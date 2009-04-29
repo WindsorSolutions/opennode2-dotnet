@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+                http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+                http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+	<description>Node Endpoint 2.0 Configuration File</description>
+
+	<!-- Properties -->
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:wne2.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Service -->
+	<bean name="service20" class="com.windsor.node.ws2.service.Endpoint2ServiceImpl">
+	   <property name="contentService" ref="contentService" />
+       <property name="securityService" ref="securityService" />
+       <property name="transactionService" ref="transactionService" />
+	</bean>
+	
+	<!-- Clients -->
+	<bean name="client20" class="com.windsor.node.ws2.client.NetworkNode20Client" />
+	
+	<bean id="httpClient" class="org.springframework.remoting.httpinvoker.CommonsHttpInvokerRequestExecutor">
+		<property name="readTimeout" value="0" />
+	</bean>
+	
+	<!-- Remoted -->
+	<bean id="contentService"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceUrl"
+			value="${wnos.endpoint.host}/remoting/WinNodeContentService" />
+		<property name="serviceInterface"
+			value="com.windsor.node.common.service.cmf.ContentService" />
+		<property name="httpInvokerRequestExecutor" ref="httpClient" />
+	</bean>
+
+	<bean id="securityService"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceUrl"
+			value="${wnos.endpoint.host}/remoting/WinNodeSecurityService" />
+		<property name="serviceInterface"
+			value="com.windsor.node.common.service.cmf.SecurityService" />
+		<property name="httpInvokerRequestExecutor" ref="httpClient" />
+	</bean>
+
+	<bean id="transactionService"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceUrl"
+			value="${wnos.endpoint.host}/remoting/WinNodeTransactionService" />
+		<property name="serviceInterface"
+			value="com.windsor.node.common.service.cmf.TransactionService" />
+		<property name="httpInvokerRequestExecutor" ref="httpClient" />
+	</bean>
+    
+    <!-- name of HTTP Request Header where the requestor's IP address is stored -->
+    <bean id="requestIPHeaderProperty" class="java.lang.String">
+        <constructor-arg value="${request.ip.header.name}" />
+    </bean>
+	
+</beans>
