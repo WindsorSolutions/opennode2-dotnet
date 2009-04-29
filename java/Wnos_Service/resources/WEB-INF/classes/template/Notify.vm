@@ -1,0 +1,12 @@
+<h3>Node Notify Submission Notifications</h3>
+
+On <b>$DATE</b> Account <b>$USERNAME</b> submitted notification for data flow <b>$FLOWID</b><br />
+For more information about that transaction and its status see:<br />
+<a href="$ADMINURL/tran.htm?id=$TRANID">Node Admin</a>
+
+<hr noshade size="1" color="#dcdcdc" />
+
+<font size="-1">The recipients of this message are derived based on 
+configuration values defined in the Node Administration Utility. 
+Please contact Node administrator to stop, add and/or modify these messages.</font>
+

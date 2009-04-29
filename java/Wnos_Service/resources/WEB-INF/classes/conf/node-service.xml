@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+                http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+               
+	
+	<bean id="securityCmfService" class="com.windsor.node.service.cmf.SecurityServiceImpl" parent="baseService">
+		<property name="accountService" ref="accountService" />
+		<property name="authenticationHelper" ref="authHelper" />
+	</bean>
+
+	<bean id="contentCmfService" class="com.windsor.node.service.cmf.ContentServiceImpl" parent="baseService">
+		<property name="accountService" ref="accountService" />
+		<property name="transactionDao" ref="transactionDao" />
+		<property name="serviceDao" ref="serviceDao" />
+		<property name="flowDao" ref="flowDao" />
+		<property name="notificationHelper" ref="mailHelper" />
+		<property name="compressionHelper" ref="compressionHelper" />
+		<property name="requestDao" ref="requestDao" />
+	</bean>
+
+
+	<bean id="transactionCmfService" class="com.windsor.node.service.cmf.TransactionServiceImpl" parent="baseService">
+		<property name="transactionDao" ref="transactionDao" />
+		<property name="accountService" ref="accountService" />
+		<property name="serviceDao" ref="serviceDao" />
+		<property name="flowDao" ref="flowDao" />
+		<property name="notificationHelper" ref="mailHelper" />
+		<property name="requestDao" ref="requestDao" />
+		<property name="pluginHelper" ref="pluginHelper" />
+		<property name="partnerDao" ref="partnerDao" />
+	</bean>
+
+
+
+
+
+
+</beans>

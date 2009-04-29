@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+                http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+
+	<description>
+		Put here only the services that you want to be available to he
+		plugins
+	</description>
+
+	<!-- Properties -->
+	<bean id="pluginPropertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:nos.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean name="uuidGenerator"
+		class="com.windsor.node.service.helper.id.UUIDGenerator" />
+
+	<bean name="zipCompressionService"
+		class="com.windsor.node.service.helper.zip.ZipCompressionService">
+		<property name="tempDir" value="${path.temp.dir}" />
+	</bean>
+
+	<bean name="settingService"
+		class="com.windsor.node.service.helper.settings.SettingServiceProvider">
+		<property name="tempDir" value="${path.temp.dir}" />
+        <property name="logDir" value="${path.log.dir}" />
+	</bean>
+	
+	<bean name="headerServiceProvider"
+		class="com.windsor.node.service.helper.header.SimpleHeaderDocumentHelper">
+		<property name="settingProvider" ref="settingService" />
+	</bean>
+	
+	<bean name="remoteFileResourceHelper"
+		class="com.windsor.node.service.helper.web.SimpleRemoteFileResourceHelper">
+		<property name="settingProvider" ref="settingService" />
+	</bean>
+	
+
+	
+
+</beans>

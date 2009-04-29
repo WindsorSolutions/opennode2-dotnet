@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+                http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+                
+    
+    <bean id="accountService" class="com.windsor.node.service.admin.AccountServiceImpl" parent="baseService">
+        <property name="notificationHelper" ref="mailHelper" />
+        <property name="authenticationHelper" ref="authHelper" />        
+        <property name="userManagerHelper" ref="usrMgrHelper" />
+        <property name="policyDao" ref="policyDao" />
+        <!-- properties inherited from BaseService -->
+        <property name="activityDao" ref="activityDao" />
+        <property name="accountDao" ref="accountDao" />
+        <property name="naasConfig" ref="naasConfig" />
+        <property name="nosConfig" ref="nosConfig" />
+    </bean>
+
+</beans>

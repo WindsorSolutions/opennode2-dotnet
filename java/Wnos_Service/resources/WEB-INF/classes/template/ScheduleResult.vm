@@ -1,0 +1,17 @@
+<h3>Node Schedule Result Notifications</h3>
+
+On <b>$DATE</b> the Node Scheduler executed <b>$SCHEDULENAME</b> schedule.<br />
+
+The attached file represents the results.
+Document: $DOC
+
+For more information about that transaction see: 
+<a href="$ADMINURL/tran.htm?id=$TRANID&sid=$SCHEDULEID">Node Admin</a>
+
+<hr noshade size="1" color="#dcdcdc" />
+
+<font size="-1">The recipients of this message are derived based on 
+configuration values defined in the Node Administration Utility. 
+Please contact Node administrator to stop, add and/or modify these messages.</font>
+
+

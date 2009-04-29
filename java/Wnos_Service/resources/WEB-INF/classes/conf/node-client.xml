@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+                http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<bean id="httpClient"
+		class="org.apache.commons.httpclient.HttpClient" lazy-init="true" />
+
+	<bean id="httpInvoker1"
+		class="org.springframework.remoting.httpinvoker.CommonsHttpInvokerRequestExecutor"
+		lazy-init="true">
+		<property name="readTimeout" value="0" />
+		<property name="httpClient" ref="httpClient" />
+	</bean>
+
+	<bean id="httpInvoker2"
+		class="org.springframework.remoting.httpinvoker.CommonsHttpInvokerRequestExecutor"
+		lazy-init="true">
+		<property name="readTimeout" value="0" />
+		<property name="httpClient" ref="httpClient" />
+	</bean>
+
+
+	<!-- Node Client v.1.1 -->
+	<bean id="nodeClient11"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl" value="${url.node.endpoint1Client}" />
+		<property name="serviceInterface"
+			value="com.windsor.node.common.util.NodeClientService" />
+		<property name="httpInvokerRequestExecutor" ref="httpInvoker1" />
+	</bean>
+
+	<!-- Node Client v.2.0 -->
+	<bean id="nodeClient20"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl" value="${url.node.endpoint2Client}" />
+		<property name="serviceInterface"
+			value="com.windsor.node.common.util.NodeClientService" />
+		<property name="httpInvokerRequestExecutor" ref="httpInvoker2" />
+	</bean>
+
+	<!-- NODE CLIENT FACTORY -->
+	<bean id="nodeClientFactory"
+		class="com.windsor.node.service.helper.client.NodeClientFactory"
+		lazy-init="true">
+		<property name="naasConfig" ref="naasConfig" />
+		<property name="nosConfig" ref="nosConfig" />
+		<property name="client11" ref="nodeClient11" />
+		<property name="client20" ref="nodeClient20" />
+	</bean>
+
+
+
+</beans>

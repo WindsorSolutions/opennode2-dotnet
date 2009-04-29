@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+                http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+
+	<description>Request Worker Description</description>
+
+	<!-- WORKERS -->
+	<!-- Base worker -->
+	<bean id="baseWorker" class="com.windsor.node.worker.NodeWorker">
+		<property name="nosConfig" ref="nosConfig" />
+		<property name="activityService" ref="activityService" />
+	</bean>
+	
+	<!-- Base transaction worker -->
+	<bean id="naasSyncTaskWorker"
+		class="com.windsor.node.worker.NaasSyncTaskWorker"
+		parent="baseWorker">
+		<property name="accountDao" ref="accountDao" />
+		<property name="naasConfig" ref="naasConfig" />
+		<property name="userManager" ref="usrMgrHelper" />
+	</bean>
+
+	<!-- File system directory cleanup -->
+	<bean id="tempCleanupWorker"
+		class="com.windsor.node.worker.util.TempCleanupWorker"
+		parent="baseWorker">
+		<!-- Number of hours the files can stay in the temp directory -->
+		<property name="keepFileForNumberOfHours" value="8" />
+	</bean>
+
+	<!-- Base transaction worker -->
+	<bean id="nodeTransactionTaskWorker"
+		class="com.windsor.node.worker.NodeTransactionTaskWorker"
+		parent="baseWorker">
+		<property name="transactionDao" ref="transactionDao" />
+		<property name="activityService" ref="activityService" />
+		<property name="requestDao" ref="requestDao" />
+		<property name="notificationHelper" ref="mailHelper" />
+		<property name="pluginHelper" ref="pluginHelper" />
+		<property name="accountDao" ref="accountDao" />
+	</bean>
+
+	<!-- Submitted document processor -->
+	<bean id="submitProcessWorker"
+		class="com.windsor.node.worker.GenericNodeTransactionTaskWorker"
+		parent="nodeTransactionTaskWorker">
+		<property name="documentSubmissionType" value="Submit" />
+	</bean>
+
+	<!-- Incoming notifications (from the endpoint) processor -->
+	<bean id="notifyProcessWorker"
+		class="com.windsor.node.worker.GenericNodeTransactionTaskWorker"
+		parent="nodeTransactionTaskWorker">
+		<property name="documentSubmissionType" value="Notify" />
+	</bean>
+
+	<!-- Processes solicited requests -->
+	<bean id="solicitProcessWorker"
+		class="com.windsor.node.worker.GenericNodeTransactionTaskWorker"
+		parent="nodeTransactionTaskWorker">
+		<property name="documentSubmissionType" value="Solicit" />
+		<property name="partnerDataProcessor"
+			ref="partnerDataProcessor" />
+	</bean>
+
+
+	<bean id="scheduleWorker"
+		class="com.windsor.node.worker.schedule.ScheduleExecutionWorker"
+		parent="baseWorker">
+		<property name="scheduleDao" ref="scheduleDao" />
+		<property name="transactionDao" ref="transactionDao" />
+		<property name="notificationHelper" ref="mailHelper" />
+		<property name="schematronDataProcessor"
+			ref="schematronDataProcessor" />
+		<property name="localServiceDataProcessor"
+			ref="localServiceDataProcessor" />
+		<property name="partnerDataProcessor"
+			ref="partnerDataProcessor" />
+		<property name="fileSystemDataProcessor"
+			ref="fileSystemDataProcessor" />
+		<property name="emailDataProcessor" ref="emailDataProcessor" />
+		<property name="accountDao" ref="accountDao" />
+	</bean>
+
+
+</beans>
