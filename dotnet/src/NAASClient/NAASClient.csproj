@@ -38,12 +38,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Web.Services, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\lib\Microsoft.Web.Services.dll</HintPath>
+      <HintPath>..\..\lib\Microsoft.Web.Services.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Web.Services3, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\lib\Microsoft.Web.Services3.dll</HintPath>
+      <HintPath>..\..\lib\Microsoft.Web.Services3.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
