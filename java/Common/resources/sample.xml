@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id: build.xml 87 2008-08-14 23:37:26Z jniski $ -->
+<!-- $HeadURL: svn+ssh://windsorsolutions.biz/repo/Node2008J_v2/trunk/Node/Test/build.xml $ -->
+<project basedir="." default="build.jar">
+
+	<!-- properties & entities for all Node projects -->
+	<property file="build.properties" />
+	<property name="project.base.dir" value="." />
+	<property name="env.dir" value="${project.base.dir}/env/${node.res.env.dir}" />
+	<property name="log4j.properties" value="${env.dir}/log4j.properties" />
+	<property name="resource.base.dir" value="${project.base.dir}/../Resources" />
+	<property name="resources.local" value="${project.base.dir}/resources" />
+	<property name="runtime.jar.location" value="${resource.base.dir}/lib/${project.name}" />
+	<property name="buildtime.jar.location" value="${resource.base.dir}/lib/${project.name}.build_only" />
+	<property name="src" value="${project.base.dir}/src" />
+	<property name="test" value="${project.base.dir}/test" />
+	<property name="build" value="${project.base.dir}/build" />
+	<property name="dist" value="${resource.base.dir}/dist" />
+	<property name="web.inf" value="${build}/WEB-INF" />
+	<property name="web.inf.lib" value="${web.inf}/lib" />
+	<fileset id="runtime.jars" includes="*.jar" dir="${runtime.jar.location}" />
+	<fileset id="buildtime.jars" includes="*.jar" dir="${buildtime.jar.location}" />
+	<fileset id="junit.jar" file="${resource.base.dir}/lib/Junit3/junit.jar" />
+	<fileset id="project.jars" includes="*.jar, *.war" dir="${dist}" />
+	<path id="build.class.path">
+		<fileset refid="runtime.jars" />
+		<fileset refid="buildtime.jars" />
+		<fileset refid="junit.jar" />
+		<fileset refid="project.jars" />
+	</path>
+	<!-- END properties & entities for all Node projects -->
+
+	<!-- properties & entities for this project only -->
+	<property name="service.dir" value="${web.inf}/services/${appName}" />
+	<!-- END properties & entities for this project only -->
+
+	<!-- targets for all Node projects -->
+	<target name="clean">
+		<delete includeemptydirs="true">
+			<fileset dir="${build}" includes="**/*" />
+		</delete>
+		<delete file="${dist}/${appName}.${fileExt}" />
+	</target>
+
+	<target depends="clean" name="pre.init">
+		<condition property="isWarOutput">
+			<equals arg1="${fileExt}" arg2="war" />
+		</condition>
+		<condition property="isJarOutput">
+			<equals arg1="${fileExt}" arg2="jar" />
+		</condition>
+		<mkdir dir="${build}" />
+		<mkdir dir="${dist}" />
+	</target>
+
+	<target name="set.class.dir.war" if="isWarOutput">
+		<property name="classes" value="${web.inf}/classes" />
+	</target>
+	<target name="set.class.dir.jar" if="isJarOutput">
+		<property name="classes" value="${build}" />
+	</target>
+
+	<target depends="local.init, set.class.dir.war, set.class.dir.jar" name="init">
+		<mkdir dir="${classes}" />
+		<echo message="Classes will be compiled to ${classes}" />
+	</target>
+
+	<target depends="init" name="okToBuild" if="build.classpath.ready">
+		<condition property="okToBuild">
+			<istrue value="${build.classpath.ready}"/>
+		</condition>
+        <echo message="build.classpath.ready = ${build.classpath.ready}" />
+		<echo message="${build.classpath.ready.message}" />
+	</target>
+	
+	<target depends="okToBuild" name="compile.src" if="okToBuild" description="compiles without debug symbols, warnings on">
+		<javac debug="off" memoryMaximumSize="256m" memoryInitialSize="256m" fork="true" destdir="${classes}" srcdir="${src}" target="1.4">
+			<classpath refid="build.class.path" />
+		</javac>
+	</target>
+
+	<target depends="okToBuild" name="compile.test" if="okToBuild" description="compiles with debug symbols, warnings off">
+		<javac debug="on" memoryMaximumSize="256m" memoryInitialSize="256m" fork="true" destdir="${classes}" srcdir="${src}" target="1.4" nowarn="true">
+			<classpath refid="build.class.path" />
+		</javac>
+	</target>
+
+	<target depends="compile.src, bundle.libs" name="make.jar">
+		<jar destfile="${dist}/${appName}.${fileExt}">
+			<fileset excludes="**/Test.class" dir="${build}" />
+		</jar>
+	</target>
+
+	<target depends="compile.test, bundle.libs" name="make.test.jar">
+		<jar destfile="${dist}/${appName}.${fileExt}">
+			<fileset dir="${build}" />
+		</jar>
+	</target>
+
+	<target depends="make.jar" name="make.deploy" description="calls make.jar and deploys to appserver">
+		<copy file="${dist}/${appName}.${fileExt}" toDir="${appserver.deploy.dir}" />
+	</target>
+
+	<target depends="make.test.jar" name="make.test.deploy" description="calls make.test.jar and deploys to appserver">
+		<copy file="${dist}/${appName}.${fileExt}" toDir="${appserver.deploy.dir}" />
+	</target>
+
+	<!-- END targets for all Node projects -->
+
+	<!-- targets configured for this project -->
+	<!-- modify bodies to suit this project, otherwise leave the targets empty -->
+
+	<target depends="pre.init" name="local.init">
+		<condition property="build.classpath.ready" value="true" else="false">
+			<available file="${dist}/wne2.jar" />
+		</condition>
+		<property name="build.classpath.ready.message" value="${dist}/wne2.jar missing." />
+	</target>
+
+	<target name="bundle.libs">
+	</target>
+	<!-- END targets specific to this project -->
+</project>
