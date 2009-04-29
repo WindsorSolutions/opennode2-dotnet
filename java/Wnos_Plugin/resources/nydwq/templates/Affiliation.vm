@@ -1,0 +1,61 @@
+#if($affiliations)#foreach($affiliation in $affiliations)
+#if($affiliation.affilType || $affiliation.affilStartDate || $affiliation.affilEndDate || $affiliation.affilStatus || $affiliation.entityName || $affiliation.entityTypeCode || $affiliation.entityAddrLine1 || $affiliation.entityAddrLine2 || $affiliation.entityCity || $affiliation.entityState || $affiliation.entityZip || $affiliation.entityPhone || $affiliation.entityFax || $affiliation.entityEmail || $affiliation.entityEmergencyNum || $affiliation.tinlgentIsNumber && ($affiliation.tinlgentIsNumber != 0))
+            <WaterSystemAffiliation>
+#if($affiliation.affilType || $affiliation.affilStartDate || $affiliation.affilEndDate || $affiliation.affilStatus)
+                <Affiliation>
+#if($affiliation.affilType)
+                    <AffiliationTypeText>$affiliation.affilType</AffiliationTypeText>
+#end
+#if($affiliation.affilStartDate)
+                    <AffiliationStartDate>$affiliation.affilStartDate</AffiliationStartDate>
+#end
+#if($affiliation.affilEndDate)
+                    <AffiliationEndDate>$affiliation.affilEndDate</AffiliationEndDate>
+#end
+#if($affiliation.affilStatus)
+                    <AffiliationStatusText>$affiliation.affilStatus</AffiliationStatusText>
+#end
+                </Affiliation>
+#end
+#if($affiliation.entityName || $affiliation.entityTypeCode || $affiliation.entityAddrLine1 || $affiliation.entityAddrLine2 || $affiliation.entityCity || $affiliation.entityState || $affiliation.entityZip || $affiliation.entityPhone || $affiliation.entityFax || $affiliation.entityEmail || $affiliation.entityEmergencyNum)
+                <LegalEntity>
+#if($affiliation.entityName)
+                    <LegalEntityName>$affiliation.entityName</LegalEntityName>
+#end
+#if($affiliation.entityTypeCode)
+                    <LegalEntityTypeCode>$affiliation.entityTypeCode</LegalEntityTypeCode>
+#end
+#if($affiliation.entityAddrLine1)
+                    <LegalEntityAddressLineOne>$affiliation.entityAddrLine1</LegalEntityAddressLineOne>
+#end
+#if($affiliation.entityAddrLine2)
+                    <LegalEntityAddressLineTwo>$affiliation.entityAddrLine2</LegalEntityAddressLineTwo>
+#end
+#if($affiliation.entityCity)
+                    <LegalEntityCity>$affiliation.entityCity</LegalEntityCity>
+#end
+#if($affiliation.entityState)
+                    <LegalEntityState>$affiliation.entityState</LegalEntityState>
+#end
+#if($affiliation.entityZip)
+                    <LegalEntityZipCode>$affiliation.entityZip</LegalEntityZipCode>
+#end
+#if($affiliation.entityPhone)
+                    <LegalEntityPhoneNumber>$affiliation.entityPhone</LegalEntityPhoneNumber>
+#end
+#if($affiliation.entityFax)
+                    <LegalEntityFaxNumber>$affiliation.entityFax</LegalEntityFaxNumber>
+#end
+#if($affiliation.entityEmail)
+                    <LegalEntityEmailAddress>$affiliation.entityEmail</LegalEntityEmailAddress>
+#end
+#if($affiliation.entityEmergencyNum)
+                    <LegalEntityEmergencyNumber>$affiliation.entityEmergencyNum</LegalEntityEmergencyNumber>
+#end
+                </LegalEntity>
+#end
+#if($affiliation.tinlgentIsNumber && ($affiliation.tinlgentIsNumber != 0))
+                <TinlgentIsNumber>$affiliation.tinlgentIsNumber</TinlgentIsNumber>
+#end
+            </WaterSystemAffiliation>
+#end#end#end

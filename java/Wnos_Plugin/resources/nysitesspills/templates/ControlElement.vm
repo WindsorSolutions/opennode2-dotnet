@@ -1,0 +1,10 @@
+#foreach($element in $elements)#if($element.controlElementName || $element.controlElementCode) 
+                        <ControlElements>
+#if($element.controlElementName)
+                            <ControlElementCodeName>$element.controlElementName</ControlElementCodeName>
+#end
+#if($element.controlElementCode)
+                            <ControlElementCode>$element.controlElementCode</ControlElementCode>
+#end
+                        </ControlElements>
+#end#end

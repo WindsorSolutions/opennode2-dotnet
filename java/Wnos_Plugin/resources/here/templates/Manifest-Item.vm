@@ -1,0 +1,11 @@
+<HEREManifestItem>
+<TransactionIdentifier>$TRANSACTIONID</TransactionIdentifier>
+<EndpointURLIdentifier>$ENDPOINTURL</EndpointURLIdentifier>
+<DataExchangeNameText>$DATAEXCHANGENAME</DataExchangeNameText>
+<SourceInfo>
+	<IsFacilitySourceIndicator>#if($ISFACILITYSOURCEINDICATOR == "Y")true#{else}false#end</IsFacilitySourceIndicator>
+	<SourceSystemName>$SOURCESYSTEMNAME</SourceSystemName>
+</SourceInfo>
+<FullReplaceIndicator>#if($FULLREPLACEINDICATOR == "Y")true#{else}false#end</FullReplaceIndicator>
+<CreatedDate>$CREATEDDATE_F</CreatedDate>
+</HEREManifestItem>

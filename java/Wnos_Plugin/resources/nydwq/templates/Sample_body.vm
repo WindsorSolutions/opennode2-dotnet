@@ -1,0 +1,17 @@
+#if($sample.tsalabIsNumber || $sample.tsasamplIsNumber || $sample.sampleTypeCode || $sample.collectionEndDate || $sample.samplePurposeCode)
+                    <Sample>
+#if($sample.tsalabIsNumber)
+                        <TsalabIsNumber>$sample.tsalabIsNumber</TsalabIsNumber>
+#end
+#if($sample.tsasamplIsNumber)
+                        <TsasamplIsNumber>$sample.tsasamplIsNumber</TsasamplIsNumber>
+#end
+#if($sample.sampleTypeCode)
+                        <SampleTypeCode>$sample.sampleTypeCode</SampleTypeCode>
+#end
+#if($sample.collectionEndDate)
+                        <SampleCollectionEndDate>$sample.collectionEndDate</SampleCollectionEndDate>
+#end
+#if($sample.samplePurposeCode)
+                        <SamplePurposeCode>$sample.samplePurposeCode</SamplePurposeCode>
+#end#end

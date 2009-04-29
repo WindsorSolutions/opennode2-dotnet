@@ -1,0 +1,79 @@
+#foreach($affiliation in $affiliations)#if($affiliation.affiliationId || $affiliation.siteId || $affiliation.affiliationTypeCode || $affiliation.affiliationTypeName || $affiliation.affiliationSubTypeCode || $affiliation.affiliationSubTypeName || $affiliation.sequenceNum || $affiliation.startDate || $affiliation.endDate || $affiliation.company || $affiliation.federalId || $affiliation.contactTitle || $affiliation.contactName || $affiliation.addressOne || $affiliation.addressTwo || $affiliation.city || $affiliation.state || $affiliation.zipCode || $affiliation.phone || $affiliation.phoneExt || $affiliation.email || $affiliation.fax || $affiliation.modifiedBy || $affiliation.lastModified ) 
+            <DERProgramsAffiliation>
+#if($affiliation.affiliationId)
+                <AffiliationID>$affiliation.affiliationId</AffiliationID>
+#end
+#if($affiliation.siteId)
+                <AffiliationSiteID>$affiliation.siteId</AffiliationSiteID>
+#end
+#if($affiliation.affiliationTypeCode)
+                <AffiliationTypeCode>$affiliation.affiliationTypeCode</AffiliationTypeCode>
+#end
+#if($affiliation.affiliationTypeName)
+                <AffiliationTypeCodeName>$affiliation.affiliationTypeName</AffiliationTypeCodeName>
+#end
+#if($affiliation.affiliationSubTypeCode)
+                <AffiliationSubTypeCode>$affiliation.affiliationSubTypeCode</AffiliationSubTypeCode>
+#end
+#if($affiliation.affiliationSubTypeName)
+                <AffiliationSubTypeCodeName>$affiliation.affiliationSubTypeName</AffiliationSubTypeCodeName>
+#end
+#if($affiliation.sequenceNum)
+                <AffiliationSeqNo>$affiliation.sequenceNum</AffiliationSeqNo>
+#end
+#if($affiliation.startDate)
+                <UISAffiliationStartDate>$affiliation.getStartDateString()</UISAffiliationStartDate>
+#end
+#if($affiliation.endDate)
+                <UISAffiliationEndDate>$affiliation.getEndDateString()</UISAffiliationEndDate>
+#end
+#if($affiliation.company)
+                <AffiliationCompany>$affiliation.company</AffiliationCompany>
+#end
+#if($affiliation.federalId)
+                <AffiliationFederalID>$affiliation.federalId</AffiliationFederalID>
+#end
+#if($affiliation.contactTitle)
+                <AffiliationContactTitle>$affiliation.contactTitle</AffiliationContactTitle>
+#end
+#if($affiliation.contactName)
+                <AffiliationContactName>$affiliation.contactName</AffiliationContactName>
+#end
+#if($affiliation.addressOne)
+                <AffiliationAddress1>$affiliation.addressOne</AffiliationAddress1>
+#end
+#if($affiliation.addressTwo)
+                <AffiliationAddress2>$affiliation.addressTwo</AffiliationAddress2>
+#end
+#if($affiliation.city)
+                <AffiliationCity>$affiliation.city</AffiliationCity>
+#end
+#if($affiliation.state)
+                <AffiliationState>$affiliation.state</AffiliationState>
+#end
+#if($affiliation.zipCode)
+                <AffiliationZIPCode>$affiliation.zipCode</AffiliationZIPCode>
+#end
+#if($affiliation.countryCode)
+                <AffiliationCountryCode>$affiliation.countryCode</AffiliationCountryCode>
+#end
+#if($affiliation.phone)
+                <AffiliationPhone>$affiliation.phone</AffiliationPhone>
+#end
+#if($affiliation.phoneExt)
+                <AffiliationPhoneExt>$affiliation.phoneExt</AffiliationPhoneExt>
+#end
+#if($affiliation.email)
+                <AffiliationEmail>$affiliation.email</AffiliationEmail>
+#end
+#if($affiliation.fax)
+                <AffiliationFax>$affiliation.fax</AffiliationFax>
+#end
+#if($affiliation.modifiedBy)
+                <AffiliationModifiedBy>$affiliation.modifiedBy</AffiliationModifiedBy>
+#end
+#if($affiliation.lastModified)
+                <AffiliationLastModified>$affiliation.getLastModifiedString()</AffiliationLastModified>
+#end
+            </DERProgramsAffiliation>
+#end#end

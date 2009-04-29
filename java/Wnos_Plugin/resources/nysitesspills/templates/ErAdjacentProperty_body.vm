@@ -1,0 +1,53 @@
+#if($property.adjacentPropertyId || $property.adjacentPropertyIdc || $property.eaDistrict || $property.eaSection || $property.eaSubsection || $property.eaBlock || $property.eaLot || $property.eaSublot || $property.eaSuffix || $property.nyTransmercatorN || $property.nyTransmercatorE || $property.nyDistance ||$property.sectionBlockPrint || $property.parcelStreet || $property.parcelCity || $property.parcelZipCode || $property.parcelSwis)
+                <ERAdjProp>
+#if($property.adjacentPropertyId)
+                    <AdjPropID>$property.adjacentPropertyId</AdjPropID>
+#end
+#if($property.adjacentPropertyIdc)
+                    <AdjPropIDC>$property.adjacentPropertyIdc</AdjPropIDC>
+#end
+#if($property.eaDistrict)
+                    <EADistrict>$property.eaDistrict</EADistrict>
+#end
+#if($property.eaSection)
+                    <EASec>$property.eaSection</EASec>
+#end
+#if($property.eaSubsection)
+                    <EASubsec>$property.eaSubsection</EASubsec>
+#end
+#if($property.eaBlock)
+                    <EABlock>$property.eaBlock</EABlock>
+#end
+#if($property.eaLot)
+                    <EALot>$property.eaLot</EALot>
+#end
+#if($property.eaSublot)
+                    <EASublot>$property.eaSublot</EASublot>
+#end
+#if($property.eaSuffix)
+                    <EASuffix>$property.eaSuffix</EASuffix>
+#end
+#if($property.nyTransmercatorN)
+                    <NYTMN>$property.nyTransmercatorN</NYTMN>
+#end
+#if($property.nyTransmercatorE)
+                    <NYTME>$property.getNyTransmercatorEString()</NYTME>
+#end
+#if($property.nyDistance)
+                    <NYTMDist>$property.nyDistance</NYTMDist>
+#end
+#if($property.sectionBlockPrint)
+                    <Sblprt>$property.sectionBlockPrint</Sblprt>
+#end
+#if($property.parcelStreet)
+                    <ParcStr>$property.parcelStreet</ParcStr>
+#end
+#if($property.parcelCity)
+                    <ParcCity>$property.parcelCity</ParcCity>
+#end
+#if($property.parcelZipCode)
+                    <ParcZIP>$property.parcelZipCode</ParcZIP>
+#end
+#if($property.parcelSwis)
+                    <ParcSWIS>$property.parcelSwis</ParcSWIS>
+#end#end

@@ -1,0 +1,8 @@
+#if($DOMAINLISTNAME)<here:DomainListNameText>$DOMAINLISTNAME</here:DomainListNameText>#end
+#if($ORIGINATINGPARTNERNAME)<here:OriginatingPartnerName>$ORIGINATINGPARTNERNAME</here:OriginatingPartnerName>#end
+#if(($ITEMCODE)||($ITEMTEXT)||($ITEMDESCRIPTIONTEXT))
+<here:DomainListItem> 
+#if($ITEMCODE)<here:ItemCode>$ITEMCODE</here:ItemCode>#end
+#if($ITEMTEXT)<here:ItemText>$ITEMTEXT</here:ItemText>#end
+#if($ITEMDESCRIPTIONTEXT)<here:ItemDescriptionText>$ITEMDESCRIPTIONTEXT</here:ItemDescriptionText>#end
+</here:DomainListItem>#end

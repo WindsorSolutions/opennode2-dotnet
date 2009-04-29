@@ -1,0 +1,56 @@
+#if($violations)#foreach($violation in $violations)
+#if($violation.analyteCode || $violation.violationTypeCode || $violation.violationTypeName || $violation.severityLevelCode || $violation.statusTypeCode || $violation.analysisResult || $violation.analysisResultUom || $violation.mclViolatedText || $violation.mclViolatedUom || $violation.determinationDate || $violation.federalPeriodBeginDate || $violation.federalPeriodEndDate || $violation.statePeriodBeginDate || $violation.statePeriodEndDate || $violation.tierLevel || $violation.fiscalYear || $violation.violationSeq)
+            <Violation>
+#if($violation.analyteCode)
+                <ViolationAnalyteCode>$violation.analyteCode</ViolationAnalyteCode>
+#end
+#if($violation.violationTypeCode)
+                <DWQViolationTypeCode>$violation.violationTypeCode</DWQViolationTypeCode>
+#end
+#if($violation.violationTypeName)
+                <ViolationTypeValue>$violation.violationTypeName</ViolationTypeValue>
+#end
+#if($violation.severityLevelCode)
+                <ViolationSeverityLevelCode>$violation.severityLevelCode</ViolationSeverityLevelCode>
+#end
+#if($violation.statusTypeCode)
+                <ViolationStatusTypeCode>$violation.statusTypeCode</ViolationStatusTypeCode>
+#end
+#if($violation.analysisResult)
+                <ViolationAnalysisResultMeasure>$violation.analysisResult</ViolationAnalysisResultMeasure>
+#end
+#if($violation.analysisResultUom)
+                <ViolationAnalysisResultUOMCode>$violation.analysisResultUom</ViolationAnalysisResultUOMCode>
+#end
+#if($violation.mclViolatedText)
+                <ViolationMCLViolatedText>$violation.mclViolatedText</ViolationMCLViolatedText>
+#end
+#if($violation.mclViolatedUom)
+                <ViolationMCLViolatedUOMCode>$violation.mclViolatedUom</ViolationMCLViolatedUOMCode>
+#end
+#if($violation.determinationDate)
+                <ViolationDeterminationDate>$violation.determinationDate</ViolationDeterminationDate>
+#end
+#if($violation.federalPeriodBeginDate)
+                <ViolationFederalPeriodBeginDate>$violation.federalPeriodBeginDate</ViolationFederalPeriodBeginDate>
+#end
+#if($violation.federalPeriodEndDate)
+                <ViolationFederalPeriodEndDate>$violation.federalPeriodEndDate</ViolationFederalPeriodEndDate>
+#end
+#if($violation.statePeriodBeginDate)
+                <ViolationStatePeriodBeginDate>$violation.statePeriodBeginDate</ViolationStatePeriodBeginDate>
+#end
+#if($violation.statePeriodEndDate)
+                <ViolationStatePeriodEndDate>$violation.statePeriodEndDate</ViolationStatePeriodEndDate>
+#end
+#if($violation.tierLevel)
+                <ViolationTierLevel>$violation.tierLevel</ViolationTierLevel>
+#end
+#if($violation.fiscalYear)
+                <ViolationFiscalYear>$violation.fiscalYear</ViolationFiscalYear>
+#end
+#if($violation.violationSeq)
+                <ViolationSeq>$violation.violationSeq</ViolationSeq>
+#end
+            </Violation>
+#end#end#end

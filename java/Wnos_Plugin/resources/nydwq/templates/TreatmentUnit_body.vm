@@ -1,0 +1,11 @@
+#if($treatmentUnit.treatmentUnitName || $treatmentUnit.description || $treatmentUnit.tinunproIsNumber) 
+                <TreatmentUnit>
+#if($treatmentUnit.treatmentUnitName)
+                    <TreatmentUnitName>$treatmentUnit.treatmentUnitName</TreatmentUnitName>
+#end
+#if($treatmentUnit.description)
+                    <TreatmentUnitDescriptionText>$treatmentUnit.description</TreatmentUnitDescriptionText>
+#end
+#if($treatmentUnit.tinunproIsNumber)
+                    <TinunproIsNumber>$treatmentUnit.tinunproIsNumber</TinunproIsNumber>
+#end#end

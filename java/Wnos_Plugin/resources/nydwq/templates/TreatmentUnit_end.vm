@@ -1,0 +1,3 @@
+#if($treatmentUnit.treatmentUnitName || $treatmentUnit.description || $treatmentUnit.tinunproIsNumber) 
+                </TreatmentUnit>
+#end

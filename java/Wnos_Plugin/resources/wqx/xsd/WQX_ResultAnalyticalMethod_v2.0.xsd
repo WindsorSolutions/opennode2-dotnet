@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:wqx="http://www.exchangenetwork.net/schema/wqx/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/wqx/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+	<xsd:include schemaLocation="./WQX_SimpleContent_v2.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+        Schema Name  : WQX_ResultAnalyticalMethod_v2.0.xsd
+        Description   : 	Identifies the procedures, processes, and references required to determine the analytical methods used to obtain a result.
+        Developed by  : 	 EPA Office of Water
+        Point of Contact:  Dwane Young
+</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="ResultAnalyticalMethodDataType">
+		<xsd:sequence>
+			<xsd:element ref="wqx:MethodIdentifier"/>
+			<xsd:element ref="wqx:MethodIdentifierContext"/>
+			<xsd:element ref="wqx:MethodName" minOccurs="0"/>
+			<xsd:element ref="wqx:MethodQualifierTypeName" minOccurs="0"/>
+			<xsd:element ref="wqx:MethodDescriptionText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ResultAnalyticalMethod" type="wqx:ResultAnalyticalMethodDataType">
+		<xsd:annotation>
+			<xsd:documentation>Identifies the procedures, processes, and references required to determine the analytical methods used to obtain a result.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

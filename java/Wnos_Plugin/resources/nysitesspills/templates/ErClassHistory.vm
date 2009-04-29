@@ -1,0 +1,55 @@
+#foreach($history in $histories)#if($history.classHistSeqNbr || $history.siteName || $history.oldClass || $history.newClass || $history.requestDate || $history.changeAddedDate || $history.projectManager || $history.commentType || $history.pmAddress || $history.pmCity || $history.pmState || $history.pmZipCode || $history.pmPhone || $history.comments || $history.bcpIncompleteAppDate || $history.finalizedDate || $history.scsComments)
+                <ERClassHis>
+#if($history.classHistSeqNbr)
+                    <ClassHisSeqno>$history.classHistSeqNbr</ClassHisSeqno>
+#end
+#if($history.siteName)
+                    <ClassHisSiteName>$history.siteName</ClassHisSiteName>
+#end
+#if($history.oldClass)
+                    <OldERClass>$history.oldClass</OldERClass>
+#end
+#if($history.newClass)
+                    <NewERClass>$history.newClass</NewERClass>
+#end
+#if($history.requestDate)
+                    <ERClassHisRequestDate>$history.getRequestDateString()</ERClassHisRequestDate>
+#end
+#if($history.changeAddedDate)
+                    <ERClassHisCHAddDate>$history.getChangeAddedDateString()</ERClassHisCHAddDate>
+#end
+#if($history.projectManager)
+                    <ERClassHisProjMgr>$history.projectManager</ERClassHisProjMgr>
+#end
+#if($history.commentType)
+                    <ERClassHisCommType>$history.commentType</ERClassHisCommType>
+#end
+#if($history.pmAddress)
+                    <ERClassHisProjMgrAd>$history.pmAddress</ERClassHisProjMgrAd>
+#end
+#if($history.pmCity)
+                    <ERClassHisCity>$history.pmCity</ERClassHisCity>
+#end
+#if($history.pmState)
+                    <ERClassHisState>$history.pmState</ERClassHisState>
+#end
+#if($history.pmZipCode)
+                    <ERClassHisZip>$history.pmZipCode</ERClassHisZip>
+#end
+#if($history.pmPhone)
+                    <ERClassHisTelephone>$history.pmPhone</ERClassHisTelephone>
+#end
+#if($history.comments)
+                    <ERClassHisComments>$history.comments</ERClassHisComments>
+#end
+#if($history.bcpIncompleteAppDate)
+                    <BCPIncompleteAppDate>$history.getBcpIncompleteAppDateString()</BCPIncompleteAppDate>
+#end
+#if($history.finalizedDate)
+                    <ERClassHisFinalizedDate>$history.getFinalizedDateString()</ERClassHisFinalizedDate>
+#end
+#if($history.scsComments)
+                    <SCSComments>$history.scsComments</SCSComments>
+#end
+                </ERClassHis>
+#end#end

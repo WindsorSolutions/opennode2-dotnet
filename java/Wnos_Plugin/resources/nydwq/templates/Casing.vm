@@ -1,0 +1,23 @@
+#if($casings)#foreach($casing in $casings)
+#if($casing.casingIdentifier || $casing.casingTypeName || $casing.diameter || $casing.bottomDepth || $casing.bottomDepthUom || $casing.topMeasureRelativity)
+                    <Casing>
+#if($casing.casingIdentifier)
+                        <CasingIdentifier>$casing.casingIdentifier</CasingIdentifier>
+#end
+#if($casing.casingTypeName)
+                        <CasingTypeName>$casing.casingTypeName</CasingTypeName>
+#end
+#if($casing.diameter)
+                        <CasingDiameterMeasure>$casing.diameter</CasingDiameterMeasure>
+#end
+#if($casing.bottomDepth)
+                        <CasingBottomDepthMeasure>$casing.getBottomDepthString()</CasingBottomDepthMeasure>
+#end
+#if($casing.bottomDepthUom)
+                        <CasingBottomDepthMeasureUnit>$casing.bottomDepthUom</CasingBottomDepthMeasureUnit>
+#end
+#if($casing.topMeasureRelativity)
+                        <CasingTopMeasureRelativity>$casing.topMeasureRelativity</CasingTopMeasureRelativity>
+#end
+                    </Casing>
+#end#end#end

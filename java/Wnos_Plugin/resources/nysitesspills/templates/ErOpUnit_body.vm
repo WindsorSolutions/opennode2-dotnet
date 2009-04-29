@@ -1,0 +1,14 @@
+#if($unit.opUnitId || $unit.opUnitCode || $unit.opUnitDescription || $unit.opUnitRecordOfDiscussion )
+            <EROpUnit>
+#if($unit.opUnitId)
+                <EROpUnitID>$unit.opUnitId</EROpUnitID>
+#end
+#if($unit.opUnitCode)
+                <EROpUnitOU>$unit.opUnitCode</EROpUnitOU>
+#end
+#if($unit.opUnitDescription)
+                <EROpUnitOUDesc>$unit.opUnitDescription</EROpUnitOUDesc>
+#end
+#if($unit.opUnitRecordOfDiscussion)
+                <EROpUnitRODDescText>$unit.opUnitRecordOfDiscussion</EROpUnitRODDescText>
+#end#end

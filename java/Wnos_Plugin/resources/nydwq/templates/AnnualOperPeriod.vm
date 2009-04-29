@@ -1,0 +1,26 @@
+#if($periodList)#foreach($period in $periodList)
+#if($period.servedTypeCode || $period.periodStart || $period.periodEnd || $period.startDate || $period.endDate || $period.avgPopulationServedCount || $period.tinpopsvIsNumber)
+            <AnnualOperPeriod>
+#if($period.servedTypeCode)                
+                <AnnualOperServedTypeCode>$period.servedTypeCode</AnnualOperServedTypeCode>
+#end
+#if($period.periodStart)
+                <AnnualOperPeriodStart>$period.periodStart</AnnualOperPeriodStart>
+#end
+#if($period.periodEnd)
+                <AnnualOperPeriodEnd>$period.periodEnd</AnnualOperPeriodEnd>
+#end
+#if($period.startDate)
+                <AnnualOperStartDate>$period.startDate</AnnualOperStartDate>
+#end
+#if($period.endDate)
+                <AnnualOperEndDate>$period.endDate</AnnualOperEndDate>
+#end
+#if($period.avgPopulationServedCount)
+                <AnnualOperAvgPopulationServedCount>$period.avgPopulationServedCount</AnnualOperAvgPopulationServedCount>
+#end
+#if($period.tinpopsvIsNumber)
+                <TinpopsvIsNumber>$period.tinpopsvIsNumber</TinpopsvIsNumber>
+#end
+            </AnnualOperPeriod>
+#end#end#end

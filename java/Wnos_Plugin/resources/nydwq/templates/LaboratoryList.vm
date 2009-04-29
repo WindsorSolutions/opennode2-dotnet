@@ -1,0 +1,18 @@
+#if($lablist)
+    <LaboratoryList>
+#foreach( $lab in $lablist )
+#if($lab.laboratoryName || $lab.idNumber || ($lab.tsaLabIsNumber && $lab.tsaLabIsNumber != 0))
+        <Laboratory>
+#if($lab.laboratoryName)
+            <LaboratoryName>$lab.laboratoryName</LaboratoryName>
+#end
+#if($lab.idNumber)
+            <LaboratoryIdentificationNumber>$lab.idNumber</LaboratoryIdentificationNumber>
+#end
+#if($lab.tsaLabIsNumber)
+            <TsalabIsNumber>$lab.tsaLabIsNumber</TsalabIsNumber>
+#end
+        </Laboratory>
+#end#end
+    </LaboratoryList>
+#end

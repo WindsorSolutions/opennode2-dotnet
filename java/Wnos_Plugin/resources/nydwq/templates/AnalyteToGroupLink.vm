@@ -1,0 +1,11 @@
+#foreach($link in $linklist)#if($link.analyteCode && $link.analyteGroupCode)
+#if($link.analyteCode || $link.analyteGroupCode)
+        <AnalyteToGroupLink>
+#if($link.analyteCode)
+            <AnalyteCode>$link.analyteCode</AnalyteCode>
+#end
+#if($link.analyteGroupCode)
+            <AnalyteGroupCode>$link.analyteGroupCode</AnalyteGroupCode>
+#end
+        </AnalyteToGroupLink>
+#end#end#end

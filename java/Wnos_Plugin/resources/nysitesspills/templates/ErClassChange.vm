@@ -1,0 +1,76 @@
+#foreach($change in $changes)#if($change.classChangeId || $change.hwCode || $change.classChangeSeqNbr || $change.initiatedBy || $change.section || $change.dateChangeReceived || $change.actionRequested || $change.sectionApproveDate || $change.deeApproveDate || $change.dohApproveDate || $change.remApproveDate || $change.bureauApproveDate || $change.holdStartDate || $change.comments || $change.siteName || $change.completionDate || $change.regionApproveDate || $change.secChiefApproveDate || $change.classChangeType || $change.dueDate || $change.engineerSignDate || $change.asstDivDirDate || $change.pkgHoldDate || $change.finalizedDate)
+                <ERClassChg>
+#if($change.classChangeId)
+                    <ERClassChgID>$change.classChangeId</ERClassChgID>
+#end
+#if($change.hwCode)
+                    <Hw_code>$change.hwCode</Hw_code>
+#end
+#if($change.classChangeSeqNbr)
+                    <ERClassChgSeqno>$change.classChangeSeqNbr</ERClassChgSeqno>
+#end
+#if($change.initiatedBy)
+                    <CInitb>$change.initiatedBy</CInitb>
+#end
+#if($change.section)
+                    <CSectn>$change.section</CSectn>
+#end
+#if($change.dateChangeReceived)
+                    <DcSCSDt>$change.getDateChangeReceivedString()</DcSCSDt>
+#end
+#if($change.actionRequested)
+                    <CActRq>$change.actionRequested</CActRq>
+#end
+#if($change.sectionApproveDate)
+                    <DcInvse>$change.getSectionApproveDateString()</DcInvse>
+#end
+#if($change.deeApproveDate)
+                    <DcDEE>$change.getDeeApproveDateString()</DcDEE>
+#end
+#if($change.dohApproveDate)
+                    <DcDOH>$change.getDohApproveDateString()</DcDOH>
+#end
+#if($change.remApproveDate)
+                    <DcDivDr>$change.getRemApproveDateString()</DcDivDr>
+#end
+#if($change.bureauApproveDate)
+                    <DcBurDr>$change.getBureauApproveDateString()</DcBurDr>
+#end
+#if($change.holdStartDate)
+                    <DcApprov>$change.getHoldStartDateString()</DcApprov>
+#end
+#if($change.comments)
+                    <ERClassChgComment>$change.comments</ERClassChgComment>
+#end
+#if($change.siteName)
+                    <CsName>$change.siteName</CsName>
+#end
+#if($change.completionDate)
+                    <DcHldSt>$change.getCompletionDateString()</DcHldSt>
+#end
+#if($change.regionApproveDate)
+                    <DcRegDt>$change.getRegionApproveDateString()</DcRegDt>
+#end
+#if($change.secChiefApproveDate)
+                    <Dcfill2>$change.getSecChiefApproveDateString()</Dcfill2>
+#end
+#if($change.classChangeType)
+                    <Cfill3>$change.classChangeType</Cfill3>
+#end
+#if($change.dueDate)
+                    <DueDate>$change.getDueDateString()</DueDate>
+#end
+#if($change.engineerSignDate)
+                    <RHWREDate>$change.getEngineerSignDateString()</RHWREDate>
+#end
+#if($change.asstDivDirDate)
+                    <AsstDivDirDate>$change.getAsstDivDirDateString()</AsstDivDirDate>
+#end
+#if($change.pkgHoldDate)
+                    <PkgHoldDate>$change.getPkgHoldDateString()</PkgHoldDate>
+#end
+#if($change.finalizedDate)
+                    <FinalizedDate>$change.getFinalizedDateString()</FinalizedDate>
+#end
+                </ERClassChg>
+#end#end

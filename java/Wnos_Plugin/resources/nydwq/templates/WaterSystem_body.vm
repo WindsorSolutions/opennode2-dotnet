@@ -1,0 +1,47 @@
+#if($waterSystem.pwsIdentifier || $waterSystem.waterSystemName || $waterSystem.ownerTypeCode || $waterSystem.activityStatusCode || $waterSystem.populationCount || $waterSystem.stateTypeCode || $waterSystem.stateTypeValue || $waterSystem.federalTypeCode || $waterSystem.federalTypeValue || $waterSystem.activityDate || $waterSystem.totalDesignCapacityMeasure || $waterSystem.avgDailyProduceMeasure || $waterSystem.principalCountyServed || $waterSystem.principalCityServed || $waterSystem.primarySourceCode)
+        <WaterSystem>
+#if($waterSystem.pwsIdentifier)
+            <WaterSystemPWSIdentifier>$waterSystem.pwsIdentifier</WaterSystemPWSIdentifier>
+#end
+#if($waterSystem.waterSystemName)
+            <WaterSystemName>$waterSystem.waterSystemName</WaterSystemName>
+#end
+#if($waterSystem.ownerTypeCode)
+            <WaterSystemOwnerTypeCode>$waterSystem.ownerTypeCode</WaterSystemOwnerTypeCode>
+#end
+#if($waterSystem.activityStatusCode)
+            <WaterSystemActivityStatusCode>$waterSystem.activityStatusCode</WaterSystemActivityStatusCode>
+#end
+#if($waterSystem.populationCount)
+            <WaterSystemPopulationCount>$waterSystem.populationCount</WaterSystemPopulationCount>
+#end
+#if($waterSystem.stateTypeCode)
+            <WaterSystemStateTypeCode>$waterSystem.stateTypeCode</WaterSystemStateTypeCode>
+#end
+#if($waterSystem.stateTypeValue)
+            <WaterSystemStateTypeValue>$waterSystem.stateTypeValue</WaterSystemStateTypeValue>
+#end
+#if($waterSystem.federalTypeCode)
+            <WaterSystemFederalTypeCode>$waterSystem.federalTypeCode</WaterSystemFederalTypeCode>
+#end
+#if($waterSystem.federalTypeValue)
+            <WaterSystemFederalTypeValue>$waterSystem.federalTypeValue</WaterSystemFederalTypeValue>
+#end
+#if($waterSystem.activityDate)
+            <WaterSystemActivityDate>$waterSystem.activityDate</WaterSystemActivityDate>
+#end
+#if($waterSystem.totalDesignCapacityMeasure)
+            <WaterSystemTotalDesignCapacityMeasure>$waterSystem.totalDesignCapacityMeasure</WaterSystemTotalDesignCapacityMeasure>
+#end
+#if($waterSystem.avgDailyProduceMeasure)
+            <WaterSystemAvgDailyProduceMeasure>$waterSystem.avgDailyProduceMeasure</WaterSystemAvgDailyProduceMeasure>
+#end
+#if($waterSystem.principalCountyServed)
+            <WaterSystemPrincipalCountyServed>$waterSystem.principalCountyServed</WaterSystemPrincipalCountyServed>
+#end
+#if($waterSystem.principalCityServed)
+            <WaterSystemPrincipalCityServed>$waterSystem.principalCityServed</WaterSystemPrincipalCityServed>
+#end
+#if($waterSystem.primarySourceCode)
+            <WaterSystemPrimarySourceCode>$waterSystem.primarySourceCode</WaterSystemPrimarySourceCode>
+#end#end

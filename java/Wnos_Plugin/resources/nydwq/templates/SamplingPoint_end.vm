@@ -1,0 +1,3 @@
+#if($samplingPoint.samplingPointTypeCode || $samplingPoint.activityStatusCode || $samplingPoint.sourceTypeCode || $samplingPoint.description || $samplingPoint.identificationCode || $samplingPoint.postDisinfenctionInd || $samplingPoint.representDistribInd || $samplingPoint.tinwsfIsNumber)
+                </SamplingPoint>
+#end

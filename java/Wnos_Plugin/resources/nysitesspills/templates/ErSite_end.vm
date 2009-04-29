@@ -1,0 +1,3 @@
+#if($site.significantThreat || $site.siteId || $site.siteClassCode || $site.siteClassName || $site.siteClassDescription || $site.description || $site.landUse || $site.intendedUseCode || $site.cleanupTrackCode || $site.cleanupTrackName || $site.acres || $site.assessEnv || $site.assessDoh || $site.dohAssessMod || $site.dohAssessFlag|| $site.dohAssessReason || $site.assessLeg || $site.periodicReviewFrequencyCode || $site.periodicReviewFrequencyName || $site.vaporIntrusionLegacy || $site.hudsonRiverEstuary || $site.editReviewComp || $site.editReviewDate || $site.projMgrReviewComp || $site.projMgrReviewDate || $site.siteManagePriority || $site.modifiedBy || $site.lastModified)
+            </ERSite>
+#end

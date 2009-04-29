@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:wqx="http://www.exchangenetwork.net/schema/wqx/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/wqx/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+	<xsd:include schemaLocation="./WQX_OutboundSimpleContent_v2.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+        Schema Name  : WQX_TransactionHistory_v2.0.xsd
+        Description   : 	A listing of WQX submission transactions.
+        Developed by  : 	 EPA Office of Water
+        Point of Contact :   Dwane Young
+</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="WQXDomainValueListDataType">
+		<xsd:sequence>
+			<xsd:element ref="wqx:WQXElement" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="WQXElementDataType">
+		<xsd:sequence>
+			<xsd:element ref="wqx:WQXElementName"/>
+			<xsd:element ref="wqx:WQXElementRow" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="WQXElementRowDataType">
+		<xsd:sequence>
+			<xsd:element ref="wqx:WQXElementRowColumn" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="WQXDomainValueList" type="wqx:WQXDomainValueListDataType">
+		<xsd:annotation>
+			<xsd:documentation>A listing of WQX domain values for all domain value lists.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="WQXElement" type="wqx:WQXElementDataType">
+		<xsd:annotation>
+			<xsd:documentation>An element in the WQX namespace that has a corresponding listing of valid domain values.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="WQXElementRow" type="wqx:WQXElementRowDataType">
+		<xsd:annotation>
+			<xsd:documentation>An individual valid value from a WQX domain value listing for one element.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

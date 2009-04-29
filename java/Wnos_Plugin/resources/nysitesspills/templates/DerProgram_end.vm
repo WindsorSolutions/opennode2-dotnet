@@ -1,0 +1,3 @@
+#if($program.siteId || $program.facilityId || $program.programNum || $program.programTypeCode || $program.programTypeName || $program.facilityName || $program.startDate || $program.startQualifier || $program.endDate || $program.endQualifier || $program.edocsPath || $program.newEdocsPath || $program.edocNew || $program.lastModified)
+        </DERPrograms>
+#end

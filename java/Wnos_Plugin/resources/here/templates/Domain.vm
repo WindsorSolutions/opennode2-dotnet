@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+#set ($totalRecCount = 0)
+$helper.startStopWatch()
+$helper.print("Change Date:")      
+$helper.print($changeDate)
+<here:DomainList xmlns="http://www.exchangenetwork.net/schema/HERE" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://www.exchangenetwork.net/schema/HERE http://www.windsorsolutions.biz/xsd/HERE/1/0/HERE_DomainValues_v1.0.xsd">
+#foreach( $domain in $helper.getData("SELECT pk_guid, domainlistname, originatingpartnername FROM HERE_DOMAINLIST WHERE changedate >= ?", $changeDate))
+#if ($velocityCount % 1000 == 0)
+    $helper.print($velocityCount)
+    $helper.printElapsedTime()
+#end
+#set ($totalRecCount = $velocityCount)
+#if($domain.get("domainlistname"))
+    <here:DomainListNameText>$domain.get("domainlistname")</here:DomainListNameText>
+#end#if($domain.get("originatingpartnername"))
+    <here:OriginatingPartnerName>$domain.get("originatingpartnername")</here:OriginatingPartnerName>
+#end
+#foreach( $listItem in $helper.getData("SELECT itemcode, itemtext, itemdescriptiontext FROM HERE_DOMAINLISTITEM WHERE FK_GUID = ? ", $domain.get("pk_guid"))) 
+#if( $listItem.get("itemcode")||$listItem.get("itemtext")||$listItem.get("itemdescriptiontext") )
+    <here:DomainListItem> 
+#end#if($listItem.get("itemcode"))
+        <here:ItemCode>$listItem.get("itemcode")</here:ItemCode>
+#end#if($listItem.get("itemtext"))
+        <here:ItemText>$listItem.get("itemtext")</here:ItemText>
+#end#if($listItem.get("itemdescriptiontext"))
+        <here:ItemDescriptionText>$listItem.get("itemdescriptiontext")</here:ItemDescriptionText>
+#end
+    </here:DomainListItem>
+#end#end ## end foreach $listItem ## end foreach $domain
+</here:DomainList>
+$helper.print("Total Domains:")
+$helper.print($totalRecCount)
+## Setting the total number of records processed
+$helper.setResultingRecordCount($totalRecCount)
+$helper.print("Total Time:")
+$helper.printElapsedTime()

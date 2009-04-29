@@ -1,0 +1,94 @@
+#foreach($project in $projects)#if($project.projectId || $project.fundingSourceCode || $project.fundingSourceDescription || $project.projectTypeCode || $project.projectTypeDescription || $project.sequenceNum || $project.referName || $project.baseStartDate || $project.baseEndDate || $project.startDate || $project.startStatus || $project.endDate || $project.endStatus || $project.revisedStartDate || $project.revisedStartStatus || $project.revisedEndDate || $project.revisedEndStatus || $project.revisedReason || $project.currentStartDate || $project.currentStartStatus || $project.currentEndDate || $project.currentEndStatus || $project.projectManager || $project.leadAgency || $project.leadDivision || $project.leadBureau || $project.leadOffice || $project.projectDescription || $project.projectNotes || $project.currentStatus ) 
+                <ERProjects>
+#if($project.projectId)
+                    <ProjID>$project.projectId</ProjID>
+#end
+#if($project.fundingSourceCode)
+                    <ERProjectsFundSrcCode>$project.fundingSourceCode</ERProjectsFundSrcCode>
+#end
+#if($project.fundingSourceDescription)
+                    <ERProjectsFundSourceCodedesc>$project.fundingSourceDescription</ERProjectsFundSourceCodedesc>
+#end
+#if($project.projectTypeCode)
+                    <ProjCode>$project.projectTypeCode</ProjCode>
+#end
+#if($project.projectTypeDescription)
+                    <ProjectCodeDesc>$project.projectTypeDescription</ProjectCodeDesc>
+#end
+#if($project.sequenceNum)
+                    <ERProjectsSeqNo>$project.sequenceNum</ERProjectsSeqNo>
+#end
+#if($project.referName)
+                    <ERProjectsReferName>$project.referName</ERProjectsReferName>
+#end
+#if($project.baseStartDate)
+                    <ERProjectsBaseStartDate>$project.getBaseStartDateString()</ERProjectsBaseStartDate>
+#end
+#if($project.baseEndDate)
+                    <ERProjectsBaseEndDate>$project.getBaseEndDateString()</ERProjectsBaseEndDate>
+#end
+#if($project.startDate)
+                    <ERProjectsStartDate>$project.getStartDateString()</ERProjectsStartDate>
+#end
+#if($project.startStatus)
+                    <ERProjectsStartStatus>$project.startStatus</ERProjectsStartStatus>
+#end
+#if($project.endDate)
+                    <ERProjectsEndDate>$project.getEndDateString()</ERProjectsEndDate>
+#end
+#if($project.endStatus)
+                    <ERProjectsEndStatus>$project.endStatus</ERProjectsEndStatus>
+#end
+#if($project.revisedStartDate)
+                    <ERProjectsRevisedStartDate>$project.getRevisedStartDateString()</ERProjectsRevisedStartDate>
+#end
+#if($project.revisedStartStatus)
+                    <ERProjectsRevStartStatus>$project.revisedStartStatus</ERProjectsRevStartStatus>
+#end
+#if($project.revisedEndDate)
+                    <ERProjectsRevEndDate>$project.getRevisedEndDateString()</ERProjectsRevEndDate>
+#end
+#if($project.revisedEndStatus)
+                    <ERProjectsRevEndStatus>$project.revisedEndStatus</ERProjectsRevEndStatus>
+#end
+#if($project.revisedReason)
+                    <ERProjectsRevReason>$project.revisedReason</ERProjectsRevReason>
+#end
+#if($project.currentStartDate)
+                    <ERProjectsCurStartDate>$project.getCurrentStartDateString()</ERProjectsCurStartDate>
+#end
+#if($project.currentStartStatus)
+                    <ERProjectsCurStartStatus>$project.currentStartStatus</ERProjectsCurStartStatus>
+#end
+#if($project.currentEndDate)
+                    <ERProjectsCurEndDate>$project.getCurrentEndDateString()</ERProjectsCurEndDate>
+#end
+#if($project.currentEndStatus)
+                    <ERProjectsCurEndStatus>$project.currentEndStatus</ERProjectsCurEndStatus>
+#end
+#if($project.projectManager)
+                    <ERProjectsProjectManager>$project.projectManager</ERProjectsProjectManager>
+#end
+#if($project.leadAgency)
+                    <ERProjectsLeadAgency>$project.leadAgency</ERProjectsLeadAgency>
+#end
+#if($project.leadDivision)
+                    <ERProjectsLeadDiv>$project.leadDivision</ERProjectsLeadDiv>
+#end
+#if($project.leadBureau)
+                    <ERProjectsLeadBur>$project.leadBureau</ERProjectsLeadBur>
+#end
+#if($project.leadOffice)
+                    <ERProjectsLeadOff>$project.leadOffice</ERProjectsLeadOff>
+#end
+#if($project.projectDescription)
+                    <ProjDesc>$project.projectDescription</ProjDesc>
+#end
+#if($project.projectNotes)
+                    <ProjNotesText>$project.projectNotes</ProjNotesText>
+#end
+#if($project.currentStatus)
+                    <ERProjectsCurrentStatus>$project.currentStatus</ERProjectsCurrentStatus>
+#end
+                </ERProjects>
+#end#end

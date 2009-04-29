@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema targetNamespace="http://www.epa.gov/xml" xmlns:facid="http://www.epa.gov/xml" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="2.3">
+	<xsd:include schemaLocation="./FACID_NAICSCodeDetails_v2.3.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name : 	FACID_IndividualList_v2.3
+		Current Version Available At :
+		Description : 	NAICS Code schema for Data transfer.Date format is YYYY-MM-DD.
+		Application : 
+		Developed by : 	 Environmental Protection Agency, SAIC
+		Point of Contact : Meena Masti	
+	</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="NAICSCodeList" type="facid:NAICSCodeList"/>
+	<xsd:complexType name="NAICSCodeList">
+		<xsd:sequence>
+			<xsd:element ref="facid:NAICSCodeDetails" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="schemaVersion" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:element name="NAICSCodeDetails" type="facid:NAICSCodeDetails"/>
+</xsd:schema>

@@ -1,0 +1,20 @@
+#if($processes)#foreach($process in $processes)
+#if($process.processTypeCode || $process.processTypeName || $process.objectiveTypeCode || $process.objectiveTypeName || $process.primaryTreatmentInd) 
+                    <ObjectiveProcess>
+#if($process.processTypeCode)
+                        <ObjectiveProcessTypeCode>$process.processTypeCode</ObjectiveProcessTypeCode>
+#end
+#if($process.processTypeName)
+                        <ObjectiveProcessTypeValue>$process.processTypeName</ObjectiveProcessTypeValue>
+#end
+#if($process.objectiveTypeCode)
+                        <ObjectiveProcessObjectiveTypeCode>$process.objectiveTypeCode</ObjectiveProcessObjectiveTypeCode>
+#end
+#if($process.objectiveTypeName)
+                        <ObjectiveProcessObjectiveTypeValue>$process.objectiveTypeName</ObjectiveProcessObjectiveTypeValue>
+#end
+#if($process.primaryTreatmentInd)
+                        <ObjectiveProcessPrimaryIndicator>$process.primaryTreatmentInd</ObjectiveProcessPrimaryIndicator>
+#end
+                    </ObjectiveProcess>
+#end#end#end

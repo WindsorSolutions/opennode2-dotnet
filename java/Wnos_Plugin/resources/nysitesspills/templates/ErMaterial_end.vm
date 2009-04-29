@@ -1,0 +1,3 @@
+#if($material.materialId || $material.opUnitId || $material.programSiteId  || $material.materialCode || $material.targetLevel || $material.quantity || $material.units || $material.recovered || $material.pmContaminantComments || $material.modifiedBy || $material.lastModified || $material.mediaAffectedCode || $material.mediaAffectedTargetLevel)
+                </ERMaterial>
+#end

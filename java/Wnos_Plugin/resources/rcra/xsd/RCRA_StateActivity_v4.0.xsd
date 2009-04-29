@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:RC="http://www.exchangenetwork.net/schema/RCRA/4" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/RCRA/4" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="4.0">
+	<xsd:include schemaLocation="./RCRA_Shared_v4.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name : 	RCRA_StateActivity_v4.0
+		Description : 	State waste activity of the handler.
+		Developed by : 	 Windsor Solutions, Inc.
+	</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="StateActivity" type="RC:StateActivityDataType">
+		<xsd:annotation>
+			<xsd:documentation>State waste activity of the handler.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="StateActivityDataType">
+		<xsd:annotation>
+			<xsd:documentation>State waste activity of the handler.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="RC:TransactionCode" minOccurs="0"/>
+			<xsd:element ref="RC:StateActivityOwnerName"/>
+			<xsd:element ref="RC:StateActivityTypeCode"/>
+			<xsd:element ref="RC:StateActivitySupplementalInformationText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="StateActivitySupplementalInformationText" type="RC:StateActivitySupplementalInformationDataType">
+		<xsd:annotation>
+			<xsd:documentation>Notes regarding the Handler State Waste Activity.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="StateActivitySupplementalInformationDataType">
+		<xsd:annotation>
+			<xsd:documentation>Notes regarding the Handler State Waste Activity.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="2000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

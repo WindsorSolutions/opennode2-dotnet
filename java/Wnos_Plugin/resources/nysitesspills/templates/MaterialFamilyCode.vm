@@ -1,0 +1,13 @@
+#foreach($materialFamily in $materialFamilies)#if($materialFamily.materialFamilyCode || $materialFamily.materialFamilyName || $materialFamily.materialFamilyDescription)
+        <MaterialFamilyCodes>
+#if($materialFamily.materialFamilyCode)
+            <MaterialFamilyCode>$materialFamily.materialFamilyCode</MaterialFamilyCode>
+#end
+#if($materialFamily.materialFamilyName)
+            <MaterialFamilyCodeName>$materialFamily.materialFamilyName</MaterialFamilyCodeName>
+#end
+#if($materialFamily.materialFamilyDescription)
+            <MaterialFamilyCodeDesc>$materialFamily.materialFamilyDescription</MaterialFamilyCodeDesc>
+#end
+        </MaterialFamilyCodes>
+#end#end

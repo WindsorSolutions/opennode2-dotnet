@@ -1,0 +1,34 @@
+#foreach($material in $materials)#if($material.materialCode || $material.materialName || $material.casNumber || $material.materialFamilyCode || $material.landRepQty || $material.airRepQty || $material.acuteIndicator || $material.screeningThreshold || $material.specificGravity || $material.recordCount) 
+        <MaterialCodes>
+#if($material.materialCode)
+            <MatCode>$material.materialCode</MatCode>
+#end
+#if($material.materialName)
+            <MaterialCodeName>$material.materialName</MaterialCodeName>
+#end
+#if($material.casNumber)
+            <CASNo>$material.casNumber</CASNo>
+#end
+#if($material.materialFamilyCode)
+            <MaterialCodeFamilyCode>$material.materialFamilyCode</MaterialCodeFamilyCode>
+#end
+#if($material.landRepQty)
+            <MaterialCodeLandRepQty>$material.landRepQty</MaterialCodeLandRepQty>
+#end
+#if($material.airRepQty)
+            <MaterialCodeAirRepQty>$material.airRepQty</MaterialCodeAirRepQty>
+#end
+#if($material.acuteIndicator)
+            <MaterialCodeAcute>$material.acuteIndicator</MaterialCodeAcute>
+#end
+#if($material.screeningThreshold)
+            <MaterialCodeScreeningThreshold>$material.getScreeningThresholdString()</MaterialCodeScreeningThreshold>
+#end
+#if($material.specificGravity)
+            <MaterialCodeSpecificGravity>$material.getSpecificGravityString()</MaterialCodeSpecificGravity>
+#end
+#if($material.recordCount)
+            <MaterialCodeRecordCount>$material.recordCount</MaterialCodeRecordCount>
+#end
+        </MaterialCodes>
+#end#end

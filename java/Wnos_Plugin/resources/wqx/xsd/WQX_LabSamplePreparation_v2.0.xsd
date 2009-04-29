@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wqx="http://www.exchangenetwork.net/schema/wqx/2" targetNamespace="http://www.exchangenetwork.net/schema/wqx/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+	<xsd:include schemaLocation="./WQX_SimpleContent_v2.0.xsd"/>
+	<xsd:include schemaLocation="./WQX_ReferenceMethod_v2.0.xsd"/>
+	<xsd:include schemaLocation="./WQX_WQXTime_v2.0.xsd"/>
+	<xsd:include schemaLocation="./WQX_MeasureCompact_v2.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+  	        Schema Name  : WQX_LabSamplePreparation_v2.0.xsd
+  	        Description   : Describes Lab Sample Preparation procedures which may alter the original state of the Sample and produce Lab subsamples.  These Lab Subsamples are analyized and reported by the Lab as Sample results.
+  	        Developed by  : EPA Office of Water
+  	        Point of Contact : Dwane Young
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="LabSamplePreparationDataType">
+		<xsd:sequence>
+			<xsd:element ref="wqx:LabSamplePreparationMethod"/>
+			<xsd:element ref="wqx:PreparationStartDate" minOccurs="0"/>
+			<xsd:element ref="wqx:PreparationStartTime" minOccurs="0"/>
+			<xsd:element ref="wqx:PreparationEndDate" minOccurs="0"/>
+			<xsd:element ref="wqx:PreparationEndTime" minOccurs="0"/>
+			<xsd:element ref="wqx:SubstanceDilutionFactorNumeric" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="LabSamplePreparationMethod" type="wqx:ReferenceMethodDataType">
+		<xsd:annotation>
+			<xsd:documentation>Identifying information about the method followed to prepare a sample for analysis.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="LabSamplePreparation" type="wqx:LabSamplePreparationDataType">
+		<xsd:annotation>
+			<xsd:documentation>Describes Lab Sample Preparation procedures which may alter the original state of the Sample and produce Lab subsamples.  These Lab Subsamples are analyized and reported by the Lab as Sample results.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="PreparationEndTime" type="wqx:WQXTimeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The local time when the preparation/extraction of the sample for analysis was finished.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="PreparationStartTime" type="wqx:WQXTimeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The local time when the preparation/extraction of the sample for analysis began.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

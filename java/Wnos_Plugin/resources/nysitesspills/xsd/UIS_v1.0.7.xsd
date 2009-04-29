@@ -1,0 +1,612 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Peggy (Windsor Solutions, Inc) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.exchangenetwork.net/schema/UIS/1" xmlns:xdb="http://xmlns.oracle.com/xdb" targetNamespace="http://www.exchangenetwork.net/schema/UIS/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" xdb:mapStringToNCHAR="true" xdb:mapUnboundedStringToLob="true">
+	<!-- Include the simple types in the UIS namespace -->
+	<xsd:include schemaLocation="./UIS_Simple_v1.0.6.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation> 
+		    Schema Name : UIS_RemedSitesSpills_v1.0.xsd 
+		    Current Version Available At :
+            Description : This is the root schema for New York DEC Remediation Sites and Spills data.
+            Application : NY DEC Groundwater Quality Data Exchange Project, Remediation Sites and Spills
+            Developed by: Windsor Solutions, Inc. 
+            Point of Contact : Peggy Pryor 
+            Change History: Initial Draft 9/19/08
+            </xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="UISExchange" type="UISExchangeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The root-level container for the UIS data exchange.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="UISExchangeDataType">
+		<xsd:sequence>
+            <xsd:element ref="MaterialCodesList" minOccurs="0"/>
+			<xsd:element ref="DERProgramsList" minOccurs="0"/>
+			<!-- Optional lists for sending back individual DOH records to update DEC's UIS database without sending back the entire hierarchy -->
+			<xsd:element ref="ERMaterialList" minOccurs="0"/>
+			<xsd:element ref="AffiliationList" minOccurs="0"/>
+			<xsd:element ref="ERSiteList" minOccurs="0"/>
+			<xsd:element ref="GeographicLocList" minOccurs="0"/>
+		</xsd:sequence>
+		<xsd:attribute name="schemaVersion" use="required">
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:decimal">
+					<xsd:pattern value="3\.\d*"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:element name="DERProgramsList" type="DERProgramsListDataType">
+		<xsd:annotation>
+			<xsd:documentation>A container for one or more program-related remediation sites and spills.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="DERProgramsListDataType">
+		<xsd:sequence>
+			<xsd:element ref="DERPrograms" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="DERPrograms" type="DERProgramsDataType">
+		<xsd:annotation>
+			<xsd:documentation>Data Type Definitions for Program (DERPrograms) Site </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="DERProgramsDataType">
+		<xsd:sequence>
+			<xsd:element ref="DERProgramsSiteID"/>
+			<xsd:element ref="DERProgramsFacID" minOccurs="0"/>
+			<xsd:element ref="DERProgramsProgNo" minOccurs="0"/>
+			<xsd:element ref="DERProgramsProgTypeCode" minOccurs="0"/>
+			<xsd:element ref="ProgramTypeCodeName" minOccurs="0"/>
+			<xsd:element ref="DERProgramsProgFacName" minOccurs="0"/>
+			<xsd:element ref="DERProgramsRecStartDate" minOccurs="0"/>
+			<xsd:element ref="DERProgramsRecStartQualifier" minOccurs="0"/>
+			<xsd:element ref="DERProgramsRecEndDate" minOccurs="0"/>
+			<xsd:element ref="DERProgramsRecEndQualifier" minOccurs="0"/>
+			<xsd:element ref="DERProgramseDocsPath" minOccurs="0"/>
+			<xsd:element ref="DERProgramsNeweDocsPath" minOccurs="0"/>
+			<xsd:element ref="DERProgramseDocsNew" minOccurs="0"/>
+			<xsd:element ref="DERProgramsLastModified"/>
+			<xsd:element ref="Facility" minOccurs="0"/>
+			<xsd:element ref="DERProgramsAffiliation" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="EROpUnit" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="DERProgramsGeographicLoc" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="ERSite" minOccurs="0"/>
+			<xsd:element ref="Spills" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ERSite" type="ERSiteDataType">
+		<xsd:annotation>
+			<xsd:documentation>Data Type Definitions for the Remediation Site information associated with the program site, when program site is of remediation site type.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ERSiteDataType">
+		<xsd:sequence>
+			<xsd:element ref="ERSiteSignifThreat" minOccurs="0"/>
+			<!-- The SiteID may only need to be populated when DOH assessments are provided from DOH and exchanged by utilizing ERSiteList -->
+			<xsd:element ref="ERSiteID" minOccurs="0"/>
+			<xsd:element ref="ERSiteClassCode" minOccurs="0"/>
+			<xsd:element ref="SiteClassCodeName" minOccurs="0"/>
+			<xsd:element ref="SiteClassCodeDesc" minOccurs="0"/>
+			<xsd:element ref="ERSiteDescriptText" minOccurs="0"/>
+			<xsd:element ref="ERSiteLandUse" minOccurs="0"/>
+			<xsd:element ref="ERSiteIntendedUseCode" minOccurs="0"/>
+			<xsd:element ref="ERSiteCleanUpTrackCode" minOccurs="0"/>
+			<xsd:element ref="ERSiteCleanUpTrackCodeName" minOccurs="0"/>
+			<xsd:element ref="ERSiteAcres" minOccurs="0"/>
+			<xsd:element ref="ERSiteAssessEnvText" minOccurs="0"/>
+			<xsd:element ref="ERSiteAssessDOH" minOccurs="0"/>
+			<xsd:element ref="ERSiteDOHAssessMod" minOccurs="0"/>
+			<xsd:element ref="ERSiteDOHAssessFlag" minOccurs="0"/>
+			<xsd:element ref="ERSiteDOHAssessFlagReason" minOccurs="0"/>
+			<xsd:element ref="ERSiteAssessLEG" minOccurs="0"/>
+			<xsd:element ref="ERSitePeriodReviewFreq" minOccurs="0"/>
+			<xsd:element ref="ERSitePeriodReviewFreqCode" minOccurs="0"/>
+			<xsd:element ref="ERSiteVaporIntrusionLegacy" minOccurs="0"/>
+			<xsd:element ref="ERSiteHudsonRiverEstuary" minOccurs="0"/>
+			<xsd:element ref="ERSiteEditReviewComp" minOccurs="0"/>
+			<xsd:element ref="ERSiteEditReviewDate" minOccurs="0"/>
+			<xsd:element ref="ERSiteProjMgrReviewComp" minOccurs="0"/>
+			<xsd:element ref="ERSiteProjMgrReviewDate" minOccurs="0"/>
+			<xsd:element ref="ERSiteSiteManagePriority" minOccurs="0"/>
+			<xsd:element ref="ERSiteModifiedBy" minOccurs="0"/>
+			<xsd:element ref="ERSiteLastModified" minOccurs="0"/>
+			<xsd:element ref="ERAdjProp" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="ERClassHis" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="ERClassChg" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="ERPetFile" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ERSiteList" type="ERSiteListDataType">
+		<xsd:annotation>
+			<xsd:documentation>A container for one or more remediation site records, primarily for sending just the DOH site assessments back to DEC, standalone. The list allows for this information to be sent without the full hierachy from DERPrograms -> ERSite.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ERSiteListDataType">
+		<xsd:sequence>
+			<xsd:element ref="ERSite" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="Spills" type="SpillsDataType">
+		<xsd:annotation>
+			<xsd:documentation>Data Type Definitions for the spills information associated with the program site, when program site is of spill type.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="SpillsDataType">
+		<xsd:sequence>
+			<xsd:element ref="SpillsLeadDEC" minOccurs="0"/>
+			<xsd:element ref="SpillsReferredTo" minOccurs="0"/>
+			<xsd:element ref="SpillDate" minOccurs="0"/>
+			<xsd:element ref="SpillsRcvdDate" minOccurs="0"/>
+			<xsd:element ref="SpillsContributingFactorCode" minOccurs="0"/>
+			<xsd:element ref="ContributingFactorCodeName" minOccurs="0"/>
+			<xsd:element ref="SpillsWaterbody" minOccurs="0"/>
+			<xsd:element ref="SpillsFacilityTypeCode" minOccurs="0"/>
+			<xsd:element ref="FacilityTypeCodeName" minOccurs="0"/>
+			<xsd:element ref="SpillsReportedByCode" minOccurs="0"/>
+			<xsd:element ref="NotifierCodeName" minOccurs="0"/>
+			<xsd:element ref="SpillsCallerRemark" minOccurs="0"/>
+			<xsd:element ref="SpillsMeetsStd" minOccurs="0"/>
+			<xsd:element ref="SpillsInspDate" minOccurs="0"/>
+			<xsd:element ref="SpillsPenalty" minOccurs="0"/>
+			<xsd:element ref="SpillsUSTTrust" minOccurs="0"/>
+			<xsd:element ref="SpillsClass" minOccurs="0"/>
+			<xsd:element ref="SpillsRCDate" minOccurs="0"/>
+			<xsd:element ref="SpillsInvDate" minOccurs="0"/>
+			<xsd:element ref="SpillsRDDate" minOccurs="0"/>
+			<xsd:element ref="SpillsRADate" minOccurs="0"/>
+			<xsd:element ref="SpillsSMDate" minOccurs="0"/>
+			<xsd:element ref="SpillsCloseDate" minOccurs="0"/>
+			<xsd:element ref="SpillsDECRemark" minOccurs="0"/>
+			<xsd:element ref="SpillsCreateDate" minOccurs="0"/>
+			<xsd:element ref="SpillsPrWell" minOccurs="0"/>
+			<xsd:element ref="SpillsPuWell" minOccurs="0"/>
+			<xsd:element ref="SpillsRegionalUse" minOccurs="0"/>
+			<xsd:element ref="SpillsAfterHours" minOccurs="0"/>
+			<xsd:element ref="SpillsRemedPhase" minOccurs="0"/>
+			<xsd:element ref="SpillsLastModified" minOccurs="0"/>
+			<xsd:element ref="SpTankTest" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="Facility" type="FacilityDataType">
+		<xsd:annotation>
+			<xsd:documentation>Data Type Definitions for the facility associated with the program site.  The same facility may be referenced by multiple program sites.  Additionally a program site may have several facilities on that site. </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="FacilityDataType">
+		<xsd:sequence>
+			<xsd:element ref="DERFacID" minOccurs="0"/>
+			<xsd:element ref="FacilityAddress1" minOccurs="0"/>
+			<xsd:element ref="FacilityAddress2" minOccurs="0"/>
+			<xsd:element ref="FacilityLocality" minOccurs="0"/>
+			<xsd:element ref="FacilityZIPcode" minOccurs="0"/>
+			<xsd:element ref="FacilitySWIScode" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="DERProgramsAffiliation" type="DERProgramsAffiliationDataType">
+		<xsd:annotation>
+			<xsd:documentation>Contains affiliation information (Affiliation and AffAddr) for DERPrograms (Sites and Spills).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="DERProgramsAffiliationDataType">
+		<xsd:sequence>
+			<xsd:element ref="AffiliationID" minOccurs="0"/>
+			<xsd:element ref="AffiliationSiteID" minOccurs="0"/>
+			<xsd:element ref="AffiliationTypeCode" minOccurs="0"/>
+			<xsd:element ref="AffiliationTypeCodeName" minOccurs="0"/>
+			<xsd:element ref="AffiliationSubTypeCode" minOccurs="0"/>
+			<xsd:element ref="AffiliationSubTypeCodeName" minOccurs="0"/>
+			<xsd:element ref="AffiliationSeqNo" minOccurs="0"/>
+			<xsd:element ref="UISAffiliationStartDate" minOccurs="0"/>
+			<xsd:element ref="UISAffiliationEndDate" minOccurs="0"/>
+			<xsd:element ref="AffiliationCompany" minOccurs="0"/>
+			<xsd:element ref="AffiliationFederalID" minOccurs="0"/>
+			<xsd:element ref="AffiliationContactTitle" minOccurs="0"/>
+			<xsd:element ref="AffiliationContactName" minOccurs="0"/>
+			<xsd:element ref="AffiliationAddress1" minOccurs="0"/>
+			<xsd:element ref="AffiliationAddress2" minOccurs="0"/>
+			<xsd:element ref="AffiliationCity" minOccurs="0"/>
+			<xsd:element ref="AffiliationState" minOccurs="0"/>
+			<xsd:element ref="AffiliationZIPCode" minOccurs="0"/>
+			<xsd:element ref="AffiliationCountryCode" minOccurs="0"/>
+			<xsd:element ref="AffiliationPhone" minOccurs="0"/>
+			<xsd:element ref="AffiliationPhoneExt" minOccurs="0"/>
+			<xsd:element ref="AffiliationEmail" minOccurs="0"/>
+			<xsd:element ref="AffiliationFax" minOccurs="0"/>
+			<xsd:element ref="AffiliationModifiedBy" minOccurs="0"/>
+			<xsd:element ref="AffiliationLastModified" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="AffiliationList" type="AffiliationListDataType">
+		<xsd:annotation>
+			<xsd:documentation>Optional container for sending Affiliations, primarily when, through DOHs own work, DOH has assigned a DOH Project Manager and is sending back to DEC.  The list allows for this information to be sent without the full hierachy from DERPrograms -> Facility -> Affiliation</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="AffiliationListDataType">
+		<xsd:sequence>
+			<xsd:element ref="DERProgramsAffiliation" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="DERProgramsGeographicLoc" type="DERProgramsGeographicLocDataType">
+		<xsd:annotation>
+			<xsd:documentation>Contains Geographic Location information for DERPrograms (Sites and Spills).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="DERProgramsGeographicLocDataType">
+		<xsd:sequence>
+			<xsd:element ref="GeographicLocGISID" minOccurs="0"/>
+			<!-- The SiteID may only need to be populated when additional locations are provided from DOH and exchanged by utilizing GeographicLocList -->
+			<xsd:element ref="GeographicLocSiteID" minOccurs="0"/>
+			<xsd:element ref="GeographicLocMethod" minOccurs="0"/>
+			<xsd:element ref="GeographicLocAccuracy" minOccurs="0"/>
+			<xsd:element ref="GeographicLocAccuracyUnit" minOccurs="0"/>
+			<xsd:element ref="GeographicLocDatum" minOccurs="0"/>
+			<xsd:element ref="GeographicLocLatitude" minOccurs="0"/>
+			<xsd:element ref="GeographicLocLongitude" minOccurs="0"/>
+			<xsd:element ref="GeographicLocModifiedBy" minOccurs="0"/>
+			<xsd:element ref="GeographicLocLastModified" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="GeographicLocList" type="GeographicLocDataType">
+		<xsd:annotation>
+			<xsd:documentation>A container for one or more Geographic Location records, primarily for sending just the DOH improved locations back to DEC, standalone. The list allows for this information to be sent without the full hierachy from DERPrograms -> GeographicLoc.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="GeographicLocDataType">
+		<xsd:sequence>
+			<xsd:element ref="DERProgramsGeographicLoc" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="EROpUnit" type="EROpUnitDataType">
+		<xsd:annotation>
+			<xsd:documentation>Data Type Definitions for the Operable Unit, which characterizes the operable unit, remedy, and the remediation system.  For spills, this data will be minimally populated with the identifiers needed to cross reference to the spill-related remedy and materials records.. </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="EROpUnitDataType">
+		<xsd:sequence>
+			<xsd:element ref="EROpUnitID" minOccurs="0"/>
+			<xsd:element ref="EROpUnitOU" minOccurs="0"/>
+			<xsd:element ref="EROpUnitOUDesc" minOccurs="0"/>
+			<xsd:element ref="EROpUnitRODDescText" minOccurs="0"/>
+			<xsd:element ref="ERRemedy" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="ERProjects" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="ERMaterial" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ERRemedy" type="ERRemedyDataType">
+		<xsd:annotation>
+			<xsd:documentation>Data Type Definitions for ERRemedy.  Data characterizes the remediation system, technologies used, efficacy, and number of homes/parcels mitigated by the remediation.  Populated for remediation sites and spills that are MTB-related spills and not necessarily populated for other types of spills. </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ERRemedyDataType">
+		<xsd:sequence>
+			<xsd:element ref="RemCode" minOccurs="0"/>
+			<xsd:element ref="RemedyCodeName" minOccurs="0"/>
+			<xsd:element ref="RemType" minOccurs="0"/>
+			<xsd:element ref="RemDesc" minOccurs="0"/>
+			<xsd:element ref="RemInPlaceDate" minOccurs="0"/>
+			<xsd:element ref="RemEff" minOccurs="0"/>
+			<xsd:element ref="ParcelsMitigated" minOccurs="0"/>
+			<xsd:element ref="MaxParcelsMitigated" minOccurs="0"/>
+			<xsd:element ref="RemSysSizeCode" minOccurs="0"/>
+			<xsd:element ref="RemedySizeCodeName" minOccurs="0"/>
+			<xsd:element ref="RemedyCompletionDate" minOccurs="0"/>
+			<xsd:element ref="RemedyComments" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ERProjects" type="ERProjectsDataType">
+		<xsd:annotation>
+			<xsd:documentation>Data Type Definitions for ERProjects.  Applies to Remediation Sites only. Data describes projects associated with the remediation including applications, agreements, investigations and cleanups. </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ERProjectsDataType">
+		<xsd:sequence>
+			<xsd:element ref="ProjID" minOccurs="0"/>
+			<xsd:element ref="ERProjectsFundSrcCode" minOccurs="0"/>
+			<xsd:element ref="ERProjectsFundSourceCodedesc" minOccurs="0"/>
+			<xsd:element ref="ProjCode" minOccurs="0"/>
+			<xsd:element ref="ProjectCodeDesc" minOccurs="0"/>
+			<xsd:element ref="ERProjectsSeqNo" minOccurs="0"/>
+			<xsd:element ref="ERProjectsReferName" minOccurs="0"/>
+			<xsd:element ref="ERProjectsBaseStartDate" minOccurs="0"/>
+            <xsd:element ref="ERProjectsBaseEndDate" minOccurs="0"/>
+			<xsd:element ref="ERProjectsStartDate" minOccurs="0"/>
+			<xsd:element ref="ERProjectsStartStatus" minOccurs="0"/>
+			<xsd:element ref="ERProjectsEndDate" minOccurs="0"/>
+			<xsd:element ref="ERProjectsEndStatus" minOccurs="0"/>
+			<xsd:element ref="ERProjectsRevisedStartDate" minOccurs="0"/>
+			<xsd:element ref="ERProjectsRevStartStatus" minOccurs="0"/>
+			<xsd:element ref="ERProjectsRevEndDate" minOccurs="0"/>
+			<xsd:element ref="ERProjectsRevEndStatus" minOccurs="0"/>
+			<xsd:element ref="ERProjectsRevReason" minOccurs="0"/>
+			<xsd:element ref="ERProjectsCurStartDate" minOccurs="0"/>
+			<xsd:element ref="ERProjectsCurStartStatus" minOccurs="0"/>
+			<xsd:element ref="ERProjectsCurEndDate" minOccurs="0"/>
+			<xsd:element ref="ERProjectsCurEndStatus" minOccurs="0"/>
+			<xsd:element ref="ERProjectsProjectManager" minOccurs="0"/>
+			<xsd:element ref="ERProjectsLeadAgency" minOccurs="0"/>
+			<xsd:element ref="ERProjectsLeadDiv" minOccurs="0"/>
+			<xsd:element ref="ERProjectsLeadBur" minOccurs="0"/>
+			<xsd:element ref="ERProjectsLeadOff" minOccurs="0"/>
+			<xsd:element ref="ProjDesc" minOccurs="0"/>
+			<xsd:element ref="ProjNotesText" minOccurs="0"/>
+			<xsd:element ref="ERProjectsCurrentStatus" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ERMaterial" type="ERMaterialDataType">
+		<xsd:annotation>
+			<xsd:documentation>Data Type Definitions for ERMaterials. Data characterizes the material/contaminants known or suspected of having been disposed of</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ERMaterialDataType">
+		<xsd:sequence>
+			<xsd:element ref="ERMaterialMatID" minOccurs="0"/>
+			<!-- The OpUnitID and SiteID may only need to be populated when additional materials are provided from DOH and exchanged by utilizing ERMaterialList-->
+			<xsd:element ref="ERMaterialOpUnitID" minOccurs="0"/>
+			<xsd:element ref="DERProgramsSiteID" minOccurs="0"/>
+			<xsd:element ref="ERMaterialMatCode" minOccurs="0"/>
+			<xsd:element ref="ERMaterialTargetLvl" minOccurs="0"/>
+			<xsd:element ref="ERMaterialQuantity" minOccurs="0"/>
+			<xsd:element ref="ERMaterialUnits" minOccurs="0"/>
+			<xsd:element ref="ERMaterialRecovered" minOccurs="0"/>
+			<xsd:element ref="ERMaterialChemComments" minOccurs="0"/>
+			<xsd:element ref="ERMaterialModifiedBy" minOccurs="0"/>
+			<xsd:element ref="ERMaterialLastModified" minOccurs="0"/>
+			<xsd:element ref="MediaAffected" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="MediaAffected" type="MediaAffectedDataType">
+		<xsd:annotation>
+			<xsd:documentation>Data Type Definitions for Media Affected, describing additional material data not captured in the Materials table</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="MediaAffectedDataType">
+		<xsd:sequence>
+			<xsd:element ref="MaterialMediaAffectedCode" minOccurs="0"/>
+			<xsd:element ref="MediaAffectedTargetLevel" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ERMaterialList" type="ERMaterialListDataType">
+		<xsd:annotation>
+			<xsd:documentation>Optional container for sending ERMaterials, primarily when, through DOHs own investigation, DOH has identified and is sending back to DEC additional material information.  The list allows for this information to be sent without the full hierachy from DERPrograms -> EROpUnit -> ERMaterial.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ERMaterialListDataType">
+		<xsd:sequence>
+			<xsd:element ref="ERMaterial" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="MaterialCodesList" type="MaterialCodesListDataType">
+		<xsd:annotation>
+			<xsd:documentation>A container for sending all material codes, material family codes, and media affected codes independent of any specific spill or remediation site.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="MaterialCodesListDataType">
+		<xsd:sequence>
+			<xsd:element ref="MaterialCodes" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="MaterialFamilyCodes" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="MediaAffectedCodes" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="MaterialCodes" type="MaterialCodesDataType">
+		<xsd:annotation>
+			<xsd:documentation>Data Type Definitions for exchanging any/all valid Material Codes in the system. </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="MaterialCodesDataType">
+		<xsd:sequence>
+			<xsd:element ref="MatCode" minOccurs="0"/>
+			<xsd:element ref="MaterialCodeName" minOccurs="0"/>
+			<xsd:element ref="CASNo" minOccurs="0"/>
+			<xsd:element ref="MaterialCodeFamilyCode" minOccurs="0"/>
+			<xsd:element ref="MaterialCodeLandRepQty" minOccurs="0"/>
+			<xsd:element ref="MaterialCodeAirRepQty" minOccurs="0"/>
+			<xsd:element ref="MaterialCodeAcute" minOccurs="0"/>
+			<xsd:element ref="MaterialCodeScreeningThreshold" minOccurs="0"/>
+			<xsd:element ref="MaterialCodeSpecificGravity" minOccurs="0"/>
+			<xsd:element ref="MaterialCodeRecordCount" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="MaterialFamilyCodes" type="MaterialFamilyCodesDataType">
+		<xsd:annotation>
+			<xsd:documentation>Data Type Definitions for Material Family Codes.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="MaterialFamilyCodesDataType">
+		<xsd:sequence>
+			<xsd:element ref="MaterialFamilyCode" minOccurs="0"/>
+			<xsd:element ref="MaterialFamilyCodeName" minOccurs="0"/>
+			<xsd:element ref="MaterialFamilyCodeDesc" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="MediaAffectedCodes" type="MediaAffectedCodesDataType">
+		<xsd:annotation>
+			<xsd:documentation>Data Type Definitions for Media Affected Codes and related information. </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="MediaAffectedCodesDataType">
+		<xsd:sequence>
+			<xsd:element ref="MediaAffectedCode" minOccurs="0"/>
+			<xsd:element ref="MediaAffectedCodeName" minOccurs="0"/>
+			<xsd:element ref="MediaAffectedCodeDesc" minOccurs="0"/>
+			<xsd:element ref="MediaAffectedCodeType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ERAdjProp" type="ERAdjPropDataType">
+		<xsd:annotation>
+			<xsd:documentation>Data Type Definitions for ERAdjProp that characterizes properties/parcels that are within the remediation site (not adjacent properties).  Data includes Equalization and Assessment data and parcel information.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ERAdjPropDataType">
+		<xsd:sequence>
+			<xsd:element ref="AdjPropID" minOccurs="0"/>
+			<xsd:element ref="AdjPropIDC" minOccurs="0"/>
+			<xsd:element ref="EADistrict" minOccurs="0"/>
+			<xsd:element ref="EASec" minOccurs="0"/>
+			<xsd:element ref="EASubsec" minOccurs="0"/>
+			<xsd:element ref="EABlock" minOccurs="0"/>
+			<xsd:element ref="EALot" minOccurs="0"/>
+			<xsd:element ref="EASublot" minOccurs="0"/>
+			<xsd:element ref="EASuffix" minOccurs="0"/>
+			<xsd:element ref="NYTMN" minOccurs="0"/>
+			<xsd:element ref="NYTME" minOccurs="0"/>
+			<xsd:element ref="NYTMDist" minOccurs="0"/>
+			<xsd:element ref="Sblprt" minOccurs="0"/>
+			<xsd:element ref="ParcStr" minOccurs="0"/>
+			<xsd:element ref="ParcCity" minOccurs="0"/>
+			<xsd:element ref="ParcZIP" minOccurs="0"/>
+			<xsd:element ref="ParcSWIS" minOccurs="0"/>
+			<xsd:element ref="Controls" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="Controls" type="ControlsDataType">
+		<xsd:annotation>
+			<xsd:documentation>Data Type Definitions for Controls. Describes controls and restrictions that have been placed upon the remediation site.  Data includes key milestone dates</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ControlsDataType">
+		<xsd:sequence>
+			<xsd:element ref="ControlID" minOccurs="0"/>
+			<xsd:element ref="ContrCode" minOccurs="0"/>
+			<xsd:element ref="ControlCodeName" minOccurs="0"/>
+			<xsd:element ref="ContrSeq" minOccurs="0"/>
+			<xsd:element ref="ControlsInplaceDate" minOccurs="0"/>
+			<xsd:element ref="ControlsEndDate" minOccurs="0"/>
+			<xsd:element ref="CertRecDate" minOccurs="0"/>
+			<xsd:element ref="CertNoticeSentDate" minOccurs="0"/>
+			<xsd:element ref="CertDueDate" minOccurs="0"/>
+			<xsd:element ref="CertAcceptDate" minOccurs="0"/>
+			<xsd:element ref="NextCertDate" minOccurs="0"/>
+			<xsd:element ref="FollowupLtr" minOccurs="0"/>
+			<xsd:element ref="EnforceRef" minOccurs="0"/>
+			<xsd:element ref="AudDate" minOccurs="0"/>
+			<xsd:element ref="ControlsDesc" minOccurs="0"/>
+			<xsd:element ref="AudSummary" minOccurs="0"/>
+			<xsd:element ref="CertComments" minOccurs="0"/>
+			<xsd:element ref="ControlElements" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ControlElements" type="ControlElementsDataType">
+		<xsd:annotation>
+			<xsd:documentation>Data Type Definitions for ControlElements, type and name. </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ControlElementsDataType">
+		<xsd:sequence>
+			<xsd:element ref="ControlElementCodeName" minOccurs="0"/>
+			<xsd:element ref="ControlElementCode" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ERPetFile" type="ERPetFileDataType">
+		<xsd:annotation>
+			<xsd:documentation>Data Type Definitions for ERPetFile, which characterizes petitions filed for a site. </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ERPetFileDataType">
+		<xsd:sequence>
+			<xsd:element ref="ERPetFilePSeqno" minOccurs="0"/>
+			<xsd:element ref="PtFil1" minOccurs="0"/>
+			<xsd:element ref="Petitr" minOccurs="0"/>
+			<xsd:element ref="PSCSdtDate" minOccurs="0"/>
+			<xsd:element ref="PacTrq" minOccurs="0"/>
+			<xsd:element ref="PRegDtDate" minOccurs="0"/>
+			<xsd:element ref="PCODatDate" minOccurs="0"/>
+			<xsd:element ref="PDODDtDate" minOccurs="0"/>
+			<xsd:element ref="PDEEDtDate" minOccurs="0"/>
+			<xsd:element ref="PApprdDate" minOccurs="0"/>
+			<xsd:element ref="PFinDtDate" minOccurs="0"/>
+			<xsd:element ref="PHldDtDate" minOccurs="0"/>
+			<xsd:element ref="PComm1" minOccurs="0"/>
+			<xsd:element ref="PComm2" minOccurs="0"/>
+			<xsd:element ref="PSName" minOccurs="0"/>
+			<xsd:element ref="PTFil2" minOccurs="0"/>
+			<xsd:element ref="PTFil2a" minOccurs="0"/>
+			<xsd:element ref="PTFil3" minOccurs="0"/>
+			<xsd:element ref="Commnt" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ERClassHis" type="ERClassHisDataType">
+		<xsd:annotation>
+			<xsd:documentation>Data Type Definitions for ERClassHis, which describes the details related to a site classification change. </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ERClassHisDataType">
+		<xsd:sequence>
+			<xsd:element ref="ClassHisSeqno" minOccurs="0"/>
+			<xsd:element ref="ClassHisSiteName" minOccurs="0"/>
+			<xsd:element ref="OldERClass" minOccurs="0"/>
+			<xsd:element ref="NewERClass" minOccurs="0"/>
+			<xsd:element ref="ERClassHisRequestDate" minOccurs="0"/>
+			<xsd:element ref="ERClassHisCHAddDate" minOccurs="0"/>
+			<xsd:element ref="ERClassHisProjMgr" minOccurs="0"/>
+			<xsd:element ref="ERClassHisCommType" minOccurs="0"/>
+			<xsd:element ref="ERClassHisProjMgrAd" minOccurs="0"/>
+			<xsd:element ref="ERClassHisCity" minOccurs="0"/>
+			<xsd:element ref="ERClassHisState" minOccurs="0"/>
+			<xsd:element ref="ERClassHisZip" minOccurs="0"/>
+			<xsd:element ref="ERClassHisTelephone" minOccurs="0"/>
+			<xsd:element ref="ERClassHisComments" minOccurs="0"/>
+			<xsd:element ref="BCPIncompleteAppDate" minOccurs="0"/>
+			<xsd:element ref="ERClassHisFinalizedDate" minOccurs="0"/>
+			<xsd:element ref="SCSComments" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ERClassChg" type="ERClassChgDataType">
+		<xsd:annotation>
+			<xsd:documentation>Data Type Definitions for ERClassChg, which describes the details related to a change in the remediation site.. </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ERClassChgDataType">
+		<xsd:sequence>
+			<xsd:element ref="ERClassChgID" minOccurs="0"/>
+			<xsd:element ref="Hw_code" minOccurs="0"/>
+			<xsd:element ref="ERClassChgSeqno" minOccurs="0"/>
+			<xsd:element ref="CInitb" minOccurs="0"/>
+			<xsd:element ref="CSectn" minOccurs="0"/>
+			<xsd:element ref="DcSCSDt" minOccurs="0"/>
+			<xsd:element ref="CActRq" minOccurs="0"/>
+			<xsd:element ref="DcInvse" minOccurs="0"/>
+			<xsd:element ref="DcDEE" minOccurs="0"/>
+			<xsd:element ref="DcDOH" minOccurs="0"/>
+			<xsd:element ref="DcDivDr" minOccurs="0"/>
+			<xsd:element ref="DcBurDr" minOccurs="0"/>
+			<xsd:element ref="DcApprov" minOccurs="0"/>
+			<xsd:element ref="ERClassChgComment" minOccurs="0"/>
+			<xsd:element ref="CsName" minOccurs="0"/>
+			<xsd:element ref="DcHldSt" minOccurs="0"/>
+			<xsd:element ref="DcRegDt" minOccurs="0"/>
+			<xsd:element ref="Dcfill2" minOccurs="0"/>
+			<xsd:element ref="Cfill3" minOccurs="0"/>
+			<xsd:element ref="DueDate" minOccurs="0"/>
+			<xsd:element ref="RHWREDate" minOccurs="0"/>
+			<xsd:element ref="AsstDivDirDate" minOccurs="0"/>
+			<xsd:element ref="PkgHoldDate" minOccurs="0"/>
+			<xsd:element ref="FinalizedDate" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="SpTankTest" type="SpTankTestDataType">
+		<xsd:annotation>
+			<xsd:documentation>Data Type Definitions for SpTankTest related to tank spills. </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="SpTankTestDataType">
+		<xsd:sequence>
+			<xsd:element ref="SpTankTestID" minOccurs="0"/>
+			<xsd:element ref="TankNo" minOccurs="0"/>
+			<xsd:element ref="TankSize" minOccurs="0"/>
+			<xsd:element ref="SpillTankTestMaterial" minOccurs="0"/>
+			<xsd:element ref="SpTankTestEPAUST" minOccurs="0"/>
+			<xsd:element ref="SpTankTestUST" minOccurs="0"/>
+			<xsd:element ref="SpTankTestCauseCode" minOccurs="0"/>
+			<xsd:element ref="CauseCodeName" minOccurs="0"/>
+			<xsd:element ref="SpTankTestSourceCode" minOccurs="0"/>
+			<xsd:element ref="SourceCodeName" minOccurs="0"/>
+			<xsd:element ref="TestMethodCode" minOccurs="0"/>
+			<xsd:element ref="TestMethodCodeName" minOccurs="0"/>
+			<xsd:element ref="LeakRate" minOccurs="0"/>
+			<xsd:element ref="GrossFail" minOccurs="0"/>
+			<xsd:element ref="SpTankTestLastModified" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

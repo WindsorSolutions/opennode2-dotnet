@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<here:DomainList xmlns:here="http://www.exchangenetwork.net/schema/HERE" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.exchangenetwork.net/schema/HERE http://www.windsorsolutions.biz/xsd/HERE/1/0/HERE_DomainValues_v1.0.xsd">

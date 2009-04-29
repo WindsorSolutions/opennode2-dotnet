@@ -1,0 +1,3 @@
+#if($sample.tsalabIsNumber || $sample.tsasamplIsNumber || $sample.sampleTypeCode || $sample.collectionEndDate || $sample.samplePurposeCode)
+                    </Sample>
+#end

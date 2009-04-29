@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema targetNamespace="http://www.epa.gov/xml" xmlns:facid="http://www.epa.gov/xml" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="2.3">
+	<xsd:include schemaLocation="./FACID_AlternativeNameDetails_v2.3.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name : 	FACID_AlternativeNameList_v2.3
+		Current Version Available At :
+		Description : 	Alternate Names schema for Data transfer.
+		Application : 
+		Developed by : 	 Environmental Protection Agency, SAIC
+		Point of Contact : Meena Masti	
+	</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="AlternativeNameList" type="facid:AlternativeNameList"/>
+	<xsd:complexType name="AlternativeNameList">
+		<xsd:sequence>
+			<xsd:element ref="facid:AlternativeNameDetails" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="schemaVersion" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:element name="AlternativeNameDetails" type="facid:AlternativeNameDetails"/>
+</xsd:schema>
