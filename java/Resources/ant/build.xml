@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="build.jars">
+	<property name="project.root" value="../.." />
+	<property name="admin.root" value="${project.root}/Admin" />
+	<property name="common.root" value="${project.root}/Common" />
+	<property name="endpoint.root" value="${project.root}/Endpoint" />
+	<property name="endpoint2.root" value="${project.root}/Endpoint2" />
+	<property name="logic.root" value="${project.root}/Wnos_Logic" />
+	<property name="service.root" value="${project.root}/Wnos_Service" />
+	<property name="plugin.root" value="${project.root}/Wnos_Plugin" />
+	<property file="shared.build.properties" />
+
+	<target name="get.env" description="displays build configuration options">
+		<echo message="Build environment: ${env.dir}" />
+		<echo message="Target appserver: ${appserver}" />
+		<echo message="Use verbose output? ${verbosity}" />
+	</target>
+
+	<target name="clean" description="Cleans all projects">
+		<property name="run.target" value="clean" />
+		<antcall target="run.projects" inheritAll="true" />
+	</target>
+
+	<target name="init" description="Inits all projects">
+		<property name="run.target" value="init" />
+		<antcall target="run.projects" inheritAll="true" />
+	</target>
+
+	<target name="build.jars" description="Clean build all projects, no debug symbols or source, creates jars/wars, does NOT run tests">
+		<property name="run.target" value="build.jar" />
+		<antcall target="run.projects" inheritAll="true" />
+	</target>
+
+	<target name="build.jars.run.tests" description="Clean build all projects, runs tests, creates deployable jars/wars">
+		<property name="run.target" value="build.jar.run.tests" />
+		<antcall target="run.projects" inheritAll="true" />
+	</target>
+
+	<target name="build.test.jars" description="Clean build all projects, creates jars/wars with debug symbols and source">
+		<property name="run.target" value="build.test.jar" />
+		<antcall target="run.projects" inheritAll="true" />
+	</target>
+
+	<target name="build.deploy" description="Calls build.jar and deploys to appserver">
+		<property name="run.target" value="build.deploy" />
+		<antcall target="run.projects" inheritAll="true" />
+	</target>
+
+	<target name="build.test.deploy" description="Calls build.test.jar and deploys to appserver">
+		<property name="run.target" value="build.test.deploy" />
+		<antcall target="run.projects" inheritAll="true" />
+	</target>
+
+	<target name="run.tests" description="Builds and runs all tests">
+		<property name="run.target" value="run.tests" />
+		<antcall target="run.projects" inheritAll="true" />
+	</target>
+
+	<target name="hot.deploy" description="Deploy application jsps and static files only">
+		<property name="run.target" value="hot.deploy" />
+		<antcall target="run.projects" inheritAll="true" />
+	</target>
+
+	<target name="run.projects" if="run.target">
+		<echo message="Running ${run.target} in ${common.root}" />
+		<ant dir="${common.root}" target="${run.target}" inheritAll="false" inheritRefs="false" />
+		<echo message="Running ${run.target} in ${logic.root}" />
+		<ant dir="${logic.root}" target="${run.target}" inheritAll="false" inheritRefs="false" />
+		<echo message="Running ${run.target} in ${service.root}" />
+		<ant dir="${service.root}" target="${run.target}" inheritAll="false" inheritRefs="false" />
+		<echo message="Running ${run.target} in ${admin.root}" />
+		<ant dir="${admin.root}" target="${run.target}" inheritAll="false" inheritRefs="false" />
+		<echo message="Running ${run.target} in ${endpoint.root}" />
+		<ant dir="${endpoint.root}" target="${run.target}" inheritAll="false" inheritRefs="false" />
+		<echo message="Running ${run.target} in ${endpoint2.root}" />
+		<ant dir="${endpoint2.root}" target="${run.target}" inheritAll="false" inheritRefs="false" />
+	</target>
+
+</project>

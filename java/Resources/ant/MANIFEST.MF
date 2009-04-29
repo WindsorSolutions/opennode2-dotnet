@@ -1,0 +1,4 @@
+Implementation-Title: @project.title@
+Implementation-Vendor: Windsor Solutions, Inc.
+Implementation-Version: $Revision: 26 $ for target "@target.env@" at @build.time@ 
+Implementation-URL: $HeadURL: svn+ssh://windsorsolutions.biz/repo/node2008-v2-java/branches/OpenNode2/Resources/ant/MANIFEST.MF $
