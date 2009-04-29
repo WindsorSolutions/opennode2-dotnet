@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="/Resources/lib/Endpoint/activation.jar"/>
+	<classpathentry kind="lib" path="/Resources/lib/Endpoint/axis.jar" sourcepath="/home/jniski/devlib/axis-1_4/src"/>
+	<classpathentry kind="lib" path="/Resources/lib/Endpoint/axis-ant.jar"/>
+	<classpathentry kind="lib" path="/Resources/lib/Endpoint/axis-schema.jar"/>
+	<classpathentry kind="lib" path="/Resources/lib/Endpoint/commons-beanutils.jar"/>
+	<classpathentry kind="lib" path="/Resources/lib/Endpoint/commons-codec.jar"/>
+	<classpathentry kind="lib" path="/Resources/lib/Endpoint/commons-collections.jar"/>
+	<classpathentry kind="lib" path="/Resources/lib/Endpoint/commons-dbcp.jar"/>
+	<classpathentry kind="lib" path="/Resources/lib/Endpoint/commons-digester.jar"/>
+	<classpathentry kind="lib" path="/Resources/lib/Endpoint/commons-discovery.jar"/>
+	<classpathentry kind="lib" path="/Resources/lib/Endpoint/commons-fileupload-1.0.jar"/>
+	<classpathentry kind="lib" path="/Resources/lib/Endpoint/commons-httpclient.jar" sourcepath="/home/jniski/devlib/commons-httpclient-3.1/src/java"/>
+	<classpathentry kind="lib" path="/Resources/lib/Endpoint/commons-io.jar"/>
+	<classpathentry kind="lib" path="/Resources/lib/Endpoint/commons-javaflow.jar"/>
+	<classpathentry kind="lib" path="/Resources/lib/Endpoint/commons-pool.jar"/>
+	<classpathentry kind="lib" path="/Resources/lib/Endpoint/commons-validator.jar"/>
+	<classpathentry kind="lib" path="/Resources/lib/Endpoint/jaxrpc.jar"/>
+	<classpathentry kind="lib" path="/Resources/lib/Endpoint/jug-asl-2.0.0.jar"/>
+	<classpathentry kind="lib" path="/Resources/lib/Endpoint/log4j-1.2.8.jar"/>
+	<classpathentry kind="lib" path="/Resources/lib/Endpoint/mail.jar"/>
+	<classpathentry kind="lib" path="/Resources/lib/Endpoint/saaj.jar"/>
+	<classpathentry kind="lib" path="/Resources/lib/Endpoint/spring.jar"/>
+	<classpathentry kind="lib" path="/Resources/lib/Endpoint/spring-aspects.jar"/>
+	<classpathentry kind="lib" path="/Resources/lib/Endpoint/spring-dao.jar"/>
+	<classpathentry kind="lib" path="/Resources/lib/Endpoint/spring-remoting.jar"/>
+	<classpathentry kind="lib" path="/Resources/lib/Endpoint/wsdl4j.jar"/>
+	<classpathentry kind="lib" path="/Resources/lib/Endpoint/wsdl4j-1.5.1.jar"/>
+	<classpathentry kind="lib" path="/Resources/lib/Endpoint/xerces.jar"/>
+	<classpathentry kind="lib" path="/Resources/lib/Endpoint/xercesImpl.jar"/>
+	<classpathentry kind="lib" path="/Resources/lib/Endpoint/xmlsec.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Common"/>
+	<classpathentry kind="lib" path="/Resources/lib/Endpoint.build_only/servlet-api.jar"/>
+	<classpathentry kind="lib" path="/Resources/lib/Endpoint/commons-logging-adapters-1.1.1.jar"/>
+	<classpathentry kind="lib" path="/Resources/lib/Endpoint/commons-lang-2.4.jar"/>
+	<classpathentry kind="lib" path="/Resources/lib/Junit3/junit.jar"/>
+	<classpathentry kind="lib" path="/Resources/lib/Endpoint/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
