@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Velocity_Plugin_Helper" basedir="." default="build.zip">
+
+	<property file="build.properties" />
+
+	<property name="resource.base.dir" value="${basedir}/../../resources" />
+	<property name="my.resource.dir" value="${resource.base.dir}/${my.name}" />
+	<property name="dist" value="${basedir}/../../dist/${my.name}" />
+	<property name="tmp" value="${basedir}/../../build/tmp" />
+	<property name="src" value="${basedir}/../../src" />
+	<property name="test" value="${basedir}/../../test" />
+	<property name="build" value="${basedir}/../../build/${my.name}" />
+	<property name="lib" value="${resource.base.dir}/lib-build" />
+	<property name="compile.includes" value="*.xml, *.properties" />
+	<property name="manifest.src" value="${basedir}/../MANIFEST.MF" />
+
+	<property name="src.pkg" value="com/windsor/node/plugin/common/velocity" />
+
+	<property name="buildtime.jar.location" value="${lib}" />
+	<fileset id="lib.jars" includes="*.jar" dir="${lib}" />
+
+	<path id="build.class.path">
+		<fileset refid="lib.jars" />
+	</path>
+
+	<target name="clean">
+		<mkdir dir="${build}" />
+		<mkdir dir="${dist}" />
+		<mkdir dir="${tmp}" />
+		<delete includeemptydirs="true">
+			<fileset dir="${build}" />
+			<fileset dir="${tmp}" />
+			<fileset dir="${dist}" />
+		</delete>
+	</target>
+
+	<target name="init" depends="clean">
+		<mkdir dir="${dist}" />
+		<mkdir dir="${build}" />
+		<copy todir="${dist}/${my.name}" verbose="${verbosity}" includeemptydirs="true" preservelastmodified="false">
+			<fileset dir="${my.resource.dir}" />
+		</copy>
+
+		<copy file="${manifest.src}" todir="${tmp}" overwrite="yes" verbose="${verbosity}" preservelastmodified="false" />
+		<property name="manifest.file" value="${tmp}/MANIFEST.MF" />
+		<replace file="${manifest.file}" token="@project.title@" value="${project.title}" summary="true" />
+		<replace file="${manifest.file}" token="@build.time@" value="${build.time}" summary="true" />
+		<replace file="${manifest.file}" token="@target.env@" value="${my.name}" summary="true" />
+	</target>
+
+	<target name="compile.src" depends="init" description="compiles with debug symbols, warnings on">
+		<javac debug="on" memoryMaximumSize="256m" memoryInitialSize="256m" fork="true" destdir="${build}" srcdir="${src}" source="1.4" target="1.4" nowarn="false" failonerror="true">
+			<classpath refid="build.class.path" />
+			<include name="${src.pkg}/**" />
+		</javac>
+	</target>
+
+	<target name="build.jar" depends="compile.src" description="Makes a production-worthy jar file">
+		<echo message="Making ${my.name}.jar in ${dist}/${my.name}/lib" />
+		<property name="outfile" value="${dist}/${my.name}/lib/${my.name}.jar" />
+		<jar destfile="${outfile}" manifest="${manifest.file}">
+			<fileset excludes="**/Test*.class" dir="${build}" />
+		</jar>
+		<checksum file="${outfile}" todir="${dist}" forceOverwrite="yes" />
+		<checksum file="${outfile}" todir="${dist}" algorithm="SHA" fileext=".asc" forceOverwrite="yes" />
+	</target>
+
+
+	<target name="build.zip" depends="build.jar" description="Makes a production-worthy zip file ready for uploading">
+		<ant antfile="javadoc.xml" inheritAll="false" />
+		<echo message="Making ${my.name}.zip in ${dist}" />
+		<property name="zipfile" value="${dist}/${my.name}.zip" />
+		<zip destfile="${zipfile}" basedir="${dist}" excludes="${my.name}.zip, *.asc, *.MD5" />
+		<checksum file="${zipfile}" forceOverwrite="yes" />
+		<checksum file="${zipfile}" algorithm="SHA" fileext=".asc" forceOverwrite="yes" />
+	</target>
+
+</project>

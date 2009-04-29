@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="AQS_Plugin" basedir="." default="build.zip">
+
+	<property file="build.properties" />
+	<import file="../plugin.build.xml" />
+
+    <!-- this target must exist, even if it's empty -->
+    <target name="do.plugin.specifics">
+
+    </target>
+</project>
