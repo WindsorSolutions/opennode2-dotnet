@@ -1,0 +1,1 @@
+xsd.exe -c -l:c# -n:Windsor.Node2008.WNOS.Service.GetServices GetServices_v1_draft_3.xsd

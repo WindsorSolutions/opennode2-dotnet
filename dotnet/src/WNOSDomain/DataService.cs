@@ -1,0 +1,141 @@
+#region License
+/*
+Copyright (c) 2009, The Environmental Council of the States (ECOS)
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+
+ * Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+ * Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+ * Neither the name of the ECOS nor the names of its contributors may
+   be used to endorse or promote products derived from this software
+   without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.
+*/
+#endregion
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Reflection;
+using System.Diagnostics;
+using Windsor.Node2008.WNOSUtility;
+using Windsor.Commons.Core;
+
+namespace Windsor.Node2008.WNOSDomain
+{
+    /// <summary>
+    /// Domain object representing a data flow data service instance.  A data serivce represents a single
+    /// service action associated with a data flow, and is a many-to-one relationship with a data flow.
+    /// </summary>
+    [Serializable]
+    public class DataService : AuditableIdentity
+    {
+        private string _name;
+        private string _flowId;
+        private bool _isActive;
+		private ServiceType _type;
+        private IDictionary<string, string> _args;
+        private ServiceRequestAuthorizationType _minAuthLevel;
+        private IDictionary<string, DataProviderInfo> _dataSources;
+        private ExecutableInfo _pluginInfo;
+        public const string DEFAULT_SERVICE_NAME = "*";
+
+        public DataService()
+        {
+            _args = new Dictionary<string, string>();
+            _dataSources = new Dictionary<string, DataProviderInfo>();
+            _minAuthLevel = ServiceRequestAuthorizationType.None;
+        }
+
+        /// <summary>
+        /// The data sources (DataProviderInfo instances) associated with the data services, 
+        /// as key/value pairs.  The key is the id of the data source.
+        /// </summary>
+        public IDictionary<string, DataProviderInfo> DataSources
+        {
+            get { return _dataSources; }
+            set { _dataSources = value; }
+        }
+
+        /// <summary>
+        /// The id of the data flow associated with the data service.
+        /// </summary>
+        public string FlowId
+        {
+            get { return _flowId; }
+            set { _flowId = value; }
+        }
+
+        /// <summary>
+        /// Is this data service currently active?
+        /// </summary>
+        public bool IsActive
+        {
+            get { return _isActive; }
+            set { _isActive = value; }
+        }
+
+        /// <summary>
+        /// The name of the data service (e.g., GetFacilityByName)
+        /// </summary>
+        public string Name
+        {
+            get { return _name; }
+            set { _name = value; }
+        }
+
+        /// <summary>
+        /// The persistent configuration arguments associated with the data service.
+        /// </summary>
+        public IDictionary<string, string> Args
+        {
+            get { return _args; }
+            set { _args = value; }
+        }
+
+        /// <summary>
+        /// The minimum authorization level required to access the service.
+        /// </summary>
+        public ServiceRequestAuthorizationType MinAuthLevel
+        {
+            get { return _minAuthLevel; }
+            set { _minAuthLevel = value; }
+        }
+
+        /// <summary>
+        /// The service type (e.g., Solicit, Query, etc).
+        /// </summary>
+        public ServiceType Type
+        {
+			get { return _type; }
+			set { _type = value; }
+		}
+
+        /// <summary>
+        /// Information about the code plugin associated with this service.
+        /// </summary>
+        public ExecutableInfo PluginInfo
+        {
+            get { return _pluginInfo; }
+            set { _pluginInfo = value; }
+        }
+    }
+}

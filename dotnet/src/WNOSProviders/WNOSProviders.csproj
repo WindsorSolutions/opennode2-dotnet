@@ -1,0 +1,119 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D95C862B-FFDC-4936-8835-B0D8DB421B20}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Windsor.Node2008.WNOSProviders</RootNamespace>
+    <AssemblyName>Windsor.Node2008.WNOSProviders</AssemblyName>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Common.Logging, Version=1.2.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Core, Version=1.2.0.20313, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\Spring.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Data, Version=1.2.0.20313, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\Spring.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="IAccountAuthorizationRequest.cs" />
+    <Compile Include="IAccountManager.cs" />
+    <Compile Include="ICompressionHelper.cs" />
+    <Compile Include="ICryptographyProvider.cs" />
+    <Compile Include="IDataCache.cs" />
+    <Compile Include="IDbConnectionFactory.cs" />
+    <Compile Include="IDocumentManager.cs" />
+    <Compile Include="IFlowManager.cs" />
+    <Compile Include="IHeaderDocumentHelper.cs" />
+    <Compile Include="Implementations\CompressionHelper.cs" />
+    <Compile Include="Implementations\CryptographyProvider.cs" />
+    <Compile Include="Implementations\HeaderDocumentHelper.cs" />
+    <Compile Include="Implementations\HeaderDocumentHelperQualified.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Implementations\HeaderIdentity_v11.cs" />
+    <Compile Include="Implementations\HeaderIdentity_v11Qualified.cs">
+      <SubType>code</SubType>
+    </Compile>
+    <Compile Include="Implementations\SerializationHelper.cs" />
+    <Compile Include="Implementations\XmlValidationHelper.cs" />
+    <Compile Include="INAASManager.cs" />
+    <Compile Include="INodeEndpointClient.cs" />
+    <Compile Include="INodeEndpointClientFactory.cs" />
+    <Compile Include="IPartnerManager.cs" />
+    <Compile Include="IRequestManager.cs" />
+    <Compile Include="ISchematronHelper.cs" />
+    <Compile Include="ISerializationHelper.cs" />
+    <Compile Include="IServiceFactory.cs" />
+    <Compile Include="ISettingsProvider.cs" />
+    <Compile Include="ITransactionManager.cs" />
+    <Compile Include="IXmlValidationHelper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\windsor-common-net\src\Commons\Windsor-Commons-Compression\Windsor.Commons.Compression.csproj">
+      <Project>{A5E08ED5-9650-4CDF-90C1-ACD0A3463BA3}</Project>
+      <Name>Windsor.Commons.Compression</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\windsor-common-net\src\Commons\Windsor-Commons-Core\Windsor.Commons.Core.csproj">
+      <Project>{FE8A985A-F050-4475-B3D6-4E95EE87CF40}</Project>
+      <Name>Windsor.Commons.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AssemblyInfo\AssemblyInfo.csproj">
+      <Project>{FBFF305C-3C14-4013-88F4-EAB636399C2C}</Project>
+      <Name>AssemblyInfo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WNOSDomain\WNOSDomain.csproj">
+      <Project>{0AD3D68F-4A02-4080-BFF2-8AD1BAB259AA}</Project>
+      <Name>WNOSDomain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WNOSUtility\WNOSUtility.csproj">
+      <Project>{94459097-5EAE-4482-B1E0-F419CEBCC8C7}</Project>
+      <Name>WNOSUtility</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

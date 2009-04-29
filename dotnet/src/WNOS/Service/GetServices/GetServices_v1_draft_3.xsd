@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:typens="http://www.exchangenetwork.net/schema/ends/2" targetNamespace="http://www.exchangenetwork.net/schema/ends/2" elementFormDefault="qualified">
+	<simpleType name="NodeVersionCode">
+		<restriction base="string">
+			<enumeration value="1.1"/>
+			<enumeration value="2.0"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="NodeStageCode">
+		<restriction base="string">
+			<enumeration value="Development"/>
+			<enumeration value="Test"/>
+			<enumeration value="Production"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="NodeMethodTypeCode">
+		<restriction base="string">
+			<enumeration value="Query"/>
+			<enumeration value="Solicit"/>
+			<enumeration value="Submit"/>
+			<enumeration value="Execute"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="NodeStatusCode">
+		<restriction base="string">
+			<enumeration value="Operational"/>
+			<enumeration value="Busy"/>
+			<enumeration value="Offline"/>
+			<enumeration value="Unknown"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="EncodingType">
+		<restriction base="string">
+			<enumeration value="Base64"/>
+			<enumeration value="ZIP"/>
+			<enumeration value="Encrypt"/>
+			<enumeration value="Digest"/>
+			<enumeration value="XML"/>
+			<enumeration value="None"/>
+		</restriction>
+	</simpleType>
+	<complexType name="ObjectPropertyType">
+		<sequence>
+			<element name="PropertyName" type="string"/>
+			<element name="PropertyValue" type="anyType"/>
+		</sequence>
+	</complexType>
+	<simpleType name="allNNI">
+		<union memberTypes="nonNegativeInteger">
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="unbounded"/>
+				</restriction>
+			</simpleType>
+		</union>
+	</simpleType>
+	<complexType name="NodeBoundingBoxType">
+		<sequence>
+			<element name="BoundingCoordinateEast" type="typens:LongitudeDataType"/>
+			<element name="BoundingCoordinateNorth" type="typens:LatitudeDataType"/>
+			<element name="BoundingCoordinateSouth" type="typens:LatitudeDataType"/>
+			<element name="BoundingCoordinateWest" type="typens:LongitudeDataType"/>
+		</sequence>
+	</complexType>
+	<simpleType name="LatitudeDataType">
+		<restriction base="decimal">
+			<totalDigits value="8"/>
+			<fractionDigits value="6"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="LongitudeDataType">
+		<restriction base="decimal">
+			<totalDigits value="9"/>
+			<fractionDigits value="6"/>
+		</restriction>
+	</simpleType>
+	<complexType name="RequestParameterType">
+		<simpleContent>
+			<extension base="string">
+				<attribute name="ParameterName" type="string" use="required">
+					<annotation>
+						<documentation>The name of the parameter.</documentation>
+					</annotation>
+				</attribute>
+				<attribute name="ParameterType" type="string" use="optional">
+					<annotation>
+						<documentation>The enumerated type of the service.</documentation>
+					</annotation>
+				</attribute>
+				<attribute name="ParameterTypeDescriptor" type="string" use="optional">
+					<annotation>
+						<documentation>The name of type descriptor where additional data element information can be located. .</documentation>
+					</annotation>
+				</attribute>
+				<attribute name="ParameterRequiredIndicator" type="boolean" use="optional" default="true">
+					<annotation>
+						<documentation>An indication of the optionality of the parameter</documentation>
+					</annotation>
+				</attribute>
+				<attribute name="ParameterEncoding" type="typens:EncodingType" use="optional" default="None">
+					<annotation>
+						<documentation>The encoding type of the parameter.</documentation>
+					</annotation>
+				</attribute>
+				<attribute name="ParameterSortIndex" type="integer" use="optional">
+					<annotation>
+						<documentation>For parameters offered by Node 1.1 services – this indicates in which order the parameter should be sent.</documentation>
+					</annotation>
+				</attribute>
+				<attribute name="ParameterOccurrenceNumber" type="typens:allNNI" use="optional" default="1">
+					<annotation>
+						<documentation>The number of times the parameter should be repeated in the request.</documentation>
+					</annotation>
+				</attribute>
+			</extension>
+		</simpleContent>
+	</complexType>
+	<complexType name="ServiceDescriptionListType">
+		<sequence>
+			<element name="Service" maxOccurs="unbounded">
+				<complexType>
+					<sequence>
+						<element name="MethodName" type="typens:NodeMethodTypeCode">
+							<annotation>
+								<documentation>The name of a node method in which the service can be invoked.</documentation>
+							</annotation>
+						</element>
+						<element name="Dataflow" type="string">
+							<annotation>
+								<documentation>The name of the dataflow offered by the service.</documentation>
+							</annotation>
+						</element>
+						<element name="ServiceIdentifier" type="string">
+							<annotation>
+								<documentation>The unique name of the service.</documentation>
+							</annotation>
+						</element>
+						<element name="ServiceDescription" type="string">
+							<annotation>
+								<documentation>A brief description of the service</documentation>
+							</annotation>
+						</element>
+						<element name="ServiceDocumentURL" type="anyURI">
+							<annotation>
+								<documentation>URL to online documentation of the service if any.</documentation>
+							</annotation>
+						</element>
+						<element name="ServiceProperty" type="typens:ObjectPropertyType" minOccurs="0" maxOccurs="unbounded">
+							<annotation>
+								<documentation>Additional properties of the service. Such as document URL, schema URL.</documentation>
+							</annotation>
+						</element>
+						<element name="StyleSheetURL" type="anyURI" minOccurs="0" maxOccurs="unbounded">
+							<annotation>
+								<documentation>The default stylesheet for transforming results to user friendly format.</documentation>
+							</annotation>
+						</element>
+						<element name="Parameter" type="typens:RequestParameterType" minOccurs="0" maxOccurs="unbounded"/>
+					</sequence>
+				</complexType>
+			</element>
+		</sequence>
+	</complexType>
+	<complexType name="NetworkNodeType">
+		<sequence>
+			<element name="NodeIdentifier" type="string">
+				<annotation>
+					<documentation>The identifier of the node.</documentation>
+				</annotation>
+			</element>
+			<element name="NodeName" type="string">
+				<annotation>
+					<documentation>A short name of the node</documentation>
+				</annotation>
+			</element>
+			<element name="NodeAddress" type="anyURI">
+				<annotation>
+					<documentation>The SOAP endpoint address of the node.</documentation>
+				</annotation>
+			</element>
+			<element name="OrganizationIdentifier" type="string">
+				<annotation>
+					<documentation>The organization name where the node is located.</documentation>
+				</annotation>
+			</element>
+			<element name="NodeContact" type="string">
+				<annotation>
+					<documentation>The name and contact information of the node administrator.  Should include a phone number.</documentation>
+				</annotation>
+			</element>
+			<element name="NodeVersionIdentifier" type="typens:NodeVersionCode">
+				<annotation>
+					<documentation>The version of the specification implemented by the node.  Currently may be either 1.1 or 2.0.</documentation>
+				</annotation>
+			</element>
+			<element name="NodeDeploymentTypeCode" type="typens:NodeStageCode">
+				<annotation>
+					<documentation>The type of node environment.</documentation>
+				</annotation>
+			</element>
+			<element name="NodeStatus" type="typens:NodeStatusCode">
+				<annotation>
+					<documentation>A string description of the current status of the node.   Default is ‘Ready’.</documentation>
+				</annotation>
+			</element>
+			<element name="NodeProperty" type="typens:ObjectPropertyType" minOccurs="0" maxOccurs="unbounded">
+				<annotation>
+					<documentation>Additional properties of the node. This is an extension mechanism</documentation>
+				</annotation>
+			</element>
+			<element name="BoundingBoxDetails" type="typens:NodeBoundingBoxType" minOccurs="0">
+				<annotation>
+					<documentation>Four latitudinal and longitudinal coordinates representing the area that a node has data.  </documentation>
+				</annotation>
+			</element>
+			<element name="NodeServiceList" type="typens:ServiceDescriptionListType">
+				<annotation>
+					<documentation>A list of services offered by the Node.</documentation>
+				</annotation>
+			</element>
+		</sequence>
+	</complexType>
+	<complexType name="NetworkNodeListType">
+		<sequence>
+			<element name="NetworkNodeDetails" type="typens:NetworkNodeType" minOccurs="0" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+	<element name="NetworkNodes" type="typens:NetworkNodeListType"/>
+</schema>

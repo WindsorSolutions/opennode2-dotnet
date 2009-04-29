@@ -1,0 +1,184 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{51F19662-F93B-4834-9CB8-8DC4E04F7B20}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Windsor.Node2008.NodeEndpointClient</RootNamespace>
+    <AssemblyName>Windsor.Node2008.NodeEndpointClient</AssemblyName>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <NoWarn>0618 1591 1573</NoWarn>
+    <DocumentationFile>bin\Debug\Windsor.Node2008.NodeEndpointClient.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <NoWarn>0618 1591 1573</NoWarn>
+    <DocumentationFile>bin\Release\Windsor.Node2008.NodeEndpointClient.XML</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Web.Services, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\Microsoft.Web.Services.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Services3, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\Microsoft.Web.Services3.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Client1\Windsor.Node.Proxy11.WSDL\NetworkNode.cs">
+      <Link>Client1\Windsor.Node.Proxy11.WSDL\NetworkNode.cs</Link>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="..\Client1\Windsor.Node.Proxy11.WSDL\NodeDocument.cs">
+      <Link>Client1\Windsor.Node.Proxy11.WSDL\NodeDocument.cs</Link>
+    </Compile>
+    <Compile Include="..\Client1\Windsor.Node.Proxy11\CertificatePolicy.cs">
+      <Link>Client1\Windsor.Node.Proxy11\CertificatePolicy.cs</Link>
+    </Compile>
+    <Compile Include="..\Client1\Windsor.Node.Proxy11\INodeRequestor11.cs">
+      <Link>Client1\Windsor.Node.Proxy11\INodeRequestor11.cs</Link>
+    </Compile>
+    <Compile Include="..\Client1\Windsor.Node.Proxy11\NodeBaseEventArgs.cs">
+      <Link>Client1\Windsor.Node.Proxy11\NodeBaseEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\Client1\Windsor.Node.Proxy11\NodeDownloadEventArgs.cs">
+      <Link>Client1\Windsor.Node.Proxy11\NodeDownloadEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\Client1\Windsor.Node.Proxy11\NodeDownloadEventHandler.cs">
+      <Link>Client1\Windsor.Node.Proxy11\NodeDownloadEventHandler.cs</Link>
+    </Compile>
+    <Compile Include="..\Client1\Windsor.Node.Proxy11\NodeQueryEventArgs.cs">
+      <Link>Client1\Windsor.Node.Proxy11\NodeQueryEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\Client1\Windsor.Node.Proxy11\NodeQueryEventHandler.cs">
+      <Link>Client1\Windsor.Node.Proxy11\NodeQueryEventHandler.cs</Link>
+    </Compile>
+    <Compile Include="..\Client1\Windsor.Node.Proxy11\NodeRequestor.cs">
+      <Link>Client1\Windsor.Node.Proxy11\NodeRequestor.cs</Link>
+    </Compile>
+    <Compile Include="..\Client1\Windsor.Node.Proxy11\NodeRequestorEventArgs.cs">
+      <Link>Client1\Windsor.Node.Proxy11\NodeRequestorEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\Client1\Windsor.Node.Proxy11\NodeRequestorOutputFilter.cs">
+      <Link>Client1\Windsor.Node.Proxy11\NodeRequestorOutputFilter.cs</Link>
+    </Compile>
+    <Compile Include="..\Client1\Windsor.Node.Proxy11\NodeSubmitEventArgs.cs">
+      <Link>Client1\Windsor.Node.Proxy11\NodeSubmitEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\Client1\Windsor.Node.Proxy11\NodeSubmitEventHandler.cs">
+      <Link>Client1\Windsor.Node.Proxy11\NodeSubmitEventHandler.cs</Link>
+    </Compile>
+    <Compile Include="..\Client1\Windsor.Node.Proxy11\RequestorEventHandler.cs">
+      <Link>Client1\Windsor.Node.Proxy11\RequestorEventHandler.cs</Link>
+    </Compile>
+    <Compile Include="..\Client1\Windsor.Node.Proxy11\Util.cs">
+      <Link>Client1\Windsor.Node.Proxy11\Util.cs</Link>
+    </Compile>
+    <Compile Include="..\Client2\EN11\Client11.cs">
+      <Link>Client2\EN11\Client11.cs</Link>
+    </Compile>
+    <Compile Include="..\Client2\EN20\Client20.cs">
+      <Link>Client2\EN20\Client20.cs</Link>
+    </Compile>
+    <Compile Include="..\Client2\EN20\NetworkNode2.cs">
+      <Link>Client2\EN20\NetworkNode2.cs</Link>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="..\Client2\EN20\TestClient20.cs">
+      <Link>Client2\EN20\TestClient20.cs</Link>
+    </Compile>
+    <Compile Include="..\Client2\NodeEndpointClientFactory.cs">
+      <Link>Client2\NodeEndpointClientFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\WNOSDomain\AuthenticationCredentials.cs">
+      <Link>WNOSDomain\AuthenticationCredentials.cs</Link>
+    </Compile>
+    <Compile Include="..\WNOSDomain\ByIndexOrNameDictionary.cs">
+      <Link>WNOSDomain\ByIndexOrNameDictionary.cs</Link>
+    </Compile>
+    <Compile Include="..\WNOSDomain\CommonContentAndFormatProvider.cs">
+      <Link>WNOSDomain\CommonContentAndFormatProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\WNOSDomain\CommonTransactionStatusCodeProvider.cs">
+      <Link>WNOSDomain\CommonTransactionStatusCodeProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\WNOSDomain\EndpointDocument.cs">
+      <Link>WNOSDomain\EndpointDocument.cs</Link>
+    </Compile>
+    <Compile Include="..\WNOSDomain\EndpointVersionType.cs">
+      <Link>WNOSDomain\EndpointVersionType.cs</Link>
+    </Compile>
+    <Compile Include="..\WNOSProviders\ICompressionHelper.cs">
+      <Link>WNOSProviders\ICompressionHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\WNOSProviders\Implementations\CompressionHelper.cs">
+      <Link>WNOSProviders\Implementations\CompressionHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\WNOSProviders\INodeEndpointClient.cs">
+      <Link>WNOSProviders\INodeEndpointClient.cs</Link>
+    </Compile>
+    <Compile Include="..\WNOSProviders\INodeEndpointClientFactory.cs">
+      <Link>WNOSProviders\INodeEndpointClientFactory.cs</Link>
+    </Compile>
+    <Compile Include="NodeEndpointClient.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\windsor-common-net\src\Commons\Windsor-Commons-Compression\Windsor.Commons.Compression.csproj">
+      <Project>{A5E08ED5-9650-4CDF-90C1-ACD0A3463BA3}</Project>
+      <Name>Windsor.Commons.Compression</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\windsor-common-net\src\Commons\Windsor-Commons-Core\Windsor.Commons.Core.csproj">
+      <Project>{FE8A985A-F050-4475-B3D6-4E95EE87CF40}</Project>
+      <Name>Windsor.Commons.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AssemblyInfo\AssemblyInfo.csproj">
+      <Project>{FBFF305C-3C14-4013-88F4-EAB636399C2C}</Project>
+      <Name>AssemblyInfo</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PostBuildEvent>IF EXIST "$(ProjectDir)..\..\..\en-node-client-lib-v2\Lib\$(ConfigurationName)" del /F /Q "$(ProjectDir)..\..\..\en-node-client-lib-v2\Lib\$(ConfigurationName)\*"
+IF EXIST "$(ProjectDir)..\..\..\en-node-client-lib-v2\Lib\$(ConfigurationName)" copy "$(ProjectDir)$(OutDir)*"  "$(ProjectDir)..\..\..\en-node-client-lib-v2\Lib\$(ConfigurationName)"</PostBuildEvent>
+  </PropertyGroup>
+</Project>

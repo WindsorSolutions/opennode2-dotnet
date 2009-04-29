@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:wqx="http://www.exchangenetwork.net/schema/wqx/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/wqx/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+	<xsd:include schemaLocation="WQX_SimpleContent_v2.0.xsd"/>
+	<xsd:include schemaLocation="WQX_MeasureCompact_v2.0.xsd"/>
+	<xsd:include schemaLocation="WQX_HorizontalAccuracyMeasure_v2.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+        Schema Name  : WQX_MonitoringLocationGeospatial_v2.0.xsd
+        Description   : 	Extensive list of geographic identifiers used to clearly mark an object's precise location.
+        Developed by  : 	 EPA Office of Water
+        Point of Contact :   Dwane Young
+</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="MonitoringLocationGeospatialDataType">
+		<xsd:sequence>
+			<xsd:element ref="wqx:LatitudeMeasure"/>
+			<xsd:element ref="wqx:LongitudeMeasure"/>
+			<xsd:element ref="wqx:SourceMapScaleNumeric" minOccurs="0"/>
+			<xsd:element ref="wqx:HorizontalAccuracyMeasure" minOccurs="0"/>
+			<xsd:element ref="wqx:HorizontalCollectionMethodName"/>
+			<xsd:element ref="wqx:HorizontalCoordinateReferenceSystemDatumName"/>
+			<xsd:element ref="wqx:VerticalMeasure" minOccurs="0"/>
+			<xsd:element ref="wqx:VerticalCollectionMethodName" minOccurs="0"/>
+			<xsd:element ref="wqx:VerticalCoordinateReferenceSystemDatumName" minOccurs="0"/>
+			<xsd:element ref="wqx:CountryCode" minOccurs="0"/>
+			<xsd:element ref="wqx:StateCode" minOccurs="0"/>
+			<xsd:element ref="wqx:CountyCode" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="VerticalMeasure" type="wqx:MeasureCompactDataType">
+		<xsd:annotation>
+			<xsd:documentation>The measure of elevation (i.e., the altitude), above or below a reference datum.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MonitoringLocationGeospatial" type="wqx:MonitoringLocationGeospatialDataType">
+		<xsd:annotation>
+			<xsd:documentation>Monitoring location geographic location.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

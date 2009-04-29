@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:wqx="http://www.exchangenetwork.net/schema/wqx/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/wqx/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+	<xsd:include schemaLocation="WQX_SimpleContent_v2.0.xsd"/>
+	<xsd:include schemaLocation="WQX_AlternateMonitoringLocationIdentity_v2.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+        Schema Name  : WQX_MonitoringLocationIdentity_v2.0.xsd
+        Description   : 	Basic identification information for the location/site that is monitored or used for sampling.
+        Developed by  : 	 EPA Office of Water
+        Point of Contact :   Dwane Young
+</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="MonitoringLocationIdentityDataType">
+		<xsd:sequence>
+			<xsd:element ref="wqx:MonitoringLocationIdentifier"/>
+			<xsd:element ref="wqx:MonitoringLocationName"/>
+			<xsd:element ref="wqx:MonitoringLocationTypeName"/>
+			<xsd:element ref="wqx:MonitoringLocationDescriptionText" minOccurs="0"/>
+			<xsd:element ref="wqx:HUCEightDigitCode" minOccurs="0"/>
+			<xsd:element ref="wqx:HUCTwelveDigitCode" minOccurs="0"/>
+			<xsd:element ref="wqx:TribalLandIndicator" minOccurs="0"/>
+			<xsd:element ref="wqx:TribalLandName" minOccurs="0"/>
+			<xsd:element ref="wqx:AlternateMonitoringLocationIdentity" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="MonitoringLocationIdentity" type="wqx:MonitoringLocationIdentityDataType">
+		<xsd:annotation>
+			<xsd:documentation>Basic identification information for the location/site that is monitored or used for sampling.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

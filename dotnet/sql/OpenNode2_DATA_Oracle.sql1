@@ -1,0 +1,413 @@
+INSERT INTO NAccount
+           (Id
+           ,NAASAccount
+           ,IsActive
+           ,SystemRole
+           ,ModifiedBy
+           ,ModifiedOn
+           ,IsDeleted
+           ,IsDemoUser)
+     VALUES
+           ('0000-0000-0000-0000-0000'
+           ,'node@ndep.nv.gov'
+           ,'Y'
+           ,'Admin'
+           ,'0000-0000-0000-0000-0000'
+           ,SYSDATE
+           ,'N'
+           ,'N');
+
+
+INSERT INTO NAccount
+           (Id
+           ,NAASAccount
+           ,IsActive
+           ,SystemRole
+           ,ModifiedBy
+           ,ModifiedOn
+           ,IsDeleted
+           ,IsDemoUser)
+     VALUES
+           ('1111-1111-1111-1111-1111'
+           ,'runtime@ndep.nv.gov'
+           ,'Y'
+           ,'Authed'
+           ,'0000-0000-0000-0000-0000'
+           ,SYSDATE
+           ,'N'
+           ,'N');
+
+
+INSERT INTO NAccount
+           (Id
+           ,NAASAccount
+           ,IsActive
+           ,SystemRole
+           ,ModifiedBy
+           ,ModifiedOn
+           ,IsDeleted
+           ,IsDemoUser)
+     VALUES
+           ('C9D1210A-92AD-4613-B91B-C22F35EC6BA8'
+           ,'ted@windsorsolutions.com'
+           ,'Y'
+           ,'Admin'
+           ,'0000-0000-0000-0000-0000'
+           ,SYSDATE
+           ,'N'
+           ,'N');
+       
+INSERT INTO NAccount
+           (Id
+           ,NAASAccount
+           ,IsActive
+           ,SystemRole
+           ,ModifiedBy
+           ,ModifiedOn
+           ,IsDeleted
+           ,IsDemoUser)
+     VALUES
+           ('6bf367ee-bd8a-4c7b-a26e-87eff2092811'
+           ,'mark@windsorsolutions.com'
+           ,'Y'
+           ,'Admin'
+           ,'0000-0000-0000-0000-0000'
+           ,SYSDATE
+           ,'N'
+           ,'N');
+
+INSERT INTO NAccount
+           (Id
+           ,NAASAccount
+           ,IsActive
+           ,SystemRole
+           ,ModifiedBy
+           ,ModifiedOn
+           ,IsDeleted
+           ,IsDemoUser)
+     VALUES
+           ('17E990F7-313E-48fd-AE7F-DAA0DFC35721'
+           ,'Jason@windsorsolutions.com'
+           ,'Y'
+           ,'Admin'
+           ,'0000-0000-0000-0000-0000'
+           ,SYSDATE
+           ,'N'
+           ,'N');
+           
+INSERT INTO NFlow
+           (Id
+           ,InfoUrl
+           ,Contact
+           ,IsProtected
+           ,ModifiedBy
+           ,ModifiedOn
+           ,Code
+           ,Description)
+     VALUES
+           ('08221DEA-7545-4b4a-A55E-BEDDFDF8E51B'
+           ,'http://www.exchangenetwork.net/exchanges/cross/nct.htm'
+           ,'0000-0000-0000-0000-0000'
+           ,'N'
+           ,'0000-0000-0000-0000-0000'
+           ,SYSDATE
+           ,'NCT'
+           ,'NCT Description');
+
+INSERT INTO NService
+           (Id
+           ,Name
+           ,FlowId
+           ,IsActive
+           ,ServiceType
+           ,Implementor
+           ,AuthLevel
+           ,ModifiedBy
+           ,ModifiedOn)
+     VALUES
+           ('10121810-7829-42ac-8FDE-D0C28A282826'
+           ,'Submit_v1.0'
+           ,'08221DEA-7545-4b4a-A55E-BEDDFDF8E51B'
+           ,'Y'
+           ,'Submit'
+           ,'Windsor.Node2008.WNOSPlugin.NCT.NCTPlugin, Windsor.Node2008.WNOSPlugin.NCT.dll'
+           ,'Basic'
+           ,'0000-0000-0000-0000-0000'
+           ,SYSDATE);
+
+INSERT INTO NService
+           (Id
+           ,Name
+           ,FlowId
+           ,IsActive
+           ,ServiceType
+           ,Implementor
+           ,AuthLevel
+           ,ModifiedBy
+           ,ModifiedOn)
+     VALUES
+           ('C33BD829-AD64-4f59-821B-E9F66A198A20'
+           ,'*'
+           ,'08221DEA-7545-4b4a-A55E-BEDDFDF8E51B'
+           ,'Y'
+           ,'Submit'
+           ,'Windsor.Node2008.WNOSPlugin.NCT.NCTPlugin, Windsor.Node2008.WNOSPlugin.NCT.dll'
+           ,'Basic'
+           ,'0000-0000-0000-0000-0000'
+           ,SYSDATE);
+           
+INSERT INTO NService
+           (Id
+           ,Name
+           ,FlowId
+           ,IsActive
+           ,ServiceType
+           ,Implementor
+           ,AuthLevel
+           ,ModifiedBy
+           ,ModifiedOn)
+     VALUES
+           ('45E5E261-1525-4efb-85EF-0BB30560CFB0'
+           ,'Query_v1.0'
+           ,'08221DEA-7545-4b4a-A55E-BEDDFDF8E51B'
+           ,'Y'
+           ,'Query'
+           ,'Windsor.Node2008.WNOSPlugin.NCT.NCTPlugin, Windsor.Node2008.WNOSPlugin.NCT.dll'
+           ,'Basic'
+           ,'0000-0000-0000-0000-0000'
+           ,SYSDATE);
+
+INSERT INTO NService
+           (Id
+           ,Name
+           ,FlowId
+           ,IsActive
+           ,ServiceType
+           ,Implementor
+           ,AuthLevel
+           ,ModifiedBy
+           ,ModifiedOn)
+     VALUES
+           ('8C2DB95B-22C4-4d1c-8219-AE2CB4CCD661'
+           ,'Solicit_v1.0'
+           ,'08221DEA-7545-4b4a-A55E-BEDDFDF8E51B'
+           ,'Y'
+           ,'Solicit'
+           ,'Windsor.Node2008.WNOSPlugin.NCT.NCTPlugin, Windsor.Node2008.WNOSPlugin.NCT.dll'
+           ,'Basic'
+           ,'0000-0000-0000-0000-0000'
+           ,SYSDATE);
+
+INSERT INTO NService
+           (Id
+           ,Name
+           ,FlowId
+           ,IsActive
+           ,ServiceType
+           ,Implementor
+           ,AuthLevel
+           ,ModifiedBy
+           ,ModifiedOn)
+     VALUES
+           ('B8145229-D9FE-437c-92AB-3FD3BDCCDA26'
+           ,'Notify_v1.0'
+           ,'08221DEA-7545-4b4a-A55E-BEDDFDF8E51B'
+           ,'Y'
+           ,'Notify'
+           ,'Windsor.Node2008.WNOSPlugin.NCT.NCTPlugin, Windsor.Node2008.WNOSPlugin.NCT.dll'
+           ,'Basic'
+           ,'0000-0000-0000-0000-0000'
+           ,SYSDATE);
+
+INSERT INTO NService
+           (Id
+           ,Name
+           ,FlowId
+           ,IsActive
+           ,ServiceType
+           ,Implementor
+           ,AuthLevel
+           ,ModifiedBy
+           ,ModifiedOn)
+     VALUES
+           ('412AB6BC-9FF3-4894-A260-4C862A59D2CB'
+           ,'Execute_v1.0'
+           ,'08221DEA-7545-4b4a-A55E-BEDDFDF8E51B'
+           ,'Y'
+           ,'Execute'
+           ,'Windsor.Node2008.WNOSPlugin.NCT.NCTPlugin, Windsor.Node2008.WNOSPlugin.NCT.dll'
+           ,'Basic'
+           ,'0000-0000-0000-0000-0000'
+           ,SYSDATE);
+
+INSERT INTO NFlow
+           (Id
+           ,InfoUrl
+           ,Contact
+           ,IsProtected
+           ,ModifiedBy
+           ,ModifiedOn
+           ,Code
+           ,Description)
+     VALUES
+           ('6E1FD9A4-4C02-4208-9D3C-BE743BF720AF'
+           ,'http://www.windsorsolutions.com'
+           ,'0000-0000-0000-0000-0000'
+           ,'Y'
+           ,'0000-0000-0000-0000-0000'
+           ,SYSDATE
+           ,'Windsor'
+           ,'Windsor node-specific tasks');
+
+
+INSERT INTO NService
+           (Id
+           ,Name
+           ,FlowId
+           ,IsActive
+           ,ServiceType
+           ,Implementor
+           ,AuthLevel
+           ,ModifiedBy
+           ,ModifiedOn)
+     VALUES
+           ('3E8D160F-D73D-4bad-AACB-A8ABFE815E63'
+           ,'Clean temporary folder'
+           ,'6E1FD9A4-4C02-4208-9D3C-BE743BF720AF'
+           ,'Y'
+           ,'Task'
+           ,'Windsor.Node2008.WNOSPlugin.Windsor.CleanTemporaryFolder, Windsor.Node2008.WNOSPlugin.Windsor.dll'
+           ,'Basic'
+           ,'0000-0000-0000-0000-0000'
+           ,SYSDATE);
+
+
+INSERT INTO NServiceArg
+           (Id
+           ,ServiceId
+           ,ArgCode
+           ,Value)
+     VALUES
+	   ('5C78FE55-CF5E-4738-B67D-19428840A9AB'
+           ,'3E8D160F-D73D-4bad-AACB-A8ABFE815E63'
+           ,'Delete files older than days'
+           ,'7');
+
+INSERT INTO NService
+           (Id
+           ,Name
+           ,FlowId
+           ,IsActive
+           ,ServiceType
+           ,Implementor
+           ,AuthLevel
+           ,ModifiedBy
+           ,ModifiedOn)
+     VALUES
+           ('98307B49-952E-450b-BE55-512CEACA4B8E'
+           ,'Refresh NAAS Users'
+           ,'6E1FD9A4-4C02-4208-9D3C-BE743BF720AF'
+           ,'Y'
+           ,'Task'
+           ,'Windsor.Node2008.WNOSPlugin.Windsor.RefreshNAASUsers, Windsor.Node2008.WNOSPlugin.Windsor.dll'
+           ,'Basic'
+           ,'0000-0000-0000-0000-0000'
+           ,SYSDATE);
+
+INSERT INTO NSchedule
+           (Id
+           ,Name
+           ,FlowId
+           ,StartOn
+           ,EndOn
+           ,SourceType
+           ,SourceId
+           ,SourceFlow
+           ,SourceOperation
+           ,TargetType
+           ,TargetId
+           ,TargetFlow
+           ,TargetOperation
+           ,LastExecutedOn
+           ,NextRun
+           ,FrequencyType
+           ,Frequency
+           ,ModifiedBy
+           ,ModifiedOn
+           ,IsActive
+           ,IsRunNow
+           ,ExecuteStatus)
+     VALUES
+           ('BDAE9CC8-FB11-4230-BA33-4DF46FFEC286'
+           ,'Clean temporary folder'
+           ,'6E1FD9A4-4C02-4208-9D3C-BE743BF720AF'
+           ,SYSDATE
+           ,SYSDATE + numtoyminterval(5, 'YEAR')
+           ,'LocalService'
+           ,'3E8D160F-D73D-4bad-AACB-A8ABFE815E63'
+           ,''
+           ,''
+           ,'None'
+           ,''
+           ,''
+           ,''
+           ,NULL
+           ,SYSDATE
+           ,'Day'
+           ,'1'
+           ,'0000-0000-0000-0000-0000'
+           ,SYSDATE
+           ,'Y'
+           ,'N'
+           ,'None');
+
+INSERT INTO NSchedule
+           (Id
+           ,Name
+           ,FlowId
+           ,StartOn
+           ,EndOn
+           ,SourceType
+           ,SourceId
+           ,SourceFlow
+           ,SourceOperation
+           ,TargetType
+           ,TargetId
+           ,TargetFlow
+           ,TargetOperation
+           ,LastExecutedOn
+           ,NextRun
+           ,FrequencyType
+           ,Frequency
+           ,ModifiedBy
+           ,ModifiedOn
+           ,IsActive
+           ,IsRunNow
+           ,ExecuteStatus)
+     VALUES
+           ('B84F7430-DA6A-4505-BCE0-EC5B0EFE89F2'
+           ,'Refresh NAAS Users'
+           ,'6E1FD9A4-4C02-4208-9D3C-BE743BF720AF'
+           ,SYSDATE
+           ,SYSDATE + numtoyminterval(5, 'YEAR')
+           ,'LocalService'
+           ,'98307B49-952E-450b-BE55-512CEACA4B8E'
+           ,''
+           ,''
+           ,'None'
+           ,''
+           ,''
+           ,''
+           ,NULL
+           ,SYSDATE
+           ,'Hour'
+           ,'1'
+           ,'0000-0000-0000-0000-0000'
+           ,SYSDATE
+           ,'Y'
+           ,'N'
+           ,'None');
+     
+     
+commit;
+
