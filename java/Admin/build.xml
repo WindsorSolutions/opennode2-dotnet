@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Admin" basedir="." default="build.jar">
+
+	<import file="${basedir}/../Resources/ant/project.build.xml" />
+
+	<!-- Modify "do.project.specifics" to carry out setup details specific to this project, -->
+	<!-- such as copying resource files to the proper locations. Otherwise leave it empty -->
+
+	<target name="do.project.specifics">
+
+		<copy todir="${classes}" file="${env.dir.local}/wna.properties" verbose="${verbosity}" preservelastmodified="false" />
+		<copy todir="${build}" overwrite="yes" verbose="${verbosity}" preservelastmodified="false">
+			<fileset dir="${resources.local}" />
+		</copy>
+		<replace file="${build}/build_info.html" token="@build.time@" value="${build.time}" summary="true" />
+		<replace file="${build}/build_info.html" token="@target.env@" value="${env.dir}" summary="true" />
+	</target>
+
+</project>

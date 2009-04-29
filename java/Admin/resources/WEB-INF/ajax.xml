@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+                http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<bean name="/ajax/accounts.htm"
+		class="com.windsor.node.admin.ajax.UserInfoAutocompleteController">
+		<property name="defaultMax" value="10" />
+		<property name="maxParameter" value="limit" />
+		<property name="parameter" value="q" />
+		<property name="search">
+			<bean
+				class="com.windsor.node.admin.ajax.StringArraySearchService" />
+		</property>
+		<property name="accountService" ref="accountService" />
+	</bean>
+
+	<bean name="/ajax/datasources.htm"
+		class="com.windsor.node.admin.ajax.InMemoryDataAutocompleteController">
+		<property name="defaultMax" value="10" />
+		<property name="maxParameter" value="limit" />
+		<property name="parameter" value="q" />
+		<property name="search">
+			<bean
+				class="com.windsor.node.admin.ajax.StringArraySearchService" />
+		</property>
+		<property name="list">
+			<list>
+				<value>com.ibm.db2.jcc.DB2Driver</value>
+				<value>com.microsoft.sqlserver.jdbc.SQLServerDriver</value>
+				<value>com.mysql.jdbc.Driver</value>
+				<value>oracle.jdbc.OracleDriver</value>
+			</list>
+		</property>
+	</bean>
+</beans>
