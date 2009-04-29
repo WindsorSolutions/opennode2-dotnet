@@ -1,0 +1,60 @@
+INFO 1 Windsor.EManifest.State.SubmissionUtility.Program - Loading context...
+INFO 1 Windsor.EManifest.State.SubmissionUtility.StateSubmitter - Executing...
+INFO 1 Windsor.EManifest.State.SubmissionUtility.StateSubmitter - Submission before execution: [StateSubmission: (DataFlow: eUHWM)
+(Code: NJ)
+(Node: [StateNode: (Endpoint: http://www.windsorsolutions.biz:8888/wne/services/v11)
+(Credentials: System.Net.NetworkCredential)
+])
+(Errors: 
+)
+]
+INFO 1 Windsor.EManifest.State.SubmissionUtility.StateSubmitter - Getting manifests...
+INFO 1 Windsor.EManifest.State.SubmissionUtility.StateSubmitter - Submitting manifests...
+INFO 1 Windsor.EManifest.State.SubmissionUtility.StateSubmitter - Setting manifest results...
+INFO 1 Windsor.EManifest.State.SubmissionUtility.StateSubmitter - Submission after execution: [StateSubmission: (DataFlow: eUHWM)
+(Code: NJ)
+(Node: [StateNode: (Endpoint: http://www.windsorsolutions.biz:8888/wne/services/v11)
+(Credentials: System.Net.NetworkCredential)
+])
+(Errors: 
+)
+]
+INFO 1 Windsor.EManifest.State.SubmissionUtility.StateSubmitter - Submission before execution: [StateSubmission: (DataFlow: eUHWM)
+(Code: MN)
+(Node: [StateNode: (Endpoint: https://neient.pca.state.mn.us/node/service.asmx)
+(Credentials: System.Net.NetworkCredential)
+])
+(Errors: 
+)
+]
+INFO 1 Windsor.EManifest.State.SubmissionUtility.StateSubmitter - Getting manifests...
+INFO 1 Windsor.EManifest.State.SubmissionUtility.StateSubmitter - Submitting manifests...
+INFO 1 Windsor.EManifest.State.SubmissionUtility.StateSubmitter - Setting manifest results...
+INFO 1 Windsor.EManifest.State.SubmissionUtility.StateSubmitter - Submission after execution: [StateSubmission: (DataFlow: eUHWM)
+(Code: MN)
+(Node: [StateNode: (Endpoint: https://neient.pca.state.mn.us/node/service.asmx)
+(Credentials: System.Net.NetworkCredential)
+])
+(Manifests: 
+([ManifestFile: (RecordId: 669b99d5-ddeb-4f0f-ba39-4d91f31e4035)
+(Path: Temp\MN\508e8141-5100-47b0-909b-d808a6903ae5.zip)
+(TransactionId: efb92997-0b6d-4f29-8a78-a3f498e47cba)
+])
+([ManifestFile: (RecordId: ab528dde-437d-4297-a7bd-626ae6af2ef5)
+(Path: Temp\MN\a4f12e1c-42b9-4dbb-af18-6e33a00478e2.zip)
+(TransactionId: 29b5300b-b653-4c36-9a7d-82d688c5580f)
+])
+([ManifestFile: (RecordId: 47a18b65-c581-462e-a65a-97ed49158817)
+(Path: Temp\MN\63026d58-23bf-4b9c-a228-c3600a1e63f8.zip)
+(TransactionId: a7d9010c-d979-41da-975f-4f775d15c5fb)
+])
+([ManifestFile: (RecordId: c619d771-7390-46fe-b114-d09cc27e4561)
+(Path: Temp\MN\1e53c2fd-a95f-4eeb-946b-6d85c4e30011.zip)
+(TransactionId: 2b9feb45-add6-4a03-886b-18a1f55c7ce3)
+])
+)
+(Errors: 
+)
+]
+INFO 1 Windsor.EManifest.State.SubmissionUtility.StateSubmitter - Post processing...
+INFO 1 Windsor.EManifest.State.SubmissionUtility.StateSubmitter - Finished
