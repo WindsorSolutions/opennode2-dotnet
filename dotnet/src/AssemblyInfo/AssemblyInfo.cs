@@ -44,19 +44,19 @@ namespace Windsor.Node2008.WNOS.AssemblyInfo
     public static partial class AssemblyInfo
 	{
 		// [assembly: AssemblyVersion(AssemblyInfoServer.cAssemblyVersion)]
-        public const string cAssemblyVersion = "1.0.0.0";
+        public const string cAssemblyVersion = "1.1.3.0";
 		
 		// [assembly: AssemblyFileVersion(AssemblyInfoServer.cAssemblyFileVersion)]
-		public const string cAssemblyFileVersion = "1.0.0.0";
+		public const string cAssemblyFileVersion = "1.1.3.0";
 
 		// [assembly: AssemblyCompany(AssemblyInfoServer.cAssemblyCompany)]
-		public const string cAssemblyCompany = "Windsor Solutions, Inc."; 
+        public const string cAssemblyCompany = "The Environmental Council of the States (ECOS)"; 
 
 		// [assembly: AssemblyProduct(AssemblyInfoServer.cAssemblyProduct)]
-        public const string cAssemblyProduct = "Windsor Node 2008"; 
+        public const string cAssemblyProduct = "OpenNode2"; 
 
 		// [assembly: AssemblyCopyright(AssemblyInfoServer.cAssemblyCopyright)]
-        public const string cAssemblyCopyright = "© 2008 Windsor Solutions. All Rights Reserved."; 
+        public const string cAssemblyCopyright = "Copyright (c) 2009, The Environmental Council of the States (ECOS). All Rights Reserved."; 
 		
 		// [assembly: AssemblyTrademark(AssemblyInfoServer.cAssemblyTrademark)]
 		public const string cAssemblyTrademark = "";

@@ -34,19 +34,20 @@ POSSIBILITY OF SUCH DAMAGE.
 ﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Windsor.Node2008.WNOS.AssemblyInfo;
 using Windsor.Node2008.WNOSPlugin;
 
 [assembly: AssemblyTitle("AQS-WS")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Private")]
-[assembly: AssemblyProduct("AQS-WS")]
-[assembly: AssemblyCopyright("Copyright © Private 2008")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCompany(AssemblyInfo.cAssemblyCompany)]
+[assembly: AssemblyProduct(AssemblyInfo.cAssemblyProduct)]
+[assembly: AssemblyCopyright(AssemblyInfo.cAssemblyCopyright)]
+[assembly: AssemblyTrademark(AssemblyInfo.cAssemblyTrademark)]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
 [assembly: Guid("d146176d-ec4d-4362-8aa7-86926dae0b47")]
-[assembly: AssemblyVersion("1.0.*")]
+[assembly: AssemblyVersion("1.1.3.*")]
 [assembly: PluginDefaultFlowAttribute("AQS-WS")]
 
 

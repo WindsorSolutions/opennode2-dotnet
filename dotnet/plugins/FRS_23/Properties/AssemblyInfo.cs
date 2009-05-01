@@ -34,6 +34,7 @@ POSSIBILITY OF SUCH DAMAGE.
 ﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Windsor.Node2008.WNOS.AssemblyInfo;
 using Windsor.Node2008.WNOSPlugin;
 
 // General Information about an assembly is controlled through the following 
@@ -42,10 +43,10 @@ using Windsor.Node2008.WNOSPlugin;
 [assembly: AssemblyTitle("FRS23")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Windsor Solutions, Inc.")]
-[assembly: AssemblyProduct("WNOS Plugin: FRS 2.3")]
-[assembly: AssemblyCopyright("Windsor 2008")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCompany(AssemblyInfo.cAssemblyCompany)]
+[assembly: AssemblyProduct(AssemblyInfo.cAssemblyProduct)]
+[assembly: AssemblyCopyright(AssemblyInfo.cAssemblyCopyright)]
+[assembly: AssemblyTrademark(AssemblyInfo.cAssemblyTrademark)]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
@@ -65,5 +66,5 @@ using Windsor.Node2008.WNOSPlugin;
 //
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("5.1.*")]
+[assembly: AssemblyVersion("1.1.3.*")]
 [assembly: PluginDefaultFlowAttribute("FRS")]
