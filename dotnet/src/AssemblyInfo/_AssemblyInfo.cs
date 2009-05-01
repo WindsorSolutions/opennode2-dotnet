@@ -43,6 +43,8 @@ namespace Windsor.Node2008.WNOS.AssemblyInfo
 	/// </summary>
     public static partial class AssemblyInfo
     {
+        public const string cSvnVersion = "$WCREV$";
+
         // [assembly: AssemblyVersion(AssemblyInfoServer.cAssemblyVersion)]
         public const string cAssemblyVersion = "1.1.3.$WCREV$";
 

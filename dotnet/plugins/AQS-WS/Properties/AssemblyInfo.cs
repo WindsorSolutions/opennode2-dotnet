@@ -47,7 +47,7 @@ using Windsor.Node2008.WNOSPlugin;
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
 [assembly: Guid("d146176d-ec4d-4362-8aa7-86926dae0b47")]
-[assembly: AssemblyVersion("1.1.3.*")]
+[assembly: AssemblyVersion("1.1.3." + AssemblyInfo.cSvnVersion)]
 [assembly: PluginDefaultFlowAttribute("AQS-WS")]
 
 
