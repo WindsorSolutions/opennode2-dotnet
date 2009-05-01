@@ -39,6 +39,7 @@ using System.Reflection;
 using System.Diagnostics;
 
 using Windsor.Node2008.WNOSPlugin;
+using Windsor.Commons.Compression;
 
 namespace CopyPlugins
 {
@@ -78,7 +79,8 @@ namespace CopyPlugins
             Directory.CreateDirectory(Path.Combine(buildFolder, "www\\Endpoint1"));
             Directory.CreateDirectory(Path.Combine(buildFolder, "www\\Endpoint2"));
         }
-        static void CopyPlugin(string pluginPath, string wnosPluginFolder)
+        static void CopyPlugin(string flowName, string packageName, string fileVersion,
+                               string pluginPath, string wnosPluginFolder)
         {
             if (Directory.Exists(wnosPluginFolder))
             {
@@ -86,11 +88,28 @@ namespace CopyPlugins
             }
             Directory.CreateDirectory(wnosPluginFolder);
             pluginPath = Path.ChangeExtension(pluginPath, ".dll");
-            string dstPath = Path.Combine(wnosPluginFolder, Path.GetFileName(pluginPath));
-            File.Copy(pluginPath, dstPath, true);
+            string dllPluginPath = Path.Combine(wnosPluginFolder, Path.GetFileName(pluginPath));
+            File.Copy(pluginPath, dllPluginPath, true);
             pluginPath = Path.ChangeExtension(pluginPath, ".pdb");
-            dstPath = Path.Combine(wnosPluginFolder, Path.GetFileName(pluginPath));
-            File.Copy(pluginPath, dstPath, true);
+            string pdbPluginPath = Path.Combine(wnosPluginFolder, Path.GetFileName(pluginPath));
+            File.Copy(pluginPath, pdbPluginPath, true);
+            string zipFileParentDir = Path.GetDirectoryName(Path.GetDirectoryName(dllPluginPath));
+            string zipFilePath = Path.Combine(zipFileParentDir, flowName + "_Plugin.zip");
+            if (File.Exists(zipFilePath)) File.Delete(zipFilePath);
+            new DotNetZipHelper().CompressFiles(zipFilePath, new string[] { dllPluginPath, pdbPluginPath });
+            string sqlParentDir = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(pluginPath)));
+            string[] sqlFiles = Directory.GetFiles(sqlParentDir, "*-DDL.sql", SearchOption.TopDirectoryOnly);
+            foreach (string sqlFile in sqlFiles)
+            {
+                string sqlDstPath = Path.Combine(zipFileParentDir, Path.GetFileName(sqlFile));
+                File.Copy(sqlFile, sqlDstPath, true);
+            }
+            string versionMinusSvnVersion = fileVersion.Substring(0, fileVersion.LastIndexOf('.'));
+            string packageFileName = string.Format("DotNET {0} Plugin v{1}.zip", packageName, versionMinusSvnVersion);
+            string[] packageFiles = Directory.GetFiles(zipFileParentDir, "*.*", SearchOption.TopDirectoryOnly);
+            string packageZipFilePath = Path.Combine(Path.GetDirectoryName(zipFileParentDir), packageFileName);
+            if (File.Exists(packageZipFilePath)) File.Delete(packageZipFilePath);
+            new DotNetZipHelper().CompressFiles(packageZipFilePath, packageFiles);
         }
         static void CopyPluginsToBuildFolder(string trunkFolder)
         {
@@ -120,11 +139,11 @@ namespace CopyPlugins
                     {
                         ICollection<string> flowNames = new List<string>();
                         flowNames.Add(pluginPath.Substring(flowNameStart + 1, index - flowNameStart - 2));
+                        string packageName = string.Empty;
                         try
                         {
                             Assembly loadedAssembly = Assembly.LoadFile(pluginPath);
-                            Attribute[] customAttributes = 
-                                Attribute.GetCustomAttributes(loadedAssembly, typeof(PluginDefaultFlowAttribute));
+                            Attribute[] customAttributes = Attribute.GetCustomAttributes(loadedAssembly);
                             if ((customAttributes != null) && (customAttributes.Length > 0))
                             {
                                 foreach (Attribute attribute in customAttributes)
@@ -133,6 +152,14 @@ namespace CopyPlugins
                                     if (defaultFlowAttribute != null)
                                     {
                                         flowNames = defaultFlowAttribute.DefaultFlowNames;
+                                    }
+                                    else
+                                    {
+                                        PluginPackageNameAttribute packageNameAttribute = attribute as PluginPackageNameAttribute;
+                                        if (packageNameAttribute != null)
+                                        {
+                                            packageName = packageNameAttribute.Name;
+                                        }
                                     }
                                 }
                             }
@@ -145,7 +172,7 @@ namespace CopyPlugins
                             string pluginDestPath = Path.Combine(wnosPluginFolder, flowName);
                             FileVersionInfo versionInfo = FileVersionInfo.GetVersionInfo(pluginPath);
                             pluginDestPath = Path.Combine(pluginDestPath, versionInfo.FileVersion);
-                            CopyPlugin(pluginPath, pluginDestPath);
+                            CopyPlugin(flowName, packageName, versionInfo.FileVersion, pluginPath, pluginDestPath);
                         }
                     }
                 }

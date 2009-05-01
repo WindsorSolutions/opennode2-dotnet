@@ -69,3 +69,4 @@ using Windsor.Node2008.WNOSPlugin;
 // by using the '*' as shown below:
 [assembly: AssemblyVersion("1.1.3." + AssemblyInfo.cSvnVersion)]
 [assembly: PluginDefaultFlowAttribute("SDWIS")]
+[assembly: PluginPackageNameAttribute("SDWIS 2.0")]

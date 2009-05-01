@@ -63,3 +63,4 @@ using Windsor.Node2008.WNOSPlugin;
 
 [assembly: AssemblyVersion("1.1.3." + AssemblyInfo.cSvnVersion)]
 [assembly: PluginDefaultFlowAttribute("RCRA")]
+[assembly: PluginPackageNameAttribute("RCRA 4.1")]

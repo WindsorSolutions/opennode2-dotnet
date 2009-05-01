@@ -52,7 +52,7 @@ namespace Windsor.Node2008.Admin.Secure
     {
 
         #region Members
-
+        private bool _canBulkAddUsers;
         #endregion
 
         protected override void OnInitializeControls(EventArgs e)
@@ -63,13 +63,15 @@ namespace Windsor.Node2008.Admin.Secure
 
                 base.OnInitializeControls(e);
                 list.Config = ListConfig;
-
-                if (!this.IsPostBack)
+                if (_canBulkAddUsers)
                 {
-                    list.SecondaryButton.Text = "Bulk Add Users";
-                    list.SecondaryButton.Visible = true;
+                    if (!this.IsPostBack)
+                    {
+                        list.SecondaryButton.Text = "Bulk Add Users";
+                        list.SecondaryButton.Visible = true;
+                    }
+                    list.SecondaryButton.Click += OnSecondaryButtonClick;
                 }
-                list.SecondaryButton.Click += OnSecondaryButtonClick;
 
                 LOG.Debug("SecurityUser.OnInitializeControls(): Exit");
             }
@@ -81,11 +83,18 @@ namespace Windsor.Node2008.Admin.Secure
         }
         protected virtual void OnSecondaryButtonClick(Object sender, EventArgs e)
         {
-            ResponseRedirect("~/Secure/SecurityBulkAddUsers.aspx");
+            if (_canBulkAddUsers)
+            {
+                ResponseRedirect("~/Secure/SecurityBulkAddUsers.aspx");
+            }
         }
         
         #region Properties
-
+        public bool CanBulkAddUsers
+        {
+            get { return _canBulkAddUsers; }
+            set { _canBulkAddUsers = value; }
+        }
         #endregion
     }
 }

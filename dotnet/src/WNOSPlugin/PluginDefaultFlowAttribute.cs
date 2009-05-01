@@ -78,4 +78,19 @@ namespace Windsor.Node2008.WNOSPlugin
             get { return _defaultFlowNames; }
         }
     }
+    [AttributeUsage(AttributeTargets.Assembly)]
+    public class PluginPackageNameAttribute : Attribute
+    {
+        private string _name;
+
+        public PluginPackageNameAttribute(string name)
+        {
+            _name = name;
+        }
+        public string Name
+        {
+            get { return _name; }
+            set { _name = value; }
+        }
+    }
 }

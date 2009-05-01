@@ -42,6 +42,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Windsor-Commons-Compression\Windsor.Commons.Compression.csproj">
+      <Project>{A5E08ED5-9650-4CDF-90C1-ACD0A3463BA3}</Project>
+      <Name>Windsor.Commons.Compression</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WNOSPlugin\WNOSPlugin.csproj">
       <Project>{FF0BCEE5-858F-4DC9-8B7B-51FFB2AA6B70}</Project>
       <Name>WNOSPlugin</Name>
