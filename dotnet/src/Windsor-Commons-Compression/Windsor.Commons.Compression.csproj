@@ -63,9 +63,9 @@
     <Compile Include="Zlib\ZlibStream.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Windsor-Commons-AssemblyInfo\Windsor.Commons.AssemblyInfo.csproj">
-      <Project>{711CDDD6-7D1F-4416-A57C-71303E81A28B}</Project>
-      <Name>Windsor.Commons.AssemblyInfo</Name>
+    <ProjectReference Include="..\AssemblyInfo\AssemblyInfo.csproj">
+      <Project>{FBFF305C-3C14-4013-88F4-EAB636399C2C}</Project>
+      <Name>AssemblyInfo</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

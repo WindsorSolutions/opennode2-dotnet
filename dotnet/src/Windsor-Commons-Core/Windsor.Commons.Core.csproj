@@ -1,19 +1,17 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{711CDDD6-7D1F-4416-A57C-71303E81A28B}</ProjectGuid>
+    <ProjectGuid>{FE8A985A-F050-4475-B3D6-4E95EE87CF40}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Windsor.Commons.AssemblyInfo</RootNamespace>
-    <AssemblyName>Windsor.Commons.AssemblyInfo</AssemblyName>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <OldToolsVersion>2.0</OldToolsVersion>
-    <UpgradeBackupLocation>
-    </UpgradeBackupLocation>
+    <RootNamespace>Windsor.Commons.Core</RootNamespace>
+    <AssemblyName>Windsor.Commons.Core</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -46,15 +44,55 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="AppDomainInstanceLoader.cs" />
+    <Compile Include="AspNetUtils.cs" />
+    <Compile Include="CollectionUtils.cs" />
+    <Compile Include="CommaSeparatedFileParser.cs" />
+    <Compile Include="ComparableBase.cs" />
+    <Compile Include="ConfigurationUtils.cs" />
+    <Compile Include="DebugUtils.cs" />
+    <Compile Include="DisposableBase.cs" />
+    <Compile Include="EnumUtils.cs" />
+    <Compile Include="ExceptionUtils.cs" />
+    <Compile Include="FileSystemEnumerator.cs" />
+    <Compile Include="FileUtils.cs" />
+    <Compile Include="MathUtils.cs" />
+    <Compile Include="NetworkUtils.cs" />
+    <Compile Include="ObjectCacheUtils.cs" />
+    <Compile Include="ParsingHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PropertyComparerHelper.cs" />
+    <Compile Include="ReflectionUtils.cs" />
+    <Compile Include="SerializationUtils.cs" />
+    <Compile Include="SimpleCryptographyProvider.cs" />
+    <Compile Include="SortableCollection.cs" />
+    <Compile Include="StringAbbreviator.cs" />
+    <Compile Include="StringUtils.cs" />
+    <Compile Include="ThreadQueueServer.cs" />
+    <Compile Include="ValidationHelper.cs" />
+    <Compile Include="XmlUtils.cs" />
+    <Compile Include="XsltUtils.cs" />
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <EmbeddedResource Include="WordAbbreviations.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AssemblyInfo\AssemblyInfo.csproj">
+      <Project>{FBFF305C-3C14-4013-88F4-EAB636399C2C}</Project>
+      <Name>AssemblyInfo</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
@@ -62,8 +100,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
-  </PropertyGroup>
 </Project>

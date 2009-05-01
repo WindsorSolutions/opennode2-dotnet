@@ -34,12 +34,12 @@ POSSIBILITY OF SUCH DAMAGE.
 ﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using Windsor.Commons.AssemblyInfo;
+using Windsor.Node2008.WNOS.AssemblyInfo;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Windsor.Commons.GenericCollectionLibrary")]
+[assembly: AssemblyTitle("Windsor.Commons.Logging")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany(AssemblyInfo.cAssemblyCompany)]
@@ -54,7 +54,7 @@ using Windsor.Commons.AssemblyInfo;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("B4E1D01C-3B32-418c-BBD7-3C0D249DC16B")]
+[assembly: Guid("4FFD8C27-45F2-4bbd-9646-3E64C5F9ED7A")]
 
 // Version information for an assembly consists of the following four values:
 //

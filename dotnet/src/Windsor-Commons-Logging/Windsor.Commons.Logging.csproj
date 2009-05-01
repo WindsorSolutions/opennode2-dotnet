@@ -42,28 +42,28 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="antlr.runtime, Version=2.7.6.2, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\antlr.runtime.dll</HintPath>
+      <HintPath>..\..\lib\antlr.runtime.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Common.Logging, Version=1.2.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\Common.Logging.dll</HintPath>
+      <HintPath>..\..\lib\Common.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Common.Logging.Log4Net, Version=1.2.0.2, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\Common.Logging.Log4Net.dll</HintPath>
+      <HintPath>..\..\lib\Common.Logging.Log4Net.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\log4net.dll</HintPath>
+      <HintPath>..\..\lib\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Spring.Aop, Version=1.2.0.20313, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\Spring.Aop.dll</HintPath>
+      <HintPath>..\..\lib\Spring.Aop.dll</HintPath>
     </Reference>
     <Reference Include="Spring.Core, Version=1.2.0.20313, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\Spring.Core.dll</HintPath>
+      <HintPath>..\..\lib\Spring.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -75,9 +75,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Windsor-Commons-AssemblyInfo\Windsor.Commons.AssemblyInfo.csproj">
-      <Project>{711CDDD6-7D1F-4416-A57C-71303E81A28B}</Project>
-      <Name>Windsor.Commons.AssemblyInfo</Name>
+    <ProjectReference Include="..\AssemblyInfo\AssemblyInfo.csproj">
+      <Project>{FBFF305C-3C14-4013-88F4-EAB636399C2C}</Project>
+      <Name>AssemblyInfo</Name>
     </ProjectReference>
     <ProjectReference Include="..\Windsor-Commons-Core\Windsor.Commons.Core.csproj">
       <Project>{FE8A985A-F050-4475-B3D6-4E95EE87CF40}</Project>

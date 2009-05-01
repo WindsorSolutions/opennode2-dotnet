@@ -57,11 +57,11 @@
       <Project>{FBFF305C-3C14-4013-88F4-EAB636399C2C}</Project>
       <Name>AssemblyInfo</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Windsor-Commons-Core\Windsor.Commons.Core.csproj">
+    <ProjectReference Include="..\..\src\Windsor-Commons-Core\Windsor.Commons.Core.csproj">
       <Project>{FE8A985A-F050-4475-B3D6-4E95EE87CF40}</Project>
       <Name>Windsor.Commons.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Windsor-Commons-Logging\Windsor.Commons.Logging.csproj">
+    <ProjectReference Include="..\..\src\Windsor-Commons-Logging\Windsor.Commons.Logging.csproj">
       <Project>{C201FD80-438C-4252-9655-B3E26F75A5AA}</Project>
       <Name>Windsor.Commons.Logging</Name>
     </ProjectReference>

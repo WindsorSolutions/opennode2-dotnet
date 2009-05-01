@@ -34,12 +34,12 @@ POSSIBILITY OF SUCH DAMAGE.
 ﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using Windsor.Commons.AssemblyInfo;
+using Windsor.Node2008.WNOS.AssemblyInfo;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Windsor.Commons.AssemblyInfo")]
+[assembly: AssemblyTitle("Windsor.Commons.Compression")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany(AssemblyInfo.cAssemblyCompany)]
@@ -54,7 +54,7 @@ using Windsor.Commons.AssemblyInfo;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("564F4DB4-10EA-4b64-A76F-38F40F185659")]
+[assembly: Guid("FA71D683-84C0-4eb1-9358-8DA96031601B")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -63,7 +63,8 @@ using Windsor.Commons.AssemblyInfo;
 //      Build Number
 //      Revision
 //
-// You can specify all the values or you can default the Revision and Build Numbers 
+// You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
+// [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion(AssemblyInfo.cAssemblyVersion)]
 [assembly: AssemblyFileVersion(AssemblyInfo.cAssemblyFileVersion)]

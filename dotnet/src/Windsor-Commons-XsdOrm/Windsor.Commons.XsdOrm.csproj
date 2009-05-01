@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{FE8A985A-F050-4475-B3D6-4E95EE87CF40}</ProjectGuid>
+    <ProjectGuid>{8A62B9FD-50DC-4712-9237-ADE3CDC0A3D4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Windsor.Commons.Core</RootNamespace>
-    <AssemblyName>Windsor.Commons.Core</AssemblyName>
+    <RootNamespace>Windsor.Commons.XsdOrm</RootNamespace>
+    <AssemblyName>Windsor.Commons.XsdOrm</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -45,51 +45,53 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Spring.Core, Version=1.2.0.20313, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Spring.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Data, Version=1.2.0.20313, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Spring.Data.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppDomainInstanceLoader.cs" />
-    <Compile Include="AspNetUtils.cs" />
-    <Compile Include="CollectionUtils.cs" />
-    <Compile Include="CommaSeparatedFileParser.cs" />
-    <Compile Include="ComparableBase.cs" />
-    <Compile Include="ConfigurationUtils.cs" />
-    <Compile Include="DebugUtils.cs" />
-    <Compile Include="DisposableBase.cs" />
-    <Compile Include="EnumUtils.cs" />
-    <Compile Include="ExceptionUtils.cs" />
-    <Compile Include="FileSystemEnumerator.cs" />
-    <Compile Include="FileUtils.cs" />
-    <Compile Include="MathUtils.cs" />
-    <Compile Include="NetworkUtils.cs" />
-    <Compile Include="ObjectCacheUtils.cs" />
-    <Compile Include="ParsingHelper.cs" />
+    <Compile Include="BaseException.cs" />
+    <Compile Include="Implementations\Column.cs" />
+    <Compile Include="Implementations\MappingContext.cs" />
+    <Compile Include="Implementations\MemberInfoWrapper.cs" />
+    <Compile Include="Implementations\ObjectPath.cs" />
+    <Compile Include="Implementations\ObjectsDatabaseBase.cs" />
+    <Compile Include="Implementations\ObjectsFromDatabase.cs" />
+    <Compile Include="Implementations\ObjectsToDatabase.cs" />
+    <Compile Include="Implementations\ObjectTableInfo.cs" />
+    <Compile Include="Implementations\Relation.cs" />
+    <Compile Include="Implementations\Table.cs" />
+    <Compile Include="Implementations\Utils.cs" />
+    <Compile Include="IObjectsFromDatabase.cs" />
+    <Compile Include="IObjectsToDatabase.cs" />
+    <Compile Include="MappingAttributes.cs" />
+    <Compile Include="MappingException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PropertyComparerHelper.cs" />
-    <Compile Include="ReflectionUtils.cs" />
-    <Compile Include="SerializationUtils.cs" />
-    <Compile Include="SimpleCryptographyProvider.cs" />
-    <Compile Include="SortableCollection.cs" />
-    <Compile Include="StringAbbreviator.cs" />
-    <Compile Include="StringUtils.cs" />
-    <Compile Include="ThreadQueueServer.cs" />
-    <Compile Include="ValidationHelper.cs" />
-    <Compile Include="XmlUtils.cs" />
-    <Compile Include="XsltUtils.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="WordAbbreviations.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Windsor-Commons-AssemblyInfo\Windsor.Commons.AssemblyInfo.csproj">
-      <Project>{711CDDD6-7D1F-4416-A57C-71303E81A28B}</Project>
-      <Name>Windsor.Commons.AssemblyInfo</Name>
+    <ProjectReference Include="..\AssemblyInfo\AssemblyInfo.csproj">
+      <Project>{FBFF305C-3C14-4013-88F4-EAB636399C2C}</Project>
+      <Name>AssemblyInfo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Windsor-Commons-Core\Windsor.Commons.Core.csproj">
+      <Project>{FE8A985A-F050-4475-B3D6-4E95EE87CF40}</Project>
+      <Name>Windsor.Commons.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Windsor-Commons-Logging\Windsor.Commons.Logging.csproj">
+      <Project>{C201FD80-438C-4252-9655-B3E26F75A5AA}</Project>
+      <Name>Windsor.Commons.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Windsor-Commons-Spring\Windsor.Commons.Spring.csproj">
+      <Project>{2249EFD8-40F1-4C41-BCF0-AD29FEDFCBD0}</Project>
+      <Name>Windsor.Commons.Spring</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
