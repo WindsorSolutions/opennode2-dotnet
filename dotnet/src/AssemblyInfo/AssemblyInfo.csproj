@@ -52,7 +52,7 @@
   </Target>
   -->
   <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
+    <PreBuildEvent>REM Stamp SVN revision # into assembly version #
+SubWCRev.exe "$(ProjectDir)\..\\..\\" "$(ProjectDir)_AssemblyInfo.cs" "$(ProjectDir)AssemblyInfo.cs"</PreBuildEvent>
   </PropertyGroup>
 </Project>

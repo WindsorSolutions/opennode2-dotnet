@@ -42,23 +42,23 @@ namespace Windsor.Node2008.WNOS.AssemblyInfo
 	/// constants defined in this file within the AssemblyInfo.cs file for your project.
 	/// </summary>
     public static partial class AssemblyInfo
-	{
-		// [assembly: AssemblyVersion(AssemblyInfoServer.cAssemblyVersion)]
-        public const string cAssemblyVersion = "1.0.0.$WCREV$";
-		
-		// [assembly: AssemblyFileVersion(AssemblyInfoServer.cAssemblyFileVersion)]
-		public const string cAssemblyFileVersion = "1.0.0.$WCREV$";
+    {
+        // [assembly: AssemblyVersion(AssemblyInfoServer.cAssemblyVersion)]
+        public const string cAssemblyVersion = "1.1.3.$WCREV$";
 
-		// [assembly: AssemblyCompany(AssemblyInfoServer.cAssemblyCompany)]
-		public const string cAssemblyCompany = "Windsor Solutions, Inc."; 
+        // [assembly: AssemblyFileVersion(AssemblyInfoServer.cAssemblyFileVersion)]
+        public const string cAssemblyFileVersion = "1.1.3.$WCREV$";
 
-		// [assembly: AssemblyProduct(AssemblyInfoServer.cAssemblyProduct)]
-        public const string cAssemblyProduct = "Windsor Node 2008"; 
+        // [assembly: AssemblyCompany(AssemblyInfoServer.cAssemblyCompany)]
+        public const string cAssemblyCompany = "The Environmental Council of the States (ECOS)";
 
-		// [assembly: AssemblyCopyright(AssemblyInfoServer.cAssemblyCopyright)]
-        public const string cAssemblyCopyright = "© 2008 Windsor Solutions. All Rights Reserved."; 
-		
-		// [assembly: AssemblyTrademark(AssemblyInfoServer.cAssemblyTrademark)]
-		public const string cAssemblyTrademark = "";
-	}
+        // [assembly: AssemblyProduct(AssemblyInfoServer.cAssemblyProduct)]
+        public const string cAssemblyProduct = "OpenNode2";
+
+        // [assembly: AssemblyCopyright(AssemblyInfoServer.cAssemblyCopyright)]
+        public const string cAssemblyCopyright = "Copyright (c) 2009, The Environmental Council of the States (ECOS). All Rights Reserved.";
+
+        // [assembly: AssemblyTrademark(AssemblyInfoServer.cAssemblyTrademark)]
+        public const string cAssemblyTrademark = "";
+    }
 }
