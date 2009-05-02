@@ -202,6 +202,10 @@
       <Project>{8FB61114-2953-4BF9-86AC-072FF5B401D7}</Project>
       <Name>NAASClient</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Windsor-Commons-XsdOrm\Windsor.Commons.XsdOrm.csproj">
+      <Project>{8A62B9FD-50DC-4712-9237-ADE3CDC0A3D4}</Project>
+      <Name>Windsor.Commons.XsdOrm</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WNOSConnector\WNOSConnector.csproj">
       <Project>{6DFCA062-E70D-4CCE-BBBF-11CA09EF2FD0}</Project>
       <Name>WNOSConnector</Name>
