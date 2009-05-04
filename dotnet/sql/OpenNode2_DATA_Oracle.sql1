@@ -9,7 +9,7 @@ INSERT INTO NAccount
            ,IsDemoUser)
      VALUES
            ('0000-0000-0000-0000-0000'
-           ,'node@ndep.nv.gov'
+           ,'admin@domain.gov'
            ,'Y'
            ,'Admin'
            ,'0000-0000-0000-0000-0000'
@@ -29,7 +29,7 @@ INSERT INTO NAccount
            ,IsDemoUser)
      VALUES
            ('1111-1111-1111-1111-1111'
-           ,'runtime@ndep.nv.gov'
+           ,'runtime@domain.gov'
            ,'Y'
            ,'Authed'
            ,'0000-0000-0000-0000-0000'
@@ -38,63 +38,6 @@ INSERT INTO NAccount
            ,'N');
 
 
-INSERT INTO NAccount
-           (Id
-           ,NAASAccount
-           ,IsActive
-           ,SystemRole
-           ,ModifiedBy
-           ,ModifiedOn
-           ,IsDeleted
-           ,IsDemoUser)
-     VALUES
-           ('C9D1210A-92AD-4613-B91B-C22F35EC6BA8'
-           ,'ted@windsorsolutions.com'
-           ,'Y'
-           ,'Admin'
-           ,'0000-0000-0000-0000-0000'
-           ,SYSDATE
-           ,'N'
-           ,'N');
-       
-INSERT INTO NAccount
-           (Id
-           ,NAASAccount
-           ,IsActive
-           ,SystemRole
-           ,ModifiedBy
-           ,ModifiedOn
-           ,IsDeleted
-           ,IsDemoUser)
-     VALUES
-           ('6bf367ee-bd8a-4c7b-a26e-87eff2092811'
-           ,'mark@windsorsolutions.com'
-           ,'Y'
-           ,'Admin'
-           ,'0000-0000-0000-0000-0000'
-           ,SYSDATE
-           ,'N'
-           ,'N');
-
-INSERT INTO NAccount
-           (Id
-           ,NAASAccount
-           ,IsActive
-           ,SystemRole
-           ,ModifiedBy
-           ,ModifiedOn
-           ,IsDeleted
-           ,IsDemoUser)
-     VALUES
-           ('17E990F7-313E-48fd-AE7F-DAA0DFC35721'
-           ,'Jason@windsorsolutions.com'
-           ,'Y'
-           ,'Admin'
-           ,'0000-0000-0000-0000-0000'
-           ,SYSDATE
-           ,'N'
-           ,'N');
-           
 INSERT INTO NFlow
            (Id
            ,InfoUrl
