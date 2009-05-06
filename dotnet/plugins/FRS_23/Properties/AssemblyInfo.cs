@@ -47,5 +47,6 @@ using Windsor.Node2008.WNOS.AssemblyInfo;
 [assembly: AssemblyTrademark(AssemblyInfo.cAssemblyTrademark)]
 [assembly: AssemblyCulture("")]
 [assembly: Guid("BF948CE7-2C20-4b4e-8361-CC17DEB5A1B8")]
-[assembly: AssemblyVersion("1.0.*")]
+[assembly: AssemblyVersion("1.1.4." + AssemblyInfo.cSvnVersion)]
 [assembly: PluginDefaultFlowAttribute("FRS")]
+[assembly: PluginPackageNameAttribute("FRS 2.3")]
