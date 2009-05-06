@@ -53,7 +53,7 @@ namespace Windsor.Node2008.WNOSPlugin.FRS23
     {
         MakeHeaderOnQuery,
         MakeHeaderOnSolicit,
-        Hd_ProvidingOrg, 
+        Hd_ProvidingOrg,
         Hd_ContactInfo,
         Hd_PayloadOperation
     }
@@ -75,7 +75,7 @@ namespace Windsor.Node2008.WNOSPlugin.FRS23
         private IDocumentManager _documentManager;
         private IHeaderDocumentHelper _headerDocumentHelper;
         private ISettingsProvider _settingsProvider;
-        
+
 
         #endregion
 
@@ -109,699 +109,705 @@ namespace Windsor.Node2008.WNOSPlugin.FRS23
             GetServiceImplementation(out _settingsProvider);
         }
 
-		public enum TableRelationships {
-			Facility_AltName,
-			Facility_EnvInt,
-			Facility_GeoCoord,
-			Facility_MailAdd,
-			Facility_NAICS,
-			Facility_SIC,
-			EnvInt_Indiv,
-			EnvInt_Org
-		}
-
-
-		#region Private methods
-
-		/// <summary>
-		/// PopulateFacilitySiteList
-		/// </summary>
-		/// <param name="fsList"></param>
-		/// <param name="ds">Dataset</param>
-		/// <returns>Collection of FacilitySiteList</returns>
-		private FacilitySiteList PopulateDeletedFacilitySiteList(ref string[] deletedIDs) {
-
-			FacilitySiteList fsList = new FacilitySiteList();
-
-			//Create an array to hold the individual fs lists in collection
-			ArrayList detailArray = new ArrayList();
-
-
-			//for each data row in the parent table (PK)
-			foreach (string id in deletedIDs) {
-				//Create a new instance of the FacilitySiteAllDetails
-				FacilitySiteAllDetails fsDetail = new FacilitySiteAllDetails();
-
-				fsDetail.StateFacilityIdentifier = id;
-				fsDetail.StateFacilitySystemAcronymName = "WADOEFSIS";
-				fsDetail.LastReportedDateSpecified = false;
-
-				//Add Loaded object (parent) to the collection
-				detailArray.Add(fsDetail);
-			}
-
-
-			//Assign the collection of FacilitySiteAllDetails of the parent table
-			fsList.FacilitySiteAllDetails = (FacilitySiteAllDetails[]) detailArray.ToArray(typeof(FacilitySiteAllDetails));
-
-			//Return loaded collection
-			return fsList;
-
-		}
-		
-
-		/// <summary>
-		/// PopulateFacilitySiteList
-		/// </summary>
-		/// <param name="fsList"></param>
-		/// <param name="ds">Dataset</param>
-		/// <returns>Collection of FacilitySiteList</returns>
-		private FacilitySiteList PopulateFacilitySiteList(ref DataSet ds) {
-
-			
-			FacilitySiteList fsList = new FacilitySiteList();
-
-	
-			//Create an array to hold the individual fs lists in collection
-			ArrayList detailArray = new ArrayList();
-
-
-
-			//Order of tables from the SP
-			//
-			//                0. FRS_FacilitySite
-			//                1. FRS_AlternateName
-			//                2. FRS_EnvironmentalInterest
-			//                3. FRS_GeographicCoordinates
-			//                4. FRS_Individual
-			//                5. FRS_MailingAddress
-			//                6. FRS_NAICSCode
-			//                7. FRS_Organization
-			//                8. FRS_SICCode
-
-
-
-
-			//The FacilitySiteAllDetails class members
-			//
-			//         FacilitySiteDataType FacilitySite;
-			//         LocationAddressDataType LocationAddress;
-			//         EnvironmentalInterest[] EnvironmentalInterestDetails;
-			//         IndividualDetails[] IndividualDetails;
-			//         OrganizationDetails[] OrganizationDetails;
-			//         AltNameDataType AlternativeNameInfo;
-			//         MailingAddressDataType MailingAddress;
-			//         SICCodeDetails[] SICCodeDetails;
-			//         NAICSCodeDetails[] NAICSCodeDetails;
-			//         GeographicCoordinateDataType GeographicCoordinates;
-			//         string SourceOfData;
-			//         System.DateTime LastReportedDate;
-			//         string StateFacilitySystemAcronymName;
-			//         string StateFacilityIdentifier;
-
-			//for each data row in the parent table (PK)
-			
-
-				foreach (DataRow dr in ds.Tables["Facility"].Rows) 
-				{
-
-					//Create a new instance of the FacilitySiteAllDetails
-					FacilitySiteAllDetails fsDetail = new FacilitySiteAllDetails();
-					
-
-					#region Facilty Level Properties
-
-					//Primitive properties at the top level
-					if (dr["LastReportedDate"] == DBNull.Value) 
-					{
-						fsDetail.LastReportedDateSpecified = false;
-					}
-					else 
-					{
-						fsDetail.LastReportedDateSpecified = true;
-						fsDetail.LastReportedDate = FormatDBNullDateTime(dr["LastReportedDate"]);
-					}
-                
-					fsDetail.SourceOfData = FormatDBNullString(dr["DataSourceName"]);
-					fsDetail.StateFacilityIdentifier = FormatDBNullString(dr["StateFacilityIdentifier"]);
-					fsDetail.StateFacilitySystemAcronymName = FormatDBNullString(dr["StateFacilitySystemAcronymName"]);
-
-					#endregion
-             
-					#region FacilitySite
-
-					//Create an instance of the complex property
-					FacilitySiteDataType fs = new FacilitySiteDataType();
-
-					//LegislativeDistrictNumber
-					fs.FacilityRegistryIdentifier = FormatDBNullString(dr["FacilityRegistryIdentifier"]);
-					fs.FacilitySiteName = FormatDBNullString(dr["FacilitySiteName"]);
-					fs.FacilitySiteTypeName = FormatDBNullString(dr["FacilitySiteTypeName"]);
-					if (dr["FederalFacilityIndicator"] == DBNull.Value) 
-					{
-						fs.FederalFacilityIndicatorSpecified = false;
-					} 
-					else 
-					{
-						fs.FederalFacilityIndicator = ConvertToYesNoIndicatorDataType(dr["FederalFacilityIndicator"]);
-						fs.FederalFacilityIndicatorSpecified = true;
-					}
-					if (dr["TribalLandIndicator"] == DBNull.Value) 
-					{
-						fs.TribalLandIndicatorSpecified = false;
-					} 
-					else 
-					{
-						fs.TribalLandIndicator = ConvertToYesNoIndicatorDataType(dr["TribalLandIndicator"]);
-						fs.TribalLandIndicatorSpecified = true;
-					}
-					fs.TribalLandName = FormatDBNullString(dr["TribalLandName"]);
-					fs.CongressionalDistrictNumber = FormatDBNullString(dr["CongressionalDistrictNumber"]);
-					fs.LegislativeDistrictNumber = FormatDBNullString(dr["LegislativeDistrictNumber"]);
-					fs.HUCCode = FormatDBNullString(dr["HUCCode"]);
-
-					fsDetail.FacilitySite = fs;
-
-					#endregion
-
-					#region LocationAddress
-
-					//Create an instance of the complex property
-					LocationAddressDataType fsAddress = new LocationAddressDataType();
-
-					fsAddress.LocationAddressText = FormatDBNullString(dr["LocationAddressText"]);
-					fsAddress.SupplementalLocationText = FormatDBNullString(dr["SupplementalLocationText"]);
-					fsAddress.LocalityName = FormatDBNullString(dr["LocalityName"]);
-					fsAddress.CountyStateFIPSCode = FormatDBNullString(dr["CountyStateFIPSCode"]);
-					fsAddress.CountyName = FormatDBNullString(dr["CountyName"]);
-					fsAddress.StateUSPSCode = FormatDBNullString(dr["StateUSPSCode"]);
-					fsAddress.StateName = FormatDBNullString(dr["StateName"]);
-					fsAddress.CountryName = FormatDBNullString(dr["CountryName"]);
-					fsAddress.LocationZIPCode = FormatDBNullString(dr["LocationZIPCode"]);
-					fsAddress.LocationDescriptionText = FormatDBNullString(dr["LocationDescriptionText"]);
-
-					fsDetail.LocationAddress = fsAddress;
-
-					#endregion
-
-					#region EnvironmentalInterest 
-
-					ArrayList envArray = new ArrayList();
-
-					foreach (DataRow childRow in dr.GetChildRows(TableRelationships.Facility_EnvInt.ToString())) 
-					{
-
-						//Create an instance of the complex property
-						EnvironmentalInterest envDataType = new EnvironmentalInterest();
-                    
-						envDataType.InformationSystemAcronymName = FormatDBNullString(childRow["InformationSystemAcronymName"]);
-						envDataType.InformationSystemIdentifier = FormatDBNullString(childRow["InformationSystemIdentifier"]);
-						envDataType.EnvironmentalInterestTypeText = FormatDBNullString(childRow["EnvironmentalInterestTypeText"]);
-
-						if (childRow["FederalStateInterestIndicator"] == DBNull.Value) 
-						{
-							envDataType.FederalStateInterestIndicatorSpecified = false;
-						} 
-						else 
-						{
-							envDataType.FederalStateInterestIndicator = ConvertToFederalStateIndicatorDataType(childRow["FederalStateInterestIndicator"]);
-							envDataType.FederalStateInterestIndicatorSpecified = true;
-						}
-
-
-						//EnvironmentalInterestStartDate
-						if (IsValidDateTime(childRow["EnvironmentalInterestStartDate"], DateTime.Parse("1/1/1900"))) 
-						{
-							envDataType.EnvironmentalInterestStartDate = FormatDBNullDateTime(childRow["EnvironmentalInterestStartDate"]);
-							envDataType.EnvironmentalInterestStartDateSpecified = true;
-							envDataType.InterestStartDateQualifierText = FormatDBNullString(childRow["InterestStartDateQualifierText"]);
-
-
-
-							//EnvironmentalInterestEndDate
-							//Specify only if the start date is there
-							if (IsValidDateTime(childRow["EnvironmentalInterestEndDate"], envDataType.EnvironmentalInterestStartDate)) 
-							{
-								envDataType.EnvironmentalInterestEndDate = FormatDBNullDateTime(childRow["EnvironmentalInterestEndDate"]);
-								envDataType.EnvironmentalInterestEndDateSpecified = true;
-								envDataType.InterestEndDateQualifierText = FormatDBNullString(childRow["InterestEndDateQualifierText"]);
-							} 
-							else 
-							{
-								envDataType.EnvironmentalInterestEndDateSpecified = false;
-							}
-
-						} 
-						else 
-						{
-							envDataType.EnvironmentalInterestStartDateSpecified = false;
-							envDataType.EnvironmentalInterestEndDateSpecified = false;
-						}
-
-
-						envArray.Add(envDataType);
-
-
-                
-    
-                    
-					}
-                
-					fsDetail.EnvironmentalInterestDetails = (EnvironmentalInterest[]) envArray.ToArray(typeof(EnvironmentalInterest));
-
-
-					#endregion
-
-				
-					#region Individual
-    
-					ArrayList indArray = new ArrayList();
-    
-					foreach (DataRow childRowInd in dr.GetChildRows(TableRelationships.EnvInt_Indiv.ToString())) 
-					{
-    
-						//Create an instance of the complex property
-						IndividualDetails indDtl = new IndividualDetails();
-    
-    
-						//Affiliation
-						AffiliationDataType affType = new AffiliationDataType();
-						affType.AffiliationTypeText = FormatDBNullString(childRowInd["AffiliationTypeText"]);
-
-						if (IsValidDateTime(childRowInd["AffiliationStartDate"],DateTime.Parse("1/1/1900"))) 
-						{
-							affType.AffiliationStartDate = FormatDBNullDateTime(childRowInd["AffiliationStartDate"]);
-							affType.AffiliationStartDateSpecified = true;
-
-							if (IsValidDateTime(childRowInd["AffiliationEndDate"], affType.AffiliationStartDate)) 
-							{
-								affType.AffiliationEndDate = FormatDBNullDateTime(childRowInd["AffiliationEndDate"]);
-								affType.AffiliationEndDateSpecified = true;
-							}
-							else 
-							{
-								affType.AffiliationEndDateSpecified = false;
-							}
-
-						}
-						else 
-						{
-							affType.AffiliationStartDateSpecified = false;
-							affType.AffiliationEndDateSpecified = false;
-						}
-
-
-						indDtl.Affiliation = affType;
-    
-						//PhoneFaxEmail
-						PhoneFaxEmailDataType pfType = new PhoneFaxEmailDataType();
-						pfType.EmailAddressText = FormatDBNullString(childRowInd["EmailAddressText"]);
-						pfType.TelephoneNumber = FormatDBNullString(childRowInd["TelephoneNumber"]);
-						pfType.PhoneExtension = FormatDBNullString(childRowInd["PhoneExtension"]);
-						pfType.FaxNumber = FormatDBNullString(childRowInd["FaxNumber"]);
-						pfType.AlternateTelephoneNumber = FormatDBNullString(childRowInd["AlternateTelephoneNumber"]);
-						//indDtl.PhoneFaxEmail = pfType;	//adding check to avoid empty PhoneFaxEmail tags
-						if(FormatDBNullString(childRowInd["TelephoneNumber"]) != null)
-						{
-							indDtl.PhoneFaxEmail = pfType;
-						}
-                            
-						//IndividualDataType
-						IndividualDataType indType = new IndividualDataType();
-						indType.IndividualFullName = FormatDBNullString(childRowInd["IndividualFullName"]);
-						indType.IndividualTitleText = FormatDBNullString(childRowInd["IndividualTitleText"]);
-						indDtl.Individual = indType;
-    
-						//MailingAddress
-						MailingAddressDataType mailAdd = new MailingAddressDataType();
-						mailAdd.MailingAddressText = FormatDBNullString(childRowInd["MailingAddressText"]);
-						mailAdd.SupplementalAddressText = FormatDBNullString(childRowInd["SupplementalAddressText"]);
-						mailAdd.MailingAddressCityName = FormatDBNullString(childRowInd["MailingAddressCityName"]);
-						mailAdd.MailingAddressStateUSPSCode = FormatDBNullString(childRowInd["MailingAddressStateUSPSCode"]);
-						mailAdd.MailingAddressStateName = FormatDBNullString(childRowInd["MailingAddressStateName"]);
-						mailAdd.MailingAddressCountryName = FormatDBNullString(childRowInd["MailingAddressCountryName"]);
-						mailAdd.MailingAddressZIPCode = FormatDBNullString(childRowInd["MailingAddressZIPCode"]);
-						indDtl.MailingAddress = mailAdd;
-    
-						indArray.Add(indDtl);
-    
-					}
-                    
-					fsDetail.IndividualDetails = (IndividualDetails[]) indArray.ToArray(typeof(IndividualDetails));
-                        
-                    
-					#endregion
-
-       
-                            
-					#region Organization
-            
-					ArrayList orgArray = new ArrayList();
-            
-					foreach (DataRow childRowOrg in dr.GetChildRows(TableRelationships.EnvInt_Org.ToString())) 
-					{
-                                
-						//Create an instance of the complex property
-						OrganizationDetails orgDtl = new OrganizationDetails();
-            
-						//Affiliation
-						AffiliationDataType affType = new AffiliationDataType();
-						affType.AffiliationTypeText = FormatDBNullString(childRowOrg["AffiliationTypeText"]);
-
-						if (IsValidDateTime(childRowOrg["AffiliationStartDate"], DateTime.Parse("1/1/1900"))) 
-						{
-							affType.AffiliationStartDate = FormatDBNullDateTime(childRowOrg["AffiliationStartDate"]);
-							affType.AffiliationStartDateSpecified = true;
-
-							if (IsValidDateTime(childRowOrg["AffiliationEndDate"], DateTime.Parse("1/1/1900"))) 
-							{
-								affType.AffiliationEndDate = FormatDBNullDateTime(childRowOrg["AffiliationEndDate"]);
-								affType.AffiliationEndDateSpecified = true;
-							}
-							else 
-							{
-								affType.AffiliationEndDateSpecified = false;
-							}
-						} 
-						else 
-						{
-							affType.AffiliationStartDateSpecified = false;
-							affType.AffiliationEndDateSpecified = false;
-						}
-
-						orgDtl.Affiliation = affType;
-            
-						//PhoneFaxEmail
-						PhoneFaxEmailDataType pfType = new PhoneFaxEmailDataType();
-						pfType.EmailAddressText = FormatDBNullString(childRowOrg["EmailAddressText"]);
-						pfType.TelephoneNumber = FormatDBNullString(childRowOrg["TelephoneNumber"]);
-						pfType.PhoneExtension = FormatDBNullString(childRowOrg["PhoneExtension"]);
-						pfType.FaxNumber = FormatDBNullString(childRowOrg["FaxNumber"]);
-						pfType.AlternateTelephoneNumber = FormatDBNullString(childRowOrg["AlternateTelephoneNumber"]);
-						//orgDtl.PhoneFaxEmail = pfType;
-						//adding check to avoid empty PhoneFaxEmail tags
-						if(FormatDBNullString(childRowOrg["TelephoneNumber"]) != null)
-						{
-							orgDtl.PhoneFaxEmail = pfType;
-						}
-            
-						//Organization
-						OrganizationDataType orgType = new OrganizationDataType();
-						orgType.OrganizationFormalName = FormatDBNullString(childRowOrg["OrganizationFormalName"]);
-						orgType.OrganizationDUNSNumber = FormatDBNullString(childRowOrg["OrganizationDUNSNumber"]);
-						orgType.OrganizationTypeText = FormatDBNullString(childRowOrg["OrganizationTypeText"]);
-						orgType.EmployerIdentifier = FormatDBNullString(childRowOrg["EmployerIdentifier"]);
-						orgType.StateBusinessIdentifier = FormatDBNullString(childRowOrg["StateBusinessIdentifier"]);
-						orgType.UltimateParentName = FormatDBNullString(childRowOrg["UltimateParentName"]);
-						orgType.UltimateParentDUNSNumber = FormatDBNullString(childRowOrg["UltimateParentDUNSNumber"]);
-						orgDtl.Organization = orgType;
-//						adding check to avoid empty Organization tags
-//						if(FormatDBNullString(childRowOrg["OrganizationFormalName"]) != null)
-//						{
-//							orgDtl.Organization = orgType;
-//						}
-						//////////////////////////////////////////////////////problem here in this area?
-            
-						//MailingAddress
-						MailingAddressDataType mailAdd = new MailingAddressDataType();
-						mailAdd.MailingAddressText = FormatDBNullString(childRowOrg["MailingAddressText"]);
-						mailAdd.SupplementalAddressText = FormatDBNullString(childRowOrg["SupplementalAddressText"]);
-						mailAdd.MailingAddressCityName = FormatDBNullString(childRowOrg["MailingAddressCityName"]);
-						mailAdd.MailingAddressStateUSPSCode = FormatDBNullString(childRowOrg["MailingAddressStateUSPSCode"]);
-						mailAdd.MailingAddressStateName = FormatDBNullString(childRowOrg["MailingAddressStateName"]);
-						mailAdd.MailingAddressCountryName = FormatDBNullString(childRowOrg["MailingAddressCountryName"]);
-						mailAdd.MailingAddressZIPCode = FormatDBNullString(childRowOrg["MailingAddressZIPCode"]);
-						orgDtl.MailingAddress = mailAdd;
-            
-						orgArray.Add(orgDtl);
-            
-					}
-                            
-					fsDetail.OrganizationDetails = (OrganizationDetails[]) orgArray.ToArray(typeof(OrganizationDetails));
-            
-					#endregion
-
-
-					#region AlternateName 
-
-					DataRow[] altInfoRows = dr.GetChildRows(TableRelationships.Facility_AltName.ToString());
-
-					if (altInfoRows.Length > 0) 
-					{
-
-						//Create an instance of the complex property
-						AltNameDataType altInfo = new AltNameDataType();
-
-						//AlternativeName, AlternativeNameTypeText, DataSourceName, LastReportedDate, 
-						//StateFacilitySystemAcronymName, StateFacilityIdentifier
-						altInfo.AlternativeName = FormatDBNullString(altInfoRows[0]["AlternativeName"]);
-						altInfo.AlternativeNameTypeText = FormatDBNullString(altInfoRows[0]["AlternativeNameTypeText"]);
-
-						fsDetail.AlternativeNameInfo = altInfo;
-
-					}
-
-					#endregion
-
-
-					#region MailingAddress
-
-					DataRow[] mailAddRows = dr.GetChildRows(TableRelationships.Facility_MailAdd.ToString());
-
-					if (mailAddRows.Length > 0) 
-					{
-
-						//Create an instance of the complex property
-						MailingAddressDataType mailAdd = new MailingAddressDataType();
-
-						//AffiliationTypeText, DataSourceName, LastReportedDate, 
-						//StateFacilitySystemAcronymName, StateFacilityIdentifier
-                
-						mailAdd.MailingAddressText = FormatDBNullString(mailAddRows[0]["MailingAddressText"]);
-						mailAdd.SupplementalAddressText = FormatDBNullString(mailAddRows[0]["SupplementalAddressText"]);
-						mailAdd.MailingAddressCityName = FormatDBNullString(mailAddRows[0]["MailingAddressCityName"]);
-						mailAdd.MailingAddressStateUSPSCode = FormatDBNullString(mailAddRows[0]["MailingAddressStateUSPSCode"]);
-						mailAdd.MailingAddressStateName = FormatDBNullString(mailAddRows[0]["MailingAddressStateName"]);
-						mailAdd.MailingAddressCountryName = FormatDBNullString(mailAddRows[0]["MailingAddressCountryName"]);
-						mailAdd.MailingAddressZIPCode = FormatDBNullString(mailAddRows[0]["MailingAddressZIPCode"]);
-
-						fsDetail.MailingAddress = mailAdd;
-
-					}
-
-					#endregion
-
-					#region SICCode
-
-					ArrayList sicArray = new ArrayList();
-
-					foreach (DataRow childRow in dr.GetChildRows(TableRelationships.Facility_SIC.ToString())) 
-					{
-
-						if (childRow["SICCode"] != DBNull.Value) 
-						{
-
-							//Create an instance of the complex property
-							SICCodeDetails sicDtl = new SICCodeDetails();
-                
-							sicDtl.SICCode = FormatDBNullSICCode(childRow["SICCode"]);
-							if (childRow["SICPrimaryIndicator"] == DBNull.Value) 
-							{
-								sicDtl.SICPrimaryIndicatorSpecified = false;
-							}
-							else 
-							{
-								sicDtl.SICPrimaryIndicator = ConvertToPrimaryIndicatorDataType(childRow["SICPrimaryIndicator"]);
-								sicDtl.SICPrimaryIndicatorSpecified = true;
-							}
-
-							sicArray.Add(sicDtl);
-
-						}
-					}
-            
-					fsDetail.SICCodeDetails = (SICCodeDetails[]) sicArray.ToArray(typeof(SICCodeDetails));
-                
-            
-					#endregion
-
-            
-					#region NAICSCode
-
-					ArrayList naicsArray = new ArrayList();
-
-					foreach (DataRow childRow in dr.GetChildRows(TableRelationships.Facility_NAICS.ToString())) 
-					{
-
-						if (childRow["NAICSCode"] != DBNull.Value) 
-						{
-
-							//Create an instance of the complex property
-							NAICSCodeDetails naicsDtl = new NAICSCodeDetails();
-
-                        
-
-							if (childRow["NAICSCode"] == DBNull.Value) 
-							{
-								naicsDtl.NAICSPrimaryIndicatorSpecified = false;
-							}
-							else 
-							{
-								naicsDtl.NAICSCode = FormatDBNullNAICSCode(childRow["NAICSCode"]);
-								naicsDtl.NAICSPrimaryIndicator = ConvertToPrimaryIndicatorDataType(childRow["NAICSPrimaryIndicator"]);
-								naicsDtl.NAICSPrimaryIndicatorSpecified = true;
-							}
-
-							naicsArray.Add(naicsDtl);
-
-						}
-
-					}
-            
-					fsDetail.NAICSCodeDetails = (NAICSCodeDetails[]) naicsArray.ToArray(typeof(NAICSCodeDetails));
-                
-            
-					#endregion
-
-
-                            
-					#region GeographicCoordinates
-
-					DataRow[] geoRows = dr.GetChildRows(TableRelationships.Facility_GeoCoord.ToString());
-
-					if (geoRows.Length > 0) 
-					{
-
-						//Create an instance of the complex property
-						GeographicCoordinateDataType geoDtl = new GeographicCoordinateDataType();
-
-						// StateFacilitySystemAcronymName, StateFacilityIdentifier
-						if (geoRows[0]["LatitudeMeasure"] != DBNull.Value) 
-						{
-							geoDtl.LatitudeMeasure = FormatDBNullDecimal(geoRows[0]["LatitudeMeasure"]);
-						}
-                    
-						if (geoRows[0]["LongitudeMeasure"] != DBNull.Value) 
-						{
-							geoDtl.LongitudeMeasure = FormatDBNullDecimal(geoRows[0]["LongitudeMeasure"]);
-						}
-
-						geoDtl.HorizontalAccuracyMeasure = FormatDBNullString(geoRows[0]["HorizontalAccuracyMeasure"]);
-
-						if (geoRows[0]["HorizontalCollectionMethodText"] == DBNull.Value) 
-						{
-							geoDtl.HorizontalCollectionMethodTextSpecified = false;
-						}
-						else 
-						{
-							geoDtl.HorizontalCollectionMethodText = ConvertToHorizontalMethodDataType(geoRows[0]["HorizontalCollectionMethodText"]);
-							geoDtl.HorizontalCollectionMethodTextSpecified = true;
-						}
-                    
-						if (geoRows[0]["HorizontalReferenceDatumName"] == DBNull.Value) 
-						{
-							geoDtl.HorizontalReferenceDatumNameSpecified = false;
-						} 
-						else 
-						{
-							geoDtl.HorizontalReferenceDatumName = ConvertToHorizontalDatumDataType(geoRows[0]["HorizontalReferenceDatumName"]);
-							geoDtl.HorizontalReferenceDatumNameSpecified = true;
-						}
-
-						geoDtl.SourceMapScaleNumber = FormatDBNullString(geoRows[0]["SourceMapScaleNumber"]);
-                    
-						if (geoRows[0]["ReferencePointText"] == DBNull.Value) 
-						{
-							geoDtl.ReferencePointTextSpecified = false;
-						}
-						else 
-						{
-							geoDtl.ReferencePointText = ConvertToReferencePointDataType(geoRows[0]["ReferencePointText"]);
-							geoDtl.ReferencePointTextSpecified = true;
-						}
-
-						if (geoRows[0]["DataCollectionDate"] == DBNull.Value) 
-						{
-							geoDtl.DataCollectionDateSpecified = false;
-						}
-						else 
-						{
-							geoDtl.DataCollectionDate = FormatDBNullDateTime(geoRows[0]["DataCollectionDate"]);
-							geoDtl.DataCollectionDateSpecified = true;
-						}
-
-						if (geoRows[0]["GeometricTypeName"] != DBNull.Value) 
-						{
-							geoDtl.GeometricTypeName = ConvertToGeometricDataType(geoRows[0]["GeometricTypeName"]);
-							geoDtl.GeometricTypeNameSpecified = true;
-						}
-						else 
-						{   
-							geoDtl.GeometricTypeNameSpecified = false;
-						}
-
-						geoDtl.LocationCommentsText = FormatDBNullString(geoRows[0]["LocationCommentsText"]);
-                    
-						if (geoRows[0]["VerticalCollectionMethodText"] == DBNull.Value) 
-						{
-							geoDtl.VerticalCollectionMethodTextSpecified = false;
-						}
-						else 
-						{
-							geoDtl.VerticalCollectionMethodText = ConvertToVerticalMethodDataType(geoRows[0]["VerticalCollectionMethodText"]);
-							geoDtl.VerticalCollectionMethodTextSpecified = true;
-						}
-                    
-						if (geoRows[0]["VerticalMeasure"] != DBNull.Value) 
-						{
-							geoDtl.VerticalMeasure = FormatDBNullDecimal(geoRows[0]["VerticalMeasure"]);
-						}
-
-						geoDtl.VerticalAccuracyMeasure = FormatDBNullString(geoRows[0]["VerticalAccuracyMeasure"]);
-                    
-						if (geoRows[0]["VerticalReferenceDatumName"] == DBNull.Value) 
-						{
-							geoDtl.VerticalReferenceDatumNameSpecified = false;
-						}
-						else 
-						{
-							geoDtl.VerticalReferenceDatumName = ConvertToVerticalDatumDataType(geoRows[0]["VerticalReferenceDatumName"]);
-							geoDtl.VerticalReferenceDatumNameSpecified = true;
-						}
-                    
-						geoDtl.DataSourceName = FormatDBNullString(geoRows[0]["DataSourceName"]);
-						geoDtl.CoordinateDataSourceName = FormatDBNullString(geoRows[0]["CoordinateDataSourceName"]);
-						geoDtl.SubEntityIdentifier = FormatDBNullString(geoRows[0]["SubEntityIdentifier"]);
-                    
-						if (geoRows[0]["SubEntityTypeName"] == DBNull.Value) 
-						{
-							geoDtl.SubEntityTypeNameSpecified = false;
-						}
-						else 
-						{
-							geoDtl.SubEntityTypeName = ConvertToSubEntityDataType(geoRows[0]["SubEntityTypeName"]);
-							geoDtl.SubEntityTypeNameSpecified = true;
-						}
-
-						fsDetail.GeographicCoordinates = geoDtl;
-
-					}
-                
-
-					#endregion
-
-
-
-					//Add Loaded object (parent) to the collection
-					detailArray.Add(fsDetail);
-
-
-
-			}
-
-	
-
-			//Assign the collection of FacilitySiteAllDetails of the parent table
-			fsList.FacilitySiteAllDetails = (FacilitySiteAllDetails[]) detailArray.ToArray(typeof(FacilitySiteAllDetails));
-
-			//Return loaded collection
-			return fsList;
-
-		}
-
-
-
-		#endregion
+        public enum TableRelationships
+        {
+            Facility_AltName,
+            Facility_EnvInt,
+            Facility_GeoCoord,
+            Facility_MailAdd,
+            Facility_NAICS,
+            Facility_SIC,
+            EnvInt_Indiv,
+            EnvInt_Org
+        }
+
+
+        #region Private methods
+
+        /// <summary>
+        /// PopulateFacilitySiteList
+        /// </summary>
+        /// <param name="fsList"></param>
+        /// <param name="ds">Dataset</param>
+        /// <returns>Collection of FacilitySiteList</returns>
+        private FacilitySiteList PopulateDeletedFacilitySiteList(ref string[] deletedIDs)
+        {
+
+            FacilitySiteList fsList = new FacilitySiteList();
+
+            //Create an array to hold the individual fs lists in collection
+            ArrayList detailArray = new ArrayList();
+
+
+            //for each data row in the parent table (PK)
+            foreach (string id in deletedIDs)
+            {
+                //Create a new instance of the FacilitySiteAllDetails
+                FacilitySiteAllDetails fsDetail = new FacilitySiteAllDetails();
+
+                fsDetail.StateFacilityIdentifier = id;
+                fsDetail.StateFacilitySystemAcronymName = "WADOEFSIS";
+                fsDetail.LastReportedDateSpecified = false;
+
+                //Add Loaded object (parent) to the collection
+                detailArray.Add(fsDetail);
+            }
+
+
+            //Assign the collection of FacilitySiteAllDetails of the parent table
+            fsList.FacilitySiteAllDetails = (FacilitySiteAllDetails[])detailArray.ToArray(typeof(FacilitySiteAllDetails));
+
+            //Return loaded collection
+            return fsList;
+
+        }
+
+
+        /// <summary>
+        /// PopulateFacilitySiteList
+        /// </summary>
+        /// <param name="fsList"></param>
+        /// <param name="ds">Dataset</param>
+        /// <returns>Collection of FacilitySiteList</returns>
+        private FacilitySiteList PopulateFacilitySiteList(ref DataSet ds)
+        {
+
+
+            FacilitySiteList fsList = new FacilitySiteList();
+
+
+            //Order of tables from the SP
+            //
+            //                0. FRS_FacilitySite
+            //                1. FRS_AlternateName
+            //                2. FRS_EnvironmentalInterest
+            //                3. FRS_GeographicCoordinates
+            //                4. FRS_Individual
+            //                5. FRS_MailingAddress
+            //                6. FRS_NAICSCode
+            //                7. FRS_Organization
+            //                8. FRS_SICCode
+
+
+
+
+            //The FacilitySiteAllDetails class members
+            //
+            //         FacilitySiteDataType FacilitySite;
+            //         LocationAddressDataType LocationAddress;
+            //         EnvironmentalInterest[] EnvironmentalInterestDetails;
+            //         IndividualDetails[] IndividualDetails;
+            //         OrganizationDetails[] OrganizationDetails;
+            //         AltNameDataType AlternativeNameInfo;
+            //         MailingAddressDataType MailingAddress;
+            //         SICCodeDetails[] SICCodeDetails;
+            //         NAICSCodeDetails[] NAICSCodeDetails;
+            //         GeographicCoordinateDataType GeographicCoordinates;
+            //         string SourceOfData;
+            //         System.DateTime LastReportedDate;
+            //         string StateFacilitySystemAcronymName;
+            //         string StateFacilityIdentifier;
+
+            //for each data row in the parent table (PK)
+
+            if (ds.Tables["Facility"] == null)
+            {
+                return fsList;
+            }
+
+            //Create an array to hold the individual fs lists in collection
+            ArrayList detailArray = new ArrayList();
+
+            foreach (DataRow dr in ds.Tables["Facility"].Rows)
+            {
+
+                //Create a new instance of the FacilitySiteAllDetails
+                FacilitySiteAllDetails fsDetail = new FacilitySiteAllDetails();
+
+
+                #region Facilty Level Properties
+
+                //Primitive properties at the top level
+                if (dr["LastReportedDate"] == DBNull.Value)
+                {
+                    fsDetail.LastReportedDateSpecified = false;
+                }
+                else
+                {
+                    fsDetail.LastReportedDateSpecified = true;
+                    fsDetail.LastReportedDate = FormatDBNullDateTime(dr["LastReportedDate"]);
+                }
+
+                fsDetail.SourceOfData = FormatDBNullString(dr["DataSourceName"]);
+                fsDetail.StateFacilityIdentifier = FormatDBNullString(dr["StateFacilityIdentifier"]);
+                fsDetail.StateFacilitySystemAcronymName = FormatDBNullString(dr["StateFacilitySystemAcronymName"]);
+
+                #endregion
+
+                #region FacilitySite
+
+                //Create an instance of the complex property
+                FacilitySiteDataType fs = new FacilitySiteDataType();
+
+                //LegislativeDistrictNumber
+                fs.FacilityRegistryIdentifier = FormatDBNullString(dr["FacilityRegistryIdentifier"]);
+                fs.FacilitySiteName = FormatDBNullString(dr["FacilitySiteName"]);
+                fs.FacilitySiteTypeName = FormatDBNullString(dr["FacilitySiteTypeName"]);
+                if (dr["FederalFacilityIndicator"] == DBNull.Value)
+                {
+                    fs.FederalFacilityIndicatorSpecified = false;
+                }
+                else
+                {
+                    fs.FederalFacilityIndicator = ConvertToYesNoIndicatorDataType(dr["FederalFacilityIndicator"]);
+                    fs.FederalFacilityIndicatorSpecified = true;
+                }
+                if (dr["TribalLandIndicator"] == DBNull.Value)
+                {
+                    fs.TribalLandIndicatorSpecified = false;
+                }
+                else
+                {
+                    fs.TribalLandIndicator = ConvertToYesNoIndicatorDataType(dr["TribalLandIndicator"]);
+                    fs.TribalLandIndicatorSpecified = true;
+                }
+                fs.TribalLandName = FormatDBNullString(dr["TribalLandName"]);
+                fs.CongressionalDistrictNumber = FormatDBNullString(dr["CongressionalDistrictNumber"]);
+                fs.LegislativeDistrictNumber = FormatDBNullString(dr["LegislativeDistrictNumber"]);
+                fs.HUCCode = FormatDBNullString(dr["HUCCode"]);
+
+                fsDetail.FacilitySite = fs;
+
+                #endregion
+
+                #region LocationAddress
+
+                //Create an instance of the complex property
+                LocationAddressDataType fsAddress = new LocationAddressDataType();
+
+                fsAddress.LocationAddressText = FormatDBNullString(dr["LocationAddressText"]);
+                fsAddress.SupplementalLocationText = FormatDBNullString(dr["SupplementalLocationText"]);
+                fsAddress.LocalityName = FormatDBNullString(dr["LocalityName"]);
+                fsAddress.CountyStateFIPSCode = FormatDBNullString(dr["CountyStateFIPSCode"]);
+                fsAddress.CountyName = FormatDBNullString(dr["CountyName"]);
+                fsAddress.StateUSPSCode = FormatDBNullString(dr["StateUSPSCode"]);
+                fsAddress.StateName = FormatDBNullString(dr["StateName"]);
+                fsAddress.CountryName = FormatDBNullString(dr["CountryName"]);
+                fsAddress.LocationZIPCode = FormatDBNullString(dr["LocationZIPCode"]);
+                fsAddress.LocationDescriptionText = FormatDBNullString(dr["LocationDescriptionText"]);
+
+                fsDetail.LocationAddress = fsAddress;
+
+                #endregion
+
+                #region EnvironmentalInterest
+
+                ArrayList envArray = new ArrayList();
+
+                foreach (DataRow childRow in dr.GetChildRows(TableRelationships.Facility_EnvInt.ToString()))
+                {
+
+                    //Create an instance of the complex property
+                    EnvironmentalInterest envDataType = new EnvironmentalInterest();
+
+                    envDataType.InformationSystemAcronymName = FormatDBNullString(childRow["InformationSystemAcronymName"]);
+                    envDataType.InformationSystemIdentifier = FormatDBNullString(childRow["InformationSystemIdentifier"]);
+                    envDataType.EnvironmentalInterestTypeText = FormatDBNullString(childRow["EnvironmentalInterestTypeText"]);
+
+                    if (childRow["FederalStateInterestIndicator"] == DBNull.Value)
+                    {
+                        envDataType.FederalStateInterestIndicatorSpecified = false;
+                    }
+                    else
+                    {
+                        envDataType.FederalStateInterestIndicator = ConvertToFederalStateIndicatorDataType(childRow["FederalStateInterestIndicator"]);
+                        envDataType.FederalStateInterestIndicatorSpecified = true;
+                    }
+
+
+                    //EnvironmentalInterestStartDate
+                    if (IsValidDateTime(childRow["EnvironmentalInterestStartDate"], DateTime.Parse("1/1/1900")))
+                    {
+                        envDataType.EnvironmentalInterestStartDate = FormatDBNullDateTime(childRow["EnvironmentalInterestStartDate"]);
+                        envDataType.EnvironmentalInterestStartDateSpecified = true;
+                        envDataType.InterestStartDateQualifierText = FormatDBNullString(childRow["InterestStartDateQualifierText"]);
+
+
+
+                        //EnvironmentalInterestEndDate
+                        //Specify only if the start date is there
+                        if (IsValidDateTime(childRow["EnvironmentalInterestEndDate"], envDataType.EnvironmentalInterestStartDate))
+                        {
+                            envDataType.EnvironmentalInterestEndDate = FormatDBNullDateTime(childRow["EnvironmentalInterestEndDate"]);
+                            envDataType.EnvironmentalInterestEndDateSpecified = true;
+                            envDataType.InterestEndDateQualifierText = FormatDBNullString(childRow["InterestEndDateQualifierText"]);
+                        }
+                        else
+                        {
+                            envDataType.EnvironmentalInterestEndDateSpecified = false;
+                        }
+
+                    }
+                    else
+                    {
+                        envDataType.EnvironmentalInterestStartDateSpecified = false;
+                        envDataType.EnvironmentalInterestEndDateSpecified = false;
+                    }
+
+
+                    envArray.Add(envDataType);
+
+
+
+
+
+                }
+
+                fsDetail.EnvironmentalInterestDetails = (EnvironmentalInterest[])envArray.ToArray(typeof(EnvironmentalInterest));
+
+
+                #endregion
+
+
+                #region Individual
+
+                ArrayList indArray = new ArrayList();
+
+                foreach (DataRow childRowInd in dr.GetChildRows(TableRelationships.EnvInt_Indiv.ToString()))
+                {
+
+                    //Create an instance of the complex property
+                    IndividualDetails indDtl = new IndividualDetails();
+
+
+                    //Affiliation
+                    AffiliationDataType affType = new AffiliationDataType();
+                    affType.AffiliationTypeText = FormatDBNullString(childRowInd["AffiliationTypeText"]);
+
+                    if (IsValidDateTime(childRowInd["AffiliationStartDate"], DateTime.Parse("1/1/1900")))
+                    {
+                        affType.AffiliationStartDate = FormatDBNullDateTime(childRowInd["AffiliationStartDate"]);
+                        affType.AffiliationStartDateSpecified = true;
+
+                        if (IsValidDateTime(childRowInd["AffiliationEndDate"], affType.AffiliationStartDate))
+                        {
+                            affType.AffiliationEndDate = FormatDBNullDateTime(childRowInd["AffiliationEndDate"]);
+                            affType.AffiliationEndDateSpecified = true;
+                        }
+                        else
+                        {
+                            affType.AffiliationEndDateSpecified = false;
+                        }
+
+                    }
+                    else
+                    {
+                        affType.AffiliationStartDateSpecified = false;
+                        affType.AffiliationEndDateSpecified = false;
+                    }
+
+
+                    indDtl.Affiliation = affType;
+
+                    //PhoneFaxEmail
+                    PhoneFaxEmailDataType pfType = new PhoneFaxEmailDataType();
+                    pfType.EmailAddressText = FormatDBNullString(childRowInd["EmailAddressText"]);
+                    pfType.TelephoneNumber = FormatDBNullString(childRowInd["TelephoneNumber"]);
+                    pfType.PhoneExtension = FormatDBNullString(childRowInd["PhoneExtension"]);
+                    pfType.FaxNumber = FormatDBNullString(childRowInd["FaxNumber"]);
+                    pfType.AlternateTelephoneNumber = FormatDBNullString(childRowInd["AlternateTelephoneNumber"]);
+                    //indDtl.PhoneFaxEmail = pfType;	//adding check to avoid empty PhoneFaxEmail tags
+                    if (FormatDBNullString(childRowInd["TelephoneNumber"]) != null)
+                    {
+                        indDtl.PhoneFaxEmail = pfType;
+                    }
+
+                    //IndividualDataType
+                    IndividualDataType indType = new IndividualDataType();
+                    indType.IndividualFullName = FormatDBNullString(childRowInd["IndividualFullName"]);
+                    indType.IndividualTitleText = FormatDBNullString(childRowInd["IndividualTitleText"]);
+                    indDtl.Individual = indType;
+
+                    //MailingAddress
+                    MailingAddressDataType mailAdd = new MailingAddressDataType();
+                    mailAdd.MailingAddressText = FormatDBNullString(childRowInd["MailingAddressText"]);
+                    mailAdd.SupplementalAddressText = FormatDBNullString(childRowInd["SupplementalAddressText"]);
+                    mailAdd.MailingAddressCityName = FormatDBNullString(childRowInd["MailingAddressCityName"]);
+                    mailAdd.MailingAddressStateUSPSCode = FormatDBNullString(childRowInd["MailingAddressStateUSPSCode"]);
+                    mailAdd.MailingAddressStateName = FormatDBNullString(childRowInd["MailingAddressStateName"]);
+                    mailAdd.MailingAddressCountryName = FormatDBNullString(childRowInd["MailingAddressCountryName"]);
+                    mailAdd.MailingAddressZIPCode = FormatDBNullString(childRowInd["MailingAddressZIPCode"]);
+                    indDtl.MailingAddress = mailAdd;
+
+                    indArray.Add(indDtl);
+
+                }
+
+                fsDetail.IndividualDetails = (IndividualDetails[])indArray.ToArray(typeof(IndividualDetails));
+
+
+                #endregion
+
+
+
+                #region Organization
+
+                ArrayList orgArray = new ArrayList();
+
+                foreach (DataRow childRowOrg in dr.GetChildRows(TableRelationships.EnvInt_Org.ToString()))
+                {
+
+                    //Create an instance of the complex property
+                    OrganizationDetails orgDtl = new OrganizationDetails();
+
+                    //Affiliation
+                    AffiliationDataType affType = new AffiliationDataType();
+                    affType.AffiliationTypeText = FormatDBNullString(childRowOrg["AffiliationTypeText"]);
+
+                    if (IsValidDateTime(childRowOrg["AffiliationStartDate"], DateTime.Parse("1/1/1900")))
+                    {
+                        affType.AffiliationStartDate = FormatDBNullDateTime(childRowOrg["AffiliationStartDate"]);
+                        affType.AffiliationStartDateSpecified = true;
+
+                        if (IsValidDateTime(childRowOrg["AffiliationEndDate"], DateTime.Parse("1/1/1900")))
+                        {
+                            affType.AffiliationEndDate = FormatDBNullDateTime(childRowOrg["AffiliationEndDate"]);
+                            affType.AffiliationEndDateSpecified = true;
+                        }
+                        else
+                        {
+                            affType.AffiliationEndDateSpecified = false;
+                        }
+                    }
+                    else
+                    {
+                        affType.AffiliationStartDateSpecified = false;
+                        affType.AffiliationEndDateSpecified = false;
+                    }
+
+                    orgDtl.Affiliation = affType;
+
+                    //PhoneFaxEmail
+                    PhoneFaxEmailDataType pfType = new PhoneFaxEmailDataType();
+                    pfType.EmailAddressText = FormatDBNullString(childRowOrg["EmailAddressText"]);
+                    pfType.TelephoneNumber = FormatDBNullString(childRowOrg["TelephoneNumber"]);
+                    pfType.PhoneExtension = FormatDBNullString(childRowOrg["PhoneExtension"]);
+                    pfType.FaxNumber = FormatDBNullString(childRowOrg["FaxNumber"]);
+                    pfType.AlternateTelephoneNumber = FormatDBNullString(childRowOrg["AlternateTelephoneNumber"]);
+                    //orgDtl.PhoneFaxEmail = pfType;
+                    //adding check to avoid empty PhoneFaxEmail tags
+                    if (FormatDBNullString(childRowOrg["TelephoneNumber"]) != null)
+                    {
+                        orgDtl.PhoneFaxEmail = pfType;
+                    }
+
+                    //Organization
+                    OrganizationDataType orgType = new OrganizationDataType();
+                    orgType.OrganizationFormalName = FormatDBNullString(childRowOrg["OrganizationFormalName"]);
+                    orgType.OrganizationDUNSNumber = FormatDBNullString(childRowOrg["OrganizationDUNSNumber"]);
+                    orgType.OrganizationTypeText = FormatDBNullString(childRowOrg["OrganizationTypeText"]);
+                    orgType.EmployerIdentifier = FormatDBNullString(childRowOrg["EmployerIdentifier"]);
+                    orgType.StateBusinessIdentifier = FormatDBNullString(childRowOrg["StateBusinessIdentifier"]);
+                    orgType.UltimateParentName = FormatDBNullString(childRowOrg["UltimateParentName"]);
+                    orgType.UltimateParentDUNSNumber = FormatDBNullString(childRowOrg["UltimateParentDUNSNumber"]);
+                    orgDtl.Organization = orgType;
+                    //						adding check to avoid empty Organization tags
+                    //						if(FormatDBNullString(childRowOrg["OrganizationFormalName"]) != null)
+                    //						{
+                    //							orgDtl.Organization = orgType;
+                    //						}
+                    //////////////////////////////////////////////////////problem here in this area?
+
+                    //MailingAddress
+                    MailingAddressDataType mailAdd = new MailingAddressDataType();
+                    mailAdd.MailingAddressText = FormatDBNullString(childRowOrg["MailingAddressText"]);
+                    mailAdd.SupplementalAddressText = FormatDBNullString(childRowOrg["SupplementalAddressText"]);
+                    mailAdd.MailingAddressCityName = FormatDBNullString(childRowOrg["MailingAddressCityName"]);
+                    mailAdd.MailingAddressStateUSPSCode = FormatDBNullString(childRowOrg["MailingAddressStateUSPSCode"]);
+                    mailAdd.MailingAddressStateName = FormatDBNullString(childRowOrg["MailingAddressStateName"]);
+                    mailAdd.MailingAddressCountryName = FormatDBNullString(childRowOrg["MailingAddressCountryName"]);
+                    mailAdd.MailingAddressZIPCode = FormatDBNullString(childRowOrg["MailingAddressZIPCode"]);
+                    orgDtl.MailingAddress = mailAdd;
+
+                    orgArray.Add(orgDtl);
+
+                }
+
+                fsDetail.OrganizationDetails = (OrganizationDetails[])orgArray.ToArray(typeof(OrganizationDetails));
+
+                #endregion
+
+
+                #region AlternateName
+
+                DataRow[] altInfoRows = dr.GetChildRows(TableRelationships.Facility_AltName.ToString());
+
+                if (altInfoRows.Length > 0)
+                {
+
+                    //Create an instance of the complex property
+                    AltNameDataType altInfo = new AltNameDataType();
+
+                    //AlternativeName, AlternativeNameTypeText, DataSourceName, LastReportedDate, 
+                    //StateFacilitySystemAcronymName, StateFacilityIdentifier
+                    altInfo.AlternativeName = FormatDBNullString(altInfoRows[0]["AlternativeName"]);
+                    altInfo.AlternativeNameTypeText = FormatDBNullString(altInfoRows[0]["AlternativeNameTypeText"]);
+
+                    fsDetail.AlternativeNameInfo = altInfo;
+
+                }
+
+                #endregion
+
+
+                #region MailingAddress
+
+                DataRow[] mailAddRows = dr.GetChildRows(TableRelationships.Facility_MailAdd.ToString());
+
+                if (mailAddRows.Length > 0)
+                {
+
+                    //Create an instance of the complex property
+                    MailingAddressDataType mailAdd = new MailingAddressDataType();
+
+                    //AffiliationTypeText, DataSourceName, LastReportedDate, 
+                    //StateFacilitySystemAcronymName, StateFacilityIdentifier
+
+                    mailAdd.MailingAddressText = FormatDBNullString(mailAddRows[0]["MailingAddressText"]);
+                    mailAdd.SupplementalAddressText = FormatDBNullString(mailAddRows[0]["SupplementalAddressText"]);
+                    mailAdd.MailingAddressCityName = FormatDBNullString(mailAddRows[0]["MailingAddressCityName"]);
+                    mailAdd.MailingAddressStateUSPSCode = FormatDBNullString(mailAddRows[0]["MailingAddressStateUSPSCode"]);
+                    mailAdd.MailingAddressStateName = FormatDBNullString(mailAddRows[0]["MailingAddressStateName"]);
+                    mailAdd.MailingAddressCountryName = FormatDBNullString(mailAddRows[0]["MailingAddressCountryName"]);
+                    mailAdd.MailingAddressZIPCode = FormatDBNullString(mailAddRows[0]["MailingAddressZIPCode"]);
+
+                    fsDetail.MailingAddress = mailAdd;
+
+                }
+
+                #endregion
+
+                #region SICCode
+
+                ArrayList sicArray = new ArrayList();
+
+                foreach (DataRow childRow in dr.GetChildRows(TableRelationships.Facility_SIC.ToString()))
+                {
+
+                    if (childRow["SICCode"] != DBNull.Value)
+                    {
+
+                        //Create an instance of the complex property
+                        SICCodeDetails sicDtl = new SICCodeDetails();
+
+                        sicDtl.SICCode = FormatDBNullSICCode(childRow["SICCode"]);
+                        if (childRow["SICPrimaryIndicator"] == DBNull.Value)
+                        {
+                            sicDtl.SICPrimaryIndicatorSpecified = false;
+                        }
+                        else
+                        {
+                            sicDtl.SICPrimaryIndicator = ConvertToPrimaryIndicatorDataType(childRow["SICPrimaryIndicator"]);
+                            sicDtl.SICPrimaryIndicatorSpecified = true;
+                        }
+
+                        sicArray.Add(sicDtl);
+
+                    }
+                }
+
+                fsDetail.SICCodeDetails = (SICCodeDetails[])sicArray.ToArray(typeof(SICCodeDetails));
+
+
+                #endregion
+
+
+                #region NAICSCode
+
+                ArrayList naicsArray = new ArrayList();
+
+                foreach (DataRow childRow in dr.GetChildRows(TableRelationships.Facility_NAICS.ToString()))
+                {
+
+                    if (childRow["NAICSCode"] != DBNull.Value)
+                    {
+
+                        //Create an instance of the complex property
+                        NAICSCodeDetails naicsDtl = new NAICSCodeDetails();
+
+
+
+                        if (childRow["NAICSCode"] == DBNull.Value)
+                        {
+                            naicsDtl.NAICSPrimaryIndicatorSpecified = false;
+                        }
+                        else
+                        {
+                            naicsDtl.NAICSCode = FormatDBNullNAICSCode(childRow["NAICSCode"]);
+                            naicsDtl.NAICSPrimaryIndicator = ConvertToPrimaryIndicatorDataType(childRow["NAICSPrimaryIndicator"]);
+                            naicsDtl.NAICSPrimaryIndicatorSpecified = true;
+                        }
+
+                        naicsArray.Add(naicsDtl);
+
+                    }
+
+                }
+
+                fsDetail.NAICSCodeDetails = (NAICSCodeDetails[])naicsArray.ToArray(typeof(NAICSCodeDetails));
+
+
+                #endregion
+
+
+
+                #region GeographicCoordinates
+
+                DataRow[] geoRows = dr.GetChildRows(TableRelationships.Facility_GeoCoord.ToString());
+
+                if (geoRows.Length > 0)
+                {
+
+                    //Create an instance of the complex property
+                    GeographicCoordinateDataType geoDtl = new GeographicCoordinateDataType();
+
+                    // StateFacilitySystemAcronymName, StateFacilityIdentifier
+                    if (geoRows[0]["LatitudeMeasure"] != DBNull.Value)
+                    {
+                        geoDtl.LatitudeMeasure = FormatDBNullDecimal(geoRows[0]["LatitudeMeasure"]);
+                    }
+
+                    if (geoRows[0]["LongitudeMeasure"] != DBNull.Value)
+                    {
+                        geoDtl.LongitudeMeasure = FormatDBNullDecimal(geoRows[0]["LongitudeMeasure"]);
+                    }
+
+                    geoDtl.HorizontalAccuracyMeasure = FormatDBNullString(geoRows[0]["HorizontalAccuracyMeasure"]);
+
+                    if (geoRows[0]["HorizontalCollectionMethodText"] == DBNull.Value)
+                    {
+                        geoDtl.HorizontalCollectionMethodTextSpecified = false;
+                    }
+                    else
+                    {
+                        geoDtl.HorizontalCollectionMethodText = ConvertToHorizontalMethodDataType(geoRows[0]["HorizontalCollectionMethodText"]);
+                        geoDtl.HorizontalCollectionMethodTextSpecified = true;
+                    }
+
+                    if (geoRows[0]["HorizontalReferenceDatumName"] == DBNull.Value)
+                    {
+                        geoDtl.HorizontalReferenceDatumNameSpecified = false;
+                    }
+                    else
+                    {
+                        geoDtl.HorizontalReferenceDatumName = ConvertToHorizontalDatumDataType(geoRows[0]["HorizontalReferenceDatumName"]);
+                        geoDtl.HorizontalReferenceDatumNameSpecified = true;
+                    }
+
+                    geoDtl.SourceMapScaleNumber = FormatDBNullString(geoRows[0]["SourceMapScaleNumber"]);
+
+                    if (geoRows[0]["ReferencePointText"] == DBNull.Value)
+                    {
+                        geoDtl.ReferencePointTextSpecified = false;
+                    }
+                    else
+                    {
+                        geoDtl.ReferencePointText = ConvertToReferencePointDataType(geoRows[0]["ReferencePointText"]);
+                        geoDtl.ReferencePointTextSpecified = true;
+                    }
+
+                    if (geoRows[0]["DataCollectionDate"] == DBNull.Value)
+                    {
+                        geoDtl.DataCollectionDateSpecified = false;
+                    }
+                    else
+                    {
+                        geoDtl.DataCollectionDate = FormatDBNullDateTime(geoRows[0]["DataCollectionDate"]);
+                        geoDtl.DataCollectionDateSpecified = true;
+                    }
+
+                    if (geoRows[0]["GeometricTypeName"] != DBNull.Value)
+                    {
+                        geoDtl.GeometricTypeName = ConvertToGeometricDataType(geoRows[0]["GeometricTypeName"]);
+                        geoDtl.GeometricTypeNameSpecified = true;
+                    }
+                    else
+                    {
+                        geoDtl.GeometricTypeNameSpecified = false;
+                    }
+
+                    geoDtl.LocationCommentsText = FormatDBNullString(geoRows[0]["LocationCommentsText"]);
+
+                    if (geoRows[0]["VerticalCollectionMethodText"] == DBNull.Value)
+                    {
+                        geoDtl.VerticalCollectionMethodTextSpecified = false;
+                    }
+                    else
+                    {
+                        geoDtl.VerticalCollectionMethodText = ConvertToVerticalMethodDataType(geoRows[0]["VerticalCollectionMethodText"]);
+                        geoDtl.VerticalCollectionMethodTextSpecified = true;
+                    }
+
+                    if (geoRows[0]["VerticalMeasure"] != DBNull.Value)
+                    {
+                        geoDtl.VerticalMeasure = FormatDBNullDecimal(geoRows[0]["VerticalMeasure"]);
+                    }
+
+                    geoDtl.VerticalAccuracyMeasure = FormatDBNullString(geoRows[0]["VerticalAccuracyMeasure"]);
+
+                    if (geoRows[0]["VerticalReferenceDatumName"] == DBNull.Value)
+                    {
+                        geoDtl.VerticalReferenceDatumNameSpecified = false;
+                    }
+                    else
+                    {
+                        geoDtl.VerticalReferenceDatumName = ConvertToVerticalDatumDataType(geoRows[0]["VerticalReferenceDatumName"]);
+                        geoDtl.VerticalReferenceDatumNameSpecified = true;
+                    }
+
+                    geoDtl.DataSourceName = FormatDBNullString(geoRows[0]["DataSourceName"]);
+                    geoDtl.CoordinateDataSourceName = FormatDBNullString(geoRows[0]["CoordinateDataSourceName"]);
+                    geoDtl.SubEntityIdentifier = FormatDBNullString(geoRows[0]["SubEntityIdentifier"]);
+
+                    if (geoRows[0]["SubEntityTypeName"] == DBNull.Value)
+                    {
+                        geoDtl.SubEntityTypeNameSpecified = false;
+                    }
+                    else
+                    {
+                        geoDtl.SubEntityTypeName = ConvertToSubEntityDataType(geoRows[0]["SubEntityTypeName"]);
+                        geoDtl.SubEntityTypeNameSpecified = true;
+                    }
+
+                    fsDetail.GeographicCoordinates = geoDtl;
+
+                }
+
+
+                #endregion
+
+
+
+                //Add Loaded object (parent) to the collection
+                detailArray.Add(fsDetail);
+
+
+
+            }
+
+
+
+            //Assign the collection of FacilitySiteAllDetails of the parent table
+            fsList.FacilitySiteAllDetails = (FacilitySiteAllDetails[])detailArray.ToArray(typeof(FacilitySiteAllDetails));
+
+            //Return loaded collection
+            return fsList;
+
+        }
+
+
+
+        #endregion
 
 
 
@@ -907,7 +913,7 @@ namespace Windsor.Node2008.WNOSPlugin.FRS23
 
         #endregion
 
-        
+
 
         #region Utilities
 
@@ -1036,7 +1042,7 @@ namespace Windsor.Node2008.WNOSPlugin.FRS23
 
                 default:
 
-                    DataSet ds = Data.GetFacilityData(isOracle, request.Service.Name, 
+                    DataSet ds = Data.GetFacilityData(isOracle, request.Service.Name,
                         request.RowIndex, request.MaxRowCount, args, connectionString);
                     fsList = PopulateFacilitySiteList(ref ds);
                     break;

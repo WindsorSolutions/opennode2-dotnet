@@ -73,11 +73,14 @@ namespace Windsor.Node2008.WNOSPlugin.FRS23
             ArrayList dlt = new ArrayList();
             string where = GetWhere(isOracle, methodName, rowId, maxRows, parameters);
             DataTable dtDeletes = GetData(isOracle, GetSql(QueryElements.Deleted, where), connectionString);
-            foreach(DataRow dr in dtDeletes.Rows)
+            if (dtDeletes != null)
             {
-                if (dr["StateFacilityIdentifier"] != DBNull.Value)
+                foreach (DataRow dr in dtDeletes.Rows)
                 {
-                    dlt.Add((string)dr["StateFacilityIdentifier"]);
+                    if (dr["StateFacilityIdentifier"] != DBNull.Value)
+                    {
+                        dlt.Add((string)dr["StateFacilityIdentifier"]);
+                    }
                 }
             }
             return (string[])dlt.ToArray(typeof(string));
