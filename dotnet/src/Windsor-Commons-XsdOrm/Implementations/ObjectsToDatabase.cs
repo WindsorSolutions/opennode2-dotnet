@@ -181,6 +181,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
             List<Column> descriptionColumns = new List<Column>(); ;
             StringBuilder sqlString = new StringBuilder();
             List<string> postCommands = new List<string>();
+            List<string> indexNames = new List<string>();
             foreach (Table table in tables.Values)
             {
                 ICollection<Column> columns = table.Columns;
@@ -198,7 +199,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
                         }
                         firstColumn = false;
                         string addString = GetAddColumnString(column, mappingContext, baseDao, postCommands,
-                                                              descriptionColumns);
+                                                              descriptionColumns, indexNames);
                         sqlString.Append(addString);
                     }
                     sqlString.Append(");");
@@ -213,7 +214,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
                         {
                             // Column does not exist
                             string addString = GetAddColumnString(column, mappingContext, baseDao, postCommands,
-                                                                  descriptionColumns);
+                                                                  descriptionColumns, indexNames);
                             sqlString.Append(string.Format("ALTER TABLE {0} ADD {1};", table.TableName, addString));
                         }
                     }
@@ -254,7 +255,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
 
         protected virtual string GetAddColumnString(Column column, MappingContext mappingContext,
                                                     SpringBaseDao baseDao, List<String> postCommands,
-                                                    List<Column> descriptionColumns)
+                                                    List<Column> descriptionColumns, List<string> indexNames)
         {
             string rtnVal = string.Format("{0} {1}{2}",
                 column.ColumnName,
@@ -264,15 +265,15 @@ namespace Windsor.Commons.XsdOrm.Implementations
             if (column.IsPrimaryKey)
             {
                 PrimaryKeyColumn primaryKeyColumn = (PrimaryKeyColumn)column;
-                string pkName = Utils.GetPrimaryKeyName(primaryKeyColumn);
+                string pkName = Utils.GetPrimaryKeyConstraintName(primaryKeyColumn, mappingContext.DefaultTableNamePrefix);
                 string cmd = string.Format("ALTER TABLE {0} ADD CONSTRAINT {1} PRIMARY KEY ({2})",
                                            primaryKeyColumn.Table.TableName, pkName, primaryKeyColumn.ColumnName);
                 postCommands.Add(cmd);
             }
-            if (column.IsForeignKey)
+            else if (column.IsForeignKey)
             {
                 ForeignKeyColumn foreignKeyColumn = (ForeignKeyColumn)column;
-                string fkName = Utils.GetForeignKeyName(foreignKeyColumn);
+                string fkName = Utils.GetForeignKeyConstraintName(foreignKeyColumn, mappingContext.DefaultTableNamePrefix);
                 string cmd = string.Format("ALTER TABLE {0} ADD CONSTRAINT {1} FOREIGN KEY ({2}) REFERENCES {3}({4})",
                                            foreignKeyColumn.Table.TableName, fkName, foreignKeyColumn.ColumnName,
                                            foreignKeyColumn.ForeignTable.TableName, foreignKeyColumn.ForeignColumnName);
@@ -282,9 +283,24 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 }
 
                 postCommands.Add(cmd);
-                cmd = string.Format("CREATE INDEX {0} ON {1}({2})", Utils.GetIndexName(foreignKeyColumn),
+                string indexName = Utils.GetIndexName(foreignKeyColumn, mappingContext.DefaultTableNamePrefix);
+                cmd = string.Format("CREATE INDEX {0} ON {1}({2})", indexName,
                                     foreignKeyColumn.Table.TableName, foreignKeyColumn.ColumnName);
                 postCommands.Add(cmd);
+                indexNames.Add(indexName);
+            }
+            else if (column.IsIndexable)
+            {
+                string indexName = Utils.GetIndexName(column, mappingContext.DefaultTableNamePrefix);
+                int count = 2;
+                while (indexNames.Contains(indexName))
+                {
+                    indexName = indexName.Remove(indexName.Length - 2) + count.ToString("00");
+                    ++count;
+                }
+                string cmd = string.Format("CREATE INDEX {0} ON {1}({2})", indexName, column.Table.TableName, column.ColumnName);
+                postCommands.Add(cmd);
+                indexNames.Add(indexName);
             }
             if (!string.IsNullOrEmpty(column.ColumnDescription))
             {

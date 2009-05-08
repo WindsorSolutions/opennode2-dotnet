@@ -57,6 +57,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
             StringBuilder sb = new StringBuilder((name.Length * 3) / 2);
             sb.Append(char.ToUpper(name[0]));
             bool lastCharWasLower = false;
+            bool twoOrMoreUpperChars = false;
             for (int i = 1; i < name.Length; ++i)
             {
                 char curChar = name[i];
@@ -71,11 +72,20 @@ namespace Windsor.Commons.XsdOrm.Implementations
                                 sb.Append('_');
                             }
                         }
+                        else
+                        {
+                            twoOrMoreUpperChars = true;
+                        }
                         sb.Append(curChar);
                         lastCharWasLower = false;
                     }
                     else
                     {
+                        if (twoOrMoreUpperChars)
+                        {
+                            sb.Insert(sb.Length - 1, '_');
+                            twoOrMoreUpperChars = false;
+                        }
                         sb.Append(char.ToUpper(curChar));
                         lastCharWasLower = true;
                     }
@@ -166,17 +176,58 @@ namespace Windsor.Commons.XsdOrm.Implementations
             }
             return name;
         }
-        public static string GetForeignKeyName(ForeignKeyColumn foreignKeyColumn)
+        public static string RemoveTableNamePrefix(string tableName, string defaultTableNamePrefix)
         {
-            return ShortenDatabaseColumnName("FK_" + foreignKeyColumn.Table.TableName + "_" + foreignKeyColumn.ForeignTable.TableName, null);
+            if (string.IsNullOrEmpty(defaultTableNamePrefix))
+            {
+                return tableName;
+            }
+            if (tableName.StartsWith(defaultTableNamePrefix + "_"))
+            {
+                tableName = tableName.Substring(defaultTableNamePrefix.Length + 1);
+            }
+            else if (tableName.StartsWith(defaultTableNamePrefix))
+            {
+                tableName = tableName.Substring(defaultTableNamePrefix.Length);
+            }
+            return tableName;
         }
-        public static string GetPrimaryKeyName(PrimaryKeyColumn primaryKeyColumn)
+        public static string GetForeignKeyConstraintName(ForeignKeyColumn foreignKeyColumn, string defaultTableNamePrefix)
         {
-            return ShortenDatabaseColumnName("PK_" + primaryKeyColumn.Table.TableName, null);
+            if (!string.IsNullOrEmpty(foreignKeyColumn.IndexName))
+            {
+                return foreignKeyColumn.IndexName;
+            }
+            else
+            {
+                return ShortenDatabaseName("FK_" + RemoveTableNamePrefix(foreignKeyColumn.Table.TableName, defaultTableNamePrefix) +
+                                           "_" + RemoveTableNamePrefix(foreignKeyColumn.ForeignTable.TableName, defaultTableNamePrefix),
+                                           18, null);
+            }
         }
-        public static string GetIndexName(Column column)
+        public static string GetPrimaryKeyConstraintName(PrimaryKeyColumn primaryKeyColumn, string defaultTableNamePrefix)
         {
-            return ShortenDatabaseColumnName("IX_" + column.Table.TableName + "_" + column.ColumnName, null);
+            if (!string.IsNullOrEmpty(primaryKeyColumn.IndexName))
+            {
+                return primaryKeyColumn.IndexName;
+            }
+            else
+            {
+                return ShortenDatabaseName("PK_" + RemoveTableNamePrefix(primaryKeyColumn.Table.TableName, defaultTableNamePrefix),
+                                           18, null);
+            }
+        }
+        public static string GetIndexName(Column column, string defaultTableNamePrefix)
+        {
+            if (!string.IsNullOrEmpty(column.IndexName))
+            {
+                return column.IndexName;
+            }
+            else
+            {
+                return ShortenDatabaseName("IX_" + RemoveTableNamePrefix(column.Table.TableName, defaultTableNamePrefix) +
+                                           "_" + column.ColumnName, 18, null);
+            }
         }
 
         private static string GetForeignKeyName(ForeignKeyColumn foreignKeyColumn, string prefix)

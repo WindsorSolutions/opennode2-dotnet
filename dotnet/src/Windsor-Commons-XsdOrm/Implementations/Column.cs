@@ -61,6 +61,8 @@ namespace Windsor.Commons.XsdOrm.Implementations
             m_ColumnType = columnAttribute.ColumnType;
             m_ColumnSize = columnAttribute.ColumnSize;
             m_IsNullable = columnAttribute.IsNullable;
+            m_IsIndexable = columnAttribute.IsIndexable;
+            m_IndexName = columnAttribute.IndexName;
         }
 
         public string ColumnName
@@ -95,6 +97,16 @@ namespace Windsor.Commons.XsdOrm.Implementations
         {
             get { return m_Table; }
             set { m_Table = value; }
+        }
+        public bool IsIndexable
+        {
+            get { return m_IsIndexable; }
+            set { m_IsIndexable = value; }
+        }
+        public string IndexName
+        {
+            get { return m_IndexName; }
+            set { m_IndexName = value; }
         }
         public string ColumnDescription
         {
@@ -140,7 +152,9 @@ namespace Windsor.Commons.XsdOrm.Implementations
         protected DbType? m_ColumnType;
         protected int m_ColumnSize;
         protected bool m_IsNullable;
-        private string m_ColumnDescription;
+        protected bool m_IsIndexable;
+        protected string m_IndexName;
+        protected string m_ColumnDescription;
     }
 
     public class PrimaryKeyColumn : Column

@@ -73,7 +73,8 @@ namespace Windsor.Commons.XsdOrm.Implementations
                                               string objParentTypePath,
                                               List<MemberInfo> parentToMemberChain,
                                               Dictionary<string, Table> tables,
-                                              string defaultColumnDescription)
+                                              string defaultColumnDescription,
+                                              bool canSetColumnsNotNull)
         {
             List<MappingAttribute> attributes = GetMappingAttributesForType(objType);
             List<MappingAttribute> unrecognizedAttributes = null;
@@ -88,32 +89,15 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 TableAttribute curTableAttribute = mappingAttribute as TableAttribute;
                 if (curTableAttribute != null)
                 {
-                    if (string.IsNullOrEmpty(curTableAttribute.TableName))
-                    {
-                        // Defaults to class name if not specified
-                        string baseTableName = objType.Name;
-                        if (baseTableName.EndsWith("DataType"))
-                        {
-                            baseTableName = baseTableName.Substring(0, baseTableName.Length - "DataType".Length);
-                        }
-                        int maxChars = Utils.MAX_TABLE_NAME_CHARS;
-                        if (!string.IsNullOrEmpty(m_DefaultTableNamePrefix))
-                        {
-                            maxChars -= m_DefaultTableNamePrefix.Length;
-                        }
-                        curTableAttribute.TableName =
-                            Utils.ShortenDatabaseTableName(Utils.CamelCaseToDatabaseName(baseTableName), maxChars,
-                                                           m_Abbreviations);
-                        if (!string.IsNullOrEmpty(m_DefaultTableNamePrefix))
-                        {
-                            curTableAttribute.TableName = m_DefaultTableNamePrefix + curTableAttribute.TableName;
-                        }
-                    }
                     if (classTableAttribute != null)
                     {
                         throw new MappingException("The class \"{0}\" has more than one TableAttribute applied to it (\"{1}\" and \"{2}\").  Each class can only have one TableAttribute applied to it.",
                                                    objType.FullName, classTableAttribute.TableName,
                                                    curTableAttribute.TableName);
+                    }
+                    if (string.IsNullOrEmpty(curTableAttribute.TableName))
+                    {
+                        curTableAttribute.TableName = GetDefaultTableName(objType);
                     }
                     classTableAttribute = curTableAttribute;
                     continue;
@@ -149,9 +133,8 @@ namespace Windsor.Commons.XsdOrm.Implementations
             if (classTableAttribute == null)
             {
                 // Defaults to class name if not specified
-                classTableAttribute = 
-                    new TableAttribute(Utils.ShortenDatabaseTableName(Utils.CamelCaseToDatabaseName(objType.Name),
-                                       m_Abbreviations));
+                string tableName = GetDefaultTableName(objType);
+                classTableAttribute = new TableAttribute(tableName);
             }
             if (classTableAttribute.TableName.Length > Utils.MAX_TABLE_NAME_CHARS)
             {
@@ -183,28 +166,40 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 attributes = GetMappingAttributesForMember(member);
                 RelationAttribute lastRelationAttribute = null;
 
-                if (CollectionUtils.IsNullOrEmpty(attributes))
+                if (GetAttributeByType<DbIgnoreAttribute>(attributes) != null)
                 {
-                    if (Utils.IsValidColumnType(valueType))
+                    members[memberIndex] = null;
+                    continue;
+                }
+
+                if (Utils.IsValidColumnType(valueType))
+                {
+                    if (valueType == typeof(bool))
                     {
-                        if (valueType == typeof(bool))
+                        if (member.Name.EndsWith(m_SpecifiedFieldPostfixName))
                         {
-                            if (member.Name.EndsWith(m_SpecifiedFieldPostfixName))
-                            {
-                                // Ignore
-                            }
-                            else
+                            // Ignore
+                        }
+                        else
+                        {
+                            if (GetAttributeByType<ColumnAttribute>(attributes) == null)
                             {
                                 attributes.Add(new ColumnAttribute());
                             }
                         }
-                        else
+                    }
+                    else
+                    {
+                        if (GetAttributeByType<ColumnAttribute>(attributes) == null)
                         {
-                            // Apply defaults
                             attributes.Add(new ColumnAttribute());
                         }
                     }
-                    else
+                }
+                else
+                {
+                    if ((GetAttributeByType<RelationAttribute>(attributes) == null) &&
+                        (GetAttributeByType<SameTableAttribute>(attributes) == null))
                     {
                         if (CollectionUtils.GetCollectionElementType(valueType) == null)
                         {
@@ -218,26 +213,13 @@ namespace Windsor.Commons.XsdOrm.Implementations
                         }
                     }
                 }
-                else
-                {
-                    bool foundIgnore = false;
-                    foreach (MappingAttribute attribute in attributes)
-                    {
-                        if (attribute is DbIgnoreAttribute)
-                        {
-                            foundIgnore = true;
-                            break;
-                        }
-                    }
-                    if (foundIgnore)
-                    {
-                        members[memberIndex] = null;
-                        continue;
-                    }
-                }
 
                 // Parse each mapping attribute associated with this class member
                 DbNotNullAttribute dbNotNullAttribute = null;
+                DbIndexableAttribute dbIndexableAttribute = null;
+                Column newColumn = null;
+                Relation newRelation = null;
+                SameTableElementInfo newSameTableElementInfo = null;
                 foreach (MappingAttribute mappingAttribute in attributes)
                 {
                     ColumnAttribute columnAttribute = mappingAttribute as ColumnAttribute;
@@ -445,7 +427,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
                             throw new MappingException("The member \"{0}\" of the class \"{1}\" has a ForeignKeyAttribute or PrimaryKeyAttribute with a Specified member \"{3}.\"  ForeignKeyAttribute and PrimaryKeyAttribute cannot be applied to members that have associated Specified members.",
                                                       member.Name, objType.FullName, columnAttribute.IsSpecifiedMemberName);
                         }
-                        Column newColumn = CreateColumn(columnAttribute, member, valueTypePath, isSpecifiedMember, objType, tables);
+                        newColumn = CreateColumn(columnAttribute, member, valueTypePath, isSpecifiedMember, objType, tables);
                         members[memberIndex] = null;
                         if (isSpecifiedMember != null)
                         {
@@ -475,8 +457,8 @@ namespace Windsor.Commons.XsdOrm.Implementations
                             throw new MappingException("The member \"{0}\" of the class \"{1}\" has a SameTableAttribute applied to it, but the member is a primitive type.  SameTableAttributes can only be applied to non-primitive types.",
                                                        member.Name, objType.FullName);
                         }
-                        CollectionUtils.Add(new SameTableElementInfo(valueTypePath, valueType, member, sameTableAttribute), 
-                                            ref sameTableAttributes);
+                        newSameTableElementInfo = new SameTableElementInfo(valueTypePath, valueType, member, sameTableAttribute);
+                        CollectionUtils.Add(newSameTableElementInfo, ref sameTableAttributes);
                         members[memberIndex] = null;
                         continue;
                     }
@@ -583,15 +565,15 @@ namespace Windsor.Commons.XsdOrm.Implementations
                         {
                             assignType = valueType;
                         }
-                        Relation relation = CreateRelation(relationAttribute, member, valueTypePath, assignType, tables);
-                        relation.ParentToMemberChain = GetStaticParentToMemberChain(parentToMemberChain, ref staticParentToMemberChain);
-                        if (!CollectionUtils.IsNullOrEmpty(relation.ParentToMemberChain))
+                        newRelation = CreateRelation(relationAttribute, member, valueTypePath, assignType, tables);
+                        newRelation.ParentToMemberChain = GetStaticParentToMemberChain(parentToMemberChain, ref staticParentToMemberChain);
+                        if (!CollectionUtils.IsNullOrEmpty(newRelation.ParentToMemberChain))
                         {
                             if (string.IsNullOrEmpty(objParentTypePath))
                             {
                                 throw new MappingException("objParentTypePath == null");
                             }
-                            relation.ParentInfoPath = objParentTypePath;
+                            newRelation.ParentInfoPath = objParentTypePath;
                         }
                         string description = ReflectionUtils.GetDescription(member);
                         CollectionUtils.Add(new RelationInfo(valueTypePath, assignType, description), ref relationMembers);
@@ -604,6 +586,11 @@ namespace Windsor.Commons.XsdOrm.Implementations
                     {
                         continue;
                     }
+                    dbIndexableAttribute = mappingAttribute as DbIndexableAttribute;
+                    if (dbIndexableAttribute != null)
+                    {
+                        continue;
+                    }
                     CollectionUtils.Add(mappingAttribute, ref unrecognizedAttributes);
                 }
                 if (unrecognizedAttributes != null)
@@ -611,6 +598,32 @@ namespace Windsor.Commons.XsdOrm.Implementations
                     throw new MappingException(Utils.GetShortDescriptionList(unrecognizedAttributes),
                                                "The member \"{0}\" of the class \"{1}\" has unrecognized mapping attribute(s).  Please correct the following attributes:",
                                                member.Name, objType.FullName);
+                }
+                if (dbNotNullAttribute != null)
+                {
+                    if (newSameTableElementInfo != null)
+                    {
+                        newSameTableElementInfo.NotNull = true;
+                    }
+                    if (newColumn != null)
+                    {
+                        if (canSetColumnsNotNull)
+                        {
+                            newColumn.IsNullable = false;
+                        }
+                    }
+                }
+                if (dbIndexableAttribute != null)
+                {
+                    if (newColumn != null)
+                    {
+                        newColumn.IsIndexable = true;
+                    }
+                    else
+                    {
+                        throw new MappingException("The member \"{0}\" of the class \"{1}\" has a DbIndexableAttribute attribute applied to it, but it is not a database column.",
+                                                   member.Name, objType.FullName);
+                    }
                 }
             }
             for (int memberIndex = 0; memberIndex < members.Count; ++memberIndex)
@@ -639,8 +652,8 @@ namespace Windsor.Commons.XsdOrm.Implementations
                     }
                     CollectionUtils.Add(sameTableElementInfo.Member, ref parentToMemberChain);
                     ConstructTableMappings(sameTableElementInfo.ValueType, sameTableElementInfo.ValueTypePath,
-                                           classTableAttribute, objParentTypePath, parentToMemberChain, 
-                                           tables, description);
+                                           classTableAttribute, objParentTypePath, parentToMemberChain,
+                                           tables, description, sameTableElementInfo.NotNull);
                     parentToMemberChain.RemoveAt(parentToMemberChain.Count - 1);
                 }
             }
@@ -650,9 +663,24 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 {
                     string description = relationInfo.Description ?? defaultColumnDescription;
                     ConstructTableMappings(relationInfo.ValueType, relationInfo.ValueTypePath,
-                                           null, null, null, tables, description);
+                                           null, null, null, tables, description, true);
                 }
             }
+        }
+        protected T GetAttributeByType<T>(List<MappingAttribute> attributes) where T : MappingAttribute
+        {
+            if (attributes != null)
+            {
+                foreach (MappingAttribute attribute in attributes)
+                {
+                    Type attrType = attribute.GetType();
+                    if (typeof(T).IsAssignableFrom(attrType))
+                    {
+                        return (T) attribute;
+                    }
+                }
+            }
+            return null;
         }
         protected string GetColumnDescription(MemberInfo member, string defaultColumnDescription)
         {
@@ -666,6 +694,31 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 description = "Parent: " + defaultColumnDescription;
             }
             return string.Format("{0} ({1})", description, member.Name);
+        }
+        protected string GetDefaultTableName(Type objType)
+        {
+            // Defaults to class name if not specified
+            string baseTableName = objType.Name;
+            if (baseTableName.EndsWith("DataType"))
+            {
+                baseTableName = baseTableName.Substring(0, baseTableName.Length - "DataType".Length);
+            }
+            int maxChars = Utils.MAX_TABLE_NAME_CHARS;
+            if (!string.IsNullOrEmpty(m_DefaultTableNamePrefix))
+            {
+                maxChars -= m_DefaultTableNamePrefix.Length;
+            }
+            string tableName =
+                Utils.ShortenDatabaseTableName(Utils.CamelCaseToDatabaseName(baseTableName), maxChars,
+                                               m_Abbreviations);
+            if (!string.IsNullOrEmpty(m_DefaultTableNamePrefix))
+            {
+                if (!tableName.StartsWith(m_DefaultTableNamePrefix))
+                {
+                    tableName = m_DefaultTableNamePrefix + tableName;
+                }
+            }
+            return tableName;
         }
         protected List<MemberInfo> GetStaticParentToMemberChain(List<MemberInfo> parentToMemberChain, 
                                                                 ref List<MemberInfo> staticParentToMemberChain)
@@ -969,16 +1022,22 @@ namespace Windsor.Commons.XsdOrm.Implementations
             {
                 return attributes;
             }
-            Dictionary<string, MappingAttribute> typeAttributes;
-            MappingAttribute mappingAttribute;
+            Dictionary<string, List<MappingAttribute>> typeAttributes;
+            List<MappingAttribute> mappingAttributes;
+            if (type.Name == "FacilitySiteIdentifierDataType")
+            {
+            }
             if (m_AppliedAttributes.TryGetValue(type, out typeAttributes) &&
-                typeAttributes.TryGetValue(memberName, out mappingAttribute))
+                typeAttributes.TryGetValue(memberName, out mappingAttributes))
             {
                 if (attributes == null)
                 {
                     attributes = new List<MappingAttribute>();
                 }
-                attributes.Add(mappingAttribute.ShallowCopy());
+                foreach (MappingAttribute mappingAttribute in mappingAttributes)
+                {
+                    attributes.Add(mappingAttribute.ShallowCopy());
+                }
             }
             return attributes;
         }
@@ -1129,6 +1188,11 @@ namespace Windsor.Commons.XsdOrm.Implementations
             get { return m_DefaultDecimalCreateString; }
             set { m_DefaultDecimalCreateString = value; }
         }
+        public string DefaultTableNamePrefix
+        {
+            get { return m_DefaultTableNamePrefix; }
+            set { m_DefaultTableNamePrefix = value; }
+        }
 
         protected virtual void ConstructTableMappings(Type rootType)
         {
@@ -1146,7 +1210,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 }
             }
             m_Tables = new Dictionary<string, Table>();
-            ConstructTableMappings(rootType, rootType.FullName, null, null, null, m_Tables, null);
+            ConstructTableMappings(rootType, rootType.FullName, null, null, null, m_Tables, null, true);
             ValidateTables(m_Tables);
             m_ObjectPaths = ConstructObjectPaths(m_Tables);
         }
@@ -1211,9 +1275,9 @@ namespace Windsor.Commons.XsdOrm.Implementations
             }
             return 0;
         }
-        protected static Dictionary<Type, Dictionary<string, MappingAttribute>> GetAppliedAttributes(Type rootType)
+        protected static Dictionary<Type, Dictionary<string, List<MappingAttribute>>> GetAppliedAttributes(Type rootType)
         {
-            Dictionary<Type, Dictionary<string, MappingAttribute>> appliedAttributes = null;
+            Dictionary<Type, Dictionary<string, List<MappingAttribute>>> appliedAttributes = null;
             ConstructAppliedAttributes(rootType.Assembly.GetCustomAttributes(typeof(AppliedAttribute), false), 
                                        ref appliedAttributes);
             // Root attributes override asssembly-level attributes
@@ -1222,7 +1286,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
             return appliedAttributes;
         }
         protected static void ConstructAppliedAttributes(IList<object> attributes, 
-                                                         ref Dictionary<Type, Dictionary<string, MappingAttribute>> appliedAttributes)
+                                                         ref Dictionary<Type, Dictionary<string, List<MappingAttribute>>> appliedAttributes)
         {
             if (CollectionUtils.IsNullOrEmpty(attributes))
             {
@@ -1230,7 +1294,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
             }
             if (appliedAttributes == null)
             {
-                appliedAttributes = new Dictionary<Type, Dictionary<string, MappingAttribute>>();
+                appliedAttributes = new Dictionary<Type, Dictionary<string, List<MappingAttribute>>>();
             }
             foreach (AppliedAttribute attribute in attributes)
             {
@@ -1245,16 +1309,20 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 }
                 // Empty attribute.AppliedToMemberName string means that attribute is applied directly to attribute.AppliedToType instead
                 // of one of its members
-                Dictionary<string, MappingAttribute> typeAttributes;
+                Dictionary<string, List<MappingAttribute>> typeAttributes;
                 if (!appliedAttributes.TryGetValue(attribute.AppliedToType, out typeAttributes))
                 {
-                    typeAttributes = new Dictionary<string, MappingAttribute>();
+                    typeAttributes = new Dictionary<string, List<MappingAttribute>>();
                     appliedAttributes.Add(attribute.AppliedToType, typeAttributes);
                 }
                 MappingAttribute mappingAttribute = null;
                 if (attribute.MappedAttributeType == typeof(DbIgnoreAttribute))
                 {
                     mappingAttribute = new DbIgnoreAttribute();
+                }
+                else if (attribute.MappedAttributeType == typeof(DbIndexableAttribute))
+                {
+                    mappingAttribute = new DbIndexableAttribute();
                 }
                 else if (attribute.MappedAttributeType == typeof(ColumnAttribute))
                 {
@@ -1293,7 +1361,11 @@ namespace Windsor.Commons.XsdOrm.Implementations
                     throw new NotImplementedException(string.Format("attribute.MappedAttributeType arg is not implemented: {0}",
                                                                     attribute.MappedAttributeType));
                 }
-                typeAttributes[attribute.AppliedToMemberName] = mappingAttribute;
+                if (!typeAttributes.ContainsKey(attribute.AppliedToMemberName))
+                {
+                    typeAttributes[attribute.AppliedToMemberName] = new List<MappingAttribute>();
+                }
+                typeAttributes[attribute.AppliedToMemberName].Add(mappingAttribute);
             }
         }
         private Dictionary<string, Table> m_Tables = new Dictionary<string, Table>();
@@ -1302,7 +1374,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
         private static Dictionary<Type, MappingContext> s_MappingContexts = new Dictionary<Type, MappingContext>();
         private DefaultStringDbValuesAttribute m_DefaultStringDbValues;
         private List<KeyValuePair<string, int>> m_ElementNamePostfixToLength;
-        private Dictionary<Type, Dictionary<string, MappingAttribute>> m_AppliedAttributes;
+        private Dictionary<Type, Dictionary<string, List<MappingAttribute>>> m_AppliedAttributes;
         private string m_SpecifiedFieldPostfixName = "Specified";
         private string m_DefaultTableNamePrefix;
         private string m_DefaultDecimalCreateString;
@@ -1321,6 +1393,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
             public Type ValueType;
             public SameTableAttribute SameTable;
             public MemberInfo Member;
+            public bool NotNull = false;
         }
         private class RelationInfo
         {

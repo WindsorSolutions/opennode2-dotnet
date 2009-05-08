@@ -334,6 +334,16 @@ namespace Windsor.Commons.XsdOrm
             get { return m_IsNullable; }
             set { m_IsNullable = value; }
         }
+        public bool IsIndexable
+        {
+            get { return m_IsIndexable; }
+            set { m_IsIndexable = value; }
+        }
+        public string IndexName
+        {
+            get { return m_IndexName; }
+            set { m_IndexName = value; }
+        }
         public string IsSpecifiedMemberName
         {
             get { return m_IsSpecifiedMemberName; }
@@ -350,6 +360,8 @@ namespace Windsor.Commons.XsdOrm
         protected int m_ColumnSize;
         protected bool m_IsNullable = true;
         protected string m_IsSpecifiedMemberName;
+        private bool m_IsIndexable;
+        private string m_IndexName;
     }
 
     /// <summary>
@@ -758,6 +770,14 @@ namespace Windsor.Commons.XsdOrm
         public override string GetShortDescription()
         {
             return "NotNull";
+        }
+    }
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
+    public class DbIndexableAttribute : MappingAttribute
+    {
+        public override string GetShortDescription()
+        {
+            return "Indexable";
         }
     }
 }
