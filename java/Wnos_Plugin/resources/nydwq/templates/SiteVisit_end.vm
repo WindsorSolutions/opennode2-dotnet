@@ -1,3 +1,0 @@
-#if($siteVisit.comment || $siteVisit.frequencyNumber || $siteVisit.frequencyPeriod || $siteVisit.nextDueDate || $siteVisit.reasonCode || $siteVisit.distributionSystemInd || $siteVisit.finishedStorageInd || $siteVisit.operatorEvalInd || $siteVisit.mrDivInd || $siteVisit.otherInd || $siteVisit.pumpInd || $siteVisit.sourceInd || $siteVisit.treatmentInd || $siteVisit.waterSystemMgmtInd || $siteVisit.status || $siteVisit.siteVisitDate || $siteVisit.notifiedDate || $siteVisit.tinvisitIsNumber)   
-            </SiteVisit>
-#end

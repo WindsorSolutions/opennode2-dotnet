@@ -1,3 +1,0 @@
-#if($unit.opUnitId || $unit.opUnitCode || $unit.opUnitDescription || $unit.opUnitRecordOfDiscussion )
-            </EROpUnit>
-#end

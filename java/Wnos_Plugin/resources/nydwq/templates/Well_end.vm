@@ -1,3 +1,0 @@
-#if($facility.hasScreenOrCasing || $facility.wellCode || $facility.wellPumpCapacity || $facility.wellPumpType || $facility.wellDepthAtCompletion || $facility.wellCapText || $facility.wellStaticLevelDepth || $facility.wellStaticLevelDepthDate || $facility.wellDrillingMethodCode || $facility.wellDrillingMethodValue || $facility.wellDrawDownDepth || $facility.wellDiameter || $facility.wellGallonsPerMin)
-                </Well>
-#end

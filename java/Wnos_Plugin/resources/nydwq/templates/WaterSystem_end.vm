@@ -1,3 +1,0 @@
-#if($waterSystem.pwsIdentifier || $waterSystem.waterSystemName || $waterSystem.ownerTypeCode || $waterSystem.activityStatusCode || $waterSystem.populationCount || $waterSystem.stateTypeCode || $waterSystem.stateTypeValue || $waterSystem.federalTypeCode || $waterSystem.federalTypeValue || $waterSystem.activityDate || ($waterSystem.totalDesignCapacityMeasure && ($waterSystem.totalDesignCapacityMeasure != 0)) || ($waterSystem.avgDailyProduceMeasure && ($waterSystem.avgDailyProduceMeasure != 0)) || $waterSystem.principalCountyServed || $waterSystem.principalCityServed || $waterSystem.primarySourceCode)
-        </WaterSystem>
-#end

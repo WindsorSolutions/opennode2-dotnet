@@ -1,3 +1,0 @@
-#if($property.adjacentPropertyId || $property.adjacentPropertyIdc || $property.eaDistrict || $property.eaSection || $property.eaSubsection || $property.eaBlock || $property.eaLot || $property.eaSublot || $property.eaSuffix || $property.nyTransmercatorN || $property.nyTransmercatorE || $property.nyDistance ||$property.sectionBlockPrint || $property.parcelStreet || $property.parcelCity || $property.parcelZipCode || $property.parcelSwis)
-                </ERAdjProp>
-#end
