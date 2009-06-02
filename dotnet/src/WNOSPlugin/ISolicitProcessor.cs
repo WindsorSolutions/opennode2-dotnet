@@ -38,11 +38,16 @@ using Windsor.Node2008.WNOSDomain;
 
 namespace Windsor.Node2008.WNOSPlugin
 {
+    /// <summary>
+    /// Descend your custom plugin implementation from this interface (and the BaseWNOSPlugin
+    /// class) to implement Solicit operations for the Node.  See the BaseWNOSPlugin class
+    /// for a quick summary of implementing a custom plugin.
+    /// </summary>
     public interface ISolicitProcessor : IAuditLogEventGenerator
     {
-		/// <summary>
-		/// Execute a Query request operation and return query results.
-		/// </summary>
+        /// <summary>
+        /// ProcessSolicit method called at runtime to handle Solicit operations for the node.
+        /// </summary>
         void ProcessSolicit(string requestId);
     }
 }

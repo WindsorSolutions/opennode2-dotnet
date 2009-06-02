@@ -37,8 +37,16 @@ using System.Text;
 
 namespace Windsor.Node2008.WNOSPlugin
 {
+    /// <summary>
+    /// Descend your custom plugin implementation from this interface (and the BaseWNOSPlugin
+    /// class) to implement Notify operations for the Node.  See the BaseWNOSPlugin class
+    /// for a quick summary of implementing a custom plugin.
+    /// </summary>
     public interface INotifyProcessor : IAuditLogEventGenerator
     {
-		void ProcessNotify(string transactionId);
+        /// <summary>
+        /// ProcessNotify method called at runtime to handle Notify operations for the node.
+        /// </summary>
+        void ProcessNotify(string transactionId);
     }
 }

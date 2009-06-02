@@ -58,6 +58,28 @@ namespace Windsor.Node2008.WNOSPlugin
 
     public delegate void WNOSPluginAuditLogginHandler(string message);
 
+    /// <summary>
+    /// All plugin implementations must descend from this class, then implement one or more of the 
+    /// relevant Node method interfaces contained within the WNOSPlugin namespace: IExecuteProcessor, 
+    /// INotifyProcessor, IQueryProcessor, ISolicitProcessor, ISubmitProcessor, etc.
+    /// 
+    /// For example, if you want to handle submits for a flow, your class declaration would look
+    /// something like:
+    /// 
+    ///     class MySubmitProcessor : WNOSPlugin, ISubmitProcessor
+    ///     {
+    ///     }
+    ///     
+    /// Your class would then implement the ISubmitProcessor.ProcessSubmit() method, which would
+    /// handle Submit operations for the node for a given flow.  Your class would then be wrapped in
+    /// its own namespace and assembly, and the assembly dll and pdb files would be uploaded to the 
+    /// flow is associated with the plugin (using the Node Admin gui interface).
+    /// 
+    /// If you plugin requires data providers or config parameters at runtime, add items to the
+    /// DataProviders and ConfigurationArguments properties in your plugin constructor.  These
+    /// properties will be set at runtime when the plugin is instantiated and called by the node
+    /// orchestration service.
+    /// </summary>
     public abstract class BaseWNOSPlugin : MarshalByRefObjectIndefinite, IAppendAuditLogEvent
     {
         private static readonly ILogEx LOG = LogManagerEx.GetLogger(MethodBase.GetCurrentMethod());
@@ -688,6 +710,32 @@ namespace Windsor.Node2008.WNOSPlugin
                 FileUtils.SafeDeleteFile(tempXmlFilePath);
             }
         }
+        protected void TrimListToRequestSize<T>(int rowIndex, int maxRowCount, List<T> list)
+        {
+            if (rowIndex > 0)
+            {
+                if (rowIndex >= list.Count)
+                {
+                    list.Clear();
+                }
+                else
+                {
+                    list.RemoveRange(0, rowIndex);
+                }
+            }
+            if (maxRowCount > 0)
+            {
+                int rtnCount = Math.Min(maxRowCount, list.Count);
+                if ((rtnCount > 0) && (rtnCount < list.Count))
+                {
+                    list.RemoveRange(rtnCount, list.Count - rtnCount);
+                }
+            }
+        }
+        protected void TrimListToRequestSize<T>(DataRequest dataRequest, List<T> list)
+        {
+            TrimListToRequestSize<T>(dataRequest.RowIndex, dataRequest.MaxRowCount, list);
+        }
         #endregion
 
         #region Properties
@@ -714,57 +762,13 @@ namespace Windsor.Node2008.WNOSPlugin
         {
             return _auditLogEvents;
         }
-        public virtual IList<PluginParameter> RuntimeParameters
+        /// <summary>
+        /// Return the Query, Solicit, or Execute data service parameters for this plugin.
+        /// </summary>
+        public virtual ICollection<TypedParameter> GetDataServiceParameters(string serviceName)
         {
-            get { return null; }
+            return null;
         }
         #endregion
-    }
-    public class PluginParameter
-    {
-        private string _name;
-        private string _description;
-        private Type _type;
-        private bool _isOptional;
-        private object _value;
-
-        public PluginParameter()
-        {
-        }
-        public PluginParameter(string name, string description, bool isOptional,
-                               Type type, object value)
-        {
-            _name = name;
-            _description = description;
-            _isOptional = isOptional;
-            _type = type;
-            _value = value;
-        }
-
-        public string Name
-        {
-            get { return _name; }
-            set { _name = value; }
-        }
-        public string Description
-        {
-            get { return _description; }
-            set { _description = value; }
-        }
-        public Type Type
-        {
-            get { return _type; }
-            set { _type = value; }
-        }
-        public bool IsOptional
-        {
-            get { return _isOptional; }
-            set { _isOptional = value; }
-        }
-        public object Value
-        {
-            get { return _value; }
-            set { _value = value; }
-        }
     }
 }

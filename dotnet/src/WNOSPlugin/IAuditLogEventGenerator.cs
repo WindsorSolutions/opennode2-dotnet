@@ -39,6 +39,10 @@ using Windsor.Node2008.WNOSDomain;
 
 namespace Windsor.Node2008.WNOSPlugin
 {
+    /// <summary>
+    /// Interface for generating audit log events that are assigned to a node transaction and
+    /// activity.
+    /// </summary>
     public interface IAuditLogEventGenerator
     {
         ICollection<ActivityEntry> GetAuditLogEvents();

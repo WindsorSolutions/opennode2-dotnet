@@ -37,8 +37,16 @@ using System.Text;
 
 namespace Windsor.Node2008.WNOSPlugin
 {
+    /// <summary>
+    /// Descend your custom plugin implementation from this interface (and the BaseWNOSPlugin
+    /// class) to implement Task operations for the Node.  See the BaseWNOSPlugin class
+    /// for a quick summary of implementing a custom plugin.
+    /// </summary>
     public interface ITaskProcessor : IAuditLogEventGenerator
     {
+        /// <summary>
+        /// ProcessTask method called at runtime to handle Task operations for the node.
+        /// </summary>
         void ProcessTask(string requestId);
     }
 }

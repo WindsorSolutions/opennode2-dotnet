@@ -38,10 +38,15 @@ using Windsor.Node2008.WNOSDomain;
 
 namespace Windsor.Node2008.WNOSPlugin
 {
+    /// <summary>
+    /// Descend your custom plugin implementation from this interface (and the BaseWNOSPlugin
+    /// class) to implement Execute operations for the Node.  See the BaseWNOSPlugin class
+    /// for a quick summary of implementing a custom plugin.
+    /// </summary>
     public interface IExecuteProcessor : IAuditLogEventGenerator
     {
 		/// <summary>
-		/// Process Execute method
+        /// ProcessExecute method called at runtime to handle Execute operations for the node.
 		/// </summary>
         ExecuteContentResult ProcessExecute(string requestId);
     }

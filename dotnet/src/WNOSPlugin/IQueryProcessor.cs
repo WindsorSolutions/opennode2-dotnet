@@ -38,11 +38,16 @@ using Windsor.Node2008.WNOSDomain;
 
 namespace Windsor.Node2008.WNOSPlugin
 {
+    /// <summary>
+    /// Descend your custom plugin implementation from this interface (and the BaseWNOSPlugin
+    /// class) to implement Query operations for the Node.  See the BaseWNOSPlugin class
+    /// for a quick summary of implementing a custom plugin.
+    /// </summary>
     public interface IQueryProcessor : IAuditLogEventGenerator
     {
-		/// <summary>
-		/// Execute a Query request operation and return query results.
-		/// </summary>
+        /// <summary>
+        /// ProcessQuery method called at runtime to handle Query operations for the node.
+        /// </summary>
         PaginatedContentResult ProcessQuery(string requestId);
     }
 }

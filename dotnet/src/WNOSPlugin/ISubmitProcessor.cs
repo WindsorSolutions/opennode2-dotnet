@@ -37,8 +37,16 @@ using System.Text;
 
 namespace Windsor.Node2008.WNOSPlugin
 {
+    /// <summary>
+    /// Descend your custom plugin implementation from this interface (and the BaseWNOSPlugin
+    /// class) to implement Submit operations for the Node.  See the BaseWNOSPlugin class
+    /// for a quick summary of implementing a custom plugin.
+    /// </summary>
     public interface ISubmitProcessor : IAuditLogEventGenerator
     {
-		void ProcessSubmit(string transactionId);
+        /// <summary>
+        /// ProcessSubmit method called at runtime to handle Submit operations for the node.
+        /// </summary>
+        void ProcessSubmit(string transactionId);
     }
 }

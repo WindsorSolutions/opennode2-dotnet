@@ -54,6 +54,10 @@ using Windsor.Commons.Spring;
 
 namespace Windsor.Node2008.WNOSPlugin
 {
+    /// <summary>
+    /// Interface for recording audit log events that are assigned to a node transaction and
+    /// activity.
+    /// </summary>
     public interface IAppendAuditLogEvent
     {
         void AppendAuditLogEvent(string messageFormat, params object[] args);
