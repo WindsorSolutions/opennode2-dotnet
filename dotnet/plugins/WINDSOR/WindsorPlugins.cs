@@ -220,15 +220,15 @@ namespace Windsor.Node2008.WNOSPlugin.Windsor
                 }
             }
         }
-        public override IList<PluginParameter> RuntimeParameters
+        /// <summary>
+        /// Return the Query, Solicit, or Execute data service parameters for this plugin.
+        /// </summary>
+        public override ICollection<TypedParameter> GetDataServiceParameters(string serviceName)
         {
-            get
-            {
-                List<PluginParameter> parameters = new List<PluginParameter>();
-                parameters.Add(new PluginParameter("Force Refresh", "If true, this task will always refresh the user list.  If false, this task will only refresh the user list if it has expired.",
-                                                   true, typeof(bool), false));
-                return parameters;
-            }
+            List<TypedParameter> parameters = new List<TypedParameter>();
+            parameters.Add(new TypedParameter("Force Refresh", "If true, this task will always refresh the user list.  If false, this task will only refresh the user list if it has expired from the cache.",
+                                               true, typeof(bool), false));
+            return parameters;
         }
     }
     [Serializable]

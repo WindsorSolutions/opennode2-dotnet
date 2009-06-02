@@ -99,6 +99,7 @@
     <Compile Include="SimpleVisit.cs" />
     <Compile Include="StatusActivityEntry.cs" />
     <Compile Include="TransactionStatus.cs" />
+    <Compile Include="TypedParameter.cs" />
     <Compile Include="UserAccessPolicy.cs" />
     <Compile Include="UserAccount.cs" />
     <Compile Include="VersionInfo.cs" />
