@@ -65,7 +65,7 @@ namespace Windsor.Node.Flow.MapForceBridge
     /// 4) The Run() method will be called by this plugin, passing in any parameters specified in the request
     /// </summary>
     [Serializable]
-    public class MapForceBridge : BaseWNOSPlugin, ITaskProcessor
+    public class MapForceBridge : BaseWNOSPlugin, ITaskProcessor, IQueryProcessor, ISolicitProcessor
     {
         protected const string CONFIG_CONNECTION_STRING = "Database Connection String";
 
@@ -82,6 +82,27 @@ namespace Windsor.Node.Flow.MapForceBridge
         }
         public void ProcessTask(string requestId)
         {
+            string filePath = DoRequest(requestId);
+
+            _documentManager.AddDocument(_dataRequest.TransactionId, CommonTransactionStatusCode.Completed,
+                                         null, filePath);
+        }
+        public PaginatedContentResult ProcessQuery(string requestId)
+        {
+            string filePath = DoRequest(requestId);
+
+            byte[] content = File.ReadAllBytes(filePath);
+            PaginatedContentResult result = new PaginatedContentResult(_dataRequest.RowIndex, _dataRequest.MaxRowCount, 
+                                                                       true, CommonContentType.XML, content);
+            return result;
+        }
+        public void ProcessSolicit(string requestId)
+        {
+            string filePath = DoRequest(requestId);
+
+        }
+        protected string DoRequest(string requestId)
+        {
             LazyInit();
 
             ValidateRequest(requestId);
@@ -90,6 +111,8 @@ namespace Windsor.Node.Flow.MapForceBridge
 
             _documentManager.AddDocument(_dataRequest.TransactionId, CommonTransactionStatusCode.Completed,
                                          null, filePath);
+
+            return filePath;
         }
         protected virtual void LazyInit()
         {
