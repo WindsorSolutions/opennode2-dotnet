@@ -83,9 +83,6 @@ namespace Windsor.Node.Flow.MapForceBridge
         public void ProcessTask(string requestId)
         {
             string filePath = DoRequest(requestId);
-
-            _documentManager.AddDocument(_dataRequest.TransactionId, CommonTransactionStatusCode.Completed,
-                                         null, filePath);
         }
         public PaginatedContentResult ProcessQuery(string requestId)
         {
