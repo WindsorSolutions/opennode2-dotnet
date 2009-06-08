@@ -446,5 +446,17 @@ namespace Windsor.Commons.Core
             }
             return true;
         }
+        public delegate void ForEachDelegate<T>(T obj);
+
+        public static void ForEach<T>(IEnumerable<T> list, ForEachDelegate<T> forEachProc)
+        {
+            if (!CollectionUtils.IsNullOrEmpty(list))
+            {
+                foreach (T obj in list)
+                {
+                    forEachProc(obj);
+                }
+            }
+        }
     }
 }

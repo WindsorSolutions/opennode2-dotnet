@@ -254,6 +254,10 @@ namespace Windsor.Node2008.WNOS.Logic
 		{
 			return _transactionDao.GetTransaction(transactionId, returnDocsWithStatus);
 		}
+        public EndpointVersionType GetTransactionEndpointVersionType(string transactionId)
+        {
+            return _transactionDao.GetTransactionEndpointVersionType(transactionId);
+        }
         public NodeTransaction GetTransaction(string transactionId)
         {
             return _transactionDao.GetTransaction(transactionId);

@@ -176,7 +176,7 @@ namespace Windsor.Node2008.WNOS.Logic
         public IList<DataService> GetDataServicesForFlow(string flowId, AdminVisit visit)
         {
             ValidateByRole(visit, SystemRoleType.Program);
-            return _serviceDao.GetDataServicesForFlow(flowId);
+            return _serviceDao.GetDataServicesForFlow(flowId, false);
         }
 
         /// <summary>

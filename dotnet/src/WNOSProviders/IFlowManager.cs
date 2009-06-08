@@ -67,11 +67,10 @@ namespace Windsor.Node2008.WNOSProviders
         /// GetDataFlow
         /// </summary>
         DataFlow GetDataFlow(string flowId);
-
         /// <summary>
-        /// Return all data flows for this node.
+        /// Return all data flows for this node, optionally including parameters associated with each data service.
         /// </summary>
-        IList<DataFlow> GetAllDataFlows(bool loadDataServices);
+        IList<DataFlow> GetAllDataFlows(bool loadDataServices, bool includeServiceParameters);
 
         /// <summary>
         /// Key is the flow name, value is the flow id.

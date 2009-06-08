@@ -86,27 +86,30 @@ namespace Windsor.Commons.Core
             return string.Format("Exception: {0}, Message: {1}", nextException.GetType().Name,
                                  nextException.Message);
         }
-        public static void ThrowIfNull<T>(T parameter, string paramName) where T : class
+        public static T ThrowIfNull<T>(T parameter, string paramName) where T : class
         {
             if (parameter == null)
             {
                 throw new NullReferenceException(paramName + " cannot be null");
             }
+            return parameter;
         }
-        public static void ThrowIfEmptyString(string parameter, string paramName)
+        public static string ThrowIfEmptyString(string parameter, string paramName)
         {
             if (string.IsNullOrEmpty(parameter))
             {
                 throw new NullReferenceException(paramName + " cannot be an empty string");
             }
+            return parameter;
         }
-        public static void ThrowIfDirectoryNotFound(string folderPath)
+        public static string ThrowIfDirectoryNotFound(string folderPath)
         {
             if (!Directory.Exists(folderPath))
             {
                 throw new DirectoryNotFoundException(string.Format("The directory \"{0}\" does not exist",
                                                                    folderPath));
             }
+            return folderPath;
         }
         public static void ThrowIfFileNotFound(string filePath)
         {

@@ -264,19 +264,50 @@ namespace Windsor.Commons.Core
         {
             using (MemoryStream stream = new MemoryStream())
             {
-                new BinaryFormatter().Serialize(stream, obj);
+                BinarySerialize(obj, stream);
                 stream.Close();
                 byte[] buffer = stream.ToArray();
                 return buffer;
             }
         }
+        public void BinarySerialize<T>(T obj, string filePath)
+        {
+            using (FileStream stream = new FileStream(filePath, FileMode.Create, FileAccess.Write))
+            {
+                BinarySerialize(obj, stream);
+            }
+        }
+        public void BinarySerialize<T>(T obj, Stream streamOut)
+        {
+            new BinaryFormatter().Serialize(streamOut, obj);
+        }
         public T BinaryDeserialize<T>(byte[] bytes)
         {
             using (MemoryStream stream = new MemoryStream(bytes))
             {
-                BinaryFormatter formatter = new BinaryFormatter();
-                return (T)formatter.Deserialize(stream);
+                return BinaryDeserialize<T>(stream);
             }
+        }
+        public T BinaryDeserialize<T>(string filePath)
+        {
+            using (FileStream stream = File.OpenRead(filePath))
+            {
+                return BinaryDeserialize<T>(stream);
+            }
+        }
+        public T BinaryDeserialize<T>(Stream streamIn)
+        {
+            return (T)new BinaryFormatter().Deserialize(streamIn);
+        }
+        public string BinarySerializeToString<T>(T obj)
+        {
+            byte[] buffer = BinarySerialize<T>(obj);
+            return Convert.ToBase64String(buffer);
+        }
+        public T BinaryDeserializeFromString<T>(string str)
+        {
+            byte[] buffer = Convert.FromBase64String(str);
+            return BinaryDeserialize<T>(buffer);
         }
         #endregion
     }

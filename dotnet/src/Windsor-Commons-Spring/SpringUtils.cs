@@ -54,7 +54,25 @@ namespace Windsor.Commons.Spring
 	public static class SpringUtils
 	{
 		private static readonly ILogEx LOG = LogManagerEx.GetLogger(MethodBase.GetCurrentMethod());
-		/// <summary>
+        /// <summary>
+        /// Fetches interface implementation from the specified context
+        /// </summary>
+        /// <returns>Instance of the specfied type based on the Spring context defenition</returns>
+        public static void GetServiceImplementation<T>(out T implementation) where T : class
+        {
+            implementation = GetServiceImplementation<T>();
+        }
+        
+        /// <summary>
+		/// Fetches interface implementation from the specified context
+		/// </summary>
+		/// <returns>Instance of the specfied type based on the Spring context defenition</returns>
+        public static T GetServiceImplementation<T>() where T : class
+        {
+            return GetServiceImplementation<T>(ContextRegistry.GetContext());
+        }
+
+        /// <summary>
 		/// Fetches interface implementation from the specified context
 		/// </summary>
 		/// <returns>Instance of the specfied type based on the Spring context defenition</returns>

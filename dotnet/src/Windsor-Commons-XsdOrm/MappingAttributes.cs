@@ -189,32 +189,12 @@ namespace Windsor.Commons.XsdOrm
         }
         private string m_Prefix;
     }
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Assembly, AllowMultiple=true)]
-    public class AppliedAttribute : MappingAttribute
+    public abstract class BaseAppliedAttribute : MappingAttribute
     {
-        public AppliedAttribute(Type appliedToType, string appliedToMemberName, Type mappedAttributeType,
-                                params object[] args)
+        public BaseAppliedAttribute(Type mappedAttributeType, params object[] args)
         {
-
-            m_AppliedToType = appliedToType;
-            m_AppliedToMemberName = appliedToMemberName;
             m_MappedAttributeType = mappedAttributeType;
             m_Args = args;
-        }
-        public override string GetShortDescription()
-        {
-            return string.Format("{0},{1},{2}", m_AppliedToType.Name, m_AppliedToMemberName,
-                                 m_MappedAttributeType.Name);
-        }
-        public Type AppliedToType
-        {
-            get { return m_AppliedToType; }
-            set { m_AppliedToType = value; }
-        }
-        public string AppliedToMemberName
-        {
-            get { return m_AppliedToMemberName; }
-            set { m_AppliedToMemberName = value; }
         }
         public Type MappedAttributeType
         {
@@ -226,12 +206,56 @@ namespace Windsor.Commons.XsdOrm
             get { return m_Args; }
             set { m_Args = value; }
         }
-        private Type m_AppliedToType;
-        private string m_AppliedToMemberName;
         private Type m_MappedAttributeType;
         private object[] m_Args;
     }
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Assembly, AllowMultiple = true)]
+    public class AppliedAttribute : BaseAppliedAttribute
+    {
+        public AppliedAttribute(Type appliedToType, string appliedToMemberName, Type mappedAttributeType,
+                                params object[] args) : base(mappedAttributeType, args)
+        {
+            m_AppliedToType = appliedToType;
+            m_AppliedToMemberName = appliedToMemberName;
+        }
+        public override string GetShortDescription()
+        {
+            return string.Format("{0},{1},{2}", m_AppliedToType.Name, m_AppliedToMemberName,
+                                 MappedAttributeType.Name);
+        }
+        public Type AppliedToType
+        {
+            get { return m_AppliedToType; }
+            set { m_AppliedToType = value; }
+        }
+        public string AppliedToMemberName
+        {
+            get { return m_AppliedToMemberName; }
+            set { m_AppliedToMemberName = value; }
+        }
+        private Type m_AppliedToType;
+        private string m_AppliedToMemberName;
+    }
 
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Assembly, AllowMultiple = true)]
+    public class AppliedPathAttribute : BaseAppliedAttribute
+    {
+        public AppliedPathAttribute(string objectPath, Type mappedAttributeType,
+                                    params object[] args) : base(mappedAttributeType, args)
+        {
+            m_ObjectPath = objectPath;
+        }
+        public override string GetShortDescription()
+        {
+            return string.Format("{0},{1}", m_ObjectPath, MappedAttributeType.Name);
+        }
+        public string ObjectPath
+        {
+            get { return m_ObjectPath; }
+            set { m_ObjectPath = value; }
+        }
+        private string m_ObjectPath;
+    }
     [AttributeUsage(AttributeTargets.Class)]
     public class TableAttribute : MappingAttribute
     {

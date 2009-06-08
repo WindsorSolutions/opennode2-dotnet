@@ -85,7 +85,7 @@ namespace Windsor.Node2008.WNOS.Data
         /// Return all data services associated with the input data flow id.  Each data flow can have 0 or more 
         /// associated data services.
         /// </summary>
-        IList<DataService> GetDataServicesForFlow(string flowId);
+        IList<DataService> GetDataServicesForFlow(string flowId, bool includeServiceParameters);
 
         /// <summary>
         /// Return all data services associated with the input data flow id that match the specified 

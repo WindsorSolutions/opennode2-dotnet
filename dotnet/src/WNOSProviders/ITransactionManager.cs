@@ -131,5 +131,7 @@ namespace Windsor.Node2008.WNOSProviders
         IList<StatusActivityEntry> GetRealtimeTransactionDetails(string transactionId);
 
         void ClearRealtimeTransactionDetails(string transactionId);
+
+        EndpointVersionType GetTransactionEndpointVersionType(string transactionId);
     }
 }

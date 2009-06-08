@@ -38,9 +38,24 @@ using System.Reflection;
 using System.Diagnostics;
 using Windsor.Node2008.WNOSUtility;
 using Windsor.Commons.Core;
+using System.ComponentModel;
 
 namespace Windsor.Node2008.WNOSDomain
 {
+    [Flags]
+    [Serializable]
+    public enum DataServicePublishFlags
+    {
+        [Description("Do Not Publish")]
+        DoNotPublish = 0x0000,
+        [Description("Endpoint v1.1")]
+        PublishToEndpointVersion11 = 0x0001,
+        [Description("Endpoint v2.0")]
+        PublishToEndpointVersion20 = 0x0002,
+        [Description("Endpoint v1.1 and v2.0")]
+        PublishToEndpointVersion11And20 = (PublishToEndpointVersion11 | PublishToEndpointVersion20),
+    }
+
     /// <summary>
     /// Domain object representing a data flow data service instance.  A data serivce represents a single
     /// service action associated with a data flow, and is a many-to-one relationship with a data flow.
@@ -56,6 +71,10 @@ namespace Windsor.Node2008.WNOSDomain
         private ServiceRequestAuthorizationType _minAuthLevel;
         private IDictionary<string, DataProviderInfo> _dataSources;
         private ExecutableInfo _pluginInfo;
+        private DataServicePublishFlags _publishFlags = (DataServicePublishFlags.PublishToEndpointVersion11 | 
+                                                         DataServicePublishFlags.PublishToEndpointVersion20);
+        private ICollection<TypedParameter> _serviceParameters;
+
         public const string DEFAULT_SERVICE_NAME = "*";
 
         public DataService()
@@ -136,6 +155,21 @@ namespace Windsor.Node2008.WNOSDomain
         {
             get { return _pluginInfo; }
             set { _pluginInfo = value; }
+        }
+
+        /// <summary>
+        /// Is data service published via the node's GetServices()?
+        /// </summary>
+        public DataServicePublishFlags PublishFlags
+        {
+            get { return _publishFlags; }
+            set { _publishFlags = value; }
+        }
+
+        public ICollection<TypedParameter> ServiceParameters
+        {
+            get { return _serviceParameters; }
+            set { _serviceParameters = value; }
         }
     }
 }

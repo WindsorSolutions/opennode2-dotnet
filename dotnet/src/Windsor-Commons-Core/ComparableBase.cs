@@ -37,6 +37,7 @@ using System.Collections.Specialized;
 
 namespace Windsor.Commons.Core
 {
+    [Serializable]
     public abstract class ComparableBase<T> : IComparable<T> where T : class
     {
         public abstract int CompareTo(T other);

@@ -49,10 +49,11 @@ namespace Windsor.Node2008.WNOS.Data
 
         /// <summary>
         /// Get a list of all data flows.  If loadDataServices is true, all data services associated with each flow
-        /// are loaded from persistent storage and populated into the DataFlow.Services collection.
+        /// are loaded from persistent storage and populated into the DataFlow.Services collection.  If includeServiceParameters
+        /// is true, load service parameters for each data service, as well.
         /// </summary>
-        IList<DataFlow> GetAllDataFlows(bool loadDataServices);
-
+        IList<DataFlow> GetAllDataFlows(bool loadDataServices, bool includeServiceParameters);
+        
         /// <summary>
         /// Get a list of all protected data flows.  If loadDataServices is true, all data services associated with each flow
         /// are loaded from persistent storage and populated into the DataFlow.Services collection.
@@ -110,7 +111,7 @@ namespace Windsor.Node2008.WNOS.Data
         /// <summary>
         /// Get a list of all data services associated with the data flow with the specified flow id.
         /// </summary>
-        IList<DataService> GetDataServicesForFlow(string flowId);
+        IList<DataService> GetDataServicesForFlow(string flowId, bool includeServiceParameters);
 
         /// <summary>
         /// Get the Execute data service associated with the data flow with the specified flow id and execute method name.

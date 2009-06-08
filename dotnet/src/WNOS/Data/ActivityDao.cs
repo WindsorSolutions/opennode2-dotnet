@@ -58,7 +58,7 @@ namespace Windsor.Node2008.WNOS.Data
         private IAccountDao _accountDao;
         private IFlowDao _flowDao;
         private ITransactionDao _transactionDao;
-        private const int MAX_DETAIL_CHARS = 4096;
+        private const int MAX_DETAIL_CHARS = 4000;
 
         #region Init
 

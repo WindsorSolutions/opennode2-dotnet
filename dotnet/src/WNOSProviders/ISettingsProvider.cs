@@ -33,6 +33,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 using System;
 using System.Collections.Generic;
+using Windsor.Node2008.WNOSDomain;
 using System.Text;
 
 namespace Windsor.Node2008.WNOSProviders
@@ -55,6 +56,10 @@ namespace Windsor.Node2008.WNOSProviders
         /// </summary>
         string NewTempFilePath(string fileExtension);
         /// <summary>
+        /// Return the external url to the node admin url
+        /// </summary>
+        string AdminUrl { get; }
+        /// <summary>
         /// Return the external url to the node endpoint v2.0 url
         /// </summary>
         string Endpoint20Url { get; }
@@ -63,8 +68,28 @@ namespace Windsor.Node2008.WNOSProviders
         /// </summary>
         string Endpoint11Url { get; }
         /// <summary>
-        /// Return true if the node is setup in Demo mode
+        /// Return true if the node is setup in Demo node
         /// </summary>
         bool IsDemoNode { get; }
+        /// <summary>
+        /// Return true if the node is setup in Production node, false if Test node
+        /// </summary>
+        bool IsProductionNode { get; }
+        /// <summary>
+        /// Return the bounding box of the node's physical location
+        /// </summary>
+        LatLongRectangle NodeBoundingBox { get; }
+        /// <summary>
+        /// Email address for node admin
+        /// </summary>
+        string NodeAdminEmail { get; }
+        /// <summary>
+        /// The NAAS id for the node
+        /// </summary>
+        string NodeId { get; }
+        /// <summary>
+        /// The node organization name
+        /// </summary>
+        string NodeOrganizationName { get; }
     }
 }

@@ -56,6 +56,8 @@
     <Compile Include="EndpointVersionType.cs" />
     <Compile Include="ExecuteContentResult.cs" />
     <Compile Include="FlowNotification.cs" />
+    <Compile Include="GetAuthorizedUsersResponse.cs" />
+    <Compile Include="LatLong.cs" />
     <Compile Include="NaasUserInfo.cs" />
     <Compile Include="PluginItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

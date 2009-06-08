@@ -46,6 +46,7 @@ using Common.Logging;
 using Windsor.Node2008.WNOSDomain;
 using Windsor.Node2008.WNOSUtility;
 using Windsor.Commons.Core;
+using Windsor.Node2008.WNOS.Utilities;
 
 namespace Windsor.Node2008.WNOS.Data
 {
@@ -60,6 +61,7 @@ namespace Windsor.Node2008.WNOS.Data
 
         private IDataProviderDao _dataProviderDao;
         private IFlowDao _flowDao;
+        private IPluginLoader _pluginLoader;
 
         #region Init
 
@@ -72,53 +74,67 @@ namespace Windsor.Node2008.WNOS.Data
 
             FieldNotInitializedException.ThrowIfNull(this, ref _dataProviderDao);
             FieldNotInitializedException.ThrowIfNull(this, ref _flowDao);
+            FieldNotInitializedException.ThrowIfNull(this, ref _pluginLoader);
         }
 
         #endregion
 
         #region Mappers
-        private const string MAP_DATA_SERVICE_COLUMNS = "Id;Name;FlowId;IsActive;ServiceType;Implementor;AuthLevel;ModifiedBy;ModifiedOn";
+        private const string MAP_DATA_SERVICE_COLUMNS = "Id;Name;FlowId;IsActive;ServiceType;Implementor;AuthLevel;ModifiedBy;ModifiedOn;PublishFlags";
         /// <summary>
         /// Convert database column values to a DataService instance.
         /// </summary>
         private DataService MapDataService(IDataReader reader)
 		{
 			DataService service = new DataService();
-			service.Id = reader.GetString(0);
-			service.Name = reader.GetString(1);
-			service.FlowId = reader.GetString(2);
-			service.IsActive = DbUtils.ToBool(reader.GetString(3));
-			service.Type = EnumUtils.ParseEnum<ServiceType>(reader.GetString(4));
-			string implementor = reader.GetString(5);
+            int index = 0;
+			service.Id = reader.GetString(index++);
+			service.Name = reader.GetString(index++);
+			service.FlowId = reader.GetString(index++);
+			service.IsActive = DbUtils.ToBool(reader.GetString(index++));
+			service.Type = EnumUtils.ParseEnum<ServiceType>(reader.GetString(index++));
+			string implementor = reader.GetString(index++);
 			if ( implementor.Length > 0 ) {
 				service.PluginInfo = new ExecutableInfo(implementor);
 			}
 			service.MinAuthLevel = 
-				EnumUtils.ParseEnum<ServiceRequestAuthorizationType>(reader.GetString(6));
-			service.ModifiedById = reader.GetString(7);
-			service.ModifiedOn = reader.GetDateTime(8);
+				EnumUtils.ParseEnum<ServiceRequestAuthorizationType>(reader.GetString(index++));
+			service.ModifiedById = reader.GetString(index++);
+			service.ModifiedOn = reader.GetDateTime(index++);
+            if ( !reader.IsDBNull(index) ) {
+                service.PublishFlags =
+                    EnumUtils.ParseEnum<DataServicePublishFlags>(reader.GetString(index++));
+            }
 			return service;
 		}
 
         /// <summary>
         /// Post-map data service data sources and arguments to a single DataService instance.
         /// </summary>
-        private void PostMapDataService(DataService dataService)
+        private void PostMapDataService(DataService dataService, bool includeServiceParameters)
 		{
 			dataService.Args = GetServiceArguments(dataService.Id);
 			dataService.DataSources = GetServiceDataSources(dataService.Id);
+            if (includeServiceParameters)
+            {
+                dataService.ServiceParameters = _pluginLoader.GetDataServiceParameters(dataService);
+            }
 		}
 
         /// <summary>
         /// Post-map data service data sources and arguments to a list of DataService instances.
         /// </summary>
-        private void PostMapDataServices(IEnumerable<DataService> dataServices)
+        private void PostMapDataServices(IEnumerable<DataService> dataServices, bool includeServiceParameters)
 		{
-			if ( dataServices != null ) {
+			if ( !CollectionUtils.IsNullOrEmpty(dataServices) ) {
 				foreach (DataService service in dataServices)
 				{
-					PostMapDataService(service);
+					PostMapDataService(service, false);
 				}
+                if (includeServiceParameters)
+                {
+                    _pluginLoader.GetDataServiceParameters(dataServices);
+                }
 			}
 		}
 		#endregion // Mappers
@@ -211,7 +227,7 @@ namespace Windsor.Node2008.WNOS.Data
 							return MapDataService(reader);
 						});
 					
-				PostMapDataService(dataService);	
+				PostMapDataService(dataService, false);	
 				return dataService;
 			}
 			catch(Spring.Dao.IncorrectResultSizeDataAccessException) {
@@ -238,7 +254,7 @@ namespace Windsor.Node2008.WNOS.Data
                             return MapDataService(reader);
                         });
 
-                PostMapDataService(dataService);
+                PostMapDataService(dataService, false);
                 return dataService;
             }
             catch (Spring.Dao.IncorrectResultSizeDataAccessException)
@@ -308,7 +324,7 @@ namespace Windsor.Node2008.WNOS.Data
 		/// Return all the data services for the flow with the specified flow id, or null
 		/// if the id is not found.
 		/// </summary>
-        public IList<DataService> GetDataServicesForFlow(string flowId)
+        public IList<DataService> GetDataServicesForFlow(string flowId, bool includeServiceParameters)
         {
             List<DataService> services = null;
             DoSimpleQueryWithRowCallbackDelegate(
@@ -320,7 +336,7 @@ namespace Windsor.Node2008.WNOS.Data
 					}
 					services.Add(MapDataService(reader));
 				});
-			PostMapDataServices(services);
+            PostMapDataServices(services, includeServiceParameters);
 			return services;
         }
 		
@@ -341,7 +357,7 @@ namespace Windsor.Node2008.WNOS.Data
 					}
 					services.Add(MapDataService(reader));
 				});
-			PostMapDataServices(services);
+			PostMapDataServices(services, false);
 			return services;
         }
 		
@@ -363,7 +379,7 @@ namespace Windsor.Node2008.WNOS.Data
 					}
 					services.Add(MapDataService(reader));
 				});
-			PostMapDataServices(services);
+			PostMapDataServices(services, false);
 			return services;
         }
 
@@ -387,19 +403,19 @@ namespace Windsor.Node2008.WNOS.Data
                     if (string.IsNullOrEmpty(item.Id))
                     {
                         id = IdProvider.Get();
-                        DoInsert(TABLE_NAME, "Id;Name;FlowId;IsActive;ServiceType;Implementor;AuthLevel;ModifiedBy;ModifiedOn",
+                        DoInsert(TABLE_NAME, "Id;Name;FlowId;IsActive;ServiceType;Implementor;AuthLevel;ModifiedBy;ModifiedOn;PublishFlags",
                                  id, item.Name, item.FlowId, DbUtils.ToDbBool(item.IsActive),
                                  item.Type.ToString(), implementerString, item.MinAuthLevel.ToString(),
-                                 item.ModifiedById, now);
+                                 item.ModifiedById, now, item.PublishFlags);
                         item.Id = id;
                     }
                     else
                     {
                         DoSimpleUpdateOne(TABLE_NAME, "Id", item.Id.ToString(),
-                                          "Name;FlowId;IsActive;ServiceType;Implementor;AuthLevel;ModifiedBy;ModifiedOn",
+                                          "Name;FlowId;IsActive;ServiceType;Implementor;AuthLevel;ModifiedBy;ModifiedOn;PublishFlags",
                                           item.Name, item.FlowId, DbUtils.ToDbBool(item.IsActive),
                                           item.Type.ToString(), implementerString, item.MinAuthLevel.ToString(),
-                                          item.ModifiedById, now);
+                                          item.ModifiedById, now, item.PublishFlags);
                     }
                     SaveServiceArgs(item);
                     SaveServiceDataSources(item);
@@ -514,6 +530,11 @@ namespace Windsor.Node2008.WNOS.Data
         {
             get { return _flowDao; }
             set { _flowDao = value; }
+        }
+        public IPluginLoader PluginLoader
+        {
+            get { return _pluginLoader; }
+            set { _pluginLoader = value; }
         }
         #endregion
     }

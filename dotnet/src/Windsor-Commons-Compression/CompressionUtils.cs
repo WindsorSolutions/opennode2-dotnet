@@ -45,18 +45,32 @@ namespace Windsor.Commons.Compression
 
 		public void UncompressDirectory(string sourceFilePath, string targetDirPath) {
 
-			if (targetDirPath == null) {
-				throw new ApplicationException("Invalid input parameter. Source directory does not exist.");
-			}
-
-			if (!Directory.Exists(targetDirPath)) {
-				Directory.CreateDirectory(targetDirPath);
-			}
-
-			using (ZipFile zip = ZipFile.Read(sourceFilePath)) {
-				zip.ExtractAll(targetDirPath);
-			}
+            UncompressDirectory(sourceFilePath, targetDirPath, null);
 		}
+
+        public void UncompressDirectory(string sourceFilePath, string targetDirPath,
+                                        string password)
+        {
+
+            if (targetDirPath == null)
+            {
+                throw new ApplicationException("Invalid input parameter. Source directory does not exist.");
+            }
+
+            if (!Directory.Exists(targetDirPath))
+            {
+                Directory.CreateDirectory(targetDirPath);
+            }
+
+            using (ZipFile zip = ZipFile.Read(sourceFilePath))
+            {
+                if (password != null)
+                {
+                    zip.Password = password;
+                }
+                zip.ExtractAll(targetDirPath);
+            }
+        }
 
         public void UncompressDirectory(byte[] content, string targetDirPath)
         {
@@ -73,6 +87,20 @@ namespace Windsor.Commons.Compression
 				zip.ExtractAll(targetDirPath);
 			}
 		}
+        public bool IsCompressed(string filePath)
+        {
+            try
+            {
+                using (ZipFile zip = ZipFile.Read(filePath))
+                {
+                }
+                return true;
+            }
+            catch (Ionic.Zip.ZipException)
+            {
+                return false;
+            }
+        }
         public bool IsCompressed(byte[] content)
         {
             try
@@ -89,12 +117,16 @@ namespace Windsor.Commons.Compression
         }
         public byte[] UncompressDeep(byte[] content)
         {
-            byte[] rtnBytes = Uncompress(content);
+            return UncompressDeepWithPassword(content, null);
+        }
+        public byte[] UncompressDeepWithPassword(byte[] content, string password)
+        {
+            byte[] rtnBytes = UncompressWithPassword(content, password);
             for (; ; )
             {
                 try
                 {
-                    byte[] nextBytes = Uncompress(rtnBytes);
+                    byte[] nextBytes = UncompressWithPassword(rtnBytes, password);
                     rtnBytes = nextBytes;
                 }
                 catch (Ionic.Zip.ZipException)
@@ -105,10 +137,21 @@ namespace Windsor.Commons.Compression
         }
         public byte[] Uncompress(byte[] content)
         {
+            return UncompressWithPassword(content, null);
+        }
+        public byte[] UncompressWithPassword(byte[] content, string password)
+        {
 			using (ZipFile zip = ZipFile.Read(content)) {
 				foreach (ZipEntry e in zip) {
 					using (MemoryStream memStreamOut = new MemoryStream()) {
-						e.Extract(memStreamOut);
+                        if (password == null)
+                        {
+                            e.Extract(memStreamOut);
+                        }
+                        else
+                        {
+                            e.ExtractWithPassword(memStreamOut, password);
+                        }
 						memStreamOut.Flush();
 						memStreamOut.Close();
 						return memStreamOut.ToArray();	// Only return the first file
@@ -118,23 +161,66 @@ namespace Windsor.Commons.Compression
 			}
 		}
 		public void Uncompress(byte[] content, string targetFilePath) {
-			using (ZipFile zip = ZipFile.Read(content)) {
-				foreach (ZipEntry e in zip) {
+            UncompressWithPassword(content, targetFilePath, null);
+		}
+        public void UncompressWithPassword(string zipFilePath, string contentFilePath, string password)
+        {
+            using (ZipFile zip = ZipFile.Read(zipFilePath))
+            {
+                foreach (ZipEntry e in zip)
+                {
+                    using (FileStream streamOut = File.OpenWrite(contentFilePath))
+                    {
+                        if (password == null)
+                        {
+                            e.Extract(streamOut);
+                        }
+                        else
+                        {
+                            e.ExtractWithPassword(streamOut, password);
+                        }
+                        return;	// Only return the first file
+                    }
+                }
+                throw new ArgumentException("Input zip file does not contain any files.");
+            }
+        }
+        public void Uncompress(string zipFilePath, string contentFilePath)
+        {
+            UncompressWithPassword(zipFilePath, contentFilePath, null);
+        }
+        public void UncompressWithPassword(byte[] content, string targetFilePath, string password)
+        {
+            using (ZipFile zip = ZipFile.Read(content))
+            {
+                foreach (ZipEntry e in zip)
+                {
                     using (Stream streamOut = File.OpenWrite(targetFilePath))
                     {
-                        e.Extract(streamOut);
+                        if (password == null)
+                        {
+                            e.Extract(streamOut);
+                        }
+                        else
+                        {
+                            e.ExtractWithPassword(streamOut, password);
+                        }
                         streamOut.Flush();
                         streamOut.Close();
                         return;	// Only return the first file
                     }
-				}
-				throw new ArgumentException("Input zip file does not contain any files.");
-			}
-		}
+                }
+                throw new ArgumentException("Input zip file does not contain any files.");
+            }
+        }
 
         public void UncompressDeep(byte[] content, string targetFilePath)
         {
-            content = UncompressDeep(content);
+            UncompressDeepWithPassword(content, targetFilePath, null);
+        }
+        public void UncompressDeepWithPassword(byte[] content, string targetFilePath, string password)
+        {
+            content = UncompressDeepWithPassword(content, password);
             File.WriteAllBytes(targetFilePath, content);
         }
 

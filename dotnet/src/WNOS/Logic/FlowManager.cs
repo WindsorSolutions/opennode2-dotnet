@@ -123,9 +123,9 @@ namespace Windsor.Node2008.WNOS.Logic
         {
             return _flowDao.GetExecuteServiceForFlow(flowId, methodName);
         }
-        public IList<DataFlow> GetAllDataFlows(bool loadDataServices)
+        public IList<DataFlow> GetAllDataFlows(bool loadDataServices, bool includeServiceParameters)
         {
-            return _flowDao.GetAllDataFlows(loadDataServices);
+            return _flowDao.GetAllDataFlows(loadDataServices, includeServiceParameters);
         }
         public IDictionary<string, string> GetAllFlowsNameToIdMap()
         {
@@ -219,7 +219,7 @@ namespace Windsor.Node2008.WNOS.Logic
         public IList<DataFlow> GetFlows(AdminVisit visit, bool loadDataServices)
         {
             ValidateByRole(visit, SystemRoleType.Program);
-            return GetAllDataFlows(loadDataServices);
+            return GetAllDataFlows(loadDataServices, false);
         }
         public IList<DataFlow> GetProtectedFlows(AdminVisit visit, bool loadDataServices)
         {
@@ -296,7 +296,7 @@ namespace Windsor.Node2008.WNOS.Logic
         public IDictionary<string, SimpleListDisplayInfo> GetListInfo(params string[] args)
         {
             Dictionary<string, SimpleListDisplayInfo> dict = new Dictionary<string, SimpleListDisplayInfo>();
-            IList<DataFlow> flows = GetAllDataFlows(false);
+            IList<DataFlow> flows = GetAllDataFlows(false, false);
             if (!CollectionUtils.IsNullOrEmpty(flows))
             {
                 foreach (DataFlow flow in flows)

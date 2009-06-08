@@ -512,6 +512,11 @@ namespace Windsor.Node2008.WNOS.Logic
             }
         }
 
+        public IList<UserAccount> GetAllUsers()
+        {
+            return _accountDao.Get();
+        }
+
         public void Delete(UserAccount instance, AdminVisit visit)
         {
             try

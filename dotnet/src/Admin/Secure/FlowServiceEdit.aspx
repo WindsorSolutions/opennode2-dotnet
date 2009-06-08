@@ -55,6 +55,15 @@
             </td>
         </tr>
         <tr>
+            <td class="label" width="50">
+                Publish For:
+            </td>
+            <td class="ctrl">
+                <asp:DropDownList ID="publishDropDownList" runat="server" Width="500px">
+                </asp:DropDownList>
+            </td>
+        </tr>
+        <tr>
             <td class="label" width="50" style="vertical-align: top">
                 Active:
             </td>

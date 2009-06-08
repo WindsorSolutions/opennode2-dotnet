@@ -37,6 +37,7 @@ using System.Text;
 using System.IO;
 using Windsor.Node2008.WNOSUtility;
 using Windsor.Node2008.WNOSProviders;
+using Windsor.Node2008.WNOSDomain;
 using Windsor.Commons.Core;
 
 namespace Windsor.Node2008.WNOS.Utilities
@@ -46,7 +47,13 @@ namespace Windsor.Node2008.WNOS.Utilities
         private string _tempFolderPath;
         private string _endpoint11Url;
         private string _endpoint20Url;
+        private string _adminUrl;
+        private string _nodeAdminEmail;
+        private string _nodeId;
+        private string _nodeOrganizationName;
         private bool _isDemoNode;
+        private bool _isProductionNode;
+        private LatLongRectangle _nodeBoundingBox;
 
         public void Init()
         {
@@ -59,8 +66,31 @@ namespace Windsor.Node2008.WNOS.Utilities
                 throw new DirectoryNotFoundException(string.Format("The node temporary folder does not exist: {0}",
                                                                    _tempFolderPath));
             }
+            FieldNotInitializedException.ThrowIfEmptyString(this, ref _nodeOrganizationName);
+            FieldNotInitializedException.ThrowIfEmptyString(this, ref _nodeAdminEmail);
+            FieldNotInitializedException.ThrowIfEmptyString(this, ref _nodeId);
             FieldNotInitializedException.ThrowIfEmptyString(this, ref _endpoint11Url);
             FieldNotInitializedException.ThrowIfEmptyString(this, ref _endpoint20Url);
+            FieldNotInitializedException.ThrowIfEmptyString(this, ref _adminUrl);
+            FieldNotInitializedException.ThrowIfNull(this, ref _nodeBoundingBox);
+        }
+
+        public LatLongRectangle NodeBoundingBox
+        {
+            get { return _nodeBoundingBox; }
+            set { _nodeBoundingBox = value; }
+        }
+
+        public string NodeAdminEmail
+        {
+            get { return _nodeAdminEmail; }
+            set { _nodeAdminEmail = value; }
+        }
+
+        public string AdminUrl
+        {
+            get { return _adminUrl; }
+            set { _adminUrl = value; }
         }
 
         public string Endpoint11Url
@@ -68,16 +98,35 @@ namespace Windsor.Node2008.WNOS.Utilities
             get { return _endpoint11Url; }
             set { _endpoint11Url = value; }
         }
+
         public string Endpoint20Url
         {
             get { return _endpoint20Url; }
             set { _endpoint20Url = value; }
         }
 
+        public string NodeId
+        {
+            get { return _nodeId; }
+            set { _nodeId = value; }
+        }
+
+        public string NodeOrganizationName
+        {
+            get { return _nodeOrganizationName; }
+            set { _nodeOrganizationName = value; }
+        }
+
         public bool IsDemoNode
         {
             get { return _isDemoNode; }
             set { _isDemoNode = value; }
+        }
+
+        public bool IsProductionNode
+        {
+            get { return _isProductionNode; }
+            set { _isProductionNode = value; }
         }
 
         public string TempFolderPath

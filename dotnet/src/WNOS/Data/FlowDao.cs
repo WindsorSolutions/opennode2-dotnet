@@ -112,13 +112,13 @@ namespace Windsor.Node2008.WNOS.Data
             flow.Description = reader.GetString(index++);
             return flow;
         }
-        private void GetDataServicesForFlows(IList<DataFlow> flows)
+        private void GetDataServicesForFlows(IList<DataFlow> flows, bool includeServiceParameters)
         {
             if (!CollectionUtils.IsNullOrEmpty(flows))
             {
                 foreach (DataFlow flow in flows)
                 {
-                    flow.Services = GetDataServicesForFlow(flow.Id);
+                    flow.Services = GetDataServicesForFlow(flow.Id, includeServiceParameters);
                 }
             }
         }
@@ -141,7 +141,7 @@ namespace Windsor.Node2008.WNOS.Data
                         {
                             return MapDataFlow(reader);
                         });
-                dataFlow.Services = GetDataServicesForFlow(flowId);
+                dataFlow.Services = GetDataServicesForFlow(flowId, false);
                 return dataFlow;
             }
             catch (Spring.Dao.IncorrectResultSizeDataAccessException)
@@ -183,7 +183,7 @@ namespace Windsor.Node2008.WNOS.Data
         /// <summary>
         /// Return all data flows in the DB.
         /// </summary>
-        public IList<DataFlow> GetAllDataFlows(bool loadDataServices)
+        public IList<DataFlow> GetAllDataFlows(bool loadDataServices, bool includeServiceParameters)
         {
             List<DataFlow> dataFlows = new List<DataFlow>();
             DoSimpleQueryWithRowCallbackDelegate(
@@ -195,7 +195,7 @@ namespace Windsor.Node2008.WNOS.Data
                 });
             if (loadDataServices)
             {
-                GetDataServicesForFlows(dataFlows);
+                GetDataServicesForFlows(dataFlows, includeServiceParameters);
             }
             return dataFlows;
         }
@@ -215,7 +215,7 @@ namespace Windsor.Node2008.WNOS.Data
                 });
             if (loadDataServices)
             {
-                GetDataServicesForFlows(dataFlows);
+                GetDataServicesForFlows(dataFlows, false);
             }
             return dataFlows;
         }
@@ -256,9 +256,9 @@ namespace Windsor.Node2008.WNOS.Data
         /// Return the data services for the flow with the specified flow id, or null
         /// if the id is not found.
         /// </summary>
-        public IList<DataService> GetDataServicesForFlow(string flowId)
+        public IList<DataService> GetDataServicesForFlow(string flowId, bool includeServiceParameters)
         {
-            return ServiceDao.GetDataServicesForFlow(flowId);
+            return ServiceDao.GetDataServicesForFlow(flowId, includeServiceParameters);
         }
         /// <summary>
         /// Return the submit document data service for the flow with the specified flow id, or null

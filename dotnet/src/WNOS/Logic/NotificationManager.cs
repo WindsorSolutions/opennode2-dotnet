@@ -120,7 +120,7 @@ namespace Windsor.Node2008.WNOS.Logic
                 }
             }
             // Add in any missing flows
-            IList<DataFlow> flows = _flowDao.GetAllDataFlows(false);
+            IList<DataFlow> flows = _flowDao.GetAllDataFlows(false, false);
             if (!CollectionUtils.IsNullOrEmpty(flows))
             {
                 foreach (DataFlow flow in flows)

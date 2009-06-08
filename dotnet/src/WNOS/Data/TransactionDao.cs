@@ -67,7 +67,7 @@ namespace Windsor.Node2008.WNOS.Data {
         private IRequestDao _requestDao;
         private INodeNotificationDao _nodeNotificationDao;
         private ITransactionStatusChangeNotifier _transactionStatusChangeNotifier;
-        private const int MAX_DETAIL_CHARS = 4096;
+        private const int MAX_DETAIL_CHARS = 4000;
 
 		private const CommonTransactionStatusCode UNPROCESSED_STATUS = CommonTransactionStatusCode.Received |
 																	   CommonTransactionStatusCode.Pending |
@@ -474,6 +474,16 @@ namespace Windsor.Node2008.WNOS.Data {
         {
             NodeMethod webMethod;
             return GetTransactionFlowName(transactionId, out webMethod);
+        }
+        public EndpointVersionType GetTransactionEndpointVersionType(string transactionId)
+        {
+            EndpointVersionType version = 
+                DoSimpleQueryForObjectDelegate<EndpointVersionType>(TABLE_NAME, "Id", transactionId, "EndpointVersion",
+                    delegate(IDataReader reader, int rowNum)
+                    {
+                        return EnumUtils.ParseEnum<EndpointVersionType>(reader.GetString(0));
+                    });
+            return version;
         }
 
         public TransactionStatus GetTransactionStatusAndFlowName(string transactionId, out string flowName,

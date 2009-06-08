@@ -37,6 +37,7 @@ using System.Text;
 using System.Data;
 using System.Data.Common;
 using System.Reflection;
+using System.Threading;
 using Spring.Data.Generic;
 using Spring.Data.Common;
 using Spring.Data;
@@ -340,7 +341,8 @@ namespace Windsor.Commons.Spring
             }
             return parameters;
         }
-        protected IDbParameters MakeStoredProcDbParameters(string semicolonSeparatedArgNames, object[] args)
+        protected IDbParameters MakeStoredProcDbParameters(string semicolonSeparatedArgNames,
+                                                           IList<object> args)
         {
             if (CollectionUtils.IsNullOrEmpty(args))
             {
@@ -362,10 +364,10 @@ namespace Windsor.Commons.Spring
             else
             {
                 string[] columnNames = semicolonSeparatedArgNames.Split(SPLIT_CHAR, StringSplitOptions.RemoveEmptyEntries);
-                if (columnNames.Length != args.Length)
+                if (columnNames.Length != args.Count)
                 {
                     throw new ArgumentException(string.Format("columnNames.Length({0}) != args.Length({1}), semicolonSeparatedColumnNames({2})",
-                                                              columnNames.Length, args.Length, semicolonSeparatedArgNames));
+                                                              columnNames.Length, args.Count, semicolonSeparatedArgNames));
                 }
                 for (int i = 0; i < columnNames.Length; ++i)
                 {
@@ -380,21 +382,24 @@ namespace Windsor.Commons.Spring
             IDbParameters parameters = MakeStoredProcReaderDbParameters(semicolonSeparatedArgNames, args);
             if (parameters == null)
             {
-                AdoTemplate.QueryWithRowCallbackDelegate(CommandType.StoredProcedure, procName,
-                                                         callback);
+                QueryWithRowCallbackDelegate(CommandType.StoredProcedure, procName, callback);
             }
             else
             {
-                AdoTemplate.QueryWithRowCallbackDelegate(CommandType.StoredProcedure, procName,
-                                                         callback, parameters);
+                QueryWithRowCallbackDelegate(CommandType.StoredProcedure, procName, callback, parameters);
             }
         }
         public int DoStoredProc(string procName)
         {
-            return DoStoredProc(procName, (string)null, (object[])null);
+            return DoStoredProcWithArgs(procName, (string)null, (object[])null);
         }
         public int DoStoredProc(string procName, string semicolonSeparatedArgNames,
-                                params object[] args)
+                                        params object[] args)
+        {
+            return DoStoredProcWithArgs(procName, semicolonSeparatedArgNames, args);
+        }
+        public int DoStoredProcWithArgs(string procName, string semicolonSeparatedArgNames,
+                                        IList<object> args)
         {
             IDbParameters parameters = MakeStoredProcDbParameters(semicolonSeparatedArgNames, args);
             if (parameters == null)
@@ -895,7 +900,7 @@ namespace Windsor.Commons.Spring
                                          semicolonSeparatedColumnNames);
             IDbParameters parameters = AdoTemplate.CreateDbParameters();
             parameters.AddWithValue(WHERE_PARAM_NAME, whereValue);
-            AdoTemplate.QueryWithRowCallbackDelegate(CommandType.Text, selectText, callback, parameters);
+            QueryWithRowCallbackDelegate(CommandType.Text, selectText, callback, parameters);
         }
         public void DoSimpleTopQueryWithRowCallbackDelegate(string semicolonSeparatedTableNames, string whereColumn,
                                                             object whereValue, string semicolonSeparatedOrderByColumns,
@@ -924,7 +929,38 @@ namespace Windsor.Commons.Spring
             }
             IDbParameters parameters = AdoTemplate.CreateDbParameters();
             parameters.AddWithValue(WHERE_PARAM_NAME, whereValue);
-            AdoTemplate.QueryWithRowCallbackDelegate(CommandType.Text, selectText, callback, parameters);
+            QueryWithRowCallbackDelegate(CommandType.Text, selectText, callback, parameters);
+        }
+        public void QueryWithRowCallbackDelegate(CommandType cmdType, string sql, RowCallbackDelegate rowCallbackDelegate)
+        {
+            QueryWithRowCallbackDelegate(cmdType, sql, rowCallbackDelegate, null);
+        }
+        public void QueryWithRowCallbackDelegate(CommandType cmdType, string sql, RowCallbackDelegate rowCallbackDelegate, IDbParameters parameters)
+        {
+            int deadlockRetriesLeft = 2;
+            for(;;)
+            {
+                try
+                {
+                    if (parameters == null)
+                    {
+                        AdoTemplate.QueryWithRowCallbackDelegate(cmdType, sql, rowCallbackDelegate);
+                    }
+                    else
+                    {
+                        AdoTemplate.QueryWithRowCallbackDelegate(cmdType, sql, rowCallbackDelegate, parameters);
+                    }
+                    return;
+                }
+                catch (DeadlockLoserDataAccessException)
+                {
+                    if (--deadlockRetriesLeft < 0)
+                    {
+                        throw;
+                    }
+                    Thread.Sleep(50);
+                }
+            }
         }
         public void DoSimpleQueryWithRowCallbackDelegate(string semicolonSeparatedTableNames, string whereColumn,
                                                             object whereValue, RowCallbackDelegate callback)
@@ -952,7 +988,7 @@ namespace Windsor.Commons.Spring
                                          (whereValues == null) ? 0 : whereValues.Count, semicolonSeparatedOrderByColumns,
                                          semicolonSeparatedColumnNames);
             IDbParameters parameters = AppendDbParameters(null, whereValues);
-            AdoTemplate.QueryWithRowCallbackDelegate(CommandType.Text, selectText, callback, parameters);
+            QueryWithRowCallbackDelegate(CommandType.Text, selectText, callback, parameters);
         }
         public IList<IDataParameter> CreateSelectSqlParamText(string semicolonSeparatedWhereColumnNames,
                                                               IList<object> whereValues, out string whereClauseText)
@@ -1161,7 +1197,7 @@ namespace Windsor.Commons.Spring
             }
             Dictionary<string, T> idMap = null;
             MultiDictionary<string, T> dict = new MultiDictionary<string, T>(true);
-            AdoTemplate.QueryWithRowCallbackDelegate(CommandType.Text, selectText,
+            QueryWithRowCallbackDelegate(CommandType.Text, selectText,
                     delegate(IDataReader reader)
                     {
                         NamedNullMappingDataReader readerEx = (NamedNullMappingDataReader)reader;

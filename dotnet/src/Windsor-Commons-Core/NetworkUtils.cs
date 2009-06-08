@@ -35,6 +35,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Net;
+using System.Threading;
+using System.ComponentModel;
 
 namespace Windsor.Commons.Core
 {
@@ -57,6 +59,127 @@ namespace Windsor.Commons.Core
         public static string GetHostName()
         {
             return Dns.GetHostName();
+        }
+
+        /// <summary>
+        /// Download progress callback
+        /// </summary>
+        /// <param name="percentComplete"></param>
+        /// <param name="callbackParam"></param>
+        /// <returns>True to continue download, false to stop</returns>
+        public delegate bool DownloadProgressHandler(int percentComplete, object callbackParam);
+
+        public static byte[] DownloadData(string url)
+        {
+            return DownloadData(url, null, null);
+        }
+        public static byte[] DownloadData(string url,
+                                          DownloadProgressHandler progressCallback,
+                                          object callbackParam)
+        {
+            if (progressCallback != null)
+            {
+                bool cancelled = false;
+                Exception error = null;
+                byte[] data = null;
+                bool isFinished = false;
+
+                using (WebClient webClient = new WebClient())
+                {
+                    webClient.DownloadProgressChanged += delegate(Object sender,
+                                                                  DownloadProgressChangedEventArgs e)
+                    {
+                        if (!progressCallback(e.ProgressPercentage, callbackParam))
+                        {
+                            webClient.CancelAsync();
+                        }
+                    };
+                    webClient.DownloadDataCompleted += delegate(Object sender,
+                                                                DownloadDataCompletedEventArgs e)
+                    {
+                        error = e.Error;
+                        data = e.Result;
+                        cancelled = e.Cancelled;
+                        isFinished = true;
+                    };
+                    webClient.DownloadDataAsync(new Uri(url));
+
+                    while (!isFinished)
+                    {
+                        Thread.Sleep(60);
+                    }
+                }
+                if (cancelled)
+                {
+                    throw new OperationCanceledException();
+                }
+                if (error != null)
+                {
+                    throw error;
+                }
+                return data;
+            }
+            else
+            {
+                using (WebClient webClient = new WebClient())
+                {
+                    return webClient.DownloadData(url);
+                }
+            }
+        }
+        public static void DownloadFile(string url, string filePath)
+        {
+            DownloadFile(url, filePath, null, null);
+        }
+        public static void DownloadFile(string url, string filePath,
+                                        DownloadProgressHandler progressCallback,
+                                        object callbackParam)
+        {
+            if (progressCallback != null)
+            {
+                Exception error = null;
+                bool cancelled = false;
+                bool isFinished = false;
+                using (WebClient webClient = new WebClient())
+                {
+                    webClient.DownloadProgressChanged += delegate(Object sender,
+                                                                  DownloadProgressChangedEventArgs e)
+                    {
+                        if (!progressCallback(e.ProgressPercentage, callbackParam))
+                        {
+                            webClient.CancelAsync();
+                        }
+                    };
+                    webClient.DownloadFileCompleted += delegate(Object sender,
+                                                                AsyncCompletedEventArgs e)
+                    {
+                        error = e.Error;
+                        cancelled = e.Cancelled;
+                        isFinished = true;
+                    };
+                    webClient.DownloadFileAsync(new Uri(url), filePath);
+
+                    while (!isFinished)
+                    {
+                        Thread.Sleep(60);
+                    }
+                }
+                if (cancelled)
+                {
+                    throw new OperationCanceledException();
+                }
+                if (error != null)
+                {
+                    throw error;
+                }
+            }
+            else
+            {
+                using (WebClient webClient = new WebClient())
+                {
+                    webClient.DownloadFile(url, filePath);
+                }
+            }
         }
     }
 }

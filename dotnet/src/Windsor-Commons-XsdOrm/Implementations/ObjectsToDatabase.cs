@@ -337,6 +337,17 @@ namespace Windsor.Commons.XsdOrm.Implementations
                     return baseDao.IsOracleDatabase ? "NUMBER(1)" : "BIT";
                 case DbType.Decimal:
                     return mappingContext.DefaultDecimalCreateString;
+                case DbType.Binary:
+                    if (column.ColumnSize == 8)
+                    {
+                        // Timestamp
+                        return "TIMESTAMP";
+                    }
+                    else
+                    {
+                        throw new MappingException("Column \"{0}\" of table \"{1}\" has an invalid database data type: \"{2}\"",
+                                                   column.ColumnName, column.Table.TableName, column.ColumnType.ToString());
+                    }
                 default:
                     throw new MappingException("Column \"{0}\" of table \"{1}\" has an invalid database data type: \"{2}\"",
                                                column.ColumnName, column.Table.TableName, column.ColumnType.ToString());

@@ -48,6 +48,16 @@ namespace Windsor.Commons.Core
     public static class FileUtils
     {
         /// <summary>
+        /// Change the file name present in filePath string to newFileName, without modifying the
+        /// parent directory or file extension.
+        /// </summary>
+        public static string ChangeFileNameWithoutExtension(string filePath, string newFileName)
+        {
+            string curExt = Path.GetExtension(filePath);
+            string curDirectory = Path.GetDirectoryName(filePath);
+            return Path.Combine(curDirectory, newFileName + curExt);
+        }
+        /// <summary>
         /// Change the physical file extension of the input file on disk, and return the new file path.
         /// </summary>
         public static string ChangeFileExtension(string filePath, string extension)
@@ -382,6 +392,13 @@ namespace Windsor.Commons.Core
                 }
             }
             return filePath;
+        }
+        /// <summary>
+        /// Return the full path to a file relative to the currently executing assembly.
+        /// </summary>
+        public static string GetExecutingAssemblyRelativePath(string fileName)
+        {
+            return Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), fileName);
         }
         /// <summary>
         /// Return a friendly, Windows-Explorer-formatted string representing the size of a file.

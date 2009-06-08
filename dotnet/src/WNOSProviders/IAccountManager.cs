@@ -52,5 +52,10 @@ namespace Windsor.Node2008.WNOSProviders
         /// GetById
         /// </summary>
         UserAccount GetById(string userId);
+
+        /// <summary>
+        /// GetAllUsers
+        /// </summary>
+        IList<UserAccount> GetAllUsers();
     }
 }

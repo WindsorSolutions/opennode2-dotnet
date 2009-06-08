@@ -92,6 +92,16 @@ namespace Windsor.Node2008.WNOS.Utilities
         /// </summary>
         ICollection<SimpleDataService> GetDataServiceImplementersForFlow(string flowId);
 
+        /// <summary>
+        /// Return all possible data service implementers for the input flow.
+        /// </summary>
+        ICollection<TypedParameter> GetDataServiceParameters(DataService inDataService);
+
+        /// <summary>
+        /// Return all possible data service implementers for the input flow.
+        /// </summary>
+        void GetDataServiceParameters(IEnumerable<DataService> dataServices);
+
         string InstallPluginForFlow(byte[] zipFileContent, string modifiedById, string flowId);
     }
 
@@ -102,11 +112,8 @@ namespace Windsor.Node2008.WNOS.Utilities
         private IFlowDao _flowDao;
         private IPluginDao _pluginDao;
 
-        private PluginDomainInstanceLoader _pluginDomainInstanceLoader;
         private string _pluginConfigFilePath;
         private string _pluginFolderPath;
-        private bool _useSingleAppDomain;
-        private bool _useAppDomains;
 
         private const string INSTALLING_DIRECTORY_PREFIX = "__INSTALLING__";
 
@@ -115,7 +122,7 @@ namespace Windsor.Node2008.WNOS.Utilities
             FieldNotInitializedException.ThrowIfNull(this, ref _configManager);
             FieldNotInitializedException.ThrowIfNull(this, ref _compressionHelper);
             FieldNotInitializedException.ThrowIfNull(this, ref _flowDao);
-            // If set, use doa, if not, don't:
+            // If set, use Dao, if not, don't:
             // FieldNotInitializedException.ThrowIfNull(this, ref _pluginDao);
             FieldNotInitializedException.ThrowIfNull(this, ref _compressionHelper);
             FieldNotInitializedException.ThrowIfEmptyString(this, ref _pluginConfigFilePath);
@@ -131,10 +138,6 @@ namespace Windsor.Node2008.WNOS.Utilities
             {
                 throw new DirectoryNotFoundException(string.Format("The plugin folder does not exist: \"{0}\"",
                                                                    _pluginFolderPath));
-            }
-            if (_useSingleAppDomain)
-            {
-                _pluginDomainInstanceLoader = new PluginDomainInstanceLoader(_pluginConfigFilePath);
             }
         }
         public virtual IPluginDisposer LoadSubmitProcessor(DataService inDataService, out ISubmitProcessor plugin)
@@ -201,6 +204,38 @@ namespace Windsor.Node2008.WNOS.Utilities
                 type |= ServiceType.Task;
             }
             return type;
+        }
+        public virtual ICollection<TypedParameter> GetDataServiceParameters(DataService inDataService)
+        {
+            if ((inDataService.PluginInfo != null) && !string.IsNullOrEmpty(inDataService.PluginInfo.ImplementingClassName))
+            {
+                BaseWNOSPlugin plugin;
+                using (IPluginDisposer disposer = LoadPluginInterfaceInstance(inDataService, true, out plugin))
+                {
+                    return plugin.GetDataServiceParameters(inDataService.Name);
+                }
+            }
+            return null;
+        }
+        public virtual void GetDataServiceParameters(IEnumerable<DataService> dataServices)
+        {
+            if ( CollectionUtils.IsNullOrEmpty(dataServices) )
+            {
+                return;
+            }
+            PluginDomainInstanceLoader loader = new PluginDomainInstanceLoader(_pluginConfigFilePath, null);
+            using (PluginDisposer disposer = new PluginDisposer(loader))
+            {
+                foreach (DataService dataService in dataServices)
+                {
+                    if ((dataService.PluginInfo != null) && !string.IsNullOrEmpty(dataService.PluginInfo.ImplementingClassName))
+                    {
+                        string pluginFilePath = GetPluginFilePath(dataService, true);
+                        BaseWNOSPlugin plugin = loader.GetInstance<BaseWNOSPlugin>(pluginFilePath, dataService.PluginInfo.ImplementingClassName);
+                        dataService.ServiceParameters = plugin.GetDataServiceParameters(dataService.Name);
+                    }
+                }
+            }
         }
         public virtual ICollection<SimpleDataService> GetDataServiceImplementersForFlow(string flowId)
         {
@@ -302,7 +337,7 @@ namespace Windsor.Node2008.WNOS.Utilities
                                 {
                                     if (loader == null)
                                     {
-                                        loader = new PluginDomainInstanceLoader(_pluginConfigFilePath);
+                                        loader = new PluginDomainInstanceLoader(_pluginConfigFilePath, assemblyPath);
                                         pluginFinder = loader.GetInstance<PluginInstanceFinder>();
                                     }
                                     GetDataServiceImplementers(pluginFinder, assemblyPath, ref implementers);
@@ -355,7 +390,7 @@ namespace Windsor.Node2008.WNOS.Utilities
                                             bool validateAgainstDbVersion, out string pluginFolderPath)
         {
             string parentFolderPath = GetPluginRootFolderForFlow(flowId);
-            string tempDirPath = 
+            string tempDirPath =
                 Path.Combine(parentFolderPath, INSTALLING_DIRECTORY_PREFIX + Guid.NewGuid().ToString());
             try
             {
@@ -396,7 +431,7 @@ namespace Windsor.Node2008.WNOS.Utilities
                         }
                     }
                 }
-                
+
                 if (curVersion != null)
                 {
                     if (primaryImplementer.Version <= curVersion)
@@ -455,7 +490,7 @@ namespace Windsor.Node2008.WNOS.Utilities
                                                                          bool ignoreInstallingAssemblies,
                                                                          out T plugin) where T : class
         {
-            return LoadPluginInterfaceInstance<T>(inDataService, ignoreInstallingAssemblies, 
+            return LoadPluginInterfaceInstance<T>(inDataService, ignoreInstallingAssemblies,
                                                   _pluginConfigFilePath, out plugin);
         }
         protected virtual IPluginDisposer LoadPluginInterfaceInstance<T>(DataService inDataService,
@@ -464,65 +499,18 @@ namespace Windsor.Node2008.WNOS.Utilities
                                                                          out T plugin) where T : class
         {
             string pluginFilePath = GetPluginFilePath(inDataService, ignoreInstallingAssemblies);
-            string implementingClassName = inDataService.PluginInfo.ImplementingClassName;
-            if (_useAppDomains)
+            PluginDomainInstanceLoader loader = new PluginDomainInstanceLoader(pluginConfigFilePath, pluginFilePath);
+            PluginDisposer disposer = new PluginDisposer(loader);
+            try
             {
-                if (_useSingleAppDomain)
-                {
-                    plugin = _pluginDomainInstanceLoader.GetInstance<T>(pluginFilePath,
-                                                                        implementingClassName);
-                    return null;
-                }
-                else
-                {
-                    PluginDomainInstanceLoader loader = new PluginDomainInstanceLoader(pluginConfigFilePath);
-                    PluginDisposer disposer = new PluginDisposer(loader);
-                    try
-                    {
-                        plugin = loader.GetInstance<T>(pluginFilePath, implementingClassName);
-                    }
-                    catch (Exception)
-                    {
-                        DisposableBase.SafeDispose(ref disposer);
-                        throw;
-                    }
-                    return disposer;
-                }
+                plugin = loader.GetInstance<T>(pluginFilePath, inDataService.PluginInfo.ImplementingClassName);
             }
-            else
+            catch (Exception)
             {
-                Assembly assembly;
-                try
-                {
-                    assembly = Assembly.LoadFile(pluginFilePath);
-                }
-                catch (Exception e)
-                {
-                    throw new ArgumentException(string.Format("Could not load the assembly specified by inDataService.PluginInfo: \"{0}\"",
-                                                              inDataService.PluginInfo.ToString()), e);
-                }
-                Type implementingType = assembly.GetType(implementingClassName, false, true);
-                if (implementingType == null)
-                {
-                    throw new ArgumentException(string.Format("inDataService.PluginInfo (\"{0}\") does not specifiy a valid type that can be loaded from the assembly.",
-                                                              inDataService.PluginInfo));
-                }
-                if (!typeof(T).IsAssignableFrom(implementingType))
-                {
-                    throw new ArgumentException(string.Format("inDataService.PluginInfo (\"{0}\") does not specifiy a type that is assignable to : \"{1}\"",
-                                                              inDataService.PluginInfo.ToString(), typeof(T).ToString()));
-                }
-                try
-                {
-                    plugin = (T)assembly.CreateInstance(implementingType.FullName);
-                }
-                catch (Exception e)
-                {
-                    throw new ArgumentException(string.Format("Could not load an instance of the type specified by inDataService.PluginInfo: \"{0}\"",
-                                                              inDataService.PluginInfo.ToString()), e);
-                }
-                return null;
+                DisposableBase.SafeDispose(ref disposer);
+                throw;
             }
+            return disposer;
         }
         protected bool GetDataServiceImplementers(PluginInstanceFinder pluginFinder, string inAssemblyPath,
                                                   ref OrderedSet<SimpleDataService> ioImplementers)
@@ -728,16 +716,6 @@ namespace Windsor.Node2008.WNOS.Utilities
             get { return _pluginFolderPath; }
             set { _pluginFolderPath = value; }
         }
-        public bool UseSingleAppDomain
-        {
-            get { return _useSingleAppDomain; }
-            set { _useSingleAppDomain = value; }
-        }
-        public bool UseAppDomains
-        {
-            get { return _useAppDomains; }
-            set { _useAppDomains = value; }
-        }
         private class PluginDisposer : DisposableBase, IPluginDisposer
         {
             AppDomainInstanceLoader _loader;
@@ -755,26 +733,64 @@ namespace Windsor.Node2008.WNOS.Utilities
         }
         protected class PluginDomainInstanceLoader : AppDomainInstanceLoader
         {
-            string _springConfigFilePath;
-            public PluginDomainInstanceLoader(string springConfigFilePath)
+            private string _springConfigFilePath;
+            private string _pluginParentFolderPath;
+            public PluginDomainInstanceLoader(string springConfigFilePath,
+                                              string pluginFilePath)
             {
                 _springConfigFilePath = springConfigFilePath;
+                if (!string.IsNullOrEmpty(pluginFilePath))
+                {
+                    _pluginParentFolderPath = Path.GetDirectoryName(pluginFilePath);
+                }
             }
             protected override AppDomain CreateAppDomain()
             {
                 AppDomain appDomain = base.CreateAppDomain();
 
+                string assemblyPath = Assembly.GetExecutingAssembly().FullName;
+                if (_pluginParentFolderPath != null)
+                {
+                    PluginAssemblyResolver resolver = (PluginAssemblyResolver)
+                        appDomain.CreateInstanceAndUnwrap(assemblyPath, typeof(PluginAssemblyResolver).FullName);
+                    resolver.InitResolver(_pluginParentFolderPath);
+                }
                 if (_springConfigFilePath != null)
                 {
                     // Initialize the main Spring ApplicationContext for the domain
-                    string assemblyPath = Assembly.GetExecutingAssembly().FullName;
-                    string fullName = typeof(SpringContextInitializer).FullName;
                     SpringContextInitializer initer = (SpringContextInitializer)
-                        appDomain.CreateInstanceAndUnwrap(assemblyPath, fullName);
+                        appDomain.CreateInstanceAndUnwrap(assemblyPath, typeof(SpringContextInitializer).FullName);
                     initer.InitSpring(_springConfigFilePath);
                 }
 
                 return appDomain;
+            }
+
+            private class PluginAssemblyResolver : MarshalByRefObjectIndefinite
+            {
+                private string _pluginParentFolderPath;
+                public void InitResolver(string pluginParentFolderPath)
+                {
+                    _pluginParentFolderPath = pluginParentFolderPath;
+                    AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(ResolveLocalAssembly);
+                }
+                protected Assembly ResolveLocalAssembly(object sender, ResolveEventArgs args)
+                {
+                    AppDomain appDomain = AppDomain.CurrentDomain;
+                    int endIndex = args.Name.IndexOf(',');
+                    string assemblyName = (endIndex < 0) ? args.Name : args.Name.Substring(0, endIndex);
+                    assemblyName = Path.Combine(_pluginParentFolderPath, Path.ChangeExtension(assemblyName, ".dll"));
+                    if (!File.Exists(assemblyName))
+                    {
+                        assemblyName = Path.ChangeExtension(assemblyName, ".exe");
+                        if (!File.Exists(assemblyName))
+                        {
+                            return null;
+                        }
+                    }
+                    string path = Path.Combine(assemblyName, assemblyName);
+                    return Assembly.LoadFrom(path);
+                }
             }
             private class SpringContextInitializer : MarshalByRefObjectIndefinite
             {
@@ -810,7 +826,7 @@ namespace Windsor.Node2008.WNOS.Utilities
                                 AppDomainInstanceLoader.GetInstance<BaseWNOSPlugin>(AppDomain.CurrentDomain, inAssemblyPath,
                                                                                     exportedType.FullName);
                         }
-                        catch(Exception)
+                        catch (Exception)
                         {
                             continue;
                         }

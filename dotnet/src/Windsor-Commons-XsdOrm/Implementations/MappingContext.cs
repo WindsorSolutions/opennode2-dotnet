@@ -76,7 +76,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
                                               string defaultColumnDescription,
                                               bool canSetColumnsNotNull)
         {
-            List<MappingAttribute> attributes = GetMappingAttributesForType(objType);
+            List<MappingAttribute> attributes = GetMappingAttributesForType(objType, objTypePath);
             List<MappingAttribute> unrecognizedAttributes = null;
             if (objParentTypePath == null)
             {
@@ -122,6 +122,14 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 {
                     continue;   // Ignore, already taken care of on root element only
                 }
+                if (mappingAttribute is AppliedPathAttribute)
+                {
+                    continue;   // Ignore, already taken care of on root element only
+                }
+                if (mappingAttribute is DefaultDecimalPrecision)
+                {
+                    continue;   // Ignore, already taken care of on root element only
+                }
                 CollectionUtils.Add(mappingAttribute, ref unrecognizedAttributes);
             }
             if (unrecognizedAttributes != null)
@@ -163,7 +171,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 FieldInfo fieldInfo = (member as FieldInfo);
                 string valueTypePath = Utils.CombineTypePath(objTypePath, member.Name);
                 Type valueType = (propertyInfo != null) ? propertyInfo.PropertyType : fieldInfo.FieldType;
-                attributes = GetMappingAttributesForMember(member);
+                attributes = GetMappingAttributesForMember(member, valueTypePath);
                 RelationAttribute lastRelationAttribute = null;
 
                 if (GetAttributeByType<DbIgnoreAttribute>(attributes) != null)
@@ -249,25 +257,6 @@ namespace Windsor.Commons.XsdOrm.Implementations
                         }
                         else
                         {
-                            if (columnAttribute.ColumnSize == 0)
-                            {
-                                if (valueType == typeof(string))
-                                {
-                                    columnAttribute.ColumnSize = GetElementDefaultStringLength(member.Name);
-                                    if (columnAttribute.ColumnSize == 0)
-                                    {
-                                        columnAttribute.ColumnSize = m_DefaultStringDbValues.DefaultDbSize;
-                                    }
-                                }
-                                else if (valueType == typeof(bool))
-                                {
-                                    columnAttribute.ColumnSize = 1;
-                                }
-                                else if (valueType.IsEnum)
-                                {
-                                    columnAttribute.ColumnSize = EnumUtils.GetLargestEnumStringSize(valueType);
-                                }
-                            }
                             if (columnAttribute.ColumnType == null)
                             {
                                 if ((valueType == typeof(string)) || (valueType == typeof(bool)) || valueType.IsEnum)
@@ -290,6 +279,27 @@ namespace Windsor.Commons.XsdOrm.Implementations
                                 {
                                     throw new MappingException("The member \"{0}\" of the class \"{1}\" has a ColumnAttribute without a ColumnType specified.",
                                                                member.Name, objType.FullName);
+                                }
+                            }
+                            if ((columnAttribute.ColumnSize == 0) &&
+                                ((columnAttribute.ColumnType != DbType.DateTime) && (columnAttribute.ColumnType != DbType.Decimal) &&
+                                 (columnAttribute.ColumnType != DbType.Int32)))
+                            {
+                                if (valueType == typeof(string))
+                                {
+                                    columnAttribute.ColumnSize = GetElementDefaultStringLength(member.Name);
+                                    if (columnAttribute.ColumnSize == 0)
+                                    {
+                                        columnAttribute.ColumnSize = m_DefaultStringDbValues.DefaultDbSize;
+                                    }
+                                }
+                                else if (valueType == typeof(bool))
+                                {
+                                    columnAttribute.ColumnSize = 1;
+                                }
+                                else if (valueType.IsEnum)
+                                {
+                                    columnAttribute.ColumnSize = EnumUtils.GetLargestEnumStringSize(valueType);
                                 }
                             }
                             if (!Utils.IsValidColumnSize(columnAttribute.ColumnType.Value, columnAttribute.ColumnSize))
@@ -1005,38 +1015,40 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 }
             }
         }
-        protected List<MappingAttribute> GetMappingAttributesForType(Type type)
+        protected List<MappingAttribute> GetMappingAttributesForType(Type type, string typePath)
         {
-            return AppendAppliedAttributes(type, string.Empty,
+            return AppendAppliedAttributes(type, string.Empty, typePath,
                                            Utils.GetMappingAttributesForType(type));
         }
-        protected List<MappingAttribute> GetMappingAttributesForMember(MemberInfo member)
+        protected List<MappingAttribute> GetMappingAttributesForMember(MemberInfo member, string memberPath)
         {
-            return AppendAppliedAttributes(member.DeclaringType, member.Name,
+            return AppendAppliedAttributes(member.DeclaringType, member.Name, memberPath,
                                            Utils.GetMappingAttributesForMember(member));
         }
-        protected List<MappingAttribute> AppendAppliedAttributes(Type type, string memberName,
+        protected List<MappingAttribute> AppendAppliedAttributes(Type type, string memberName, string objectPath,
                                                                  List<MappingAttribute> attributes)
         {
-            if (m_AppliedAttributes == null)
+            if (m_AppliedAttributes != null)
             {
-                return attributes;
-            }
-            Dictionary<string, List<MappingAttribute>> typeAttributes;
-            List<MappingAttribute> mappingAttributes;
-            if (type.Name == "FacilitySiteIdentifierDataType")
-            {
-            }
-            if (m_AppliedAttributes.TryGetValue(type, out typeAttributes) &&
-                typeAttributes.TryGetValue(memberName, out mappingAttributes))
-            {
-                if (attributes == null)
+                Dictionary<string, List<MappingAttribute>> typeAttributes;
+                List<MappingAttribute> mappingAttributes;
+                if (m_AppliedAttributes.TryGetValue(type, out typeAttributes) &&
+                    typeAttributes.TryGetValue(memberName, out mappingAttributes))
                 {
-                    attributes = new List<MappingAttribute>();
+                    foreach (MappingAttribute mappingAttribute in mappingAttributes)
+                    {
+                        CollectionUtils.Add(mappingAttribute.ShallowCopy(), ref attributes);
+                    }
                 }
-                foreach (MappingAttribute mappingAttribute in mappingAttributes)
+            }
+            if (m_AppliedPathAttributes != null)
+            {
+                foreach (AppliedPathAttributeInfo appliedPathAttributeInfo in m_AppliedPathAttributes)
                 {
-                    attributes.Add(mappingAttribute.ShallowCopy());
+                    if (objectPath.EndsWith(appliedPathAttributeInfo.RelativePath))
+                    {
+                        CollectionUtils.Add(appliedPathAttributeInfo.MappingAttribute.ShallowCopy(), ref attributes);
+                    }
                 }
             }
             return attributes;
@@ -1108,8 +1120,9 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 {
                     if (sameNameColumn.IsForeignKey || sameNameColumn.IsPrimaryKey)
                     {
-                        throw new MappingException("The table \"{0}\" has more than one column named \"{1}\"",
-                                                   table.TableName, columnAttribute.ColumnName);
+                        //??
+                        //throw new MappingException("The table \"{0}\" has more than one column named \"{1}\"",
+                        //                           table.TableName, columnAttribute.ColumnName);
                     }
                     string sameNameMemberPath = sameNameColumn.MemberInfoPath;
                     int startIndex = 0;
@@ -1202,6 +1215,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
             m_DefaultTableNamePrefix = GetDefaultTableNamePrefix(rootType);
             m_DefaultDecimalCreateString = GetDefaultDecimalPrecision(rootType);
             m_AppliedAttributes = GetAppliedAttributes(rootType);
+            m_AppliedPathAttributes = GetAppliedPathAttributes(rootType);
             if (!string.IsNullOrEmpty(m_DefaultTableNamePrefix))
             {
                 if (m_DefaultTableNamePrefix[m_DefaultTableNamePrefix.Length - 1] != '_')
@@ -1275,7 +1289,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
             }
             return 0;
         }
-        protected static Dictionary<Type, Dictionary<string, List<MappingAttribute>>> GetAppliedAttributes(Type rootType)
+        private static Dictionary<Type, Dictionary<string, List<MappingAttribute>>> GetAppliedAttributes(Type rootType)
         {
             Dictionary<Type, Dictionary<string, List<MappingAttribute>>> appliedAttributes = null;
             ConstructAppliedAttributes(rootType.Assembly.GetCustomAttributes(typeof(AppliedAttribute), false), 
@@ -1284,6 +1298,16 @@ namespace Windsor.Commons.XsdOrm.Implementations
             ConstructAppliedAttributes(rootType.GetCustomAttributes(typeof(AppliedAttribute), false), 
                                        ref appliedAttributes);
             return appliedAttributes;
+        }
+        private static List<AppliedPathAttributeInfo> GetAppliedPathAttributes(Type rootType)
+        {
+            List<AppliedPathAttributeInfo> appliedPathAttributes = null;
+            ConstructAppliedPathAttributes(rootType.Assembly.GetCustomAttributes(typeof(AppliedPathAttribute), false),
+                                           ref appliedPathAttributes);
+            // Root attributes override asssembly-level attributes
+            ConstructAppliedPathAttributes(rootType.GetCustomAttributes(typeof(AppliedPathAttribute), false),
+                                           ref appliedPathAttributes);
+            return appliedPathAttributes;
         }
         protected static void ConstructAppliedAttributes(IList<object> attributes, 
                                                          ref Dictionary<Type, Dictionary<string, List<MappingAttribute>>> appliedAttributes)
@@ -1315,58 +1339,101 @@ namespace Windsor.Commons.XsdOrm.Implementations
                     typeAttributes = new Dictionary<string, List<MappingAttribute>>();
                     appliedAttributes.Add(attribute.AppliedToType, typeAttributes);
                 }
-                MappingAttribute mappingAttribute = null;
-                if (attribute.MappedAttributeType == typeof(DbIgnoreAttribute))
-                {
-                    mappingAttribute = new DbIgnoreAttribute();
-                }
-                else if (attribute.MappedAttributeType == typeof(DbIndexableAttribute))
-                {
-                    mappingAttribute = new DbIndexableAttribute();
-                }
-                else if (attribute.MappedAttributeType == typeof(ColumnAttribute))
-                {
-                    ColumnAttribute columnAttribute = new ColumnAttribute();
-                    mappingAttribute = columnAttribute;
-                    if (!CollectionUtils.IsNullOrEmpty(attribute.Args))
-                    {
-                        foreach (object arg in attribute.Args)
-                        {
-                            if (arg is string)
-                            {
-                                columnAttribute.ColumnName = arg.ToString();
-                            }
-                            else if (arg is DbType)
-                            {
-                                columnAttribute.ColumnType = (DbType)arg;
-                            }
-                            else if (arg is bool)
-                            {
-                                columnAttribute.IsNullable = (bool)arg;
-                            }
-                            else
-                            {
-                                throw new NotImplementedException(string.Format("ColumnAttribute arg is not implemented: {0}",
-                                                                                arg.GetType().FullName));
-                            }
-                        }
-                    }
-                }
-                else if (attribute.MappedAttributeType == typeof(OneToOneAttribute))
-                {
-                    mappingAttribute = new OneToOneAttribute();
-                }
-                else
-                {
-                    throw new NotImplementedException(string.Format("attribute.MappedAttributeType arg is not implemented: {0}",
-                                                                    attribute.MappedAttributeType));
-                }
+
+                MappingAttribute mappingAttribute = GetMappingAttributeFromAppliedAttribute(attribute);
+
                 if (!typeAttributes.ContainsKey(attribute.AppliedToMemberName))
                 {
                     typeAttributes[attribute.AppliedToMemberName] = new List<MappingAttribute>();
                 }
                 typeAttributes[attribute.AppliedToMemberName].Add(mappingAttribute);
             }
+        }
+        private static void ConstructAppliedPathAttributes(IList<object> attributes,
+                                                           ref List<AppliedPathAttributeInfo> appliedPathAttributes)
+        {
+            if (CollectionUtils.IsNullOrEmpty(attributes))
+            {
+                return;
+            }
+            if (appliedPathAttributes == null)
+            {
+                appliedPathAttributes = new List<AppliedPathAttributeInfo>();
+            }
+            foreach (AppliedPathAttribute attribute in attributes)
+            {
+                MappingAttribute mappingAttribute = GetMappingAttributeFromAppliedAttribute(attribute);
+
+                bool foundIt = false;
+                for (int i = 0; i < appliedPathAttributes.Count; ++i)
+                {
+                    AppliedPathAttributeInfo appliedPathAttributeInfo = appliedPathAttributes[i];
+                    if (appliedPathAttributeInfo.RelativePath == attribute.ObjectPath)
+                    {
+                        appliedPathAttributes[i].MappingAttribute = mappingAttribute;
+                        foundIt = true;
+                        break;
+                    }
+                }
+                if (!foundIt)
+                {
+                    appliedPathAttributes.Add(new AppliedPathAttributeInfo(attribute.ObjectPath, mappingAttribute));
+                }
+            }
+        }
+        private static MappingAttribute GetMappingAttributeFromAppliedAttribute(BaseAppliedAttribute appliedAttribute)
+        {
+            MappingAttribute mappingAttribute = null;
+            if (appliedAttribute.MappedAttributeType == typeof(DbIgnoreAttribute))
+            {
+                mappingAttribute = new DbIgnoreAttribute();
+            }
+            else if (appliedAttribute.MappedAttributeType == typeof(DbIndexableAttribute))
+            {
+                mappingAttribute = new DbIndexableAttribute();
+            }
+            else if (appliedAttribute.MappedAttributeType == typeof(ColumnAttribute))
+            {
+                ColumnAttribute columnAttribute = new ColumnAttribute();
+                mappingAttribute = columnAttribute;
+                if (!CollectionUtils.IsNullOrEmpty(appliedAttribute.Args))
+                {
+                    foreach (object arg in appliedAttribute.Args)
+                    {
+                        if (arg is string)
+                        {
+                            columnAttribute.ColumnName = arg.ToString();
+                        }
+                        else if (arg is DbType)
+                        {
+                            columnAttribute.ColumnType = (DbType)arg;
+                        }
+                        else if (arg is int)
+                        {
+                            columnAttribute.ColumnSize = (int)arg;
+                        }
+                        else if (arg is bool)
+                        {
+                            columnAttribute.IsNullable = (bool)arg;
+                        }
+                        else
+                        {
+                            throw new NotImplementedException(string.Format("ColumnAttribute arg is not implemented: {0}",
+                                                                            arg.GetType().FullName));
+                        }
+                    }
+                }
+            }
+            else if (appliedAttribute.MappedAttributeType == typeof(OneToOneAttribute))
+            {
+                mappingAttribute = new OneToOneAttribute();
+            }
+            else
+            {
+                throw new NotImplementedException(string.Format("attribute.MappedAttributeType arg is not implemented: {0}",
+                                                                appliedAttribute.MappedAttributeType));
+            }
+            return mappingAttribute;
         }
         private Dictionary<string, Table> m_Tables = new Dictionary<string, Table>();
         private Dictionary<string, ObjectPath> m_ObjectPaths = new Dictionary<string, ObjectPath>();
@@ -1375,6 +1442,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
         private DefaultStringDbValuesAttribute m_DefaultStringDbValues;
         private List<KeyValuePair<string, int>> m_ElementNamePostfixToLength;
         private Dictionary<Type, Dictionary<string, List<MappingAttribute>>> m_AppliedAttributes;
+        private List<AppliedPathAttributeInfo> m_AppliedPathAttributes;
         private string m_SpecifiedFieldPostfixName = "Specified";
         private string m_DefaultTableNamePrefix;
         private string m_DefaultDecimalCreateString;
@@ -1406,6 +1474,16 @@ namespace Windsor.Commons.XsdOrm.Implementations
             public string ValueTypePath;
             public Type ValueType;
             public string Description;
+        }
+        private class AppliedPathAttributeInfo
+        {
+            public AppliedPathAttributeInfo(string relativePath, MappingAttribute mappingAttribute)
+            {
+                RelativePath = relativePath;
+                MappingAttribute = mappingAttribute;
+            }
+            public string RelativePath;
+            public MappingAttribute MappingAttribute;
         }
     }
 }

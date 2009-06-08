@@ -256,7 +256,14 @@ namespace Windsor.Commons.XsdOrm.Implementations
                     {
                         if (valueType == typeof(string))
                         {
-                            value = Enum.Parse(m_MemberType, value.ToString(), true);
+                            try
+                            {
+                                value = Enum.Parse(m_MemberType, value.ToString(), true);
+                            }
+                            catch (Exception)
+                            {
+                                throw;
+                            }
                         }
                         else
                         {
