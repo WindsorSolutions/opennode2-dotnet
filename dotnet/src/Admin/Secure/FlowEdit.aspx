@@ -22,7 +22,7 @@
     <table id="formTable" width="100%" cellpadding="2" cellspacing="0">
         <tr style="vertical-align:middle">
             <td class="label" width="50" nowrap="nowrap">
-                <asp:Image ID="Image1" runat="server" ImageAlign="AbsMiddle" ImageUrl="..\Images\Flow2.gif" style="padding-right: 3px"/>Name:</asp:Image>
+                <asp:Image ID="Image1" runat="server" ImageAlign="AbsMiddle" ImageUrl="..\Images\Flow2.gif" style="padding-right: 3px"/>Name:
             </td>
             <td class="ctrl" width="100%">
                 <asp:TextBox ID="nameEdit" runat="server" Text="" Width="500px" style="vertical-align:middle"/>

@@ -95,15 +95,6 @@ namespace Windsor.Node2008.Admin.Secure {
         protected global::System.Web.UI.WebControls.DropDownList typeDropDownList;
         
         /// <summary>
-        /// publishDropDownList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList publishDropDownList;
-        
-        /// <summary>
         /// activeCheckBox control.
         /// </summary>
         /// <remarks>

@@ -261,6 +261,38 @@ namespace Windsor.Node2008.WNOSPlugin.AQSWS
         }
 
         /// <summary>
+        /// Return the Query, Solicit, or Execute data service parameters for specified data service.
+        /// This method should NOT call GetServiceImplementation().
+        /// </summary>
+        public override IList<TypedParameter> GetDataServiceParameters(string serviceName, out DataServicePublishFlags publishFlags)
+        {
+            List<TypedParameter> list = null;
+            string[] names = null;
+            if (string.Equals(serviceName, AQSServiceType.AQDEMonitorData.ToString(), StringComparison.InvariantCultureIgnoreCase))
+            {
+                names = Enum.GetNames(typeof(MonitorDataArgType));
+            }
+            else if (string.Equals(serviceName, AQSServiceType.AQDERawData.ToString(), StringComparison.InvariantCultureIgnoreCase))
+            {
+                names = Enum.GetNames(typeof(RawDataArgType));
+            }
+            if (names != null)
+            {
+                list = new List<TypedParameter>(names.Length);
+                for (int i = 0; i < names.Length; ++i)
+                {
+                    list.Add(new TypedParameter(string.Format("P{0} - {1}", (i + 1).ToString("D2"), names[i]),
+                                                names[i], true, typeof(string), true));
+                }
+                publishFlags = DataServicePublishFlags.PublishToEndpointVersion11And20;
+            }
+            else
+            {
+                publishFlags = DataServicePublishFlags.DoNotPublish;
+            }
+            return list;
+        }
+        /// <summary>
         /// ProcessServiceRequest - returns result path
         /// </summary>
         /// <param name="request"></param>

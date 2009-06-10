@@ -37,6 +37,7 @@ using System.IO;
 using System.Xml;
 using System.Text;
 using System.Collections;
+using System.Collections.Generic;
 using System.Data;
 using Windsor.Node2008.WNOSPlugin;
 using Spring.Data.Core;
@@ -167,6 +168,27 @@ namespace Windsor.Node2008.WNOSPlugin.NEI_DB
                                       PARAM_REPORTING_YEAR_KEY, _reportingYear.ToString(), 
                                       PARAM_TRANSACTION_TYPE_KEY, _transactionType,
                                       PARAM_ADD_HEADER_KEY, _addHeader);
+        }
+        /// <summary>
+        /// Return the Query, Solicit, or Execute data service parameters for specified data service.
+        /// This method should NOT call GetServiceImplementation().
+        /// </summary>
+        public override IList<TypedParameter> GetDataServiceParameters(string serviceName, out DataServicePublishFlags publishFlags)
+        {
+            if (string.Equals(serviceName, "GetNEIPointDataByYear", StringComparison.InvariantCultureIgnoreCase))
+            {
+                List<TypedParameter> list = new List<TypedParameter>(3);
+                list.Add(new TypedParameter("ReportingYear", "The reporting year for returned data", true, typeof(int), true));
+                list.Add(new TypedParameter("TransactionType", "The transaction type for returned data (original or replace)", true, typeof(string), true));
+                list.Add(new TypedParameter("AddHeader", "True to add an exchange header to the returned data, false otherwise", true, typeof(bool), true));
+                publishFlags = DataServicePublishFlags.PublishToEndpointVersion11And20;
+                return list;
+            }
+            else
+            {
+                publishFlags = DataServicePublishFlags.DoNotPublish;
+                return null;
+            }
         }
     }
 

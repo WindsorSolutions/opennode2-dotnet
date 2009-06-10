@@ -186,7 +186,7 @@ namespace Windsor.Node2008.WNOSPlugin
                 }
                 else
                 {
-                    AppendAuditLogEvent("Failed to convert service configuration value \"{0}\" to type \"{1}\": {2}", 
+                    AppendAuditLogEvent("Failed to convert service configuration value \"{0}\" to type \"{1}\": {2}",
                                         valueStr, typeof(T).Name, ExceptionUtils.ToShortString(e));
                 }
                 return false;
@@ -512,6 +512,30 @@ namespace Windsor.Node2008.WNOSPlugin
             LOG.Debug("Getting service using default application context");
             return ServiceFactory.GetServiceImplementation<T>();
         }
+        /// <summary>
+        /// Return the paramter list sorted by name if parameters.IsByName == true, or just "as is"
+        /// if parameters.IsByName == false.
+        /// </summary>
+        public ICollection<string> GetParameterListSortedByName(ByIndexOrNameDictionary<string> parameters)
+        {
+            if (CollectionUtils.IsNullOrEmpty(parameters))
+            {
+                return null;
+            }
+            else if (parameters.IsByName)
+            {
+                SortedDictionary<string, string> dict = new SortedDictionary<string, string>();
+                foreach (KeyValuePair<string, string> pair in parameters.NameValuePairs)
+                {
+                    dict.Add(pair.Key, pair.Value);
+                }
+                return dict.Values;
+            }
+            else
+            {
+                return parameters;
+            }
+        }
 
         protected PaginatedContentResult GetXmlPaginatedContentResult(byte[] content, int rowIndex,
                                                                       int maxRowCount, bool isLast)
@@ -763,10 +787,12 @@ namespace Windsor.Node2008.WNOSPlugin
             return _auditLogEvents;
         }
         /// <summary>
-        /// Return the Query, Solicit, or Execute data service parameters for this plugin.
+        /// Return the Query, Solicit, or Execute data service parameters for specified data service.
+        /// This method should NOT call GetServiceImplementation().
         /// </summary>
-        public virtual ICollection<TypedParameter> GetDataServiceParameters(string serviceName)
+        public virtual IList<TypedParameter> GetDataServiceParameters(string serviceName, out DataServicePublishFlags publishFlags)
         {
+            publishFlags = DataServicePublishFlags.DoNotPublish;
             return null;
         }
         #endregion

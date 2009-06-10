@@ -47,7 +47,6 @@ using Windsor.Node2008.WNOSConnector.Service;
 using Windsor.Node2008.WNOSConnector.Logic;
 using Windsor.Node2008.WNOS.Server;
 using Windsor.Node2008.WNOSConnector.Server;
-using Windsor.Node2008.WNOS.Service.GetServices;
 using Windsor.Commons.Core;
 
 namespace Windsor.Node2008.WNOS.Service
@@ -59,6 +58,7 @@ namespace Windsor.Node2008.WNOS.Service
 		private IDocumentManagerEx _documentManager;
 		private INotificationManager _notificationManager;
 		private INodeProcessor _submitDocumentProcessor;
+        private ITransactionService _transactionService;
 
         #region IContentService Members
 
@@ -291,19 +291,26 @@ namespace Windsor.Node2008.WNOS.Service
 
         public SimpleContent GetMetaData(string category, NamedEndpointVisit visit)
         {
-            // TODO: Once services-xml format specified, need to update this code
-            NetworkNodeListType1 networkNodeListType1 = new NetworkNodeListType1();
-            NetworkNodeType networkNodeType = new NetworkNodeType();
-            networkNodeType.NodeDeploymentTypeCode = NodeStageCode.Production;
-            networkNodeType.NodeStatus = NodeStatusCode.Operational;
-            networkNodeType.NodeVersionIdentifier = NodeVersionCode.Item20;
-            networkNodeListType1.NetworkNodeDetails = new NetworkNodeType[1];
-            networkNodeListType1.NetworkNodeDetails[0] = networkNodeType;
-            string xmlString = SerializationHelper.ToXml(networkNodeListType1);
-            SimpleContent simpleContent = new SimpleContent();
-            simpleContent.Type = CommonContentType.XML;
-            simpleContent.Content = StringUtils.UTF8.GetBytes(xmlString);
-            return simpleContent;
+            PaginatedContentRequest request = new PaginatedContentRequest();
+            request.FlowName = "ENDS_v20";
+            request.OperationName = "GetServices";
+            request.Paging = new PaginationIndicator();
+            request.Paging.Start = 0;
+            request.Paging.Count = -1;
+            if (visit.Version == EndpointVersionType.EN20)
+            {
+                request.Parameters = new ByIndexOrNameDictionary<string>(true);
+                request.Parameters.Add("ServiceCategory", category);
+            }
+            else
+            {
+                request.Parameters = new ByIndexOrNameDictionary<string>(false);
+                request.Parameters.Add(category);
+            }
+
+            PaginatedContentResult result = _transactionService.Query(request, visit);
+
+            return result.Content;
         }
 
         private bool ValidateTransaction(EndpointVersionType endpointVersion, NodeMethod transactionWebMethod, 
@@ -375,7 +382,8 @@ namespace Windsor.Node2008.WNOS.Service
 			FieldNotInitializedException.ThrowIfNull(this, ref _documentManager);
 			FieldNotInitializedException.ThrowIfNull(this, ref _notificationManager);
 			FieldNotInitializedException.ThrowIfNull(this, ref _submitDocumentProcessor);
-		}
+            FieldNotInitializedException.ThrowIfNull(this, ref _transactionService);
+        }
 
 		#endregion // Init
 
@@ -414,6 +422,11 @@ namespace Windsor.Node2008.WNOS.Service
 				_transactionManager = value;
 			}
 		}
+        public ITransactionService TransactionService
+        {
+            get { return _transactionService; }
+            set { _transactionService = value; }
+        }
 
 		internal INodeProcessor SubmitProcessor {
 			get {

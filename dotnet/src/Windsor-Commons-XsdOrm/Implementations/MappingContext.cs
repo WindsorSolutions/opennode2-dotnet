@@ -446,7 +446,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
                         newColumn.ColumnDescription = GetColumnDescription(member, defaultColumnDescription);
                         if (!newColumn.IsForeignKey && !newColumn.IsPrimaryKey)
                         {
-                            newColumn.ParentToMemberChain = 
+                            newColumn.ParentToMemberChain =
                                 GetStaticParentToMemberChain(parentToMemberChain, ref staticParentToMemberChain);
                             if (!CollectionUtils.IsNullOrEmpty(newColumn.ParentToMemberChain))
                             {
@@ -686,7 +686,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
                     Type attrType = attribute.GetType();
                     if (typeof(T).IsAssignableFrom(attrType))
                     {
-                        return (T) attribute;
+                        return (T)attribute;
                     }
                 }
             }
@@ -730,7 +730,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
             }
             return tableName;
         }
-        protected List<MemberInfo> GetStaticParentToMemberChain(List<MemberInfo> parentToMemberChain, 
+        protected List<MemberInfo> GetStaticParentToMemberChain(List<MemberInfo> parentToMemberChain,
                                                                 ref List<MemberInfo> staticParentToMemberChain)
         {
             if (CollectionUtils.IsNullOrEmpty(parentToMemberChain))
@@ -755,7 +755,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
                         // Determine the foreign key table and column by looking for the single table that
                         // has a relation column (one-to-one, one-to-many) with a type that matches this 
                         // table's root type
-                        if ( foreignKeyColumn.ForeignTable != null )
+                        if (foreignKeyColumn.ForeignTable != null)
                         {
                             throw new MappingException("The member \"{0}\" of the class \"{1}\" has an empty ForeignTableName, but ForeignTable != null.",
                                                        foreignKeyColumn.MemberInfo.Name, foreignKeyColumn.MemberInfo.DeclaringType.FullName);
@@ -1231,16 +1231,174 @@ namespace Windsor.Commons.XsdOrm.Implementations
         protected virtual Dictionary<string, string> ConstructAbbreviations(Type rootType)
         {
             AbbreviationsAttribute attr = GetGlobalAttribute<AbbreviationsAttribute>(rootType);
-            return (attr == null) ? null : attr.Abbreviations;
+            if (attr == null)
+            {
+                attr = new AbbreviationsAttribute(
+                    "APPORTIONMENT", "APPOR",
+                    "NAICSPRIMARY", "NAICS_PRI",
+                    "SICPRIMARY", "SIC_PRI",
+                    "SICCODE", "SIC_CODE",
+                    "SUMMARY", "SUMM",
+                    "EXCLUDED", "EXCL",
+                    "PARAMETER", "PARAM",
+                    "TRIBAL", "TRIB",
+                    "DIMENSION", "DIM",
+                    "DETAILS", "DTLS",
+                    "MEASURE", "MEAS",
+                    "ALTERNATIVE", "ALT",
+                    "ELECTRONIC", "ELEC",
+                    "TELEPHONE", "TELE",
+                    "VERIFICATION", "VERF",
+                    "COMMENTS", "COMM",
+                    "STATUS", "STAT",
+                    "QUALITY", "QLTY",
+                    "UPDATED", "UPDT",
+                    "EXTENSION", "EXT",
+                    "DETERMINE", "DETR",
+                    "QUALIFIER", "QUAL",
+                    "QUALIFICATION", "QUAL",
+                    "LOCALITY", "LOCA",
+                    "AFFILIATION", "AFFL",
+                    "AFFILIATE", "AFFL",
+                    "SUPPLEMENTAL", "SUPP",
+                    "MAILING", "MAIL",
+                    "INTEREST", "INTR",
+                    "INDIVIDUAL", "INDV",
+                    "ORGANIZATION", "ORG",
+                    "COUNTY", "CNTY",
+                    "ENVIRONMENTAL", "ENVR",
+                    "ENVIRONMENT", "ENVR",
+                    "ORIGINATING", "ORIG",
+                    "PARTNER", "PART",
+                    "PRECISION", "PREC",
+                    "RESULT", "RSLT",
+                    "DEVIATIONS", "DEVI",
+                    "ACCURACY", "ACC",
+                    "ADDRESS", "ADDR",
+                    "POSTAL", "POST",
+                    "COLLECTION", "COLL",
+                    "STATE", "STA",
+                    "COUNTRY", "CTRY",
+                    "ACRONYM", "ACRO",
+                    "PRIMARY", "PRI",
+                    "FEDERAL", "FED",
+                    "AGENCY", "AGN",
+                    "METHOD", "METH",
+                    "INFORMATION", "INFO",
+                    "DESCRIPTION", "DESC",
+                    "DISTRICT", "DIST",
+                    "CONGRESSIONAL", "CONG",
+                    "LEGISLATIVE", "LEGI",
+                    "HUCCODE", "HUC_CODE",
+                    "IDENTIFICATION", "IDEN",
+                    "CONTEXT", "CONT",
+                    "URLTEXT", "URL_TEXT",
+                    "VERTICAL", "VERT",
+                    "VALUE", "VAL",
+                    "VERSION", "VERS",
+                    "REGISTRY", "REG",
+                    "WEIGHT", "WGHT",
+                    "QUANTITY", "QNTY",
+                    "STRUCTURE", "STRU",
+                    "CONSTRUCTION", "CONST",
+                    "COMPARTMENT", "COMPART",
+                    "INSTALLATION", "INSTALL",
+                    "NUMBER", "NUM",
+                    "SECONDARY", "SEC",
+                    "CONTAINMENT", "CONT",
+                    "INDICATOR", "IND",
+                    "CHEMICAL", "CHEM",
+                    "SUBSTANCE", "SUBS",
+                    "IDENTITY", "IDEN",
+                    "CONFIDENTIAL", "CONF",
+                    "EPACHEMICAL", "EPA_CHEM",
+                    "CASREGISTRY", "CAS_REG",
+                    "FACILITY", "FAC",
+                    "LOCATION", "LOC",
+                    "POSITION", "POS",
+                    "ACTIVITY", "ACT",
+                    "IDENTIFIER", "IDEN",
+                    "EXEMPTION", "EXEMP",
+                    "INJECTION", "INJEC",
+                    "AQUIFER", "AQUIF",
+                    "HIGH", "HI",
+                    "LOW", "LO",
+                    "PRIORITY", "PRI",
+                    "SOURCE", "SRC",
+                    "TEXT", "TXT",
+                    "OPERATING", "OPER",
+                    "GEOGRAPHIC", "GEO",
+                    "REFERENCE", "REF",
+                    "POINT", "PT",
+                    "HORIZONTAL", "HORZ",
+                    "COORDINATE", "COORD",
+                    "COORDINATES", "COORD",
+                    "SYSTEM", "SYS",
+                    "RETURN", "RTN",
+                    "COMPLIANCE", "COMPL",
+                    "INSPECTION", "INSP",
+                    "MONITORING", "MONTR",
+                    "MECHANICAL", "MECH",
+                    "INTEGRITY", "INTEG",
+                    "REASON", "RSN",
+                    "CODE", "CD",
+                    "ACTION", "ACT",
+                    "REMEDIAL", "REM",
+                    "ENGINEERING", "ENGR",
+                    "MAXIMUM", "MAX",
+                    "MINIMUM", "MIN",
+                    "NUMERIC", "NUM",
+                    "PERMITTED", "PERM",
+                    "VOLUME", "VOL",
+                    "INJECT", "INJ",
+                    "GEOLOGY", "GEO",
+                    "BOTTOM", "BOT",
+                    "ZONE", "ZN",
+                    "TEST", "TST",
+                    "LITHOLOGIC", "LITH",
+                    "INJECTIONE", "INJ",
+                    "PERMEABILITY", "PERM",
+                    "CONFINING", "CONF",
+                    "POROSITY", "POR",
+                    "PERCENT", "PCNT",
+                    "NAICSCODE", "NAICS_CODE",
+                    "ICISCOMPLIANCE", "ICIS_COMPL",
+                    "ICISMOANAME", "ICIS_MOA_NAME",
+                    "ICISREGIONAL", "ICIS_RGN",
+                    "USDWDEPTH", "USDW_DEPTH");
+            }
+            return attr.Abbreviations;
         }
         protected virtual DefaultStringDbValuesAttribute GetDefaultDbStringValues(Type rootType)
         {
             DefaultStringDbValuesAttribute attr = GetGlobalAttribute<DefaultStringDbValuesAttribute>(rootType);
-            return (attr == null) ? null : attr;
+            if (attr == null)
+            {
+                attr = new DefaultStringDbValuesAttribute(DbType.AnsiString, 255);
+            }
+            return attr;
         }
         protected virtual List<KeyValuePair<string, int>> GetElementNamePostfixToLength(Type rootType)
         {
             DefaultElementNamePostfixLengthsAttribute attr = GetGlobalAttribute<DefaultElementNamePostfixLengthsAttribute>(rootType);
+            if (attr == null)
+            {
+                attr = new DefaultElementNamePostfixLengthsAttribute(
+                    "Text", "255",
+                    "Name", "128",
+                    "Code", "50",
+                    "Value", "50",
+                    "CodeContext", "50",
+                    "Identifier", "50",
+                    "UnitName", "50",
+                    "PrecisionText", "50",
+                    "Number", "20",
+                    "Version", "20",
+                    "NumberText", "20",
+                    "IndividualFullName", "255",
+                    "srsDimension", "10",
+                    "srsName", "255");
+            }
             return (attr == null) ? null : attr.ElementNamePostfixToLength;
         }
         protected virtual string GetDefaultTableNamePrefix(Type rootType)
@@ -1292,10 +1450,10 @@ namespace Windsor.Commons.XsdOrm.Implementations
         private static Dictionary<Type, Dictionary<string, List<MappingAttribute>>> GetAppliedAttributes(Type rootType)
         {
             Dictionary<Type, Dictionary<string, List<MappingAttribute>>> appliedAttributes = null;
-            ConstructAppliedAttributes(rootType.Assembly.GetCustomAttributes(typeof(AppliedAttribute), false), 
+            ConstructAppliedAttributes(rootType.Assembly.GetCustomAttributes(typeof(AppliedAttribute), false),
                                        ref appliedAttributes);
             // Root attributes override asssembly-level attributes
-            ConstructAppliedAttributes(rootType.GetCustomAttributes(typeof(AppliedAttribute), false), 
+            ConstructAppliedAttributes(rootType.GetCustomAttributes(typeof(AppliedAttribute), false),
                                        ref appliedAttributes);
             return appliedAttributes;
         }
@@ -1309,7 +1467,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
                                            ref appliedPathAttributes);
             return appliedPathAttributes;
         }
-        protected static void ConstructAppliedAttributes(IList<object> attributes, 
+        protected static void ConstructAppliedAttributes(IList<object> attributes,
                                                          ref Dictionary<Type, Dictionary<string, List<MappingAttribute>>> appliedAttributes)
         {
             if (CollectionUtils.IsNullOrEmpty(attributes))

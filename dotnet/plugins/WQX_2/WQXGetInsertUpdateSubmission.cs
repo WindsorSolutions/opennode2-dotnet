@@ -86,7 +86,6 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                 throw;
             }
         }
-
         #endregion
     }
 }

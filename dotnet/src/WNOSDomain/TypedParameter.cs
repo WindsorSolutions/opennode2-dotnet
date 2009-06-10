@@ -52,18 +52,29 @@ namespace Windsor.Node2008.WNOSDomain
         private string _description;
         private bool _isRequired;
         private object _value;
+        private bool _doPublishParam;
 
         public TypedParameter()
         {
         }
         public TypedParameter(string name, string description, bool isRequired,
-                                    Type type, object value)
+                              Type type, bool doPublishParam, object value)
         {
             _type = type;
             _name = name;
             _description = description;
             _isRequired = isRequired;
+            _doPublishParam = doPublishParam;
             _value = value;
+        }
+        public TypedParameter(string name, string description, bool isRequired,
+                              Type type, bool doPublishParam)
+        {
+            _type = type;
+            _name = name;
+            _description = description;
+            _isRequired = isRequired;
+            _doPublishParam = doPublishParam;
         }
         public Type Type
         {
@@ -89,6 +100,11 @@ namespace Windsor.Node2008.WNOSDomain
         {
             get { return _value; }
             set { _value = value; }
+        }
+        public bool DoPublishParam
+        {
+            get { return _doPublishParam; }
+            set { _doPublishParam = value; }
         }
     }
 }

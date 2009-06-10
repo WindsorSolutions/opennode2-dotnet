@@ -95,7 +95,7 @@ namespace Windsor.Node2008.WNOS.Utilities
         /// <summary>
         /// Return all possible data service implementers for the input flow.
         /// </summary>
-        ICollection<TypedParameter> GetDataServiceParameters(DataService inDataService);
+        void GetDataServiceParameters(DataService inDataService);
 
         /// <summary>
         /// Return all possible data service implementers for the input flow.
@@ -205,34 +205,43 @@ namespace Windsor.Node2008.WNOS.Utilities
             }
             return type;
         }
-        public virtual ICollection<TypedParameter> GetDataServiceParameters(DataService inDataService)
+        public virtual void GetDataServiceParameters(DataService inDataService)
         {
-            if ((inDataService.PluginInfo != null) && !string.IsNullOrEmpty(inDataService.PluginInfo.ImplementingClassName))
-            {
-                BaseWNOSPlugin plugin;
-                using (IPluginDisposer disposer = LoadPluginInterfaceInstance(inDataService, true, out plugin))
-                {
-                    return plugin.GetDataServiceParameters(inDataService.Name);
-                }
-            }
-            return null;
+            GetDataServiceParameters(new DataService[] { inDataService });
         }
         public virtual void GetDataServiceParameters(IEnumerable<DataService> dataServices)
         {
-            if ( CollectionUtils.IsNullOrEmpty(dataServices) )
+            if (CollectionUtils.IsNullOrEmpty(dataServices))
             {
                 return;
             }
-            PluginDomainInstanceLoader loader = new PluginDomainInstanceLoader(_pluginConfigFilePath, null);
+            string pluginRootFilePath = GetPluginFilePath(CollectionUtils.FirstItem(dataServices), true);
+            PluginDomainInstanceLoader loader = new PluginDomainInstanceLoader(null, pluginRootFilePath);
             using (PluginDisposer disposer = new PluginDisposer(loader))
             {
                 foreach (DataService dataService in dataServices)
                 {
                     if ((dataService.PluginInfo != null) && !string.IsNullOrEmpty(dataService.PluginInfo.ImplementingClassName))
                     {
-                        string pluginFilePath = GetPluginFilePath(dataService, true);
-                        BaseWNOSPlugin plugin = loader.GetInstance<BaseWNOSPlugin>(pluginFilePath, dataService.PluginInfo.ImplementingClassName);
-                        dataService.ServiceParameters = plugin.GetDataServiceParameters(dataService.Name);
+                        try
+                        {
+                            string pluginFilePath = GetPluginFilePath(dataService, true);
+                            BaseWNOSPlugin plugin = loader.GetInstance<BaseWNOSPlugin>(pluginFilePath, dataService.PluginInfo.ImplementingClassName);
+                            DataServicePublishFlags publishFlags;
+                            dataService.ServiceParameters = plugin.GetDataServiceParameters(dataService.Name, out publishFlags);
+                            dataService.PublishFlags = publishFlags;
+                        }
+                        catch (Exception e)
+                        {
+                            // Don't publish on load error
+                            dataService.PublishFlags = DataServicePublishFlags.DoNotPublish;
+                            LOG.Error("Failed to GetDataServiceParameters for data service \"{0}\"", e, dataService.Name);
+                        }
+                    }
+                    else
+                    {
+                        // Don't publish if not implementer
+                        dataService.PublishFlags = DataServicePublishFlags.DoNotPublish;
                     }
                 }
             }
@@ -308,8 +317,16 @@ namespace Windsor.Node2008.WNOS.Utilities
             }
             if (rtnPath == null)
             {
+                string flowName = flowId;
+                try
+                {
+                    flowName = _flowDao.GetDataFlowNameById(flowId);
+                }
+                catch (Exception)
+                {
+                }
                 throw new InvalidOperationException(string.Format("A valid plugin has not been installed for the flow \"{0}\"",
-                                                                  flowId));
+                                                                  flowName));
             }
             return rtnPath;
         }
@@ -434,9 +451,9 @@ namespace Windsor.Node2008.WNOS.Utilities
 
                 if (curVersion != null)
                 {
-                    if (primaryImplementer.Version <= curVersion)
+                    if (primaryImplementer.Version < curVersion)
                     {
-                        throw new InvalidOperationException(string.Format("A plugin with a newer or same version \"{0}\" is already installed for the flow \"{1}\"",
+                        throw new InvalidOperationException(string.Format("A plugin with a newer version \"{0}\" is already installed for the flow \"{1}\"",
                                                                           curVersion.ToString(), _flowDao.GetDataFlowNameById(flowId)));
                     }
                 }
@@ -452,14 +469,14 @@ namespace Windsor.Node2008.WNOS.Utilities
                     {
                         _pluginDao.SavePlugin(pluginItem, zipFileContent);
                         // Rename the plugin directory with the version name
-                        Directory.Move(tempDirPath, installFolderPath);
+                        MoveInstalledPluginDirectory(tempDirPath, installFolderPath);
                         return null;
                     });
                 }
                 else
                 {
                     // Rename the plugin directory with the version name
-                    Directory.Move(tempDirPath, installFolderPath);
+                    MoveInstalledPluginDirectory(tempDirPath, installFolderPath);
                 }
 
                 pluginFolderPath = installFolderPath;
@@ -470,6 +487,27 @@ namespace Windsor.Node2008.WNOS.Utilities
                 FileUtils.SafeDeleteDirectory(tempDirPath);
                 throw;
             }
+        }
+        private void MoveInstalledPluginDirectory(string fromPath, string toPath)
+        {
+            int tryDeleteCount = 3;
+            while (Directory.Exists(toPath) && (tryDeleteCount > 0))
+            {
+                // Attempt to delete the directory
+                --tryDeleteCount;
+                if (!FileUtils.SafeDeleteDirectory(toPath))
+                {
+                    if (tryDeleteCount > 0)
+                    {
+                        Thread.Sleep(2000);
+                    }
+                }
+            }
+            if (Directory.Exists(toPath))
+            {
+                throw new IOException("The existing plugin directory location could not be replaced");
+            }
+            Directory.Move(fromPath, toPath);
         }
         public virtual IPluginDisposer LoadPluginInterface<T>(DataService inDataService, out T plugin) where T : class
         {

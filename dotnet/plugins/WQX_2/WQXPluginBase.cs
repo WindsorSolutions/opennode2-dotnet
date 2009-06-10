@@ -226,17 +226,33 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
             if (_dataRequest.Parameters.IsByName)
             {
                 GetParameterByName(_dataRequest, PARAM_ORGANIZATION_IDENTIFIER_KEY, out _organizationIdentifier);
-                TryGetParameterByName(_dataRequest, PARAM_ADD_HEADER_KEY, ref _addHeader);
                 TryGetParameterByName(_dataRequest, PARAM_WQX_UPDATE_DATE_KEY, ref _wqxUpdateDate);
+                TryGetParameterByName(_dataRequest, PARAM_ADD_HEADER_KEY, ref _addHeader);
                 TryGetParameterByName(_dataRequest, PARAM_USE_SUBMISSION_HISTORY_TABLE_KEY, ref _useSubmissionHistoryTable);
             }
             else
             {
                 GetParameterByIndex(_dataRequest, 0, out _organizationIdentifier);
-                TryGetParameterByIndex(_dataRequest, 1, ref _addHeader);
+                TryGetParameterByIndex(_dataRequest, 1, ref _wqxUpdateDate);
+                TryGetParameterByIndex(_dataRequest, 2, ref _addHeader);
+                TryGetParameterByIndex(_dataRequest, 3, ref _useSubmissionHistoryTable);
             }
             AppendAuditLogEvent("Running submission for organization \"{0}\"",
                                       _organizationIdentifier);
+        }
+        /// <summary>
+        /// Return the Query, Solicit, or Execute data service parameters for specified data service.
+        /// This method should NOT call GetServiceImplementation().
+        /// </summary>
+        public override IList<TypedParameter> GetDataServiceParameters(string serviceName, out DataServicePublishFlags publishFlags)
+        {
+            publishFlags = DataServicePublishFlags.DoNotPublish;
+            List<TypedParameter> list = new List<TypedParameter>(2);
+            list.Add(new TypedParameter("OrganizationIdentifier", "The indentifier of the organization for which data will be returned", true, typeof(string), true));
+            list.Add(new TypedParameter("WQXUpdateDate", "Data will be returned that has been updated since this date", false, typeof(DateTime), true));
+            list.Add(new TypedParameter("AddHeader", "True to add an exchange header to the returned data, false otherwise", false, typeof(bool), true));
+            list.Add(new TypedParameter("UseSubmissionHistoryTable", "True to use the submission history table during processing", false, typeof(bool), false));
+            return list;
         }
         protected virtual IList<PendingSubmissionInfo> GetPendingSubmissions()
         {

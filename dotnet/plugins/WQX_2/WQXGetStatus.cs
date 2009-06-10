@@ -53,7 +53,7 @@ using System.ComponentModel;
 namespace Windsor.Node2008.WNOSPlugin.WQX2
 {
     [Serializable]
-    public class WQXGetStatus : WQXPluginBase, ISolicitProcessor
+    public class WQXGetStatus : WQXPluginBase, ITaskProcessor
     {
         #region fields
         #endregion
@@ -69,7 +69,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
         /// ProcessSolicit
         /// </summary>
         /// <param name="requestId"></param>
-        public virtual void ProcessSolicit(string requestId)
+        public virtual void ProcessTask(string requestId)
         {
             ProcessSolicitInit(requestId, true);
 

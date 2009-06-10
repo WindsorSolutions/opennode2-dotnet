@@ -71,9 +71,8 @@ namespace Windsor.Node2008.WNOSDomain
         private ServiceRequestAuthorizationType _minAuthLevel;
         private IDictionary<string, DataProviderInfo> _dataSources;
         private ExecutableInfo _pluginInfo;
-        private DataServicePublishFlags _publishFlags = (DataServicePublishFlags.PublishToEndpointVersion11 | 
-                                                         DataServicePublishFlags.PublishToEndpointVersion20);
-        private ICollection<TypedParameter> _serviceParameters;
+        private DataServicePublishFlags _publishFlags = DataServicePublishFlags.PublishToEndpointVersion11And20;
+        private IList<TypedParameter> _serviceParameters;
 
         public const string DEFAULT_SERVICE_NAME = "*";
 
@@ -166,7 +165,7 @@ namespace Windsor.Node2008.WNOSDomain
             set { _publishFlags = value; }
         }
 
-        public ICollection<TypedParameter> ServiceParameters
+        public IList<TypedParameter> ServiceParameters
         {
             get { return _serviceParameters; }
             set { _serviceParameters = value; }

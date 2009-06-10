@@ -163,7 +163,6 @@
     <Compile Include="Service\BaseService.cs" />
     <Compile Include="Service\BaseEndpointService.cs" />
     <Compile Include="Service\ContentServiceProvider.cs" />
-    <Compile Include="Service\GetServices\GetServices_v1_draft_3.cs" />
     <Compile Include="Service\SecurityServiceProvider.cs" />
     <Compile Include="Service\TransactionServiceProvider.cs" />
     <Compile Include="Utilities\DbConnectionFactory.cs" />

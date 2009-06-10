@@ -117,7 +117,7 @@ namespace Windsor.Node2008.WNOS.Data
 			dataService.DataSources = GetServiceDataSources(dataService.Id);
             if (includeServiceParameters)
             {
-                dataService.ServiceParameters = _pluginLoader.GetDataServiceParameters(dataService);
+                _pluginLoader.GetDataServiceParameters(dataService);
             }
 		}
 

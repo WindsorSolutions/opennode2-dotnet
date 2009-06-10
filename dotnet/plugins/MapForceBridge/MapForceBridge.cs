@@ -89,14 +89,13 @@ namespace Windsor.Node.Flow.MapForceBridge
             string filePath = DoRequest(requestId);
 
             byte[] content = File.ReadAllBytes(filePath);
-            PaginatedContentResult result = new PaginatedContentResult(_dataRequest.RowIndex, _dataRequest.MaxRowCount, 
+            PaginatedContentResult result = new PaginatedContentResult(_dataRequest.RowIndex, _dataRequest.MaxRowCount,
                                                                        true, CommonContentType.XML, content);
             return result;
         }
         public void ProcessSolicit(string requestId)
         {
             string filePath = DoRequest(requestId);
-
         }
         protected string DoRequest(string requestId)
         {
@@ -126,18 +125,10 @@ namespace Windsor.Node.Flow.MapForceBridge
             AppendAuditLogEvent("Loading request with id \"{0}\"", requestId);
             _dataRequest = _requestManager.GetDataRequest(requestId);
 
-            if (!CollectionUtils.IsNullOrEmpty(_dataRequest.Parameters))
-            {
-                if (_dataRequest.Parameters.IsByName)
-                {
-                    throw new ArgumentException("Request parameters must be 'by-index' not 'by-value'");
-                }
-            }
-
             AppendAuditLogEvent("Validating request: {0}", _dataRequest);
         }
 
-        protected virtual string RunMapForceInstance()
+        protected Assembly GetRunMethod(out Type runType, out MethodInfo runMethod, out ParameterInfo[] runParams)
         {
             string assemblyPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Mapping.exe");
             if (!File.Exists(assemblyPath))
@@ -148,9 +139,9 @@ namespace Windsor.Node.Flow.MapForceBridge
             Assembly assembly = Assembly.LoadFile(assemblyPath);
 
             Type[] assemblyTypes = assembly.GetExportedTypes();
-            Type runType = null;
-            MethodInfo runMethod = null;
-            ParameterInfo[] runParams = null;
+            runType = null;
+            runMethod = null;
+            runParams = null;
             foreach (Type assemblyType in assemblyTypes)
             {
                 MethodInfo[] typeMethods = assemblyType.GetMethods(BindingFlags.Instance | BindingFlags.Public |
@@ -169,7 +160,7 @@ namespace Windsor.Node.Flow.MapForceBridge
                             {
                                 if (runMethod2 != null)
                                 {
-                                    AppendAuditLogEvent("More than one valid Run() method found for the class \"{0}.\"  This class will be ignored.", 
+                                    AppendAuditLogEvent("More than one valid Run() method found for the class \"{0}.\"  This class will be ignored.",
                                                         assemblyType.Name);
                                     runMethod2 = null;
                                     runParams2 = null;
@@ -197,27 +188,64 @@ namespace Windsor.Node.Flow.MapForceBridge
             {
                 throw new InvalidOperationException("Did not find a class that has a valid Run() method");
             }
+            return assembly;
+        }
+        protected static string ParamNameFromRunParamName(string runParamName)
+        {
+            const string postfixName = "SourceParameter";
 
-            List<object> runParameters = new List<object>();
-
-            runParameters.Add(_connectionString);
-
-            if (!CollectionUtils.IsNullOrEmpty(_dataRequest.Parameters))
+            if (runParamName.EndsWith(postfixName) && (runParamName.Length > postfixName.Length))
             {
-                if ((runParams.Length - 2) != _dataRequest.Parameters.Count)
+                return runParamName.Substring(0, runParamName.Length - postfixName.Length);
+            }
+            else
+            {
+                return runParamName;
+            }
+        }
+        protected static void AppendRunParameters(ParameterInfo[] runParams, ByIndexOrNameDictionary<string> serviceParameters,
+                                                  Type runType, List<object> runParameters)
+        {
+            if (!CollectionUtils.IsNullOrEmpty(serviceParameters))
+            {
+                if ((runParams.Length - 2) != serviceParameters.Count)
                 {
                     throw new ArgumentException(string.Format("The number of request parameters ({0}) does not match the number of parameters specified by the Run() method ({1}) of class {2}.",
-                                                              _dataRequest.Parameters.Count, runParams.Length - 2, runType.Name));
+                                                              serviceParameters.Count, runParams.Length - 2, runType.Name));
                 }
-                foreach (string requestParam in _dataRequest.Parameters)
+                if (serviceParameters.IsByName)
                 {
-                    if (string.IsNullOrEmpty(requestParam))
+                    for (int i = 1; i < runParams.Length - 1; ++i)
                     {
-                        runParameters.Add(null);
+                        ParameterInfo runParam = runParams[i];
+                        string paramName = ParamNameFromRunParamName(runParam.Name);
+                        string requestParam;
+                        if (!serviceParameters.TryGetValue(paramName, out requestParam))
+                        {
+                            throw new ArgumentNullException(string.Format("The service parameter \"{0}\" was not specified", paramName));
+                        }
+                        if (string.IsNullOrEmpty(requestParam))
+                        {
+                            runParameters.Add(null);
+                        }
+                        else
+                        {
+                            runParameters.Add(requestParam);
+                        }
                     }
-                    else
+                }
+                else
+                {
+                    foreach (string requestParam in serviceParameters)
                     {
-                        runParameters.Add(requestParam);
+                        if (string.IsNullOrEmpty(requestParam))
+                        {
+                            runParameters.Add(null);
+                        }
+                        else
+                        {
+                            runParameters.Add(requestParam);
+                        }
                     }
                 }
             }
@@ -229,6 +257,20 @@ namespace Windsor.Node.Flow.MapForceBridge
                                                               runParams.Length - 2, runType.Name));
                 }
             }
+        }
+        protected virtual string RunMapForceInstance()
+        {
+            Type runType = null;
+            MethodInfo runMethod = null;
+            ParameterInfo[] runParams = null;
+
+            Assembly assembly = GetRunMethod(out runType, out runMethod, out runParams);
+
+            List<object> runParameters = new List<object>();
+
+            runParameters.Add(_connectionString);
+
+            AppendRunParameters(runParams, _dataRequest.Parameters, runType, runParameters);
 
             AppendAuditLogEvent("Found a class with a valid Run() method: \"{0}\" ...", runType.Name);
 
@@ -245,6 +287,32 @@ namespace Windsor.Node.Flow.MapForceBridge
             runMethod.Invoke(rtnObject, runParameters.ToArray());
 
             return tempXmlFilePath;
+        }
+        /// <summary>
+        /// Return the Query, Solicit, or Execute data service parameters for specified data service.
+        /// This method should NOT call GetServiceImplementation().
+        /// </summary>
+        public override IList<TypedParameter> GetDataServiceParameters(string serviceName, out DataServicePublishFlags publishFlags)
+        {
+            Type runType = null;
+            MethodInfo runMethod = null;
+            ParameterInfo[] runParams = null;
+
+            Assembly assembly = GetRunMethod(out runType, out runMethod, out runParams);
+
+            List<TypedParameter> list = null;
+            if (!CollectionUtils.IsNullOrEmpty(runParams) && (runParams.Length > 2))
+            {
+                list = new List<TypedParameter>(runParams.Length);
+                for (int i = 1; i < runParams.Length - 1; ++i)
+                {
+                    ParameterInfo runParam = runParams[i];
+                    string paramName = ParamNameFromRunParamName(runParam.Name);
+                    list.Add(new TypedParameter(paramName, paramName, true, typeof(string), true));
+                }
+            }
+            publishFlags = DataServicePublishFlags.PublishToEndpointVersion11And20;
+            return list;
         }
     }
 }

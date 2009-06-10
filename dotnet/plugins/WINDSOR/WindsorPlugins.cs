@@ -51,7 +51,6 @@ using Windsor.Commons.Logging;
 
 namespace Windsor.Node2008.WNOSPlugin.Windsor
 {
-
     [Serializable]
     public class CleanTemporaryFolder : BaseWNOSPlugin, ITaskProcessor
     {
@@ -223,11 +222,12 @@ namespace Windsor.Node2008.WNOSPlugin.Windsor
         /// <summary>
         /// Return the Query, Solicit, or Execute data service parameters for this plugin.
         /// </summary>
-        public override ICollection<TypedParameter> GetDataServiceParameters(string serviceName)
+        public override IList<TypedParameter> GetDataServiceParameters(string serviceName, out DataServicePublishFlags publishFlags)
         {
             List<TypedParameter> parameters = new List<TypedParameter>();
             parameters.Add(new TypedParameter("Force Refresh", "If true, this task will always refresh the user list.  If false, this task will only refresh the user list if it has expired from the cache.",
-                                               true, typeof(bool), false));
+                                               false, typeof(bool), false));
+            publishFlags = DataServicePublishFlags.DoNotPublish;
             return parameters;
         }
     }

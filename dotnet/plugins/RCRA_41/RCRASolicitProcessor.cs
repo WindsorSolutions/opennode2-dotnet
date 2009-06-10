@@ -239,9 +239,16 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_41
             {
                 throw new InvalidOperationException("The staging database does not contain any RCRA data");
             }
-            else if (dataList.Count > 1)
+            else
             {
-                throw new InvalidOperationException("The staging database contains more than one set of RCRA data");
+                int handlerCount = 0;
+                foreach (FacilitySubmissionDataType submission in dataList)
+                {
+                    handlerCount += !CollectionUtils.IsNullOrEmpty(submission.Handler) ?
+                        submission.Handler.Length : 0;
+                }
+                AppendAuditLogEvent("Found {0} facility submission(s) and {1} handler(s)", 
+                                    dataList.Count, handlerCount);
             }
 
             HazardousWasteHandlerSubmissionDataType hdRoot = new HazardousWasteHandlerSubmissionDataType();
@@ -250,5 +257,14 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_41
 
             return hdRoot;
 		}
-	}
+        /// <summary>
+        /// Return the Query, Solicit, or Execute data service parameters for specified data service.
+        /// This method should NOT call GetServiceImplementation().
+        /// </summary>
+        public override IList<TypedParameter> GetDataServiceParameters(string serviceName, out DataServicePublishFlags publishFlags)
+        {
+            publishFlags = DataServicePublishFlags.PublishToEndpointVersion11And20;
+            return null;
+        }
+    }
 }

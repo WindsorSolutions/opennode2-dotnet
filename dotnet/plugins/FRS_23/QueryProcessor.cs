@@ -66,7 +66,6 @@ namespace Windsor.Node2008.WNOSPlugin.FRS23
     [Serializable]
     public class QueryProcessor : BaseWNOSPlugin, ISolicitProcessor, IQueryProcessor
     {
-
         #region fields
         private static readonly ILogEx LOG = LogManagerEx.GetLogger(MethodBase.GetCurrentMethod());
         private IRequestManager _requestManager;
@@ -214,7 +213,7 @@ namespace Windsor.Node2008.WNOSPlugin.FRS23
             {
                 return fsList;
             }
-
+            
             //Create an array to hold the individual fs lists in collection
             ArrayList detailArray = new ArrayList();
 
@@ -872,7 +871,7 @@ namespace Windsor.Node2008.WNOSPlugin.FRS23
             DataRequest request = GetAndPrintRequest(requestId);
 
             FacilitySiteList list = GetFacilitySiteList(request);
-            AppendAuditLogEvent("Records found: " + list.FacilitySiteAllDetails.Length);
+            AppendAuditLogEvent("Records found: " + ((list.FacilitySiteAllDetails != null) ? list.FacilitySiteAllDetails.Length.ToString() : "0"));
 
             string serializedFilePath = null;
             if (IsOn(FRSServiceParameterType.MakeHeaderOnSolicit))
@@ -1050,8 +1049,70 @@ namespace Windsor.Node2008.WNOSPlugin.FRS23
 
             return fsList;
         }
-
-
+        public override IList<TypedParameter> GetDataServiceParameters(string serviceName, out DataServicePublishFlags publishFlags)
+        {
+            List<TypedParameter> list = null;
+            publishFlags = DataServicePublishFlags.DoNotPublish;
+            switch (serviceName.ToLower())
+            {
+                case "getdeletedfacilitybychangedate":
+                    list = new List<TypedParameter>(1);
+                    list.Add(new TypedParameter("P01 - DeletionDate", "Deletion Date (YYYY-MM-DD)", true, typeof(string), true));
+                    publishFlags = DataServicePublishFlags.PublishToEndpointVersion11And20;
+                    break;
+                case "getfacilitybychangedate":
+                    list = new List<TypedParameter>(2);
+                    list.Add(new TypedParameter("P01 - StateUSPSCode", "State USPS Code", true, typeof(string), true));
+                    list.Add(new TypedParameter("P02 - ChangeDate", "Change Date (YYYY-MM-DD)", true, typeof(string), true));
+                    publishFlags = DataServicePublishFlags.PublishToEndpointVersion11And20;
+                    break;
+                case "getfacility":
+                    list = new List<TypedParameter>(2);
+                    list.Add(new TypedParameter("P01 - StateUSPSCode", "State USPS Code", true, typeof(string), true));
+                    list.Add(new TypedParameter("P02 - FacilityName", "Facility Name (Starts With)", true, typeof(string), true));
+                    publishFlags = DataServicePublishFlags.PublishToEndpointVersion11And20;
+                    break;
+                case "getfacilitybyname":
+                    list = new List<TypedParameter>(34);
+                    list.Add(new TypedParameter("P01 - FacilityName", "State USPS Code", false, typeof(string), true));
+                    list.Add(new TypedParameter("P02 - FRSRegistryId", "Facility Name (Starts With)", false, typeof(string), true));
+                    list.Add(new TypedParameter("P03 - StateFacilityId", "State Facility Id", false, typeof(string), true));
+                    list.Add(new TypedParameter("P04 - ChangeDate", "Change Date (YYYY-MM-DD)", false, typeof(string), true));
+                    list.Add(new TypedParameter("P05 - StateSystemId", "State SystemI d", false, typeof(string), true));
+                    list.Add(new TypedParameter("P06 - EnvIntTypes", "Env Int Types", false, typeof(string), true));
+                    list.Add(new TypedParameter("P07 - StateSystemAcronym", "State System Acronym", false, typeof(string), true));
+                    list.Add(new TypedParameter("P08 - SICCodes", "SIC Codes", false, typeof(string), true));
+                    list.Add(new TypedParameter("P09 - NaicsCodes", "Naics Codes", false, typeof(string), true));
+                    list.Add(new TypedParameter("P10 - LocationAddress", "Location Address", false, typeof(string), true));
+                    list.Add(new TypedParameter("P11 - CityName", "City Name", false, typeof(string), true));
+                    list.Add(new TypedParameter("P12 - ZipCode", "Zip Code", false, typeof(string), true));
+                    list.Add(new TypedParameter("P13 - State", "State", false, typeof(string), true));
+                    list.Add(new TypedParameter("P14 - EPARegions", "EPA Regions", false, typeof(string), true));
+                    list.Add(new TypedParameter("P15 - HUCCode", "HUC Code", false, typeof(string), true));
+                    list.Add(new TypedParameter("P16 - FIPSCodes", "FIPS Codes", false, typeof(string), true));
+                    list.Add(new TypedParameter("P17 - CountyNames", "County Names", false, typeof(string), true));
+                    list.Add(new TypedParameter("P18 - NBoundingLong", "N Bounding Long", false, typeof(string), true));
+                    list.Add(new TypedParameter("P19 - SBoundingLong", "S Bounding Long", false, typeof(string), true));
+                    list.Add(new TypedParameter("P20 - EBoundingLat", "E Bounding Lat", false, typeof(string), true));
+                    list.Add(new TypedParameter("P21 - WBoundingLat", "W Bounding Lat", false, typeof(string), true));
+                    list.Add(new TypedParameter("P22 - TRSQ", "TRSQ", false, typeof(string), true));
+                    list.Add(new TypedParameter("P23 - StateCongressDistNums", "State Congress Dist Nums", false, typeof(string), true));
+                    list.Add(new TypedParameter("P24 - StateHouseDistNums", "State House Dist Nums", false, typeof(string), true));
+                    list.Add(new TypedParameter("P25 - StateSenateDistNums", "State Senate Dist Nums", false, typeof(string), true));
+                    list.Add(new TypedParameter("P26 - FedCongressDistNums", "Fed Congress Dist Nums", false, typeof(string), true));
+                    list.Add(new TypedParameter("P27 - FedHouseDistNums", "Fed House Dist Nums", false, typeof(string), true));
+                    list.Add(new TypedParameter("P28 - FedSenateDistNums", "Fed Senate Dist Nums", false, typeof(string), true));
+                    list.Add(new TypedParameter("P29 - TribalLandCode", "Tribal Land Code", false, typeof(string), true));
+                    list.Add(new TypedParameter("P30 - TribalLandName", "Tribal Land Name", false, typeof(string), true));
+                    list.Add(new TypedParameter("P31 - FederalFacility", "Federal Facility", false, typeof(string), true));
+                    list.Add(new TypedParameter("P32 - OrgDUNSNum", "Org DUNS Num", false, typeof(string), true));
+                    list.Add(new TypedParameter("P33 - OrgName", "Org Name", false, typeof(string), true));
+                    list.Add(new TypedParameter("P34 - IndividualName", "Individual Name", false, typeof(string), true));
+                    publishFlags = DataServicePublishFlags.PublishToEndpointVersion11And20;
+                    break;
+            }
+            return list;
+        }
 
         /// <summary>
         /// FormatDBNullNAICSCode

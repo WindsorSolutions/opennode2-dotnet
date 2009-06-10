@@ -301,9 +301,9 @@ namespace Windsor.Node2008.Admin.Secure
                 introParagraphs.DataSource = IntroParagraphs;
                 introParagraphs.DataBind();
 
-                publishDropDownList.DataSource = EnumUtils.GetAllDescriptions<DataServicePublishFlags>();
-                publishDropDownList.DataBind();
-                publishDropDownList.SelectedIndex = publishDropDownList.Items.Count - 1;
+                //publishDropDownList.DataSource = EnumUtils.GetAllDescriptions<DataServicePublishFlags>();
+                //publishDropDownList.DataBind();
+                //publishDropDownList.SelectedIndex = publishDropDownList.Items.Count - 1;
 
                 ICollection<SimpleDataService> implementers = GetDataServiceImplementersForFlow(_dataModel.FlowId);
                 if (!CollectionUtils.IsNullOrEmpty(implementers))
@@ -351,7 +351,7 @@ namespace Windsor.Node2008.Admin.Secure
             BindingManager.AddBinding("PluginInfoBinder", "DataService.PluginInfo");
             BindingManager.AddBinding("activeCheckBox.Checked", "DataService.IsActive");
             BindingManager.AddBinding("ServiceTypeBinder", "DataService.Type");
-            BindingManager.AddBinding("PublishFlagsBinder", "DataService.PublishFlags");
+            //BindingManager.AddBinding("PublishFlagsBinder", "DataService.PublishFlags");
         }
         protected override void BindFormData()
         {
@@ -448,17 +448,17 @@ namespace Windsor.Node2008.Admin.Secure
                 }
             }
         }
-        protected DataServicePublishFlags PublishFlagsBinder
-        {
-            get
-            {
-                return EnumUtils.FromDescription<DataServicePublishFlags>(publishDropDownList.SelectedValue);
-            }
-            set
-            {
-                publishDropDownList.SelectedValue = EnumUtils.ToDescription(value);
-            }
-        }
+        //protected DataServicePublishFlags PublishFlagsBinder
+        //{
+        //    get
+        //    {
+        //        return EnumUtils.FromDescription<DataServicePublishFlags>(publishDropDownList.SelectedValue);
+        //    }
+        //    set
+        //    {
+        //        publishDropDownList.SelectedValue = EnumUtils.ToDescription(value);
+        //    }
+        //}
         protected Dictionary<string, string> GetServiceArguments()
         {
             Repeater repeater = argsRepeater;

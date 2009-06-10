@@ -22,13 +22,13 @@
     <table id="formTable" width="100%" cellpadding="2" cellspacing="0">
         <tr>
             <td class="label" width="50">
-                <asp:Image ID="Image1" runat="server" ImageAlign="AbsMiddle" ImageUrl="..\Images\Flow2.gif" style="padding-right: 3px"/>Exchange:</asp:Image>
+                <asp:Image ID="Image1" runat="server" ImageAlign="AbsMiddle" ImageUrl="..\Images\Flow2.gif" style="padding-right: 3px" />Exchange:
             </td>
             <td id="flowNameLabel" class="ctrl" runat="server">
             </td>
         </tr>
         <tr>
-            <td class="label style="vertical-align:top" width="50">
+            <td class="label" style="vertical-align:top" width="50">
                 Name:
             </td>
             <td class="ctrl" width="100%">
@@ -54,7 +54,7 @@
                 </asp:DropDownList>
             </td>
         </tr>
-        <tr>
+<%--        <tr>
             <td class="label" width="50">
                 Publish For:
             </td>
@@ -63,7 +63,7 @@
                 </asp:DropDownList>
             </td>
         </tr>
-        <tr>
+--%>        <tr>
             <td class="label" width="50" style="vertical-align: top">
                 Active:
             </td>

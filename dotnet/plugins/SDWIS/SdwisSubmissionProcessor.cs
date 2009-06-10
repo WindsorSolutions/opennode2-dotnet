@@ -93,6 +93,16 @@ namespace Windsor.Node2008.WNOSPlugin.SDWIS
         }
 
         /// <summary>
+        /// Return the Query, Solicit, or Execute data service parameters for specified data service.
+        /// This method should NOT call GetServiceImplementation().
+        /// </summary>
+        public override IList<TypedParameter> GetDataServiceParameters(string serviceName, out DataServicePublishFlags publishFlags)
+        {
+            publishFlags = DataServicePublishFlags.PublishToEndpointVersion11And20;
+            return null;
+        }
+
+        /// <summary>
         /// ProcessSubmit
         /// </summary>
         /// <param name="transactionId"></param>
@@ -100,7 +110,6 @@ namespace Windsor.Node2008.WNOSPlugin.SDWIS
         {
             try
             {
-
                 LazyInit();
 
                 WriteOut("Runtime arguments:");
