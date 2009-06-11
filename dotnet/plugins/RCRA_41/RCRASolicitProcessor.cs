@@ -52,19 +52,15 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_41
     [Serializable]
     public class RCRASolicitProcessor : BaseWNOSPlugin, ISolicitProcessor
 	{
-
-        public enum ServiceParameterType
-        {
-            MakeHeader,
-            ProvidingOrg,
-            Title,
-            ContactInfo,
-            PayloadOperation,
-            Notification,
-            RCRAInfoUserID,
-            RCRAInfoStateCode,
-            SchemaReference
-        }
+        protected const string CONFIG_ADD_HEADER = "Add Header";
+        protected const string CONFIG_AUTHOR = "Author";
+        protected const string CONFIG_ORGANIZATION = "Organization";
+        protected const string CONFIG_CONTACT_INFO = "Contact Info";
+        protected const string CONFIG_NOTIFICATIONS = "Notifications";
+        protected const string CONFIG_PAYLOAD_OPERATION = "Payload Operation";
+        protected const string CONFIG_TITLE = "Title";
+        protected const string CONFIG_RCRA_INFO_USER_ID = "RCRAInfoUserID";
+        protected const string CONFIG_RCRA_INFO_STATE_CODE = "RCRAInfoStateCode";
 
         public enum DataProviderParameterType
         {
@@ -80,16 +76,29 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_41
         private IHeaderDocumentHelper _headerDocumentHelper;
         private ISettingsProvider _settingsProvider;
         protected SpringBaseDao _baseDao;
+
+        private bool _addHeader;
+        private string _author;
+        private string _organization;
+        private string _contactInfo;
+        private string _notifications;
+        private string _payloadOperation;
+        private string _title;
+        private string _rcraInfoUserId;
+        private string _rcraInfoStateCode;
         #endregion
 
         public RCRASolicitProcessor()
         {
-
-            //Load Parameters
-            foreach (string arg in Enum.GetNames(typeof(ServiceParameterType)))
-            {
-                ConfigurationArguments.Add(arg, null);
-            }
+            ConfigurationArguments.Add(CONFIG_ADD_HEADER, null);
+            ConfigurationArguments.Add(CONFIG_AUTHOR, null);
+            ConfigurationArguments.Add(CONFIG_ORGANIZATION, null);
+            ConfigurationArguments.Add(CONFIG_CONTACT_INFO, null);
+            ConfigurationArguments.Add(CONFIG_NOTIFICATIONS, null);
+            ConfigurationArguments.Add(CONFIG_PAYLOAD_OPERATION, null);
+            ConfigurationArguments.Add(CONFIG_TITLE, null);
+            ConfigurationArguments.Add(CONFIG_RCRA_INFO_USER_ID, null);
+            ConfigurationArguments.Add(CONFIG_RCRA_INFO_STATE_CODE, null);
 
             //Load Data Sources
             foreach (string arg in Enum.GetNames(typeof(DataProviderParameterType)))
@@ -110,11 +119,20 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_41
 
             _baseDao = ValidateDBProvider(DataProviderParameterType.SourceProvider.ToString(), 
                                           typeof(NamedNullMappingDataReader));
+
+            GetConfigParameter(CONFIG_ADD_HEADER, true, out _addHeader);
+            _author = ValidateNonEmptyConfigParameter(CONFIG_AUTHOR);
+            _organization = ValidateNonEmptyConfigParameter(CONFIG_ORGANIZATION);
+            _contactInfo = ValidateNonEmptyConfigParameter(CONFIG_CONTACT_INFO);
+            _payloadOperation = ValidateNonEmptyConfigParameter(CONFIG_PAYLOAD_OPERATION);
+            _title = ValidateNonEmptyConfigParameter(CONFIG_TITLE);
+            TryGetConfigParameter(CONFIG_NOTIFICATIONS, ref _notifications);
+            _rcraInfoUserId = ValidateNonEmptyConfigParameter(CONFIG_RCRA_INFO_USER_ID);
+            _rcraInfoStateCode = ValidateNonEmptyConfigParameter(CONFIG_RCRA_INFO_STATE_CODE);
         }
         
         public void ProcessSolicit(string requestId)
 		{
-
             LOG.DebugEnter(MethodBase.GetCurrentMethod(), requestId);
 
             LazyInit();
@@ -124,7 +142,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_41
             HazardousWasteHandlerSubmissionDataType returnData = GetObjectFromRequest(request);
 
             string serializedFilePath = null;
-            if (IsOn(ServiceParameterType.MakeHeader))
+            if (_addHeader)
             {
                 LOG.Debug("Serializing results and making header...");
                 AppendAuditLogEvent("Serializing results and making header...");
@@ -160,32 +178,15 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_41
 
 
 
-        private bool IsOn(ServiceParameterType type)
-        {
-            string doHeader = ValidateNonEmptyConfigParameter(type.ToString()).Trim().ToLower();
-            AppendAuditLogEvent("Do header: " + doHeader);
-            return (doHeader == "true" || doHeader == "on" || doHeader == "yes" || doHeader == "ya" || doHeader == "da");
-        }
-
         protected string MakeHeaderFile(HazardousWasteHandlerSubmissionDataType list)
         {
             AppendAuditLogEvent("Generating header file from results");
 
             // Configure the submission header helper
-            _headerDocumentHelper.Configure("Windsor Solutions, Inc.",
-                                            ValidateNonEmptyConfigParameter(ServiceParameterType.ProvidingOrg.ToString()),
-                                            "RCRA", null,
-                                            ValidateNonEmptyConfigParameter(ServiceParameterType.ContactInfo.ToString()),
-                                            "Unclassified");
-
-            _headerDocumentHelper.AddNotification(
-                ValidateNonEmptyConfigParameter(ServiceParameterType.Notification.ToString()));
-
-            _headerDocumentHelper.AddPropery("RCRAInfoStateCode", 
-                ValidateNonEmptyConfigParameter(ServiceParameterType.RCRAInfoStateCode.ToString()));
-
-            _headerDocumentHelper.AddPropery("RCRAInfoUserID", 
-                ValidateNonEmptyConfigParameter(ServiceParameterType.RCRAInfoUserID.ToString()));
+            _headerDocumentHelper.Configure(_author, _organization, _title, null, _contactInfo, null);
+            _headerDocumentHelper.AddNotifications(_notifications);
+            _headerDocumentHelper.AddPropery("RCRAInfoStateCode", _rcraInfoStateCode);
+            _headerDocumentHelper.AddPropery("RCRAInfoUserID", _rcraInfoUserId);
 
             string tempXmlFilePath = _settingsProvider.NewTempFilePath();
             tempXmlFilePath = Path.ChangeExtension(tempXmlFilePath, ".xml");
@@ -207,8 +208,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_41
             doc.Load(tempXmlFilePath);
             AppendAuditLogEvent("Xml document loaded");
 
-            _headerDocumentHelper.AddPayload(ValidateNonEmptyConfigParameter(ServiceParameterType.PayloadOperation.ToString()),
-                                             doc.DocumentElement);
+            _headerDocumentHelper.AddPayload(_payloadOperation, doc.DocumentElement);
 
             AppendAuditLogEvent("Header payload added");
 

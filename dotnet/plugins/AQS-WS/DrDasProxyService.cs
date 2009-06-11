@@ -58,18 +58,6 @@ namespace Windsor.Node2008.WNOSPlugin.AQSWS
         AQDERawData
     }
 
-    public enum AQSServiceParameterType
-    {
-        DrDasReporterWsUrl,
-        AQSSchemaVersion
-    }
-
-    public enum AQSDataProviderParameterType
-    {
-
-    }
-
-
     public enum MonitorDataArgType
     {
         FileGenerationPurposeCode,
@@ -122,6 +110,9 @@ namespace Windsor.Node2008.WNOSPlugin.AQSWS
     public class DrDasProxyService : BaseWNOSPlugin, ISolicitProcessor, IQueryProcessor
     {
 
+        protected const string CONFIG_REPORTER_URL = "Reporter Url";
+        protected const string CONFIG_SCHEMA_VERSION = "Schema Version";
+
         #region fields
         private static readonly ILogEx LOG = LogManagerEx.GetLogger(MethodBase.GetCurrentMethod());
         private IRequestManager _requestManager;
@@ -129,6 +120,9 @@ namespace Windsor.Node2008.WNOSPlugin.AQSWS
         private ICompressionHelper _compressionHelper;
         private IDocumentManager _documentManager;
         private ISettingsProvider _settingsProvider;
+
+        private string _reporterUrl;
+        private string _schemaVersion;
         #endregion
 
         /// <summary>
@@ -136,19 +130,8 @@ namespace Windsor.Node2008.WNOSPlugin.AQSWS
         /// </summary>
         public DrDasProxyService()
         {
-
-            //Load Parameters
-            foreach (string arg in Enum.GetNames(typeof(AQSServiceParameterType)))
-            {
-                ConfigurationArguments.Add(arg, null);
-            }
-
-            //Load Data Sources
-            foreach (string arg in Enum.GetNames(typeof(AQSDataProviderParameterType)))
-            {
-                DataProviders.Add(arg, null);
-            }
-
+            ConfigurationArguments.Add(CONFIG_REPORTER_URL, null);
+            ConfigurationArguments.Add(CONFIG_SCHEMA_VERSION, null);
         }
 
         protected void LazyInit()
@@ -158,6 +141,9 @@ namespace Windsor.Node2008.WNOSPlugin.AQSWS
             GetServiceImplementation(out _compressionHelper);
             GetServiceImplementation(out _documentManager);
             GetServiceImplementation(out _settingsProvider);
+
+            _reporterUrl = ValidateNonEmptyConfigParameter(CONFIG_REPORTER_URL);
+            _schemaVersion = ValidateNonEmptyConfigParameter(CONFIG_SCHEMA_VERSION);
         }
         #region IQueryProcessor Interface Implementation
 
@@ -309,14 +295,12 @@ namespace Windsor.Node2008.WNOSPlugin.AQSWS
 
             DebugAndAudit("Validating configuration arguments...");
 
-            string reporterUrl = ConfigurationArguments[AQSServiceParameterType.DrDasReporterWsUrl.ToString()];
-            DebugAndAudit("Getting WS Proxy for: {0}", reporterUrl);
+            DebugAndAudit("Getting WS Proxy for: {0}", _reporterUrl);
 
-            string schemaVersion = ConfigurationArguments[AQSServiceParameterType.AQSSchemaVersion.ToString()];
-            DebugAndAudit("Parsed Schema Version: {0}", schemaVersion);
+            DebugAndAudit("Parsed Schema Version: {0}", _schemaVersion);
 
             DebugAndAudit("Initializing DrDAS client...");
-            DrDasProxy client = new DrDasProxy(reporterUrl);
+            DrDasProxy client = new DrDasProxy(_reporterUrl);
             client.AllowAutoRedirect = true;
             client.SoapVersion = System.Web.Services.Protocols.SoapProtocolVersion.Soap11;
             client.Timeout = 600000;
@@ -349,7 +333,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQSWS
                         request.Parameters[(Int32)MonitorDataArgType.MinLongitudeMeasure],
                         request.Parameters[(Int32)MonitorDataArgType.MaxLongitudeMeasure],
                         request.Parameters[(Int32)MonitorDataArgType.LastUpdatedDate],
-                        schemaVersion));
+                        _schemaVersion));
                     break;
 
                 case AQSServiceType.AQDERawData:
@@ -382,7 +366,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQSWS
                         request.Parameters[(Int32)RawDataArgType.LastUpdatedDate],
                         request.Parameters[(Int32)RawDataArgType.IncludeMonitorDetails],
                         request.Parameters[(Int32)RawDataArgType.IncludeEventData],
-                        schemaVersion,
+                        _schemaVersion,
                         remoteRequestId,
                         Boolean.FalseString);
                     DebugAndAudit("Remote result url: {0}", resultUrl);

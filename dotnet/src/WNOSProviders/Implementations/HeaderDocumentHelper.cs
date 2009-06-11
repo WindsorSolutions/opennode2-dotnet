@@ -78,9 +78,30 @@ namespace Windsor.Node2008.WNOSProviders.Implementation
 
 
 
+        public void AddNotifications(string commaSeparatedNotifications)
+        {
+            if (!string.IsNullOrEmpty(commaSeparatedNotifications))
+            {
+                AddNotifications(commaSeparatedNotifications.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+            }
+        }
+        public void AddNotifications(IEnumerable<string> notifications)
+        {
+            if (notifications != null)
+            {
+                foreach (string notification in notifications)
+                {
+                    AddNotification(notification);
+                }
+            }
+        }
         public void AddNotification(string notification)
         {
-            _notifs.Add(notification);
+            notification = notification.Trim();
+            if (!string.IsNullOrEmpty(notification))
+            {
+                _notifs.Add(notification);
+            }
         }
 
         public void AddPayload(string operation, XmlElement payloadContent)

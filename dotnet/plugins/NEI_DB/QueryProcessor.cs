@@ -53,8 +53,9 @@ namespace Windsor.Node2008.WNOSPlugin.NEI_DB
     public class GetNEIPointDataByYear : QueryProcessor, ISolicitProcessor
     {
         protected const string PARAM_TRANSACTION_TYPE_KEY = "TransactionType";
-        protected const string PARAM_ADD_HEADER_KEY = "AddHeader";
 
+        protected const string CONFIG_ADD_HEADER = "Add Header";
+        protected const string CONFIG_AUTHOR = "Author";
         protected const string CONFIG_ORGANIZATION = "Organization";
         protected const string CONFIG_CONTACT_INFO = "Contact Info";
         protected const string CONFIG_SENSITIVITY = "Sensitivity";
@@ -64,15 +65,36 @@ namespace Windsor.Node2008.WNOSPlugin.NEI_DB
         private const string TRANSACTION_TYPE_PARAM_REPLACE = "replace";
 
         protected string _transactionType;
-        protected bool _addHeader;
         protected IHeaderDocumentHelper _headerDocumentHelper;
 
+        private bool _addHeader;
+        private string _author;
+        private string _organization;
+        private string _contactInfo;
+        private string _sensitivity;
+        private string _geographicCoverage;
+        
         public GetNEIPointDataByYear()
         {
+            ConfigurationArguments.Add(CONFIG_ADD_HEADER, null);
+            ConfigurationArguments.Add(CONFIG_AUTHOR, null);
             ConfigurationArguments.Add(CONFIG_ORGANIZATION, null);
             ConfigurationArguments.Add(CONFIG_CONTACT_INFO, null);
             ConfigurationArguments.Add(CONFIG_SENSITIVITY, null);
             ConfigurationArguments.Add(CONFIG_GEOGRAPHIC_COVERAGE, null);
+        }
+        protected override void LazyInit()
+        {
+            base.LazyInit();
+
+            GetServiceImplementation(out _headerDocumentHelper);
+
+            GetConfigParameter(CONFIG_ADD_HEADER, true, out _addHeader);
+            _author = ValidateNonEmptyConfigParameter(CONFIG_AUTHOR);
+            _organization = ValidateNonEmptyConfigParameter(CONFIG_ORGANIZATION);
+            _contactInfo = ValidateNonEmptyConfigParameter(CONFIG_CONTACT_INFO);
+            _sensitivity = ValidateNonEmptyConfigParameter(CONFIG_SENSITIVITY);
+            _geographicCoverage = ValidateNonEmptyConfigParameter(CONFIG_GEOGRAPHIC_COVERAGE);
         }
         public void ProcessSolicit(string requestId)
         {
@@ -99,12 +121,8 @@ namespace Windsor.Node2008.WNOSPlugin.NEI_DB
                     XmlDocument doc = new XmlDocument();
                     doc.Load(tempXmlFilePath);
 
-                    _headerDocumentHelper.Configure("Windsor Solutions, Inc.",
-                                                    ValidateNonEmptyConfigParameter(CONFIG_ORGANIZATION),
-                                                    "NEI", null,
-                                                    ValidateNonEmptyConfigParameter(CONFIG_CONTACT_INFO),
-                                                    ValidateNonEmptyConfigParameter(CONFIG_SENSITIVITY));
-                    _headerDocumentHelper.AddPropery("GeographicCoverage", ValidateNonEmptyConfigParameter(CONFIG_GEOGRAPHIC_COVERAGE));
+                    _headerDocumentHelper.Configure(_author, _organization, null, null, _contactInfo, _sensitivity);
+                    _headerDocumentHelper.AddPropery("GeographicCoverage", _geographicCoverage);
                     _headerDocumentHelper.AddPropery("InventoryYear", _reportingYear.ToString());
                     
                     _headerDocumentHelper.AddPayload("Point|"+_transactionType,
@@ -139,17 +157,6 @@ namespace Windsor.Node2008.WNOSPlugin.NEI_DB
                                                  null, _documentManager, _dataRequest.TransactionId);
             }
         }
-        protected override void LazyInit()
-        {
-            base.LazyInit();
-
-            GetServiceImplementation(out _headerDocumentHelper);
-
-            ValidateNonEmptyConfigParameter(CONFIG_ORGANIZATION);
-            ValidateNonEmptyConfigParameter(CONFIG_CONTACT_INFO);
-            ValidateNonEmptyConfigParameter(CONFIG_SENSITIVITY);
-            ValidateNonEmptyConfigParameter(CONFIG_GEOGRAPHIC_COVERAGE);
-        }
         protected override void ValidateRequest(string requestId)
         {
             base.ValidateRequest(requestId);
@@ -162,12 +169,9 @@ namespace Windsor.Node2008.WNOSPlugin.NEI_DB
                                                           PARAM_TRANSACTION_TYPE_KEY, TRANSACTION_TYPE_PARAM_ORIGINAL,
                                                           TRANSACTION_TYPE_PARAM_REPLACE, _transactionType));
             }
-            GetParameter(_dataRequest, PARAM_ADD_HEADER_KEY, 2, out _addHeader);
-
-            AppendAuditLogEvent("Validated request with parameters: {0} = {1}, {2} = {3}, {4} = {5}",
+            AppendAuditLogEvent("Validated request with parameters: {0} = {1}, {2} = {3}",
                                       PARAM_REPORTING_YEAR_KEY, _reportingYear.ToString(), 
-                                      PARAM_TRANSACTION_TYPE_KEY, _transactionType,
-                                      PARAM_ADD_HEADER_KEY, _addHeader);
+                                      PARAM_TRANSACTION_TYPE_KEY, _transactionType);
         }
         /// <summary>
         /// Return the Query, Solicit, or Execute data service parameters for specified data service.

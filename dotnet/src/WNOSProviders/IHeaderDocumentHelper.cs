@@ -33,12 +33,15 @@ POSSIBILITY OF SUCH DAMAGE.
 
 ﻿using System;
 using System.Xml;
+using System.Collections.Generic;
 
 namespace Windsor.Node2008.WNOSProviders
 {
     public interface IHeaderDocumentHelper
     {
         void AddNotification(string notification);
+        void AddNotifications(IEnumerable<string> notifications);
+        void AddNotifications(string commaSeparatedNotifications);
         void AddPayload(string operation, XmlElement payloadContent);
         void AddPropery(string key, string value);
         void Configure(string author, string org, string title, string dataService, string contactInfo, string sensitivity);

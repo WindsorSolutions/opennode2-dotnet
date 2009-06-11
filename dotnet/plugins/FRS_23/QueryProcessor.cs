@@ -49,15 +49,6 @@ using Windsor.Commons.Spring;
 namespace Windsor.Node2008.WNOSPlugin.FRS23
 {
 
-    public enum FRSServiceParameterType
-    {
-        MakeHeaderOnQuery,
-        MakeHeaderOnSolicit,
-        Hd_ProvidingOrg,
-        Hd_ContactInfo,
-        Hd_PayloadOperation
-    }
-
     public enum FRSDataProviderParameterType
     {
         SourceProvider
@@ -66,6 +57,14 @@ namespace Windsor.Node2008.WNOSPlugin.FRS23
     [Serializable]
     public class QueryProcessor : BaseWNOSPlugin, ISolicitProcessor, IQueryProcessor
     {
+        protected const string CONFIG_ADD_HEADER = "Add Header";
+        protected const string CONFIG_AUTHOR = "Author";
+        protected const string CONFIG_ORGANIZATION = "Organization";
+        protected const string CONFIG_CONTACT_INFO = "Contact Info";
+        protected const string CONFIG_NOTIFICATIONS = "Notifications";
+        protected const string CONFIG_PAYLOAD_OPERATION = "Payload Operation";
+        protected const string CONFIG_TITLE = "Title";
+
         #region fields
         private static readonly ILogEx LOG = LogManagerEx.GetLogger(MethodBase.GetCurrentMethod());
         private IRequestManager _requestManager;
@@ -76,6 +75,14 @@ namespace Windsor.Node2008.WNOSPlugin.FRS23
         private ISettingsProvider _settingsProvider;
 
 
+        private bool _addHeader;
+        private string _author;
+        private string _organization;
+        private string _contactInfo;
+        private string _notifications;
+        private string _payloadOperation;
+        private string _title;
+
         #endregion
 
 
@@ -84,18 +91,19 @@ namespace Windsor.Node2008.WNOSPlugin.FRS23
         /// </summary>
         public QueryProcessor()
         {
-            //Load Parameters
-            foreach (string arg in Enum.GetNames(typeof(FRSServiceParameterType)))
-            {
-                ConfigurationArguments.Add(arg, null);
-            }
+            ConfigurationArguments.Add(CONFIG_ADD_HEADER, null);
+            ConfigurationArguments.Add(CONFIG_AUTHOR, null);
+            ConfigurationArguments.Add(CONFIG_ORGANIZATION, null);
+            ConfigurationArguments.Add(CONFIG_CONTACT_INFO, null);
+            ConfigurationArguments.Add(CONFIG_NOTIFICATIONS, null);
+            ConfigurationArguments.Add(CONFIG_PAYLOAD_OPERATION, null);
+            ConfigurationArguments.Add(CONFIG_TITLE, null);
 
             //Load Data Sources
             foreach (string arg in Enum.GetNames(typeof(FRSDataProviderParameterType)))
             {
                 DataProviders.Add(arg, null);
             }
-
         }
 
         protected void LazyInit()
@@ -106,6 +114,14 @@ namespace Windsor.Node2008.WNOSPlugin.FRS23
             GetServiceImplementation(out _documentManager);
             GetServiceImplementation(out _headerDocumentHelper);
             GetServiceImplementation(out _settingsProvider);
+
+            _addHeader = IsOn(CONFIG_ADD_HEADER);
+            _author = ValidateNonEmptyConfigParameter(CONFIG_AUTHOR);
+            _organization = ValidateNonEmptyConfigParameter(CONFIG_ORGANIZATION);
+            _contactInfo = ValidateNonEmptyConfigParameter(CONFIG_CONTACT_INFO);
+            _payloadOperation = ValidateNonEmptyConfigParameter(CONFIG_PAYLOAD_OPERATION);
+            _title = ValidateNonEmptyConfigParameter(CONFIG_TITLE);
+            TryGetConfigParameter(CONFIG_NOTIFICATIONS, ref _notifications);
         }
 
         public enum TableRelationships
@@ -832,7 +848,7 @@ namespace Windsor.Node2008.WNOSPlugin.FRS23
             PaginatedContentResult result = new PaginatedContentResult();
             result.Paging = new PaginationIndicator(request.RowIndex, request.MaxRowCount, true);
 
-            if (IsOn(FRSServiceParameterType.MakeHeaderOnQuery))
+            if (_addHeader)
             {
                 LOG.Debug("Serializing data and making header...");
                 AppendAuditLogEvent("Serializing data and making header...");
@@ -874,7 +890,7 @@ namespace Windsor.Node2008.WNOSPlugin.FRS23
             AppendAuditLogEvent("Records found: " + ((list.FacilitySiteAllDetails != null) ? list.FacilitySiteAllDetails.Length.ToString() : "0"));
 
             string serializedFilePath = null;
-            if (IsOn(FRSServiceParameterType.MakeHeaderOnSolicit))
+            if (_addHeader)
             {
                 LOG.Debug("Serializing results and making header...");
                 AppendAuditLogEvent("Serializing results and making header...");
@@ -950,9 +966,13 @@ namespace Windsor.Node2008.WNOSPlugin.FRS23
         }
 
 
-        private bool IsOn(FRSServiceParameterType type)
+        private bool IsOn(string type)
         {
-            string doHeader = ValidateNonEmptyConfigParameter(type.ToString()).Trim().ToLower();
+            string doHeader = string.Empty;
+            if (TryGetConfigParameter(type, ref doHeader) && !string.IsNullOrEmpty(doHeader))
+            {
+                doHeader = doHeader.Trim().ToLower();
+            }
             AppendAuditLogEvent("Do header: " + doHeader);
             return (doHeader == "true" || doHeader == "on" || doHeader == "yes" || doHeader == "ya" || doHeader == "da");
         }
@@ -962,12 +982,8 @@ namespace Windsor.Node2008.WNOSPlugin.FRS23
             AppendAuditLogEvent("Generating header file from results");
 
             // Configure the submission header helper
-            _headerDocumentHelper.Configure("Windsor Solutions, Inc.",
-                                            ValidateNonEmptyConfigParameter(FRSServiceParameterType.Hd_ProvidingOrg.ToString()),
-                                            "FRS", null,
-                                            ValidateNonEmptyConfigParameter(FRSServiceParameterType.Hd_ContactInfo.ToString()),
-                                            null);
-
+            _headerDocumentHelper.Configure(_author, _organization, _title, null, _contactInfo, null);
+            _headerDocumentHelper.AddNotifications(_notifications);
 
             string tempXmlFilePath = _settingsProvider.NewTempFilePath();
             tempXmlFilePath = Path.ChangeExtension(tempXmlFilePath, ".xml");
@@ -989,8 +1005,7 @@ namespace Windsor.Node2008.WNOSPlugin.FRS23
             doc.Load(tempXmlFilePath);
             AppendAuditLogEvent("Xml document loaded");
 
-            _headerDocumentHelper.AddPayload(ValidateNonEmptyConfigParameter(FRSServiceParameterType.Hd_PayloadOperation.ToString()),
-                                             doc.DocumentElement);
+            _headerDocumentHelper.AddPayload(_payloadOperation, doc.DocumentElement);
 
             AppendAuditLogEvent("Header payload added");
 

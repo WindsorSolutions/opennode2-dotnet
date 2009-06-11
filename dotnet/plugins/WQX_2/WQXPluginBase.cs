@@ -119,7 +119,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
         protected const string WQX_DELETE_OPERATION_NAME = "WQXGetDeleteSubmission";
 
         // Config arguments:
-        protected const string CONFIG_EPA_PARTNER_NAME_KEY = "EPA CDX Network Partner Name";
+        protected const string CONFIG_EPA_PARTNER_NAME_KEY = "Submission Partner Name";
         protected const string CONFIG_AUTHOR = "Author";
         protected const string CONFIG_ORGANIZATION = "Organization";
         protected const string CONFIG_CONTACT_INFO = "Contact Info";
