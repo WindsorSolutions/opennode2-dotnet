@@ -67,7 +67,7 @@ namespace Windsor.Node2008.WNOSPlugin.FRS23
             string methodName,
             int rowId,
             int maxRows,
-            string[] parameters,
+            IList<string> parameters,
             string connectionString) 
         {
             ArrayList dlt = new ArrayList();
@@ -97,7 +97,7 @@ namespace Windsor.Node2008.WNOSPlugin.FRS23
             string methodName,
             int rowId,
             int maxRows,
-            string[] parameters,
+            IList<string> parameters,
             string connectionString) 
         {
 
@@ -301,7 +301,7 @@ namespace Windsor.Node2008.WNOSPlugin.FRS23
             string methodName,
             int rowId,
             int maxRows,
-            string[] parameters)
+            IList<string> parameters)
         {
 
             string topNum = string.Empty;
@@ -374,7 +374,7 @@ namespace Windsor.Node2008.WNOSPlugin.FRS23
         private static string GetWhere(
             int rowId,
             int maxRows,
-            string [] criteria)
+            IList<string> criteria)
         {
             StringBuilder joins = new StringBuilder(1000);
             StringBuilder where = new StringBuilder(1000);

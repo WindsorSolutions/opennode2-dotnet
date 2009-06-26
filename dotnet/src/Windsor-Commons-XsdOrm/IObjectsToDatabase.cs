@@ -47,6 +47,10 @@ namespace Windsor.Commons.XsdOrm
         /// insert row counts for each table.
         /// </summary>
         Dictionary<string, int> SaveToDatabase(object objectToSave, SpringBaseDao baseDao);
+
+        string GetTableNameForType(Type objectType);
+
+        string GetPrimaryKeyNameForType(Type objectType);
     }
 
     public interface IBeforeSaveToDatabase

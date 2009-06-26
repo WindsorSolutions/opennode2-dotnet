@@ -98,69 +98,127 @@ namespace Windsor.Commons.XsdOrm.Implementations
             }
             return sb.ToString();
         }
-        public static string ShortenDatabaseColumnName(string name, Dictionary<string, string> abbreviations)
+        public static string ShortenDatabaseColumnName(string name, bool shortenNamesByRemovingVowelsFirst,
+                                                       Dictionary<string, string> abbreviations)
         {
-            return ShortenDatabaseName(name, MAX_COLUMN_NAME_CHARS, abbreviations);
+            return ShortenDatabaseName(name, MAX_COLUMN_NAME_CHARS, shortenNamesByRemovingVowelsFirst,
+                                       abbreviations);
         }
-        public static string ShortenDatabaseTableName(string name, Dictionary<string, string> abbreviations)
+        public static string ShortenDatabaseTableName(string name, bool shortenNamesByRemovingVowelsFirst,
+                                                      Dictionary<string, string> abbreviations)
         {
-            return ShortenDatabaseName(name, MAX_TABLE_NAME_CHARS, abbreviations);
+            return ShortenDatabaseName(name, MAX_TABLE_NAME_CHARS, shortenNamesByRemovingVowelsFirst,
+                                       abbreviations);
         }
-        public static string ShortenDatabaseTableName(string name, int maxChars, Dictionary<string, string> abbreviations)
+        public static string ShortenDatabaseTableName(string name, int maxChars, bool shortenNamesByRemovingVowelsFirst,
+                                                      Dictionary<string, string> abbreviations)
         {
-            return ShortenDatabaseName(name, maxChars, abbreviations);
+            return ShortenDatabaseName(name, maxChars, shortenNamesByRemovingVowelsFirst,
+                                       abbreviations);
         }
-        public static string ShortenDatabaseName(string name, int maxChars,
+        //static List<string> overList = new List<string>(); //??
+        public static string ShortenDatabaseName(string name, int maxChars, bool shortenNamesByRemovingVowelsFirst,
                                                  Dictionary<string, string> abbreviations)
         {
             string value = StringAbbreviator.Abbreviate(name, abbreviations);
+            //{
+            //    string[] subnames = value.Split('_');
+            //    foreach (string str in subnames)
+            //    {
+            //        if (str.Length > 6)
+            //        {
+            //            overList.Add(str);
+            //            if (overList.Count > 4)
+            //            {
+            //                string overListStr = StringUtils.Join(",", overList);
+            //                overList.Clear();
+            //            }
+            //        }
+            //    }
+            //}
             if (string.IsNullOrEmpty(value) || (value.Length <= maxChars))
             {
                 return value;
             }
-            value = ShortenDatabaseName(value, maxChars);
+            //overList.Add(value);
+            //if (overList.Count > 5)
+            //{
+            //    string overListStr = StringUtils.Join(",", overList);
+            //    overList.Clear();
+            //}
+            value = ShortenDatabaseName(value, maxChars, shortenNamesByRemovingVowelsFirst);
             return value;
         }
-        public static string ShortenDatabaseName(string name, int maxChars)
+        public static string ShortenDatabaseName(string name, int maxChars, bool shortenNamesByRemovingVowelsFirst)
         {
             string[] subnames = name.Split('_');
             int charsToRemove = name.Length - maxChars;
-            int minSubnameSize = 5;
-            do
+            if (shortenNamesByRemovingVowelsFirst)
             {
                 bool removedAny = false;
-                for (int i = subnames.Length - 1; i >= 0; --i)
+                do
                 {
-                    string curString = subnames[i];
-                    if (curString.Length > minSubnameSize)
+                    removedAny = false;
+                    for (int i = subnames.Length - 1; i >= 0; --i)
                     {
-                        subnames[i] = curString.Remove(curString.Length - 1);
-                        removedAny = true;
-                        if (--charsToRemove == 0)
+                        string curString = subnames[i];
+                        if (curString.Length > 2)
+                        {
+                            int index = StringUtils.LastIndexOf(curString, new string[] { "A", "E", "I", "O", "U" },
+                                                                curString.Length - 2, curString.Length - 2, StringComparison.InvariantCultureIgnoreCase);
+                            if (index > 0)
+                            {
+                                curString = curString.Remove(index, 1);
+                                subnames[i] = curString;
+                                removedAny = true;
+                                if (--charsToRemove == 0)
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                } while (removedAny);
+            }
+            if (charsToRemove > 0)
+            {
+                int minSubnameSize = 5;
+                do
+                {
+                    bool removedAny = false;
+                    for (int i = subnames.Length - 1; i >= 0; --i)
+                    {
+                        string curString = subnames[i];
+                        if (curString.Length > minSubnameSize)
+                        {
+                            subnames[i] = curString.Remove(curString.Length - 1);
+                            removedAny = true;
+                            if (--charsToRemove == 0)
+                            {
+                                break;
+                            }
+                        }
+                    }
+                    if (!removedAny)
+                    {
+                        if (--minSubnameSize == 1)
                         {
                             break;
                         }
                     }
-                }
-                if (!removedAny)
+                } while (charsToRemove > 0);
+                if (charsToRemove > 0)
                 {
-                    if (--minSubnameSize == 1)
+                    string curString = subnames[0];
+                    int newLength = curString.Length - charsToRemove;
+                    if (newLength < 3)
                     {
-                        break;
+                        newLength = 3;
                     }
-                }
-            } while (charsToRemove > 0);
-            if (charsToRemove > 0)
-            {
-                string curString = subnames[0];
-                int newLength = curString.Length - charsToRemove;
-                if (newLength < 3)
-                {
-                    newLength = 3;
-                }
-                if (newLength < curString.Length)
-                {
-                    subnames[0] = curString.Remove(curString.Length - charsToRemove);
+                    if (newLength < curString.Length)
+                    {
+                        subnames[0] = curString.Remove(curString.Length - charsToRemove);
+                    }
                 }
             }
             name = string.Join("_", subnames);
@@ -192,7 +250,8 @@ namespace Windsor.Commons.XsdOrm.Implementations
             }
             return tableName;
         }
-        public static string GetForeignKeyConstraintName(ForeignKeyColumn foreignKeyColumn, string defaultTableNamePrefix)
+        public static string GetForeignKeyConstraintName(ForeignKeyColumn foreignKeyColumn, bool shortenNamesByRemovingVowelsFirst,
+                                                         string defaultTableNamePrefix)
         {
             if (!string.IsNullOrEmpty(foreignKeyColumn.IndexName))
             {
@@ -202,10 +261,11 @@ namespace Windsor.Commons.XsdOrm.Implementations
             {
                 return ShortenDatabaseName("FK_" + RemoveTableNamePrefix(foreignKeyColumn.Table.TableName, defaultTableNamePrefix) +
                                            "_" + RemoveTableNamePrefix(foreignKeyColumn.ForeignTable.TableName, defaultTableNamePrefix),
-                                           18, null);
+                                           18, shortenNamesByRemovingVowelsFirst, null);
             }
         }
-        public static string GetPrimaryKeyConstraintName(PrimaryKeyColumn primaryKeyColumn, string defaultTableNamePrefix)
+        public static string GetPrimaryKeyConstraintName(PrimaryKeyColumn primaryKeyColumn, bool shortenNamesByRemovingVowelsFirst,
+                                                         string defaultTableNamePrefix)
         {
             if (!string.IsNullOrEmpty(primaryKeyColumn.IndexName))
             {
@@ -214,10 +274,11 @@ namespace Windsor.Commons.XsdOrm.Implementations
             else
             {
                 return ShortenDatabaseName("PK_" + RemoveTableNamePrefix(primaryKeyColumn.Table.TableName, defaultTableNamePrefix),
-                                           18, null);
+                                           18, shortenNamesByRemovingVowelsFirst, null);
             }
         }
-        public static string GetIndexName(Column column, string defaultTableNamePrefix)
+        public static string GetIndexName(Column column, bool shortenNamesByRemovingVowelsFirst,
+                                          string defaultTableNamePrefix)
         {
             if (!string.IsNullOrEmpty(column.IndexName))
             {
@@ -226,7 +287,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
             else
             {
                 return ShortenDatabaseName("IX_" + RemoveTableNamePrefix(column.Table.TableName, defaultTableNamePrefix) +
-                                           "_" + column.ColumnName, 18, null);
+                                           "_" + column.ColumnName, 18, shortenNamesByRemovingVowelsFirst, null);
             }
         }
 
@@ -350,6 +411,15 @@ namespace Windsor.Commons.XsdOrm.Implementations
             if (index >= 0)
             {
                 return path.Remove(index);
+            }
+            return path;
+        }
+        public static string GetTypePathName(string path)
+        {
+            int index = path.LastIndexOf('.');
+            if (index >= 0)
+            {
+                return path.Substring(index + 1, path.Length - index - 1);
             }
             return path;
         }

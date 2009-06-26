@@ -116,12 +116,15 @@ namespace Windsor.Node2008.WNOSPlugin.FRS23
             GetServiceImplementation(out _settingsProvider);
 
             _addHeader = IsOn(CONFIG_ADD_HEADER);
-            _author = ValidateNonEmptyConfigParameter(CONFIG_AUTHOR);
-            _organization = ValidateNonEmptyConfigParameter(CONFIG_ORGANIZATION);
-            _contactInfo = ValidateNonEmptyConfigParameter(CONFIG_CONTACT_INFO);
-            _payloadOperation = ValidateNonEmptyConfigParameter(CONFIG_PAYLOAD_OPERATION);
-            _title = ValidateNonEmptyConfigParameter(CONFIG_TITLE);
-            TryGetConfigParameter(CONFIG_NOTIFICATIONS, ref _notifications);
+            if (_addHeader)
+            {
+                _author = ValidateNonEmptyConfigParameter(CONFIG_AUTHOR);
+                _organization = ValidateNonEmptyConfigParameter(CONFIG_ORGANIZATION);
+                _contactInfo = ValidateNonEmptyConfigParameter(CONFIG_CONTACT_INFO);
+                _payloadOperation = ValidateNonEmptyConfigParameter(CONFIG_PAYLOAD_OPERATION);
+                _title = ValidateNonEmptyConfigParameter(CONFIG_TITLE);
+                TryGetConfigParameter(CONFIG_NOTIFICATIONS, ref _notifications);
+            }
         }
 
         public enum TableRelationships
@@ -1038,9 +1041,7 @@ namespace Windsor.Node2008.WNOSPlugin.FRS23
                 throw new ApplicationException("Service name is required.");
             }
 
-            List<string> list = new List<string>();
-            list.AddRange(request.Parameters);
-            string[] args = list.ToArray();
+            List<string> parameters = GetParameterListSortedByName(request.Parameters);
 
             string connectionString = dbProvider.ConnectionString;
             FacilitySiteList fsList;
@@ -1050,14 +1051,14 @@ namespace Windsor.Node2008.WNOSPlugin.FRS23
                 case "getdeletedfacilitybychangedate":
 
                     string[] ids = Data.GetDeletedFacilities(isOracle, "getdeletedfacilitybychangedate",
-                        request.RowIndex, request.MaxRowCount, args, connectionString);
+                        request.RowIndex, request.MaxRowCount, parameters, connectionString);
                     fsList = PopulateDeletedFacilitySiteList(ref ids);
                     break;
 
                 default:
 
                     DataSet ds = Data.GetFacilityData(isOracle, request.Service.Name,
-                        request.RowIndex, request.MaxRowCount, args, connectionString);
+                        request.RowIndex, request.MaxRowCount, parameters, connectionString);
                     fsList = PopulateFacilitySiteList(ref ds);
                     break;
             }

@@ -516,7 +516,7 @@ namespace Windsor.Node2008.WNOSPlugin
         /// Return the paramter list sorted by name if parameters.IsByName == true, or just "as is"
         /// if parameters.IsByName == false.
         /// </summary>
-        public ICollection<string> GetParameterListSortedByName(ByIndexOrNameDictionary<string> parameters)
+        public List<string> GetParameterListSortedByName(ByIndexOrNameDictionary<string> parameters)
         {
             if (CollectionUtils.IsNullOrEmpty(parameters))
             {
@@ -529,11 +529,11 @@ namespace Windsor.Node2008.WNOSPlugin
                 {
                     dict.Add(pair.Key, pair.Value);
                 }
-                return dict.Values;
+                return new List<string>(dict.Values);
             }
             else
             {
-                return parameters;
+                return new List<string>(parameters);
             }
         }
 

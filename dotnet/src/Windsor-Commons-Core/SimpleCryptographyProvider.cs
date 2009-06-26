@@ -48,8 +48,7 @@ namespace Windsor.Commons.Core
     public class SimpleCryptographyProvider
     {
 
-        protected string _privateKey;
-
+        protected string _privateKey = "AFD9898243HSFD823HJADI123WEF40EDFGKJSDF132E321ASDADMASDFSDF234SWDFS09234JKSDF";
 
         public SimpleCryptographyProvider()
         {

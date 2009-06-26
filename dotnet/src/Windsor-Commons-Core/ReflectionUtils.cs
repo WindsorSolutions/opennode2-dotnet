@@ -394,6 +394,26 @@ namespace Windsor.Commons.Core
             {
             }
         }
+        public static FieldInfo FindFirstPublicFieldWithAttribute(Type objectType, Type attributeToFind)
+        {
+            if (!typeof(Attribute).IsAssignableFrom(attributeToFind))
+            {
+                throw new ArgumentException("attributeToFind must be an Attribute type");
+            }
+            FieldInfo[] fieldInfoArray = objectType.GetFields(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static);
+            foreach (FieldInfo fieldInfo in fieldInfoArray)
+            {
+                object[] qualifiers = fieldInfo.GetCustomAttributes(attributeToFind, true);
+                foreach (object qualifier in qualifiers)
+                {
+                    if (attributeToFind.IsAssignableFrom(qualifier.GetType()))
+                    {
+                        return fieldInfo;
+                    }
+                }
+            }
+            return null;
+        }
 
         [ThreadStatic]
         private static List<object> s_CurGetPublicPropertiesStringObjects;

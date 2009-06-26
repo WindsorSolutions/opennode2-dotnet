@@ -39,6 +39,7 @@ using System.Reflection;
 using System.Diagnostics;
 using System.Threading;
 using System.Runtime.InteropServices;
+using System.Security.AccessControl;
 
 namespace Windsor.Commons.Core
 {
@@ -392,6 +393,12 @@ namespace Windsor.Commons.Core
                 }
             }
             return filePath;
+        }
+        public static void GrantEveryoneFullAccessToFile(string filePath)
+        {
+            FileSecurity security = File.GetAccessControl(filePath);
+            security.AddAccessRule(new FileSystemAccessRule("Everyone", FileSystemRights.FullControl, AccessControlType.Allow));
+            File.SetAccessControl(filePath, security);
         }
         /// <summary>
         /// Return the full path to a file relative to the currently executing assembly.

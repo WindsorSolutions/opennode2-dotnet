@@ -65,7 +65,7 @@ namespace Windsor.Node.Flow.MapForceBridge
     /// 4) The Run() method will be called by this plugin, passing in any parameters specified in the request
     /// </summary>
     [Serializable]
-    public class MapForceBridge : BaseWNOSPlugin, ITaskProcessor, IQueryProcessor, ISolicitProcessor
+    public class MapForceBridge : BaseWNOSPlugin, ITaskProcessor, IQueryProcessor, ISolicitProcessor, ISubmitProcessor
     {
         protected const string CONFIG_CONNECTION_STRING = "Database Connection String";
 
@@ -79,6 +79,47 @@ namespace Windsor.Node.Flow.MapForceBridge
         public MapForceBridge()
         {
             ConfigurationArguments.Add(CONFIG_CONNECTION_STRING, null);
+        }
+        public void ProcessSubmit(string transactionId)
+        {
+            LazyInit();
+
+            IList<string> docIds = _documentManager.GetDocumentIds(transactionId);
+            if (CollectionUtils.IsNullOrEmpty(docIds))
+            {
+                throw new ArgumentException(string.Format("No documents found for transaction: {0}", transactionId));
+            }
+
+            Type runType = null;
+            MethodInfo runMethod = null;
+            ParameterInfo[] runParams = null;
+
+            Assembly assembly = GetRunMethod(out runType, out runMethod, out runParams);
+            if (runParams.Length != 2)
+            {
+                throw new InvalidOperationException("Did not find a valid Run() method that takes two parameters");
+            }
+            AppendAuditLogEvent("Found a class with a valid Run() method: \"{0}\" ...", runType.Name);
+
+            AppendAuditLogEvent("Creating an instance of class \"{0}\" ...", runType.Name);
+
+            object runObject = assembly.CreateInstance(runType.FullName);
+            object[] invokeParams = new object[2] { null, _connectionString };
+
+            foreach (string docId in docIds)
+            {
+                string tempFilePath = GetUncompressedDocument(transactionId, docId);
+                try
+                {
+                    AppendAuditLogEvent("Calling Run() method to process input xml file ...");
+                    invokeParams[0] = tempFilePath;
+                    runMethod.Invoke(runObject, invokeParams);
+                }
+                finally
+                {
+                    FileUtils.SafeDeleteFile(tempFilePath);
+                }
+            }
         }
         public void ProcessTask(string requestId)
         {
@@ -103,7 +144,7 @@ namespace Windsor.Node.Flow.MapForceBridge
 
             ValidateRequest(requestId);
 
-            string filePath = RunMapForceInstance();
+            string filePath = RunMapForceQueryInstance();
 
             _documentManager.AddDocument(_dataRequest.TransactionId, CommonTransactionStatusCode.Completed,
                                          null, filePath);
@@ -258,7 +299,7 @@ namespace Windsor.Node.Flow.MapForceBridge
                 }
             }
         }
-        protected virtual string RunMapForceInstance()
+        protected virtual string RunMapForceQueryInstance()
         {
             Type runType = null;
             MethodInfo runMethod = null;
@@ -313,6 +354,12 @@ namespace Windsor.Node.Flow.MapForceBridge
             }
             publishFlags = DataServicePublishFlags.PublishToEndpointVersion11And20;
             return list;
+        }
+        protected string GetUncompressedDocument(string transactionId, string docId)
+        {
+            string path = _settingsProvider.NewTempFilePath();
+            File.WriteAllBytes(path, _documentManager.GetUncompressedContent(transactionId, docId));
+            return path;
         }
     }
 }

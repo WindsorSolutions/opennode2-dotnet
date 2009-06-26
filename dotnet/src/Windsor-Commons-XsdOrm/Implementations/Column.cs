@@ -47,6 +47,17 @@ namespace Windsor.Commons.XsdOrm.Implementations
                       MemberInfo isSpecifiedMember, ColumnAttribute columnAttribute) :
             base(member, memberPath, isSpecifiedMember)
         {
+            Init(table, columnAttribute);
+        }
+        // Virtual column member:
+        public Column(Table table, string memberPath, Type memberType, 
+                      ColumnAttribute columnAttribute) :
+            base(memberPath, memberType)
+        {
+            Init(table, columnAttribute);
+        }
+        private void Init(Table table, ColumnAttribute columnAttribute)
+        {
             ExceptionUtils.ThrowIfNull(table, "table");
             ExceptionUtils.ThrowIfNull(columnAttribute, "columnAttribute");
             ExceptionUtils.ThrowIfEmptyString(columnAttribute.TableName, "columnAttribute.TableName");
@@ -162,6 +173,10 @@ namespace Windsor.Commons.XsdOrm.Implementations
         public PrimaryKeyColumn(Table table, MemberInfo member, string memberPath,
                                 PrimaryKeyAttribute columnAttribute) :
             base(table, member, memberPath, null, columnAttribute) { }
+        // Virtual column member:
+        public PrimaryKeyColumn(Table table, string memberPath, Type memberType,
+                                ColumnAttribute columnAttribute) :
+            base(table, memberPath, memberType, columnAttribute) { }
 
         public override bool IsPrimaryKey
         {
@@ -186,6 +201,10 @@ namespace Windsor.Commons.XsdOrm.Implementations
         public GuidPrimaryKeyColumn(Table table, MemberInfo member, string memberPath,
                                     PrimaryKeyAttribute columnAttribute) :
             base(table, member, memberPath, columnAttribute) { }
+        // Virtual column member:
+        public GuidPrimaryKeyColumn(Table table, string memberPath,
+                                    PrimaryKeyAttribute columnAttribute) :
+            base(table, memberPath, typeof(string), columnAttribute) { }
 
         public override object GetInsertColumnValue<T>(T objectToSave,
                                                        Dictionary<string, object> previousInsertColumnValues)
@@ -224,6 +243,14 @@ namespace Windsor.Commons.XsdOrm.Implementations
         public ForeignKeyColumn(Table table, MemberInfo member, string memberPath,
                                 ForeignKeyAttribute columnAttribute) :
             base(table, member, memberPath, null, columnAttribute)
+        {
+            m_DeleteRule = columnAttribute.DeleteRule;
+            m_ForeignTableName = columnAttribute.ForeignTableName;
+            m_ForeignColumnName = columnAttribute.ForeignColumnName;
+        }
+        public ForeignKeyColumn(Table table, string memberPath, Type memberType,
+                                ForeignKeyAttribute columnAttribute) :
+            base(table, memberPath, memberType, columnAttribute)
         {
             m_DeleteRule = columnAttribute.DeleteRule;
             m_ForeignTableName = columnAttribute.ForeignTableName;

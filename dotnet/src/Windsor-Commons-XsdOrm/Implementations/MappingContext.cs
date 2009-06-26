@@ -130,6 +130,10 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 {
                     continue;   // Ignore, already taken care of on root element only
                 }
+                if (mappingAttribute is ShortenNamesByRemovingVowelsFirstAttribute)
+                {
+                    continue;   // Ignore, already taken care of on root element only
+                }
                 CollectionUtils.Add(mappingAttribute, ref unrecognizedAttributes);
             }
             if (unrecognizedAttributes != null)
@@ -171,6 +175,9 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 FieldInfo fieldInfo = (member as FieldInfo);
                 string valueTypePath = Utils.CombineTypePath(objTypePath, member.Name);
                 Type valueType = (propertyInfo != null) ? propertyInfo.PropertyType : fieldInfo.FieldType;
+                if (valueTypePath.Contains("SamplePreparation"))
+                {
+                }
                 attributes = GetMappingAttributesForMember(member, valueTypePath);
                 RelationAttribute lastRelationAttribute = null;
 
@@ -246,9 +253,22 @@ namespace Windsor.Commons.XsdOrm.Implementations
                         }
                         if (string.IsNullOrEmpty(columnAttribute.ColumnName))
                         {
+                            string columnName = member.Name;
+                            if (primaryKeyAttribute != null)
+                            {
+                                if (columnName == "_PK")
+                                {
+                                    columnName = objType.Name;
+                                    if (columnName.EndsWith("DataType"))
+                                    {
+                                        columnName = columnName.Substring(0, columnName.Length - "DataType".Length);
+                                    }
+                                    columnName += "Id";
+                                }
+                            }
                             columnAttribute.ColumnName =
-                                Utils.ShortenDatabaseColumnName(Utils.CamelCaseToDatabaseName(member.Name),
-                                                                m_Abbreviations);
+                                Utils.ShortenDatabaseColumnName(Utils.CamelCaseToDatabaseName(columnName),
+                                                                m_ShortenNamesByRemovingVowelsFirst, m_Abbreviations);
                         }
                         if ((foreignKeyAttribute != null) && (columnAttribute.ColumnType == null) && (columnAttribute.ColumnSize == 0))
                         {
@@ -641,9 +661,9 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 MemberInfo nullMember = members[memberIndex];
                 if (nullMember != null)
                 {
-                    if (nullMember.DeclaringType != null)
+                    if (nullMember.ReflectedType != null)
                     {
-                        throw new MappingException("The member \"{0}.{1}\" was not mapped", nullMember.DeclaringType.Name, nullMember.Name);
+                        throw new MappingException("The member \"{0}.{1}\" was not mapped", nullMember.ReflectedType.Name, nullMember.Name);
                     }
                     else
                     {
@@ -720,7 +740,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
             }
             string tableName =
                 Utils.ShortenDatabaseTableName(Utils.CamelCaseToDatabaseName(baseTableName), maxChars,
-                                               m_Abbreviations);
+                                               m_ShortenNamesByRemovingVowelsFirst, m_Abbreviations);
             if (!string.IsNullOrEmpty(m_DefaultTableNamePrefix))
             {
                 if (!tableName.StartsWith(m_DefaultTableNamePrefix))
@@ -745,7 +765,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
         }
         protected virtual void ValidateTables(Dictionary<string, Table> tables)
         {
-            // First, clean up any missing foreign key references
+            // Clean up any missing foreign key references
             foreach (Table table in tables.Values)
             {
                 foreach (ForeignKeyColumn foreignKeyColumn in table.ForeignKeys)
@@ -758,7 +778,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
                         if (foreignKeyColumn.ForeignTable != null)
                         {
                             throw new MappingException("The member \"{0}\" of the class \"{1}\" has an empty ForeignTableName, but ForeignTable != null.",
-                                                       foreignKeyColumn.MemberInfo.Name, foreignKeyColumn.MemberInfo.DeclaringType.FullName);
+                                                       foreignKeyColumn.MemberInfo.Name, foreignKeyColumn.MemberInfo.ReflectedType.FullName);
                         }
                         Type tableRootType = foreignKeyColumn.Table.TableRootType;
                         if (tableRootType == null)
@@ -806,7 +826,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
                         if (foreignTable == null)
                         {
                             throw new MappingException("The member \"{0}\" of the class \"{1}\" has a ForeignKeyAttribute attribute applied to it (without a table name) that references a table that cannot be found.",
-                                                       foreignKeyColumn.MemberInfo.Name, foreignKeyColumn.MemberInfo.DeclaringType.FullName);
+                                                       foreignKeyColumn.MemberInfo.Name, foreignKeyColumn.MemberInfo.ReflectedType.FullName);
                         }
                         foreignKeyColumn.ForeignTable = foreignTable;
                         foreignKeyColumn.ForeignTableName = foreignTable.TableName;
@@ -815,7 +835,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
                             if (foreignKeyColumn.ForeignColumn != null)
                             {
                                 throw new MappingException("The member \"{0}\" of the class \"{1}\" has an empty ForeignColumnName, but ForeignColumn != null.",
-                                                           foreignKeyColumn.MemberInfo.Name, foreignKeyColumn.MemberInfo.DeclaringType.FullName);
+                                                           foreignKeyColumn.MemberInfo.Name, foreignKeyColumn.MemberInfo.ReflectedType.FullName);
                             }
                             foreignKeyColumn.ForeignColumn = foreignColumn;
                             foreignKeyColumn.ForeignColumnName = foreignColumn.ColumnName;
@@ -827,6 +847,10 @@ namespace Windsor.Commons.XsdOrm.Implementations
                                 throw new MappingException("foreignKeyColumn.ForeignColumnName != foreignColumn.ColumnName");
                             }
                         }
+                    }
+                    if (foreignKeyColumn.MemberInfo.Name == "_FK")
+                    {
+                        foreignKeyColumn.ColumnName = foreignKeyColumn.ForeignColumnName;
                     }
                 }
             }
@@ -860,7 +884,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
                         if (!tables.TryGetValue(foreignKeyColumn.ForeignTableName, out foreignTable))
                         {
                             throw new MappingException("The member \"{0}\" of the class \"{1}\" has a ForeignKeyAttribute attribute applied to it that references a table that is not mapped: \"{2}\".",
-                                                       column.MemberInfo.Name, column.MemberInfo.DeclaringType.FullName,
+                                                       column.MemberInfo.Name, column.MemberInfo.ReflectedType.FullName,
                                                        foreignKeyColumn.ForeignTableName);
                         }
                         Column foreignColumn = null;
@@ -871,12 +895,12 @@ namespace Windsor.Commons.XsdOrm.Implementations
                             if (primaryKeys.Count == 0)
                             {
                                 throw new MappingException("The member \"{0}\" of the class \"{1}\" has a foreign key attribute applied to it, but the foreign table does not have a primary key.",
-                                                           foreignKeyColumn.MemberInfo.Name, foreignKeyColumn.MemberInfo.DeclaringType.FullName);
+                                                           foreignKeyColumn.MemberInfo.Name, foreignKeyColumn.MemberInfo.ReflectedType.FullName);
                             }
                             else if (primaryKeys.Count > 1)
                             {
                                 throw new MappingException("The member \"{0}\" of the class \"{1}\" has a foreign key attribute applied to it, but the foreign table has more than one primary key.",
-                                                          foreignKeyColumn.MemberInfo.Name, foreignKeyColumn.MemberInfo.DeclaringType.FullName);
+                                                          foreignKeyColumn.MemberInfo.Name, foreignKeyColumn.MemberInfo.ReflectedType.FullName);
                             }
                             foreach (PrimaryKeyColumn primaryKeyColumn in primaryKeys)
                             {
@@ -888,7 +912,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
                         else if (!foreignTable.TryGetColumn(foreignKeyColumn.ForeignColumnName, out foreignColumn))
                         {
                             throw new MappingException("The member \"{0}\" of the class \"{1}\" has a ForeignKeyAttribute attribute applied to it that references a table with a column that is not mapped: \"{2}.{3}\".",
-                                                       column.MemberInfo.Name, column.MemberInfo.DeclaringType.FullName,
+                                                       column.MemberInfo.Name, column.MemberInfo.ReflectedType.FullName,
                                                        foreignKeyColumn.ForeignTableName, foreignKeyColumn.ForeignColumnName);
                         }
                         if ((column.ColumnType == null) && (column.ColumnSize == 0))
@@ -902,14 +926,14 @@ namespace Windsor.Commons.XsdOrm.Implementations
                             if (foreignColumn.ColumnType != column.ColumnType)
                             {
                                 throw new MappingException("The member \"{0}\" of the class \"{1}\" has a ForeignKeyAttribute attribute applied to it that references a table with a column, \"{2}.{3},\" that does not have the same database type: \"{4}\" vs. \"{5}.\"",
-                                                           column.MemberInfo.Name, column.MemberInfo.DeclaringType.FullName,
+                                                           column.MemberInfo.Name, column.MemberInfo.ReflectedType.FullName,
                                                            foreignKeyColumn.ForeignTableName, foreignKeyColumn.ForeignColumnName,
                                                            foreignColumn.ColumnType.ToString(), column.ColumnType.ToString());
                             }
                             if (foreignColumn.ColumnSize != column.ColumnSize)
                             {
                                 throw new MappingException("The member \"{0}\" of the class \"{1}\" has a ForeignKeyAttribute attribute applied to it that references a table with a column, \"{2}.{3},\" that does not have the same database size: \"{4}\" vs. \"{5}.\"",
-                                                           column.MemberInfo.Name, column.MemberInfo.DeclaringType.FullName,
+                                                           column.MemberInfo.Name, column.MemberInfo.ReflectedType.FullName,
                                                            foreignKeyColumn.ForeignTableName, foreignKeyColumn.ForeignColumnName,
                                                            foreignColumn.ColumnSize.ToString(), column.ColumnSize.ToString());
                             }
@@ -920,7 +944,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
                     if (column.ColumnType == null)
                     {
                         throw new MappingException("The member \"{0}\" of the class \"{1}\" has a null ColumnType",
-                                                   column.MemberInfo.Name, column.MemberInfo.DeclaringType.FullName);
+                                                   column.MemberInfo.Name, column.MemberInfo.ReflectedType.FullName);
                     }
                 }
                 Dictionary<string, Relation> memberPathToRelation = new Dictionary<string, Relation>();
@@ -959,7 +983,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
                         if (!relation.ChildTable.TryGetColumn(relation.ChildForeignKeyColumnName, out childColumn))
                         {
                             throw new MappingException("The member \"{0}\" of the class \"{1}\" has a relation attribute applied to it that references a table with a column that is not mapped: \"{2}.{3}\".",
-                                                       relation.MemberInfo.Name, relation.MemberInfo.DeclaringType.FullName,
+                                                       relation.MemberInfo.Name, relation.MemberInfo.ReflectedType.FullName,
                                                        relation.ChildTable.TableName, relation.ChildForeignKeyColumnName);
                         }
                     }
@@ -968,14 +992,14 @@ namespace Windsor.Commons.XsdOrm.Implementations
                         if (!relation.ChildTable.TryGetForeignKeyColumn(relation.ParentTable.TableName, out childColumn))
                         {
                             throw new MappingException("The member \"{0}\" of the class \"{1}\" has a relation attribute applied to it that references a table with a missing foreign column: \"{2}\".",
-                                                       relation.MemberInfo.Name, relation.MemberInfo.DeclaringType.FullName,
+                                                       relation.MemberInfo.Name, relation.MemberInfo.ReflectedType.FullName,
                                                        relation.ChildTable.TableName);
                         }
                     }
                     if (!childColumn.IsForeignKey)
                     {
                         throw new MappingException("The member \"{0}\" of the class \"{1}\" has a relation attribute applied to it that references a table with a column that is not a foreign key column: \"{2}.{3}\".",
-                                                   relation.MemberInfo.Name, relation.MemberInfo.DeclaringType.FullName,
+                                                   relation.MemberInfo.Name, relation.MemberInfo.ReflectedType.FullName,
                                                    relation.ChildTable.TableName, relation.ChildForeignKeyColumnName);
                     }
                     relation.ChildForeignKeyColumn = childColumn as ForeignKeyColumn;
@@ -999,7 +1023,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
                         if (!relation.ParentTable.TryGetColumn(relation.ParentColumnName, out parentColumn))
                         {
                             throw new MappingException("The member \"{0}\" of the class \"{1}\" has a relation attribute applied to it with a ParentColumnName of \"{2}\" specified, but the parent table \"{3}\" does not define the column.",
-                                                       relation.MemberInfo.Name, relation.MemberInfo.DeclaringType.FullName,
+                                                       relation.MemberInfo.Name, relation.MemberInfo.ReflectedType.FullName,
                                                        relation.ParentColumnName, relation.ParentTable.TableName);
                         }
                     }
@@ -1008,7 +1032,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
                     if (memberPathToRelation.TryGetValue(relation.MemberInfoPath, out existingRelation))
                     {
                         throw new MappingException("The member \"{0}\" of the class \"{1}\" has more than one relation attribute applied to it: \"{2}\" and \"{3}\"",
-                                                   relation.MemberInfo.Name, relation.MemberInfo.DeclaringType.FullName,
+                                                   relation.MemberInfo.Name, relation.MemberInfo.ReflectedType.FullName,
                                                    existingRelation.ToString(), relation.ToString());
                     }
                     memberPathToRelation.Add(relation.MemberInfoPath, relation);
@@ -1022,7 +1046,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
         }
         protected List<MappingAttribute> GetMappingAttributesForMember(MemberInfo member, string memberPath)
         {
-            return AppendAppliedAttributes(member.DeclaringType, member.Name, memberPath,
+            return AppendAppliedAttributes(member.ReflectedType, member.Name, memberPath,
                                            Utils.GetMappingAttributesForMember(member));
         }
         protected List<MappingAttribute> AppendAppliedAttributes(Type type, string memberName, string objectPath,
@@ -1047,7 +1071,12 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 {
                     if (objectPath.EndsWith(appliedPathAttributeInfo.RelativePath))
                     {
-                        CollectionUtils.Add(appliedPathAttributeInfo.MappingAttribute.ShallowCopy(), ref attributes);
+                        if ((objectPath.Length == appliedPathAttributeInfo.RelativePath.Length) ||
+                             ((objectPath.Length > appliedPathAttributeInfo.RelativePath.Length) &&
+                              (objectPath[objectPath.Length - appliedPathAttributeInfo.RelativePath.Length - 1] == '.')))
+                        {
+                            CollectionUtils.Add(appliedPathAttributeInfo.MappingAttribute.ShallowCopy(), ref attributes);
+                        }
                     }
                 }
             }
@@ -1149,14 +1178,16 @@ namespace Windsor.Commons.XsdOrm.Implementations
                     }
                     string memberPrefix =
                         Utils.ShortenDatabaseTableName(Utils.CamelCaseToDatabaseName(memberPath.Substring(startIndex, endIndex - startIndex)),
-                                                       m_Abbreviations);
+                                                       m_ShortenNamesByRemovingVowelsFirst, m_Abbreviations);
                     if (memberPrefix != null)
                     {
-                        columnAttribute.ColumnName = Utils.ShortenDatabaseTableName(memberPrefix + '_' + columnAttribute.ColumnName, null);
+                        columnAttribute.ColumnName = Utils.ShortenDatabaseTableName(memberPrefix + '_' + columnAttribute.ColumnName,
+                                                                                    m_ShortenNamesByRemovingVowelsFirst, null);
                     }
                     while (table.TryGetColumn(columnAttribute.ColumnName, out sameNameColumn))
                     {
-                        columnAttribute.ColumnName = Utils.ShortenDatabaseName(columnAttribute.ColumnName, columnAttribute.ColumnName.Length - 1, null);
+                        columnAttribute.ColumnName = Utils.ShortenDatabaseName(columnAttribute.ColumnName, columnAttribute.ColumnName.Length - 1,
+                                                                               m_ShortenNamesByRemovingVowelsFirst, null);
                     }
                 }
             }
@@ -1216,6 +1247,8 @@ namespace Windsor.Commons.XsdOrm.Implementations
             m_DefaultDecimalCreateString = GetDefaultDecimalPrecision(rootType);
             m_AppliedAttributes = GetAppliedAttributes(rootType);
             m_AppliedPathAttributes = GetAppliedPathAttributes(rootType);
+            m_ShortenNamesByRemovingVowelsFirst = GetShortenNamesByRemovingVowelsFirst(rootType);
+
             if (!string.IsNullOrEmpty(m_DefaultTableNamePrefix))
             {
                 if (m_DefaultTableNamePrefix[m_DefaultTableNamePrefix.Length - 1] != '_')
@@ -1234,7 +1267,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
             if (attr == null)
             {
                 attr = new AbbreviationsAttribute(
-                    "APPORTIONMENT", "APPOR",
+                    "APPORTIONMENT", "APPR",
                     "NAICSPRIMARY", "NAICS_PRI",
                     "SICPRIMARY", "SIC_PRI",
                     "SICCODE", "SIC_CODE",
@@ -1341,10 +1374,10 @@ namespace Windsor.Commons.XsdOrm.Implementations
                     "MECHANICAL", "MECH",
                     "INTEGRITY", "INTEG",
                     "REASON", "RSN",
-                    "CODE", "CD",
                     "ACTION", "ACT",
                     "REMEDIAL", "REM",
                     "ENGINEERING", "ENGR",
+                    "PERIMETER", "PERM",
                     "MAXIMUM", "MAX",
                     "MINIMUM", "MIN",
                     "NUMERIC", "NUM",
@@ -1365,7 +1398,89 @@ namespace Windsor.Commons.XsdOrm.Implementations
                     "ICISCOMPLIANCE", "ICIS_COMPL",
                     "ICISMOANAME", "ICIS_MOA_NAME",
                     "ICISREGIONAL", "ICIS_RGN",
-                    "USDWDEPTH", "USDW_DEPTH");
+                    "USDWDEPTH", "USDW_DEPTH",
+                    "PERCENTOF", "PCNT",
+                    "PRODUCING", "PROD",
+                    "UNITOF", "UNT",
+                    "WITHIN", "WTIN",
+                    "ATTACHMENT", "ATCH",
+                    "CONTENT", "CONT",
+                    "EMISSIONS", "EMIS",
+                    "EMISSION", "EMIS",
+                    "DESIGN", "DSGN",
+                    "CAPACITY", "CAP",
+                    "CONTROL", "CTRL",
+                    "APPROACH", "APCH",
+                    "CAPTURE", "CAP",
+                    "EFFICIENCY", "EFCY",
+                    "EFFECTIVENESS", "EFCT",
+                    "PENETRATION", "PEN",
+                    "POLLUTANT", "POLT",
+                    "MEASURES", "MEAS",
+                    "REDUCTION", "REDC",
+                    "PROCESS", "PROC",
+                    "REPORTING", "RPT",
+                    "PERIOD", "PRD",
+                    "CALCULATION", "CALC",
+                    "PARAM", "PARM",
+                    "NUMERATOR", "NUM",
+                    "DENOMINATOR", "DEN",
+                    "FACTOR", "FAC",
+                    "RELEASE", "REL",
+                    "STACK", "STK",
+                    "HEIGHT", "HGT",
+                    "LENGTH", "LEN",
+                    "WIDTH", "WID",
+                    "DIAMETER", "DIA",
+                    "VELOCITY", "VEL",
+                    "TEMPERATURE", "TMP",
+                    "DISTANCE", "DIST",
+                    "FUGITIVE", "FGTV",
+                    "CONSUMPTION", "CONS",
+                    "AMOUNTOF", "AMT",
+                    "CONSUMED", "CONS",
+                    "THOUSAND", "THSD",
+                    "MOISTURE", "MOIS",
+                    "FINDING", "FIND",
+                    "REGULATORY", "RGTRY",
+                    "REGULATION", "RGLN",
+                    "COMMENT", "CMNT",
+                    "PROGRAM", "PROG",
+                    "EFFECTIVE", "EFFC",
+                    "CONSOLIDATION", "CONS",
+                    "METHODOLOGY", "METH",
+                    "AVERAGE", "AVE",
+                    "ACTUAL", "ACTL",
+                    "ALGORITHM", "ALGOR",
+                    "ASSESSMENT", "ASMT",
+                    "CONVERSION", "CONV",
+                    "FORMULA", "FORM",
+                    "MANAGER", "MGR",
+                    "SELECTION", "SELC",
+                    "RECURRENCE", "RECUR",
+                    "IGNITION", "IGNIT",
+                    "ORIENTATION", "ORIEN",
+                    "GROUND", "GRND",
+                    "CREATION", "CRTN",
+                    "SUBMITTAL", "SUBM",
+                    "CATEGORY", "CATG",
+                    "SECTOR", "SECT",
+                    "LATITUDE", "LAT",
+                    "LONGITUDE", "LONG",
+                    "GEOMETRIC", "GEOM",
+                    "OWNERSHIP", "OWNER",
+                    "INSIGNIFICANT", "INSIG",
+                    "OPERATION", "OPER",
+                    "COMMERCIAL", "COMMER",
+                    "INVENTORY", "INVEN",
+                    "SEQUENCE", "SEQ",
+                    "COMMUNICATION", "COMMUN",
+                    "PARAMETERS", "PARAMS",
+                    "CONFIGURATION", "CONFIG",
+                    "EXCEPTION", "EXCPT",
+                    "EXCEPTIONS", "EXCPT",
+                    "CLASSIFICATION", "CLASS"
+                    );
             }
             return attr.Abbreviations;
         }
@@ -1406,6 +1521,11 @@ namespace Windsor.Commons.XsdOrm.Implementations
             DefaultTableNamePrefixAttribute attr = GetGlobalAttribute<DefaultTableNamePrefixAttribute>(rootType);
             return (attr == null) ? null : attr.Prefix;
 
+        }
+        protected virtual bool GetShortenNamesByRemovingVowelsFirst(Type rootType)
+        {
+            ShortenNamesByRemovingVowelsFirstAttribute attr = GetGlobalAttribute<ShortenNamesByRemovingVowelsFirstAttribute>(rootType);
+            return (attr != null);
         }
         protected virtual string GetDefaultDecimalPrecision(Type rootType)
         {
@@ -1593,6 +1713,31 @@ namespace Windsor.Commons.XsdOrm.Implementations
             }
             return mappingAttribute;
         }
+        public string GetTableNameForType(Type objectType)
+        {
+            Table table = GetTableForType(objectType);
+            return table.TableName;
+        }
+        public string GetPrimaryKeyNameForType(Type objectType)
+        {
+            Table table = GetTableForType(objectType);
+            return table.GetSinglePrimaryKey().ColumnName;
+        }
+        protected Table GetTableForType(Type objectType)
+        {
+            if (m_Tables == null)
+            {
+                throw new MappingException("No tables are defined");
+            }
+            foreach (Table table in m_Tables.Values)
+            {
+                if (table.TableRootType == objectType)
+                {
+                    return table;
+                }
+            }
+            throw new MappingException("Could not find table for type \"{0}\"", objectType.FullName);
+        }
         private Dictionary<string, Table> m_Tables = new Dictionary<string, Table>();
         private Dictionary<string, ObjectPath> m_ObjectPaths = new Dictionary<string, ObjectPath>();
         private Dictionary<string, string> m_Abbreviations = null;
@@ -1604,6 +1749,13 @@ namespace Windsor.Commons.XsdOrm.Implementations
         private string m_SpecifiedFieldPostfixName = "Specified";
         private string m_DefaultTableNamePrefix;
         private string m_DefaultDecimalCreateString;
+        private bool m_ShortenNamesByRemovingVowelsFirst;
+
+        public bool ShortenNamesByRemovingVowelsFirst
+        {
+            get { return m_ShortenNamesByRemovingVowelsFirst; }
+            set { m_ShortenNamesByRemovingVowelsFirst = value; }
+        }
 
         private class SameTableElementInfo
         {

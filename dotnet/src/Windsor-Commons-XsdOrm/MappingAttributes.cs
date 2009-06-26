@@ -436,6 +436,10 @@ namespace Windsor.Commons.XsdOrm
             base(columnName, columnType, columnSize)
         {
         }
+        public GuidPrimaryKeyAttribute(string columnName, int columnSize) :
+            base(columnName, DbType.AnsiString, columnSize)
+        {
+        }
     }
 
     /// <summary>
@@ -535,6 +539,10 @@ namespace Windsor.Commons.XsdOrm
         }
         public GuidForeignKeyAttribute(string columnName, DbType columnType, int columnSize) :
             base(columnName, columnType, columnSize)
+        {
+        }
+        public GuidForeignKeyAttribute(string columnName, int columnSize) :
+            base(columnName, DbType.AnsiString, columnSize)
         {
         }
         public GuidForeignKeyAttribute(string columnName, DbType columnType, int columnSize,
@@ -802,6 +810,14 @@ namespace Windsor.Commons.XsdOrm
         public override string GetShortDescription()
         {
             return "Indexable";
+        }
+    }
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Assembly)]
+    public class ShortenNamesByRemovingVowelsFirstAttribute : MappingAttribute
+    {
+        public override string GetShortDescription()
+        {
+            return "ShortenNamesByRemovingVowelsFirst";
         }
     }
 }

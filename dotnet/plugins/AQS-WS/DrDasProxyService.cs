@@ -314,25 +314,27 @@ namespace Windsor.Node2008.WNOSPlugin.AQSWS
             sb.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             sb.Append(Environment.NewLine);
 
+            List<string> parameters = GetParameterListSortedByName(request.Parameters);
+
             switch (serviceType)
             {
                 case AQSServiceType.AQDEMonitorData:
 
                     DebugAndAudit("Executing queryAQSMonitorData...");
                     sb.Append(client.queryAQSMonitorData(
-                        request.Parameters[(Int32)MonitorDataArgType.FileGenerationPurposeCode],
-                        request.Parameters[(Int32)MonitorDataArgType.SubstanceName],
-                        request.Parameters[(Int32)MonitorDataArgType.MonitorType],
-                        request.Parameters[(Int32)MonitorDataArgType.StateName],
-                        request.Parameters[(Int32)MonitorDataArgType.CountyName],
-                        request.Parameters[(Int32)MonitorDataArgType.CityName],
-                        request.Parameters[(Int32)MonitorDataArgType.TribeName],
-                        request.Parameters[(Int32)MonitorDataArgType.FacilitySiteIdentifier],
-                        request.Parameters[(Int32)MonitorDataArgType.MinLatitudeMeasure],
-                        request.Parameters[(Int32)MonitorDataArgType.MaxLatitudeMeasure],
-                        request.Parameters[(Int32)MonitorDataArgType.MinLongitudeMeasure],
-                        request.Parameters[(Int32)MonitorDataArgType.MaxLongitudeMeasure],
-                        request.Parameters[(Int32)MonitorDataArgType.LastUpdatedDate],
+                        parameters[(Int32)MonitorDataArgType.FileGenerationPurposeCode],
+                        parameters[(Int32)MonitorDataArgType.SubstanceName],
+                        parameters[(Int32)MonitorDataArgType.MonitorType],
+                        parameters[(Int32)MonitorDataArgType.StateName],
+                        parameters[(Int32)MonitorDataArgType.CountyName],
+                        parameters[(Int32)MonitorDataArgType.CityName],
+                        parameters[(Int32)MonitorDataArgType.TribeName],
+                        parameters[(Int32)MonitorDataArgType.FacilitySiteIdentifier],
+                        parameters[(Int32)MonitorDataArgType.MinLatitudeMeasure],
+                        parameters[(Int32)MonitorDataArgType.MaxLatitudeMeasure],
+                        parameters[(Int32)MonitorDataArgType.MinLongitudeMeasure],
+                        parameters[(Int32)MonitorDataArgType.MaxLongitudeMeasure],
+                        parameters[(Int32)MonitorDataArgType.LastUpdatedDate],
                         _schemaVersion));
                     break;
 
@@ -343,29 +345,29 @@ namespace Windsor.Node2008.WNOSPlugin.AQSWS
                     DebugAndAudit("Remote request Id: {0}", remoteRequestId);
                     DebugAndAudit("Executing solicitAQSRawData...");
                     String resultUrl = client.solicitAQSRawData(
-                        request.Parameters[(Int32)RawDataArgType.FileGenerationPurposeCode],
-                        request.Parameters[(Int32)RawDataArgType.BeginDate],
-                        request.Parameters[(Int32)RawDataArgType.BeginTime],
-                        request.Parameters[(Int32)RawDataArgType.EndDate],
-                        request.Parameters[(Int32)RawDataArgType.EndTime],
-                        request.Parameters[(Int32)RawDataArgType.TimeType],
-                        request.Parameters[(Int32)RawDataArgType.SampleDuration],
-                        request.Parameters[(Int32)RawDataArgType.SubstanceName],
-                        request.Parameters[(Int32)RawDataArgType.MonitorType],
-                        request.Parameters[(Int32)RawDataArgType.DataValidityCode],
-                        request.Parameters[(Int32)RawDataArgType.DataApprovalIndicator],
-                        request.Parameters[(Int32)RawDataArgType.StateName],
-                        request.Parameters[(Int32)RawDataArgType.CountyName],
-                        request.Parameters[(Int32)RawDataArgType.CityName],
-                        request.Parameters[(Int32)RawDataArgType.TribeName],
-                        request.Parameters[(Int32)RawDataArgType.FacilitySiteIdentifier],
-                        request.Parameters[(Int32)RawDataArgType.MinLatitudeMeasure],
-                        request.Parameters[(Int32)RawDataArgType.MaxLatitudeMeasure],
-                        request.Parameters[(Int32)RawDataArgType.MinLongitudeMeasure],
-                        request.Parameters[(Int32)RawDataArgType.MaxLongitudeMeasure],
-                        request.Parameters[(Int32)RawDataArgType.LastUpdatedDate],
-                        request.Parameters[(Int32)RawDataArgType.IncludeMonitorDetails],
-                        request.Parameters[(Int32)RawDataArgType.IncludeEventData],
+                        parameters[(Int32)RawDataArgType.FileGenerationPurposeCode],
+                        parameters[(Int32)RawDataArgType.BeginDate],
+                        parameters[(Int32)RawDataArgType.BeginTime],
+                        parameters[(Int32)RawDataArgType.EndDate],
+                        parameters[(Int32)RawDataArgType.EndTime],
+                        parameters[(Int32)RawDataArgType.TimeType],
+                        parameters[(Int32)RawDataArgType.SampleDuration],
+                        parameters[(Int32)RawDataArgType.SubstanceName],
+                        parameters[(Int32)RawDataArgType.MonitorType],
+                        parameters[(Int32)RawDataArgType.DataValidityCode],
+                        parameters[(Int32)RawDataArgType.DataApprovalIndicator],
+                        parameters[(Int32)RawDataArgType.StateName],
+                        parameters[(Int32)RawDataArgType.CountyName],
+                        parameters[(Int32)RawDataArgType.CityName],
+                        parameters[(Int32)RawDataArgType.TribeName],
+                        parameters[(Int32)RawDataArgType.FacilitySiteIdentifier],
+                        parameters[(Int32)RawDataArgType.MinLatitudeMeasure],
+                        parameters[(Int32)RawDataArgType.MaxLatitudeMeasure],
+                        parameters[(Int32)RawDataArgType.MinLongitudeMeasure],
+                        parameters[(Int32)RawDataArgType.MaxLongitudeMeasure],
+                        parameters[(Int32)RawDataArgType.LastUpdatedDate],
+                        parameters[(Int32)RawDataArgType.IncludeMonitorDetails],
+                        parameters[(Int32)RawDataArgType.IncludeEventData],
                         _schemaVersion,
                         remoteRequestId,
                         Boolean.FalseString);

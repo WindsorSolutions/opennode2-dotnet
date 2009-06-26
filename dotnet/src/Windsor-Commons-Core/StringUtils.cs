@@ -157,6 +157,19 @@ namespace Windsor.Commons.Core
         {
             return (IndexOf(checkString, strings, comparison) >= 0);
         }
+        public static int LastIndexOf(string checkString, IEnumerable strings,
+                                      int startIndex, int count, StringComparison comparison)
+        {
+            foreach (string str in strings)
+            {
+                int index = checkString.LastIndexOf(str, startIndex, count, comparison);
+                if (index >= 0)
+                {
+                    return index;
+                }
+            }
+            return -1;
+        }
         public static int IndexOf(string checkString, IEnumerable strings, 
                                   StringComparison comparison)
         {

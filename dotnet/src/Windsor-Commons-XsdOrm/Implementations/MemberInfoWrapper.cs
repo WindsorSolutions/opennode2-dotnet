@@ -56,7 +56,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
             if ((m_MemberPropertyInfo == null) && (m_MemberFieldInfo == null))
             {
                 throw new ArgumentException(string.Format("The input member instance cannot be mapped to PropertyInfo or FieldInfo: {0}.{1}",
-                                                          member.DeclaringType.ToString(), member.Name));
+                                                          member.ReflectedType.ToString(), member.Name));
             }
             if (m_IsSpecifiedMemberInfo != null)
             {
@@ -78,8 +78,19 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 throw new ArgumentException("member must be either a PropertyInfo or FieldInfo instance");
             }
             m_ParentInfoPath = Utils.GetTypePathParent(m_MemberInfoPath);
+            m_MemberName = Utils.GetTypePathName(m_MemberInfoPath);
         }
+        // Virtual members:
+        public MemberInfoWrapper(string memberPath, Type memberType)
+        {
+            ExceptionUtils.ThrowIfNull(memberType, "memberType");
+            ExceptionUtils.ThrowIfEmptyString(memberPath, "memberPath");
 
+            m_MemberInfoPath = memberPath;
+            m_MemberType = memberType;
+            m_ParentInfoPath = Utils.GetTypePathParent(m_MemberInfoPath);
+            m_MemberName = Utils.GetTypePathName(m_MemberInfoPath);
+        }
         public override string ToString()
         {
             return ReflectionUtils.GetPublicPropertiesString(this);
@@ -122,6 +133,10 @@ namespace Windsor.Commons.XsdOrm.Implementations
         {
             if (m_ParentToMemberChain != null)
             {
+                if (instance == null)
+                {
+                    return null;
+                }
                 object getInstance;
                 if (!GetCachedValue(m_ParentToMemberChain, instance, out getInstance))
                 {
@@ -156,6 +171,10 @@ namespace Windsor.Commons.XsdOrm.Implementations
         {
             if (m_ParentToMemberChain != null)
             {
+                if (instance == null)
+                {
+                    return null;
+                }
                 object getInstance;
                 if (!GetCachedValue(m_ParentToMemberChain, instance, out getInstance))
                 {
@@ -222,22 +241,28 @@ namespace Windsor.Commons.XsdOrm.Implementations
                     return null;
                 }
             }
+            return GetActualMemberValue(getInstance);
+        }
+        protected virtual object GetActualMemberValue(object instance) {
             object value;
-            if (m_MemberPropertyInfo != null)
+            if (m_MemberFieldInfo != null)
             {
-                value = m_MemberPropertyInfo.GetValue(getInstance, null);
+                value = m_MemberFieldInfo.GetValue(instance);
+            }
+            else if (m_MemberPropertyInfo != null)
+            {
+                value = m_MemberPropertyInfo.GetValue(instance, null);
             }
             else
             {
-                value = m_MemberFieldInfo.GetValue(getInstance);
+                GetCachedValue(instance, m_MemberName, out value);
             }
             return value;
         }
         public virtual IEnumerable GetMemberEnumerable<T>(T instance)
         {
-            object getInstance = GetActualGetInstance(instance);
-            IEnumerable value = GetMemberValue(getInstance) as IEnumerable;
-            return (value != null) ? value : new object[0];
+            IEnumerable value = GetMemberValue(instance) as IEnumerable;
+            return (value != null) ? value : m_EmptyEnumerable;
         }
         public virtual void SetMemberValue<T>(T instance, object value)
         {
@@ -293,13 +318,21 @@ namespace Windsor.Commons.XsdOrm.Implementations
             {
                 ReflectionUtils.SetFieldOrPropertyValue(setInstance, m_IsSpecifiedMemberInfo, false);
             }
-            if (m_MemberPropertyInfo != null)
+            SetActualMemberValue(setInstance, value);
+        }
+        protected virtual void SetActualMemberValue(object instance, object value)
+        {
+            if (m_MemberFieldInfo != null)
             {
-                m_MemberPropertyInfo.SetValue(setInstance, value, null);
+                m_MemberFieldInfo.SetValue(instance, value);
+            }
+            else if (m_MemberPropertyInfo != null)
+            {
+                m_MemberPropertyInfo.SetValue(instance, value, null);
             }
             else
             {
-                m_MemberFieldInfo.SetValue(setInstance, value);
+                SetCachedValue(instance, m_MemberName, value);
             }
         }
         protected string m_MemberInfoPath;
@@ -309,5 +342,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
         protected MemberInfo m_IsSpecifiedMemberInfo;
         protected IList<MemberInfo> m_ParentToMemberChain;
         protected string m_ParentInfoPath;
+        protected string m_MemberName;
+        protected readonly object[] m_EmptyEnumerable = new object[0];
     }
 }

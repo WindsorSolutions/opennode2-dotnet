@@ -108,6 +108,26 @@ namespace Windsor.Commons.Core
 
             return errors;
         }
+        public IList<string> Validate(string xmlPath, string xsdPath)
+        {
+            using (Stream xmlStream = File.OpenRead(xmlPath))
+            {
+                using (Stream xsdStream = File.OpenRead(xsdPath))
+                {
+                    string startDirectory = Environment.CurrentDirectory;
+                    Environment.CurrentDirectory = Path.GetDirectoryName(xsdPath);
+
+                    try
+                    {
+                        return Validate(xmlStream, xsdStream);
+                    }
+                    finally
+                    {
+                        Environment.CurrentDirectory = startDirectory;
+                    }
+                }
+            }
+        }
         public IList<string> Validate(string xmlPath, Stream xsdStream)
         {
             using (Stream stream = File.OpenRead(xmlPath))

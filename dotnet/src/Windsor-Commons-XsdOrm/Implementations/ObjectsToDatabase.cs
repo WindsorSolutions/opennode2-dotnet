@@ -66,6 +66,18 @@ namespace Windsor.Commons.XsdOrm.Implementations
 
             BuildTables(tableSchemas, mappingContext, baseDao);
         }
+        public string GetTableNameForType(Type objectType)
+        {
+            MappingContext mappingContext = MappingContext.GetMappingContext(objectType);
+
+            return mappingContext.GetTableNameForType(objectType);
+        }
+        public string GetPrimaryKeyNameForType(Type objectType)
+        {
+            MappingContext mappingContext = MappingContext.GetMappingContext(objectType);
+
+            return mappingContext.GetPrimaryKeyNameForType(objectType);
+        }
         public virtual Dictionary<string, int> SaveToDatabase(object objectToSave, SpringBaseDao baseDao)
         {
             Type objectToSaveType = objectToSave.GetType();
@@ -253,9 +265,20 @@ namespace Windsor.Commons.XsdOrm.Implementations
             }
         }
 
+        protected virtual string CheckDatabaseNameDoesNotExist(string dbName, List<string> dbNames)
+        {
+            int count = 2;
+            while (dbNames.Contains(dbName))
+            {
+                dbName = dbName.Remove(dbName.Length - 2) + count.ToString("00");
+                ++count;
+            }
+            dbNames.Add(dbName);
+            return dbName;
+        }
         protected virtual string GetAddColumnString(Column column, MappingContext mappingContext,
                                                     SpringBaseDao baseDao, List<String> postCommands,
-                                                    List<Column> descriptionColumns, List<string> indexNames)
+                                                    List<Column> descriptionColumns, List<string> dbNames)
         {
             string rtnVal = string.Format("{0} {1}{2}",
                 column.ColumnName,
@@ -265,7 +288,9 @@ namespace Windsor.Commons.XsdOrm.Implementations
             if (column.IsPrimaryKey)
             {
                 PrimaryKeyColumn primaryKeyColumn = (PrimaryKeyColumn)column;
-                string pkName = Utils.GetPrimaryKeyConstraintName(primaryKeyColumn, mappingContext.DefaultTableNamePrefix);
+                string pkName = Utils.GetPrimaryKeyConstraintName(primaryKeyColumn, mappingContext.ShortenNamesByRemovingVowelsFirst,
+                                                                  mappingContext.DefaultTableNamePrefix);
+                pkName = CheckDatabaseNameDoesNotExist(pkName, dbNames);
                 string cmd = string.Format("ALTER TABLE {0} ADD CONSTRAINT {1} PRIMARY KEY ({2})",
                                            primaryKeyColumn.Table.TableName, pkName, primaryKeyColumn.ColumnName);
                 postCommands.Add(cmd);
@@ -273,7 +298,9 @@ namespace Windsor.Commons.XsdOrm.Implementations
             else if (column.IsForeignKey)
             {
                 ForeignKeyColumn foreignKeyColumn = (ForeignKeyColumn)column;
-                string fkName = Utils.GetForeignKeyConstraintName(foreignKeyColumn, mappingContext.DefaultTableNamePrefix);
+                string fkName = Utils.GetForeignKeyConstraintName(foreignKeyColumn, mappingContext.ShortenNamesByRemovingVowelsFirst,
+                                                                  mappingContext.DefaultTableNamePrefix);
+                fkName = CheckDatabaseNameDoesNotExist(fkName, dbNames);
                 string cmd = string.Format("ALTER TABLE {0} ADD CONSTRAINT {1} FOREIGN KEY ({2}) REFERENCES {3}({4})",
                                            foreignKeyColumn.Table.TableName, fkName, foreignKeyColumn.ColumnName,
                                            foreignKeyColumn.ForeignTable.TableName, foreignKeyColumn.ForeignColumnName);
@@ -283,24 +310,20 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 }
 
                 postCommands.Add(cmd);
-                string indexName = Utils.GetIndexName(foreignKeyColumn, mappingContext.DefaultTableNamePrefix);
+                string indexName = Utils.GetIndexName(foreignKeyColumn, mappingContext.ShortenNamesByRemovingVowelsFirst,
+                                                      mappingContext.DefaultTableNamePrefix);
+                indexName = CheckDatabaseNameDoesNotExist(indexName, dbNames);
                 cmd = string.Format("CREATE INDEX {0} ON {1}({2})", indexName,
                                     foreignKeyColumn.Table.TableName, foreignKeyColumn.ColumnName);
                 postCommands.Add(cmd);
-                indexNames.Add(indexName);
             }
             else if (column.IsIndexable)
             {
-                string indexName = Utils.GetIndexName(column, mappingContext.DefaultTableNamePrefix);
-                int count = 2;
-                while (indexNames.Contains(indexName))
-                {
-                    indexName = indexName.Remove(indexName.Length - 2) + count.ToString("00");
-                    ++count;
-                }
+                string indexName = Utils.GetIndexName(column, mappingContext.ShortenNamesByRemovingVowelsFirst,
+                                                      mappingContext.DefaultTableNamePrefix);
+                indexName = CheckDatabaseNameDoesNotExist(indexName, dbNames);
                 string cmd = string.Format("CREATE INDEX {0} ON {1}({2})", indexName, column.Table.TableName, column.ColumnName);
                 postCommands.Add(cmd);
-                indexNames.Add(indexName);
             }
             if (!string.IsNullOrEmpty(column.ColumnDescription))
             {

@@ -54,7 +54,7 @@ namespace Windsor.Commons.Logging
     {
         public static ILogEx GetLogger(MethodBase declaringMethod)
         {
-            return new DefaultLoggerEx(declaringMethod.DeclaringType.FullName);
+            return new DefaultLoggerEx(declaringMethod.ReflectedType.FullName);
         }
         public static ILogEx GetLogger(Type declaringType)
         {
