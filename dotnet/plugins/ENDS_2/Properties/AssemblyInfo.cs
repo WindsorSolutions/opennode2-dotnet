@@ -66,6 +66,6 @@ using Windsor.Node2008.WNOSPlugin;
 //
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("1.0.*")]
+[assembly: AssemblyVersion("1.1.0." + AssemblyInfo.cSvnVersion)]
 [assembly: PluginDefaultFlowAttribute("ENDS_v20")]
-[assembly: PluginPackageNameAttribute("ENDS_v20")]
+[assembly: PluginPackageNameAttribute("ENDS 2.0")]
