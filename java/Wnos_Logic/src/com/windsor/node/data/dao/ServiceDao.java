@@ -83,14 +83,14 @@ public interface ServiceDao extends DeletableDao {
      * @param id
      * @return a list of DataServices associated with the given DataFlow id
      */
-    List getByFlowId(String id);
+    List<DataService> getByFlowId(String id);
 
     /**
      * Retrieve a Map of all DataServices flagged as active.
      * 
      * @return a Map of all DataServices flagged as active
      */
-    Map getActive();
+    Map<String, String> getActive();
 
     /**
      * Retrieve a Map of all DataServices flagged as active with the given
@@ -100,6 +100,28 @@ public interface ServiceDao extends DeletableDao {
      * @return a Map of all DataServices flagged as active with the given
      *         DataFlow id
      */
-    Map getActiveByFlowId(String id);
+    Map<String, String> getActiveByFlowId(String id);
+
+    /**
+     * Retrieve a List of all active DataServices, populated with parent Flow
+     * Name.
+     * 
+     * <p>
+     * Specific to Exchange Network Discovery Services, v20.
+     * </p>
+     * 
+     * @return a List of all active DataServices, populated with parent Flow
+     *         Name
+     */
+    List<DataService> getServicesForEnds2();
+
+    /**
+     * Retrieve a List of all active DataServices with a given implementing
+     * class name; intended for use by Ends2.
+     * 
+     * @param implementorName
+     * @return
+     */
+    List<DataService> getActiveByImplementor(String implementorName);
 
 }

@@ -35,11 +35,11 @@ import java.io.File;
 
 public interface SettingsService {
 
-    public static final String LOG_EXT = ".log";
-    public static final String WNA_LOG = "wna.log";
-    public static final String WNE_LOG = "wne.log";
-    public static final String WNE2_LOG = "wne2.log";
-    public static final String WNOS_LOG = "wnos.log";
+    String LOG_EXT = ".log";
+    String WNA_LOG = "wna.log";
+    String WNE_LOG = "wne.log";
+    String WNE2_LOG = "wne2.log";
+    String WNOS_LOG = "wnos.log";
 
     File getTempDir();
 

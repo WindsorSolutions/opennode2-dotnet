@@ -31,8 +31,11 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.windsor.node.service.cmf;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -65,7 +68,9 @@ import com.windsor.node.data.dao.FlowDao;
 import com.windsor.node.data.dao.RequestDao;
 import com.windsor.node.data.dao.ServiceDao;
 import com.windsor.node.data.dao.TransactionDao;
+import com.windsor.node.plugin.WnosPluginHelper;
 import com.windsor.node.service.BaseService;
+import com.windsor.node.service.Ends2Service;
 import com.windsor.node.service.admin.AccountServiceImpl;
 import com.windsor.node.service.helper.CompressionService;
 import com.windsor.node.service.helper.NotificationHelper;
@@ -73,7 +78,9 @@ import com.windsor.node.service.helper.NotificationHelper;
 public class ContentServiceImpl extends BaseService implements ContentService,
         InitializingBean {
 
-    public final Logger logger = Logger.getLogger(this.getClass());
+    private static final String ENDS2_PLUGIN_CLASSNAME = "com.windsor.node.plugin.ends2.Ends2GetServicesQueryProcessor";
+
+    private final Logger logger = Logger.getLogger(this.getClass());
 
     private TransactionDao transactionDao;
     private AccountServiceImpl accountService;
@@ -82,43 +89,53 @@ public class ContentServiceImpl extends BaseService implements ContentService,
     private FlowDao flowDao;
     private NotificationHelper notificationHelper;
     private CompressionService compressionHelper;
+    private WnosPluginHelper pluginHelper;
 
     public void afterPropertiesSet() {
 
         super.afterPropertiesSet();
 
         if (requestDao == null) {
-            throw new RuntimeException("RequestDao Not Set");
+            throw new RuntimeException("RequestDao not set");
         }
 
         if (flowDao == null) {
-            throw new RuntimeException("FlowDao Not Set");
+            throw new RuntimeException("FlowDao not set");
         }
 
         if (accountService == null) {
-            throw new RuntimeException("AccountService Not Set");
+            throw new RuntimeException("AccountService not set");
         }
 
         if (transactionDao == null) {
-            throw new RuntimeException("TransactionDao Not Set");
+            throw new RuntimeException("TransactionDao not set");
         }
 
         if (serviceDao == null) {
-            throw new RuntimeException("ServiceDao Not Set");
+            throw new RuntimeException("ServiceDao not set");
         }
 
         if (notificationHelper == null) {
-            throw new RuntimeException("NotificationHelper Not Set");
+            throw new RuntimeException("NotificationHelper not set");
         }
 
         if (compressionHelper == null) {
-            throw new RuntimeException("CompressionService Not Set");
+            throw new RuntimeException("CompressionService not set");
+        }
+
+        if (pluginHelper == null) {
+            throw new RuntimeException("Plugin Helper not set");
         }
 
     }
 
-    /**
-     * download
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.windsor.node.common.service.cmf.ContentService#download(com.windsor
+     * .node.common.domain.EndpointVisit,
+     * com.windsor.node.common.domain.ComplexContent)
      */
     public List download(EndpointVisit visit, ComplexContent content) {
 
@@ -168,7 +185,7 @@ public class ContentServiceImpl extends BaseService implements ContentService,
 
             logEntry.setModifiedById(account.getId());
 
-            List docs = null;
+            List<Document> docs = null;
 
             // If no documents specified than get all docs
             if (content.getDocuments() == null
@@ -183,7 +200,7 @@ public class ContentServiceImpl extends BaseService implements ContentService,
 
                 logEntry.addEntry("Getting documents by name and Id...");
 
-                docs = new ArrayList();
+                docs = new ArrayList<Document>();
 
                 for (int d = 0; d < content.getDocuments().size(); d++) {
 
@@ -251,8 +268,12 @@ public class ContentServiceImpl extends BaseService implements ContentService,
 
     }
 
-    /**
-     * getServices
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.windsor.node.common.service.cmf.ContentService#getServices(com.windsor
+     * .node.common.domain.EndpointVisit, java.lang.String)
      */
     public SimpleContent getServices(EndpointVisit visit, String category) {
 
@@ -261,47 +282,54 @@ public class ContentServiceImpl extends BaseService implements ContentService,
         }
 
         Activity logEntry = makeNewActivity(ActivityType.AUDIT, visit);
+        logEntry.addEntry("GetServices invoked");
 
-        // TODO: Implement for real when the spec becomes final (3)
-        SimpleContent content = new SimpleContent();
+        SimpleContent content = null;
 
         try {
 
             // VISIT
             UserAccount account = visit.getUserAccount();
-
             logEntry.setModifiedById(account.getId());
 
-            StringBuffer sb = new StringBuffer();
-            sb.append("<services>");
+            /* is ENDS2 service & plugin installed and active? */
+            List<DataService> endsServices = serviceDao
+                    .getActiveByImplementor(ENDS2_PLUGIN_CLASSNAME);
 
-            Map services = serviceDao.getActive();
+            logger.debug("Found " + endsServices.size()
+                    + " services with implementor " + ENDS2_PLUGIN_CLASSNAME);
 
-            Iterator keyValueIt = services.entrySet().iterator();
-            for (int i = 0; i < services.size(); i++) {
-                Map.Entry entry = (Map.Entry) keyValueIt.next();
-                sb.append("<service>");
-                sb.append("" + entry.getValue());
-                sb.append("</service>");
-            }
+            if (endsServices.size() > 1) {
 
-            sb.append("</services>");
-
-            try {
-                content.setContent(sb.toString().getBytes("UTF-8"));
-            } catch (UnsupportedEncodingException uee) {
                 throw new RuntimeException(
-                        "Error whole converting string to byte[]");
+                        "Can't have more than one active service with implementor "
+                                + ENDS2_PLUGIN_CLASSNAME);
+
+            } else if (endsServices.size() == 1) {
+
+                logEntry
+                        .addEntry("Found 1 active Ends2 service, instantiating plugin...");
+
+                content = getServices20FromEndsPlugin(endsServices.get(0),
+                        logEntry);
+
+            } else {
+                logEntry
+                        .addEntry("Ends2 plugin unavailable, falling back to XML list of service names");
+                content = getServices20NoPlugin();
             }
 
             content.setType(CommonContentType.XML);
 
         } catch (Exception ex) {
-            logger.debug(ex.getMessage());
+
+            String msg = "Exception message: " + ex.getMessage()
+                    + "\n Exception type: " + ex.getClass().getName();
+            logger.debug(msg);
 
             logEntry.setType(ActivityType.ERROR);
-            logEntry.addEntry(ex.getMessage());
-            throw new RuntimeException("Error: " + ex.getMessage(), ex);
+            logEntry.addEntry(msg);
+            throw new RuntimeException("Error: " + msg, ex);
 
         } finally {
             getActivityDao().make(logEntry);
@@ -328,15 +356,18 @@ public class ContentServiceImpl extends BaseService implements ContentService,
 
             logEntry.setModifiedById(account.getId());
 
-            Map services = serviceDao.getActive();
+            Map<String, String> services = serviceDao.getActive();
 
             String[] serviceNames = new String[services.size()];
-            Iterator keyValueIt = services.entrySet().iterator();
+            Iterator<Map.Entry<String, String>> keyValueIt = services
+                    .entrySet().iterator();
             for (int i = 0; i < services.size(); i++) {
-                Map.Entry entry = (Map.Entry) keyValueIt.next();
-                serviceNames[i] = (String) entry.getValue();
+                Map.Entry<String, String> entry = (Map.Entry<String, String>) keyValueIt
+                        .next();
+                serviceNames[i] = (String) entry.getValue() + "\n";
             }
 
+            Arrays.sort(serviceNames);
             return serviceNames;
 
         } catch (Exception ex) {
@@ -565,6 +596,70 @@ public class ContentServiceImpl extends BaseService implements ContentService,
 
     public void setRequestDao(RequestDao requestDao) {
         this.requestDao = requestDao;
+    }
+
+    public void setPluginHelper(WnosPluginHelper pluginHelper) {
+        this.pluginHelper = pluginHelper;
+    }
+
+    private SimpleContent getServices20NoPlugin() {
+
+        SimpleContent content = new SimpleContent();
+        StringBuffer sb = new StringBuffer();
+
+        sb.append("<services>\n");
+
+        Map<String, String> services = serviceDao.getActive();
+
+        ArrayList<String> serviceNames = new ArrayList<String>(services
+                .values());
+        Collections.sort(serviceNames);
+
+        for (String name : serviceNames) {
+
+            sb.append("<service>");
+            sb.append(name);
+            sb.append("</service>\n");
+        }
+
+        sb.append("</services>\n");
+
+        try {
+            content.setContent(sb.toString().getBytes("UTF-8"));
+        } catch (UnsupportedEncodingException uee) {
+            throw new RuntimeException(
+                    "Error while converting String to byte[]");
+        }
+
+        return content;
+    }
+
+    private SimpleContent getServices20FromEndsPlugin(DataService endsService,
+            Activity logEntry) {
+
+        SimpleContent content = new SimpleContent();
+
+        DataFlow flow = flowDao.get(endsService.getFlowId());
+
+        logEntry
+                .addEntry("Looking for Ends2Service implementation among installed plugins...");
+
+        File pluginSourceDir = pluginHelper.getPluginContentDir(flow);
+
+        Ends2Service ends2Service = (Ends2Service) pluginHelper
+                .getClassLoader().getPluginInstance(pluginSourceDir,
+                        ENDS2_PLUGIN_CLASSNAME);
+
+        logEntry
+                .addEntry("Got Ends2Service plugin instance, invoking GetServices...");
+
+        content = ends2Service.getServices(getNaasConfig(), getNosConfig(),
+                serviceDao, flowDao, pluginHelper, pluginSourceDir,
+                getNosConfig().getTempDir());
+
+        logEntry.addEntry("Returning service descriptions for Node.");
+
+        return content;
     }
 
 }

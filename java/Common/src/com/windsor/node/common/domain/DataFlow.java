@@ -35,7 +35,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.apache.commons.collections.ListUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
@@ -54,7 +53,7 @@ import org.apache.commons.lang.builder.ReflectionToStringBuilder;
  */
 public class DataFlow extends AuditableIdentity {
 
-    private static final long serialVersionUID = 1;
+    private static final long serialVersionUID = 2;
 
     /** The URL for information about this Flow. */
     private String infoUrl;
@@ -69,14 +68,14 @@ public class DataFlow extends AuditableIdentity {
     private String description;
 
     /** A list of the DataServices provided by this Flow's plugin. */
-    private List services; 
+    private List<DataService> services;
 
     /** A flag indicating whether access to this Flow is restricted. */
     private boolean secured;
 
     /** Default constructor. */
     public DataFlow() {
-        services = ListUtils.typedList(new ArrayList(), DataService.class);
+        services = new ArrayList<DataService>();
     }
 
     /**
@@ -163,7 +162,7 @@ public class DataFlow extends AuditableIdentity {
      * @return a java.util.List of DataServices implemented by this Flow's
      *         plugin
      */
-    public List getServices() {
+    public List<DataService> getServices() {
         return services;
     }
 
@@ -173,8 +172,8 @@ public class DataFlow extends AuditableIdentity {
      * 
      * @param services
      */
-    public void setServices(List services) {
-        this.services = ListUtils.typedList(services, DataService.class);
+    public void setServices(List<DataService> services) {
+        this.services = services;
     }
 
     /**

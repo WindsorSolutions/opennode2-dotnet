@@ -40,7 +40,8 @@ public final class CommonTransactionStatusCodeConverter {
     
     public static CommonTransactionStatusCode convert(String s) {
         CommonTransactionStatusCode ctsc = null;
-        Object o = CommonTransactionStatusCode.getEnumMap().get(s);
+        Object o = CommonTransactionStatusCode.getEnumMap()
+                .get(s.toUpperCase());
         if ((null != o) && (o instanceof CommonTransactionStatusCode)) {
             ctsc = (CommonTransactionStatusCode) o;
         } else {

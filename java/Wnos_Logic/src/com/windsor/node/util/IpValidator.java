@@ -31,6 +31,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.windsor.node.util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -57,9 +58,11 @@ public final class IpValidator {
     private IpValidator() {
     }
 
-    public static boolean contains(List ipList, String ip) {
+    public static boolean contains(List aList, String ip) {
 
         boolean bool = false;
+
+        List ipList = cleanupList(aList);
 
         LOGGER.debug("Whitelist: " + ipList);
         LOGGER.debug("Testing IP: " + ip);
@@ -74,7 +77,7 @@ public final class IpValidator {
             /* loop through the IP list */
             for (int i = 0; i < ipList.size(); i++) {
 
-                String item = (String) ipList.get(i);
+                String item = ((String) ipList.get(i)).trim();
                 LOGGER.debug("Whitelist Item: " + item);
 
                 if (ip.equalsIgnoreCase(item)) {
@@ -166,4 +169,32 @@ public final class IpValidator {
         }
         return bool;
     }
+
+    protected static List cleanupList(List aList) {
+
+        List newList = new ArrayList();
+
+        String s;
+
+        for (int i = 0; i < aList.size(); i++) {
+
+            s = (String) aList.get(i);
+
+            if (StringUtils.contains(s, ',')) {
+
+                String[] items = StringUtils.split(s, ',');
+
+                for (int z = 0; z < items.length; z++) {
+
+                    newList.add(items[z].trim());
+                }
+            } else {
+
+                newList.add(s.trim());
+            }
+        }
+
+        return newList;
+    }
+
 }

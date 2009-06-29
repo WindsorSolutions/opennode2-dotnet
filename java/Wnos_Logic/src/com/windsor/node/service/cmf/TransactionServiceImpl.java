@@ -73,7 +73,7 @@ import com.windsor.node.service.helper.NotificationHelper;
 public class TransactionServiceImpl extends BaseService implements
         TransactionService, InitializingBean {
 
-    public final Logger logger = Logger.getLogger(this.getClass());
+    private final Logger logger = Logger.getLogger(this.getClass());
     private TransactionDao transactionDao;
     private AccountServiceImpl accountService;
     private ServiceDao serviceDao;

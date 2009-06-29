@@ -43,7 +43,7 @@ public interface WnosClassLoader {
      * @param fullyQualifiedClassName
      * @return
      */
-    public Object getPluginInstance(File rootDir, String fullyQualifiedClassName);
+    Object getPluginInstance(File rootDir, String fullyQualifiedClassName);
 
     /**
      * getBasePluginImplementors
@@ -51,6 +51,6 @@ public interface WnosClassLoader {
      * @param rootDir
      * @return
      */
-    public List getBasePluginImplementors(File rootDir);
+    List<String> getBasePluginImplementors(File rootDir);
 
 }

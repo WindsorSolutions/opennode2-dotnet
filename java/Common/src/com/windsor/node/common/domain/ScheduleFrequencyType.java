@@ -41,14 +41,14 @@ public final class ScheduleFrequencyType extends Enum {
 
     public static final ScheduleFrequencyType ONCE = new ScheduleFrequencyType(
             "Once");
-    public static final ScheduleFrequencyType HOURLY = new ScheduleFrequencyType(
-            "Hourly");
-    public static final ScheduleFrequencyType DAILY = new ScheduleFrequencyType(
-            "Daily");
-    public static final ScheduleFrequencyType WEEKLY = new ScheduleFrequencyType(
-            "Weekly");
-    public static final ScheduleFrequencyType MONTHLY = new ScheduleFrequencyType(
-            "Monthly");
+    public static final ScheduleFrequencyType HOUR = new ScheduleFrequencyType(
+            "Hour(s)");
+    public static final ScheduleFrequencyType DAY = new ScheduleFrequencyType(
+            "Day(s)");
+    public static final ScheduleFrequencyType WEEK = new ScheduleFrequencyType(
+            "Week(s)");
+    public static final ScheduleFrequencyType MONTH = new ScheduleFrequencyType(
+            "Month(s)");
 
     private static final long serialVersionUID = 1;
     

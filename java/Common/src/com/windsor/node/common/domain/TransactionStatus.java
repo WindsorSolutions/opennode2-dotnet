@@ -35,6 +35,8 @@ import java.io.Serializable;
 
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 
+import com.windsor.node.common.util.CommonTransactionStatusCodeConverter;
+
 public class TransactionStatus implements Serializable {
 
     private static final long serialVersionUID = 1;
@@ -73,13 +75,13 @@ public class TransactionStatus implements Serializable {
     public TransactionStatus(String transactionId, String status,
             String description) {
         this(transactionId,
-                (CommonTransactionStatusCode) CommonTransactionStatusCode
-                        .getEnumMap().get(status), description);
+                (CommonTransactionStatusCode) CommonTransactionStatusCodeConverter
+                        .convert(status), description);
     }
 
     public TransactionStatus(String status, String description) {
-        this((CommonTransactionStatusCode) CommonTransactionStatusCode
-                .getEnumMap().get(status), description);
+        this((CommonTransactionStatusCode) CommonTransactionStatusCodeConverter
+                .convert(status), description);
     }
 
     public CommonTransactionStatusCode getStatus() {

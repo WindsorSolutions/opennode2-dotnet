@@ -56,52 +56,52 @@ import com.windsor.node.ws2.Endpoint2FaultMessage;
 
 public abstract class BaseEndpoint2Service implements Endpoint2Service {
 
-	protected static final String DEFAULT_AUTH_DOMAIN = "default";
-	protected static final String DEFAULT_AUTH_METHOD = "password";
+    protected static final String DEFAULT_AUTH_DOMAIN = "default";
+    protected static final String DEFAULT_AUTH_METHOD = "password";
     protected static final String UNKNOWN_DOMAIN = "Authentication domain not recognized.";
 
-	protected static final String NULL_AUTH_REQUEST = "Null authRequest";
-	protected static final String NULL_REQUEST = "Null request";
-	protected static final String NULL_MESSAGES = "Null messages";
-	protected static final String NULL_DOCUMENTS = "Null documents";
-	protected static final String ZERO_DOCUMENTS = "Zero documents";
-	protected static final String MORE_THAN_ONE_DOCUMENT = "More than one document";
-	protected static final String NULL_DATA_FLOW = "Null data flow";
-	protected static final String NULL_TRANSACTION_ID = "Null transaction Id";
-	protected static final String NULL_DOWNLOAD_REQUEST = "Null download request";
-	protected static final String NULL_TOKEN = "Null token";
-	protected static final String NULL_PASSWORD = "Null Password";
-	protected static final String NULL_USER_ID = "Null User id";
-	protected static final String NULL_SUBMIT_REQUEST = "Null submit request";
+    protected static final String NULL_AUTH_REQUEST = "Null authRequest";
+    protected static final String NULL_REQUEST = "Null request";
+    protected static final String NULL_MESSAGES = "Null messages";
+    protected static final String NULL_DOCUMENTS = "Null documents";
+    protected static final String ZERO_DOCUMENTS = "Zero documents";
+    protected static final String MORE_THAN_ONE_DOCUMENT = "More than one document";
+    protected static final String NULL_DATA_FLOW = "Null data flow";
+    protected static final String NULL_TRANSACTION_ID = "Null transaction Id";
+    protected static final String NULL_DOWNLOAD_REQUEST = "Null download request";
+    protected static final String NULL_TOKEN = "Null token";
+    protected static final String NULL_PASSWORD = "Null Password";
+    protected static final String NULL_USER_ID = "Null User id";
+    protected static final String NULL_SUBMIT_REQUEST = "Null submit request";
 
-	public abstract AuthenticateResponse Authenticate(Authenticate authenticate)
-			throws Endpoint2FaultMessage;
+    public abstract AuthenticateResponse Authenticate(Authenticate authenticate)
+            throws Endpoint2FaultMessage;
 
-	public abstract DownloadResponse Download(Download download)
-			throws Endpoint2FaultMessage;
+    public abstract DownloadResponse Download(Download download)
+            throws Endpoint2FaultMessage;
 
-	public abstract ExecuteResponse Execute(Execute execute)
-			throws Endpoint2FaultMessage;
+    public abstract ExecuteResponse Execute(Execute execute)
+            throws Endpoint2FaultMessage;
 
-	public abstract GetServicesResponse GetServices(GetServices getServices)
-			throws Endpoint2FaultMessage;
+    public abstract GetServicesResponse GetServices(GetServices getServices)
+            throws Endpoint2FaultMessage;
 
-	public abstract GetStatusResponse GetStatus(GetStatus getStatus)
-			throws Endpoint2FaultMessage;
+    public abstract GetStatusResponse GetStatus(GetStatus getStatus)
+            throws Endpoint2FaultMessage;
 
-	public abstract NodePingResponse NodePing(NodePing nodePing)
-			throws Endpoint2FaultMessage;
+    public abstract NodePingResponse NodePing(NodePing nodePing)
+            throws Endpoint2FaultMessage;
 
-	public abstract NotifyResponse Notify(Notify notify)
-			throws Endpoint2FaultMessage;
+    public abstract NotifyResponse Notify(Notify notify)
+            throws Endpoint2FaultMessage;
 
-	public abstract QueryResponse Query(Query query)
-			throws Endpoint2FaultMessage;
+    public abstract QueryResponse Query(Query query)
+            throws Endpoint2FaultMessage;
 
-	public abstract SolicitResponse Solicit(Solicit solicit)
-			throws Endpoint2FaultMessage;
+    public abstract SolicitResponse Solicit(Solicit solicit)
+            throws Endpoint2FaultMessage;
 
-	public abstract SubmitResponse Submit(Submit submit)
-			throws Endpoint2FaultMessage;
+    public abstract SubmitResponse Submit(Submit submit)
+            throws Endpoint2FaultMessage;
 
 }

@@ -41,7 +41,7 @@ public interface AuthenticationHelper {
      * @param clientHostIP
      * @return
      */
-    public String authenticateUser(String username, String password,
+    String authenticateUser(String username, String password,
             String clientHostIP);
 
     /**
@@ -53,7 +53,7 @@ public interface AuthenticationHelper {
      * @param authenticationMethod
      * @return
      */
-    public String authenticateUser(String username, String password,
+    String authenticateUser(String username, String password,
             String clientHostIP, String authenticationMethod);
 
     /**
@@ -63,6 +63,6 @@ public interface AuthenticationHelper {
      * @param clientHostIP
      * @return
      */
-    public String validateToken(String securityToken, String clientHostIP);
+    String validateToken(String securityToken, String clientHostIP);
 
 }

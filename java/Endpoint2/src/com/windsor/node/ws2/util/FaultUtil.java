@@ -43,81 +43,81 @@ import com.windsor.node.ws2.Endpoint2FaultMessage;
 
 public class FaultUtil {
 
-	private static final Logger logger = Logger.getLogger(FaultUtil.class
-			.getName());
+    private static final Logger logger = Logger.getLogger(FaultUtil.class
+            .getName());
 
-	/**
-	 * parseNodeFault
-	 * 
-	 * @param ex
-	 * @return
-	 */
-	public static Endpoint2FaultMessage parseNodeFault(Exception ex) {
+    /**
+     * parseNodeFault
+     * 
+     * @param ex
+     * @return
+     */
+    public static Endpoint2FaultMessage parseNodeFault(Exception ex) {
 
-		logger.error("Parsing Exception: " + ex);
+        logger.error("Parsing Exception: " + ex);
 
-		Endpoint2FaultMessage result = null;
+        Endpoint2FaultMessage result = null;
 
-		if (ex == null) {
-			result = new Endpoint2FaultMessage("Null Exception");
-		}
+        if (ex == null) {
+            result = new Endpoint2FaultMessage("Null Exception");
+        }
 
-		if (ex instanceof AxisFault) {
+        if (ex instanceof AxisFault) {
 
-			AxisFault fault = (AxisFault) ex;
-			logger.error(fault);
+            AxisFault fault = (AxisFault) ex;
+            logger.error(fault);
 
-			if (fault.getDetail() == null) {
-				result = new Endpoint2FaultMessage("Null Node fault detail");
-			}
+            if (fault.getDetail() == null) {
+                result = new Endpoint2FaultMessage("Null Node fault detail");
+            }
 
-			try {
+            try {
 
-				// org.apache.axiom.om
-				OMElement faultElt = fault.getDetail();
-				logger.debug(faultElt);
+                // org.apache.axiom.om
+                OMElement faultElt = fault.getDetail();
+                logger.debug(faultElt);
 
-				NodeFaultDetailType faultDetail = NodeFaultDetailType.Factory
-						.parse(faultElt.getXMLStreamReader());
+                NodeFaultDetailType faultDetail = NodeFaultDetailType.Factory
+                        .parse(faultElt.getXMLStreamReader());
 
-				logger.debug(faultDetail);
+                logger.debug(faultDetail);
 
-				if (StringUtils.isNotBlank(ex.getMessage())) {
-					faultDetail.setDescription(ex.getMessage() + " ("
-							+ faultDetail.getErrorCode() + "-"
-							+ faultDetail.getDescription() + ")");
-				}
+                if (StringUtils.isNotBlank(ex.getMessage())) {
+                    faultDetail.setDescription(ex.getMessage() + " ("
+                            + faultDetail.getErrorCode() + "-"
+                            + faultDetail.getDescription() + ")");
+                }
 
-				result = new Endpoint2FaultMessage(faultDetail);
+                result = new Endpoint2FaultMessage(faultDetail);
 
-			} catch (Exception innerEx) {
+            } catch (Exception innerEx) {
 
-				String exMessage = "Error while parsing fault:"
-						+ innerEx.getMessage();
-				logger.error(exMessage, innerEx);
-				result = new Endpoint2FaultMessage(exMessage, innerEx);
-			}
+                String exMessage = "Error while parsing fault:"
+                        + innerEx.getMessage();
+                logger.error(exMessage, innerEx);
+                result = new Endpoint2FaultMessage(exMessage, innerEx);
+            }
 
-		} else {
-			logger.error(ex);
-			result = new Endpoint2FaultMessage(ex.getMessage(), ex);
-		}
+        } else {
+            logger.error(ex);
+            result = new Endpoint2FaultMessage(ex.getMessage(), ex);
+        }
 
-		logger.error(result);
-		return result;
+        logger.error(result);
+        return result;
 
-	}
+    }
 
-	public static final Endpoint2FaultMessage makeFault(ErrorCodeList code,
-			String description) {
+    public static final Endpoint2FaultMessage makeFault(ErrorCodeList code,
+            String description) {
 
-		Endpoint2FaultMessage fault = new Endpoint2FaultMessage();
-		NodeFaultDetailType details = new NodeFaultDetailType();
-		details.setErrorCode(code);
-		details.setDescription(description);
-		fault.setFaultMessage(details);
-		return fault;
+        Endpoint2FaultMessage fault = new Endpoint2FaultMessage();
+        NodeFaultDetailType details = new NodeFaultDetailType();
+        details.setErrorCode(code);
+        details.setDescription(description);
+        fault.setFaultMessage(details);
+        return fault;
 
-	}
+    }
 
 }

@@ -69,7 +69,7 @@ public class SimpleHeaderDocumentHelper implements HeaderDocumentHelper,
 
     }
 
-    public byte[] makeHeader(String title, String serviceName,
+    public byte[] makeHeader(String author, String title, String serviceName,
             String contactInfo, String[] notifications,
             String organizationName, Map properties, String sensitivity,
             String payloadOperation, byte[] payload) {
@@ -99,7 +99,7 @@ public class SimpleHeaderDocumentHelper implements HeaderDocumentHelper,
 
             // Header
             out.write("<Header xmlns=\"\">");
-            out.write("<Author>Windsor Solutions, Inc.</Author>");
+            out.write("<Author>" + author + "</Author>");
             out.write("<Organization>" + organizationName + "</Organization>");
             out.write("<Title>" + title + "</Title>");
             out.write("<CreationTime>" + formatter.format(new Date())
@@ -155,7 +155,7 @@ public class SimpleHeaderDocumentHelper implements HeaderDocumentHelper,
 
     }
 
-    public File makeHeader(String title, String serviceName,
+    public File makeHeader(String author, String title, String serviceName,
             String contactInfo, String[] notifications,
             String organizationName, Map properties, String sensitivity,
             String payloadOperation, File payload) {
@@ -166,7 +166,7 @@ public class SimpleHeaderDocumentHelper implements HeaderDocumentHelper,
             byte[] source = FileUtils.readFileToByteArray(payload);
 
             logger.debug("Making header");
-            byte[] target = makeHeader(title, serviceName, contactInfo,
+            byte[] target = makeHeader(author, title, serviceName, contactInfo,
                     notifications, organizationName, properties, sensitivity,
                     payloadOperation, source);
 

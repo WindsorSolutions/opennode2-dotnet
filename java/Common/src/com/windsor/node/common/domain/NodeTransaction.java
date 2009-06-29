@@ -34,16 +34,15 @@ package com.windsor.node.common.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.collections.ListUtils;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 
 public class NodeTransaction extends AuditableIdentity {
 
-    private static final long serialVersionUID = 1;
+    private static final long serialVersionUID = 2;
     private DataFlow flow;
     private String networkId;
     private TransactionStatus status;
-    private List documents;
+    private List<Document> documents;
     private DataRequest request;
     private String operation;
     private NodeMethodType webMethod;
@@ -51,7 +50,7 @@ public class NodeTransaction extends AuditableIdentity {
 
     public NodeTransaction() {
         status = new TransactionStatus(CommonTransactionStatusCode.UNKNOWN_STR);
-        this.documents = ListUtils.typedList(new ArrayList(), Document.class);
+        this.documents = new ArrayList<Document>();
     }
 
     public DataFlow getFlow() {
@@ -78,7 +77,7 @@ public class NodeTransaction extends AuditableIdentity {
         this.status = status;
     }
 
-    public List getDocuments() {
+    public List<Document> getDocuments() {
         return documents;
     }
 
@@ -87,8 +86,8 @@ public class NodeTransaction extends AuditableIdentity {
      * 
      * @param documents
      */
-    public void setDocuments(List documents) {
-        this.documents = ListUtils.typedList(documents, Document.class);
+    public void setDocuments(List<Document> documents) {
+        this.documents = documents;
     }
 
     public DataRequest getRequest() {
@@ -122,8 +121,8 @@ public class NodeTransaction extends AuditableIdentity {
     public void setCreator(UserAccount creator) {
         this.creator = creator;
     }
-    
-// CHECKSTYLE:OFF
+
+    // CHECKSTYLE:OFF
     public int hashCode() {
         final int prime = 31;
         int result = super.hashCode();
@@ -141,8 +140,9 @@ public class NodeTransaction extends AuditableIdentity {
                 + ((webMethod == null) ? 0 : webMethod.hashCode());
         return result;
     }
-// CHECKSTYLE:ON
-    
+
+    // CHECKSTYLE:ON
+
     // CHECKSTYLE:OFF
     public boolean equals(Object obj) {
         if (this == obj)
@@ -194,6 +194,7 @@ public class NodeTransaction extends AuditableIdentity {
             return false;
         return true;
     }
+
     // CHECKSTYLE:ON
 
     public String toString() {

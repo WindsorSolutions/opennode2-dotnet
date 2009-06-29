@@ -41,6 +41,6 @@ public interface ArgValidationHelper {
      * @param optional
      * @return
      */
-    public String validate(String[] args, Integer index, Boolean optional);
+    String validate(String[] args, Integer index, Boolean optional);
 
 }

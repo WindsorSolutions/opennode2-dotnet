@@ -182,9 +182,7 @@
                                 <td nowrap="nowrap" valign="top">
                                     <img src="img/icon_attachment.gif" align="top" style="border-width:0px;vertical-align:top">File:
                                 </td>
-                                <td>
-									<a href="doc.htm?tid=<c:out value="${model.tran.id}" />&id=<c:out value="${doc.id}" />&name=<c:out value="${doc.documentName}" />"><c:out value="${doc.documentName}" />&nbsp;(<c:out value="${doc.type.name}" />)</a>								
-                                </td>
+                                <td><a href="doc.htm?tid=<c:out value="${model.tran.id}" />&id=<c:out value="${doc.id}" />&name=<c:out value="${doc.documentName}" />"><c:out value="${doc.documentName}" />&nbsp;(<c:out value="${doc.type.name}" />)</a></td>
                               </tr>
 							</c:forEach>
 							</table>

@@ -47,6 +47,7 @@ import com.windsor.node.common.service.admin.ScheduleService;
 import com.windsor.node.data.dao.ScheduleDao;
 import com.windsor.node.service.BaseService;
 import com.windsor.node.util.DateUtil;
+import com.windsor.node.util.ScheduleUtil;
 
 public class ScheduleServiceImpl extends BaseService implements
         ScheduleService, InitializingBean {
@@ -149,9 +150,10 @@ public class ScheduleServiceImpl extends BaseService implements
     public ScheduledItem save(ScheduledItem instance, NodeVisit visit) {
 
         if (instance == null) {
-            throw new RuntimeException("PartnerIdentity argument not set.");
+            throw new RuntimeException("ScheduledItem argument not set.");
         }
 
+        instance.setNextRunOn(ScheduleUtil.calculateNextRun(instance));
         logger.debug("Attempting to save:" + instance);
 
         // Make sure the user performing that action has admin rights
@@ -177,7 +179,7 @@ public class ScheduleServiceImpl extends BaseService implements
             if (instance.getSourceType() == null
                     || StringUtils.isBlank(instance.getSourceId())) {
                 throw new RuntimeException(
-                        "Rewuired data element not set: Source Command Id");
+                        "Required data element not set: Source Command Id");
             }
 
             logger.debug("Attempting to save schedule in DB");

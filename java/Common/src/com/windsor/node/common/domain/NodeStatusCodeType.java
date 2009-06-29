@@ -31,37 +31,21 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.windsor.node.common.domain;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
-import org.apache.commons.lang.enums.Enum;
+public enum NodeStatusCodeType {
 
-public final class NodeStatusCodeType extends Enum {
+    READY("Ready"), BUSY("Busy"), OFFLINE("Offline"), UNKNOWN("Unknown");
 
-    public static final NodeStatusCodeType READY = new NodeStatusCodeType(
-            "Ready");
-    public static final NodeStatusCodeType BUSY = new NodeStatusCodeType("Busy");
-    public static final NodeStatusCodeType OFFLINE = new NodeStatusCodeType(
-            "Offline");
-    public static final NodeStatusCodeType UNKNOWN = new NodeStatusCodeType(
-            "Unknown");
+    private static final long serialVersionUID = 2;
 
-    private static final long serialVersionUID = 1;
-    
+    private String type;
+
     private NodeStatusCodeType(String type) {
-        super(type);
+        this.type = type;
     }
 
-    public static Map getEnumMap() {
-        return getEnumMap(NodeStatusCodeType.class);
-    }
-
-    public static List getEnumList() {
-        return getEnumList(NodeStatusCodeType.class);
-    }
-
-    public static Iterator iterator() {
-        return iterator(NodeStatusCodeType.class);
+    @Override
+    public String toString() {
+        return this.type;
     }
 }

@@ -34,7 +34,6 @@ package com.windsor.node.common.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.collections.ListUtils;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 
 /**
@@ -46,7 +45,8 @@ import org.apache.commons.lang.builder.ReflectionToStringBuilder;
  * {@link com.windsor.node.common.domain.DataFlow DataFlow}, and is implemented
  * by a class within a Node plugin. This class manages DataService configuration
  * parameters, which are set via the NodeAdmin web application and stored in the
- * Node metadata database.
+ * Node metadata database. It also includes request/query parameters, which are
+ * sent with a SOAP call or in a schedule.
  * </p>
  * <p>
  * At a minimum, a DataService is configured with the name of the implementing
@@ -67,8 +67,8 @@ public class DataService extends AuditableIdentity {
      * The default name for a DataService.
      */
     public static final String DEFAULTSERVICENAME = "*";
-    
-    private static final long serialVersionUID = 1;
+
+    private static final long serialVersionUID = 2;
 
     /**
      * A name for this service, set and displayed in NodeAdmin.
@@ -79,6 +79,13 @@ public class DataService extends AuditableIdentity {
      * The DataFlow that this DataService is associated with.
      */
     private String flowId;
+
+    /**
+     * The name of the DataFlow that this DataService is associated with.
+     * 
+     * @since OpenNode2 v1.1.4
+     */
+    private String flowName;
 
     /**
      * Whether this DataService can be invoked.
@@ -97,13 +104,13 @@ public class DataService extends AuditableIdentity {
      * Submit, Download, etc.) that this DataService's implementing class is
      * capable of responding to.
      */
-    private List supportedTypes;
+    private List<ServiceType> supportedTypes;
 
     /**
      * The arguments for this DataService, a java.util.List of type
      * com.windsor.node.common.domain.NamedSystemConfigItem
      */
-    private List args;
+    private List<NamedSystemConfigItem> args;
 
     /**
      * The java.util.List of data sources (if any) associated with this
@@ -113,7 +120,7 @@ public class DataService extends AuditableIdentity {
      * The list must be of type com.windsor.node.common.domain.DataProviderInfo.
      * </p>
      */
-    private List dataSources;
+    private List<DataProviderInfo> dataSources;
 
     /**
      * The fully qualified name of the plugin class for this DataService.
@@ -121,16 +128,27 @@ public class DataService extends AuditableIdentity {
     private String implementingClassName;
 
     /**
+     * Parameters passed by a SOAP call or Schedule.
+     * 
+     * <p>
+     * This is usually populated by the plugin implementation class in response
+     * to a ENDS v20 GetServices call, but could also be fed by the Node
+     * metadata db if and when we decide to modify its schema.
+     * </p>
+     * 
+     * @since OpenNode2 v1.1.4
+     */
+    private List<DataServiceRequestParameter> requestParams;
+
+    /**
      * Default Constructor.
      */
     public DataService() {
         type = ServiceType.NONE;
-        args = ListUtils
-                .typedList(new ArrayList(), NamedSystemConfigItem.class);
-        dataSources = ListUtils.typedList(new ArrayList(),
-                DataProviderInfo.class);
-        supportedTypes = ListUtils
-                .typedList(new ArrayList(), ServiceType.class);
+        args = new ArrayList<NamedSystemConfigItem>();
+        dataSources = new ArrayList<DataProviderInfo>();
+        supportedTypes = new ArrayList<ServiceType>();
+        requestParams = new ArrayList<DataServiceRequestParameter>();
     }
 
     /**
@@ -234,11 +252,9 @@ public class DataService extends AuditableIdentity {
     }
 
     /**
-     * @return a java.util.List of type
-     *         com.windsor.node.common.domain.NamedSystemConfigItem containing
-     *         the arguments for this DataService
+     * @return a java.util.List containing the arguments for this DataService
      */
-    public List getArgs() {
+    public List<NamedSystemConfigItem> getArgs() {
         return args;
     }
 
@@ -249,8 +265,8 @@ public class DataService extends AuditableIdentity {
      *            a java.util.List of type
      *            com.windsor.node.common.domain.NamedSystemConfigItem
      */
-    public void setArgs(List args) {
-        this.args = ListUtils.typedList(args, NamedSystemConfigItem.class);
+    public void setArgs(List<NamedSystemConfigItem> args) {
+        this.args = args;
     }
 
     /**
@@ -273,51 +289,73 @@ public class DataService extends AuditableIdentity {
      * @return a java.util.List of data sources (if any) associated with this
      *         DataService
      */
-    public List getDataSources() {
+    public List<DataProviderInfo> getDataSources() {
         return dataSources;
-    }
-
-    /**
-     * @return a List of the {@link com.windsor.node.common.domain.ServiceType
-     *         ServiceTypes} supported by this DataService's implementing class
-     */
-    public List getSupportedTypes() {
-        return supportedTypes;
-    }
-
-    /**
-     * @param supportedTypes
-     */
-    public void setSupportedTypes(List supportedTypes) {
-        this.supportedTypes = ListUtils.typedList(supportedTypes,
-                ServiceType.class);
     }
 
     /**
      * Sets the java.util.List of data sources (if any) associated with this
      * DataService.
      * 
-     * <p>
-     * The list must be of type com.windsor.node.common.domain.DataProviderInfo.
-     * </p>
      * 
      * @param dataSources
      */
-    public void setDataSources(List dataSources) {
-        this.dataSources = ListUtils.typedList(dataSources,
-                DataProviderInfo.class);
+    public void setDataSources(List<DataProviderInfo> dataSources) {
+        this.dataSources = dataSources;
+    }
+
+    /**
+     * @return a List of the {@link com.windsor.node.common.domain.ServiceType
+     *         ServiceTypes} supported by this DataService's implementing class
+     */
+    public List<ServiceType> getSupportedTypes() {
+        return supportedTypes;
+    }
+
+    /**
+     * @param supportedTypes
+     */
+    public void setSupportedTypes(List<ServiceType> supportedTypes) {
+        this.supportedTypes = supportedTypes;
     }
 
     /**
      * 
      * @see java.lang.Object#toString()
      */
+    @Override
     public String toString() {
         ReflectionToStringBuilder rtsb = new ReflectionToStringBuilder(this,
                 new DomainStringStyle());
         rtsb.setAppendStatics(false);
         rtsb.setAppendTransients(false);
         return rtsb.toString();
+    }
+
+    /**
+     * @return the name of the DataFlow associated with this DataService.
+     * @since OpenNode2 v1.1.4
+     */
+    public String getFlowName() {
+        return flowName;
+    }
+
+    /**
+     * Sets the name of the DataFlow associated with this DataService.
+     * 
+     * @param flowName
+     * @since OpenNode2 v1.1.4
+     */
+    public void setFlowName(String flowName) {
+        this.flowName = flowName;
+    }
+
+    public List<DataServiceRequestParameter> getRequestParams() {
+        return requestParams;
+    }
+
+    public void setRequestParams(List<DataServiceRequestParameter> requestParams) {
+        this.requestParams = requestParams;
     }
 
 }

@@ -50,9 +50,10 @@ public interface HeaderDocumentHelper {
      * @param payload
      * @return
      */
-    byte[] makeHeader(String title, String serviceName, String contactInfo,
-            String[] notifications, String organizationName, Map properties,
-            String sensitivity, String payloadOperation, byte[] payload);
+    byte[] makeHeader(String author, String title, String serviceName,
+            String contactInfo, String[] notifications,
+            String organizationName, Map properties, String sensitivity,
+            String payloadOperation, byte[] payload);
 
     /**
      * makeHeader
@@ -68,8 +69,9 @@ public interface HeaderDocumentHelper {
      * @param payload
      * @return
      */
-    File makeHeader(String title, String serviceName, String contactInfo,
-            String[] notifications, String organizationName, Map properties,
-            String sensitivity, String payloadOperation, File payload);
+    File makeHeader(String author, String title, String serviceName,
+            String contactInfo, String[] notifications,
+            String organizationName, Map properties, String sensitivity,
+            String payloadOperation, File payload);
 
 }

@@ -33,6 +33,6 @@ package com.windsor.node.service.helper;
 
 public interface SimpleEmailService {
 
-    public void sendCustom(String[] toEmailList, String body);
+    void sendCustom(String[] toEmailList, String body);
 
 }

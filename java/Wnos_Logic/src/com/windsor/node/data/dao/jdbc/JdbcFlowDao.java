@@ -53,7 +53,7 @@ public class JdbcFlowDao extends BaseJdbcDao implements FlowDao,
         InitializingBean {
 
     protected final String SQL_SELECT = "SELECT Id, InfoUrl, Contact, "
-            + "IsProtected, ModifiedBy, ModifiedOn, Code, Description FROM NFlow ORDER BY Id ";
+            + "IsProtected, ModifiedBy, ModifiedOn, Code, Description FROM NFlow ORDER BY Code ";
 
     protected final String SQL_SELECT_NAMES = "SELECT Code FROM NFlow ORDER BY Code ";
 

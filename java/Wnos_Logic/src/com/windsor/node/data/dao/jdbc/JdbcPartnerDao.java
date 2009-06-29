@@ -149,7 +149,7 @@ public class JdbcPartnerDao extends BaseJdbcDao implements PartnerDao,
         args[1] = instance.getUrl().toString();
         args[2] = instance.getModifiedById();
         args[3] = DateUtil.getTimestamp();
-        args[4] = instance.getVersion().getName();
+        args[4] = instance.getVersion().toString();
         args[5] = instance.getId();
 
         getJdbcTemplate().update(sql, args);
@@ -194,11 +194,11 @@ public class JdbcPartnerDao extends BaseJdbcDao implements PartnerDao,
                 obj.setUrl(new URL(rs.getString("Url")));
                 obj.setModifiedById(rs.getString("ModifiedBy"));
                 obj.setModifiedOn(rs.getTimestamp("ModifiedOn"));
-                obj.setVersion((EndpointVersionType) EndpointVersionType
-                        .getEnumMap().get(rs.getString("Version")));
+                obj.setVersion(EndpointVersionType.fromString(rs
+                        .getString("Version")));
             } catch (MalformedURLException mue) {
                 throw new SQLException(
-                        "Url format error. How did it get intot he Db?");
+                        "Url format error. How did it get into the Db?");
             }
 
             return obj;

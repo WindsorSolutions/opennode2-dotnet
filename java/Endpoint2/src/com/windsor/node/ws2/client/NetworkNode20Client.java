@@ -87,611 +87,615 @@ import com.windsor.node.common.domain.SimpleContent;
 import com.windsor.node.common.domain.TransactionStatus;
 import com.windsor.node.common.domain.WnosNotificationMessageCategoryType;
 import com.windsor.node.common.util.ByIndexOrNameMap;
+import com.windsor.node.common.util.CommonTransactionStatusCodeConverter;
 import com.windsor.node.common.util.NodeClientService;
 import com.windsor.node.ws2.util.NodeUtil;
 
 public class NetworkNode20Client implements NodeClientService {
 
-	private static final Logger logger = Logger
-			.getLogger(NetworkNode20Client.class.getName());
-
-	private URL partnerEndpointUrl;
-	private NAASAccount credential;
-	private String localEndpointUrl;
-	private File tempDir;
-
-	public void configure(URL partnerEndpointUrl, String localEndpointUrl,
-			NAASAccount credentials, File tempDir) {
-
-		if (tempDir == null || !tempDir.exists() || !tempDir.isDirectory()) {
-			throw new RuntimeException("Null tempDir");
-		}
-
-		if (partnerEndpointUrl == null) {
-			throw new RuntimeException("Null partner");
-		}
-
-		if (StringUtils.isBlank(localEndpointUrl)) {
-			throw new RuntimeException("Null partner");
-		}
-
-		if (credentials == null
-				|| StringUtils.isBlank(credentials.getUsername())
-				|| StringUtils.isBlank(credentials.getPassword())) {
-			throw new RuntimeException("Null credentials");
-		}
-
-		this.partnerEndpointUrl = partnerEndpointUrl;
-		logger.debug("En20Client created with URL: " + partnerEndpointUrl);
-
-		this.credential = credentials;
-		logger.debug("Using account: " + credentials.getUsername());
-
-		this.localEndpointUrl = localEndpointUrl;
-		logger.debug("Local endpoint: " + localEndpointUrl);
-
-		this.tempDir = tempDir;
-		logger.debug("Temp Dir: " + tempDir);
-	}
-
-	/**
-	 * getStub
-	 * 
-	 * @param operationId
-	 * @return
-	 * @throws AxisFault
-	 */
-	private NetworkNode2Stub getStub(String operation) throws AxisFault {
-		logger.debug("Getting stub for: " + partnerEndpointUrl.toString());
-		return new NetworkNode2Stub(partnerEndpointUrl.toString());
-	}
-
-	/**
-	 * authenticate
-	 * 
-	 * @return
-	 */
-	private String authenticate() {
-
-		try {
-
-			logger.debug("Invoking authenticate...");
-
-			Authenticate authRequest = new Authenticate();
-			authRequest.setAuthenticationMethod(credential.getAuthMethod());
-			authRequest.setCredential(credential.getPassword());
-			authRequest.setDomain(credential.getDomain());
-			authRequest.setUserId(credential.getUsername());
-
-			AuthenticateResponse response = getStub("Authenticate")
-					.Authenticate(authRequest);
-
-			if (response == null
-					|| StringUtils.isBlank(response.getSecurityToken())) {
-				throw new RuntimeException("Null token");
-			}
+    private static final String NO_TRANSACTION_DOCUMENTS = "No transaction documents";
+
+    private static final String NULL_TRANSACTION = "Null transaction";
+
+    private static final Logger logger = Logger
+            .getLogger(NetworkNode20Client.class.getName());
+
+    private URL partnerEndpointUrl;
+    private NAASAccount credential;
+    private String localEndpointUrl;
+    private File tempDir;
+
+    public void configure(URL partnerEndpointUrl, String localEndpointUrl,
+            NAASAccount credentials, File tempDir) {
+
+        if (tempDir == null || !tempDir.exists() || !tempDir.isDirectory()) {
+            throw new RuntimeException("Null tempDir");
+        }
+
+        if (partnerEndpointUrl == null) {
+            throw new RuntimeException("Null partner");
+        }
+
+        if (StringUtils.isBlank(localEndpointUrl)) {
+            throw new RuntimeException("Null partner");
+        }
+
+        if (credentials == null
+                || StringUtils.isBlank(credentials.getUsername())
+                || StringUtils.isBlank(credentials.getPassword())) {
+            throw new RuntimeException("Null credentials");
+        }
+
+        this.partnerEndpointUrl = partnerEndpointUrl;
+        logger.debug("En20Client created with URL: " + partnerEndpointUrl);
+
+        this.credential = credentials;
+        logger.debug("Using account: " + credentials.getUsername());
+
+        this.localEndpointUrl = localEndpointUrl;
+        logger.debug("Local endpoint: " + localEndpointUrl);
+
+        this.tempDir = tempDir;
+        logger.debug("Temp Dir: " + tempDir);
+    }
+
+    /**
+     * getStub
+     * 
+     * @param operationId
+     * @return
+     * @throws AxisFault
+     */
+    private NetworkNode2Stub getStub(String operation) throws AxisFault {
+        logger.debug("Getting stub for: " + partnerEndpointUrl.toString());
+        return new NetworkNode2Stub(partnerEndpointUrl.toString());
+    }
+
+    /**
+     * authenticate
+     * 
+     * @return
+     */
+    private String authenticate() {
 
-			logger.debug("Security token: " + response.getSecurityToken());
+        try {
+
+            logger.debug("Invoking authenticate...");
 
-			return response.getSecurityToken();
+            Authenticate authRequest = new Authenticate();
+            authRequest.setAuthenticationMethod(credential.getAuthMethod());
+            authRequest.setCredential(credential.getPassword());
+            authRequest.setDomain(credential.getDomain());
+            authRequest.setUserId(credential.getUsername());
+
+            AuthenticateResponse response = getStub("Authenticate")
+                    .Authenticate(authRequest);
 
-		} catch (Exception ex) {
-			logger.error(ex);
-			throw new RuntimeException("Error while authenticating to: "
-					+ partnerEndpointUrl + " using: "
-					+ credential.getUsername() + " Message: " + ex.getMessage());
-		}
-	}
+            if (response == null
+                    || StringUtils.isBlank(response.getSecurityToken())) {
+                throw new RuntimeException("Null token");
+            }
 
-	/**
-	 * download
-	 */
-	public NodeTransaction download(NodeTransaction transaction) {
+            logger.debug("Security token: " + response.getSecurityToken());
 
-		if (transaction == null) {
-			throw new RuntimeException("Null transaction");
-		}
+            return response.getSecurityToken();
 
-		if (StringUtils.isBlank(transaction.getNetworkId())) {
-			throw new RuntimeException("Null network transaction Id");
-		}
+        } catch (Exception ex) {
+            logger.error(ex);
+            throw new RuntimeException("Error while authenticating to: "
+                    + partnerEndpointUrl + " using: "
+                    + credential.getUsername() + " Message: " + ex.getMessage());
+        }
+    }
 
-		if (transaction.getFlow() == null
-				|| StringUtils.isBlank(transaction.getFlow().getName())) {
-			throw new RuntimeException("Null data flow name");
-		}
+    /**
+     * download
+     */
+    public NodeTransaction download(NodeTransaction transaction) {
 
-		try {
+        if (transaction == null) {
+            throw new RuntimeException(NULL_TRANSACTION);
+        }
 
-			String token = authenticate();
-			logger.debug("token: " + token);
+        if (StringUtils.isBlank(transaction.getNetworkId())) {
+            throw new RuntimeException("Null network transaction Id");
+        }
 
-			File targetDir = new File(FilenameUtils.concat(tempDir
-					.getAbsolutePath(), "Temp-" + System.currentTimeMillis()));
-			logger.debug("creating temp dir: " + targetDir);
-			FileUtils.forceMkdir(targetDir);
+        if (transaction.getFlow() == null
+                || StringUtils.isBlank(transaction.getFlow().getName())) {
+            throw new RuntimeException("Null data flow name");
+        }
 
-			if (!targetDir.exists()) {
-				throw new RuntimeException("Unable to create temp dir: "
-						+ targetDir);
-			}
+        try {
 
-			Download downloadReq = new Download();
-			downloadReq
-					.setDataflow(new NCName(transaction.getFlow().getName()));
-			downloadReq.setSecurityToken(token);
-			downloadReq.setTransactionId(transaction.getNetworkId());
+            String token = authenticate();
+            logger.debug("token: " + token);
 
-			// If documents are specified
-			if (transaction.getDocuments() != null) {
-				for (int d = 0; d < transaction.getDocuments().size(); d++) {
+            File targetDir = new File(FilenameUtils.concat(tempDir
+                    .getAbsolutePath(), "Temp-" + System.currentTimeMillis()));
+            logger.debug("creating temp dir: " + targetDir);
+            FileUtils.forceMkdir(targetDir);
 
-					Document wnosDoc = (Document) transaction.getDocuments()
-							.get(d);
-					NodeDocumentType reqDoc = new NodeDocumentType();
+            if (!targetDir.exists()) {
+                throw new RuntimeException("Unable to create temp dir: "
+                        + targetDir);
+            }
 
-					logger.debug("Setting document format type from: "
-							+ wnosDoc.getType());
+            Download downloadReq = new Download();
+            downloadReq
+                    .setDataflow(new NCName(transaction.getFlow().getName()));
+            downloadReq.setSecurityToken(token);
+            downloadReq.setTransactionId(transaction.getNetworkId());
 
-					reqDoc.setDocumentFormat(DocumentFormatType.Factory
-							.fromValue(wnosDoc.getType().getName()));
+            // If documents are specified
+            if (transaction.getDocuments() != null) {
+                for (int d = 0; d < transaction.getDocuments().size(); d++) {
 
-					if (StringUtils.isNotBlank(wnosDoc.getDocumentId())) {
+                    Document wnosDoc = (Document) transaction.getDocuments()
+                            .get(d);
+                    NodeDocumentType reqDoc = new NodeDocumentType();
 
-						reqDoc.setDocumentId(new Id(wnosDoc.getDocumentId()));
-						reqDoc.setDocumentName("");
+                    logger.debug("Setting document format type from: "
+                            + wnosDoc.getType());
 
-					} else if (StringUtils
-							.isNotBlank(wnosDoc.getDocumentName())) {
+                    reqDoc.setDocumentFormat(DocumentFormatType.Factory
+                            .fromValue(wnosDoc.getType().getName()));
 
-						reqDoc.setDocumentName(wnosDoc.getDocumentName());
+                    if (StringUtils.isNotBlank(wnosDoc.getDocumentId())) {
 
-					} else {
-						throw new RuntimeException(
-								"Document Id or Name required");
-					}
+                        reqDoc.setDocumentId(new Id(wnosDoc.getDocumentId()));
+                        reqDoc.setDocumentName("");
 
-					downloadReq.addDocuments(reqDoc);
-				}
-			}
+                    } else if (StringUtils
+                            .isNotBlank(wnosDoc.getDocumentName())) {
 
-			logger.debug("Downloading...");
-			DownloadResponse downloadResp = getStub("Download").Download(
-					downloadReq);
+                        reqDoc.setDocumentName(wnosDoc.getDocumentName());
 
-			if (downloadResp == null) {
-				throw new RuntimeException("Null DownloadResponse");
-			}
+                    } else {
+                        throw new RuntimeException(
+                                "Document Id or Name required");
+                    }
 
-			transaction.getDocuments().clear();
+                    downloadReq.addDocuments(reqDoc);
+                }
+            }
 
-			logger.debug("Spooling files...");
-			for (int i = 0; i < downloadResp.getDocuments().length; i++) {
+            logger.debug("Downloading...");
+            DownloadResponse downloadResp = getStub("Download").Download(
+                    downloadReq);
 
-				NodeDocumentType nodeDoc = downloadResp.getDocuments()[i];
+            if (downloadResp == null) {
+                throw new RuntimeException("Null DownloadResponse");
+            }
 
-				File targetFile = new File(FilenameUtils.concat(targetDir
-						.getAbsolutePath(), nodeDoc.getDocumentName()));
+            transaction.getDocuments().clear();
 
-				logger.debug("Target : " + targetFile);
+            logger.debug("Spooling files...");
+            for (int i = 0; i < downloadResp.getDocuments().length; i++) {
 
-				DataHandler docHandler = nodeDoc.getDocumentContent()
-						.getBase64Binary();
+                NodeDocumentType nodeDoc = downloadResp.getDocuments()[i];
 
-				FileOutputStream dest = new FileOutputStream(targetFile
-						.getAbsoluteFile());
-				docHandler.writeTo(dest);
-				dest.flush();
-				dest.close();
+                File targetFile = new File(FilenameUtils.concat(targetDir
+                        .getAbsolutePath(), nodeDoc.getDocumentName()));
 
-				if (!targetFile.exists()) {
-					throw new RuntimeException("Null result file: "
-							+ targetFile);
-				}
+                logger.debug("Target : " + targetFile);
 
-				Document doc = new Document();
+                DataHandler docHandler = nodeDoc.getDocumentContent()
+                        .getBase64Binary();
 
-				// Content
-				FileInputStream decodedStream = new FileInputStream(targetFile);
-				doc.setContent(new BASE64Decoder().decodeBuffer(decodedStream));
-				decodedStream.close();
+                FileOutputStream dest = new FileOutputStream(targetFile
+                        .getAbsoluteFile());
+                docHandler.writeTo(dest);
+                dest.flush();
+                dest.close();
 
-				if (nodeDoc.getDocumentId() != null
-						&& StringUtils.isNotBlank(nodeDoc.getDocumentId()
-								.toString())) {
-					doc.setDocumentId(nodeDoc.getDocumentId().toString());
-				}
-				doc.setDocumentName(nodeDoc.getDocumentName());
-				doc.setDocumentStatus(CommonTransactionStatusCode.RECEIVED);
-				doc.setDocumentStatusDetail("Document downloaded");
+                if (!targetFile.exists()) {
+                    throw new RuntimeException("Null result file: "
+                            + targetFile);
+                }
 
-				if (nodeDoc.getDocumentFormat() != null
-						&& StringUtils.isNotBlank(nodeDoc.getDocumentFormat()
-								.getValue())) {
-					doc.setType((CommonContentType) CommonContentType
-							.getEnumMap().get(
-									nodeDoc.getDocumentFormat().getValue()));
-				}
+                Document doc = new Document();
 
-				transaction.getDocuments().add(doc);
+                // Content
+                FileInputStream decodedStream = new FileInputStream(targetFile);
+                doc.setContent(new BASE64Decoder().decodeBuffer(decodedStream));
+                decodedStream.close();
 
-			}
+                if (nodeDoc.getDocumentId() != null
+                        && StringUtils.isNotBlank(nodeDoc.getDocumentId()
+                                .toString())) {
+                    doc.setDocumentId(nodeDoc.getDocumentId().toString());
+                }
+                doc.setDocumentName(nodeDoc.getDocumentName());
+                doc.setDocumentStatus(CommonTransactionStatusCode.RECEIVED);
+                doc.setDocumentStatusDetail("Document downloaded");
 
-			TransactionStatus status = new TransactionStatus(transaction
-					.getNetworkId());
-			status.setDescription("Notification performed");
-			status.setStatus(CommonTransactionStatusCode.UNKNOWN);
+                if (nodeDoc.getDocumentFormat() != null
+                        && StringUtils.isNotBlank(nodeDoc.getDocumentFormat()
+                                .getValue())) {
+                    doc.setType((CommonContentType) CommonContentType
+                            .getEnumMap().get(
+                                    nodeDoc.getDocumentFormat().getValue()));
+                }
 
-			transaction.setStatus(status);
+                transaction.getDocuments().add(doc);
 
-			return transaction;
+            }
 
-		} catch (Exception ex) {
-			logger.error(ex);
-			throw new RuntimeException("Error while downloading from: "
-					+ partnerEndpointUrl + " using: " + transaction, ex);
-		}
+            TransactionStatus status = new TransactionStatus(transaction
+                    .getNetworkId());
+            status.setDescription("Notification performed");
+            status.setStatus(CommonTransactionStatusCode.UNKNOWN);
 
-	}
+            transaction.setStatus(status);
 
-	/**
-	 * getStatus
-	 */
-	public TransactionStatus getStatus(String transactionId) {
+            return transaction;
 
-		if (StringUtils.isBlank(transactionId)) {
-			throw new RuntimeException("Null transactionId");
-		}
+        } catch (Exception ex) {
+            logger.error(ex);
+            throw new RuntimeException("Error while downloading from: "
+                    + partnerEndpointUrl + " using: " + transaction, ex);
+        }
 
-		try {
+    }
 
-			logger.debug("Invoking authenticate...");
-			logger.debug("TransactionId: " + transactionId);
+    /**
+     * getStatus
+     */
+    public TransactionStatus getStatus(String transactionId) {
 
-			GetStatus request = new GetStatus();
-			request.setSecurityToken(authenticate());
-			request.setTransactionId(transactionId);
+        if (StringUtils.isBlank(transactionId)) {
+            throw new RuntimeException("Null transactionId");
+        }
 
-			GetStatusResponse response = getStub("GetStatus")
-					.GetStatus(request);
+        try {
 
-			logger.debug("Response: " + response);
+            logger.debug("Invoking authenticate...");
+            logger.debug("TransactionId: " + transactionId);
 
-			if (response == null || response.getGetStatusResponse() == null) {
-				throw new RuntimeException("Empty token returned");
-			}
+            GetStatus request = new GetStatus();
+            request.setSecurityToken(authenticate());
+            request.setTransactionId(transactionId);
 
-			TransactionStatus status = new TransactionStatus(response
-					.getGetStatusResponse().getTransactionId());
-			status.setDescription(response.getGetStatusResponse()
-					.getStatusDetail());
-			status
-					.setStatus((CommonTransactionStatusCode) CommonTransactionStatusCode
-							.getEnumMap().get(
-									response.getGetStatusResponse().getStatus()
-											.getValue()));
+            GetStatusResponse response = getStub("GetStatus")
+                    .GetStatus(request);
 
-			logger.debug("Status: " + status);
+            logger.debug("Response: " + response);
 
-			return status;
+            if (response == null || response.getGetStatusResponse() == null) {
+                throw new RuntimeException("Empty token returned");
+            }
 
-		} catch (Exception ex) {
-			logger.error(ex);
-			throw new RuntimeException("Error while getting status to: "
-					+ partnerEndpointUrl + " using: " + transactionId, ex);
-		}
+            TransactionStatus status = new TransactionStatus(response
+                    .getGetStatusResponse().getTransactionId());
+            status.setDescription(response.getGetStatusResponse()
+                    .getStatusDetail());
+            status
+                    .setStatus((CommonTransactionStatusCode) CommonTransactionStatusCodeConverter
+                            .convert(
+                                    response.getGetStatusResponse().getStatus()
+                                            .getValue()));
 
-	}
+            logger.debug("Status: " + status);
 
-	/**
-	 * notify
-	 */
-	public TransactionStatus notify(Notification notification) {
+            return status;
 
-		if (notification == null) {
-			throw new RuntimeException("Null notification");
-		}
+        } catch (Exception ex) {
+            logger.error(ex);
+            throw new RuntimeException("Error while getting status to: "
+                    + partnerEndpointUrl + " using: " + transactionId, ex);
+        }
 
-		try {
+    }
 
-			logger.debug("Creating Notification: " + notification.getName());
-			logger.debug("Notification: " + notification);
+    /**
+     * notify
+     */
+    public TransactionStatus notify(Notification notification) {
 
-			Notify request = new Notify();
-			request.setNodeAddress(localEndpointUrl);
-			NotificationMessageType msg = new NotificationMessageType();
+        if (notification == null) {
+            throw new RuntimeException("Null notification");
+        }
 
-			if (notification.getCategory() == WnosNotificationMessageCategoryType.STATUS) {
-				msg
-						.setMessageCategory(net.exchangenetwork.www.schema.node._2.NotificationMessageCategoryType.Status);
-				msg.setObjectId(notification.getStatus().getTransactionId());
+        try {
 
-				logger.debug("Request: " + request);
-			} else if (notification.getCategory() == WnosNotificationMessageCategoryType.EVENT) {
-				msg
-						.setMessageCategory(net.exchangenetwork.www.schema.node._2.NotificationMessageCategoryType.Event);
-				msg.setObjectId(notification.getName());
+            logger.debug("Creating Notification: " + notification.getName());
+            logger.debug("Notification: " + notification);
 
-			} else if (notification.getCategory() == WnosNotificationMessageCategoryType.DOCUMENT) {
-				msg
-						.setMessageCategory(net.exchangenetwork.www.schema.node._2.NotificationMessageCategoryType.Document);
-				msg.setObjectId(notification.getStatus().getTransactionId());
+            Notify request = new Notify();
+            request.setNodeAddress(localEndpointUrl);
+            NotificationMessageType msg = new NotificationMessageType();
 
-			} else {
-				throw new RuntimeException(
-						"Null NotificationMessageCategoryType");
-			}
+            if (notification.getCategory() == WnosNotificationMessageCategoryType.STATUS) {
+                msg
+                        .setMessageCategory(net.exchangenetwork.www.schema.node._2.NotificationMessageCategoryType.Status);
+                msg.setObjectId(notification.getStatus().getTransactionId());
 
-			msg.setMessageName(notification.getStatus().getStatus().getName());
-			msg.setStatus(TransactionStatusCode.Factory.fromString(notification
-					.getStatus().getStatus().getName(), null));
-			msg.setStatusDetail(notification.getStatus().getDescription());
+                logger.debug("Request: " + request);
+            } else if (notification.getCategory() == WnosNotificationMessageCategoryType.EVENT) {
+                msg
+                        .setMessageCategory(net.exchangenetwork.www.schema.node._2.NotificationMessageCategoryType.Event);
+                msg.setObjectId(notification.getName());
 
-			request.addMessages(msg);
-			request.setDataflow(new NCName(notification.getFlowName()));
-			request.setSecurityToken(authenticate());
+            } else if (notification.getCategory() == WnosNotificationMessageCategoryType.DOCUMENT) {
+                msg
+                        .setMessageCategory(net.exchangenetwork.www.schema.node._2.NotificationMessageCategoryType.Document);
+                msg.setObjectId(notification.getStatus().getTransactionId());
 
-			logger.debug("Invoking notify...");
-			NotifyResponse response = getStub("Notify").Notify(request);
+            } else {
+                throw new RuntimeException(
+                        "Null NotificationMessageCategoryType");
+            }
 
-			if (response == null || response.getNotifyResponse() == null) {
-				throw new RuntimeException("Empty response returned");
-			}
+            msg.setMessageName(notification.getStatus().getStatus().getName());
+            msg.setStatus(TransactionStatusCode.Factory.fromString(notification
+                    .getStatus().getStatus().getName(), null));
+            msg.setStatusDetail(notification.getStatus().getDescription());
 
-			logger.debug("Response: " + response);
+            request.addMessages(msg);
+            request.setDataflow(new NCName(notification.getFlowName()));
+            request.setSecurityToken(authenticate());
 
-			TransactionStatus status = new TransactionStatus(response
-					.getNotifyResponse().getTransactionId());
-			status.setDescription(response.getNotifyResponse()
-					.getStatusDetail());
-			status.setStatus(CommonTransactionStatusCode.RECEIVED);
+            logger.debug("Invoking notify...");
+            NotifyResponse response = getStub("Notify").Notify(request);
 
-			logger.debug("Status: " + status);
+            if (response == null || response.getNotifyResponse() == null) {
+                throw new RuntimeException("Empty response returned");
+            }
 
-			return status;
+            logger.debug("Response: " + response);
 
-		} catch (Exception ex) {
-			logger.error(ex);
-			throw new RuntimeException("Error while notifying: "
-					+ ex.getMessage(), ex);
-		}
+            TransactionStatus status = new TransactionStatus(response
+                    .getNotifyResponse().getTransactionId());
+            status.setDescription(response.getNotifyResponse()
+                    .getStatusDetail());
+            status.setStatus(CommonTransactionStatusCode.RECEIVED);
 
-	}
+            logger.debug("Status: " + status);
 
-	/**
-	 * query
-	 */
-	public SimpleContent query(DataRequest request) {
+            return status;
 
-		if (request == null) {
-			throw new RuntimeException("Null request");
-		}
+        } catch (Exception ex) {
+            logger.error(ex);
+            throw new RuntimeException("Error while notifying: "
+                    + ex.getMessage(), ex);
+        }
 
-		try {
+    }
 
-			logger.debug("Invoking Query with DataRequest: " + request);
+    /**
+     * query
+     */
+    public SimpleContent query(DataRequest request) {
 
-			Query queryReq = new Query();
-			queryReq.setDataflow(new NCName(request.getFlowName()));
-			queryReq.setSecurityToken(authenticate());
-			queryReq.setRowId(BigInteger
-					.valueOf(request.getPaging().getStart()));
-			queryReq.setMaxRows(BigInteger.valueOf(request.getPaging()
-					.getCount()));
-			queryReq.setRequest(request.getService().getName());
+        if (request == null) {
+            throw new RuntimeException("Null request");
+        }
 
-			ByIndexOrNameMap map = request.getParameters();
-			logger.debug("Request parameters size: " + map.size());
-			logger.debug("Request parameters: " + map);
+        try {
 
-			for (Iterator it = map.keySet().iterator(); it.hasNext();) {
-				String key = (String) it.next();
-				ParameterType queryParam = new ParameterType();
-				queryParam.setParameterEncoding(EncodingType.XML);
-				queryParam.setParameterType(new QName("xsd", "string"));
-				queryParam.setParameterName(key);
-				queryParam.setString((String) map.get(key));
-				queryReq.addParameters(queryParam);
-			}
+            logger.debug("Invoking Query with DataRequest: " + request);
 
-			QueryResponse response = getStub("Query").Query(queryReq);
+            Query queryReq = new Query();
+            queryReq.setDataflow(new NCName(request.getFlowName()));
+            queryReq.setSecurityToken(authenticate());
+            queryReq.setRowId(BigInteger
+                    .valueOf(request.getPaging().getStart()));
+            queryReq.setMaxRows(BigInteger.valueOf(request.getPaging()
+                    .getCount()));
+            queryReq.setRequest(request.getService().getName());
 
-			logger.debug("Response received");
+            ByIndexOrNameMap map = request.getParameters();
+            logger.debug("Request parameters size: " + map.size());
+            logger.debug("Request parameters: " + map);
 
-			if (response == null || response.getQueryResponse() == null) {
-				throw new RuntimeException("Empty response returned");
-			}
+            for (Iterator it = map.keySet().iterator(); it.hasNext();) {
+                String key = (String) it.next();
+                ParameterType queryParam = new ParameterType();
+                queryParam.setParameterEncoding(EncodingType.XML);
+                queryParam.setParameterType(new QName("xsd", "string"));
+                queryParam.setParameterName(key);
+                queryParam.setString((String) map.get(key));
+                queryReq.addParameters(queryParam);
+            }
 
-			Document doc = NodeUtil.getBytesFromGenericXmlType(response
-					.getQueryResponse().getResults());
+            QueryResponse response = getStub("Query").Query(queryReq);
 
-			SimpleContent content = new SimpleContent();
-			content.setContent(doc.getContent());
-			content.setType(doc.getType());
+            logger.debug("Response received");
 
-			logger.debug("Document received");
+            if (response == null || response.getQueryResponse() == null) {
+                throw new RuntimeException("Empty response returned");
+            }
 
-			return content;
+            Document doc = NodeUtil.getBytesFromGenericXmlType(response
+                    .getQueryResponse().getResults());
 
-		} catch (Exception ex) {
-			logger.error(ex);
-			throw new RuntimeException("Error while querying: "
-					+ ex.getMessage(), ex);
-		}
+            SimpleContent content = new SimpleContent();
+            content.setContent(doc.getContent());
+            content.setType(doc.getType());
 
-	}
+            logger.debug("Document received");
 
-	/**
-	 * submit
-	 */
-	public NodeTransaction submit(NodeTransaction transaction) {
+            return content;
 
-		if (transaction == null) {
-			throw new RuntimeException("Null transaction");
-		}
+        } catch (Exception ex) {
+            logger.error(ex);
+            throw new RuntimeException("Error while querying: "
+                    + ex.getMessage(), ex);
+        }
 
-		if (transaction.getDocuments() == null
-				|| transaction.getDocuments().size() < 1) {
-			throw new RuntimeException("No transaction documents");
-		}
+    }
 
-		try {
+    /**
+     * submit
+     */
+    public NodeTransaction submit(NodeTransaction transaction) {
 
-			logger.debug("Invoking submit...");
-			logger.debug("Transaction: " + transaction);
+        if (transaction == null) {
+            logger.error(NULL_TRANSACTION);
+            throw new RuntimeException(NULL_TRANSACTION);
+        }
 
-			Submit submitRequest = new Submit();
-			submitRequest.setSecurityToken(authenticate());
-			submitRequest.setDataflow(new NCName(transaction.getFlow()
-					.getName()));
-			submitRequest.setFlowOperation(transaction.getOperation());
+        if (transaction.getDocuments() == null
+                || transaction.getDocuments().size() < 1) {
+            logger.error(NO_TRANSACTION_DOCUMENTS);
+            throw new RuntimeException(NO_TRANSACTION_DOCUMENTS);
+        }
 
-			logger.debug("Add notifications for ALL: " + localEndpointUrl);
-			NotificationURIType notifType = new NotificationURIType();
-			notifType.setNotificationType(NotificationTypeCode.All);
-			notifType.setString(localEndpointUrl);
-			submitRequest
-					.setNotificationURI(new NotificationURIType[] { notifType });
+        try {
 
-			logger.debug("Add recipients: " + localEndpointUrl);
-			submitRequest.setRecipient(new String[] { localEndpointUrl });
+            logger.debug("Invoking submit...");
+            logger.debug("Transaction: " + transaction);
 
-			for (int d = 0; d < transaction.getDocuments().size(); d++) {
-				Document doc = (Document) transaction.getDocuments().get(d);
-				logger.debug("Local Doc: " + doc);
-				submitRequest.addDocuments(NodeUtil
-						.getNodeDocumentFromWnosDoc(doc));
-			}
+            Submit submitRequest = new Submit();
+            submitRequest.setSecurityToken(authenticate());
+            submitRequest.setDataflow(new NCName(transaction.getFlow()
+                    .getName()));
+            submitRequest.setFlowOperation(transaction.getOperation());
 
-			String transactionIdToSubmit = "";
+            logger.debug("Add notifications for ALL: " + localEndpointUrl);
+            NotificationURIType notifType = new NotificationURIType();
+            notifType.setNotificationType(NotificationTypeCode.All);
+            notifType.setString(localEndpointUrl);
+            submitRequest
+                    .setNotificationURI(new NotificationURIType[] { notifType });
 
-			if (transaction.getWebMethod() == NodeMethodType.SOLICIT) {
-				transactionIdToSubmit = transaction.getNetworkId();
-			}
+            for (int d = 0; d < transaction.getDocuments().size(); d++) {
+                Document doc = (Document) transaction.getDocuments().get(d);
+                logger.debug("Local Doc: " + doc);
+                submitRequest.addDocuments(NodeUtil
+                        .getNodeDocumentFromWnosDoc(doc));
+            }
 
-			submitRequest.setTransactionId(transactionIdToSubmit);
+            String transactionIdToSubmit = "";
 
-			SubmitResponse response = getStub("Submit").Submit(submitRequest);
+            if (transaction.getWebMethod() == NodeMethodType.SOLICIT) {
+                transactionIdToSubmit = transaction.getNetworkId();
+            }
 
-			logger.debug("Response: " + response);
+            submitRequest.setTransactionId(transactionIdToSubmit);
 
-			if (response == null
-					|| response.getSubmitResponse() == null
-					|| StringUtils.isBlank(response.getSubmitResponse()
-							.getTransactionId())) {
-				throw new RuntimeException("Empty response returned");
-			}
+            SubmitResponse response = getStub("Submit").Submit(submitRequest);
 
-			logger.debug("Remote Transaction Id: "
-					+ response.getSubmitResponse().getTransactionId());
+            logger.debug("Response: " + response);
 
-			transaction.setNetworkId(response.getSubmitResponse()
-					.getTransactionId());
-			transaction.getStatus().setTransactionId(
-					response.getSubmitResponse().getTransactionId());
-			transaction.getStatus().setDescription(
-					response.getSubmitResponse().getStatusDetail());
-			transaction.getStatus().setStatus(
-					(CommonTransactionStatusCode) CommonTransactionStatusCode
-							.getEnumMap().get(
-									response.getSubmitResponse().getStatus()
-											.getValue()));
+            if (response == null
+                    || response.getSubmitResponse() == null
+                    || StringUtils.isBlank(response.getSubmitResponse()
+                            .getTransactionId())) {
+                throw new RuntimeException("Empty response returned");
+            }
 
-			logger.debug("Transaction: " + transaction);
+            logger.debug("Remote Transaction Id: "
+                    + response.getSubmitResponse().getTransactionId());
 
-			return transaction;
+            transaction.setNetworkId(response.getSubmitResponse()
+                    .getTransactionId());
+            transaction.getStatus().setTransactionId(
+                    response.getSubmitResponse().getTransactionId());
+            transaction.getStatus().setDescription(
+                    response.getSubmitResponse().getStatusDetail());
+            transaction.getStatus().setStatus(
+                    (CommonTransactionStatusCode) CommonTransactionStatusCodeConverter
+                                    .convert(
+                                    response.getSubmitResponse().getStatus()
+                                            .getValue()));
 
-		} catch (Exception ex) {
-			logger.error(ex);
-			throw new RuntimeException("Error while submitting: "
-					+ ex.getMessage(), ex);
-		}
+            logger.debug("Transaction: " + transaction);
 
-	}
+            return transaction;
 
-	/**
-	 * solicit
-	 */
-	public TransactionStatus solicit(DataRequest request) {
+        } catch (Exception ex) {
+            logger.error(ex);
+            throw new RuntimeException("Error while submitting: "
+                    + ex.getMessage(), ex);
+        }
 
-		if (request == null) {
-			throw new RuntimeException("Null request");
-		}
+    }
 
-		try {
+    /**
+     * solicit
+     */
+    public TransactionStatus solicit(DataRequest request) {
 
-			logger.debug("Invoking solicit...");
-			logger.debug("Request: " + request);
+        if (request == null) {
+            throw new RuntimeException("Null request");
+        }
 
-			Solicit solicitReq = new Solicit();
-			solicitReq.setDataflow(new NCName(request.getFlowName()));
-			solicitReq.setSecurityToken(authenticate());
-			solicitReq.setRequest(request.getService().getName());
+        try {
 
-			if (request.getParameters() != null) {
-				ByIndexOrNameMap map = request.getParameters();
-				logger.debug("Params: " + map);
-				for (Iterator it = map.keySet().iterator(); it.hasNext();) {
+            logger.debug("Invoking solicit...");
+            logger.debug("Request: " + request);
 
-					String key = (String) it.next();
+            Solicit solicitReq = new Solicit();
+            solicitReq.setDataflow(new NCName(request.getFlowName()));
+            solicitReq.setSecurityToken(authenticate());
+            solicitReq.setRequest(request.getService().getName());
 
-					ParameterType queryParam = new ParameterType();
+            if (request.getParameters() != null) {
+                ByIndexOrNameMap map = request.getParameters();
+                logger.debug("Params: " + map);
+                for (Iterator it = map.keySet().iterator(); it.hasNext();) {
 
-					queryParam.setParameterName(key);
-					queryParam.setString((String) map.get(key));
+                    String key = (String) it.next();
 
-					solicitReq.addParameters(queryParam);
-				}
-			}
+                    ParameterType queryParam = new ParameterType();
 
-			if (request.getRecipients() != null) {
-				logger.debug("Recipients: " + request.getRecipients());
-				for (int i = 0; i < request.getRecipients().size(); i++) {
-					solicitReq.addRecipient((String) request.getRecipients()
-							.get(i));
-				}
-			}
+                    queryParam.setParameterName(key);
+                    queryParam.setString((String) map.get(key));
 
-			if (request.getNotifications() != null) {
-				logger.debug("Notifications: " + request.getNotifications());
+                    solicitReq.addParameters(queryParam);
+                }
+            }
 
-				int mapsize = request.getNotifications().size();
-				Iterator notifPairs = request.getNotifications().entrySet()
-						.iterator();
-				for (int i = 0; i < mapsize; i++) {
-					Map.Entry entry = (Map.Entry) notifPairs.next();
+            if (request.getRecipients() != null) {
+                logger.debug("Recipients: " + request.getRecipients());
+                for (int i = 0; i < request.getRecipients().size(); i++) {
+                    solicitReq.addRecipient((String) request.getRecipients()
+                            .get(i));
+                }
+            }
 
-					NotificationURIType notif = new NotificationURIType();
+            if (request.getNotifications() != null) {
+                logger.debug("Notifications: " + request.getNotifications());
 
-					notif.setNotificationType(NotificationTypeCode.All);
-					notif.setString((String) entry.getKey());
+                int mapsize = request.getNotifications().size();
+                Iterator notifPairs = request.getNotifications().entrySet()
+                        .iterator();
+                for (int i = 0; i < mapsize; i++) {
+                    Map.Entry entry = (Map.Entry) notifPairs.next();
 
-					solicitReq.addNotificationURI(notif);
-				}
-			}
+                    NotificationURIType notif = new NotificationURIType();
 
-			logger.debug("Soliciting...");
-			SolicitResponse response = getStub("Solicit").Solicit(solicitReq);
+                    notif.setNotificationType(NotificationTypeCode.All);
+                    notif.setString((String) entry.getKey());
 
-			if (response == null || response.getSolicitResponse() == null) {
-				throw new RuntimeException("Empty response returned");
-			}
+                    solicitReq.addNotificationURI(notif);
+                }
+            }
 
-			logger.debug("Parsing response...");
-			TransactionStatus status = new TransactionStatus(response
-					.getSolicitResponse().getTransactionId());
-			status.setDescription(response.getSolicitResponse()
-					.getStatusDetail());
-			status.setStatus(CommonTransactionStatusCode.RECEIVED);
-			logger.debug("Status: " + status);
+            logger.debug("Soliciting...");
+            SolicitResponse response = getStub("Solicit").Solicit(solicitReq);
 
-			return status;
+            if (response == null || response.getSolicitResponse() == null) {
+                throw new RuntimeException("Empty response returned");
+            }
 
-		} catch (Exception ex) {
-			logger.error(ex);
-			throw new RuntimeException("Error while soliciting: "
-					+ ex.getMessage(), ex);
-		}
+            logger.debug("Parsing response...");
+            TransactionStatus status = new TransactionStatus(response
+                    .getSolicitResponse().getTransactionId());
+            status.setDescription(response.getSolicitResponse()
+                    .getStatusDetail());
+            status.setStatus(CommonTransactionStatusCode.RECEIVED);
+            logger.debug("Status: " + status);
 
-	}
+            return status;
+
+        } catch (Exception ex) {
+            logger.error(ex);
+            throw new RuntimeException("Error while soliciting: "
+                    + ex.getMessage(), ex);
+        }
+
+    }
 }

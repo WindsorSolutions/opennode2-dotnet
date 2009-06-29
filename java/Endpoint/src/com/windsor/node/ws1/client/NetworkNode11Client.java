@@ -49,9 +49,10 @@ import com.windsor.node.common.domain.NAASAccount;
 import com.windsor.node.common.domain.NodeMethodType;
 import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.Notification;
-import com.windsor.node.common.domain.WnosNotificationMessageCategoryType;
 import com.windsor.node.common.domain.SimpleContent;
 import com.windsor.node.common.domain.TransactionStatus;
+import com.windsor.node.common.domain.WnosNotificationMessageCategoryType;
+import com.windsor.node.common.util.CommonTransactionStatusCodeConverter;
 import com.windsor.node.common.util.NodeClientService;
 import com.windsor.node.ws1.wsdl.ArrayofDocHolder;
 import com.windsor.node.ws1.wsdl.NetworkNodeBindingStub;
@@ -139,8 +140,8 @@ public class NetworkNode11Client implements NodeClientService {
 
         TransactionStatus status = new TransactionStatus(transactionId);
         status
-                .setStatus((CommonTransactionStatusCode) CommonTransactionStatusCode
-                        .getEnumMap().get(
+                .setStatus((CommonTransactionStatusCode) CommonTransactionStatusCodeConverter
+                        .convert(
                                 getStatus(authenticate(), transactionId)));
 
         return status;
@@ -621,7 +622,8 @@ public class NetworkNode11Client implements NodeClientService {
         try {
             String status = null;
             NetworkNodeBindingStub port = getStub("getStatus");
-            logger.debug("Invoking getStatus...");
+            logger.debug("Invoking getStatus: \ntoken: " + securityToken
+                    + "\ntransactionId: " + transactionId);
             status = port.getStatus(securityToken, transactionId);
             logger.debug("Result: " + status);
             return status;

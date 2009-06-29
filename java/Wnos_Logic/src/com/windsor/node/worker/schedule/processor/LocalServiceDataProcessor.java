@@ -124,7 +124,11 @@ public class LocalServiceDataProcessor implements InitializingBean {
             ProcessContentResult result = pluginHelper
                     .processTransaction(transaction);
 
-            logger.info("Plugin result: " + result.getAuditEntries());
+            logger.info("Plugin result audit entries: " + result.getAuditEntries());
+            logger.info("Plugin result status: " + result.getStatus());
+            logger.debug("Plugin result paginatedContentIndicator: " + result.getPaginatedContentIndicator());
+            logger.debug("Plugin result number of documents: " + result.getDocuments().size());
+            logger.debug("Plugin result isSuccess: " + result.isSuccess());            
 
             if (!result.isSuccess()) {
                 throw new RuntimeException("Error while executing plugin: "

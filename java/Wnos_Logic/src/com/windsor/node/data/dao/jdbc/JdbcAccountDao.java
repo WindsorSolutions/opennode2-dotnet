@@ -81,6 +81,9 @@ public class JdbcAccountDao extends BaseJdbcDao implements AccountDao {
 
     private static final String SQL_DELETE = "UPDATE NAccount SET IsActive = ? WHERE Id = ?";
 
+    private static final String SQL_SELECT_ACTIVE_ADMINS = SQL_SELECT
+            + " WHERE IsActive = ? and SystemRole = ?";
+
     private JdbcUserAccessPolicyDao userAccessPolicyDao;
 
     /**
@@ -326,6 +329,24 @@ public class JdbcAccountDao extends BaseJdbcDao implements AccountDao {
 
     public void setUserAccessPolicyDao(JdbcUserAccessPolicyDao policyDao) {
         this.userAccessPolicyDao = policyDao;
+    }
+
+    /**
+     * Get a list of active administrators, protected because this just supports
+     * testing.
+     * 
+     * @return a list of UserAccounts representing active administrators
+     */
+    protected List getActiveAdmins() {
+
+        List activeAdmins = getJdbcTemplate()
+                .query(
+                        SQL_SELECT_ACTIVE_ADMINS,
+                        new Object[] { FormatUtil.YES,
+                                SystemRoleType.ADMIN.getName() },
+                        new UserAccountMapper(false));
+
+        return activeAdmins;
     }
 
 }

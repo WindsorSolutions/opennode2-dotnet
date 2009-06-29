@@ -57,12 +57,30 @@ import com.windsor.node.util.FormatUtil;
 public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
 
     /**
+     * SQL SELECT statement for this table
+     */
+    protected static final String SQL_SELECT_ARG = "SELECT ArgKey, ArgValue FROM NScheduleSourceArg "
+            + "WHERE ScheduleId = ? ORDER BY ArgKey ";
+
+    /**
+     * SQL INSERT statement for this table
+     */
+    protected static final String SQL_INSERT_ARG = "INSERT INTO NScheduleSourceArg "
+            + "( Id, ScheduleId, ArgKey, ArgValue ) VALUES ( ?, ?, ?, ? )";
+
+    /**
+     * SQL DELETE statement for this table
+     */
+    protected static final String SQL_DELETE_ARG = "DELETE FROM NScheduleSourceArg WHERE ScheduleId = ?";
+
+    /**
      * All finder methods in this class use this SELECT constant to build their
      * queries
      */
     private static final String SQL_SELECT = "SELECT Id, Name, FlowId, StartOn, EndOn, "
-            + "SourceType, SourceId, SourceOperation, TargetType, TargetId, LastExecutionInfo, "
-            + "LastExecutedOn, NextRun, FrequencyType, Frequency, ModifiedBy, ModifiedOn, IsActive, "
+            + "SourceType, SourceId, SourceOperation, TargetType, TargetId, "
+            + "LastExecutionInfo, LastExecutedOn, NextRun, FrequencyType, "
+            + "Frequency, ModifiedBy, ModifiedOn, IsActive, "
             + "IsRunNow, ExecuteStatus FROM NSchedule ";
 
     /**
@@ -94,7 +112,8 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
      */
     private static final String SQL_INSERT = "INSERT INTO NSchedule ( Name, FlowId, StartOn, EndOn, "
             + "SourceType, SourceId, SourceOperation, TargetType, TargetId, LastExecutionInfo, "
-            + "LastExecutedOn, NextRun, FrequencyType, Frequency, ModifiedBy, ModifiedOn, IsActive, IsRunNow, ExecuteStatus, Id ) "
+            + "LastExecutedOn, NextRun, FrequencyType, Frequency, ModifiedBy, ModifiedOn, IsActive, "
+            + "IsRunNow, ExecuteStatus, Id ) "
             + "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
 
     /**
@@ -111,7 +130,8 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
      */
     private static final String SQL_UPDATE_NEXT = "UPDATE NSchedule SET NextRun = ?, IsRunNow = 'N' WHERE Id = ?";
 
-    private static final String SQL_UPDATE_INFO = "UPDATE NSchedule SET LastExecutedOn = ?, LastExecutionInfo = ?, ExecuteStatus = ?, IsRunNow = 'N' WHERE Id = ?";
+    private static final String SQL_UPDATE_INFO = "UPDATE NSchedule SET LastExecutedOn = ?, LastExecutionInfo = ?, "
+            + "ExecuteStatus = ?, IsRunNow = 'N' WHERE Id = ?";
 
     /**
      * SQL DELETE statement for this table
@@ -122,21 +142,6 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
      * SQL DELETE statement for this table
      */
     private static final String SQL_DELETE_FLOW = "DELETE FROM NSchedule WHERE FlowId = ?";
-
-    /**
-     * SQL SELECT statement for this table
-     */
-    protected final String SQL_SELECT_ARG = "SELECT ArgKey, ArgValue FROM NScheduleSourceArg WHERE ScheduleId = ? ORDER BY ArgKey ";
-
-    /**
-     * SQL INSERT statement for this table
-     */
-    protected final String SQL_INSERT_ARG = "INSERT INTO NScheduleSourceArg ( Id, ScheduleId, ArgKey, ArgValue ) VALUES ( ?, ?, ?, ? )";
-
-    /**
-     * SQL DELETE statement for this table
-     */
-    protected final String SQL_DELETE_ARG = "DELETE FROM NScheduleSourceArg WHERE ScheduleId = ?";
 
     /**
      * get
@@ -169,18 +174,11 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
         // LastExecutionInfo = ?,
         // ExecuteStatus = ?
         // WHERE Id = ?
+        Object[] args = new Object[] { DateUtil.getTimestamp(), info,
+                executeStatus.getName(), scheduleId };
 
-        Object[] args = new Object[4];
-        args[0] = DateUtil.getTimestamp();
-        args[1] = info;
-        args[2] = executeStatus.getName();
-        args[3] = scheduleId;
-
-        int[] types = new int[4];
-        types[0] = Types.TIMESTAMP;
-        types[1] = Types.VARCHAR;
-        types[2] = Types.VARCHAR;
-        types[3] = Types.VARCHAR;
+        int[] types = new int[] { Types.TIMESTAMP, Types.VARCHAR,
+                Types.VARCHAR, Types.VARCHAR };
 
         getJdbcTemplate().update(SQL_UPDATE_INFO, args, types);
 
@@ -194,6 +192,9 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
         if (StringUtils.isBlank(scheduleId)) {
             throw new RuntimeException("scheduleId not set.");
         }
+
+        logger.debug("setting nextRun to " + time + " for schedule id "
+                + scheduleId);
 
         Object[] args = new Object[2];
 
@@ -329,13 +330,10 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
 
         validateObjectArg(sourceArgs, "ByIndexOrNameMap");
 
-        int[] types = new int[4];
-        types[0] = Types.VARCHAR;
-        types[1] = Types.VARCHAR;
-        types[2] = Types.VARCHAR;
-        types[3] = Types.VARCHAR;
+        int[] types = new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,
+                Types.VARCHAR };
 
-        Object[] args = new Object[4];
+        Object[] args = new Object[types.length];
         Set keySet = sourceArgs.keySet();
         Iterator i = keySet.iterator();
 
@@ -344,7 +342,7 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
             args[0] = idGenerator.createId();
             args[1] = scheduleId;
             args[2] = name;
-            args[3] = (String) sourceArgs.get(name);
+            args[3] = ((String) sourceArgs.get(name)).trim();
 
             getJdbcTemplate().update(SQL_INSERT_ARG, args, types);
         }
@@ -382,14 +380,16 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
     }
 
     /**
-     * getForExec() { Returns a single schedule for execution. Makes sure the
-     * schedule is not already running
+     * Returns a single schedule for execution; makes sure the schedule is not
+     * already running.
      * 
-     * @return
+     * @return the ScheduledItem to run
      */
     public ScheduledItem getForNextExec() {
 
-        // TODO: When disconnected this value returns an invalid time
+        ScheduledItem item = null;
+
+        // TODO: When disconnected this returns an invalid time
         Timestamp now = DateUtil.getTimestamp();
 
         logger.debug("Now: " + now);
@@ -403,7 +403,7 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
 
         for (int i = 0; i < schedules.size(); i++) {
 
-            ScheduledItem item = (ScheduledItem) schedules.get(i);
+            item = (ScheduledItem) schedules.get(i);
 
             Object[] args = new Object[3];
 
@@ -411,14 +411,12 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
             args[1] = item.getId();
             args[2] = ScheduleExecuteStatus.RUNNING.getName();
 
-            // new, Id, Old "
-            if (1 == getJdbcTemplate().update(SQL_UPDATE_FOR_EXEC, args)) {
-                return item;
-            }
+            getJdbcTemplate().update(SQL_UPDATE_FOR_EXEC, args);
 
         }
 
-        return null;
+        // returning null is ok
+        return item;
 
     }
 

@@ -35,28 +35,26 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.collections.ListUtils;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 
 public class ProcessContentResult implements Serializable {
 
-    private static final long serialVersionUID = 1;
+    private static final long serialVersionUID = 2;
 
     private CommonTransactionStatusCode status;
-    
+
     /**
      * List of type com.windsor.node.common.domain.Document
      */
-    private List documents;
+    private List<Document> documents;
     private PaginationIndicator paginatedContentIndicator;
-    private List auditEntries;
+    private List<ActivityEntry> auditEntries;
     private boolean success;
 
     public ProcessContentResult() {
         status = CommonTransactionStatusCode.UNKNOWN;
-        this.auditEntries = ListUtils.typedList(new ArrayList(),
-                ActivityEntry.class);
-        this.documents = ListUtils.typedList(new ArrayList(), Document.class);
+        this.auditEntries = new ArrayList<ActivityEntry>();
+        this.documents = new ArrayList<Document>();
         success = false;
     }
 
@@ -68,11 +66,11 @@ public class ProcessContentResult implements Serializable {
         this.status = status;
     }
 
-    public List getDocuments() {
+    public List<Document> getDocuments() {
         return documents;
     }
 
-    public List getAuditEntries() {
+    public List<ActivityEntry> getAuditEntries() {
         return auditEntries;
     }
 
@@ -84,13 +82,8 @@ public class ProcessContentResult implements Serializable {
         this.success = success;
     }
 
-    /**
-     * List must be of type com.windsor.node.common.domain.Document
-     * 
-     * @param documents
-     */
-    public void setDocuments(List documents) {
-        this.documents = ListUtils.typedList(documents, Document.class);
+    public void setDocuments(List<Document> documents) {
+        this.documents = documents;
     }
 
     public PaginationIndicator getPaginatedContentIndicator() {

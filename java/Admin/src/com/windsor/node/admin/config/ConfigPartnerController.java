@@ -31,6 +31,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.windsor.node.admin.config;
 
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,7 +41,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.ServletRequestDataBinder;
@@ -133,8 +133,8 @@ public class ConfigPartnerController extends BaseSimpleFormController implements
 
             request.setAttribute(AdminConstants.COMMAND_KEY, partner);
 
-            view = new ModelAndView(getFormView(), AdminConstants.MODEL_KEY, getRreferenceData(
-                    request, visit));
+            view = new ModelAndView(getFormView(), AdminConstants.MODEL_KEY,
+                    getRreferenceData(request, visit));
 
         }
 
@@ -151,10 +151,11 @@ public class ConfigPartnerController extends BaseSimpleFormController implements
         model.put(AdminConstants.TAB_KEY, SiteTabUtils.TAB_CONFIG);
 
         // set the side bar
-        model.put(AdminConstants.BARS_KEY, SideBarUtils.getConfigBars(request, 2));
+        model.put(AdminConstants.BARS_KEY, SideBarUtils.getConfigBars(request,
+                2));
 
         // set endpointVersions
-        model.put("endpointVersions", EndpointVersionType.getEnumList());
+        model.put("endpointVersions", EnumSet.allOf(EndpointVersionType.class));
 
         return model;
 
@@ -170,7 +171,8 @@ public class ConfigPartnerController extends BaseSimpleFormController implements
         }
 
         Map modelHolder = new HashMap();
-        modelHolder.put(AdminConstants.MODEL_KEY, getRreferenceData(request, visit));
+        modelHolder.put(AdminConstants.MODEL_KEY, getRreferenceData(request,
+                visit));
         return modelHolder;
 
     }

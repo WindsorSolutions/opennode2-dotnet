@@ -35,43 +35,43 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.enums.ValuedEnum;
+import org.apache.commons.lang.enums.Enum;
 
-public final class CommonTransactionStatusCode extends ValuedEnum {
+public final class CommonTransactionStatusCode extends Enum {
 
-    public static final String UNKNOWN_STR = "Unknown";
-    public static final String RECEIVED_STR = "Received";
-    public static final String PROCESSING_STR = "Processing";
-    public static final String PENDING_STR = "Pending";
-    public static final String FAILED_STR = "Failed";
-    public static final String CANCELLED_STR = "Cancelled";
-    public static final String APPROVED_STR = "Approved";
-    public static final String PROCESSED_STR = "Processed";
-    public static final String COMPLETED_STR = "Completed";
+    public static final String UNKNOWN_STR = "UNKNOWN";
+    public static final String RECEIVED_STR = "RECEIVED";
+    public static final String PROCESSING_STR = "PROCESSING";
+    public static final String PENDING_STR = "PENDING";
+    public static final String FAILED_STR = "FAILED";
+    public static final String CANCELLED_STR = "CANCELLED";
+    public static final String APPROVED_STR = "APPROVED";
+    public static final String PROCESSED_STR = "PROCESSED";
+    public static final String COMPLETED_STR = "COMPLETED";
     
     public static final CommonTransactionStatusCode UNKNOWN = new CommonTransactionStatusCode(
-            UNKNOWN_STR, 0x00);
+            UNKNOWN_STR);
     public static final CommonTransactionStatusCode RECEIVED = new CommonTransactionStatusCode(
-            RECEIVED_STR, 0x02);
+            RECEIVED_STR);
     public static final CommonTransactionStatusCode PROCESSING = new CommonTransactionStatusCode(
-            PROCESSING_STR, 0x04);
+            PROCESSING_STR);
     public static final CommonTransactionStatusCode PENDING = new CommonTransactionStatusCode(
-            PENDING_STR, 0x08);
+            PENDING_STR);
     public static final CommonTransactionStatusCode FAILED = new CommonTransactionStatusCode(
-            FAILED_STR, 0x10);
+            FAILED_STR);
     public static final CommonTransactionStatusCode CANCELLED = new CommonTransactionStatusCode(
-            CANCELLED_STR, 0x20);;
+            CANCELLED_STR);
     public static final CommonTransactionStatusCode APPROVED = new CommonTransactionStatusCode(
-            APPROVED_STR, 0x20);;
+            APPROVED_STR);
     public static final CommonTransactionStatusCode PROCESSED = new CommonTransactionStatusCode(
-            PROCESSED_STR, 0x40);;
+            PROCESSED_STR);
     public static final CommonTransactionStatusCode COMPLETED = new CommonTransactionStatusCode(
-            COMPLETED_STR, 0x80);
+            COMPLETED_STR);
 
     private static final long serialVersionUID = 1;
 
-    private CommonTransactionStatusCode(String s, int i) {
-        super(s, i);
+    private CommonTransactionStatusCode(String s) {
+        super(s);
     }
 
     public static Map getEnumMap() {

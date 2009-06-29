@@ -27,7 +27,6 @@
 	<classpathentry kind="lib" path="/Resources/lib/Endpoint/spring-aspects.jar"/>
 	<classpathentry kind="lib" path="/Resources/lib/Endpoint/spring-dao.jar"/>
 	<classpathentry kind="lib" path="/Resources/lib/Endpoint/spring-remoting.jar"/>
-	<classpathentry kind="lib" path="/Resources/lib/Endpoint/wsdl4j.jar"/>
 	<classpathentry kind="lib" path="/Resources/lib/Endpoint/wsdl4j-1.5.1.jar"/>
 	<classpathentry kind="lib" path="/Resources/lib/Endpoint/xerces.jar"/>
 	<classpathentry kind="lib" path="/Resources/lib/Endpoint/xercesImpl.jar"/>

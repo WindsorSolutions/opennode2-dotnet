@@ -48,7 +48,6 @@ import com.windsor.node.common.domain.NamedSystemConfigItem;
 import com.windsor.node.common.domain.ServiceRequestAuthorizationType;
 import com.windsor.node.common.domain.ServiceType;
 import com.windsor.node.common.exception.WinNodeException;
-import com.windsor.node.data.dao.ConfigDao;
 import com.windsor.node.data.dao.ConnectionDao;
 import com.windsor.node.data.dao.ServiceDao;
 import com.windsor.node.service.helper.IdGenerator;
@@ -69,9 +68,19 @@ public class JdbcServiceDao extends BaseJdbcDao implements ServiceDao,
             + "Implementor, AuthLevel, ModifiedBy, ModifiedOn FROM NService ";
 
     /**
+     * For ENDS2 support.
+     */
+    private static final String SQL_SELECT_WITH_FLOW_NAME = "SELECT s.Id, s.Name, s.FlowId, s.IsActive, s.ServiceType, "
+            + "s.Implementor, s.AuthLevel, s.ModifiedBy, s.ModifiedOn, f.Code FROM NService s, NFlow f "
+            + "WHERE s.IsActive = 'Y' AND f.Id = s.FlowId ORDER BY f.Code, s.Name";
+
+    private static final String SQL_SELECT_ACTIVE_BY_IMLPEMENTOR = SQL_SELECT
+            + " WHERE IsActive = 'Y' and Implementor = ? ";
+
+    /**
      * Select active DataService ids and names.
      */
-    private static final String SQL_SELECT_ID_AND_NAME_LIST = "SELECT Id, Name FROM NService WHERE IsActive = 'Y' ";
+    private static final String SQL_SELECT_ID_AND_NAME_LIST = "SELECT Id, Name FROM NService WHERE IsActive = 'Y'  ORDER BY Name";
 
     /**
      * Select active DataService ids and names for a given DataFlow id.
@@ -129,36 +138,32 @@ public class JdbcServiceDao extends BaseJdbcDao implements ServiceDao,
     /**
      * Select the service arguments for a given DataService id.
      */
-    protected final String SQL_SELECT_ARG = "SELECT ArgKey, ArgValue FROM NServiceArg WHERE ServiceId = ? ORDER BY ArgKey  ";
+    protected static final String SQL_SELECT_ARG = "SELECT ArgKey, ArgValue FROM NServiceArg WHERE ServiceId = ? ORDER BY ArgKey  ";
 
     /**
      * Insert the service arguments for a given DataService id.
      */
-    protected final String SQL_INSERT_ARG = "INSERT INTO NServiceArg ( Id, ServiceId, ArgKey, ArgValue ) VALUES ( ?, ?, ?, ? )";
+    protected static final String SQL_INSERT_ARG = "INSERT INTO NServiceArg ( Id, ServiceId, ArgKey, ArgValue ) VALUES ( ?, ?, ?, ? )";
 
     /**
      * Delete the service arguments for a given DataService id.
      */
-    protected final String SQL_DELETE_ARG = "DELETE FROM NServiceArg WHERE ServiceId = ?";
+    protected static final String SQL_DELETE_ARG = "DELETE FROM NServiceArg WHERE ServiceId = ?";
 
     /**
      * Insert a data source for a given DataService id.
      */
-    protected final String SQL_INSERT_CONN = "INSERT INTO NServiceConn ( Id, ServiceId, ConnectionId, KeyName ) VALUES ( ?, ?, ?, ? )";
+    protected static final String SQL_INSERT_CONN = "INSERT INTO NServiceConn ( Id, ServiceId, ConnectionId, KeyName ) VALUES ( ?, ?, ?, ? )";
 
     /**
      * Delete a data source for a given DataService id.
      */
-    protected final String SQL_DELETE_CONN = "DELETE FROM NServiceConn WHERE ServiceId = ? ";
+    protected static final String SQL_DELETE_CONN = "DELETE FROM NServiceConn WHERE ServiceId = ? ";
 
     /**
      * Dao for related data sources.
      */
     private ConnectionDao connectionDao;
-
-    // TODO: verify that this is no longer used, then delete and remove from
-    // Spring config.
-    private ConfigDao configDao;
 
     /*
      * (non-Javadoc)
@@ -171,10 +176,6 @@ public class JdbcServiceDao extends BaseJdbcDao implements ServiceDao,
 
         if (connectionDao == null) {
             throw new RuntimeException("connectionDao Not Set");
-        }
-
-        if (configDao == null) {
-            throw new RuntimeException("configDao Not Set");
         }
     }
 
@@ -360,9 +361,6 @@ public class JdbcServiceDao extends BaseJdbcDao implements ServiceDao,
 
     }
 
-    /**
-     * delete
-     */
     /*
      * (non-Javadoc)
      * 
@@ -379,15 +377,13 @@ public class JdbcServiceDao extends BaseJdbcDao implements ServiceDao,
         delete(SQL_DELETE, id);
     }
 
-    /**
-     * getByFlowId
-     */
     /*
      * (non-Javadoc)
      * 
      * @see com.windsor.node.data.dao.ServiceDao#getByFlowId(java.lang.String)
      */
-    public List getByFlowId(String id) {
+    @SuppressWarnings("unchecked")
+    public List<DataService> getByFlowId(String id) {
 
         validateStringArg(id);
 
@@ -400,7 +396,7 @@ public class JdbcServiceDao extends BaseJdbcDao implements ServiceDao,
      * 
      * @see com.windsor.node.data.dao.ServiceDao#getActive()
      */
-    public Map getActive() {
+    public Map<String, String> getActive() {
 
         return getMap(SQL_SELECT_ID_AND_NAME_LIST, false);
     }
@@ -411,7 +407,7 @@ public class JdbcServiceDao extends BaseJdbcDao implements ServiceDao,
      * @see
      * com.windsor.node.data.dao.ServiceDao#getActiveByFlowId(java.lang.String)
      */
-    public Map getActiveByFlowId(String id) {
+    public Map<String, String> getActiveByFlowId(String id) {
 
         validateStringArg(id);
 
@@ -426,13 +422,24 @@ public class JdbcServiceDao extends BaseJdbcDao implements ServiceDao,
                 new Object[] { serviceId }, new ServiceArgMapper(serviceId));
     }
 
-    /**
-     * Retrieve a List of all DataServices.
-     * 
-     * @return a List of all DataServices
-     */
-    public List get() {
+    @SuppressWarnings("unchecked")
+    public List<DataService> get() {
         return getJdbcTemplate().query(SQL_SELECT_ALL, new ServiceMapper());
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<DataService> getServicesForEnds2() {
+        return getJdbcTemplate().query(SQL_SELECT_WITH_FLOW_NAME,
+                new ServiceMapper());
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<DataService> getActiveByImplementor(String implementorName) {
+
+        validateStringArg(implementorName);
+
+        return getJdbcTemplate().query(SQL_SELECT_ACTIVE_BY_IMLPEMENTOR,
+                new Object[] { implementorName }, new ServiceMapper());
     }
 
     /**
@@ -456,13 +463,17 @@ public class JdbcServiceDao extends BaseJdbcDao implements ServiceDao,
             obj.setName(rs.getString("Name"));
             obj.setFlowId(rs.getString("FlowId"));
             obj.setActive(FormatUtil.toBooleanFromYN(rs.getString("IsActive")));
-            obj.setType(((ServiceType) ServiceType.getEnumMap().get(
-                    rs.getString("ServiceType"))));
+            obj.setType((ServiceType) ServiceType.getEnumMap().get(
+                    rs.getString("ServiceType")));
             obj.setImplementingClassName(rs.getString("Implementor"));
             obj.setArgs(getServiceArgs(rs.getString("Id")));
             obj.setDataSources(connectionDao.getBySerivceId(obj.getId()));
             obj.setModifiedById(rs.getString("ModifiedBy"));
             obj.setModifiedOn(rs.getTimestamp("ModifiedOn"));
+
+            if (containsColumnNamed(rs, "Code")) {
+                obj.setFlowName(rs.getString("Code"));
+            }
 
             return obj;
         }
@@ -526,10 +537,6 @@ public class JdbcServiceDao extends BaseJdbcDao implements ServiceDao,
 
     public void setConnectionDao(ConnectionDao connectionDao) {
         this.connectionDao = connectionDao;
-    }
-
-    public void setConfigDao(ConfigDao configDao) {
-        this.configDao = configDao;
     }
 
     public void setIdGenerator(IdGenerator idGenerator) {

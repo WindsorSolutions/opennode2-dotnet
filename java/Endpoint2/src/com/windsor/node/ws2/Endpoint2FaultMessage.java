@@ -43,38 +43,38 @@ import net.exchangenetwork.www.schema.node._2.NodeFaultDetailType;
 
 public class Endpoint2FaultMessage extends java.lang.Exception {
 
-	private static final long serialVersionUID = 1;
+    private static final long serialVersionUID = 1;
 
-	private NodeFaultDetailType faultMessage = new NodeFaultDetailType();
+    private NodeFaultDetailType faultMessage = new NodeFaultDetailType();
 
-	public Endpoint2FaultMessage() {
-		super("Endpoint2FaultMessage");
-		faultMessage.setDescription("Error description not defined");
-		faultMessage.setErrorCode(ErrorCodeList.E_Unknown);
-	}
+    public Endpoint2FaultMessage() {
+        super("Endpoint2FaultMessage");
+        faultMessage.setDescription("Error description not defined");
+        faultMessage.setErrorCode(ErrorCodeList.E_Unknown);
+    }
 
-	public Endpoint2FaultMessage(String s) {
-		super(s);
-		faultMessage.setDescription(s);
-		faultMessage.setErrorCode(ErrorCodeList.E_Unknown);
-	}
+    public Endpoint2FaultMessage(String s) {
+        super(s);
+        faultMessage.setDescription(s);
+        faultMessage.setErrorCode(ErrorCodeList.E_Unknown);
+    }
 
-	public Endpoint2FaultMessage(NodeFaultDetailType faultMessage) {
-		super(faultMessage.getDescription());
-		this.faultMessage = faultMessage;
-	}
+    public Endpoint2FaultMessage(NodeFaultDetailType faultMessage) {
+        super(faultMessage.getDescription());
+        this.faultMessage = faultMessage;
+    }
 
-	public Endpoint2FaultMessage(String s, Throwable ex) {
-		super(s, ex);
-		faultMessage.setDescription(s);
-		faultMessage.setErrorCode(ErrorCodeList.E_Unknown);
-	}
+    public Endpoint2FaultMessage(String s, Throwable ex) {
+        super(s, ex);
+        faultMessage.setDescription(s);
+        faultMessage.setErrorCode(ErrorCodeList.E_Unknown);
+    }
 
-	public void setFaultMessage(NodeFaultDetailType msg) {
-		faultMessage = msg;
-	}
+    public void setFaultMessage(NodeFaultDetailType msg) {
+        faultMessage = msg;
+    }
 
-	public NodeFaultDetailType getFaultMessage() {
-		return faultMessage;
-	}
+    public NodeFaultDetailType getFaultMessage() {
+        return faultMessage;
+    }
 }

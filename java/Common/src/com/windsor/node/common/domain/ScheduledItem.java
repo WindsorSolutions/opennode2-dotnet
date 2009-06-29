@@ -47,8 +47,8 @@ public class ScheduledItem extends AuditableIdentity {
     private static final long serialVersionUID = 1;
     private String name;
     private String flowId;
-    private Timestamp startOn = new Timestamp(new Date().getTime());
-    private Timestamp endOn = new Timestamp(new Date().getTime());
+    private Timestamp startOn;
+    private Timestamp endOn;
     private ScheduledItemSourceType sourceType = ScheduledItemSourceType.NONE;
     private String sourceId;
     private String sourceOperation;
@@ -63,15 +63,21 @@ public class ScheduledItem extends AuditableIdentity {
     private boolean active = true;
     private boolean runNow = false;
     private ScheduleExecuteStatus executeStatus = ScheduleExecuteStatus.SUCCESS;
+    
     /**
-     * Map of service id's & names associated with a flow id. Used only by web
-     * UI - this is inelegant but expedient
+     * Map of service id's & names associated with a flow id.
+     * <p>
+     * Used only by web UI - this is inelegant but expedient.
+     * </p>
      * 
      */
     private transient Map services;
 
     public ScheduledItem() {
-
+        
+        long now = System.currentTimeMillis();
+        startOn = new Timestamp(now);
+        endOn = new Timestamp(now);
     }
 
     public String getName() {

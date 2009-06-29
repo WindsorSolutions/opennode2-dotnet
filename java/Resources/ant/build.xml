@@ -5,6 +5,7 @@
 	<property name="common.root" value="${project.root}/Common" />
 	<property name="endpoint.root" value="${project.root}/Endpoint" />
 	<property name="endpoint2.root" value="${project.root}/Endpoint2" />
+	<property name="endpoint2client.root" value="${project.root}/Endpoint2Client" />
 	<property name="logic.root" value="${project.root}/Wnos_Logic" />
 	<property name="service.root" value="${project.root}/Wnos_Service" />
 	<property name="plugin.root" value="${project.root}/Wnos_Plugin" />
@@ -12,6 +13,7 @@
 
 	<target name="get.env" description="displays build configuration options">
 		<echo message="Build environment: ${env.dir}" />
+		<echo message="Selected JDK version: ${jdk.version}" />
 		<echo message="Target appserver: ${appserver}" />
 		<echo message="Use verbose output? ${verbosity}" />
 	</target>
@@ -28,31 +30,37 @@
 
 	<target name="build.jars" description="Clean build all projects, no debug symbols or source, creates jars/wars, does NOT run tests">
 		<property name="run.target" value="build.jar" />
+		<property name="copyCommonAndLogicJars" value="true" />
 		<antcall target="run.projects" inheritAll="true" />
 	</target>
 
 	<target name="build.jars.run.tests" description="Clean build all projects, runs tests, creates deployable jars/wars">
 		<property name="run.target" value="build.jar.run.tests" />
+		<property name="copyCommonAndLogicJars" value="true" />
 		<antcall target="run.projects" inheritAll="true" />
 	</target>
 
 	<target name="build.test.jars" description="Clean build all projects, creates jars/wars with debug symbols and source">
 		<property name="run.target" value="build.test.jar" />
+		<property name="copyCommonAndLogicJars" value="true" />
 		<antcall target="run.projects" inheritAll="true" />
 	</target>
 
 	<target name="build.deploy" description="Calls build.jar and deploys to appserver">
 		<property name="run.target" value="build.deploy" />
+		<property name="copyCommonAndLogicJars" value="true" />
 		<antcall target="run.projects" inheritAll="true" />
 	</target>
 
 	<target name="build.test.deploy" description="Calls build.test.jar and deploys to appserver">
 		<property name="run.target" value="build.test.deploy" />
+		<property name="copyCommonAndLogicJars" value="true" />
 		<antcall target="run.projects" inheritAll="true" />
 	</target>
 
 	<target name="run.tests" description="Builds and runs all tests">
 		<property name="run.target" value="run.tests" />
+		<property name="copyCommonAndLogicJars" value="true" />
 		<antcall target="run.projects" inheritAll="true" />
 	</target>
 
@@ -74,6 +82,12 @@
 		<ant dir="${endpoint.root}" target="${run.target}" inheritAll="false" inheritRefs="false" />
 		<echo message="Running ${run.target} in ${endpoint2.root}" />
 		<ant dir="${endpoint2.root}" target="${run.target}" inheritAll="false" inheritRefs="false" />
+		<antcall target="copyCommonAndLogicJars" inheritAll="true" />
+	</target>
+
+	<target name="copyCommonAndLogicJars" if="copyCommonAndLogicJars">
+		<copy file="../dist/${env.dir}/nodeCommon.jar" todir="../../Wnos_Plugin/resources/lib-build" verbose="${verbosity}"/>
+		<copy file="../dist/${env.dir}/nodeLogic.jar" todir="../../Wnos_Plugin/resources/lib-build"  verbose="${verbosity}"/>
 	</target>
 
 </project>

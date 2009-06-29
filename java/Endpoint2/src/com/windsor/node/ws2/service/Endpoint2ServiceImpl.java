@@ -91,6 +91,7 @@ import com.windsor.node.common.domain.EndpointAuthenticationRequest;
 import com.windsor.node.common.domain.EndpointTokenValidationRequest;
 import com.windsor.node.common.domain.EndpointVersionType;
 import com.windsor.node.common.domain.EndpointVisit;
+import com.windsor.node.common.domain.NodeStatusCodeType;
 import com.windsor.node.common.domain.Notification;
 import com.windsor.node.common.domain.OperationDataFlow;
 import com.windsor.node.common.domain.PaginationIndicator;
@@ -104,6 +105,7 @@ import com.windsor.node.common.service.cmf.ContentService;
 import com.windsor.node.common.service.cmf.SecurityService;
 import com.windsor.node.common.service.cmf.TransactionService;
 import com.windsor.node.common.util.ByIndexOrNameMap;
+import com.windsor.node.common.util.CommonTransactionStatusCodeConverter;
 import com.windsor.node.ws2.Endpoint2FaultMessage;
 import com.windsor.node.ws2.util.FaultUtil;
 import com.windsor.node.ws2.util.NodeUtil;
@@ -457,7 +459,8 @@ public class Endpoint2ServiceImpl extends BaseEndpoint2Service implements
     public NodePingResponse NodePing(NodePing nodePingRequest)
             throws Endpoint2FaultMessage {
         NodePingResponse response = new NodePingResponse();
-        NodeStatusCode statusCode = NodeStatusCode.Factory.fromValue("Ready");
+        NodeStatusCode statusCode = NodeStatusCode.Factory
+                .fromValue(NodeStatusCodeType.READY.toString());
         response.setNodeStatus(statusCode);
         response.setStatusDetail("Node Ready");
         return response;
@@ -639,9 +642,8 @@ public class Endpoint2ServiceImpl extends BaseEndpoint2Service implements
 
                 TransactionStatus status = new TransactionStatus();
                 status
-                        .setStatus((CommonTransactionStatusCode) CommonTransactionStatusCode
-                                .getEnumMap().get(
-                                        wsdlNotif.getStatus().getValue()));
+                        .setStatus((CommonTransactionStatusCode) CommonTransactionStatusCodeConverter
+                                .convert(wsdlNotif.getStatus().getValue()));
                 status.setDescription(wsdlNotif.getStatusDetail());
                 wnosNotif.setStatus(status);
 
@@ -846,9 +848,9 @@ public class Endpoint2ServiceImpl extends BaseEndpoint2Service implements
             }
             if (wnosResult.getDocuments().size() == 0) {
                 throw new RuntimeException(ZERO_DOCUMENTS);
-//            }
-//            if (wnosResult.getDocuments().size() > 1) {
-//                throw new RuntimeException(MORE_THAN_ONE_DOCUMENT);
+                // }
+                // if (wnosResult.getDocuments().size() > 1) {
+                // throw new RuntimeException(MORE_THAN_ONE_DOCUMENT);
             } else {
 
                 Document doc = (Document) wnosResult.getDocuments().get(0);

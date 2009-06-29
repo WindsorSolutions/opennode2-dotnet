@@ -46,6 +46,7 @@ import com.windsor.node.common.domain.Document;
 import com.windsor.node.common.domain.NodeMethodType;
 import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.TransactionStatus;
+import com.windsor.node.common.util.CommonTransactionStatusCodeConverter;
 import com.windsor.node.data.dao.AccountDao;
 import com.windsor.node.data.dao.FlowDao;
 import com.windsor.node.data.dao.TransactionDao;
@@ -227,13 +228,21 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao,
         validateStringArg(id);
 
         String sql = SQL_SELECT_ID;
-
+        
+        String adjustedId;
+        
         if (useNetworkId) {
+            
             sql = SQL_SELECT_ENID;
-            id = id.toUpperCase();
+            adjustedId = id.toUpperCase();
+
+        } else {
+            
+            adjustedId = id;
         }
 
-        return (NodeTransaction) queryForObject(sql, new Object[] { id },
+        return (NodeTransaction) queryForObject(sql,
+                new Object[] { adjustedId },
                 new TransactionMapper());
     }
 
@@ -313,6 +322,8 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao,
 
         String sql = SQL_SELECT_DOC_NO_CONTENT;
 
+        String adjustedId;
+        
         if (loadDocContent) {
             sql = SQL_SELECT_DOC_WITH_CONTENT;
         }
@@ -324,10 +335,14 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao,
                 sql = SQL_SELECT_DOC_EN_WITH_CONTENT;
             }
 
-            transactionId = transactionId.toUpperCase();
+            adjustedId = transactionId.toUpperCase();
+
+        } else {
+
+            adjustedId = transactionId;
         }
 
-        return getJdbcTemplate().query(sql, new Object[] { transactionId },
+        return getJdbcTemplate().query(sql, new Object[] { adjustedId },
                 new DocumentMapper());
     }
 
@@ -535,8 +550,8 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao,
                     rs.getString("DocumentType")));
             obj.setDocumentId(rs.getString("DocumentId"));
             obj
-                    .setDocumentStatus((CommonTransactionStatusCode) CommonTransactionStatusCode
-                            .getEnumMap().get(rs.getString("Status")));
+                    .setDocumentStatus((CommonTransactionStatusCode) CommonTransactionStatusCodeConverter
+                            .convert(rs.getString("Status")));
             obj.setDocumentStatusDetail(rs.getString("StatusDetail"));
             obj.setContent(rs.getBytes("DocumentContent"));
 

@@ -33,6 +33,6 @@ package com.windsor.node.service.helper;
 
 public interface IdGenerator {
 
-    public abstract String createId();
+    abstract String createId();
 
 }

@@ -41,9 +41,9 @@
 					        style="width:96%"
 					        class="select" >
 						<c:forEach var="ver" items="${model.endpointVersions}">
-							<option value="<c:out value="${ver.name}" />"
-								<c:if test="${ command.version.name == ver.name }">selected</c:if> 
-							><c:out value="${ver.name}" /></option>
+							<option value="<c:out value="${ver.type}" />"
+								<c:if test="${ command.version.type == ver.type }">selected</c:if> 
+							><c:out value="${ver.type}" /></option>
 						</c:forEach>
 					</select>
 					<span class="error" <c:if test="${status.errorMessage == \"\"}">style="display:none;"</c:if> ><c:out value="${status.errorMessage}" /></span>

@@ -44,7 +44,7 @@ public class EndpointVersionTypeEditor extends ClassEditor {
         } else {
 
             try {
-                setValue(EndpointVersionType.getEnumMap().get(text));
+                setValue(EndpointVersionType.fromString(text));
             } catch (Exception ex) {
                 throw new IllegalArgumentException(
                         "Value could not be converted: " + text);
@@ -57,9 +57,9 @@ public class EndpointVersionTypeEditor extends ClassEditor {
         EndpointVersionType value = (EndpointVersionType) getValue();
 
         if (value == null) {
-            return EndpointVersionType.UNDEFINED.getName();
+            return EndpointVersionType.UNDEFINED.toString();
         } else {
-            return value.getName();
+            return value.toString();
         }
     }
 }

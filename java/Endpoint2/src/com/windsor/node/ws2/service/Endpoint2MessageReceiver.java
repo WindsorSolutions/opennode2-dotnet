@@ -78,648 +78,648 @@ import com.windsor.node.ws2.util.FaultUtil;
  */
 
 public class Endpoint2MessageReceiver extends
-		org.apache.axis2.receivers.AbstractInOutMessageReceiver {
+        org.apache.axis2.receivers.AbstractInOutMessageReceiver {
 
-	private final Logger logger = Logger.getLogger(getClass());
+    private final Logger logger = Logger.getLogger(getClass());
 
-	public void invokeBusinessLogic(
-			org.apache.axis2.context.MessageContext msgContext,
-			org.apache.axis2.context.MessageContext newMsgContext)
-			throws AxisFault {
+    public void invokeBusinessLogic(
+            org.apache.axis2.context.MessageContext msgContext,
+            org.apache.axis2.context.MessageContext newMsgContext)
+            throws AxisFault {
 
-		try {
+        try {
 
-			// get the implementation class for the Web Service
-			Object obj = getTheImplementationObject(msgContext);
+            // get the implementation class for the Web Service
+            Object obj = getTheImplementationObject(msgContext);
 
-			Endpoint2Service skel = (Endpoint2Service) obj;
-			// Out Envelop
-			org.apache.axiom.soap.SOAPEnvelope envelope = null;
+            Endpoint2Service skel = (Endpoint2Service) obj;
+            // Out Envelop
+            org.apache.axiom.soap.SOAPEnvelope envelope = null;
 
-			org.apache.axiom.soap.SOAPBody inputEnvelope = msgContext
-					.getEnvelope().getBody();
+            org.apache.axiom.soap.SOAPBody inputEnvelope = msgContext
+                    .getEnvelope().getBody();
 
-			// Find the axisOperation that has been set by the Dispatch phase.
-			org.apache.axis2.description.AxisOperation op = msgContext
-					.getOperationContext().getAxisOperation();
+            // Find the axisOperation that has been set by the Dispatch phase.
+            org.apache.axis2.description.AxisOperation op = msgContext
+                    .getOperationContext().getAxisOperation();
 
-			if (op == null) {
-				throw new AxisFault(
-						"Operation is not located, if this is doclit style the "
-								+ "SOAP-ACTION should specified via the SOAP Action to "
-								+ "use the RawXMLProvider");
-			}
+            if (op == null) {
+                throw new AxisFault(
+                        "Operation is not located, if this is doclit style the "
+                                + "SOAP-ACTION should specified via the SOAP Action to "
+                                + "use the RawXMLProvider");
+            }
 
-			String methodName;
-			if ((op.getName() != null)
-					&& ((methodName = org.apache.axis2.util.JavaUtils
-							.xmlNameToJava(op.getName().getLocalPart())) != null)) {
+            String methodName;
+            if ((op.getName() != null)
+                    && ((methodName = org.apache.axis2.util.JavaUtils
+                            .xmlNameToJava(op.getName().getLocalPart())) != null)) {
 
-				SOAPEnvelope inEnvelope = msgContext.getEnvelope();
-				logger.debug("Envelope: " + inEnvelope);
-				SOAPBody inBody = inEnvelope.getBody();
-				OMElement firstElement = inBody.getFirstElement();
-				Map namespaceMap = getEnvelopeNamespaces(inEnvelope);
+                SOAPEnvelope inEnvelope = msgContext.getEnvelope();
+                logger.debug("Envelope: " + inEnvelope);
+                SOAPBody inBody = inEnvelope.getBody();
+                OMElement firstElement = inBody.getFirstElement();
+                Map namespaceMap = getEnvelopeNamespaces(inEnvelope);
 
-				if ("Execute".equals(methodName)) {
+                if ("Execute".equals(methodName)) {
 
-					logger.debug("Processing Execute...");
+                    logger.debug("Processing Execute...");
 
-					Execute wrappedParam = (Execute) fromOM(firstElement,
-							Execute.class, namespaceMap);
+                    Execute wrappedParam = (Execute) fromOM(firstElement,
+                            Execute.class, namespaceMap);
 
-					ExecuteResponse executeResponse41 = skel
-							.Execute(wrappedParam);
+                    ExecuteResponse executeResponse41 = skel
+                            .Execute(wrappedParam);
 
-					envelope = toEnvelope(getSOAPFactory(msgContext),
-							executeResponse41, false);
+                    envelope = toEnvelope(getSOAPFactory(msgContext),
+                            executeResponse41, false);
 
-				} else if ("Authenticate".equals(methodName)) {
+                } else if ("Authenticate".equals(methodName)) {
 
-					logger.debug("Processing Authenticate...");
+                    logger.debug("Processing Authenticate...");
 
-					Authenticate wrappedParam = (Authenticate) fromOM(
-							firstElement, Authenticate.class, namespaceMap);
+                    Authenticate wrappedParam = (Authenticate) fromOM(
+                            firstElement, Authenticate.class, namespaceMap);
 
-					AuthenticateResponse authenticateResponse43 = skel
-							.Authenticate(wrappedParam);
+                    AuthenticateResponse authenticateResponse43 = skel
+                            .Authenticate(wrappedParam);
 
-					envelope = toEnvelope(getSOAPFactory(msgContext),
-							authenticateResponse43, false);
+                    envelope = toEnvelope(getSOAPFactory(msgContext),
+                            authenticateResponse43, false);
 
-				} else if ("Download".equals(methodName)) {
+                } else if ("Download".equals(methodName)) {
 
-					logger.debug("Processing Download...");
+                    logger.debug("Processing Download...");
 
-					Download wrappedParam = (Download) fromOM(firstElement,
-							Download.class, namespaceMap);
+                    Download wrappedParam = (Download) fromOM(firstElement,
+                            Download.class, namespaceMap);
 
-					DownloadResponse downloadResponse45 = skel
-							.Download(wrappedParam);
+                    DownloadResponse downloadResponse45 = skel
+                            .Download(wrappedParam);
 
-					envelope = toEnvelope(getSOAPFactory(msgContext),
-							downloadResponse45, false);
+                    envelope = toEnvelope(getSOAPFactory(msgContext),
+                            downloadResponse45, false);
 
-				} else if ("GetStatus".equals(methodName)) {
+                } else if ("GetStatus".equals(methodName)) {
 
-					GetStatus wrappedParam = (GetStatus) fromOM(firstElement,
-							GetStatus.class, namespaceMap);
+                    GetStatus wrappedParam = (GetStatus) fromOM(firstElement,
+                            GetStatus.class, namespaceMap);
 
-					GetStatusResponse getStatusResponse47 = skel
-							.GetStatus(wrappedParam);
+                    GetStatusResponse getStatusResponse47 = skel
+                            .GetStatus(wrappedParam);
 
-					envelope = toEnvelope(getSOAPFactory(msgContext),
-							getStatusResponse47, false);
+                    envelope = toEnvelope(getSOAPFactory(msgContext),
+                            getStatusResponse47, false);
 
-				} else if ("NodePing".equals(methodName)) {
+                } else if ("NodePing".equals(methodName)) {
 
-					logger.debug("Processing NodePing...");
+                    logger.debug("Processing NodePing...");
 
-					NodePing wrappedParam = (NodePing) fromOM(firstElement,
-							NodePing.class, namespaceMap);
+                    NodePing wrappedParam = (NodePing) fromOM(firstElement,
+                            NodePing.class, namespaceMap);
 
-					NodePingResponse nodePingResponse49 = skel
-							.NodePing(wrappedParam);
+                    NodePingResponse nodePingResponse49 = skel
+                            .NodePing(wrappedParam);
 
-					envelope = toEnvelope(getSOAPFactory(msgContext),
-							nodePingResponse49, false);
+                    envelope = toEnvelope(getSOAPFactory(msgContext),
+                            nodePingResponse49, false);
 
-				} else if ("GetServices".equals(methodName)) {
+                } else if ("GetServices".equals(methodName)) {
 
-					logger.debug("Processing GetServices...");
+                    logger.debug("Processing GetServices...");
 
-					GetServices wrappedParam = (GetServices) fromOM(
-							firstElement, GetServices.class, namespaceMap);
+                    GetServices wrappedParam = (GetServices) fromOM(
+                            firstElement, GetServices.class, namespaceMap);
 
-					GetServicesResponse getServicesResponse51 = skel
-							.GetServices(wrappedParam);
+                    GetServicesResponse getServicesResponse51 = skel
+                            .GetServices(wrappedParam);
 
-					envelope = toEnvelope(getSOAPFactory(msgContext),
-							getServicesResponse51, false);
+                    envelope = toEnvelope(getSOAPFactory(msgContext),
+                            getServicesResponse51, false);
 
-				} else if ("Submit".equals(methodName)) {
+                } else if ("Submit".equals(methodName)) {
 
-					logger.debug("Processing Submit...");
+                    logger.debug("Processing Submit...");
 
-					Submit wrappedParam = (Submit) fromOM(firstElement,
-							Submit.class, namespaceMap);
+                    Submit wrappedParam = (Submit) fromOM(firstElement,
+                            Submit.class, namespaceMap);
 
-					SubmitResponse submitResponse53 = skel.Submit(wrappedParam);
+                    SubmitResponse submitResponse53 = skel.Submit(wrappedParam);
 
-					envelope = toEnvelope(getSOAPFactory(msgContext),
-							submitResponse53, false);
+                    envelope = toEnvelope(getSOAPFactory(msgContext),
+                            submitResponse53, false);
 
-				} else if ("Notify".equals(methodName)) {
+                } else if ("Notify".equals(methodName)) {
 
-					logger.debug("Processing Notify...");
+                    logger.debug("Processing Notify...");
 
-					Notify wrappedParam = (Notify) fromOM(firstElement,
-							Notify.class, namespaceMap);
+                    Notify wrappedParam = (Notify) fromOM(firstElement,
+                            Notify.class, namespaceMap);
 
-					logger.debug("Input params: " + wrappedParam);
+                    logger.debug("Input params: " + wrappedParam);
 
-					NotifyResponse notifyResponse55 = skel.Notify(wrappedParam);
+                    NotifyResponse notifyResponse55 = skel.Notify(wrappedParam);
 
-					logger.debug("Output params: " + notifyResponse55);
+                    logger.debug("Output params: " + notifyResponse55);
 
-					envelope = toEnvelope(getSOAPFactory(msgContext),
-							notifyResponse55, false);
+                    envelope = toEnvelope(getSOAPFactory(msgContext),
+                            notifyResponse55, false);
 
-				} else if ("Solicit".equals(methodName)) {
+                } else if ("Solicit".equals(methodName)) {
 
-					logger.debug("Processing Solicit...");
+                    logger.debug("Processing Solicit...");
 
-					Solicit wrappedParam = (Solicit) fromOM(firstElement,
-							Solicit.class, namespaceMap);
+                    Solicit wrappedParam = (Solicit) fromOM(firstElement,
+                            Solicit.class, namespaceMap);
 
-					SolicitResponse solicitResponse57 = skel
-							.Solicit(wrappedParam);
+                    SolicitResponse solicitResponse57 = skel
+                            .Solicit(wrappedParam);
 
-					envelope = toEnvelope(getSOAPFactory(msgContext),
-							solicitResponse57, false);
+                    envelope = toEnvelope(getSOAPFactory(msgContext),
+                            solicitResponse57, false);
 
-				} else if ("Query".equals(methodName)) {
+                } else if ("Query".equals(methodName)) {
 
-					logger.debug("Processing Query...");
+                    logger.debug("Processing Query...");
 
-					Query wrappedParam = (Query) fromOM(firstElement,
-							Query.class, namespaceMap);
+                    Query wrappedParam = (Query) fromOM(firstElement,
+                            Query.class, namespaceMap);
 
-					QueryResponse queryResponse59 = skel.Query(wrappedParam);
+                    QueryResponse queryResponse59 = skel.Query(wrappedParam);
 
-					envelope = toEnvelope(getSOAPFactory(msgContext),
-							queryResponse59, false);
+                    envelope = toEnvelope(getSOAPFactory(msgContext),
+                            queryResponse59, false);
 
-				} else {
-					logger.error("Unsupported method: " + methodName);
-					throw new RuntimeException("method not found");
-				}
+                } else {
+                    logger.error("Unsupported method: " + methodName);
+                    throw new RuntimeException("method not found");
+                }
 
-				newMsgContext.setEnvelope(envelope);
-			}
+                newMsgContext.setEnvelope(envelope);
+            }
 
-		} catch (Endpoint2FaultMessage e) {
+        } catch (Endpoint2FaultMessage e) {
 
-			msgContext.setProperty(org.apache.axis2.Constants.FAULT_NAME,
-					"NodeFaultDetailType");
+            msgContext.setProperty(org.apache.axis2.Constants.FAULT_NAME,
+                    "NodeFaultDetailType");
 
-			AxisFault f = createAxisFault(e);
+            AxisFault f = createAxisFault(e);
 
-			if (e.getFaultMessage() != null) {
-				f.setDetail(toOM(e.getFaultMessage(), false));
-			}
+            if (e.getFaultMessage() != null) {
+                f.setDetail(toOM(e.getFaultMessage(), false));
+            }
 
-			throw f;
-		}
+            throw f;
+        }
 
-		catch (Exception ex) {
+        catch (Exception ex) {
 
-			Endpoint2FaultMessage e = FaultUtil.parseNodeFault(ex);
+            Endpoint2FaultMessage e = FaultUtil.parseNodeFault(ex);
 
-			msgContext.setProperty(org.apache.axis2.Constants.FAULT_NAME,
-					"NodeFaultDetailType");
+            msgContext.setProperty(org.apache.axis2.Constants.FAULT_NAME,
+                    "NodeFaultDetailType");
 
-			AxisFault f = createAxisFault(e);
+            AxisFault f = createAxisFault(e);
 
-			if (e.getFaultMessage() != null) {
-				f.setDetail(toOM(e.getFaultMessage(), false));
-			}
+            if (e.getFaultMessage() != null) {
+                f.setDetail(toOM(e.getFaultMessage(), false));
+            }
 
-			throw f;
+            throw f;
 
-		}
-	}
+        }
+    }
 
-	private org.apache.axiom.om.OMElement toOM(NodeFaultDetailType param,
-			boolean optimizeContent) throws AxisFault {
+    private org.apache.axiom.om.OMElement toOM(NodeFaultDetailType param,
+            boolean optimizeContent) throws AxisFault {
 
-		try {
-			return param.getOMElement(NodeFaultDetailType.MY_QNAME,
-					org.apache.axiom.om.OMAbstractFactory.getOMFactory());
-		} catch (org.apache.axis2.databinding.ADBException e) {
-			throw AxisFault.makeFault(e);
-		}
+        try {
+            return param.getOMElement(NodeFaultDetailType.MY_QNAME,
+                    org.apache.axiom.om.OMAbstractFactory.getOMFactory());
+        } catch (org.apache.axis2.databinding.ADBException e) {
+            throw AxisFault.makeFault(e);
+        }
 
-	}
+    }
 
-	private org.apache.axiom.soap.SOAPEnvelope toEnvelope(
-			org.apache.axiom.soap.SOAPFactory factory, ExecuteResponse param,
-			boolean optimizeContent) throws AxisFault {
-		try {
-			org.apache.axiom.soap.SOAPEnvelope emptyEnvelope = factory
-					.getDefaultEnvelope();
+    private org.apache.axiom.soap.SOAPEnvelope toEnvelope(
+            org.apache.axiom.soap.SOAPFactory factory, ExecuteResponse param,
+            boolean optimizeContent) throws AxisFault {
+        try {
+            org.apache.axiom.soap.SOAPEnvelope emptyEnvelope = factory
+                    .getDefaultEnvelope();
 
-			emptyEnvelope.getBody().addChild(
-					param.getOMElement(ExecuteResponse.MY_QNAME, factory));
+            emptyEnvelope.getBody().addChild(
+                    param.getOMElement(ExecuteResponse.MY_QNAME, factory));
 
-			return emptyEnvelope;
-		} catch (org.apache.axis2.databinding.ADBException e) {
-			throw AxisFault.makeFault(e);
-		}
-	}
+            return emptyEnvelope;
+        } catch (org.apache.axis2.databinding.ADBException e) {
+            throw AxisFault.makeFault(e);
+        }
+    }
 
-	private org.apache.axiom.soap.SOAPEnvelope toEnvelope(
-			org.apache.axiom.soap.SOAPFactory factory,
-			AuthenticateResponse param, boolean optimizeContent)
-			throws AxisFault {
-		try {
-			org.apache.axiom.soap.SOAPEnvelope emptyEnvelope = factory
-					.getDefaultEnvelope();
+    private org.apache.axiom.soap.SOAPEnvelope toEnvelope(
+            org.apache.axiom.soap.SOAPFactory factory,
+            AuthenticateResponse param, boolean optimizeContent)
+            throws AxisFault {
+        try {
+            org.apache.axiom.soap.SOAPEnvelope emptyEnvelope = factory
+                    .getDefaultEnvelope();
 
-			emptyEnvelope.getBody().addChild(
-					param.getOMElement(AuthenticateResponse.MY_QNAME, factory));
+            emptyEnvelope.getBody().addChild(
+                    param.getOMElement(AuthenticateResponse.MY_QNAME, factory));
 
-			return emptyEnvelope;
-		} catch (org.apache.axis2.databinding.ADBException e) {
-			throw AxisFault.makeFault(e);
-		}
-	}
+            return emptyEnvelope;
+        } catch (org.apache.axis2.databinding.ADBException e) {
+            throw AxisFault.makeFault(e);
+        }
+    }
 
-	private org.apache.axiom.soap.SOAPEnvelope toEnvelope(
-			org.apache.axiom.soap.SOAPFactory factory, DownloadResponse param,
-			boolean optimizeContent) throws AxisFault {
-		try {
-			org.apache.axiom.soap.SOAPEnvelope emptyEnvelope = factory
-					.getDefaultEnvelope();
+    private org.apache.axiom.soap.SOAPEnvelope toEnvelope(
+            org.apache.axiom.soap.SOAPFactory factory, DownloadResponse param,
+            boolean optimizeContent) throws AxisFault {
+        try {
+            org.apache.axiom.soap.SOAPEnvelope emptyEnvelope = factory
+                    .getDefaultEnvelope();
 
-			emptyEnvelope.getBody().addChild(
-					param.getOMElement(DownloadResponse.MY_QNAME, factory));
+            emptyEnvelope.getBody().addChild(
+                    param.getOMElement(DownloadResponse.MY_QNAME, factory));
 
-			return emptyEnvelope;
-		} catch (org.apache.axis2.databinding.ADBException e) {
-			throw AxisFault.makeFault(e);
-		}
-	}
+            return emptyEnvelope;
+        } catch (org.apache.axis2.databinding.ADBException e) {
+            throw AxisFault.makeFault(e);
+        }
+    }
 
-	private org.apache.axiom.soap.SOAPEnvelope toEnvelope(
-			org.apache.axiom.soap.SOAPFactory factory, GetStatusResponse param,
-			boolean optimizeContent) throws AxisFault {
-		try {
-			org.apache.axiom.soap.SOAPEnvelope emptyEnvelope = factory
-					.getDefaultEnvelope();
+    private org.apache.axiom.soap.SOAPEnvelope toEnvelope(
+            org.apache.axiom.soap.SOAPFactory factory, GetStatusResponse param,
+            boolean optimizeContent) throws AxisFault {
+        try {
+            org.apache.axiom.soap.SOAPEnvelope emptyEnvelope = factory
+                    .getDefaultEnvelope();
 
-			emptyEnvelope.getBody().addChild(
-					param.getOMElement(GetStatusResponse.MY_QNAME, factory));
+            emptyEnvelope.getBody().addChild(
+                    param.getOMElement(GetStatusResponse.MY_QNAME, factory));
 
-			return emptyEnvelope;
-		} catch (org.apache.axis2.databinding.ADBException e) {
-			throw AxisFault.makeFault(e);
-		}
-	}
+            return emptyEnvelope;
+        } catch (org.apache.axis2.databinding.ADBException e) {
+            throw AxisFault.makeFault(e);
+        }
+    }
 
-	private org.apache.axiom.soap.SOAPEnvelope toEnvelope(
-			org.apache.axiom.soap.SOAPFactory factory, NodePingResponse param,
-			boolean optimizeContent) throws AxisFault {
-		try {
-			org.apache.axiom.soap.SOAPEnvelope emptyEnvelope = factory
-					.getDefaultEnvelope();
+    private org.apache.axiom.soap.SOAPEnvelope toEnvelope(
+            org.apache.axiom.soap.SOAPFactory factory, NodePingResponse param,
+            boolean optimizeContent) throws AxisFault {
+        try {
+            org.apache.axiom.soap.SOAPEnvelope emptyEnvelope = factory
+                    .getDefaultEnvelope();
 
-			emptyEnvelope.getBody().addChild(
-					param.getOMElement(NodePingResponse.MY_QNAME, factory));
+            emptyEnvelope.getBody().addChild(
+                    param.getOMElement(NodePingResponse.MY_QNAME, factory));
 
-			return emptyEnvelope;
-		} catch (org.apache.axis2.databinding.ADBException e) {
-			throw AxisFault.makeFault(e);
-		}
-	}
+            return emptyEnvelope;
+        } catch (org.apache.axis2.databinding.ADBException e) {
+            throw AxisFault.makeFault(e);
+        }
+    }
 
-	private org.apache.axiom.soap.SOAPEnvelope toEnvelope(
-			org.apache.axiom.soap.SOAPFactory factory,
-			GetServicesResponse param, boolean optimizeContent)
-			throws AxisFault {
-		try {
-			org.apache.axiom.soap.SOAPEnvelope emptyEnvelope = factory
-					.getDefaultEnvelope();
+    private org.apache.axiom.soap.SOAPEnvelope toEnvelope(
+            org.apache.axiom.soap.SOAPFactory factory,
+            GetServicesResponse param, boolean optimizeContent)
+            throws AxisFault {
+        try {
+            org.apache.axiom.soap.SOAPEnvelope emptyEnvelope = factory
+                    .getDefaultEnvelope();
 
-			emptyEnvelope.getBody().addChild(
-					param.getOMElement(GetServicesResponse.MY_QNAME, factory));
+            emptyEnvelope.getBody().addChild(
+                    param.getOMElement(GetServicesResponse.MY_QNAME, factory));
 
-			return emptyEnvelope;
-		} catch (org.apache.axis2.databinding.ADBException e) {
-			throw AxisFault.makeFault(e);
-		}
-	}
+            return emptyEnvelope;
+        } catch (org.apache.axis2.databinding.ADBException e) {
+            throw AxisFault.makeFault(e);
+        }
+    }
 
-	private org.apache.axiom.soap.SOAPEnvelope toEnvelope(
-			org.apache.axiom.soap.SOAPFactory factory, SubmitResponse param,
-			boolean optimizeContent) throws AxisFault {
-		try {
-			org.apache.axiom.soap.SOAPEnvelope emptyEnvelope = factory
-					.getDefaultEnvelope();
+    private org.apache.axiom.soap.SOAPEnvelope toEnvelope(
+            org.apache.axiom.soap.SOAPFactory factory, SubmitResponse param,
+            boolean optimizeContent) throws AxisFault {
+        try {
+            org.apache.axiom.soap.SOAPEnvelope emptyEnvelope = factory
+                    .getDefaultEnvelope();
 
-			emptyEnvelope.getBody().addChild(
-					param.getOMElement(SubmitResponse.MY_QNAME, factory));
+            emptyEnvelope.getBody().addChild(
+                    param.getOMElement(SubmitResponse.MY_QNAME, factory));
 
-			return emptyEnvelope;
-		} catch (org.apache.axis2.databinding.ADBException e) {
-			throw AxisFault.makeFault(e);
-		}
-	}
+            return emptyEnvelope;
+        } catch (org.apache.axis2.databinding.ADBException e) {
+            throw AxisFault.makeFault(e);
+        }
+    }
 
-	private org.apache.axiom.soap.SOAPEnvelope toEnvelope(
-			org.apache.axiom.soap.SOAPFactory factory, NotifyResponse param,
-			boolean optimizeContent) throws AxisFault {
-		try {
-			org.apache.axiom.soap.SOAPEnvelope emptyEnvelope = factory
-					.getDefaultEnvelope();
+    private org.apache.axiom.soap.SOAPEnvelope toEnvelope(
+            org.apache.axiom.soap.SOAPFactory factory, NotifyResponse param,
+            boolean optimizeContent) throws AxisFault {
+        try {
+            org.apache.axiom.soap.SOAPEnvelope emptyEnvelope = factory
+                    .getDefaultEnvelope();
 
-			emptyEnvelope.getBody().addChild(
-					param.getOMElement(NotifyResponse.MY_QNAME, factory));
+            emptyEnvelope.getBody().addChild(
+                    param.getOMElement(NotifyResponse.MY_QNAME, factory));
 
-			return emptyEnvelope;
-		} catch (org.apache.axis2.databinding.ADBException e) {
-			throw AxisFault.makeFault(e);
-		}
-	}
+            return emptyEnvelope;
+        } catch (org.apache.axis2.databinding.ADBException e) {
+            throw AxisFault.makeFault(e);
+        }
+    }
 
-	private org.apache.axiom.soap.SOAPEnvelope toEnvelope(
-			org.apache.axiom.soap.SOAPFactory factory, SolicitResponse param,
-			boolean optimizeContent) throws AxisFault {
-		try {
-			org.apache.axiom.soap.SOAPEnvelope emptyEnvelope = factory
-					.getDefaultEnvelope();
+    private org.apache.axiom.soap.SOAPEnvelope toEnvelope(
+            org.apache.axiom.soap.SOAPFactory factory, SolicitResponse param,
+            boolean optimizeContent) throws AxisFault {
+        try {
+            org.apache.axiom.soap.SOAPEnvelope emptyEnvelope = factory
+                    .getDefaultEnvelope();
 
-			emptyEnvelope.getBody().addChild(
-					param.getOMElement(SolicitResponse.MY_QNAME, factory));
+            emptyEnvelope.getBody().addChild(
+                    param.getOMElement(SolicitResponse.MY_QNAME, factory));
 
-			return emptyEnvelope;
-		} catch (org.apache.axis2.databinding.ADBException e) {
-			throw AxisFault.makeFault(e);
-		}
-	}
+            return emptyEnvelope;
+        } catch (org.apache.axis2.databinding.ADBException e) {
+            throw AxisFault.makeFault(e);
+        }
+    }
 
-	private org.apache.axiom.soap.SOAPEnvelope toEnvelope(
-			org.apache.axiom.soap.SOAPFactory factory, QueryResponse param,
-			boolean optimizeContent) throws AxisFault {
-		try {
-			org.apache.axiom.soap.SOAPEnvelope emptyEnvelope = factory
-					.getDefaultEnvelope();
+    private org.apache.axiom.soap.SOAPEnvelope toEnvelope(
+            org.apache.axiom.soap.SOAPFactory factory, QueryResponse param,
+            boolean optimizeContent) throws AxisFault {
+        try {
+            org.apache.axiom.soap.SOAPEnvelope emptyEnvelope = factory
+                    .getDefaultEnvelope();
 
-			emptyEnvelope.getBody().addChild(
-					param.getOMElement(QueryResponse.MY_QNAME, factory));
+            emptyEnvelope.getBody().addChild(
+                    param.getOMElement(QueryResponse.MY_QNAME, factory));
 
-			return emptyEnvelope;
-		} catch (org.apache.axis2.databinding.ADBException e) {
-			throw AxisFault.makeFault(e);
-		}
-	}
+            return emptyEnvelope;
+        } catch (org.apache.axis2.databinding.ADBException e) {
+            throw AxisFault.makeFault(e);
+        }
+    }
 
-	private Object fromOM(org.apache.axiom.om.OMElement param, Class type,
-			Map extraNamespaces) throws AxisFault {
+    private Object fromOM(org.apache.axiom.om.OMElement param, Class type,
+            Map extraNamespaces) throws AxisFault {
 
-		try {
+        try {
 
-			logger.debug("Parsing for type: " + type);
+            logger.debug("Parsing for type: " + type);
 
-			if (Execute.class.equals(type)) {
+            if (Execute.class.equals(type)) {
 
-				return Execute.Factory.parse(param
-						.getXMLStreamReaderWithoutCaching());
+                return Execute.Factory.parse(param
+                        .getXMLStreamReaderWithoutCaching());
 
-			}
+            }
 
-			if (ExecuteResponse.class.equals(type)) {
+            if (ExecuteResponse.class.equals(type)) {
 
-				return ExecuteResponse.Factory.parse(param
-						.getXMLStreamReaderWithoutCaching());
+                return ExecuteResponse.Factory.parse(param
+                        .getXMLStreamReaderWithoutCaching());
 
-			}
+            }
 
-			if (NodeFaultDetailType.class.equals(type)) {
+            if (NodeFaultDetailType.class.equals(type)) {
 
-				return NodeFaultDetailType.Factory.parse(param
-						.getXMLStreamReaderWithoutCaching());
+                return NodeFaultDetailType.Factory.parse(param
+                        .getXMLStreamReaderWithoutCaching());
 
-			}
+            }
 
-			if (Authenticate.class.equals(type)) {
+            if (Authenticate.class.equals(type)) {
 
-				return Authenticate.Factory.parse(param
-						.getXMLStreamReaderWithoutCaching());
+                return Authenticate.Factory.parse(param
+                        .getXMLStreamReaderWithoutCaching());
 
-			}
+            }
 
-			if (AuthenticateResponse.class.equals(type)) {
+            if (AuthenticateResponse.class.equals(type)) {
 
-				return AuthenticateResponse.Factory.parse(param
-						.getXMLStreamReaderWithoutCaching());
+                return AuthenticateResponse.Factory.parse(param
+                        .getXMLStreamReaderWithoutCaching());
 
-			}
+            }
 
-			if (NodeFaultDetailType.class.equals(type)) {
+            if (NodeFaultDetailType.class.equals(type)) {
 
-				return NodeFaultDetailType.Factory.parse(param
-						.getXMLStreamReaderWithoutCaching());
+                return NodeFaultDetailType.Factory.parse(param
+                        .getXMLStreamReaderWithoutCaching());
 
-			}
+            }
 
-			if (Download.class.equals(type)) {
+            if (Download.class.equals(type)) {
 
-				return Download.Factory.parse(param
-						.getXMLStreamReaderWithoutCaching());
+                return Download.Factory.parse(param
+                        .getXMLStreamReaderWithoutCaching());
 
-			}
+            }
 
-			if (DownloadResponse.class.equals(type)) {
+            if (DownloadResponse.class.equals(type)) {
 
-				return DownloadResponse.Factory.parse(param
-						.getXMLStreamReaderWithoutCaching());
+                return DownloadResponse.Factory.parse(param
+                        .getXMLStreamReaderWithoutCaching());
 
-			}
+            }
 
-			if (NodeFaultDetailType.class.equals(type)) {
+            if (NodeFaultDetailType.class.equals(type)) {
 
-				return NodeFaultDetailType.Factory.parse(param
-						.getXMLStreamReaderWithoutCaching());
+                return NodeFaultDetailType.Factory.parse(param
+                        .getXMLStreamReaderWithoutCaching());
 
-			}
+            }
 
-			if (GetStatus.class.equals(type)) {
+            if (GetStatus.class.equals(type)) {
 
-				return GetStatus.Factory.parse(param
-						.getXMLStreamReaderWithoutCaching());
+                return GetStatus.Factory.parse(param
+                        .getXMLStreamReaderWithoutCaching());
 
-			}
+            }
 
-			if (GetStatusResponse.class.equals(type)) {
+            if (GetStatusResponse.class.equals(type)) {
 
-				return GetStatusResponse.Factory.parse(param
-						.getXMLStreamReaderWithoutCaching());
+                return GetStatusResponse.Factory.parse(param
+                        .getXMLStreamReaderWithoutCaching());
 
-			}
+            }
 
-			if (NodeFaultDetailType.class.equals(type)) {
+            if (NodeFaultDetailType.class.equals(type)) {
 
-				return NodeFaultDetailType.Factory.parse(param
-						.getXMLStreamReaderWithoutCaching());
+                return NodeFaultDetailType.Factory.parse(param
+                        .getXMLStreamReaderWithoutCaching());
 
-			}
+            }
 
-			if (NodePing.class.equals(type)) {
+            if (NodePing.class.equals(type)) {
 
-				return NodePing.Factory.parse(param
-						.getXMLStreamReaderWithoutCaching());
+                return NodePing.Factory.parse(param
+                        .getXMLStreamReaderWithoutCaching());
 
-			}
+            }
 
-			if (NodePingResponse.class.equals(type)) {
+            if (NodePingResponse.class.equals(type)) {
 
-				return NodePingResponse.Factory.parse(param
-						.getXMLStreamReaderWithoutCaching());
+                return NodePingResponse.Factory.parse(param
+                        .getXMLStreamReaderWithoutCaching());
 
-			}
+            }
 
-			if (NodeFaultDetailType.class.equals(type)) {
+            if (NodeFaultDetailType.class.equals(type)) {
 
-				return NodeFaultDetailType.Factory.parse(param
-						.getXMLStreamReaderWithoutCaching());
+                return NodeFaultDetailType.Factory.parse(param
+                        .getXMLStreamReaderWithoutCaching());
 
-			}
+            }
 
-			if (GetServices.class.equals(type)) {
+            if (GetServices.class.equals(type)) {
 
-				return GetServices.Factory.parse(param
-						.getXMLStreamReaderWithoutCaching());
+                return GetServices.Factory.parse(param
+                        .getXMLStreamReaderWithoutCaching());
 
-			}
+            }
 
-			if (GetServicesResponse.class.equals(type)) {
+            if (GetServicesResponse.class.equals(type)) {
 
-				return GetServicesResponse.Factory.parse(param
-						.getXMLStreamReaderWithoutCaching());
+                return GetServicesResponse.Factory.parse(param
+                        .getXMLStreamReaderWithoutCaching());
 
-			}
+            }
 
-			if (NodeFaultDetailType.class.equals(type)) {
+            if (NodeFaultDetailType.class.equals(type)) {
 
-				return NodeFaultDetailType.Factory.parse(param
-						.getXMLStreamReaderWithoutCaching());
+                return NodeFaultDetailType.Factory.parse(param
+                        .getXMLStreamReaderWithoutCaching());
 
-			}
+            }
 
-			if (Submit.class.equals(type)) {
+            if (Submit.class.equals(type)) {
 
-				return Submit.Factory.parse(param
-						.getXMLStreamReaderWithoutCaching());
+                return Submit.Factory.parse(param
+                        .getXMLStreamReaderWithoutCaching());
 
-			}
+            }
 
-			if (SubmitResponse.class.equals(type)) {
+            if (SubmitResponse.class.equals(type)) {
 
-				return SubmitResponse.Factory.parse(param
-						.getXMLStreamReaderWithoutCaching());
+                return SubmitResponse.Factory.parse(param
+                        .getXMLStreamReaderWithoutCaching());
 
-			}
+            }
 
-			if (NodeFaultDetailType.class.equals(type)) {
+            if (NodeFaultDetailType.class.equals(type)) {
 
-				return NodeFaultDetailType.Factory.parse(param
-						.getXMLStreamReaderWithoutCaching());
+                return NodeFaultDetailType.Factory.parse(param
+                        .getXMLStreamReaderWithoutCaching());
 
-			}
+            }
 
-			if (Notify.class.equals(type)) {
+            if (Notify.class.equals(type)) {
 
-				logger.debug("Notify Factory parsing...");
+                logger.debug("Notify Factory parsing...");
 
-				return Notify.Factory.parse(param
-						.getXMLStreamReaderWithoutCaching());
+                return Notify.Factory.parse(param
+                        .getXMLStreamReaderWithoutCaching());
 
-			}
+            }
 
-			if (NotifyResponse.class.equals(type)) {
+            if (NotifyResponse.class.equals(type)) {
 
-				return NotifyResponse.Factory.parse(param
-						.getXMLStreamReaderWithoutCaching());
+                return NotifyResponse.Factory.parse(param
+                        .getXMLStreamReaderWithoutCaching());
 
-			}
+            }
 
-			if (NodeFaultDetailType.class.equals(type)) {
+            if (NodeFaultDetailType.class.equals(type)) {
 
-				return NodeFaultDetailType.Factory.parse(param
-						.getXMLStreamReaderWithoutCaching());
+                return NodeFaultDetailType.Factory.parse(param
+                        .getXMLStreamReaderWithoutCaching());
 
-			}
+            }
 
-			if (Solicit.class.equals(type)) {
+            if (Solicit.class.equals(type)) {
 
-				return Solicit.Factory.parse(param
-						.getXMLStreamReaderWithoutCaching());
+                return Solicit.Factory.parse(param
+                        .getXMLStreamReaderWithoutCaching());
 
-			}
+            }
 
-			if (SolicitResponse.class.equals(type)) {
+            if (SolicitResponse.class.equals(type)) {
 
-				return SolicitResponse.Factory.parse(param
-						.getXMLStreamReaderWithoutCaching());
+                return SolicitResponse.Factory.parse(param
+                        .getXMLStreamReaderWithoutCaching());
 
-			}
+            }
 
-			if (NodeFaultDetailType.class.equals(type)) {
+            if (NodeFaultDetailType.class.equals(type)) {
 
-				return NodeFaultDetailType.Factory.parse(param
-						.getXMLStreamReaderWithoutCaching());
+                return NodeFaultDetailType.Factory.parse(param
+                        .getXMLStreamReaderWithoutCaching());
 
-			}
+            }
 
-			if (Query.class.equals(type)) {
+            if (Query.class.equals(type)) {
 
-				return Query.Factory.parse(param
-						.getXMLStreamReaderWithoutCaching());
+                return Query.Factory.parse(param
+                        .getXMLStreamReaderWithoutCaching());
 
-			}
+            }
 
-			if (QueryResponse.class.equals(type)) {
+            if (QueryResponse.class.equals(type)) {
 
-				return QueryResponse.Factory.parse(param
-						.getXMLStreamReaderWithoutCaching());
+                return QueryResponse.Factory.parse(param
+                        .getXMLStreamReaderWithoutCaching());
 
-			}
+            }
 
-			if (NodeFaultDetailType.class.equals(type)) {
+            if (NodeFaultDetailType.class.equals(type)) {
 
-				return NodeFaultDetailType.Factory.parse(param
-						.getXMLStreamReaderWithoutCaching());
+                return NodeFaultDetailType.Factory.parse(param
+                        .getXMLStreamReaderWithoutCaching());
 
-			}
+            }
 
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			throw AxisFault.makeFault(e);
-		}
-		return null;
-	}
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            throw AxisFault.makeFault(e);
+        }
+        return null;
+    }
 
-	/**
-	 * A utility method that copies the namepaces from the SOAPEnvelope
-	 */
-	private Map getEnvelopeNamespaces(org.apache.axiom.soap.SOAPEnvelope env) {
+    /**
+     * A utility method that copies the namepaces from the SOAPEnvelope
+     */
+    private Map getEnvelopeNamespaces(org.apache.axiom.soap.SOAPEnvelope env) {
 
-		Map returnMap = new HashMap();
-		Iterator namespaceIterator = env.getAllDeclaredNamespaces();
+        Map returnMap = new HashMap();
+        Iterator namespaceIterator = env.getAllDeclaredNamespaces();
 
-		while (namespaceIterator.hasNext()) {
-			OMNamespace ns = (OMNamespace) namespaceIterator.next();
-			returnMap.put(ns.getPrefix(), ns.getNamespaceURI());
-		}
+        while (namespaceIterator.hasNext()) {
+            OMNamespace ns = (OMNamespace) namespaceIterator.next();
+            returnMap.put(ns.getPrefix(), ns.getNamespaceURI());
+        }
 
-		return returnMap;
+        return returnMap;
 
-	}
+    }
 
-	private AxisFault createAxisFault(Exception e) {
+    private AxisFault createAxisFault(Exception e) {
 
-		AxisFault f;
+        AxisFault f;
 
-		Throwable cause = e.getCause();
+        Throwable cause = e.getCause();
 
-		if (cause != null) {
-			f = new AxisFault(e.getMessage(), cause);
-		} else {
-			f = new AxisFault(e.getMessage());
-		}
+        if (cause != null) {
+            f = new AxisFault(e.getMessage(), cause);
+        } else {
+            f = new AxisFault(e.getMessage());
+        }
 
-		return f;
-	}
+        return f;
+    }
 
 }// end of class

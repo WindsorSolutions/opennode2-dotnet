@@ -1,3 +1,26 @@
+--  additions for HERE AuthorizationRequest feature    
+ALTER TABLE NAccountAuthRequestFlow  
+    DROP CONSTRAINT FK_AccountAuthRequestFlow_AccountAuthRequest
+;
+
+ALTER TABLE NAccountAuthRequestFlow
+    DROP CONSTRAINT PK_NAccountAuthRequestFlow
+;
+
+DROP TABLE NAccountAuthRequestFlow
+;
+
+ALTER TABLE NAccountAuthRequest  
+    DROP CONSTRAINT FK_AccountAuthRequest_Account 
+;
+
+ALTER TABLE NAccountAuthRequest  
+    DROP CONSTRAINT FK_AccountAuthenticationRequest_Transaction 
+;
+
+DROP TABLE NAccountAuthRequest
+;
+-- END additions for HERE AuthorizationRequest feature
 
 ALTER TABLE NSERVICECONN
     DROP CONSTRAINT FK_SERVICECONN_SERVICE

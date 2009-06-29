@@ -41,13 +41,16 @@ public class NamedSystemConfigItem extends AuditableIdentity {
 
     private static final long serialVersionUID = 1;
 
-    /** ArgCode = plugin argument */
+    /** Plugin config item name. */
     private String key;
-    /** Value = value of the config */
+
+    /** Value of the config item. */
     private String value;
-    /** ServiceId */
+
+    /** ServiceId. */
     private String serviceId;
-    /** derived from the value containing the global char */
+
+    /** Derived from the value containing the global char. */
     private boolean global;
 
     public NamedSystemConfigItem() {

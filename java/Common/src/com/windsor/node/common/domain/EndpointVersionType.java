@@ -31,42 +31,44 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.windsor.node.common.domain;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+public enum EndpointVersionType {
 
-import org.apache.commons.lang.enums.Enum;
+    UNDEFINED("Undefined"), EN11("EN11"), EN20("EN2.0");
 
-public final class EndpointVersionType extends Enum {
+    private static final long serialVersionUID = 2;
 
-    public static final EndpointVersionType UNDEFINED = new EndpointVersionType(
-            "Undefined");
-    /**
-     * EN WSDL v1.1
-     */
-    public static final EndpointVersionType EN11 = new EndpointVersionType(
-            "EN11");
-    /**
-     * EN WSDL v2.0
-     */
-    public static final EndpointVersionType EN20 = new EndpointVersionType(
-            "EN2.0");
+    private String type;
 
-    private static final long serialVersionUID = 1;
-    
     private EndpointVersionType(String type) {
-        super(type);
+        this.type = type;
     }
 
-    public static Map getEnumMap() {
-        return getEnumMap(EndpointVersionType.class);
+    @Override
+    public String toString() {
+        return this.type;
     }
 
-    public static List getEnumList() {
-        return getEnumList(EndpointVersionType.class);
+    public String getType() {
+        return this.type;
     }
 
-    public static Iterator iterator() {
-        return iterator(EndpointVersionType.class);
+    public static EndpointVersionType fromString(String s) {
+
+        EndpointVersionType version;
+
+        if (s.equalsIgnoreCase(EN11.toString())) {
+
+            version = EN11;
+
+        } else if (s.equalsIgnoreCase(EN20.toString())) {
+
+            version = EN20;
+
+        } else {
+
+            version = UNDEFINED;
+        }
+
+        return version;
     }
 }

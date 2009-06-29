@@ -40,8 +40,8 @@ import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 
 public class ActivitySearchCriteria implements Serializable {
 
-    public static final String MIN_DATE = "1970-02-12";
-    public static final String MAX_DATE = "2050-02-12";
+    public static final String MIN_DATE = "2005-01-01";
+    public static final String MAX_DATE = "2020-01-12";
     public static final String FORMAT = "yyyy-mm-dd";
 
     private static final long serialVersionUID = 1;

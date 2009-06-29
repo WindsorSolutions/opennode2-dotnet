@@ -153,7 +153,7 @@ public class WnosPluginHelper implements PluginHelper, InitializingBean {
 
     }
 
-    private File getPluginContentDir(DataFlow flow) {
+    public File getPluginContentDir(DataFlow flow) {
 
         if (flow == null || StringUtils.isBlank(flow.getName())) {
             throw new RuntimeException("Null flow name");
@@ -252,7 +252,7 @@ public class WnosPluginHelper implements PluginHelper, InitializingBean {
         // Connections
         logger.debug("Setting data sources");
         if (transaction.getRequest().getService().getDataSources() != null) {
-            for (Iterator it = transaction.getRequest().getService()
+            for (Iterator<?> it = transaction.getRequest().getService()
                     .getDataSources().iterator(); it.hasNext();) {
 
                 DataProviderInfo provider = (DataProviderInfo) it.next();
@@ -281,8 +281,8 @@ public class WnosPluginHelper implements PluginHelper, InitializingBean {
         // Args
         logger.debug("Looping through service args");
         if (transaction.getRequest().getService().getArgs() != null) {
-            for (Iterator it = transaction.getRequest().getService().getArgs()
-                    .iterator(); it.hasNext();) {
+            for (Iterator<?> it = transaction.getRequest().getService()
+                    .getArgs().iterator(); it.hasNext();) {
 
                 NamedSystemConfigItem arg = (NamedSystemConfigItem) it.next();
 
@@ -291,8 +291,8 @@ public class WnosPluginHelper implements PluginHelper, InitializingBean {
                 if (processor.getConfigurationArguments().containsKey(
                         arg.getKey())) {
 
-                    Object pluginArgKey = arg.getKey();
-                    Object pluginArgVal = null;
+                    String pluginArgKey = arg.getKey();
+                    String pluginArgVal = null;
                     String configArgValue = (String) arg.getValue();
 
                     logger.debug("Found, removing: " + pluginArgKey);
@@ -306,7 +306,8 @@ public class WnosPluginHelper implements PluginHelper, InitializingBean {
 
                         if (globalSystemArgs.containsKey(configArgValue)) {
 
-                            pluginArgVal = globalSystemArgs.get(configArgValue);
+                            pluginArgVal = (String) globalSystemArgs
+                                    .get(configArgValue);
                             logger.debug("Found global val: " + pluginArgVal);
 
                         } else {
@@ -385,7 +386,7 @@ public class WnosPluginHelper implements PluginHelper, InitializingBean {
     /**
      * getWnosPluginImplementors
      */
-    public List getWnosPluginImplementors(DataFlow flow) {
+    public List<String> getWnosPluginImplementors(DataFlow flow) {
 
         logger.debug("Flow: " + flow);
 
@@ -431,6 +432,10 @@ public class WnosPluginHelper implements PluginHelper, InitializingBean {
 
     public void setPartnerProvider(NodePartnerProvider partnerProvider) {
         this.partnerProvider = partnerProvider;
+    }
+
+    public WnosClassLoader getClassLoader() {
+        return classLoader;
     }
 
 }

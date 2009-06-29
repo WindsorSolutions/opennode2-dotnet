@@ -67,7 +67,7 @@ public class ZipCompressionService implements CompressionService,
         }
 
         if (!tempDir.exists()) {
-            throw new RuntimeException("Dir does not exits");
+            throw new RuntimeException("Dir does not exist");
         }
 
         if (!tempDir.isDirectory()) {

@@ -1,42 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="SharedBuildLogic" basedir="." default="build.jar">
-    <!-- TODO: add check for project jar dependencies -->
-    <!-- properties & entities for all Node projects -->
-    <property file="build.properties" />
-    <property name="resource.base.dir" value="${basedir}/../Resources" />
-    <property file="${resource.base.dir}/ant/shared.build.properties" />
-    <property name="resources.local" value="${basedir}/resources" />
-    <property name="env.dir.local" value="${basedir}/env/${env.dir}" />
-    <property name="log4j.properties" value="${env.dir.local}/log4j.properties" />
-    <property name="commons-logging.properties" value="${env.dir.local}/commons-logging.properties" />
-    <property name="runtime.jar.location" value="${resource.base.dir}/lib/${eclipse.project.name}" />
-    <property name="buildtime.jar.location" value="${resource.base.dir}/lib/${eclipse.project.name}.build_only" />
-    <property name="src" value="${basedir}/src" />
-    <property name="test" value="${basedir}/test" />
-    <property name="build" value="${basedir}/build" />
-    <property name="dist" value="${resource.base.dir}/dist" />
-    <property name="web.dir" value="${appserver.deploy.dir}/${jarName}" />
-    <property name="web.inf" value="${build}/WEB-INF" />
-    <property name="web.inf.lib" value="${web.inf}/lib" />
-    <property name="compile.includes" value="*.xml, *.properties" />
-    <property name="manifest.src" value="${resource.base.dir}/ant/MANIFEST.MF" />
+	<!-- TODO: add check for project jar dependencies -->
+	<!-- properties & entities for all Node projects -->
+	<property file="build.properties" />
+	<property name="resource.base.dir" value="${basedir}/../Resources" />
+	<property file="${resource.base.dir}/ant/shared.build.properties" />
+	<property name="resources.local" value="${basedir}/resources" />
+	<property name="env.dir.local" value="${basedir}/env/${env.dir}" />
+	<property name="log4j.properties" value="${env.dir.local}/log4j.properties" />
+	<property name="commons-logging.properties" value="${env.dir.local}/commons-logging.properties" />
+	<property name="runtime.jar.location" value="${resource.base.dir}/lib/${eclipse.project.name}" />
+	<property name="buildtime.jar.location" value="${resource.base.dir}/lib/${eclipse.project.name}.build_only" />
+	<property name="src" value="${basedir}/src" />
+	<property name="test" value="${basedir}/test" />
+	<property name="build" value="${basedir}/build" />
+	<property name="dist" value="${resource.base.dir}/dist" />
+	<property name="web.dir" value="${appserver.deploy.dir}/${jarName}" />
+	<property name="web.inf" value="${build}/WEB-INF" />
+	<property name="web.inf.lib" value="${web.inf}/lib" />
+	<property name="compile.includes" value="*.xml, *.properties" />
+	<property name="manifest.src" value="${resource.base.dir}/ant/MANIFEST.MF" />
 
-    <fileset id="runtime.jars" includes="*.jar" dir="${runtime.jar.location}" />
-    <fileset id="buildtime.jars" includes="*.jar" dir="${buildtime.jar.location}" />
-    <fileset id="junit.jar" file="${resource.base.dir}/lib/Junit3/junit.jar" />
-    <fileset id="project.jars" dir="${dist}/${env.dir}" includes="${project.jar.dependencies}" />
+	<fileset id="runtime.jars" includes="*.jar" dir="${runtime.jar.location}" />
+	<fileset id="buildtime.jars" includes="*.jar" dir="${buildtime.jar.location}" />
+	<fileset id="junit.jar" file="${resource.base.dir}/lib/Junit3/junit.jar" />
+	<fileset id="project.jars" dir="${dist}/${env.dir}" includes="${project.jar.dependencies}" />
 
-    <path id="build.class.path">
-        <fileset refid="project.jars" />
-        <fileset refid="runtime.jars" />
-        <fileset refid="buildtime.jars" />
-        <fileset refid="junit.jar" />
-    </path>
-    <!-- END properties & entities for all Node projects (except plugins) -->
+	<path id="build.class.path">
+		<fileset refid="project.jars" />
+		<fileset refid="runtime.jars" />
+		<fileset refid="buildtime.jars" />
+		<fileset refid="junit.jar" />
+	</path>
+	<!-- END properties & entities for all Node projects (except plugins) -->
 
-    <!-- targets for all Node projects -->
-    <target name="get.env" description="displays build configuration options">
-        <echo message="Build environment: ${env.dir}" />
+	<!-- targets for all Node projects -->
+	<target name="get.env" description="displays build configuration options">
+		<echo message="Build environment: ${env.dir}" />
+		<echo message="Selected JDK version: ${jdk.version}" />
         <echo message="Target appserver: ${appserver}" />
         <echo message="Use verbose output? ${verbosity}" />
         <antcall target="setServerAndLoggingType" inheritall="true" />
@@ -141,7 +142,7 @@
     </target>
 
     <target depends="init" name="compile.src" description="compiles with debug symbols, warnings on">
-        <javac debug="on" memoryMaximumSize="256m" memoryInitialSize="256m" fork="true" destdir="${classes}" srcdir="${src}" source="1.4" target="1.4" nowarn="false" failonerror="true">
+        <javac debug="on" memoryMaximumSize="256m" memoryInitialSize="256m" fork="true" destdir="${classes}" srcdir="${src}" source="${jdk.version}" target="${jdk.version}" nowarn="false" failonerror="true">
             <classpath refid="build.class.path" />
         </javac>
         <copy todir="${classes}" verbose="${verbosity}" preservelastmodified="false">
@@ -150,10 +151,10 @@
     </target>
 
     <target depends="init" name="compile.test" description="compiles with debug symbols, warnings off">
-        <javac debug="on" memoryMaximumSize="256m" memoryInitialSize="256m" fork="true" destdir="${classes}" srcdir="${src}" source="1.4" target="1.4" nowarn="true" failonerror="false">
+        <javac debug="on" memoryMaximumSize="256m" memoryInitialSize="256m" fork="true" destdir="${classes}" srcdir="${src}" source="${jdk.version}" target="${jdk.version}" nowarn="true" failonerror="false">
             <classpath refid="build.class.path" />
         </javac>
-        <javac debug="on" memoryMaximumSize="256m" memoryInitialSize="256m" fork="true" destdir="${classes}" srcdir="${test}" source="1.4" target="1.4" nowarn="true" failonerror="false">
+        <javac debug="on" memoryMaximumSize="256m" memoryInitialSize="256m" fork="true" destdir="${classes}" srcdir="${test}" source="${jdk.version}" target="${jdk.version}" nowarn="true" failonerror="false">
             <classpath refid="build.class.path" />
         </javac>
         <copy todir="${classes}" verbose="${verbosity}" preservelastmodified="false">

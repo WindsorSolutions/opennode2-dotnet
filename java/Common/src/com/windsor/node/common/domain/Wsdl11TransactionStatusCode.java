@@ -35,27 +35,27 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.enums.ValuedEnum;
+import org.apache.commons.lang.enums.Enum;
 
-public final class Wsdl11TransactionStatusCode extends ValuedEnum {
+public final class Wsdl11TransactionStatusCode extends Enum {
 
     public static final Wsdl11TransactionStatusCode UNKNOWN = new Wsdl11TransactionStatusCode(
-            "Unknown", 0x00);
+            "Unknown");
     public static final Wsdl11TransactionStatusCode RECEIVED = new Wsdl11TransactionStatusCode(
-            "Received", 0x01);
+            "Received");
     public static final Wsdl11TransactionStatusCode PENDING = new Wsdl11TransactionStatusCode(
-            "Pending", 0x04);
+            "Pending");
     public static final Wsdl11TransactionStatusCode FAILED = new Wsdl11TransactionStatusCode(
-            "Failed", 0x08);
+            "Failed");
     public static final Wsdl11TransactionStatusCode PROCESSED = new Wsdl11TransactionStatusCode(
-            "Processed", 0x40);;
+            "Processed");
     public static final Wsdl11TransactionStatusCode COMPLETED = new Wsdl11TransactionStatusCode(
-            "Completed", 0x80);
+            "Completed");
 
     private static final long serialVersionUID = 1;
 
-    private Wsdl11TransactionStatusCode(String s, int i) {
-        super(s, i);
+    private Wsdl11TransactionStatusCode(String s) {
+        super(s);
     }
 
     public static Map getEnumMap() {

@@ -32,11 +32,14 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.windsor.node.data.dao.jdbc;
 
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.Map.Entry;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -51,7 +54,7 @@ import com.windsor.node.service.helper.IdGenerator;
 public class BaseJdbcDao extends JdbcDaoSupport {
 
     /** Logger for this class and subclasses */
-    public final Logger logger = Logger.getLogger(getClass());
+    protected Logger logger = Logger.getLogger(getClass());
 
     protected IdGenerator idGenerator;
 
@@ -104,7 +107,7 @@ public class BaseJdbcDao extends JdbcDaoSupport {
 
         logger.debug("exists result: " + result);
 
-        return (result > 0);
+        return result > 0;
 
     }
 
@@ -115,11 +118,13 @@ public class BaseJdbcDao extends JdbcDaoSupport {
      * @param upperKey
      * @return
      */
-    protected Map getMap(String sql, boolean upperKey) {
+    @SuppressWarnings("unchecked")
+    protected Map<String, String> getMap(String sql, boolean upperKey) {
 
         validateStringArg(sql);
 
-        return (Map) getJdbcTemplate().query(sql, new MapExtractor(upperKey));
+        return (Map<String, String>) getJdbcTemplate().query(sql,
+                new MapExtractor(upperKey));
     }
 
     /**
@@ -130,7 +135,8 @@ public class BaseJdbcDao extends JdbcDaoSupport {
      * @param upperKey
      * @return
      */
-    protected Map getMap(String sql, String id, boolean upperKey) {
+    @SuppressWarnings("unchecked")
+    protected Map<String, String> getMap(String sql, String id, boolean upperKey) {
 
         validateStringArg(sql);
 
@@ -151,11 +157,13 @@ public class BaseJdbcDao extends JdbcDaoSupport {
 
         ByIndexOrNameMap indeNameMap = new ByIndexOrNameMap();
 
-        Map map = getMap(sql, id, true);
+        Map<String, String> map = getMap(sql, id, true);
 
-        for (Iterator it = map.entrySet().iterator(); it.hasNext();) {
+        for (Iterator<Entry<String, String>> it = map.entrySet().iterator(); it
+                .hasNext();) {
 
-            Map.Entry entry = (Map.Entry) it.next();
+            Map.Entry<String, String> entry = (Map.Entry<String, String>) it
+                    .next();
             indeNameMap.put((String) entry.getKey(), entry.getValue());
 
         }
@@ -175,7 +183,7 @@ public class BaseJdbcDao extends JdbcDaoSupport {
         validateStringArg(sql);
         validateStringArg(id);
 
-        List list = getList(sql, id);
+        List<?> list = getList(sql, id);
 
         return (String[]) list.toArray(new String[list.size()]);
     }
@@ -187,7 +195,7 @@ public class BaseJdbcDao extends JdbcDaoSupport {
      * @param id
      * @return
      */
-    protected List getList(String sql, String id) {
+    protected List<?> getList(String sql, String id) {
 
         validateStringArg(sql);
         validateStringArg(id);
@@ -203,7 +211,7 @@ public class BaseJdbcDao extends JdbcDaoSupport {
      * @param sql
      * @return
      */
-    protected List getList(String sql) {
+    protected List<?> getList(String sql) {
 
         validateStringArg(sql);
 
@@ -221,9 +229,33 @@ public class BaseJdbcDao extends JdbcDaoSupport {
 
         validateStringArg(sql);
 
-        List list = getJdbcTemplate().query(sql, new ArrayMapper());
+        List<?> list = getJdbcTemplate().query(sql, new ArrayMapper());
 
         return (String[]) list.toArray(new String[list.size()]);
+    }
+
+    protected static List<String> getColumnNames(ResultSet rs)
+            throws SQLException {
+
+        List<String> columnNames = new ArrayList<String>();
+
+        ResultSetMetaData rsm = rs.getMetaData();
+        int columnCount = rsm.getColumnCount();
+
+        for (int i = 1; i <= columnCount; i++) {
+
+            columnNames.add(rsm.getColumnName(i));
+
+        }
+
+        return columnNames;
+    }
+
+    protected static boolean containsColumnNamed(ResultSet rs, String columnName)
+            throws SQLException {
+
+        return getColumnNames(rs).contains(columnName);
+
     }
 
     /**
@@ -252,7 +284,7 @@ public class BaseJdbcDao extends JdbcDaoSupport {
         logger.debug("SQL: " + sql);
         printourArgs(args);
 
-        List result = getJdbcTemplate().query(sql, args, rowMapper);
+        List<?> result = getJdbcTemplate().query(sql, args, rowMapper);
 
         if (result == null || result.size() != 1) {
             return null;
@@ -277,7 +309,8 @@ public class BaseJdbcDao extends JdbcDaoSupport {
         public Object extractData(ResultSet rs) throws SQLException,
                 DataAccessException {
 
-            Map map = new TreeMap(String.CASE_INSENSITIVE_ORDER);
+            Map<String, String> map = new TreeMap<String, String>(
+                    String.CASE_INSENSITIVE_ORDER);
 
             while (rs.next()) {
 

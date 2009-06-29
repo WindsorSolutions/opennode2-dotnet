@@ -40,14 +40,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import javax.sql.DataSource;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
 
 import com.windsor.node.common.domain.ActivityEntry;
+import com.windsor.node.common.domain.DataServiceRequestParameter;
 import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.PartnerIdentity;
 import com.windsor.node.common.domain.ProcessContentResult;
+import com.windsor.node.common.domain.ServiceType;
 import com.windsor.node.common.util.NodeClientService;
 import com.windsor.node.service.helper.NodePartnerProvider;
 import com.windsor.node.service.helper.ServiceFactory;
@@ -58,88 +62,121 @@ import com.windsor.node.service.helper.client.DualEndpointNodeClientFactory;
  * 
  * <p>
  * Contains essential attributes for getting plugin configuration from the Node
- * at runtime.
- * </p>
- * 
- * <p>
- * Logs to a plugin-specific log in <nodehome>/log if running within a Node;
- * otherwise relies on the runtime Log4j settings.
+ * at runtime, access to internal services, and utility methods for getting
+ * Node-wide environment data.
  * </p>
  * 
  */
 public abstract class BaseWnosPlugin implements InitializingBean {
 
-    /* STRING CONSTANTS */
+    public static final String ARG_ADD_HEADER = "Add Header";
 
-    public static final String DS_SOURCE = "sourceDs";
-    public static final String ARG_HD_DO = "makeHeader";
-    public static final String ARG_HD_ORN_NAME = "organizationName";
-    public static final String ARG_HD_TITLE = "title";
-    public static final String ARG_HD_CONTACT = "contactInfo";
-    public static final String ARG_HD_NOTIFS = "notifications";
-    public static final String ARG_HD_PAYLOAD_OP = "payloadOperation";
+    public static final String ARG_DS_SOURCE = "Source Data Provider";
+    public static final String ARG_DS_TARGET = "Target Data Provider";
+
+    public static final String ARG_HEADER_AUTHOR = "Author";
+    public static final String ARG_HEADER_CONTACT_INFO = "Contact Info";
+    public static final String ARG_HEADER_ORG_NAME = "Organization";
+    public static final String ARG_HEADER_NOTIFS = "Notifications";
+    public static final String ARG_HEADER_PAYLOAD_OP = "Payload Operation";
+    public static final String ARG_HEADER_SENSITIVITY = "Sensitivity";
+    public static final String ARG_HEADER_TITLE = "Title";
+
+    public static final String ARG_LAST_EXEC_STATE_KEY = "Name of app key to manage state";
+
+    public static final String ARG_SOURCE_SYS_NAME = "Source System Name";
 
     private static final String NULL_REQUEST = "Null request";
     private static final String NULL_TRANSACTION = "Null transaction";
 
     protected Logger logger = Logger.getLogger(getClass());
 
-    private Map configurationArguments;
-    private Map dataSources;
+    private Map<String, String> configurationArguments;
+    private Map<String, DataSource> dataSources;
     private ServiceFactory serviceFactory;
-    private List supportedPluginTypes;
+    private List<ServiceType> supportedPluginTypes;
     private DualEndpointNodeClientFactory nodeClientFactory;
     private NodePartnerProvider partnerProvider;
     private File pluginSourceDir;
+
+    /* for ENDS getServices() */
+    private Boolean publishForEN11 = true;
+    private Boolean publishForEN20 = true;
 
     /**
      * BaseWnosPlugin
      */
     public BaseWnosPlugin() {
         // initialize the local variables
-        configurationArguments = new TreeMap();
-        dataSources = new TreeMap();
-        supportedPluginTypes = new ArrayList();
+        configurationArguments = new TreeMap<String, String>();
+        dataSources = new TreeMap<String, DataSource>();
+        supportedPluginTypes = new ArrayList<ServiceType>();
 
     }
 
     /**
-     * afterPropertiesSet
+     * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
      */
     public void afterPropertiesSet() {
 
         if (serviceFactory == null) {
-            throw new RuntimeException("ServiceFactory Not Set");
+            throw new RuntimeException("serviceFactory not set");
         }
 
         if (nodeClientFactory == null) {
-            throw new RuntimeException("DualEndpointNodeClientFactory Not Set");
+            throw new RuntimeException("dualEndpointNodeClientFactory not set");
         }
 
         if (partnerProvider == null) {
-            throw new RuntimeException("NodePartnerProvider Not Set");
+            throw new RuntimeException("nodePartnerProvider not set");
         }
 
     }
 
     /**
-     * process must be overidden by the implementing service
+     * Core processing call invoked by the Node.
      * 
      * @param transaction
+     *            typically created by the Node from an incoming SOAP call
      * @return
      */
     public abstract ProcessContentResult process(NodeTransaction transaction);
 
-    /*
+    /**
+     * Provides runtime request parameter specifications for the Exchange
+     * Network Discovery Service, v20.
      * 
-     * Properties
+     * <p>
+     * A plugin that returns <code>true</code> to {@link #isPublishForEN11()} or
+     * {@link #isPublishForEN20()} should return accurate data if it accepts
+     * request/schedule parameters for the given endpoint version, and return
+     * <code>null</code> otherwise. Unpublished plugins should return
+     * <code>null</code>.
+     * </p>
+     * 
+     * <p>
+     * NOTE: This method is called by the Ends2 plugin, after creating an
+     * instance of the called class via reflection. Therefore, the
+     * implementation cannot depend on plugin or Node state.
+     * 
+     * @param serviceName
+     *            in case a singe plugin implementation class implements more
+     *            than one service
+     * @return a List of request parameter specs, or <code>null</code>
+     * @see {@link com.windsor.node.plugin.frs23.FrsQueryProcessor#processContentResult
+     *      FrsQueryProcessor.processContentResult()} for an example
+     *      implementation.
      */
+    public abstract List<DataServiceRequestParameter> getServiceRequestParamSpecs(
+            String serviceName);
 
     /**
-     * Gets a map of config arguments where the Key is uneditable and the value
-     * will be set by the plugin exe
+     * Gets a map of service configuration arguments set via the Node Admin
+     * application.
+     * 
+     * @return
      */
-    public Map getConfigurationArguments() {
+    public Map<String, String> getConfigurationArguments() {
         return configurationArguments;
     }
 
@@ -149,7 +186,7 @@ public abstract class BaseWnosPlugin implements InitializingBean {
      * 
      * @return
      */
-    public Map getDataSources() {
+    public Map<String, DataSource> getDataSources() {
         return dataSources;
     }
 
@@ -176,13 +213,10 @@ public abstract class BaseWnosPlugin implements InitializingBean {
      * 
      * @return
      */
-    public List getSupportedPluginTypes() {
+    public List<ServiceType> getSupportedPluginTypes() {
         return supportedPluginTypes;
     }
 
-    /*
-     * ElementUtil
-     */
     public String getOptionalConfigValueAsString(String key) {
         return getConfigValueAsString(key, false);
     }
@@ -407,6 +441,42 @@ public abstract class BaseWnosPlugin implements InitializingBean {
 
     public void setPluginSourceDir(File pluginSourceDir) {
         this.pluginSourceDir = pluginSourceDir;
+    }
+
+    /**
+     * Should this service be published to ENDS for Node v1.1?
+     * 
+     * @return
+     */
+    public Boolean isPublishForEN11() {
+        return publishForEN11;
+    }
+
+    /**
+     * Sets whether this service should be published to ENDS for Node v1.1.
+     * 
+     * @param publishServices
+     */
+    public void setPublishForEN11(Boolean publishForNode11) {
+        this.publishForEN11 = publishForNode11;
+    }
+
+    /**
+     * Should this service be published to ENDS for Node v2.0?
+     * 
+     * @return
+     */
+    public Boolean isPublishForEN20() {
+        return publishForEN20;
+    }
+
+    /**
+     * Sets whether this service should be published to ENDS for Node v2.0.
+     * 
+     * @param publishServices
+     */
+    public void setPublishForEN20(Boolean publishForNode20) {
+        this.publishForEN20 = publishForNode20;
     }
 
 }

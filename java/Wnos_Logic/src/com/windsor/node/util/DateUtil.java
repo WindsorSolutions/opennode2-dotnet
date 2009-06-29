@@ -39,10 +39,15 @@ import java.util.TimeZone;
 
 public final class DateUtil {
 
-    private static final int MONTHS_PER_YEAR = 12;
-    private static final int WEEKS_PER_MONTH = 4;
+    public static final int YEARS_PER_CENTURY = 100;
+    public static final int MONTHS_PER_YEAR = 12;
+    public static final int WEEKS_PER_MONTH = 4;
+    public static final int DAYS_PER_WEEK = 7;
+    public static final int HOURS_PER_DAY = 24;
+    public static final int MINUTES_PER_HOUR = 60;
+    public static final int SECONDS_PER_MINUTE = 60;    
+    
     private static final int YEAR_OFFSET = 4716;
-    private static final int YEARS_PER_CENTURY = 100;
     
     private static final float DATE_OFFSET = 1524.5f;
     private static final float DAYS_PER_MONTH = 30.6001f;
@@ -131,6 +136,13 @@ public final class DateUtil {
         GregorianCalendar calendar = new GregorianCalendar();
         calendar.setTime(date);
         calendar.add(GregorianCalendar.HOUR_OF_DAY, n);
+        return (Date) calendar.getTime().clone();
+    }
+
+    public static Date getNextNMinute(Date date, int n) {
+        GregorianCalendar calendar = new GregorianCalendar();
+        calendar.setTime(date);
+        calendar.add(GregorianCalendar.MINUTE, n);
         return (Date) calendar.getTime().clone();
     }
 

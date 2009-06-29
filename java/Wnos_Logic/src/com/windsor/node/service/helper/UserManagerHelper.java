@@ -35,15 +35,14 @@ import java.util.List;
 
 public interface UserManagerHelper {
 
-    public void addUser(String username, String password);
+    void addUser(String username, String password);
 
-    public void deleteUser(String username);
+    void deleteUser(String username);
 
-    public String resetPassword(String username);
+    String resetPassword(String username);
 
-    public void changePassword(String username, String password,
-            String newPassword);
+    void changePassword(String username, String password, String newPassword);
 
-    public List getUsers();
+    List getUsers();
 
 }

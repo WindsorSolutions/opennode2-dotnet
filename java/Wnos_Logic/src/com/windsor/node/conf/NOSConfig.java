@@ -39,21 +39,50 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 
+import com.windsor.node.common.domain.NodeDeploymentType;
+
 public class NOSConfig implements InitializingBean {
 
     private String webServiceEndpoint1;
     private String webServiceEndpoint2;
     private String adminUrl;
     private String nodeAdminEmail;
-    private List adminWhiteList;
+    private List<String> adminWhiteList;
     private String localhostIp = "127.0.0.1";
     private File pluginDir;
     private File tempDir;
     private String globalArgumentIndicator = "@";
     private boolean skipNaas = false;
 
+    /** ENDS property. */
+    private String nodeName;
+
+    /** ENDS property. */
+    private String orgIdentifier;
+
+    /** ENDS property. */
+    private String boundingCoordinateEast;
+
+    /** ENDS property. */
+    private String boundingCoordinateNorth;
+
+    /** ENDS property. */
+    private String boundingCoordinateSouth;
+
+    /** ENDS property. */
+    private String boundingCoordinateWest;
+
+    /** ENDS property. */
+    private String deploymentType;
+
+    private NodeDeploymentType nodeDeploymentType;
+
+    /** ENDS property. */
+    private String publicV2endpointUrl;
+
     /**
-     * Make sure the helpers are set
+     * Make sure the required properties are set; we don't worry about ENDS
+     * properties.
      */
     public void afterPropertiesSet() {
 
@@ -137,11 +166,11 @@ public class NOSConfig implements InitializingBean {
         this.nodeAdminEmail = nodeAdminEmail;
     }
 
-    public List getAdminWhiteList() {
+    public List<String> getAdminWhiteList() {
         return adminWhiteList;
     }
 
-    public void setAdminWhiteList(List adminWhiteList) {
+    public void setAdminWhiteList(List<String> adminWhiteList) {
         this.adminWhiteList = adminWhiteList;
     }
 
@@ -185,16 +214,83 @@ public class NOSConfig implements InitializingBean {
         this.skipNaas = skipNaas;
     }
 
-    protected List massageWhitelist(List whitelist) {
+    public String getNodeName() {
+        return nodeName;
+    }
 
-        List newlist = new ArrayList();
+    public void setNodeName(String nodeName) {
+        this.nodeName = nodeName;
+    }
+
+    public String getBoundingCoordinateEast() {
+        return boundingCoordinateEast;
+    }
+
+    public void setBoundingCoordinateEast(String boundingCoordinateEast) {
+        this.boundingCoordinateEast = boundingCoordinateEast;
+    }
+
+    public String getBoundingCoordinateNorth() {
+        return boundingCoordinateNorth;
+    }
+
+    public void setBoundingCoordinateNorth(String boundingCoordinateNorth) {
+        this.boundingCoordinateNorth = boundingCoordinateNorth;
+    }
+
+    public String getBoundingCoordinateSouth() {
+        return boundingCoordinateSouth;
+    }
+
+    public void setBoundingCoordinateSouth(String boundingCoordinateSouth) {
+        this.boundingCoordinateSouth = boundingCoordinateSouth;
+    }
+
+    public String getBoundingCoordinateWest() {
+        return boundingCoordinateWest;
+    }
+
+    public void setBoundingCoordinateWest(String boundingCoordinateWest) {
+        this.boundingCoordinateWest = boundingCoordinateWest;
+    }
+
+    public NodeDeploymentType getNodeDeploymentType() {
+        return nodeDeploymentType;
+    }
+
+    public void setNodeDeploymentType(NodeDeploymentType type) {
+        this.nodeDeploymentType = type;
+        setDeploymentType(type.toString());
+    }
+
+    public void setDeploymentType(String deployment) {
+
+        try {
+
+            this.nodeDeploymentType = Enum.valueOf(NodeDeploymentType.class,
+                    deployment.toUpperCase());
+            this.deploymentType = getNodeDeploymentType().toString();
+
+        } catch (IllegalArgumentException e) {
+
+            this.nodeDeploymentType = null;
+        }
+    }
+
+    public String getDeploymentType() {
+        return this.deploymentType;
+    }
+
+    protected List<String> massageWhitelist(List<String> whitelist) {
+
+        List<String> newlist = new ArrayList<String>();
 
         int i = 0;
-        Iterator iter = whitelist.iterator();
+        Iterator<String> iter = whitelist.iterator();
 
         while (iter.hasNext()) {
 
-            String s = (String) iter.next();
+            String s = iter.next();
 
             if (StringUtils.contains(s, ',')) {
                 String[] arr = StringUtils.split(s, ',');
@@ -209,4 +305,21 @@ public class NOSConfig implements InitializingBean {
 
         return newlist;
     }
+
+    public String getOrgIdentifier() {
+        return orgIdentifier;
+    }
+
+    public void setOrgIdentifier(String orgIdentifier) {
+        this.orgIdentifier = orgIdentifier;
+    }
+
+    public String getPublicV2endpointUrl() {
+        return publicV2endpointUrl;
+    }
+
+    public void setPublicV2endpointUrl(String publicV2endpointUrl) {
+        this.publicV2endpointUrl = publicV2endpointUrl;
+    }
+
 }

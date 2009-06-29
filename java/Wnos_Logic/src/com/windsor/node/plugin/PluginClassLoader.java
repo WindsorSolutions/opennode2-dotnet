@@ -33,26 +33,25 @@ package com.windsor.node.plugin;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.lang.reflect.Modifier;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.zip.ZipEntry;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.springframework.util.ClassUtils;
 
-public class PluginClassLoader extends ClassUtils implements WnosClassLoader {
+public class PluginClassLoader implements WnosClassLoader {
 
     // NOTE: Do not make this static, want to make sure this class is unloaded
     // as soon
     // as possible
     private Logger logger = Logger.getLogger(PluginClassLoader.class);
-    private Class pluginTemplate = BaseWnosPlugin.class;
+    private Class<BaseWnosPlugin> pluginTemplate = BaseWnosPlugin.class;
 
     public Object getPluginInstance(File rootDir, String fullyQualifiedClassName) {
 
@@ -65,10 +64,6 @@ public class PluginClassLoader extends ClassUtils implements WnosClassLoader {
                         "rootDir not set or does not exist: " + rootDir);
             }
 
-            Map exlussionTypes = new HashMap();
-            exlussionTypes.put(BaseWnosPlugin.class.getName(),
-                    BaseWnosPlugin.class);
-
             logger.debug("getting instance from: " + fullyQualifiedClassName);
             Object testObj = getClassInstance(rootDir, fullyQualifiedClassName);
 
@@ -79,7 +74,7 @@ public class PluginClassLoader extends ClassUtils implements WnosClassLoader {
                         + fullyQualifiedClassName);
             }
 
-            if (isAssignable(pluginTemplate, testObj.getClass())) {
+            if (pluginTemplate.isAssignableFrom(testObj.getClass())) {
 
                 return testObj;
 
@@ -96,9 +91,16 @@ public class PluginClassLoader extends ClassUtils implements WnosClassLoader {
         }
     }
 
-    public List getBasePluginImplementors(File rootDir) {
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.windsor.node.plugin.WnosClassLoader#getBasePluginImplementors(java
+     * .io.File)
+     */
+    public List<String> getBasePluginImplementors(File rootDir) {
 
-        List resultList = new ArrayList();
+        List<String> resultList = new ArrayList<String>();
 
         try {
 
@@ -108,10 +110,6 @@ public class PluginClassLoader extends ClassUtils implements WnosClassLoader {
                 throw new IllegalArgumentException(
                         "rootDir not set or does not exist: " + rootDir);
             }
-
-            Map exlussionTypes = new HashMap();
-            exlussionTypes.put(BaseWnosPlugin.class.getName(),
-                    BaseWnosPlugin.class);
 
             // get jars for that flow
             String[] files = rootDir.list(new JarFilter());
@@ -125,7 +123,7 @@ public class PluginClassLoader extends ClassUtils implements WnosClassLoader {
 
                 logger.debug("Jar file path: " + fullJarPath);
 
-                loadImplementersFromJar(fullJarPath, resultList);
+                resultList.addAll(loadImplementersFromJar(fullJarPath));
 
             }
 
@@ -164,13 +162,15 @@ public class PluginClassLoader extends ClassUtils implements WnosClassLoader {
 
     }
 
-    private void loadImplementersFromJar(String jarFilePath, List matches) {
+    private List<String> loadImplementersFromJar(String jarFilePath) {
+
+        List<String> matches = new ArrayList<String>();
 
         try {
-            // List all the types in the assembly that is passed in as a
+            // List all the types in the jar file that is passed in as a
             // parameter
             URL[] urls = new URL[1];
-            Enumeration e = null;
+            Enumeration<? extends ZipEntry> e = null;
             java.util.zip.ZipFile zf = null;
 
             urls[0] = new File(jarFilePath).toURL();
@@ -192,16 +192,16 @@ public class PluginClassLoader extends ClassUtils implements WnosClassLoader {
 
                         logger.debug("Loading   : " + className);
 
-                        Class c = ucl.loadClass(className);
+                        Class<?> c = ucl.loadClass(className);
 
-                        if (isAssignable(pluginTemplate, c)) {
+                        if (pluginTemplate.isAssignableFrom(c)
+                                && !Modifier.isAbstract(c.getModifiers())) {
 
-                            if (!matches.contains(className)) {
+                            logger.debug("Adding    : " + className);
 
-                                logger.debug("Adding    : " + className);
-                                matches.add(className);
-                            }
-
+                            // TODO this is the place to filter out abstract
+                            // classes
+                            matches.add(className);
                         }
 
                     }
@@ -215,16 +215,17 @@ public class PluginClassLoader extends ClassUtils implements WnosClassLoader {
         } catch (Exception pluginEx) {
             logger.error(pluginEx.getMessage(), pluginEx);
         }
+
+        return matches;
     }
 
     private Object getClassInstanceFromJar(String jarFilePath,
             String fullyQualifiedClassName) {
 
         try {
-            // List all the types in the assembly that is passed in as a
-            // parameter
+            // List all the classes in the jar that is passed in
             URL[] urls = new URL[1];
-            Enumeration e = null;
+            Enumeration<? extends ZipEntry> e = null;
             java.util.zip.ZipFile zf = null;
 
             urls[0] = new File(jarFilePath).toURL();
@@ -250,7 +251,7 @@ public class PluginClassLoader extends ClassUtils implements WnosClassLoader {
 
                         logger.debug("Loading    : " + className);
 
-                        Class c = ucl.loadClass(className);
+                        Class<?> c = ucl.loadClass(className);
                         return c.newInstance();
 
                     }

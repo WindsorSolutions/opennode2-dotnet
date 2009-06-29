@@ -97,21 +97,22 @@ public class RequestProcesor implements NetworkNodePortType {
     private String requestIPHeaderProperty;
 
     public RequestProcesor() throws RemoteException {
-        
+
         logger.debug("[RequestProcesor]: Constructor.");
-        
+
         logger.debug("Getting ApplicationContext from endpoint.xml.");
         ApplicationContext context = new ClassPathXmlApplicationContext(
                 new String[] { "endpoint.xml" });
-        
+
         logger.debug("Getting NOS services.");
         contentService = (ContentService) context.getBean("contentService");
         securityService = (SecurityService) context.getBean("securityService");
         transactionService = (TransactionService) context
                 .getBean("transactionService");
         logger.debug("NOS Services Acquired");
-        
-        requestIPHeaderProperty = (String) context.getBean(REQUEST_IP_HEADER_KEY);
+
+        requestIPHeaderProperty = (String) context
+                .getBean(REQUEST_IP_HEADER_KEY);
         logger.debug(REQUEST_IP_HEADER_KEY + COLON + requestIPHeaderProperty);
     }
 
@@ -452,7 +453,7 @@ public class RequestProcesor implements NetworkNodePortType {
 
     public String nodePing(String hello) throws RemoteException {
         logger.debug("[nodePing]: hello: " + hello);
-        return NodeStatusCodeType.READY.getName();
+        return NodeStatusCodeType.READY.toString();
     }
 
     public String[] getServices(String securityToken, String serviceType)

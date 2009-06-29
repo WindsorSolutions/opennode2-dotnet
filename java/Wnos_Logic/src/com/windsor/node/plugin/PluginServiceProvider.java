@@ -78,8 +78,8 @@ public class PluginServiceProvider implements ServiceFactory, InitializingBean {
                 .debug("Creating plugin service provide using following sources: "
                         + StringUtils.join(configLocations, ", "));
         context = new ClassPathXmlApplicationContext(configLocations);
-        logger.debug("Aquired beans: " + context.getBeanDefinitionCount());
-        logger.debug("Aquired beans: "
+        logger.debug("Acquired beans: " + context.getBeanDefinitionCount());
+        logger.debug("Acquired beans: "
                 + StringUtils.join(context.getBeanDefinitionNames(), ", "));
 
     }

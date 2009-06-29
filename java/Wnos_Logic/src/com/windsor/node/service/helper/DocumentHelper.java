@@ -40,7 +40,7 @@ public interface DocumentHelper {
      * @param documentID
      * @return
      */
-    public byte[] getDocumentContent(String transactionId, String documentId);
+    byte[] getDocumentContent(String transactionId, String documentId);
 
     /**
      * Gets an instance of a multiple documents
@@ -48,7 +48,7 @@ public interface DocumentHelper {
      * @param transactionID
      * @return
      */
-    public String[] getDocumentList(String transactionId);
+    String[] getDocumentList(String transactionId);
 
     /**
      * Saves a dpcument to the repository
@@ -57,7 +57,7 @@ public interface DocumentHelper {
      * @param transactionID
      * @param documentContent
      */
-    public void saveDocument(String docuemntId, String transactionId,
+    void saveDocument(String docuemntId, String transactionId,
             byte[] documentContent);
 
     /**
@@ -65,6 +65,6 @@ public interface DocumentHelper {
      * 
      * @param transactionID
      */
-    public void deleteDocuments(String transactionId);
+    void deleteDocuments(String transactionId);
 
 }

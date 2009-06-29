@@ -43,7 +43,7 @@ import com.windsor.node.common.domain.TransactionStatus;
 
 public interface NodeClientService {
 
-    void configure(URL parternEndpointUrl, String localEndpointUrl,
+    void configure(URL partnerEndpointUrl, String localEndpointUrl,
             NAASAccount credentials, File tempDir);
 
     NodeTransaction submit(NodeTransaction transaction);

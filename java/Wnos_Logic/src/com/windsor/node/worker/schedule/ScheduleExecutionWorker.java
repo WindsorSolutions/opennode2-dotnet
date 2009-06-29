@@ -42,7 +42,6 @@ import com.windsor.node.common.domain.CommonTransactionStatusCode;
 import com.windsor.node.common.domain.NodeMethodType;
 import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.ScheduleExecuteStatus;
-import com.windsor.node.common.domain.ScheduleFrequencyType;
 import com.windsor.node.common.domain.ScheduledItem;
 import com.windsor.node.common.domain.ScheduledItemSourceType;
 import com.windsor.node.common.domain.ScheduledItemTargetType;
@@ -50,7 +49,7 @@ import com.windsor.node.data.dao.AccountDao;
 import com.windsor.node.data.dao.jdbc.JdbcScheduleDao;
 import com.windsor.node.data.dao.jdbc.JdbcTransactionDao;
 import com.windsor.node.service.helper.NotificationHelper;
-import com.windsor.node.util.DateUtil;
+import com.windsor.node.util.ScheduleUtil;
 import com.windsor.node.worker.NodeWorker;
 import com.windsor.node.worker.schedule.processor.EmailDataProcessor;
 import com.windsor.node.worker.schedule.processor.FileSystemDataProcessor;
@@ -60,6 +59,8 @@ import com.windsor.node.worker.schedule.processor.SchematronDataProcessor;
 
 public class ScheduleExecutionWorker extends NodeWorker implements
         InitializingBean {
+
+    private static final String NL = "\n";
 
     private JdbcScheduleDao scheduleDao;
     private JdbcTransactionDao transactionDao;
@@ -124,101 +125,26 @@ public class ScheduleExecutionWorker extends NodeWorker implements
             logger.debug("Next one to execute: " + schedule);
 
             if (schedule != null) {
-                logger.debug("Setting next run");
-                setNextTimeToExecute(schedule);
+
+                Timestamp next = null;
+
+                if (schedule.getNextRunOn() != null) {
+
+                    logger.debug("Calculating next run");
+                    next = ScheduleUtil.calculateNextRun(schedule);
+                }
 
                 logger.debug("Processing");
                 processSchedule(schedule);
+
+                logger.debug("Updating next run: " + next);
+                scheduleDao.setRun(schedule.getId(), next);
             }
 
         } catch (Exception ex) {
             // Do not throw exception.
             // Processing method took care of the logging
             logger.error("Run Error: " + ex.getMessage(), ex);
-        }
-
-    }
-
-    /**
-     * Set the next execution time
-     * 
-     * @param schedule
-     */
-    private void setNextTimeToExecute(ScheduledItem schedule) {
-
-        if (schedule == null || schedule.getNextRunOn() == null) {
-            return;
-        }
-
-        try {
-
-            Timestamp now = DateUtil.getTimestamp();
-            Timestamp start = schedule.getStartOn();
-            Timestamp end = schedule.getEndOn();
-            Timestamp last = schedule.getLastExecutedOn();
-
-            logger.debug("Now  : " + now);
-            logger.debug("Start: " + start);
-            logger.debug("End  : " + end);
-            logger.debug("Last : " + last);
-
-            // Are we in the start/end window?
-            if (now.before(start) || now.after(end)) {
-                logger.debug("Outside of the start/end window");
-                scheduleDao.setRun(schedule.getId(), null);
-                return;
-            }
-
-            if (schedule.getFrequencyType().equals(ScheduleFrequencyType.ONCE)) {
-                logger.debug("One time only reset it");
-                scheduleDao.setRun(schedule.getId(), null);
-                return;
-            }
-
-            Timestamp next = null;
-
-            if (last == null) {
-                last = now;
-            }
-
-            //
-            if (schedule.getFrequencyType()
-                    .equals(ScheduleFrequencyType.HOURLY)) {
-                next = new Timestamp(DateUtil.getNextNHour(last, 1).getTime());
-                logger.debug("Adding hours: " + next);
-            } else if (schedule.getFrequencyType().equals(
-                    ScheduleFrequencyType.DAILY)) {
-                next = new Timestamp(DateUtil.getNextNDay(last, 1).getTime());
-                logger.debug("Adding days: " + next);
-            } else if (schedule.getFrequencyType().equals(
-                    ScheduleFrequencyType.WEEKLY)) {
-                next = new Timestamp(DateUtil.getNextNDay(last, 7).getTime());
-                logger.debug("Adding weeks: " + next);
-            } else if (schedule.getFrequencyType().equals(
-                    ScheduleFrequencyType.MONTHLY)) {
-                next = new Timestamp(DateUtil.getNextNMonth(last, 1).getTime());
-                logger.debug("Adding months: " + next);
-            }
-
-            logger.debug("Next : " + next);
-
-            // Will it be after the end?
-            if (next.after(end)) {
-                logger
-                        .debug("Having added the date is after the end of schedule: "
-                                + end);
-                scheduleDao.setRun(schedule.getId(), null);
-            } else {
-
-                // looks like it is a time to execute
-                logger.debug("Updating next run: " + next);
-                scheduleDao.setRun(schedule.getId(), next);
-
-            }
-
-        } catch (Exception ex) {
-            logger.error("Set Next Time To Execute: " + ex.getMessage(), ex);
-            throw new RuntimeException(ex);
         }
 
     }
@@ -363,15 +289,13 @@ public class ScheduleExecutionWorker extends NodeWorker implements
 
     }
 
-    private static final String NL = "\n";
-
     private String getScheduleInfo(Activity logEntry, boolean success) {
 
         StringBuffer sb = new StringBuffer();
 
         if (logEntry != null) {
 
-            sb.append("Success: " + ((success) ? "Yes" : "No") + NL);
+            sb.append("Success: " + (success ? "Yes" : "No") + NL);
             sb.append(NL);
 
             if (logEntry.getEntries() != null) {
