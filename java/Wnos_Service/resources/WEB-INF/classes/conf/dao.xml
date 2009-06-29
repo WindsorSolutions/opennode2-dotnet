@@ -80,7 +80,6 @@
 		class="com.windsor.node.data.dao.jdbc.JdbcServiceDao">
 		<property name="dataSource" ref="jdbcDataSource" />
 		<property name="connectionDao" ref="connectionDao" />
-		<property name="configDao" ref="configDao" />
 		<property name="idGenerator" ref="idGenerator" />
 	</bean>
 

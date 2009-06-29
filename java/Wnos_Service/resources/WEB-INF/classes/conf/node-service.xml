@@ -19,6 +19,8 @@
 		<property name="notificationHelper" ref="mailHelper" />
 		<property name="compressionHelper" ref="compressionHelper" />
 		<property name="requestDao" ref="requestDao" />
+        <!-- added to support ENDS_v2.0 in contentCmfService -->
+        <property name="pluginHelper" ref="pluginHelper" />
 	</bean>
 
 
@@ -32,10 +34,5 @@
 		<property name="pluginHelper" ref="pluginHelper" />
 		<property name="partnerDao" ref="partnerDao" />
 	</bean>
-
-
-
-
-
 
 </beans>

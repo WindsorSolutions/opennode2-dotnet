@@ -57,14 +57,20 @@
 		<property name="adminWhiteList">
 			<list>
 				<value>127.0.0.1</value>
-				<value>70.102.94.202</value>
 				<value>${ip.whitelist.subnet}</value>
 			</list>
 		</property>
 		<property name="pluginDir" value="${path.plugin.dir}" />
 		<property name="tempDir" value="${path.temp.dir}" />
-        <!-- <property name="logDir" value="${path.log.dir}" /> -->
 		<property name="skipNaas" value="false" />
+        <property name="nodeName" value="${node.name}" />
+        <property name="orgIdentifier" value="${organization.identifier}" />
+        <property name="deploymentType" value="${node.deployment.type}" />
+        <property name="publicV2endpointUrl" value="${public.v2.endpoint.url}" />
+        <property name="boundingCoordinateEast" value="${bounding.coordinate.east}" />
+        <property name="boundingCoordinateNorth" value="${bounding.coordinate.north}" />
+        <property name="boundingCoordinateSouth" value="${bounding.coordinate.south}" />
+        <property name="boundingCoordinateWest" value="${bounding.coordinate.west}" />
 	</bean>
 
 

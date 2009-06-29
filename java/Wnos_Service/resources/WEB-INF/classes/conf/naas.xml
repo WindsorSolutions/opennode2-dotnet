@@ -41,8 +41,6 @@
 		<property name="password" value="${naas.runtime.password}" />
 		<property name="authMethod" value="${naas.runtime.authMeth}" />
 		<property name="domain" value="default" />
-	</bean>
-               
-               
+	</bean>    
 
 </beans>
