@@ -12,7 +12,7 @@
         	nonavbar="false" 
         	notree="false" 
         	packagenames="com.windsor.node.plugin.common.velocity,com.windsor.node.plugin.common.velocity.jdbc" 
-        	source="1.4" 
+        	source="1.5" 
         	sourcepath="../../src" 
         	splitindex="false" 
         	use="true" 

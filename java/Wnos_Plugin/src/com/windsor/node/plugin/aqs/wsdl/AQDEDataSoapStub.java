@@ -228,8 +228,11 @@ public class AQDEDataSoapStub extends org.apache.axis.client.Stub implements
             oper.setReturnQName(new javax.xml.namespace.QName(
                     "urn:schemas-drdas-com:reporter.aqde.webservice",
                     "solicitAQSRawDataResult"));
-            oper.setStyle(org.apache.axis.enum.Style.WRAPPED);
-            oper.setUse(org.apache.axis.enum.Use.LITERAL);
+            // change for JDK 1.5
+            oper.setStyle(org.apache.axis.constants.Style.WRAPPED);
+            oper.setUse(org.apache.axis.constants.Use.LITERAL);
+            // oper.setStyle(org.apache.axis.enum.Style.WRAPPED);
+            // oper.setUse(org.apache.axis.enum.Use.LITERAL);
             _operations[0] = oper;
 
             oper = new org.apache.axis.description.OperationDesc();
@@ -387,8 +390,11 @@ public class AQDEDataSoapStub extends org.apache.axis.client.Stub implements
             oper.setReturnQName(new javax.xml.namespace.QName(
                     "urn:schemas-drdas-com:reporter.aqde.webservice",
                     "queryAQSRawDataResult"));
-            oper.setStyle(org.apache.axis.enum.Style.WRAPPED);
-            oper.setUse(org.apache.axis.enum.Use.LITERAL);
+            // change for JDK 1.5
+            oper.setStyle(org.apache.axis.constants.Style.WRAPPED);
+            oper.setUse(org.apache.axis.constants.Use.LITERAL);
+            // oper.setStyle(org.apache.axis.enum.Style.WRAPPED);
+            // oper.setUse(org.apache.axis.enum.Use.LITERAL);
             _operations[1] = oper;
 
             oper = new org.apache.axis.description.OperationDesc();
@@ -484,8 +490,11 @@ public class AQDEDataSoapStub extends org.apache.axis.client.Stub implements
             oper.setReturnQName(new javax.xml.namespace.QName(
                     "urn:schemas-drdas-com:reporter.aqde.webservice",
                     "queryAQSMonitorDataResult"));
-            oper.setStyle(org.apache.axis.enum.Style.WRAPPED);
-            oper.setUse(org.apache.axis.enum.Use.LITERAL);
+            // change for JDK 1.5
+            oper.setStyle(org.apache.axis.constants.Style.WRAPPED);
+            oper.setUse(org.apache.axis.constants.Use.LITERAL);
+            // oper.setStyle(org.apache.axis.enum.Style.WRAPPED);
+            // oper.setUse(org.apache.axis.enum.Use.LITERAL);
             _operations[2] = oper;
 
         } catch (Throwable thr) {

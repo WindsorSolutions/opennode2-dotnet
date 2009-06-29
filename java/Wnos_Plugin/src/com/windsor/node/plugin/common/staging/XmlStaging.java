@@ -54,23 +54,23 @@ public interface XmlStaging {
      *            indicates whether this is the final piece of a well-formed Xml
      *            payload
      */
-    public abstract void execute(StringBuffer xml, boolean isFinal);
+    void execute(StringBuffer xml, boolean isFinal);
 
     /**
      * @return the maxmimum number of list elements to be written at once
      */
-    public abstract int getBatchSize();
+    int getBatchSize();
 
     /**
      * @param the
      *            maxmimum number of list elements to be written at once
      */
-    public abstract void setBatchSize(int size);
+    void setBatchSize(int size);
 
     /**
      * @return the names of top-level lists in the Xml file being staged
      */
-    public abstract List getListNames();
+    List getListNames();
 
     /**
      * Keys are names of top-level lists, values are Lists of top-level list
@@ -78,39 +78,39 @@ public interface XmlStaging {
      * 
      * @return the Map of list names to element-name lists
      */
-    public abstract Map getListElementMap();
+    Map getListElementMap();
 
     /**
      * @return the opening tag of the document being processed
      */
-    public abstract String getDocumentOpen();
+    String getDocumentOpen();
 
     /**
      * @return the closing tag of the document being processed
      */
-    public abstract String getDocumentClose();
+    String getDocumentClose();
 
     /**
      * @param tagname
      * @return &lt;tagname&gt;
      */
-    public abstract String getStartTag(String tagname);
+    String getStartTag(String tagname);
 
     /**
      * @param tagname
      * @return &lt;/tagname&gt;
      */
-    public abstract String getEndTag(String tagname);
+    String getEndTag(String tagname);
 
     /**
      * For loading text to a data store.
      * 
      * @param loader
      */
-    public abstract void setTextLoader(TextLoader loader);
+    void setTextLoader(TextLoader loader);
 
     /**
      * @return the TextLoader implementation
      */
-    public abstract TextLoader getTextLoader();
+    TextLoader getTextLoader();
 }

@@ -36,6 +36,7 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.windsor.node.plugin.frs23;
 
 import java.io.File;
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -45,6 +46,7 @@ import org.apache.commons.io.FilenameUtils;
 import com.windsor.node.common.domain.CommonContentType;
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
 import com.windsor.node.common.domain.DataRequest;
+import com.windsor.node.common.domain.DataServiceRequestParameter;
 import com.windsor.node.common.domain.Document;
 import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.PaginationIndicator;
@@ -55,27 +57,18 @@ import com.windsor.node.service.helper.CompressionService;
 import com.windsor.node.service.helper.IdGenerator;
 import com.windsor.node.service.helper.settings.SettingServiceProvider;
 
-/**
- * @author mchmarny
- * 
- */
 public class NewFacilityRequestProcessor extends BaseWnosPlugin {
-
-    /**
-     * runtime argument names
-     */
-    public static final String ARG_SOURCE_SYS_NAME = "Source system name";
-    public static final String ARG_LAST_EXEC_STATE_KEY = "Name of app key to manage state";
 
     public NewFacilityRequestProcessor() {
         super();
+        setPublishForEN11(false);
+        setPublishForEN20(false);
 
         debug("Setting internal runtime argument list");
-        getConfigurationArguments().put(ARG_SOURCE_SYS_NAME, "");
         getConfigurationArguments().put(ARG_LAST_EXEC_STATE_KEY, "");
 
         debug("Setting internal data source list");
-        getDataSources().put(DS_SOURCE, (DataSource) null);
+        getDataSources().put(ARG_DS_SOURCE, (DataSource) null);
 
         getSupportedPluginTypes().add(ServiceType.SOLICIT);
 
@@ -97,7 +90,7 @@ public class NewFacilityRequestProcessor extends BaseWnosPlugin {
         }
 
         // make sure the source data source is set
-        if (!getDataSources().containsKey(DS_SOURCE)) {
+        if (!getDataSources().containsKey(ARG_DS_SOURCE)) {
             throw new RuntimeException("Source data source not set");
         }
 
@@ -142,8 +135,8 @@ public class NewFacilityRequestProcessor extends BaseWnosPlugin {
             validateTransaction(transaction);
 
             result.getAuditEntries().add(makeEntry("Acquiring arguments..."));
-            DataSource dataSource = (DataSource) getDataSources()
-                    .get(DS_SOURCE);
+            DataSource dataSource = (DataSource) getDataSources().get(
+                    ARG_DS_SOURCE);
             debug("Data Source: " + dataSource);
 
             String sourceSysName = getRequiredConfigValueAsString(ARG_SOURCE_SYS_NAME);
@@ -210,7 +203,7 @@ public class NewFacilityRequestProcessor extends BaseWnosPlugin {
             request.getParameters().put(1, lastExecDate);
 
             new Data(false).getList(dataSource, resultFilePath, request,
-                    sourceSysName, result, false);
+                    result, false);
 
             result.getAuditEntries().add(
                     makeEntry("Result file: " + resultFilePath));
@@ -275,5 +268,18 @@ public class NewFacilityRequestProcessor extends BaseWnosPlugin {
         }
 
         return result;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.windsor.node.plugin.BaseWnosPlugin#getServiceRequestParamSpecs(java
+     * .lang.String)
+     */
+    @Override
+    public List<DataServiceRequestParameter> getServiceRequestParamSpecs(
+            String serviceName) {
+        return null;
     }
 }

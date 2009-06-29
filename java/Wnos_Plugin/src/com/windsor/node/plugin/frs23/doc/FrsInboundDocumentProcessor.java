@@ -35,6 +35,7 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.windsor.node.plugin.frs23.doc;
 
 import java.io.File;
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -43,6 +44,7 @@ import org.apache.commons.io.FilenameUtils;
 
 import com.windsor.node.common.domain.CommonContentType;
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
+import com.windsor.node.common.domain.DataServiceRequestParameter;
 import com.windsor.node.common.domain.Document;
 import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.ProcessContentResult;
@@ -60,11 +62,14 @@ public class FrsInboundDocumentProcessor extends BaseWnosPlugin {
 
         super();
 
+        setPublishForEN11(false);
+        setPublishForEN20(false);
+
         debug("Setting internal runtime argument list");
         getConfigurationArguments().put(ARG_PROC_NAME, "");
 
         debug("Setting internal data source list");
-        getDataSources().put(DS_SOURCE, (DataSource) null);
+        getDataSources().put(ARG_DS_SOURCE, (DataSource) null);
 
         getSupportedPluginTypes().add(ServiceType.SUBMIT);
 
@@ -87,7 +92,7 @@ public class FrsInboundDocumentProcessor extends BaseWnosPlugin {
         }
 
         // make sure the target data source is set
-        if (!getDataSources().containsKey(DS_SOURCE)) {
+        if (!getDataSources().containsKey(ARG_DS_SOURCE)) {
             throw new RuntimeException("Target data source not set");
         }
 
@@ -131,8 +136,8 @@ public class FrsInboundDocumentProcessor extends BaseWnosPlugin {
 
             result.getAuditEntries().add(
                     makeEntry("Acquiring target datasource..."));
-            DataSource dataSource = (DataSource) getDataSources()
-                    .get(DS_SOURCE);
+            DataSource dataSource = (DataSource) getDataSources().get(
+                    ARG_DS_SOURCE);
 
             /*
              * HELPERS
@@ -263,5 +268,18 @@ public class FrsInboundDocumentProcessor extends BaseWnosPlugin {
         }
 
         return result;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.windsor.node.plugin.BaseWnosPlugin#getServiceRequestParamSpecs(java
+     * .lang.String)
+     */
+    @Override
+    public List<DataServiceRequestParameter> getServiceRequestParamSpecs(
+            String serviceName) {
+        return null;
     }
 }

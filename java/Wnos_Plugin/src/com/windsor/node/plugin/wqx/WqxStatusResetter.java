@@ -31,9 +31,12 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.windsor.node.plugin.wqx;
 
+import java.util.List;
+
 import javax.sql.DataSource;
 
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
+import com.windsor.node.common.domain.DataServiceRequestParameter;
 import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.ProcessContentResult;
 import com.windsor.node.common.domain.ServiceType;
@@ -51,8 +54,11 @@ public class WqxStatusResetter extends BaseWnosPlugin {
 
         super();
 
+        setPublishForEN11(false);
+        setPublishForEN20(false);
+
         debug("Setting internal data source list");
-        getDataSources().put(DS_SOURCE, (DataSource) null);
+        getDataSources().put(ARG_DS_SOURCE, (DataSource) null);
 
         debug("Setting service types");
         getSupportedPluginTypes().add(ServiceType.SOLICIT);
@@ -71,7 +77,7 @@ public class WqxStatusResetter extends BaseWnosPlugin {
         try {
 
             // data access for internal housekeeping for this flow
-            DataSource ds = (DataSource) getDataSources().get(DS_SOURCE);
+            DataSource ds = (DataSource) getDataSources().get(ARG_DS_SOURCE);
             WqxStatusDao dao = new WqxStatusDao(ds);
 
             result
@@ -111,11 +117,24 @@ public class WqxStatusResetter extends BaseWnosPlugin {
             throw new RuntimeException("Data sources not set");
         }
 
-        if (!getDataSources().containsKey(DS_SOURCE)) {
+        if (!getDataSources().containsKey(ARG_DS_SOURCE)) {
             throw new RuntimeException("Data source not set");
         }
 
         debug("DwqHistoryResetter data source validated");
 
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.windsor.node.plugin.BaseWnosPlugin#getServiceRequestParamSpecs(java
+     * .lang.String)
+     */
+    @Override
+    public List<DataServiceRequestParameter> getServiceRequestParamSpecs(
+            String serviceName) {
+        return null;
     }
 }

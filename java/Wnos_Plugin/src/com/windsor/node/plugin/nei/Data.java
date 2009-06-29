@@ -391,7 +391,8 @@ public class Data extends JdbcDaoSupport {
 
     public void getList(DataSource dataSource, String targetFilePath,
             DataRequest req, String org, String author, String contact,
-            boolean doHeader, String docId) {
+            String sensitivity, String geoCoverage, boolean doHeader,
+            String docId) {
 
         try {
 
@@ -416,7 +417,8 @@ public class Data extends JdbcDaoSupport {
             out = new OutputStreamWriter(new BufferedOutputStream(
                     new FileOutputStream(targetFilePath), 1024 * 24), "UTF-8");
 
-            String year = req.getParameterValues()[0];
+            String year = req.getParameterValues()[0].trim();
+
             replace = req.getParameterValues()[1].trim().equalsIgnoreCase(
                     "replace");
 
@@ -448,10 +450,10 @@ public class Data extends JdbcDaoSupport {
                         + "</CreationTime>");
                 out.write("<ContactInfo>" + contact + "</ContactInfo>");
                 out.write("<Notification>" + contact + "</Notification>");
-                out.write("<Sensitivity>Unclassified</Sensitivity>");
+                out.write("<Sensitivity>" + sensitivity + "</Sensitivity>");
                 out.write("<Property>");
                 out.write("<name>GeographicCoverage</name>");
-                out.write("<value>36</value>");
+                out.write("<value>" + geoCoverage + "</value>");
                 out.write("</Property>");
                 out.write("<Property>");
                 out.write("<name>InventoryYear</name>");
@@ -466,18 +468,18 @@ public class Data extends JdbcDaoSupport {
                 // Payload
                 out.write("<Payload Operation=\"Point|"
                         + req.getParameterValues()[1] + "\" xmlns=\"\">");
-                out
-                        .write("<PointSourceSubmissionGroup xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" ");
-                out
-                        .write("xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" ");
-                out
-                        .write("xsi:schemaLocation=\"http://www.epa.gov/exchangenetwork ");
-                out
-                        .write("http://www.exchangenetwork.net/registry/EN_NEI_Point_v3_0.xsd\" ");
-                out
-                        .write("schemaVersion=\"0\" xmlns=\"http://www.epa.gov/exchangenetwork\">");
-
             }
+
+            out
+                    .write("<PointSourceSubmissionGroup xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" ");
+            out
+                    .write("xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" ");
+            out
+                    .write("xsi:schemaLocation=\"http://www.epa.gov/exchangenetwork ");
+            out
+                    .write("http://www.exchangenetwork.net/registry/EN_NEI_Point_v3_0.xsd\" ");
+            out
+                    .write("schemaVersion=\"0\" xmlns=\"http://www.epa.gov/exchangenetwork\">");
 
             writeSystemRecordCountValues(year);
             writeTransmittalSubmissionGroup(year);
@@ -534,6 +536,9 @@ public class Data extends JdbcDaoSupport {
      */
     private void writeSystemRecordCountValues(String year) throws Exception {
         SystemRecordCountValues counts = new SystemRecordCountValues();
+
+        logger.debug("Year (single-quoted for clarity) = '" + year + "'");
+        logger.debug("Year(i.e., String).length() = " + year.length());
 
         if (StringUtils.isBlank(year) || year.length() != 4) {
             throw new RuntimeException("Invalid Year: " + year);

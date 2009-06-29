@@ -2,20 +2,20 @@
 #set ($totalRecCount = 0)
 $helper.startStopWatch()
 #if($handlerLimit) $helper.print("HandlerLimit:") $helper.print($handlerLimit)
+## this query lets us limit the results for test - DB2 specific syntax
 #set($handlerQuery = "SELECT handler_id FROM RCRA_HD_HBASIC WHERE handler_id <>  ? fetch first $handlerLimit rows only")
 #else
 #set($handlerQuery = "SELECT handler_id FROM RCRA_HD_HBASIC WHERE handler_id <>  ? ")
 #end
 $helper.print("handlerQuery:")
 $helper.print($handlerQuery)
-#if($makeHeader)
-#if($makeHeader == "true" || $makeHeader == "TRUE")
+#if($makeHeader)#if($makeHeader == "true" || $makeHeader == "TRUE")
 <Document xmlns:hdr="http://www.exchangenetwork.net/schema/v1.0/ExchangeNetworkDocument.xsd"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.exchangenetwork.net/schema/v1.0/ExchangeNetworkDocument.xsd http://www.exchangenetwork.net/schema/v1.0/ExchangeNetworkDocument.xsd"
     Id="$docId">
     <Header>
-        <Author>$contactInfo</Author>
+        <Author>$author</Author>
         <Organization>$providingOrg</Organization>
         <Title>$title</Title>
         <CreationTime>$helper.getCurrentDateTime()</CreationTime>
@@ -25,22 +25,19 @@ $helper.print($handlerQuery)
         <Notification>$notification</Notification>
         <Sensitivity>Unclassified</Sensitivity>
         <Property>
-            <name>RCRAInfoUserID</name>
-            <value>$rcraInfoUserId</value>
+        <name>RCRAInfoUserID</name>
+        <value>$rcraInfoUserId</value>
         </Property>
         <Property>
-            <name>RCRAInfoStateCode</name>
-            <value>$rcraInfoStateCode</value>
+        <name>RCRAInfoStateCode</name>
+        <value>$rcraInfoStateCode</value>
         </Property>
     </Header>
 <Payload Operation=$payloadOperation>
 #end#end##if($makeHeader)
-<HazardousWasteHandlerSubmission
-    xmlns="$schemaReference"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.exchangenetwork.net/schema/RCRA/4 http://www.exchangenetwork.net/schema/RCRA/4/0/RCRA_HazardousWasteHandlerSubmission_v4.0.xsd">
-<FacilitySubmission>
+<HazardousWasteHandlerSubmission xmlns="http://www.exchangenetwork.net/schema/RCRA/4">
 #foreach($handlerId in $helper.getList($handlerQuery, "", "handler_id"))
+    <FacilitySubmission>
 #if ($velocityCount % 500 == 0)
 $helper.print($velocityCount)
 $helper.printElapsedTime()
@@ -48,527 +45,526 @@ $helper.printElapsedTime()
 #set ($totalRecCount = $velocityCount)
 #set ($hbasic = $helper.getObject("SELECT * FROM RCRA_HD_HBASIC WHERE HANDLER_ID = ? ", $handlerId))
 #if($hbasic.get("transaction_code"))
-            <TransactionCode>$hbasic.get("transaction_code")</TransactionCode>
+        <TransactionCode>$hbasic.get("transaction_code")</TransactionCode>
 #end
 #if($hbasic.get("handler_id"))
-            <HandlerID>$hbasic.get("handler_id")</HandlerID>
+        <HandlerID>$hbasic.get("handler_id")</HandlerID>
 #end
 #if($hbasic.get("extract_flag"))
-            <PublicUseExtractIndicator>$hbasic.get("extract_flag")</PublicUseExtractIndicator>
+        <PublicUseExtractIndicator>$hbasic.get("extract_flag")</PublicUseExtractIndicator>
 #end
 #if($hbasic.get("facility_identifier"))
-            <FacilityRegistryID>$hbasic.get("facility_identifier")</FacilityRegistryID>
+        <FacilityRegistryID>$hbasic.get("facility_identifier")</FacilityRegistryID>
 #end
 #if($hbasic.get("notes"))
-            <FacilitySupplementalInformationText>$hbasic.get("notes")</FacilitySupplementalInformationText>
+        <FacilitySupplementalInformationText>$hbasic.get("notes")</FacilitySupplementalInformationText>
 #end
 #foreach($handler in $helper.getData("SELECT * FROM RCRA_HD_HBASIC H JOIN RCRA_HD_HANDLER HH ON H.PK_GUID = HH.FK_GUID WHERE HANDLER_ID = ? ", $handlerId))    
-            <Handler>
+        <Handler>
 #if($handler.get("transaction_code"))
-                <TransactionCode>$handler.get("transaction_code")</TransactionCode>
+            <TransactionCode>$handler.get("transaction_code")</TransactionCode>
 #end
 #if($handler.get("activity_location"))
-                <ActivityLocationCode>$handler.get("activity_location")</ActivityLocationCode>
+            <ActivityLocationCode>$handler.get("activity_location")</ActivityLocationCode>
 #end
 #if($handler.get("source_type"))
-                <SourceTypeCode>$handler.get("source_type")</SourceTypeCode>
+            <SourceTypeCode>$handler.get("source_type")</SourceTypeCode>
 #end
 #if($handler.get("seq_number"))
-                <SourceRecordSequenceNumber>$handler.get("seq_number")</SourceRecordSequenceNumber>
+            <SourceRecordSequenceNumber>$handler.get("seq_number")</SourceRecordSequenceNumber>
 #end
 #if($handler.get("receive_date"))
-                <ReceiveDate>$handler.get("receive_date")</ReceiveDate>
+            <ReceiveDate>$handler.get("receive_date")</ReceiveDate>
 #end
 #if($handler.get("acknowledge_date"))
-                <AcknowledgeReceiptDate>$handler.get("acknowledge_date")</AcknowledgeReceiptDate>
+            <AcknowledgeReceiptDate>$handler.get("acknowledge_date")</AcknowledgeReceiptDate>
 #end
 #if($handler.get("non_notifier"))
-                <NonNotifierIndicator>$handler.get("non_notifier")</NonNotifierIndicator>
+            <NonNotifierIndicator>$handler.get("non_notifier")</NonNotifierIndicator>
 #end
 #if($handler.get("number_of_employees"))
-                <OnsiteEmployeeQuantity>$handler.get("number_of_employees")</OnsiteEmployeeQuantity>
+            <OnsiteEmployeeQuantity>$handler.get("number_of_employees")</OnsiteEmployeeQuantity>
 #end
 #if($handler.get("tsd_date"))
-                <TreatmentStorageDisposalDate>$handler.get("tsd_date")</TreatmentStorageDisposalDate>
+            <TreatmentStorageDisposalDate>$handler.get("tsd_date")</TreatmentStorageDisposalDate>
 #end
 #if($handler.get("off_site_receipt"))
-                <OffsiteWasteReceiptCode>$handler.get("off_site_receipt")</OffsiteWasteReceiptCode>
+            <OffsiteWasteReceiptCode>$handler.get("off_site_receipt")</OffsiteWasteReceiptCode>
 #end
 #if($handler.get("accessibility"))
-                <AccessibilityCode>$handler.get("accessibility")</AccessibilityCode>
+            <AccessibilityCode>$handler.get("accessibility")</AccessibilityCode>
 #end
 #if($handler.get("county_code_owner"))
-                <CountyCodeOwner>$handler.get("county_code_owner")</CountyCodeOwner>
+            <CountyCodeOwner>$handler.get("county_code_owner")</CountyCodeOwner>
 #end
 #if($handler.get("county_code"))
-                <CountyCode>$handler.get("county_code")</CountyCode>
+            <CountyCode>$handler.get("county_code")</CountyCode>
 #end
 #if($handler.get("notes"))
-                <HandlerSupplementalInformationText>$handler.get("notes")</HandlerSupplementalInformationText>
+            <HandlerSupplementalInformationText>$handler.get("notes")</HandlerSupplementalInformationText>
 #end
 #if(($handler.get("location_street1"))||($handler.get("location_city"))||($handler.get("location_state"))||($handler.get("location_zip")))
-                <LocationAddress>
+            <LocationAddress>
 #if($handler.get("location_street1"))
-                    <LocationAddressText>$handler.get("location_street1")</LocationAddressText>
+                <LocationAddressText>$handler.get("location_street1")</LocationAddressText>
 #end
 #if($handler.get("location_street2"))
-                    <SupplementalLocationText>$handler.get("location_street2")</SupplementalLocationText>
+                <SupplementalLocationText>$handler.get("location_street2")</SupplementalLocationText>
 #end
 #if($handler.get("location_city"))
-                    <LocalityName>$handler.get("location_city")</LocalityName>
+                <LocalityName>$handler.get("location_city")</LocalityName>
 #end
 #if($handler.get("location_state"))
-                    <StateUSPSCode>$handler.get("location_state")</StateUSPSCode>
+                <StateUSPSCode>$handler.get("location_state")</StateUSPSCode>
 #end
 #if($handler.get("location_country"))
-                    <CountryName>$handler.get("location_country")</CountryName>
+                <CountryName>$handler.get("location_country")</CountryName>
 #end
 #if($handler.get("location_zip"))
-                    <LocationZIPCode>$handler.get("location_zip")</LocationZIPCode>
+                <LocationZIPCode>$handler.get("location_zip")</LocationZIPCode>
 #end#end
-                </LocationAddress>
+            </LocationAddress>
 #if(($handler.get("mail_street1"))||($handler.get("mail_city"))||($handler.get("mail_state"))||($handler.get("mail_zip")))
-                <MailingAddress>
+            <MailingAddress>
 #if($handler.get("mail_street1"))
-                    <MailingAddressText>$handler.get("mail_street1")</MailingAddressText>
+                <MailingAddressText>$handler.get("mail_street1")</MailingAddressText>
 #end
 #if($handler.get("mail_street2"))
-                    <SupplementalAddressText>$handler.get("mail_street2")</SupplementalAddressText>
+                <SupplementalAddressText>$handler.get("mail_street2")</SupplementalAddressText>
 #end
 #if($handler.get("mail_city"))
-                    <MailingAddressCityName>$handler.get("mail_city")</MailingAddressCityName>
+                <MailingAddressCityName>$handler.get("mail_city")</MailingAddressCityName>
 #end
 #if($handler.get("mail_state"))
-                    <MailingAddressStateUSPSCode>$handler.get("mail_state")</MailingAddressStateUSPSCode>
+                <MailingAddressStateUSPSCode>$handler.get("mail_state")</MailingAddressStateUSPSCode>
 #end
 #if($handler.get("mail_country"))
-                    <MailingAddressCountryName>$handler.get("mail_country")</MailingAddressCountryName>
+                <MailingAddressCountryName>$handler.get("mail_country")</MailingAddressCountryName>
 #end
 #if($handler.get("mail_zip"))
-                    <MailingAddressZIPCode>$handler.get("mail_zip")</MailingAddressZIPCode>
+                <MailingAddressZIPCode>$handler.get("mail_zip")</MailingAddressZIPCode>
 #end
 #end
-                </MailingAddress>
+            </MailingAddress>
 #if(($handler.get("contact_first_name"))||($handler.get("contact_last_name"))||($handler.get("contact_org_name")||($handler.get("contact_street1"))||($handler.get("contact_city"))||($handler.get("contact_state"))||($handler.get("contact_zip"))))
-                <ContactAddress>
+            <ContactAddress>
 #if(($handler.get("contact_first_name"))||($handler.get("contact_last_name"))||($handler.get("contact_org_name")))
-                    <Contact>
+                <Contact>
 #if($handler.get("contact_first_name"))
-                        <FirstName>$handler.get("contact_first_name")</FirstName>
+                <FirstName>$handler.get("contact_first_name")</FirstName>
 #end
 #if($handler.get("contact_middle_initial"))
-                        <MiddleInitial>$handler.get("contact_middle_initial")</MiddleInitial>
+                <MiddleInitial>$handler.get("contact_middle_initial")</MiddleInitial>
 #end
 #if($handler.get("contact_last_name"))
-                        <LastName>$handler.get("contact_last_name")</LastName>
+                <LastName>$handler.get("contact_last_name")</LastName>
 #end
 #if($handler.get("contact_org_name"))
-                        <OrganizationFormalName>$handler.get("contact_org_name")</OrganizationFormalName>
+                <OrganizationFormalName>$handler.get("contact_org_name")</OrganizationFormalName>
 #end
 #if($handler.get("contact_email_address"))
-                        <EmailAddressText>$handler.get("contact_email_address")</EmailAddressText>
+                <EmailAddressText>$handler.get("contact_email_address")</EmailAddressText>
 #end
 #if($handler.get("contact_phone"))
-                        <TelephoneNumberText>$handler.get("contact_phone")</TelephoneNumberText>
+                <TelephoneNumberText>$handler.get("contact_phone")</TelephoneNumberText>
 #end
 #if($handler.get("contact_phone_ext"))
-                        <PhoneExtensionText>$handler.get("contact_phone_ext")</PhoneExtensionText>
+                <PhoneExtensionText>$handler.get("contact_phone_ext")</PhoneExtensionText>
 #end
-                    </Contact>
+                </Contact>
 #end
 #if(($handler.get("contact_street1"))||($handler.get("contact_city"))||($handler.get("contact_state"))||($handler.get("contact_zip")))
-                    <MailingAddress>                
+                <MailingAddress>            
 #if($handler.get("contact_street1"))
-                        <MailingAddressText>$handler.get("contact_street1")</MailingAddressText>
+                <MailingAddressText>$handler.get("contact_street1")</MailingAddressText>
 #end
 #if($handler.get("contact_street2"))
-                        <SupplementalAddressText>$handler.get("contact_street2")</SupplementalAddressText>
+                <SupplementalAddressText>$handler.get("contact_street2")</SupplementalAddressText>
 #end
 #if($handler.get("contact_city"))
-                        <MailingAddressCityName>$handler.get("contact_city")</MailingAddressCityName>
+                <MailingAddressCityName>$handler.get("contact_city")</MailingAddressCityName>
 #end
 #if($handler.get("contact_state"))
-                        <MailingAddressStateUSPSCode>$handler.get("contact_state")</MailingAddressStateUSPSCode>
+                <MailingAddressStateUSPSCode>$handler.get("contact_state")</MailingAddressStateUSPSCode>
 #end
 #if($handler.get("contact_country"))
-                        <MailingAddressCountryName>$handler.get("contact_country")</MailingAddressCountryName>
+                <MailingAddressCountryName>$handler.get("contact_country")</MailingAddressCountryName>
 #end
 #if($handler.get("contact_zip"))
-                        <MailingAddressZIPCode>$handler.get("contact_zip")</MailingAddressZIPCode>
+                <MailingAddressZIPCode>$handler.get("contact_zip")</MailingAddressZIPCode>
 #end
-                    </MailingAddress>
+                </MailingAddress>
 #end
-                </ContactAddress>
+            </ContactAddress>
 #end
 #if(($handler.get("pcontact_first_name"))||($handler.get("pcontact_last_name"))||($handler.get("pcontact_org_name"))||($handler.get("pcontact_street1"))||($handler.get("pcontact_city"))||($handler.get("pcontact_state"))||($handler.get("pcontact_zip")))
-                <PermitContactAddress>
+            <PermitContactAddress>
 #if(($handler.get("pcontact_first_name"))||($handler.get("pcontact_last_name"))||($handler.get("pcontact_org_name")))
-                    <Contact>
+                <Contact>
 #if($handler.get("pcontact_first_name"))
-                        <FirstName>$handler.get("pcontact_first_name")</FirstName>
+                <FirstName>$handler.get("pcontact_first_name")</FirstName>
 #end
 #if($handler.get("pcontact_middle_initial"))
-                        <MiddleInitial>$handler.get("pcontact_middle_initial")</MiddleInitial>
+                <MiddleInitial>$handler.get("pcontact_middle_initial")</MiddleInitial>
 #end
 #if($handler.get("pcontact_last_name"))
-                        <LastName>$handler.get("pcontact_last_name")</LastName>
+                <LastName>$handler.get("pcontact_last_name")</LastName>
 #end
 #if($handler.get("pcontact_org_name"))
-                        <OrganizationFormalName>$handler.get("pcontact_org_name")</OrganizationFormalName>
+                <OrganizationFormalName>$handler.get("pcontact_org_name")</OrganizationFormalName>
 #end
 #if($handler.get("pcontact_email_address"))
-                        <EmailAddressText>$handler.get("pcontact_email_address")</EmailAddressText>
+                <EmailAddressText>$handler.get("pcontact_email_address")</EmailAddressText>
 #end
 #if($handler.get("pcontact_phone"))
-                        <TelephoneNumberText>$handler.get("pcontact_phone")</TelephoneNumberText>
+                <TelephoneNumberText>$handler.get("pcontact_phone")</TelephoneNumberText>
 #end
 #if($handler.get("pcontact_phone_ext"))
-                        <PhoneExtensionText>$handler.get("pcontact_phone_ext")</PhoneExtensionText>
+                <PhoneExtensionText>$handler.get("pcontact_phone_ext")</PhoneExtensionText>
 #end
-                    </Contact>
+                </Contact>
 #end
 #if(($handler.get("pcontact_street1"))||($handler.get("pcontact_city"))||($handler.get("pcontact_state"))||($handler.get("pcontact_zip")))
-                    <MailingAddress>                
+                <MailingAddress>            
 #if($handler.get("pcontact_street1"))
-                        <MailingAddressText>$handler.get("pcontact_street1")</MailingAddressText>
+                <MailingAddressText>$handler.get("pcontact_street1")</MailingAddressText>
 #end
 #if($handler.get("pcontact_street2"))
-                        <SupplementalAddressText>$handler.get("pcontact_street2")</SupplementalAddressText>
+                <SupplementalAddressText>$handler.get("pcontact_street2")</SupplementalAddressText>
 #end
 #if($handler.get("pcontact_city"))
-                        <MailingAddressCityName>$handler.get("pcontact_city")</MailingAddressCityName>
+                <MailingAddressCityName>$handler.get("pcontact_city")</MailingAddressCityName>
 #end
 #if($handler.get("pcontact_state"))
-                        <MailingAddressStateUSPSCode>$handler.get("pcontact_state")</MailingAddressStateUSPSCode>
+                <MailingAddressStateUSPSCode>$handler.get("pcontact_state")</MailingAddressStateUSPSCode>
 #end
 #if($handler.get("pcontact_country"))
-                        <MailingAddressCountryName>$handler.get("pcontact_country")</MailingAddressCountryName>
+                <MailingAddressCountryName>$handler.get("pcontact_country")</MailingAddressCountryName>
 #end
 #if($handler.get("pcontact_zip"))
-                        <MailingAddressZIPCode>$handler.get("pcontact_zip")</MailingAddressZIPCode>
+                <MailingAddressZIPCode>$handler.get("pcontact_zip")</MailingAddressZIPCode>
 #end    
-                    </MailingAddress>
+                </MailingAddress>
 #end
-                </PermitContactAddress>
+            </PermitContactAddress>
 #end
 #if(($handler.get("used_oil_burner"))||($handler.get("used_oil_processor"))||($handler.get("used_oil_refiner"))||($handler.get("used_oil_market_burner"))||($handler.get("used_oil_marketer"))||($handler.get("used_oil_transfer_facility"))||($handler.get("used_oil_transporter")))
-                <UsedOil>
+            <UsedOil>
 #if($handler.get("used_oil_burner"))
-                    <FuelBurnerCode>$handler.get("used_oil_burner")</FuelBurnerCode>
+                <FuelBurnerCode>$handler.get("used_oil_burner")</FuelBurnerCode>
 #end
 #if($handler.get("used_oil_processor"))
-                    <ProcessorCode>$handler.get("used_oil_processor")</ProcessorCode>
+                <ProcessorCode>$handler.get("used_oil_processor")</ProcessorCode>
 #end
 #if($handler.get("used_oil_refiner"))
-                    <RefinerCode>$handler.get("used_oil_refiner")</RefinerCode>
+                <RefinerCode>$handler.get("used_oil_refiner")</RefinerCode>
 #end
 #if($handler.get("used_oil_market_burner"))
-                    <MarketBurnerCode>$handler.get("used_oil_market_burner")</MarketBurnerCode>
+                <MarketBurnerCode>$handler.get("used_oil_market_burner")</MarketBurnerCode>
 #end
 #if($handler.get("used_oil_spec_marketer"))
-                    <SpecificationMarketerCode>$handler.get("used_oil_spec_marketer")</SpecificationMarketerCode>
+                <SpecificationMarketerCode>$handler.get("used_oil_spec_marketer")</SpecificationMarketerCode>
 #end
 #if($handler.get("used_oil_transfer_facility"))
-                    <TransferFacilityCode>$handler.get("used_oil_transfer_facility")</TransferFacilityCode>
+                <TransferFacilityCode>$handler.get("used_oil_transfer_facility")</TransferFacilityCode>
 #end
 #if($handler.get("used_oil_transporter"))
-                    <TransporterCode>$handler.get("used_oil_transporter")</TransporterCode>
+                <TransporterCode>$handler.get("used_oil_transporter")</TransporterCode>
 #end
-                </UsedOil>
+            </UsedOil>
 #end
 #if(($handler.get("site_name")))
-                <WasteActivitySite>
+            <WasteActivitySite>
 #if($handler.get("site_name"))
-                    <FacilitySiteName>$handler.get("site_name")</FacilitySiteName>
+                <FacilitySiteName>$handler.get("site_name")</FacilitySiteName>
 #end
 #if($handler.get("land_type"))
-                    <LandTypeCode>$handler.get("land_type")</LandTypeCode>
+                <LandTypeCode>$handler.get("land_type")</LandTypeCode>
 #end
 #if($handler.get("state_district"))
-                    <StateDistrictCode>$handler.get("state_district")</StateDistrictCode>
+                <StateDistrictCode>$handler.get("state_district")</StateDistrictCode>
 #end
 #if($handler.get("importer_activity"))
-                    <ImporterActivityCode>$handler.get("importer_activity")</ImporterActivityCode>
+                <ImporterActivityCode>$handler.get("importer_activity")</ImporterActivityCode>
 #end
 #if($handler.get("mixed_waste_generator"))
-                    <MixedWasteGeneratorCode>$handler.get("mixed_waste_generator")</MixedWasteGeneratorCode>
+                <MixedWasteGeneratorCode>$handler.get("mixed_waste_generator")</MixedWasteGeneratorCode>
 #end
 #if($handler.get("recycler_activity"))
-                    <RecyclerActivityCode>$handler.get("recycler_activity")</RecyclerActivityCode>
+                <RecyclerActivityCode>$handler.get("recycler_activity")</RecyclerActivityCode>
 #end
 #if($handler.get("transporter_activity"))
-                    <TransporterActivityCode>$handler.get("transporter_activity")</TransporterActivityCode>
+                <TransporterActivityCode>$handler.get("transporter_activity")</TransporterActivityCode>
 #end
 #if($handler.get("tsd_activity"))
-                    <TreatmentStorageDisposalActivityCode>$handler.get("tsd_activity")</TreatmentStorageDisposalActivityCode>
+                <TreatmentStorageDisposalActivityCode>$handler.get("tsd_activity")</TreatmentStorageDisposalActivityCode>
 #end
 #if($handler.get("underground_injection_activity"))
-                    <UndergroundInjectionActivityCode>$handler.get("underground_injection_activity")</UndergroundInjectionActivityCode>
+                <UndergroundInjectionActivityCode>$handler.get("underground_injection_activity")</UndergroundInjectionActivityCode>
 #end
 #if($handler.get("universal_waste_dest_facility"))
-                    <UniversalWasteDestinationFacilityIndicator>$handler.get("universal_waste_dest_facility")</UniversalWasteDestinationFacilityIndicator>
+                <UniversalWasteDestinationFacilityIndicator>$handler.get("universal_waste_dest_facility")</UniversalWasteDestinationFacilityIndicator>
 #end
 #if($handler.get("onsite_burner_exemption"))
-                    <OnsiteBurnerExemptionCode>$handler.get("onsite_burner_exemption")</OnsiteBurnerExemptionCode>
+                <OnsiteBurnerExemptionCode>$handler.get("onsite_burner_exemption")</OnsiteBurnerExemptionCode>
 #end
 #if($handler.get("furnace_exemption"))
-                    <FurnaceExemptionCode>$handler.get("furnace_exemption")</FurnaceExemptionCode>
+                <FurnaceExemptionCode>$handler.get("furnace_exemption")</FurnaceExemptionCode>
 #end
-                </WasteActivitySite>
+            </WasteActivitySite>
 #end
 #if(($handler.get("state_waste_generator")))
-                <StateWasteGenerator>
+            <StateWasteGenerator>
 #if($handler.get("state_waste_generator"))
-                    <WasteGeneratorOwnerName>$handler.get("state_waste_generator")</WasteGeneratorOwnerName>
+                <WasteGeneratorOwnerName>$handler.get("state_waste_generator")</WasteGeneratorOwnerName>
 #end
 #if($handler.get("state_waste_generator_owner"))
-                    <WasteGeneratorStatusCode>$handler.get("state_waste_generator_owner")</WasteGeneratorStatusCode>
+                <WasteGeneratorStatusCode>$handler.get("state_waste_generator_owner")</WasteGeneratorStatusCode>
 #end
-                </StateWasteGenerator>
+            </StateWasteGenerator>
 #end
 #if(($handler.get("fed_waste_generator")))
-                <FederalWasteGenerator>
+            <FederalWasteGenerator>
 #if($handler.get("fed_waste_generator"))
-                    <WasteGeneratorOwnerName>$handler.get("fed_waste_generator")</WasteGeneratorOwnerName>
+                <WasteGeneratorOwnerName>$handler.get("fed_waste_generator")</WasteGeneratorOwnerName>
 #end
 #if($handler.get("fed_waste_generator_owner"))
-                    <WasteGeneratorStatusCode>$handler.get("fed_waste_generator_owner")</WasteGeneratorStatusCode>
+                <WasteGeneratorStatusCode>$handler.get("fed_waste_generator_owner")</WasteGeneratorStatusCode>
 #end
-                </FederalWasteGenerator>
+            </FederalWasteGenerator>
 #end
 #foreach($cert in $helper.getData("SELECT * FROM RCRA_HD_HBASIC H JOIN RCRA_HD_HANDLER HH ON H.PK_GUID = HH.FK_GUID JOIN RCRA_HD_CERTIFICATION C ON HH.PK_GUID = C.FK_GUID WHERE HANDLER_ID = ? ", $handlerId))
 #if(($cert.get("cert_seq")))
-                <Certification>
+            <Certification>
 #if($cert.get("transaction_code"))
-                    <TransactionCode>$cert.get("transaction_code")</TransactionCode>
+                <TransactionCode>$cert.get("transaction_code")</TransactionCode>
 #end
 #if($cert.get("cert_seq"))
-                    <CertificationSequenceNumber>$cert.get("cert_seq")</CertificationSequenceNumber>
+                <CertificationSequenceNumber>$cert.get("cert_seq")</CertificationSequenceNumber>
 #end
 #if($cert.get("cert_signed_date"))
-                    <SignedDate>$cert.get("cert_signed_date")</SignedDate>
+                <SignedDate>$cert.get("cert_signed_date")</SignedDate>
 #end
 #if($cert.get("cert_title"))
-                    <IndividualTitleText>$cert.get("cert_title")</IndividualTitleText>
+                <IndividualTitleText>$cert.get("cert_title")</IndividualTitleText>
 #end
 #if($cert.get("cert_first_name"))
-                    <FirstName>$cert.get("cert_first_name")</FirstName>
+                <FirstName>$cert.get("cert_first_name")</FirstName>
 #end
 #if($cert.get("cert_middle_initial"))
-                    <MiddleInitial>$cert.get("cert_middle_initial")</MiddleInitial>
+                <MiddleInitial>$cert.get("cert_middle_initial")</MiddleInitial>
 #end
 #if($cert.get("cert_last_name"))
-                    <LastName>$cert.get("cert_last_name")</LastName>
+                <LastName>$cert.get("cert_last_name")</LastName>
 #end
 #if($cert.get("notes"))
-                    <CertificationSupplementalInformationText>$cert.get("notes")</CertificationSupplementalInformationText>
+                <CertificationSupplementalInformationText>$cert.get("notes")</CertificationSupplementalInformationText>
 #end
-                </Certification>
+            </Certification>
 #end#end
 #foreach($naics in $helper.getData("SELECT * FROM RCRA_HD_HBASIC H JOIN RCRA_HD_HANDLER HH ON H.PK_GUID = HH.FK_GUID JOIN RCRA_HD_NAICS N ON HH.PK_GUID = N.FK_GUID WHERE HANDLER_ID = ? ", $handlerId))
 #if(($naics.get("naics_code")))
-                <NAICSIdentity>
+            <NAICSIdentity>
 #if($naics.get("transaction_code"))
-                    <TransactionCode>$naics.get("transaction_code")</TransactionCode>
+                <TransactionCode>$naics.get("transaction_code")</TransactionCode>
 #end
 #if($naics.get("naics_seq"))
-                    <NAICSSequenceNumber>$naics.get("naics_seq")</NAICSSequenceNumber>
+                <NAICSSequenceNumber>$naics.get("naics_seq")</NAICSSequenceNumber>
 #end
 #if($naics.get("naics_owner"))
-                    <NAICSOwnerCode>$naics.get("naics_owner")</NAICSOwnerCode>
+                <NAICSOwnerCode>$naics.get("naics_owner")</NAICSOwnerCode>
 #end
 #if($naics.get("naics_code"))
-                    <NAICSCode>$naics.get("naics_code")</NAICSCode>
+                <NAICSCode>$naics.get("naics_code")</NAICSCode>
 #end
 #if($naics.get("notes"))
-                    <NAICSSupplementalInformationText>$naics.get("notes")</NAICSSupplementalInformationText>
+                <NAICSSupplementalInformationText>$naics.get("notes")</NAICSSupplementalInformationText>
 #end
-                </NAICSIdentity>
+            </NAICSIdentity>
 #end#end
 #foreach($ownop in $helper.getData("SELECT * FROM RCRA_HD_HBASIC H JOIN RCRA_HD_HANDLER HH ON H.PK_GUID = HH.FK_GUID JOIN RCRA_HD_OWNEROP O ON HH.PK_GUID = O.FK_GUID WHERE HANDLER_ID = ? ", $handlerId))
 #if(($ownop.get("owner_op_seq")))
-                <FacilityOwnerOperator>
+            <FacilityOwnerOperator>
 #if($ownop.get("transaction_code"))
-                    <TransactionCode>$ownop.get("transaction_code")</TransactionCode>
+                <TransactionCode>$ownop.get("transaction_code")</TransactionCode>
 #end
 #if($ownop.get("owner_op_seq"))
-                    <OwnerOperatorSequenceNumber>$ownop.get("owner_op_seq")</OwnerOperatorSequenceNumber>
+                <OwnerOperatorSequenceNumber>$ownop.get("owner_op_seq")</OwnerOperatorSequenceNumber>
 #end
 #if($ownop.get("owner_op_ind"))
-                    <OwnerOperatorIndicatorCode>$ownop.get("owner_op_ind")</OwnerOperatorIndicatorCode>
+                <OwnerOperatorIndicator>$ownop.get("owner_op_ind")</OwnerOperatorIndicator>
 #end
 #if($ownop.get("owner_op_type"))
-                    <OwnerOperatorTypeCode>$ownop.get("owner_op_type")</OwnerOperatorTypeCode>
+                <OwnerOperatorTypeCode>$ownop.get("owner_op_type")</OwnerOperatorTypeCode>
 #end
 #if($ownop.get("date_became_current"))
-                    <CurrentStartDate>$ownop.get("date_became_current")</CurrentStartDate>
+                <CurrentStartDate>$ownop.get("date_became_current")</CurrentStartDate>
 #end
 #if($ownop.get("date_ended_current"))
-                    <CurrentEndDate>$ownop.get("date_ended_current")</CurrentEndDate>
+                <CurrentEndDate>$ownop.get("date_ended_current")</CurrentEndDate>
 #end
 #if($ownop.get("dunn_bradstreet_num"))
-                    <DUNSID>$ownop.get("dunn_bradstreet_num")</DUNSID>
+                <DUNSID>$ownop.get("dunn_bradstreet_num")</DUNSID>
 #end
 #if($ownop.get("notes"))
-                    <OwnerOperatorSupplementalInformationText>$ownop.get("notes")</OwnerOperatorSupplementalInformationText>
+                <OwnerOperatorSupplementalInformationText>$ownop.get("notes")</OwnerOperatorSupplementalInformationText>
 #end
 #if(($ownop.get("first_name"))||($ownop.get("last_name"))||($ownop.get("org_name"))||($ownop.get("street1"))||($ownop.get("city"))||($ownop.get("state"))||($ownop.get("zip")))
-                    <ContactAddress>
+                <ContactAddress>
 #if(($ownop.get("first_name"))||($ownop.get("last_name"))||($ownop.get("org_name")))
-                        <Contact>
+                <Contact>
 #if($ownop.get("first_name"))
-                            <FirstName>$ownop.get("first_name")</FirstName>
+                    <FirstName>$ownop.get("first_name")</FirstName>
 #end
 #if($ownop.get("middle_initial"))
-                            <MiddleInitial>$ownop.get("middle_initial")</MiddleInitial>
+                    <MiddleInitial>$ownop.get("middle_initial")</MiddleInitial>
 #end
 #if($ownop.get("last_name"))
-                            <LastName>$ownop.get("last_name")</LastName>
+                    <LastName>$ownop.get("last_name")</LastName>
 #end
 #if($ownop.get("org_name"))
-                            <OrganizationFormalName>$ownop.get("org_name")</OrganizationFormalName>
+                    <OrganizationFormalName>$ownop.get("org_name")</OrganizationFormalName>
 #end
 #if($ownop.get("email_address"))
-                            <EmailAddressText>$ownop.get("email_address")</EmailAddressText>
+                    <EmailAddressText>$ownop.get("email_address")</EmailAddressText>
 #end
 #if($ownop.get("phone"))
-                            <TelephoneNumberText>$ownop.get("phone")</TelephoneNumberText>
+                    <TelephoneNumberText>$ownop.get("phone")</TelephoneNumberText>
 #end
 #if($ownop.get("phone_ext"))
-                            <PhoneExtensionText>$ownop.get("phone_ext")</PhoneExtensionText>
+                    <PhoneExtensionText>$ownop.get("phone_ext")</PhoneExtensionText>
 #end
-                        </Contact>
+                </Contact>
 #end
 #if(($ownop.get("street1"))||($ownop.get("city"))||($ownop.get("state"))||($ownop.get("zip")))
-                        <MailingAddress>                
+                <MailingAddress>            
 #if($ownop.get("street1"))
-                            <MailingAddressText>$ownop.get("street1")</MailingAddressText>
+                    <MailingAddressText>$ownop.get("street1")</MailingAddressText>
 #end
 #if($ownop.get("street2"))
-                            <SupplementalAddressText>$ownop.get("street2")</SupplementalAddressText>
+                    <SupplementalAddressText>$ownop.get("street2")</SupplementalAddressText>
 #end
 #if($ownop.get("city"))
-                            <MailingAddressCityName>$ownop.get("city")</MailingAddressCityName>
+                    <MailingAddressCityName>$ownop.get("city")</MailingAddressCityName>
 #end
 #if($ownop.get("state"))
-                            <MailingAddressStateUSPSCode>$ownop.get("state")</MailingAddressStateUSPSCode>
+                    <MailingAddressStateUSPSCode>$ownop.get("state")</MailingAddressStateUSPSCode>
 #end
 #if($ownop.get("country"))
-                            <MailingAddressCountryName>$ownop.get("country")</MailingAddressCountryName>
+                    <MailingAddressCountryName>$ownop.get("country")</MailingAddressCountryName>
 #end
 #if($ownop.get("zip"))
-                            <MailingAddressZIPCode>$ownop.get("zip")</MailingAddressZIPCode>
+                    <MailingAddressZIPCode>$ownop.get("zip")</MailingAddressZIPCode>
 #end    
-                        </MailingAddress>
+                </MailingAddress>
 #end
-                    </ContactAddress>
+                </ContactAddress>
 #end
-                </FacilityOwnerOperator>
+            </FacilityOwnerOperator>
 #end#end
 #foreach($permit in $helper.getData("SELECT * FROM RCRA_HD_HBASIC H JOIN RCRA_HD_HANDLER HH ON H.PK_GUID = HH.FK_GUID JOIN RCRA_HD_ENV_PERMIT EP ON HH.PK_GUID = EP.FK_GUID WHERE HANDLER_ID = ? ", $handlerId))
 #if(($permit.get("env_permit_number")))
-                <EnvironmentalPermit>
+            <EnvironmentalPermit>
 #if($permit.get("transaction_code"))
-                    <TransactionCode>$permit.get("transaction_code")</TransactionCode>
+                <TransactionCode>$permit.get("transaction_code")</TransactionCode>
 #end
 #if($permit.get("env_permit_number"))
-                    <EnvironmentalPermitID>$permit.get("env_permit_number")</EnvironmentalPermitID>
+                <EnvironmentalPermitID>$permit.get("env_permit_number")</EnvironmentalPermitID>
 #end
 #if($permit.get("env_permit_owner"))
-                    <EnvironmentalPermitOwnerName>$permit.get("env_permit_owner")</EnvironmentalPermitOwnerName>
+                <EnvironmentalPermitOwnerName>$permit.get("env_permit_owner")</EnvironmentalPermitOwnerName>
 #end
 #if($permit.get("env_permit_type"))
-                    <EnvironmentalPermitTypeCode>$permit.get("env_permit_type")</EnvironmentalPermitTypeCode>
+                <EnvironmentalPermitTypeCode>$permit.get("env_permit_type")</EnvironmentalPermitTypeCode>
 #end
 #if($permit.get("env_permit_desc"))
-                    <EnvironmentalPermitDescription>$permit.get("env_permit_desc")</EnvironmentalPermitDescription>
+                <EnvironmentalPermitDescription>$permit.get("env_permit_desc")</EnvironmentalPermitDescription>
 #end
 #if($permit.get("notes"))
-                    <EnvironmentalPermitSupplementalInformationText>$permit.get("notes")</EnvironmentalPermitSupplementalInformationText>
+                <EnvironmentalPermitSupplementalInformationText>$permit.get("notes")</EnvironmentalPermitSupplementalInformationText>
 #end
-                </EnvironmentalPermit>
+            </EnvironmentalPermit>
 #end#end
 #foreach($state in $helper.getData("SELECT * FROM RCRA_HD_HBASIC H JOIN RCRA_HD_HANDLER HH ON H.PK_GUID = HH.FK_GUID JOIN RCRA_HD_STATE_ACTIVITY SA ON HH.PK_GUID = SA.FK_GUID WHERE HANDLER_ID = ? ", $handlerId))
 #if(($state.get("state_activity_owner"))||($state.get("state_activity_type")))
-                <StateActivity>
+            <StateActivity>
 #if($state.get("transaction_code"))
-                    <TransactionCode>$state.get("transaction_code")</TransactionCode>
+                <TransactionCode>$state.get("transaction_code")</TransactionCode>
 #end
 #if($state.get("state_activity_owner"))
-                    <StateActivityOwnerName>$state.get("state_activity_owner")</StateActivityOwnerName>
+                <StateActivityOwnerName>$state.get("state_activity_owner")</StateActivityOwnerName>
 #end
 #if($state.get("state_activity_type"))
-                    <StateActivityTypeCode>$state.get("state_activity_type")</StateActivityTypeCode>
+                <StateActivityTypeCode>$state.get("state_activity_type")</StateActivityTypeCode>
 #end
 #if($state.get("notes"))
-                    <StateActivitySupplementalInformationText>$state.get("notes")</StateActivitySupplementalInformationText>
+                <StateActivitySupplementalInformationText>$state.get("notes")</StateActivitySupplementalInformationText>
 #end
-                </StateActivity>
+            </StateActivity>
 #end#end
 #foreach($univ in $helper.getData("SELECT * FROM RCRA_HD_HBASIC H JOIN RCRA_HD_HANDLER HH ON H.PK_GUID = HH.FK_GUID JOIN RCRA_HD_UNIVERSAL_WASTE UW ON HH.PK_GUID = UW.FK_GUID WHERE HANDLER_ID = ? ", $handlerId))
 #if(($univ.get("universal_waste_owner"))||($univ.get("universal_waste_type"))||($univ.get("accumulated"))||($univ.get("generated")))
-                <HandlerUniversalWaste>
+            <HandlerUniversalWaste>
 #if($univ.get("transaction_code"))
-                    <TransactionCode>$univ.get("transaction_code")</TransactionCode>
+                <TransactionCode>$univ.get("transaction_code")</TransactionCode>
 #end
 #if($univ.get("universal_waste_owner"))
-                    <UniversalWasteOwnerName>$univ.get("universal_waste_owner")</UniversalWasteOwnerName>
+                <UniversalWasteOwnerName>$univ.get("universal_waste_owner")</UniversalWasteOwnerName>
 #end
 #if($univ.get("universal_waste_type"))
-                    <UniversalWasteTypeCode>$univ.get("universal_waste_type")</UniversalWasteTypeCode>
+                <UniversalWasteTypeCode>$univ.get("universal_waste_type")</UniversalWasteTypeCode>
 #end
 #if($univ.get("accumulated"))
-                    <AccumulatedWasteCode>$univ.get("accumulated")</AccumulatedWasteCode>
+                <AccumulatedWasteCode>$univ.get("accumulated")</AccumulatedWasteCode>
 #end
 #if($univ.get("generated"))
-                    <GeneratedHandlerCode>$univ.get("generated")</GeneratedHandlerCode>
+                <GeneratedHandlerCode>$univ.get("generated")</GeneratedHandlerCode>
 #end
 #if($univ.get("notes"))
-                    <UniversalWasteSupplementalInformationText>$univ.get("notes")</UniversalWasteSupplementalInformationText>
+                <UniversalWasteSupplementalInformationText>$univ.get("notes")</UniversalWasteSupplementalInformationText>
 #end
-                </HandlerUniversalWaste>
+            </HandlerUniversalWaste>
 #end#end
 #foreach($waste in $helper.getData("SELECT * FROM RCRA_HD_HBASIC H JOIN RCRA_HD_HANDLER HH ON H.PK_GUID = HH.FK_GUID JOIN RCRA_HD_WASTE_CODE WC ON HH.PK_GUID = WC.FK_GUID WHERE HANDLER_ID = ? ", $handlerId))
 #if(($waste.get("waste_code_owner"))||($waste.get("waste_code_type")))
-                <HandlerWasteCodeDetails>
+            <HandlerWasteCodeDetails>
 #if($waste.get("transaction_code"))
-                    <TransactionCode>$waste.get("transaction_code")</TransactionCode>
+                <TransactionCode>$waste.get("transaction_code")</TransactionCode>
 #end
 #if($waste.get("waste_code_owner"))
-                    <WasteCodeOwnerName>$waste.get("waste_code_owner")</WasteCodeOwnerName>
+                <WasteCodeOwnerName>$waste.get("waste_code_owner")</WasteCodeOwnerName>
 #end
 #if($waste.get("waste_code_type"))
-                    <WasteCode>$waste.get("waste_code_type")</WasteCode>
+                <WasteCode>$waste.get("waste_code_type")</WasteCode>
 #end
-                </HandlerWasteCodeDetails>
+            </HandlerWasteCodeDetails>
 #end#end
-            </Handler>
+        </Handler>
 #end
 #foreach($other in $helper.getData("SELECT * FROM RCRA_HD_HBASIC H JOIN RCRA_HD_OTHER_ID O ON H.PK_GUID = O.FK_GUID WHERE HANDLER_ID = ? ", $handlerId))
-#if(($other.get("other_id")))
-            <OtherID>
+        <OtherID>
 #if($other.get("transaction_code"))
-                <TransactionCode>$other.get("transaction_code")</TransactionCode>
+            <TransactionCode>$other.get("transaction_code")</TransactionCode>
 #end
 #if($other.get("other_id"))
-                <OtherHandlerID>$other.get("other_id")</OtherHandlerID>
+            <OtherHandlerID>$other.get("other_id")</OtherHandlerID>
 #end
 #if($other.get("relationship_owner"))
-                <RelationshipOwnerName>$other.get("relationship_owner")</RelationshipOwnerName>
+            <RelationshipOwnerName>$other.get("relationship_owner")</RelationshipOwnerName>
 #end
 #if($other.get("relationship_type"))
-                <RelationshipTypeCode>$other.get("relationship_type")</RelationshipTypeCode>
+            <RelationshipTypeCode>$other.get("relationship_type")</RelationshipTypeCode>
 #end
 #if($other.get("same_facility"))
-                <SameFacilityIndicator>$other.get("same_facility")</SameFacilityIndicator>
+            <SameFacilityIndicator>$other.get("same_facility")</SameFacilityIndicator>
 #end
 #if($other.get("notes"))
-                <OtherIDSupplementalInformationText>$other.get("notes")</OtherIDSupplementalInformationText>
+            <OtherIDSupplementalInformationText>$other.get("notes")</OtherIDSupplementalInformationText>
 #end
-            </OtherID>
-#end#end
+        </OtherID>
 #end
-</FacilitySubmission>
+    </FacilitySubmission>
+#end
 </HazardousWasteHandlerSubmission>
 #if($makeHeader)#if($makeHeader == "true" || $makeHeader == "TRUE")
 </Payload>

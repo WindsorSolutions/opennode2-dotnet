@@ -141,7 +141,7 @@ public class XmlValidator implements InitializingBean {
      */
     public boolean validateLenient(String filename) {
 
-        logger.debug("Gently validating UISExchange xml file " + filename);
+        logger.debug("Gently validating xml file " + filename);
 
         SchemaFactory factory = SchemaFactory
                 .newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
@@ -154,6 +154,7 @@ public class XmlValidator implements InitializingBean {
             Schema schema = factory.newSchema(schemaLocation);
 
             Validator validator = schema.newValidator();
+            logger.debug("validator implementation: " + validator.getClass());
             ErrorHandler lenient = new ForgivingErrorHandler();
             validator.setErrorHandler(lenient);
 

@@ -50,13 +50,10 @@ import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.DynaBean;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.beanutils.ResultSetDynaClass;
-import org.apache.commons.beanutils.converters.BooleanConverter;
 import org.apache.commons.lang.NullArgumentException;
-import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.time.DateUtils;
-import org.apache.commons.lang.time.StopWatch;
-import org.apache.log4j.Logger;
+
+import com.windsor.node.plugin.common.velocity.TemplateHelper;
 
 /**
  * Provides an API for embedding SQL in Velocity templates, plus a handful of
@@ -93,27 +90,9 @@ import org.apache.log4j.Logger;
  * 
  * @see http://velocity.apache.org for a guide to the Velocity Template Language
  */
-public class JdbcTemplateHelper {
-
-    public static final String XML_DATE_FORMAT = "yyyy-MM-dd";
-    public static final String TIMESTAMP_FORMAT_MINS = "yyyy-MM-dd HH:mm";
-    public static final String TIMESTAMP_FORMAT_SECS = "yyyy-MM-dd HH:mm:ss";
-    public static final String TIMESTAMP_FORMAT_MILLI = "yyyy-MM-dd HH:mm:ss.S";
-    public static final String TIMESTAMP_FORMAT_MILLI2 = "yyyy-MM-dd HH:mm:ss.SS";
-    public static final String TIMESTAMP_FORMAT_MILLI3 = "yyyy-MM-dd HH:mm:ss.SSS";
-    public static final String TIMESTAMP_FORMAT_MILLI4 = "yyyy-MM-dd HH:mm:ss.SSSS";
-
-    private static final String[] DATE_FORMATS = { XML_DATE_FORMAT,
-            TIMESTAMP_FORMAT_MINS, TIMESTAMP_FORMAT_SECS,
-            TIMESTAMP_FORMAT_MILLI, TIMESTAMP_FORMAT_MILLI2,
-            TIMESTAMP_FORMAT_MILLI3, TIMESTAMP_FORMAT_MILLI4 };
-
-    protected Logger logger = Logger.getLogger(getClass());
+public class JdbcTemplateHelper extends TemplateHelper {
 
     private Connection connection;
-    private StopWatch watch = new StopWatch();
-    private BooleanConverter booleanConverter;
-    private SimpleDateFormat simpleDateFormat;
     private int resultingRecordCount = 0;
 
     /**
@@ -125,6 +104,7 @@ public class JdbcTemplateHelper {
      * 
      */
     public JdbcTemplateHelper() {
+        super();
     }
 
     /**
@@ -147,152 +127,66 @@ public class JdbcTemplateHelper {
     }
 
     /**
-     * Start the timer - only one StopWatch per instance of this class.
-     */
-    public void startStopWatch() {
-        watch.start();
-    }
-
-    /**
-     * Stop the timer.
-     */
-    public void stopStopWatch() {
-        watch.stop();
-    }
-
-    /**
-     * Prints elapsed time to the Log4j subsystem (INFO log level).
-     */
-    public void printElapsedTime() {
-        print(watch.toString());
-    }
-
-    /**
-     * Calls org.apache.commons.lang.StringEscapeUtils to escape XML entities
-     * (&lt;, &gt;, &amp; &quot; &apos;).
+     * Reformats a String formatted in one of the eight patterns supported by
+     * this class into a pattern that the database can parse as a Date without
+     * calling a conversion function.
      * 
      * <p>
-     * An optional method, we configure the Velocity engine to use its own
-     * escaping mechanism.
+     * Essentially a workaround for Oracle's default date format. Tested with
+     * MySql, SqlServer, DB2, and Oracle.
      * </p>
      * 
-     * @param val
-     * @return the escaped String
+     * @param dateString
+     *            the String to convert
+     * @return for Oracle, a String in dd-MMM-yy format; for all others, a
+     *         String in yyyy-MM-dd format (i.e., XML Date)
      */
-    public String escapeXml(String val) {
-        return StringEscapeUtils.escapeXml(val);
-    }
+    public String toDbDateString(String dateString) {
 
-    /**
-     * Calls the corresponding method in
-     * org.apache.commons.lang.StringEscapeUtils.
-     * 
-     * @param val
-     * @return the escaped String
-     */
-    public String escapeCsv(String val) {
-        return StringEscapeUtils.escapeCsv(val);
-    }
+        logger.debug("toDbDateString: " + dateString);
 
-    /**
-     * Calls the corresponding method in
-     * org.apache.commons.lang.StringEscapeUtils.
-     * 
-     * @param val
-     * @return the escaped String
-     */
-    public String escapeHtml(String val) {
-        return StringEscapeUtils.escapeHtml(val);
-    }
+        Date date;
 
-    /**
-     * Calls the corresponding method in
-     * org.apache.commons.lang.StringEscapeUtils.
-     * 
-     * @param val
-     * @return the escaped String
-     */
-    public String escapeSql(String val) {
-        return StringEscapeUtils.escapeSql(val);
-    }
+        try {
 
-    /**
-     * Convert any value to "true" or "false"; use for elements of type
-     * &lt;xsd:boolean&gt;.
-     * 
-     * <p>
-     * For example:
-     * 
-     * <pre>
-     * &lt;SomeBooleanElement&gt;$helper.toBoolean($myElement.get(&quot;some_column&quot;))&lt;/SomeBooleanElement&gt;
-     * </pre>
-     * 
-     * </p>
-     * 
-     * <p>
-     * Wraps org.apache.commons.beanutils.converters.BooleanConverter, using
-     * default configuration.
-     * </p>
-     * 
-     * @param val
-     * @return
-     */
-    public String toXmlBoolean(Object val) {
+            date = makeSqlDate(dateString);
 
-        if (null == booleanConverter) {
+        } catch (ParseException pe) {
 
-            booleanConverter = new BooleanConverter();
-        }
-        return ((Boolean) booleanConverter.convert(null, val)).toString();
-
-    }
-
-    /**
-     * Given the contents of a Date, DateTime, or TimeStamp column, return a
-     * proper XML date (i.e., in yyyy-MM-dd format).
-     * 
-     * @param val
-     * @return
-     * @throws ParseException
-     */
-    public String toXmlDate(Object val) throws ParseException {
-
-        if (null == simpleDateFormat) {
-
-            simpleDateFormat = new SimpleDateFormat(XML_DATE_FORMAT);
+            throw new IllegalArgumentException(
+                    "Not a recognized date format, root exception: " + pe);
         }
 
-        return simpleDateFormat.format(DateUtils.parseDate(val.toString(),
-                DATE_FORMATS));
-    }
+        String driverName;
 
-    /**
-     * Given the contents of a DateTime or TimeStamp column, return a proper XML
-     * datetime (i.e., in yyyy-MM-dd'T'HH:mm:ss.S format).
-     * 
-     * @param val
-     * @return
-     */
-    public String toXmlDateTime(Object val) {
+        try {
 
-        SimpleDateFormat sdfInput = new SimpleDateFormat(
-                "yyyy-MM-dd'T'HH:mm:ss.S");
-        return sdfInput.format(val);
+            driverName = connection.getMetaData().getDriverName();
 
-    }
+        } catch (SQLException sqle) {
 
-    public String getCurrentDateTime() {
+            throw new RuntimeException(
+                    "couldn't get jdbc driver name from connection");
+        }
 
-        return toXmlDateTime(new Long(System.currentTimeMillis()));
-    }
+        String formatStr;
 
-    /**
-     * Logs the object by implicitly calling its toString() method.
-     * 
-     * @param val
-     */
-    public void print(Object val) {
-        logger.info(val);
+        if (StringUtils.containsIgnoreCase(driverName, "oracle")) {
+
+            logger.debug("using oracle");
+            formatStr = DATE_FORMAT_ORACLE_DEFAULT;
+
+        } else {
+
+            formatStr = XML_DATE_FORMAT;
+        }
+
+        SimpleDateFormat sdf = new SimpleDateFormat(formatStr);
+
+        String output = sdf.format(date);
+        logger.debug("toDbDateString output: " + output);
+
+        return output;
     }
 
     /**
@@ -316,7 +210,8 @@ public class JdbcTemplateHelper {
      * @return an array of single values
      */
     public Object[] getList(String sql, Object arg, String propertyName) {
-        return getList(sql, new Object[] { arg }, propertyName, Types.VARCHAR);
+
+        return getList(sql, trapArrayList(arg), propertyName, Types.VARCHAR);
     }
 
     /**
@@ -343,7 +238,8 @@ public class JdbcTemplateHelper {
      */
     public Object[] getList(String sql, Object arg, String propertyName,
             int type) {
-        return getList(sql, new Object[] { arg }, propertyName, type);
+
+        return getList(sql, trapArrayList(arg), propertyName, type);
     }
 
     /**
@@ -363,6 +259,7 @@ public class JdbcTemplateHelper {
      *            the JDBC type constant
      * @see http://java.sun.com/j2se/1.4.2/docs/api/java/sql/Types.html
      */
+    @SuppressWarnings("unchecked")
     public Object[] getList(String sql, Object[] args, String propertyName,
             int type) {
 
@@ -374,9 +271,9 @@ public class JdbcTemplateHelper {
 
             ResultSetDynaClass rsdc = new ResultSetDynaClass(ps.executeQuery());
 
-            ArrayList results = new ArrayList();
+            ArrayList<Object> results = new ArrayList<Object>();
 
-            Iterator rows = rsdc.iterator();
+            Iterator<Object> rows = rsdc.iterator();
             while (rows.hasNext()) {
                 DynaBean bean = (DynaBean) rows.next();
                 results.add(bean.get(propertyName));
@@ -409,7 +306,8 @@ public class JdbcTemplateHelper {
      * @return a java.lang.Object
      */
     public Object getObject(String sql, Object arg) {
-        return getObject(sql, new Object[] { arg });
+
+        return getObject(sql, trapArrayList(arg));
     }
 
     /**
@@ -426,6 +324,7 @@ public class JdbcTemplateHelper {
      *            an array of query parameters
      * @return a java.lang.Object
      */
+    @SuppressWarnings("unchecked")
     public Object getObject(String sql, Object[] args) {
 
         traceArgs(sql, args, null, Types.VARCHAR);
@@ -442,7 +341,7 @@ public class JdbcTemplateHelper {
 
             DynaBean newRow = null;
 
-            Iterator rows = rsdc.iterator();
+            Iterator<Object> rows = rsdc.iterator();
             if (rows.hasNext()) {
                 DynaBean oldRow = (DynaBean) rows.next();
                 newRow = bdc.newInstance();
@@ -477,24 +376,9 @@ public class JdbcTemplateHelper {
      *            VTL variable)
      * @return a java.util.Iterator
      */
-    public Iterator getData(String sql, Object arg) {
+    public Iterator<DynaBean> getData(String sql, Object arg) {
 
-        Object[] newArgs = null;
-
-        // VTL syntax ["foo", "bar"] creates an ArrayList thru Velocity 1.5
-        if (arg instanceof ArrayList) {
-
-            logger.debug("converting ArrayList to Object[]");
-
-            ArrayList realArgs = (ArrayList) arg;
-
-            newArgs = realArgs.toArray();
-
-        } else {
-
-            newArgs = new Object[] { arg };
-        }
-        return getData(sql, newArgs);
+        return getData(sql, trapArrayList(arg));
     }
 
     /**
@@ -513,7 +397,7 @@ public class JdbcTemplateHelper {
      *            VTL variable)
      * @return a java.util.Iterator
      */
-    public Iterator getData(String sql, Object[] args) {
+    public Iterator<DynaBean> getData(String sql, Object[] args) {
 
         return getData(sql, args, Types.VARCHAR);
 
@@ -538,7 +422,8 @@ public class JdbcTemplateHelper {
      * @return a java.util.Iterator
      * @see http://java.sun.com/j2se/1.4.2/docs/api/java/sql/Types.html
      */
-    public Iterator getData(String sql, Object[] args, int type) {
+    @SuppressWarnings("unchecked")
+    public Iterator<DynaBean> getData(String sql, Object[] args, int type) {
 
         traceArgs(sql, args, null, type);
 
@@ -548,13 +433,13 @@ public class JdbcTemplateHelper {
 
             ResultSetDynaClass rsdc = new ResultSetDynaClass(ps.executeQuery());
 
-            ArrayList results = new ArrayList();
+            ArrayList<DynaBean> results = new ArrayList<DynaBean>();
             BasicDynaClass bdc = new BasicDynaClass("objectCopy",
                     BasicDynaBean.class, rsdc.getDynaProperties());
 
             // Note: This is ugly but necessary to disconnect the Iterator
             // from the underlining result set and its connection.
-            Iterator rows = rsdc.iterator();
+            Iterator<Object> rows = rsdc.iterator();
             while (rows.hasNext()) {
                 DynaBean oldRow = (DynaBean) rows.next();
                 DynaBean newRow = bdc.newInstance();
@@ -565,6 +450,7 @@ public class JdbcTemplateHelper {
             // again, ugly but required for large sets
             ps.close();
 
+            logger.trace("query returned " + results.size() + " results");
             return results.iterator();
 
         } catch (Exception ex) {
@@ -575,15 +461,12 @@ public class JdbcTemplateHelper {
 
     }
 
-    private Date makeSqlDate(Object val) throws ParseException {
-        return new Date(DateUtils.parseDate(val.toString(), DATE_FORMATS)
-                .getTime());
-    }
-
     private PreparedStatement getPreparedStatement(String sql, Object[] args,
             int type) {
 
         checkConnection();
+
+        traceArgs(sql, args, null, type);
 
         try {
 
@@ -596,19 +479,27 @@ public class JdbcTemplateHelper {
                     Object argVal = args[i - 1];
 
                     if (type == Types.BIGINT || type == Types.INTEGER) {
+
+                        logger.trace("Converting " + argVal + " to int");
                         ps.setInt(i, ((Integer) ConvertUtils.convert(argVal,
                                 int.class)).intValue());
+
                     } else if (type == Types.TIMESTAMP) {
+
+                        logger.trace("Converting " + argVal + " to Timestamp");
                         ps.setTimestamp(i, new Timestamp(makeSqlDate(argVal)
                                 .getTime()));
+
                     } else if (type == Types.DATE) {
+
+                        logger.trace("Converting " + argVal + " to Sql Date");
                         ps.setDate(i, makeSqlDate(argVal));
+
                     } else {
+
                         ps.setObject(i, argVal);
                     }
-
                 }
-
             }
 
             return ps;

@@ -34,13 +34,14 @@ POSSIBILITY OF SUCH DAMAGE.
  */
 package com.windsor.node.plugin.aqs;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-
-import org.apache.commons.lang.StringUtils;
 
 import com.windsor.node.common.domain.CommonContentType;
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
+import com.windsor.node.common.domain.DataServiceRequestParameter;
 import com.windsor.node.common.domain.Document;
 import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.PaginationIndicator;
@@ -57,34 +58,22 @@ import com.windsor.node.service.helper.RemoteFileResourceHelper;
  * @author mchmarny
  * 
  */
-public class DrDasServiceProxy extends BaseWnosPlugin {
+public class DrDasProxyService extends BaseWnosPlugin {
 
     public static final String SRV_MONITOR = "AQDEMonitorData";
     public static final String SRV_RAW = "AQDERawData";
 
-    /**
-     * name used as a key in the data source collection
-     */
-    public static final String ARG_ENDPOINT_URL = "reporterUrl";
+    public static final String ARG_ENDPOINT_URL = "Reporter Url";
+    public static final String ARG_HD_SCHEMA_VERSION = "Schema Version";
 
-    public static final String ARG_HD_SENSTIV = "sensitivity";
-    public static final String ARG_HD_SCHEMA_VERSION = "schemaVersion";
-
-    public DrDasServiceProxy() {
+    public DrDasProxyService() {
 
         super();
 
         debug("Setting internal runtime argument list");
-        getConfigurationArguments().put(ARG_ENDPOINT_URL, "");
-        getConfigurationArguments().put(ARG_HD_DO, "");
-        getConfigurationArguments().put(ARG_HD_SCHEMA_VERSION, "");
 
-        getConfigurationArguments().put(ARG_HD_TITLE, "");
-        getConfigurationArguments().put(ARG_HD_CONTACT, "");
-        getConfigurationArguments().put(ARG_HD_NOTIFS, "");
-        getConfigurationArguments().put(ARG_HD_ORN_NAME, "");
-        getConfigurationArguments().put(ARG_HD_SENSTIV, "");
-        getConfigurationArguments().put(ARG_HD_PAYLOAD_OP, "");
+        getConfigurationArguments().put(ARG_ENDPOINT_URL, "");
+        getConfigurationArguments().put(ARG_HD_SCHEMA_VERSION, "");
 
         getSupportedPluginTypes().add(ServiceType.QUERY);
         getSupportedPluginTypes().add(ServiceType.SOLICIT);
@@ -167,23 +156,6 @@ public class DrDasServiceProxy extends BaseWnosPlugin {
             String reporterServiceUrl = getRequiredConfigValueAsString(ARG_ENDPOINT_URL);
             String reporterSchemaVersion = getRequiredConfigValueAsString(ARG_HD_SCHEMA_VERSION);
 
-            boolean doHeader = getRequiredConfigValueAsString(ARG_HD_DO)
-                    .equalsIgnoreCase("true");
-
-            String title = getConfigValueAsString(ARG_HD_TITLE, doHeader);
-            String contactInfo = getConfigValueAsString(ARG_HD_CONTACT,
-                    doHeader);
-            String organizationName = getConfigValueAsString(ARG_HD_ORN_NAME,
-                    doHeader);
-            String sensitivity = getConfigValueAsString(ARG_HD_SENSTIV,
-                    doHeader);
-            String payloadOperation = getConfigValueAsString(ARG_HD_PAYLOAD_OP,
-                    doHeader);
-            String notification = getConfigValueAsString(ARG_HD_NOTIFS,
-                    doHeader);
-
-            String[] notifications = StringUtils.split(notification, ';');
-
             Map properties = new HashMap();
             properties.put("schemaVersion", reporterSchemaVersion);
 
@@ -210,7 +182,7 @@ public class DrDasServiceProxy extends BaseWnosPlugin {
             if (methodName.equalsIgnoreCase(SRV_MONITOR)) {
 
                 result.getAuditEntries().add(
-                        makeEntry("Executing Monitor Dats service using: "
+                        makeEntry("Executing Monitor Data service using: "
                                 + transaction.getRequest().getParameters()
                                 + " and SchemaVersion: "
                                 + reporterSchemaVersion));
@@ -232,21 +204,9 @@ public class DrDasServiceProxy extends BaseWnosPlugin {
 
                 resultsBytes = webHelper.getBytesFromURL(resultFile);
 
-                if (doHeader) {
-                    result.getAuditEntries().add(
-                            makeEntry("Generating header..."));
-
-                    resultsBytes = headerHelper.makeHeader(title, methodName,
-                            contactInfo, notifications, organizationName,
-                            properties, sensitivity, payloadOperation,
-                            resultsBytes);
-                } else {
-
-                    String tempXml = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
-                    tempXml += new String(resultsBytes);
-                    resultsBytes = tempXml.getBytes("UTF-8");
-
-                }
+                String tempXml = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
+                tempXml += new String(resultsBytes);
+                resultsBytes = tempXml.getBytes("UTF-8");
 
             } else {
                 throw new RuntimeException(
@@ -308,6 +268,55 @@ public class DrDasServiceProxy extends BaseWnosPlugin {
         }
 
         return result;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.windsor.node.plugin.BaseWnosPlugin#getServiceRequestParamSpecs(java
+     * .lang.String)
+     */
+    @Override
+    public List<DataServiceRequestParameter> getServiceRequestParamSpecs(
+            String serviceName) {
+
+        List<DataServiceRequestParameter> list = new ArrayList<DataServiceRequestParameter>();
+
+        Integer sortIndex = 0;
+
+        if (serviceName.equalsIgnoreCase(SRV_MONITOR)) {
+
+            for (MonitorDataArgType arg : MonitorDataArgType.values()) {
+
+                DataServiceRequestParameter param = new DataServiceRequestParameter();
+                param.setName(arg.toString());
+                param.setSortIndex(sortIndex);
+
+                list.add(param);
+
+                sortIndex++;
+            }
+
+        } else if (serviceName.equalsIgnoreCase(SRV_RAW)) {
+
+            for (RawDataArgType arg : RawDataArgType.values()) {
+
+                DataServiceRequestParameter param = new DataServiceRequestParameter();
+                param.setName(arg.toString());
+                param.setSortIndex(sortIndex);
+
+                list.add(param);
+
+                sortIndex++;
+            }
+
+        } else {
+
+            list = null;
+        }
+
+        return list;
     }
 
 }

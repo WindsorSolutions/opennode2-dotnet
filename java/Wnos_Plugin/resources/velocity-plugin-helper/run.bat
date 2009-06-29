@@ -36,8 +36,8 @@ set CLASSPATH=%CLASSPATH%;lib\net-monitor-0.1.jar
 set CLASSPATH=%CLASSPATH%;lib\ojdbc14_g.jar
 set CLASSPATH=%CLASSPATH%;lib\spring-2.5.5.jar
 set CLASSPATH=%CLASSPATH%;lib\sqljdbc.jar
-set CLASSPATH=%CLASSPATH%;lib\velocity-1.5.jar
-set CLASSPATH=%CLASSPATH%;lib\velocity-dep-1.5.jar
+set CLASSPATH=%CLASSPATH%;lib\velocity-1.6.2.jar
+set CLASSPATH=%CLASSPATH%;lib\velocity-1.6.2-dep.jar
 set CLASSPATH=%CLASSPATH%;lib\db2jcc_license_cu.jar
 set CLASSPATH=%CLASSPATH%;lib\db2jcc.jar
 

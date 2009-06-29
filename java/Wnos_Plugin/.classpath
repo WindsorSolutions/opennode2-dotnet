@@ -4,6 +4,9 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Wnos_Logic"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/Common"/>
+	<classpathentry kind="lib" path="resources/lib-build/mapforce_base.jar"/>
+	<classpathentry kind="lib" path="resources/lib-build/hamcrest-core-1.1.jar"/>
+	<classpathentry kind="lib" path="resources/lib-build/hamcrest-library-1.1.jar"/>
+	<classpathentry kind="lib" path="resources/lib-build/jmock-2.5.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

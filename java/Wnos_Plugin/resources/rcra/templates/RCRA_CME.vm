@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="UTF-8"?>
+#set ($totalRecCount = 0)
+$helper.startStopWatch()
+#if($handlerLimit) $helper.print("HandlerLimit:") $helper.print($handlerLimit)
+#set($handlerQuery = "SELECT epahandlerid FROM RCRA_CME_EVALUATION WHERE epahandlerid <>  ? fetch first $handlerLimit rows only")
+#else
+#set($handlerQuery = "SELECT epahandlerid FROM RCRA_CME_EVALUATION WHERE epahandlerid <>  ? ")
+#end
+$helper.print("handlerQuery:")
+$helper.print($handlerQuery)
+#if($makeHeader)#if($makeHeader == "true" || $makeHeader == "TRUE")
+<Document xmlns:hdr="http://www.exchangenetwork.net/schema/v1.0/ExchangeNetworkDocument.xsd"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.exchangenetwork.net/schema/v1.0/ExchangeNetworkDocument.xsd http://www.exchangenetwork.net/schema/v1.0/ExchangeNetworkDocument.xsd"
+    Id="$docId">
+    <Header>
+        <Author>$contactInfo</Author>
+        <Organization>$providingOrg</Organization>
+        <Title>$title</Title>
+        <CreationTime>$helper.getCurrentDateTime()</CreationTime>
+        <Comment>RCRA submission</Comment>
+        <DataService>CMESubmission</DataService>
+        <ContactInfo>$contactInfo</ContactInfo>
+        <Notification>$notification</Notification>
+        <Sensitivity>Unclassified</Sensitivity>
+        <Property>
+        <name>RCRAInfoUserID</name>
+        <value>$rcraInfoUserId</value>
+        </Property>
+        <Property>
+        <name>RCRAInfoStateCode</name>
+        <value>$rcraInfoStateCode</value>
+        </Property>
+    </Header>
+<Payload Operation=$payloadOperation>
+#end#end##if($makeHeader)
+<CMEFacilitySubmission xmlns="$schemaReference">
+#foreach($handlerId in $helper.getList($handlerQuery, "", "epahandlerid"))
+
+
+#if ($velocityCount % 500 == 0)
+$helper.print($velocityCount)
+$helper.printElapsedTime()
+#end
+
+#set ($totalRecCount = $velocityCount)
+#set ($handler = $helper.getObject("SELECT * FROM RCRA_CME_EVALUATION WHERE EPAHANDLERID = ? ", $handlerId) )
+	  
+#if($handler.get("epahandlerid"))
+	<EPAHandlerID>$handler.get("epahandlerid")</EPAHandlerID>
+#end
+		
+
+#foreach($enf in $helper.getData("SELECT * FROM RCRA_CME_ENFORCEMENT WHERE EPAHANDLERID = ? ", $handlerId) )
+#if(($enf.get("enf_activity_location"))||($enf.get("enf_identifier"))||($enf.get("enf_action_date"))||($enf.get("enf_agency")))
+	<EnforcementAction>
+#if($enf.get("transcode"))
+		<TransactionCode>$enf.get("transcode")</TransactionCode>
+#end
+#if($enf.get("enf_activity_location"))
+		<EnforcementAgencyLocationName>$enf.get("enf_activity_location")</EnforcementAgencyLocationName>
+#end
+#if($enf.get("enf_identifier"))
+		<EnforcementActionIdentifier>$enf.get("enf_identifier")</EnforcementActionIdentifier>
+#end
+#if($enf.get("enf_action_date"))
+		<EnforcementActionDate>$enf.get("enf_action_date")</EnforcementActionDate>
+#end
+#if($enf.get("enf_agency"))
+		<EnforcementAgencyName>$enf.get("enf_agency")</EnforcementAgencyName>
+#end
+#if($enf.get("docket_number"))
+		<EnforcementDocketNumber>$enf.get("docket_number")</EnforcementDocketNumber>
+#end
+#if($enf.get("attorney"))
+		<EnforcementAttorney>$enf.get("attorney")</EnforcementAttorney>
+#end
+#if($enf.get("ca_component"))
+		<CorrectiveActionComponent>$enf.get("ca_component")</CorrectiveActionComponent>
+#end
+#if($enf.get("cafo_seq"))
+		<ConsentAgreementFinalOrderSequenceNumber>$enf.get("cafo_seq")</ConsentAgreementFinalOrderSequenceNumber>
+#end
+#if($enf.get("appeal_initiated_date"))
+		<AppealInitiateDate>$enf.get("appeal_initiated_date")</AppealInitiateDate>
+#end
+#if($enf.get("appeal_resolved_date"))
+		<AppealResolutionDate>$enf.get("appeal_resolved_date")</AppealResolutionDate>
+#end
+#if($enf.get("disposition_status_date"))
+		<DispositionStatusDate>$enf.get("disposition_status_date")</DispositionStatusDate>
+#end
+#if($enf.get("disposition_status_owner"))
+		<DispositionStatusOwner>$enf.get("disposition_status_owner")</DispositionStatusOwner>
+#end
+#if($enf.get("disposition_status"))
+		<DispositionStatus>$enf.get("disposition_status")</DispositionStatus>
+#end
+#if($enf.get("enf_owner"))
+		<EnforcementOwner>$enf.get("enf_owner")</EnforcementOwner>
+#end
+#if($enf.get("enf_type"))
+		<EnforcementType>$enf.get("enf_type")</EnforcementType>
+#end
+#if($enf.get("responsible_person_owner"))
+		<EnforcementResponsiblePersonOwner>$enf.get("responsible_person_owner")</EnforcementResponsiblePersonOwner>
+#end
+#if($enf.get("responsible_person"))
+		<EnforcementResponsiblePersonIdentifier>$enf.get("responsible_person")</EnforcementResponsiblePersonIdentifier>
+#end
+#if($enf.get("suborganization_owner"))
+		<EnforcementResponsibleSuborganizationOwner>$enf.get("suborganization_owner")</EnforcementResponsibleSuborganizationOwner>
+#end
+#if($enf.get("suborganization"))
+		<EnforcementResponsibleSuborganization>$enf.get("suborganization")</EnforcementResponsibleSuborganization>
+#end
+#if($enf.get("notes"))
+		<Notes>$enf.get("notes")</Notes>
+#end		
+
+
+#foreach($penalty in $helper.getData("SELECT * FROM RCRA_CME_ENFORCEMENT E JOIN RCRA_CME_PENALTY P ON E.ENFORCEMENT_ID = P.ENFORCEMENT_ID WHERE EPAHANDLERID = ? ", $handlerId))
+#if(($penalty.get("penalty_type"))||($penalty.get("penalty_owner")))
+			<Penalty>
+#if($penalty.get("transcode"))
+				<TransactionCode>$penalty.get("transcode")</TransactionCode>
+#end
+#if($penalty.get("penalty_owner"))
+				<PenaltyTypeOwner>$penalty.get("penalty_owner")</PenaltyTypeOwner>
+#end
+#if($penalty.get("penalty_type"))
+				<PenaltyType>$penalty.get("penalty_type")</PenaltyType>
+#end
+#if($penalty.get("amount"))
+				<CashCivilPenaltySoughtAmount>$penalty.get("amount")</CashCivilPenaltySoughtAmount>
+#end
+#if($penalty.get("notes"))
+				<Notes>$penalty.get("notes")</Notes>
+#end
+
+		
+#foreach($payment in $helper.getData("SELECT * FROM RCRA_CME_ENFORCEMENT E JOIN RCRA_CME_PENALTY P ON E.ENFORCEMENT_ID = P.ENFORCEMENT_ID JOIN RCRA_CME_PAYMENT CP ON P.PENALTY_ID = CP.PENALTY_ID WHERE EPAHANDLERID = ? ", $handlerId))
+#if(($payment.get("payment_seq")))
+					<Payment>
+#if($payment.get("transcode"))
+						<TransactionCode>$payment.get("transcode")</TransactionCode>
+#end
+#if($payment.get("payment_seq"))
+						<PaymentSequenceNumber>$payment.get("payment_seq")</PaymentSequenceNumber>
+#end
+#if($payment.get("defaulted_date"))
+						<PaymentDefaultedDate>$payment.get("defaulted_date")</PaymentDefaultedDate>
+#end
+#if($payment.get("scheduled_date"))
+						<ScheduledPaymentDate>$payment.get("scheduled_date")</ScheduledPaymentDate>
+#end
+#if($payment.get("scheduled_amount"))
+						<ScheduledPaymentAmount>$payment.get("scheduled_amount")</ScheduledPaymentAmount>
+#end
+#if($payment.get("paid_date"))
+						<ActualPaymentDate>$payment.get("paid_date")</ActualPaymentDate>
+#end
+#if($payment.get("paid_amount"))
+						<ActualPaidAmount>$payment.get("paid_amount")</ActualPaidAmount>
+#end
+#if($payment.get("notes"))
+						<Notes>$payment.get("notes")</Notes>
+#end
+					</Payment>
+#end
+#end
+			</Penalty>
+#end
+#end
+
+
+#foreach($violenf in $helper.getData("SELECT * FROM RCRA_CME_ENFORCEMENT E JOIN RCRA_CME_LN_VIOLATION_ENFORCEMENT VE ON E.ENFORCEMENT_ID = VE.ENFORCEMENT_ID JOIN RCRA_CME_VIOLATION V ON VE.VIOLATION_ID = V.VIOLATION_ID WHERE E.EPAHANDLERID = ? ", $handlerId))
+#if(($violenf.get("viol_seq"))||($violenf.get("viol_determined_by_agency")))
+			<ViolationEnforcement>
+#if($violenf.get("transcode"))
+				<TransactionCode>$violenf.get("transcode")</TransactionCode>
+#end
+#if($violenf.get("viol_seq"))
+				<ViolationSequenceNumber>$violenf.get("viol_seq")</ViolationSequenceNumber>
+#end
+#if($violenf.get("viol_determined_by_agency"))
+				<AgencyWhichDeterminedViolation>$violenf.get("viol_determined_by_agency")</AgencyWhichDeterminedViolation>
+#end
+#if($violenf.get("scheduled_compliance_date"))
+				<ReturnComplianceScheduledDate>$violenf.get("scheduled_compliance_date")</ReturnComplianceScheduledDate>
+#end
+			</ViolationEnforcement>
+#end
+#end
+
+
+#foreach($sep in $helper.getData("SELECT * FROM RCRA_CME_ENFORCEMENT E JOIN RCRA_CME_SEP S ON E.ENFORCEMENT_ID = S.ENFORCEMENT_ID WHERE EPAHANDLERID = ? ", $handlerId))
+#if(($sep.get("sep_seq")))
+			<SupplementalEnvironmentalProject>
+#if($sep.get("transcode"))
+				<TransactionCode>$sep.get("transcode")</TransactionCode>
+#end
+#if($sep.get("sep_seq"))
+				<SEPSequenceNumber>$sep.get("sep_seq")</SEPSequenceNumber>
+#end
+#if($sep.get("expenditure_amount"))
+				<SEPExpenditureAmount>$sep.get("expenditure_amount")</SEPExpenditureAmount>
+#end
+#if($sep.get("scheduled_completion_date"))
+				<SEPScheduledCompletionDate>$sep.get("scheduled_completion_date")</SEPScheduledCompletionDate>
+#end
+#if($sep.get("actual_completion_date"))
+				<SEPActualDate>$sep.get("actual_completion_date")</SEPActualDate>
+#end
+#if($sep.get("defaulted_date"))
+				<SEPDefaultedDate>$sep.get("defaulted_date")</SEPDefaultedDate>
+#end
+#if($sep.get("sep_owner"))
+				<SEPCodeOwner>$sep.get("sep_owner")</SEPCodeOwner>
+#end
+#if($sep.get("sep_type"))
+				<SEPDescriptionText>$sep.get("sep_type")</SEPDescriptionText>
+#end
+#if($sep.get("notes"))
+				<Notes>$sep.get("notes")</Notes>
+#end
+			</SupplementalEnvironmentalProject>
+#end
+#end
+
+
+#foreach($media in $helper.getData("SELECT * FROM RCRA_CME_ENFORCEMENT E JOIN RCRA_CME_MEDIA M ON E.ENFORCEMENT_ID = M.ENFORCEMENT_ID WHERE EPAHANDLERID = ? ", $handlerId))
+#if(($media.get("media_owner"))||($media.get("media_code")))
+			<Media>
+#if($media.get("transcode"))
+				<TransactionCode>$media.get("transcode")</TransactionCode>
+#end
+#if($media.get("media_owner"))
+				<MultimediaCodeOwner>$media.get("media_owner")</MultimediaCodeOwner>
+#end
+#if($media.get("media_code"))
+				<MultimediaCode>$media.get("media_code")</MultimediaCode>
+#end
+#if($media.get("notes"))
+				<Notes>$media.get("notes")</Notes>
+#end
+			</Media>
+#end
+#end
+	</EnforcementAction>
+#end
+#end
+
+
+#foreach($eval in $helper.getData("SELECT * FROM RCRA_CME_EVALUATION WHERE EPAHANDLERID = ? ", $handlerId) )
+#if(($eval.get("eval_activity_location"))||($eval.get("eval_identifier"))||($eval.get("eval_start_date"))||($eval.get("eval_agency")))
+	<Evaluation>
+#if($eval.get("transcode"))
+		<TransactionCode>$eval.get("transcode")</TransactionCode>
+#end
+#if($eval.get("eval_activity_location"))
+		<EvaluationActivityLocation>$eval.get("eval_activity_location")</EvaluationActivityLocation>
+#end
+#if($eval.get("eval_identifier"))
+		<EvaluationIdentifier>$eval.get("eval_identifier")</EvaluationIdentifier>
+#end
+#if($eval.get("eval_start_date"))
+		<EvaluationStartDate>$eval.get("eval_start_date")</EvaluationStartDate>
+#end
+#if($eval.get("eval_agency"))
+		<EvaluationResponsibleAgency>$eval.get("eval_agency")</EvaluationResponsibleAgency>
+#end
+#if($eval.get("day_zero_date"))
+		<DayZero>$eval.get("day_zero_date")</DayZero>
+#end
+#if($eval.get("violation_found_ind"))
+		<FoundViolation>$eval.get("violation_found_ind")</FoundViolation>
+#end
+#if($eval.get("citizen_complaint_ind"))
+		<CitizenComplaintIndicator>$eval.get("citizen_complaint_ind")</CitizenComplaintIndicator>
+#end
+#if($eval.get("multimedia_ind"))
+		<MultimediaIndicator>$eval.get("multimedia_ind")</MultimediaIndicator>
+#end
+#if($eval.get("sampling_ind"))
+		<SamplingIndicator>$eval.get("sampling_ind")</SamplingIndicator>
+#end
+#if($eval.get("not_subtitle_c_ind"))
+		<NotSubtitleCIndicator>$eval.get("not_subtitle_c_ind")</NotSubtitleCIndicator>
+#end
+#if($eval.get("eval_owner"))
+		<EvaluationTypeOwner>$eval.get("eval_owner")</EvaluationTypeOwner>
+#end
+#if($eval.get("eval_type"))
+		<EvaluationType>$eval.get("eval_type")</EvaluationType>
+#end
+#if($eval.get("focus_owner"))
+		<FocusAreaOwner>$eval.get("focus_owner")</FocusAreaOwner>
+#end
+#if($eval.get("focus_area"))
+		<FocusArea>$eval.get("focus_area")</FocusArea>
+#end
+#if($eval.get("eval_responsible_person_owner"))
+		<EvaluationResponsiblePersonIdentifierOwner>$eval.get("eval_responsible_person_owner")</EvaluationResponsiblePersonIdentifierOwner>
+#end
+#if($eval.get("eval_responsible_person"))
+		<EvaluationResponsiblePersonIdentifier>$eval.get("eval_responsible_person")</EvaluationResponsiblePersonIdentifier>
+#end
+#if($eval.get("eval_suborg_owner"))
+		<EvaluationResponsibleSuborganizationOwner>$eval.get("eval_suborg_owner")</EvaluationResponsibleSuborganizationOwner>
+#end
+#if($eval.get("eval_suborganization"))
+		<EvaluationResponsibleSuborganization>$eval.get("eval_suborganization")</EvaluationResponsibleSuborganization>
+#end
+#if($eval.get("notes"))
+		<Notes>$eval.get("notes")</Notes>
+#end
+
+
+#foreach($request in $helper.getData("SELECT * FROM RCRA_CME_EVALUATION E JOIN RCRA_CME_REQUEST R ON E.EVALUATION_ID = R.EVALUATION_ID WHERE EPAHANDLERID = ? ", $handlerId))
+#if(($request.get("request_seq")))
+			<Request>
+#if($request.get("transcode"))
+				<TransactionCode>$request.get("transcode")</TransactionCode>
+#end
+#if($request.get("request_seq"))
+				<RequestSequenceNumber>$request.get("request_seq")</RequestSequenceNumber>
+#end
+#if($request.get("date_of_request"))
+				<DateOfRequest>$request.get("date_of_request")</DateOfRequest>
+#end
+#if($request.get("response_received_date"))
+				<DateResponseReceived>$request.get("response_received_date")</DateResponseReceived>
+#end
+#if($request.get("agency"))
+				<RequestAgency>$request.get("agency")</RequestAgency>
+#end
+#if($request.get("notes"))
+				<Notes>$request.get("notes")</Notes>
+#end
+			</Request>
+#end
+#end
+
+
+#foreach($comm in $helper.getData("SELECT * FROM RCRA_CME_EVALUATION E JOIN RCRA_CME_COMMITMENT C ON E.EPAHANDLERID = C.EPAHANDLERID WHERE E.EPAHANDLERID = ? ", $handlerId))
+#if(($comm.get("commitment_lead"))||($comm.get("commitment_seq")))
+			<EvaluationCommitment>
+#if($comm.get("transcode"))
+				<TransactionCode>$comm.get("transcode")</TransactionCode>
+#end
+#if($comm.get("commitment_lead"))
+				<CommitmentLead>$comm.get("commitment_lead")</CommitmentLead>
+#end
+#if($comm.get("commitment_seq"))
+				<CommitmentSequenceNumber>$comm.get("commitment_seq")</CommitmentSequenceNumber>
+#end
+#if($comm.get("notes"))
+				<Notes>$comm.get("notes")</Notes>
+#end
+			</EvaluationCommitment>
+#end
+#end
+
+
+#foreach($ev in $helper.getData("SELECT * FROM RCRA_CME_EVALUATION E JOIN RCRA_CME_LN_EVALUATION_VIOLATION EV ON E.EVALUATION_ID = EV.EVALUATION_ID JOIN RCRA_CME_VIOLATION V ON EV.VIOLATION_ID = V.VIOLATION_ID WHERE E.EPAHANDLERID = ? ", $handlerId))
+#if(($ev.get("viol_activity_location"))||($ev.get("viol_seq"))||($ev.get("viol_determined_by_agency")))
+			<EvaluationViolation>
+#if($ev.get("transcode"))
+				<TransactionCode>$ev.get("transcode")</TransactionCode>
+#end
+#if($ev.get("viol_activity_location"))
+				<ViolationActivityLocation>$ev.get("viol_activity_location")</ViolationActivityLocation>
+#end
+#if($ev.get("viol_seq"))
+				<ViolationSequenceNumber>$ev.get("viol_seq")</ViolationSequenceNumber>
+#end
+#if($ev.get("viol_determined_by_agency"))
+				<AgencyWhichDeterminedViolation>$ev.get("viol_determined_by_agency")</AgencyWhichDeterminedViolation>
+#end
+			</EvaluationViolation>
+#end
+#end
+
+	</Evaluation>
+#end
+#end
+
+
+#foreach($viol in $helper.getData("SELECT * FROM RCRA_CME_VIOLATION WHERE EPAHANDLERID = ? ", $handlerId) )
+#if(($viol.get("viol_activity_location"))||($viol.get("viol_seq"))||($viol.get("viol_determined_by_agency")))
+	<Violation>
+#if($viol.get("transcode"))
+		<TransactionCode>$viol.get("transcode")</TransactionCode>
+#end
+#if($viol.get("viol_activity_location"))
+		<ViolationActivityLocation>$viol.get("viol_activity_location")</ViolationActivityLocation>
+#end
+#if($viol.get("viol_seq"))
+		<ViolationSequenceNumber>$viol.get("viol_seq")</ViolationSequenceNumber>
+#end
+#if($viol.get("viol_determined_by_agency"))
+		<AgencyWhichDeterminedViolation>$viol.get("viol_determined_by_agency")</AgencyWhichDeterminedViolation>
+#end
+#if($viol.get("viol_owner"))
+		<ViolationTypeOwner>$viol.get("viol_owner")</ViolationTypeOwner>
+#end
+#if($viol.get("viol_type"))
+		<ViolationType>$viol.get("viol_type")</ViolationType>
+#end
+#if($viol.get("former_citation"))
+		<FormerCitationName>$viol.get("former_citation")</FormerCitationName>
+#end
+#if($viol.get("determined_date"))
+		<ViolationDeterminedDate>$viol.get("determined_date")</ViolationDeterminedDate>
+#end
+#if($viol.get("rtc_actual_date"))
+		<ReturnComplianceActualDate>$viol.get("rtc_actual_date")</ReturnComplianceActualDate>
+#end
+#if($viol.get("rtc_qualifier_ind"))
+		<ReturnToComplianceQualifier>$viol.get("rtc_qualifier_ind")</ReturnToComplianceQualifier>
+#end
+#if($viol.get("responsible_agency_ind"))
+		<ViolationResponsibleAgency>$viol.get("responsible_agency_ind")</ViolationResponsibleAgency>
+#end
+#if($viol.get("notes"))
+		<Notes>$viol.get("notes")</Notes>
+#end
+
+
+#foreach($citation in $helper.getData("SELECT * FROM RCRA_CME_VIOLATION V JOIN RCRA_CME_CITATION C ON V.VIOLATION_ID = C.VIOLATION_ID WHERE EPAHANDLERID = ? ", $handlerId))
+#if(($request.get("citation_seq")))
+			<Citation>
+#if($citation.get("transcode"))
+				<TransactionCode>$citation.get("transcode")</TransactionCode>
+#end
+#if($citation.get("citation_seq"))
+				<CitationNameSequenceNumber>$citation.get("citation_seq")</CitationNameSequenceNumber>
+#end
+#if($citation.get("citation"))
+				<CitationName>$citation.get("citation")</CitationName>
+#end
+#if($citation.get("citation_owner"))
+				<CitationNameOwner>$citation.get("citation_owner")</CitationNameOwner>
+#end
+#if($citation.get("citation_type"))
+				<CitationNameType>$citation.get("citation_type")</CitationNameType>
+#end
+#if($citation.get("notes"))
+				<Notes>$citation.get("notes")</Notes>
+#end
+			</Citation>
+#end
+#end
+		</Violation>
+#end
+#end
+
+#end
+
+</CMEFacilitySubmission>
+#if($makeHeader)#if($makeHeader == "true" || $makeHeader == "TRUE")
+</Payload>
+</Document>
+#end#end##if($makeHeader
+$helper.print("Template Records:")
+$helper.print($totalRecCount)
+## Setting the total number of records processed
+$helper.setResultingRecordCount($totalRecCount)
+$helper.print("Total Time:")
+$helper.printElapsedTime()

@@ -45,6 +45,8 @@
 
 	<target name="get.env">
 		<echo message="Build environment: ${plugin.name}" />
+		<echo message="Selected JDK version: ${jdk.version}" />
+		<echo message="Use verbose output? ${verbosity}" />
 	</target>
 
 	<target name="project.jar.test">
@@ -114,7 +116,7 @@
 	</target>
 
 	<target name="compile.src" depends="init" description="compiles with debug symbols, warnings on">
-		<javac debug="on" memoryMaximumSize="256m" memoryInitialSize="256m" fork="true" destdir="${classes}" srcdir="${src}" source="1.4" target="1.4" nowarn="false" failonerror="true">
+		<javac debug="on" memoryMaximumSize="256m" memoryInitialSize="256m" fork="true" destdir="${classes}" srcdir="${src}" source="${jdk.version}" target="${jdk.version}" nowarn="false" failonerror="true">
 			<classpath refid="build.class.path" />
 			<include name="${plugin.pkg}/**" />
 			<include name="${plugin.common}/**" />
@@ -125,12 +127,12 @@
 	</target>
 
 	<target name="compile.test" depends="init" description="compiles with debug symbols, warnings off">
-		<javac debug="on" memoryMaximumSize="256m" memoryInitialSize="256m" fork="true" destdir="${classes}" srcdir="${src}" source="1.4" target="1.4" nowarn="true" failonerror="false">
+		<javac debug="on" memoryMaximumSize="256m" memoryInitialSize="256m" fork="true" destdir="${classes}" srcdir="${src}" source="${jdk.version}" target="${jdk.version}" nowarn="true" failonerror="false">
 			<classpath refid="build.class.path" />
 			<include name="${plugin.pkg.root}/*" />
 			<include name="${plugin.pkg}/**" />
 		</javac>
-		<javac debug="on" memoryMaximumSize="256m" memoryInitialSize="256m" fork="true" destdir="${classes}" srcdir="${test}" source="1.4" target="1.4" nowarn="true" failonerror="false">
+		<javac debug="on" memoryMaximumSize="256m" memoryInitialSize="256m" fork="true" destdir="${classes}" srcdir="${test}" source="${jdk.version}" target="${jdk.version}" nowarn="true" failonerror="false">
 			<classpath refid="build.class.path" />
 			<include name="${plugin.pkg.root}/*" />
 			<include name="${plugin.pkg}/**" />

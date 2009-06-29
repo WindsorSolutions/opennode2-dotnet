@@ -33,6 +33,7 @@ package com.windsor.node.plugin.rcra;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -41,6 +42,7 @@ import org.apache.commons.io.FilenameUtils;
 
 import com.windsor.node.common.domain.CommonContentType;
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
+import com.windsor.node.common.domain.DataServiceRequestParameter;
 import com.windsor.node.common.domain.Document;
 import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.PaginationIndicator;
@@ -56,30 +58,7 @@ import com.windsor.node.service.helper.settings.SettingServiceProvider;
 
 public class HazardousWasteHandlerSubmission extends BaseWnosPlugin {
 
-    /**
-     * Required runtime argument, set in service configuration.
-     */
-    public static final String ARG_CONTACT_INFO = "Contact Info";
-
-    /**
-     * Required runtime argument, set in service configuration.
-     */
-    public static final String ARG_MAKE_HEADER = "MakeHeader";
-
-    /**
-     * Required runtime argument, set in service configuration.
-     */
-    public static final String ARG_NOTIFICATION = "Notification";
-
-    /**
-     * Required runtime argument, set in service configuration.
-     */
-    public static final String ARG_PAYLOAD_OPERATION = "PayloadOperation";
-
-    /**
-     * Required runtime argument, set in service configuration.
-     */
-    public static final String ARG_PROVIDING_ORG = "ProvidingOrg";
+    public static final String SERVICE_NAME = "GetRCRAData";
 
     /**
      * Required runtime argument, set in service configuration.
@@ -92,20 +71,13 @@ public class HazardousWasteHandlerSubmission extends BaseWnosPlugin {
     public static final String ARG_RCRA_INFO_USER_ID = "RCRAInfoUserID";
 
     /**
-     * Required runtime argument, set in service configuration.
-     */
-    public static final String ARG_SCHEMA_REFERENCE = "SchemaReference";
-
-    /**
-     * Required runtime argument, set in service configuration.
-     */
-    public static final String ARG_TITLE = "Title";
-
-    /**
      * Index position for schedule argument (number of handler ids in top-level
      * query - for dev and testing convenience).
      */
     public static final int HANDLER_LIMIT_ARG_INDEX = 0;
+
+    /** Velocity template variable name. */
+    public static final String TEMPLATE_AUTHOR = "author";
 
     /** Velocity template variable name. */
     public static final String TEMPLATE_CONTACT_INFO = "contactInfo";
@@ -157,6 +129,7 @@ public class HazardousWasteHandlerSubmission extends BaseWnosPlugin {
     private String tempFileName;
 
     /* VTL template variables */
+    private String author;
     private String contactInfo;
     private String makeHeader;
     private String notification;
@@ -172,18 +145,18 @@ public class HazardousWasteHandlerSubmission extends BaseWnosPlugin {
         super();
 
         debug("Setting internal runtime argument list");
-        getConfigurationArguments().put(ARG_CONTACT_INFO, "");
-        getConfigurationArguments().put(ARG_MAKE_HEADER, "");
-        getConfigurationArguments().put(ARG_NOTIFICATION, "");
-        getConfigurationArguments().put(ARG_PAYLOAD_OPERATION, "");
-        getConfigurationArguments().put(ARG_PROVIDING_ORG, "");
+        getConfigurationArguments().put(ARG_HEADER_CONTACT_INFO, "");
+        getConfigurationArguments().put(ARG_ADD_HEADER, "");
+        getConfigurationArguments().put(ARG_HEADER_AUTHOR, "");
+        getConfigurationArguments().put(ARG_HEADER_NOTIFS, "");
+        getConfigurationArguments().put(ARG_HEADER_PAYLOAD_OP, "");
+        getConfigurationArguments().put(ARG_HEADER_ORG_NAME, "");
         getConfigurationArguments().put(ARG_RCRA_INFO_STATE_CODE, "");
         getConfigurationArguments().put(ARG_RCRA_INFO_USER_ID, "");
-        getConfigurationArguments().put(ARG_SCHEMA_REFERENCE, "");
-        getConfigurationArguments().put(ARG_TITLE, "");
+        getConfigurationArguments().put(ARG_HEADER_TITLE, "");
 
         debug("Setting internal data source list");
-        getDataSources().put(DS_SOURCE, null);
+        getDataSources().put(ARG_DS_SOURCE, null);
 
         debug("Setting service type");
         getSupportedPluginTypes().add(ServiceType.SOLICIT);
@@ -199,60 +172,34 @@ public class HazardousWasteHandlerSubmission extends BaseWnosPlugin {
     public void afterPropertiesSet() {
         super.afterPropertiesSet();
 
+        debug("Validating data sources");
+
         // make sure the run time args are set
         if (getDataSources() == null) {
             throw new RuntimeException("Data sources not set");
         }
 
         // make sure the data sources are set
-        if (!getDataSources().containsKey(DS_SOURCE)) {
+        if (!getDataSources().containsKey(ARG_DS_SOURCE)) {
             throw new RuntimeException("Source data source not set");
         }
 
-        contactInfo = (String) getRequiredConfigValueAsString(ARG_CONTACT_INFO);
-        debug("contactInfo: " + contactInfo);
-
-        makeHeader = (String) getRequiredConfigValueAsString(ARG_MAKE_HEADER);
-        debug("makeHeader: " + makeHeader);
-
-        notification = (String) getRequiredConfigValueAsString(ARG_NOTIFICATION);
-        debug("notification: " + notification);
-
-        payloadOperation = (String) getRequiredConfigValueAsString(ARG_PAYLOAD_OPERATION);
-        debug("payloadOperation: " + payloadOperation);
-
-        providingOrg = (String) getRequiredConfigValueAsString(ARG_PROVIDING_ORG);
-        debug("providingOrg: " + providingOrg);
-
-        rcraInfoStateCode = (String) getRequiredConfigValueAsString(ARG_RCRA_INFO_STATE_CODE);
-        debug("rcraInfoStateCode: " + rcraInfoStateCode);
-
-        rcraInfoUserId = (String) getRequiredConfigValueAsString(ARG_RCRA_INFO_USER_ID);
-        debug("rcraInfoUserId: " + rcraInfoUserId);
-
-        schemaReference = (String) getRequiredConfigValueAsString(ARG_SCHEMA_REFERENCE);
-        debug("schemaReference: " + schemaReference);
-
-        title = (String) getRequiredConfigValueAsString(ARG_TITLE);
-        debug("title: " + title);
-
-        velocityHelper.configure((DataSource) getDataSources().get(DS_SOURCE),
-                getPluginSourceDir().getAbsolutePath());
-
-        settingService = (SettingServiceProvider) getServiceFactory()
-                .makeService(SettingServiceProvider.class);
+        debug("Validating helpers");
 
         if (settingService == null) {
             throw new RuntimeException(
                     "Unable to obtain SettingServiceProvider");
         }
 
-        idGenerator = (IdGenerator) getServiceFactory().makeService(
-                IdGenerator.class);
+        settingService = (SettingServiceProvider) getServiceFactory()
+                .makeService(SettingServiceProvider.class);
 
         if (idGenerator == null) {
             throw new RuntimeException("Unable to obtain IdGenerator");
         }
+
+        idGenerator = (IdGenerator) getServiceFactory().makeService(
+                IdGenerator.class);
 
         compressionService = (CompressionService) getServiceFactory()
                 .makeService(CompressionService.class);
@@ -260,6 +207,63 @@ public class HazardousWasteHandlerSubmission extends BaseWnosPlugin {
         if (compressionService == null) {
             throw new RuntimeException("Unable to obtain CompressionService");
         }
+
+        debug("Validating runtime args");
+
+        // make sure the run time args are set
+        if (getConfigurationArguments() == null) {
+            throw new RuntimeException("Config args not set");
+        }
+
+        if (!getConfigurationArguments().containsKey(ARG_ADD_HEADER)) {
+            throw new RuntimeException(ARG_ADD_HEADER + " not set");
+        }
+
+        if (!getConfigurationArguments().containsKey(ARG_RCRA_INFO_STATE_CODE)) {
+            throw new RuntimeException(ARG_RCRA_INFO_STATE_CODE + " not set");
+        }
+
+        if (!getConfigurationArguments().containsKey(ARG_RCRA_INFO_USER_ID)) {
+            throw new RuntimeException(ARG_RCRA_INFO_USER_ID + " not set");
+        }
+
+        debug("Plugin validated");
+
+        /* required args */
+        makeHeader = (String) getRequiredConfigValueAsString(ARG_ADD_HEADER);
+        debug("add header: " + makeHeader);
+        boolean doHeader = makeHeader.equalsIgnoreCase("true");
+
+        rcraInfoStateCode = (String) getRequiredConfigValueAsString(ARG_RCRA_INFO_STATE_CODE);
+        debug("rcraInfoStateCode: " + rcraInfoStateCode);
+
+        rcraInfoUserId = (String) getRequiredConfigValueAsString(ARG_RCRA_INFO_USER_ID);
+        debug("rcraInfoUserId: " + rcraInfoUserId);
+
+        /* optional - header elements */
+
+        author = (String) getConfigValueAsString(ARG_HEADER_AUTHOR, doHeader);
+        debug("author: " + author);
+
+        contactInfo = (String) getConfigValueAsString(ARG_HEADER_CONTACT_INFO,
+                doHeader);
+        debug("contactInfo: " + contactInfo);
+
+        notification = (String) getConfigValueAsString(ARG_HEADER_NOTIFS,
+                doHeader);
+        debug("notification: " + notification);
+
+        debug("payloadOperation: " + payloadOperation);
+
+        providingOrg = (String) getConfigValueAsString(ARG_HEADER_ORG_NAME,
+                doHeader);
+        debug("providingOrg: " + providingOrg);
+
+        title = (String) getConfigValueAsString(ARG_HEADER_TITLE, doHeader);
+        debug("title: " + title);
+
+        velocityHelper.configure((DataSource) getDataSources().get(
+                ARG_DS_SOURCE), getPluginSourceDir().getAbsolutePath());
 
         debug("Finished validating property set");
 
@@ -282,6 +286,8 @@ public class HazardousWasteHandlerSubmission extends BaseWnosPlugin {
             result.getAuditEntries()
                     .add(makeEntry("Validating transaction..."));
             validateTransaction(transaction);
+
+            velocityHelper.setTemplateArg(TEMPLATE_AUTHOR, author);
 
             velocityHelper.setTemplateArg(TEMPLATE_CONTACT_INFO, contactInfo);
 
@@ -372,9 +378,6 @@ public class HazardousWasteHandlerSubmission extends BaseWnosPlugin {
              * 
              * SAVE RESULTS
              */
-            result.getAuditEntries().add(
-                    makeEntry("Recorded document submission."));
-
             result.setSuccess(true);
             result.setStatus(CommonTransactionStatusCode.PROCESSED);
             result.getAuditEntries().add(makeEntry("Done: OK"));
@@ -528,6 +531,12 @@ public class HazardousWasteHandlerSubmission extends BaseWnosPlugin {
 
     public void setHandlerLimit(String handlerLimit) {
         this.handlerLimit = handlerLimit;
+    }
+
+    @Override
+    public List<DataServiceRequestParameter> getServiceRequestParamSpecs(
+            String serviceName) {
+        return null;
     }
 
 }

@@ -36,11 +36,13 @@ package com.windsor.node.plugin.wqx.dao;
 
 import java.sql.Timestamp;
 import java.sql.Types;
+import java.util.List;
 
 import javax.sql.DataSource;
 
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
 import com.windsor.node.plugin.common.dao.BaseJdbcDao;
+import com.windsor.node.plugin.wqx.WqxOperationType;
 
 /**
  * Handles saving submission status to WQX_SUBMISSIONHISTORY table.
@@ -48,40 +50,92 @@ import com.windsor.node.plugin.common.dao.BaseJdbcDao;
  */
 public class WqxStatusDao extends BaseJdbcDao {
 
+    /** Constant for the table we're dealing with. */
     public static final String TABLE_NAME = "WQX_SUBMISSIONHISTORY";
+
+    /** Column name from WQX_SUBMISSIONHISTORY. */
     public static final String ORG_TABLE_NAME = "WQX_ORGANIZATION";
+
+    /** Column name from WQX_SUBMISSIONHISTORY. */
     public static final String RECORD_ID = "RECORDID";
+
+    /** Column name from WQX_SUBMISSIONHISTORY. */
+    public static final String PARENT_ID = "PARENTID";
+
+    /** Column name from WQX_SUBMISSIONHISTORY. */
     public static final String SUBMISSION_TYPE = "SUBMISSIONTYPE";
+
+    /** Column name from WQX_SUBMISSIONHISTORY. */
     public static final String STATUS = "CDXPROCESSINGSTATUS";
+
+    /** Column name from WQX_SUBMISSIONHISTORY. */
     public static final String WQXUPDATEDATE = "WQXUPDATEDATE";
+
+    /** Column name from WQX_SUBMISSIONHISTORY. */
+    public static final String TRAN_ID = "LOCALTRANSACTIONID";
+
+    /** Column name from WQX_ORGANIZATION. */
+    public static final String ORG_ID = "ORGID";
 
     public static final String RESET = "Reset";
 
-    public static final String SQL_INSERT = INSERT + TABLE_NAME
+    public static final String NO_NEW_STATUS_WHEN_PENDING = "Can't create \"Pending\" "
+            + " or \"Processing\" status when a transaction "
+            + "for that Organization and Operation type is already Pending or Processing.";
+
+    public static final String NO_PENDING_FOUND = "No Pending or Processing transactions found for orgId ";
+
+    private static final String SQL_SELECT_ORG_PK_BY_ORG_ID = SELECT
+            + RECORD_ID + FROM + ORG_TABLE_NAME + WHERE + ORG_ID + EQUALS_PARAM;
+
+    private static final String ORG_PK_FROM_ORG_ID = PARENT_ID + IN + L_PAREN
+            + SQL_SELECT_ORG_PK_BY_ORG_ID + R_PAREN;
+
+    private static final String SQL_INSERT = INSERT + TABLE_NAME
             + " VALUES( ?, ?, ?, ?, ?, ?, ? )";
 
-    public static final String SQL_UPDATE_STATUS = UPDATE + TABLE_NAME + SET
-            + STATUS + EQUALS_PARAM + WHERE + RECORD_ID + EQUALS_PARAM;
+    private static final String SQL_UPDATE_STATUS = UPDATE + TABLE_NAME + SET
+            + STATUS + EQUALS_PARAM + WHERE + TRAN_ID + EQUALS_PARAM;
 
-    public static final String SQL_RESET_STATUS = UPDATE + TABLE_NAME + SET
-            + STATUS + EQUALS + APOS + RESET + APOS + WHERE + STATUS + EQUALS
-            + APOS + CommonTransactionStatusCode.PENDING_STR + APOS;
+    private static final String STATUS_PENDING_OR_PROCESSING = L_PAREN
+            + L_PAREN + STATUS + EQUALS + APOS
+            + CommonTransactionStatusCode.PENDING.getName() + APOS + R_PAREN
+            + OR + L_PAREN + STATUS + EQUALS + APOS
+            + CommonTransactionStatusCode.PROCESSING.getName() + APOS + R_PAREN
+            + R_PAREN;
 
-    public static final String SQL_SELECT_ID_BY_OPERATION_TYPE = SELECT
-            + RECORD_ID + FROM + TABLE_NAME + WHERE + SUBMISSION_TYPE
-            + EQUALS_PARAM;
+    private static final String SQL_RESET_STATUS = UPDATE + TABLE_NAME + SET
+            + STATUS + EQUALS + APOS + RESET + APOS + WHERE
+            + STATUS_PENDING_OR_PROCESSING;
 
-    public static final String SQL_SELECT_ID_BY_OPERATION_TYPE_AND_STATUS = SQL_SELECT_ID_BY_OPERATION_TYPE
-            + AND + STATUS + EQUALS_PARAM;
+    private static final String SQL_SELECT_LATEST_PROCESSED_BY_ORG_ID_AND_OPERATION_TYPE = SELECT
+            + "max("
+            + WQXUPDATEDATE
+            + R_PAREN
+            + FROM
+            + TABLE_NAME
+            + WHERE
+            + SUBMISSION_TYPE
+            + EQUALS_PARAM
+            + AND
+            + STATUS_PENDING_OR_PROCESSING + AND + ORG_PK_FROM_ORG_ID;
 
-    public static final String SQL_SELECT_LATEST_PENDING_DATE = SELECT + "max("
-            + WQXUPDATEDATE + R_PAREN + FROM + TABLE_NAME + WHERE + STATUS
-            + EQUALS + APOS + CommonTransactionStatusCode.PENDING_STR + APOS;
+    private static final String SQL_COUNT_PENDING_BY_OPERATION_TYPE_AND_ORG_ID = SELECT
+            + " COUNT(*)"
+            + FROM
+            + TABLE_NAME
+            + WHERE
+            + STATUS_PENDING_OR_PROCESSING
+            + AND
+            + SUBMISSION_TYPE
+            + EQUALS_PARAM + AND + ORG_PK_FROM_ORG_ID;
 
-    public static final String SQL_SELECT_ORG_PK_BY_ORG_ID = SELECT + RECORD_ID
-            + FROM + ORG_TABLE_NAME + WHERE + "ORGID" + EQUALS_PARAM;
+    private static final String SQL_SELECT_PENDING_TRAN = SELECT + TRAN_ID
+            + FROM + TABLE_NAME + WHERE + STATUS_PENDING_OR_PROCESSING + AND
+            + SUBMISSION_TYPE + EQUALS_PARAM + AND + ORG_PK_FROM_ORG_ID;
 
-    public static final String NO_NEW_STATUS_WHEN_PENDING = "Can't create \"Pending\" status when a transaction is already pending.";
+    private static final String SQL_SELECT_ALL_PENDING_TRANS = SELECT + TRAN_ID
+            + FROM + TABLE_NAME + WHERE + STATUS_PENDING_OR_PROCESSING;
 
     private int[] argTypes = new int[] { Types.VARCHAR, Types.VARCHAR,
             Types.TIMESTAMP, Types.TIMESTAMP, Types.VARCHAR, Types.VARCHAR,
@@ -99,22 +153,47 @@ public class WqxStatusDao extends BaseJdbcDao {
         super.checkDaoConfig();
     }
 
-    public String createStatus(String id, String orgId, String submissionType,
-            String localTransactionId, String status) {
+    /**
+     * Creates a row in WQX_SUBMISSIONHISTORY if no row with
+     * <code>operationType</code> and <code>operationType</code> and status of
+     * &quot;pending&quot; exists - otherwise throws an
+     * {@link UnsupportedOperationException}.
+     * 
+     * @param id
+     *            primary key for the new row
+     * @param orgId
+     *            Organization identifier
+     * @param operationType
+     *            one of WqxOperationType.UPDATE_INSERT or
+     *            WqxOperationType.DELETE
+     * @param localTransactionId
+     * @param status
+     *            values specified by {@link CommonTransactionStatusCode}
+     * 
+     */
+    public void createStatus(String id, String orgId,
+            WqxOperationType operationType, String localTransactionId,
+            CommonTransactionStatusCode status) {
 
         checkDaoConfig();
         logger.debug("createStatus");
+        logger.debug("id = " + id);
+        logger.debug("orgId = " + orgId);
+        logger.debug("operationType = " + operationType);
+        logger.debug("localTransactionId = " + localTransactionId);
+        logger.debug("status = " + status);
 
-        if (status.equals(CommonTransactionStatusCode.PENDING_STR)
-                && getLatestPendingTimestamp() != null) {
+        if (null != getPendingTransactionId(orgId, operationType)) {
 
             throw new UnsupportedOperationException(NO_NEW_STATUS_WHEN_PENDING);
         }
 
-        Object[] args = new Object[] { id, orgId,
+        String orgPk = getPrimaryKeyForOrgId(orgId);
+
+        Object[] args = new Object[] { id, orgPk,
                 new Timestamp(System.currentTimeMillis()),
                 new Timestamp(System.currentTimeMillis()),
-                submissionType.toString(), localTransactionId, status };
+                operationType.getName(), localTransactionId, status.getName() };
 
         logger.debug("args: ");
         for (int i = 0; i < args.length; i++) {
@@ -124,49 +203,91 @@ public class WqxStatusDao extends BaseJdbcDao {
         logger.debug("sql: " + SQL_INSERT);
         getJdbcTemplate().update(SQL_INSERT, args, argTypes);
 
-        return id;
     }
 
-    public void updateStatus(String id, String status) {
+    public String getPendingTransactionId(String orgId,
+            WqxOperationType operationType) {
+
+        String tranId = null;
 
         checkDaoConfig();
-        logger.debug("updateStatus");
+        logger.debug("getPendingTransactionId: orgId = " + orgId
+                + ", operationType = " + operationType);
 
-        if (status.equals(CommonTransactionStatusCode.PENDING_STR)
-                && getLatestPendingTimestamp() != null) {
-
-            throw new UnsupportedOperationException(NO_NEW_STATUS_WHEN_PENDING);
+        if (countPending(orgId, operationType) > 0) {
+            tranId = (String) getJdbcTemplate().queryForObject(
+                    SQL_SELECT_PENDING_TRAN,
+                    new Object[] { operationType.getName(), orgId },
+                    String.class);
         }
+        return tranId;
+
+    }
+
+    public List getPendingTransactionIds() {
+
+        List idList = null;
+
+        checkDaoConfig();
+        logger.debug("getPendingTransactionIds");
+
+        logger.debug("sql: " + SQL_SELECT_ALL_PENDING_TRANS);
+        idList = getJdbcTemplate().queryForList(SQL_SELECT_ALL_PENDING_TRANS,
+                String.class);
+
+        return idList;
+    }
+
+    public Timestamp getLatestProcessedTimestamp(String orgId,
+            WqxOperationType operationType) {
+
+        Timestamp ts = null;
+
+        logger.debug("getLatestProcessedTimestamp: orgId = " + orgId
+                + ", operationType = " + operationType);
+        checkDaoConfig();
+
+        logger.debug("sql: "
+                + SQL_SELECT_LATEST_PROCESSED_BY_ORG_ID_AND_OPERATION_TYPE);
+
+        ts = (Timestamp) getJdbcTemplate().queryForObject(
+                SQL_SELECT_LATEST_PROCESSED_BY_ORG_ID_AND_OPERATION_TYPE,
+                new Object[] { operationType.getName(), orgId },
+                Timestamp.class);
+
+        return ts;
+
+    }
+
+    public void updateStatus(String tranId,
+            CommonTransactionStatusCode newStatus) {
+
+        checkDaoConfig();
+        logger.debug("updateStatus: tranId = " + tranId + ", newStatus = "
+                + newStatus);
 
         logger.debug("sql: " + SQL_UPDATE_STATUS);
         getJdbcTemplate().update(SQL_UPDATE_STATUS,
-                new Object[] { id, status },
-                new int[] { Types.VARCHAR, Types.VARCHAR });
-
+                new Object[] { newStatus.getName(), tranId });
     }
 
-    public void resetStatus() {
+    /**
+     * Sets value of &quot;CDXPROCESSINGSTATUS&quot; from &quot;Pending&quot; to
+     * &quot;Reset&quot;.
+     */
+    public int resetStatus() {
 
         checkDaoConfig();
         logger.debug("resetStatus");
 
+        int rowCount;
+
         logger.debug("sql: " + SQL_RESET_STATUS);
-        getJdbcTemplate().update(SQL_RESET_STATUS);
+        rowCount = getJdbcTemplate().update(SQL_RESET_STATUS);
 
-    }
+        logger.debug("Reset " + rowCount + " rows");
+        return rowCount;
 
-    public Timestamp getLatestPendingTimestamp() {
-
-        checkDaoConfig();
-        logger.debug("getLatestPendingDate");
-
-        Timestamp t = null;
-
-        logger.debug("sql: " + SQL_SELECT_LATEST_PENDING_DATE);
-        t = (Timestamp) getJdbcTemplate().queryForObject(
-                SQL_SELECT_LATEST_PENDING_DATE, Timestamp.class);
-
-        return t;
     }
 
     public String getPrimaryKeyForOrgId(String orgId) {
@@ -178,6 +299,16 @@ public class WqxStatusDao extends BaseJdbcDao {
         return (String) getJdbcTemplate().queryForObject(
                 SQL_SELECT_ORG_PK_BY_ORG_ID, new Object[] { orgId },
                 String.class);
+    }
+
+    private int countPending(String orgId, WqxOperationType operationType) {
+
+        checkDaoConfig();
+
+        logger.debug("sql: " + SQL_COUNT_PENDING_BY_OPERATION_TYPE_AND_ORG_ID);
+        return getJdbcTemplate().queryForInt(
+                SQL_COUNT_PENDING_BY_OPERATION_TYPE_AND_ORG_ID,
+                new Object[] { operationType.getName(), orgId });
     }
 
 }

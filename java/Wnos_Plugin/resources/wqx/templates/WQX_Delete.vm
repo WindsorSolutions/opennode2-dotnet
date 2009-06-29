@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+#set ($totalRecCount = 0)    
+$helper.startStopWatch()
+$helper.print("lastProcessedTimestamp:")$helper.print($lastProcessedTimestamp)
+#set ($org = $helper.getObject("SELECT recordid FROM WQX_ORGANIZATION WHERE ORGID = ? ", [$orgId]))
+#if($makeHeader)#if($makeHeader == "true" || $makeHeader == "TRUE")
+<Document Id="$docId" 
+          xmlns="http://www.exchangenetwork.net/schema/v1.0/ExchangeNetworkDocument.xsd" 
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <Header>
+        <Author>$authorName</Author>
+        <Organization>$authorOrg</Organization>
+        <Title>WQX Delete</Title>
+        <CreationTime>$helper.getCurrentDateTime()</CreationTime>
+        <ContactInfo>$contactInfo</ContactInfo>
+    </Header>
+    <Payload Operation="Delete">
+#end#end##if($makeHeader)
+        <WQXDelete xmlns="http://www.exchangenetwork.net/schema/wqx/2" 
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.exchangenetwork.net/schema/wqx/2 http://www.exchangenetwork.net/schema/wqx/2/0/WQX_WQX_Delete_v2.0.xsd">
+            <OrganizationDelete>
+                <OrganizationIdentifier>$orgId</OrganizationIdentifier>
+#foreach($project in $helper.getData("SELECT * FROM WQX_PROJECT WHERE PARENTID = ? AND WQXUPDATEDATE >= ? ", [$org.get("recordid"), $lastProcessedTimestamp]))
+                <ProjectIdentifier>$project.get("projectid")</ProjectIdentifier>
+#end###foreach($project in $helper.getData
+#foreach($monLoc in $helper.getData("SELECT * FROM WQX_MONITORINGLOCATION WHERE PARENTID = ? AND WQXUPDATEDATE >= ? ", [$org.get("recordid"), $lastProcessedTimestamp]))
+                <MonitoringLocationIdentifier>$monLoc.get("monitoringlocationid")</MonitoringLocationIdentifier>
+#end##foreach($monLoc in $helper.getData
+#foreach($activity in $helper.getData("SELECT * FROM WQX_ACTIVITY WHERE PARENTID = ?  AND WQXUPDATEDATE >= ? ", [$org.get("recordid"), $lastProcessedTimestamp]))
+                <ActivityIdentifier>$activity.get("activityid")</ActivityIdentifier>
+#end##foreach($activity in $helper.getData
+#foreach($activityGroup in $helper.getData("SELECT * FROM WQX_ACTIVITYGROUP WHERE PARENTID = ? AND WQXUPDATEDATE >= ? ", [$org.get("recordid"), $lastProcessedTimestamp]))
+                <ActivityGroupIdentifier>$activity.get("activitygroupid")</ActivityGroupIdentifier>
+#end##foreach($activityGroup in $helper.getData
+#foreach($habitatIndex in $helper.getData("SELECT * FROM WQX_BIOLOGICALHABITATINDEX WHERE PARENTID = ? AND WQXUPDATEDATE >= ? ", [$org.get("recordid"), $lastProcessedTimestamp]))
+                <IndexIdentifier>$activity.get("indexid")</IndexIdentifier>
+#end##foreach($habitatIndex in $helper.getData
+            </OrganizationDelete>            
+        </WQXDelete>
+#if($makeHeader)#if($makeHeader == "true" || $makeHeader == "TRUE")
+    </Payload>
+</Document>
+#end#end##if($makeHeader)
+$helper.print("Template merge complete! Total elapsed time:")
+$helper.printElapsedTime()

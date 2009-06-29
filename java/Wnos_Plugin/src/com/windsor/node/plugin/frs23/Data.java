@@ -67,11 +67,11 @@ import com.windsor.node.plugin.xml.ElementUtil;
  */
 public class Data extends JdbcDaoSupport {
 
-    private Logger logger = Logger.getLogger(getClass());
+    public static final String SERVICE_CHANGEDATE = "GetFacilityByChangeDate";
+    public static final String SERVICE_DELETED = "GetDeletedFacilityByChangeDate";
+    public static final String SERVICE_NAME = "GetFacilityByName";
 
-    protected static final String SERVICE_CHANGEDATE = "GetFacilityByChangeDate";
-    protected static final String SERVICE_DELETED = "GetDeletedFacilityByChangeDate";
-    protected static final String SERVICE_NAME = "GetFacilityByName";
+    private Logger logger = Logger.getLogger(getClass());
 
     private OutputStreamWriter out = null;
     private PreparedStatement psEnvInterest = null;
@@ -306,8 +306,7 @@ public class Data extends JdbcDaoSupport {
     }
 
     public void getList(DataSource dataSource, String targetFilePath,
-            DataRequest req, String sysName, ProcessContentResult result,
-            boolean makingHeader) {
+            DataRequest req, ProcessContentResult result, boolean makingHeader) {
 
         try {
 
@@ -554,7 +553,7 @@ public class Data extends JdbcDaoSupport {
                     getGeographicCoordinateDetails(stateID);
 
                     // Root Elements
-                    out.write(ElementUtil.getElement("SourceOfData", sysName));
+                    out.write(ElementUtil.getElement("SourceOfData", "FIS"));
                     out.write(ElementUtil.getElement("LastReportedDate", rs
                             .getString(FRS.FACILITYSITE.LASTREPORTEDDATE)));
                     out
@@ -575,7 +574,7 @@ public class Data extends JdbcDaoSupport {
                     out.write(ElementUtil.getElement("LastReportedDate", rs
                             .getString(FRS.DELETEDFACILITIES.DELETEDONDATE)));
                     out.write(ElementUtil.getElement(
-                            "StateFacilitySystemAcronymName", sysName));
+                            "StateFacilitySystemAcronymName", "FIS"));
                     out
                             .write(ElementUtil
                                     .getElement(

@@ -31,30 +31,14 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.windsor.node.plugin.common.velocity.jdbc;
 
-import java.io.BufferedOutputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 import java.io.Writer;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Properties;
 
 import javax.sql.DataSource;
 
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 import org.apache.velocity.Template;
-import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.VelocityEngine;
-import org.apache.velocity.runtime.RuntimeConstants;
-import org.apache.velocity.runtime.log.Log4JLogChute;
 
-import com.windsor.node.plugin.common.velocity.VelocityHelper;
+import com.windsor.node.plugin.common.velocity.VelocityHelperImpl;
 
 /**
  * VelocityHelper implementation for merging relational data with Velocity
@@ -67,168 +51,62 @@ import com.windsor.node.plugin.common.velocity.VelocityHelper;
  * </p>
  * 
  */
-public class JdbcVelocityHelper implements VelocityHelper {
-
-    public static final String TEXT_ENCODING = "UTF-8";
-    public static final int BUFFER_SIZE = 1024 * 24;
-    protected Logger logger = Logger.getLogger(getClass());
-
-    private VelocityEngine velocityEngine;
-    private JdbcTemplateHelper templateHelper;
-    private VelocityContext context;
+public class JdbcVelocityHelper extends VelocityHelperImpl {
 
     /**
      * 
-     * @see com.windsor.node.velocity.jdbc.VelocityHelper#configure(javax.sql.DataSource
+     * @see com.windsor.node.velocity.VelocityHelper#configure(javax.sql.DataSource
      *      )
      */
     public void configure(DataSource dataSource, String templateDirectory) {
+
+        configure(templateDirectory);
 
         if (dataSource == null) {
             throw new NullPointerException("Null dataSource");
         }
 
         templateHelper = new JdbcTemplateHelper(dataSource);
-
-        logger.info("Template directory: " + templateDirectory);
-
-        // configuration for VelocityEngine
-        Properties props = new Properties();
-        props.setProperty("resource.loader", "file");
-        props.setProperty("file.resource.loader.description",
-                "Velocity File Resource Loader");
-        props
-                .setProperty("file.resource.loader.class",
-                        "org.apache.velocity.runtime.resource.loader.FileResourceLoader");
-        props.setProperty("file.resource.loader.path", templateDirectory);
-        props.setProperty("file.resource.loader.cache", "false");
-        props
-                .setProperty("file.resource.loader.modificationCheckInterval",
-                        "0");
-        props.setProperty("input.encoding", TEXT_ENCODING);
-        props.setProperty("output.encoding", TEXT_ENCODING);
-
-        props.setProperty(RuntimeConstants.RUNTIME_LOG_LOGSYSTEM_CLASS,
-                "org.apache.velocity.runtime.log.Log4JLogChute");
-        props.setProperty(Log4JLogChute.RUNTIME_LOG_LOG4J_LOGGER,
-                "org.apache.velocity");
-
-        props.setProperty("eventhandler.referenceinsertion.class",
-                "org.apache.velocity.app.event.implement.EscapeXmlReference");
-        props.setProperty("eventhandler.escape.html.match", "/.*/");
-        props.setProperty("directive.foreach.counter.name", "velocityCount");
-        props.setProperty("directive.foreach.counter.initial.value", "1");
-
-        try {
-            velocityEngine = new VelocityEngine(props);
-        } catch (Exception e) {
-            throw new RuntimeException("Error while creating VelocityEngine:"
-                    + e.getMessage(), e);
-        }
-
-        context = new VelocityContext();
         context.put("helper", templateHelper);
 
     }
 
     /**
+     * Merge a VTL template, using the SQL statements embedded within it.
      * 
-     * @see com.windsor.node.velocity.jdbc.VelocityHelper#setTemplateArg(java.lang
-     *      .String, java.lang.Object)
-     */
-    public void setTemplateArg(String key, Object arg) {
-        context.put(key, arg);
-    }
-
-    /**
-     * 
-     * @see com.windsor.node.velocity.jdbc.VelocityHelper#setTemplateArgs(java.util
-     *      .Map)
-     */
-    public void setTemplateArgs(Map args) {
-        Iterator it = args.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pairs = (Map.Entry) it.next();
-            context.put(pairs.getKey().toString(), pairs.getValue());
-        }
-
-    }
-
-    /**
-     * 
-     * @see com.windsor.node.velocity.jdbc.VelocityHelper#splitTemplateArgs(java.lang
-     *      .String)
-     */
-    public Map splitTemplateArgs(String helperArgs) {
-
-        Map map = new HashMap();
-
-        String[] argPairs = StringUtils.split(helperArgs, VelocityHelper.HELPER_ARGS_DELIM);
-
-        for (int i = 0; i < argPairs.length; i++) {
-
-            logger.info(argPairs[i]);
-
-            String[] argPair = StringUtils.split(argPairs[i], VelocityHelper.HELPER_NAME_VAL_DELIM);
-
-            if (argPair.length != 2) {
-                throw new IllegalArgumentException(
-                        "Invalid argument, expected key value pair deliminated by ':' char");
-            } else {
-
-                map.put(argPair[0].trim(), argPair[1].trim());
-            }
-        }
-        return map;
-    }
-
-    /**
-     * 
-     * @see com.windsor.node.velocity.jdbc.VelocityHelper#merge(java.lang.String,
+     * @param template
+     *            the template file name, relative to the templateDirectory used
+     *            in configuring this VelocityHelper
+     * @param targetFilePath
+     *            fully qualified file name for the merged output
+     * @return the number of rows returned from the outermost query (the
+     *         template developer must manage this in the template)
+     * @see com.windsor.node.velocity.VelocityHelper#merge(java.lang.String,
      *      java.lang.String)
      */
     public int merge(String template, String targetFilePath) {
 
-        OutputStreamWriter out = null;
-
-        try {
-            out = new OutputStreamWriter(new BufferedOutputStream(
-                    new FileOutputStream(targetFilePath), BUFFER_SIZE),
-                    TEXT_ENCODING);
-
-            return merge(template, out);
-
-        } catch (FileNotFoundException ex) {
-            throw new RuntimeException("Error while merging: file not found."
-                    + ex.getMessage(), ex);
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(
-                    "Error while merging: unsupported encoding"
-                            + e.getMessage(), e);
-        } finally {
-            if (out != null) {
-                try {
-                    out.flush();
-                    out.close();
-                } catch (IOException e) {
-                    logger.error(e);
-                }
-
-            }
-        }
-
+        return super.merge(template, targetFilePath);
     }
 
     /**
+     * Merge a VTL template, using the SQL statements embedded within it.
      * 
-     * @see com.windsor.node.velocity.jdbc.VelocityHelper#merge(java.lang.String,
+     * @param template
+     *            the template file name, relative to the templateDirectory used
+     *            in configuring this VelocityHelper
+     * @param writer
+     *            a java.io.Writer implementation for writing the merged output
+     * @return the number of rows returned from the outermost query (the
+     *         template developer must manage this in the template)
+     * @see com.windsor.node.velocity.VelocityHelper#merge(java.lang.String,
      *      java.io.Writer)
      */
     public int merge(String template, Writer writer) {
 
         if (velocityEngine == null || templateHelper == null) {
             throw new RuntimeException(
-                    "Helper not configured. configure(DataSource dataSource) first!");
+                    "Helper not configured. configure(DataSource dataSource, String templateDirectory) first!");
         }
 
         try {
@@ -240,7 +118,8 @@ public class JdbcVelocityHelper implements VelocityHelper {
             logger.debug("Merging template...");
             tmpl.merge(context, writer);
 
-            return templateHelper.getResultingRecordCount();
+            return ((JdbcTemplateHelper) templateHelper)
+                    .getResultingRecordCount();
 
         } catch (Exception e) {
             logger.error("Exception: " + e.getMessage(), e);

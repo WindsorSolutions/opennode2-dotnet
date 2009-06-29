@@ -40,33 +40,41 @@ public interface VelocityHelper {
 
     /** Key for bean in the Sping context_config.xml. */
     String VELOCITY_HELPER_CTX_KEY = "velocityHelper";
-    
+
     /** Key for bean in the Sping context_config.xml. */
     String DATASOURCE_CTX_KEY = "dataSource";
-    
+
     /** Key for bean in the Sping context_config.xml. */
     String OUTPUT_FILENAME_CTX_KEY = "outputFilename";
-    
+
     /** Key for value in helper.properties */
     String OUTPUT_FILENAME_PROPS_KEY = "helper.output";
-    
+
     /** Key for bean in the Sping context_config.xml. */
     String TEMPLATE_CTX_KEY = "templateFilename";
-    
+
     /** Key for value in helper.properties */
     String TEMPLATE_PROPS_KEY = "helper.template";
-    
+
     /** Key for bean in the Sping context_config.xml. */
     String HELPER_ARGS_CTX_KEY = "helperArgs";
-    
+
     /** Key for value in helper.properties */
     String HELPER_ARGS_PROPS_KEY = "helper.args";
-    
+
     /** Delimiter for arguments in helper.properties */
     String HELPER_ARGS_DELIM = "|";
-    
+
     /** Delimiter for name-value argument elements in helper.properties */
     String HELPER_NAME_VAL_DELIM = "^";
+
+    /**
+     * Configure the helper instance.
+     * 
+     * @param templateDirectory
+     *            the filesystem location of the Velocity templates
+     */
+    void configure(String templateDirectory);
 
     /**
      * Configure the helper instance.
@@ -86,7 +94,7 @@ public interface VelocityHelper {
      * The input string must be of the form:<br>
      * 
      * <pre>
-     * &lt;name&gt;^&lt;value&gt;|&lt;name&gt;^&lt;value&gt;|...
+     * &lt;name&gt;&circ;&lt;value&gt;|&lt;name&gt;&circ;&lt;value&gt;|...
      * </pre>
      * 
      * <br>
@@ -97,7 +105,7 @@ public interface VelocityHelper {
      * @param args
      * @return
      */
-    Map splitTemplateArgs(String args);
+    Map<String, Object> splitTemplateArgs(String args);
 
     /**
      * Set a Velocity Template Language (VTL) variable that can be referenced by
@@ -114,30 +122,29 @@ public interface VelocityHelper {
      * @param args
      *            assumed to be a Map of String-Object pairs
      */
-    void setTemplateArgs(Map args);
+    void setTemplateArgs(Map<String, Object> args);
 
     /**
-     * Merge a VTL template, using the SQL statements embedded within it.
+     * Merge a VTL template.
      * 
      * @param template
      *            the template file name, relative to the templateDirectory used
      *            in configuring this VelocityHelper
      * @param writer
      *            a java.io.Writer implementation for writing the merged output
-     * @return the number of rows returned from the outermost query (the
-     *         template developer must manage this in the template)
+     * @return implementation-specific number (e.g., status code, result count)
      */
     int merge(String template, Writer writer);
 
     /**
-     * Merge a VTL template, using the SQL statements embedded within it.
+     * Merge a VTL template.
      * 
      * @param template
      *            the template file name, relative to the templateDirectory used
      *            in configuring this VelocityHelper
-     * @param targetFilePath fully qualified file name for the merged output
-     * @return the number of rows returned from the outermost query (the
-     *         template developer must manage this in the template)
+     * @param targetFilePath
+     *            fully qualified file name for the merged output
+     * @return implementation-specific number (e.g., status code, result count)
      */
     int merge(String template, String targetFilePath);
 

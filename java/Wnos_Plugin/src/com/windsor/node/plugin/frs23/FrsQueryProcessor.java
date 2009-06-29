@@ -33,54 +33,65 @@ POSSIBILITY OF SUCH DAMAGE.
  * Created on Aug 20, 2004
  *
  */
-package com.windsor.node.plugin.nei;
+package com.windsor.node.plugin.frs23;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.sql.DataSource;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang.StringUtils;
 
 import com.windsor.node.common.domain.CommonContentType;
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
+import com.windsor.node.common.domain.DataServiceRequestParameter;
 import com.windsor.node.common.domain.Document;
 import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.PaginationIndicator;
 import com.windsor.node.common.domain.ProcessContentResult;
+import com.windsor.node.common.domain.RequestType;
 import com.windsor.node.common.domain.ServiceType;
 import com.windsor.node.plugin.BaseWnosPlugin;
 import com.windsor.node.service.helper.CompressionService;
+import com.windsor.node.service.helper.HeaderDocumentHelper;
 import com.windsor.node.service.helper.IdGenerator;
 import com.windsor.node.service.helper.settings.SettingServiceProvider;
 
 /**
- * NOTE: This class has been upgraded from the legacy Node No effort has been
- * taken to obtimize this class do to it anticipated short lifespan (4 more runs
- * kevin J tells me)
- * 
  * @author mchmarny
  * 
  */
-public class RequestProcessor extends BaseWnosPlugin {
+public class FrsQueryProcessor extends BaseWnosPlugin {
 
-    public static final String ARG_HD_AUTHOR = "authorName";
+    public static final String SERVICE_CHANGEDATE_PARAM_NAME = "FacilityChangeDate";
+    public static final String SERVICE_DELETED_PARAM_NAME = "FacilityDeletedDate";
+    public static final String SERVICE_NAME_PARAM_NAME = "StateFacilityIdentifier";
 
-    public RequestProcessor() {
+    public FrsQueryProcessor() {
         super();
 
         debug("Setting internal runtime argument list");
-        getConfigurationArguments().put(ARG_HD_ORN_NAME, "");
-        getConfigurationArguments().put(ARG_HD_AUTHOR, "");
-        getConfigurationArguments().put(ARG_HD_CONTACT, "");
-        getConfigurationArguments().put(ARG_HD_DO, "");
+        getConfigurationArguments().put(ARG_ADD_HEADER, "");
+        getConfigurationArguments().put(ARG_HEADER_AUTHOR, "");
+        getConfigurationArguments().put(ARG_HEADER_CONTACT_INFO, "");
+        getConfigurationArguments().put(ARG_HEADER_NOTIFS, "");
+        getConfigurationArguments().put(ARG_HEADER_ORG_NAME, "");
+        getConfigurationArguments().put(ARG_HEADER_PAYLOAD_OP, "");
+        getConfigurationArguments().put(ARG_HEADER_TITLE, "");
 
         debug("Setting internal data source list");
-        getDataSources().put(DS_SOURCE, (DataSource) null);
+        getDataSources().put(ARG_DS_SOURCE, (DataSource) null);
 
+        getSupportedPluginTypes().add(ServiceType.QUERY);
         getSupportedPluginTypes().add(ServiceType.SOLICIT);
+        getSupportedPluginTypes().add(ServiceType.QUERY_OR_SOLICIT);
 
-        debug("Plugin initiated");
+        debug("FrsQueryProcessor instantiated");
     }
 
     /**
@@ -98,7 +109,7 @@ public class RequestProcessor extends BaseWnosPlugin {
         }
 
         // make sure the source data source is set
-        if (!getDataSources().containsKey(DS_SOURCE)) {
+        if (!getDataSources().containsKey(ARG_DS_SOURCE)) {
             throw new RuntimeException("Source data source not set");
         }
 
@@ -109,34 +120,15 @@ public class RequestProcessor extends BaseWnosPlugin {
             throw new RuntimeException("Config args not set");
         }
 
-        if (!getConfigurationArguments().containsKey(ARG_HD_CONTACT)) {
-            throw new RuntimeException(ARG_HD_CONTACT + " not set");
+        if (!getConfigurationArguments().containsKey(ARG_ADD_HEADER)) {
+            throw new RuntimeException(ARG_ADD_HEADER + " not set");
         }
 
-        if (!getConfigurationArguments().containsKey(ARG_HD_AUTHOR)) {
-            throw new RuntimeException(ARG_HD_AUTHOR + " not set");
-        }
-
-        if (!getConfigurationArguments().containsKey(ARG_HD_ORN_NAME)) {
-            throw new RuntimeException(ARG_HD_ORN_NAME + " not set");
-        }
-
-        if (!getConfigurationArguments().containsKey(ARG_HD_DO)) {
-            throw new RuntimeException(ARG_HD_DO + " not set");
+        if (!getConfigurationArguments().containsKey(ARG_HEADER_AUTHOR)) {
+            throw new RuntimeException(ARG_HEADER_AUTHOR + " not set");
         }
 
         debug("Plugin validated");
-
-    }
-
-    protected void validateTransaction(NodeTransaction transaction) {
-
-        super.validateTransaction(transaction);
-
-        if (transaction.getRequest().getParameters().size() != 2) {
-            throw new RuntimeException(
-                    "Invalid number of parameters. Expected 2: Year and TransactionType");
-        }
 
     }
 
@@ -153,35 +145,47 @@ public class RequestProcessor extends BaseWnosPlugin {
 
         try {
 
-            /* ARGUMENTS */
+            /*
+             * 
+             * ARGUMENTS
+             */
             result.getAuditEntries()
                     .add(makeEntry("Vaildating transaction..."));
             validateTransaction(transaction);
 
             result.getAuditEntries().add(makeEntry("Acquiring arguments..."));
-            DataSource dataSource = (DataSource) getDataSources()
-                    .get(DS_SOURCE);
+            DataSource dataSource = (DataSource) getDataSources().get(
+                    ARG_DS_SOURCE);
             debug("Data Source: " + dataSource);
 
-            String author = getRequiredConfigValueAsString(ARG_HD_AUTHOR);
-            result.getAuditEntries().add(
-                    makeEntry(ARG_HD_AUTHOR + ": " + author));
-
-            String contact = getRequiredConfigValueAsString(ARG_HD_CONTACT);
-            result.getAuditEntries().add(
-                    makeEntry(ARG_HD_CONTACT + ": " + contact));
-
-            String org = getRequiredConfigValueAsString(ARG_HD_ORN_NAME);
-            result.getAuditEntries().add(
-                    makeEntry(ARG_HD_ORN_NAME + ": " + org));
-
-            String doHeaderIndicator = getRequiredConfigValueAsString(ARG_HD_DO);
+            String doHeaderIndicator = getRequiredConfigValueAsString(ARG_ADD_HEADER);
             boolean doHeader = doHeaderIndicator.equalsIgnoreCase("true");
             result.getAuditEntries().add(
                     makeEntry("Generate Header: " + doHeaderIndicator + " ("
                             + doHeader + ")"));
 
-            /* HELPERS */
+            String author = getConfigValueAsString(ARG_HEADER_AUTHOR, doHeader);
+            String title = getConfigValueAsString(ARG_HEADER_TITLE, doHeader);
+            String contactInfo = getConfigValueAsString(
+                    ARG_HEADER_CONTACT_INFO, doHeader);
+            String organizationName = getConfigValueAsString(
+                    ARG_HEADER_ORG_NAME, doHeader);
+            String notification = getConfigValueAsString(ARG_HEADER_NOTIFS,
+                    doHeader);
+            String payloadOperation = getConfigValueAsString(
+                    ARG_HEADER_PAYLOAD_OP, doHeader);
+            String[] notifications = StringUtils.split(notification, ';');
+
+            Map properties = new HashMap();
+            properties.put("ServiceName", transaction.getRequest().getService()
+                    .getName());
+            properties.put("Arguments", StringUtils.join(transaction
+                    .getRequest().getParameterValues()));
+
+            /*
+             * 
+             * HELPERS
+             */
 
             result.getAuditEntries().add(
                     makeEntry("Validating required helpers..."));
@@ -200,6 +204,14 @@ public class RequestProcessor extends BaseWnosPlugin {
                 throw new RuntimeException("Unable to obtain IdGenerator");
             }
 
+            HeaderDocumentHelper headerHelper = (HeaderDocumentHelper) getServiceFactory()
+                    .makeService(HeaderDocumentHelper.class);
+
+            if (headerHelper == null) {
+                throw new RuntimeException(
+                        "Unable to obtain HeaderDocumentHelper");
+            }
+
             CompressionService compressionService = (CompressionService) getServiceFactory()
                     .makeService(CompressionService.class);
 
@@ -208,20 +220,21 @@ public class RequestProcessor extends BaseWnosPlugin {
                         "Unable to obtain CompressionService");
             }
 
-            /* EXECUTE */
+            /*
+             * 
+             * EXECUTE
+             */
 
             // Data
             result.getAuditEntries().add(makeEntry("Executing request..."));
 
-            String documentId = idGenerator.createId();
-
             String resultFilePath = FilenameUtils.concat(settingService
-                    .getTempDir().getAbsolutePath(), "NEI-"
+                    .getTempDir().getAbsolutePath(), "FRS-"
                     + transaction.getRequest().getService().getName() + "-"
-                    + documentId + ".xml");
+                    + idGenerator.createId() + ".xml");
 
-            new Data().getList(dataSource, resultFilePath, transaction
-                    .getRequest(), org, author, contact, doHeader, documentId);
+            new Data(true).getList(dataSource, resultFilePath, transaction
+                    .getRequest(), result, doHeader);
 
             result.getAuditEntries().add(
                     makeEntry("Result file: " + resultFilePath));
@@ -232,23 +245,61 @@ public class RequestProcessor extends BaseWnosPlugin {
                 throw new RuntimeException("Result file does not exist");
             }
 
-            /* COMPRESSION */
+            /*
+             * 
+             * HEADER
+             */
 
             result.getAuditEntries().add(
-                    makeEntry("Creating and compressing document..."));
+                    makeEntry("Testing for header: " + doHeader));
+
+            if (doHeader) {
+
+                result.getAuditEntries().add(makeEntry("Making header..."));
+                resultingFile = headerHelper.makeHeader(author, title,
+                        transaction.getRequest().getService().getName(),
+                        contactInfo, notifications, organizationName,
+                        properties, "Unclassified", payloadOperation,
+                        resultingFile);
+
+            }
+
+            /*
+             * 
+             * COMPRESSION
+             */
+
+            result.getAuditEntries().add(
+                    makeEntry("Testing for compression: "
+                            + transaction.getRequest().getType()));
+
             Document doc = new Document();
-            doc.setType(CommonContentType.ZIP);
-            String xmlFileName = FilenameUtils.getName(resultingFile
-                    .getAbsolutePath());
-            doc.setDocumentName(xmlFileName + ".zip");
-            resultingFile = compressionService.zip(resultingFile);
+            result.getAuditEntries().add(makeEntry("Creating document..."));
+
+            if (transaction.getRequest().getType() != RequestType.QUERY) {
+
+                result.getAuditEntries().add(
+                        makeEntry("Compressing results..."));
+                resultingFile = compressionService.zip(resultingFile);
+                result.getAuditEntries().add(
+                        makeEntry("Result: " + resultingFile));
+
+                doc.setType(CommonContentType.ZIP);
+
+            } else {
+                doc.setType(CommonContentType.XML);
+            }
+
+            doc.setDocumentName(FilenameUtils.getName(resultingFile
+                    .getAbsolutePath()));
+
             doc.setContent(FileUtils.readFileToByteArray(resultingFile));
+
+            result.getAuditEntries().add(makeEntry("Setting result..."));
 
             result.setPaginatedContentIndicator(new PaginationIndicator(
                     transaction.getRequest().getPaging().getStart(),
                     transaction.getRequest().getPaging().getCount(), true));
-
-            result.getAuditEntries().add(makeEntry("Setting result..."));
 
             result.getDocuments().add(doc);
 
@@ -266,11 +317,56 @@ public class RequestProcessor extends BaseWnosPlugin {
 
             result.getAuditEntries().add(
                     makeEntry("Error while executing: "
-                            + this.getClass().getName() + "Message: "
+                            + this.getClass().getName() + " Message: "
                             + ex.getMessage()));
 
         }
 
         return result;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.windsor.node.plugin.BaseWnosPlugin#getServiceRequestParamSpecs(com
+     * .windsor.node.common.domain.EndpointVersionType)
+     */
+    @Override
+    public List<DataServiceRequestParameter> getServiceRequestParamSpecs(
+            String serviceName) {
+
+        List<DataServiceRequestParameter> list = new ArrayList<DataServiceRequestParameter>();
+
+        if (serviceName.equalsIgnoreCase(Data.SERVICE_CHANGEDATE)) {
+
+            DataServiceRequestParameter param = new DataServiceRequestParameter();
+            param.setName(SERVICE_CHANGEDATE_PARAM_NAME);
+            param.setSortIndex(0);
+
+            list.add(param);
+
+        } else if (serviceName.equalsIgnoreCase(Data.SERVICE_DELETED)) {
+
+            DataServiceRequestParameter param = new DataServiceRequestParameter();
+            param.setName(SERVICE_DELETED_PARAM_NAME);
+            param.setSortIndex(0);
+
+            list.add(param);
+
+        } else if (serviceName.equalsIgnoreCase(Data.SERVICE_NAME)) {
+
+            DataServiceRequestParameter param = new DataServiceRequestParameter();
+            param.setName(SERVICE_NAME_PARAM_NAME);
+            param.setSortIndex(0);
+
+            list.add(param);
+
+        } else {
+
+            list = null;
+        }
+
+        return list;
     }
 }

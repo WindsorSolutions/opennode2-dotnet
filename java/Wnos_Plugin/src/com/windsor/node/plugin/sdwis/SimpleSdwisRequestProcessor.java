@@ -34,9 +34,12 @@ POSSIBILITY OF SUCH DAMAGE.
  */
 package com.windsor.node.plugin.sdwis;
 
+import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
 
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
+import com.windsor.node.common.domain.DataServiceRequestParameter;
 import com.windsor.node.common.domain.NodeMethodType;
 import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.ProcessContentResult;
@@ -51,6 +54,7 @@ import com.windsor.node.service.helper.settings.SettingServiceProvider;
  */
 public class SimpleSdwisRequestProcessor extends BaseWnosPlugin {
 
+    public static final String SERVICE_NAME = "SDWIS";
     public static final String ARG_TARGET_ENDPOINT_URL = "targetEndpointUrl";
 
     public SimpleSdwisRequestProcessor() {
@@ -190,6 +194,12 @@ public class SimpleSdwisRequestProcessor extends BaseWnosPlugin {
         }
 
         return result;
+    }
+
+    @Override
+    public List<DataServiceRequestParameter> getServiceRequestParamSpecs(
+            String serviceName) {
+        return null;
     }
 
 }

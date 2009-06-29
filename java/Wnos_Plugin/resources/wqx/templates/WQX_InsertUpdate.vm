@@ -1,24 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>  
 #set ($totalRecCount = 0)    
 $helper.startStopWatch()
+$helper.print("lastProcessedTimestamp:")$helper.print($lastProcessedTimestamp)
+#if($makeHeader)#if($makeHeader == "true" || $makeHeader == "TRUE")
 <Document Id="$docId" 
           xmlns="http://www.exchangenetwork.net/schema/v1.0/ExchangeNetworkDocument.xsd" 
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<Header>
-		<Author>$authorName</Author>
-		<Organization>$authorOrg</Organization>
-		<Title>WQX Update-Insert</Title>
-		<CreationTime>$helper.getCurrentDateTime()</CreationTime>
-		<Comment>Created by $partnerName Exchange Network Node</Comment>
-		<ContactInfo>$contactInfo</ContactInfo>
-	</Header>
+    <Header>
+        <Author>$authorName</Author>
+        <Organization>$authorOrg</Organization>
+        <Title>WQX Update-Insert</Title>
+        <CreationTime>$helper.getCurrentDateTime()</CreationTime>
+        <ContactInfo>$contactInfo</ContactInfo>
+    </Header>
 	<Payload Operation="Update-Insert">
+#end#end##if($makeHeader)
     	<WQX xmlns="http://www.exchangenetwork.net/schema/wqx/2" 
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:schemaLocation="http://www.exchangenetwork.net/schema/wqx/1 http://www.exchangenetwork.net/schema/wqx/1/0/WQX_WQX_v2.0.xsd">
+             xsi:schemaLocation="http://www.exchangenetwork.net/schema/wqx/2 http://www.exchangenetwork.net/schema/wqx/2/0/WQX_WQX_v2.0.xsd">
 #set($org = $helper.getObject("SELECT recordid, orgid, orgformalname, orgdesc, tribalcode FROM WQX_ORGANIZATION WHERE ORGID = ? ", $orgId))
         <Organization>
-#if($org.get("recordid") || $org.get("orgid") || $org.get("orgformalname") || $org.get("orgdesc") || $org.get("tribalcode")) $helper.setResultingRecordCount("1")
+#if($org.get("recordid") || $org.get("orgid") || $org.get("orgformalname") || $org.get("orgdesc") || $org.get("tribalcode"))
             <OrganizationDescription>
 #if($org.get("orgid"))
                 <OrganizationIdentifier>$org.get("orgid")</OrganizationIdentifier>
@@ -85,7 +87,7 @@ $helper.startStopWatch()
 #end
             </OrganizationAddress>
 #end##foreach($orgAddr in $helper.getData
-#foreach($project in $helper.getData("SELECT recordid, projectid, projectname, projectdesc, samplingdesigntypecode, qappapprovedind, qappapprovalagencyname FROM WQX_PROJECT P WHERE PARENTID = ? AND WQXUPDATEDATE >= ? ", [$org.get("recordid"), $lastPendingTimestamp]))
+#foreach($project in $helper.getData("SELECT recordid, projectid, projectname, projectdesc, samplingdesigntypecode, qappapprovedind, qappapprovalagencyname FROM WQX_PROJECT P WHERE PARENTID = ? AND WQXUPDATEDATE >= ? ", [$org.get("recordid"), $lastProcessedTimestamp]))
             <Project>
 #if($project.get("projectid"))
                 <ProjectIdentifier>$project.get("projectid")</ProjectIdentifier>
@@ -151,7 +153,7 @@ $helper.startStopWatch()
 #end##foreach($project in $helper.getData
 $helper.print("getting MonitoringLocations...")
 $helper.printElapsedTime()    
-#foreach($monitoringLoc in $helper.getData("SELECT recordid, parentid, monitoringlocationid, monlocname, monloctype, monlocdesc, huceightdigitcode, huctwelvedigitcode, triballandind, triballandname, latitudemeasure, longitudemeasure, sourcemapscale, horizaccuracymeasure, horizaccuracymeasureunit, horizcollmethod, horizcoordrefsysdatum, verticalmeasure, verticalmeasureunit, verticalcollmethod, verticalcoordrefsysdatum, countrycode, statecode, countycode, welltype, aquifername, formationtype, wellholedepthmeasure, wellholedepthmeasureunit, wqxupdatedate FROM WQX_MONITORINGLOCATION WHERE PARENTID = ?  AND WQXUPDATEDATE >= ? ", [$org.get("recordid"), $lastPendingTimestamp]))
+#foreach($monitoringLoc in $helper.getData("SELECT recordid, parentid, monitoringlocationid, monlocname, monloctype, monlocdesc, huceightdigitcode, huctwelvedigitcode, triballandind, triballandname, latitudemeasure, longitudemeasure, sourcemapscale, horizaccuracymeasure, horizaccuracymeasureunit, horizcollmethod, horizcoordrefsysdatum, verticalmeasure, verticalmeasureunit, verticalcollmethod, verticalcoordrefsysdatum, countrycode, statecode, countycode, welltype, aquifername, formationtype, wellholedepthmeasure, wellholedepthmeasureunit, wqxupdatedate FROM WQX_MONITORINGLOCATION WHERE PARENTID = ?  AND WQXUPDATEDATE >= ? ", [$org.get("recordid"), $lastProcessedTimestamp]))
             <MonitoringLocation>
 #if($monitoringLoc.get("monitoringlocationid") || $monitoringLoc.get("monlocname") || $monitoringLoc.get("monloctype") || $monitoringLoc.get("monlocdesc") || $monitoringLoc.get("huceightdigitcode") || $monitoringLoc.get("huctwelvedigitcode") || $monitoringLoc.get("triballandind") || $monitoringLoc.get("triballandname") || $monitoringLoc.get("latitudemeasure") || $monitoringLoc.get("longitudemeasure") || $monitoringLoc.get("sourcemapscale") || $monitoringLoc.get("horizaccuracymeasure") || $monitoringLoc.get("horizaccuracymeasureunit") || $monitoringLoc.get("horizcollmethod") || $monitoringLoc.get("horizcoordrefsysdatum") || $monitoringLoc.get("verticalmeasure") || $monitoringLoc.get("verticalmeasureunit") || $monitoringLoc.get("verticalcollmethod") || $monitoringLoc.get("verticalcoordrefsysdatum") || $monitoringLoc.get("countrycode") || $monitoringLoc.get("statecode") || $monitoringLoc.get("countycode") || $monitoringLoc.get("welltype") || $monitoringLoc.get("aquifername") || $monitoringLoc.get("formationtype") || $monitoringLoc.get("wellholedepthmeasure") || $monitoringLoc.get("wellholedepthmeasureunit"))
                 <MonitoringLocationIdentity>
@@ -282,10 +284,10 @@ $helper.printElapsedTime()
 #end##foreach($monLoc in $helper.getData
 $helper.print("Done with MonitoringLocations, getting BiologicalHabitatIndexes...")
 $helper.printElapsedTime()
-#foreach($habitatIndex in $helper.getData("SELECT indexid, indextypeid, indextypeidcontext, indextypename, resourcetitle, resourcedate, resourceid, indextypescale, indexscore, indexcalculateddate, monlocid FROM WQX_BIOLOGICALHABITATINDEX WHERE PARENTID = ? AND WQXUPDATEDATE >= ? ", [$org.get("recordid"), $lastPendingTimestamp]))
+#foreach($habitatIndex in $helper.getData("SELECT indexid, indextypeid, indextypeidcontext, indextypename, resourcetitle, resourcedate, resourceid, indextypescale, indexscore, indexcalculateddate, monlocid FROM WQX_BIOLOGICALHABITATINDEX WHERE PARENTID = ? AND WQXUPDATEDATE >= ? ", [$org.get("recordid"), $lastProcessedTimestamp]))
             <BiologicalHabitatIndex>
 #if($habitatIndex.get("indexid"))
-                <IndexIdentifier>1</IndexIdentifier>
+                <IndexIdentifier>$habitatIndex.get("indexid")</IndexIdentifier>
 #end
 #if($habitatIndex.get("indextypeid") || $habitatIndex.get("indextypeidcontext") || $habitatIndex.get("indextypename") || $habitatIndex.get("resourcetitle") || $habitatIndex.get("resourcedate") || $habitatIndex.get("resourceid") || $habitatIndex.get("indextypescale"))
                 <IndexType>
@@ -323,7 +325,7 @@ $helper.printElapsedTime()
 #end##foreach($habitatIndex in $helper.getData
 $helper.print("Done with BiologicalHabitatIndexes, getting Activities...")
 $helper.printElapsedTime()
-#foreach($activity in $helper.getData("SELECT recordid, activityid, activitytypecode, activitymedia, activitymediasubdivision, activitystartdate, starttime, starttimezone, activityenddate, endtime, endtimezone, relativedepth, depthheightmeasure, depthheightmeasureunit, topdepthheightmeasure, topdepthheightmeasureunit, bottomdepthheightmeasure, bottomdepthheightmeasureunit, depthaltituderefpoint, monlocid, activitycomment, latitudemeasure, longitudemeasure, sourcemapscale, horizaccuracymeasure, horizaccuracymeasureunit, horizcollmethod, horizcoordrefsysdatum, bioactivityassemblagesampd, biohabcolldurationmeasure, biohabcolldurationmeasureunit, biohabreachlengthmeasure, biohabreachlengthmeasureunit, biohabreachwidthmeasure, biohabreachwidthmeasureunit, biohabpasscount, biohabnettype, biohabnetsurfaceareameasure, biohabnetsurfacemeasureunit, biohabnetmeshsizemeasure, biohabnetmeshmeasureunit, biohabnetboatspeedmeasure, biohabnetboatspeedmeasureunit, biohabnetcurrspeedmeasure, biohabnetcurrspeedmeasureunit, bioactivitytoxicitytesttype, sampcollmethodid, sampcollmethodidcontext, sampcollmethod, sampcollmethodqualifier, sampcollmethoddesc, sampcollequipment, sampcollequipmentcomment, sampprepid, sampprepidcontext, sampprep, sampprepqualifiertype, sampprepdesc, sampprepconttype, sampprepcontcolor, sampprepcontchempreservused, sampprepcontthermalpreservused, sampprepcontsamptransstordesc, resultcount from WQX_ACTIVITY WHERE PARENTID = ?  AND WQXUPDATEDATE >= ? ", [$org.get("recordid"), $lastPendingTimestamp]))
+#foreach($activity in $helper.getData("SELECT recordid, activityid, activitytypecode, activitymedia, activitymediasubdivision, activitystartdate, starttime, starttimezone, activityenddate, endtime, endtimezone, relativedepth, depthheightmeasure, depthheightmeasureunit, topdepthheightmeasure, topdepthheightmeasureunit, bottomdepthheightmeasure, bottomdepthheightmeasureunit, depthaltituderefpoint, monlocid, activitycomment, latitudemeasure, longitudemeasure, sourcemapscale, horizaccuracymeasure, horizaccuracymeasureunit, horizcollmethod, horizcoordrefsysdatum, bioactivityassemblagesampd, biohabcolldurationmeasure, biohabcolldurationmeasureunit, biohabreachlengthmeasure, biohabreachlengthmeasureunit, biohabreachwidthmeasure, biohabreachwidthmeasureunit, biohabpasscount, biohabnettype, biohabnetsurfaceareameasure, biohabnetsurfacemeasureunit, biohabnetmeshsizemeasure, biohabnetmeshmeasureunit, biohabnetboatspeedmeasure, biohabnetboatspeedmeasureunit, biohabnetcurrspeedmeasure, biohabnetcurrspeedmeasureunit, bioactivitytoxicitytesttype, sampcollmethodid, sampcollmethodidcontext, sampcollmethod, sampcollmethodqualifier, sampcollmethoddesc, sampcollequipment, sampcollequipmentcomment, sampprepid, sampprepidcontext, sampprep, sampprepqualifiertype, sampprepdesc, sampprepconttype, sampprepcontcolor, sampprepcontchempreservused, sampprepcontthermalpreservused, sampprepcontsamptransstordesc, resultcount from WQX_ACTIVITY WHERE PARENTID = ?  AND WQXUPDATEDATE >= ? ", [$org.get("recordid"), $lastProcessedTimestamp]))
         <Activity>
 #if($activity.get("activityid") || $activity.get("activitytypecode") || $activity.get("activitymedia") || $activity.get("activitymediasubdivision") || $activity.get("activitystartdate") || $activity.get("starttime") || $activity.get("starttimezone") || $activity.get("activityenddate") || $activity.get("endtime") || $activity.get("endtimezone") || $activity.get("relativedepth") || $activity.get("depthheightmeasure") || $activity.get("depthheightmeasureunit") || $activity.get("topdepthheightmeasure") || $activity.get("topdepthheightmeasureunit") || $activity.get("bottomdepthheightmeasure") || $activity.get("bottomdepthheightmeasureunit") || $activity.get("depthaltituderefpoint") || $activity.get("monlocid"))
             <ActivityDescription>
@@ -342,10 +344,10 @@ $helper.printElapsedTime()
 #if($activity.get("activitystartdate"))
                 <ActivityStartDate>$helper.toXmlDate($activity.get("activitystartdate"))</ActivityStartDate>
 #end
-#if($activity.get("starttime") || $activity.get("starttimezone"))
+#if($activity.get("starttime") && $activity.get("starttimezone"))
                 <ActivityStartTime>
 #if($activity.get("starttime"))
-                    <Time>$activity.get("starttime")</Time>
+                    <Time>$helper.amPmStringToXmlTime($activity.get("starttime"))</Time>
 #end
 #if($activity.get("starttimezone"))
                     <TimeZoneCode>$activity.get("starttimezone")</TimeZoneCode>
@@ -355,10 +357,10 @@ $helper.printElapsedTime()
 #if($activity.get("activityenddate"))
                 <ActivityEndDate>$helper.toXmlDate($activity.get("activityenddate"))</ActivityEndDate>
 #end
-#if($activity.get("endtime") || $activity.get("endtimezone"))
+#if($activity.get("endtime") && $activity.get("endtimezone"))
                 <ActivityEndTime>
 #if($activity.get("endtime"))
-                    <Time>$activity.get("endtime")</Time>
+                    <Time>$helper.amPmStringToXmlTime($activity.get("endtime"))</Time>
 #end
 #if($activity.get("endtimezone"))
                     <TimeZoneCode>$activity.get("endtimezone")</TimeZoneCode>
@@ -906,10 +908,10 @@ $helper.printElapsedTime()
 #if($result.get("labanalysisstartdate"))
                     <AnalysisStartDate>$helper.toXmlDate($result.get("labanalysisstartdate"))</AnalysisStartDate>
 #end
-#if($result.get("labanalysisstarttime") || $result.get("labanalysisstarttimezonecode"))
+#if($result.get("labanalysisstarttime") && $result.get("labanalysisstarttimezonecode"))
                     <AnalysisStartTime>
 #if($result.get("labanalysisstarttime"))
-                        <Time>$result.get("labanalysisstarttime")</Time>
+                        <Time>$helper.amPmStringToXmlTime($result.get("labanalysisstarttime"))</Time>
 #end
 #if($result.get("labanalysisstarttimezonecode"))
                         <TimeZoneCode>$result.get("labanalysisstarttimezonecode")</TimeZoneCode>
@@ -919,10 +921,10 @@ $helper.printElapsedTime()
 #if($result.get("labanalysisenddate"))
                     <AnalysisEndDate>$helper.toXmlDate($result.get("labanalysisenddate"))</AnalysisEndDate>
 #end
-#if($result.get("labanalysisendtime") || $result.get("labanalysisendtimezonecode"))
+#if($result.get("labanalysisendtime") && $result.get("labanalysisendtimezonecode"))
                     <AnalysisEndTime>
 #if($result.get("labanalysisendtime"))
-                        <Time>$result.get("labanalysisendtime")</Time>
+                        <Time>$helper.amPmStringToXmlTime($result.get("labanalysisendtime"))</Time>
 #end
 #if($result.get("labanalysisendtimezonecode"))
                         <TimeZoneCode>$result.get("labanalysisendtimezonecode")</TimeZoneCode>
@@ -934,8 +936,9 @@ $helper.printElapsedTime()
 #end
 #foreach($quantLimit in $helper.getData("SELECT detectquantlimittype, detectquantlimitmeasure, detectquantlimitmeasunitcode FROM WQX_RESULTDETECTQUANTLIMIT WHERE PARENTID = ? ", $result.get("recordid"))) 
                     <ResultDetectionQuantitationLimit>
+#if($quantLimit.get("detectquantlimittype") || $quantLimit.get("detectquantlimitmeasure") || $quantLimit.get("detectquantlimitmeasunitcode"))
 #if($quantLimit.get("detectquantlimittype"))
-                        <DetectionQuantitationLimit>$quantLimit.get("detectquantlimittype")</DetectionQuantitationLimit>
+                        <DetectionQuantitationLimitTypeName>$quantLimit.get("detectquantlimittype")</DetectionQuantitationLimitTypeName>
 #end
 #if($quantLimit.get("detectquantlimitmeasure") || $quantLimit.get("detectquantlimitmeasunitcode"))
                         <DetectionQuantitationLimitMeasure>
@@ -946,7 +949,7 @@ $helper.printElapsedTime()
                             <MeasureUnitCode>$quantLimit.get("detectquantlimitmeasunitcode")</MeasureUnitCode>
 #end
                         </DetectionQuantitationLimitMeasure>
-#end##if(... || ...)
+#end#end##if(... || ...)
                     </ResultDetectionQuantitationLimit>
 #end##foreach($quantLimit in $helper.getData
 #if($result.get("labaccind"))
@@ -987,10 +990,10 @@ $helper.printElapsedTime()
 #if($samplePrep.get("prepstartdate"))
                     <PreparationStartDate>$helper.toXmlDate($samplePrep.get("prepstartdate"))</PreparationStartDate>
 #end
-#if($samplePrep.get("prepstarttime") || $samplePrep.get("prepstarttimezonecode"))
+#if($samplePrep.get("prepstarttime") && $samplePrep.get("prepstarttimezonecode"))
                     <PreparationStartTime>
 #if($samplePrep.get("prepstarttime"))
-                        <Time>$samplePrep.get("prepstarttime")</Time>
+                        <Time>$helper.amPmStringToXmlTime($samplePrep.get("prepstarttime"))</Time>
 #end
 #if($samplePrep.get("prepstarttimezonecode"))
                         <TimeZoneCode>$samplePrep.get("prepstarttimezonecode")</TimeZoneCode>
@@ -1000,9 +1003,9 @@ $helper.printElapsedTime()
 #if($samplePrep.get("prependdate"))
                     <PreparationEndDate>$helper.toXmlDate($samplePrep.get("prependdate"))</PreparationEndDate>
 #end
-#if($samplePrep.get("prependtime") || $samplePrep.get("prependtimezonecode"))
+#if($samplePrep.get("prependtime") && $samplePrep.get("prependtimezonecode"))
                     <PreparationEndTime>
-                        <Time>$samplePrep.get("prependtime")</Time>
+                        <Time>$helper.amPmStringToXmlTime($samplePrep.get("prependtime"))</Time>
                         <TimeZoneCode>$samplePrep.get("prependtimezonecode")</TimeZoneCode>
                     </PreparationEndTime>
 #end##if(... || ...)
@@ -1017,7 +1020,7 @@ $helper.printElapsedTime()
 #end##foreach($activity in $helper.getData
 $helper.print("done with Results and Activities, getting ActivityGroups...")
 $helper.printElapsedTime()
-#foreach($activityGroup in $helper.getData("SELECT activitygroupid, activitygroupname, activitygrouptypecode, activityid FROM WQX_ACTIVITYGROUP WHERE PARENTID = ?  AND WQXUPDATEDATE >= ? ", [$org.get("recordid"), $lastPendingTimestamp]))
+#foreach($activityGroup in $helper.getData("SELECT activitygroupid, activitygroupname, activitygrouptypecode, activityid FROM WQX_ACTIVITYGROUP WHERE PARENTID = ?  AND WQXUPDATEDATE >= ? ", [$org.get("recordid"), $lastProcessedTimestamp]))
         <ActivityGroup>
 #if($activityGroup.get("activitygroupid"))
             <ActivityGroupIdentifier>$activityGroup.get("activitygroupid")</ActivityGroupIdentifier>
@@ -1035,7 +1038,9 @@ $helper.printElapsedTime()
 #end##foreach($activityGroup in $helper.getData
         </Organization>
         </WQX>
+#if($makeHeader)#if($makeHeader == "true" || $makeHeader == "TRUE")
     </Payload>
 </Document>
+#end#end##if($makeHeader)
 $helper.print("Template merge complete! Total elapsed time:")
 $helper.printElapsedTime()
