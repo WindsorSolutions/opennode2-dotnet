@@ -1,0 +1,1 @@
+ALTER TABLE NService ADD PublishFlags VARCHAR(50) NULL
