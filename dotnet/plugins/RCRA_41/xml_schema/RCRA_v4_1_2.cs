@@ -4,189 +4,235 @@ using Windsor.Commons.XsdOrm;
 
 namespace Windsor.Node2008.WNOSPlugin.RCRA_41
 {
+    [DefaultDecimalPrecision(14,6)]
+
+    // CitationDataType
+    [AppliedAttribute(typeof(CitationDataType), "CitationNameSequenceNumber", typeof(ColumnAttribute), DbType.Int32)]
+    [AppliedAttribute(typeof(CitationDataType), "Notes", typeof(ColumnAttribute), 2000)]
+
+    // EnforcementActionDataType
+    [AppliedAttribute(typeof(EnforcementActionDataType), "ConsentAgreementFinalOrderSequenceNumber", typeof(ColumnAttribute), DbType.Int32)]
+    [AppliedAttribute(typeof(EnforcementActionDataType), "Notes", typeof(ColumnAttribute), 2000)]
+
+    // EvaluationDataType
+    [AppliedAttribute(typeof(EvaluationDataType), "Notes", typeof(ColumnAttribute), 2000)]
+
+    // EvaluationCommitmentDataType
+    [AppliedAttribute(typeof(EvaluationCommitmentDataType), "CommitmentSequenceNumber", typeof(ColumnAttribute), DbType.Int32)]
+
+    // EvaluationViolationDataType
+    [AppliedAttribute(typeof(EvaluationViolationDataType), "ViolationSequenceNumber", typeof(ColumnAttribute), DbType.Int32)]
+
+    // MediaDataType
+    [AppliedAttribute(typeof(MediaDataType), "Notes", typeof(ColumnAttribute), 2000)]
+
+    // MilestoneDataType
+    [AppliedAttribute(typeof(MilestoneDataType), "MilestoneSequenceNumber", typeof(ColumnAttribute), DbType.Int32)]
+    [AppliedAttribute(typeof(MilestoneDataType), "Notes", typeof(ColumnAttribute), 2000)]
+
+    // PenaltyDataType
+    [AppliedAttribute(typeof(PenaltyDataType), "Notes", typeof(ColumnAttribute), 2000)]
+
+    // PaymentDataType
+    [AppliedAttribute(typeof(PaymentDataType), "PaymentSequenceNumber", typeof(ColumnAttribute), DbType.Int32)]
+    [AppliedAttribute(typeof(PaymentDataType), "Notes", typeof(ColumnAttribute), 2000)]
+
+    // RequestDataType
+    [AppliedAttribute(typeof(RequestDataType), "RequestSequenceNumber", typeof(ColumnAttribute), DbType.Int32)]
+    [AppliedAttribute(typeof(RequestDataType), "Notes", typeof(ColumnAttribute), 2000)]
+
+    // SupplementalEnvironmentalProjectDataType
+    [AppliedAttribute(typeof(SupplementalEnvironmentalProjectDataType), "SEPSequenceNumber", typeof(ColumnAttribute), DbType.Int32)]
+    [AppliedAttribute(typeof(SupplementalEnvironmentalProjectDataType), "Notes", typeof(ColumnAttribute), 2000)]
+
+    // ViolationDataType
+    [AppliedAttribute(typeof(ViolationDataType), "ViolationSequenceNumber", typeof(ColumnAttribute), DbType.Int32)]
+    [AppliedAttribute(typeof(ViolationDataType), "Notes", typeof(ColumnAttribute), 2000)]
+
+    // ViolationEnforcementDataType
+    [AppliedAttribute(typeof(ViolationEnforcementDataType), "ViolationSequenceNumber", typeof(ColumnAttribute), DbType.Int32)]
+
+    [ShortenNamesByRemovingVowelsFirstAttribute]
+
+    [Table("RCRA_CME_HAZRD_WASTE_CME_SUBM")]
     public partial class HazardousWasteCMESubmissionDataType
     {
         [System.Xml.Serialization.XmlIgnore]
         [GuidPrimaryKey]
-        public string HazardousWasteCMESubmissionId;
+        public string _PK;
     }
-
+    [Table("RCRA_CME_FAC_SUBM")]
     public partial class CMEFacilitySubmissionDataType
     {
         [System.Xml.Serialization.XmlIgnore]
         [GuidPrimaryKey]
-        public string CMEFacilitySubmissionId;
+        public string _PK;
 
         [System.Xml.Serialization.XmlIgnore]
         [GuidForeignKey]
-        public string HazardousWasteCMESubmissionId;
+        public string _FK;
     }
-
+    [Table("RCRA_CME_ENFRC_ACT")]
     public partial class EnforcementActionDataType
     {
         [System.Xml.Serialization.XmlIgnore]
         [GuidPrimaryKey]
-        public string EnforcementActionId;
+        public string _PK;
 
         [System.Xml.Serialization.XmlIgnore]
         [GuidForeignKey]
-        public string CMEFacilitySubmissionId;
+        public string _FK;
     }
-
+    [Table("RCRA_CME_EVAL")]
     public partial class EvaluationDataType
     {
         [System.Xml.Serialization.XmlIgnore]
         [GuidPrimaryKey]
-        public string EvaluationId;
+        public string _PK;
 
         [System.Xml.Serialization.XmlIgnore]
         [GuidForeignKey]
-        public string CMEFacilitySubmissionId;
+        public string _FK;
     }
-
+    [Table("RCRA_CME_VIOL")]
     public partial class ViolationDataType
     {
         [System.Xml.Serialization.XmlIgnore]
         [GuidPrimaryKey]
-        public string ViolationId;
+        public string _PK;
 
         [System.Xml.Serialization.XmlIgnore]
         [GuidForeignKey]
-        public string CMEFacilitySubmissionId;
+        public string _FK;
     }
-
+    [Table("RCRA_CME_CSNY_DATE")]
     public partial class CSNYDateDataType
     {
         [System.Xml.Serialization.XmlIgnore]
         [GuidPrimaryKey]
-        public string CSNYDateId;
+        public string _PK;
 
         [System.Xml.Serialization.XmlIgnore]
         [GuidForeignKey]
-        public string EnforcementActionId;
+        public string _FK;
     }
-
+    [Table("RCRA_CME_PNLTY")]
     public partial class PenaltyDataType
     {
         [System.Xml.Serialization.XmlIgnore]
         [GuidPrimaryKey]
-        public string PenaltyId;
+        public string _PK;
 
         [System.Xml.Serialization.XmlIgnore]
         [GuidForeignKey]
-        public string EnforcementActionId;
+        public string _FK;
     }
-
+    [Table("RCRA_CME_MILESTONE")]
     public partial class MilestoneDataType
     {
         [System.Xml.Serialization.XmlIgnore]
         [GuidPrimaryKey]
-        public string MilestoneId;
+        public string _PK;
 
         [System.Xml.Serialization.XmlIgnore]
         [GuidForeignKey]
-        public string EnforcementActionId;
+        public string _FK;
     }
-
+    [Table("RCRA_CME_VIOL_ENFRC")]
     public partial class ViolationEnforcementDataType
     {
         [System.Xml.Serialization.XmlIgnore]
         [GuidPrimaryKey]
-        public string ViolationEnforcementId;
+        public string _PK;
 
         [System.Xml.Serialization.XmlIgnore]
         [GuidForeignKey]
-        public string EnforcementActionId;
+        public string _FK;
     }
-
+    [Table("RCRA_CME_SUPP_ENVR_PRJT")]
     public partial class SupplementalEnvironmentalProjectDataType
     {
         [System.Xml.Serialization.XmlIgnore]
         [GuidPrimaryKey]
-        public string SupplementalEnvironmentalProjectId;
+        public string _PK;
 
         [System.Xml.Serialization.XmlIgnore]
         [GuidForeignKey]
-        public string EnforcementActionId;
+        public string _FK;
     }
-
+    [Table("RCRA_CME_MEDIA")]
     public partial class MediaDataType
     {
         [System.Xml.Serialization.XmlIgnore]
         [GuidPrimaryKey]
-        public string MediaId;
+        public string _PK;
 
         [System.Xml.Serialization.XmlIgnore]
         [GuidForeignKey]
-        public string EnforcementActionId;
+        public string _FK;
     }
-
+    [Table("RCRA_CME_RQST")]
     public partial class RequestDataType
     {
         [System.Xml.Serialization.XmlIgnore]
         [GuidPrimaryKey]
-        public string RequestId;
+        public string _PK;
 
         [System.Xml.Serialization.XmlIgnore]
         [GuidForeignKey]
-        public string EvaluationId;
+        public string _FK;
     }
-
+    [Table("RCRA_CME_EVAL_COMMIT")]
     public partial class EvaluationCommitmentDataType
     {
         [System.Xml.Serialization.XmlIgnore]
         [GuidPrimaryKey]
-        public string EvaluationCommitmentId;
+        public string _PK;
 
         [System.Xml.Serialization.XmlIgnore]
         [GuidForeignKey]
-        public string EvaluationId;
+        public string _FK;
     }
-
+    [Table("RCRA_CME_EVAL_VIOL")]
     public partial class EvaluationViolationDataType
     {
         [System.Xml.Serialization.XmlIgnore]
         [GuidPrimaryKey]
-        public string EvaluationViolationId;
+        public string _PK;
 
         [System.Xml.Serialization.XmlIgnore]
         [GuidForeignKey]
-        public string EvaluationId;
+        public string _FK;
     }
-
+    [Table("RCRA_CME_CITATION")]
     public partial class CitationDataType
     {
         [System.Xml.Serialization.XmlIgnore]
         [GuidPrimaryKey]
-        public string CitationId;
+        public string _PK;
 
         [System.Xml.Serialization.XmlIgnore]
         [GuidForeignKey]
-        public string ViolationId;
+        public string _FK;
     }
-
+    [Table("RCRA_CME_PYMT")]
     public partial class PaymentDataType
     {
         [System.Xml.Serialization.XmlIgnore]
         [GuidPrimaryKey]
-        public string PaymentId;
+        public string _PK;
 
         [System.Xml.Serialization.XmlIgnore]
         [GuidForeignKey]
-        public string PenaltyId;
+        public string _FK;
     }
-
-
-
-
-
 
 
     [DefaultTableNamePrefixAttribute("")]
     [DefaultStringDbValues(DbType.AnsiString, 255)]
 
     //RCRA_HD_CERTIFICATION
-    [AppliedAttribute(typeof(CertificationDataType), "TransactionCode", typeof(ColumnAttribute), "TRANSACTION_CODE", DbType.AnsiStringFixedLength, 1, false)]
+    [AppliedAttribute(typeof(CertificationDataType), "TransactionCode", typeof(ColumnAttribute), "TRANSACTION_CODE", DbType.AnsiStringFixedLength, 1)]
     [AppliedAttribute(typeof(CertificationDataType), "CertificationSequenceNumber", typeof(ColumnAttribute), "CERT_SEQ", DbType.Int32, false)]
     [AppliedAttribute(typeof(CertificationDataType), "SignedDate", typeof(ColumnAttribute), "CERT_SIGNED_DATE", DbType.AnsiString, 10)]
     [AppliedAttribute(typeof(CertificationDataType), "IndividualTitleText", typeof(ColumnAttribute), "CERT_TITLE", 45)]
@@ -196,7 +242,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_41
     [AppliedAttribute(typeof(CertificationDataType), "CertificationSupplementalInformationText", typeof(ColumnAttribute), "NOTES", 245)]
 
     //RCRA_HD_ENV_PERMIT
-    [AppliedAttribute(typeof(EnvironmentalPermitDataType), "TransactionCode", typeof(ColumnAttribute), "TRANSACTION_CODE", DbType.AnsiStringFixedLength, 1, false)]
+    [AppliedAttribute(typeof(EnvironmentalPermitDataType), "TransactionCode", typeof(ColumnAttribute), "TRANSACTION_CODE", DbType.AnsiStringFixedLength, 1)]
     [AppliedAttribute(typeof(EnvironmentalPermitDataType), "EnvironmentalPermitID", typeof(ColumnAttribute), "ENV_PERMIT_NUMBER", 13, false)]
     [AppliedAttribute(typeof(EnvironmentalPermitDataType), "EnvironmentalPermitOwnerName", typeof(ColumnAttribute), "ENV_PERMIT_OWNER", DbType.AnsiStringFixedLength, 2)]
     [AppliedAttribute(typeof(EnvironmentalPermitDataType), "EnvironmentalPermitTypeCode", typeof(ColumnAttribute), "ENV_PERMIT_TYPE", DbType.AnsiStringFixedLength, 1)]
@@ -204,7 +250,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_41
     [AppliedAttribute(typeof(EnvironmentalPermitDataType), "EnvironmentalPermitSupplementalInformationText", typeof(ColumnAttribute), "NOTES", 240)]
 
     //RCRA_HD_HANDLER
-    [AppliedAttribute(typeof(HandlerDataType), "TransactionCode", typeof(ColumnAttribute), "TRANSACTION_CODE", DbType.AnsiStringFixedLength, 1, false)]
+    [AppliedAttribute(typeof(HandlerDataType), "TransactionCode", typeof(ColumnAttribute), "TRANSACTION_CODE", DbType.AnsiStringFixedLength, 1)]
     [AppliedAttribute(typeof(HandlerDataType), "ActivityLocationCode", typeof(ColumnAttribute), "ACTIVITY_LOCATION", DbType.AnsiStringFixedLength, 2, false)]
     [AppliedAttribute(typeof(HandlerDataType), "SourceTypeCode", typeof(ColumnAttribute), "SOURCE_TYPE", DbType.AnsiStringFixedLength, 1, false)]
     [AppliedAttribute(typeof(HandlerDataType), "SourceRecordSequenceNumber", typeof(ColumnAttribute), "SEQ_NUMBER", DbType.Int32, false)]
@@ -275,14 +321,14 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_41
     [AppliedAttribute(typeof(HandlerDataType), "AccessibilityCode", typeof(ColumnAttribute), "ACCESSIBILITY", DbType.AnsiStringFixedLength, 1)]
     [AppliedAttribute(typeof(HandlerDataType), "CountyCode", typeof(ColumnAttribute), "COUNTY_CODE", 5)]
     [AppliedAttribute(typeof(HandlerDataType), "CountyCodeOwner", typeof(ColumnAttribute), "COUNTY_CODE_OWNER", DbType.AnsiStringFixedLength, 2)]
-    [AppliedPathAttribute("Handler.StateWasteGenerator.WasteGeneratorOwnerName", typeof(ColumnAttribute), "FED_WASTE_GENERATOR_OWNER", DbType.AnsiStringFixedLength, 2)]
-    [AppliedPathAttribute("Handler.StateWasteGenerator.WasteGeneratorStatusCode", typeof(ColumnAttribute), "FED_WASTE_GENERATOR", DbType.AnsiStringFixedLength, 1)]
-    [AppliedPathAttribute("Handler.FederalWasteGenerator.WasteGeneratorOwnerName", typeof(ColumnAttribute), "STATE_WASTE_GENERATOR_OWNER", DbType.AnsiStringFixedLength, 2)]
-    [AppliedPathAttribute("Handler.FederalWasteGenerator.WasteGeneratorStatusCode", typeof(ColumnAttribute), "STATE_WASTE_GENERATOR", DbType.AnsiStringFixedLength, 1)]
+    [AppliedPathAttribute("Handler.StateWasteGenerator.WasteGeneratorOwnerName", typeof(ColumnAttribute), "STATE_WASTE_GENERATOR_OWNER", DbType.AnsiStringFixedLength, 2)]
+    [AppliedPathAttribute("Handler.StateWasteGenerator.WasteGeneratorStatusCode", typeof(ColumnAttribute), "STATE_WASTE_GENERATOR", DbType.AnsiStringFixedLength, 1)]
+    [AppliedPathAttribute("Handler.FederalWasteGenerator.WasteGeneratorOwnerName", typeof(ColumnAttribute), "FED_WASTE_GENERATOR_OWNER", DbType.AnsiStringFixedLength, 2)]
+    [AppliedPathAttribute("Handler.FederalWasteGenerator.WasteGeneratorStatusCode", typeof(ColumnAttribute), "FED_WASTE_GENERATOR", DbType.AnsiStringFixedLength, 1)]
     [AppliedAttribute(typeof(HandlerDataType), "HandlerSupplementalInformationText", typeof(ColumnAttribute), "NOTES", 2000)]
 
     //RCRA_HD_HBASIC
-    [AppliedAttribute(typeof(FacilitySubmissionDataType), "TransactionCode", typeof(ColumnAttribute), "TRANSACTION_CODE", DbType.AnsiStringFixedLength, 1, false)]
+    [AppliedAttribute(typeof(FacilitySubmissionDataType), "TransactionCode", typeof(ColumnAttribute), "TRANSACTION_CODE", DbType.AnsiStringFixedLength, 1)]
     [AppliedAttribute(typeof(FacilitySubmissionDataType), "HandlerID", typeof(ColumnAttribute), "HANDLER_ID", 12)]
     [AppliedAttribute(typeof(FacilitySubmissionDataType), "PublicUseExtractIndicator", typeof(ColumnAttribute), "EXTRACT_FLAG", DbType.AnsiStringFixedLength, 1)]
     [AppliedAttribute(typeof(FacilitySubmissionDataType), "FacilityRegistryID", typeof(ColumnAttribute), "FACILITY_IDENTIFIER", 12)]
@@ -290,14 +336,14 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_41
     [AppliedAttribute(typeof(FacilitySubmissionDataType), "LastUpdateDate", typeof(ColumnAttribute), "LAST_UPDATE_DATE", DbType.Binary, 8)]
 
     //RCRA_HD_NAICS
-    [AppliedAttribute(typeof(NAICSIdentityDataType), "TransactionCode", typeof(ColumnAttribute), "TRANSACTION_CODE", DbType.AnsiStringFixedLength, 1, false)]
+    [AppliedAttribute(typeof(NAICSIdentityDataType), "TransactionCode", typeof(ColumnAttribute), "TRANSACTION_CODE", DbType.AnsiStringFixedLength, 1)]
     [AppliedAttribute(typeof(NAICSIdentityDataType), "NAICSSequenceNumber", typeof(ColumnAttribute), "NAICS_SEQ", DbType.Int32, false)]
     [AppliedAttribute(typeof(NAICSIdentityDataType), "NAICSOwnerCode", typeof(ColumnAttribute), "NAICS_OWNER", DbType.AnsiStringFixedLength, 2)]
     [AppliedAttribute(typeof(NAICSIdentityDataType), "NAICSCode", typeof(ColumnAttribute), "NAICS_CODE", 6)]
     [AppliedAttribute(typeof(NAICSIdentityDataType), "NAICSSupplementalInformationText", typeof(ColumnAttribute), "NOTES", 240)]
 
     //RCRA_HD_OTHER_ID
-    [AppliedAttribute(typeof(OtherIDDataType), "TransactionCode", typeof(ColumnAttribute), "TRANSACTION_CODE", DbType.AnsiStringFixedLength, 1, false)]
+    [AppliedAttribute(typeof(OtherIDDataType), "TransactionCode", typeof(ColumnAttribute), "TRANSACTION_CODE", DbType.AnsiStringFixedLength, 1)]
     [AppliedAttribute(typeof(OtherIDDataType), "OtherHandlerID", typeof(ColumnAttribute), "OTHER_ID", 12)]
     [AppliedAttribute(typeof(OtherIDDataType), "RelationshipOwnerName", typeof(ColumnAttribute), "RELATIONSHIP_OWNER", DbType.AnsiStringFixedLength, 2)]
     [AppliedAttribute(typeof(OtherIDDataType), "RelationshipTypeCode", typeof(ColumnAttribute), "RELATIONSHIP_TYPE", DbType.AnsiStringFixedLength, 1)]
@@ -305,7 +351,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_41
     [AppliedAttribute(typeof(OtherIDDataType), "OtherIDSupplementalInformationText", typeof(ColumnAttribute), "NOTES", 2000)]
 
     //RCRA_HD_OWNEROP
-    [AppliedAttribute(typeof(FacilityOwnerOperatorDataType), "TransactionCode", typeof(ColumnAttribute), "TRANSACTION_CODE", DbType.AnsiStringFixedLength, 1, false)]
+    [AppliedAttribute(typeof(FacilityOwnerOperatorDataType), "TransactionCode", typeof(ColumnAttribute), "TRANSACTION_CODE", DbType.AnsiStringFixedLength, 1)]
     [AppliedAttribute(typeof(FacilityOwnerOperatorDataType), "OwnerOperatorSequenceNumber", typeof(ColumnAttribute), "OWNER_OP_SEQ", DbType.Int32, false)]
     [AppliedAttribute(typeof(FacilityOwnerOperatorDataType), "OwnerOperatorIndicator", typeof(ColumnAttribute), "OWNER_OP_IND", DbType.AnsiStringFixedLength, 2)]
     [AppliedPathAttribute("Handler.FacilityOwnerOperator.ContactAddress.Contact.FirstName", typeof(ColumnAttribute), "FIRST_NAME", 15)]
@@ -328,13 +374,13 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_41
     [AppliedAttribute(typeof(FacilityOwnerOperatorDataType), "OwnerOperatorSupplementalInformationText", typeof(ColumnAttribute), "NOTES", 240)]
 
     //RCRA_HD_STATE_ACTIVITY
-    [AppliedAttribute(typeof(StateActivityDataType), "TransactionCode", typeof(ColumnAttribute), "TRANSACTION_CODE", DbType.AnsiStringFixedLength, 1, false)]
+    [AppliedAttribute(typeof(StateActivityDataType), "TransactionCode", typeof(ColumnAttribute), "TRANSACTION_CODE", DbType.AnsiStringFixedLength, 1)]
     [AppliedAttribute(typeof(StateActivityDataType), "StateActivityOwnerName", typeof(ColumnAttribute), "STATE_ACTIVITY_OWNER", DbType.AnsiStringFixedLength, 2, false)]
     [AppliedAttribute(typeof(StateActivityDataType), "StateActivityTypeCode", typeof(ColumnAttribute), "STATE_ACTIVITY_TYPE", 5, false)]
     [AppliedAttribute(typeof(StateActivityDataType), "StateActivitySupplementalInformationText", typeof(ColumnAttribute), "NOTES", 2000)]
 
     //RCRA_HD_UNIVERSAL_WASTE
-    [AppliedAttribute(typeof(UniversalWasteActivityDataType), "TransactionCode", typeof(ColumnAttribute), "TRANSACTION_CODE", DbType.AnsiStringFixedLength, 1, false)]
+    [AppliedAttribute(typeof(UniversalWasteActivityDataType), "TransactionCode", typeof(ColumnAttribute), "TRANSACTION_CODE", DbType.AnsiStringFixedLength, 1)]
     [AppliedAttribute(typeof(UniversalWasteActivityDataType), "UniversalWasteOwnerName", typeof(ColumnAttribute), "UNIVERSAL_WASTE_OWNER", DbType.AnsiStringFixedLength, 2)]
     [AppliedAttribute(typeof(UniversalWasteActivityDataType), "UniversalWasteTypeCode", typeof(ColumnAttribute), "UNIVERSAL_WASTE_TYPE", DbType.AnsiStringFixedLength, 1)]
     [AppliedAttribute(typeof(UniversalWasteActivityDataType), "AccumulatedWasteCode", typeof(ColumnAttribute), "ACCUMULATED", DbType.AnsiStringFixedLength, 1)]
@@ -342,7 +388,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_41
     [AppliedAttribute(typeof(UniversalWasteActivityDataType), "UniversalWasteSupplementalInformationText", typeof(ColumnAttribute), "NOTES", 240)]
 
     //RCRA_HD_WASTE_CODE
-    [AppliedAttribute(typeof(HandlerWasteCodeDataType), "TransactionCode", typeof(ColumnAttribute), "TRANSACTION_CODE", DbType.AnsiStringFixedLength, 1, false)]
+    [AppliedAttribute(typeof(HandlerWasteCodeDataType), "TransactionCode", typeof(ColumnAttribute), "TRANSACTION_CODE", DbType.AnsiStringFixedLength, 1)]
     [AppliedAttribute(typeof(HandlerWasteCodeDataType), "WasteCodeOwnerName", typeof(ColumnAttribute), "WASTE_CODE_OWNER", DbType.AnsiStringFixedLength, 2)]
     [AppliedAttribute(typeof(HandlerWasteCodeDataType), "WasteCode", typeof(ColumnAttribute), "WASTE_CODE_TYPE", 6)]
 

@@ -50,7 +50,7 @@ using Windsor.Commons.Spring;
 namespace Windsor.Node2008.WNOSPlugin.RCRA_41
 {
     [Serializable]
-    public class RCRASolicitProcessor : BaseWNOSPlugin, ISolicitProcessor
+    public abstract class RCRABaseSubmissionProcessor : BaseWNOSPlugin, ISolicitProcessor
 	{
         protected const string CONFIG_ADD_HEADER = "Add Header";
         protected const string CONFIG_AUTHOR = "Author";
@@ -68,27 +68,27 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_41
         }
 
         #region fields
-        private static readonly ILogEx LOG = LogManagerEx.GetLogger(MethodBase.GetCurrentMethod());
-        private IRequestManager _requestManager;
-        private ISerializationHelper _serializationHelper;
-        private ICompressionHelper _compressionHelper;
-        private IDocumentManager _documentManager;
-        private IHeaderDocumentHelper _headerDocumentHelper;
-        private ISettingsProvider _settingsProvider;
+        protected static readonly ILogEx LOG = LogManagerEx.GetLogger(MethodBase.GetCurrentMethod());
+        protected IRequestManager _requestManager;
+        protected ISerializationHelper _serializationHelper;
+        protected ICompressionHelper _compressionHelper;
+        protected IDocumentManager _documentManager;
+        protected IHeaderDocumentHelper _headerDocumentHelper;
+        protected ISettingsProvider _settingsProvider;
         protected SpringBaseDao _baseDao;
 
-        private bool _addHeader;
-        private string _author;
-        private string _organization;
-        private string _contactInfo;
-        private string _notifications;
-        private string _payloadOperation;
-        private string _title;
-        private string _rcraInfoUserId;
-        private string _rcraInfoStateCode;
+        protected bool _addHeader;
+        protected string _author;
+        protected string _organization;
+        protected string _contactInfo;
+        protected string _notifications;
+        protected string _payloadOperation;
+        protected string _title;
+        protected string _rcraInfoUserId;
+        protected string _rcraInfoStateCode;
         #endregion
 
-        public RCRASolicitProcessor()
+        public RCRABaseSubmissionProcessor()
         {
             ConfigurationArguments.Add(CONFIG_ADD_HEADER, null);
             ConfigurationArguments.Add(CONFIG_AUTHOR, null);
@@ -130,6 +130,8 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_41
             _rcraInfoUserId = ValidateNonEmptyConfigParameter(CONFIG_RCRA_INFO_USER_ID);
             _rcraInfoStateCode = ValidateNonEmptyConfigParameter(CONFIG_RCRA_INFO_STATE_CODE);
         }
+
+        protected abstract object GetObjectFromRequest(DataRequest request);
         
         public void ProcessSolicit(string requestId)
 		{
@@ -139,7 +141,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_41
 
             DataRequest request = _requestManager.GetDataRequest(requestId);
 
-            HazardousWasteHandlerSubmissionDataType returnData = GetObjectFromRequest(request);
+            object returnData = GetObjectFromRequest(request);
 
             string serializedFilePath = null;
             if (_addHeader)
@@ -178,7 +180,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_41
 
 
 
-        protected string MakeHeaderFile(HazardousWasteHandlerSubmissionDataType list)
+        protected string MakeHeaderFile(object dataObject)
         {
             AppendAuditLogEvent("Generating header file from results");
 
@@ -196,7 +198,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_41
             tempXmlFilePath2 = Path.ChangeExtension(tempXmlFilePath, ".xml");
             AppendAuditLogEvent("Temp file after header:" + tempXmlFilePath2);
 
-            _serializationHelper.Serialize(list, tempXmlFilePath);
+            _serializationHelper.Serialize(dataObject, tempXmlFilePath);
             AppendAuditLogEvent("Temp file serialized");
 
             if (!File.Exists(tempXmlFilePath))
@@ -226,37 +228,6 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_41
         }
 
 
-        private HazardousWasteHandlerSubmissionDataType GetObjectFromRequest(DataRequest request)
-        {
-            LOG.DebugEnter(MethodBase.GetCurrentMethod(), request);
-
-            IObjectsFromDatabase objectsFromDatabase;
-            GetServiceImplementation(out objectsFromDatabase);
-
-            List<FacilitySubmissionDataType> dataList = objectsFromDatabase.LoadFromDatabase<FacilitySubmissionDataType>(_baseDao, null);
-
-            if (CollectionUtils.IsNullOrEmpty(dataList))
-            {
-                throw new InvalidOperationException("The staging database does not contain any RCRA data");
-            }
-            else
-            {
-                int handlerCount = 0;
-                foreach (FacilitySubmissionDataType submission in dataList)
-                {
-                    handlerCount += !CollectionUtils.IsNullOrEmpty(submission.Handler) ?
-                        submission.Handler.Length : 0;
-                }
-                AppendAuditLogEvent("Found {0} facility submission(s) and {1} handler(s)", 
-                                    dataList.Count, handlerCount);
-            }
-
-            HazardousWasteHandlerSubmissionDataType hdRoot = new HazardousWasteHandlerSubmissionDataType();
-
-            hdRoot.FacilitySubmission = dataList.ToArray();
-
-            return hdRoot;
-		}
         /// <summary>
         /// Return the Query, Solicit, or Execute data service parameters for specified data service.
         /// This method should NOT call GetServiceImplementation().

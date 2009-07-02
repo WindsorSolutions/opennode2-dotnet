@@ -633,7 +633,10 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 {
                     if (newSameTableElementInfo != null)
                     {
-                        newSameTableElementInfo.NotNull = true;
+                        if (canSetColumnsNotNull)
+                        {
+                            newSameTableElementInfo.NotNull = true;
+                        }
                     }
                     if (newColumn != null)
                     {
@@ -1479,7 +1482,42 @@ namespace Windsor.Commons.XsdOrm.Implementations
                     "CONFIGURATION", "CONFIG",
                     "EXCEPTION", "EXCPT",
                     "EXCEPTIONS", "EXCPT",
-                    "CLASSIFICATION", "CLASS"
+                    "CLASSIFICATION", "CLASS",
+                    "HAZARDOUS", "HAZRD",
+                    "SUBMISSION", "SUBM",
+                    "ENFORCEMENT", "ENFRC",
+                    "TRANSACTION", "TRANS",
+                    "ATTORNEY", "ATTRY",
+                    "CORRECTIVE", "CORCT",
+                    "COMPONENT", "COMPT",
+                    "RESOLUTION", "RSLN",
+                    "DISPOSITION", "DISP",
+                    "RESPONSIBLE", "RESP",
+                    "SUBORGANIZATION", "SUBORG",
+                    "PENALTY", "PNLTY",
+                    "PAYMENT", "PYMT",
+                    "DEFAULTED", "DFLT",
+                    "SCHEDULED", "SCHD",
+                    "TECHNICAL", "TECH",
+                    "INITIATED", "INIT",
+                    "REQUIREMENT", "RQMT",
+                    "COMPLETION", "COMP",
+                    "DETERMINED", "DTRM",
+                    "PROJECT", "PRJT",
+                    "EXPENDITURE", "EXPND",
+                    "AGREEMENT", "AGMT",
+                    "EVALUATION", "EVAL",
+                    "CITIZEN", "CTZN",
+                    "COMPLAINT", "CPLT",
+                    "SAMPLING", "SAMPL",
+                    "SUBTITLE", "SUBTL",
+                    "HANDLER", "HDLR",
+                    "CONSENT", "CNST",
+                    "REQUEST", "RQST",
+                    "VIOLATION", "VIOL",
+                    "RESPONSE", "RESP",
+                    "RECEIVED", "RCVD",
+                    "COMMITMENT", "COMMIT"
                     );
             }
             return attr.Abbreviations;
@@ -1510,6 +1548,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
                     "Number", "20",
                     "Version", "20",
                     "NumberText", "20",
+                    "Indicator", "50",
                     "IndividualFullName", "255",
                     "srsDimension", "10",
                     "srsName", "255");

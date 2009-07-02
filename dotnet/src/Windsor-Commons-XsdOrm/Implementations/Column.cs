@@ -74,6 +74,11 @@ namespace Windsor.Commons.XsdOrm.Implementations
             m_IsNullable = columnAttribute.IsNullable;
             m_IsIndexable = columnAttribute.IsIndexable;
             m_IndexName = columnAttribute.IndexName;
+            if ((m_ColumnType != null) && Utils.IsStringColumnType(m_ColumnType.Value) && (m_ColumnSize == 1) &&
+                (this.MemberType == typeof(bool)))
+            {
+                m_IsDbBoolString = true;
+            }
         }
 
         public string ColumnName
@@ -148,6 +153,10 @@ namespace Windsor.Commons.XsdOrm.Implementations
                                                                       this.ToString()));
                 }
             }
+            else if (m_IsDbBoolString)
+            {
+                value = ((bool)value) ? "Y" : "N";
+            }
             return value;
         }
         public override void SetMemberValue<T>(T instance, object value)
@@ -155,6 +164,22 @@ namespace Windsor.Commons.XsdOrm.Implementations
             if (value is DBNull)
             {
                 value = null;
+            }
+            else if (m_IsDbBoolString)
+            {
+                if (string.Equals(value.ToString(), "N", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    value = false;
+                }
+                else if (string.Equals(value.ToString(), "Y", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    value = true;
+                }
+                else
+                {
+                    throw new MappingException("Invalid boolean string valid specified (\"{0}\") for column: {1}",
+                                               value, this.ToString());
+                }
             }
             base.SetMemberValue<T>(instance, value);
         }
@@ -166,6 +191,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
         protected bool m_IsIndexable;
         protected string m_IndexName;
         protected string m_ColumnDescription;
+        protected bool m_IsDbBoolString;
     }
 
     public class PrimaryKeyColumn : Column
