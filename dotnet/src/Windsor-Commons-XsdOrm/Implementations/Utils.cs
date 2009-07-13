@@ -52,51 +52,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
         }
         public static string CamelCaseToDatabaseName(string name)
         {
-            ExceptionUtils.ThrowIfEmptyString(name, "name");
-
-            StringBuilder sb = new StringBuilder((name.Length * 3) / 2);
-            sb.Append(char.ToUpper(name[0]));
-            bool lastCharWasLower = false;
-            bool twoOrMoreUpperChars = false;
-            for (int i = 1; i < name.Length; ++i)
-            {
-                char curChar = name[i];
-                if (char.IsLetter(curChar))
-                {
-                    if (char.IsUpper(curChar))
-                    {
-                        if (lastCharWasLower)
-                        {
-                            if (sb[sb.Length - 1] != '_')
-                            {
-                                sb.Append('_');
-                            }
-                        }
-                        else
-                        {
-                            twoOrMoreUpperChars = true;
-                        }
-                        sb.Append(curChar);
-                        lastCharWasLower = false;
-                    }
-                    else
-                    {
-                        if (twoOrMoreUpperChars)
-                        {
-                            sb.Insert(sb.Length - 1, '_');
-                            twoOrMoreUpperChars = false;
-                        }
-                        sb.Append(char.ToUpper(curChar));
-                        lastCharWasLower = true;
-                    }
-                }
-                else
-                {
-                    sb.Append(curChar);
-                    lastCharWasLower = true;
-                }
-            }
-            return sb.ToString();
+            return StringUtils.SplitCamelCaseName(name, '_').ToUpper();
         }
         public static string ShortenDatabaseColumnName(string name, bool shortenNamesByRemovingVowelsFirst,
                                                        Dictionary<string, string> abbreviations)
@@ -125,10 +81,10 @@ namespace Windsor.Commons.XsdOrm.Implementations
             //    string[] subnames = value.Split('_');
             //    foreach (string str in subnames)
             //    {
-            //        if (str.Length > 6)
+            //        if ((str.Length > 6) && !overList.Contains(str))
             //        {
             //            overList.Add(str);
-            //            if (overList.Count > 4)
+            //            if (overList.Count > 1)
             //            {
             //                string overListStr = StringUtils.Join(",", overList);
             //                overList.Clear();

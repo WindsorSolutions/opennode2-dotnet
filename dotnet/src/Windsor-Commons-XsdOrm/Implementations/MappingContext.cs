@@ -1709,6 +1709,26 @@ namespace Windsor.Commons.XsdOrm.Implementations
             {
                 mappingAttribute = new DbIndexableAttribute();
             }
+            else if (appliedAttribute.MappedAttributeType == typeof(TableAttribute))
+            {
+                TableAttribute tableAttribute = new TableAttribute();
+                mappingAttribute = tableAttribute;
+                if (!CollectionUtils.IsNullOrEmpty(appliedAttribute.Args))
+                {
+                    foreach (object arg in appliedAttribute.Args)
+                    {
+                        if (arg is string)
+                        {
+                            tableAttribute.TableName = arg.ToString();
+                        }
+                        else
+                        {
+                            throw new NotImplementedException(string.Format("TableAttribute arg is not implemented: {0}",
+                                                                            arg.GetType().FullName));
+                        }
+                    }
+                }
+            }
             else if (appliedAttribute.MappedAttributeType == typeof(ColumnAttribute))
             {
                 ColumnAttribute columnAttribute = new ColumnAttribute();

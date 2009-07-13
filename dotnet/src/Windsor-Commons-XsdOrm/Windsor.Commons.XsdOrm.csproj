@@ -58,6 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseDataType.cs" />
     <Compile Include="BaseException.cs" />
     <Compile Include="Implementations\Column.cs" />
     <Compile Include="Implementations\MappingContext.cs" />

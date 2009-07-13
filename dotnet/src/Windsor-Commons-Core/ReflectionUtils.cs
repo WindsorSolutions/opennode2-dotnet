@@ -95,6 +95,25 @@ namespace Windsor.Commons.Core
         /// This works around an issue in .NET where Type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | 
         /// BindingFlags.Instance) does not return private, inherited fields!
         /// </summary>
+        public static object GetPublicOrPrivatePropertyValue(object obj, string propertyName, bool declaredOnly)
+        {
+            BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
+            if ( declaredOnly )
+            {
+                flags |= BindingFlags.DeclaredOnly;
+            }
+            PropertyInfo propInfo = obj.GetType().GetProperty(propertyName, flags);
+            if (propInfo == null)
+            {
+                throw new ArgumentException(string.Format("The property {0} was not found for the object {1}", 
+                                                          propertyName, obj.GetType().FullName));
+            }
+            return propInfo.GetValue(obj, null);
+        }
+        /// <summary>
+        /// This works around an issue in .NET where Type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | 
+        /// BindingFlags.Instance) does not return private, inherited fields!
+        /// </summary>
         public static FieldInfo GetFieldByName(Type inType, string fieldName)
         {
             List<FieldInfo> fieldInfoList = new List<FieldInfo>();

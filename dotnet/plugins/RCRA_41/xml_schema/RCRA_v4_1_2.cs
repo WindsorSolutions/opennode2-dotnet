@@ -6,225 +6,123 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_41
 {
     [DefaultDecimalPrecision(14,6)]
 
+    // HazardousWasteCMESubmissionDataType
+    [AppliedAttribute(typeof(HazardousWasteCMESubmissionDataType), "", typeof(TableAttribute), "RCRA_CME_HAZRD_WASTE_CME_SUBM")]
+
+    // CMEFacilitySubmissionDataType
+    [AppliedAttribute(typeof(CMEFacilitySubmissionDataType), "", typeof(TableAttribute), "RCRA_CME_FAC_SUBM")]
+
     // CitationDataType
+    [AppliedAttribute(typeof(CitationDataType), "", typeof(TableAttribute), "RCRA_CME_CITATION")]
     [AppliedAttribute(typeof(CitationDataType), "CitationNameSequenceNumber", typeof(ColumnAttribute), DbType.Int32)]
     [AppliedAttribute(typeof(CitationDataType), "Notes", typeof(ColumnAttribute), 2000)]
 
     // EnforcementActionDataType
+    [AppliedAttribute(typeof(EnforcementActionDataType), "", typeof(TableAttribute), "RCRA_CME_ENFRC_ACT")]
     [AppliedAttribute(typeof(EnforcementActionDataType), "ConsentAgreementFinalOrderSequenceNumber", typeof(ColumnAttribute), DbType.Int32)]
     [AppliedAttribute(typeof(EnforcementActionDataType), "Notes", typeof(ColumnAttribute), 2000)]
 
     // EvaluationDataType
+    [AppliedAttribute(typeof(EvaluationDataType), "", typeof(TableAttribute), "RCRA_CME_EVAL")]
     [AppliedAttribute(typeof(EvaluationDataType), "Notes", typeof(ColumnAttribute), 2000)]
 
     // EvaluationCommitmentDataType
+    [AppliedAttribute(typeof(EvaluationCommitmentDataType), "", typeof(TableAttribute), "RCRA_CME_EVAL_COMMIT")]
     [AppliedAttribute(typeof(EvaluationCommitmentDataType), "CommitmentSequenceNumber", typeof(ColumnAttribute), DbType.Int32)]
 
     // EvaluationViolationDataType
+    [AppliedAttribute(typeof(EvaluationViolationDataType), "", typeof(TableAttribute), "RCRA_CME_EVAL_VIOL")]
     [AppliedAttribute(typeof(EvaluationViolationDataType), "ViolationSequenceNumber", typeof(ColumnAttribute), DbType.Int32)]
 
     // MediaDataType
+    [AppliedAttribute(typeof(MediaDataType), "", typeof(TableAttribute), "RCRA_CME_MEDIA")]
     [AppliedAttribute(typeof(MediaDataType), "Notes", typeof(ColumnAttribute), 2000)]
 
     // MilestoneDataType
+    [AppliedAttribute(typeof(MilestoneDataType), "", typeof(TableAttribute), "RCRA_CME_MILESTONE")]
     [AppliedAttribute(typeof(MilestoneDataType), "MilestoneSequenceNumber", typeof(ColumnAttribute), DbType.Int32)]
     [AppliedAttribute(typeof(MilestoneDataType), "Notes", typeof(ColumnAttribute), 2000)]
 
     // PenaltyDataType
+    [AppliedAttribute(typeof(PenaltyDataType), "", typeof(TableAttribute), "RCRA_CME_PNLTY")]
     [AppliedAttribute(typeof(PenaltyDataType), "Notes", typeof(ColumnAttribute), 2000)]
 
     // PaymentDataType
+    [AppliedAttribute(typeof(PaymentDataType), "", typeof(TableAttribute), "RCRA_CME_PYMT")]
     [AppliedAttribute(typeof(PaymentDataType), "PaymentSequenceNumber", typeof(ColumnAttribute), DbType.Int32)]
     [AppliedAttribute(typeof(PaymentDataType), "Notes", typeof(ColumnAttribute), 2000)]
 
     // RequestDataType
+    [AppliedAttribute(typeof(RequestDataType), "", typeof(TableAttribute), "RCRA_CME_RQST")]
     [AppliedAttribute(typeof(RequestDataType), "RequestSequenceNumber", typeof(ColumnAttribute), DbType.Int32)]
     [AppliedAttribute(typeof(RequestDataType), "Notes", typeof(ColumnAttribute), 2000)]
 
     // SupplementalEnvironmentalProjectDataType
+    [AppliedAttribute(typeof(SupplementalEnvironmentalProjectDataType), "", typeof(TableAttribute), "RCRA_CME_SUPP_ENVR_PRJT")]
     [AppliedAttribute(typeof(SupplementalEnvironmentalProjectDataType), "SEPSequenceNumber", typeof(ColumnAttribute), DbType.Int32)]
     [AppliedAttribute(typeof(SupplementalEnvironmentalProjectDataType), "Notes", typeof(ColumnAttribute), 2000)]
 
     // ViolationDataType
+    [AppliedAttribute(typeof(ViolationDataType), "", typeof(TableAttribute), "RCRA_CME_VIOL")]
     [AppliedAttribute(typeof(ViolationDataType), "ViolationSequenceNumber", typeof(ColumnAttribute), DbType.Int32)]
     [AppliedAttribute(typeof(ViolationDataType), "Notes", typeof(ColumnAttribute), 2000)]
 
+    // CSNYDateDataType
+    [AppliedAttribute(typeof(CSNYDateDataType), "", typeof(TableAttribute), "RCRA_CME_CSNY_DATE")]
+
     // ViolationEnforcementDataType
+    [AppliedAttribute(typeof(ViolationEnforcementDataType), "", typeof(TableAttribute), "RCRA_CME_VIOL_ENFRC")]
     [AppliedAttribute(typeof(ViolationEnforcementDataType), "ViolationSequenceNumber", typeof(ColumnAttribute), DbType.Int32)]
 
     [ShortenNamesByRemovingVowelsFirstAttribute]
 
-    [Table("RCRA_CME_HAZRD_WASTE_CME_SUBM")]
-    public partial class HazardousWasteCMESubmissionDataType
+    public partial class HazardousWasteCMESubmissionDataType : BaseDataType
     {
-        [System.Xml.Serialization.XmlIgnore]
-        [GuidPrimaryKey]
-        public string _PK;
     }
-    [Table("RCRA_CME_FAC_SUBM")]
-    public partial class CMEFacilitySubmissionDataType
+    public partial class CMEFacilitySubmissionDataType : BaseChildDataType
     {
-        [System.Xml.Serialization.XmlIgnore]
-        [GuidPrimaryKey]
-        public string _PK;
-
-        [System.Xml.Serialization.XmlIgnore]
-        [GuidForeignKey]
-        public string _FK;
     }
-    [Table("RCRA_CME_ENFRC_ACT")]
-    public partial class EnforcementActionDataType
+    public partial class EnforcementActionDataType : BaseChildDataType
     {
-        [System.Xml.Serialization.XmlIgnore]
-        [GuidPrimaryKey]
-        public string _PK;
-
-        [System.Xml.Serialization.XmlIgnore]
-        [GuidForeignKey]
-        public string _FK;
     }
-    [Table("RCRA_CME_EVAL")]
-    public partial class EvaluationDataType
+    public partial class EvaluationDataType : BaseChildDataType
     {
-        [System.Xml.Serialization.XmlIgnore]
-        [GuidPrimaryKey]
-        public string _PK;
-
-        [System.Xml.Serialization.XmlIgnore]
-        [GuidForeignKey]
-        public string _FK;
     }
-    [Table("RCRA_CME_VIOL")]
-    public partial class ViolationDataType
+    public partial class ViolationDataType : BaseChildDataType
     {
-        [System.Xml.Serialization.XmlIgnore]
-        [GuidPrimaryKey]
-        public string _PK;
-
-        [System.Xml.Serialization.XmlIgnore]
-        [GuidForeignKey]
-        public string _FK;
     }
-    [Table("RCRA_CME_CSNY_DATE")]
-    public partial class CSNYDateDataType
+    public partial class CSNYDateDataType : BaseChildDataType
     {
-        [System.Xml.Serialization.XmlIgnore]
-        [GuidPrimaryKey]
-        public string _PK;
-
-        [System.Xml.Serialization.XmlIgnore]
-        [GuidForeignKey]
-        public string _FK;
     }
-    [Table("RCRA_CME_PNLTY")]
-    public partial class PenaltyDataType
+    public partial class PenaltyDataType : BaseChildDataType
     {
-        [System.Xml.Serialization.XmlIgnore]
-        [GuidPrimaryKey]
-        public string _PK;
-
-        [System.Xml.Serialization.XmlIgnore]
-        [GuidForeignKey]
-        public string _FK;
     }
-    [Table("RCRA_CME_MILESTONE")]
-    public partial class MilestoneDataType
+    public partial class MilestoneDataType : BaseChildDataType
     {
-        [System.Xml.Serialization.XmlIgnore]
-        [GuidPrimaryKey]
-        public string _PK;
-
-        [System.Xml.Serialization.XmlIgnore]
-        [GuidForeignKey]
-        public string _FK;
     }
-    [Table("RCRA_CME_VIOL_ENFRC")]
-    public partial class ViolationEnforcementDataType
+    public partial class ViolationEnforcementDataType : BaseChildDataType
     {
-        [System.Xml.Serialization.XmlIgnore]
-        [GuidPrimaryKey]
-        public string _PK;
-
-        [System.Xml.Serialization.XmlIgnore]
-        [GuidForeignKey]
-        public string _FK;
     }
-    [Table("RCRA_CME_SUPP_ENVR_PRJT")]
-    public partial class SupplementalEnvironmentalProjectDataType
+    public partial class SupplementalEnvironmentalProjectDataType : BaseChildDataType
     {
-        [System.Xml.Serialization.XmlIgnore]
-        [GuidPrimaryKey]
-        public string _PK;
-
-        [System.Xml.Serialization.XmlIgnore]
-        [GuidForeignKey]
-        public string _FK;
     }
-    [Table("RCRA_CME_MEDIA")]
-    public partial class MediaDataType
+    public partial class MediaDataType : BaseChildDataType
     {
-        [System.Xml.Serialization.XmlIgnore]
-        [GuidPrimaryKey]
-        public string _PK;
-
-        [System.Xml.Serialization.XmlIgnore]
-        [GuidForeignKey]
-        public string _FK;
     }
-    [Table("RCRA_CME_RQST")]
-    public partial class RequestDataType
+    public partial class RequestDataType : BaseChildDataType
     {
-        [System.Xml.Serialization.XmlIgnore]
-        [GuidPrimaryKey]
-        public string _PK;
-
-        [System.Xml.Serialization.XmlIgnore]
-        [GuidForeignKey]
-        public string _FK;
     }
-    [Table("RCRA_CME_EVAL_COMMIT")]
-    public partial class EvaluationCommitmentDataType
+    public partial class EvaluationCommitmentDataType : BaseChildDataType
     {
-        [System.Xml.Serialization.XmlIgnore]
-        [GuidPrimaryKey]
-        public string _PK;
-
-        [System.Xml.Serialization.XmlIgnore]
-        [GuidForeignKey]
-        public string _FK;
     }
-    [Table("RCRA_CME_EVAL_VIOL")]
-    public partial class EvaluationViolationDataType
+    public partial class EvaluationViolationDataType : BaseChildDataType
     {
-        [System.Xml.Serialization.XmlIgnore]
-        [GuidPrimaryKey]
-        public string _PK;
-
-        [System.Xml.Serialization.XmlIgnore]
-        [GuidForeignKey]
-        public string _FK;
     }
-    [Table("RCRA_CME_CITATION")]
-    public partial class CitationDataType
+    public partial class CitationDataType : BaseChildDataType
     {
-        [System.Xml.Serialization.XmlIgnore]
-        [GuidPrimaryKey]
-        public string _PK;
-
-        [System.Xml.Serialization.XmlIgnore]
-        [GuidForeignKey]
-        public string _FK;
     }
-    [Table("RCRA_CME_PYMT")]
-    public partial class PaymentDataType
+    public partial class PaymentDataType : BaseChildDataType
     {
-        [System.Xml.Serialization.XmlIgnore]
-        [GuidPrimaryKey]
-        public string _PK;
-
-        [System.Xml.Serialization.XmlIgnore]
-        [GuidForeignKey]
-        public string _FK;
     }
 
 

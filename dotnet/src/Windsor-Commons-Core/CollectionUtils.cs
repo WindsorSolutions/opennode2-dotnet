@@ -174,6 +174,16 @@ namespace Windsor.Commons.Core
             }
             return false;
         }
+        public static bool InsertIntoSortedList<T>(List<T> inList, T inElement, IComparer<T> comparer)
+        {
+            int index = inList.BinarySearch(inElement, comparer);
+            if (index < 0)
+            {
+                inList.Insert(~index, inElement);
+                return true;
+            }
+            return false;
+        }
         /// <summary>
         /// Perform a binary search on the input list attempting to locate an object represented by 
         /// inCompareParam.  Return values are the same as List.BinarySearch().
@@ -182,6 +192,11 @@ namespace Windsor.Commons.Core
         {
 
             return (inList.BinarySearch(inValue) >= 0);
+        }
+        public static bool SortedListContains<T>(List<T> inList, T inValue, IComparer<T> comparer)
+        {
+
+            return (inList.BinarySearch(inValue, comparer) >= 0);
         }
 
         public static T FirstItem<T>(IEnumerable<T> inArray)
@@ -457,6 +472,36 @@ namespace Windsor.Commons.Core
                     forEachProc(obj);
                 }
             }
+        }
+        public static string[] PrependItemToArray(ICollection<string> array, string itemToAdd)
+        {
+            List<string> rtnList = new List<string>((array == null) ? 1 : array.Count + 1);
+            rtnList.Add(itemToAdd);
+            if (!CollectionUtils.IsNullOrEmpty(array))
+            {
+                foreach (string item in array)
+                {
+                    if (!string.Equals(item, itemToAdd, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        rtnList.Add(item);
+                    }
+                }
+            }
+            return rtnList.ToArray();
+        }
+        public static List<string> CreateList(ICollection<string> list)
+        {
+            List<string> rtnList;
+            if (CollectionUtils.IsNullOrEmpty(list))
+            {
+                rtnList = new List<string>(1);
+            }
+            else
+            {
+                rtnList = new List<string>(list.Count + 1);
+                rtnList.AddRange(list);
+            }
+            return rtnList;
         }
     }
 }

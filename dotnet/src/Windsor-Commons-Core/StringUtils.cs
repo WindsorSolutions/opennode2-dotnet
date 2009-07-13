@@ -247,5 +247,69 @@ namespace Windsor.Commons.Core
             }
             return sb.ToString();
         }
+        public static string SplitCamelCaseName(string camelCaseName, char separator)
+        {
+            ExceptionUtils.ThrowIfEmptyString(camelCaseName, "camelCaseName");
+
+            StringBuilder sb = new StringBuilder((camelCaseName.Length * 3) / 2);
+            sb.Append(camelCaseName[0]);
+            bool lastCharWasLower = false;
+            bool lastCharWasNumber = false;
+            bool twoOrMoreUpperChars = false;
+            for (int i = 1; i < camelCaseName.Length; ++i)
+            {
+                char curChar = camelCaseName[i];
+                if (char.IsLetter(curChar))
+                {
+                    lastCharWasNumber = false;
+                    if (char.IsUpper(curChar))
+                    {
+                        if (lastCharWasLower)
+                        {
+                            if (sb[sb.Length - 1] != separator)
+                            {
+                                sb.Append(separator);
+                            }
+                        }
+                        else
+                        {
+                            twoOrMoreUpperChars = true;
+                        }
+                        sb.Append(curChar);
+                        lastCharWasLower = false;
+                    }
+                    else
+                    {
+                        if (twoOrMoreUpperChars)
+                        {
+                            sb.Insert(sb.Length - 1, separator);
+                            twoOrMoreUpperChars = false;
+                        }
+                        sb.Append(curChar);
+                        lastCharWasLower = true;
+                    }
+                }
+                else if (char.IsDigit(curChar))
+                {
+                    if (!lastCharWasNumber)
+                    {
+                        if (sb[sb.Length - 1] != separator)
+                        {
+                            sb.Append(separator);
+                        }
+                    }
+                    sb.Append(curChar);
+                    lastCharWasNumber = true;
+                    lastCharWasLower = true;
+                }
+                else
+                {
+                    sb.Append(curChar);
+                    lastCharWasLower = true;
+                    lastCharWasNumber = false;
+                }
+            }
+            return sb.ToString();
+        }
     }
 }
