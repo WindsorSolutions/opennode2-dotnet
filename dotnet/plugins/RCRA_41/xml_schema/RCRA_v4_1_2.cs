@@ -430,10 +430,10 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_41
         public string FirstName;
 
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
-        public string LastName;
+        public string MiddleInitial;
 
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
-        public string MiddleInitial;
+        public string LastName;
 
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         public string OrganizationFormalName;
