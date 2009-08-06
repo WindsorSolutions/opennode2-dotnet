@@ -101,10 +101,6 @@ public class NewFacilityRequestProcessor extends BaseWnosPlugin {
             throw new RuntimeException("Config args not set");
         }
 
-        if (!getConfigurationArguments().containsKey(ARG_SOURCE_SYS_NAME)) {
-            throw new RuntimeException(ARG_SOURCE_SYS_NAME + " not set");
-        }
-
         if (!getConfigurationArguments().containsKey(ARG_LAST_EXEC_STATE_KEY)) {
             throw new RuntimeException(ARG_LAST_EXEC_STATE_KEY + " not set");
         }
@@ -138,10 +134,6 @@ public class NewFacilityRequestProcessor extends BaseWnosPlugin {
             DataSource dataSource = (DataSource) getDataSources().get(
                     ARG_DS_SOURCE);
             debug("Data Source: " + dataSource);
-
-            String sourceSysName = getRequiredConfigValueAsString(ARG_SOURCE_SYS_NAME);
-            result.getAuditEntries().add(
-                    makeEntry("Source System Name: " + sourceSysName));
 
             String stateKey = getRequiredConfigValueAsString(ARG_LAST_EXEC_STATE_KEY);
             result.getAuditEntries().add(

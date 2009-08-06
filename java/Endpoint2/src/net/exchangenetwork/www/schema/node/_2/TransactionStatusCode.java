@@ -78,31 +78,31 @@ public class TransactionStatusCode implements
     }
 
     public static final java.lang.String _Received = org.apache.axis2.databinding.utils.ConverterUtil
-            .convertToString("Received");
+            .convertToString("RECEIVED");
 
     public static final java.lang.String _Processing = org.apache.axis2.databinding.utils.ConverterUtil
-            .convertToString("Processing");
+            .convertToString("PROCESSING");
 
     public static final java.lang.String _Pending = org.apache.axis2.databinding.utils.ConverterUtil
-            .convertToString("Pending");
+            .convertToString("PENDING");
 
     public static final java.lang.String _Failed = org.apache.axis2.databinding.utils.ConverterUtil
-            .convertToString("Failed");
+            .convertToString("FAILED");
 
     public static final java.lang.String _Cancelled = org.apache.axis2.databinding.utils.ConverterUtil
-            .convertToString("Cancelled");
+            .convertToString("CANCELLED");
 
     public static final java.lang.String _Approved = org.apache.axis2.databinding.utils.ConverterUtil
-            .convertToString("Approved");
+            .convertToString("APPROVED");
 
     public static final java.lang.String _Processed = org.apache.axis2.databinding.utils.ConverterUtil
-            .convertToString("Processed");
+            .convertToString("PROCESSED");
 
     public static final java.lang.String _Completed = org.apache.axis2.databinding.utils.ConverterUtil
-            .convertToString("Completed");
+            .convertToString("COMPLETED");
 
     public static final java.lang.String _Unknown = org.apache.axis2.databinding.utils.ConverterUtil
-            .convertToString("Unknown");
+            .convertToString("UNKNOWN");
 
     public static final TransactionStatusCode Received = new TransactionStatusCode(
             _Received, true);

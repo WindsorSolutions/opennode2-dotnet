@@ -62,6 +62,7 @@ public abstract class BaseJdbcDao extends JdbcDaoSupport {
     public static final String IN = " IN ";
     public static final String R_PAREN = ")";
     public static final String L_PAREN = "(";
+    public static final String VALUES = " VALUES ";
 
     public static final String PARAM = " ? ";
     public static final String GT_PARAM = " > ? ";
@@ -72,20 +73,33 @@ public abstract class BaseJdbcDao extends JdbcDaoSupport {
     // dbms approaches
     public static final String ROWNUM_PARAM = "ROWNUM <= ? ";
 
+    private static final String DATA_SOURCE_CANNOT_BE_NULL = "DataSource cannot be null.";
+
     protected Logger logger = Logger.getLogger(getClass());
 
     protected void checkDaoConfig() {
         super.checkDaoConfig();
 
         if (getDataSource() == null) {
-            logger.error("DataSource cannot be null.");
-            throw new RuntimeException("DataSource cannot be null.");
+            logger.error(DATA_SOURCE_CANNOT_BE_NULL);
+            throw new RuntimeException(DATA_SOURCE_CANNOT_BE_NULL);
         }
     }
 
-    protected static List getColumnNames(ResultSet rs) throws SQLException {
+    protected boolean validateStringArg(String arg) {
 
-        List columnNames = new ArrayList();
+        if (StringUtils.isBlank(arg)) {
+
+            throw new RuntimeException("String arg was blank");
+        }
+
+        return true;
+    }
+
+    protected static List<String> getColumnNames(ResultSet rs)
+            throws SQLException {
+
+        List<String> columnNames = new ArrayList<String>();
 
         ResultSetMetaData rsm = rs.getMetaData();
         int columnCount = rsm.getColumnCount();
@@ -160,7 +174,7 @@ public abstract class BaseJdbcDao extends JdbcDaoSupport {
             String tableName) {
 
         String sql = "select count(*) from " + tableName + " where " + column
-                + " = '" + value + "'";
+                + " = '" + value + APOS;
 
         return getJdbcTemplate().queryForInt(sql);
 

@@ -35,6 +35,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.sql.DataSource;
+
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 
@@ -79,7 +81,7 @@ public class FlowServiceImpl extends BaseService implements FlowService,
     /**
      * getFlowPluginImplementors
      */
-    public List getFlowPluginImplementors(String flowId, NodeVisit visit) {
+    public List<String> getFlowPluginImplementors(String flowId, NodeVisit visit) {
 
         if (StringUtils.isBlank(flowId)) {
             throw new RuntimeException("flowId not set.");
@@ -97,9 +99,10 @@ public class FlowServiceImpl extends BaseService implements FlowService,
     /**
      * getFlows
      */
-    public List getFlows(NodeVisit visit, boolean loadDataServices) {
+    @SuppressWarnings("unchecked")
+    public List<DataFlow> getFlows(NodeVisit visit, boolean loadDataServices) {
 
-        List flows = flowDao.get();
+        List<DataFlow> flows = (List<DataFlow>) flowDao.get();
 
         if (loadDataServices) {
 
@@ -117,7 +120,7 @@ public class FlowServiceImpl extends BaseService implements FlowService,
     /**
      * getDataFlowNames
      */
-    public List getDataFlowNames() {
+    public List<String> getDataFlowNames() {
         return flowDao.getFlowNames();
     }
 
@@ -224,11 +227,11 @@ public class FlowServiceImpl extends BaseService implements FlowService,
         return flowDao.get(flowId);
     }
 
-    public Map getActiveServiceMap() {
+    public Map<String, String> getActiveServiceMap() {
         return serviceDao.getActive();
     }
 
-    public Map getActiveServiceMapByFlowId(String flowId) {
+    public Map<String, String> getActiveServiceMapByFlowId(String flowId) {
         return serviceDao.getActiveByFlowId(flowId);
     }
 
@@ -352,10 +355,10 @@ public class FlowServiceImpl extends BaseService implements FlowService,
 
             instance.setModifiedById(visit.getUserAccount().getId());
             logEntry.addEntry("Saving service saved in DB.");
-            instance = serviceDao.save(instance);
+            DataService savedService = serviceDao.save(instance);
             logEntry.addEntry("Service saved in DB.");
 
-            return instance;
+            return savedService;
 
         } catch (Exception ex) {
 
@@ -415,10 +418,12 @@ public class FlowServiceImpl extends BaseService implements FlowService,
             // On new, clear the service args and load from the plugin
             instance.getArgs().clear();
 
-            for (Iterator it = plugin.getConfigurationArguments().entrySet()
-                    .iterator(); it.hasNext();) {
+            for (Iterator<Map.Entry<String, String>> it = plugin
+                    .getConfigurationArguments().entrySet().iterator(); it
+                    .hasNext();) {
 
-                Map.Entry pluginArgEntry = (Map.Entry) it.next();
+                Map.Entry<String, String> pluginArgEntry = (Map.Entry<String, String>) it
+                        .next();
 
                 logger.debug("runtime arg: " + pluginArgEntry);
 
@@ -434,10 +439,11 @@ public class FlowServiceImpl extends BaseService implements FlowService,
 
             logger.debug("connection sources before: "
                     + plugin.getDataSources());
-            for (Iterator it = plugin.getDataSources().entrySet().iterator(); it
-                    .hasNext();) {
+            for (Iterator<Map.Entry<String, DataSource>> it = plugin
+                    .getDataSources().entrySet().iterator(); it.hasNext();) {
 
-                Map.Entry pluginDsEntry = (Map.Entry) it.next();
+                Map.Entry<String, DataSource> pluginDsEntry = (Map.Entry<String, DataSource>) it
+                        .next();
 
                 instance.getDataSources().add(
                         new DataProviderInfo(pluginDsEntry.getKey()));

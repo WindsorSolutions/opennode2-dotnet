@@ -35,6 +35,6 @@ import java.util.List;
 
 public interface ListableDao {
 
-    List get();
+    List<?> get();
 
 }

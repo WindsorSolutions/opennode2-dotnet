@@ -75,7 +75,7 @@ public class RemoteRssFeedReader implements FeedReader, InitializingBean {
             SyndFeedInput input = new SyndFeedInput();
             SyndFeed feed = input.build(new XmlReader(feedUrl));
 
-            logger.debug("Feed: " + feed);
+            logger.trace("Feed: " + feed);
 
             logger.debug("Feed title: " + feed.getTitle());
             result.setTitle(feed.getTitle());
@@ -99,7 +99,7 @@ public class RemoteRssFeedReader implements FeedReader, InitializingBean {
                 }
 
                 SyndEntry entry = (SyndEntry) iter.next();
-                logger.debug("processing SyndEntry:" + entry.toString());
+                logger.trace("processing SyndEntry:" + entry.toString());
 
                 FeedResultItem item = new FeedResultItem();
 
@@ -113,7 +113,7 @@ public class RemoteRssFeedReader implements FeedReader, InitializingBean {
 
                 } else {
 
-                    logger.debug("entry.getDescription().getValue(): "
+                    logger.trace("entry.getDescription().getValue(): "
                             + entry.getDescription().getValue());
                     item.setBody(entry.getDescription().getValue());
                 }
@@ -128,7 +128,7 @@ public class RemoteRssFeedReader implements FeedReader, InitializingBean {
                             + entry.getPublishedDate());
                     item.setDate(entry.getPublishedDate());
                 }
-                
+
                 result.getItems().add(item);
             }
 

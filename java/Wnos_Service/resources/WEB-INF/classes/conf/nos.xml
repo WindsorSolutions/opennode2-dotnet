@@ -57,7 +57,7 @@
 		<property name="adminWhiteList">
 			<list>
 				<value>127.0.0.1</value>
-				<value>${ip.whitelist.subnet}</value>
+                <value>${ip.whitelist.subnet}</value>
 			</list>
 		</property>
 		<property name="pluginDir" value="${path.plugin.dir}" />

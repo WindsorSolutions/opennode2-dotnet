@@ -75,7 +75,7 @@ public class PluginServiceProvider implements ServiceFactory, InitializingBean {
         }
 
         logger
-                .debug("Creating plugin service provide using following sources: "
+                .debug("Creating plugin service provider using following sources: "
                         + StringUtils.join(configLocations, ", "));
         context = new ClassPathXmlApplicationContext(configLocations);
         logger.debug("Acquired beans: " + context.getBeanDefinitionCount());
@@ -91,7 +91,7 @@ public class PluginServiceProvider implements ServiceFactory, InitializingBean {
      * com.windsor.node.service.helper.ServiceFactory#makeService(java.lang.
      * Class)
      */
-    public Object makeService(Class serviceType) {
+    public Object makeService(Class<?> serviceType) {
 
         logger.debug("Logging for: " + serviceType);
 

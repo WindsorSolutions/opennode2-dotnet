@@ -43,6 +43,8 @@ public interface FlowDao extends DeletableDao, ListableDao {
 
     DataFlow getByCode(String code);
 
-    List getFlowNames();
+    List<String> getFlowNames();
+
+    List<DataFlow> getSecuredFlows();
 
 }

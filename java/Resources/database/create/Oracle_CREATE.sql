@@ -227,12 +227,6 @@ CREATE TABLE NTransactionRecipient (
 ;
 
 
-;*
-
-    PKS & UKS
-
-*;
-
 ALTER TABLE NAccount
 	ADD CONSTRAINT PK_Account
 	PRIMARY KEY (Id)
@@ -578,68 +572,64 @@ ALTER TABLE NTransactionRecipient
 -- additions for HERE AuthorizationRequest feature
 
 CREATE TABLE NAccountAuthRequest (
-    Id                          varchar(50) NOT NULL,
-    TransactionId               varchar(50) NOT NULL,
+    Id                          varchar2(50) NOT NULL,
+    TransactionId               varchar2(50) NOT NULL,
     RequestGeneratedOn          date NOT NULL,
-    RequestType                 varchar(255) NOT NULL,
-    NAASAccount                 varchar(500) NOT NULL,
-    FullName                    varchar(500) NOT NULL,
-    OrganizationAffiliation     varchar(500) NOT NULL,
-    TelephoneNumber             varchar(25) NOT NULL,
-    EmailAddress                varchar(500) NOT NULL,
-    AffiliatedNodeId            varchar(50) NOT NULL,
-    AffiliatedCounty            varchar(255) NULL,
-    PurposeDescription          varchar(4000) NULL,
-    RequestedNodeIds            varchar(1000) NOT NULL,
-    AuthorizationAccountId      varchar(50) NULL,
-    AuthorizationComments       varchar(4000) NULL,
+    RequestType                 varchar2(255) NOT NULL,
+    NAASAccount                 varchar2(500) NOT NULL,
+    FullName                    varchar2(500) NOT NULL,
+    OrganizationAffiliation     varchar2(500) NOT NULL,
+    TelephoneNumber             varchar2(25) NOT NULL,
+    EmailAddress                varchar2(500) NOT NULL,
+    AffiliatedNodeId            varchar2(50) NOT NULL,
+    AffiliatedCounty            varchar2(255) NULL,
+    PurposeDescription          varchar2(4000) NULL,
+    RequestedNodeIds            varchar2(1000) NOT NULL,
+    AuthorizationAccountId      varchar2(50) NULL,
+    AuthorizationComments       varchar2(4000) NULL,
     AuthorizationGeneratedOn    date NULL,
-    DidCreateInNaas             varchar(1) NULL
+    DidCreateInNaas             varchar2(1) NULL
     )
 ;
-    
+
 ALTER TABLE NAccountAuthRequest
-    ADD CONSTRAINT PK_NAccountAuthenticationRequest
+    ADD CONSTRAINT PK_NAcctAuthnRequest
     PRIMARY KEY (Id)
 ;
 
-ALTER TABLE NAccountAuthRequest  
-    ADD CONSTRAINT FK_AccountAuthenticationRequest_Transaction 
+ALTER TABLE NAccountAuthRequest 
+    ADD CONSTRAINT FK_AcctAuthReq_Trans
     FOREIGN KEY(TransactionId)
     REFERENCES NTransaction(Id)
-    ON DELETE CASCADE 
-    ON UPDATE CASCADE 
+    ON DELETE CASCADE
 ;
 
-ALTER TABLE NAccountAuthRequest  
-    ADD CONSTRAINT FK_AccountAuthRequest_Account 
+ALTER TABLE NAccountAuthRequest 
+    ADD CONSTRAINT FK_AcctAuthReq_Acct
     FOREIGN KEY(AuthorizationAccountId)
     REFERENCES NAccount(Id)
-    ON DELETE CASCADE 
-    ON UPDATE CASCADE 
+    ON DELETE CASCADE
 ;
 
-    
 CREATE TABLE NAccountAuthRequestFlow (
-    Id varchar(50)          NOT NULL,
-    AccountAuthRequestId    varchar(50) NOT NULL,
-    FlowName varchar(255)   NOT NULL,
-    AccessGranted           varchar(1) NULL
+    Id varchar2(50)          NOT NULL,
+    AccountAuthRequestId    varchar2(50) NOT NULL,
+    FlowName varchar2(255)   NOT NULL,
+    AccessGranted           varchar2(1) NULL
     )
+
 ;
 
 ALTER TABLE NAccountAuthRequestFlow
     ADD CONSTRAINT PK_NAccountAuthRequestFlow
     PRIMARY KEY (Id)
 ;
-    
-ALTER TABLE NAccountAuthRequestFlow  
-    ADD CONSTRAINT FK_AccountAuthRequestFlow_AccountAuthRequest
+
+ALTER TABLE NAccountAuthRequestFlow 
+    ADD CONSTRAINT FK_AcctAuthReqFlow_AcctAuthReq
     FOREIGN KEY(AccountAuthRequestId)
     REFERENCES NAccountAuthRequest(Id)
-    ON DELETE CASCADE 
-    ON UPDATE CASCADE 
+    ON DELETE CASCADE
 ;
-    
--- END additions for HERE AuthorizationRequest feature
+
     

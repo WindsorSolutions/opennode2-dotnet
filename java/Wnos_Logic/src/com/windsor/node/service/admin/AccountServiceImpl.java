@@ -675,18 +675,19 @@ public class AccountServiceImpl extends BaseService implements AccountService,
 
     }
 
-    public void validateAccess(UserAccount account, String flowCode) {
+    public void validateAccess(UserAccount account, String flowId) {
 
-        logger.debug("Account: " + account);
+        logger.debug("account: " + account);
+        logger.debug("flowId: " + flowId);
 
         if (account == null) {
             throw new RuntimeException(
                     "Unable to create local account instance.");
         }
 
-        if (StringUtils.isBlank(flowCode)) {
+        if (StringUtils.isBlank(flowId)) {
             throw new RuntimeException(
-                    "Null flowCode. No need to validate policy if three is no flow");
+                    "Null flowCode. No need to validate policy");
         }
 
         if (!account.isActive()) {
@@ -694,7 +695,7 @@ public class AccountServiceImpl extends BaseService implements AccountService,
         }
 
         // Validate the flow grant if the flow is not null
-        if (StringUtils.isNotBlank(flowCode)) {
+        if (StringUtils.isNotBlank(flowId)) {
 
             List userPolicies = policyDao.getByUserAccountId(account.getId());
 
@@ -705,17 +706,19 @@ public class AccountServiceImpl extends BaseService implements AccountService,
                         .get(i);
 
                 if (policy.getPolicyType() == ServiceRequestAuthorizationType.FLOW
-                        && policy.getTypeQualifier().equalsIgnoreCase(flowCode)
+                        && policy.getTypeQualifier().equalsIgnoreCase(flowId)
                         && policy.isAllowed()) {
                     hasGrantPolicy = true;
                     break;
                 }
-
             }
 
             if (!hasGrantPolicy) {
                 throw new RuntimeException(
                         "User has not been granted access to this flow.");
+            } else {
+
+                logger.debug("Access granted.");
             }
 
         }

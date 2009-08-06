@@ -50,7 +50,7 @@ import com.windsor.node.common.service.admin.TransactionService;
 public class DocController implements Controller, InitializingBean {
 
     private static final long serialVersionUID = 1;
-    
+
     private static final String NO_CACHE = "no-cache";
 
     protected Logger logger = Logger.getLogger(DocController.class);
@@ -93,9 +93,7 @@ public class DocController implements Controller, InitializingBean {
 
         byte[] content = transactionService.downloadContent(tid, id, visit);
 
-        response.setHeader("Cache-Control", NO_CACHE);
-        response.setHeader("Pragma", NO_CACHE);
-        response.setDateHeader("Expires", 0);
+        response.setHeader("Cache-Control", "must-revalidate");
         response.setBufferSize(content.length);
         response.setContentType("application/zip");
         response.setContentLength(content.length);

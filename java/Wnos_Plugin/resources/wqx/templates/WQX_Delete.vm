@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>  
 #set ($totalRecCount = 0)    
 $helper.startStopWatch()
-$helper.print("lastProcessedTimestamp:")$helper.print($lastProcessedTimestamp)
+$helper.print("lastProcessedTimestamp:")$helper.print($helper.toDbDateString($lastProcessedTimestamp))
 #set ($org = $helper.getObject("SELECT recordid FROM WQX_ORGANIZATION WHERE ORGID = ? ", [$orgId]))
 #if($makeHeader)#if($makeHeader == "true" || $makeHeader == "TRUE")
 <Document Id="$docId" 
@@ -21,19 +21,19 @@ $helper.print("lastProcessedTimestamp:")$helper.print($lastProcessedTimestamp)
              xsi:schemaLocation="http://www.exchangenetwork.net/schema/wqx/2 http://www.exchangenetwork.net/schema/wqx/2/0/WQX_WQX_Delete_v2.0.xsd">
             <OrganizationDelete>
                 <OrganizationIdentifier>$orgId</OrganizationIdentifier>
-#foreach($project in $helper.getData("SELECT * FROM WQX_PROJECT WHERE PARENTID = ? AND WQXUPDATEDATE >= ? ", [$org.get("recordid"), $lastProcessedTimestamp]))
+#foreach($project in $helper.getData("SELECT * FROM WQX_PROJECT WHERE PARENTID = ? AND WQXUPDATEDATE >= ? ", [$org.get("recordid"), $helper.toDbDateString($lastProcessedTimestamp)]))
                 <ProjectIdentifier>$project.get("projectid")</ProjectIdentifier>
 #end###foreach($project in $helper.getData
-#foreach($monLoc in $helper.getData("SELECT * FROM WQX_MONITORINGLOCATION WHERE PARENTID = ? AND WQXUPDATEDATE >= ? ", [$org.get("recordid"), $lastProcessedTimestamp]))
+#foreach($monLoc in $helper.getData("SELECT * FROM WQX_MONITORINGLOCATION WHERE PARENTID = ? AND WQXUPDATEDATE >= ? ", [$org.get("recordid"), $helper.toDbDateString($lastProcessedTimestamp)]))
                 <MonitoringLocationIdentifier>$monLoc.get("monitoringlocationid")</MonitoringLocationIdentifier>
 #end##foreach($monLoc in $helper.getData
-#foreach($activity in $helper.getData("SELECT * FROM WQX_ACTIVITY WHERE PARENTID = ?  AND WQXUPDATEDATE >= ? ", [$org.get("recordid"), $lastProcessedTimestamp]))
+#foreach($activity in $helper.getData("SELECT * FROM WQX_ACTIVITY WHERE PARENTID = ?  AND WQXUPDATEDATE >= ? ", [$org.get("recordid"), $helper.toDbDateString($lastProcessedTimestamp)]))
                 <ActivityIdentifier>$activity.get("activityid")</ActivityIdentifier>
 #end##foreach($activity in $helper.getData
-#foreach($activityGroup in $helper.getData("SELECT * FROM WQX_ACTIVITYGROUP WHERE PARENTID = ? AND WQXUPDATEDATE >= ? ", [$org.get("recordid"), $lastProcessedTimestamp]))
+#foreach($activityGroup in $helper.getData("SELECT * FROM WQX_ACTIVITYGROUP WHERE PARENTID = ? AND WQXUPDATEDATE >= ? ", [$org.get("recordid"), $helper.toDbDateString($lastProcessedTimestamp)]))
                 <ActivityGroupIdentifier>$activity.get("activitygroupid")</ActivityGroupIdentifier>
 #end##foreach($activityGroup in $helper.getData
-#foreach($habitatIndex in $helper.getData("SELECT * FROM WQX_BIOLOGICALHABITATINDEX WHERE PARENTID = ? AND WQXUPDATEDATE >= ? ", [$org.get("recordid"), $lastProcessedTimestamp]))
+#foreach($habitatIndex in $helper.getData("SELECT * FROM WQX_BIOLOGICALHABITATINDEX WHERE PARENTID = ? AND WQXUPDATEDATE >= ? ", [$org.get("recordid"), $helper.toDbDateString($lastProcessedTimestamp)]))
                 <IndexIdentifier>$activity.get("indexid")</IndexIdentifier>
 #end##foreach($habitatIndex in $helper.getData
             </OrganizationDelete>            

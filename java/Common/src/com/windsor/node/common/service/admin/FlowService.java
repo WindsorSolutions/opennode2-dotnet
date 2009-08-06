@@ -40,30 +40,28 @@ import com.windsor.node.common.domain.NodeVisit;
 
 public interface FlowService {
 
-    /*
-     * 
-     * 
-     * SERVICES
+    /**
+     * @param flowId
+     * @param visit
+     * @return list of implementing class names
      */
-
-    List getFlowPluginImplementors(String flowId, NodeVisit visit);
+    List<String> getFlowPluginImplementors(String flowId, NodeVisit visit);
 
     /**
-     * getActiveServiceMap
      * 
      * @return map of id, name
      */
-    Map getActiveServiceMap();
+    Map<String, String> getActiveServiceMap();
 
     /**
-     * getActiveServiceMapByFlowId
+     * 
      * 
      * @return map of id, name
      */
-    Map getActiveServiceMapByFlowId(String flowId);
+    Map<String, String> getActiveServiceMapByFlowId(String flowId);
 
     /**
-     * saveDataService
+     * 
      * 
      * @param instance
      * @param visit
@@ -72,7 +70,7 @@ public interface FlowService {
     DataService saveDataService(DataService instance, NodeVisit visit);
 
     /**
-     * deleteDataService
+     * 
      * 
      * @param instance
      * @param visit
@@ -80,7 +78,7 @@ public interface FlowService {
     void deleteDataService(String id, NodeVisit visit);
 
     /**
-     * getService
+     * 
      * 
      * @param serviceId
      * @param visit
@@ -88,14 +86,8 @@ public interface FlowService {
      */
     DataService getService(String serviceId, NodeVisit visit);
 
-    /*
-     * 
-     * 
-     * FLOW
-     */
-
     /**
-     * saveDataFlow
+     * 
      * 
      * @param instance
      * @param visit
@@ -104,7 +96,7 @@ public interface FlowService {
     DataFlow saveDataFlow(DataFlow instance, NodeVisit visit);
 
     /**
-     * deleteDataFlow
+     * 
      * 
      * @param instance
      * @param visit
@@ -112,7 +104,7 @@ public interface FlowService {
     void deleteDataFlow(String id, NodeVisit visit);
 
     /**
-     * getDataFlow
+     * 
      * 
      * @param flowId
      * @param visit
@@ -121,19 +113,17 @@ public interface FlowService {
     DataFlow getDataFlow(String flowId, NodeVisit visit);
 
     /**
-     * getFlows
      * 
      * @param visit
      * @param loadDataServices
      * @return
      */
-    List getFlows(NodeVisit visit, boolean loadDataServices);
+    List<DataFlow> getFlows(NodeVisit visit, boolean loadDataServices);
 
     /**
-     * getDataFlowNames
      * 
      * @return a List of <Object>
      */
-    List getDataFlowNames();
+    List<String> getDataFlowNames();
 
 }

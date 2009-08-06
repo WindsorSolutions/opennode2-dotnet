@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>  
 #set ($totalRecCount = 0)    
 $helper.startStopWatch()
-$helper.print("lastProcessedTimestamp:")$helper.print($lastProcessedTimestamp)
+$helper.print("lastProcessedTimestamp:")$helper.print($helper.toDbDateString($lastProcessedTimestamp))
 #if($makeHeader)#if($makeHeader == "true" || $makeHeader == "TRUE")
 <Document Id="$docId" 
           xmlns="http://www.exchangenetwork.net/schema/v1.0/ExchangeNetworkDocument.xsd" 
@@ -87,7 +87,7 @@ $helper.print("lastProcessedTimestamp:")$helper.print($lastProcessedTimestamp)
 #end
             </OrganizationAddress>
 #end##foreach($orgAddr in $helper.getData
-#foreach($project in $helper.getData("SELECT recordid, projectid, projectname, projectdesc, samplingdesigntypecode, qappapprovedind, qappapprovalagencyname FROM WQX_PROJECT P WHERE PARENTID = ? AND WQXUPDATEDATE >= ? ", [$org.get("recordid"), $lastProcessedTimestamp]))
+#foreach($project in $helper.getData("SELECT recordid, projectid, projectname, projectdesc, samplingdesigntypecode, qappapprovedind, qappapprovalagencyname FROM WQX_PROJECT P WHERE PARENTID = ? AND WQXUPDATEDATE >= ? ", [$org.get("recordid"), $helper.toDbDateString($lastProcessedTimestamp)]))
             <Project>
 #if($project.get("projectid"))
                 <ProjectIdentifier>$project.get("projectid")</ProjectIdentifier>
@@ -102,7 +102,7 @@ $helper.print("lastProcessedTimestamp:")$helper.print($lastProcessedTimestamp)
                 <SamplingDesignTypeCode>$project.get("samplingdesigntypecode")</SamplingDesignTypeCode>
 #end
 #if($project.get("qappapprovedind"))
-                <QAPPApprovedIndicator>$project.get("qappapprovedind")</QAPPApprovedIndicator>
+                <QAPPApprovedIndicator>$helper.toXmlBoolean($project.get("qappapprovedind"))</QAPPApprovedIndicator>
 #end
 #if($project.get("qappapprovalagencyname"))
                 <QAPPApprovalAgencyName>$project.get("qappapprovalagencyname")</QAPPApprovalAgencyName>
@@ -153,7 +153,7 @@ $helper.print("lastProcessedTimestamp:")$helper.print($lastProcessedTimestamp)
 #end##foreach($project in $helper.getData
 $helper.print("getting MonitoringLocations...")
 $helper.printElapsedTime()    
-#foreach($monitoringLoc in $helper.getData("SELECT recordid, parentid, monitoringlocationid, monlocname, monloctype, monlocdesc, huceightdigitcode, huctwelvedigitcode, triballandind, triballandname, latitudemeasure, longitudemeasure, sourcemapscale, horizaccuracymeasure, horizaccuracymeasureunit, horizcollmethod, horizcoordrefsysdatum, verticalmeasure, verticalmeasureunit, verticalcollmethod, verticalcoordrefsysdatum, countrycode, statecode, countycode, welltype, aquifername, formationtype, wellholedepthmeasure, wellholedepthmeasureunit, wqxupdatedate FROM WQX_MONITORINGLOCATION WHERE PARENTID = ?  AND WQXUPDATEDATE >= ? ", [$org.get("recordid"), $lastProcessedTimestamp]))
+#foreach($monitoringLoc in $helper.getData("SELECT recordid, parentid, monitoringlocationid, monlocname, monloctype, monlocdesc, huceightdigitcode, huctwelvedigitcode, triballandind, triballandname, latitudemeasure, longitudemeasure, sourcemapscale, horizaccuracymeasure, horizaccuracymeasureunit, horizcollmethod, horizcoordrefsysdatum, verticalmeasure, verticalmeasureunit, verticalcollmethod, verticalcoordrefsysdatum, countrycode, statecode, countycode, welltype, aquifername, formationtype, wellholedepthmeasure, wellholedepthmeasureunit, wqxupdatedate FROM WQX_MONITORINGLOCATION WHERE PARENTID = ?  AND WQXUPDATEDATE >= ? ", [$org.get("recordid"), $helper.toDbDateString($lastProcessedTimestamp)]))
             <MonitoringLocation>
 #if($monitoringLoc.get("monitoringlocationid") || $monitoringLoc.get("monlocname") || $monitoringLoc.get("monloctype") || $monitoringLoc.get("monlocdesc") || $monitoringLoc.get("huceightdigitcode") || $monitoringLoc.get("huctwelvedigitcode") || $monitoringLoc.get("triballandind") || $monitoringLoc.get("triballandname") || $monitoringLoc.get("latitudemeasure") || $monitoringLoc.get("longitudemeasure") || $monitoringLoc.get("sourcemapscale") || $monitoringLoc.get("horizaccuracymeasure") || $monitoringLoc.get("horizaccuracymeasureunit") || $monitoringLoc.get("horizcollmethod") || $monitoringLoc.get("horizcoordrefsysdatum") || $monitoringLoc.get("verticalmeasure") || $monitoringLoc.get("verticalmeasureunit") || $monitoringLoc.get("verticalcollmethod") || $monitoringLoc.get("verticalcoordrefsysdatum") || $monitoringLoc.get("countrycode") || $monitoringLoc.get("statecode") || $monitoringLoc.get("countycode") || $monitoringLoc.get("welltype") || $monitoringLoc.get("aquifername") || $monitoringLoc.get("formationtype") || $monitoringLoc.get("wellholedepthmeasure") || $monitoringLoc.get("wellholedepthmeasureunit"))
                 <MonitoringLocationIdentity>
@@ -181,7 +181,7 @@ $helper.printElapsedTime()
 #if($monitoringLoc.get("triballandname"))
                     <TribalLandName>$monitoringLoc.get("triballandname")</TribalLandName>
 #end
-#foreach($altMonLoc in $helper.getData("SELECT monlocid, monlocidcontext FROM WQX_ALTMONLOC WHERE PARENTID = ? ", $monitoringloc.get("recordid")))
+#foreach($altMonLoc in $helper.getData("SELECT monlocid, monlocidcontext FROM WQX_ALTMONLOC WHERE PARENTID = ? ", $monitoringLoc.get("recordid")))
                     <AlternateMonitoringLocationIdentity>
 #if($altMonLoc.get("monlocid"))
                         <MonitoringLocationIdentifier>$altMonLoc.get("monlocid")</MonitoringLocationIdentifier>
@@ -284,7 +284,7 @@ $helper.printElapsedTime()
 #end##foreach($monLoc in $helper.getData
 $helper.print("Done with MonitoringLocations, getting BiologicalHabitatIndexes...")
 $helper.printElapsedTime()
-#foreach($habitatIndex in $helper.getData("SELECT indexid, indextypeid, indextypeidcontext, indextypename, resourcetitle, resourcedate, resourceid, indextypescale, indexscore, indexcalculateddate, monlocid FROM WQX_BIOLOGICALHABITATINDEX WHERE PARENTID = ? AND WQXUPDATEDATE >= ? ", [$org.get("recordid"), $lastProcessedTimestamp]))
+#foreach($habitatIndex in $helper.getData("SELECT indexid, indextypeid, indextypeidcontext, indextypename, resourcetitle, resourcedate, resourceid, indextypescale, indexscore, indexcalculateddate, monlocid FROM WQX_BIOLOGICALHABITATINDEX WHERE PARENTID = ? AND WQXUPDATEDATE >= ? ", [$org.get("recordid"), $helper.toDbDateString($lastProcessedTimestamp)]))
             <BiologicalHabitatIndex>
 #if($habitatIndex.get("indexid"))
                 <IndexIdentifier>$habitatIndex.get("indexid")</IndexIdentifier>
@@ -325,7 +325,7 @@ $helper.printElapsedTime()
 #end##foreach($habitatIndex in $helper.getData
 $helper.print("Done with BiologicalHabitatIndexes, getting Activities...")
 $helper.printElapsedTime()
-#foreach($activity in $helper.getData("SELECT recordid, activityid, activitytypecode, activitymedia, activitymediasubdivision, activitystartdate, starttime, starttimezone, activityenddate, endtime, endtimezone, relativedepth, depthheightmeasure, depthheightmeasureunit, topdepthheightmeasure, topdepthheightmeasureunit, bottomdepthheightmeasure, bottomdepthheightmeasureunit, depthaltituderefpoint, monlocid, activitycomment, latitudemeasure, longitudemeasure, sourcemapscale, horizaccuracymeasure, horizaccuracymeasureunit, horizcollmethod, horizcoordrefsysdatum, bioactivityassemblagesampd, biohabcolldurationmeasure, biohabcolldurationmeasureunit, biohabreachlengthmeasure, biohabreachlengthmeasureunit, biohabreachwidthmeasure, biohabreachwidthmeasureunit, biohabpasscount, biohabnettype, biohabnetsurfaceareameasure, biohabnetsurfacemeasureunit, biohabnetmeshsizemeasure, biohabnetmeshmeasureunit, biohabnetboatspeedmeasure, biohabnetboatspeedmeasureunit, biohabnetcurrspeedmeasure, biohabnetcurrspeedmeasureunit, bioactivitytoxicitytesttype, sampcollmethodid, sampcollmethodidcontext, sampcollmethod, sampcollmethodqualifier, sampcollmethoddesc, sampcollequipment, sampcollequipmentcomment, sampprepid, sampprepidcontext, sampprep, sampprepqualifiertype, sampprepdesc, sampprepconttype, sampprepcontcolor, sampprepcontchempreservused, sampprepcontthermalpreservused, sampprepcontsamptransstordesc, resultcount from WQX_ACTIVITY WHERE PARENTID = ?  AND WQXUPDATEDATE >= ? ", [$org.get("recordid"), $lastProcessedTimestamp]))
+#foreach($activity in $helper.getData("SELECT recordid, activityid, activitytypecode, activitymedia, activitymediasubdivision, activitystartdate, starttime, starttimezone, activityenddate, endtime, endtimezone, relativedepth, depthheightmeasure, depthheightmeasureunit, topdepthheightmeasure, topdepthheightmeasureunit, bottomdepthheightmeasure, bottomdepthheightmeasureunit, depthaltituderefpoint, monlocid, activitycomment, latitudemeasure, longitudemeasure, sourcemapscale, horizaccuracymeasure, horizaccuracymeasureunit, horizcollmethod, horizcoordrefsysdatum, bioactivityassemblagesampd, biohabcolldurationmeasure, biohabcolldurationmeasureunit, biohabreachlengthmeasure, biohabreachlengthmeasureunit, biohabreachwidthmeasure, biohabreachwidthmeasureunit, biohabpasscount, biohabnettype, biohabnetsurfaceareameasure, biohabnetsurfacemeasureunit, biohabnetmeshsizemeasure, biohabnetmeshmeasureunit, biohabnetboatspeedmeasure, biohabnetboatspeedmeasureunit, biohabnetcurrspeedmeasure, biohabnetcurrspeedmeasureunit, bioactivitytoxicitytesttype, sampcollmethodid, sampcollmethodidcontext, sampcollmethod, sampcollmethodqualifier, sampcollmethoddesc, sampcollequipment, sampcollequipmentcomment, sampprepid, sampprepidcontext, sampprep, sampprepqualifiertype, sampprepdesc, sampprepconttype, sampprepcontcolor, sampprepcontchempreservused, sampprepcontthermalpreservused, sampprepcontsamptransstordesc, resultcount from WQX_ACTIVITY WHERE PARENTID = ?  AND WQXUPDATEDATE >= ? ", [$org.get("recordid"), $helper.toDbDateString($lastProcessedTimestamp)]))
         <Activity>
 #if($activity.get("activityid") || $activity.get("activitytypecode") || $activity.get("activitymedia") || $activity.get("activitymediasubdivision") || $activity.get("activitystartdate") || $activity.get("starttime") || $activity.get("starttimezone") || $activity.get("activityenddate") || $activity.get("endtime") || $activity.get("endtimezone") || $activity.get("relativedepth") || $activity.get("depthheightmeasure") || $activity.get("depthheightmeasureunit") || $activity.get("topdepthheightmeasure") || $activity.get("topdepthheightmeasureunit") || $activity.get("bottomdepthheightmeasure") || $activity.get("bottomdepthheightmeasureunit") || $activity.get("depthaltituderefpoint") || $activity.get("monlocid"))
             <ActivityDescription>
@@ -953,7 +953,7 @@ $helper.printElapsedTime()
                     </ResultDetectionQuantitationLimit>
 #end##foreach($quantLimit in $helper.getData
 #if($result.get("labaccind"))
-                    <LaboratoryAccreditationIndicator>$result.get("labaccind")</LaboratoryAccreditationIndicator>
+                    <LaboratoryAccreditationIndicator>$helper.toXmlBoolean($result.get("labaccind"))</LaboratoryAccreditationIndicator>
 #end
 #if($result.get("labaccauthorityname"))
                     <LaboratoryAccreditationAuthorityName>$result.get("labaccauthorityname")</LaboratoryAccreditationAuthorityName>
@@ -1020,7 +1020,7 @@ $helper.printElapsedTime()
 #end##foreach($activity in $helper.getData
 $helper.print("done with Results and Activities, getting ActivityGroups...")
 $helper.printElapsedTime()
-#foreach($activityGroup in $helper.getData("SELECT activitygroupid, activitygroupname, activitygrouptypecode, activityid FROM WQX_ACTIVITYGROUP WHERE PARENTID = ?  AND WQXUPDATEDATE >= ? ", [$org.get("recordid"), $lastProcessedTimestamp]))
+#foreach($activityGroup in $helper.getData("SELECT activitygroupid, activitygroupname, activitygrouptypecode, activityid FROM WQX_ACTIVITYGROUP WHERE PARENTID = ?  AND WQXUPDATEDATE >= ? ", [$org.get("recordid"), $helper.toDbDateString($lastProcessedTimestamp)]))
         <ActivityGroup>
 #if($activityGroup.get("activitygroupid"))
             <ActivityGroupIdentifier>$activityGroup.get("activitygroupid")</ActivityGroupIdentifier>

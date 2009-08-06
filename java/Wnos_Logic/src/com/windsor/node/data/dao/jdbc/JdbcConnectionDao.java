@@ -33,7 +33,6 @@ package com.windsor.node.data.dao.jdbc;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -176,7 +175,7 @@ public class JdbcConnectionDao extends BaseJdbcDao implements ConnectionDao {
             obj.setProviderType(rs.getString("Provider"));
             obj.setConnectionString(rs.getString("ConnectionString"));
             obj.setModifiedById(rs.getString("ModifiedBy"));
-            obj.setModifiedOn(Timestamp.valueOf(rs.getString("ModifiedOn")));
+            obj.setModifiedOn(rs.getTimestamp("ModifiedOn"));
 
             return obj;
 

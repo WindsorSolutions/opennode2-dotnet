@@ -48,7 +48,7 @@ public final class CommonTransactionStatusCode extends Enum {
     public static final String APPROVED_STR = "APPROVED";
     public static final String PROCESSED_STR = "PROCESSED";
     public static final String COMPLETED_STR = "COMPLETED";
-    
+
     public static final CommonTransactionStatusCode UNKNOWN = new CommonTransactionStatusCode(
             UNKNOWN_STR);
     public static final CommonTransactionStatusCode RECEIVED = new CommonTransactionStatusCode(
@@ -68,7 +68,7 @@ public final class CommonTransactionStatusCode extends Enum {
     public static final CommonTransactionStatusCode COMPLETED = new CommonTransactionStatusCode(
             COMPLETED_STR);
 
-    private static final long serialVersionUID = 1;
+    private static final long serialVersionUID = 2;
 
     private CommonTransactionStatusCode(String s) {
         super(s);

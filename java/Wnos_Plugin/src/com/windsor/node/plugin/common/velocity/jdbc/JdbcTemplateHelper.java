@@ -92,6 +92,15 @@ import com.windsor.node.plugin.common.velocity.TemplateHelper;
  */
 public class JdbcTemplateHelper extends TemplateHelper {
 
+    public static enum DbType {
+        Oracle, DB2, MSSQL, MySQL, Unrecognized
+    };
+
+    private static final String ORACLE = "oracle";
+    private static final String IBM_DB2 = "ibm db2";
+    private static final String MS_SQL = "microsoft sql server";
+    private static final String MY_SQL = "mysql";
+
     private Connection connection;
     private int resultingRecordCount = 0;
 
@@ -127,6 +136,53 @@ public class JdbcTemplateHelper extends TemplateHelper {
     }
 
     /**
+     * Infer database vendor/type from the JDBC driver name.
+     * 
+     * @return one of Oracle, DB2, MSSQL, MySQL, or Unrecognized
+     */
+    public DbType getDbType() {
+
+        DbType type = DbType.Unrecognized;
+
+        if (null != connection) {
+
+            String driverName;
+
+            try {
+
+                driverName = connection.getMetaData().getDriverName();
+                logger.debug("Driver name: " + driverName);
+
+            } catch (SQLException sqle) {
+
+                throw new RuntimeException(
+                        "couldn't get jdbc driver name from connection");
+            }
+
+            if (StringUtils.containsIgnoreCase(driverName, ORACLE)) {
+
+                type = DbType.Oracle;
+
+            } else if (StringUtils.containsIgnoreCase(driverName, IBM_DB2)) {
+
+                type = DbType.DB2;
+
+            } else if (StringUtils.containsIgnoreCase(driverName, MS_SQL)) {
+
+                type = DbType.MSSQL;
+
+            } else if (StringUtils.containsIgnoreCase(driverName, MY_SQL)) {
+
+                type = DbType.MySQL;
+            }
+        }
+
+        logger.debug("Using database type " + type);
+
+        return type;
+    }
+
+    /**
      * Reformats a String formatted in one of the eight patterns supported by
      * this class into a pattern that the database can parse as a Date without
      * calling a conversion function.
@@ -157,23 +213,10 @@ public class JdbcTemplateHelper extends TemplateHelper {
                     "Not a recognized date format, root exception: " + pe);
         }
 
-        String driverName;
-
-        try {
-
-            driverName = connection.getMetaData().getDriverName();
-
-        } catch (SQLException sqle) {
-
-            throw new RuntimeException(
-                    "couldn't get jdbc driver name from connection");
-        }
-
         String formatStr;
 
-        if (StringUtils.containsIgnoreCase(driverName, "oracle")) {
+        if (getDbType().equals(DbType.Oracle)) {
 
-            logger.debug("using oracle");
             formatStr = DATE_FORMAT_ORACLE_DEFAULT;
 
         } else {
@@ -190,13 +233,35 @@ public class JdbcTemplateHelper extends TemplateHelper {
     }
 
     /**
+     * Given an SQL statment with no query parameters return an array of single
+     * values suitable for iterating over with a VTL #foreach construct.
+     * 
+     * <p>
+     * Treats the query parameter as VARCHAR; to specify the SQL datatype, use
+     * {@link #getList(String, Object, String, int)}.
+     * </p>
+     * 
+     * @param sql
+     *            the SQL query containing one replacement parameter
+     * 
+     * @param propertyName
+     *            the name of the table column whose values will populate the
+     *            returned array
+     * @return an array of single values
+     */
+    public Object[] getList(String sql, String propertyName) {
+
+        return getList(sql, null, propertyName, Types.VARCHAR);
+    }
+
+    /**
      * Given an SQL statment with one query parameter &quot;?&quot; return an
      * array of single values suitable for iterating over with a VTL #foreach
      * construct.
      * 
      * <p>
      * Treats the query parameter as VARCHAR; to specify the SQL datatype, use
-     * {@link #getList(String, Object, String)}.
+     * {@link #getList(String, Object, String, int)}.
      * </p>
      * 
      * @param sql
@@ -263,8 +328,6 @@ public class JdbcTemplateHelper extends TemplateHelper {
     public Object[] getList(String sql, Object[] args, String propertyName,
             int type) {
 
-        traceArgs(sql, args, propertyName, type);
-
         try {
 
             PreparedStatement ps = getPreparedStatement(sql, args, type);
@@ -327,8 +390,6 @@ public class JdbcTemplateHelper extends TemplateHelper {
     @SuppressWarnings("unchecked")
     public Object getObject(String sql, Object[] args) {
 
-        traceArgs(sql, args, null, Types.VARCHAR);
-
         try {
 
             PreparedStatement ps = getPreparedStatement(sql, args,
@@ -359,6 +420,23 @@ public class JdbcTemplateHelper extends TemplateHelper {
                     + ex.getMessage(), ex);
         }
 
+    }
+
+    /**
+     * Given an SQL statment with no query parameters, return an Iterator
+     * suitable for iterating over with a VTL #foreach construct.
+     * 
+     * <p>
+     * Treats the query parameter as a VARCHAR.
+     * </p>
+     * 
+     * @param sql
+     *            the SQL query
+     * @return a java.util.Iterator
+     */
+    public Iterator<DynaBean> getData(String sql) {
+
+        return getData(sql, null);
     }
 
     /**
@@ -424,8 +502,6 @@ public class JdbcTemplateHelper extends TemplateHelper {
      */
     @SuppressWarnings("unchecked")
     public Iterator<DynaBean> getData(String sql, Object[] args, int type) {
-
-        traceArgs(sql, args, null, type);
 
         try {
 
@@ -519,7 +595,7 @@ public class JdbcTemplateHelper extends TemplateHelper {
             logger.trace("sql = " + sql);
         }
 
-        if (args.length > 0) {
+        if (null != args && args.length > 0) {
 
             logger.trace("args.length = " + args.length);
 

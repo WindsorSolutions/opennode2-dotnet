@@ -4,8 +4,7 @@
 
 <table id="contentTable">
 	<tr>
-		<td id="sidebarPane" align="left"><%@ include
-			file="/WEB-INF/jsp/_bar.jsp"%></td>
+		<td id="sidebarPane" align="left"><%@ include file="/WEB-INF/jsp/_bar.jsp"%></td>
 		<td id="contentPane">
 
         <div id="pageTitle"><fmt:message key="secTitle" /></div>

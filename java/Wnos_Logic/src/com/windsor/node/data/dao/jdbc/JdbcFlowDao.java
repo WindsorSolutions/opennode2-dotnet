@@ -52,41 +52,42 @@ import com.windsor.node.util.FormatUtil;
 public class JdbcFlowDao extends BaseJdbcDao implements FlowDao,
         InitializingBean {
 
-    protected final String SQL_SELECT = "SELECT Id, InfoUrl, Contact, "
-            + "IsProtected, ModifiedBy, ModifiedOn, Code, Description FROM NFlow ORDER BY Code ";
+    protected static final String SQL_SELECT = "SELECT Id, InfoUrl, Contact, "
+            + "IsProtected, ModifiedBy, ModifiedOn, Code, Description FROM NFlow ";
 
-    protected final String SQL_SELECT_NAMES = "SELECT Code FROM NFlow ORDER BY Code ";
+    protected static final String SQL_SELECT_NAMES = "SELECT Code FROM NFlow ORDER BY Code ";
 
-    protected final String SQL_SELECT_ID_EXISTS = "SELECT COUNT(*) FROM NFlow WHERE Id = ? ";
+    protected static final String SQL_SELECT_ID_EXISTS = "SELECT COUNT(*) FROM NFlow WHERE Id = ? ";
 
-    protected final String SQL_SELECT_CODE_EXISTS = "SELECT COUNT(*) FROM NFlow WHERE Code = ? ";
+    protected static final String SQL_SELECT_CODE_EXISTS = "SELECT COUNT(*) FROM NFlow WHERE Code = ? ";
 
-    /**
-     * All finder methods in this class use this SELECT constant to build their
-     * queries
-     */
-    protected final String SQL_SELECT_ID = "SELECT Id, InfoUrl, Contact, "
-            + "IsProtected, ModifiedBy, ModifiedOn, Code, Description FROM NFlow WHERE Id = ? ";
+    protected static final String SQL_SELECT_ID = SQL_SELECT + "WHERE Id = ? ";
 
-    protected final String SQL_SELECT_NAME = "SELECT Id, InfoUrl, Contact, "
-            + "IsProtected, ModifiedBy, ModifiedOn, Code, Description FROM NFlow WHERE Code = ? ";
+    protected static final String SQL_SELECT_NAME = SQL_SELECT
+            + "WHERE Code = ? ";
+
+    protected static final String SQL_SELECT_PROTECTED = SQL_SELECT
+            + " WHERE IsProtected = 'Y' ORDER BY Code ";
+
+    protected static final String SQL_SELECT_ORDER_BY_CODE = SQL_SELECT
+            + "ORDER BY Code ";
 
     /**
      * SQL INSERT statement for this table
      */
-    protected final String SQL_INSERT = "INSERT INTO NFlow ( InfoUrl, Contact, IsProtected, "
+    protected static final String SQL_INSERT = "INSERT INTO NFlow ( InfoUrl, Contact, IsProtected, "
             + "ModifiedBy, ModifiedOn, Code, Description, Id ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ? )";
 
     /**
      * SQL UPDATE statement for this table
      */
-    protected final String SQL_UPDATE = "UPDATE NFlow SET InfoUrl = ?, Contact = ?, "
+    protected static final String SQL_UPDATE = "UPDATE NFlow SET InfoUrl = ?, Contact = ?, "
             + "IsProtected = ?, ModifiedBy = ?, ModifiedOn = ?, Code = ?, Description = ? WHERE Id = ?";
 
     /**
      * SQL DELETE statement for this table
      */
-    protected final String SQL_DELETE = "DELETE FROM NFlow WHERE Id = ?";
+    protected static final String SQL_DELETE = "DELETE FROM NFlow WHERE Id = ?";
 
     private UserAccessPolicyDao userAccessPolicyDao;
     private ServiceDao serviceDao;
@@ -145,26 +146,15 @@ public class JdbcFlowDao extends BaseJdbcDao implements FlowDao,
 
         logger.debug("Flow Id: " + instance.getId());
 
-        Object[] args = new Object[8];
+        Object[] args = new Object[] { instance.getInfoUrl(),
+                instance.getContactUserId(),
+                FormatUtil.toYNFromBoolean(instance.isSecured()),
+                instance.getModifiedById(), DateUtil.getTimestamp(),
+                instance.getName(), instance.getDescription(), instance.getId() };
 
-        args[0] = instance.getInfoUrl();
-        args[1] = instance.getContactUserId();
-        args[2] = FormatUtil.toYNFromBoolean(instance.isSecured());
-        args[3] = instance.getModifiedById();
-        args[4] = DateUtil.getTimestamp();
-        args[5] = instance.getName();
-        args[6] = instance.getDescription();
-        args[7] = instance.getId();
-
-        int[] types = new int[8];
-        types[0] = Types.VARCHAR;
-        types[1] = Types.VARCHAR;
-        types[2] = Types.VARCHAR;
-        types[3] = Types.VARCHAR;
-        types[4] = Types.TIMESTAMP;
-        types[5] = Types.VARCHAR;
-        types[6] = Types.VARCHAR;
-        types[7] = Types.VARCHAR;
+        int[] types = new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,
+                Types.VARCHAR, Types.TIMESTAMP, Types.VARCHAR, Types.VARCHAR,
+                Types.VARCHAR };
 
         printourArgs(args);
 
@@ -189,14 +179,27 @@ public class JdbcFlowDao extends BaseJdbcDao implements FlowDao,
     /**
      * get
      */
-    public List get() {
+    public List<?> get() {
 
-        return getJdbcTemplate().query(SQL_SELECT, new FlowMapper());
-
+        return getJdbcTemplate().query(SQL_SELECT_ORDER_BY_CODE,
+                new FlowMapper());
     }
 
-    public List getFlowNames() {
-        return getList(SQL_SELECT_NAMES);
+    @SuppressWarnings("unchecked")
+    public List<String> getFlowNames() {
+        return (List<String>) getList(SQL_SELECT_NAMES);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.windsor.node.data.dao.FlowDao#getProtectedFlows()
+     */
+    @SuppressWarnings("unchecked")
+    public List<DataFlow> getSecuredFlows() {
+
+        return (List<DataFlow>) getJdbcTemplate().query(SQL_SELECT_PROTECTED,
+                new FlowMapper());
     }
 
     /**

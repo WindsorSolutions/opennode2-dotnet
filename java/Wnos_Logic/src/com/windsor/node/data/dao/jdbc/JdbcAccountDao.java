@@ -182,8 +182,8 @@ public class JdbcAccountDao extends BaseJdbcDao implements AccountDao {
         // then, if we have some, add them to the user
         if (null != instance.getPolicies()) {
 
-            List policyList = instance.getPolicies();
-            Iterator i = policyList.iterator();
+            List<?> policyList = instance.getPolicies();
+            Iterator<?> i = policyList.iterator();
 
             while (i.hasNext()) {
 
@@ -225,7 +225,8 @@ public class JdbcAccountDao extends BaseJdbcDao implements AccountDao {
     /**
      * get list of all users
      */
-    public List get(boolean includeInactive, boolean loadPolicies) {
+    @SuppressWarnings("unchecked")
+    public List<UserAccount> get(boolean includeInactive, boolean loadPolicies) {
 
         if (includeInactive) {
             return getJdbcTemplate().query(SQL_SELECT,
@@ -238,7 +239,8 @@ public class JdbcAccountDao extends BaseJdbcDao implements AccountDao {
 
     }
 
-    public List get(String code, boolean includeInactive) {
+    @SuppressWarnings("unchecked")
+    public List<UserAccount> get(String code, boolean includeInactive) {
 
         validateStringArg(code);
 
@@ -337,9 +339,10 @@ public class JdbcAccountDao extends BaseJdbcDao implements AccountDao {
      * 
      * @return a list of UserAccounts representing active administrators
      */
-    protected List getActiveAdmins() {
+    @SuppressWarnings("unchecked")
+    protected List<UserAccount> getActiveAdmins() {
 
-        List activeAdmins = getJdbcTemplate()
+        List<UserAccount> activeAdmins = getJdbcTemplate()
                 .query(
                         SQL_SELECT_ACTIVE_ADMINS,
                         new Object[] { FormatUtil.YES,

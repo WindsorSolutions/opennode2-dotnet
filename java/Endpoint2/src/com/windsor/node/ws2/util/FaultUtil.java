@@ -65,27 +65,32 @@ public class FaultUtil {
         if (ex instanceof AxisFault) {
 
             AxisFault fault = (AxisFault) ex;
-            logger.error(fault);
+            logger.error("Fault: " + fault);
 
-            if (fault.getDetail() == null) {
-                result = new Endpoint2FaultMessage("Null Node fault detail");
+            if (fault.getCause() == null) {
+                result = new Endpoint2FaultMessage(
+                        "AxisFault.getCause() returned null");
             }
 
             try {
 
                 // org.apache.axiom.om
                 OMElement faultElt = fault.getDetail();
-                logger.debug(faultElt);
+                logger.debug("Fault Detail: " + faultElt);
 
                 NodeFaultDetailType faultDetail = NodeFaultDetailType.Factory
                         .parse(faultElt.getXMLStreamReader());
 
-                logger.debug(faultDetail);
+                logger.debug("Fault Detail Description: "
+                        + faultDetail.getDescription());
 
                 if (StringUtils.isNotBlank(ex.getMessage())) {
                     faultDetail.setDescription(ex.getMessage() + " ("
-                            + faultDetail.getErrorCode() + "-"
+                            + faultDetail.getErrorCode() + " - "
                             + faultDetail.getDescription() + ")");
+
+                    logger.debug("updated Fault Detail Description: "
+                            + faultDetail.getDescription());
                 }
 
                 result = new Endpoint2FaultMessage(faultDetail);

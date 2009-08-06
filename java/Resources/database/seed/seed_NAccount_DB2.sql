@@ -18,7 +18,7 @@ VALUES
 		'Admin',
 		'MY_AGENCY',
 		'00000000-0000-0000-0000-000000000000',
-		current timestamp
+		current date
 	)
 ;
 COMMIT

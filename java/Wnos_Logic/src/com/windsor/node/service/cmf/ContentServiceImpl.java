@@ -159,7 +159,7 @@ public class ContentServiceImpl extends BaseService implements ContentService,
 
             if (tran == null) {
                 throw new RuntimeException(
-                        "Unable to local transaction with that Id: "
+                        "Unable to find local transaction with that Id: "
                                 + content.getTransactionId());
             }
 
@@ -179,8 +179,7 @@ public class ContentServiceImpl extends BaseService implements ContentService,
             UserAccount account = visit.getUserAccount();
 
             if (tran.getFlow().isSecured()) {
-                accountService
-                        .validateAccess(account, tran.getFlow().getName());
+                accountService.validateAccess(account, tran.getFlow().getId());
             }
 
             logEntry.setModifiedById(account.getId());
@@ -469,7 +468,7 @@ public class ContentServiceImpl extends BaseService implements ContentService,
             UserAccount account = visit.getUserAccount();
 
             if (flow.isSecured()) {
-                accountService.validateAccess(account, flow.getName());
+                accountService.validateAccess(account, flow.getId());
             }
 
             logEntry.setModifiedById(account.getId());

@@ -38,20 +38,20 @@ import com.windsor.node.common.domain.UserAccount;
 
 public class NAASPolicyEditRequest {
 
-    private static final long serialVersionUID = 1;
+    private static final long serialVersionUID = 2;
 
-    private List flowAssignemnts; // NAASFlowPolicyInfo
+    private List<NAASFlowPolicyInfo> flowAssignemnts; // NAASFlowPolicyInfo
     private UserAccount account;
 
     public NAASPolicyEditRequest() {
-        flowAssignemnts = new ArrayList();
+        flowAssignemnts = new ArrayList<NAASFlowPolicyInfo>();
     }
 
-    public List getFlowAssignemnts() {
+    public List<NAASFlowPolicyInfo> getFlowAssignemnts() {
         return flowAssignemnts;
     }
 
-    public void setFlowAssignemnts(List flowAssignemnts) {
+    public void setFlowAssignemnts(List<NAASFlowPolicyInfo> flowAssignemnts) {
         this.flowAssignemnts = flowAssignemnts;
     }
 

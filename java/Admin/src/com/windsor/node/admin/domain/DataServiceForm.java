@@ -40,21 +40,21 @@ import com.windsor.node.common.domain.DomainStringStyle;
 
 public class DataServiceForm {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 2;
 
     private DataService service;
-    private List implementers;
+    private List<String> implementers;
     private String flowName;
 
     public DataServiceForm() {
         service = new DataService();
     }
 
-    public List getImplementers() {
+    public List<String> getImplementers() {
         return implementers;
     }
 
-    public void setImplementers(List implementers) {
+    public void setImplementers(List<String> implementers) {
         this.implementers = implementers;
     }
 

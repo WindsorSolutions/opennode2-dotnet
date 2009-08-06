@@ -95,6 +95,12 @@
 		<property name="idGenerator" ref="idGenerator" />
 	</bean>
 
+    <bean id="flowSecurityDao"
+        class="com.windsor.node.data.dao.jdbc.JdbcFlowSecurityDao">
+        <property name="dataSource" ref="jdbcDataSource" />
+        <property name="idGenerator" ref="idGenerator" />
+    </bean>
+
 
 
 	<!-- jdbc -->

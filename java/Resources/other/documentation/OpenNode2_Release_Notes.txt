@@ -1,5 +1,38 @@
 ================================================================================
-Opennode2 v1.1.4 for Java - Release Notes                               2009-06-26
+Opennode2 v1.17 for Java - Release Notes                             2009-08-05
+================================================================================
+
+This release primarily addresses interoperability issues the EN v2.0 Endpoint
+(aka wne2.war). 
+
+The .war files are drop-in replacements for an existing installation; if 
+upgrading, be sure to back up the .properties files in each web application 
+before deploying. See the Java Administration Guide for details.
+
+Beginning with this release, plugin versions are synchronized with OpenNode2
+itself. Due to changes in the Node, the minimum plugin version for this release
+is also 1.17. (The gap in release numbers between 1.1.4 and 1.17 is an artifact
+of synchronizing versions).
+ 
+FIXED/RESOLVED
+========================================
+* The EN v2.0 endpoint now correctly handles Query and Solicit requests.
+
+* The EN v2.0 endpoint problem of  "null" fault messages has been fixed.
+
+* Flow security (restricting user access to Data Exchanges) now works correctly.
+
+* Bugs in the OpenNode2 Admin web application that appeared only when using IBM
+  DB2 for the metadata database (including saving a datasource configuration) 
+  have been addressed.
+
+NEW
+========================================
+* The build scripts now handle version- and build-numbering in a more automated
+  fashion. 
+
+================================================================================
+Opennode2 v1.1.4 for Java - Release Notes                             2009-06-26
 ================================================================================
 
 This release contains both new features and bug fixes. The .war files are drop-

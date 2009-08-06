@@ -128,6 +128,12 @@
 		<property name="idGenerator" ref="uuidGenerator" />
 	</bean>
 
+    <bean id="flowSecurityDao"
+        class="com.windsor.node.data.dao.jdbc.JdbcFlowSecurityDao">
+        <property name="dataSource" ref="jdbcDataSource" />
+        <property name="idGenerator" ref="uuidGenerator" />
+    </bean>
+
 	<bean id="jdbcDataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
 		<property name="driverClassName" value="${jdbc.driverClassName}" />

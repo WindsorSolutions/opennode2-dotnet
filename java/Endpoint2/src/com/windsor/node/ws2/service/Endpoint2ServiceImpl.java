@@ -210,9 +210,17 @@ public class Endpoint2ServiceImpl extends BaseEndpoint2Service implements
             return response;
 
         } catch (Exception ex) {
-            logger.error("[Authenticate]: Exception: " + ex.getMessage());
-            throw FaultUtil.makeFault(ErrorCodeList.E_InvalidCredential, ex
-                    .getMessage());
+
+            String msg;
+
+            if (null == ex.getMessage()) {
+                msg = ex.getClass().getName();
+            } else {
+                msg = ex.getMessage();
+            }
+
+            logger.error("[Authenticate]: Exception: " + msg);
+            throw FaultUtil.makeFault(ErrorCodeList.E_InvalidCredential, msg);
         }
 
     }
@@ -284,8 +292,17 @@ public class Endpoint2ServiceImpl extends BaseEndpoint2Service implements
             return response;
 
         } catch (Exception ex) {
-            logger.error("[Execute]: Exception: " + ex.getMessage());
-            throw FaultUtil.makeFault(ErrorCodeList.E_Unknown, ex.getMessage());
+
+            String msg;
+
+            if (null == ex.getMessage()) {
+                msg = ex.getClass().getName();
+            } else {
+                msg = ex.getMessage();
+            }
+
+            logger.error("[Execute]: Exception: " + msg);
+            throw FaultUtil.makeFault(ErrorCodeList.E_Unknown, msg);
         }
 
     }
@@ -397,8 +414,17 @@ public class Endpoint2ServiceImpl extends BaseEndpoint2Service implements
             return response;
 
         } catch (Exception ex) {
-            logger.error("[Download]: Exception: " + ex.getMessage());
-            throw FaultUtil.makeFault(ErrorCodeList.E_Unknown, ex.getMessage());
+
+            String msg;
+
+            if (null == ex.getMessage()) {
+                msg = ex.getClass().getName();
+            } else {
+                msg = ex.getMessage();
+            }
+
+            logger.error("[Download]: Exception: " + msg);
+            throw FaultUtil.makeFault(ErrorCodeList.E_Unknown, msg);
         }
     }
 
@@ -447,8 +473,17 @@ public class Endpoint2ServiceImpl extends BaseEndpoint2Service implements
             return response;
 
         } catch (Exception ex) {
-            logger.error("[GetStatus]: Exception: " + ex.getMessage());
-            throw FaultUtil.makeFault(ErrorCodeList.E_Unknown, ex.getMessage());
+
+            String msg;
+
+            if (null == ex.getMessage()) {
+                msg = ex.getClass().getName();
+            } else {
+                msg = ex.getMessage();
+            }
+
+            logger.error("[GetStatus]: Exception: " + msg);
+            throw FaultUtil.makeFault(ErrorCodeList.E_Unknown, msg);
         }
 
     }
@@ -503,11 +538,21 @@ public class Endpoint2ServiceImpl extends BaseEndpoint2Service implements
             response.setGetServicesResponse(NodeUtil.getGenericXmlType(content
                     .getType(), content.getContent()));
 
+            logger.debug("Returning result");
             return response;
 
         } catch (Exception ex) {
-            logger.error("[GetServices]: Exception: " + ex.getMessage());
-            throw FaultUtil.makeFault(ErrorCodeList.E_Unknown, ex.getMessage());
+
+            String msg;
+
+            if (null == ex.getMessage()) {
+                msg = ex.getClass().getName();
+            } else {
+                msg = ex.getMessage();
+            }
+
+            logger.error("[GetServices]: Exception: " + msg);
+            throw FaultUtil.makeFault(ErrorCodeList.E_Unknown, msg);
         }
 
     }
@@ -565,17 +610,39 @@ public class Endpoint2ServiceImpl extends BaseEndpoint2Service implements
             TransactionStatus status = contentService.submit(visit, content);
 
             SubmitResponse response = new SubmitResponse();
+
             StatusResponseType statusResponseType = new StatusResponseType();
+
+            logger.debug("Setting StatusResponseType.status to "
+                    + TransactionStatusCode.Received);
             statusResponseType.setStatus(TransactionStatusCode.Received);
+
+            logger.debug("Setting StatusResponseType.transactionId to "
+                    + status.getTransactionId());
             statusResponseType.setTransactionId(status.getTransactionId());
+
+            logger.debug("Setting StatusResponseType.statusDetail to "
+                    + status.getDescription());
             statusResponseType.setStatusDetail(status.getDescription());
+
+            logger.debug("Setting StatusResponseType in SubmitResponse...");
             response.setSubmitResponse(statusResponseType);
 
+            logger.debug("Returning response...");
             return response;
 
         } catch (Exception ex) {
-            logger.error("[Submit]: Exception: " + ex.getMessage());
-            throw FaultUtil.makeFault(ErrorCodeList.E_Unknown, ex.getMessage());
+
+            String msg;
+
+            if (null == ex.getMessage()) {
+                msg = ex.getClass().getName();
+            } else {
+                msg = ex.getMessage();
+            }
+
+            logger.error("[Submit]: Exception: " + msg);
+            throw FaultUtil.makeFault(ErrorCodeList.E_Unknown, msg);
         }
 
     }
@@ -660,17 +727,39 @@ public class Endpoint2ServiceImpl extends BaseEndpoint2Service implements
 
             NotifyResponse response = new NotifyResponse();
             StatusResponseType responseType = new StatusResponseType();
+
+            logger.debug("Setting StatusResponseType.status to "
+                    + TransactionStatusCode.Factory.fromValue(result
+                            .getStatus().getName()));
             responseType.setStatus(TransactionStatusCode.Factory
                     .fromValue(result.getStatus().getName()));
+
+            logger.debug("Setting StatusResponseType.statusDetail to "
+                    + result.getDescription());
             responseType.setStatusDetail(result.getDescription());
+
+            logger.debug("Setting StatusResponseType.transactionId to "
+                    + result.getTransactionId());
             responseType.setTransactionId(result.getTransactionId());
+
+            logger.debug("Putting StatusResponseType in NotifyResponse...");
             response.setNotifyResponse(responseType);
 
+            logger.debug("Returning NotifyResponse...");
             return response;
 
         } catch (Exception ex) {
-            logger.error("[Notify]: Exception: " + ex.getMessage());
-            throw FaultUtil.makeFault(ErrorCodeList.E_Unknown, ex.getMessage());
+
+            String msg;
+
+            if (null == ex.getMessage()) {
+                msg = ex.getClass().getName();
+            } else {
+                msg = ex.getMessage();
+            }
+
+            logger.error("[Notify]: Exception: " + msg);
+            throw FaultUtil.makeFault(ErrorCodeList.E_Unknown, msg);
         }
 
     }
@@ -744,7 +833,7 @@ public class Endpoint2ServiceImpl extends BaseEndpoint2Service implements
 
                         if (StringUtils.isNotBlank(notifStr)) {
 
-                            // TODO: Create Transaction Notifcation Convertion
+                            // TODO: Create Transaction Notifcation Conversion
                             // Utility
                             dataRequest
                                     .getNotifications()
@@ -769,20 +858,39 @@ public class Endpoint2ServiceImpl extends BaseEndpoint2Service implements
 
             StatusResponseType responseType = new StatusResponseType();
 
+            logger.debug("Setting StatusResponseType.status to "
+                    + TransactionStatusCode.Factory.fromValue(status
+                            .getStatus().getName()));
             responseType.setStatus(TransactionStatusCode.Factory
                     .fromValue(status.getStatus().getName()));
 
+            logger.debug("Setting StatusResponseType.statusDetail to "
+                    + status.getDescription());
             responseType.setStatusDetail(status.getDescription());
+
+            logger.debug("Setting StatusResponseType.transactionId to "
+                    + status.getTransactionId());
             responseType.setTransactionId(status.getTransactionId());
 
+            logger.debug("Putting StatusResponseType in SolicitResponse...");
             SolicitResponse response = new SolicitResponse();
             response.setSolicitResponse(responseType);
 
+            logger.debug("Returning SolicitResponse...");
             return response;
 
         } catch (Exception ex) {
-            logger.error("[Solicit]: Exception: " + ex.getMessage());
-            throw FaultUtil.makeFault(ErrorCodeList.E_Unknown, ex.getMessage());
+
+            String msg;
+
+            if (null == ex.getMessage()) {
+                msg = ex.getClass().getName();
+            } else {
+                msg = ex.getMessage();
+            }
+
+            logger.error("[Solicit]: Exception: " + msg);
+            throw FaultUtil.makeFault(ErrorCodeList.E_Unknown, msg);
         }
 
     }
@@ -857,25 +965,48 @@ public class Endpoint2ServiceImpl extends BaseEndpoint2Service implements
                 logger.debug("Document: " + doc);
 
                 ResultSetType responseType = new ResultSetType();
+
+                logger.debug("Setting ResultSetType.rowId to "
+                        + BigInteger.valueOf(wnosResult
+                                .getPaginatedContentIndicator().getStart()));
                 responseType.setRowId(BigInteger.valueOf(wnosResult
                         .getPaginatedContentIndicator().getStart()));
+
+                logger.debug("Setting ResultSetType.rowCount to "
+                        + BigInteger.valueOf(wnosResult
+                                .getPaginatedContentIndicator().getCount()));
                 responseType.setRowCount(BigInteger.valueOf(wnosResult
                         .getPaginatedContentIndicator().getCount()));
+
+                logger.debug("Setting ResultSetType.lastSet to "
+                        + wnosResult.getPaginatedContentIndicator().isLast());
                 responseType.setLastSet(wnosResult
                         .getPaginatedContentIndicator().isLast());
                 responseType.setResults(NodeUtil.getGenericXmlType(doc
                         .getType(), doc.getContent()));
 
                 QueryResponse response = new QueryResponse();
+
+                logger.debug("Setting ResultSetType in QueryResponse...");
                 response.setQueryResponse(responseType);
 
+                logger.debug("Returning response...");
                 return response;
 
             }
 
         } catch (Exception ex) {
-            logger.error("[Query]: Exception: " + ex.getMessage());
-            throw FaultUtil.makeFault(ErrorCodeList.E_Unknown, ex.getMessage());
+
+            String msg;
+
+            if (null == ex.getMessage()) {
+                msg = ex.getClass().getName();
+            } else {
+                msg = ex.getMessage();
+            }
+
+            logger.error("[Query]: Exception: " + msg);
+            throw FaultUtil.makeFault(ErrorCodeList.E_Unknown, msg);
         }
 
     }

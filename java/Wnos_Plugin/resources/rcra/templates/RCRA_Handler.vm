@@ -3,12 +3,11 @@
 $helper.startStopWatch()
 #if($handlerLimit) $helper.print("HandlerLimit:") $helper.print($handlerLimit)
 ## this query lets us limit the results for test - DB2 specific syntax
-#set($handlerQuery = "SELECT handler_id FROM RCRA_HD_HBASIC WHERE handler_id <>  ? fetch first $handlerLimit rows only")
+#set($handlerQuery = "SELECT handler_id FROM RCRA_HD_HBASIC fetch first $handlerLimit rows only")
 #else
-#set($handlerQuery = "SELECT handler_id FROM RCRA_HD_HBASIC WHERE handler_id <>  ? ")
+#set($handlerQuery = "SELECT handler_id FROM RCRA_HD_HBASIC")
 #end
-$helper.print("handlerQuery:")
-$helper.print($handlerQuery)
+$helper.print("handlerQuery: $handlerQuery")
 #if($makeHeader)#if($makeHeader == "true" || $makeHeader == "TRUE")
 <Document xmlns:hdr="http://www.exchangenetwork.net/schema/v1.0/ExchangeNetworkDocument.xsd"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -35,8 +34,8 @@ $helper.print($handlerQuery)
     </Header>
 <Payload Operation=$payloadOperation>
 #end#end##if($makeHeader)
-<HazardousWasteHandlerSubmission xmlns="http://www.exchangenetwork.net/schema/RCRA/4">
-#foreach($handlerId in $helper.getList($handlerQuery, "", "handler_id"))
+<HazardousWasteHandlerSubmission xmlns="http://www.exchangenetwork.net/schema/RCRA/4" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.exchangenetwork.net/schema/RCRA/4 http://www.exchangenetwork.net/schema/RCRA/4/0/RCRA_HazardousWasteHandlerSubmission_v4.0.xsd">
+#foreach($handlerId in $helper.getList($handlerQuery, "handler_id"))
     <FacilitySubmission>
 #if ($velocityCount % 500 == 0)
 $helper.print($velocityCount)
@@ -570,8 +569,7 @@ $helper.printElapsedTime()
 </Payload>
 </Document>
 #end#end##if($makeHeader
-$helper.print("Template Records:")
-$helper.print($totalRecCount)
+$helper.print("Template Records: $totalRecCount")
 ## Setting the total number of records processed
 $helper.setResultingRecordCount($totalRecCount)
 $helper.print("Total Time:")

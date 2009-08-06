@@ -1,6 +1,6 @@
 --  additions for HERE AuthorizationRequest feature    
 ALTER TABLE NAccountAuthRequestFlow  
-    DROP CONSTRAINT FK_AccountAuthRequestFlow_AccountAuthRequest
+    DROP CONSTRAINT FK_AcctAuthReqFlow_AcctAuthReq
 ;
 
 ALTER TABLE NAccountAuthRequestFlow
@@ -11,11 +11,11 @@ DROP TABLE NAccountAuthRequestFlow
 ;
 
 ALTER TABLE NAccountAuthRequest  
-    DROP CONSTRAINT FK_AccountAuthRequest_Account 
+    DROP CONSTRAINT FK_AcctAuthReq_Acct 
 ;
 
 ALTER TABLE NAccountAuthRequest  
-    DROP CONSTRAINT FK_AccountAuthenticationRequest_Transaction 
+    DROP CONSTRAINT FK_AcctAuthReq_Trans 
 ;
 
 DROP TABLE NAccountAuthRequest

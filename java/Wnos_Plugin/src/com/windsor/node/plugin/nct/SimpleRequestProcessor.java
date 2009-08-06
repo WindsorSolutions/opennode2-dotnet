@@ -65,13 +65,12 @@ import com.windsor.node.service.helper.settings.SettingServiceProvider;
  */
 public class SimpleRequestProcessor extends BaseWnosPlugin {
 
-    private static final String QUERY_XML_HEADER = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
-            + "<QueryResult:QueryResult "
-            + "xmlns:QueryResult=\"http://www.exchangenetwork.net/schema/NCT/1\" "
-            + "xmlns=\"http://www.exchangenetwork.net/schema/NCT/1\" "
-            + "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">";
+    private static final String QUERY_XML_HEADER = "\n<QueryResult:QueryResult "
+            + "\nxmlns:QueryResult=\"http://www.exchangenetwork.net/schema/NCT/1\" "
+            + "\nxmlns=\"http://www.exchangenetwork.net/schema/NCT/1\" "
+            + "\nxmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">";
 
-    private static final String QUERY_XML_FOOTER = "</QueryResult:QueryResult>";
+    private static final String QUERY_XML_FOOTER = "\n</QueryResult:QueryResult>\n";
 
     private static final String STRING_PARAM = "stringParameter";
     private static final String XML_PARAM = "xmlParameter";
@@ -82,6 +81,11 @@ public class SimpleRequestProcessor extends BaseWnosPlugin {
     private static final String AUDIT_REPORT_NAME = "Node2.0.Report";
 
     private static final int MAX_ROWS = 10;
+
+    private SettingServiceProvider settingService;
+    private IdGenerator idGenerator;
+    private CompressionService compressionService;
+    private String resultFilePathBase;
 
     public SimpleRequestProcessor() {
 
@@ -108,6 +112,30 @@ public class SimpleRequestProcessor extends BaseWnosPlugin {
     public void afterPropertiesSet() {
         super.afterPropertiesSet();
 
+        settingService = (SettingServiceProvider) getServiceFactory()
+                .makeService(SettingServiceProvider.class);
+
+        if (settingService == null) {
+            throw new RuntimeException(
+                    "Unable to obtain SettingServiceProvider");
+        }
+
+        idGenerator = (IdGenerator) getServiceFactory().makeService(
+                IdGenerator.class);
+
+        if (idGenerator == null) {
+            throw new RuntimeException("Unable to obtain IdGenerator");
+        }
+
+        compressionService = (CompressionService) getServiceFactory()
+                .makeService(CompressionService.class);
+
+        if (compressionService == null) {
+            throw new RuntimeException("Unable to obtain CompressionService");
+        }
+
+        resultFilePathBase = settingService.getTempDir().getAbsolutePath();
+
         debug("Plugin validated");
 
     }
@@ -127,29 +155,8 @@ public class SimpleRequestProcessor extends BaseWnosPlugin {
 
             result.getAuditEntries()
                     .add(makeEntry("Vaildating transaction..."));
+            validateTransaction(transaction);
 
-            /*
-             * 
-             * Transaction validation
-             */
-            if (transaction == null) {
-                throw new RuntimeException("Null transaction");
-            }
-
-            if (transaction.getCreator() == null
-                    || StringUtils.isBlank(transaction.getCreator()
-                            .getNaasUserName())) {
-                throw new RuntimeException("Null transaction creator");
-            }
-
-            if (StringUtils.isBlank(transaction.getNetworkId())) {
-                throw new RuntimeException("Null transaction network Id");
-            }
-
-            /*
-             * 
-             * Parsing Test
-             */
             result.getAuditEntries().add(
                     makeEntry("Parsing test from: "
                             + transaction.getWebMethod().getName()));
@@ -165,8 +172,6 @@ public class SimpleRequestProcessor extends BaseWnosPlugin {
 
                 result.setDocuments(processRequest(transaction.getRequest()));
 
-            } else {
-                // Do nothing
             }
 
             /*
@@ -210,38 +215,13 @@ public class SimpleRequestProcessor extends BaseWnosPlugin {
      * Utilities
      */
 
-    private List processRequest(DataRequest req) {
+    private List<Document> processRequest(DataRequest req) {
 
         if (req == null) {
             throw new RuntimeException("Null request");
         }
 
-        SettingServiceProvider settingService = (SettingServiceProvider) getServiceFactory()
-                .makeService(SettingServiceProvider.class);
-
-        if (settingService == null) {
-            throw new RuntimeException(
-                    "Unable to obtain SettingServiceProvider");
-        }
-
-        IdGenerator idGenerator = (IdGenerator) getServiceFactory()
-                .makeService(IdGenerator.class);
-
-        if (idGenerator == null) {
-            throw new RuntimeException("Unable to obtain IdGenerator");
-        }
-
-        CompressionService compressionService = (CompressionService) getServiceFactory()
-                .makeService(CompressionService.class);
-
-        if (compressionService == null) {
-            throw new RuntimeException("Unable to obtain CompressionService");
-        }
-
-        String resultFilePathBase = settingService.getTempDir()
-                .getAbsolutePath();
-
-        List resultDocs = new ArrayList();
+        List<Document> resultDocs = new ArrayList<Document>();
 
         try {
 
@@ -256,10 +236,12 @@ public class SimpleRequestProcessor extends BaseWnosPlugin {
             int maxRows = getMaxRowsFromPaging(req.getPaging());
 
             for (int i = startRow; i < maxRows; i++) {
-                sb.append("<row>Row " + i + " text</row>");
+                sb.append("\n<row>Row " + i + " text</row>");
             }
 
             sb.append(QUERY_XML_FOOTER);
+
+            logger.debug("Buffered doc content");
 
             String resultFilePath = FilenameUtils.concat(resultFilePathBase,
                     "NCT-" + req.getService().getName() + "-"
@@ -269,6 +251,8 @@ public class SimpleRequestProcessor extends BaseWnosPlugin {
 
             FileUtils.writeStringToFile(resultFile, sb.toString(), "UTF-8");
 
+            logger.debug("Wrote buffer to " + resultFilePath);
+
             if (req.getType().equals(RequestType.SOLICIT)) {
 
                 resultFile = compressionService.zip(resultFile);
@@ -276,7 +260,11 @@ public class SimpleRequestProcessor extends BaseWnosPlugin {
                 doc.setDocumentName("NCT-SolicitResults.zip");
                 doc.setType(CommonContentType.ZIP);
 
+                logger.debug("SOLICIT request, set content type to ZIP");
+
             } else if (req.getType().equals(RequestType.QUERY)) {
+
+                logger.debug("QUERY request");
 
                 String zipSetting = null;
 
@@ -289,6 +277,8 @@ public class SimpleRequestProcessor extends BaseWnosPlugin {
                     zipSetting = (String) req.getParameters().get(XML_PARAM);
 
                 }
+
+                logger.debug("zipSetting = " + zipSetting);
 
                 if (StringUtils.isNotBlank(zipSetting)
                         && StringUtils.containsIgnoreCase(zipSetting, UNZIPPED)) {
@@ -309,6 +299,8 @@ public class SimpleRequestProcessor extends BaseWnosPlugin {
                 doc.setDocumentName("NCT-QueryResults.xml");
                 doc.setType(CommonContentType.XML);
             }
+
+            logger.debug("doc content type set to " + doc.getType().getName());
 
             doc.setContent(FileUtils.readFileToByteArray(resultFile));
             resultDocs.add(doc);
@@ -374,7 +366,7 @@ public class SimpleRequestProcessor extends BaseWnosPlugin {
 
             b = false;
 
-        } else if (count - start >= 10) {
+        } else if (count - start >= MAX_ROWS) {
 
             b = true;
 

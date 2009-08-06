@@ -32,8 +32,13 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.windsor.node.util;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+
+import org.apache.log4j.Logger;
 
 public final class IOUtil {
+
+    private static Logger logger = Logger.getLogger(IOUtil.class);
 
     private IOUtil() {
     }
@@ -57,6 +62,60 @@ public final class IOUtil {
         }
 
         return testFile;
+
+    }
+
+    /**
+     * Detect whether a byte[] begins with the (unreadable) UTF-8 byte-order
+     * marker; for use in SAX-based XML parsing.
+     * 
+     * <p>
+     * Google for &apos;xerces &quot;Content is not allowed in
+     * prolog&quot;&apos; to see why this is valuable.
+     * </p>
+     * 
+     * @param input
+     * @return
+     */
+    public static byte[] filterUtf8Bom(byte[] input) {
+
+        byte[] filteredInput = null;
+
+        logger.debug("looking for UTF-8 Byte-order-mark at start of byte[]...");
+
+        /*
+         * lifted from
+         * http://stackoverflow.com/questions/712004/does-java-have-methods-to
+         * -get-the-various-byte-order-marks
+         */
+        try {
+
+            byte[] utf8bom = "\uFEFF".getBytes("UTF-8");
+
+            if (input[0] == utf8bom[0] && input[1] == utf8bom[1]
+                    && input[2] == utf8bom[2]) {
+
+                logger.debug("Found UTF-8 Byte-order-mark, removing");
+
+                filteredInput = new byte[input.length - utf8bom.length];
+
+                for (int i = utf8bom.length; i < input.length; i++) {
+                    filteredInput[i - utf8bom.length] = input[i];
+                }
+
+            } else {
+
+                logger.debug("No UTF-8 Byte-order-mark found.");
+
+                filteredInput = input;
+            }
+
+        } catch (UnsupportedEncodingException e) {
+
+            throw new RuntimeException(e.getMessage(), e);
+        }
+
+        return filteredInput;
 
     }
 

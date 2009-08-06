@@ -44,6 +44,7 @@ import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.ProcessContentResult;
 import com.windsor.node.common.domain.ServiceType;
 import com.windsor.node.common.util.NodeClientService;
+import com.windsor.node.data.dao.TransactionDao;
 import com.windsor.node.plugin.BaseWnosPlugin;
 import com.windsor.node.service.helper.settings.SettingServiceProvider;
 
@@ -145,6 +146,7 @@ public class InboundDocumentRelayProcessor extends BaseWnosPlugin {
 
             result.getAuditEntries().add(
                     makeEntry("Validating required helpers..."));
+
             SettingServiceProvider settingService = (SettingServiceProvider) getServiceFactory()
                     .makeService(SettingServiceProvider.class);
 
@@ -152,6 +154,9 @@ public class InboundDocumentRelayProcessor extends BaseWnosPlugin {
                 throw new RuntimeException(
                         "Unable to obtain SettingServiceProvider");
             }
+
+            TransactionDao tranDao = (TransactionDao) getServiceFactory()
+                    .makeService(TransactionDao.class);
 
             result.getAuditEntries().add(makeEntry("Vaildating arguments..."));
             String endpointUrl = getRequiredConfigValueAsString(ARG_TARGET_ENDPOINT_URL);
@@ -168,7 +173,21 @@ public class InboundDocumentRelayProcessor extends BaseWnosPlugin {
 
             result.getAuditEntries()
                     .add(makeEntry("Submitting transaction..."));
-            client.submit(transaction);
+            NodeTransaction resultTran = client.submit(transaction);
+
+            if (resultTran == null) {
+                throw new RuntimeException("Null transaction");
+            }
+
+            // In case the calling class uses that Id
+            transaction.setNetworkId(resultTran.getNetworkId());
+
+            result.getAuditEntries().add(
+                    makeEntry("Remote Transaction Id: "
+                            + resultTran.getNetworkId()));
+
+            tranDao.updateNetworkId(transaction.getId(), resultTran
+                    .getNetworkId());
 
             result.setSuccess(true);
             result.setStatus(CommonTransactionStatusCode.PROCESSED);

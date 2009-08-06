@@ -56,7 +56,11 @@ import com.windsor.node.util.IOUtil;
 public class ZipCompressionService implements CompressionService,
         InitializingBean {
 
-    public final Logger logger = Logger.getLogger(this.getClass());
+    private static final String UNHANDLED_EXCEPTION = "Unhandled exception: ";
+
+    private static final int MEGA = 1024;
+
+    private Logger logger = Logger.getLogger(this.getClass());
 
     private File tempDir;
 
@@ -80,10 +84,11 @@ public class ZipCompressionService implements CompressionService,
 
     }
 
-    // OLD
-
-    /**
-     * zip
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.windsor.node.service.helper.CompressionService#zip(byte[],
+     * java.lang.String)
      */
     public byte[] zip(byte[] content, String fileName) {
 
@@ -113,7 +118,7 @@ public class ZipCompressionService implements CompressionService,
 
         } catch (IOException ioe) {
 
-            logger.error("Unhandled exception:" + ioe.getMessage());
+            logger.error(UNHANDLED_EXCEPTION + ioe.getMessage());
 
             ioe.printStackTrace();
 
@@ -121,6 +126,12 @@ public class ZipCompressionService implements CompressionService,
         }
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.windsor.node.service.helper.CompressionService#unzip(byte[],
+     * java.lang.String)
+     */
     public void unzip(byte[] content, String targetDirPath) {
 
         String sourcePath = FilenameUtils.concat(tempDir.getAbsolutePath(),
@@ -138,7 +149,7 @@ public class ZipCompressionService implements CompressionService,
 
         } catch (Exception ex) {
 
-            logger.error("Unhandled exception:" + ex.getMessage(), ex);
+            logger.error(UNHANDLED_EXCEPTION + ex.getMessage(), ex);
 
             throw new RuntimeException("Error while unzipping file: "
                     + targetDirPath + " Message: " + ex.getMessage(), ex);
@@ -146,12 +157,16 @@ public class ZipCompressionService implements CompressionService,
 
     }
 
-    /**
-     * unzip
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.windsor.node.service.helper.CompressionService#unzip(java.lang.String
+     * , java.lang.String)
      */
     public void unzip(String sourceFilePath, String targetDirPath) {
 
-        Enumeration entries = null;
+        Enumeration<? extends ZipEntry> entries = null;
         ZipFile zipFile = null;
 
         try {
@@ -187,7 +202,7 @@ public class ZipCompressionService implements CompressionService,
 
         } catch (IOException ioe) {
 
-            logger.error("Unhandled exception:");
+            logger.error(UNHANDLED_EXCEPTION);
             logger.error(ioe);
 
             throw new RuntimeException("Error while unzipping file: "
@@ -196,12 +211,16 @@ public class ZipCompressionService implements CompressionService,
 
     }
 
-    /**
-     * zip
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.windsor.node.service.helper.CompressionService#zip(java.lang.String,
+     * java.lang.String)
      */
     public void zip(String targetFilePath, String sourceDirPath) {
 
-        byte[] buf = new byte[1024];
+        byte[] buf = new byte[MEGA];
 
         try {
 
@@ -242,7 +261,7 @@ public class ZipCompressionService implements CompressionService,
 
         } catch (IOException ioe) {
 
-            logger.error("Unhandled exception:" + ioe.getMessage());
+            logger.error(UNHANDLED_EXCEPTION + ioe.getMessage());
 
             ioe.printStackTrace();
 
@@ -252,6 +271,11 @@ public class ZipCompressionService implements CompressionService,
 
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.windsor.node.service.helper.CompressionService#zip(java.io.File)
+     */
     public File zip(File sourceFile) {
 
         if (sourceFile == null || !sourceFile.exists()) {
@@ -264,7 +288,7 @@ public class ZipCompressionService implements CompressionService,
             return sourceFile;
         }
 
-        byte[] buf = new byte[1024];
+        byte[] buf = new byte[MEGA];
 
         try {
 
@@ -306,12 +330,15 @@ public class ZipCompressionService implements CompressionService,
 
     }
 
-    /**
-     * zip
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.windsor.node.service.helper.CompressionService#zip(java.lang.String)
      */
     public String zip(String sourceFilePath) {
 
-        byte[] buf = new byte[1024];
+        byte[] buf = new byte[MEGA];
 
         try {
 
@@ -344,7 +371,7 @@ public class ZipCompressionService implements CompressionService,
 
         } catch (IOException ioe) {
 
-            logger.error("Unhandled exception:" + ioe.getMessage());
+            logger.error(UNHANDLED_EXCEPTION + ioe.getMessage());
 
             ioe.printStackTrace();
 
@@ -381,10 +408,10 @@ public class ZipCompressionService implements CompressionService,
      * @param out
      * @throws IOException
      */
-    private static final void copyInputStream(InputStream in, OutputStream out)
+    private static void copyInputStream(InputStream in, OutputStream out)
             throws IOException {
 
-        byte[] buffer = new byte[1024];
+        byte[] buffer = new byte[MEGA];
         int len;
 
         while ((len = in.read(buffer)) >= 0) {
@@ -397,6 +424,10 @@ public class ZipCompressionService implements CompressionService,
 
     public void setTempDir(File tempDir) {
         this.tempDir = tempDir;
+    }
+
+    public File getTempDir() {
+        return tempDir;
     }
 
 }

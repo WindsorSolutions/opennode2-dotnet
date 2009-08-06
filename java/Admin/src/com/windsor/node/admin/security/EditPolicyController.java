@@ -83,11 +83,11 @@ public class EditPolicyController extends BaseSimpleFormController implements
     public void afterPropertiesSet() throws Exception {
 
         if (accountService == null) {
-            throw new Exception("EditAccountController: accountService not set");
+            throw new Exception("EditPolicyController: accountService not set");
         }
 
         if (flowService == null) {
-            throw new Exception("EditAccountController: flowService not set");
+            throw new Exception("EditPolicyController: flowService not set");
         }
 
     }
@@ -135,7 +135,8 @@ public class EditPolicyController extends BaseSimpleFormController implements
             String[] selectedFlow = ServletRequestUtils.getStringParameters(
                     request, "selectedFlow");
 
-            List assignedPolicies = new ArrayList(selectedFlow.length);
+            List<UserAccessPolicy> assignedPolicies = new ArrayList<UserAccessPolicy>(
+                    selectedFlow.length);
 
             if (selectedFlow != null) {
                 logger.debug("assignments: " + selectedFlow.length);
@@ -173,9 +174,8 @@ public class EditPolicyController extends BaseSimpleFormController implements
 
             request.setAttribute(AdminConstants.COMMAND_KEY, editRequest);
 
-            view = new ModelAndView(getFormView(),
-                    AdminConstants.MODEL_KEY, getReferenceData(request,
-                            visit));
+            view = new ModelAndView(getFormView(), AdminConstants.MODEL_KEY,
+                    getReferenceData(request, visit));
 
         }
 
@@ -183,22 +183,25 @@ public class EditPolicyController extends BaseSimpleFormController implements
 
     }
 
-    protected Map getReferenceData(HttpServletRequest request, NodeVisit visit) {
+    protected Map<String, Object> getReferenceData(HttpServletRequest request,
+            NodeVisit visit) {
 
-        Map model = new HashMap();
+        Map<String, Object> model = new HashMap<String, Object>();
         model.put(AdminConstants.VISIT_KEY, visit);
 
         // Set the selected tab
         model.put(AdminConstants.TAB_KEY, SiteTabUtils.TAB_SECURITY);
 
         // set the side bar
-        model.put(AdminConstants.BARS_KEY, SideBarUtils.getSecurityBars(request, 1));
+        model.put(AdminConstants.BARS_KEY, SideBarUtils.getSecurityBars(
+                request, 1));
 
         return model;
 
     }
 
-    protected Map referenceData(HttpServletRequest request) throws Exception {
+    protected Map<String, Object> referenceData(HttpServletRequest request)
+            throws Exception {
 
         NodeVisit visit = VisitUtils.getVisit(request);
 
@@ -207,9 +210,9 @@ public class EditPolicyController extends BaseSimpleFormController implements
             return null;
         }
 
-        Map modelHolder = new HashMap();
-        modelHolder.put(AdminConstants.MODEL_KEY, getReferenceData(
-                request, visit));
+        Map<String, Object> modelHolder = new HashMap<String, Object>();
+        modelHolder.put(AdminConstants.MODEL_KEY, getReferenceData(request,
+                visit));
         return modelHolder;
 
     }
@@ -242,7 +245,7 @@ public class EditPolicyController extends BaseSimpleFormController implements
 
             // get all flows
             logger.debug("Getting list of flows...");
-            List flowList = flowService.getFlows(visit, false);
+            List<DataFlow> flowList = flowService.getFlows(visit, false);
 
             for (int f = 0; f < flowList.size(); f++) {
 
@@ -263,7 +266,7 @@ public class EditPolicyController extends BaseSimpleFormController implements
 
                     // TODO: For now, only flow policies are managed. In the
                     // future would be nice to implement other
-                    // types
+                    // types (e.g. services-level policy?)
                     if (policy.getPolicyType().getName().equalsIgnoreCase(
                             ServiceRequestAuthorizationType.FLOW.getName())
                             && flow.getId().equalsIgnoreCase(

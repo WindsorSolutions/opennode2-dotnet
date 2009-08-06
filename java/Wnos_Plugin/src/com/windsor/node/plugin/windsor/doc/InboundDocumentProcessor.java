@@ -213,10 +213,8 @@ public class InboundDocumentProcessor extends BaseWnosPlugin {
             result.getAuditEntries().add(
                     makeEntry("Vaildating transaction and documents..."));
 
-            /*
-             * 
-             * Parsing Test
-             */
+            validateTransaction(transaction);
+
             if (transaction.getDocuments() == null) {
                 throw new RuntimeException(
                         "Invalid number of documents. At least one required");
@@ -266,7 +264,6 @@ public class InboundDocumentProcessor extends BaseWnosPlugin {
                     makeEntry("Error while executing: "
                             + this.getClass().getName() + "Message: "
                             + ex.getMessage()));
-
         }
 
         return result;

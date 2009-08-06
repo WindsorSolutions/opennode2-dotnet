@@ -12,8 +12,11 @@
 		<copy todir="${build}" overwrite="yes" verbose="${verbosity}" preservelastmodified="false">
 			<fileset dir="${resources.local}" />
 		</copy>
+        <replace file="${build}/build_info.html" token="@major.version@" value="${major.version}" summary="true" />
+        <replace file="${build}/build_info.html" token="@minor.version@" value="${minor.version}" summary="true" />
 		<replace file="${build}/build_info.html" token="@build.time@" value="${build.time}" summary="true" />
 		<replace file="${build}/build_info.html" token="@target.env@" value="${env.dir}" summary="true" />
+        <replace file="${build}/build_info.html" token="@node.build.number@" value="${build.number}" summary="true" />
 	</target>
 
 </project>

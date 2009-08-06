@@ -51,7 +51,7 @@ public class NaasSyncTaskWorker extends NodeWorker implements InitializingBean {
     private AccountDao accountDao;
     private NAASConfig naasConfig;
     private UserManagerHelper userManager;
-    private UserAccount adminAccout;
+    private UserAccount adminAccount;
 
     /**
      * afterPropertiesSet
@@ -73,10 +73,10 @@ public class NaasSyncTaskWorker extends NodeWorker implements InitializingBean {
         }
 
         // get admin account
-        adminAccout = accountDao.getByNAASAccount(naasConfig.getAdminAccount()
+        adminAccount = accountDao.getByNAASAccount(naasConfig.getAdminAccount()
                 .getUsername());
 
-        if (adminAccout == null) {
+        if (adminAccount == null) {
             throw new RuntimeException("Null admin account for: "
                     + naasConfig.getAdminAccount().getUsername());
         }
@@ -134,7 +134,7 @@ public class NaasSyncTaskWorker extends NodeWorker implements InitializingBean {
         logEntry.setIp(getNosConfig().getLocalhostIp());
         logEntry.setType(ActivityType.INFO);
         logEntry.addEntry("Machine Id: " + getMachineId());
-        logEntry.setModifiedById(adminAccout.getId());
+        logEntry.setModifiedById(adminAccount.getId());
 
         try {
 
@@ -184,7 +184,7 @@ public class NaasSyncTaskWorker extends NodeWorker implements InitializingBean {
                             if (accountDao.getOrCreateAccount(
                                     naasAccountInfo.getUserName(),
                                     naasAccountInfo.getAffiliate(),
-                                    adminAccout.getId()).isActive()) {
+                                    adminAccount.getId()).isActive()) {
                                 // increment number of inserts only if saved
                                 // otherwise it must have already existed
                                 addedUsersCount++;

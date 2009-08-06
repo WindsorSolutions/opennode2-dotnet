@@ -1,44 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="SharedBuildLogic" basedir="." default="build.jar">
-	<!-- TODO: add check for project jar dependencies -->
-	<!-- properties & entities for all Node projects -->
-	<property file="build.properties" />
-	<property name="resource.base.dir" value="${basedir}/../Resources" />
-	<property file="${resource.base.dir}/ant/shared.build.properties" />
-	<property name="resources.local" value="${basedir}/resources" />
-	<property name="env.dir.local" value="${basedir}/env/${env.dir}" />
-	<property name="log4j.properties" value="${env.dir.local}/log4j.properties" />
-	<property name="commons-logging.properties" value="${env.dir.local}/commons-logging.properties" />
-	<property name="runtime.jar.location" value="${resource.base.dir}/lib/${eclipse.project.name}" />
-	<property name="buildtime.jar.location" value="${resource.base.dir}/lib/${eclipse.project.name}.build_only" />
-	<property name="src" value="${basedir}/src" />
-	<property name="test" value="${basedir}/test" />
-	<property name="build" value="${basedir}/build" />
-	<property name="dist" value="${resource.base.dir}/dist" />
-	<property name="web.dir" value="${appserver.deploy.dir}/${jarName}" />
-	<property name="web.inf" value="${build}/WEB-INF" />
-	<property name="web.inf.lib" value="${web.inf}/lib" />
-	<property name="compile.includes" value="*.xml, *.properties" />
-	<property name="manifest.src" value="${resource.base.dir}/ant/MANIFEST.MF" />
+    <!-- properties & entities for all Node projects -->
+    <property file="build.properties" />
+    <property name="resource.base.dir" value="${basedir}/../Resources" />
+    <property file="${resource.base.dir}/ant/shared.build.properties" />
+    <property name="resources.local" value="${basedir}/resources" />
+    <property name="env.dir.local" value="${basedir}/env/${env.dir}" />
+    <property name="log4j.properties" value="${env.dir.local}/log4j.properties" />
+    <property name="commons-logging.properties" value="${env.dir.local}/commons-logging.properties" />
+    <property name="runtime.jar.location" value="${resource.base.dir}/lib/${eclipse.project.name}" />
+    <property name="buildtime.jar.location" value="${resource.base.dir}/lib/${eclipse.project.name}.build_only" />
+    <property name="src" value="${basedir}/src" />
+    <property name="test" value="${basedir}/test" />
+    <property name="build" value="${basedir}/build" />
+    <property name="dist" value="${resource.base.dir}/dist" />
+    <property name="web.dir" value="${appserver.deploy.dir}/${jarName}" />
+    <property name="web.inf" value="${build}/WEB-INF" />
+    <property name="web.inf.lib" value="${web.inf}/lib" />
+    <property name="compile.includes" value="*.xml, *.properties" />
+    <property name="manifest.src" value="${resource.base.dir}/ant/MANIFEST.MF" />
 
-	<fileset id="runtime.jars" includes="*.jar" dir="${runtime.jar.location}" />
-	<fileset id="buildtime.jars" includes="*.jar" dir="${buildtime.jar.location}" />
-	<fileset id="junit.jar" file="${resource.base.dir}/lib/Junit3/junit.jar" />
-	<fileset id="project.jars" dir="${dist}/${env.dir}" includes="${project.jar.dependencies}" />
+    <fileset id="runtime.jars" includes="*.jar" dir="${runtime.jar.location}" />
+    <fileset id="buildtime.jars" includes="*.jar" dir="${buildtime.jar.location}" />
+    <fileset id="junit.jar" file="${resource.base.dir}/lib/Junit3/junit.jar" />
+    <fileset id="project.jars" dir="${dist}/${env.dir}" includes="${project.jar.dependencies}" />
 
-	<path id="build.class.path">
-		<fileset refid="project.jars" />
-		<fileset refid="runtime.jars" />
-		<fileset refid="buildtime.jars" />
-		<fileset refid="junit.jar" />
-	</path>
-	<!-- END properties & entities for all Node projects (except plugins) -->
+    <path id="build.class.path">
+        <fileset refid="project.jars" />
+        <fileset refid="runtime.jars" />
+        <fileset refid="buildtime.jars" />
+        <fileset refid="junit.jar" />
+    </path>
+    <!-- END properties & entities for all Node projects (except plugins) -->
 
-	<!-- targets for all Node projects -->
-	<target name="get.env" description="displays build configuration options">
-		<echo message="Build environment: ${env.dir}" />
-		<echo message="Selected JDK version: ${jdk.version}" />
+    <!-- targets for all Node projects -->
+    <target name="get.env" description="displays build configuration options">
+        <echo message="Build environment: ${env.dir}" />
+        <echo message="Selected JDK version: ${jdk.version}" />
         <echo message="Target appserver: ${appserver}" />
+        <echo message="update.major.version: ${update.major.version}" />
+        <echo message="update.minor.version: ${update.minor.version}" />
         <echo message="Use verbose output? ${verbosity}" />
         <antcall target="setServerAndLoggingType" inheritall="true" />
     </target>
@@ -102,9 +103,19 @@
 
         <copy file="${manifest.src}" todir="${java.io.tmpdir}" overwrite="yes" verbose="${verbosity}" preservelastmodified="false" />
         <property name="manifest.file" value="${java.io.tmpdir}/MANIFEST.MF" />
+        
+        <!-- load the version numbers -->
+        <property file="${resource.base.dir}/ant/major.version.properties" />
+        <property file="${resource.base.dir}/ant/minor.version.properties" />
+        <property file="${resource.base.dir}/ant/build.number.properties" />
+        
         <tstamp>
             <format property="build.time" pattern="dd MMMM, yyyy hh:mm z" timezone="America/Los_Angeles" />
         </tstamp>
+
+        <replace file="${manifest.file}" token="@major.version@" value="${major.version}" summary="true" />
+        <replace file="${manifest.file}" token="@minor.version@" value="${minor.version}" summary="true" />
+        <replace file="${manifest.file}" token="@node.build.number@" value="${build.number}" summary="true" />
         <replace file="${manifest.file}" token="@project.title@" value="${project.title}" summary="true" />
         <replace file="${manifest.file}" token="@build.time@" value="${build.time}" summary="true" />
         <replace file="${manifest.file}" token="@target.env@" value="${env.dir}" summary="true" />
@@ -278,6 +289,7 @@
             <fileset refid="project.jars" />
         </copy>
         <copy file="${log4j.properties}" todir="${classes}" overwrite="yes" verbose="${verbosity}" preservelastmodified="false" />
+        <copy file="${commons-logging.properties}" todir="${classes}" overwrite="yes" verbose="${verbosity}" preservelastmodified="false" />
         <antcall target="bundle.junit" inheritAll="true" inheritRefs="true" />
         <antcall target="bundle.weblogic" inheritAll="true" inheritRefs="true" />
     </target>

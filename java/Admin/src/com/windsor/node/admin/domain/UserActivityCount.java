@@ -39,7 +39,7 @@ import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 
 import com.windsor.node.common.domain.DomainStringStyle;
 
-public class UserActivityCount implements Comparable {
+public class UserActivityCount implements Comparable<Object> {
 
     private String naasId;
     private int activityCount;

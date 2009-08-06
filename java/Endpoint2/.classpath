@@ -22,7 +22,7 @@
 	<classpathentry kind="lib" path="/Resources/lib/Endpoint2/axis2-jibx-1.4.jar"/>
 	<classpathentry kind="lib" path="/Resources/lib/Endpoint2/axis2-json-1.4.jar"/>
 	<classpathentry kind="lib" path="/Resources/lib/Endpoint2/axis2-jws-api-1.4.jar"/>
-	<classpathentry kind="lib" path="/Resources/lib/Endpoint2/axis2-kernel-1.4.jar" sourcepath="/home/jniski/devtools/axis2-1.4/modules"/>
+	<classpathentry kind="lib" path="/Resources/lib/Endpoint2/axis2-kernel-1.4.jar" sourcepath="/home/jniski/devtools/axis2-1.4-src.zip"/>
 	<classpathentry kind="lib" path="/Resources/lib/Endpoint2/axis2-metadata-1.4.jar"/>
 	<classpathentry kind="lib" path="/Resources/lib/Endpoint2/axis2-mtompolicy-1.4.jar"/>
 	<classpathentry kind="lib" path="/Resources/lib/Endpoint2/axis2-saaj-1.4.jar"/>

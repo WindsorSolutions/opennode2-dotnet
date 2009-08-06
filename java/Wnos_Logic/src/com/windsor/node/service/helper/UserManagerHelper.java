@@ -33,6 +33,8 @@ package com.windsor.node.service.helper;
 
 import java.util.List;
 
+import com.windsor.node.common.domain.NaasUserInfo;
+
 public interface UserManagerHelper {
 
     void addUser(String username, String password);
@@ -43,6 +45,6 @@ public interface UserManagerHelper {
 
     void changePassword(String username, String password, String newPassword);
 
-    List getUsers();
+    List<NaasUserInfo> getUsers();
 
 }

@@ -52,6 +52,6 @@ public interface ServiceFactory {
      *            interface of the service to be fetched
      * @return the implementation defined in the Spring ApplicationContext
      */
-    Object makeService(Class serviceType);
+    Object makeService(Class<?> serviceType);
 
 }

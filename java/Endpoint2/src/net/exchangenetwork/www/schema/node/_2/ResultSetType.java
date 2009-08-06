@@ -623,7 +623,6 @@ public class ResultSetType implements org.apache.axis2.databinding.ADBBean {
                 throws java.lang.Exception {
             ResultSetType object = new ResultSetType();
 
-
             try {
 
                 while (!reader.isStartElement() && !reader.isEndElement())
@@ -774,7 +773,6 @@ public class ResultSetType implements org.apache.axis2.databinding.ADBBean {
 
             return object;
         }
-
     }// end of factory class
 
 }

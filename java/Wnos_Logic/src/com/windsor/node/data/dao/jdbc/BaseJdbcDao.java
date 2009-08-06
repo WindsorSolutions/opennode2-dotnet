@@ -53,6 +53,37 @@ import com.windsor.node.service.helper.IdGenerator;
 
 public class BaseJdbcDao extends JdbcDaoSupport {
 
+    public static final String COMMA = ", ";
+    public static final String DOT = ".";
+    public static final String APOS = "'";
+    public static final String WHERE = " WHERE ";
+    public static final String FROM = " FROM  ";
+    public static final String SELECT = " SELECT ";
+    public static final String UPDATE = " UPDATE ";
+    public static final String SET = " SET ";
+    public static final String INSERT = " INSERT INTO ";
+    public static final String AND = " AND ";
+    public static final String OR = " OR ";
+    public static final String SELECT_COUNT_ALL_FROM = " SELECT COUNT(*) FROM ";
+    public static final String ORDER_BY = " ORDER BY ";
+    public static final String SELECT_ALL_FROM = " SELECT * FROM ";
+    public static final String EQUALS = " = ";
+    public static final String IN = " IN ";
+    public static final String R_PAREN = ")";
+    public static final String L_PAREN = "(";
+    public static final String VALUES = " VALUES ";
+
+    public static final String PARAM = " ? ";
+    public static final String GT_PARAM = " > ? ";
+    public static final String EQUALS_PARAM = " = ? ";
+    public static final String NOT_EQUALS_PARAM = " != ? ";
+    // "ROWNUM" is Oracle-specific, but so is NY-DOH and NY-DEC
+    // see http://en.wikipedia.org/wiki/Select_(SQL) for other
+    // dbms approaches
+    public static final String ROWNUM_PARAM = "ROWNUM <= ? ";
+
+    protected static final String DATA_SOURCE_CANNOT_BE_NULL = "DataSource cannot be null.";
+
     /** Logger for this class and subclasses */
     protected Logger logger = Logger.getLogger(getClass());
 
@@ -66,6 +97,11 @@ public class BaseJdbcDao extends JdbcDaoSupport {
 
         if (idGenerator == null) {
             throw new RuntimeException("idGenerator Not Set");
+        }
+
+        if (getDataSource() == null) {
+            logger.error(DATA_SOURCE_CANNOT_BE_NULL);
+            throw new RuntimeException(DATA_SOURCE_CANNOT_BE_NULL);
         }
     }
 

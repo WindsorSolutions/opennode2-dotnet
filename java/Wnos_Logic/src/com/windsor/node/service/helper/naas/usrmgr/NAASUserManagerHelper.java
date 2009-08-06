@@ -47,6 +47,11 @@ import com.windsor.node.util.PasswordUtil;
 public class NAASUserManagerHelper implements UserManagerHelper,
         InitializingBean {
 
+    /**
+     * 
+     */
+    private static final int USER_LIST_CHUNK_SIZE = 1500;
+
     private static final Logger logger = Logger
             .getLogger(NAASUserManagerHelper.class);
 
@@ -200,15 +205,15 @@ public class NAASUserManagerHelper implements UserManagerHelper,
     /**
      * getUsers
      */
-    public List getUsers() {
+    public List<NaasUserInfo> getUsers() {
 
         try {
 
             logger.debug("Executing getUserList");
 
-            List list = new ArrayList();
+            List<NaasUserInfo> list = new ArrayList<NaasUserInfo>();
             boolean hasMore = true;
-            int chunkSize = 1500;
+            int chunkSize = USER_LIST_CHUNK_SIZE;
             int recordCounter = 0;
 
             while (hasMore) {
@@ -239,9 +244,9 @@ public class NAASUserManagerHelper implements UserManagerHelper,
         }
     }
 
-    private List mapUsers(UserInfo[] users) {
+    private List<NaasUserInfo> mapUsers(UserInfo[] users) {
 
-        List list = new ArrayList();
+        List<NaasUserInfo> list = new ArrayList<NaasUserInfo>();
 
         if (users != null) {
 

@@ -206,7 +206,7 @@ public class TransactionServiceImpl extends BaseService implements
 
             if (tran == null) {
                 throw new RuntimeException(
-                        "Unable to local transaction with that Id: "
+                        "Unable to find local transaction with that Id: "
                                 + transactionId);
             }
 
@@ -224,7 +224,7 @@ public class TransactionServiceImpl extends BaseService implements
 
             if (tran.getFlow().isSecured()) {
                 accountService.validateAccess(visit.getUserAccount(), tran
-                        .getFlow().getName());
+                        .getFlow().getId());
             }
 
             logEntry.setModifiedById(account.getId());
@@ -625,7 +625,7 @@ public class TransactionServiceImpl extends BaseService implements
             UserAccount account = visit.getUserAccount();
 
             if (flow.isSecured()) {
-                accountService.validateAccess(account, flow.getName());
+                accountService.validateAccess(account, flow.getId());
             }
 
             request.setRequestor(account);

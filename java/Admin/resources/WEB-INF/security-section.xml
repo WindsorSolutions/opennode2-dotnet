@@ -10,8 +10,6 @@
 		<property name="accountService" ref="accountService" />
 	</bean>
 
-
-
 	<bean name="/account-new.htm"
 		class="com.windsor.node.admin.security.NewAccountController">
 		<property name="accountService" ref="accountService" />
@@ -21,7 +19,6 @@
 		</property>
 		<property name="successView" value="security.htm?bi=0" />
 	</bean>
-
 
 	<bean name="/account-edit.htm"
 		class="com.windsor.node.admin.security.EditAccountController">
@@ -34,16 +31,18 @@
 		<property name="successView" value="security.htm?bi=0" />
 	</bean>
 	
-	
-	
 	<bean name="/policy-edit.htm"
 		class="com.windsor.node.admin.security.EditPolicyController">
 		<property name="accountService" ref="accountService" />
 		<property name="flowService" ref="flowService" />
 		<property name="successView" value="security.htm?bi=1" />
 	</bean>
-
-
-
-
+<!--
+    <bean name="/user-requests.htm"
+        class="com.windsor.node.admin.security.EditPolicyController">
+        <property name="accountService" ref="accountService" />
+        <property name="flowService" ref="flowService" />
+        <property name="successView" value="security.htm?bi=1" />
+    </bean>
+-->
 </beans>

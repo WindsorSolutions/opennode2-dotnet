@@ -320,18 +320,21 @@ public class TemplateHelper {
 
         Object[] newArgs = null;
 
-        // VTL syntax ["foo", "bar"] creates an ArrayList thru Velocity 1.5
-        if (arg instanceof ArrayList) {
+        if (null != arg) {
 
-            logger.debug("converting ArrayList to Object[]");
+            // VTL syntax ["foo", "bar"] creates an ArrayList thru Velocity 1.5
+            if (arg instanceof ArrayList) {
 
-            ArrayList<?> realArgs = (ArrayList<?>) arg;
+                logger.debug("converting ArrayList to Object[]");
 
-            newArgs = realArgs.toArray();
+                ArrayList<?> realArgs = (ArrayList<?>) arg;
 
-        } else {
+                newArgs = realArgs.toArray();
 
-            newArgs = new Object[] { arg };
+            } else {
+
+                newArgs = new Object[] { arg };
+            }
         }
 
         return newArgs;

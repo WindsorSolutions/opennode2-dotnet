@@ -4,6 +4,7 @@
 	<!-- this file is called by individual plugin build.xml files -->
 	<!-- filesystem paths are relative to the script that imports this one -->
 	<property name="resource.base.dir" value="${basedir}/../../resources" />
+    <property name="master.build.resource.dir" value="${basedir}/../../../Resources/ant" />
 
 	<property file="../../ant/shared.plugin.properties" />
 
@@ -101,10 +102,28 @@
 
 		<copy file="${manifest.src}" todir="${tmp}" overwrite="yes" verbose="${verbosity}" preservelastmodified="false" />
 		<property name="manifest.file" value="${tmp}/MANIFEST.MF" />
+	    
+	    <!-- load the version numbers -->
+        <property file="${master.build.resource.dir}/major.version.properties" />
+        <property file="${master.build.resource.dir}/minor.version.properties" />
+        <property file="${master.build.resource.dir}/build.number.properties" />
+	    
+	    <!-- update the plugin build number -->
+        <propertyfile file="../../ant/plugin.build.number.properties" comment="CALLED BY plugin..build.xml - DO NOT EDIT MANUALLY! (unless you know what you're doing :-)">
+            <entry key="plugin.build.number" type="int" default="${plugin.build.number}" operation="+" />
+        </propertyfile>
+        <echo message="Updated plugin build number." />
+        <property file="../../ant/plugin.build.number.properties" />
+	    
 		<tstamp>
 			<format property="build.time" pattern="dd MMMM, yyyy hh:mm z" timezone="America/Los_Angeles" />
 		</tstamp>
-		<replace file="${manifest.file}" token="@project.title@" value="${project.title}" summary="true" />
+
+        <replace file="${manifest.file}" token="@major.version@" value="${major.version}" summary="true" />
+        <replace file="${manifest.file}" token="@minor.version@" value="${minor.version}" summary="true" />
+        <replace file="${manifest.file}" token="@node.build.number@" value="${build.number}" summary="true" />
+        <replace file="${manifest.file}" token="@plugin.build.number@" value="${plugin.build.number}" summary="true" />
+	    <replace file="${manifest.file}" token="@project.title@" value="${project.title}" summary="true" />
 		<replace file="${manifest.file}" token="@build.time@" value="${build.time}" summary="true" />
 		<replace file="${manifest.file}" token="@target.env@" value="${plugin.dir}" summary="true" />
 

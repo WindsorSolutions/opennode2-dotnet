@@ -41,9 +41,9 @@ public interface AccountDao extends DeletableDao {
 
     UserAccount get(String id);
 
-    List get(boolean includeInactive, boolean loadPolicies);
+    List<UserAccount> get(boolean includeInactive, boolean loadPolicies);
 
-    List get(String code, boolean includeInactive);
+    List<UserAccount> get(String code, boolean includeInactive);
 
     String[] getNames();
 

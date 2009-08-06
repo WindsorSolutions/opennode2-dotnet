@@ -37,6 +37,10 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.ISODateTimeFormat;
+
 public final class DateUtil {
 
     public static final int YEARS_PER_CENTURY = 100;
@@ -45,15 +49,16 @@ public final class DateUtil {
     public static final int DAYS_PER_WEEK = 7;
     public static final int HOURS_PER_DAY = 24;
     public static final int MINUTES_PER_HOUR = 60;
-    public static final int SECONDS_PER_MINUTE = 60;    
-    
+    public static final int SECONDS_PER_MINUTE = 60;
+
+    public static final String XML_DATETIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSSZ";
+
     private static final int YEAR_OFFSET = 4716;
-    
+
     private static final float DATE_OFFSET = 1524.5f;
     private static final float DAYS_PER_MONTH = 30.6001f;
     private static final float DAYS_PER_YEAR = 365.25f;
-    
-    
+
     private DateUtil() {
     }
 
@@ -235,7 +240,8 @@ public final class DateUtil {
         calendar.setTime(endDate);
         int endMonth = calendar.get(GregorianCalendar.MONTH);
         int endYear = calendar.get(GregorianCalendar.YEAR);
-        return (endYear - startYear) * MONTHS_PER_YEAR + (endMonth - startMonth);
+        return (endYear - startYear) * MONTHS_PER_YEAR
+                + (endMonth - startMonth);
     }
 
     public static int daysBetween(Date startDate, Date endDate) {
@@ -261,5 +267,47 @@ public final class DateUtil {
         float f = (int) (DAYS_PER_MONTH * (m + 1));
         float jd = (c + d + e + f) - DATE_OFFSET;
         return jd;
+    }
+
+    /**
+     * Given these forms of an XML Datetime
+     * 
+     * <pre>
+     * 2009-05-12T11:58:40.8125-07:00
+     * 2009-05-12T11:58:40.8125Z
+     * </pre>
+     * 
+     * (with or without milliseconds), return the milliseconds since the
+     * beginning of Java time.
+     * 
+     * @param xmlDateTimeString
+     * @return
+     */
+    public static long xmlDateTimeToMillisec(String xmlDateTimeString) {
+
+        DateTimeFormatter dtf = ISODateTimeFormat.dateTime();
+
+        DateTime dt = dtf.parseDateTime(xmlDateTimeString);
+
+        return dt.getMillis();
+    }
+
+    /**
+     * Given this form of an XML Datetime
+     * 
+     * <pre>
+     * 2009-05-12T11:58:40.8125-07:00
+     * </pre>
+     * 
+     * (with or without milliseconds), return a JDBC Timestamp encapsulating the
+     * same time.
+     * 
+     * @param xmlDateTimeString
+     * @return
+     */
+    public static Timestamp xmlDateTimeToJdbcTimestamp(String xmlDateTimeString) {
+
+        return new Timestamp(xmlDateTimeToMillisec(xmlDateTimeString));
+
     }
 }

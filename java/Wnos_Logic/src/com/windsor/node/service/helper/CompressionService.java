@@ -35,16 +35,41 @@ import java.io.File;
 
 public interface CompressionService {
 
+    /**
+     * @param content
+     * @param fileName
+     * @return
+     */
     byte[] zip(byte[] content, String fileName);
 
+    /**
+     * @param content
+     * @param targetDirPath
+     */
     void unzip(byte[] content, String targetDirPath);
 
+    /**
+     * @param sourceFilePath
+     * @param targetDirPath
+     */
     void unzip(String sourceFilePath, String targetDirPath);
 
+    /**
+     * @param targetFilePath
+     * @param sourceDirPath
+     */
     void zip(String targetFilePath, String sourceDirPath);
 
+    /**
+     * @param sourceFile
+     * @return
+     */
     File zip(File sourceFile);
 
+    /**
+     * @param sourceFilePath
+     * @return
+     */
     String zip(String sourceFilePath);
 
 }
