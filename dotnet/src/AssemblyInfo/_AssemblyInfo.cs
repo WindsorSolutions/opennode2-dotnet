@@ -46,10 +46,10 @@ namespace Windsor.Node2008.WNOS.AssemblyInfo
         public const string cSvnVersion = "$WCREV$";
 
         // [assembly: AssemblyVersion(AssemblyInfoServer.cAssemblyVersion)]
-        public const string cAssemblyVersion = "1.1.7.$WCREV$";
+        public const string cAssemblyVersion = "1.1.8.$WCREV$";
 
         // [assembly: AssemblyFileVersion(AssemblyInfoServer.cAssemblyFileVersion)]
-        public const string cAssemblyFileVersion = "1.1.7.$WCREV$";
+        public const string cAssemblyFileVersion = "1.1.8.$WCREV$";
 
         // [assembly: AssemblyCompany(AssemblyInfoServer.cAssemblyCompany)]
         public const string cAssemblyCompany = "The Environmental Council of the States (ECOS)";
