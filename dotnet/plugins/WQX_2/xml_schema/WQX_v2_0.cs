@@ -1933,7 +1933,9 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
         [System.Xml.Serialization.XmlElementAttribute("OrganizationDelete", Order = 0)]
         [System.ComponentModel.DescriptionAttribute("Schema used to delete organization information.")]
         [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
-        public OrganizationDeleteDataType[] OrganizationDelete;
+        //TSM:
+        //public OrganizationDeleteDataType[] OrganizationDelete;
+        public OrganizationDeleteDataType OrganizationDelete;
     }
 
     /// <remarks/>

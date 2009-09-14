@@ -3,14 +3,15 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
     using System;
     using System.Xml.Serialization;
     using System.Data;
+    using System.Collections.Generic;
     using Windsor.Commons.XsdOrm;
+    using Windsor.Commons.Core;
 
     // string[] ActivityDataType.ActivityMetricDataType.IndexIdentifier -> Maps to single column -> WQX_ACTIVITYMETRIC.METRICINDEXID
     // string[] ResultDataType.BiologicalResultDescriptionDataType.TaxonomicDetailsDataType.HabitName -> Maps to single column -> WQX_RESULT.TAXDETAILSHABITNAME
     // string[] ResultDataType.BiologicalResultDescriptionDataType.TaxonomicDetailsDataType.FunctionalFeedingGroupName -> Maps to single column -> WQX_RESULT.TAXDETAILSFUNCFEEDINGGROUP
     // FrequencyClassInformationDataType[] ResultDataType.BiologicalResultDescriptionDataType.FrequencyClassInformation -> Maps to single columns -> WQX_RESULT.FREQCLASSDESCCODE, etc.
     // Why is the WQX_ACTIVITYGROUP.ACTIVITYID field present (an ActivityGroup can have many Activities)
-
 
     // OrganizationDataType
     [AppliedAttribute(typeof(OrganizationDescriptionDataType), "OrganizationIdentifier", typeof(ColumnAttribute), "ORGID", DbType.AnsiString, 30, false)]
@@ -318,8 +319,39 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
     [AppliedAttribute(typeof(AlternateMonitoringLocationIdentityDataType), "MonitoringLocationIdentifier", typeof(ColumnAttribute), "MONLOCID", DbType.AnsiString, 35, false)]
     [AppliedAttribute(typeof(AlternateMonitoringLocationIdentityDataType), "MonitoringLocationIdentifierContext", typeof(ColumnAttribute), "MONLOCIDCONTEXT", DbType.AnsiString, 120, false)]
 
+    [Table("WQX_ORGANIZATION")]
+    public partial class WQXDataType : IBeforeSaveToDatabase, IAfterLoadFromDatabase
+    {
+        [System.Xml.Serialization.XmlIgnore]
+        [GuidPrimaryKey("RECORDID", 50)]
+        public string RecordId;
+
+        public void AssignWqxUpdateDates(DateTime time)
+        {
+            if (Organization != null)
+            {
+                Organization.AssignWqxUpdateDates(time);
+            }
+        }
+        public void BeforeSaveToDatabase()
+        {
+            if (Organization != null)
+            {
+                Organization.BeforeSaveToDatabase();
+            }
+        }
+        public void AfterLoadFromDatabase()
+        {
+            if (Organization != null)
+            {
+                Organization.AfterLoadFromDatabase();
+            }
+        }
+    }
+
     // OrganizationDeleteDataType
-    [AppliedAttribute(typeof(OrganizationDeleteDataType), "OrganizationIdentifier", typeof(DbIgnoreAttribute))]
+    [AppliedAttribute(typeof(OrganizationDeleteDataType), "OrganizationIdentifier", typeof(ColumnAttribute), "ORGID", DbType.AnsiString, 30, false)]
+    [AppliedAttribute(typeof(OrganizationDeleteDataType), "OrganizationFormalName", typeof(ColumnAttribute), "ORGFORMALNAME", DbType.AnsiString, 120, false)]
     [AppliedAttribute(typeof(OrganizationDeleteDataType), "ProjectIdentifier", typeof(DbIgnoreAttribute))]
     [AppliedAttribute(typeof(OrganizationDeleteDataType), "MonitoringLocationIdentifier", typeof(DbIgnoreAttribute))]
     [AppliedAttribute(typeof(OrganizationDeleteDataType), "ActivityIdentifier", typeof(DbIgnoreAttribute))]
@@ -327,21 +359,279 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
     [AppliedAttribute(typeof(OrganizationDeleteDataType), "IndexIdentifier", typeof(DbIgnoreAttribute))]
 
     [Table("WQX_ORGANIZATION")]
-    public partial class OrganizationDataType
+    public partial class WQXDeleteDataType : IBeforeSaveToDatabase, IAfterLoadFromDatabase
     {
         [System.Xml.Serialization.XmlIgnore]
         [GuidPrimaryKey("RECORDID", 50)]
         public string RecordId;
 
+        public void AssignWqxUpdateDates(DateTime time)
+        {
+            if (OrganizationDelete != null)
+            {
+                OrganizationDelete.AssignWqxUpdateDates(time);
+            }
+        }
+        public void BeforeSaveToDatabase()
+        {
+            if (OrganizationDelete != null)
+            {
+                OrganizationDelete.BeforeSaveToDatabase();
+            }
+        }
+        public void AfterLoadFromDatabase()
+        {
+            if (OrganizationDelete != null)
+            {
+                OrganizationDelete.AfterLoadFromDatabase();
+            }
+        }
+    }
+
+    [AppliedAttribute(typeof(OrganizationDeleteDataType), "OrganizationIdentifier", typeof(ColumnAttribute), "ORGID", DbType.AnsiString, 30, false)]
+    [AppliedAttribute(typeof(OrganizationDeleteDataType), "OrganizationFormalName", typeof(ColumnAttribute), "ORGFORMALNAME", DbType.AnsiString, 120, false)]
+
+    [Table("WQX_ORGANIZATION")]
+    public class WQXSubmissionDataType
+    {
         [System.Xml.Serialization.XmlIgnore]
-        public OrganizationDeleteDataType[] OrganizationDelete;
+        public string OrganizationIdentifier;
+
+        [System.Xml.Serialization.XmlIgnore]
+        public string OrganizationFormalName;
+
+        [System.Xml.Serialization.XmlIgnore]
+        [GuidPrimaryKey("RECORDID", 50)]
+        public string RecordId;
 
         [System.Xml.Serialization.XmlIgnore]
         public SubmissionHistoryDataType[] SubmissionHistory;
     }
 
+    public partial class OrganizationDataType : IBeforeSaveToDatabase, IAfterLoadFromDatabase
+    {
+        public void BeforeSaveToDatabase()
+        {
+            // Setup ProjectActivity linking table
+            if (!CollectionUtils.IsNullOrEmpty(Project) && !CollectionUtils.IsNullOrEmpty(Activity))
+            {
+                Dictionary<string, string> projectIdentifierToPkMap = new Dictionary<string, string>();
+                CollectionUtils.ForEach(Project, delegate(ProjectDataType project)
+                {
+                    if (string.IsNullOrEmpty(project.RecordId))
+                    {
+                        project.RecordId = Guid.NewGuid().ToString();
+                    }
+                    projectIdentifierToPkMap.Add(project.ProjectIdentifier, project.RecordId);
+                });
+                CollectionUtils.ForEach(Activity, delegate(ActivityDataType activity)
+                {
+                    activity.BeforeSaveToDatabase(projectIdentifierToPkMap);
+                });
+            }
+            // Setup ActivityActivityGroup linking table
+            if (!CollectionUtils.IsNullOrEmpty(ActivityGroup) && !CollectionUtils.IsNullOrEmpty(Activity))
+            {
+                Dictionary<string, string> activityIdentifierToPkMap = new Dictionary<string, string>();
+                CollectionUtils.ForEach(Activity, delegate(ActivityDataType activity)
+                {
+                    if (string.IsNullOrEmpty(activity.RecordId))
+                    {
+                        activity.RecordId = Guid.NewGuid().ToString();
+                    }
+                    activityIdentifierToPkMap.Add(activity.ActivityDescription.ActivityIdentifier, activity.RecordId);
+                });
+                CollectionUtils.ForEach(ActivityGroup, delegate(ActivityGroupDataType activityGroup)
+                {
+                    activityGroup.BeforeSaveToDatabase(activityIdentifierToPkMap);
+                });
+            }
+            // Assign wqx update dates
+            AssignWqxUpdateDates(DateTime.Now);
+        }
+        public void AfterLoadFromDatabase()
+        {
+            // Assign project identifiers to activities
+            if (!CollectionUtils.IsNullOrEmpty(Project) && !CollectionUtils.IsNullOrEmpty(Activity))
+            {
+                Dictionary<string, string> projectPkToIdentifierMap = new Dictionary<string, string>();
+                CollectionUtils.ForEach(Project, delegate(ProjectDataType project)
+                {
+                    projectPkToIdentifierMap.Add(project.RecordId, project.ProjectIdentifier);
+                });
+                CollectionUtils.ForEach(Activity, delegate(ActivityDataType activity)
+                {
+                    activity.AfterLoadFromDatabase(projectPkToIdentifierMap);
+                });
+            }
+            // Assign activity identifiers to activity groups
+            if (!CollectionUtils.IsNullOrEmpty(ActivityGroup) && !CollectionUtils.IsNullOrEmpty(Activity))
+            {
+                Dictionary<string, string> activityPkToIdentifierMap = new Dictionary<string, string>();
+                CollectionUtils.ForEach(Activity, delegate(ActivityDataType activity)
+                {
+                    activityPkToIdentifierMap.Add(activity.RecordId, activity.ActivityDescription.ActivityIdentifier);
+                });
+                CollectionUtils.ForEach(ActivityGroup, delegate(ActivityGroupDataType activityGroup)
+                {
+                    activityGroup.AfterLoadFromDatabase(activityPkToIdentifierMap);
+                });
+            }
+        }
+        public void AssignWqxUpdateDates(DateTime time)
+        {
+            CollectionUtils.ForEach(Project, delegate(ProjectDataType project)
+            {
+                if (project.WqxUpdateDate == DateTime.MinValue)
+                {
+                    project.WqxUpdateDate = time;
+                }
+            });
+            CollectionUtils.ForEach(MonitoringLocation, delegate(MonitoringLocationDataType monitoringLocation)
+            {
+                if (monitoringLocation.WqxUpdateDate == DateTime.MinValue)
+                {
+                    monitoringLocation.WqxUpdateDate = time;
+                }
+            });
+            CollectionUtils.ForEach(BiologicalHabitatIndex, delegate(BiologicalHabitatIndexDataType biologicalHabitatIndex)
+            {
+                if (biologicalHabitatIndex.WqxUpdateDate == DateTime.MinValue)
+                {
+                    biologicalHabitatIndex.WqxUpdateDate = time;
+                }
+            });
+            CollectionUtils.ForEach(Activity, delegate(ActivityDataType activity)
+            {
+                if (activity.WqxUpdateDate == DateTime.MinValue)
+                {
+                    activity.WqxUpdateDate = time;
+                }
+            });
+            CollectionUtils.ForEach(ActivityGroup, delegate(ActivityGroupDataType activityGroup)
+            {
+                if (activityGroup.WqxUpdateDate == DateTime.MinValue)
+                {
+                    activityGroup.WqxUpdateDate = time;
+                }
+            });
+        }
+    }
+
+    public partial class OrganizationDeleteDataType : IBeforeSaveToDatabase, IAfterLoadFromDatabase
+    {
+        [System.Xml.Serialization.XmlIgnore]
+        public string OrganizationFormalName;
+
+        [System.Xml.Serialization.XmlIgnore]
+        public DeleteDataType[] Delete;
+
+        public void AssignWqxUpdateDates(DateTime time)
+        {
+            CollectionUtils.ForEach(Delete, delegate(DeleteDataType del)
+            {
+                if (del.WqxUpdateDate == DateTime.MinValue)
+                {
+                    del.WqxUpdateDate = time;
+                }
+            });
+        }
+        public void BeforeSaveToDatabase()
+        {
+            DateTime now = DateTime.Now;
+            List<DeleteDataType> deleteList = null;
+            AddToDeleteList("PROJECT", ProjectIdentifier, now, ref deleteList);
+            AddToDeleteList("MONITORINGLOCATION", MonitoringLocationIdentifier, now, ref deleteList);
+            AddToDeleteList("ACTIVITY", ActivityIdentifier, now, ref deleteList);
+            AddToDeleteList("ACTIVITYGROUP", ActivityGroupIdentifier, now, ref deleteList);
+            AddToDeleteList("INDEX", IndexIdentifier, now, ref deleteList);
+            if (!CollectionUtils.IsNullOrEmpty(deleteList))
+            {
+                Delete = deleteList.ToArray();
+            }
+        }
+        public void AfterLoadFromDatabase()
+        {
+            if (!CollectionUtils.IsNullOrEmpty(Delete))
+            {
+                int listCapacity = (Delete.Length + 1) / 2;
+                List<string> projectIdentifiers = new List<string>(listCapacity);
+                List<string> monitoringLocationIdentifiers = new List<string>(listCapacity);
+                List<string> activityIdentifiers = new List<string>(listCapacity);
+                List<string> activityGroupIdentifiers = new List<string>(listCapacity);
+                List<string> indexIdentifiers = new List<string>(listCapacity);
+                CollectionUtils.ForEach(Delete, delegate(DeleteDataType del)
+                {
+                    switch (del.Component.ToUpper())
+                    {
+                        case "PROJECT":
+                            projectIdentifiers.Add(del.Identifier);
+                            break;
+                        case "MONITORINGLOCATION":
+                            monitoringLocationIdentifiers.Add(del.Identifier);
+                            break;
+                        case "ACTIVITY":
+                            activityIdentifiers.Add(del.Identifier);
+                            break;
+                        case "ACTIVITYGROUP":
+                            activityGroupIdentifiers.Add(del.Identifier);
+                            break;
+                        case "INDEX":
+                            indexIdentifiers.Add(del.Identifier);
+                            break;
+                        default:
+                            throw new ArgumentException(string.Format("Unrecognized Delete component: {0}", del.Component));
+                    }
+                });
+                if (projectIdentifiers.Count > 0)
+                {
+                    ProjectIdentifier = projectIdentifiers.ToArray();
+                }
+                if (monitoringLocationIdentifiers.Count > 0)
+                {
+                    MonitoringLocationIdentifier = monitoringLocationIdentifiers.ToArray();
+                }
+                if (activityIdentifiers.Count > 0)
+                {
+                    ActivityIdentifier = activityIdentifiers.ToArray();
+                }
+                if (activityGroupIdentifiers.Count > 0)
+                {
+                    ActivityGroupIdentifier = activityGroupIdentifiers.ToArray();
+                }
+                if (indexIdentifiers.Count > 0)
+                {
+                    IndexIdentifier = indexIdentifiers.ToArray();
+                }
+            }
+        }
+        protected static void AddToDeleteList(string component, string[] identifiers, DateTime now,
+                                              ref List<DeleteDataType> deleteList)
+        {
+            if (!CollectionUtils.IsNullOrEmpty(identifiers))
+            {
+                if (deleteList == null)
+                {
+                    deleteList = new List<DeleteDataType>(identifiers.Length);
+                }
+                else
+                {
+                    deleteList.Capacity = deleteList.Count + identifiers.Length;
+                }
+                foreach (string identifier in identifiers)
+                {
+                    DeleteDataType deleteDataType = new DeleteDataType();
+                    deleteDataType.Component = component;
+                    deleteDataType.Identifier = identifier;
+                    deleteDataType.WqxUpdateDate = now;
+                    deleteList.Add(deleteDataType);
+                }
+            }
+        }
+    }
+
     [Table("WQX_DELETES")]
-    public partial class OrganizationDeleteDataType
+    public partial class DeleteDataType
     {
         [System.Xml.Serialization.XmlIgnore]
         [GuidPrimaryKey("RECORDID", 50)]
@@ -365,7 +655,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
     }
 
     [Table("WQX_SUBMISSIONHISTORY")]
-    public partial class SubmissionHistoryDataType
+    public class SubmissionHistoryDataType
     {
         [System.Xml.Serialization.XmlIgnore]
         [GuidPrimaryKey("RECORDID", 50)]
@@ -488,6 +778,76 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
         [System.Xml.Serialization.XmlIgnore]
         [Column("WQXUPDATEDATE", DbType.DateTime, 0, IsNullable = false)]
         public DateTime WqxUpdateDate;
+
+        [System.Xml.Serialization.XmlIgnore]
+        public ProjectActivityDataType[] ProjectActivity;
+
+        public void BeforeSaveToDatabase(Dictionary<string, string> projectIdentifierToPkMap)
+        {
+            if (ActivityDescription == null)
+            {
+                return;
+            }
+            List<ProjectActivityDataType> projectActivities = null;
+            CollectionUtils.ForEach(ActivityDescription.ProjectIdentifier, delegate(string projectIdentifier)
+            {
+                if (projectActivities == null)
+                {
+                    projectActivities = new List<ProjectActivityDataType>(ActivityDescription.ProjectIdentifier.Length);
+                    if (string.IsNullOrEmpty(this.RecordId))
+                    {
+                        this.RecordId = Guid.NewGuid().ToString();
+                    }
+                }
+                string projectPk;
+                if (!projectIdentifierToPkMap.TryGetValue(projectIdentifier, out projectPk))
+                {
+                    throw new ArgumentException(string.Format("An activity (\"{0}\") has a project mapped to it (\"{1}\") that cannot be found.",
+                                                              this.RecordId, projectIdentifier));
+                }
+                ProjectActivityDataType projectActivity = new ProjectActivityDataType();
+                projectActivity.ActivityParentId = this.RecordId;
+                projectActivity.ProjectParentId = projectPk;
+                if (CollectionUtils.InsertIntoSortedList(projectActivities, projectActivity, s_ProjectActivityDataTypeComparer))
+                {
+                    projectActivity.RecordId = Guid.NewGuid().ToString();
+                }
+            });
+            if (projectActivities != null)
+            {
+                this.ProjectActivity = projectActivities.ToArray();
+            }
+        }
+        public void AfterLoadFromDatabase(Dictionary<string, string> projectPkToIdentifierMap)
+        {
+            List<string> projectIds = null;
+            CollectionUtils.ForEach(ProjectActivity, delegate(ProjectActivityDataType projectActivity)
+            {
+                if (projectIds == null)
+                {
+                    projectIds = new List<string>(ProjectActivity.Length);
+                }
+                string projectId;
+                if ( !projectPkToIdentifierMap.TryGetValue(projectActivity.ProjectParentId, out projectId) )
+                {
+                    throw new ArgumentException(string.Format("An activity (\"{0}\") has a project mapped to it (\"{1}\") that cannot be found.",
+                                                              this.RecordId, projectActivity.ProjectParentId));
+                }
+                CollectionUtils.InsertIntoSortedList(projectIds, projectId);
+            });
+            if (projectIds != null)
+            {
+                ActivityDescription.ProjectIdentifier = projectIds.ToArray();
+            }
+        }
+        private static ProjectActivityDataTypeComparer s_ProjectActivityDataTypeComparer = new ProjectActivityDataTypeComparer();
+    }
+    internal class ProjectActivityDataTypeComparer : IComparer<ProjectActivityDataType> 
+    {
+        public int Compare(ProjectActivityDataType x, ProjectActivityDataType y)
+        {
+            return string.Compare(x.ProjectParentId, y.ProjectParentId);
+        }
     }
     [Table("WQX_ACTIVITYGROUP")]
     public partial class ActivityGroupDataType
@@ -506,6 +866,69 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
         
         [System.Xml.Serialization.XmlIgnore]
         public ActivityActivityGroupDataType[] ActivityActivityGroup;
+
+        public void BeforeSaveToDatabase(Dictionary<string, string> activityIdentifierToPkMap)
+        {
+            List<ActivityActivityGroupDataType> activityActivityGroups = null;
+            CollectionUtils.ForEach(ActivityIdentifier, delegate(string activityIdentifier)
+            {
+                if (activityActivityGroups == null)
+                {
+                    activityActivityGroups = new List<ActivityActivityGroupDataType>(ActivityIdentifier.Length);
+                    if (string.IsNullOrEmpty(this.RecordId))
+                    {
+                        this.RecordId = Guid.NewGuid().ToString();
+                    }
+                }
+                string activityPk;
+                if (!activityIdentifierToPkMap.TryGetValue(activityIdentifier, out activityPk))
+                {
+                    throw new ArgumentException(string.Format("An activity group (\"{0}\") has an activity mapped to it (\"{1}\") that cannot be found.",
+                                                              this.RecordId, activityIdentifier));
+                }
+                ActivityActivityGroupDataType activityActivityGroup = new ActivityActivityGroupDataType();
+                activityActivityGroup.ActivityGroupParentId = this.RecordId;
+                activityActivityGroup.ActivityParentId = activityPk;
+                if (CollectionUtils.InsertIntoSortedList(activityActivityGroups, activityActivityGroup, s_ActivityActivityGroupDataTypeComparer))
+                {
+                    activityActivityGroup.RecordId = Guid.NewGuid().ToString();
+                }
+            });
+            if (activityActivityGroups != null)
+            {
+                this.ActivityActivityGroup = activityActivityGroups.ToArray();
+            }
+        }
+        public void AfterLoadFromDatabase(Dictionary<string, string> activityPkToIdentifierMap)
+        {
+            List<string> activityIds = null;
+            CollectionUtils.ForEach(ActivityActivityGroup, delegate(ActivityActivityGroupDataType activityActivityGroup)
+            {
+                if (activityIds == null)
+                {
+                    activityIds = new List<string>(ActivityActivityGroup.Length);
+                }
+                string activityId;
+                if (!activityPkToIdentifierMap.TryGetValue(activityActivityGroup.ActivityParentId, out activityId))
+                {
+                    throw new ArgumentException(string.Format("An activity group (\"{0}\") has an activity mapped to it (\"{1}\") that cannot be found.",
+                                                              this.RecordId, activityActivityGroup.ActivityParentId));
+                }
+                CollectionUtils.InsertIntoSortedList(activityIds, activityId);
+            });
+            if (activityIds != null)
+            {
+                ActivityIdentifier = activityIds.ToArray();
+            }
+        }
+        private static ActivityActivityGroupDataTypeComparer s_ActivityActivityGroupDataTypeComparer = new ActivityActivityGroupDataTypeComparer();
+    }
+    internal class ActivityActivityGroupDataTypeComparer : IComparer<ActivityActivityGroupDataType>
+    {
+        public int Compare(ActivityActivityGroupDataType x, ActivityActivityGroupDataType y)
+        {
+            return string.Compare(x.ActivityParentId, y.ActivityParentId);
+        }
     }
     [Table("WQX_PROJATTACHEDBINARYOBJECT")]
     public partial class ProjectAttachedBinaryObjectDataType : AttachedBinaryObjectDataType
@@ -655,7 +1078,23 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
         public string ActivityGroupParentId;
 
         [System.Xml.Serialization.XmlIgnore]
-        [Column("ACTIVITYID", DbType.AnsiString, 35, IsNullable = false)]
-        public string ActivityId;
+        [Column("ACTIVITYPARENTID", DbType.AnsiString, 50, IsNullable = false)]
+        public string ActivityParentId;
+    }
+
+    [Table("WQX_PROJECTACTIVITY")]
+    public class ProjectActivityDataType
+    {
+        [System.Xml.Serialization.XmlIgnore]
+        [GuidPrimaryKey("RECORDID", 50)]
+        public string RecordId;
+
+        [System.Xml.Serialization.XmlIgnore]
+        [GuidForeignKey("ACTIVITYPARENTID", 50)]
+        public string ActivityParentId;
+
+        [System.Xml.Serialization.XmlIgnore]
+        [Column("PROJECTPARENTID", DbType.AnsiString, 50, IsNullable = false)]
+        public string ProjectParentId;
     }
 }

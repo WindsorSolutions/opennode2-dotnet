@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema targetNamespace="urn:us:net:exchangenetwork" xmlns:pnwwqx="urn:us:net:exchangenetwork" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.3">
+	<xsd:include schemaLocation=".\PNWWQX_MailingAddressType_v.1.3.xsd"/>
+	<xsd:include schemaLocation=".\PNWWQX_PhoneEmailType_v.1.3.xsd"/>
+	<xsd:include schemaLocation=".\PNWWQX_EntityType_v.1.3.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name : 					PNWWQX_ContactEntityDetailsType_v.1.3.xsd 
+		Current Version Available At :	
+		Description : 					This schema defines the data elements to be shared through the Pacific Northwest Water Quality Data Exchange related to a contact individual or organization.
+		Application : 					Pacific Northwest Water Quality Data Exchange 
+		Developed by : 	 				Pacific Northwest Exchange States; Windsor Solutions, Inc
+		Point of Contact : 				Curtis Cude (cude.curtis@deq.state.or.us)
+										Kevin Jeffery (kevin_jeffery@windsorsolutions.com)	
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="ContactEntityDetailsType">
+		<xsd:sequence>
+			<xsd:element ref="pnwwqx:ContactEntityIdentifier"/>
+			<xsd:element ref="pnwwqx:ContactOrganizationName" minOccurs="0"/>
+			<xsd:element ref="pnwwqx:ContactEntityType"/>
+			<xsd:element ref="pnwwqx:ContactIndividualName"/>
+			<xsd:element ref="pnwwqx:ContactMailingAddress" minOccurs="0"/>
+			<xsd:element ref="pnwwqx:ContactPhoneEmail"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ContactEntityIdentifier" type="xsd:string"/>
+	<xsd:element name="ContactOrganizationName" type="xsd:string"/>
+	<xsd:element name="ContactEntityType" type="pnwwqx:ContactEntityType"/>
+	<xsd:element name="ContactIndividualName" type="xsd:string"/>
+	<xsd:element name="ContactMailingAddress" type="pnwwqx:MailingAddressType"/>
+	<xsd:element name="ContactPhoneEmail" type="pnwwqx:PhoneEmailType"/>
+	<xsd:simpleType name="ContactEntityType">
+		<xsd:restriction base="pnwwqx:EntityType">
+			<xsd:enumeration value="Individual"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>
