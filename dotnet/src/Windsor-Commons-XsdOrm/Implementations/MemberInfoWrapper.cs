@@ -287,7 +287,8 @@ namespace Windsor.Commons.XsdOrm.Implementations
                             }
                             catch (Exception)
                             {
-                                throw;
+                                throw new ArgumentException(string.Format("Failed to convert value \"{0}\" to enum type \"{1}\" for member \"{2}\"",
+                                                                          value, m_MemberType.FullName, m_MemberInfoPath));
                             }
                         }
                         else

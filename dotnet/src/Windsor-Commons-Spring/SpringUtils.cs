@@ -73,33 +73,70 @@ namespace Windsor.Commons.Spring
         }
 
         /// <summary>
-		/// Fetches interface implementation from the specified context
-		/// </summary>
+        /// Fetches interface implementation from the specified context
+        /// </summary>
+        /// <typeparam name="T">desired type</typeparam>
+        /// <param name="throwOnNull">indcator whetehr or now to throw on null object</param>
+        /// <returns>Instance of the specfied type based on the Spring context defenition</returns>
+        public static T GetServiceImplementation<T>(bool throwOnNull) where T : class
+        {
+            return GetServiceImplementation<T>(ContextRegistry.GetContext(), throwOnNull);
+        }
+
+        /// <summary>
+		/// Fetches interface implementation from the specified context. Will throw on null
+        /// </summary>
+        /// <typeparam name="T">Desired type</typeparam>
+        /// <param name="applicationContext">spring app context</param>
 		/// <returns>Instance of the specfied type based on the Spring context defenition</returns>
 		public static T GetServiceImplementation<T>(IApplicationContext applicationContext) where T : class
 		{
-			Type serviceType = typeof(T);
-			LOG.Debug("Getting service using specified context: " + applicationContext);
-			LOG.Debug("Service type: " + serviceType.FullName);
-			IDictionary objects = applicationContext.GetObjectsOfType(serviceType, true, false);
-//          string[] objectNames = applicationContext.GetObjectDefinitionNames();
+            return GetServiceImplementation<T>(applicationContext, true);
+		}
+
+        /// <summary>
+        /// Fetches interface implementation from the specified context
+        /// </summary>
+        /// <typeparam name="T">Desired type</typeparam>
+        /// <param name="applicationContext">spring app context</param>
+        /// <param name="throwOnNull">indcator whetehr or now to throw on null object</param>
+        /// <returns>found type or null</returns>
+        public static T GetServiceImplementation<T>(IApplicationContext applicationContext, bool throwOnNull) where T : class
+        {
+            Type serviceType = typeof(T);
+            LOG.Debug("Getting service using specified context: " + applicationContext);
+            LOG.Debug("Service type: " + serviceType.FullName);
+            IDictionary objects = applicationContext.GetObjectsOfType(serviceType, true, false);
+            //          string[] objectNames = applicationContext.GetObjectDefinitionNames();
             if (objects != null && objects.Count > 0)
             {
-				object rtnObject = null;
-				foreach(DictionaryEntry entry in objects) {
-					// Return closest match
-					if ( entry.Value.GetType() == serviceType ) {
-						rtnObject = entry.Value;
-						break;
-					} else {
-						rtnObject = entry.Value;
-					}
-				}
-				if ( rtnObject != null ) {
-					return (T) rtnObject;
-				}
-			}
-			throw new ArgumentException("GetServiceImplementation() could not locate object of type: " + serviceType.ToString());
-		}
+                object rtnObject = null;
+                foreach (DictionaryEntry entry in objects)
+                {
+                    // Return closest match
+                    if (entry.Value.GetType() == serviceType)
+                    {
+                        rtnObject = entry.Value;
+                        break;
+                    }
+                    else
+                    {
+                        rtnObject = entry.Value;
+                    }
+                }
+                if (rtnObject != null)
+                {
+                    return (T)rtnObject;
+                }
+            }
+            if (throwOnNull)
+            {
+                throw new ArgumentException("GetServiceImplementation() could not locate object of type: " + serviceType.ToString());
+            }
+            else
+            {
+                return null;
+            }
+        }
 	}
 }

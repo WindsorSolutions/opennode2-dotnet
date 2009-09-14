@@ -440,13 +440,11 @@ namespace Windsor.Commons.XsdOrm.Implementations
                                                                   tableName));
                     }
                     command.CommandText += " WHERE " + appendSelectWhereClause.SelectWhereQuery;
-                    if (appendSelectWhereClause.SelectWhereParameters != null)
-                    {
-                        foreach (IDataParameter parameter in appendSelectWhereClause.SelectWhereParameters)
-                        {
-                            command.Parameters.Add(parameter);
-                        }
-                    }
+                    CollectionUtils.ForEach(appendSelectWhereClause.SelectWhereParameters,
+                                            delegate(IDataParameter parameter)
+                                            {
+                                                command.Parameters.Add(parameter);
+                                            });
                 }
             }
         }

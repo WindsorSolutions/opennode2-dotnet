@@ -63,6 +63,14 @@ namespace Windsor.Commons.Spring
         public NamedNullMappingDataReader() : base() { }
         public NamedNullMappingDataReader(IDataReader dataReader) : base(dataReader) { }
 
+        public virtual bool ContainsField(string name)
+        {
+            if (_nameToOrdinalMap != null)
+            {
+                return _nameToOrdinalMap.ContainsKey(name);
+            }
+            return false;
+        }
         public override int GetOrdinal(string name)
         {
             if (_nameToOrdinalMap == null)
@@ -81,6 +89,11 @@ namespace Windsor.Commons.Spring
         {
             _nameToOrdinalMap = null;
             return base.NextResult();
+        }
+        public virtual byte[] GetNullBytes(string name)
+        {
+            int ordinal = GetOrdinal(name);
+            return (base.IsDBNull(ordinal) ? null : (byte[]) base.GetValue(ordinal));
         }
         public virtual string GetString(string name)
         {

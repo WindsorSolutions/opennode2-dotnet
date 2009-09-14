@@ -52,6 +52,7 @@ using Windsor.Commons.Core;
 using Wintellect.PowerCollections;
 using Windsor.Commons.Logging;
 using SpringCore = Spring.Data.Core;
+using SpringDataCommon = Spring.Data.Common;
 
 namespace Windsor.Commons.Spring
 {
@@ -150,13 +151,56 @@ namespace Windsor.Commons.Spring
         /// Parses standard JDBC SQL and populates with all the provider specific params and loads them with values
         /// </summary>
         /// <param name="sql">JDBC-compatable SQL</param>
-        /// <param name="pars">IDbParameters created in this method</param>
+        /// <param name="pars">Collection of IDataParameter created in this method</param>
         /// <param name="parValues">Array of parameter values corresponding to the SQL params</param>
         /// <example>SELCT * FROM table WHERE column = ?</example>
         /// <returns>Parsed SQL</returns>
+        public string LoadGenericParameters(string sql, out ICollection<IDataParameter> pars, params object[] parValues)
+        {
+            IDbParameters parameters;
+            string rtnVal = LoadGenericParametersFromValueList(sql, out parameters, parValues);
+            if ((parameters != null) && (parameters.Count > 0))
+            {
+                List<IDataParameter> list = new List<IDataParameter>(parameters.Count);
+                for (int i = 0; i < parameters.Count; ++i)
+                {
+                    list.Add(parameters[i]);
+                }
+                pars = list;
+                parameters.DataParameterCollection.Clear();
+            }
+            else
+            {
+                pars = null;
+            }
+            return rtnVal;
+        }
         public string LoadGenericParameters(string sql, out IDbParameters pars, params object[] parValues)
         {
             return LoadGenericParametersFromValueList(sql, out pars, parValues);
+        }
+        public void ExecuteSqlWithoutDatabaseConnection(string sqlToExecute)
+        {
+            string saveConnectionString = DbProvider.ConnectionString;
+            string databaseName;
+            string newConnectionString =
+                SpringBaseDao.RemoveDatabaseFromConnectionString(DbProvider, out databaseName);
+            DbProvider.ConnectionString = newConnectionString;
+            ConnectionTxPair connectionTxPairToUse = null;
+            try
+            {
+                connectionTxPairToUse = ConnectionUtils.GetConnectionTxPair(DbProvider);
+                AdoTemplate.ExecuteNonQuery(CommandType.Text, sqlToExecute);
+            }
+            finally
+            {
+                if (connectionTxPairToUse != null)
+                {
+                    ConnectionUtils.DisposeConnection(connectionTxPairToUse.Connection, DbProvider);
+                    connectionTxPairToUse = null;
+                }
+                DbProvider.ConnectionString = saveConnectionString;
+            }
         }
         public string LoadGenericParametersFromValueList(string sql, out IDbParameters pars, IList<object> parValues)
         {
@@ -1154,7 +1198,7 @@ namespace Windsor.Commons.Spring
             IDbParameters parameters = AppendDbParameters(null, whereValues);
             return AdoTemplate.ExecuteNonQuery(CommandType.Text, deleteText, parameters);
         }
-        public string GetDbInGroupFromFlagsEnum<T>(string fieldName, T flagsEnumValue) where T : struct
+        public string GetDbInGroupFromFlagsEnum<T>(string fieldName, T flagsEnumValue) where T : struct, IConvertible
         {
             StringBuilder sb = new StringBuilder(fieldName + " IN (");
             IList<T> enumValues = EnumUtils.GetEnumFlagsArray<T>(flagsEnumValue);

@@ -59,10 +59,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
         {
             MappingContext mappingContext = MappingContext.GetMappingContext(objectToSaveType);
 
-            BuildDatabase(baseDao);
-
-            Dictionary<string, DataTable> tableSchemas =
-                GetCurrentDatabaseTableSchemas(mappingContext.Tables, baseDao);
+            Dictionary<string, DataTable> tableSchemas = BuildDatabase(mappingContext.Tables, baseDao);
 
             BuildTables(tableSchemas, mappingContext, baseDao);
         }
@@ -134,13 +131,16 @@ namespace Windsor.Commons.XsdOrm.Implementations
             }
             return rtnTables;
         }
-        protected virtual void BuildDatabase(SpringBaseDao baseDao)
+        protected virtual Dictionary<string, DataTable> BuildDatabase(Dictionary<string, Table> tables,
+                                                                      SpringBaseDao baseDao)
         {
             ConnectionTxPair connectionTxPairToUse = null;
             try
             {
                 connectionTxPairToUse = ConnectionUtils.GetConnectionTxPair(baseDao.DbProvider);
-                return;
+                ConnectionUtils.DisposeConnection(connectionTxPairToUse.Connection, baseDao.DbProvider);
+                connectionTxPairToUse = null;
+                return GetCurrentDatabaseTableSchemas(tables, baseDao);
             }
             catch (CannotGetAdoConnectionException)
             {
@@ -160,7 +160,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 SpringBaseDao.RemoveDatabaseFromConnectionString(baseDao.DbProvider, out databaseName);
             if (string.IsNullOrEmpty(databaseName))
             {
-                throw new ArgumentException(string.Format("Could not located database name in connection string: \"{0}\"",
+                throw new ArgumentException(string.Format("Could not locate database name in connection string: \"{0}\"",
                                                           baseDao.DbProvider.ConnectionString));
             }
             baseDao.DbProvider.ConnectionString = newConnectionString;
@@ -169,7 +169,6 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 connectionTxPairToUse = ConnectionUtils.GetConnectionTxPair(baseDao.DbProvider);
                 string sql = string.Format("CREATE DATABASE {0}", databaseName);
                 baseDao.AdoTemplate.ExecuteNonQuery(CommandType.Text, sql);
-                Thread.Sleep(5000); // Pause to let the DB finish creation
             }
             finally
             {
@@ -179,6 +178,44 @@ namespace Windsor.Commons.XsdOrm.Implementations
                     connectionTxPairToUse = null;
                 }
                 baseDao.DbProvider.ConnectionString = saveConnectionString;
+            }
+            // Wait for database to be fully created
+            long timeoutTicks = DateTime.Now.Ticks + TimeSpan.FromSeconds(20).Ticks;
+            do
+            {
+                try
+                {
+                    return GetCurrentDatabaseTableSchemas(tables, baseDao);
+                }
+                catch (CannotGetAdoConnectionException)
+                {
+                }
+                Thread.Sleep(300);
+            }
+            while (timeoutTicks > DateTime.Now.Ticks);
+            throw new CannotGetAdoConnectionException();
+        }
+        protected virtual bool TestDbConnection(string connectionString)
+        {
+            try
+            {
+                const string cDatabaseConnectTimeoutParamName = "Connect Timeout";
+                if (connectionString.IndexOf(cDatabaseConnectTimeoutParamName, StringComparison.InvariantCultureIgnoreCase) < 0)
+                {
+                    connectionString += ";" + cDatabaseConnectTimeoutParamName + "=10";
+                }
+                IDbProvider dbProvider =
+                    global::Spring.Data.Common.DbProviderFactory.GetDbProvider("System.Data.SqlClient");
+                dbProvider.ConnectionString = connectionString;
+                using (System.Data.IDbConnection connection = dbProvider.CreateConnection())
+                {
+                    connection.Open();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
             }
         }
         protected virtual void BuildTables(Dictionary<string, DataTable> existingTableSchemas,

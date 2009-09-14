@@ -60,6 +60,12 @@ namespace Windsor.Commons.XsdOrm
             _selectWhereQuery = selectWhereQuery;
             _selectWhereParameters = selectWhereParameters;
         }
+        public DbAppendSelectWhereClause(SpringBaseDao baseDao, string selectJDBCWhereQuery, params object[] queryValues)
+        {
+            ICollection<IDataParameter> parameters;
+            _selectWhereQuery = baseDao.LoadGenericParameters(selectJDBCWhereQuery, out parameters, queryValues);
+            _selectWhereParameters = parameters;
+        }
         public string SelectWhereQuery
         {
             get { return _selectWhereQuery; }
