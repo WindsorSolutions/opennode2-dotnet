@@ -50,7 +50,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 import org.springframework.web.servlet.view.RedirectView;
 
-import com.windsor.node.BaseSimpleFormController;
 import com.windsor.node.admin.domain.NAASFlowPolicyInfo;
 import com.windsor.node.admin.domain.NAASPolicyEditRequest;
 import com.windsor.node.admin.editor.SystemRoleTypeEditor;
@@ -62,12 +61,12 @@ import com.windsor.node.common.domain.DataFlow;
 import com.windsor.node.common.domain.NodeVisit;
 import com.windsor.node.common.domain.ServiceRequestAuthorizationType;
 import com.windsor.node.common.domain.SystemRoleType;
-import com.windsor.node.common.domain.UserAccessPolicy;
 import com.windsor.node.common.domain.UserAccount;
+import com.windsor.node.common.domain.flowsecurity.UserAccessPolicy;
 import com.windsor.node.common.service.admin.AccountService;
 import com.windsor.node.common.service.admin.FlowService;
 
-public class EditPolicyController extends BaseSimpleFormController implements
+public class EditPolicyController extends BaseSecurityFormController implements
         Controller, InitializingBean {
 
     private AccountService accountService;
@@ -194,7 +193,7 @@ public class EditPolicyController extends BaseSimpleFormController implements
 
         // set the side bar
         model.put(AdminConstants.BARS_KEY, SideBarUtils.getSecurityBars(
-                request, 1));
+                request, 1, showManageUserRequests));
 
         return model;
 
@@ -223,6 +222,7 @@ public class EditPolicyController extends BaseSimpleFormController implements
         NodeVisit visit = VisitUtils.getVisit(request);
 
         if (visit == null) {
+
             logger.debug(AdminConstants.UNAUTHED_ACCESS);
             return VisitUtils.getUnauthedView(request);
         }
@@ -286,7 +286,7 @@ public class EditPolicyController extends BaseSimpleFormController implements
 
         }
 
-        logger.debug("Account Detail: " + editRequest);
+        logger.debug("EditRequest Detail: " + editRequest);
 
         return editRequest;
     }

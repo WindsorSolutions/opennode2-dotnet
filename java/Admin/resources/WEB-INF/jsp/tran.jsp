@@ -38,7 +38,7 @@
                     
                     <tr>
                         <td class="label" width="50" style="text-align: right; vertical-align: top;">Current Status:</td>
-                        <td class="ctrl"><c:out value="${model.tran.status.status.name}" /></td>
+                        <td class="ctrl"><c:out value="${model.tran.status.status}" /></td>
                     </tr>
                     
                     <tr>

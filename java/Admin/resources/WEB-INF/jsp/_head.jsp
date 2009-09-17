@@ -41,7 +41,7 @@
                 </c:otherwise>
             </c:choose>
 					
-                <c:if test='${model.visit.userAccount.role.name == "Admin"}'>
+                <c:if test='${model.visit.userAccount.role == "Admin"}'>
 					
 					<li <c:if test="${model.tab != null && model.tab == 1}">class="current"</c:if> >
 					   <a href="config.htm">
@@ -86,7 +86,7 @@
 <c:if test="${model.visit != null}">
 <div class="userInfo">
 	<c:out value="${model.visit.userAccount.naasUserName}" />
-		&nbsp;as&nbsp;<c:out value="${model.visit.userAccount.role.name}" />
+		&nbsp;as&nbsp;<c:out value="${model.visit.userAccount.role}" />
 		&nbsp;|&nbsp;<a href="exit.htm">Sign out</a>
 </div>
 </c:if>

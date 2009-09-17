@@ -169,7 +169,7 @@ public class JdbcActivityDao extends BaseJdbcDao implements ActivityDao {
 
             Object[] args = new Object[6];
             args[0] = objId;
-            args[1] = instance.getType().getName();
+            args[1] = instance.getType().name();
             args[2] = instance.getTransactionId();
             args[3] = instance.getIp();
             args[4] = instance.getModifiedById();
@@ -421,8 +421,8 @@ public class JdbcActivityDao extends BaseJdbcDao implements ActivityDao {
             obj.setFlowName(rs.getString("FlowCode"));
             obj.setWebMethod(rs.getString("WebMethod"));
 
-            obj.setType((ActivityType) ActivityType.getEnumMap().get(
-                    rs.getString("ActivityType")));
+            obj.setType((ActivityType) ActivityType.valueOf(rs
+                    .getString("ActivityType")));
 
             return obj;
 

@@ -49,9 +49,9 @@
 						style="vertical-align: middle; width: 95%;" >
 						<c:forEach var="sysRole" items="${model.sysRoles}"
 							varStatus="rowSatus">
-							<option value="<c:out value="${sysRole.name}" />"
-								<c:if test="${ sysRole.name == command.role.name }">selected</c:if>><c:out
-								value="${sysRole.name}" /></option>
+							<option value="<c:out value="${sysRole}" />"
+								<c:if test="${ sysRole == command.role }">selected</c:if>><c:out
+								value="${sysRole}" /></option>
 						</c:forEach>
 					</select>
 					<span class="error" <c:if test="${status.errorMessage == \"\"}">style="display:none;"</c:if> ><c:out value="${status.errorMessage}" /></span>

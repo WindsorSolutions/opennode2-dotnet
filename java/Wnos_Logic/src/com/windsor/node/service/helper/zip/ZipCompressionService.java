@@ -177,20 +177,38 @@ public class ZipCompressionService implements CompressionService,
             while (entries.hasMoreElements()) {
 
                 ZipEntry entry = (ZipEntry) entries.nextElement();
+                String entryName = entry.getName();
 
+                /* if the zipEntry name ends with / it's a directory */
                 if (entry.isDirectory()) {
-                    // Assume directories are stored parents first then
-                    // children.
-                    logger.debug("Extracting directory: " + entry.getName());
-                    // This is not robust, just for demonstration purposes.
-                    (new File(entry.getName())).mkdir();
+
+                    logger.debug("Extracting directory: " + entryName);
+
+                    FileUtils.forceMkdir(new File(entryName));
+
                     continue;
+
+                    /*
+                     * else if the entry is a file, but is nested in one or more
+                     * directories, make the directory
+                     */
+                } else if (entryName.contains("/")) {
+
+                    String zipPath = FilenameUtils.getPath(entryName);
+                    String baseDirName = FilenameUtils.concat(targetDirPath,
+                            zipPath);
+                    File basedir = new File(baseDirName);
+
+                    if (!basedir.exists()) {
+                        FileUtils.forceMkdir(basedir);
+                    }
+
                 }
 
                 String targetPath = FilenameUtils.concat(targetDirPath, IOUtil
-                        .cleanForPath(entry.getName()));
+                        .cleanForPath(entryName));
 
-                logger.debug("Extracting file: " + entry.getName() + " to: "
+                logger.debug("Extracting file: " + entryName + " to: "
                         + targetPath);
 
                 copyInputStream(zipFile.getInputStream(entry),

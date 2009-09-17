@@ -48,7 +48,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 import org.springframework.web.servlet.view.RedirectView;
 
-import com.windsor.node.BaseSimpleFormController;
 import com.windsor.node.admin.editor.SystemRoleTypeEditor;
 import com.windsor.node.admin.util.AdminConstants;
 import com.windsor.node.admin.util.SideBarUtils;
@@ -59,7 +58,7 @@ import com.windsor.node.common.domain.SystemRoleType;
 import com.windsor.node.common.domain.UserAccount;
 import com.windsor.node.common.service.admin.AccountService;
 
-public class NewAccountController extends BaseSimpleFormController implements
+public class NewAccountController extends BaseSecurityFormController implements
         Controller, InitializingBean {
 
     private AccountService accountService;
@@ -129,9 +128,8 @@ public class NewAccountController extends BaseSimpleFormController implements
 
             request.setAttribute(AdminConstants.COMMAND_KEY, accountRequest);
 
-            view = new ModelAndView(getFormView(),
-                    AdminConstants.MODEL_KEY, getRreferenceData(request,
-                            visit));
+            view = new ModelAndView(getFormView(), AdminConstants.MODEL_KEY,
+                    getRreferenceData(request, visit));
 
         }
 
@@ -148,10 +146,11 @@ public class NewAccountController extends BaseSimpleFormController implements
         model.put(AdminConstants.TAB_KEY, SiteTabUtils.TAB_SECURITY);
 
         // set the side bar
-        model.put(AdminConstants.BARS_KEY, SideBarUtils.getSecurityBars(request, 0));
+        model.put(AdminConstants.BARS_KEY, SideBarUtils.getSecurityBars(
+                request, 0, showManageUserRequests));
 
         // sys roles
-        model.put("sysRoles", SystemRoleType.getEnumList());
+        model.put("sysRoles", SystemRoleType.values());
 
         return model;
 
@@ -167,8 +166,8 @@ public class NewAccountController extends BaseSimpleFormController implements
         }
 
         Map modelHolder = new HashMap();
-        modelHolder.put(AdminConstants.MODEL_KEY, getRreferenceData(
-                request, visit));
+        modelHolder.put(AdminConstants.MODEL_KEY, getRreferenceData(request,
+                visit));
         return modelHolder;
 
     }
@@ -184,7 +183,7 @@ public class NewAccountController extends BaseSimpleFormController implements
         }
 
         UserAccount accountRequest = new UserAccount();
-        accountRequest.setRole(SystemRoleType.AUTHED);
+        accountRequest.setRole(SystemRoleType.Authed);
         return accountRequest;
 
     }

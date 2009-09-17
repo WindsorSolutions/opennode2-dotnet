@@ -56,10 +56,6 @@ import com.windsor.node.util.DateUtil;
 public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao,
         InitializingBean {
 
-    /**
-     * All finder methods in this class use this SELECT constant to build their
-     * queries
-     */
     private static final String SQL_SELECT = "SELECT Id, FlowId, NetworkId, "
             + "Status, ModifiedBy, ModifiedOn, StatusDetail, Operation, WebMethod  FROM NTransaction ";
 
@@ -104,37 +100,25 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao,
      */
     private static final String SQL_DELETE = "DELETE FROM NTransaction WHERE Id = ?";
 
-    /**
-     * All finder methods in this class use this SELECT constant to build their
-     * queries
-     */
     private static final String SQL_SELECT_DOC_WITH_CONTENT = "SELECT Id, DocumentName, DocumentType, "
             + "DocumentId, Status, StatusDetail, DocumentContent FROM NDocument WHERE TransactionId = ? ";
 
     private static final String SQL_SELECT_DOC_NO_CONTENT = "SELECT Id, DocumentName, DocumentType, "
-            + "DocumentId, Status, StatusDetail, null as DocumentContent FROM NDocument WHERE TransactionId = ? ";
+            + "DocumentId, Status, StatusDetail FROM NDocument WHERE TransactionId = ? ";
 
-    /**
-     * All finder methods in this class use this SELECT constant to build their
-     * queries
-     */
     private static final String SQL_SELECT_DOC_ID = SQL_SELECT_DOC_WITH_CONTENT
             + " AND DocumentId = ? ";
 
     private static final String SQL_SELECT_DOC_NAME = SQL_SELECT_DOC_WITH_CONTENT
             + " AND UPPER(DocumentName) = ? ";
 
-    /**
-     * All finder methods in this class use this SELECT constant to build their
-     * queries
-     */
     private static final String SQL_SELECT_DOC_EN_WITH_CONTENT = "SELECT Id, DocumentName, "
             + " DocumentType, DocumentId, Status, StatusDetail, DocumentContent "
             + "FROM NDocument WHERE TransactionId IN (SELECT Id FROM NTransaction "
             + "WHERE UPPER(NetworkId) = ? ) ";
 
     private static final String SQL_SELECT_DOC_EN_NO_CONTENT = "SELECT Id, DocumentName, "
-            + " DocumentType, DocumentId, Status, StatusDetail, null as DocumentContent "
+            + " DocumentType, DocumentId, Status, StatusDetail "
             + "FROM NDocument WHERE TransactionId IN (SELECT Id FROM NTransaction "
             + "WHERE UPPER(NetworkId) = ? ) ";
 
@@ -191,7 +175,7 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao,
         args[3] = instance.getType().getName();
         args[4] = (instance.getDocumentId() == null) ? instance.getId()
                 : instance.getDocumentId();
-        args[5] = instance.getDocumentStatus().getName();
+        args[5] = instance.getDocumentStatus().name();
         args[6] = instance.getDocumentStatusDetail();
         args[7] = instance.getContent();
 
@@ -228,22 +212,21 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao,
         validateStringArg(id);
 
         String sql = SQL_SELECT_ID;
-        
+
         String adjustedId;
-        
+
         if (useNetworkId) {
-            
+
             sql = SQL_SELECT_ENID;
             adjustedId = id.toUpperCase();
 
         } else {
-            
+
             adjustedId = id;
         }
 
         return (NodeTransaction) queryForObject(sql,
-                new Object[] { adjustedId },
-                new TransactionMapper());
+                new Object[] { adjustedId }, new TransactionMapper());
     }
 
     /**
@@ -255,7 +238,7 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao,
         validateObjectArg(method, "NodeMethodType");
 
         return getJdbcTemplate().query(SQL_SELECT_STATUS_N_METHOD,
-                new Object[] { status.getName(), method.getName() },
+                new Object[] { status.name(), method.getName() },
                 new TransactionMapper());
     }
 
@@ -286,9 +269,9 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao,
 
             // New, Id, Old
 
-            args[0] = CommonTransactionStatusCode.PROCESSING.getName();
+            args[0] = CommonTransactionStatusCode.PROCESSING.name();
             args[1] = tran.getId();
-            args[2] = tran.getStatus().getStatus().getName();
+            args[2] = tran.getStatus().getStatus().name();
 
             if (1 == getJdbcTemplate().update(SQL_UPDATE_STATUS_TRAN, args)) {
                 tran.getStatus().setStatus(
@@ -308,7 +291,7 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao,
     public List getSubmittedDocumentTransactions() {
 
         return getJdbcTemplate().query(SQL_SELECT_STATUS_DOCS,
-                new Object[] { CommonTransactionStatusCode.RECEIVED_STR },
+                new Object[] { CommonTransactionStatusCode.RECEIVED.name() },
                 new TransactionMapper());
     }
 
@@ -323,7 +306,7 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao,
         String sql = SQL_SELECT_DOC_NO_CONTENT;
 
         String adjustedId;
-        
+
         if (loadDocContent) {
             sql = SQL_SELECT_DOC_WITH_CONTENT;
         }
@@ -424,7 +407,7 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao,
         args[0] = instance.getId();
         args[1] = instance.getFlow().getId();
         args[2] = instance.getNetworkId();
-        args[3] = instance.getStatus().getStatus().getName();
+        args[3] = instance.getStatus().getStatus().name();
         args[4] = instance.getModifiedById();
         args[5] = DateUtil.getTimestamp();
         args[6] = instance.getStatus().getDescription();
@@ -450,7 +433,7 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao,
 
         Object[] args = new Object[2];
 
-        args[0] = status.getName();
+        args[0] = status.name();
         args[1] = transactionId;
 
         getJdbcTemplate().update(SQL_UPDATE, args);
@@ -553,7 +536,10 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao,
                     .setDocumentStatus((CommonTransactionStatusCode) CommonTransactionStatusCodeConverter
                             .convert(rs.getString("Status")));
             obj.setDocumentStatusDetail(rs.getString("StatusDetail"));
-            obj.setContent(rs.getBytes("DocumentContent"));
+
+            if (containsColumnNamed(rs, "DocumentContent")) {
+                obj.setContent(rs.getBytes("DocumentContent"));
+            }
 
             return obj;
 

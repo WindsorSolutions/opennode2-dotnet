@@ -71,7 +71,7 @@ public class ScheduleServiceImpl extends BaseService implements
         }
 
         // Make sure the user performing that action has program rights
-        validateByRole(visit, SystemRoleType.PROGRAM);
+        validateByRole(visit, SystemRoleType.Program);
 
         ScheduledItem schedule = scheduleDao.get(scheduleId);
 
@@ -80,7 +80,7 @@ public class ScheduleServiceImpl extends BaseService implements
                     "Schedule item not present in local database.");
         }
 
-        Activity logEntry = makeNewActivity(ActivityType.AUDIT, visit);
+        Activity logEntry = makeNewActivity(ActivityType.Audit, visit);
 
         // The idea is that both of them need to work independently
         try {
@@ -139,7 +139,7 @@ public class ScheduleServiceImpl extends BaseService implements
     public void saveAndRunNow(ScheduledItem instance, NodeVisit visit) {
 
         // Make sure the user performing that action has admin rights
-        validateByRole(visit, SystemRoleType.PROGRAM);
+        validateByRole(visit, SystemRoleType.Program);
 
         save(instance, visit);
 
@@ -157,9 +157,9 @@ public class ScheduleServiceImpl extends BaseService implements
         logger.debug("Attempting to save:" + instance);
 
         // Make sure the user performing that action has admin rights
-        validateByRole(visit, SystemRoleType.PROGRAM);
+        validateByRole(visit, SystemRoleType.Program);
 
-        Activity logEntry = makeNewActivity(ActivityType.AUDIT, visit);
+        Activity logEntry = makeNewActivity(ActivityType.Audit, visit);
 
         try {
 

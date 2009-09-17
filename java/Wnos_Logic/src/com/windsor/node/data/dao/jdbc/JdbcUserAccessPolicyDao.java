@@ -39,49 +39,52 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.jdbc.core.RowMapper;
 
 import com.windsor.node.common.domain.ServiceRequestAuthorizationType;
-import com.windsor.node.common.domain.UserAccessPolicy;
+import com.windsor.node.common.domain.flowsecurity.UserAccessPolicy;
 import com.windsor.node.data.dao.UserAccessPolicyDao;
 import com.windsor.node.util.FormatUtil;
 
 public class JdbcUserAccessPolicyDao extends BaseJdbcDao implements
         UserAccessPolicyDao {
 
+    protected static final String WHERE_ID = "WHERE Id = ? ";
+    protected static final String SQL = "SQL: ";
+
     /**
      * Base SQL SELECT statement
      */
-    protected final String SQL_SELECT = "SELECT * FROM NAccountPolicy ";
+    protected static final String SQL_SELECT = "SELECT * FROM NAccountPolicy ";
 
     /**
      * SQL statement for selecting by UserAccessPolicy Id
      */
-    protected final String SQL_SELECT_BY_ID = SQL_SELECT + "WHERE Id = ? ";
+    protected static final String SQL_SELECT_BY_ID = SQL_SELECT + WHERE_ID;
 
     /**
      * SQL statement for selecting by AccountId
      */
-    protected final String SQL_SELECT_BY_ACCOUNT_ID = SQL_SELECT
+    protected static final String SQL_SELECT_BY_ACCOUNT_ID = SQL_SELECT
             + "WHERE AccountId = ?";
 
     /**
      * Base SQL DELETE statement
      */
-    protected final String SQL_DELETE = "DELETE FROM NAccountPolicy ";
+    protected static final String SQL_DELETE = "DELETE FROM NAccountPolicy ";
 
     /**
      * SQL statement for deleting by UserAccessPolicy Id
      */
-    protected final String SQL_DELETE_BY_ID = SQL_DELETE + "WHERE Id = ? ";
+    protected static final String SQL_DELETE_BY_ID = SQL_DELETE + WHERE_ID;
 
     /**
      * SQL statement for deleting by UserAccessPolicy Id
      */
-    protected final String SQL_DELETE_BY_ACCOUNT_ID = SQL_DELETE
+    protected static final String SQL_DELETE_BY_ACCOUNT_ID = SQL_DELETE
             + "WHERE AccountId = ? ";
 
     /**
      * SQL INSERT statement for this table
      */
-    protected final String SQL_INSERT = "INSERT INTO NAccountPolicy "
+    protected static final String SQL_INSERT = "INSERT INTO NAccountPolicy "
             + "(AccountId, PolicyType, Qualifier, IsAllowed, ModifiedBy, ModifiedOn, Id) "
             + "VALUES ( ?, ?, ?, ?, ?, ?, ? )";
 
@@ -94,16 +97,18 @@ public class JdbcUserAccessPolicyDao extends BaseJdbcDao implements
     public UserAccessPolicy get(String id) {
         validateStringArg(id);
         logger.debug("Retrieving UserAccessPolicy with id=" + id);
-        logger.debug("SQL: " + SQL_SELECT_BY_ID);
+        logger.debug(SQL + SQL_SELECT_BY_ID);
         return (UserAccessPolicy) queryForObject(SQL_SELECT_BY_ID,
                 new Object[] { id }, new UserAccessPolicyMapper());
     }
 
-    public List getByUserAccountId(String accountId) {
+    @SuppressWarnings("unchecked")
+    public List<UserAccessPolicy> getByUserAccountId(String accountId) {
         validateStringArg(accountId);
-        logger.debug("Getting UserAccessPolicies for AccountId=" + accountId);
-        return getJdbcTemplate().query(SQL_SELECT_BY_ACCOUNT_ID,
-                new Object[] { accountId }, new UserAccessPolicyMapper());
+        logger.debug("Getting UserAccessPolicies for AccountId: " + accountId);
+        return (List<UserAccessPolicy>) getJdbcTemplate().query(
+                SQL_SELECT_BY_ACCOUNT_ID, new Object[] { accountId },
+                new UserAccessPolicyMapper());
     }
 
     public UserAccessPolicy save(UserAccessPolicy instance) {
@@ -117,16 +122,14 @@ public class JdbcUserAccessPolicyDao extends BaseJdbcDao implements
             sql = SQL_INSERT;
         }
 
-        logger.debug("SQL: " + sql);
+        logger.debug(SQL + sql);
 
-        Object[] args = new Object[7];
-        args[0] = instance.getAccountId();
-        args[1] = instance.getPolicyType().getName();
-        args[2] = instance.getTypeQualifier();
-        args[3] = FormatUtil.toYNFromBoolean(instance.isAllowed());
-        args[4] = instance.getModifiedById();
-        args[5] = instance.getModifiedOn();
-        args[6] = instance.getId();
+        Object[] args = new Object[] { instance.getAccountId(),
+                instance.getPolicyType().getName(),
+                instance.getTypeQualifier(),
+                FormatUtil.toYNFromBoolean(instance.isAllowed()),
+                instance.getModifiedById(), instance.getModifiedOn(),
+                instance.getId() };
 
         logger.debug("Saving UserAccessPolicy");
         printourArgs(args);
@@ -139,14 +142,14 @@ public class JdbcUserAccessPolicyDao extends BaseJdbcDao implements
     public void delete(String id) {
         validateStringArg(id);
         logger.debug("Deleting UserAccessPolicy with id=" + id);
-        logger.debug("SQL: " + SQL_DELETE_BY_ID);
+        logger.debug(SQL + SQL_DELETE_BY_ID);
         delete(SQL_DELETE_BY_ID, id);
     }
 
     public void deletePoliciesByAccountId(String accountId) {
         validateStringArg(accountId);
         logger.debug("Deleting UserAccessPolicies with AccountId=" + accountId);
-        logger.debug("SQL: " + SQL_DELETE_BY_ACCOUNT_ID);
+        logger.debug(SQL + SQL_DELETE_BY_ACCOUNT_ID);
         delete(SQL_DELETE_BY_ACCOUNT_ID, accountId);
     }
 

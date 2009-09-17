@@ -91,7 +91,12 @@ public class DocController implements Controller, InitializingBean {
                     "Invalid transaction or document Id");
         }
 
+        logger.debug("Download document with\nTransaction id: " + tid
+                + "\nDocument Id: " + id + "\nDocument Name: " + name);
+
         byte[] content = transactionService.downloadContent(tid, id, visit);
+
+        logger.debug("Content length (in bytes): " + content.length);
 
         response.setHeader("Cache-Control", "must-revalidate");
         response.setBufferSize(content.length);

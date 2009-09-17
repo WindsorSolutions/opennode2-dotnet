@@ -9,6 +9,8 @@
     <property name="logic.root" value="${project.root}/Wnos_Logic" />
     <property name="service.root" value="${project.root}/Wnos_Service" />
     <property name="plugin.root" value="${project.root}/Wnos_Plugin" />
+    <property name="version.properties.comment" value="CALLED BY project.build.xml - DO NOT EDIT MANUALLY! (unless you know what you're doing :-)" />
+    
     <property file="shared.build.properties" />
     <property file="major.version.properties" />
     <property file="minor.version.properties" />
@@ -36,30 +38,50 @@
     </target>
 
     <target name="update.major.version" depends="check.major.version.update" if="updateMajorVersion">
-        <propertyfile file="major.version.properties" comment="CALLED BY project.build.xml - DO NOT EDIT MANUALLY! (unless you know what you're doing :-)">
+        <propertyfile file="major.version.properties" comment="${version.properties.comment}">
             <entry key="major.version" type="int" default="${major.version}" operation="+" />
         </propertyfile>
         <echo message="Updated major version." />
     </target>
 
     <target name="update.minor.version" depends="check.minor.version.update" if="updateMinorVersion">
-        <propertyfile file="minor.version.properties" comment="CALLED BY project.build.xml - DO NOT EDIT MANUALLY! (unless you know what you're doing :-)">
+        <propertyfile file="minor.version.properties" comment="${version.properties.comment}">
             <entry key="minor.version" type="int" default="${minor.version}" operation="+" pattern="00" />
         </propertyfile>
         <echo message="Updated minor version." />
     </target>
 
-    <target name="update.build.number">
-        <propertyfile file="build.number.properties" comment="CALLED BY project.build.xml - DO NOT EDIT MANUALLY! (unless you know what you're doing :-)">
+    <target name="update.build.number" unless="resetBuildNumber">
+        <propertyfile file="build.number.properties" comment="${version.properties.comment}">
             <entry key="build.number" type="int" default="${build.number}" operation="+" />
         </propertyfile>
         <echo message="Updated build number." />
     </target>
 
-    <target name="update.version.numbers">
-        <antcall target="update.major.version" inheritAll="true" />
-        <antcall target="update.minor.version" inheritAll="true" />
+    <target name="reset.build.number" if="resetBuildNumber">
+        <propertyfile file="build.number.properties" comment="${version.properties.comment}">
+            <entry key="build.number" value="1" />
+        </propertyfile>
+        <echo message="Reset build number." />
+        
+        <propertyfile file="${plugin.root}/ant/plugin.build.number.properties" comment="${version.properties.comment}">
+            <entry key="plugin.build.number" value="1" />
+        </propertyfile>
+        <echo message="Reset plugin.build number." />
+    </target>
+
+    <target name="flag.build.number.reset">
+        <condition property="resetBuildNumber">
+            <or>
+                <isset property="updateMajorVersion" />
+                <isset property="updateMinorVersion" />
+            </or>
+        </condition>
+    </target>
+    
+    <target name="update.version.numbers" depends="update.major.version,update.minor.version,flag.build.number.reset">
         <antcall target="update.build.number" inheritAll="true" />
+        <antcall target="reset.build.number" inheritAll="true" />
     </target>
 
     <target name="clean" description="Cleans all projects">

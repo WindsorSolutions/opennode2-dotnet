@@ -281,7 +281,7 @@ public class Endpoint2ServiceImpl extends BaseEndpoint2Service implements
 
             logger.debug("Parsing status from: " + result.getStatus());
             response.setStatus(TransactionStatusCode.Factory.fromValue(result
-                    .getStatus().getName()));
+                    .getStatus().name()));
             response.setTransactionId(null);
 
             Document doc = (Document) result.getDocuments().get(0);
@@ -463,7 +463,7 @@ public class Endpoint2ServiceImpl extends BaseEndpoint2Service implements
 
             StatusResponseType responseType = new StatusResponseType();
             responseType.setStatus(TransactionStatusCode.Factory
-                    .fromValue(status.getStatus().getName()));
+                    .fromValue(status.getStatus().name()));
             responseType.setStatusDetail(status.getDescription());
             responseType.setTransactionId(status.getTransactionId());
 
@@ -730,9 +730,9 @@ public class Endpoint2ServiceImpl extends BaseEndpoint2Service implements
 
             logger.debug("Setting StatusResponseType.status to "
                     + TransactionStatusCode.Factory.fromValue(result
-                            .getStatus().getName()));
+                            .getStatus().name()));
             responseType.setStatus(TransactionStatusCode.Factory
-                    .fromValue(result.getStatus().getName()));
+                    .fromValue(result.getStatus().name()));
 
             logger.debug("Setting StatusResponseType.statusDetail to "
                     + result.getDescription());
@@ -860,9 +860,9 @@ public class Endpoint2ServiceImpl extends BaseEndpoint2Service implements
 
             logger.debug("Setting StatusResponseType.status to "
                     + TransactionStatusCode.Factory.fromValue(status
-                            .getStatus().getName()));
+                            .getStatus().name()));
             responseType.setStatus(TransactionStatusCode.Factory
-                    .fromValue(status.getStatus().getName()));
+                    .fromValue(status.getStatus().name()));
 
             logger.debug("Setting StatusResponseType.statusDetail to "
                     + status.getDescription());

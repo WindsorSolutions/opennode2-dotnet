@@ -1,8 +1,48 @@
 ================================================================================
+Opennode2 v1.18 for Java - Release Notes                             2009-09-15
+================================================================================
+
+This release features new plugins, enhancements to support the Homeland 
+Emergency Response Exchange (HERE), bug fixes, and additional refactoring for 
+Java 5. The fixes and improvements in OpenNode2 itself require installing the
+new OpenNode2 in order to use the plugins included in this release; the latest 
+plugins may not function correctly with earlier OpenNode2 releases. See the 
+updated installation guide for details. 
+
+FIXED/RESOLVED
+========================================
+* Fixed a bug introduced in the last release that sent transaction status codes
+  in the wrong case.
+  
+* The EN v2.0 Endpoint (wne2.war) reliably reports the root error message for
+  both incoming and outgoing service calls. 
+
+
+NEW
+========================================
+* The RCRA41 plugin now includes support for the Compliance Monitoring & 
+  Enforcement (CME) Module. See the new configuration guide foe details.
+
+* For HERE users, this release introduces User Authorization Request management. 
+  This requires installing the FlowSecurity plugin and configuring the relevant
+  service. It also requires setting a new property named "manage.user.requests"
+  in wna.war/WEB-INF/classes to "true" (it's set to "false" in this release), 
+  so that the "Manage User Requests" button will appear in the Security tab of
+  the OpenNode2 Admin application.  
+
+* The "TASK" service type is introduced in  
+  com.windsor.node.common.domain.ServiceType, to provide more robust 
+  integration and audit capabilities for creating plugins to be run from 
+  schedules only (and not callable via SOAP web services). The previous work-
+  around (creating a plugin of ServiceType.NONE) was inelegant and did not 
+  support configuration arguments.
+
+
+================================================================================
 Opennode2 v1.17 for Java - Release Notes                             2009-08-05
 ================================================================================
 
-This release primarily addresses interoperability issues the EN v2.0 Endpoint
+This release primarily addresses interoperability issues in the EN v2.0 Endpoint
 (aka wne2.war). 
 
 The .war files are drop-in replacements for an existing installation; if 
@@ -138,4 +178,3 @@ FIXED/RESOLVED
 * The list of plugin implementation classes on the Node Admin "Edit Service"
   page no longer displays abstract implementation classes, thus avoiding an
   error when trying to save the Service.
-

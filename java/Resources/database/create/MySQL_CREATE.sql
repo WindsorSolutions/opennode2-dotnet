@@ -330,22 +330,22 @@ ALTER TABLE NAccount
     ADD CONSTRAINT FK_Account_Account
     FOREIGN KEY(ModifiedBy)
     REFERENCES NAccount(Id)
-    ON DELETE NO ACTION 
-    ON UPDATE NO ACTION ;
+    ON DELETE CASCADE 
+    ON UPDATE CASCADE ;
 
 ALTER TABLE NAccountPolicy
     ADD CONSTRAINT FK_AccountPolicy_Account
     FOREIGN KEY(ModifiedBy)
     REFERENCES NAccount(Id)
-    ON DELETE NO ACTION 
-    ON UPDATE NO ACTION ;
+    ON DELETE CASCADE 
+    ON UPDATE CASCADE ;
 
 ALTER TABLE NAccountPolicy
     ADD CONSTRAINT FK_AccountIdPolicy_Account
     FOREIGN KEY(AccountId)
     REFERENCES NAccount(Id)
-    ON DELETE NO ACTION 
-    ON UPDATE NO ACTION ;
+    ON DELETE CASCADE 
+    ON UPDATE CASCADE ;
 
 ALTER TABLE NActivity
     ADD CONSTRAINT FK_Activity_Transaction
@@ -379,8 +379,8 @@ ALTER TABLE NConnection
     ADD CONSTRAINT FK_Connection_Account
     FOREIGN KEY(ModifiedBy)
     REFERENCES NAccount(Id)
-    ON DELETE NO ACTION 
-    ON UPDATE NO ACTION ;
+    ON DELETE CASCADE 
+    ON UPDATE CASCADE ;
 
 ALTER TABLE NDocument
     ADD CONSTRAINT FK_Document_Transaction
@@ -407,8 +407,8 @@ ALTER TABLE NNotification
     ADD CONSTRAINT FK_Notification_Account
     FOREIGN KEY(AccountId)
     REFERENCES NAccount(Id)
-    ON DELETE NO ACTION 
-    ON UPDATE NO ACTION ;
+    ON DELETE CASCADE 
+    ON UPDATE CASCADE ;
 
 ALTER TABLE NPartner
     ADD CONSTRAINT FK_Partner_Account
@@ -428,8 +428,8 @@ ALTER TABLE NPlugin
     ADD CONSTRAINT FK_NPlugin_NAccount
     FOREIGN KEY(ModifiedBy)
     REFERENCES NAccount(Id)
-    ON DELETE NO ACTION 
-    ON UPDATE NO ACTION ;
+    ON DELETE CASCADE 
+    ON UPDATE CASCADE ;
 
 ALTER TABLE NRequest
     ADD CONSTRAINT FK_Request_Transaction
@@ -449,8 +449,8 @@ ALTER TABLE NRequest
     ADD CONSTRAINT FK_ModifiedBy_Request_Account
     FOREIGN KEY(ModifiedBy)
     REFERENCES NAccount(Id)
-    ON DELETE NO ACTION 
-    ON UPDATE NO ACTION ;
+    ON DELETE CASCADE 
+    ON UPDATE CASCADE ;
 
 ALTER TABLE NRequestArg
     ADD CONSTRAINT FK_RequestArg_Request
@@ -477,8 +477,8 @@ ALTER TABLE NService
     ADD CONSTRAINT FK_Service_Account
     FOREIGN KEY(ModifiedBy)
     REFERENCES NAccount(Id)
-    ON DELETE NO ACTION 
-    ON UPDATE NO ACTION ;
+    ON DELETE CASCADE 
+    ON UPDATE CASCADE ;
 
 ALTER TABLE NServiceArg
     ADD CONSTRAINT FK_ServiceArg_Service
@@ -505,22 +505,22 @@ ALTER TABLE NTransaction
     ADD CONSTRAINT FK_ModifiedBy_Transaction_Account
     FOREIGN KEY(ModifiedBy)
     REFERENCES NAccount(Id)
-    ON DELETE NO ACTION 
-    ON UPDATE NO ACTION ;
+    ON DELETE CASCADE 
+    ON UPDATE CASCADE ;
 
 ALTER TABLE NTransactionNotification
     ADD CONSTRAINT FK_TransactionNotification_Transaction
     FOREIGN KEY(TransactionId)
     REFERENCES NTransaction(Id)
-    ON DELETE NO ACTION 
-    ON UPDATE NO ACTION ;
+    ON DELETE CASCADE 
+    ON UPDATE CASCADE ;
 
 ALTER TABLE NTransactionRecipient
     ADD CONSTRAINT FK_TransactionRecipient_Transaction
     FOREIGN KEY(TransactionId)
     REFERENCES NTransaction(Id)
-    ON DELETE NO ACTION 
-    ON UPDATE NO ACTION ;
+    ON DELETE CASCADE 
+    ON UPDATE CASCADE ;
 
 
 -- additions for HERE AuthorizationRequest feature

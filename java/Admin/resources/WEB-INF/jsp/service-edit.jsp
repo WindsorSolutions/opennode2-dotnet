@@ -84,9 +84,9 @@
 							name="<c:out value="${status.expression}" />"
 							style="vertical-align: middle; width: 96%;">
 							<c:forEach var="srvType" items="${command.service.supportedTypes}">
-								<option value="<c:out value="${srvType.name}" />"
-									<c:if test="${ srvType.name == command.service.type.name }">selected</c:if> > 
-								<c:out value="${srvType.name}" /></option>
+								<option value="<c:out value="${srvType}" />"
+									<c:if test="${srvType == command.service.type}">selected</c:if> > 
+								<c:out value="${srvType}" /></option>
 							</c:forEach>
 						</select>
 						<span class="error" <c:if test="${status.errorMessage == \"\"}">style="display:none;"</c:if> >

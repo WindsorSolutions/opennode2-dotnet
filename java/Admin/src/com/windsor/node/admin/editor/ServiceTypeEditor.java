@@ -44,7 +44,7 @@ public class ServiceTypeEditor extends ClassEditor {
         } else {
 
             try {
-                setValue(ServiceType.getEnumMap().get(text));
+                setValue(ServiceType.fromString(text));
             } catch (Exception ex) {
                 throw new IllegalArgumentException(
                         "Value could not be converted: " + text);
@@ -58,7 +58,7 @@ public class ServiceTypeEditor extends ClassEditor {
         if (value == null) {
             return null;
         } else {
-            return value.getName();
+            return value.name();
         }
     }
 }

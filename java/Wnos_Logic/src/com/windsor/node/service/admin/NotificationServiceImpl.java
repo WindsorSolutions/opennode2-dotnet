@@ -66,7 +66,7 @@ public class NotificationServiceImpl extends BaseService implements
     public List getByAccountIdLight(String accountId, NodeVisit visit) {
 
         // Make sure the user performing that action has admin rights
-        validateByRole(visit, SystemRoleType.PROGRAM);
+        validateByRole(visit, SystemRoleType.Program);
 
         logger.debug("Getting notifications for account: " + accountId);
 
@@ -80,7 +80,7 @@ public class NotificationServiceImpl extends BaseService implements
     public List getByAccount(String accountId, NodeVisit visit) {
 
         // Make sure the user performing that action has admin rights
-        validateByRole(visit, SystemRoleType.PROGRAM);
+        validateByRole(visit, SystemRoleType.Program);
 
         logger.debug("Getting notifications for account: " + accountId);
 
@@ -94,7 +94,7 @@ public class NotificationServiceImpl extends BaseService implements
     public List getByFlow(String flowId, NodeVisit visit) {
 
         // Make sure the user performing that action has admin rights
-        validateByRole(visit, SystemRoleType.PROGRAM);
+        validateByRole(visit, SystemRoleType.Program);
 
         logger.debug("Getting notifications for flow: " + flowId);
 
@@ -111,15 +111,15 @@ public class NotificationServiceImpl extends BaseService implements
         }
 
         // Make sure the user performing that action has PROGRAM rights
-        validateByRole(visit, SystemRoleType.PROGRAM);
+        validateByRole(visit, SystemRoleType.Program);
 
-        Activity logEntry = makeNewActivity(ActivityType.AUDIT, visit);
+        Activity logEntry = makeNewActivity(ActivityType.Audit, visit);
 
         try {
 
             if ((accountId != visit.getUserAccount().getId())
                     && (visit.getUserAccount().getRole()
-                            .equals(SystemRoleType.ADMIN))) {
+                            .equals(SystemRoleType.Admin))) {
                 throw new IllegalArgumentException(
                         "Only admins can edit other users' notifications.");
             }

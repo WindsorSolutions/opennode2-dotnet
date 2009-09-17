@@ -36,13 +36,13 @@
 
 							<tr
 								class="<c:choose><c:when test="${status.index % 2 == 0}">rowOdd</c:when><c:otherwise>rowEven</c:otherwise></c:choose>">
-								<td width="10" nowrap><img alt="" src="img/icon_settings.gif"
+								<td width="10" nowrap="nowrap"><img alt="" src="img/icon_settings.gif"
 									style="border: 0; vertical-align: middle; padding-right: 3px;" /></td>
 								<td width="*"><strong><c:out value="${arg.id}" /></strong>:</td>
 								<td width="*" align="right"><c:out value="${arg.value}" /></td>
 								<td width="10" align="right"><input type="image"
 									title="Edit" src="img/action_go.gif" alt="Edit"
-									align="absmiddle" style="border-width: 0px;"
+									align="middle" style="border-width: 0px;"
 									onclick="location.href='config-arg.htm?id=<c:out value="${arg.id}" />'" /></td>
 
 							</tr>
@@ -80,13 +80,13 @@
 
 							<tr
 								class="<c:choose><c:when test="${status.index % 2 == 0}">rowOdd</c:when><c:otherwise>rowEven</c:otherwise></c:choose>">
-								<td width="10"  nowrap><img alt="" src="img/list_links.gif"
+								<td width="10"  nowrap="nowrap"><img alt="" src="img/list_links.gif"
 									style="border: 0; vertical-align: middle; padding-right: 3px;" /></td>
 								<td width="*"><strong><c:out value="${conn.code}" /></strong>:</td>
 								<td width="*" align="right"><c:out value="${conn.providerType}" /></td>
 								<td width="10" align="right"><input type="image"
 									title="Edit" src="img/action_go.gif" alt="Edit"
-									align="absmiddle" style="border-width: 0px;"
+									align="middle" style="border-width: 0px;"
 									onclick="location.href='config-conn.htm?id=<c:out value="${conn.id}" />'" /></td>
 
 							</tr>
@@ -131,7 +131,7 @@
 								<td width="*"><strong><c:out value="${partner.name}" /></strong></td>
 								<td width="10" align="right"  nowrap rowspan="2"><input type="image"
 									title="Edit" src="img/action_go.gif" alt="Edit"
-									align="absmiddle" style="border-width: 0px;"
+									align="middle" style="border-width: 0px;"
 									onclick="location.href='config-partner.htm?id=<c:out value="${partner.id}" />'" /></td>
 
 							</tr>

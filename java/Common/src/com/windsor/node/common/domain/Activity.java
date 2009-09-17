@@ -37,14 +37,14 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.collections.ListUtils;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 
 public class Activity extends AuditableIdentity {
+
     private static final long serialVersionUID = 1;
+
     private ActivityType type;
-    // List of type ActivityEntry
-    private List entries;
+    private List<ActivityEntry> entries;
     private String transactionId;
     private String ip;
     private String userName;
@@ -52,10 +52,10 @@ public class Activity extends AuditableIdentity {
     private String webMethod;
 
     public Activity() {
-        this.entries = new ArrayList();
+        this.entries = new ArrayList<ActivityEntry>();
     }
 
-    public void addEntryAll(List entries) {
+    public void addEntryAll(List<ActivityEntry> entries) {
 
         if (entries == null) {
             throw new RuntimeException("Null entry list");
@@ -91,12 +91,12 @@ public class Activity extends AuditableIdentity {
         this.type = type;
     }
 
-    public List getEntries() {
+    public List<ActivityEntry> getEntries() {
         return entries;
     }
 
-    public void setEntries(List entries) {
-        this.entries = ListUtils.typedList(entries, ActivityEntry.class);
+    public void setEntries(List<ActivityEntry> entries) {
+        this.entries = entries;
     }
 
     public String getTransactionId() {

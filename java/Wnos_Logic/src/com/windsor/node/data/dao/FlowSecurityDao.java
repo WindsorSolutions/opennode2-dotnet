@@ -31,6 +31,8 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.windsor.node.data.dao;
 
+import java.util.List;
+
 import com.windsor.node.common.domain.flowsecurity.AuthorizationRequest;
 
 /**
@@ -55,6 +57,11 @@ public interface FlowSecurityDao {
      * @return
      */
     AuthorizationRequest getByTransactionId(String tranId);
+
+    /**
+     * @return pending requests, ordered by date ascending
+     */
+    List<AuthorizationRequest> getPendingRequests();
 
     /**
      * @param naasId

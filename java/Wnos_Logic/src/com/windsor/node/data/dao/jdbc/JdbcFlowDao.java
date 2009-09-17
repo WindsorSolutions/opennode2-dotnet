@@ -69,6 +69,9 @@ public class JdbcFlowDao extends BaseJdbcDao implements FlowDao,
     protected static final String SQL_SELECT_PROTECTED = SQL_SELECT
             + " WHERE IsProtected = 'Y' ORDER BY Code ";
 
+    protected static final String SQL_SELECT_UNPROTECTED = SQL_SELECT
+            + " WHERE IsProtected = 'N' ORDER BY Code ";
+
     protected static final String SQL_SELECT_ORDER_BY_CODE = SQL_SELECT
             + "ORDER BY Code ";
 
@@ -199,6 +202,18 @@ public class JdbcFlowDao extends BaseJdbcDao implements FlowDao,
     public List<DataFlow> getSecuredFlows() {
 
         return (List<DataFlow>) getJdbcTemplate().query(SQL_SELECT_PROTECTED,
+                new FlowMapper());
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.windsor.node.data.dao.FlowDao#getProtectedFlows()
+     */
+    @SuppressWarnings("unchecked")
+    public List<DataFlow> getUnsecuredFlows() {
+
+        return (List<DataFlow>) getJdbcTemplate().query(SQL_SELECT_UNPROTECTED,
                 new FlowMapper());
     }
 

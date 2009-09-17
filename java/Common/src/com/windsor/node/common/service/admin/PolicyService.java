@@ -31,11 +31,13 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.windsor.node.common.service.admin;
 
+/* TODO: this appears to be an unimplemented interface! */
+
 import java.util.List;
 
 import com.windsor.node.common.domain.NodeVisit;
-import com.windsor.node.common.domain.UserAccessPolicy;
 import com.windsor.node.common.domain.UserAccount;
+import com.windsor.node.common.domain.flowsecurity.UserAccessPolicy;
 
 public interface PolicyService {
 

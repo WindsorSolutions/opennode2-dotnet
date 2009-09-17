@@ -132,7 +132,7 @@ public class NaasSyncTaskWorker extends NodeWorker implements InitializingBean {
 
         Activity logEntry = new Activity();
         logEntry.setIp(getNosConfig().getLocalhostIp());
-        logEntry.setType(ActivityType.INFO);
+        logEntry.setType(ActivityType.Info);
         logEntry.addEntry("Machine Id: " + getMachineId());
         logEntry.setModifiedById(adminAccount.getId());
 
@@ -264,7 +264,7 @@ public class NaasSyncTaskWorker extends NodeWorker implements InitializingBean {
         } catch (Exception ex) {
 
             logger.error(ex.getMessage());
-            logEntry.setType(ActivityType.ERROR);
+            logEntry.setType(ActivityType.Error);
             logEntry.addEntry("Error: " + ex.getMessage());
 
         } finally {

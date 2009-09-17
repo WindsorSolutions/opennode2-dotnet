@@ -31,9 +31,13 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.windsor.node.admin.domain;
 
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+
+import com.windsor.node.common.domain.DomainStringStyle;
+
 public class NAASFlowPolicyInfo {
 
-    private static final long serialVersionUID = 1;
+    private static final long serialVersionUID = 2;
 
     private String flowId;
     private boolean flowProtected;
@@ -70,6 +74,14 @@ public class NAASFlowPolicyInfo {
 
     public void setFlowProtected(boolean flowProtected) {
         this.flowProtected = flowProtected;
+    }
+
+    public String toString() {
+        ReflectionToStringBuilder rtsb = new ReflectionToStringBuilder(this,
+                new DomainStringStyle());
+        rtsb.setAppendStatics(false);
+        rtsb.setAppendTransients(false);
+        return rtsb.toString();
     }
 
 }

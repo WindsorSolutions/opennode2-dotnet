@@ -372,9 +372,8 @@ public class NetworkNode20Client implements NodeClientService {
                     .getStatusDetail());
             status
                     .setStatus((CommonTransactionStatusCode) CommonTransactionStatusCodeConverter
-                            .convert(
-                                    response.getGetStatusResponse().getStatus()
-                                            .getValue()));
+                            .convert(response.getGetStatusResponse()
+                                    .getStatus().getValue()));
 
             logger.debug("Status: " + status);
 
@@ -427,9 +426,9 @@ public class NetworkNode20Client implements NodeClientService {
                         "Null NotificationMessageCategoryType");
             }
 
-            msg.setMessageName(notification.getStatus().getStatus().getName());
+            msg.setMessageName(notification.getStatus().getStatus().name());
             msg.setStatus(TransactionStatusCode.Factory.fromString(notification
-                    .getStatus().getStatus().getName(), null));
+                    .getStatus().getStatus().name(), null));
             msg.setStatusDetail(notification.getStatus().getDescription());
 
             request.addMessages(msg);
@@ -595,11 +594,12 @@ public class NetworkNode20Client implements NodeClientService {
                     response.getSubmitResponse().getTransactionId());
             transaction.getStatus().setDescription(
                     response.getSubmitResponse().getStatusDetail());
-            transaction.getStatus().setStatus(
-                    (CommonTransactionStatusCode) CommonTransactionStatusCodeConverter
-                                    .convert(
-                                    response.getSubmitResponse().getStatus()
-                                            .getValue()));
+            transaction
+                    .getStatus()
+                    .setStatus(
+                            (CommonTransactionStatusCode) CommonTransactionStatusCodeConverter
+                                    .convert(response.getSubmitResponse()
+                                            .getStatus().getValue()));
 
             logger.debug("Transaction: " + transaction);
 

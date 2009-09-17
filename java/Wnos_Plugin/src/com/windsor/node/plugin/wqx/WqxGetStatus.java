@@ -88,9 +88,10 @@ public class WqxGetStatus extends BaseWqxPlugin {
                     CommonTransactionStatusCode remoteStatus = client
                             .getStatus(networkTranId).getStatus();
 
-                    result.getAuditEntries().add(
-                            makeEntry("remote status is "
-                                    + remoteStatus.getName()));
+                    result.getAuditEntries()
+                            .add(
+                                    makeEntry("remote status is "
+                                            + remoteStatus.name()));
 
                     // update status in staging tables
                     if (remoteStatus

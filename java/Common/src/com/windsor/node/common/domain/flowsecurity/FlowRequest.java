@@ -30,11 +30,15 @@ POSSIBILITY OF SUCH DAMAGE.
  */
 package com.windsor.node.common.domain.flowsecurity;
 
+import java.io.Serializable;
+
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 
 import com.windsor.node.common.domain.DomainStringStyle;
 
-public class FlowRequest {
+public class FlowRequest implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private String id;
     private String flowName;

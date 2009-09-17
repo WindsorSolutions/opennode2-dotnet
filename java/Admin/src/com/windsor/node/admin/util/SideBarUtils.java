@@ -39,7 +39,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.windsor.node.admin.domain.SideBar;
 
 public final class SideBarUtils {
-    
+
     private static final String ZERO = "0";
     private static final String ONE = "1";
     private static final String TWO = "2";
@@ -47,10 +47,10 @@ public final class SideBarUtils {
     private SideBarUtils() {
     }
 
-    public static List getScheduleBars(HttpServletRequest request,
+    public static List<SideBar> getScheduleBars(HttpServletRequest request,
             int activeBarIndex) {
 
-        List bars = new ArrayList();
+        List<SideBar> bars = new ArrayList<SideBar>();
         bars.add(new SideBar("schedule.htm?bi=0", "Manage Schedules",
                 QueryStringUtils.hasPageViewIndex(request, ZERO,
                         activeBarIndex == 0)));
@@ -59,10 +59,10 @@ public final class SideBarUtils {
 
     }
 
-    public static List getExchangeBars(HttpServletRequest request,
+    public static List<SideBar> getExchangeBars(HttpServletRequest request,
             int activeBarIndex) {
 
-        List bars = new ArrayList();
+        List<SideBar> bars = new ArrayList<SideBar>();
         bars.add(new SideBar("flow.htm", "Manage Exchanges", QueryStringUtils
                 .hasPageViewIndex(request, ZERO, activeBarIndex == 0)));
 
@@ -74,10 +74,10 @@ public final class SideBarUtils {
 
     }
 
-    public static List getConfigBars(HttpServletRequest request,
+    public static List<SideBar> getConfigBars(HttpServletRequest request,
             int activeBarIndex) {
 
-        List bars = new ArrayList();
+        List<SideBar> bars = new ArrayList<SideBar>();
         bars.add(new SideBar("config.htm?bi=0", "Global Arguments",
                 QueryStringUtils.hasPageViewIndex(request, ZERO,
                         activeBarIndex == 0)));
@@ -94,10 +94,10 @@ public final class SideBarUtils {
 
     }
 
-    public static List getProfileBars(HttpServletRequest request,
+    public static List<SideBar> getProfileBars(HttpServletRequest request,
             int activeBarIndex) {
 
-        List bars = new ArrayList();
+        List<SideBar> bars = new ArrayList<SideBar>();
         bars.add(new SideBar("profile.htm?bi=0", "Account Profile",
                 QueryStringUtils.hasPageViewIndex(request, ZERO,
                         activeBarIndex == 0)));
@@ -114,10 +114,10 @@ public final class SideBarUtils {
 
     }
 
-    public static List getSecurityBars(HttpServletRequest request,
-            int activeBarIndex) {
+    public static List<SideBar> getSecurityBars(HttpServletRequest request,
+            int activeBarIndex, Boolean showManageUserRequests) {
 
-        List bars = new ArrayList();
+        List<SideBar> bars = new ArrayList<SideBar>();
         bars.add(new SideBar("security.htm?bi=0", "Manage Accounts",
                 QueryStringUtils.hasPageViewIndex(request, ZERO,
                         activeBarIndex == 0)));
@@ -125,6 +125,13 @@ public final class SideBarUtils {
         bars.add(new SideBar("security.htm?bi=1", "Manage Policies",
                 QueryStringUtils.hasPageViewIndex(request, ONE,
                         activeBarIndex == 1)));
+
+        if (showManageUserRequests) {
+
+            bars.add(new SideBar("authrequest-manage.htm?bi=2",
+                    "Manage User Requests", QueryStringUtils.hasPageViewIndex(
+                            request, TWO, activeBarIndex == 2)));
+        }
 
         return bars;
 

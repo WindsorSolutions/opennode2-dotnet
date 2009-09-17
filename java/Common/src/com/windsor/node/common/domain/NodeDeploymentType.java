@@ -37,18 +37,5 @@ package com.windsor.node.common.domain;
  */
 public enum NodeDeploymentType {
 
-    DEVELOPMENT("Development"), TEST("Test"), PRODUCTION("Production");
-
-    private String description;
-
-    private NodeDeploymentType(String typeName) {
-
-        this.description = typeName;
-    }
-
-    @Override
-    public String toString() {
-
-        return description;
-    }
+    Development, Test, Production;
 }

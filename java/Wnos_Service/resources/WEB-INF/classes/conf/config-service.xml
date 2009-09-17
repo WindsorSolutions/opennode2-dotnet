@@ -10,8 +10,6 @@
 
 	<bean id="configService" class="com.windsor.node.service.admin.ConfigServiceImpl" parent="baseService">
 		<property name="configDao" ref="configDao" />
-		<property name="naasConfig" ref="naasConfig" />
-		<property name="nosConfig" ref="nosConfig" />
 		<property name="connectionDao" ref="connectionDao" />
 		
 		

@@ -32,7 +32,7 @@ $helper.print("handlerQuery: $handlerQuery")
         <value>$rcraInfoStateCode</value>
         </Property>
     </Header>
-<Payload Operation=$payloadOperation>
+<Payload Operation="$payloadOperation">
 #end#end##if($makeHeader)
 <HazardousWasteCMESubmission xmlns="http://www.exchangenetwork.net/schema/RCRA/4" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.exchangenetwork.net/schema/RCRA/4 http://www.exchangenetwork.net/schema/RCRA/4/0/RCRA_HazardousWasteCMESubmission_v4.0.xsd">
 <CMEFacilitySubmission>

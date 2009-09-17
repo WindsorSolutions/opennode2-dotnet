@@ -30,6 +30,7 @@
 	<classpathentry exported="true" kind="lib" path="/Resources/lib/Wnos_Logic/ojdbc14_g.jar"/>
 	<classpathentry exported="true" kind="lib" path="/Resources/lib/Wnos_Logic/saaj.jar"/>
 	<classpathentry exported="true" kind="lib" path="/Resources/lib/Wnos_Logic/spring-2.5.5.jar" sourcepath="/home/jniski/devlib/spring-framework-2.5.5/src"/>
+	<classpathentry exported="true" kind="lib" path="/Resources/lib/Wnos_Logic/sqljdbc.jar"/>
 	<classpathentry exported="true" kind="lib" path="/Resources/lib/Wnos_Logic/wsdl4j-1.5.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="/Resources/lib/Wnos_Logic/xercesImpl-2.8.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="/Resources/lib/Wnos_Logic/xml-apis-1.3.04.jar"/>

@@ -88,7 +88,7 @@ public class FlowServiceImpl extends BaseService implements FlowService,
         }
 
         // Make sure the user performing that action has admin rights
-        validateByRole(visit, SystemRoleType.ADMIN);
+        validateByRole(visit, SystemRoleType.Admin);
 
         DataFlow flow = flowDao.get(flowId);
 
@@ -110,7 +110,6 @@ public class FlowServiceImpl extends BaseService implements FlowService,
                 DataFlow flow = (DataFlow) flows.get(i);
                 flow.setServices(serviceDao.getByFlowId(flow.getId()));
             }
-
         }
 
         return flows;
@@ -134,7 +133,7 @@ public class FlowServiceImpl extends BaseService implements FlowService,
         }
 
         // Make sure the user performing that action has admin rights
-        validateByRole(visit, SystemRoleType.ADMIN);
+        validateByRole(visit, SystemRoleType.Admin);
 
         DataFlow flow = flowDao.get(flowId);
 
@@ -143,7 +142,7 @@ public class FlowServiceImpl extends BaseService implements FlowService,
                     "Flow item not present in local database.");
         }
 
-        Activity logEntry = makeNewActivity(ActivityType.AUDIT, visit);
+        Activity logEntry = makeNewActivity(ActivityType.Audit, visit);
 
         // The idea is that both of them need to work independently
         try {
@@ -181,7 +180,7 @@ public class FlowServiceImpl extends BaseService implements FlowService,
         }
 
         // Make sure the user performing that action has admin rights
-        validateByRole(visit, SystemRoleType.ADMIN);
+        validateByRole(visit, SystemRoleType.Admin);
 
         DataService service = serviceDao.get(serviceId);
 
@@ -189,7 +188,7 @@ public class FlowServiceImpl extends BaseService implements FlowService,
             throw new RuntimeException("Service not present in local database.");
         }
 
-        Activity logEntry = makeNewActivity(ActivityType.AUDIT, visit);
+        Activity logEntry = makeNewActivity(ActivityType.Audit, visit);
 
         try {
 
@@ -245,9 +244,9 @@ public class FlowServiceImpl extends BaseService implements FlowService,
         }
 
         // Make sure the user performing that action has admin rights
-        validateByRole(visit, SystemRoleType.ADMIN);
+        validateByRole(visit, SystemRoleType.Admin);
 
-        Activity logEntry = makeNewActivity(ActivityType.AUDIT, visit);
+        Activity logEntry = makeNewActivity(ActivityType.Audit, visit);
 
         try {
 
@@ -314,9 +313,9 @@ public class FlowServiceImpl extends BaseService implements FlowService,
         }
 
         // Make sure the user performing that action has admin rights
-        validateByRole(visit, SystemRoleType.ADMIN);
+        validateByRole(visit, SystemRoleType.Admin);
 
-        Activity logEntry = makeNewActivity(ActivityType.AUDIT, visit);
+        Activity logEntry = makeNewActivity(ActivityType.Audit, visit);
 
         try {
 
@@ -329,7 +328,7 @@ public class FlowServiceImpl extends BaseService implements FlowService,
                     && instance.getName().equalsIgnoreCase(flow.getName())) {
 
                 logEntry.addEntry("Default processor for: {0}",
-                        new Object[] { instance.getType().getName() });
+                        new Object[] { instance.getType().name() });
 
                 if (!instance.getType().equals(ServiceType.SUBMIT)
                         && !instance.getType().equals(ServiceType.NOTIFY)) {
@@ -350,7 +349,6 @@ public class FlowServiceImpl extends BaseService implements FlowService,
                         .debug("Null service type, clearing the default values so they would not be saved to the db.");
                 instance.getArgs().clear();
                 instance.getDataSources().clear();
-
             }
 
             instance.setModifiedById(visit.getUserAccount().getId());

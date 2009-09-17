@@ -1,33 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
                 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 
 
 	<!-- DAOs -->
-	<bean id="accountDao"
-		class="com.windsor.node.data.dao.jdbc.JdbcAccountDao">
+	<bean id="accountDao" class="com.windsor.node.data.dao.jdbc.JdbcAccountDao">
 		<property name="dataSource" ref="jdbcDataSource" />
 		<property name="idGenerator" ref="idGenerator" />
 		<property name="userAccessPolicyDao" ref="policyDao" />
 	</bean>
 
-	<bean id="policyDao"
-		class="com.windsor.node.data.dao.jdbc.JdbcUserAccessPolicyDao">
+	<bean id="policyDao" class="com.windsor.node.data.dao.jdbc.JdbcUserAccessPolicyDao">
 		<property name="dataSource" ref="jdbcDataSource" />
 		<property name="idGenerator" ref="idGenerator" />
 	</bean>
 
-	<bean id="activityDao"
-		class="com.windsor.node.data.dao.jdbc.JdbcActivityDao">
+	<bean id="activityDao" class="com.windsor.node.data.dao.jdbc.JdbcActivityDao">
 		<property name="dataSource" ref="jdbcDataSource" />
 		<property name="idGenerator" ref="idGenerator" />
 	</bean>
 
-	<bean id="flowDao"
-		class="com.windsor.node.data.dao.jdbc.JdbcFlowDao">
+	<bean id="flowDao" class="com.windsor.node.data.dao.jdbc.JdbcFlowDao">
 		<property name="dataSource" ref="jdbcDataSource" />
 		<property name="scheduleDao" ref="scheduleDao" />
 		<property name="serviceDao" ref="serviceDao" />
@@ -35,96 +30,81 @@
 		<property name="userAccessPolicyDao" ref="policyDao" />
 	</bean>
 
-	<bean id="notificationDao"
-		class="com.windsor.node.data.dao.jdbc.JdbcNotificationDao">
+	<bean id="notificationDao" class="com.windsor.node.data.dao.jdbc.JdbcNotificationDao">
 		<property name="dataSource" ref="jdbcDataSource" />
 		<property name="flowDao" ref="flowDao" />
 		<property name="accountDao" ref="accountDao" />
 		<property name="idGenerator" ref="idGenerator" />
 	</bean>
 
-	<bean id="scheduleDao"
-		class="com.windsor.node.data.dao.jdbc.JdbcScheduleDao">
+	<bean id="scheduleDao" class="com.windsor.node.data.dao.jdbc.JdbcScheduleDao">
 		<property name="dataSource" ref="jdbcDataSource" />
 		<property name="idGenerator" ref="idGenerator" />
 	</bean>
 
-	<bean id="configDao"
-		class="com.windsor.node.data.dao.jdbc.JdbcConfigDao">
+	<bean id="configDao" class="com.windsor.node.data.dao.jdbc.JdbcConfigDao">
 		<property name="dataSource" ref="jdbcDataSource" />
 		<property name="idGenerator" ref="idGenerator" />
 	</bean>
 
-	<bean id="partnerDao"
-		class="com.windsor.node.data.dao.jdbc.JdbcPartnerDao">
+	<bean id="partnerDao" class="com.windsor.node.data.dao.jdbc.JdbcPartnerDao">
 		<property name="dataSource" ref="jdbcDataSource" />
 		<property name="idGenerator" ref="idGenerator" />
 	</bean>
 
-	<bean id="transactionDao"
-		class="com.windsor.node.data.dao.jdbc.JdbcTransactionDao">
+	<bean id="transactionDao" class="com.windsor.node.data.dao.jdbc.JdbcTransactionDao">
 		<property name="dataSource" ref="jdbcDataSource" />
 		<property name="idGenerator" ref="idGenerator" />
 		<property name="flowDao" ref="flowDao" />
 		<property name="accountDao" ref="accountDao" />
 	</bean>
 
-	<bean id="requestDao"
-		class="com.windsor.node.data.dao.jdbc.JdbcRequestDao">
+	<bean id="requestDao" class="com.windsor.node.data.dao.jdbc.JdbcRequestDao">
 		<property name="dataSource" ref="jdbcDataSource" />
 		<property name="serviceDao" ref="serviceDao" />
 		<property name="idGenerator" ref="idGenerator" />
 	</bean>
 
-	<bean id="serviceDao"
-		class="com.windsor.node.data.dao.jdbc.JdbcServiceDao">
+	<bean id="serviceDao" class="com.windsor.node.data.dao.jdbc.JdbcServiceDao">
 		<property name="dataSource" ref="jdbcDataSource" />
 		<property name="connectionDao" ref="connectionDao" />
 		<property name="idGenerator" ref="idGenerator" />
 	</bean>
 
-	<bean id="connectionDao"
-		class="com.windsor.node.data.dao.jdbc.JdbcConnectionDao">
+	<bean id="connectionDao" class="com.windsor.node.data.dao.jdbc.JdbcConnectionDao">
 		<property name="dataSource" ref="jdbcDataSource" />
 		<property name="idGenerator" ref="idGenerator" />
 	</bean>
 
-	<bean id="pluginDao"
-		class="com.windsor.node.data.dao.jdbc.JdbcPluginDao">
+	<bean id="pluginDao" class="com.windsor.node.data.dao.jdbc.JdbcPluginDao">
 		<property name="dataSource" ref="jdbcDataSource" />
 		<property name="idGenerator" ref="idGenerator" />
 	</bean>
 
-    <bean id="flowSecurityDao"
-        class="com.windsor.node.data.dao.jdbc.JdbcFlowSecurityDao">
-        <property name="dataSource" ref="jdbcDataSource" />
-        <property name="idGenerator" ref="idGenerator" />
-    </bean>
+	<bean id="flowSecurityDao" class="com.windsor.node.data.dao.jdbc.JdbcFlowSecurityDao">
+		<property name="dataSource" ref="jdbcDataSource" />
+		<property name="idGenerator" ref="idGenerator" />
+	</bean>
 
 
 
 	<!-- jdbc -->
 
-	<bean id="jdbcDataSource"
-		class="org.apache.commons.dbcp.BasicDataSource"
+	<!-- standard -->
+	<bean id="jdbcDataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
-
 		<property name="driverClassName">
 			<value>${jdbc.driverClassName}</value>
 		</property>
-
 		<property name="url">
 			<value>${jdbc.url}</value>
 		</property>
-
 		<property name="username">
 			<value>${jdbc.username}</value>
 		</property>
-
 		<property name="password">
 			<value>${jdbc.password}</value>
 		</property>
-
 		<property name="poolPreparedStatements">
 			<value>true</value>
 		</property>
@@ -132,15 +112,29 @@
 		<property name="initialSize">
 			<value>${jdbc.initialSize}</value>
 		</property>
-
 		<property name="maxActive">
 			<value>${jdbc.maxActive}</value>
 		</property>
-
 		<property name="maxIdle">
 			<value>${jdbc.maxIdle}</value>
 		</property>
 	</bean>
 
+	<!--
+		for special cases using Oracle RAC with the tnsnames content in the
+		URL see http://forum.springsource.org/showthread.php?t=74794
+
+		EXPERIMENTAL - UNTESTED 2009-08-19
+	-->
+
+	<!--
+		<bean id="jdbcDataSource" class="oracle.jdbc.pool.OracleDataSource"
+		destroy-method="close"> <property name="URL">
+		<value>${jdbc.url}</value> </property> <property name="user">
+		<value>${jdbc.username}</value> </property> <property name="password">
+		<value>${jdbc.password}</value> </property> <property
+		name="connectionCachingEnabled" value="true" /> <property
+		name="fastConnectionFailoverEnabled" value="true" /> </bean>
+	-->
 
 </beans>

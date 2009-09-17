@@ -166,7 +166,7 @@ public class ScheduleExecutionWorker extends NodeWorker implements
         Activity logEntry = new Activity();
         logEntry.setModifiedById(schedule.getModifiedById());
         logEntry.setIp(getNosConfig().getLocalhostIp());
-        logEntry.setType(ActivityType.INFO);
+        logEntry.setType(ActivityType.Info);
         logEntry.addEntry("Machine Id: " + getMachineId());
 
         try {
@@ -272,7 +272,7 @@ public class ScheduleExecutionWorker extends NodeWorker implements
             logger.error("Error while processing schedule: " + ex.getMessage(),
                     ex);
 
-            logEntry.setType(ActivityType.ERROR);
+            logEntry.setType(ActivityType.Error);
             logEntry.addEntry("Error:{0}", new Object[] { ex.getMessage() });
 
             if (tran != null) {

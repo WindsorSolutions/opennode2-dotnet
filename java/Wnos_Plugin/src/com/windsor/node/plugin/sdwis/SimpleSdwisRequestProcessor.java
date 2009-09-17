@@ -36,8 +36,6 @@ package com.windsor.node.plugin.sdwis;
 
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
-
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
 import com.windsor.node.common.domain.DataServiceRequestParameter;
 import com.windsor.node.common.domain.NodeMethodType;
@@ -70,10 +68,6 @@ public class SimpleSdwisRequestProcessor extends BaseWnosPlugin {
 
     }
 
-    /**
-     * will be called by the plugin executor after properties are set. an
-     * opportunity to validate all settings
-     */
     public void afterPropertiesSet() {
         super.afterPropertiesSet();
 
@@ -101,51 +95,27 @@ public class SimpleSdwisRequestProcessor extends BaseWnosPlugin {
         result.setSuccess(false);
         result.setStatus(CommonTransactionStatusCode.FAILED);
 
+        result.getAuditEntries().add(makeEntry("Vaildating transaction..."));
+
+        validateTransaction(transaction);
+
+        if (!transaction.getWebMethod().equals(NodeMethodType.SUBMIT)) {
+            throw new RuntimeException("Invalid method type: "
+                    + transaction.getWebMethod());
+        }
+
+        int numOfDocs = 0;
+
+        if (transaction.getDocuments() == null
+                || transaction.getDocuments().size() != 1) {
+            if (transaction.getDocuments() != null) {
+                numOfDocs = transaction.getDocuments().size();
+            }
+            throw new RuntimeException("Invalid number of documents: "
+                    + numOfDocs);
+        }
+
         try {
-
-            result.getAuditEntries()
-                    .add(makeEntry("Vaildating transaction..."));
-
-            /*
-             * 
-             * Transaction validation
-             */
-            if (transaction == null) {
-                throw new RuntimeException("Null transaction");
-            }
-
-            if (transaction.getCreator() == null
-                    || StringUtils.isBlank(transaction.getCreator()
-                            .getNaasUserName())) {
-                throw new RuntimeException("Null transaction creator");
-            }
-
-            if (StringUtils.isBlank(transaction.getNetworkId())) {
-                throw new RuntimeException("Null transaction network Id");
-            }
-
-            /*
-             * 
-             * Parsing Test
-             */
-
-            if (!transaction.getWebMethod().equals(NodeMethodType.SUBMIT)) {
-                throw new RuntimeException("Invalid method type: "
-                        + transaction.getWebMethod());
-            }
-
-            if (transaction.getDocuments() == null
-                    || transaction.getDocuments().size() != 1) {
-                int numOfDocs = (transaction.getDocuments() == null) ? 0
-                        : transaction.getDocuments().size();
-                throw new RuntimeException("Invalid number of documents: "
-                        + numOfDocs);
-            }
-
-            /*
-             * 
-             * HELPERS
-             */
 
             result.getAuditEntries().add(
                     makeEntry("Validating required helpers..."));

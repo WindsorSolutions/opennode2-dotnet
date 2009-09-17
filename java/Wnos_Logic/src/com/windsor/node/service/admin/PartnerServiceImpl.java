@@ -74,7 +74,7 @@ public class PartnerServiceImpl extends BaseService implements PartnerService,
         }
 
         // Make sure the user performing that action has admin rights
-        validateByRole(visit, SystemRoleType.ADMIN);
+        validateByRole(visit, SystemRoleType.Admin);
 
         PartnerIdentity partner = partnerDao.get(partnerId);
 
@@ -83,7 +83,7 @@ public class PartnerServiceImpl extends BaseService implements PartnerService,
                     "Partner item not present in local database.");
         }
 
-        Activity logEntry = makeNewActivity(ActivityType.AUDIT, visit);
+        Activity logEntry = makeNewActivity(ActivityType.Audit, visit);
 
         // The idea is that both of them need to work independently
         try {
@@ -119,9 +119,9 @@ public class PartnerServiceImpl extends BaseService implements PartnerService,
         }
 
         // Make sure the user performing that action has admin rights
-        validateByRole(visit, SystemRoleType.ADMIN);
+        validateByRole(visit, SystemRoleType.Admin);
 
-        Activity logEntry = makeNewActivity(ActivityType.AUDIT, visit);
+        Activity logEntry = makeNewActivity(ActivityType.Audit, visit);
 
         try {
 

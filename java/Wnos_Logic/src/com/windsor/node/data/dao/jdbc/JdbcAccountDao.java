@@ -40,33 +40,40 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.jdbc.core.RowMapper;
 
 import com.windsor.node.common.domain.SystemRoleType;
-import com.windsor.node.common.domain.UserAccessPolicy;
 import com.windsor.node.common.domain.UserAccount;
+import com.windsor.node.common.domain.flowsecurity.UserAccessPolicy;
 import com.windsor.node.data.dao.AccountDao;
 import com.windsor.node.util.DateUtil;
 import com.windsor.node.util.FormatUtil;
 
 public class JdbcAccountDao extends BaseJdbcDao implements AccountDao {
 
+    private static final String ORDER_BY_NAAS = " ORDER BY NAASAccount ";
+
     private static final String SQL_SELECT = "SELECT Id, NAASAccount, IsActive, "
             + "SystemRole, ModifiedBy, ModifiedOn, Affiliation FROM NAccount ";
 
-    private static final String SQL_SELECT_ALL = SQL_SELECT
-            + "WHERE IsActive = ?  ORDER BY NAASAccount ";
+    private static final String SQL_SELECT_ALL_ISACTIVE = SQL_SELECT
+            + "WHERE IsActive = ?  " + ORDER_BY_NAAS;
+
+    private static final String SQL_SELECT_ALL_INCLUDE_INACTIVE = SQL_SELECT
+            + ORDER_BY_NAAS;
 
     private static final String SQL_SELECT_BY_ID = SQL_SELECT + "WHERE Id = ?";
 
     /*
      * Local Users
      */
-    private static final String SQL_SELECT_BY_CODE = SQL_SELECT
-            + "WHERE IsActive = ? AND ((UPPER(Affiliation) = ?) OR (SystemRole = ? OR SystemRole = ?))";
+    private static final String SQL_SELECT_BY_AFFIL_ACTIVE = SQL_SELECT
+            + "WHERE IsActive = ? AND ((UPPER(Affiliation) = ?) OR (SystemRole = ? OR SystemRole = ?))"
+            + ORDER_BY_NAAS;
 
-    private static final String SQL_SELECT_BY_CODE_ALL = SQL_SELECT
-            + "WHERE ((UPPER(Affiliation) = ?) OR (SystemRole = ? OR SystemRole = ?))";
+    private static final String SQL_SELECT_BY_AFFIL_ALL = SQL_SELECT
+            + "WHERE ((UPPER(Affiliation) = ?) OR (SystemRole = ? OR SystemRole = ?))"
+            + ORDER_BY_NAAS;
 
     private static final String SQL_SELECT_NAMES = "SELECT NAASAccount FROM NAccount "
-            + "WHERE IsActive = ? ORDER BY NAASAccount ";
+            + "WHERE IsActive = ? " + ORDER_BY_NAAS;
 
     private static final String SQL_SELECT_BY_NAAS = SQL_SELECT
             + "WHERE NAASAccount = ?";
@@ -82,7 +89,7 @@ public class JdbcAccountDao extends BaseJdbcDao implements AccountDao {
     private static final String SQL_DELETE = "UPDATE NAccount SET IsActive = ? WHERE Id = ?";
 
     private static final String SQL_SELECT_ACTIVE_ADMINS = SQL_SELECT
-            + " WHERE IsActive = ? and SystemRole = ?";
+            + " WHERE IsActive = ? and SystemRole = ?" + ORDER_BY_NAAS;
 
     private JdbcUserAccessPolicyDao userAccessPolicyDao;
 
@@ -107,8 +114,9 @@ public class JdbcAccountDao extends BaseJdbcDao implements AccountDao {
     public UserAccount getOrCreateAccount(String naasAccount,
             String affiliationCode, String adminUserId) {
 
-        logger.debug("getOrCreateAccount: " + naasAccount);
-        logger.debug("getOrCreateAccount: " + affiliationCode);
+        logger.debug("getOrCreateAccount with naasAccount: " + naasAccount);
+        logger.debug("getOrCreateAccount with affiliationCode: "
+                + affiliationCode);
 
         if (StringUtils.isBlank(naasAccount)) {
             throw new IllegalArgumentException("Username not provided.");
@@ -130,7 +138,7 @@ public class JdbcAccountDao extends BaseJdbcDao implements AccountDao {
             account.setActive(true);
             account.setModifiedById(adminUserId);
             account.setNaasUserName(naasAccount);
-            account.setRole(SystemRoleType.AUTHED);
+            account.setRole(SystemRoleType.Authed);
             account.setAffiliationCode(affiliationCode);
 
             account = save(account);
@@ -160,14 +168,11 @@ public class JdbcAccountDao extends BaseJdbcDao implements AccountDao {
 
         logger.debug("SQL: " + sql);
 
-        Object[] args = new Object[7];
-        args[0] = instance.getNaasUserName();
-        args[1] = FormatUtil.toYNFromBoolean(instance.isActive());
-        args[2] = instance.getRole().getName();
-        args[3] = instance.getModifiedById();
-        args[4] = DateUtil.getTimestamp();
-        args[5] = instance.getAffiliationCode();
-        args[6] = instance.getId();
+        Object[] args = new Object[] { instance.getNaasUserName(),
+                FormatUtil.toYNFromBoolean(instance.isActive()),
+                instance.getRole().name(), instance.getModifiedById(),
+                DateUtil.getTimestamp(), instance.getAffiliationCode(),
+                instance.getId() };
 
         printourArgs(args);
 
@@ -180,16 +185,21 @@ public class JdbcAccountDao extends BaseJdbcDao implements AccountDao {
         userAccessPolicyDao.deletePoliciesByAccountId(instance.getId());
 
         // then, if we have some, add them to the user
-        if (null != instance.getPolicies()) {
+        if (null != instance.getPolicies() && instance.getPolicies().size() > 0) {
 
-            List<?> policyList = instance.getPolicies();
-            Iterator<?> i = policyList.iterator();
+            Iterator<?> i = instance.getPolicies().iterator();
 
             while (i.hasNext()) {
 
                 UserAccessPolicy policy = (UserAccessPolicy) i.next();
 
-                logger.debug("Saving policy [" + i + "]: " + policy);
+                /*
+                 * to re-save, we need to null the policy id, or else the dao
+                 * will attempt updating a non-existent row - see iTest#873
+                 */
+                policy.setId(null);
+
+                logger.debug("Saving policy: " + policy);
                 if (StringUtils.isBlank(policy.getAccountId())) {
                     policy.setAccountId(instance.getId());
                 }
@@ -210,6 +220,8 @@ public class JdbcAccountDao extends BaseJdbcDao implements AccountDao {
 
         validateStringArg(id);
 
+        logger.debug("Getting account and policies for account id: " + id);
+
         return (UserAccount) queryForObject(SQL_SELECT_BY_ID,
                 new Object[] { id }, new UserAccountMapper(true));
 
@@ -229,10 +241,10 @@ public class JdbcAccountDao extends BaseJdbcDao implements AccountDao {
     public List<UserAccount> get(boolean includeInactive, boolean loadPolicies) {
 
         if (includeInactive) {
-            return getJdbcTemplate().query(SQL_SELECT,
+            return getJdbcTemplate().query(SQL_SELECT_ALL_INCLUDE_INACTIVE,
                     new UserAccountMapper(loadPolicies));
         } else {
-            return getJdbcTemplate().query(SQL_SELECT_ALL,
+            return getJdbcTemplate().query(SQL_SELECT_ALL_ISACTIVE,
                     new Object[] { FormatUtil.YES },
                     new UserAccountMapper(loadPolicies));
         }
@@ -240,26 +252,26 @@ public class JdbcAccountDao extends BaseJdbcDao implements AccountDao {
     }
 
     @SuppressWarnings("unchecked")
-    public List<UserAccount> get(String code, boolean includeInactive) {
+    public List<UserAccount> get(String nodeId, boolean includeInactive) {
 
-        validateStringArg(code);
+        validateStringArg(nodeId);
 
-        logger.debug("Looking for NAAS Account: " + code);
+        logger.debug("Looking for NAAS Account by code: " + nodeId);
 
         if (includeInactive) {
             return getJdbcTemplate().query(
-                    SQL_SELECT_BY_CODE_ALL,
-                    new Object[] { code.toUpperCase(),
-                            SystemRoleType.ADMIN.getName(),
-                            SystemRoleType.PROGRAM.getName() },
+                    SQL_SELECT_BY_AFFIL_ALL,
+                    new Object[] { nodeId.toUpperCase(),
+                            SystemRoleType.Admin.name(),
+                            SystemRoleType.Program.name() },
                     new UserAccountMapper(true));
 
         } else {
             return getJdbcTemplate().query(
-                    SQL_SELECT_BY_CODE,
-                    new Object[] { FormatUtil.YES, code.toUpperCase(),
-                            SystemRoleType.ADMIN.getName(),
-                            SystemRoleType.PROGRAM.getName() },
+                    SQL_SELECT_BY_AFFIL_ACTIVE,
+                    new Object[] { FormatUtil.YES, nodeId.toUpperCase(),
+                            SystemRoleType.Admin.name(),
+                            SystemRoleType.Program.name() },
                     new UserAccountMapper(true));
 
         }
@@ -271,11 +283,13 @@ public class JdbcAccountDao extends BaseJdbcDao implements AccountDao {
      */
     public UserAccount getByNAASAccount(String naasAccount) {
 
+        UserAccount account = null;
+
         validateStringArg(naasAccount);
 
         logger.debug("Looking for NAAS Account: " + naasAccount);
 
-        UserAccount account = (UserAccount) queryForObject(SQL_SELECT_BY_NAAS,
+        account = (UserAccount) queryForObject(SQL_SELECT_BY_NAAS,
                 new Object[] { naasAccount }, new UserAccountMapper(true));
 
         logger.debug("Retrieved UserAccount: " + account);
@@ -314,8 +328,8 @@ public class JdbcAccountDao extends BaseJdbcDao implements AccountDao {
             obj.setModifiedById(rs.getString("ModifiedBy"));
             obj.setModifiedOn(rs.getTimestamp("ModifiedOn"));
             obj.setAffiliationCode(rs.getString("Affiliation"));
-            obj.setRole((SystemRoleType) SystemRoleType.getEnumMap().get(
-                    rs.getString("SystemRole")));
+            obj.setRole((SystemRoleType) SystemRoleType.valueOf(rs
+                    .getString("SystemRole")));
             obj.setActive(FormatUtil.toBooleanFromYN(rs.getString("IsActive")));
 
             if (loadPolicies) {
@@ -342,12 +356,10 @@ public class JdbcAccountDao extends BaseJdbcDao implements AccountDao {
     @SuppressWarnings("unchecked")
     protected List<UserAccount> getActiveAdmins() {
 
-        List<UserAccount> activeAdmins = getJdbcTemplate()
-                .query(
-                        SQL_SELECT_ACTIVE_ADMINS,
-                        new Object[] { FormatUtil.YES,
-                                SystemRoleType.ADMIN.getName() },
-                        new UserAccountMapper(false));
+        List<UserAccount> activeAdmins = getJdbcTemplate().query(
+                SQL_SELECT_ACTIVE_ADMINS,
+                new Object[] { FormatUtil.YES, SystemRoleType.Admin.name() },
+                new UserAccountMapper(false));
 
         return activeAdmins;
     }

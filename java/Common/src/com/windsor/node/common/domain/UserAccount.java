@@ -34,21 +34,22 @@ package com.windsor.node.common.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.collections.ListUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
+
+import com.windsor.node.common.domain.flowsecurity.UserAccessPolicy;
 
 public class UserAccount extends AuditableIdentity {
 
-    private static final long serialVersionUID = 1;
+    private static final long serialVersionUID = 2;
     private String naasUserName;
     private boolean active;
     private SystemRoleType role;
-    private List policies;
+    private List<UserAccessPolicy> policies;
     private String affiliationCode;
 
     public UserAccount() {
-        role = SystemRoleType.NONE;
-        policies = ListUtils.typedList(new ArrayList(), UserAccessPolicy.class);
+        role = SystemRoleType.None;
+        policies = new ArrayList<UserAccessPolicy>();
     }
 
     public String getNaasUserName() {
@@ -83,11 +84,11 @@ public class UserAccount extends AuditableIdentity {
         this.role = role;
     }
 
-    public List getPolicies() {
+    public List<UserAccessPolicy> getPolicies() {
         return policies;
     }
 
-    public void setPolicies(List policies) {
+    public void setPolicies(List<UserAccessPolicy> policies) {
         this.policies = policies;
     }
 

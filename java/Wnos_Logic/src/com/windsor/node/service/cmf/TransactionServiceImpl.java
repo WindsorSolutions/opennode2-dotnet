@@ -73,6 +73,38 @@ import com.windsor.node.service.helper.NotificationHelper;
 public class TransactionServiceImpl extends BaseService implements
         TransactionService, InitializingBean {
 
+    /**
+     * 
+     */
+    private static final String VISIT_OBJECT_NOT_SET = "Visit object not set";
+    /**
+     * 
+     */
+    private static final String SERVICE_DOES_NOT_SUPPORT = "Service does not support: ";
+    /**
+     * 
+     */
+    private static final String NULL_RESULT_FROM_THE_PLUGIN = "Null result from the plugin";
+    /**
+     * 
+     */
+    private static final String GET_STATUS_REQUEST_FROM_0_BY_1_FOR_TRANSACTION_ID_2 = "GetStatus request from {0} by {1} for transaction Id {2}.";
+    /**
+     * 
+     */
+    private static final String ERROR_PREFIX = "Error: ";
+    /**
+     * 
+     */
+    private static final String NULL_SERVICE = "Null service";
+    /**
+     * 
+     */
+    private static final String NULL_REQUEST = "Null request";
+    /**
+     * 
+     */
+    private static final String NULL_VISIT = "Null visit";
     private final Logger logger = Logger.getLogger(this.getClass());
     private TransactionDao transactionDao;
     private AccountServiceImpl accountService;
@@ -91,31 +123,31 @@ public class TransactionServiceImpl extends BaseService implements
             throw new RuntimeException("PartnerDao Not Set");
         }
 
-        if (flowDao == null) {
+        else if (flowDao == null) {
             throw new RuntimeException("FlowDao Not Set");
         }
 
-        if (accountService == null) {
+        else if (accountService == null) {
             throw new RuntimeException("AccountService Not Set");
         }
 
-        if (transactionDao == null) {
+        else if (transactionDao == null) {
             throw new RuntimeException("TransactionDao Not Set");
         }
 
-        if (serviceDao == null) {
+        else if (serviceDao == null) {
             throw new RuntimeException("ServiceDao Not Set");
         }
 
-        if (notificationHelper == null) {
+        else if (notificationHelper == null) {
             throw new RuntimeException("NotificationHelper Not Set");
         }
 
-        if (requestDao == null) {
+        else if (requestDao == null) {
             throw new RuntimeException("RequestDao Not Set");
         }
 
-        if (pluginHelper == null) {
+        else if (pluginHelper == null) {
             throw new RuntimeException("PluginHelper Not Set");
         }
 
@@ -127,18 +159,18 @@ public class TransactionServiceImpl extends BaseService implements
     public ProcessContentResult execute(EndpointVisit visit, DataRequest request) {
 
         if (visit == null) {
-            throw new RuntimeException("Null visit");
+            throw new RuntimeException(NULL_VISIT);
         }
 
         if (request == null) {
-            throw new RuntimeException("Null request");
+            throw new RuntimeException(NULL_REQUEST);
         }
 
         if (request.getService() == null) {
-            throw new RuntimeException("Null service");
+            throw new RuntimeException(NULL_SERVICE);
         }
 
-        Activity logEntry = makeNewActivity(ActivityType.AUDIT, visit);
+        Activity logEntry = makeNewActivity(ActivityType.Audit, visit);
 
         NodeTransaction tran = null;
 
@@ -155,7 +187,7 @@ public class TransactionServiceImpl extends BaseService implements
                     .processTransaction(tran);
 
             if (queryResult == null) {
-                throw new RuntimeException("Null result from the plugin");
+                throw new RuntimeException(NULL_RESULT_FROM_THE_PLUGIN);
             }
 
             return queryResult;
@@ -164,7 +196,7 @@ public class TransactionServiceImpl extends BaseService implements
 
             logger.debug(ex.getMessage());
 
-            logEntry.setType(ActivityType.ERROR);
+            logEntry.setType(ActivityType.Error);
             logEntry.addEntry(ex.getMessage());
 
             if (tran != null) {
@@ -172,7 +204,7 @@ public class TransactionServiceImpl extends BaseService implements
                         CommonTransactionStatusCode.FAILED);
             }
 
-            throw new RuntimeException("Error: " + ex.getMessage(), ex);
+            throw new RuntimeException(ERROR_PREFIX + ex.getMessage(), ex);
 
         } finally {
             getActivityDao().make(logEntry);
@@ -187,7 +219,7 @@ public class TransactionServiceImpl extends BaseService implements
     public TransactionStatus getStatus(EndpointVisit visit, String transactionId) {
 
         if (visit == null) {
-            throw new RuntimeException("Null visit");
+            throw new RuntimeException(NULL_VISIT);
         }
 
         logger.debug("getStatus visit: " + visit);
@@ -196,7 +228,7 @@ public class TransactionServiceImpl extends BaseService implements
             throw new RuntimeException("Null transaction");
         }
 
-        Activity logEntry = makeNewActivity(ActivityType.AUDIT, visit);
+        Activity logEntry = makeNewActivity(ActivityType.Audit, visit);
 
         try {
 
@@ -229,12 +261,10 @@ public class TransactionServiceImpl extends BaseService implements
 
             logEntry.setModifiedById(account.getId());
 
-            logEntry
-                    .addEntry(
-                            "GetStatus request from {0} by {1} for transaction Id {2}.",
-                            new Object[] { visit.getIp(),
-                                    account.getNaasUserName(),
-                                    tran.getNetworkId() });
+            logEntry.addEntry(
+                    GET_STATUS_REQUEST_FROM_0_BY_1_FOR_TRANSACTION_ID_2,
+                    new Object[] { visit.getIp(), account.getNaasUserName(),
+                            tran.getNetworkId() });
 
             logEntry.addEntry("Results: {0}", new Object[] { tran.getStatus(),
                     tran.getNetworkId() });
@@ -255,9 +285,9 @@ public class TransactionServiceImpl extends BaseService implements
 
             logger.debug(ex.getMessage());
 
-            logEntry.setType(ActivityType.ERROR);
+            logEntry.setType(ActivityType.Error);
             logEntry.addEntry(ex.getMessage());
-            throw new RuntimeException("Error: " + ex.getMessage(), ex);
+            throw new RuntimeException(ERROR_PREFIX + ex.getMessage(), ex);
 
         } finally {
             getActivityDao().make(logEntry);
@@ -273,14 +303,14 @@ public class TransactionServiceImpl extends BaseService implements
             ComplexNotification notification) {
 
         if (visit == null) {
-            throw new RuntimeException("Null visit");
+            throw new RuntimeException(NULL_VISIT);
         }
 
         if (notification == null) {
             throw new RuntimeException("Null notification");
         }
 
-        Activity logEntry = makeNewActivity(ActivityType.AUDIT, visit);
+        Activity logEntry = makeNewActivity(ActivityType.Audit, visit);
 
         try {
 
@@ -321,12 +351,10 @@ public class TransactionServiceImpl extends BaseService implements
 
             logEntry.setTransactionId(tran.getId());
 
-            logEntry
-                    .addEntry(
-                            "GetStatus request from {0} by {1} for transaction Id {2}.",
-                            new Object[] { visit.getIp(),
-                                    account.getNaasUserName(),
-                                    tran.getNetworkId() });
+            logEntry.addEntry(
+                    GET_STATUS_REQUEST_FROM_0_BY_1_FOR_TRANSACTION_ID_2,
+                    new Object[] { visit.getIp(), account.getNaasUserName(),
+                            tran.getNetworkId() });
 
             logEntry.addEntry("Notification Name {0} ({1})", new Object[] {
                     notification.getFlowName(), notification.getUri() });
@@ -355,7 +383,7 @@ public class TransactionServiceImpl extends BaseService implements
                         notif.getName(),
                         (notif.getStatus() == null) ? null : (notif.getStatus()
                                 .getStatus() == null) ? null : notif
-                                .getStatus().getStatus().getName() };
+                                .getStatus().getStatus().name() };
 
                 logger.debug("Creating local doc...");
 
@@ -375,7 +403,7 @@ public class TransactionServiceImpl extends BaseService implements
 
                 logEntry.addEntry("Document {0} ({1} - {2}: {3})",
                         new Object[] { doc.getDocumentName(),
-                                doc.getDocumentStatus().getName(),
+                                doc.getDocumentStatus().name(),
                                 doc.getType().getName(),
                                 doc.getDocumentStatusDetail() });
 
@@ -399,9 +427,9 @@ public class TransactionServiceImpl extends BaseService implements
 
             logger.debug(ex.getMessage());
 
-            logEntry.setType(ActivityType.ERROR);
+            logEntry.setType(ActivityType.Error);
             logEntry.addEntry(ex.getMessage());
-            throw new RuntimeException("Error: " + ex.getMessage(), ex);
+            throw new RuntimeException(ERROR_PREFIX + ex.getMessage(), ex);
 
         } finally {
             getActivityDao().make(logEntry);
@@ -416,18 +444,18 @@ public class TransactionServiceImpl extends BaseService implements
     public ProcessContentResult query(EndpointVisit visit, DataRequest request) {
 
         if (visit == null) {
-            throw new RuntimeException("Null visit");
+            throw new RuntimeException(NULL_VISIT);
         }
 
         if (request == null) {
-            throw new RuntimeException("Null request");
+            throw new RuntimeException(NULL_REQUEST);
         }
 
         if (request.getService() == null) {
-            throw new RuntimeException("Null service");
+            throw new RuntimeException(NULL_SERVICE);
         }
 
-        Activity logEntry = makeNewActivity(ActivityType.AUDIT, visit);
+        Activity logEntry = makeNewActivity(ActivityType.Audit, visit);
 
         NodeTransaction tran = null;
 
@@ -444,7 +472,7 @@ public class TransactionServiceImpl extends BaseService implements
                     .processTransaction(tran);
 
             if (queryResult == null) {
-                throw new RuntimeException("Null result from the plugin");
+                throw new RuntimeException(NULL_RESULT_FROM_THE_PLUGIN);
             }
 
             return queryResult;
@@ -453,7 +481,7 @@ public class TransactionServiceImpl extends BaseService implements
 
             logger.debug(ex.getMessage());
 
-            logEntry.setType(ActivityType.ERROR);
+            logEntry.setType(ActivityType.Error);
             logEntry.addEntry(ex.getMessage());
 
             if (tran != null) {
@@ -461,7 +489,7 @@ public class TransactionServiceImpl extends BaseService implements
                         CommonTransactionStatusCode.FAILED);
             }
 
-            throw new RuntimeException("Error: " + ex.getMessage(), ex);
+            throw new RuntimeException(ERROR_PREFIX + ex.getMessage(), ex);
 
         } finally {
             getActivityDao().make(logEntry);
@@ -476,10 +504,10 @@ public class TransactionServiceImpl extends BaseService implements
     public TransactionStatus solicit(EndpointVisit visit, DataRequest request) {
 
         if (visit == null) {
-            throw new RuntimeException("Visit object not set");
+            throw new RuntimeException(VISIT_OBJECT_NOT_SET);
         }
 
-        Activity logEntry = makeNewActivity(ActivityType.AUDIT, visit);
+        Activity logEntry = makeNewActivity(ActivityType.Audit, visit);
 
         NodeTransaction tran = null;
 
@@ -527,7 +555,7 @@ public class TransactionServiceImpl extends BaseService implements
 
             logger.debug(ex.getMessage(), ex);
 
-            logEntry.setType(ActivityType.ERROR);
+            logEntry.setType(ActivityType.Error);
             logEntry.addEntry(ex.getMessage());
 
             if (tran != null) {
@@ -535,7 +563,7 @@ public class TransactionServiceImpl extends BaseService implements
                         CommonTransactionStatusCode.FAILED);
             }
 
-            throw new RuntimeException("Error: " + ex.getMessage(), ex);
+            throw new RuntimeException(ERROR_PREFIX + ex.getMessage(), ex);
 
         } finally {
             getActivityDao().make(logEntry);
@@ -553,7 +581,7 @@ public class TransactionServiceImpl extends BaseService implements
             DataRequest request, LogableNodeTransaction info) {
 
         if (visit == null) {
-            throw new RuntimeException("Visit object not set");
+            throw new RuntimeException(VISIT_OBJECT_NOT_SET);
         }
 
         if (request == null) {
@@ -581,11 +609,10 @@ public class TransactionServiceImpl extends BaseService implements
             logger.debug("Service Type: " + request.getService().getType());
             logger.debug("Info Type: " + info.getType());
 
-            // TODO: Verify that the flags work as in C#
             if (info.getType() == ServiceType.EXECUTE) {
 
                 if (request.getService().getType() != ServiceType.EXECUTE) {
-                    throw new RuntimeException("Service does not support: "
+                    throw new RuntimeException(SERVICE_DOES_NOT_SUPPORT
                             + ServiceType.EXECUTE);
                 }
 
@@ -594,7 +621,7 @@ public class TransactionServiceImpl extends BaseService implements
                 if (request.getService().getType() != ServiceType.QUERY
                         && request.getService().getType() != ServiceType.QUERY_OR_SOLICIT
                         && request.getService().getType() != ServiceType.QUERY_OR_SOLICIT_OR_EXECUTE) {
-                    throw new RuntimeException("Service does not support: "
+                    throw new RuntimeException(SERVICE_DOES_NOT_SUPPORT
                             + ServiceType.QUERY);
                 }
 
@@ -603,7 +630,7 @@ public class TransactionServiceImpl extends BaseService implements
                 if (request.getService().getType() != ServiceType.SOLICIT
                         && request.getService().getType() != ServiceType.QUERY_OR_SOLICIT
                         && request.getService().getType() != ServiceType.QUERY_OR_SOLICIT_OR_EXECUTE) {
-                    throw new RuntimeException("Service does not support: "
+                    throw new RuntimeException(SERVICE_DOES_NOT_SUPPORT
                             + ServiceType.SOLICIT);
                 }
 
@@ -697,8 +724,9 @@ public class TransactionServiceImpl extends BaseService implements
             return info;
 
         } catch (Exception ex) {
-            logger.error("Error while saving request: ", ex);
-            throw new RuntimeException("Error while saving request: ", ex);
+            String msg = "Error while saving request: " + ex.getMessage();
+            logger.error(msg, ex);
+            throw new RuntimeException(msg, ex);
         }
 
     }

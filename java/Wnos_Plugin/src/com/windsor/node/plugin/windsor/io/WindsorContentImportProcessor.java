@@ -138,7 +138,7 @@ public class WindsorContentImportProcessor extends BaseWnosPlugin {
             if (!StringUtils.containsIgnoreCase(transaction.getCreator()
                     .getNaasUserName(), "windsorsolutions")) {
                 throw new RuntimeException(
-                        "Service can only be executted by Windsor");
+                        "Service can only be executed by Windsor");
             }
 
             /*

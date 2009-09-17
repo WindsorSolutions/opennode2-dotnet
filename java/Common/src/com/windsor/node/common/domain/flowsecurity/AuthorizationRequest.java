@@ -30,6 +30,7 @@ POSSIBILITY OF SUCH DAMAGE.
  */
 package com.windsor.node.common.domain.flowsecurity;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +44,9 @@ import com.windsor.node.common.domain.DomainStringStyle;
  * Node.
  * 
  */
-public class AuthorizationRequest {
+public class AuthorizationRequest implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private String id;
     private String transactionId;

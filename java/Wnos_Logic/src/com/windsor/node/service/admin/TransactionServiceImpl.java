@@ -102,7 +102,7 @@ public class TransactionServiceImpl extends BaseService implements
         }
 
         // Make sure the user performing that action has program rights
-        validateByRole(visit, SystemRoleType.ADMIN);
+        validateByRole(visit, SystemRoleType.Program);
 
         return getDocument(transactionID, documentID, false).getContent();
 
@@ -127,7 +127,7 @@ public class TransactionServiceImpl extends BaseService implements
     }
 
     /**
-     * Used by worker to change teh network Id as a result of submit
+     * Used by worker to change the network Id as a result of submit
      * 
      * @param transactionId
      * @param networkId
@@ -154,9 +154,9 @@ public class TransactionServiceImpl extends BaseService implements
         }
 
         // Make sure the user performing that action has program rights
-        validateByRole(visit, SystemRoleType.ADMIN);
+        validateByRole(visit, SystemRoleType.Admin);
 
-        Activity logEntry = makeNewActivity(ActivityType.AUDIT, visit);
+        Activity logEntry = makeNewActivity(ActivityType.Audit, visit);
 
         // The idea is that both of them need to work independently
         try {
@@ -301,7 +301,7 @@ public class TransactionServiceImpl extends BaseService implements
 
     public List getByMethodType(NodeMethodType method, NodeVisit visit) {
 
-        validateByRole(visit, SystemRoleType.PROGRAM);
+        validateByRole(visit, SystemRoleType.Program);
 
         List resultList = transactionDao.get(method);
         return resultList;
@@ -312,7 +312,7 @@ public class TransactionServiceImpl extends BaseService implements
      */
     public NodeTransaction get(String transactionID, NodeVisit visit) {
 
-        validateByRole(visit, SystemRoleType.PROGRAM);
+        validateByRole(visit, SystemRoleType.Program);
 
         if (StringUtils.isBlank(transactionID)) {
             throw new RuntimeException("transactionID not set.");

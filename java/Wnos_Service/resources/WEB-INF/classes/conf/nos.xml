@@ -41,6 +41,7 @@
 	<import resource="transaction-service.xml" />
 	<import resource="node-service.xml" />
 	<import resource="node-client.xml" />
+    <import resource="flow-security-service.xml" />
 
 	<!-- Worker -->
 	<import resource="worker.xml" />
@@ -58,6 +59,10 @@
 			<list>
 				<value>127.0.0.1</value>
                 <value>${ip.whitelist.subnet}</value>
+                <!-- windsorsolutions.biz -->
+				<value>70.102.94.202</value>
+                <!-- Windsor employee vpn -->
+                <value>172.16.0.*</value>
 			</list>
 		</property>
 		<property name="pluginDir" value="${path.plugin.dir}" />

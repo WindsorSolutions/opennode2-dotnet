@@ -141,8 +141,7 @@ public class NetworkNode11Client implements NodeClientService {
         TransactionStatus status = new TransactionStatus(transactionId);
         status
                 .setStatus((CommonTransactionStatusCode) CommonTransactionStatusCodeConverter
-                        .convert(
-                                getStatus(authenticate(), transactionId)));
+                        .convert(getStatus(authenticate(), transactionId)));
 
         return status;
 
@@ -247,7 +246,7 @@ public class NetworkNode11Client implements NodeClientService {
 
             NodeDocument document = new NodeDocument();
             document.setName(notification.getStatus().getTransactionId());
-            document.setType(notification.getStatus().getStatus().getName());
+            document.setType(notification.getStatus().getStatus().name());
             document.setContent(notification.getStatus().getDescription()
                     .getBytes("UTF-8"));
             logger.debug("Node Document: " + document);

@@ -31,35 +31,10 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.windsor.node.common.domain;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+public enum SystemRoleType {
 
-import org.apache.commons.lang.enums.Enum;
+    None, Authed, Program, Admin;
 
-public final class SystemRoleType extends Enum {
-
-    public static final SystemRoleType NONE = new SystemRoleType("None");
-    public static final SystemRoleType AUTHED = new SystemRoleType("Authed");
-    public static final SystemRoleType PROGRAM = new SystemRoleType("Program");
-    public static final SystemRoleType ADMIN = new SystemRoleType("Admin");
-
-    private static final long serialVersionUID = 1;
-    
-    private SystemRoleType(String type) {
-        super(type);
-    }
-
-    public static Map getEnumMap() {
-        return getEnumMap(SystemRoleType.class);
-    }
-
-    public static List getEnumList() {
-        return getEnumList(SystemRoleType.class);
-    }
-
-    public static Iterator iterator() {
-        return iterator(SystemRoleType.class);
-    }
+    private static final long serialVersionUID = 2;
 
 }

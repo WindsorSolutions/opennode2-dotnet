@@ -53,10 +53,10 @@ import com.windsor.node.service.BaseService;
 public class ConfigServiceImpl extends BaseService implements ConfigService,
         InitializingBean {
 
+    private static final Map CONFS = new HashMap();
+
     private ConfigDao configDao;
     private ConnectionDao connectionDao;
-
-    private static final Map CONFS = new HashMap();
 
     public void afterPropertiesSet() {
 
@@ -78,13 +78,13 @@ public class ConfigServiceImpl extends BaseService implements ConfigService,
     public void deleteDataProvider(String dsId, NodeVisit visit) {
 
         // Make sure the user performing that action has admin rights
-        validateByRole(visit, SystemRoleType.ADMIN);
+        validateByRole(visit, SystemRoleType.Admin);
 
         if (StringUtils.isBlank(dsId)) {
             throw new RuntimeException("dsId not set.");
         }
 
-        Activity logEntry = makeNewActivity(ActivityType.AUDIT, visit);
+        Activity logEntry = makeNewActivity(ActivityType.Audit, visit);
 
         // The idea is that both of them need to work independently
         try {
@@ -113,7 +113,7 @@ public class ConfigServiceImpl extends BaseService implements ConfigService,
     public List getDataProviders(NodeVisit visit) {
 
         // Make sure the user performing that action has admin rights
-        validateByRole(visit, SystemRoleType.ADMIN);
+        validateByRole(visit, SystemRoleType.Admin);
 
         return connectionDao.get();
 
@@ -122,7 +122,7 @@ public class ConfigServiceImpl extends BaseService implements ConfigService,
     public DataProviderInfo getDataProvider(String id, NodeVisit visit) {
 
         // Make sure the user performing that action has admin rights
-        validateByRole(visit, SystemRoleType.ADMIN);
+        validateByRole(visit, SystemRoleType.Admin);
 
         return connectionDao.get(id);
 
@@ -132,7 +132,7 @@ public class ConfigServiceImpl extends BaseService implements ConfigService,
             NodeVisit visit) {
 
         // Make sure the user performing that action has admin rights
-        validateByRole(visit, SystemRoleType.ADMIN);
+        validateByRole(visit, SystemRoleType.Admin);
 
         if (instance == null) {
             throw new RuntimeException("connection not set.");
@@ -142,7 +142,7 @@ public class ConfigServiceImpl extends BaseService implements ConfigService,
             throw new RuntimeException("name not set.");
         }
 
-        Activity logEntry = makeNewActivity(ActivityType.AUDIT, visit);
+        Activity logEntry = makeNewActivity(ActivityType.Audit, visit);
 
         // The idea is that both of them need to work independently
         try {
@@ -181,9 +181,9 @@ public class ConfigServiceImpl extends BaseService implements ConfigService,
         }
 
         // Make sure the user performing that action has admin rights
-        validateByRole(visit, SystemRoleType.ADMIN);
+        validateByRole(visit, SystemRoleType.Admin);
 
-        Activity logEntry = makeNewActivity(ActivityType.AUDIT, visit);
+        Activity logEntry = makeNewActivity(ActivityType.Audit, visit);
 
         // The idea is that both of them need to work independently
         try {
@@ -222,7 +222,7 @@ public class ConfigServiceImpl extends BaseService implements ConfigService,
     // public Map get(NodeVisit visit) {
     //
     // // Make sure the user performing that action has admin rights
-    // validateByRole(visit, SystemRoleType.ADMIN);
+    // validateByRole(visit, SystemRoleType.Admin);
     //
     // return get();
     //
@@ -231,7 +231,7 @@ public class ConfigServiceImpl extends BaseService implements ConfigService,
     public List getList(NodeVisit visit) {
 
         // Make sure the user performing that action has admin rights
-        validateByRole(visit, SystemRoleType.ADMIN);
+        validateByRole(visit, SystemRoleType.Admin);
 
         return configDao.get();
 
@@ -279,7 +279,7 @@ public class ConfigServiceImpl extends BaseService implements ConfigService,
     public ConfigItem get(String configId, NodeVisit visit) {
 
         // Make sure the user performing that action has admin rights
-        validateByRole(visit, SystemRoleType.ADMIN);
+        validateByRole(visit, SystemRoleType.Admin);
 
         return get(configId);
     }
@@ -307,9 +307,9 @@ public class ConfigServiceImpl extends BaseService implements ConfigService,
         }
 
         // Make sure the user performing that action has admin rights
-        validateByRole(visit, SystemRoleType.ADMIN);
+        validateByRole(visit, SystemRoleType.Admin);
 
-        Activity logEntry = makeNewActivity(ActivityType.AUDIT, visit);
+        Activity logEntry = makeNewActivity(ActivityType.Audit, visit);
 
         try {
 

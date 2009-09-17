@@ -80,7 +80,7 @@ public class PluginServiceImpl extends BaseService implements
     public void upload(String flowId, byte[] content, NodeVisit visit) {
 
         // Make sure the user performing that action has admin rights
-        validateByRole(visit, SystemRoleType.ADMIN);
+        validateByRole(visit, SystemRoleType.Admin);
 
         if (StringUtils.isBlank(flowId)) {
             throw new RuntimeException("flowId not set.");
@@ -90,7 +90,7 @@ public class PluginServiceImpl extends BaseService implements
             throw new RuntimeException("content not set.");
         }
 
-        Activity logEntry = makeNewActivity(ActivityType.AUDIT, visit);
+        Activity logEntry = makeNewActivity(ActivityType.Audit, visit);
 
         // The idea is that both of them need to work independently
         try {

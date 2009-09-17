@@ -86,7 +86,7 @@ public class SecurityServiceImpl extends BaseService implements
             throw new RuntimeException("Null ip");
         }
 
-        Activity logEntry = makeNewActivity(ActivityType.SERVICEAUTH, request
+        Activity logEntry = makeNewActivity(ActivityType.ServiceAuth, request
                 .getIp());
 
         try {
@@ -129,7 +129,7 @@ public class SecurityServiceImpl extends BaseService implements
         } catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
 
-            logEntry.setType(ActivityType.ERROR);
+            logEntry.setType(ActivityType.Error);
 
             logEntry.addEntry(ex.getMessage());
 
@@ -165,7 +165,7 @@ public class SecurityServiceImpl extends BaseService implements
 
         logger.debug("endpointValidate request: " + request);
 
-        Activity logEntry = makeNewActivity(ActivityType.AUDIT, request.getIp());
+        Activity logEntry = makeNewActivity(ActivityType.Audit, request.getIp());
 
         try {
 
@@ -207,7 +207,7 @@ public class SecurityServiceImpl extends BaseService implements
 
         } catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
-            logEntry.setType(ActivityType.ERROR);
+            logEntry.setType(ActivityType.Error);
             logEntry.addEntry(ex.getMessage());
 
             throw new RuntimeException("Error while validating: "

@@ -62,6 +62,31 @@ public class JdbcServiceDao extends BaseJdbcDao implements ServiceDao,
         InitializingBean {
 
     /**
+     * Select the service arguments for a given DataService id.
+     */
+    protected static final String SQL_SELECT_ARG = "SELECT ArgKey, ArgValue FROM NServiceArg WHERE ServiceId = ? ORDER BY ArgKey  ";
+
+    /**
+     * Insert the service arguments for a given DataService id.
+     */
+    protected static final String SQL_INSERT_ARG = "INSERT INTO NServiceArg ( Id, ServiceId, ArgKey, ArgValue ) VALUES ( ?, ?, ?, ? )";
+
+    /**
+     * Delete the service arguments for a given DataService id.
+     */
+    protected static final String SQL_DELETE_ARG = "DELETE FROM NServiceArg WHERE ServiceId = ?";
+
+    /**
+     * Insert a data source for a given DataService id.
+     */
+    protected static final String SQL_INSERT_CONN = "INSERT INTO NServiceConn ( Id, ServiceId, ConnectionId, KeyName ) VALUES ( ?, ?, ?, ? )";
+
+    /**
+     * Delete a data source for a given DataService id.
+     */
+    protected static final String SQL_DELETE_CONN = "DELETE FROM NServiceConn WHERE ServiceId = ? ";
+
+    /**
      * Base &quot;select&quot; statement.
      */
     private static final String SQL_SELECT = "SELECT Id, Name, FlowId, IsActive, ServiceType, "
@@ -136,31 +161,6 @@ public class JdbcServiceDao extends BaseJdbcDao implements ServiceDao,
     private static final String SQL_DELETE = "DELETE FROM NService WHERE Id = ?";
 
     /**
-     * Select the service arguments for a given DataService id.
-     */
-    protected static final String SQL_SELECT_ARG = "SELECT ArgKey, ArgValue FROM NServiceArg WHERE ServiceId = ? ORDER BY ArgKey  ";
-
-    /**
-     * Insert the service arguments for a given DataService id.
-     */
-    protected static final String SQL_INSERT_ARG = "INSERT INTO NServiceArg ( Id, ServiceId, ArgKey, ArgValue ) VALUES ( ?, ?, ?, ? )";
-
-    /**
-     * Delete the service arguments for a given DataService id.
-     */
-    protected static final String SQL_DELETE_ARG = "DELETE FROM NServiceArg WHERE ServiceId = ?";
-
-    /**
-     * Insert a data source for a given DataService id.
-     */
-    protected static final String SQL_INSERT_CONN = "INSERT INTO NServiceConn ( Id, ServiceId, ConnectionId, KeyName ) VALUES ( ?, ?, ?, ? )";
-
-    /**
-     * Delete a data source for a given DataService id.
-     */
-    protected static final String SQL_DELETE_CONN = "DELETE FROM NServiceConn WHERE ServiceId = ? ";
-
-    /**
      * Dao for related data sources.
      */
     private ConnectionDao connectionDao;
@@ -224,7 +224,7 @@ public class JdbcServiceDao extends BaseJdbcDao implements ServiceDao,
                 new ServiceMapper());
     }
 
-    private void saveConn(List dataSources, String serviceId) {
+    private void saveConn(List<?> dataSources, String serviceId) {
 
         validateObjectArg(dataSources, "Map");
 
@@ -237,9 +237,14 @@ public class JdbcServiceDao extends BaseJdbcDao implements ServiceDao,
         Object[] args = new Object[4];
         args[1] = serviceId;
 
-        for (Iterator it = dataSources.iterator(); it.hasNext();) {
+        for (Iterator<?> it = dataSources.iterator(); it.hasNext();) {
 
             DataProviderInfo dataSource = (DataProviderInfo) it.next();
+
+            if (null == dataSource.getId()) {
+                throw new RuntimeException(
+                        "Please select a configured DataSource");
+            }
 
             args[0] = idGenerator.createId();
             args[1] = serviceId;
@@ -254,7 +259,7 @@ public class JdbcServiceDao extends BaseJdbcDao implements ServiceDao,
 
     }
 
-    private void saveArgs(List serviceArgs, String serviceId) {
+    private void saveArgs(List<?> serviceArgs, String serviceId) {
 
         validateObjectArg(serviceArgs, "Map");
 
@@ -266,7 +271,7 @@ public class JdbcServiceDao extends BaseJdbcDao implements ServiceDao,
 
         Object[] args = new Object[4];
 
-        for (Iterator it = serviceArgs.iterator(); it.hasNext();) {
+        for (Iterator<?> it = serviceArgs.iterator(); it.hasNext();) {
 
             NamedSystemConfigItem serviceArg = (NamedSystemConfigItem) it
                     .next();
@@ -321,7 +326,7 @@ public class JdbcServiceDao extends BaseJdbcDao implements ServiceDao,
         args[0] = instance.getName();
         args[1] = instance.getFlowId();
         args[2] = FormatUtil.toYNFromBoolean(instance.isActive());
-        args[3] = instance.getType().getName();
+        args[3] = instance.getType().toString();
         args[4] = instance.getImplementingClassName();
         args[5] = ServiceRequestAuthorizationType.BASIC.getName();
         args[6] = instance.getModifiedById();
@@ -414,7 +419,8 @@ public class JdbcServiceDao extends BaseJdbcDao implements ServiceDao,
         return getMap(SQL_SELECT_ID_AND_NAME_LIST_BY_FLOW, id, false);
     }
 
-    private List getServiceArgs(String serviceId) {
+    @SuppressWarnings("unchecked")
+    private List<NamedSystemConfigItem> getServiceArgs(String serviceId) {
 
         validateStringArg(serviceId);
 
@@ -455,6 +461,7 @@ public class JdbcServiceDao extends BaseJdbcDao implements ServiceDao,
          * org.springframework.jdbc.core.RowMapper#mapRow(java.sql.ResultSet,
          * int)
          */
+        @SuppressWarnings("unchecked")
         public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
 
             DataService obj = new DataService();
@@ -463,8 +470,8 @@ public class JdbcServiceDao extends BaseJdbcDao implements ServiceDao,
             obj.setName(rs.getString("Name"));
             obj.setFlowId(rs.getString("FlowId"));
             obj.setActive(FormatUtil.toBooleanFromYN(rs.getString("IsActive")));
-            obj.setType((ServiceType) ServiceType.getEnumMap().get(
-                    rs.getString("ServiceType")));
+            obj.setType((ServiceType) ServiceType.fromString(rs
+                    .getString("ServiceType")));
             obj.setImplementingClassName(rs.getString("Implementor"));
             obj.setArgs(getServiceArgs(rs.getString("Id")));
             obj.setDataSources(connectionDao.getBySerivceId(obj.getId()));

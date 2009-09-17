@@ -53,10 +53,10 @@ import com.windsor.node.common.service.admin.AccountService;
 public class SecurityController extends AbstractController implements
         InitializingBean {
 
-    protected Logger logger = Logger
-            .getLogger(SecurityController.class);
+    protected Logger logger = Logger.getLogger(SecurityController.class);
 
     private AccountService accountService;
+    private Boolean showManageUserRequests;
 
     public SecurityController() {
         super();
@@ -78,11 +78,12 @@ public class SecurityController extends AbstractController implements
         NodeVisit visit = VisitUtils.getVisit(request);
 
         if (visit == null) {
-            logger.debug(AdminConstants.UNAUTHED + " security access " + AdminConstants.ACCESS_REQUEST);
+            logger.debug(AdminConstants.UNAUTHED + " security access "
+                    + AdminConstants.ACCESS_REQUEST);
             return VisitUtils.getUnauthedView(request);
         }
 
-        Map model = new HashMap();
+        Map<String, Object> model = new HashMap<String, Object>();
         model.put(AdminConstants.VISIT_KEY, visit);
 
         // Set the selected tab
@@ -101,7 +102,8 @@ public class SecurityController extends AbstractController implements
         }
 
         // set the side bar
-        model.put(AdminConstants.BARS_KEY, SideBarUtils.getSecurityBars(request, 0));
+        model.put(AdminConstants.BARS_KEY, SideBarUtils.getSecurityBars(
+                request, 0, showManageUserRequests));
 
         return new ModelAndView("security", AdminConstants.MODEL_KEY, model);
 
@@ -113,6 +115,14 @@ public class SecurityController extends AbstractController implements
 
     public void setAccountService(AccountService accountService) {
         this.accountService = accountService;
+    }
+
+    public Boolean getShowManageUserRequests() {
+        return showManageUserRequests;
+    }
+
+    public void setShowManageUserRequests(Boolean showManageUserRequests) {
+        this.showManageUserRequests = showManageUserRequests;
     }
 
 }

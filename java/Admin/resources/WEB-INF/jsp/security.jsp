@@ -48,7 +48,7 @@ function goto(searchValue){
 						</tr>
 						<tr>
 
-							<td class="label" width="5%" nowrap><img
+							<td class="label" width="5%" nowrap="nowrap"><img
 								alt="" src="img/page_user_dark.gif"
 								style="border: 0; vertical-align: middle; padding-right: 3px; float: right;" /></td>
 							<td class="ctrl" width="95%">
@@ -64,9 +64,9 @@ function goto(searchValue){
 									</c:forEach>
 								</select>
 							</td>
-							<td class="label" width="10" nowrap align="right"><input
+							<td class="label" width="10" nowrap="nowrap" align="right"><input
 								type="image" src="img/action_refresh.gif"
-								alt="Refresh accounts from NAAS" align="absmiddle"
+								alt="Refresh accounts from NAAS" align="middle"
 								style="border-width: 0px;"
 								onclick="location.href='security.htm?bi=1&refresh=true'" /></td>
 						</tr>
@@ -99,7 +99,7 @@ function goto(searchValue){
 
 							<tr
 								class="<c:choose><c:when test="${status.index % 2 == 0}">rowOdd</c:when><c:otherwise>rowEven</c:otherwise></c:choose>">
-								<td width="95%" nowrap><c:choose>
+								<td width="95%" nowrap="nowrap"><c:choose>
 									<c:when test="${user.active}">
 										<img alt="User" src="img/page_user_dark.gif"
 											style="border: 0; vertical-align: middle; padding-right: 3px;" />
@@ -110,7 +110,7 @@ function goto(searchValue){
 									</c:otherwise>
 								</c:choose> <c:out value="${user.naasUserName}" />&nbsp;( <c:choose>
 									<c:when test="${user.active}">
-										<c:out value="${user.affiliationCode}" />/<c:out value="${user.role.name}" />
+										<c:out value="${user.affiliationCode}" />/<c:out value="${user.role}" />
 									</c:when>
 									<c:otherwise>
 										<span class="error">Inactive</span>

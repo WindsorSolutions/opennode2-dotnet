@@ -41,9 +41,9 @@
 					        style="width:96%"
 					        class="select" >
 						<c:forEach var="ver" items="${model.endpointVersions}">
-							<option value="<c:out value="${ver.type}" />"
-								<c:if test="${ command.version.type == ver.type }">selected</c:if> 
-							><c:out value="${ver.type}" /></option>
+							<option value="<c:out value="${ver}" />"
+								<c:if test="${command.version == ver}">selected</c:if> 
+							><c:out value="${ver}" /></option>
 						</c:forEach>
 					</select>
 					<span class="error" <c:if test="${status.errorMessage == \"\"}">style="display:none;"</c:if> ><c:out value="${status.errorMessage}" /></span>
@@ -83,11 +83,11 @@
 
 function isUrl() {
 	var s = $("#url").val();
-   	var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
+   	var regexp = /(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
 	if (regexp.test(s)){
 		return true;
 	}else{
-		alet("Invalid endpoint url");
+		alert("Invalid endpoint url");
 		return false;
 	}
 }

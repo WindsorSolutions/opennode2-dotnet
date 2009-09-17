@@ -114,11 +114,11 @@ public class ConfigPartnerController extends BaseSimpleFormController implements
                     request, "delete"))) {
                 logger.debug("Deleting: " + partner);
                 partnerService.delete(partner.getId(), visit);
+
             } else {
 
                 logger.debug(AdminConstants.SAVING + partner);
                 partnerService.save(partner, visit);
-
             }
 
             logger.debug(AdminConstants.RETURNING_SUCCESS_VIEW);

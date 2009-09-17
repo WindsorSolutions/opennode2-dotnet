@@ -7,12 +7,9 @@
                
 	<description>Flow Service Description</description>
 
-	<bean id="flowService" class="com.windsor.node.service.admin.FlowServiceImpl"  parent="baseService">
+	<bean id="flowService" class="com.windsor.node.service.admin.FlowServiceImpl" parent="baseService">
 		<property name="flowDao" ref="flowDao" />
 		<property name="serviceDao" ref="serviceDao" />
 		<property name="pluginHelper" ref="pluginHelper" />
 	</bean>
-	
-
-
 </beans>

@@ -217,6 +217,31 @@ public class JdbcFlowSecurityDao extends BaseJdbcDao implements FlowSecurityDao 
     }
 
     @SuppressWarnings("unchecked")
+    public List<AuthorizationRequest> getPendingRequests() {
+
+        List<AuthorizationRequest> pendingRequests = null;
+
+        checkDaoConfig();
+
+        logger.debug(SQL_SELECT_PENDING);
+
+        pendingRequests = (List<AuthorizationRequest>) getJdbcTemplate().query(
+                SQL_SELECT_PENDING, new AuthorizationRequestMapper());
+
+        for (AuthorizationRequest pendingRequest : pendingRequests) {
+
+            List<FlowRequest> requestedFlows = getFlowRequests(pendingRequest
+                    .getId());
+            pendingRequest.setRequestedFlows(requestedFlows);
+        }
+
+        logger.debug("returning " + pendingRequests.size()
+                + " AuthorizationRequests");
+
+        return pendingRequests;
+    }
+
+    @SuppressWarnings("unchecked")
     private List<FlowRequest> getFlowRequests(String authReqId) {
 
         validateStringArg(authReqId);

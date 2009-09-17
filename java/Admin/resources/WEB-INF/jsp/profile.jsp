@@ -39,19 +39,19 @@
 
 
 						<tr>
-							<td class="label" style="width: 20%;" nowrap><img alt=""
+							<td class="label" style="width: 20%;" nowrap="nowrap"><img alt=""
 								src="img/page_user_dark.gif"
 								style="border: 0; vertical-align: middle; padding-right: 3px;" /></td>
 							<td class="ctrl"><c:out value="${usr.naasUserName}" /></td>
 						</tr>
 
 						<tr>
-							<td class="label" style="width: 20%;" nowrap>System&nbsp;Role:</td>
-							<td class="ctrl"><c:out value="${usr.role.name}" /></td>
+							<td class="label" style="width: 20%;" nowrap="nowrap">System&nbsp;Role:</td>
+							<td class="ctrl"><c:out value="${usr.role}" /></td>
 						</tr>
 
 						<tr>
-							<td class="label" style="width: 20%;" nowrap>Active:</td>
+							<td class="label" style="width: 20%;" nowrap="nowrap">Active:</td>
 							<td class="ctrl"><c:choose>
 								<c:when test="${usr.active}">Yes</c:when>
 								<c:otherwise>No</c:otherwise>
@@ -59,19 +59,19 @@
 						</tr>
 
 						<tr>
-							<td class="label" style="width: 20%;" nowrap>Last&nbsp;Modified&nbsp;By:</td>
+							<td class="label" style="width: 20%;" nowrap="nowrap">Last&nbsp;Modified&nbsp;By:</td>
 							<td class="ctrl"><c:out value="${usr.modifiedById}" /></td>
 						</tr>
 
 						<tr>
-							<td class="label" style="width: 20%;" nowrap>Last&nbsp;Modified&nbsp;On:</td>
+							<td class="label" style="width: 20%;" nowrap="nowrap">Last&nbsp;Modified&nbsp;On:</td>
 							<td class="ctrl"><fmt:formatDate
 								pattern="MMMMM dd, yyyy hh:mm a" value="${usr.modifiedOn}" /></td>
 						</tr>
 
-						<c:if test="${usr.role.name != 'Admin'}">
+						<c:if test="${usr.role != 'Admin'}">
 							<tr>
-								<td class="label" style="width: 20%;" nowrap>Assigned&nbsp;Flows:</td>
+								<td class="label" style="width: 20%;" nowrap="nowrap">Assigned&nbsp;Flows:</td>
 								<td class="ctrl">
 								<ul>
 									<c:forEach var="policy" items="${usr.policies}">
@@ -162,9 +162,9 @@
 								<tr
 									class="<c:choose><c:when test="${status.index % 2 == 0}">rowOdd</c:when>
 								<c:otherwise>rowEven</c:otherwise></c:choose>">
-									<td nowrap="nowap" valign="absmiddle"><strong><c:out value="${notif.flow.name}" /></strong></td>
+									<td nowrap="nowrap" valign="middle"><strong><c:out value="${notif.flow.name}" /></strong></td>
 
-									<td class="ctrl" nowrap="nowap" valign="absmiddle"><input
+									<td class="ctrl" nowrap="nowrap" valign="middle"><input
 										id="<c:out value="${notif.flow.id}${deliminator}OnSolicit" />"
 										type="checkbox" <c:if test="${notif.onSolicit}">checked</c:if>
 										value="<c:out value="${notif.flow.id}${deliminator}OnSolicit" />"
@@ -172,7 +172,7 @@
 										for="<c:out value="${notif.flow.id}${deliminator}OnSolicit" />">Solicit</label>
 									</td>
 
-									<td class="ctrl" nowrap="nowap" valign="absmiddle"><input
+									<td class="ctrl" nowrap="nowrap" valign="middle"><input
 										id="<c:out value="${notif.flow.id}${deliminator}OnQuery" />"
 										type="checkbox" <c:if test="${notif.onQuery}">checked</c:if>
 										value="<c:out value="${notif.flow.id}${deliminator}OnQuery" />"
@@ -180,7 +180,7 @@
 										for="<c:out value="${notif.flow.id}${deliminator}OnQuery" />">Query</label>
 									</td>
 
-									<td class="ctrl" nowrap="nowap" valign="absmiddle"><input
+									<td class="ctrl" nowrap="nowrap" valign="middle"><input
 										id="<c:out value="${notif.flow.id}${deliminator}OnSubmit" />"
 										type="checkbox" <c:if test="${notif.onSubmit}">checked</c:if>
 										value="<c:out value="${notif.flow.id}${deliminator}OnSubmit" />"
@@ -188,7 +188,7 @@
 										for="<c:out value="${notif.flow.id}${deliminator}OnSubmit" />">Submit</label>
 									</td>
 
-									<td class="ctrl" nowrap="nowap" valign="absmiddle"><input
+									<td class="ctrl" nowrap="nowrap" valign="middle"><input
 										id="<c:out value="${notif.flow.id}${deliminator}OnNotify" />"
 										type="checkbox" <c:if test="${notif.onNotify}">checked</c:if>
 										value="<c:out value="${notif.flow.id}${deliminator}OnNotify" />"
@@ -196,7 +196,7 @@
 										for="<c:out value="${notif.flow.id}${deliminator}OnNotify" />">Notify</label>
 									</td>
 
-									<td class="ctrl" nowrap="nowap" valign="absmiddle"><input
+									<td class="ctrl" nowrap="nowrap" valign="middle"><input
 										id="<c:out value="${notif.flow.id}${deliminator}OnSchedule" />"
 										type="checkbox"
 										<c:if test="${notif.onSchedule}">checked</c:if>
@@ -205,7 +205,7 @@
 										for="<c:out value="${notif.flow.id}${deliminator}OnSchedule" />">Schedule</label>
 									</td>
 
-									<td class="ctrl" nowrap="nowap" valign="absmiddle"><input
+									<td class="ctrl" nowrap="nowrap" valign="middle"><input
 										id="<c:out value="${notif.flow.id}${deliminator}OnDownload" />"
 										type="checkbox"
 										<c:if test="${notif.onDownload}">checked</c:if>
@@ -214,7 +214,7 @@
 										for="<c:out value="${notif.flow.id}${deliminator}OnDownload" />">Download</label>
 									</td>
 
-									<td class="ctrl" nowrap="nowap" valign="absmiddle"><input
+									<td class="ctrl" nowrap="nowrap" valign="middle"><input
 										id="<c:out value="${notif.flow.id}${deliminator}OnExecute" />"
 										type="checkbox" <c:if test="${notif.onExecute}">checked</c:if>
 										value="<c:out value="${notif.flow.id}${deliminator}OnExecute" />"
@@ -222,7 +222,7 @@
 										for="<c:out value="${notif.flow.id}${deliminator}OnExecute" />">Execute</label>
 									</td>
 
-									<td class="ctrl" nowrap="nowap" valign="absmiddle"><a href="#"
+									<td class="ctrl" nowrap="nowrap" valign="middle"><a href="#"
 										onclick="toggleCheck('<c:out value="${notif.flow.id}${deliminator}" />');">Toggle</a></td>
 
 								</tr>

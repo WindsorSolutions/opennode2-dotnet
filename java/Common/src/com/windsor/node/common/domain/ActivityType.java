@@ -31,37 +31,9 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.windsor.node.common.domain;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
-import org.apache.commons.lang.enums.Enum;
+public enum ActivityType {
 
-public final class ActivityType extends Enum {
-
-    public static final ActivityType INFO = new ActivityType("Info");
-    public static final ActivityType ADMINAUTH = new ActivityType("AdminAuth");
-    public static final ActivityType SERVICEAUTH = new ActivityType(
-            "ServiceAuth");
-    public static final ActivityType AUDIT = new ActivityType("Audit");
-    public static final ActivityType ERROR = new ActivityType("Error");
-
-    private static final long serialVersionUID = 1;
-
-    private ActivityType(String type) {
-        super(type);
-    }
-
-    public static Map getEnumMap() {
-        return getEnumMap(ActivityType.class);
-    }
-
-    public static List getEnumList() {
-        return getEnumList(ActivityType.class);
-    }
-
-    public static Iterator iterator() {
-        return iterator(ActivityType.class);
-    }
+    Info, AdminAuth, ServiceAuth, Audit, Error;
 
 }

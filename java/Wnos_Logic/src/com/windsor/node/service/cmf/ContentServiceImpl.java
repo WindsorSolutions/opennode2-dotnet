@@ -143,7 +143,7 @@ public class ContentServiceImpl extends BaseService implements ContentService,
             throw new RuntimeException("Null visit");
         }
 
-        Activity logEntry = makeNewActivity(ActivityType.AUDIT, visit);
+        Activity logEntry = makeNewActivity(ActivityType.Audit, visit);
 
         try {
 
@@ -255,7 +255,7 @@ public class ContentServiceImpl extends BaseService implements ContentService,
 
             logger.debug(ex.getMessage());
 
-            logEntry.setType(ActivityType.ERROR);
+            logEntry.setType(ActivityType.Error);
             logEntry.addEntry(ex.getMessage());
             throw new RuntimeException("Error while downloading documents: "
                     + ex.getMessage(), ex);
@@ -280,7 +280,7 @@ public class ContentServiceImpl extends BaseService implements ContentService,
             throw new RuntimeException("Null visit");
         }
 
-        Activity logEntry = makeNewActivity(ActivityType.AUDIT, visit);
+        Activity logEntry = makeNewActivity(ActivityType.Audit, visit);
         logEntry.addEntry("GetServices invoked");
 
         SimpleContent content = null;
@@ -326,7 +326,7 @@ public class ContentServiceImpl extends BaseService implements ContentService,
                     + "\n Exception type: " + ex.getClass().getName();
             logger.debug(msg);
 
-            logEntry.setType(ActivityType.ERROR);
+            logEntry.setType(ActivityType.Error);
             logEntry.addEntry(msg);
             throw new RuntimeException("Error: " + msg, ex);
 
@@ -346,7 +346,7 @@ public class ContentServiceImpl extends BaseService implements ContentService,
             throw new RuntimeException("Null visit");
         }
 
-        Activity logEntry = makeNewActivity(ActivityType.AUDIT, visit);
+        Activity logEntry = makeNewActivity(ActivityType.Audit, visit);
 
         try {
 
@@ -372,7 +372,7 @@ public class ContentServiceImpl extends BaseService implements ContentService,
         } catch (Exception ex) {
             logger.debug(ex.getMessage(), ex);
 
-            logEntry.setType(ActivityType.ERROR);
+            logEntry.setType(ActivityType.Error);
             logEntry.addEntry(ex.getMessage());
             throw new RuntimeException("Error: " + ex.getMessage(), ex);
 
@@ -397,7 +397,7 @@ public class ContentServiceImpl extends BaseService implements ContentService,
             throw new RuntimeException("Null content");
         }
 
-        Activity logEntry = makeNewActivity(ActivityType.AUDIT, visit);
+        Activity logEntry = makeNewActivity(ActivityType.Audit, visit);
 
         try {
 
@@ -520,7 +520,7 @@ public class ContentServiceImpl extends BaseService implements ContentService,
 
                 logEntry.addEntry("Document {0} ({1} - {2}: {3})",
                         new Object[] { doc.getDocumentName(),
-                                doc.getDocumentStatus().getName(),
+                                doc.getDocumentStatus().name(),
                                 doc.getType().getName(),
                                 doc.getDocumentStatusDetail() });
 
@@ -558,7 +558,7 @@ public class ContentServiceImpl extends BaseService implements ContentService,
         } catch (Exception ex) {
             logger.debug(ex.getMessage());
 
-            logEntry.setType(ActivityType.ERROR);
+            logEntry.setType(ActivityType.Error);
             logEntry.addEntry(ex.getMessage());
             throw new RuntimeException("Error: " + ex.getMessage(), ex);
 

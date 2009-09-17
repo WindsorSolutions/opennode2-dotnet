@@ -43,7 +43,7 @@ public interface AccountDao extends DeletableDao {
 
     List<UserAccount> get(boolean includeInactive, boolean loadPolicies);
 
-    List<UserAccount> get(String code, boolean includeInactive);
+    List<UserAccount> get(String nodeId, boolean includeInactive);
 
     String[] getNames();
 

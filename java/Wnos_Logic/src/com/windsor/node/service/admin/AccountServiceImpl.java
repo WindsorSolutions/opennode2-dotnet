@@ -43,8 +43,8 @@ import com.windsor.node.common.domain.AuthenticationRequest;
 import com.windsor.node.common.domain.NodeVisit;
 import com.windsor.node.common.domain.ServiceRequestAuthorizationType;
 import com.windsor.node.common.domain.SystemRoleType;
-import com.windsor.node.common.domain.UserAccessPolicy;
 import com.windsor.node.common.domain.UserAccount;
+import com.windsor.node.common.domain.flowsecurity.UserAccessPolicy;
 import com.windsor.node.common.exception.WinNodeException;
 import com.windsor.node.common.service.admin.AccountService;
 import com.windsor.node.data.dao.UserAccessPolicyDao;
@@ -112,7 +112,7 @@ public class AccountServiceImpl extends BaseService implements AccountService,
         Activity logEntry = new Activity();
         logEntry.setModifiedById(getAdminAccount().getId());
         logEntry.setIp(request.getIp());
-        logEntry.setType(ActivityType.ADMINAUTH);
+        logEntry.setType(ActivityType.AdminAuth);
 
         try {
 
@@ -169,7 +169,7 @@ public class AccountServiceImpl extends BaseService implements AccountService,
         } catch (Exception ex) {
 
             logger.error(ex);
-            logEntry.setType(ActivityType.ERROR);
+            logEntry.setType(ActivityType.Error);
             logEntry.addEntry("Error while authenticating: " + ex.getMessage());
 
             throw new WinNodeException(ex.getMessage());
@@ -197,11 +197,11 @@ public class AccountServiceImpl extends BaseService implements AccountService,
         }
 
         // Make sure the user performing that action has admin rights
-        validateByRole(visit, SystemRoleType.ADMIN);
+        validateByRole(visit, SystemRoleType.Admin);
 
         logger.debug("Account to create: " + accountRequest);
 
-        Activity logEntry = makeNewActivity(ActivityType.AUDIT, visit);
+        Activity logEntry = makeNewActivity(ActivityType.Audit, visit);
 
         UserAccount account = null;
         String password = null;
@@ -267,8 +267,9 @@ public class AccountServiceImpl extends BaseService implements AccountService,
             logEntry.addEntry("Account {0} was created in local data store.",
                     new Object[] { account.getNaasUserName() });
 
-            if (accountRequest.getRole().equals(SystemRoleType.PROGRAM)
-                    || accountRequest.getRole().equals(SystemRoleType.ADMIN)) {
+            if (accountRequest.getRole().equals(SystemRoleType.Program)
+                    || accountRequest.getRole().equals(SystemRoleType.Admin)) {
+
                 notificationHelper.sendNewLocalUser(account, password);
             }
 
@@ -276,8 +277,9 @@ public class AccountServiceImpl extends BaseService implements AccountService,
 
             logger.error(ex);
 
-            logEntry.addEntry(ex.getMessage());
-            logEntry.setType(ActivityType.ERROR);
+            String mesg = ex.getMessage();
+            logEntry.addEntry(mesg);
+            logEntry.setType(ActivityType.Error);
 
             if (accountCreatedInNaas) {
                 try {
@@ -289,14 +291,15 @@ public class AccountServiceImpl extends BaseService implements AccountService,
                             new Object[] { username });
 
                 } catch (Exception delNAASEx) {
+
                     logEntry.addEntry(delNAASEx.getMessage());
                 }
             }
 
-            throw new RuntimeException(
-                    "Error while creating account. See log for details.");
+            throw new RuntimeException("Error while creating account: " + mesg);
 
         } finally {
+
             getActivityDao().make(logEntry);
         }
 
@@ -312,17 +315,19 @@ public class AccountServiceImpl extends BaseService implements AccountService,
      */
     public void update(UserAccount instance, NodeVisit visit) {
 
+        logger.debug("Updating user account: " + instance);
+
         if (instance == null) {
             throw new IllegalArgumentException(
-                    "AuthenticationCredentials argument not provided.");
+                    "Authentication Credentials not provided.");
         }
 
         // Make sure the user performing that action has admin rights
-        validateByRole(visit, SystemRoleType.ADMIN);
+        validateByRole(visit, SystemRoleType.Admin);
 
         instance.setModifiedById(visit.getUserAccount().getId());
 
-        Activity logEntry = makeNewActivity(ActivityType.AUDIT, visit);
+        Activity logEntry = makeNewActivity(ActivityType.Audit, visit);
 
         try {
 
@@ -360,13 +365,13 @@ public class AccountServiceImpl extends BaseService implements AccountService,
     public void delete(UserAccount account, NodeVisit visit) {
 
         // Make sure the user performing that action has admin rights
-        validateByRole(visit, SystemRoleType.ADMIN);
+        validateByRole(visit, SystemRoleType.Admin);
 
         if (StringUtils.isBlank(account.getId())) {
             throw new RuntimeException("User not present in local database.");
         }
 
-        Activity logEntry = makeNewActivity(ActivityType.AUDIT, visit);
+        Activity logEntry = makeNewActivity(ActivityType.Audit, visit);
 
         try {
 
@@ -415,7 +420,7 @@ public class AccountServiceImpl extends BaseService implements AccountService,
                     "AuthenticationCredentials argument not provided.");
         }
 
-        Activity logEntry = makeNewActivity(ActivityType.AUDIT, visit);
+        Activity logEntry = makeNewActivity(ActivityType.Audit, visit);
 
         try {
 
@@ -424,7 +429,7 @@ public class AccountServiceImpl extends BaseService implements AccountService,
                             new Object[] { visit.getName(),
                                     instance.getNaasUserName() });
 
-            validateByRole(visit, SystemRoleType.ADMIN);
+            validateByRole(visit, SystemRoleType.Admin);
 
             if (!instance.getAffiliationCode().equals(
                     getNaasConfig().getNodeId())) {
@@ -468,14 +473,14 @@ public class AccountServiceImpl extends BaseService implements AccountService,
             throw new IllegalArgumentException("Null new password");
         }
 
-        Activity logEntry = makeNewActivity(ActivityType.AUDIT, visit);
+        Activity logEntry = makeNewActivity(ActivityType.Audit, visit);
 
         try {
 
             logEntry.addEntry("{0} attempted to change password.",
                     new Object[] { visit.getName() });
 
-            validateByRole(visit, SystemRoleType.PROGRAM);
+            validateByRole(visit, SystemRoleType.Program);
 
             userManagerHelper.changePassword(visit.getName(), currentPassword,
                     newPassword);
@@ -516,9 +521,9 @@ public class AccountServiceImpl extends BaseService implements AccountService,
         }
 
         // Make sure the user performing that action has admin rights
-        validateByRole(visit, SystemRoleType.PROGRAM);
+        validateByRole(visit, SystemRoleType.Program);
 
-        Activity logEntry = makeNewActivity(ActivityType.AUDIT, visit);
+        Activity logEntry = makeNewActivity(ActivityType.Audit, visit);
 
         try {
 
@@ -553,21 +558,26 @@ public class AccountServiceImpl extends BaseService implements AccountService,
         }
 
         // Make sure the user performing that action has admin rights
-        validateByRole(visit, SystemRoleType.PROGRAM);
+        validateByRole(visit, SystemRoleType.Program);
         logger.debug("Getting account for: " + accountId);
         return getAccountDao().get(accountId);
     }
 
     public UserAccount getByUserName(String username, NodeVisit visit) {
 
+        UserAccount account = null;
+
         if (username == null) {
             throw new IllegalArgumentException(
                     "username argument not provided.");
         }
 
-        validateByRole(visit, SystemRoleType.PROGRAM);
+        validateByRole(visit, SystemRoleType.Program);
         logger.debug("Getting account for: " + username);
-        return getAccountDao().getByNAASAccount(username);
+        account = getAccountDao().getByNAASAccount(username);
+        logger.debug("Retrieved UserAccount: " + account);
+
+        return account;
     }
 
     public UserAccount getActiveAdminUser(String username) {
@@ -580,7 +590,7 @@ public class AccountServiceImpl extends BaseService implements AccountService,
         logger.debug("Getting account for: " + username);
         UserAccount user = getAccountDao().getByNAASAccount(username);
 
-        validateByRole(user, SystemRoleType.PROGRAM);
+        validateByRole(user, SystemRoleType.Program);
 
         if (!user.isActive()) {
             throw new RuntimeException("User inactive");
@@ -595,7 +605,7 @@ public class AccountServiceImpl extends BaseService implements AccountService,
     public List getLocalUsers(boolean includeInactive, NodeVisit visit) {
 
         // Make sure the user performing that action has admin rights
-        validateByRole(visit, SystemRoleType.PROGRAM);
+        validateByRole(visit, SystemRoleType.Program);
         logger.debug("Getting account list");
         return getAccountDao()
                 .get(getNaasConfig().getNodeId(), includeInactive);
@@ -605,14 +615,14 @@ public class AccountServiceImpl extends BaseService implements AccountService,
      * getNAASUserNames
      */
     public String[] getNAASUserNames(NodeVisit visit) {
-        validateByRole(visit, SystemRoleType.ADMIN);
+        validateByRole(visit, SystemRoleType.Admin);
         logger.debug("Getting naas name list");
         return getAccountDao().getNames();
     }
 
     public String[] getActiveUsernames(NodeVisit visit) {
         // Make sure the user performing that action has admin rights
-        validateByRole(visit, SystemRoleType.ADMIN);
+        validateByRole(visit, SystemRoleType.Admin);
         logger.debug("Getting naas account name list");
         return getAccountDao().getNames();
     }
@@ -622,7 +632,7 @@ public class AccountServiceImpl extends BaseService implements AccountService,
      */
     public List getNAASUsers(NodeVisit visit) {
         // Make sure the user performing that action has admin rights
-        validateByRole(visit, SystemRoleType.ADMIN);
+        validateByRole(visit, SystemRoleType.Admin);
         logger.debug("Getting naas account list");
         return getAccountDao().get(getNaasConfig().getNodeId(), false);
     }
@@ -634,9 +644,9 @@ public class AccountServiceImpl extends BaseService implements AccountService,
             NodeVisit visit) {
 
         // Make sure the user performing that action has admin rights
-        validateByRole(visit, SystemRoleType.ADMIN);
+        validateByRole(visit, SystemRoleType.Admin);
 
-        Activity logEntry = makeNewActivity(ActivityType.AUDIT, visit);
+        Activity logEntry = makeNewActivity(ActivityType.Audit, visit);
 
         try {
             logEntry.addEntry("{0} attempted to set simple NAAS policy {1}.",
@@ -744,18 +754,12 @@ public class AccountServiceImpl extends BaseService implements AccountService,
     public UserAccount getOrCreateAccount(String naasAccount, NodeVisit visit) {
 
         // Make sure the user performing that action has admin rights
-        validateByRole(visit, SystemRoleType.ADMIN);
+        validateByRole(visit, SystemRoleType.Admin);
 
         return getAccountDao().getOrCreateAccount(naasAccount,
                 getNaasConfig().getNodeId(), getAdminAccount().getId());
 
     }
-
-    /*
-     * 
-     * 
-     * Setters
-     */
 
     public void setNotificationHelper(NotificationHelper notificationHelper) {
         this.notificationHelper = notificationHelper;

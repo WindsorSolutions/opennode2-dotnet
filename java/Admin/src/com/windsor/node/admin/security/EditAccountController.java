@@ -48,7 +48,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 import org.springframework.web.servlet.view.RedirectView;
 
-import com.windsor.node.BaseSimpleFormController;
 import com.windsor.node.admin.editor.SystemRoleTypeEditor;
 import com.windsor.node.admin.util.AdminConstants;
 import com.windsor.node.admin.util.SideBarUtils;
@@ -60,7 +59,7 @@ import com.windsor.node.common.domain.UserAccount;
 import com.windsor.node.common.service.admin.AccountService;
 import com.windsor.node.common.service.admin.FlowService;
 
-public class EditAccountController extends BaseSimpleFormController implements
+public class EditAccountController extends BaseSecurityFormController implements
         Controller, InitializingBean {
 
     private AccountService accountService;
@@ -130,13 +129,16 @@ public class EditAccountController extends BaseSimpleFormController implements
 
                 accountService.update(account, visit);
 
-                logger.debug(AdminConstants.RETURNING_SUCCESS_VIEW);
-
                 if (StringUtils.isNotBlank(ServletRequestUtils
                         .getStringParameter(request, "savepol"))) {
+
                     logger.debug("Returning policy view");
                     view = new ModelAndView(new RedirectView(
                             "policy-edit.htm?id=" + account.getNaasUserName()));
+
+                } else {
+
+                    logger.debug(AdminConstants.RETURNING_SUCCESS_VIEW);
                 }
 
             }
@@ -149,9 +151,8 @@ public class EditAccountController extends BaseSimpleFormController implements
 
             request.setAttribute(AdminConstants.COMMAND_KEY, account);
 
-            view = new ModelAndView(getFormView(),
-                    AdminConstants.MODEL_KEY, getReferenceData(request,
-                            visit));
+            view = new ModelAndView(getFormView(), AdminConstants.MODEL_KEY,
+                    getReferenceData(request, visit));
 
         }
 
@@ -168,10 +169,11 @@ public class EditAccountController extends BaseSimpleFormController implements
         model.put(AdminConstants.TAB_KEY, SiteTabUtils.TAB_SECURITY);
 
         // set the side bar
-        model.put(AdminConstants.BARS_KEY, SideBarUtils.getSecurityBars(request, 0));
+        model.put(AdminConstants.BARS_KEY, SideBarUtils.getSecurityBars(
+                request, 0, showManageUserRequests));
 
         // sys roles
-        model.put("sysRoles", SystemRoleType.getEnumList());
+        model.put("sysRoles", SystemRoleType.values());
 
         // local node id
         model.put("nodeId", accountService.getLocalNodeId());
@@ -190,8 +192,8 @@ public class EditAccountController extends BaseSimpleFormController implements
         }
 
         Map modelHolder = new HashMap();
-        modelHolder.put(AdminConstants.MODEL_KEY, getReferenceData(
-                request, visit));
+        modelHolder.put(AdminConstants.MODEL_KEY, getReferenceData(request,
+                visit));
         return modelHolder;
 
     }
@@ -209,21 +211,22 @@ public class EditAccountController extends BaseSimpleFormController implements
         String accountId = ServletRequestUtils
                 .getStringParameter(request, "id");
 
-        UserAccount account = new UserAccount();
+        UserAccount account = null;
 
         if (StringUtils.isNotBlank(accountId)) {
 
             account = accountService.getByAccountId(accountId, visit);
 
-            if (account != null) {
+            if (account == null) {
 
-                UserAccount modifiedBy = accountService.getByAccountId(account
-                        .getModifiedById(), visit);
+                account = new UserAccount();
+            }
 
-                if (modifiedBy != null) {
-                    account.setModifiedById(modifiedBy.getNaasUserName());
-                }
+            UserAccount modifiedBy = accountService.getByAccountId(account
+                    .getModifiedById(), visit);
 
+            if (modifiedBy != null) {
+                account.setModifiedById(modifiedBy.getNaasUserName());
             }
         }
 

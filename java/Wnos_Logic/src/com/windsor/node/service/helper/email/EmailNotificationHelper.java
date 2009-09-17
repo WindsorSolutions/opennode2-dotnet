@@ -592,7 +592,7 @@ public class EmailNotificationHelper implements InitializingBean,
         Map data = new HashMap();
 
         data.put(ARG_TRANID, transaction.getNetworkId());
-        data.put(ARG_STATUS, transaction.getStatus().getStatus().getName());
+        data.put(ARG_STATUS, transaction.getStatus().getStatus().name());
         data.put(ARG_FLOWID, dataFlowName);
 
         logData(data);

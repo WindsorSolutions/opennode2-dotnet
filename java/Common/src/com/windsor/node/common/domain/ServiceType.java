@@ -31,40 +31,76 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.windsor.node.common.domain;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+/**
+ * We take this non-standard approach to a Java 5 enum name for backward
+ * compatilbility with earlier versions based on
+ * org.apache.commons.lang.enums.Enum.
+ * 
+ * @author jniski
+ * 
+ */
+public enum ServiceType {
 
-import org.apache.commons.lang.enums.ValuedEnum;
+    NONE("None"), QUERY("Query"), SOLICIT("Solicit"), SUBMIT("Submit"), NOTIFY(
+            "Notify"), EXECUTE("Execute"), QUERY_OR_SOLICIT("QueryOrSolicit"), QUERY_OR_SOLICIT_OR_EXECUTE(
+            "QueryOrSolicitOrExecute"), TASK("Task");
 
-public final class ServiceType extends ValuedEnum {
+    private static final long serialVersionUID = 2;
 
-    public static final ServiceType NONE = new ServiceType("None", 0x00);
-    public static final ServiceType QUERY = new ServiceType("Query", 0x02);
-    public static final ServiceType SOLICIT = new ServiceType("Solicit", 0x04);
-    public static final ServiceType SUBMIT = new ServiceType("Submit", 0x08);
-    public static final ServiceType NOTIFY = new ServiceType("Notify", 0x10);
-    public static final ServiceType EXECUTE = new ServiceType("Execute", 0x20);
-    public static final ServiceType QUERY_OR_SOLICIT = new ServiceType(
-            "QueryOrSolicit", 0x40);
-    public static final ServiceType QUERY_OR_SOLICIT_OR_EXECUTE = new ServiceType(
-            "QueryOrSolicitOrExecute", 0x80);
+    private String name;
 
-    private static final long serialVersionUID = 1;
-
-    private ServiceType(String s, int i) {
-        super(s, i);
+    private ServiceType(String typeName) {
+        this.name = typeName;
     }
 
-    public static Map getEnumMap() {
-        return getEnumMap(ServiceType.class);
+    @Override
+    public String toString() {
+        return this.name;
     }
 
-    public static List getEnumList() {
-        return getEnumList(ServiceType.class);
+    public static ServiceType fromString(String s) {
+
+        ServiceType serviceType = null;
+
+        if (s.equalsIgnoreCase(NONE.toString())) {
+
+            serviceType = NONE;
+
+        } else if (s.equalsIgnoreCase(QUERY.toString())) {
+
+            serviceType = QUERY;
+
+        } else if (s.equalsIgnoreCase(SOLICIT.toString())) {
+
+            serviceType = SOLICIT;
+
+        } else if (s.equalsIgnoreCase(SUBMIT.toString())) {
+
+            serviceType = SUBMIT;
+
+        } else if (s.equalsIgnoreCase(NOTIFY.toString())) {
+
+            serviceType = NOTIFY;
+
+        } else if (s.equalsIgnoreCase(EXECUTE.toString())) {
+
+            serviceType = EXECUTE;
+
+        } else if (s.equalsIgnoreCase(QUERY_OR_SOLICIT.toString())) {
+
+            serviceType = QUERY_OR_SOLICIT;
+
+        } else if (s.equalsIgnoreCase(QUERY_OR_SOLICIT_OR_EXECUTE.toString())) {
+
+            serviceType = QUERY_OR_SOLICIT_OR_EXECUTE;
+
+        } else if (s.equalsIgnoreCase(TASK.toString())) {
+
+            serviceType = TASK;
+
+        }
+
+        return serviceType;
     }
 
-    public static Iterator iterator() {
-        return iterator(ServiceType.class);
-    }
 }

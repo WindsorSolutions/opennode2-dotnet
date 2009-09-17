@@ -8,6 +8,7 @@
 	<bean name="/security.htm"
 		class="com.windsor.node.admin.security.SecurityController">
 		<property name="accountService" ref="accountService" />
+        <property name="showManageUserRequests" ref="showManageUserRequests" />
 	</bean>
 
 	<bean name="/account-new.htm"
@@ -17,6 +18,7 @@
 			<bean
 				class="com.windsor.node.admin.valid.AccountRequestValidator" />
 		</property>
+        <property name="showManageUserRequests" ref="showManageUserRequests" />
 		<property name="successView" value="security.htm?bi=0" />
 	</bean>
 
@@ -28,6 +30,7 @@
 			<bean
 				class="com.windsor.node.admin.valid.SystemAccountValidator" />
 		</property>
+        <property name="showManageUserRequests" ref="showManageUserRequests" />
 		<property name="successView" value="security.htm?bi=0" />
 	</bean>
 	
@@ -35,14 +38,23 @@
 		class="com.windsor.node.admin.security.EditPolicyController">
 		<property name="accountService" ref="accountService" />
 		<property name="flowService" ref="flowService" />
+        <property name="showManageUserRequests" ref="showManageUserRequests" />
 		<property name="successView" value="security.htm?bi=1" />
 	</bean>
-<!--
-    <bean name="/user-requests.htm"
-        class="com.windsor.node.admin.security.EditPolicyController">
+    
+    <bean name="/authrequest-manage.htm"
+        class="com.windsor.node.admin.security.AuthRequestController">
         <property name="accountService" ref="accountService" />
-        <property name="flowService" ref="flowService" />
-        <property name="successView" value="security.htm?bi=1" />
+        <property name="flowSecurityService" ref="flowSecurityService" />
     </bean>
--->
+    
+    <bean name="/authrequest-submit.htm"
+        class="com.windsor.node.admin.security.AuthRequestFormController">
+        <property name="accountService" ref="accountService" />
+        <property name="flowSecurityService" ref="flowSecurityService" />
+        <property name="showManageUserRequests" ref="showManageUserRequests" />
+        <property name="formView" value="authrequest-manage.htm" />
+        <property name="successView" value="authrequest-manage.htm" />
+    </bean>
+
 </beans>

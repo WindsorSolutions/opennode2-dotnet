@@ -33,7 +33,7 @@ package com.windsor.node.data.dao;
 
 import java.util.List;
 
-import com.windsor.node.common.domain.UserAccessPolicy;
+import com.windsor.node.common.domain.flowsecurity.UserAccessPolicy;
 
 public interface UserAccessPolicyDao extends DeletableDao {
 
@@ -41,7 +41,7 @@ public interface UserAccessPolicyDao extends DeletableDao {
 
     UserAccessPolicy get(String id);
 
-    List getByUserAccountId(String naasAccount);
+    List<UserAccessPolicy> getByUserAccountId(String naasAccount);
 
     void deletePoliciesByAccountId(String id);
 }

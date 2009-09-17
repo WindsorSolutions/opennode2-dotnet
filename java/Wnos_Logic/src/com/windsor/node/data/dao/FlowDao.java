@@ -47,4 +47,5 @@ public interface FlowDao extends DeletableDao, ListableDao {
 
     List<DataFlow> getSecuredFlows();
 
+    List<DataFlow> getUnsecuredFlows();
 }

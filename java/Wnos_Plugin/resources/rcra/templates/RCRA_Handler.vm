@@ -32,14 +32,12 @@ $helper.print("handlerQuery: $handlerQuery")
         <value>$rcraInfoStateCode</value>
         </Property>
     </Header>
-<Payload Operation=$payloadOperation>
+<Payload Operation="$payloadOperation">
 #end#end##if($makeHeader)
 <HazardousWasteHandlerSubmission xmlns="http://www.exchangenetwork.net/schema/RCRA/4" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.exchangenetwork.net/schema/RCRA/4 http://www.exchangenetwork.net/schema/RCRA/4/0/RCRA_HazardousWasteHandlerSubmission_v4.0.xsd">
-#foreach($handlerId in $helper.getList($handlerQuery, "handler_id"))
+#foreach($handlerId in $helper.getList($handlerQuery, "handler_id"))#set ($handlerCount = $helper.getObject("SELECT count(*) AS ROWCOUNT FROM RCRA_HD_HBASIC H JOIN RCRA_HD_HANDLER HH ON H.PK_GUID = HH.FK_GUID WHERE HANDLER_ID = ? ", $handlerId))#if($handlerCount.get("rowcount") > 0)
     <FacilitySubmission>
-#if ($velocityCount % 500 == 0)
-$helper.print($velocityCount)
-$helper.printElapsedTime()
+#if ($velocityCount % 500 == 0)$helper.print($velocityCount)$helper.printElapsedTime()
 #end
 #set ($totalRecCount = $velocityCount)
 #set ($hbasic = $helper.getObject("SELECT * FROM RCRA_HD_HBASIC WHERE HANDLER_ID = ? ", $handlerId))
@@ -143,8 +141,8 @@ $helper.printElapsedTime()
 #if($handler.get("mail_zip"))
                 <MailingAddressZIPCode>$handler.get("mail_zip")</MailingAddressZIPCode>
 #end
-#end
             </MailingAddress>
+#end
 #if(($handler.get("contact_first_name"))||($handler.get("contact_last_name"))||($handler.get("contact_org_name")||($handler.get("contact_street1"))||($handler.get("contact_city"))||($handler.get("contact_state"))||($handler.get("contact_zip"))))
             <ContactAddress>
 #if(($handler.get("contact_first_name"))||($handler.get("contact_last_name"))||($handler.get("contact_org_name")))
@@ -315,20 +313,20 @@ $helper.printElapsedTime()
 #if(($handler.get("state_waste_generator")))
             <StateWasteGenerator>
 #if($handler.get("state_waste_generator"))
-                <WasteGeneratorOwnerName>$handler.get("state_waste_generator")</WasteGeneratorOwnerName>
+                <WasteGeneratorOwnerName>$handler.get("state_waste_generator_owner")</WasteGeneratorOwnerName>
 #end
 #if($handler.get("state_waste_generator_owner"))
-                <WasteGeneratorStatusCode>$handler.get("state_waste_generator_owner")</WasteGeneratorStatusCode>
+                <WasteGeneratorStatusCode>$handler.get("state_waste_generator")</WasteGeneratorStatusCode>
 #end
             </StateWasteGenerator>
 #end
 #if(($handler.get("fed_waste_generator")))
             <FederalWasteGenerator>
 #if($handler.get("fed_waste_generator"))
-                <WasteGeneratorOwnerName>$handler.get("fed_waste_generator")</WasteGeneratorOwnerName>
+                <WasteGeneratorOwnerName>$handler.get("fed_waste_generator_owner")</WasteGeneratorOwnerName>
 #end
 #if($handler.get("fed_waste_generator_owner"))
-                <WasteGeneratorStatusCode>$handler.get("fed_waste_generator_owner")</WasteGeneratorStatusCode>
+                <WasteGeneratorStatusCode>$handler.get("fed_waste_generator")</WasteGeneratorStatusCode>
 #end
             </FederalWasteGenerator>
 #end
@@ -563,7 +561,7 @@ $helper.printElapsedTime()
         </OtherID>
 #end
     </FacilitySubmission>
-#end
+#end#end##if($handlerCount.get("rowcount") > 0)
 </HazardousWasteHandlerSubmission>
 #if($makeHeader)#if($makeHeader == "true" || $makeHeader == "TRUE")
 </Payload>

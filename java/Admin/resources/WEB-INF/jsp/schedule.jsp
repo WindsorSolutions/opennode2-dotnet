@@ -41,24 +41,24 @@
 					<td width="5%" align="center">
 					<c:choose>
 						<c:when test="${schedule.executeStatus.name == 'Sucesss'}">
-							<img title="OK" src="img/flag_green.gif" alt="OK" align="absmiddle" style="border-width: 0px;" />
+							<img title="OK" src="img/flag_green.gif" alt="OK" align="middle" style="border-width: 0px;" />
 						</c:when>
 						<c:when test="${schedule.executeStatus.name == 'Running'}">
-							<img title="RUNNING" src="img/flag_white.gif" alt="RUNNING" align="absmiddle" style="border-width: 0px;" />
+							<img title="RUNNING" src="img/flag_white.gif" alt="RUNNING" align="middle" style="border-width: 0px;" />
 						</c:when>
 						<c:otherwise>
-							<img title="ERROR" src="img/flag_red.gif" alt="ERROR" align="absmiddle" style="border-width: 0px;"  />
+							<img title="ERROR" src="img/flag_red.gif" alt="ERROR" align="middle" style="border-width: 0px;"  />
 						</c:otherwise>
 					</c:choose>
 					</td>
 
-					<td width="90%" nowrap>
+					<td width="90%" nowrap="nowrap">
 						<strong><c:out value="${schedule.name}" /></strong>
 					</td>
 
 					<td width="5%" align="right">
 						<input type="image" title="Edit"
-						src="img/action_go.gif" alt="Edit" align="absmiddle"
+						src="img/action_go.gif" alt="Edit" align="middle"
 						style="border-width: 0px;"
 						onclick="location.href='schedule-edit.htm?id=<c:out value="${schedule.id}" />'" />
 					</td>

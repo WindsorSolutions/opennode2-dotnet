@@ -44,7 +44,7 @@ public class SystemRoleTypeEditor extends ClassEditor {
         } else {
 
             try {
-                setValue(SystemRoleType.getEnumMap().get(text));
+                setValue(SystemRoleType.valueOf(text));
             } catch (Exception ex) {
                 throw new IllegalArgumentException(
                         "Value could not be converted: " + text);
@@ -58,7 +58,7 @@ public class SystemRoleTypeEditor extends ClassEditor {
         if (value == null) {
             return null;
         } else {
-            return value.getName();
+            return value.name();
         }
     }
 }

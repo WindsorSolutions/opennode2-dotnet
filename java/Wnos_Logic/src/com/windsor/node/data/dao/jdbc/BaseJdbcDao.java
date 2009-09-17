@@ -290,7 +290,19 @@ public class BaseJdbcDao extends JdbcDaoSupport {
     protected static boolean containsColumnNamed(ResultSet rs, String columnName)
             throws SQLException {
 
-        return getColumnNames(rs).contains(columnName);
+        boolean b = false;
+
+        List<String> columnNames = getColumnNames(rs);
+
+        /* coddle the non-case-sensitive db platforms... */
+        if (columnNames.contains(columnName)
+                || columnNames.contains(columnName.toUpperCase())
+                || columnNames.contains(columnName.toLowerCase())) {
+
+            b = true;
+        }
+
+        return b;
 
     }
 

@@ -11,11 +11,6 @@
         <property name="authenticationHelper" ref="authHelper" />        
         <property name="userManagerHelper" ref="usrMgrHelper" />
         <property name="policyDao" ref="policyDao" />
-        <!-- properties inherited from BaseService -->
-        <property name="activityDao" ref="activityDao" />
-        <property name="accountDao" ref="accountDao" />
-        <property name="naasConfig" ref="naasConfig" />
-        <property name="nosConfig" ref="nosConfig" />
     </bean>
 
 </beans>

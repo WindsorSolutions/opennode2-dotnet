@@ -40,7 +40,7 @@
 								<td width="5%" align="right">
 									<input type="image"
 										title="Edit" src="img/action_go.gif" alt="Edit Exchange"
-										align="absmiddle" style="border-width: 0px;"
+										align="middle" style="border-width: 0px;"
 										onclick="location.href='flow-edit.htm?id=<c:out value="${flow.id}" />'" />
 								</td>
 
@@ -54,16 +54,16 @@
 								</c:choose>">
 								
 								<td width="2%"></td>
-								<td nowrap width="93%">
+								<td nowrap="nowrap" width="93%">
 								    <img alt="" src="img/icon_world_dynamic.gif"
 									   style="border: 0; vertical-align: middle; padding-right: 3px;" />
 									<strong><c:out value="${srv.name}" /></strong>&nbsp;
-									(<c:out value="${srv.type.name}" /><c:if test="${srv.active == false}">&nbsp;[disabled]</c:if>)
+									(<c:out value="${srv.type}" /><c:if test="${srv.active == false}">&nbsp;[disabled]</c:if>)
 								</td>
 								<td width="5%" align="right">
 								    <input type="image"
 										title="Edit Service" src="img/action_go.gif" alt="Edit Service"
-										align="absmiddle" style="border-width: 0px;"
+										align="middle" style="border-width: 0px;"
 										onclick="location.href='service-edit.htm?id=<c:out value="${srv.id}" />'" />
 								</td>
 							</tr>

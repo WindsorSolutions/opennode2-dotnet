@@ -23,26 +23,29 @@
 
 
 			<tr>
-				<td class="label" width="5%" nowrap><img alt=""
+				<td class="label" width="5%" nowrap="nowrap"><img alt=""
 					src="img/page_user_dark.gif"
 					style="border: 0; vertical-align: middle; padding-right: 3px;" /></td>
-				<td class="ctrl" width="95%"><spring:bind path="command.account.naasUserName">
-					<c:out value="${status.value}" />
-				</spring:bind> <spring:bind path="command.account.naasUserName">
-					<input type="hidden" name="<c:out value="${status.expression}" />"
-						value="<c:out value="${status.value}" />" />
-				</spring:bind></td>
+				<td class="ctrl" width="95%">
+					<spring:bind path="command.account.naasUserName">
+						<c:out value="${status.value}" />
+					</spring:bind> 
+					<spring:bind path="command.account.naasUserName">
+						<input type="hidden" name="<c:out value="${status.expression}" />"
+							value="<c:out value="${status.value}" />" />
+					</spring:bind>
+				</td>
 			</tr>
 
 			<tr>
-				<td class="label" width="5%" nowrap>Affiliate:</td>
+				<td class="label" width="5%" nowrap="nowrap">Affiliate:</td>
 				<td class="ctrl" width="95%"><c:out
 					value="${command.account.affiliationCode}" /></td>
 			</tr>
 
 
 			<tr>
-				<td class="label" style="width: 20%;" nowrap>Flows&nbsp;Access:</td>
+				<td class="label" style="width: 20%;" nowrap="nowrap">Flows&nbsp;Access:</td>
 				<td class="ctrl"><div><img align="left" alt="" src="img/icon_padlock.gif"
 					style="border: 0; vertical-align: middle; padding-right: 3px;" /><fmt:message key="secPolicyEditProtectedInfo" /></div>
 				<table id="formTable" width="100%" cellpadding="2" cellspacing="0">
@@ -54,7 +57,7 @@
 							class="<c:choose><c:when test="${status.index % 2 == 0}">rowOdd</c:when>
 									<c:otherwise>rowEven</c:otherwise></c:choose>">
 
-							<td width="10" nowrap><c:choose>
+							<td width="10" nowrap="nowrap"><c:choose>
 								<c:when test="${ass.flowProtected == true}">
 									<img
 										alt="Protected flow: requires a policy in addition to the NAAS token"
@@ -66,7 +69,7 @@
 								</c:otherwise>
 							</c:choose></td>
 
-							<td nowrap><c:out value="${ass.label}" /></td>
+							<td nowrap="nowrap"><c:out value="${ass.label}" /></td>
 							<td align="right"><input type="checkbox" name="selectedFlow"
 								value="<c:out value="${ass.flowId}" />"
 								<c:if test="${ass.assigned == true}">checked</c:if>

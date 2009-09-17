@@ -329,13 +329,11 @@ public abstract class BaseRcraXmlPlugin extends BaseWnosPlugin {
             debug("rcraInfoUserId: " + rcraInfoUserId);
         }
         /* optional - header elements */
-
-        author = (String) getConfigValueAsString(ARG_HEADER_AUTHOR, doHeader);
-        debug("author: " + author);
-
         contactInfo = (String) getConfigValueAsString(ARG_HEADER_CONTACT_INFO,
                 doHeader);
         debug("contactInfo: " + contactInfo);
+
+        author = contactInfo;
 
         notification = (String) getConfigValueAsString(ARG_HEADER_NOTIFS,
                 doHeader);

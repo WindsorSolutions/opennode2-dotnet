@@ -99,9 +99,9 @@ public class WqxStatusDao extends BaseJdbcDao {
 
     private static final String STATUS_PENDING_OR_PROCESSING = L_PAREN
             + L_PAREN + STATUS + EQUALS + APOS
-            + CommonTransactionStatusCode.PENDING.getName() + APOS + R_PAREN
-            + OR + L_PAREN + STATUS + EQUALS + APOS
-            + CommonTransactionStatusCode.PROCESSING.getName() + APOS + R_PAREN
+            + CommonTransactionStatusCode.PENDING.name() + APOS + R_PAREN + OR
+            + L_PAREN + STATUS + EQUALS + APOS
+            + CommonTransactionStatusCode.PROCESSING.name() + APOS + R_PAREN
             + R_PAREN;
 
     private static final String SQL_RESET_STATUS = UPDATE + TABLE_NAME + SET
@@ -193,7 +193,7 @@ public class WqxStatusDao extends BaseJdbcDao {
         Object[] args = new Object[] { id, orgPk,
                 new Timestamp(System.currentTimeMillis()),
                 new Timestamp(System.currentTimeMillis()),
-                operationType.getName(), localTransactionId, status.getName() };
+                operationType.getName(), localTransactionId, status.name() };
 
         logger.debug("args: ");
         for (int i = 0; i < args.length; i++) {
@@ -268,7 +268,7 @@ public class WqxStatusDao extends BaseJdbcDao {
 
         logger.debug("sql: " + SQL_UPDATE_STATUS);
         getJdbcTemplate().update(SQL_UPDATE_STATUS,
-                new Object[] { newStatus.getName(), tranId });
+                new Object[] { newStatus.name(), tranId });
     }
 
     /**

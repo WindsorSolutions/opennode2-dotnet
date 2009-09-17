@@ -60,7 +60,7 @@ import com.windsor.node.service.helper.client.DualEndpointNodeClientFactory;
 
 public class PartnerDataProcessor implements InitializingBean {
 
-    public final Logger logger = Logger.getLogger(this.getClass());
+    private Logger logger = Logger.getLogger(this.getClass());
 
     private PartnerDao partnerDao;
     private DualEndpointNodeClientFactory clientFactory;
@@ -196,10 +196,16 @@ public class PartnerDataProcessor implements InitializingBean {
 
         } catch (Exception ex) {
 
-            logger.error("Get And Save Data: " + ex.getMessage(), ex);
+            /*
+             * Avoid trying to get the exception itself, as the type may not be
+             * on the classpath - who knows what the partner's throwing? a
+             * ClassNotFoundException will only mask the real error message -
+             * even with our own v20 endpoint!
+             */
+            logger.error("Get And Save Data: " + ex.getMessage());
 
             throw new RuntimeException("Error while retrieving source data: "
-                    + ex.getMessage(), ex);
+                    + ex.getMessage());
         }
     }
 
@@ -267,7 +273,7 @@ public class PartnerDataProcessor implements InitializingBean {
             PartnerIdentity partner, String dataFlowName) {
 
         if (transaction == null) {
-            throw new RuntimeException("Null transactionId");
+            throw new RuntimeException("Null transaction");
         }
 
         if (partner == null) {
@@ -304,22 +310,29 @@ public class PartnerDataProcessor implements InitializingBean {
                     .makeAndConfigure(partner);
 
             info.add(new ActivityEntry("Submitting..."));
-            transaction = clientService.submit(transaction);
+            NodeTransaction resultTransaction = clientService
+                    .submit(transaction);
 
             info.add(new ActivityEntry("Updating network transaction Id: "
-                    + transaction.getNetworkId()));
+                    + resultTransaction.getNetworkId()));
 
-            transactionDao.updateNetworkId(transaction.getId(), transaction
-                    .getNetworkId());
+            transactionDao.updateNetworkId(transaction.getId(),
+                    resultTransaction.getNetworkId());
 
             return info;
 
         } catch (Exception ex) {
 
-            logger.error("Get And Send Data: " + ex.getMessage(), ex);
+            /*
+             * Avoid trying to get the exception itself, as the type may not be
+             * on the classpath - who knows what the partner's throwing? a
+             * ClassNotFoundException will only mask the real error message -
+             * even with our own v20 endpoint!
+             */
+            logger.error("Get And Send Data: " + ex.getMessage());
 
             throw new RuntimeException("Error while retrieving source data: "
-                    + ex.getMessage(), ex);
+                    + ex.getMessage());
         }
     }
 

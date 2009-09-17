@@ -21,16 +21,16 @@
 								<img style="border: 0; vertical-align: middle; padding-right: 3px;" 
 								<c:choose>
 									
-									<c:when test="${activity.type.name == 'AdminAuth'}">
+									<c:when test="${activity.type == 'AdminAuth'}">
 										title="Admin authentication" alt="Admin authentication" src="img/flag_blue.gif" 
 									</c:when>
-									<c:when test="${activity.type.name == 'ServiceAuth'}">
+									<c:when test="${activity.type == 'ServiceAuth'}">
 										title="Service Authentication" alt="Service Authentication" src="img/flag_orange.gif" 
 									</c:when>
-									<c:when test="${activity.type.name == 'Audit'}">
+									<c:when test="${activity.type == 'Audit'}">
 										title="Admin management audit" alt="Admin management audit" src="img/flag_green.gif" 
 									</c:when>
-									<c:when test="${activity.type.name == 'Error'}">
+									<c:when test="${activity.type == 'Error'}">
 										title="Error" alt="Error" src="img/flag_red.gif" 
 									</c:when>
 									<c:otherwise>
@@ -40,13 +40,13 @@
 							/>
 								
 								</td>
-	                            <td style="width:120px;white-space:nowrap;"><c:out value="${activity.type.name}" />
+	                            <td style="width:120px;white-space:nowrap;"><c:out value="${activity.type}" />
 	                            <c:if test="${activity.webMethod != null }">&nbsp;(<c:out value="${activity.webMethod}" />)</c:if></td>
 								<td  style="width:140px;white-space:nowrap;"><fmt:formatDate type="both" dateStyle="short" timeStyle="short" 
 									value="${activity.modifiedOn}" /></td>
-								<td nowrap><c:out value="${activity.userName}" /> (<c:out value="${activity.ip}" />)</td>
+								<td nowrap="nowrap"><c:out value="${activity.userName}" /> (<c:out value="${activity.ip}" />)</td>
 								<td align="center" style="white-space:nowrap;"><c:out value="${activity.flowName}" /></td>
-	                            <td width="10" align="right" nowrap>
+	                            <td width="10" align="right" nowrap="nowrap">
 	                                <c:if test="${activity.transactionId != null }">
 		                                <a href="tran.htm?id=<c:out value="${activity.transactionId}" />">
 		                                <img src="img/text_view.gif" alt="View Transaction Detail" border="0" />

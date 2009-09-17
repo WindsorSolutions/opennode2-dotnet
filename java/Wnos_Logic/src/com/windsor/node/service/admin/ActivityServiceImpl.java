@@ -59,7 +59,7 @@ public class ActivityServiceImpl extends BaseService implements
      */
     public DashboardContent getDashboardContent(NodeVisit visit) {
         // Make sure the user performing that action has program rights
-        validateByRole(visit, SystemRoleType.PROGRAM);
+        validateByRole(visit, SystemRoleType.Program);
 
         return getActivityDao().getDashboardContent();
     }
@@ -70,7 +70,7 @@ public class ActivityServiceImpl extends BaseService implements
     public ActivitySearchLookups getLookups(NodeVisit visit) {
 
         // Make sure the user performing that action has program rights
-        validateByRole(visit, SystemRoleType.PROGRAM);
+        validateByRole(visit, SystemRoleType.Program);
 
         return getActivityDao().getLookups();
     }
@@ -86,7 +86,7 @@ public class ActivityServiceImpl extends BaseService implements
         }
 
         // Make sure the user performing that action has program rights
-        validateByRole(visit, SystemRoleType.PROGRAM);
+        validateByRole(visit, SystemRoleType.Program);
 
         return getActivityDao().get(activityId);
     }
@@ -108,7 +108,7 @@ public class ActivityServiceImpl extends BaseService implements
         }
 
         // Make sure the user performing that action has program rights
-        validateByRole(visit, SystemRoleType.PROGRAM);
+        validateByRole(visit, SystemRoleType.Program);
 
         return getActivityDao().search(instance);
     }

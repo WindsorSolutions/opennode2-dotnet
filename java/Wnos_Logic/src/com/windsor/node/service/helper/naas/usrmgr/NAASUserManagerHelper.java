@@ -35,9 +35,11 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.axis.AxisFault;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
+import org.w3c.dom.Element;
 
 import com.windsor.node.common.domain.NaasUserInfo;
 import com.windsor.node.conf.NAASConfig;
@@ -124,17 +126,19 @@ public class NAASUserManagerHelper implements UserManagerHelper,
             throw new IllegalArgumentException("newPassword not set");
         }
 
+        StringBuffer result = new StringBuffer();
+
         try {
 
             logger.debug("Executing changePwd");
 
-            String result = proxy.changePwd(username, password, newPassword);
+            result.append(proxy.changePwd(username, password, newPassword));
 
             logger.debug("Result: " + result);
 
         } catch (Exception ex) {
             throw getCustomException("Error while executing changePwd: "
-                    + ex.getMessage(), ex);
+                    + result.toString() + ": " + ex.getMessage(), ex);
         }
 
     }
@@ -198,7 +202,7 @@ public class NAASUserManagerHelper implements UserManagerHelper,
         }
     }
 
-    private BigInteger makeMig(int val) {
+    private BigInteger makeBig(int val) {
         return BigInteger.valueOf(val);
     }
 
@@ -209,7 +213,7 @@ public class NAASUserManagerHelper implements UserManagerHelper,
 
         try {
 
-            logger.debug("Executing getUserList");
+            logger.debug("Executing getUsers");
 
             List<NaasUserInfo> list = new ArrayList<NaasUserInfo>();
             boolean hasMore = true;
@@ -221,7 +225,7 @@ public class NAASUserManagerHelper implements UserManagerHelper,
                 UserInfo[] info = proxy.getUserList(naasConfig
                         .getAdminAccount().getUsername(), naasConfig
                         .getAdminAccount().getPassword(), "", "",
-                        makeMig(recordCounter), makeMig(chunkSize));
+                        makeBig(recordCounter), makeBig(chunkSize));
 
                 if (info == null || info.length == 0) {
                     hasMore = false;
@@ -284,9 +288,40 @@ public class NAASUserManagerHelper implements UserManagerHelper,
     }
 
     private RuntimeException getCustomException(String message, Exception ex) {
-        String result = message + ": " + ex.getMessage();
+
+        StringBuffer result = new StringBuffer();
+
+        if (ex instanceof AxisFault) {
+
+            AxisFault fault = (AxisFault) ex;
+            result.append(fault.getFaultString() + ": ");
+
+            for (Element e : fault.getFaultDetails()) {
+
+                result.append(e.getTextContent());
+
+            }
+
+        } else if (ex instanceof org.springframework.mail.MailSendException
+                || ex instanceof javax.mail.SendFailedException
+                || ex instanceof ClassNotFoundException) {
+
+            result
+                    .append((ex.getMessage() + ": " + ex.getCause()
+                            .getMessage()));
+
+        } else {
+
+            result.append(message);
+        }
+
         logger.error(result, ex);
-        return new RuntimeException(result, ex);
+        /*
+         * we don't throw the original Exception, as its type may not be on
+         * NodeAdmin's classpath, in which case the message would get mangled by
+         * a ClassNotFoundException
+         */
+        return new RuntimeException(result.toString());
     }
 
     public void setNaasConfig(NAASConfig naasConfig) {

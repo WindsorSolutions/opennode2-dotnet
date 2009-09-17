@@ -30,7 +30,11 @@
 	<classpathentry kind="lib" path="/Resources/lib/Admin/log4j-1.2.15.jar"/>
 	<classpathentry kind="lib" path="/Resources/lib/Admin/rome-1.0RC1.jar"/>
 	<classpathentry kind="lib" path="/Resources/lib/Admin/spring-2.5.5.jar"/>
-	<classpathentry kind="lib" path="/Resources/lib/Admin/spring-webmvc-2.5.5.jar"/>
+	<classpathentry kind="lib" path="/Resources/lib/Admin/spring-webmvc-2.5.5.jar" sourcepath="/home/jniski/devlib/spring-framework-2.5.5/dist/spring-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/home/jniski/devlib/spring-framework-2.5.5/docs/api/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="/Resources/lib/Admin/standard-1.0.6.jar"/>
 	<classpathentry kind="lib" path="/Resources/lib/Junit3/junit.jar"/>
 	<classpathentry kind="lib" path="/Resources/lib/Admin.build_only/servlet-api.jar"/>

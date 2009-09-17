@@ -121,7 +121,7 @@ public class NodeTransactionTaskWorker extends NodeWorker implements
                 Activity logEntry = new Activity();
                 logEntry.setModifiedById(transaction.getModifiedById());
                 logEntry.setIp(getNosConfig().getLocalhostIp());
-                logEntry.setType(ActivityType.INFO);
+                logEntry.setType(ActivityType.Info);
                 logEntry.addEntry("Machine Id: " + getMachineId());
                 logEntry.setTransactionId(transaction.getId());
                 logEntry.addEntry("EN Id: " + transaction.getNetworkId());
@@ -204,7 +204,7 @@ public class NodeTransactionTaskWorker extends NodeWorker implements
         Activity logEntry = new Activity();
         logEntry.setModifiedById(transaction.getModifiedById());
         logEntry.setIp(getNosConfig().getLocalhostIp());
-        logEntry.setType(ActivityType.INFO);
+        logEntry.setType(ActivityType.Info);
         logEntry.setTransactionId(transaction.getId());
         logEntry.addEntry("Machine Id: " + getMachineId());
         logEntry.addEntry("EN Id: " + transaction.getNetworkId());
@@ -365,7 +365,7 @@ public class NodeTransactionTaskWorker extends NodeWorker implements
 
                 } else {
 
-                    logEntry.setType(ActivityType.ERROR);
+                    logEntry.setType(ActivityType.Error);
 
                     getTransactionDao().updateStatus(transaction.getId(),
                             CommonTransactionStatusCode.FAILED);
@@ -378,7 +378,7 @@ public class NodeTransactionTaskWorker extends NodeWorker implements
 
             logger.debug(ex.getMessage());
 
-            logEntry.setType(ActivityType.ERROR);
+            logEntry.setType(ActivityType.Error);
             logEntry.addEntry(makeAndDebug("Error:{0}", new Object[] { ex
                     .getMessage() }));
 

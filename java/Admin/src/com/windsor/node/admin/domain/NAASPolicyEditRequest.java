@@ -34,11 +34,14 @@ package com.windsor.node.admin.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+
+import com.windsor.node.common.domain.DomainStringStyle;
 import com.windsor.node.common.domain.UserAccount;
 
 public class NAASPolicyEditRequest {
 
-    private static final long serialVersionUID = 2;
+    private static final long serialVersionUID = 3;
 
     private List<NAASFlowPolicyInfo> flowAssignemnts; // NAASFlowPolicyInfo
     private UserAccount account;
@@ -61,6 +64,14 @@ public class NAASPolicyEditRequest {
 
     public void setAccount(UserAccount account) {
         this.account = account;
+    }
+
+    public String toString() {
+        ReflectionToStringBuilder rtsb = new ReflectionToStringBuilder(this,
+                new DomainStringStyle());
+        rtsb.setAppendStatics(false);
+        rtsb.setAppendTransients(false);
+        return rtsb.toString();
     }
 
 }

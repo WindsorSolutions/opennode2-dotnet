@@ -95,17 +95,17 @@ public class BaseService {
         logger.debug("Required  : " + minimalRole);
 
         // If admin than don't bother
-        if (!account.getRole().equals(SystemRoleType.ADMIN)) {
+        if (!account.getRole().equals(SystemRoleType.Admin)) {
 
-            logger.debug("User not an admin  : " + account.getRole().getName());
+            logger.debug("User not an admin  : " + account.getRole().name());
 
-            if (minimalRole.equals(SystemRoleType.ADMIN)) {
+            if (minimalRole.equals(SystemRoleType.Admin)) {
 
                 throw new WinNodeException(
                         "Invalid system role. Required: Admin");
 
-            } else if (minimalRole.equals(SystemRoleType.PROGRAM)
-                    && !account.getRole().equals(SystemRoleType.PROGRAM)) {
+            } else if (minimalRole.equals(SystemRoleType.Program)
+                    && !account.getRole().equals(SystemRoleType.Program)) {
 
                 throw new WinNodeException(
                         "Invalid system role. Required: Program");
