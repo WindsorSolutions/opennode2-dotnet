@@ -127,6 +127,23 @@ namespace Windsor.Commons.Spring
                 throw new ArgumentException(string.Format("Invalid SQL: {0}", sql));
             }
         }
+        public static string MakeWhereInClause<T>(IEnumerable<T> values)
+        {
+            StringBuilder sb = new StringBuilder("IN (");
+            int count = 0;
+            foreach (T value in values)
+            {
+                if (count++ > 0)
+                {
+                    sb.Append(',');
+                }
+                sb.Append('\'');
+                sb.Append(value.ToString());
+                sb.Append('\'');
+            }
+            sb.Append(")");
+            return sb.ToString();
+        }
         /// <summary>
         /// Creates parameter name based on index number
         /// </summary>

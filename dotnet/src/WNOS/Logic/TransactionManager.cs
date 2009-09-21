@@ -118,6 +118,11 @@ namespace Windsor.Node2008.WNOS.Logic
 			}
 			return null;
         }
+        public void SetNetworkIdStatus(string transactionId, CommonTransactionStatusCode statusCode,
+                                       string statusDetail)
+        {
+            _transactionDao.SetNetworkIdStatus(transactionId, statusCode, statusDetail);
+        }
         protected TransactionStatus RefreshNetworkStatus(INodeEndpointClient client, NodeTransaction nodeTransaction)
         {
             string statusDetail = null;
@@ -175,6 +180,10 @@ namespace Windsor.Node2008.WNOS.Logic
             catch (Exception)
             {
             }
+        }
+        public IList<NodeTransaction> GetOutstandingNetworkTransactions(DateTime newerThan, IEnumerable<CommonTransactionStatusCode> notOutstandingCodes)
+        {
+            return _transactionDao.GetOutstandingNetworkTransactions(newerThan, notOutstandingCodes);
         }
         public byte[] DownloadNetworkDocumentsAsZipFile(string transactionID, AdminVisit visit)
         {

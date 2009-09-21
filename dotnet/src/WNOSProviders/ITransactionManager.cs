@@ -52,6 +52,8 @@ namespace Windsor.Node2008.WNOSProviders
         /// </summary>
         void SetNetworkId(string transactionId, string networkId, EndpointVersionType networkEndpointVersion,
                           string networkEndpointUrl);
+        void SetNetworkIdStatus(string transactionId, CommonTransactionStatusCode statusCode,
+                                string statusDetail);
 
         /// <summary>
         /// Get the network id of the specified transaction, null if the tranaction is not valid, or an empty
@@ -133,5 +135,7 @@ namespace Windsor.Node2008.WNOSProviders
         void ClearRealtimeTransactionDetails(string transactionId);
 
         EndpointVersionType GetTransactionEndpointVersionType(string transactionId);
+
+        IList<NodeTransaction> GetOutstandingNetworkTransactions(DateTime newerThan, IEnumerable<CommonTransactionStatusCode> notOutstandingCodes);
     }
 }
