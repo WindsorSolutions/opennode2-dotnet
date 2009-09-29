@@ -1,0 +1,815 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<facid:FacilityDetails schemaVersion="3.0" xmlns:facid="http://www.exchangenetwork.net/schema/facilityid/3" xmlns:gml="http://www.opengis.net/gml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.exchangenetwork.net/schema/facilityid/3 http://www.windsorsolutions.biz/xsd/FACID/FacilityID/index.xsd">
+	<facid:FacilityList>
+		<facid:Facility>
+			<facid:FacilitySiteIdentity>
+				<facid:FacilitySiteIdentifier FacilitySiteIdentifierContext="ODEQ|ADDR">2515466</facid:FacilitySiteIdentifier>
+				<facid:FacilitySiteName>Wayne Inc. Manufacturing</facid:FacilitySiteName>
+				<facid:FacilitySiteType>
+					<facid:FacilitySiteTypeCode/>
+					<facid:FacilitySiteTypeCodeListIdentifier/>
+					<facid:FacilitySiteTypeName/>
+				</facid:FacilitySiteType>
+				<facid:FederalFacilityIndicator/>
+			</facid:FacilitySiteIdentity>
+			<facid:LocationAddress>
+				<facid:LocationAddressText>111 NW 2nd Ave.</facid:LocationAddressText>
+				<facid:SupplementalLocationText>Bldg 2, Ste 4523</facid:SupplementalLocationText>
+				<facid:LocalityName>Portland</facid:LocalityName>
+				<facid:StateIdentity>
+					<facid:StateCode>OR</facid:StateCode>
+					<facid:StateCodeListIdentifier/>
+					<facid:StateName>Oregon</facid:StateName>
+				</facid:StateIdentity>
+				<facid:AddressPostalCode AddressPostalCodeContext="ODEQ|ADDR">97203</facid:AddressPostalCode>
+				<facid:CountryIdentity>
+					<facid:CountryCode>USA</facid:CountryCode>
+					<facid:CountryCodeListIdentifier/>
+					<facid:CountryName>United States of America</facid:CountryName>
+				</facid:CountryIdentity>
+				<facid:CountyIdentity>
+					<facid:CountyCode>Mult</facid:CountyCode>
+					<facid:CountyCodeListIdentifier/>
+					<facid:CountyName>Multnomah</facid:CountyName>
+				</facid:CountyIdentity>
+				<facid:TribalLandName/>
+				<facid:TribalLandIndicator>N</facid:TribalLandIndicator>
+				<facid:LocationDescriptionText>Facility can be found two blocks south of Burnside.</facid:LocationDescriptionText>
+			</facid:LocationAddress>
+			<facid:MailingAddress>
+				<facid:MailingAddressText>P.O. Box 22234</facid:MailingAddressText>
+				<facid:SupplementalAddressText/>
+				<facid:MailingAddressCityName>Portland</facid:MailingAddressCityName>
+				<facid:StateIdentity>
+					<facid:StateCode>OR</facid:StateCode>
+					<facid:StateCodeListIdentifier/>
+					<facid:StateName>Oregon</facid:StateName>
+				</facid:StateIdentity>
+				<facid:AddressPostalCode AddressPostalCodeContext="ODEQ|ADDR">97203</facid:AddressPostalCode>
+				<facid:CountryIdentity>
+					<facid:CountryCode>USA</facid:CountryCode>
+					<facid:CountryCodeListIdentifier/>
+					<facid:CountryName>United States of America</facid:CountryName>
+				</facid:CountryIdentity>
+			</facid:MailingAddress>
+			<facid:CongressionalDistrictNumberCode>15</facid:CongressionalDistrictNumberCode>
+			<facid:LegislativeDistrictNumberCode>20</facid:LegislativeDistrictNumberCode>
+			<facid:HUCCode>00170900</facid:HUCCode>
+			<facid:FacilityPrimaryGeographicLocationDescription>
+				<gml:Point>
+					<gml:pos srsName="urn:ogc:def:crs:EPSG:6.6:32126" srsDimension="2">45.52398148148147 -122.6723925925926</gml:pos>
+				</gml:Point>
+				<facid:HorizontalAccuracyMeasure>
+					<facid:MeasureValue>100</facid:MeasureValue>
+					<facid:MeasureUnit>
+						<facid:MeasureUnitCode>ft</facid:MeasureUnitCode>
+						<facid:MeasureUnitCodeListIdentifier/>
+						<facid:MeasureUnitName>Feet</facid:MeasureUnitName>
+					</facid:MeasureUnit>
+					<facid:MeasurePrecisionText/>
+					<facid:ResultQualifier>
+						<facid:ResultQualifierCode/>
+						<facid:ResultQualifierCodeListIdentifier/>
+						<facid:ResultQualifierName/>
+					</facid:ResultQualifier>
+				</facid:HorizontalAccuracyMeasure>
+				<facid:HorizontalCollectionMethod>
+					<facid:MethodIdentifierCode>019</facid:MethodIdentifierCode>
+					<facid:MethodIdentifierCodeListIdentifier/>
+					<facid:MethodName>Interpolation-Photo</facid:MethodName>
+					<facid:MethodDescriptionText>The geographic coordinate determination method based on interpolation-photo.</facid:MethodDescriptionText>
+					<facid:MethodDeviationsText/>
+				</facid:HorizontalCollectionMethod>
+			</facid:FacilityPrimaryGeographicLocationDescription>
+			<facid:FacilityGeographicLocationList>
+				<facid:FacilityGeographicLocationDescription>
+					<gml:Point>
+						<gml:pos srsName="urn:ogc:def:crs:EPSG:6.6:32126" srsDimension="3">45.52398148148147 -122.6723925925926 33</gml:pos>
+					</gml:Point>
+					<facid:SourceMapScaleNumber>24000</facid:SourceMapScaleNumber>
+					<facid:HorizontalAccuracyMeasure>
+						<facid:MeasureValue>100</facid:MeasureValue>
+						<facid:MeasureUnit>
+							<facid:MeasureUnitCode>ft</facid:MeasureUnitCode>
+							<facid:MeasureUnitCodeListIdentifier/>
+							<facid:MeasureUnitName>Feet</facid:MeasureUnitName>
+						</facid:MeasureUnit>
+						<facid:MeasurePrecisionText/>
+						<facid:ResultQualifier>
+							<facid:ResultQualifierCode/>
+							<facid:ResultQualifierCodeListIdentifier/>
+							<facid:ResultQualifierName/>
+						</facid:ResultQualifier>
+					</facid:HorizontalAccuracyMeasure>
+					<facid:HorizontalCollectionMethod>
+						<facid:MethodIdentifierCode>019</facid:MethodIdentifierCode>
+						<facid:MethodIdentifierCodeListIdentifier/>
+						<facid:MethodName>Interpolation-Photo</facid:MethodName>
+						<facid:MethodDescriptionText>The geographic coordinate determination method based on interpolation-photo.</facid:MethodDescriptionText>
+						<facid:MethodDeviationsText/>
+					</facid:HorizontalCollectionMethod>
+					<facid:GeographicReferencePoint>
+						<facid:GeographicReferencePointCode>002</facid:GeographicReferencePointCode>
+						<facid:ReferencePointCodeListIdentifier/>
+						<facid:GeographicReferencePointName>Facility/Station Location - Plant Entrance (general)</facid:GeographicReferencePointName>
+					</facid:GeographicReferencePoint>
+					<facid:DataCollectionDate>2000-09-01</facid:DataCollectionDate>
+					<facid:LocationCommentsText>Facility resides on two square blocks (to the east and west of the location address).</facid:LocationCommentsText>
+					<facid:VerticalCollectionMethod>
+						<facid:MethodIdentifierCode>002</facid:MethodIdentifierCode>
+						<facid:MethodIdentifierCodeListIdentifier/>
+						<facid:MethodName>GPS Carrier Phase Kinematic Relative Position</facid:MethodName>
+						<facid:MethodDescriptionText>The geographic coordinate determination method based on GPS carrier phase kinematic relative positioning technique.</facid:MethodDescriptionText>
+						<facid:MethodDeviationsText/>
+					</facid:VerticalCollectionMethod>
+					<facid:VerificationMethod>
+						<facid:MethodIdentifierCode>007</facid:MethodIdentifierCode>
+						<facid:MethodIdentifierCodeListIdentifier/>
+						<facid:MethodName>Verified Relative to Map Features (1:24K)</facid:MethodName>
+						<facid:MethodDescriptionText>The coordinates are verified relative to map features (1:24K)</facid:MethodDescriptionText>
+						<facid:MethodDeviationsText/>
+					</facid:VerificationMethod>
+					<facid:CoordinateDataSource>
+						<facid:CoordinateDataSourceCode>041</facid:CoordinateDataSourceCode>
+						<facid:CoordinateDataSourceCodeListIdentifier/>
+						<facid:CoordinateDataSourceName>Oregon</facid:CoordinateDataSourceName>
+					</facid:CoordinateDataSource>
+				</facid:FacilityGeographicLocationDescription>
+				<facid:FacilityGeographicLocationDescription>
+					<gml:LineString>
+						<gml:posList srsName="urn:ogc:def:crs:EPSG:6.6:32126" srsDimension="3">
+									45.256 -110.45 46.46 -109.48 43.84 -109.86
+								 </gml:posList>
+					</gml:LineString>
+					<facid:SourceMapScaleNumber>24000</facid:SourceMapScaleNumber>
+					<facid:HorizontalAccuracyMeasure>
+						<facid:MeasureValue>100</facid:MeasureValue>
+						<facid:MeasureUnit>
+							<facid:MeasureUnitCode>ft</facid:MeasureUnitCode>
+							<facid:MeasureUnitCodeListIdentifier/>
+							<facid:MeasureUnitName>Feet</facid:MeasureUnitName>
+						</facid:MeasureUnit>
+						<facid:MeasurePrecisionText/>
+						<facid:ResultQualifier>
+							<facid:ResultQualifierCode/>
+							<facid:ResultQualifierCodeListIdentifier/>
+							<facid:ResultQualifierName/>
+						</facid:ResultQualifier>
+					</facid:HorizontalAccuracyMeasure>
+					<facid:HorizontalCollectionMethod>
+						<facid:MethodIdentifierCode>019</facid:MethodIdentifierCode>
+						<facid:MethodIdentifierCodeListIdentifier/>
+						<facid:MethodName>Interpolation-Photo</facid:MethodName>
+						<facid:MethodDescriptionText>The geographic coordinate determination method based on interpolation-photo.</facid:MethodDescriptionText>
+						<facid:MethodDeviationsText/>
+					</facid:HorizontalCollectionMethod>
+					<facid:GeographicReferencePoint>
+						<facid:GeographicReferencePointCode>002</facid:GeographicReferencePointCode>
+						<facid:ReferencePointCodeListIdentifier/>
+						<facid:GeographicReferencePointName>Facility/Station Location - Plant Entrance (general)</facid:GeographicReferencePointName>
+					</facid:GeographicReferencePoint>
+					<facid:DataCollectionDate>2000-09-01</facid:DataCollectionDate>
+					<facid:LocationCommentsText>Facility resides on two square blocks (to the east and west of the location address).</facid:LocationCommentsText>
+					<facid:VerticalCollectionMethod>
+						<facid:MethodIdentifierCode>002</facid:MethodIdentifierCode>
+						<facid:MethodIdentifierCodeListIdentifier/>
+						<facid:MethodName>GPS Carrier Phase Kinematic Relative Position</facid:MethodName>
+						<facid:MethodDescriptionText>The geographic coordinate determination method based on GPS carrier phase kinematic relative positioning technique.</facid:MethodDescriptionText>
+						<facid:MethodDeviationsText/>
+					</facid:VerticalCollectionMethod>
+					<facid:VerificationMethod>
+						<facid:MethodIdentifierCode>007</facid:MethodIdentifierCode>
+						<facid:MethodIdentifierCodeListIdentifier/>
+						<facid:MethodName>Verified Relative to Map Features (1:24K)</facid:MethodName>
+						<facid:MethodDescriptionText>The coordinates are verified relative to map features (1:24K)</facid:MethodDescriptionText>
+						<facid:MethodDeviationsText/>
+					</facid:VerificationMethod>
+					<facid:CoordinateDataSource>
+						<facid:CoordinateDataSourceCode>041</facid:CoordinateDataSourceCode>
+						<facid:CoordinateDataSourceCodeListIdentifier/>
+						<facid:CoordinateDataSourceName>Oregon</facid:CoordinateDataSourceName>
+					</facid:CoordinateDataSource>
+				</facid:FacilityGeographicLocationDescription>
+				<facid:FacilityGeographicLocationDescription>
+					<gml:Polygon>
+						<gml:exterior>
+							<gml:LinearRing>
+								<gml:posList srsName="urn:ogc:def:crs:EPSG:6.6:32126" srsDimension="2">
+									45.256 -110.45 46.46 -109.48 43.84 -109.86 45.256 -110.45
+									   </gml:posList>
+							</gml:LinearRing>
+						</gml:exterior>
+					</gml:Polygon>
+					<facid:SourceMapScaleNumber>24000</facid:SourceMapScaleNumber>
+					<facid:HorizontalAccuracyMeasure>
+						<facid:MeasureValue>100</facid:MeasureValue>
+						<facid:MeasureUnit>
+							<facid:MeasureUnitCode>ft</facid:MeasureUnitCode>
+							<facid:MeasureUnitCodeListIdentifier/>
+							<facid:MeasureUnitName>Feet</facid:MeasureUnitName>
+						</facid:MeasureUnit>
+						<facid:MeasurePrecisionText/>
+						<facid:ResultQualifier>
+							<facid:ResultQualifierCode/>
+							<facid:ResultQualifierCodeListIdentifier/>
+							<facid:ResultQualifierName/>
+						</facid:ResultQualifier>
+					</facid:HorizontalAccuracyMeasure>
+					<facid:HorizontalCollectionMethod>
+						<facid:MethodIdentifierCode>019</facid:MethodIdentifierCode>
+						<facid:MethodIdentifierCodeListIdentifier/>
+						<facid:MethodName>Interpolation-Photo</facid:MethodName>
+						<facid:MethodDescriptionText>The geographic coordinate determination method based on interpolation-photo.</facid:MethodDescriptionText>
+						<facid:MethodDeviationsText/>
+					</facid:HorizontalCollectionMethod>
+					<facid:GeographicReferencePoint>
+						<facid:GeographicReferencePointCode>002</facid:GeographicReferencePointCode>
+						<facid:ReferencePointCodeListIdentifier/>
+						<facid:GeographicReferencePointName>Facility/Station Location - Plant Entrance (general)</facid:GeographicReferencePointName>
+					</facid:GeographicReferencePoint>
+					<facid:DataCollectionDate>2000-09-01</facid:DataCollectionDate>
+					<facid:LocationCommentsText>Facility resides on two square blocks (to the east and west of the location address).</facid:LocationCommentsText>
+					<facid:VerticalCollectionMethod>
+						<facid:MethodIdentifierCode>002</facid:MethodIdentifierCode>
+						<facid:MethodIdentifierCodeListIdentifier/>
+						<facid:MethodName>GPS Carrier Phase Kinematic Relative Position</facid:MethodName>
+						<facid:MethodDescriptionText>The geographic coordinate determination method based on GPS carrier phase kinematic relative positioning technique.</facid:MethodDescriptionText>
+						<facid:MethodDeviationsText/>
+					</facid:VerticalCollectionMethod>
+					<facid:VerificationMethod>
+						<facid:MethodIdentifierCode>007</facid:MethodIdentifierCode>
+						<facid:MethodIdentifierCodeListIdentifier/>
+						<facid:MethodName>Verified Relative to Map Features (1:24K)</facid:MethodName>
+						<facid:MethodDescriptionText>The coordinates are verified relative to map features (1:24K)</facid:MethodDescriptionText>
+						<facid:MethodDeviationsText/>
+					</facid:VerificationMethod>
+					<facid:CoordinateDataSource>
+						<facid:CoordinateDataSourceCode>041</facid:CoordinateDataSourceCode>
+						<facid:CoordinateDataSourceCodeListIdentifier/>
+						<facid:CoordinateDataSourceName>Oregon</facid:CoordinateDataSourceName>
+					</facid:CoordinateDataSource>
+				</facid:FacilityGeographicLocationDescription>
+				<facid:FacilityGeographicLocationDescription>
+					<gml:Envelope>
+						<gml:lowerCorner srsName="urn:ogc:def:crs:EPSG:6.6:32126" srsDimension="2">45.523924 -122.673346</gml:lowerCorner>
+						<gml:upperCorner srsName="urn:ogc:def:crs:EPSG:6.6:32126" srsDimension="2">45.524459 -122.671579</gml:upperCorner>
+					</gml:Envelope>
+					<facid:SourceMapScaleNumber>24000</facid:SourceMapScaleNumber>
+					<facid:HorizontalAccuracyMeasure>
+						<facid:MeasureValue>100</facid:MeasureValue>
+						<facid:MeasureUnit>
+							<facid:MeasureUnitCode>ft</facid:MeasureUnitCode>
+							<facid:MeasureUnitCodeListIdentifier/>
+							<facid:MeasureUnitName>Feet</facid:MeasureUnitName>
+						</facid:MeasureUnit>
+						<facid:MeasurePrecisionText/>
+						<facid:ResultQualifier>
+							<facid:ResultQualifierCode/>
+							<facid:ResultQualifierCodeListIdentifier/>
+							<facid:ResultQualifierName/>
+						</facid:ResultQualifier>
+					</facid:HorizontalAccuracyMeasure>
+					<facid:HorizontalCollectionMethod>
+						<facid:MethodIdentifierCode>019</facid:MethodIdentifierCode>
+						<facid:MethodIdentifierCodeListIdentifier/>
+						<facid:MethodName>Interpolation-Photo</facid:MethodName>
+						<facid:MethodDescriptionText>The geographic coordinate determination method based on interpolation-photo.</facid:MethodDescriptionText>
+						<facid:MethodDeviationsText/>
+					</facid:HorizontalCollectionMethod>
+					<facid:GeographicReferencePoint>
+						<facid:GeographicReferencePointCode>002</facid:GeographicReferencePointCode>
+						<facid:ReferencePointCodeListIdentifier/>
+						<facid:GeographicReferencePointName>Facility/Station Location - Plant Entrance (general)</facid:GeographicReferencePointName>
+					</facid:GeographicReferencePoint>
+					<facid:DataCollectionDate>2000-09-01</facid:DataCollectionDate>
+					<facid:LocationCommentsText>Facility resides on two square blocks (to the east and west of the location address).</facid:LocationCommentsText>
+					<facid:VerticalCollectionMethod>
+						<facid:MethodIdentifierCode>002</facid:MethodIdentifierCode>
+						<facid:MethodIdentifierCodeListIdentifier/>
+						<facid:MethodName>GPS Carrier Phase Kinematic Relative Position</facid:MethodName>
+						<facid:MethodDescriptionText>The geographic coordinate determination method based on GPS carrier phase kinematic relative positioning technique.</facid:MethodDescriptionText>
+						<facid:MethodDeviationsText/>
+					</facid:VerticalCollectionMethod>
+					<facid:VerificationMethod>
+						<facid:MethodIdentifierCode>007</facid:MethodIdentifierCode>
+						<facid:MethodIdentifierCodeListIdentifier/>
+						<facid:MethodName>Verified Relative to Map Features (1:24K)</facid:MethodName>
+						<facid:MethodDescriptionText>The coordinates are verified relative to map features (1:24K)</facid:MethodDescriptionText>
+						<facid:MethodDeviationsText/>
+					</facid:VerificationMethod>
+					<facid:CoordinateDataSource>
+						<facid:CoordinateDataSourceCode>041</facid:CoordinateDataSourceCode>
+						<facid:CoordinateDataSourceCodeListIdentifier/>
+						<facid:CoordinateDataSourceName>Oregon</facid:CoordinateDataSourceName>
+					</facid:CoordinateDataSource>
+				</facid:FacilityGeographicLocationDescription>
+			</facid:FacilityGeographicLocationList>
+			<facid:EnvironmentalInterestList>
+				<facid:EnvironmentalInterest>
+					<facid:DataSource>
+						<facid:OriginatingPartnerName>ODEQ</facid:OriginatingPartnerName>
+						<facid:InformationSystemAcronymName>LUST</facid:InformationSystemAcronymName>
+						<facid:LastUpdatedDate>2003-05-22</facid:LastUpdatedDate>
+					</facid:DataSource>
+					<facid:EnvironmentalInterestIdentifier>47778</facid:EnvironmentalInterestIdentifier>
+					<facid:EnvironmentalInterestTypeText>Leaking Underground Storage Tank Cleanup Permit</facid:EnvironmentalInterestTypeText>
+					<facid:EnvironmentalInterestStartDate>1999-01-21</facid:EnvironmentalInterestStartDate>
+					<facid:EnvironmentalInterestStartDateQualifierText>Date Permit Issued</facid:EnvironmentalInterestStartDateQualifierText>
+					<facid:EnvironmentalInterestEndDateQualifierText>Date Permit Ended</facid:EnvironmentalInterestEndDateQualifierText>
+					<facid:EnvironmentalInterestActiveIndicator>Y</facid:EnvironmentalInterestActiveIndicator>
+					<facid:AgencyType>
+						<facid:AgencyTypeCode>ST</facid:AgencyTypeCode>
+						<facid:AgencyTypeCodeListIdentifier/>
+						<facid:AgencyTypeName>State</facid:AgencyTypeName>
+					</facid:AgencyType>
+				</facid:EnvironmentalInterest>
+				<facid:EnvironmentalInterest>
+					<facid:DataSource>
+						<facid:OriginatingPartnerName>ODEQ</facid:OriginatingPartnerName>
+						<facid:InformationSystemAcronymName>HW</facid:InformationSystemAcronymName>
+						<facid:LastUpdatedDate>2005-08-12</facid:LastUpdatedDate>
+					</facid:DataSource>
+					<facid:EnvironmentalInterestIdentifier>HW444556</facid:EnvironmentalInterestIdentifier>
+					<facid:EnvironmentalInterestTypeText>Hazardous Waste Permit Renewal - LQG</facid:EnvironmentalInterestTypeText>
+					<facid:EnvironmentalInterestStartDate>1995-05-22</facid:EnvironmentalInterestStartDate>
+					<facid:EnvironmentalInterestStartDateQualifierText>Date Permit Issued</facid:EnvironmentalInterestStartDateQualifierText>
+					<facid:EnvironmentalInterestEndDateQualifierText>Date Permit Ended</facid:EnvironmentalInterestEndDateQualifierText>
+					<facid:EnvironmentalInterestActiveIndicator>Y</facid:EnvironmentalInterestActiveIndicator>
+					<facid:AgencyType>
+						<facid:AgencyTypeCode>ST</facid:AgencyTypeCode>
+						<facid:AgencyTypeCodeListIdentifier/>
+						<facid:AgencyTypeName>State</facid:AgencyTypeName>
+					</facid:AgencyType>
+				</facid:EnvironmentalInterest>
+			</facid:EnvironmentalInterestList>
+			<facid:ElectronicAddressList>
+				<facid:ElectronicAddress>
+					<facid:ElectronicAddressText>http://www.oregon.gov/DEQ/address?facid=2515466</facid:ElectronicAddressText>
+					<facid:ElectronicAddressTypeName>HTTP</facid:ElectronicAddressTypeName>
+				</facid:ElectronicAddress>
+				<facid:ElectronicAddress>
+					<facid:ElectronicAddressText>http://www.oregon.gov/DEQ/LIT?facid=2515466</facid:ElectronicAddressText>
+					<facid:ElectronicAddressTypeName>HTTP</facid:ElectronicAddressTypeName>
+				</facid:ElectronicAddress>
+			</facid:ElectronicAddressList>
+			<facid:AlternativeNameList>
+				<facid:AlternativeName>
+					<facid:AlternativeNameText>Wayne Company</facid:AlternativeNameText>
+					<facid:AlternativeNameTypeText>Historical</facid:AlternativeNameTypeText>
+				</facid:AlternativeName>
+				<facid:AlternativeName>
+					<facid:AlternativeNameText>Mason Corp.</facid:AlternativeNameText>
+					<facid:AlternativeNameTypeText>Historical</facid:AlternativeNameTypeText>
+				</facid:AlternativeName>
+			</facid:AlternativeNameList>
+			<facid:AlternativeIdentificationList>
+				<facid:AlternativeIdentification>
+					<facid:AlternativeIdentificationIdentifier>122334</facid:AlternativeIdentificationIdentifier>
+					<facid:AlternativeIdentificationTypeText>Historical</facid:AlternativeIdentificationTypeText>
+				</facid:AlternativeIdentification>
+				<facid:AlternativeIdentification>
+					<facid:AlternativeIdentificationIdentifier>110112211570</facid:AlternativeIdentificationIdentifier>
+					<facid:AlternativeIdentificationTypeText>Facility Registry System</facid:AlternativeIdentificationTypeText>
+				</facid:AlternativeIdentification>
+			</facid:AlternativeIdentificationList>
+			<facid:SICList>
+				<facid:FacilitySIC>
+					<facid:SICCode>2299</facid:SICCode>
+					<facid:SICPrimaryIndicator>Primary</facid:SICPrimaryIndicator>
+				</facid:FacilitySIC>
+				<facid:FacilitySIC>
+					<facid:SICCode>5699</facid:SICCode>
+					<facid:SICPrimaryIndicator>Secondary</facid:SICPrimaryIndicator>
+				</facid:FacilitySIC>
+			</facid:SICList>
+			<facid:NAICSList>
+				<facid:FacilityNAICS>
+					<facid:FacilityNAICSCode>314110</facid:FacilityNAICSCode>
+					<facid:FacilityNAICSPrimaryIndicator>Primary</facid:FacilityNAICSPrimaryIndicator>
+				</facid:FacilityNAICS>
+				<facid:FacilityNAICS>
+					<facid:FacilityNAICSCode>315111</facid:FacilityNAICSCode>
+					<facid:FacilityNAICSPrimaryIndicator>Secondary</facid:FacilityNAICSPrimaryIndicator>
+				</facid:FacilityNAICS>
+			</facid:NAICSList>
+			<facid:DataSource>
+				<facid:OriginatingPartnerName>ODEQ</facid:OriginatingPartnerName>
+				<facid:InformationSystemAcronymName>ADDR</facid:InformationSystemAcronymName>
+				<facid:LastUpdatedDate>2003-05-22</facid:LastUpdatedDate>
+			</facid:DataSource>
+			<facid:AffiliationList>
+				<facid:FacilityAffiliation>
+					<facid:AffiliateIdentifier>123</facid:AffiliateIdentifier>
+					<facid:Affiliation>
+						<facid:AffiliationTypeText>Owner</facid:AffiliationTypeText>
+						<facid:AffiliationStartDate>1999-01-21</facid:AffiliationStartDate>
+						<facid:AffiliationStatusText>I</facid:AffiliationStatusText>
+						<facid:AffiliationStatusDetermineDate>2001-05-13</facid:AffiliationStatusDetermineDate>
+					</facid:Affiliation>
+				</facid:FacilityAffiliation>
+				<facid:FacilityAffiliation>
+					<facid:AffiliateIdentifier>234</facid:AffiliateIdentifier>
+					<facid:Affiliation>
+						<facid:AffiliationTypeText>Owner</facid:AffiliationTypeText>
+						<facid:AffiliationStartDate>2001-03-23</facid:AffiliationStartDate>
+						<facid:AffiliationEndDate>2000-02-02</facid:AffiliationEndDate>
+						<facid:AffiliationStatusText>A</facid:AffiliationStatusText>
+						<facid:AffiliationStatusDetermineDate>2001-05-13</facid:AffiliationStatusDetermineDate>
+					</facid:Affiliation>
+				</facid:FacilityAffiliation>
+			</facid:AffiliationList>
+		</facid:Facility>
+		<facid:Facility>
+			<facid:FacilitySiteIdentity>
+				<facid:FacilitySiteIdentifier FacilitySiteIdentifierContext="ODEQ|ADDR">45666544</facid:FacilitySiteIdentifier>
+				<facid:FacilitySiteName>Acme Corp Testing Facility</facid:FacilitySiteName>
+				<facid:FacilitySiteType>
+					<facid:FacilitySiteTypeCode/>
+					<facid:FacilitySiteTypeCodeListIdentifier/>
+					<facid:FacilitySiteTypeName/>
+				</facid:FacilitySiteType>
+				<facid:FederalFacilityIndicator/>
+			</facid:FacilitySiteIdentity>
+			<facid:LocationAddress>
+				<facid:LocationAddressText>230 SW 3rd St.</facid:LocationAddressText>
+				<facid:SupplementalLocationText/>
+				<facid:LocalityName>Corvallis</facid:LocalityName>
+				<facid:StateIdentity>
+					<facid:StateCode>OR</facid:StateCode>
+					<facid:StateCodeListIdentifier/>
+					<facid:StateName>Oregon</facid:StateName>
+				</facid:StateIdentity>
+				<facid:AddressPostalCode AddressPostalCodeContext="ODEQ|ADDR">97333</facid:AddressPostalCode>
+				<facid:CountryIdentity>
+					<facid:CountryCode>USA</facid:CountryCode>
+					<facid:CountryCodeListIdentifier/>
+					<facid:CountryName>United States of America</facid:CountryName>
+				</facid:CountryIdentity>
+				<facid:CountyIdentity>
+					<facid:CountyCode>Linn</facid:CountyCode>
+					<facid:CountyCodeListIdentifier/>
+					<facid:CountyName>Linn</facid:CountyName>
+				</facid:CountyIdentity>
+				<facid:TribalLandName/>
+				<facid:TribalLandIndicator>N</facid:TribalLandIndicator>
+				<facid:LocationDescriptionText>Facility can be found on the NW corner of the ACME corp. complex.</facid:LocationDescriptionText>
+			</facid:LocationAddress>
+			<facid:MailingAddress>
+				<facid:MailingAddressText>P.O. Box 43</facid:MailingAddressText>
+				<facid:SupplementalAddressText/>
+				<facid:MailingAddressCityName>Corvallis</facid:MailingAddressCityName>
+				<facid:StateIdentity>
+					<facid:StateCode>OR</facid:StateCode>
+					<facid:StateCodeListIdentifier/>
+					<facid:StateName>Oregon</facid:StateName>
+				</facid:StateIdentity>
+				<facid:AddressPostalCode AddressPostalCodeContext="ODEQ|ADDR">97333</facid:AddressPostalCode>
+				<facid:CountryIdentity>
+					<facid:CountryCode>USA</facid:CountryCode>
+					<facid:CountryCodeListIdentifier/>
+					<facid:CountryName>United States of America</facid:CountryName>
+				</facid:CountryIdentity>
+			</facid:MailingAddress>
+			<facid:CongressionalDistrictNumberCode>21</facid:CongressionalDistrictNumberCode>
+			<facid:LegislativeDistrictNumberCode>06</facid:LegislativeDistrictNumberCode>
+			<facid:HUCCode>00171500</facid:HUCCode>
+			<facid:FacilityPrimaryGeographicLocationDescription>
+				<gml:Point>
+					<gml:pos srsName="urn:ogc:def:crs:EPSG:6.6:32126" srsDimension="2">44.563096 -123.26155</gml:pos>
+				</gml:Point>
+				<facid:HorizontalAccuracyMeasure>
+					<facid:MeasureValue>100</facid:MeasureValue>
+					<facid:MeasureUnit>
+						<facid:MeasureUnitCode>ft</facid:MeasureUnitCode>
+						<facid:MeasureUnitCodeListIdentifier/>
+						<facid:MeasureUnitName>Feet</facid:MeasureUnitName>
+					</facid:MeasureUnit>
+					<facid:MeasurePrecisionText/>
+					<facid:ResultQualifier>
+						<facid:ResultQualifierCode/>
+						<facid:ResultQualifierCodeListIdentifier/>
+						<facid:ResultQualifierName/>
+					</facid:ResultQualifier>
+				</facid:HorizontalAccuracyMeasure>
+				<facid:HorizontalCollectionMethod>
+					<facid:MethodIdentifierCode>019</facid:MethodIdentifierCode>
+					<facid:MethodIdentifierCodeListIdentifier/>
+					<facid:MethodName>Interpolation-Photo</facid:MethodName>
+					<facid:MethodDescriptionText>The geographic coordinate determination method based on interpolation-photo.</facid:MethodDescriptionText>
+					<facid:MethodDeviationsText/>
+				</facid:HorizontalCollectionMethod>
+			</facid:FacilityPrimaryGeographicLocationDescription>
+			<facid:FacilityGeographicLocationList>
+				<facid:FacilityGeographicLocationDescription>
+					<gml:Point>
+						<gml:pos srsName="urn:ogc:def:crs:EPSG:6.6:32126" srsDimension="3">44.563096 -123.26155 33</gml:pos>
+					</gml:Point>
+					<facid:SourceMapScaleNumber>24000</facid:SourceMapScaleNumber>
+					<facid:HorizontalAccuracyMeasure>
+						<facid:MeasureValue>100</facid:MeasureValue>
+						<facid:MeasureUnit>
+							<facid:MeasureUnitCode>ft</facid:MeasureUnitCode>
+							<facid:MeasureUnitCodeListIdentifier/>
+							<facid:MeasureUnitName>Feet</facid:MeasureUnitName>
+						</facid:MeasureUnit>
+						<facid:MeasurePrecisionText/>
+						<facid:ResultQualifier>
+							<facid:ResultQualifierCode/>
+							<facid:ResultQualifierCodeListIdentifier/>
+							<facid:ResultQualifierName/>
+						</facid:ResultQualifier>
+					</facid:HorizontalAccuracyMeasure>
+					<facid:HorizontalCollectionMethod>
+						<facid:MethodIdentifierCode>019</facid:MethodIdentifierCode>
+						<facid:MethodIdentifierCodeListIdentifier/>
+						<facid:MethodName>Interpolation-Photo</facid:MethodName>
+						<facid:MethodDescriptionText>The geographic coordinate determination method based on interpolation-photo.</facid:MethodDescriptionText>
+						<facid:MethodDeviationsText/>
+					</facid:HorizontalCollectionMethod>
+					<facid:GeographicReferencePoint>
+						<facid:GeographicReferencePointCode>002</facid:GeographicReferencePointCode>
+						<facid:ReferencePointCodeListIdentifier/>
+						<facid:GeographicReferencePointName>Facility/Station Location - Plant Entrance (general)</facid:GeographicReferencePointName>
+					</facid:GeographicReferencePoint>
+					<facid:DataCollectionDate>1993-01-08</facid:DataCollectionDate>
+					<facid:LocationCommentsText/>
+					<facid:VerticalCollectionMethod>
+						<facid:MethodIdentifierCode>002</facid:MethodIdentifierCode>
+						<facid:MethodIdentifierCodeListIdentifier/>
+						<facid:MethodName>GPS Carrier Phase Kinematic Relative Position</facid:MethodName>
+						<facid:MethodDescriptionText>The geographic coordinate determination method based on GPS carrier phase kinematic relative positioning technique.</facid:MethodDescriptionText>
+						<facid:MethodDeviationsText/>
+					</facid:VerticalCollectionMethod>
+					<facid:VerificationMethod>
+						<facid:MethodIdentifierCode>007</facid:MethodIdentifierCode>
+						<facid:MethodIdentifierCodeListIdentifier/>
+						<facid:MethodName>Verified Relative to Map Features (1:24K)</facid:MethodName>
+						<facid:MethodDescriptionText>The coordinates are verified relative to map features (1:24K)</facid:MethodDescriptionText>
+						<facid:MethodDeviationsText/>
+					</facid:VerificationMethod>
+					<facid:CoordinateDataSource>
+						<facid:CoordinateDataSourceCode>041</facid:CoordinateDataSourceCode>
+						<facid:CoordinateDataSourceCodeListIdentifier/>
+						<facid:CoordinateDataSourceName>Oregon</facid:CoordinateDataSourceName>
+					</facid:CoordinateDataSource>
+				</facid:FacilityGeographicLocationDescription>
+			</facid:FacilityGeographicLocationList>
+			<facid:EnvironmentalInterestList>
+				<facid:EnvironmentalInterest>
+					<facid:DataSource>
+						<facid:OriginatingPartnerName>ODEQ</facid:OriginatingPartnerName>
+						<facid:InformationSystemAcronymName>ASB</facid:InformationSystemAcronymName>
+						<facid:LastUpdatedDate>2004-05-14</facid:LastUpdatedDate>
+					</facid:DataSource>
+					<facid:EnvironmentalInterestIdentifier>AS5454</facid:EnvironmentalInterestIdentifier>
+					<facid:EnvironmentalInterestTypeText>Friable Asbestos Removal Permit</facid:EnvironmentalInterestTypeText>
+					<facid:EnvironmentalInterestStartDate>1993-01-08</facid:EnvironmentalInterestStartDate>
+					<facid:EnvironmentalInterestStartDateQualifierText>Date Permit Issued</facid:EnvironmentalInterestStartDateQualifierText>
+					<facid:EnvironmentalInterestEndDate>1993-03-01</facid:EnvironmentalInterestEndDate>
+					<facid:EnvironmentalInterestEndDateQualifierText>Date Permit Ended</facid:EnvironmentalInterestEndDateQualifierText>
+					<facid:EnvironmentalInterestActiveIndicator>N</facid:EnvironmentalInterestActiveIndicator>
+					<facid:AgencyType>
+						<facid:AgencyTypeCode>ST</facid:AgencyTypeCode>
+						<facid:AgencyTypeCodeListIdentifier/>
+						<facid:AgencyTypeName>State</facid:AgencyTypeName>
+					</facid:AgencyType>
+				</facid:EnvironmentalInterest>
+				<facid:EnvironmentalInterest>
+					<facid:DataSource>
+						<facid:OriginatingPartnerName>ODEQ</facid:OriginatingPartnerName>
+						<facid:InformationSystemAcronymName>TRAACS</facid:InformationSystemAcronymName>
+						<facid:LastUpdatedDate>2002-04-11</facid:LastUpdatedDate>
+					</facid:DataSource>
+					<facid:EnvironmentalInterestIdentifier>46566</facid:EnvironmentalInterestIdentifier>
+					<facid:EnvironmentalInterestTypeText>Title V Permit</facid:EnvironmentalInterestTypeText>
+					<facid:EnvironmentalInterestStartDate>1993-02-22</facid:EnvironmentalInterestStartDate>
+					<facid:EnvironmentalInterestStartDateQualifierText>Date Permit Issued</facid:EnvironmentalInterestStartDateQualifierText>
+					<facid:EnvironmentalInterestEndDateQualifierText>Date Permit Ended</facid:EnvironmentalInterestEndDateQualifierText>
+					<facid:EnvironmentalInterestActiveIndicator>Y</facid:EnvironmentalInterestActiveIndicator>
+					<facid:AgencyType>
+						<facid:AgencyTypeCode>ST</facid:AgencyTypeCode>
+						<facid:AgencyTypeCodeListIdentifier/>
+						<facid:AgencyTypeName>State</facid:AgencyTypeName>
+					</facid:AgencyType>
+				</facid:EnvironmentalInterest>
+			</facid:EnvironmentalInterestList>
+			<facid:ElectronicAddressList>
+				<facid:ElectronicAddress>
+					<facid:ElectronicAddressText>http://www.oregon.gov/DEQ/address?facid=45666544</facid:ElectronicAddressText>
+					<facid:ElectronicAddressTypeName>HTTP</facid:ElectronicAddressTypeName>
+				</facid:ElectronicAddress>
+				<facid:ElectronicAddress>
+					<facid:ElectronicAddressText>http://www.oregon.gov/DEQ/LIT?facid=333</facid:ElectronicAddressText>
+					<facid:ElectronicAddressTypeName>HTTP</facid:ElectronicAddressTypeName>
+				</facid:ElectronicAddress>
+			</facid:ElectronicAddressList>
+			<facid:AlternativeNameList>
+				<facid:AlternativeName>
+					<facid:AlternativeNameText>Acme Inc</facid:AlternativeNameText>
+					<facid:AlternativeNameTypeText>Historical</facid:AlternativeNameTypeText>
+				</facid:AlternativeName>
+				<facid:AlternativeName>
+					<facid:AlternativeNameText>Jackson Industries</facid:AlternativeNameText>
+					<facid:AlternativeNameTypeText>Historical</facid:AlternativeNameTypeText>
+				</facid:AlternativeName>
+			</facid:AlternativeNameList>
+			<facid:AlternativeIdentificationList>
+				<facid:AlternativeIdentification>
+					<facid:AlternativeIdentificationIdentifier>938822</facid:AlternativeIdentificationIdentifier>
+					<facid:AlternativeIdentificationTypeText>Historical</facid:AlternativeIdentificationTypeText>
+				</facid:AlternativeIdentification>
+				<facid:AlternativeIdentification>
+					<facid:AlternativeIdentificationIdentifier>52431</facid:AlternativeIdentificationIdentifier>
+					<facid:AlternativeIdentificationTypeText>Facility Registry System</facid:AlternativeIdentificationTypeText>
+				</facid:AlternativeIdentification>
+			</facid:AlternativeIdentificationList>
+			<facid:SICList>
+				<facid:FacilitySIC>
+					<facid:SICCode>2499</facid:SICCode>
+					<facid:SICPrimaryIndicator>Primary</facid:SICPrimaryIndicator>
+				</facid:FacilitySIC>
+				<facid:FacilitySIC>
+					<facid:SICCode>3999</facid:SICCode>
+					<facid:SICPrimaryIndicator>Secondary</facid:SICPrimaryIndicator>
+				</facid:FacilitySIC>
+			</facid:SICList>
+			<facid:NAICSList>
+				<facid:FacilityNAICS>
+					<facid:FacilityNAICSCode>421990</facid:FacilityNAICSCode>
+					<facid:FacilityNAICSPrimaryIndicator>Primary</facid:FacilityNAICSPrimaryIndicator>
+				</facid:FacilityNAICS>
+				<facid:FacilityNAICS>
+					<facid:FacilityNAICSCode>321114</facid:FacilityNAICSCode>
+					<facid:FacilityNAICSPrimaryIndicator>Secondary</facid:FacilityNAICSPrimaryIndicator>
+				</facid:FacilityNAICS>
+			</facid:NAICSList>
+			<facid:DataSource>
+				<facid:OriginatingPartnerName>ODEQ</facid:OriginatingPartnerName>
+				<facid:InformationSystemAcronymName>ADDR</facid:InformationSystemAcronymName>
+				<facid:LastUpdatedDate>2001-01-12</facid:LastUpdatedDate>
+			</facid:DataSource>
+			<facid:AffiliationList>
+				<facid:FacilityAffiliation>
+					<facid:AffiliateIdentifier>123</facid:AffiliateIdentifier>
+					<facid:Affiliation>
+						<facid:AffiliationTypeText>Owner</facid:AffiliationTypeText>
+						<facid:AffiliationStartDate>1992-01-21</facid:AffiliationStartDate>
+						<facid:AffiliationEndDate>2000-02-02</facid:AffiliationEndDate>
+						<facid:AffiliationStatusText>I</facid:AffiliationStatusText>
+						<facid:AffiliationStatusDetermineDate>2000-02-03</facid:AffiliationStatusDetermineDate>
+					</facid:Affiliation>
+				</facid:FacilityAffiliation>
+				<facid:FacilityAffiliation>
+					<facid:AffiliateIdentifier>456</facid:AffiliateIdentifier>
+					<facid:Affiliation>
+						<facid:AffiliationTypeText>Owner</facid:AffiliationTypeText>
+						<facid:AffiliationStartDate>2000-02-03</facid:AffiliationStartDate>
+						<facid:AffiliationStatusText>A</facid:AffiliationStatusText>
+						<facid:AffiliationStatusDetermineDate>2000-02-03</facid:AffiliationStatusDetermineDate>
+					</facid:Affiliation>
+				</facid:FacilityAffiliation>
+			</facid:AffiliationList>
+		</facid:Facility>
+	</facid:FacilityList>
+	<facid:AffiliateList>
+		<facid:Affiliate>
+			<facid:AffiliateIdentifier>123</facid:AffiliateIdentifier>
+			<facid:TelephonicList>
+				<facid:Telephonic>
+					<facid:TelephoneNumberText>503-555-5555</facid:TelephoneNumberText>
+					<facid:TelephoneNumberTypeName>Business Phone</facid:TelephoneNumberTypeName>
+					<facid:TelephoneExtensionNumberText>555</facid:TelephoneExtensionNumberText>
+				</facid:Telephonic>
+				<facid:Telephonic>
+					<facid:TelephoneNumberText>503-555-5551</facid:TelephoneNumberText>
+					<facid:TelephoneNumberTypeName>Fax</facid:TelephoneNumberTypeName>
+					<facid:TelephoneExtensionNumberText/>
+				</facid:Telephonic>
+			</facid:TelephonicList>
+			<facid:ElectronicAddressList>
+				<facid:ElectronicAddress>
+					<facid:ElectronicAddressText>contact@wayneinc.com</facid:ElectronicAddressText>
+					<facid:ElectronicAddressTypeName>Email</facid:ElectronicAddressTypeName>
+				</facid:ElectronicAddress>
+				<facid:ElectronicAddress>
+					<facid:ElectronicAddressText>http://www.wayneinc.net</facid:ElectronicAddressText>
+					<facid:ElectronicAddressTypeName>HTTP</facid:ElectronicAddressTypeName>
+				</facid:ElectronicAddress>
+			</facid:ElectronicAddressList>
+			<facid:OrganizationIdentity>
+				<facid:OrganizationIdentifier OrganizationIdentifierContext="ODEQ|PartyAffiliation">215656</facid:OrganizationIdentifier>
+				<facid:OrganizationFormalName>Acme Operations</facid:OrganizationFormalName>
+			</facid:OrganizationIdentity>
+			<facid:MailingAddress>
+				<facid:MailingAddressText>222 NE Grand Blvd.</facid:MailingAddressText>
+				<facid:SupplementalAddressText>Blg 4, Ste 201</facid:SupplementalAddressText>
+				<facid:MailingAddressCityName>Portland</facid:MailingAddressCityName>
+				<facid:StateIdentity>
+					<facid:StateCode>OR</facid:StateCode>
+					<facid:StateCodeListIdentifier/>
+					<facid:StateName>Oregon</facid:StateName>
+				</facid:StateIdentity>
+				<facid:AddressPostalCode AddressPostalCodeContext="ODEQ|PartyAffiliation">97212</facid:AddressPostalCode>
+				<facid:CountryIdentity>
+					<facid:CountryCode>USA</facid:CountryCode>
+					<facid:CountryCodeListIdentifier/>
+					<facid:CountryName>United States of America</facid:CountryName>
+				</facid:CountryIdentity>
+			</facid:MailingAddress>
+		</facid:Affiliate>
+		<facid:Affiliate>
+			<facid:AffiliateIdentifier>234</facid:AffiliateIdentifier>
+			<facid:TelephonicList>
+				<facid:Telephonic>
+					<facid:TelephoneNumberText>503-222-2222</facid:TelephoneNumberText>
+					<facid:TelephoneNumberTypeName>Phone</facid:TelephoneNumberTypeName>
+					<facid:TelephoneExtensionNumberText>211</facid:TelephoneExtensionNumberText>
+				</facid:Telephonic>
+				<facid:Telephonic>
+					<facid:TelephoneNumberText>503-644-4444</facid:TelephoneNumberText>
+					<facid:TelephoneNumberTypeName>Fax</facid:TelephoneNumberTypeName>
+					<facid:TelephoneExtensionNumberText/>
+				</facid:Telephonic>
+			</facid:TelephonicList>
+			<facid:ElectronicAddressList>
+				<facid:ElectronicAddress>
+					<facid:ElectronicAddressText>Samantha@wayneinc.com</facid:ElectronicAddressText>
+					<facid:ElectronicAddressTypeName>Email</facid:ElectronicAddressTypeName>
+				</facid:ElectronicAddress>
+				<facid:ElectronicAddress>
+					<facid:ElectronicAddressText>http://www.wayneinc.com</facid:ElectronicAddressText>
+					<facid:ElectronicAddressTypeName>HTTP</facid:ElectronicAddressTypeName>
+				</facid:ElectronicAddress>
+			</facid:ElectronicAddressList>
+			<facid:IndividualIdentity>
+				<facid:IndividualIdentifier IndividualIdentifierContext="ODEQ|PartyAffiliation">45668</facid:IndividualIdentifier>
+				<facid:IndividualTitleText/>
+				<facid:NamePrefixText>Mrs</facid:NamePrefixText>
+				<facid:IndividualFullName>Samantha Jean Jones</facid:IndividualFullName>
+				<facid:NameSuffixText>MBA</facid:NameSuffixText>
+			</facid:IndividualIdentity>
+			<facid:MailingAddress>
+				<facid:MailingAddressText>43321 N Columbia Drive</facid:MailingAddressText>
+				<facid:SupplementalAddressText/>
+				<facid:MailingAddressCityName>Portland</facid:MailingAddressCityName>
+				<facid:StateIdentity>
+					<facid:StateCode>OR</facid:StateCode>
+					<facid:StateCodeListIdentifier/>
+					<facid:StateName>Oregon</facid:StateName>
+				</facid:StateIdentity>
+				<facid:AddressPostalCode AddressPostalCodeContext="ODEQ|PartyAffiliation">97203</facid:AddressPostalCode>
+				<facid:CountryIdentity>
+					<facid:CountryCode>USA</facid:CountryCode>
+					<facid:CountryCodeListIdentifier/>
+					<facid:CountryName>United States of America</facid:CountryName>
+				</facid:CountryIdentity>
+			</facid:MailingAddress>
+		</facid:Affiliate>
+		<facid:Affiliate>
+			<facid:AffiliateIdentifier>456</facid:AffiliateIdentifier>
+			<facid:TelephonicList>
+				<facid:Telephonic>
+					<facid:TelephoneNumberText>503-111-1111</facid:TelephoneNumberText>
+					<facid:TelephoneNumberTypeName>Phone</facid:TelephoneNumberTypeName>
+					<facid:TelephoneExtensionNumberText/>
+				</facid:Telephonic>
+				<facid:Telephonic>
+					<facid:TelephoneNumberText>503-212-5665</facid:TelephoneNumberText>
+					<facid:TelephoneNumberTypeName>Fax</facid:TelephoneNumberTypeName>
+					<facid:TelephoneExtensionNumberText/>
+				</facid:Telephonic>
+			</facid:TelephonicList>
+			<facid:ElectronicAddressList>
+				<facid:ElectronicAddress>
+					<facid:ElectronicAddressText>Jim@myemail.com</facid:ElectronicAddressText>
+					<facid:ElectronicAddressTypeName>Email</facid:ElectronicAddressTypeName>
+				</facid:ElectronicAddress>
+			</facid:ElectronicAddressList>
+			<facid:IndividualIdentity>
+				<facid:IndividualIdentifier IndividualIdentifierContext="ODEQ|PartyAffiliation">12334</facid:IndividualIdentifier>
+				<facid:IndividualTitleText/>
+				<facid:NamePrefixText>Mr</facid:NamePrefixText>
+				<facid:FirstName>Jim</facid:FirstName>
+				<facid:MiddleName>J.</facid:MiddleName>
+				<facid:LastName>Smith</facid:LastName>
+				<facid:NameSuffixText/>
+			</facid:IndividualIdentity>
+			<facid:MailingAddress>
+				<facid:MailingAddressText>1260 First Avenue South </facid:MailingAddressText>
+				<facid:SupplementalAddressText/>
+				<facid:MailingAddressCityName>Seattle</facid:MailingAddressCityName>
+				<facid:StateIdentity>
+					<facid:StateCode>WA</facid:StateCode>
+					<facid:StateCodeListIdentifier/>
+					<facid:StateName>Washington</facid:StateName>
+				</facid:StateIdentity>
+				<facid:AddressPostalCode AddressPostalCodeContext="ODEQ|PartyAffiliation">98134</facid:AddressPostalCode>
+				<facid:CountryIdentity>
+					<facid:CountryCode>USA</facid:CountryCode>
+					<facid:CountryCodeListIdentifier/>
+					<facid:CountryName>United States of America</facid:CountryName>
+				</facid:CountryIdentity>
+			</facid:MailingAddress>
+		</facid:Affiliate>
+	</facid:AffiliateList>
+</facid:FacilityDetails>

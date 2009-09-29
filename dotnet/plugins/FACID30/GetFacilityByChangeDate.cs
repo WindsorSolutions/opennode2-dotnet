@@ -31,42 +31,49 @@ POSSIBILITY OF SUCH DAMAGE.
 */
 #endregion
 
-﻿using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using Windsor.Node2008.WNOS.AssemblyInfo;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Xml;
+using System.IO;
+using System.Data;
+using System.Data.Common;
+using System.Data.ProviderBase;
 using Windsor.Node2008.WNOSPlugin;
+using System.Diagnostics;
+using System.Reflection;
+using Windsor.Node2008.WNOSUtility;
+using Windsor.Node2008.WNOSDomain;
+using Windsor.Node2008.WNOSProviders;
+using Spring.Data.Common;
+using Spring.Transaction.Support;
+using Spring.Data.Core;
+using System.ComponentModel;
+using Windsor.Commons.Core;
+using Windsor.Commons.Logging;
+using Windsor.Commons.Spring;
+using Windsor.Commons.XsdOrm;
 
-// General Information about an assembly is controlled through the following 
-// set of attributes. Change these attribute values to modify the information
-// associated with an assembly.
-[assembly: AssemblyTitle("SDWIS")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany(AssemblyInfo.cAssemblyCompany)]
-[assembly: AssemblyProduct(AssemblyInfo.cAssemblyProduct)]
-[assembly: AssemblyCopyright(AssemblyInfo.cAssemblyCopyright)]
-[assembly: AssemblyTrademark(AssemblyInfo.cAssemblyTrademark)]
-[assembly: AssemblyCulture("")]
+namespace Windsor.Node2008.WNOSPlugin.FACID30
+{
+    [Serializable]
+    public class GetFacilityByChangeDate : QuerySolicitProcessorBase, ISolicitProcessor
+    {
+        public GetFacilityByChangeDate()
+        {
+        }
 
-
-// Setting ComVisible to false makes the types in this assembly not visible 
-// to COM components.  If you need to access a type in this assembly from 
-// COM, set the ComVisible attribute to true on that type.
-[assembly: ComVisible(false)]
-
-// The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("a2fcf1e0-9ac0-4d57-a49e-0c2aa28ca0a1")]
-
-// Version information for an assembly consists of the following four values:
-//
-//      Major Version
-//      Minor Version 
-//      Build Number
-//      Revision
-//
-// You can specify all the values or you can default the Revision and Build Numbers 
-// by using the '*' as shown below:
-[assembly: AssemblyVersion("1.1.8." + AssemblyInfo.cSvnVersion)]
-[assembly: PluginDefaultFlowAttribute("SDWIS")]
-[assembly: PluginPackageNameAttribute("SDWIS 2.0")]
+        protected override void LazyInit()
+        {
+            base.LazyInit();
+        }
+        protected override void ValidateRequest(string requestId)
+        {
+            base.ValidateRequest(requestId);
+        }
+        public void ProcessSolicit(string requestId)
+        {
+            DoFacilityDetailsQuery(requestId);
+        }
+    }
+}
