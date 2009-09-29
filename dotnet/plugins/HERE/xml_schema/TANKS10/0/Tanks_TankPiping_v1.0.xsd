@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:tanks="http://www.exchangenetwork.net/schema/tanks/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/tanks/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:annotation>
+		<xsd:documentation>
+			Schema Name  : Tanks_TankPiping_v1.0.xsd
+			Current Version Available At :
+			Description  : Storage tank piping attributes.
+			Developed by  : Windsor Solutions, Inc.
+			Point of Contact : Bret Smith
+			Last Date Modified: February, 2009
+		</xsd:documentation>
+	</xsd:annotation>
+	<!-- INCLUDES -->
+	<xsd:include schemaLocation="Tanks_Shared_v1.0.xsd"/>
+	<xsd:include schemaLocation="Tanks_PipingConstruction_v1.0.xsd"/>
+	<!-- COMPLEX TYPE -->
+	<xsd:complexType name="TankPipingDataType">
+		<xsd:sequence>
+			<xsd:element ref="tanks:PipingSystemTypeText" minOccurs="0"/>
+			<xsd:element ref="tanks:PipingConstruction" minOccurs="0"/>
+			<xsd:element ref="tanks:PipingHasSecondaryContainmentIndicator" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- COMPONENT ELEMENT -->
+	<xsd:element name="TankPiping" type="tanks:TankPipingDataType">
+		<xsd:annotation>
+			<xsd:documentation>Storage tank piping schema containing tank piping specific data elements.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Terrie Sutch (SAIC) -->
+<!-- edited with XML Spy v4.4 U (http://www.xmlspy.com) by Surjit De (Science Applications International Corp.) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="2.0">
+	<xsd:include schemaLocation="FACID_PhoneFaxEmailDataType_v2.xsd"/>
+	<xsd:include schemaLocation="SDWA_WaterSystemFacilityDataTypes_v2.xsd"/>
+	<xsd:element name="MessageStatus" type="MessageStatusType"/>
+	<xsd:element name="MessageSummary">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="OriginatorIdentifier" type="xsd:string">
+					<xsd:annotation>
+						<xsd:documentation>State Code, Region Code, and Headquarters</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element ref="OriginName" minOccurs="0"/>
+				<xsd:element ref="JobNumber" minOccurs="0"/>
+				<xsd:element name="ExtractionInformation" minOccurs="0">
+					<xsd:complexType>
+						<xsd:complexContent>
+							<xsd:extension base="ActivityInformationType">
+								<xsd:sequence>
+									<xsd:element name="ExtractionBeginDate" type="xsd:date"/>
+									<xsd:element name="ExtractionEndDate" type="xsd:date" minOccurs="0"/>
+								</xsd:sequence>
+							</xsd:extension>
+						</xsd:complexContent>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="Validations" minOccurs="0">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="ValidationDetail" type="ValidationType" maxOccurs="unbounded"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="Certifications" minOccurs="0">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="CertificationDetail" maxOccurs="unbounded">
+								<xsd:complexType>
+									<xsd:complexContent>
+										<xsd:extension base="ActivityInformationType">
+											<xsd:sequence>
+												<xsd:element ref="OriginCode"/>
+												<xsd:element ref="OriginName"/>
+												<xsd:element ref="JobNumber"/>
+											</xsd:sequence>
+										</xsd:extension>
+									</xsd:complexContent>
+								</xsd:complexType>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="MessageStatusType">
+		<xsd:sequence>
+			<xsd:element name="StatusText" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string"/>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="StatusIdentifier" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string"/>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ValidationType">
+		<xsd:sequence>
+			<xsd:element ref="OriginCode"/>
+			<xsd:element ref="OriginName"/>
+			<xsd:element ref="JobNumber"/>
+			<xsd:element name="ValidationInformation" type="ActivityInformationType" minOccurs="0"/>
+			<xsd:element name="SummaryInformation" minOccurs="0">
+				<xsd:complexType>
+					<xsd:choice>
+						<xsd:element name="InventoryCounts">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="WaterSystem" type="SummaryCountsType" minOccurs="0"/>
+									<xsd:element name="WaterSystemFacility" type="SummaryCountsType" minOccurs="0"/>
+									<xsd:element name="LegalEntity" type="SummaryCountsType" minOccurs="0"/>
+									<xsd:element name="LegalEntityAffiliation" type="SummaryCountsType" minOccurs="0"/>
+									<xsd:element name="ServiceArea" type="SummaryCountsType" minOccurs="0"/>
+									<xsd:element name="GeographicArea" type="SummaryCountsType" minOccurs="0"/>
+									<xsd:element name="LocationalDetail" type="SummaryCountsType" minOccurs="0"/>
+									<xsd:element name="Treatment" type="SummaryCountsType" minOccurs="0"/>
+									<xsd:element name="FacilityFlow" type="SummaryCountsType" minOccurs="0"/>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+						<xsd:element name="ActionCounts">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="Violation" type="SummaryCountsType" minOccurs="0"/>
+									<xsd:element name="EnforcementAction" type="SummaryCountsType" minOccurs="0"/>
+									<xsd:element name="AssignmentCriteria" type="SummaryCountsType" minOccurs="0"/>
+									<xsd:element name="EventSchedule" type="SummaryCountsType" minOccurs="0"/>
+									<xsd:element name="EventScheduleActivity" type="SummaryCountsType" minOccurs="0"/>
+									<xsd:element name="SiteVisit" type="SummaryCountsType" minOccurs="0"/>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+						<xsd:element name="SampleCounts">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="Sample" type="SummaryCountsType" minOccurs="0"/>
+									<xsd:element name="SampleResult" type="SummaryCountsType" minOccurs="0"/>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:choice>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="InventoryMinimumDataSet" type="InventoryMinimumDataSetType" minOccurs="0"/>
+			<xsd:element name="ReferentialIntegrityErrors" minOccurs="0">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="ReferentialIntegrityErrorDetail" type="MessageStatusType" maxOccurs="unbounded"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SummaryCountsType">
+		<xsd:sequence>
+			<xsd:element name="ExtractedCount" type="xsd:nonNegativeInteger"/>
+			<xsd:element name="AcceptedCount" type="xsd:nonNegativeInteger"/>
+			<xsd:element name="ReturnedCount" type="xsd:nonNegativeInteger"/>
+			<xsd:element name="ErrorCountByCodes" minOccurs="0" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="ErrorCode" type="xsd:string"/>
+						<xsd:element name="ErrorCount" type="xsd:positiveInteger"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ActivityInformationType">
+		<xsd:sequence>
+			<xsd:element name="RequestUserID">
+				<xsd:simpleType>
+					<xsd:restriction base="UserIDType"/>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="RequestDateTime" type="xsd:dateTime"/>
+			<xsd:element name="ContactInformation" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="PhoneFaxEmailDataType">
+							<xsd:sequence>
+								<xsd:element name="NameText" type="xsd:string" minOccurs="0"/>
+								<xsd:element name="OrganizationNameText" type="xsd:string" minOccurs="0"/>
+								<xsd:element name="CommentText" type="xsd:string" minOccurs="0"/>
+							</xsd:sequence>
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="InventoryMinimumDataSetType">
+		<xsd:sequence>
+			<xsd:element name="WaterSystemDependencies" minOccurs="0" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="PWSIdentifier" type="PWSIdentifierType"/>
+						<xsd:element name="LegalEntityACIndicator" type="xsd:string"/>
+						<xsd:element name="SourceFacilityIndicator" type="xsd:string"/>
+						<xsd:element name="ServiceAreaIndicator" type="xsd:string"/>
+						<xsd:element name="GeographicAreaIndicator" type="xsd:string"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="WaterSystemFacilityDependencies" minOccurs="0" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="PWSIdentifier" type="PWSIdentifierType"/>
+						<xsd:element name="FacilityIdentifier" type="FacilityIdentifierDataType"/>
+						<xsd:element name="WaterSystemFacilityType">
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:enumeration value="T"/>
+									<xsd:enumeration value="S"/>
+									<xsd:enumeration value="O"/>
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+						<xsd:element name="TreatmentIndicator" type="xsd:string"/>
+						<xsd:element name="AddressIndicator" type="xsd:string"/>
+						<xsd:element name="LatLongIndicator" type="xsd:string"/>
+						<xsd:element name="LegalEntityAffiliationIndicator" type="xsd:string"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="OriginCodeType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="S"/>
+			<xsd:enumeration value="R"/>
+			<xsd:enumeration value="H"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="UserIDType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:complexType name="CertificationType">
+		<xsd:sequence>
+			<xsd:element name="CeritficationStatement">
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="ActivityInformationType">
+							<xsd:sequence>
+								<xsd:element ref="OriginCode"/>
+							</xsd:sequence>
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="OriginCode">
+		<xsd:complexType>
+			<xsd:simpleContent>
+				<xsd:extension base="OriginCodeType"/>
+			</xsd:simpleContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="OriginName" type="xsd:string"/>
+	<xsd:element name="JobNumber" type="xsd:string"/>
+</xsd:schema>

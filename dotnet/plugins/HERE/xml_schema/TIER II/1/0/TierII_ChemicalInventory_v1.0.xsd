@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:TRI="urn:us:net:exchangenetwork:TRI:1:0" xmlns:TierII="http://www.exchangenetwork.net/schema/TierII/1/0" xmlns:sc="urn:us:net:exchangenetwork:sc:1:0" targetNamespace="http://www.exchangenetwork.net/schema/TierII/1/0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:import namespace="urn:us:net:exchangenetwork:sc:1:0" schemaLocation="SC_SimpleContent_v1.0.xsd"/>
+	<xsd:import namespace="urn:us:net:exchangenetwork:sc:1:0" schemaLocation="SC_ChemicalSubstanceIdentity_v1.0.xsd"/>
+	<xsd:import namespace="urn:us:net:exchangenetwork:sc:1:0" schemaLocation="SC_MailingAddress_v1.0.xsd"/>
+	<xsd:import namespace="urn:us:net:exchangenetwork:sc:1:0" schemaLocation="SC_Telephonic_v1.0.xsd"/>
+	<xsd:import namespace="urn:us:net:exchangenetwork:sc:1:0" schemaLocation="SC_ElectronicAddress_v1.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>		
+		Schema Name : 	TierII_ChemicalInventory_v1.0.xsd
+		Current Version Available At :
+		Description : 	Chemical Description, inventory and storage informaiton
+		Aplication : 
+		Developed by : 	 enfoTech
+		Point of Contact : Sara Liu	
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="ChemicalInventory" type="TierII:ChemicalInventoryDataType">
+		<xsd:annotation>
+			<xsd:documentation>Emergency and Hazardous Chemical Inventory Details</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ChemicalInventoryDataType">
+		<xsd:sequence>
+			<xsd:element ref="TierII:ChemicalIdentification" minOccurs="0"/>
+			<xsd:element ref="TierII:ChemicalPhysicalState" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="TierII:EHSIndicator" minOccurs="0"/>
+			<xsd:element ref="TierII:HealthEffects" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="TierII:HazardType" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="TierII:TradeSecretIndicator" minOccurs="0"/>
+			<xsd:element ref="TierII:ChemicalInventoryDetails" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="TierII:ChemicalStorageLocations" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="TierII:MixtureComponents" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ChemicalIdentification" type="TierII:ChemicalIndentificationDataType">
+		<xsd:annotation>
+			<xsd:documentation>Identifying the types of the contact, for instance, emergency contact, night contact, etc.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ChemicalPhysicalState" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation>Chemical physical state, for instance, pure, mixture, solid, liquid, gas, etc.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="HealthEffects" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation>Chemical health effects, for instance, acute, chronic, etc.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="EHSIndicator" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation>Indicates if Chemical is an Extremely Hazardous Substance (EHS)</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TradeSecretIndicator" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation>Indicator of chemical trade secret</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="HazardType" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation>Chemical hazard type, for instance, fire, pressure, reactive, etc.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ChemicalInventoryDetails" type="TierII:ChemicalInventoryDetailsDataType">
+		<xsd:annotation>
+			<xsd:documentation>Detailed chemical inventory information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ChemicalStorageLocations" type="TierII:ChemicalStorageLocationDataType">
+		<xsd:annotation>
+			<xsd:documentation>Chemical storage codes and locations information. </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MixtureComponents" type="TierII:MixtureComponentsDataType">
+		<xsd:annotation>
+			<xsd:documentation>Chemical mixture component details </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="NumberOfDaysOnsite" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation>Number of Days that hazardous chemical was found on-site</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MaximumDailyAmount" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation>for each hazardous chemical, the greatest amount present at the facilty on any single day during the reporting period. </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="AverageDailyAmount" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation>for each hazardous chemical, the average weight in pounds that was present at the facilty during the year. </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MaximumCode" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation>range value code for the maximum daily amount. </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="AverageCode" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation>range value code for average daily amount. </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ChemicalIndentificationDataType">
+		<xsd:sequence>
+			<xsd:element ref="sc:CASNumber" minOccurs="0"/>
+			<xsd:element ref="sc:ChemicalSubstanceSystematicName" minOccurs="0"/>
+			<xsd:element ref="sc:EPAChemicalRegistryName" minOccurs="0"/>
+			<xsd:element ref="sc:EPAChemicalIdentifier" minOccurs="0"/>
+			<xsd:element ref="sc:ChemicalNameContext" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ChemicalInventoryDetailsDataType">
+		<xsd:sequence>
+			<xsd:element ref="TierII:NumberOfDaysOnsite" minOccurs="0"/>
+			<xsd:element ref="TierII:MaximumDailyAmount" minOccurs="0"/>
+			<xsd:element ref="TierII:MaximumCode" minOccurs="0"/>
+			<xsd:element ref="TierII:AverageDailyAmount" minOccurs="0"/>
+			<xsd:element ref="TierII:AverageCode" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ChemicalStorageLocationDataType">
+		<xsd:sequence>
+			<xsd:element ref="TierII:ConfidentialLocationIndicator" minOccurs="0"/>
+			<xsd:element ref="TierII:StorageTypeCode" minOccurs="0"/>
+			<xsd:element ref="TierII:StorageTypeDescription" minOccurs="0"/>
+			<xsd:element ref="TierII:StorageLocationTemperatureCode" minOccurs="0"/>
+			<xsd:element ref="TierII:StorageLocationTemperatureDescription" minOccurs="0"/>
+			<xsd:element ref="TierII:StorageLocationPressureCode" minOccurs="0"/>
+			<xsd:element ref="TierII:StorageLocationPressureDescription" minOccurs="0"/>
+			<xsd:element ref="TierII:StorageLocationDescription" minOccurs="0"/>
+			<xsd:element ref="TierII:MaximumAmountAtLocation" minOccurs="0"/>
+			<xsd:element ref="TierII:MeasurementUnit" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MixtureComponentsDataType">
+		<xsd:sequence>
+			<xsd:element ref="sc:CASNumber" minOccurs="0"/>
+			<xsd:element ref="TierII:Component" minOccurs="0"/>
+			<xsd:element ref="TierII:ComponentPercentage" minOccurs="0"/>
+			<xsd:element ref="TierII:WeightOrVolume" minOccurs="0"/>
+			<xsd:element ref="TierII:EHSIndicator" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ConfidentialLocationIndicator" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation>Indicates that the chemical storage location is confidential</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="StorageTypeCode" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation>code for the storage type, for instance, A (Above ground tank), etc.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="StorageTypeDescription" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation>description of the storage type code</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="StorageLocationTemperatureCode" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation>code for the temperature condition at storage location</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="StorageLocationTemperatureDescription" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation>description of the temperature condition at storage location</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="StorageLocationPressureCode" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation>code of the pressure condition at storage location</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="StorageLocationPressureDescription" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation>description of the pressure condition at storage location</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="StorageLocationDescription" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation>other description of the storage location, for instance, precise location of the chemical, etc.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MaximumAmountAtLocation" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation>maximum chemical storage at this storage location</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MeasurementUnit" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation>Unit used to measure maximum amount</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="Component" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation>mixture component name</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ComponentPercentage" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation>percentage of the component</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="WeightOrVolume" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation>Weight or Volume used</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

@@ -1,0 +1,36 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Windsor.Node2008.CameoInputFileProcessor.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="ImportFolder" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">C:\FLOWS\HERE</Value>
+    </Setting>
+    <Setting Name="ImportCSVFileSearchPattern" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Tier2*.mer</Value>
+    </Setting>
+    <Setting Name="ImportFileSearchToDBTableNamePattern" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">CAMEO_*</Value>
+    </Setting>
+    <Setting Name="TempFolderPath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="DBProviderType" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">System.Data.SqlClient</Value>
+    </Setting>
+    <Setting Name="DBConnectionString" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">server=.\sqlexpress;integrated security=true;database=HERE_FLOW_MI_CORRECT</Value>
+    </Setting>
+    <Setting Name="ArchiveFolder" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">C:\FLOWS\HERE\Archive</Value>
+    </Setting>
+    <Setting Name="ErrorFolder" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">C:\FLOWS\HERE\Error</Value>
+    </Setting>
+    <Setting Name="EndProcessingStoredProcName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">HERE_PROCESS</Value>
+    </Setting>
+    <Setting Name="CleanupTablesStoredProcName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">CLEAN_MI_CAMEO</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

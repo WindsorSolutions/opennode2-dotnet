@@ -1,0 +1,40 @@
+<!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Terrie Sutch (SAIC) -->
+<!-- edited with XML Spy v4.3 U (http://www.xmlspy.com) by Fazal Mohammed (Science Applications International Corp.) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="2.0">
+	<xsd:include schemaLocation=".\SDWA_WaterSystemFacilityDataTypes_v2.xsd"/>
+	<xsd:include schemaLocation=".\SDWA_SampleDataTypes_v2.xsd"/>
+	<xsd:include schemaLocation=".\SDWA_SampleResult_v2.xsd"/>
+	<xsd:include schemaLocation=".\SDWA_MessageNotification_v2.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>Sample Business Object</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="Samples" type="SamplesType"/>
+	<xsd:element name="SampleDetails" type="SampleDetailsType"/>
+	<xsd:complexType name="SamplesType">
+		<xsd:sequence>
+			<xsd:element ref="SampleDetails" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SampleDetailsType">
+		<xsd:sequence>
+			<xsd:element ref="PWSIdentifier"/>
+			<xsd:element ref="SampleIdentifier"/>
+			<xsd:element ref="FacilityIdentifier" minOccurs="0"/>
+			<xsd:element name="SampleDate">
+				<xsd:complexType>
+					<xsd:choice>
+						<xsd:element ref="CollectionDate"/>
+						<xsd:element ref="MonitoringPeriod"/>
+					</xsd:choice>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element ref="SampleFacilityWaterTypeCode" minOccurs="0"/>
+			<xsd:element ref="QtyComposited" minOccurs="0"/>
+			<xsd:element ref="SampleWaterTreatmentCode" minOccurs="0"/>
+			<xsd:element ref="SampleReconciliationIdentifier" minOccurs="0"/>
+			<xsd:element ref="SampleReportingDate"/>
+			<xsd:element ref="MessageStatus" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="SampleResults"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

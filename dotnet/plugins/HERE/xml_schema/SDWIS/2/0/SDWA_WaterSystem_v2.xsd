@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Terrie Sutch (SAIC) -->
+<!-- edited with XML Spy v4.3 U (http://www.xmlspy.com) by Terrie Sutch (Science Applications International Corp.) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="2.0">
+	<xsd:include schemaLocation=".\SDWA_WaterSystemDataTypes_v2.xsd"/>
+	<xsd:include schemaLocation=".\SDWA_MessageNotification_v2.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>Water System Business Object</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="WaterSystems" type="WaterSystemsType"/>
+	<xsd:element name="WaterSystemDetails" type="WaterSystemDetailsType"/>
+	<xsd:complexType name="WaterSystemsType">
+		<xsd:sequence>
+			<xsd:element ref="WaterSystemDetails" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="WaterSystemDetailsType">
+		<xsd:sequence>
+			<xsd:element ref="PWSIdentifier"/>
+			<xsd:element ref="PWSTypeCode"/>
+			<xsd:element ref="PWSNameText"/>
+			<xsd:element ref="PWSActivityFlag"/>
+			<xsd:element ref="PWSDeactivationDate" minOccurs="0"/>
+			<xsd:element ref="WholeSalerOfWaterCode" minOccurs="0"/>
+			<xsd:element ref="RetailPopulationServed"/>
+			<xsd:element ref="RetailServiceConnections"/>
+			<xsd:element ref="NonCommunitySeason" minOccurs="0"/>
+			<xsd:element ref="OwnerTypeCode"/>
+			<xsd:element ref="MessageStatus" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

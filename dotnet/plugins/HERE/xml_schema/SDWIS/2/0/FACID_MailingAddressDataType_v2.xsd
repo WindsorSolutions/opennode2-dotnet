@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<xsd:include schemaLocation="FACID_StateCodeDataType_v2.xsd"/>
+<xsd:annotation>
+	<xsd:appinfo>MailingAddressDataType_v2.xsd v1.0 2001-02 </xsd:appinfo>
+	<xsd:documentation>
+		Complex Data Type for Mailing Address.
+	</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType name="MailingAddressDataType">
+<xsd:sequence>
+<xsd:element name="MailingAddressText" type="xsd:string" minOccurs="0"/>
+<xsd:element name="SupplementalAddressText" type="xsd:string" minOccurs="0"/>
+<xsd:element name="MailingAddressCityName" type="xsd:string" minOccurs="0"/>
+<xsd:element name="MailingAddressStateUSPSCode" type="StateCodeDataType" minOccurs="0"/>
+<xsd:element name="MailingAddressStateName" type="xsd:string" minOccurs="0"/>
+<xsd:element name="MailingAddressCountryName" type="xsd:string" minOccurs="0"/> 
+<xsd:element name="MailingAddressZIPCode" type="xsd:string" minOccurs="0"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<xsd:include schemaLocation="FACID_FederalStateIndicatorDataType_v2.xsd"/>
+<xsd:annotation>
+	<xsd:appinfo>EnvironmentalInterestDataType_v2.xsd v2.0 2001-02 </xsd:appinfo>
+	<xsd:documentation>
+		Data Type for Environmental Interest.
+	</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType name="EnvironmentalInterestDataType">
+<xsd:sequence>
+<xsd:element name="InformationSystemAcronymName" type="xsd:string" minOccurs="0"/>
+<xsd:element name="InformationSystemIdentifier" type="xsd:string" minOccurs="0"/>
+<xsd:element name="EnvironmentalInterestTypeText" type="xsd:string" minOccurs="0"/>
+<xsd:element name="FederalStateInterestIndicator" type="FederalStateIndicatorDataType" minOccurs="0"/>
+<xsd:element name="EnvironmentalInterestStartDate" type="xsd:date" minOccurs="0"/> 
+<xsd:element name="InterestStartDateQualifierText" type="xsd:string" minOccurs="0"/> 
+<xsd:element name="EnvironmentalInterestEndDate" type="xsd:date" minOccurs="0"/> 
+<xsd:element name="InterestEndDateQualifierText" type="xsd:string" minOccurs="0"/> 
+</xsd:sequence>
+</xsd:complexType>
+</xsd:schema>

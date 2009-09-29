@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<xsd:include schemaLocation="FACID_DistrictDataType_v2.xsd"/>
+<xsd:include schemaLocation="FACID_YesNoIndicatorDataType_v2.xsd"/>
+<xsd:include schemaLocation="FACID_HUCCodeDataType_v2.xsd"/>
+<xsd:annotation>
+	<xsd:appinfo>FacilitySiteDataType_v2.xsd v2.0 2001-02 </xsd:appinfo>
+	<xsd:documentation>
+		Data Type for Facility Site.
+	</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType name="FacilitySiteDataType">
+<xsd:sequence>
+<xsd:element name="FacilityRegistryIdentifier" type="xsd:string" minOccurs="0"/>
+<xsd:element name="FacilitySiteName" type="xsd:string" minOccurs="0"/>
+<xsd:element name="FacilitySiteTypeName" type="xsd:string" minOccurs="0"/>
+<xsd:element name="FederalFacilityIndicator" type="YesNoIndicatorDataType" minOccurs="0"/>
+<xsd:element name="TribalLandIndicator" type="YesNoIndicatorDataType" minOccurs="0"/> 
+<xsd:element name="TribalLandName" type="xsd:string" minOccurs="0"/> 
+<xsd:element name="CongressionalDistrictNumber" type="DistrictDataType" minOccurs="0"/> 
+<xsd:element name="LegislativeDistrictNumber" type="DistrictDataType" minOccurs="0"/> 
+<xsd:element name="HUCCode" type="HUCCodeDataType" minOccurs="0"/> 
+</xsd:sequence>
+</xsd:complexType>
+</xsd:schema>

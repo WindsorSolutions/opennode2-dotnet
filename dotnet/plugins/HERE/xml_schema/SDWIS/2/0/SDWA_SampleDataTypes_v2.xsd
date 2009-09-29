@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Terrie Sutch (SAIC) -->
+<!-- edited with XML Spy v4.4 U (http://www.xmlspy.com) by Surjit De (Science Applications International Corp.) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="2.0">
+	<xsd:include schemaLocation=".\SDWA_CodeList.xsd"/>
+	<xsd:include schemaLocation=".\SDWA_CodeListSampleContaminant.xsd"/>
+	<xsd:include schemaLocation=".\SDWA_WaterSystemFacilityDataTypes_v2.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>Data Type Definitions for Sample and Sample Results.</xsd:documentation>
+	</xsd:annotation>
+	<xsd:simpleType name="SampleIdentifierType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="20"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SampleBeginDateType">
+		<xsd:restriction base="xsd:date">
+			<xsd:minInclusive value="1991-06-30"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="QtyCompositedType">
+		<xsd:restriction base="xsd:positiveInteger">
+			<xsd:minInclusive value="2"/>
+			<xsd:maxInclusive value="5"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SampleReconciliationIdentifierType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="40"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SampleAnalysisMethodCodeType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="5"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SampleAnalysisResultType">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:totalDigits value="15"/>
+			<xsd:fractionDigits value="9"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MPBeginDateType">
+		<xsd:restriction base="xsd:date"/>
+	</xsd:simpleType>
+	<xsd:complexType name="MonitoringPeriodType">
+		<xsd:sequence>
+			<xsd:element ref="MPBeginDate"/>
+			<xsd:element ref="MPEndDate"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SampleFacilityWaterTypeCodeType">
+		<xsd:choice>
+			<xsd:element name="SDWASampleFacilityWaterTypeCode" type="SDWASampleFacilityWaterTypeCodeType"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="SampleWaterTreatmentCodeType">
+		<xsd:choice>
+			<xsd:element name="SDWASampleWaterTreatmentCode" type="SDWASampleWaterTreatmentCodeType"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="SampleContaminantCodeType">
+		<xsd:choice>
+			<xsd:element name="SDWASampleContaminantCode" type="SDWASampleContaminantCodeType"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="SampleResultSignCodeType">
+		<xsd:choice>
+			<xsd:element name="SDWASampleResultSignCode" type="SDWASampleResultSignCodeType"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="SampleUnitMeasureCodeType">
+		<xsd:choice>
+			<xsd:element name="SDWASampleUnitMeasureCode" type="SDWASampleUnitMeasureCodeType"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:annotation>
+		<xsd:documentation>Global Element Declarations Sample and Sample Results.</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="SampleUnitMeasureCode" type="SampleUnitMeasureCodeType"/>
+	<xsd:element name="SampleResultSignCode" type="SampleResultSignCodeType"/>
+	<xsd:element name="SampleContaminantCode" type="SampleContaminantCodeType"/>
+	<xsd:element name="SampleAnalysisMethodCode" type="SampleAnalysisMethodCodeType"/>
+	<xsd:element name="SampleAnalysisResult" type="SampleAnalysisResultType"/>
+	<xsd:element name="SampleIdentifier" type="SampleIdentifierType"/>
+	<xsd:element name="CollectionDate" type="xsd:date"/>
+	<xsd:element name="MPBeginDate" type="MPBeginDateType"/>
+	<xsd:element name="MPEndDate" type="xsd:date"/>
+	<xsd:element name="SampleFacilityWaterTypeCode" type="SampleFacilityWaterTypeCodeType"/>
+	<xsd:element name="SampleWaterTreatmentCode" type="SampleWaterTreatmentCodeType"/>
+	<xsd:element name="SampleReportingDate" type="xsd:date"/>
+	<xsd:element name="QtyComposited" type="QtyCompositedType"/>
+	<xsd:element name="SampleReconciliationIdentifier" type="SampleReconciliationIdentifierType"/>
+	<xsd:element name="MonitoringPeriod" type="MonitoringPeriodType"/>
+</xsd:schema>

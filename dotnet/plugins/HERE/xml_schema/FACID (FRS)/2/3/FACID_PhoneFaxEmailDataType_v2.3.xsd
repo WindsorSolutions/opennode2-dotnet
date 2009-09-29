@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema targetNamespace="http://www.epa.gov/xml" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:facid="http://www.epa.gov/xml" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="2.3">
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name : 	FACID_PhoneFaxEmailDataType_v2.3 
+		Current Version Available At :
+		Description : 	Complex Data Type for Phone Fax Email.
+		Application : 
+		Developed by : 	 Environmental Protection Agency, SAIC
+		Point of Contact : Meena Masti	
+	</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="PhoneFaxEmailDataType">
+		<xsd:sequence>
+			<xsd:element ref="facid:EmailAddressText" minOccurs="0"/>
+			<xsd:element ref="facid:TelephoneNumber" minOccurs="0"/>
+			<xsd:element ref="facid:PhoneExtension" minOccurs="0"/>
+			<xsd:element ref="facid:FaxNumber" minOccurs="0"/>
+			<xsd:element ref="facid:AlternateTelephoneNumber" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="EmailAddressText" type="xsd:string"/>
+	<xsd:element name="TelephoneNumber" type="xsd:string"/>
+	<xsd:element name="PhoneExtension" type="xsd:string"/>
+	<xsd:element name="FaxNumber" type="xsd:string"/>
+	<xsd:element name="AlternateTelephoneNumber" type="xsd:string"/>
+</xsd:schema>

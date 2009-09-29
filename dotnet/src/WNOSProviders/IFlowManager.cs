@@ -76,5 +76,17 @@ namespace Windsor.Node2008.WNOSProviders
         /// Key is the flow name, value is the flow id.
         /// </summary>
         IDictionary<string, string> GetAllFlowsNameToIdMap();
+        /// <summary>
+        /// GetProtectedFlowNamesForUser
+        /// </summary>
+        IList<string> GetProtectedFlowNamesForUser(string username);
+        /// <summary>
+        /// GetProtectedFlowNames
+        /// </summary>
+        IList<string> GetProtectedFlowNames();
+        /// <summary>
+        /// GetDataFlowNames
+        /// </summary>
+        ICollection<string> GetDataFlowNames();
     }
 }

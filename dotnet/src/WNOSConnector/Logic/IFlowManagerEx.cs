@@ -69,10 +69,6 @@ namespace Windsor.Node2008.WNOSConnector.Logic
         /// </summary>
         DataService GetExecuteServiceForFlow(string flowId, string methodName);
         /// <summary>
-        /// GetProtectedFlowNames
-        /// </summary>
-        IList<string> GetProtectedFlowNames();
-        /// <summary>
         /// GetAllProtectedDataFlowNamesToIdMap
         /// </summary>
         IDictionary<string, string> GetAllProtectedUpperDataFlowNamesToIdMap();

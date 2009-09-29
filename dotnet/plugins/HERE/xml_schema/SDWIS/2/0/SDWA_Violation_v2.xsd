@@ -1,0 +1,33 @@
+<!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Terrie Sutch (Science Application International Corporation) -->
+<!-- edited with XML Spy v4.3 U (http://www.xmlspy.com) by Terrie Sutch (Science Applications International Corp.) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="2.0">
+	<xsd:include schemaLocation=".\SDWA_WaterSystemFacilityDataTypes_v2.xsd"/>
+	<xsd:include schemaLocation=".\SDWA_ViolationDataTypes_v2.xsd"/>
+	<xsd:include schemaLocation=".\SDWA_MessageNotification_v2.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>Violation Business Object</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="Violations" type="ViolationsType"/>
+	<xsd:element name="ViolationDetails" type="ViolationDetailsType"/>
+	<xsd:complexType name="ViolationsType">
+		<xsd:sequence>
+			<xsd:element ref="ViolationDetails" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ViolationDetailsType">
+		<xsd:sequence>
+			<xsd:element ref="PWSIdentifier"/>
+			<xsd:element ref="FacilityIdentifier" minOccurs="0"/>
+			<xsd:element ref="ViolationIdentifier"/>
+			<xsd:element ref="ViolationTypeCode"/>
+			<xsd:element ref="ViolationContaminantCode" minOccurs="0"/>
+			<xsd:element ref="CompliancePeriod" minOccurs="0"/>
+			<xsd:element ref="AnalysisResult" minOccurs="0"/>
+			<xsd:element ref="LevelViolated" minOccurs="0"/>
+			<xsd:element ref="MajorViolationIndicatorCode" minOccurs="0"/>
+			<xsd:element ref="PNViolationIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="ViolationReportingDate"/>
+			<xsd:element ref="MessageStatus" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,27 @@
+<!-- edited with XML Spy v4.3 U (http://www.xmlspy.com) by Terrie Sutch (Science Applications International Corp.) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="2.0">
+	<xsd:include schemaLocation=".\SDWA_ServiceAreaDataTypes_v2.xsd"/>
+	<xsd:include schemaLocation=".\SDWA_MessageNotification_v2.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>Service Area Business Object </xsd:documentation>
+		<xsd:documentation>Description         : </xsd:documentation>
+		<xsd:documentation>Application          : </xsd:documentation>
+		<xsd:documentation>Developed By     :  </xsd:documentation>
+		<xsd:documentation>Point Of Contact  : </xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="ServiceAreas" type="ServiceAreasType"/>
+	<xsd:element name="ServiceAreaDetails" type="ServiceAreaDetailsType"/>
+	<xsd:complexType name="ServiceAreasType">
+		<xsd:sequence>
+			<xsd:element ref="ServiceAreaDetails" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ServiceAreaDetailsType">
+		<xsd:sequence>
+			<xsd:element ref="PWSIdentifier"/>
+			<xsd:element ref="PrimaryNAICSCode"/>
+			<xsd:element ref="NAICSCode" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="MessageStatus" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

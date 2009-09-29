@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<xsd:include schemaLocation="FACID_StateCodeDataType_v2.xsd"/>
+<xsd:include schemaLocation="FACID_FIPSCodeDataType_v2.xsd"/>
+<xsd:annotation>
+	<xsd:appinfo>LocationAddressDataType_v2.xsd v2.0 2001-02 </xsd:appinfo>
+	<xsd:documentation>
+		Data Type for Location Address.
+	</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType name="LocationAddressDataType">
+<xsd:sequence>
+<xsd:element name="LocationAddressText" type="xsd:string" minOccurs="0"/>
+<xsd:element name="SupplementalLocationText" type="xsd:string" minOccurs="0"/>
+<xsd:element name="LocalityName" type="xsd:string" minOccurs="0"/> 
+<xsd:element name="CountyStateFIPSCode" type="FIPSCodeDataType" minOccurs="0"/> 
+<xsd:element name="CountyName" type="xsd:string" minOccurs="0"/> 
+<xsd:element name="StateUSPSCode" type="StateCodeDataType" minOccurs="0"/> 
+<xsd:element name="StateName" type="xsd:string" minOccurs="0"/> 
+<xsd:element name="CountryName" type="xsd:string" minOccurs="0"/> 
+<xsd:element name="LocationZIPCode" type="xsd:string" minOccurs="0"/> 
+<xsd:element name="LocationDescriptionText" type="xsd:string" minOccurs="0"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:schema>
+

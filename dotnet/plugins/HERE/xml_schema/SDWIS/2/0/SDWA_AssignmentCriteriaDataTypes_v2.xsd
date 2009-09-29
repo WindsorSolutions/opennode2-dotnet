@@ -1,0 +1,51 @@
+<!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Terrie Sutch (Science Application International Corporation) -->
+<!-- edited with XML Spy v4.3 U (http://www.xmlspy.com) by Terrie Sutch (Science Applications International Corp.) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="2.0">
+	<xsd:include schemaLocation=".\SDWA_CodeList.xsd"/>
+	<xsd:include schemaLocation=".\SDWA_EnforcementDataTypes_v2.xsd"/>
+	<xsd:include schemaLocation=".\SDWA_ViolationDataTypes_v2.xsd"/>
+	<xsd:include schemaLocation=".\SDWA_SiteVisitDataTypes_v2.xsd"/>
+	<xsd:include schemaLocation=".\SDWA_EventScheduleDataTypes_v2.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>Data Type Definitions for Assignment Criteria.</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="LinkEffectivityDatesType">
+		<xsd:sequence>
+			<xsd:element ref="LinkCompliancePeriodBeginDate"/>
+			<xsd:element ref="LinkExpirationDate"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AssociatedViolationCriteriaType">
+		<xsd:sequence>
+			<xsd:element ref="LinkEffectivityDates"/>
+			<xsd:element ref="ViolationTypeCode" minOccurs="0"/>
+			<xsd:choice>
+				<xsd:element ref="ViolationContaminantCode" minOccurs="0"/>
+				<xsd:element ref="EventScheduleRuleCode" minOccurs="0"/>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="EnforcementAssignmentType">
+		<xsd:choice>
+			<xsd:element ref="AssociatedViolationCriteria" maxOccurs="unbounded"/>
+			<xsd:element ref="AssociatedViolationIDs" maxOccurs="unbounded"/>
+			<xsd:element ref="AssociatedScheduleIdentifier" maxOccurs="unbounded"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="VisitAssignmentType">
+		<xsd:sequence>
+			<xsd:element ref="AssociatedScheduleIdentifier" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:annotation>
+		<xsd:documentation>Global Element Declarations for Assignment Criteria.</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="LinkEffectivityDates" type="LinkEffectivityDatesType"/>
+	<xsd:element name="AssociatedViolationIDs" type="ViolationIdentifierType"/>
+	<xsd:element name="AssociatedViolationCriteria" type="AssociatedViolationCriteriaType"/>
+	<xsd:element name="AssociatedScheduleIdentifier" type="EventScheduleIdentifierType"/>
+	<xsd:element name="EnforcementAssignment" type="EnforcementAssignmentType"/>
+	<xsd:element name="VisitAssignment" type="VisitAssignmentType"/>
+	<xsd:element name="LinkCompliancePeriodBeginDate" type="xsd:date"/>
+	<xsd:element name="LinkExpirationDate" type="xsd:date"/>
+</xsd:schema>

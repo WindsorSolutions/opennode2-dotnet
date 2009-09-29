@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<xsd:annotation>
+	<xsd:appinfo>PhoneFaxEmailDataType_v2.xsd v2.0 2001-02 </xsd:appinfo>
+	<xsd:documentation>
+		Complex Data Type for Phone Fax Email.
+	</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType name="PhoneFaxEmailDataType">
+<xsd:sequence>
+<xsd:element name="EmailAddressText" type="xsd:string" minOccurs="0"/>
+<xsd:element name="TelephoneNumber" type="xsd:string" minOccurs="0"/>
+<xsd:element name="PhoneExtension" type="xsd:string" minOccurs="0"/>
+<xsd:element name="FaxNumber" type="xsd:string" minOccurs="0"/> 
+<xsd:element name="AlternateTelephoneNumber" type="xsd:string" minOccurs="0"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:schema>

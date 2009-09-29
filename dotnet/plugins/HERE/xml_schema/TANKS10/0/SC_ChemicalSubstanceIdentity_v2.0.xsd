@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified" version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:include schemaLocation="SC_SimpleContent_v2.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+        Schema Name  : SC_ChemicalSubstanceIdentity_v2.0.xsd
+        Schema Identification : S.02
+        Current Version Available At :  http://www.exchangenetwork.net/schema/SC
+        Description   : 	The Chemical Identification Block provides for the use of common identifiers for all chemical substances regulated or monitored by environmental programs.
+        Application   :   Exchange Network Shared Schema Component
+        Developed by  : 	 Core Reference Model (CRM) Workgroup
+        Point of Contact :   Douglas Timms, enfoTech &amp; Consulting, Inc.
+        Last Modified by :   Ross &amp; Associates - April 17, 2006 (from SSCv1.1: targetNamespace declaration removed, to conform with Exchange Network namespace decision v1.11)
+</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="ChemicalSubstanceIdentityDataType">
+		<xsd:sequence>
+			<xsd:element ref="EPAChemicalInternalNumber" minOccurs="0"/>
+			<xsd:element ref="CASRegistryNumber" minOccurs="0"/>
+			<xsd:element ref="ChemicalSubstanceSystematicName" minOccurs="0"/>
+			<xsd:element ref="EPAChemicalRegistryName" minOccurs="0"/>
+			<xsd:element ref="EPAChemicalIdentifier" minOccurs="0"/>
+			<xsd:element ref="ChemicalNameContextName" minOccurs="0"/>
+			<xsd:element ref="EPAChemicalRegistryNameSourceText" minOccurs="0"/>
+			<xsd:element ref="EPAChemicalRegistryNameContextName" minOccurs="0"/>
+			<xsd:element ref="ChemicalSubstanceDefinitionText" minOccurs="0"/>
+			<xsd:element ref="ChemicalSubstanceCommentText" minOccurs="0"/>
+			<xsd:element ref="ChemicalSubstanceSynonymName" minOccurs="0"/>
+			<xsd:element ref="MolecularFormulaCode" minOccurs="0"/>
+			<xsd:element ref="ChemicalSubstanceFormulaWeightQuantity" minOccurs="0"/>
+			<xsd:element ref="ChemicalSubstanceTypeName" minOccurs="0"/>
+			<xsd:element ref="ChemicalSubstanceLinearStructureCode" minOccurs="0"/>
+			<xsd:element ref="ChemicalStructureGraphicalDiagram" minOccurs="0"/>
+			<xsd:element ref="ChemicalSubstanceClassificationName" minOccurs="0"/>
+			<xsd:element ref="ChemicalSynonymStatusName" minOccurs="0"/>
+			<xsd:element ref="ChemicalSynonymSourceName" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ChemicalSubstanceIdentity" type="ChemicalSubstanceIdentityDataType">
+		<xsd:annotation>
+			<xsd:documentation>The Chemical Identification Block provides for the use of common identifiers for all chemical substances regulated or monitored by environmental programs.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

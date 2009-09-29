@@ -293,6 +293,10 @@ namespace Windsor.Node2008.WNOS.Logic
         {
             return _accountDao.GetUserIdByName(username);
         }
+        public IList<string> GetProtectedFlowNamesForUser(string username)
+        {
+            return _flowDao.GetProtectedFlowNamesForUser(username);
+        }
         public IDictionary<string, SimpleListDisplayInfo> GetListInfo(params string[] args)
         {
             Dictionary<string, SimpleListDisplayInfo> dict = new Dictionary<string, SimpleListDisplayInfo>();

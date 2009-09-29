@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:sc="urn:us:net:exchangenetwork:sc:1:0" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="urn:us:net:exchangenetwork:sc:1:0" version="1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:include schemaLocation="SC_SimpleContent_v1.0.xsd" />
+    <xsd:annotation>
+        <xsd:documentation>
+        Schema Name  : SC_NAICSIdentity_v1.0.xsd
+        Schema Identification : F.06
+        Current Version Available At :  http://www.exchangenetwork.net/registry/SC
+        Description   : 	The NAICS code set used to classify the economic activities of business establishments, grouped hierarchically into economic sectors, economic subsectors, industry groups, and industries. Industry classifications are further subdivided into national classifications that are specific to the needs of each country.
+        Application   :   Exchange Network Shared Schema Component
+        Developed by  : 	 Core Reference Model (CRM) Workgroup
+        Point of Contact :   Douglas Timms, enfoTech &amp; Consulting, Inc.
+</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType name="NAICSIdentityDataType">
+        <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="sc:NAICSCode" />
+            <xsd:element minOccurs="0" maxOccurs="1" ref="sc:NAICSIndustryCode" />
+            <xsd:element minOccurs="0" maxOccurs="1" ref="sc:NAICSGroupCode" />
+            <xsd:element minOccurs="0" maxOccurs="1" ref="sc:NAICSSubsectorCode" />
+            <xsd:element minOccurs="0" maxOccurs="1" ref="sc:NAICSSectorCode" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="NAICSIdentity" type="sc:NAICSIdentityDataType">
+        <xsd:annotation>
+            <xsd:documentation>The NAICS code set used to classify the economic activities of business establishments, grouped hierarchically into economic sectors, economic subsectors, industry groups, and industries. Industry classifications are further subdivided into national classifications that are specific to the needs of each country.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+</xsd:schema>
