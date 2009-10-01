@@ -41,6 +41,8 @@ public final class ScheduleFrequencyType extends Enum {
 
     public static final ScheduleFrequencyType ONCE = new ScheduleFrequencyType(
             "Once");
+    public static final ScheduleFrequencyType MINUTE = new ScheduleFrequencyType(
+            "Minute(s)");
     public static final ScheduleFrequencyType HOUR = new ScheduleFrequencyType(
             "Hour(s)");
     public static final ScheduleFrequencyType DAY = new ScheduleFrequencyType(
@@ -50,8 +52,8 @@ public final class ScheduleFrequencyType extends Enum {
     public static final ScheduleFrequencyType MONTH = new ScheduleFrequencyType(
             "Month(s)");
 
-    private static final long serialVersionUID = 1;
-    
+    private static final long serialVersionUID = 2;
+
     private ScheduleFrequencyType(String type) {
         super(type);
     }

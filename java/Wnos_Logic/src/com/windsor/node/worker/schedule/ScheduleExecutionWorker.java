@@ -265,7 +265,7 @@ public class ScheduleExecutionWorker extends NodeWorker implements
 
             logEntry.addEntry("Notification Sent");
             scheduleDao.setRunInfo(schedule.getId(), getScheduleInfo(logEntry,
-                    true), ScheduleExecuteStatus.SUCCESS);
+                    true), ScheduleExecuteStatus.Success);
 
         } catch (Exception ex) {
 
@@ -281,7 +281,7 @@ public class ScheduleExecutionWorker extends NodeWorker implements
             }
 
             scheduleDao.setRunInfo(schedule.getId(), getScheduleInfo(logEntry,
-                    false), ScheduleExecuteStatus.FAILURE);
+                    false), ScheduleExecuteStatus.Failure);
 
         } finally {
             getActivityService().insert(logEntry);

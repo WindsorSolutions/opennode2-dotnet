@@ -31,37 +31,11 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.windsor.node.common.domain;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
-import org.apache.commons.lang.enums.Enum;
+public enum ScheduleExecuteStatus {
 
-public final class ScheduleExecuteStatus extends Enum {
+    Running, Success, Failure;
 
-    public static final ScheduleExecuteStatus RUNNING = new ScheduleExecuteStatus(
-            "Running");
-    public static final ScheduleExecuteStatus SUCCESS = new ScheduleExecuteStatus(
-            "Sucesss");
-    public static final ScheduleExecuteStatus FAILURE = new ScheduleExecuteStatus(
-            "Failure");
-
-    private static final long serialVersionUID = 1;
-    
-    private ScheduleExecuteStatus(String type) {
-        super(type);
-    }
-
-    public static Map getEnumMap() {
-        return getEnumMap(ScheduleExecuteStatus.class);
-    }
-
-    public static List getEnumList() {
-        return getEnumList(ScheduleExecuteStatus.class);
-    }
-
-    public static Iterator iterator() {
-        return iterator(ScheduleExecuteStatus.class);
-    }
+    private static final long serialVersionUID = 2;
 
 }

@@ -118,9 +118,10 @@ public class ScheduleServiceImpl extends BaseService implements
     /**
      * get
      */
-    public List get(NodeVisit visit) {
+    @SuppressWarnings("unchecked")
+    public List<ScheduledItem> get(NodeVisit visit) {
 
-        return scheduleDao.get();
+        return (List<ScheduledItem>) scheduleDao.get();
     }
 
     /**
@@ -128,7 +129,7 @@ public class ScheduleServiceImpl extends BaseService implements
      * 
      * @return
      */
-    public List get() {
+    public List<?> get() {
 
         return scheduleDao.get();
     }
@@ -153,6 +154,8 @@ public class ScheduleServiceImpl extends BaseService implements
             throw new RuntimeException("ScheduledItem argument not set.");
         }
 
+        ScheduledItem savedSchedule = null;
+
         instance.setNextRunOn(ScheduleUtil.calculateNextRun(instance));
         logger.debug("Attempting to save:" + instance);
 
@@ -169,8 +172,8 @@ public class ScheduleServiceImpl extends BaseService implements
             instance.setModifiedById(visit.getUserAccount().getId());
 
             if (instance.getNextRunOn() == null
-                    || instance.getNextRunOn() == new Timestamp(
-                            Integer.MIN_VALUE)) {
+                    || instance.getNextRunOn().equals(
+                            new Timestamp(Integer.MIN_VALUE))) {
                 instance.setNextRunOn(instance.getStartOn());
             }
 
@@ -183,7 +186,7 @@ public class ScheduleServiceImpl extends BaseService implements
             }
 
             logger.debug("Attempting to save schedule in DB");
-            instance = scheduleDao.save(instance);
+            savedSchedule = scheduleDao.save(instance);
             logEntry.addEntry("Schedule saved in DB.");
 
         } catch (Exception ex) {
@@ -199,7 +202,7 @@ public class ScheduleServiceImpl extends BaseService implements
             getActivityDao().make(logEntry);
         }
 
-        return instance;
+        return savedSchedule;
 
     }
 

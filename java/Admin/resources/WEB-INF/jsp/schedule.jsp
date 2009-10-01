@@ -40,10 +40,10 @@
 
 					<td width="5%" align="center">
 					<c:choose>
-						<c:when test="${schedule.executeStatus.name == 'Sucesss'}">
+						<c:when test="${schedule.executeStatus == 'Success'}">
 							<img title="OK" src="img/flag_green.gif" alt="OK" align="middle" style="border-width: 0px;" />
 						</c:when>
-						<c:when test="${schedule.executeStatus.name == 'Running'}">
+						<c:when test="${schedule.executeStatus == 'Running'}">
 							<img title="RUNNING" src="img/flag_white.gif" alt="RUNNING" align="middle" style="border-width: 0px;" />
 						</c:when>
 						<c:otherwise>
@@ -66,7 +66,7 @@
 				</tr>
 				
 				<c:choose>
-						<c:when test="${schedule.executeStatus.name == 'Running' }">
+						<c:when test="${schedule.executeStatus == 'Running' }">
 						
 
 <tr	class="<c:out value="${row}"/>">
@@ -107,7 +107,7 @@
 				</tr>
 				
 				<c:choose>
-				<c:when test="${schedule.executeStatus.name == 'Sucesss' }">
+				<c:when test="${schedule.executeStatus == 'Success' }">
 					<c:set var="hasError" value=""/>
 				</c:when>
 				<c:otherwise>

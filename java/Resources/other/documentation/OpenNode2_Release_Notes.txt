@@ -1,5 +1,31 @@
 ================================================================================
-Opennode2 v1.18 for Java - Release Notes                             2009-09-15
+OpenNode2 v1.19 for Java - Release Notes                             2009-09-30
+================================================================================
+
+This release introduces the plugin that supports the Homeland Emergency Response
+Exchange(HERE). This plugin is compatible with version 1.18 of the OpenNode. See
+the associated installation and configuration guide for details.
+
+This release  also features a number of small updates to the source code, but 
+does not include a binary distribution.
+
+NEW
+========================================
+* Externalized worker thread startup delay and run intervals to new 
+  worker.properties file, so they can be easily adjusted on a per-environment 
+  basis.
+
+* Added a per-minute option to the scheduler (mainly to facilitate testing).
+
+FIXED/RESOLVED
+========================================
+* Cleaned up minor issues related to schedules. If you build and install this
+  version for use with an existing OpenNode2 Admin database, you'll need to run
+  a simple update statement, provided in 
+  Resources/database/fixes/fix_NSchedule_data.sql.
+
+================================================================================
+OpenNode2 v1.18 for Java - Release Notes                             2009-09-15
 ================================================================================
 
 This release features new plugins, enhancements to support the Homeland 
@@ -39,7 +65,7 @@ NEW
 
 
 ================================================================================
-Opennode2 v1.17 for Java - Release Notes                             2009-08-05
+OpenNode2 v1.17 for Java - Release Notes                             2009-08-05
 ================================================================================
 
 This release primarily addresses interoperability issues in the EN v2.0 Endpoint
@@ -72,7 +98,7 @@ NEW
   fashion. 
 
 ================================================================================
-Opennode2 v1.1.4 for Java - Release Notes                             2009-06-26
+OpenNode2 v1.1.4 for Java - Release Notes                             2009-06-26
 ================================================================================
 
 This release contains both new features and bug fixes. The .war files are drop-

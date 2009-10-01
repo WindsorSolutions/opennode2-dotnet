@@ -62,7 +62,7 @@ public class ScheduledItem extends AuditableIdentity {
     private int frequency = 0;
     private boolean active = true;
     private boolean runNow = false;
-    private ScheduleExecuteStatus executeStatus = ScheduleExecuteStatus.SUCCESS;
+    private ScheduleExecuteStatus executeStatus = ScheduleExecuteStatus.Success;
     
     /**
      * Map of service id's & names associated with a flow id.

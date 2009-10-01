@@ -83,26 +83,13 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
             + "Frequency, ModifiedBy, ModifiedOn, IsActive, "
             + "IsRunNow, ExecuteStatus FROM NSchedule ";
 
-    /**
-     * All finder methods in this class use this SELECT constant to build their
-     * queries
-     */
     private static final String SQL_SELECT_ID = SQL_SELECT + " WHERE Id = ? ";
 
-    /**
-     * All finder methods in this class use this SELECT constant to build their
-     * queries
-     */
     private static final String SQL_SELECT_ALL = SQL_SELECT + " ORDER BY Name ";
-
-    /**
-     * All finder methods in this class use this SELECT constant to build their
-     * queries
-     */
 
     private static final String SQL_SELECT_FOR_EXEC = SQL_SELECT
             + " WHERE ((IsRunNow = ?) OR (((NextRun IS NOT NULL) AND (? > NextRun)) "
-            + " AND ((? BETWEEN StartOn AND EndOn) OR (StartOn = EndOn)))) ";
+            + " AND (? BETWEEN StartOn AND EndOn) )) ";
 
     private static final String SQL_UPDATE_FOR_EXEC = "UPDATE NSchedule SET ExecuteStatus = ?, IsRunNow = 'N' "
             + " WHERE Id = ? AND ExecuteStatus != ? ";
@@ -175,7 +162,7 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
         // ExecuteStatus = ?
         // WHERE Id = ?
         Object[] args = new Object[] { DateUtil.getTimestamp(), info,
-                executeStatus.getName(), scheduleId };
+                executeStatus.name(), scheduleId };
 
         int[] types = new int[] { Types.TIMESTAMP, Types.VARCHAR,
                 Types.VARCHAR, Types.VARCHAR };
@@ -268,7 +255,7 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
         // IsRunNow
         args[17] = FormatUtil.toYNFromBoolean(instance.isRunNow());
         // ExecuteStatus
-        args[18] = instance.getExecuteStatus().getName();
+        args[18] = instance.getExecuteStatus().name();
         // id
         args[19] = instance.getId();
 
@@ -334,8 +321,8 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
                 Types.VARCHAR };
 
         Object[] args = new Object[types.length];
-        Set keySet = sourceArgs.keySet();
-        Iterator i = keySet.iterator();
+        Set<?> keySet = sourceArgs.keySet();
+        Iterator<?> i = keySet.iterator();
 
         while (i.hasNext()) {
             String name = (String) i.next();
@@ -375,7 +362,7 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
         delete(SQL_DELETE_FLOW, id);
     }
 
-    public List get() {
+    public List<?> get() {
         return getJdbcTemplate().query(SQL_SELECT_ALL, new ScheduleMapper());
     }
 
@@ -389,12 +376,12 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
 
         ScheduledItem item = null;
 
-        // TODO: When disconnected this returns an invalid time
+        // NOTE: When disconnected this returns an invalid time (?)
         Timestamp now = DateUtil.getTimestamp();
 
         logger.debug("Now: " + now);
 
-        List schedules = getJdbcTemplate().query(SQL_SELECT_FOR_EXEC,
+        List<?> schedules = getJdbcTemplate().query(SQL_SELECT_FOR_EXEC,
                 new Object[] { FormatUtil.YES, now, now },
                 new int[] { Types.VARCHAR, Types.TIMESTAMP, Types.TIMESTAMP },
                 new ScheduleMapper());
@@ -407,9 +394,9 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
 
             Object[] args = new Object[3];
 
-            args[0] = ScheduleExecuteStatus.RUNNING.getName();
+            args[0] = ScheduleExecuteStatus.Running.name();
             args[1] = item.getId();
-            args[2] = ScheduleExecuteStatus.RUNNING.getName();
+            args[2] = ScheduleExecuteStatus.Running.name();
 
             getJdbcTemplate().update(SQL_UPDATE_FOR_EXEC, args);
 
@@ -489,7 +476,7 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
 
             // ExecuteStatus
             obj.setExecuteStatus((ScheduleExecuteStatus) ScheduleExecuteStatus
-                    .getEnumMap().get(rs.getString("ExecuteStatus")));
+                    .valueOf(rs.getString("ExecuteStatus")));
 
             return obj;
 

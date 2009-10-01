@@ -89,7 +89,17 @@ public final class ScheduleUtil {
                 last = now;
             }
 
-            if (schedule.getFrequencyType().equals(ScheduleFrequencyType.HOUR)) {
+            if (schedule.getFrequencyType()
+                    .equals(ScheduleFrequencyType.MINUTE)) {
+
+                next = new Timestamp(DateUtil.getNextNMinute(last, frequency)
+                        .getTime());
+
+                logger.debug("Added " + frequency + " hour(s), next run is: "
+                        + next);
+
+            } else if (schedule.getFrequencyType().equals(
+                    ScheduleFrequencyType.HOUR)) {
 
                 next = new Timestamp(DateUtil.getNextNHour(last, frequency)
                         .getTime());

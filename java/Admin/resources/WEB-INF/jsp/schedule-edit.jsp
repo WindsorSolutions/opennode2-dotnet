@@ -459,7 +459,7 @@
             <tr>
                 <td class="command" colspan="2" align="right">
                 
-                <c:if test="${command.executeStatus.name == 'Running' }">
+                <c:if test="${command.executeStatus == 'Running' }">
                     <span class="error">Schedule is currently being executed. 
                     Please wait until it is finished before making changes.</span>
                 </c:if>

@@ -74,7 +74,7 @@ public interface ScheduleService {
      * @param visit
      * @return
      */
-    List get(NodeVisit visit);
+    List<ScheduledItem> get(NodeVisit visit);
 
     /**
      * saveAndRunNow
