@@ -120,21 +120,5 @@
 		</property>
 	</bean>
 
-	<!--
-		for special cases using Oracle RAC with the tnsnames content in the
-		URL see http://forum.springsource.org/showthread.php?t=74794
-
-		EXPERIMENTAL - UNTESTED 2009-08-19
-	-->
-
-	<!--
-		<bean id="jdbcDataSource" class="oracle.jdbc.pool.OracleDataSource"
-		destroy-method="close"> <property name="URL">
-		<value>${jdbc.url}</value> </property> <property name="user">
-		<value>${jdbc.username}</value> </property> <property name="password">
-		<value>${jdbc.password}</value> </property> <property
-		name="connectionCachingEnabled" value="true" /> <property
-		name="fastConnectionFailoverEnabled" value="true" /> </bean>
-	-->
 
 </beans>

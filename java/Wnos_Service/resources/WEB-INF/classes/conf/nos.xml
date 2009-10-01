@@ -18,6 +18,7 @@
 				<value>classpath:nos.properties</value>
 				<value>classpath:naas.properties</value>
 				<value>classpath:velocity.properties</value>
+                <value>classpath:worker.properties</value>
 			</list>
 		</property>
 	</bean>
