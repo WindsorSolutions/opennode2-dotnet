@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AuthorizationResponse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://www.exchangenetwork.net/schema/SECURITY/1">
+    <GeneratedOn>2009-06-11T15:58:18.12787-07:00</GeneratedOn>
+    <NaasUsername>ted1207960235@windsorsolutions.com</NaasUsername>
+    <AccountCreatedInNaas>false</AccountCreatedInNaas>
+    <Comments />
+    <AuthorizationList>
+        <RequestedDataSourceName>Bogus</RequestedDataSourceName>
+        <AccessGranted>false</AccessGranted>
+    </AuthorizationList>
+    <AuthorizationList>
+        <RequestedDataSourceName>here</RequestedDataSourceName>
+        <AccessGranted>false</AccessGranted>
+    </AuthorizationList>
+    <AuthorizationList>
+        <RequestedDataSourceName>HERE-CAFO</RequestedDataSourceName>
+        <AccessGranted>false</AccessGranted>
+    </AuthorizationList>
+    <AuthorizationList>
+        <RequestedDataSourceName>HERE-FRS</RequestedDataSourceName>
+        <AccessGranted>false</AccessGranted>
+    </AuthorizationList>
+    <AuthorizationList>
+        <RequestedDataSourceName>HERE-TIER2</RequestedDataSourceName>
+        <AccessGranted>false</AccessGranted>
+    </AuthorizationList>
+</AuthorizationResponse>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AuthorizationRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://www.exchangenetwork.net/schema/SECURITY/1">
+    <GeneratedOn>2009-05-12T11:58:40.8125-07:00</GeneratedOn>
+    <AccountExistsInNaas>false</AccountExistsInNaas>
+    <RequestType>HERE data access request</RequestType>
+    <NaasUsername>ted1207960235@windsorsolutions.com</NaasUsername>
+    <FullName>Ted1207960235 Morris</FullName>
+    <OrganizationAffiliation>Windsor Solutions, Inc.</OrganizationAffiliation>
+    <TelephoneNumber>503-544-1515</TelephoneNumber>
+    <EmailAddress>ted1207960235@windsorsolutions.com</EmailAddress>
+    <AffiliatedNodeId>NY</AffiliatedNodeId>
+    <AffiliatedCounty>Skamania</AffiliatedCounty>
+    <PurposeDescription>I need node access now, dammit!</PurposeDescription>
+    <RequestedDataSourceNames>here</RequestedDataSourceNames>
+    <RequestedDataSourceNames>HERE-CAFO</RequestedDataSourceNames>
+    <RequestedDataSourceNames>HERE-TIER2</RequestedDataSourceNames>
+    <RequestedDataSourceNames>HERE-FRS</RequestedDataSourceNames>
+    <RequestedDataSourceNames>Bogus</RequestedDataSourceNames>
+    <RequestedDataSourceNames>HERE-SDWIS</RequestedDataSourceNames>
+    <RequestedNodeIds>NY</RequestedNodeIds>
+    <RequestedNodeIds>NV</RequestedNodeIds>
+    <RequestedNodeIds>ND</RequestedNodeIds>
+</AuthorizationRequest>

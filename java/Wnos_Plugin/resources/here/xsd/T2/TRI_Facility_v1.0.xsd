@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="urn:us:net:exchangenetwork:TRI:1:0" xmlns:sc="urn:us:net:exchangenetwork:sc:1:0" xmlns:TRI="urn:us:net:exchangenetwork:TRI:1:0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:import namespace="urn:us:net:exchangenetwork:sc:1:0" schemaLocation="SC_SimpleContent_v1.0.xsd"/>
+	<xsd:import namespace="urn:us:net:exchangenetwork:sc:1:0" schemaLocation="SC_LocationAddress_v1.0.xsd"/>
+	<xsd:include schemaLocation="TRI_MailingAddress_v1.0.xsd"/>
+	<xsd:include schemaLocation="TRI_GeographicLocationDescription_v1.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>		
+		Schema Name : 	TRI_Facility_v1.0.xsd
+		Current Version Available At :
+		Description : 	Facility name, location, address, industry and related facility information
+		Aplication : 
+		Developed by : 	 Environmental Protection Agency, Windsor Solutions, Inc.
+		Point of Contact : William Geake	
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="Facility" type="TRI:FacilityDataType">
+		<xsd:annotation>
+			<xsd:documentation>Facility Identification data</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="FacilityDataType">
+		<xsd:sequence>
+			<xsd:element ref="TRI:FacilityIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="sc:FacilitySiteName" minOccurs="0"/>
+			<xsd:element ref="sc:LocationAddress" minOccurs="0"/>
+			<xsd:element ref="TRI:MailingFacilitySiteName" minOccurs="0"/>
+			<xsd:element ref="TRI:MailingAddress" minOccurs="0"/>
+			<xsd:element ref="TRI:FacilitySIC" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="TRI:GeographicLocationDescription" minOccurs="0"/>
+			<xsd:element ref="TRI:ParentCompanyNameNAIndicator" minOccurs="0"/>
+			<xsd:element ref="TRI:ParentCompanyNameText" minOccurs="0"/>
+			<xsd:element ref="TRI:ParentDunBradstreetCode" minOccurs="0"/>
+			<xsd:element ref="TRI:FacilityDunBradstreetCode" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="TRI:RCRAIdentificationNumber" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="TRI:NPDESIdentificationNumber" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="TRI:UICIdentificationNumber" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="FacilityIdentifier" type="sc:FacilitySiteIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>A unique number assigned to the facility. The context attribute indicates which system the identifier refers to, such as TRI or FRS.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MailingFacilitySiteName" type="sc:FacilitySiteNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>The name which the facility or establishment uses for receiving mail </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ParentCompanyNameNAIndicator" type="xsd:boolean">
+		<xsd:annotation>
+			<xsd:documentation>Indicates that the N/A box was checked for the parent company name on the TRI reporting form</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ParentCompanyNameText" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation>Name of the corporation or other business company that is the ultimate parent company of the facility or establishment submitting the data.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ParentDunBradstreetCode" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation>The number which has been assigned to the parent company by Dun &amp; Bradstreet.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="FacilityPrimaryDunBradstreetIndicator" type="xsd:boolean">
+		<xsd:annotation>
+			<xsd:documentation>Indicates that the associated DB_NUM represents the principal Dun &amp; Bradstreet number assigned to the facility</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="FacilityDunBradstreetCode" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation>The number which has been assigned to a company by Dun &amp; Bradstreet.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="RCRAIdentificationNumber" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation>The number assigned to the facility by EPA for purposes of the Resource Conservation and Recovery Act (RCRA).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="NPDESIdentificationNumber" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation>The number assigned to the facility by EPA for purposes of the National Pollutant Discharge Elimination System (NPDES) program</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="UICIdentificationNumber" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation>The number assigned to the facility by EPA for purposes of the Undergrounf Injection Well Code (UIC) program</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="FacilitySIC" type="TRI:FacilitySICDataType">
+		<xsd:annotation>
+			<xsd:documentation>The Standard Industrial Classification (SIC) code or codes which best describes the activities conducted at the facility</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="FacilitySICDataType">
+		<xsd:sequence>
+			<xsd:element ref="sc:SICCode"/>
+			<xsd:element ref="sc:SICPrimaryIndicator"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

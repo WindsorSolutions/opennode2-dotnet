@@ -180,26 +180,31 @@ public abstract class BaseWqxXmlPlugin extends BaseWqxPlugin implements
             /* CREATE THE DOCUMENT TO SUBMIT */
             result.getAuditEntries().add(makeEntry("Generating xml file..."));
 
+            String docId = idGenerator.createId();
+
             generateXmlDoc(transaction, operationType, outfileBaseName,
-                    templateName);
+                    templateName, docId);
 
             result.getAuditEntries().add(
                     makeEntry("Xml file generated with template "
                             + templateName));
 
-            Document doc = makeDocument(transaction);
+            Document doc = makeDocument(transaction, docId);
 
             result.getAuditEntries().add(
                     makeEntry("Created document " + doc.getDocumentName()
                             + " in " + getTempFilePath()));
 
             result.getAuditEntries().add(makeEntry("Setting result..."));
+
             result.setPaginatedContentIndicator(new PaginationIndicator(
                     transaction.getRequest().getPaging().getStart(),
                     transaction.getRequest().getPaging().getCount(), true));
+
             result.getDocuments().add(doc);
 
             /* SUBMIT FILE TO PARTNER */
+
             transaction.getDocuments().add(doc);
 
             debug("pre-submit transaction.getId(): " + transaction.getId());
@@ -245,7 +250,7 @@ public abstract class BaseWqxXmlPlugin extends BaseWqxPlugin implements
                             + this.getClass().getName() + " Message: "
                             + ex.getMessage()));
         }
-
+        debug("Returning result: " + result);
         return result;
     }
 
@@ -296,7 +301,7 @@ public abstract class BaseWqxXmlPlugin extends BaseWqxPlugin implements
 
     private void generateXmlDoc(NodeTransaction transaction,
             WqxOperationType operationType, String outfileBaseName,
-            String templateName) {
+            String templateName, String docId) {
 
         velocityHelper.setTemplateArg(TEMPLATE_AUTHOR_NAME, authorName);
         velocityHelper.setTemplateArg(TEMPLATE_AUTHOR_ORG, authorOrg);
@@ -312,7 +317,6 @@ public abstract class BaseWqxXmlPlugin extends BaseWqxPlugin implements
 
         velocityHelper.setTemplateArg(TEMPLATE_ORG_ID, orgId);
 
-        String docId = idGenerator.createId();
         velocityHelper.setTemplateArg(TEMPLATE_DOC_ID, docId);
 
         Timestamp lastPendingTimestamp = statusDao.getLatestProcessedTimestamp(
@@ -336,11 +340,12 @@ public abstract class BaseWqxXmlPlugin extends BaseWqxPlugin implements
 
     }
 
-    private Document makeDocument(NodeTransaction transaction)
+    private Document makeDocument(NodeTransaction transaction, String docId)
             throws IOException {
 
         Document doc = new Document();
-        doc.setDocumentId(idGenerator.createId());
+        doc.setDocumentId(docId);
+        doc.setId(docId);
 
         if (transaction.getRequest().getType() != RequestType.QUERY) {
 
@@ -355,7 +360,9 @@ public abstract class BaseWqxXmlPlugin extends BaseWqxPlugin implements
 
         } else {
             doc.setType(CommonContentType.XML);
+
             doc.setDocumentName(FilenameUtils.getName(getTempFilePath()));
+
             doc.setContent(FileUtils.readFileToByteArray(new File(
                     getTempFilePath())));
         }

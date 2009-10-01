@@ -148,4 +148,8 @@ public interface VelocityHelper {
      */
     int merge(String template, String targetFilePath);
 
+    int getResultingRecordCount();
+
+    void setResultingRecordCount(int recordCunt);
+
 }

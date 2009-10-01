@@ -426,10 +426,6 @@ public class JdbcTemplateHelper extends TemplateHelper {
      * Given an SQL statment with no query parameters, return an Iterator
      * suitable for iterating over with a VTL #foreach construct.
      * 
-     * <p>
-     * Treats the query parameter as a VARCHAR.
-     * </p>
-     * 
      * @param sql
      *            the SQL query
      * @return a java.util.Iterator

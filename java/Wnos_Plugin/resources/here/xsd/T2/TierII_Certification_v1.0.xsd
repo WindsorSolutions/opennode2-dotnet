@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:sc="urn:us:net:exchangenetwork:sc:1:0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:TRI="urn:us:net:exchangenetwork:TRI:1:0" xmlns:TierII="http://www.exchangenetwork.net/schema/TierII/1/0" targetNamespace="http://www.exchangenetwork.net/schema/TierII/1/0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:import namespace="urn:us:net:exchangenetwork:sc:1:0" schemaLocation="SC_SimpleContent_v1.0.xsd"/>
+	<xsd:import namespace="urn:us:net:exchangenetwork:sc:1:0" schemaLocation="SC_IndividualIdentity_v1.0.xsd"/>
+	<xsd:import namespace="urn:us:net:exchangenetwork:sc:1:0" schemaLocation="SC_ElectronicAddress_v1.0.xsd"/>
+	<xsd:import namespace="urn:us:net:exchangenetwork:sc:1:0" schemaLocation="SC_Telephonic_v1.0.xsd"/>
+	<xsd:import namespace="urn:us:net:exchangenetwork:sc:1:0" schemaLocation="SC_MailingAddress_v1.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>		
+		Schema Name : 	TierII_Certification_v1.0.xsd
+		Current Version Available At :
+		Description : 	
+		Aplication : 
+		Developed by : 	 enfoTech
+		Point of Contact : Sara Liu	
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="Certification" type="TierII:CertificationDataType"/>
+	<xsd:complexType name="CertificationDataType">
+		<xsd:sequence>
+			<xsd:element ref="TierII:CertificationStatement" maxOccurs="unbounded"/>
+			<xsd:element ref="TierII:Certifier" minOccurs="0"/>
+			<xsd:element ref="TierII:CertifierContact" minOccurs="0"/>
+			<xsd:element ref="TierII:CertificationDate" minOccurs="0"/>
+			<xsd:element ref="TierII:CertifiedIndicator" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="CertificationStatement" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation>Certification Statement contents</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="Certifier" type="sc:IndividualIdentityDataType">
+		<xsd:annotation>
+			<xsd:documentation>Certifier name and title</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CertifierContact" type="TierII:CertifierContactDataType"/>
+	<xsd:complexType name="CertifierContactDataType">
+		<xsd:sequence>
+			<xsd:element ref="sc:IndividualIdentity" minOccurs="0"/>
+			<xsd:element ref="sc:ElectronicAddress" minOccurs="0"/>
+			<xsd:element ref="sc:MailingAddress" minOccurs="0"/>
+			<xsd:element ref="sc:Telephonic" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="CertificationDate" type="xsd:date">
+		<xsd:annotation>
+			<xsd:documentation>Date submission is certified</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CertifiedIndicator" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation>Indicator of the submission has been certified. </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

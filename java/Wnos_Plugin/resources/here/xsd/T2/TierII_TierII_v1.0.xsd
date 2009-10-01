@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by private (private) -->
+<xsd:schema targetNamespace="http://www.exchangenetwork.net/schema/TierII/1/0" xmlns:sc="urn:us:net:exchangenetwork:sc:1:0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:TRI="urn:us:net:exchangenetwork:TRI:1:0" xmlns:facid="http://www.epa.gov/xml" xmlns:ei="http://www.exchangenetwork.net/schema/EnvironmentalIncident/1/0" xmlns:TierII="http://www.exchangenetwork.net/schema/TierII/1/0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:import namespace="urn:us:net:exchangenetwork:sc:1:0" schemaLocation="SC_SimpleContent_v1.0.xsd"/>
+	<xsd:import namespace="urn:us:net:exchangenetwork:sc:1:0" schemaLocation="SC_IndividualIdentity_v1.0.xsd"/>
+	<xsd:import namespace="urn:us:net:exchangenetwork:sc:1:0" schemaLocation="SC_ElectronicAddress_v1.0.xsd"/>
+	<xsd:import namespace="urn:us:net:exchangenetwork:TRI:1:0" schemaLocation="TRI_Facility_v1.0.xsd"/>
+	<xsd:include schemaLocation="TierII_Report_v1.0.xsd"/>
+	<xsd:include schemaLocation="TierII_Certification_v1.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>		
+		Schema Name : 	TierII_TierII_v1.0.xsd
+		Current Version Available At :
+		Description : 	This is the root schema for Tier II Chemical Inventory reporting data
+		Aplication : 
+		Developed by : 	 enfoTech
+		Point of Contact : Sara Liu	
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="TierII" type="TierII:TierIIDataType"/>
+	<xsd:complexType name="TierIIDataType">
+		<xsd:sequence>
+			<xsd:element ref="TierII:Submission" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="schemaVersion" type="xsd:decimal" use="required"/>
+	</xsd:complexType>
+	<xsd:element name="Submission" type="TierII:SubmissionDataType">
+		<xsd:annotation>
+			<xsd:documentation>A container for one or more TRI Reports for a given facility</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="SubmissionDataType">
+		<xsd:sequence>
+			<xsd:element ref="TierII:SubmissionIdentifier" minOccurs="0"/>
+			<xsd:element ref="TierII:SubmissionDate" minOccurs="0"/>
+			<xsd:element ref="TierII:SubmissionStatus" minOccurs="0"/>
+			<xsd:element ref="TierII:SubmissionMethod" minOccurs="0"/>
+			<xsd:element ref="TierII:TierIIReport" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="SubmissionIdentifier" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation>A number used to uniquely identify a Tier II submission, which contains data for multiple facilities and one or more chemicals</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SubmissionDate" type="xsd:date">
+		<xsd:annotation>
+			<xsd:documentation>Date and Time a submission is received by the system</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SubmissionStatus" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation>Submission status, for instance, accepted, rejected, etc.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SubmissionMethod" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation>File submitted method, via web entry form, file upload, etc. </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://www.exchangenetwork.net/schema/SECURITY/1" elementFormDefault="qualified" targetNamespace="http://www.exchangenetwork.net/schema/SECURITY/1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="AuthorizationResponse" nillable="true" type="tns:AuthorizationResponse" />
+  <xs:complexType name="AuthorizationResponse">
+      <xs:sequence>
+        <xs:element minOccurs="1" maxOccurs="1" name="GeneratedOn" type="xs:dateTime" />
+        <xs:element minOccurs="1" maxOccurs="1" name="NaasUsername" type="xs:string" />
+        <xs:element minOccurs="1" maxOccurs="1" name="AccountCreatedInNaas" type="xs:boolean" />
+        <xs:element minOccurs="0" maxOccurs="1" name="Comments" type="xs:string" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" name="AuthorizationList" type="tns:AuthorizationItem" />
+      </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AuthorizationItem">
+    <xs:sequence>
+      <xs:element minOccurs="1" maxOccurs="1" name="RequestedDataSourceName" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="AccessGranted" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

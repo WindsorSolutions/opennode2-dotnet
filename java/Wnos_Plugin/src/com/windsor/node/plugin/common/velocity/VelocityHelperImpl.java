@@ -75,6 +75,8 @@ public class VelocityHelperImpl implements VelocityHelper {
     protected VelocityEngine velocityEngine;
     protected TemplateHelper templateHelper;
 
+    private int resultingRecordCount;
+
     /**
      * NOTE: this implementation ignores the DataSource and simply calls
      * <code>configure(String templateDirectory)</code>.
@@ -253,7 +255,15 @@ public class VelocityHelperImpl implements VelocityHelper {
             throw new RuntimeException("Template error: " + e.getMessage(), e);
         }
 
-        return 0;
+        return getResultingRecordCount();
+    }
+
+    public int getResultingRecordCount() {
+        return resultingRecordCount;
+    }
+
+    public void setResultingRecordCount(int resultingRecordCount) {
+        this.resultingRecordCount = resultingRecordCount;
     }
 
 }

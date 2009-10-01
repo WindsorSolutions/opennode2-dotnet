@@ -8,11 +8,14 @@
 
 	<property name="aqs.root" value="aqs" />
     <property name="ends2.root" value="ends2" />
+    <property name="flowsecurity.root" value="flowsecurity" />
 	<property name="frs23.root" value="frs23" />
+	<property name="here.root" value="here" />
 	<property name="mapforcebridge.root" value="mapforcebridge" />
     <property name="nct.root" value="nct" />
 	<property name="nei.root" value="nei" />
     <property name="rcra.root" value="rcra" />
+	<property name="sample.root" value="sample" />
     <property name="sdwis.root" value="sdwis" />
 	<property name="windsor.root" value="windsor" />
     <property name="wqx.root" value="wqx" />
@@ -78,9 +81,15 @@
 		<echo message="Running ${run.target} in ${ends2.root}" />
 		<ant dir="${ends2.root}" target="${run.target}" inheritAll="false" inheritRefs="false" />
         
+		<echo message="Running ${run.target} in ${flowsecurity.root}" />
+        <ant dir="${flowsecurity.root}" target="${run.target}" inheritAll="false" inheritRefs="false" />
+        
 		<echo message="Running ${run.target} in ${frs23.root}" />
         <ant dir="${frs23.root}" target="${run.target}" inheritAll="false" inheritRefs="false" />
 		
+		<echo message="Running ${run.target} in ${here.root}" />
+        <ant dir="${here.root}" target="${run.target}" inheritAll="false" inheritRefs="false" />
+        
 		<echo message="Running ${run.target} in ${mapforcebridge.root}" />
 		<ant dir="${mapforcebridge.root}" target="${run.target}" inheritAll="false" inheritRefs="false" />
 		
@@ -89,10 +98,13 @@
 		
 		<echo message="Running ${run.target} in ${nei.root}" />
 		<ant dir="${nei.root}" target="${run.target}" inheritAll="false" inheritRefs="false" />
-		
+        
 		<echo message="Running ${run.target} in ${rcra.root}" />
         <ant dir="${rcra.root}" target="${run.target}" inheritAll="false" inheritRefs="false" />
 		
+		<echo message="Running ${run.target} in ${sample.root}" />
+		<ant dir="${sample.root}" target="${run.target}" inheritAll="false" inheritRefs="false" />
+        
 		<echo message="Running ${run.target} in ${sdwis.root}" />
         <ant dir="${sdwis.root}" target="${run.target}" inheritAll="false" inheritRefs="false" />
 		
