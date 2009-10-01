@@ -45,7 +45,8 @@ namespace Windsor.Node2008.Client2
 {
 
 
-    [System.Web.Services.WebServiceBindingAttribute(Name = "NetworkNodeBinding2", Namespace = "http://www.exchangenetwork.net/wsdl/node/2")]
+    [System.Web.Services.WebServiceBindingAttribute(Name = "NetworkNodeBinding2", Namespace = "http://www.exchangenetwork.net/wsdl/node/2", ConformsTo = WsiProfiles.BasicProfile1_1)]
+    [Microsoft.Web.Services3.Messaging.SoapActor("*")]
     public partial class ENClient20 : Microsoft.Web.Services3.WebServicesClientProtocol
     {
         protected override XmlReader GetReaderForMessage(SoapClientMessage message, int bufferSize)
@@ -93,13 +94,9 @@ namespace Windsor.Node2008.Client2
 
         private System.Threading.SendOrPostCallback GetServicesOperationCompleted;
 
-        /// <remarks/>
-        public ENClient20() : this("http://localhost/xml/node_v20_draft.wsdl")
-        {
-        }
-
         public ENClient20(string url)
         {
+            this.RequireMtom = true;
             this.SoapVersion = System.Web.Services.Protocols.SoapProtocolVersion.Soap12;
             this.Url = url;
             ServicePointManager.ServerCertificateValidationCallback = CertificatePolicy.RemoteCertificateValidationProc;
@@ -117,7 +114,7 @@ namespace Windsor.Node2008.Client2
         public event GetServicesCompletedEventHandler GetServicesCompleted;
 
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Bare)]
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("Authenticate", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Bare)]
         [return: System.Xml.Serialization.XmlElementAttribute("AuthenticateResponse", Namespace = "http://www.exchangenetwork.net/schema/node/2")]
         public AuthenticateResponse Authenticate([System.Xml.Serialization.XmlElementAttribute("Authenticate", Namespace = "http://www.exchangenetwork.net/schema/node/2")] Authenticate Authenticate1)
         {
@@ -167,7 +164,7 @@ namespace Windsor.Node2008.Client2
         }
 
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Bare)]
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("Submit", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Bare)]
         [return: System.Xml.Serialization.XmlElementAttribute("SubmitResponse", Namespace = "http://www.exchangenetwork.net/schema/node/2")]
         public StatusResponseType Submit([System.Xml.Serialization.XmlElementAttribute("Submit", Namespace = "http://www.exchangenetwork.net/schema/node/2")] Submit Submit1)
         {
@@ -217,7 +214,7 @@ namespace Windsor.Node2008.Client2
         }
 
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Bare)]
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("GetStatus", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Bare)]
         [return: System.Xml.Serialization.XmlElementAttribute("GetStatusResponse", Namespace = "http://www.exchangenetwork.net/schema/node/2")]
         public StatusResponseType GetStatus([System.Xml.Serialization.XmlElementAttribute("GetStatus", Namespace = "http://www.exchangenetwork.net/schema/node/2")] GetStatus GetStatus1)
         {
@@ -267,7 +264,7 @@ namespace Windsor.Node2008.Client2
         }
 
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Bare)]
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("Notify", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Bare)]
         [return: System.Xml.Serialization.XmlElementAttribute("NotifyResponse", Namespace = "http://www.exchangenetwork.net/schema/node/2")]
         public StatusResponseType Notify([System.Xml.Serialization.XmlElementAttribute("Notify", Namespace = "http://www.exchangenetwork.net/schema/node/2")] Notify Notify1)
         {
@@ -317,7 +314,7 @@ namespace Windsor.Node2008.Client2
         }
 
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Bare)]
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("Download", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Bare)]
         [return: System.Xml.Serialization.XmlArrayAttribute("DownloadResponse", Namespace = "http://www.exchangenetwork.net/schema/node/2")]
         [return: System.Xml.Serialization.XmlArrayItemAttribute("documents", IsNullable = false)]
         public NodeDocumentType[] Download([System.Xml.Serialization.XmlElementAttribute("Download", Namespace = "http://www.exchangenetwork.net/schema/node/2")] Download Download1)
@@ -368,7 +365,7 @@ namespace Windsor.Node2008.Client2
         }
 
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Bare)]
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("Query", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Bare)]
         [return: System.Xml.Serialization.XmlElementAttribute("QueryResponse", Namespace = "http://www.exchangenetwork.net/schema/node/2")]
         public ResultSetType Query([System.Xml.Serialization.XmlElementAttribute("Query", Namespace = "http://www.exchangenetwork.net/schema/node/2")] Query Query1)
         {
@@ -418,7 +415,7 @@ namespace Windsor.Node2008.Client2
         }
 
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Bare)]
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("Solicit", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Bare)]
         [return: System.Xml.Serialization.XmlElementAttribute("SolicitResponse", Namespace = "http://www.exchangenetwork.net/schema/node/2")]
         public StatusResponseType Solicit([System.Xml.Serialization.XmlElementAttribute("Solicit", Namespace = "http://www.exchangenetwork.net/schema/node/2")] Solicit Solicit1)
         {
@@ -468,7 +465,7 @@ namespace Windsor.Node2008.Client2
         }
 
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Bare)]
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("Execute", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Bare)]
         [return: System.Xml.Serialization.XmlElementAttribute("ExecuteResponse", Namespace = "http://www.exchangenetwork.net/schema/node/2")]
         public ExecuteResponse Execute([System.Xml.Serialization.XmlElementAttribute("Execute", Namespace = "http://www.exchangenetwork.net/schema/node/2")] Execute Execute1)
         {
@@ -518,7 +515,7 @@ namespace Windsor.Node2008.Client2
         }
 
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Bare)]
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("NodePing", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Bare)]
         [return: System.Xml.Serialization.XmlElementAttribute("NodePingResponse", Namespace = "http://www.exchangenetwork.net/schema/node/2")]
         public NodePingResponse NodePing([System.Xml.Serialization.XmlElementAttribute("NodePing", Namespace = "http://www.exchangenetwork.net/schema/node/2")] NodePing NodePing1)
         {
@@ -568,7 +565,7 @@ namespace Windsor.Node2008.Client2
         }
 
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Bare)]
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("GetServices", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Bare)]
         [return: System.Xml.Serialization.XmlElementAttribute("GetServicesResponse", Namespace = "http://www.exchangenetwork.net/schema/node/2")]
         public GenericXmlType GetServices([System.Xml.Serialization.XmlElementAttribute("GetServices", Namespace = "http://www.exchangenetwork.net/schema/node/2")] GetServices GetServices1)
         {

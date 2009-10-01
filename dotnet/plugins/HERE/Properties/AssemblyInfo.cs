@@ -66,6 +66,6 @@ using Windsor.Node2008.WNOSPlugin;
 //
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("1.1.8." + AssemblyInfo.cSvnVersion)]
+[assembly: AssemblyVersion("1.1.9." + AssemblyInfo.cSvnVersion)]
 [assembly: PluginDefaultFlowAttribute("HERE-CAFO,HERE-DELETE,HERE,HERE-FRS,HERE-TIER2,HERE-TANKS,HERE-FACID")]
-[assembly: PluginPackageNameAttribute("HERE 1.0")]
+[assembly: PluginPackageNameAttribute("HERE 2.0")]
