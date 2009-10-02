@@ -1020,7 +1020,7 @@ $helper.printElapsedTime()
 #end##foreach($activity in $helper.getData
 $helper.print("done with Results and Activities, getting ActivityGroups...")
 $helper.printElapsedTime()
-#foreach($activityGroup in $helper.getData("SELECT activitygroupid, activitygroupname, activitygrouptypecode, activityid FROM WQX_ACTIVITYGROUP WHERE PARENTID = ?  AND WQXUPDATEDATE >= ? ", [$org.get("recordid"), $helper.toDbDateString($lastProcessedTimestamp)]))
+#foreach($activityGroup in $helper.getData("SELECT A.activitygroupid, A.activitygroupname, A.activitygrouptypecode, B.activityparentid FROM WQX_ACTIVITYGROUP A,  WQX_ACTIVITYACTIVITYGROUP B WHERE B.ACTIVITYGROUPPARENTID = A.RECORDID and A.PARENTID = ?  AND WQXUPDATEDATE >= ? ", [$org.get("recordid"), $helper.toDbDateString($lastProcessedTimestamp)]))
         <ActivityGroup>
 #if($activityGroup.get("activitygroupid"))
             <ActivityGroupIdentifier>$activityGroup.get("activitygroupid")</ActivityGroupIdentifier>
@@ -1031,8 +1031,8 @@ $helper.printElapsedTime()
 #if($activityGroup.get("activitygrouptypecode"))
             <ActivityGroupTypeCode>$activityGroup.get("activitygrouptypecode")</ActivityGroupTypeCode>
 #end
-#if($activityGroup.get("activityid"))
-            <ActivityIdentifier>$activityGroup.get("activityid")</ActivityIdentifier>
+#if($activityGroup.get("activityparentid"))
+            <ActivityIdentifier>$activityGroup.get("activityparentid")</ActivityIdentifier>
 #end
         </ActivityGroup>
 #end##foreach($activityGroup in $helper.getData
