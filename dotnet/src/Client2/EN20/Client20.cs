@@ -99,6 +99,7 @@ namespace Windsor.Node2008.Client2.EN20
                 {
                     throw new ApplicationException("Client not configured. Please call Configure first");
                 }
+                
 				Authenticate authRequest =
 					NewAuthenticateObject(_credentials.UserName, 
 										  _credentials.Password,
@@ -570,10 +571,9 @@ namespace Windsor.Node2008.Client2.EN20
                 throw new ArgumentException("No NAAS authentication credentials specified");
             }
 
-            _requestor = new ENClient20();
+            _requestor = new ENClient20(targetEndpoint);
             _requestor.UseDefaultCredentials = true;
             _requestor.Timeout = 300000;
-            _requestor.Url = targetEndpoint;
             _requestor.SoapVersion = System.Web.Services.Protocols.SoapProtocolVersion.Soap12;
             _requestor.AllowAutoRedirect = true;
 

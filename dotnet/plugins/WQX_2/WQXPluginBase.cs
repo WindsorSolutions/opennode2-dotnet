@@ -887,13 +887,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                     if (endpointClient.Version == EndpointVersionType.EN20)
                     {
                         transactionId =
-                            endpointClient.Submit(WQX_FLOW_NAME,
-                                                  null,
-                            /* Don't specify operation for now
-                            (submissionType == Submission_Type.InsertUpdate) ?
-                             WQX_INSERT_UPDATE_OPERATION_NAME : WQX_DELETE_OPERATION_NAME,
-                            */
-                                                  null, new string[] { submitFile });
+                            endpointClient.Submit(WQX_FLOW_NAME, "default",
+                                                  string.Empty, new string[] { submitFile });
                     }
                     else
                     {
