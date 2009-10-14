@@ -62,11 +62,15 @@
   <ItemGroup>
     <Reference Include="Common.Logging, Version=1.2.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\lib\Common.Logging.dll</HintPath>
+      <HintPath>..\..\lib\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Core, Version=1.2.0.20313, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Spring.Core.dll</HintPath>
     </Reference>
     <Reference Include="Spring.Data, Version=1.2.0.20313, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\lib\Spring.Data.dll</HintPath>
+      <HintPath>..\..\lib\Spring.Data.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -135,7 +139,6 @@
     <Compile Include="TANKS10\TanksService.cs" />
     <Compile Include="TIER2\Tier2DataSet.cs">
       <DependentUpon>Tier2DataSet.xsd</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="TIER2\Tier2DataSet.Designer.cs">
       <AutoGen>True</AutoGen>
