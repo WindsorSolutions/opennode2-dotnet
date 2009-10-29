@@ -40,6 +40,8 @@ using System.Diagnostics;
 
 using Windsor.Node2008.WNOSPlugin;
 using Windsor.Commons.Compression;
+using Windsor.Node2008.WNOS.AssemblyInfo;
+using Windsor.Commons.Core;
 
 namespace CopyPlugins
 {
@@ -196,6 +198,20 @@ namespace CopyPlugins
                 string dstPath = Path.Combine(wnosConfigFolder, Path.GetFileName(configPath));
                 File.Copy(configPath, dstPath, true);
             }
+        }
+        static void BuildDeployPackage()
+        {
+            string parentDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            string zipFile = Path.Combine(parentDir, "DotNET OpenNode2 v1.1" + AssemblyInfo.cBuildVersion + ".zip");
+            FileUtils.SafeDeleteFile(zipFile);
+            DotNetZipHelper zipHelper = new DotNetZipHelper();
+            zipHelper.CompressDirectory(zipFile, Path.Combine(parentDir, "Config"));
+            zipHelper.CompressDirectory(zipFile, Path.Combine(parentDir, "Logs"));
+            zipHelper.CompressDirectory(zipFile, Path.Combine(parentDir, "Repository"));
+            zipHelper.CompressDirectory(zipFile, Path.Combine(parentDir, "Server"));
+            zipHelper.CompressDirectory(zipFile, Path.Combine(parentDir, "Sql"));
+            zipHelper.CompressDirectory(zipFile, Path.Combine(parentDir, "Temp"));
+            zipHelper.CompressDirectory(zipFile, Path.Combine(parentDir, "www"));
         }
     }
 }

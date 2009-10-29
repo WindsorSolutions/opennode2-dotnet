@@ -68,4 +68,4 @@ using Windsor.Node2008.WNOSPlugin;
 // by using the '*' as shown below:
 [assembly: AssemblyVersion("1.1." + AssemblyInfo.cBuildVersion + "." + AssemblyInfo.cSvnVersion)]
 [assembly: PluginDefaultFlowAttribute("ICIS-NPDES")]
-[assembly: PluginPackageNameAttribute("ICIS-NPDES_v1.5")]
+[assembly: PluginPackageNameAttribute("ICIS-NPDES 1.5")]

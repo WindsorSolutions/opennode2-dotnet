@@ -66,6 +66,6 @@ using Windsor.Node2008.WNOSPlugin;
 //
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("1.1.8." + AssemblyInfo.cSvnVersion)]
+[assembly: AssemblyVersion("1.1." + AssemblyInfo.cBuildVersion + "." + AssemblyInfo.cSvnVersion)]
 [assembly: PluginDefaultFlowAttribute("FacID_v3.0")]
-[assembly: PluginPackageNameAttribute("FacID_v3.0")]
+[assembly: PluginPackageNameAttribute("FacID 3.0")]
