@@ -43,13 +43,14 @@ namespace Windsor.Node2008.WNOS.AssemblyInfo
 	/// </summary>
     public static partial class AssemblyInfo
     {
+        public const string cBuildVersion = "10";
         public const string cSvnVersion = "$WCREV$";
 
         // [assembly: AssemblyVersion(AssemblyInfoServer.cAssemblyVersion)]
-        public const string cAssemblyVersion = "1.1.9.$WCREV$";
+        public const string cAssemblyVersion = "1.1." + cBuildVersion + ".$WCREV$";
 
         // [assembly: AssemblyFileVersion(AssemblyInfoServer.cAssemblyFileVersion)]
-        public const string cAssemblyFileVersion = "1.1.9.$WCREV$";
+        public const string cAssemblyFileVersion = "1.1." + cBuildVersion + ".$WCREV$";
 
         // [assembly: AssemblyCompany(AssemblyInfoServer.cAssemblyCompany)]
         public const string cAssemblyCompany = "The Environmental Council of the States (ECOS)";

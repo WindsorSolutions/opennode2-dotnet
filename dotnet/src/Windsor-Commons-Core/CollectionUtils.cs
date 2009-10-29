@@ -86,18 +86,19 @@ namespace Windsor.Commons.Core
         public static bool IndexInRange(IEnumerable inArray, int inIndex)
         {
 
+            return (inIndex > -1) && (inIndex < Count(inArray));
+        }
+        public static int Count(IEnumerable inArray)
+        {
+
             if (inArray == null)
             {
-                return false;
-            }
-            if (inIndex < 0)
-            {
-                return false;
+                return 0;
             }
             ICollection collection = inArray as ICollection;
             if (collection != null)
             {
-                return (inIndex < collection.Count);
+                return collection.Count;
             }
             else
             {
@@ -106,7 +107,7 @@ namespace Windsor.Commons.Core
                 {
                     ++count;
                 }
-                return (inIndex < count);
+                return count;
             }
         }
         public static T[] ToArray<T>(IEnumerable<T> inArray)
@@ -162,6 +163,31 @@ namespace Windsor.Commons.Core
             else
             {
                 return new List<T>();
+            }
+        }
+        public static T[] ToArray<T, K>(IEnumerable<K> inArray) where T : K
+        {
+            if (inArray != null)
+            {
+                List<T> rtnList;
+                ICollection collection = inArray as ICollection;
+                if (collection != null)
+                {
+                    rtnList = new List<T>(collection.Count);
+                }
+                else
+                {
+                    rtnList = new List<T>();
+                }
+                foreach (K item in inArray)
+                {
+                    rtnList.Add((T)item);
+                }
+                return rtnList.ToArray();
+            }
+            else
+            {
+                return new T[0];
             }
         }
         public static bool InsertIntoSortedList<T>(List<T> inList, T inElement)
@@ -475,19 +501,57 @@ namespace Windsor.Commons.Core
         }
         public static string[] PrependItemToArray(ICollection<string> array, string itemToAdd)
         {
-            List<string> rtnList = new List<string>((array == null) ? 1 : array.Count + 1);
-            rtnList.Add(itemToAdd);
-            if (!CollectionUtils.IsNullOrEmpty(array))
+            return PrependItemToArray(array, itemToAdd, int.MaxValue);
+        }
+        public static string[] PrependItemToArray(ICollection<string> array, string itemToAdd, int maxLength)
+        {
+            int newLength = (array == null) ? 1 : array.Count + 1;
+            if (newLength > maxLength)
             {
+                newLength = maxLength;
+            }
+            if (newLength == 0)
+            {
+                return new string[0];
+            }
+            List<string> rtnList = new List<string>(newLength);
+            rtnList.Add(itemToAdd);
+            if ((newLength > 1) && !CollectionUtils.IsNullOrEmpty(array))
+            {
+                int count = 1;
                 foreach (string item in array)
                 {
                     if (!string.Equals(item, itemToAdd, StringComparison.InvariantCultureIgnoreCase))
                     {
                         rtnList.Add(item);
+                        if (++count == newLength)
+                        {
+                            break;
+                        }
                     }
                 }
             }
             return rtnList.ToArray();
+        }
+        public static StringCollection PrependItemToStringCollection(StringCollection collection, string itemToAdd)
+        {
+            if (collection == null)
+            {
+                collection = new StringCollection();
+            }
+            else
+            {
+                for (int i = collection.Count - 1; i >= 0; --i)
+                {
+                    string value = collection[i];
+                    if (string.Equals(value, itemToAdd, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        collection.RemoveAt(i);
+                    }
+                }
+            }
+            collection.Insert(0, itemToAdd);
+            return collection;
         }
         public static List<string> CreateList(ICollection<string> list)
         {
@@ -502,6 +566,33 @@ namespace Windsor.Commons.Core
                 rtnList.AddRange(list);
             }
             return rtnList;
+        }
+        public static T[] TrimArray<T>(T[] array, int maxLength)
+        {
+            if ((array != null) && (array.Length > maxLength))
+            {
+                Array.Resize(ref array, maxLength);
+            }
+            return array;
+        }
+        public static bool ContainsElementOfType<T>(IEnumerable<T> list, Type type)
+        {
+            if (CollectionUtils.IsNullOrEmpty(list))
+            {
+                return false;
+            }
+            if (!typeof(T).IsAssignableFrom(type))
+            {
+                return false;
+            }
+            foreach (T element in list)
+            {
+                if ((element != null) && (element.GetType() == type))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

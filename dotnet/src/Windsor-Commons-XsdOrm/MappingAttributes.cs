@@ -83,6 +83,24 @@ namespace Windsor.Commons.XsdOrm
         }
         private Dictionary<string, string> m_Abbreviations;
     }
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Assembly)]
+    public class AdditionalAbbreviationsAttribute : MappingAttribute
+    {
+        public AdditionalAbbreviationsAttribute(params string[] abbreviationPairs)
+        {
+            m_Abbreviations = CollectionUtils.CreateDictionaryFromPairs(abbreviationPairs);
+        }
+        public Dictionary<string, string> Abbreviations
+        {
+            get { return m_Abbreviations; }
+            set { m_Abbreviations = value; }
+        }
+        public override string GetShortDescription()
+        {
+            return string.Format("{0} additional abbreviation(s)", m_Abbreviations.Count.ToString());
+        }
+        private Dictionary<string, string> m_Abbreviations;
+    }
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Assembly)]
     public class DefaultDecimalPrecision : MappingAttribute
@@ -819,5 +837,34 @@ namespace Windsor.Commons.XsdOrm
         {
             return "ShortenNamesByRemovingVowelsFirst";
         }
+    }
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Assembly)]
+    public class FixShortenNameBreakBugAttribute : MappingAttribute
+    {
+        public override string GetShortDescription()
+        {
+            return "FixShortenNameBreakBug";
+        }
+    }
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Assembly, AllowMultiple = true)]
+    public class NamePostfixAppliedAttribute : BaseAppliedAttribute
+    {
+        public NamePostfixAppliedAttribute(string appliedToMemberNameThatEndsWith, Type mappedAttributeType,
+                                           params object[] args)
+            : base(mappedAttributeType, args)
+        {
+            m_AppliedToMemberNameThatEndsWith = appliedToMemberNameThatEndsWith;
+        }
+        public override string GetShortDescription()
+        {
+            return string.Format("{0},{1}", m_AppliedToMemberNameThatEndsWith,
+                                 MappedAttributeType.Name);
+        }
+        public string AppliedToMemberNameThatEndsWith
+        {
+            get { return m_AppliedToMemberNameThatEndsWith; }
+            set { m_AppliedToMemberNameThatEndsWith = value; }
+        }
+        private string m_AppliedToMemberNameThatEndsWith;
     }
 }

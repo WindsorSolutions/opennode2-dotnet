@@ -68,19 +68,16 @@ namespace Windsor.Node2008.WNOSPlugin.FRS23
             int rowId,
             int maxRows,
             IList<string> parameters,
-            string connectionString) 
+            string connectionString)
         {
             ArrayList dlt = new ArrayList();
             string where = GetWhere(isOracle, methodName, rowId, maxRows, parameters);
             DataTable dtDeletes = GetData(isOracle, GetSql(QueryElements.Deleted, where), connectionString);
-            if (dtDeletes != null)
+            foreach (DataRow dr in dtDeletes.Rows)
             {
-                foreach (DataRow dr in dtDeletes.Rows)
+                if (dr["StateFacilityIdentifier"] != DBNull.Value)
                 {
-                    if (dr["StateFacilityIdentifier"] != DBNull.Value)
-                    {
-                        dlt.Add((string)dr["StateFacilityIdentifier"]);
-                    }
+                    dlt.Add((string)dr["StateFacilityIdentifier"]);
                 }
             }
             return (string[])dlt.ToArray(typeof(string));
@@ -98,156 +95,120 @@ namespace Windsor.Node2008.WNOSPlugin.FRS23
             int rowId,
             int maxRows,
             IList<string> parameters,
-            string connectionString) 
+            string connectionString)
         {
 
             // Build the WHERE clause
             string where = GetWhere(isOracle, methodName, rowId, maxRows, parameters);
-			string tracker = "at init";
-            
-            try 
-            {
-                DataSet ds = new DataSet("FRSID");
-				tracker = " declared record set ";
 
-				int zed = 0;
-                // --------------------------------------------------------------------
-                // Get Data Tables
-                // --------------------------------------------------------------------
-                DataTable dtFacility = GetData(isOracle, GetSql(QueryElements.Facility, where), connectionString);
-                if (dtFacility != null)
-                {
-                    zed = dtFacility.Rows.Count;
-                    tracker = " dtFacility ";
+            DataSet ds = new DataSet("FRSID");
 
-                    DataTable dtAltName = GetData(isOracle, GetSql(QueryElements.AltName, where), connectionString);
-                    tracker = "dtAltName ";
-                    zed = dtAltName.Rows.Count;
+            // --------------------------------------------------------------------
+            // Get Data Tables
+            // --------------------------------------------------------------------
 
-                    DataTable dtEnvInt = GetData(isOracle, GetSql(QueryElements.EnvInt, where), connectionString);
-                    tracker = " dtEnvInt ";
-                    zed = dtEnvInt.Rows.Count;
+            DataTable dtFacility = GetData(isOracle, GetSql(QueryElements.Facility, where), connectionString);
 
-                    DataTable dtGeoCoor = GetData(isOracle, GetSql(QueryElements.GeoCoor, where), connectionString);
-                    tracker = " dtGeoCoor ";
-                    zed = dtGeoCoor.Rows.Count;
-                    DataTable dtIndividual = GetData(isOracle, GetSql(QueryElements.Individual, where), connectionString);
-                    tracker = " dtIndividual ";
-                    zed = dtIndividual.Rows.Count;
-                    DataTable dtMailingAddress = GetData(isOracle, GetSql(QueryElements.MailingAddress, where), connectionString);
-                    tracker = " dtMailingAddress ";
-                    zed = dtMailingAddress.Rows.Count;
-                    DataTable dtNAICS = GetData(isOracle, GetSql(QueryElements.NAICS, where), connectionString);
-                    tracker = " dtNAICS ";
-                    zed = dtNAICS.Rows.Count;
-                    DataTable dtOrg = GetData(isOracle, GetSql(QueryElements.Org, where), connectionString);
-                    tracker = " dtOrg ";
-                    zed = dtOrg.Rows.Count;
-                    DataTable dtSIC = GetData(isOracle, GetSql(QueryElements.SIC, where), connectionString);
-                    tracker = " after dtSIC and starting to add tables ";
-                    zed = dtSIC.Rows.Count;
+            DataTable dtAltName = GetData(isOracle, GetSql(QueryElements.AltName, where), connectionString);
 
-                    // --------------------------------------------------------------------
-                    // Merge Data Tables
-                    // --------------------------------------------------------------------
-                    ds.Tables.Add(dtFacility.Copy());
-                    ds.Tables[0].TableName = "Facility";
-                    tracker = " after dtFacility ";
+            DataTable dtEnvInt = GetData(isOracle, GetSql(QueryElements.EnvInt, where), connectionString);
 
-                    ds.Tables.Add(dtAltName.Copy());
-                    ds.Tables[1].TableName = "AltName";
-                    tracker = " after AltName ";
+            DataTable dtGeoCoor = GetData(isOracle, GetSql(QueryElements.GeoCoor, where), connectionString);
 
-                    ds.Tables.Add(dtEnvInt.Copy());
-                    ds.Tables[2].TableName = "EnvInt";
-                    tracker = " after EnvInt ";
+            DataTable dtIndividual = GetData(isOracle, GetSql(QueryElements.Individual, where), connectionString);
 
-                    ds.Tables.Add(dtGeoCoor.Copy());
-                    ds.Tables[3].TableName = "GeoCoord";
-                    tracker = " after GeoCoord ";
+            DataTable dtMailingAddress = GetData(isOracle, GetSql(QueryElements.MailingAddress, where), connectionString);
 
-                    ds.Tables.Add(dtIndividual.Copy());
-                    ds.Tables[4].TableName = "Indiv";
-                    tracker = " after Indiv ";
+            DataTable dtNAICS = GetData(isOracle, GetSql(QueryElements.NAICS, where), connectionString);
 
-                    ds.Tables.Add(dtMailingAddress.Copy());
-                    ds.Tables[5].TableName = "MailAdd";
-                    tracker = " after dtMailingAddress ";
+            DataTable dtOrg = GetData(isOracle, GetSql(QueryElements.Org, where), connectionString);
 
-                    ds.Tables.Add(dtNAICS.Copy());
-                    ds.Tables[6].TableName = "NAICS";
-                    tracker = " after dtNAICS ";
-
-                    ds.Tables.Add(dtOrg.Copy());
-                    ds.Tables[7].TableName = "Org";
-                    tracker = " after dtOrg ";
-
-                    ds.Tables.Add(dtSIC.Copy());
-                    ds.Tables[8].TableName = "SIC";
-                    tracker = " after dtSIC all tables added next create relationships ";
-
-                    ds.AcceptChanges();
+            DataTable dtSIC = GetData(isOracle, GetSql(QueryElements.SIC, where), connectionString);
 
 
-                    // --------------------------------------------------------------------
-                    // Load Relationships
-                    // --------------------------------------------------------------------
+            // --------------------------------------------------------------------
+            // Merge Data Tables
+            // --------------------------------------------------------------------
+            ds.Tables.Add(dtFacility.Copy());
+            ds.Tables[0].TableName = "Facility";
+
+            ds.Tables.Add(dtAltName.Copy());
+            ds.Tables[1].TableName = "AltName";
+
+            ds.Tables.Add(dtEnvInt.Copy());
+            ds.Tables[2].TableName = "EnvInt";
+
+            ds.Tables.Add(dtGeoCoor.Copy());
+            ds.Tables[3].TableName = "GeoCoord";
+
+            ds.Tables.Add(dtIndividual.Copy());
+            ds.Tables[4].TableName = "Indiv";
+
+            ds.Tables.Add(dtMailingAddress.Copy());
+            ds.Tables[5].TableName = "MailAdd";
+
+            ds.Tables.Add(dtNAICS.Copy());
+            ds.Tables[6].TableName = "NAICS";
+
+            ds.Tables.Add(dtOrg.Copy());
+            ds.Tables[7].TableName = "Org";
+
+            ds.Tables.Add(dtSIC.Copy());
+            ds.Tables[8].TableName = "SIC";
+
+            ds.AcceptChanges();
 
 
-                    //Create relationships
-                    ds.Relations.Add(
-                        QueryProcessor.TableRelationships.Facility_AltName.ToString(),
-                        ds.Tables["Facility"].Columns["STATEFACILITYIDENTIFIER"],
-                        ds.Tables["AltName"].Columns["STATEFACILITYIDENTIFIER"]);
+            // --------------------------------------------------------------------
+            // Load Relationships
+            // --------------------------------------------------------------------
 
-                    ds.Relations.Add(
-                        QueryProcessor.TableRelationships.Facility_EnvInt.ToString(),
-                        ds.Tables["Facility"].Columns["STATEFACILITYIDENTIFIER"],
-                        ds.Tables["EnvInt"].Columns["STATEFACILITYIDENTIFIER"]);
 
-                    //EnvInt
-                    ds.Relations.Add(
-                        QueryProcessor.TableRelationships.EnvInt_Indiv.ToString(),
-                        ds.Tables["Facility"].Columns["STATEFACILITYIDENTIFIER"],
-                        ds.Tables["Indiv"].Columns["STATEFACILITYIDENTIFIER"]);
+            //Create relationships
+            ds.Relations.Add(
+                QueryProcessor.TableRelationships.Facility_AltName.ToString(),
+                ds.Tables["Facility"].Columns["STATEFACILITYIDENTIFIER"],
+                ds.Tables["AltName"].Columns["STATEFACILITYIDENTIFIER"]);
 
-                    //EnvInt
-                    ds.Relations.Add(
-                        QueryProcessor.TableRelationships.EnvInt_Org.ToString(),
-                        ds.Tables["Facility"].Columns["STATEFACILITYIDENTIFIER"],
-                        ds.Tables["Org"].Columns["STATEFACILITYIDENTIFIER"]);
+            ds.Relations.Add(
+                QueryProcessor.TableRelationships.Facility_EnvInt.ToString(),
+                ds.Tables["Facility"].Columns["STATEFACILITYIDENTIFIER"],
+                ds.Tables["EnvInt"].Columns["STATEFACILITYIDENTIFIER"]);
 
-                    ds.Relations.Add(
-                        QueryProcessor.TableRelationships.Facility_GeoCoord.ToString(),
-                        ds.Tables["Facility"].Columns["STATEFACILITYIDENTIFIER"],
-                        ds.Tables["GeoCoord"].Columns["STATEFACILITYIDENTIFIER"]);
+            //EnvInt
+            ds.Relations.Add(
+                QueryProcessor.TableRelationships.EnvInt_Indiv.ToString(),
+                ds.Tables["Facility"].Columns["STATEFACILITYIDENTIFIER"],
+                ds.Tables["Indiv"].Columns["STATEFACILITYIDENTIFIER"]);
 
-                    ds.Relations.Add(
-                        QueryProcessor.TableRelationships.Facility_MailAdd.ToString(),
-                        ds.Tables["Facility"].Columns["STATEFACILITYIDENTIFIER"],
-                        ds.Tables["MailAdd"].Columns["STATEFACILITYIDENTIFIER"]);
+            //EnvInt
+            ds.Relations.Add(
+                QueryProcessor.TableRelationships.EnvInt_Org.ToString(),
+                ds.Tables["Facility"].Columns["STATEFACILITYIDENTIFIER"],
+                ds.Tables["Org"].Columns["STATEFACILITYIDENTIFIER"]);
 
-                    ds.Relations.Add(
-                        QueryProcessor.TableRelationships.Facility_NAICS.ToString(),
-                        ds.Tables["Facility"].Columns["STATEFACILITYIDENTIFIER"],
-                        ds.Tables["NAICS"].Columns["STATEFACILITYIDENTIFIER"]);
+            ds.Relations.Add(
+                QueryProcessor.TableRelationships.Facility_GeoCoord.ToString(),
+                ds.Tables["Facility"].Columns["STATEFACILITYIDENTIFIER"],
+                ds.Tables["GeoCoord"].Columns["STATEFACILITYIDENTIFIER"]);
 
-                    ds.Relations.Add(
-                        QueryProcessor.TableRelationships.Facility_SIC.ToString(),
-                        ds.Tables["Facility"].Columns["STATEFACILITYIDENTIFIER"],
-                        ds.Tables["SIC"].Columns["STATEFACILITYIDENTIFIER"]);
+            ds.Relations.Add(
+                QueryProcessor.TableRelationships.Facility_MailAdd.ToString(),
+                ds.Tables["Facility"].Columns["STATEFACILITYIDENTIFIER"],
+                ds.Tables["MailAdd"].Columns["STATEFACILITYIDENTIFIER"]);
 
-                    ds.AcceptChanges();
-                }
-                return ds;
-            }
-            catch (Exception ex) 
-            {
-                //Capture the excpetions
-				string sysErrMsg = "NODE" + "Connection String was " + connectionString + "tracker was set to location of " + tracker;
-                System.Diagnostics.EventLog.WriteEntry("NODE",sysErrMsg + ex.Message);
-            }
-            return null;
+            ds.Relations.Add(
+                QueryProcessor.TableRelationships.Facility_NAICS.ToString(),
+                ds.Tables["Facility"].Columns["STATEFACILITYIDENTIFIER"],
+                ds.Tables["NAICS"].Columns["STATEFACILITYIDENTIFIER"]);
+
+            ds.Relations.Add(
+                QueryProcessor.TableRelationships.Facility_SIC.ToString(),
+                ds.Tables["Facility"].Columns["STATEFACILITYIDENTIFIER"],
+                ds.Tables["SIC"].Columns["STATEFACILITYIDENTIFIER"]);
+
+            ds.AcceptChanges();
+            return ds;
         }
 
 
@@ -261,12 +222,12 @@ namespace Windsor.Node2008.WNOSPlugin.FRS23
         /// <returns></returns>
         private static DataTable GetData(bool isOracle,
             string sql,
-            string connectionString) 
-        {   
-            try 
+            string connectionString)
+        {
+            try
             {
-				sql = FixSql(sql);
-				LOG.Debug("GetData: " + sql);
+                sql = FixSql(sql);
+                LOG.Debug("GetData: " + sql);
 
                 //Populate the dataset with the results of the query
 
@@ -286,15 +247,10 @@ namespace Windsor.Node2008.WNOSPlugin.FRS23
                                      sql).Tables[0];
                 }
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
-                //Capture the excpetions
-                string test = ex.Message;
-				//Capture the excpetions
-				string sysErrMsg = "NODESQL" + "Connection String was " + connectionString + " sql was " + sql;
-				System.Diagnostics.EventLog.WriteEntry("NODE",sysErrMsg + ex.Message);
+                throw new ArgumentException("No FRS table data found for query: " + sql, ex);
             }
-            return null;
         }
 
         private static string GetWhere(bool isOracle,
@@ -305,10 +261,10 @@ namespace Windsor.Node2008.WNOSPlugin.FRS23
         {
 
             string topNum = string.Empty;
-			string rowNum = string.Empty;
+            string rowNum = string.Empty;
 
             //Final Check on Row Nums
-            if (maxRows > -1) 
+            if (maxRows > -1)
             {
                 if (isOracle)
                 {
@@ -320,7 +276,7 @@ namespace Windsor.Node2008.WNOSPlugin.FRS23
                     topNum = string.Format(" TOP {0} ", maxRows);
                     rowNum = " ";
                 }
-                
+
             }
 
             string where = string.Empty;
@@ -434,12 +390,12 @@ namespace Windsor.Node2008.WNOSPlugin.FRS23
             // SIC Code
             if (criteria[CriteriaEnum.SICCodes].Trim().Length > 0)
             {
-                string [] sics = criteria[CriteriaEnum.SICCodes].Trim().Split("|".ToCharArray());
+                string[] sics = criteria[CriteriaEnum.SICCodes].Trim().Split("|".ToCharArray());
                 string temp = "";
                 foreach (string s in sics)
                     temp += string.Format("SC.SICCODE LIKE '%{0}%' OR ", FixQuotes(s));
                 temp = temp.Substring(0, temp.Length - 4);
-				
+
                 where.Append(string.Format("({0}) AND ", temp));
                 joinSicCode |= true;
             }
@@ -447,12 +403,12 @@ namespace Windsor.Node2008.WNOSPlugin.FRS23
             // Naics Code
             if (criteria[CriteriaEnum.NaicsCodes].Trim().Length > 0)
             {
-                string [] naics = criteria[CriteriaEnum.NaicsCodes].Trim().Split("|".ToCharArray());
+                string[] naics = criteria[CriteriaEnum.NaicsCodes].Trim().Split("|".ToCharArray());
                 string temp = "";
                 foreach (string s in naics)
                     temp += string.Format("NC.NAICSCODE LIKE '%{0}%' OR ", FixQuotes(s));
                 temp = temp.Substring(0, temp.Length - 4);
-				
+
                 where.Append(string.Format("({0}) AND ", temp));
                 joinNaicsCode |= true;
             }
@@ -680,7 +636,7 @@ namespace Windsor.Node2008.WNOSPlugin.FRS23
 				FROM {0}FRS_FacilitySite FS
 				{1}
 				WHERE {2} 
-                ORDER BY FS.STATEFACILITYIDENTIFIER ", SCHEMA, joins.ToString(), where.ToString(), top );
+                ORDER BY FS.STATEFACILITYIDENTIFIER ", SCHEMA, joins.ToString(), where.ToString(), top);
 
             LOG.Debug("SQL: {0}", sql);
 
@@ -704,14 +660,14 @@ namespace Windsor.Node2008.WNOSPlugin.FRS23
 
             switch (elementType)
             {
-                case QueryElements.Deleted: 
+                case QueryElements.Deleted:
                     sql = @"
                         SELECT DISTINCT 
                             statefacilityidentifier
                         FROM {0}FRS_Deleted_Facility  
                         WHERE {1} ";
                     break;
-                case QueryElements.Facility: 
+                case QueryElements.Facility:
                     sql = @"
                         SELECT DISTINCT 
                             f.facilityregistryidentifier, 
@@ -936,11 +892,12 @@ namespace Windsor.Node2008.WNOSPlugin.FRS23
             output = output.Replace("\n", " ");
             output = output.Replace("\t", " ");
             output = output.Replace("\r", " ");
-            
-            while(output.IndexOf("  ")>-1){
-            
-            output = output.Replace("  ", " ");
-            
+
+            while (output.IndexOf("  ") > -1)
+            {
+
+                output = output.Replace("  ", " ");
+
             }
             return output;
         }
@@ -981,7 +938,7 @@ namespace Windsor.Node2008.WNOSPlugin.FRS23
         private static string ParseInClause(string input)
         {
             string output = "";
-            string [] ss = input.Split("|".ToCharArray());
+            string[] ss = input.Split("|".ToCharArray());
             foreach (string s in ss)
             {
                 output += string.Format("'{0}',", FixQuotes(s));
@@ -997,9 +954,9 @@ namespace Windsor.Node2008.WNOSPlugin.FRS23
         /// <summary>
         /// QueryElements
         /// </summary>
-        private enum QueryElements 
+        private enum QueryElements
         {
-            Facility, 
+            Facility,
             AltName,
             EnvInt,
             GeoCoor,
@@ -1014,7 +971,7 @@ namespace Windsor.Node2008.WNOSPlugin.FRS23
         public class CriteriaEnum
         {
             private CriteriaEnum()
-            {}
+            { }
 
             static public int FacilityName = 0;
             static public int FRSRegistryId = 1;

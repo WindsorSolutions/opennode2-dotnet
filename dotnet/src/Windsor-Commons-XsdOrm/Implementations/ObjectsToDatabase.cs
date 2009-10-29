@@ -227,6 +227,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
             {
                 return;
             }
+            string commandSeparator = baseDao.IsOracleDatabase ? ";" : ";";
             List<Column> descriptionColumns = new List<Column>(); ;
             StringBuilder sqlString = new StringBuilder();
             List<string> postCommands = new List<string>();
@@ -251,7 +252,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
                                                               descriptionColumns, indexNames);
                         sqlString.Append(addString);
                     }
-                    sqlString.Append(");");
+                    sqlString.AppendFormat(") {0} ", commandSeparator);
                 }
                 else
                 {
@@ -264,41 +265,73 @@ namespace Windsor.Commons.XsdOrm.Implementations
                             // Column does not exist
                             string addString = GetAddColumnString(column, mappingContext, baseDao, postCommands,
                                                                   descriptionColumns, indexNames);
-                            sqlString.Append(string.Format("ALTER TABLE {0} ADD {1};", table.TableName, addString));
+                            sqlString.Append(string.Format("ALTER TABLE {0} ADD {1} {2} ", table.TableName, addString, commandSeparator));
                         }
                     }
                 }
             }
             if (postCommands.Count > 0)
             {
-                sqlString.Append(StringUtils.Join(";", postCommands));
+                sqlString.Append(StringUtils.Join(string.Format(" {0} ", commandSeparator), postCommands));
             }
+
             if (sqlString.Length > 0)
             {
+                string[] commands = sqlString.ToString().Split(new string[] { commandSeparator }, StringSplitOptions.RemoveEmptyEntries);
                 baseDao.TransactionTemplate.Execute(delegate
                 {
-                    baseDao.AdoTemplate.ExecuteNonQuery(CommandType.Text, sqlString.ToString());
+                    baseDao.AdoTemplate.ClassicAdoTemplate.Execute(delegate(IDbCommand dbCommand)
+                    {
+                        dbCommand.CommandType = CommandType.Text;
+                        foreach (string command in commands)
+                        {
+                            dbCommand.CommandText = command;
+                            dbCommand.ExecuteNonQuery();
+                        }
+                        return null;
+                    });
+                    AddColumnDescriptions(descriptionColumns, mappingContext, baseDao);
                     return null;
                 });
             }
-            AddColumnDescriptions(descriptionColumns, mappingContext, baseDao);
         }
         protected virtual void AddColumnDescriptions(IList<Column> columns, MappingContext mappingContext,
                                                      SpringBaseDao baseDao)
         {
-            if (!baseDao.IsSqlServerDatabase)
-            {
-                return;
-            }
             if (CollectionUtils.IsNullOrEmpty(columns))
             {
                 return;
             }
-            foreach (Column column in columns)
+            if (baseDao.IsOracleDatabase)
             {
-                baseDao.DoStoredProc("sp_addextendedproperty", "name;value;level0type;level0name;level1type;level1name;level2type;level2name",
-                                     "MS_Description", column.ColumnDescription, "SCHEMA", "dbo", "TABLE",
-                                     column.Table.TableName, "COLUMN", column.ColumnName);
+                baseDao.AdoTemplate.ClassicAdoTemplate.Execute(delegate(IDbCommand dbCommand)
+                    {
+                        dbCommand.CommandType = CommandType.Text;
+                        foreach (Column column in columns)
+                        {
+                            if (!string.IsNullOrEmpty(column.ColumnDescription))
+                            {
+                                string description = column.ColumnDescription.Replace("'", "''");
+                                dbCommand.CommandText =
+                                    string.Format("COMMENT ON COLUMN {0}.{1} IS '{2}'", column.Table.TableName, column.ColumnName,
+                                                  description);
+                                dbCommand.ExecuteNonQuery();
+                            }
+                        }
+                        return null;
+                    });
+            }
+            else
+            {
+                foreach (Column column in columns)
+                {
+                    if (!string.IsNullOrEmpty(column.ColumnDescription))
+                    {
+                        baseDao.DoStoredProc("sp_addextendedproperty", "name;value;level0type;level0name;level1type;level1name;level2type;level2name",
+                                             "MS_Description", column.ColumnDescription, "SCHEMA", "dbo", "TABLE",
+                                             column.Table.TableName, "COLUMN", column.ColumnName);
+                    }
+                }
             }
         }
 
@@ -321,12 +354,12 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 column.ColumnName,
                 GetColumnSqlDataTypeCreateString(mappingContext, column, baseDao),
                 column.IsNullable ? string.Empty : " NOT NULL");
-            
+
             if (column.IsPrimaryKey)
             {
                 PrimaryKeyColumn primaryKeyColumn = (PrimaryKeyColumn)column;
                 string pkName = Utils.GetPrimaryKeyConstraintName(primaryKeyColumn, mappingContext.ShortenNamesByRemovingVowelsFirst,
-                                                                  mappingContext.DefaultTableNamePrefix);
+                                                                  mappingContext.FixShortenNameBreakBug, mappingContext.DefaultTableNamePrefix);
                 pkName = CheckDatabaseNameDoesNotExist(pkName, dbNames);
                 string cmd = string.Format("ALTER TABLE {0} ADD CONSTRAINT {1} PRIMARY KEY ({2})",
                                            primaryKeyColumn.Table.TableName, pkName, primaryKeyColumn.ColumnName);
@@ -336,7 +369,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
             {
                 ForeignKeyColumn foreignKeyColumn = (ForeignKeyColumn)column;
                 string fkName = Utils.GetForeignKeyConstraintName(foreignKeyColumn, mappingContext.ShortenNamesByRemovingVowelsFirst,
-                                                                  mappingContext.DefaultTableNamePrefix);
+                                                                  mappingContext.FixShortenNameBreakBug, mappingContext.DefaultTableNamePrefix);
                 fkName = CheckDatabaseNameDoesNotExist(fkName, dbNames);
                 string cmd = string.Format("ALTER TABLE {0} ADD CONSTRAINT {1} FOREIGN KEY ({2}) REFERENCES {3}({4})",
                                            foreignKeyColumn.Table.TableName, fkName, foreignKeyColumn.ColumnName,
@@ -348,7 +381,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
 
                 postCommands.Add(cmd);
                 string indexName = Utils.GetIndexName(foreignKeyColumn, mappingContext.ShortenNamesByRemovingVowelsFirst,
-                                                      mappingContext.DefaultTableNamePrefix);
+                                                      mappingContext.FixShortenNameBreakBug, mappingContext.DefaultTableNamePrefix);
                 indexName = CheckDatabaseNameDoesNotExist(indexName, dbNames);
                 cmd = string.Format("CREATE INDEX {0} ON {1}({2})", indexName,
                                     foreignKeyColumn.Table.TableName, foreignKeyColumn.ColumnName);
@@ -357,7 +390,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
             else if (column.IsIndexable)
             {
                 string indexName = Utils.GetIndexName(column, mappingContext.ShortenNamesByRemovingVowelsFirst,
-                                                      mappingContext.DefaultTableNamePrefix);
+                                                      mappingContext.FixShortenNameBreakBug, mappingContext.DefaultTableNamePrefix);
                 indexName = CheckDatabaseNameDoesNotExist(indexName, dbNames);
                 string cmd = string.Format("CREATE INDEX {0} ON {1}({2})", indexName, column.Table.TableName, column.ColumnName);
                 postCommands.Add(cmd);
@@ -368,7 +401,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
             }
             return rtnVal;
         }
-        protected virtual string GetColumnSqlDataTypeCreateString(MappingContext mappingContext, Column column, 
+        protected virtual string GetColumnSqlDataTypeCreateString(MappingContext mappingContext, Column column,
                                                                   SpringBaseDao baseDao)
         {
             switch (column.ColumnType)
@@ -389,10 +422,10 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 case DbType.UInt16:
                 case DbType.Int32:
                 case DbType.UInt32:
-                    return "INTEGER";
+                    return baseDao.IsOracleDatabase ? "NUMBER(10)" : "INTEGER";
                 case DbType.Int64:
                 case DbType.UInt64:
-                    return "LONG";
+                    return baseDao.IsOracleDatabase ? "NUMBER(20)" : "BIGINT";
                 case DbType.Boolean:
                     return baseDao.IsOracleDatabase ? "NUMBER(1)" : "BIT";
                 case DbType.Decimal:

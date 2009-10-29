@@ -55,26 +55,26 @@ namespace Windsor.Commons.XsdOrm.Implementations
             return StringUtils.SplitCamelCaseName(name, '_').ToUpper();
         }
         public static string ShortenDatabaseColumnName(string name, bool shortenNamesByRemovingVowelsFirst,
-                                                       Dictionary<string, string> abbreviations)
+                                                       bool fixBreakBug, Dictionary<string, string> abbreviations)
         {
             return ShortenDatabaseName(name, MAX_COLUMN_NAME_CHARS, shortenNamesByRemovingVowelsFirst,
-                                       abbreviations);
+                                       fixBreakBug, abbreviations);
         }
         public static string ShortenDatabaseTableName(string name, bool shortenNamesByRemovingVowelsFirst,
-                                                      Dictionary<string, string> abbreviations)
+                                                      bool fixBreakBug, Dictionary<string, string> abbreviations)
         {
             return ShortenDatabaseName(name, MAX_TABLE_NAME_CHARS, shortenNamesByRemovingVowelsFirst,
-                                       abbreviations);
+                                       fixBreakBug, abbreviations);
         }
         public static string ShortenDatabaseTableName(string name, int maxChars, bool shortenNamesByRemovingVowelsFirst,
-                                                      Dictionary<string, string> abbreviations)
+                                                      bool fixBreakBug, Dictionary<string, string> abbreviations)
         {
             return ShortenDatabaseName(name, maxChars, shortenNamesByRemovingVowelsFirst,
-                                       abbreviations);
+                                       fixBreakBug, abbreviations);
         }
         //static List<string> overList = new List<string>(); //??
         public static string ShortenDatabaseName(string name, int maxChars, bool shortenNamesByRemovingVowelsFirst,
-                                                 Dictionary<string, string> abbreviations)
+                                                 bool fixBreakBug, Dictionary<string, string> abbreviations)
         {
             string value = StringAbbreviator.Abbreviate(name, abbreviations);
             //{
@@ -102,10 +102,11 @@ namespace Windsor.Commons.XsdOrm.Implementations
             //    string overListStr = StringUtils.Join(",", overList);
             //    overList.Clear();
             //}
-            value = ShortenDatabaseName(value, maxChars, shortenNamesByRemovingVowelsFirst);
+            value = ShortenDatabaseName(value, maxChars, shortenNamesByRemovingVowelsFirst, fixBreakBug);
             return value;
         }
-        public static string ShortenDatabaseName(string name, int maxChars, bool shortenNamesByRemovingVowelsFirst)
+        public static string ShortenDatabaseName(string name, int maxChars, bool shortenNamesByRemovingVowelsFirst,
+                                                 bool fixBreakBug)
         {
             string[] subnames = name.Split('_');
             int charsToRemove = name.Length - maxChars;
@@ -132,6 +133,13 @@ namespace Windsor.Commons.XsdOrm.Implementations
                                     break;
                                 }
                             }
+                        }
+                    }
+                    if (fixBreakBug)
+                    {
+                        if (charsToRemove == 0)
+                        {
+                            break;
                         }
                     }
                 } while (removedAny);
@@ -207,7 +215,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
             return tableName;
         }
         public static string GetForeignKeyConstraintName(ForeignKeyColumn foreignKeyColumn, bool shortenNamesByRemovingVowelsFirst,
-                                                         string defaultTableNamePrefix)
+                                                         bool fixBreakBug, string defaultTableNamePrefix)
         {
             if (!string.IsNullOrEmpty(foreignKeyColumn.IndexName))
             {
@@ -217,11 +225,11 @@ namespace Windsor.Commons.XsdOrm.Implementations
             {
                 return ShortenDatabaseName("FK_" + RemoveTableNamePrefix(foreignKeyColumn.Table.TableName, defaultTableNamePrefix) +
                                            "_" + RemoveTableNamePrefix(foreignKeyColumn.ForeignTable.TableName, defaultTableNamePrefix),
-                                           18, shortenNamesByRemovingVowelsFirst, null);
+                                           18, shortenNamesByRemovingVowelsFirst, fixBreakBug, null);
             }
         }
         public static string GetPrimaryKeyConstraintName(PrimaryKeyColumn primaryKeyColumn, bool shortenNamesByRemovingVowelsFirst,
-                                                         string defaultTableNamePrefix)
+                                                         bool fixBreakBug, string defaultTableNamePrefix)
         {
             if (!string.IsNullOrEmpty(primaryKeyColumn.IndexName))
             {
@@ -230,11 +238,11 @@ namespace Windsor.Commons.XsdOrm.Implementations
             else
             {
                 return ShortenDatabaseName("PK_" + RemoveTableNamePrefix(primaryKeyColumn.Table.TableName, defaultTableNamePrefix),
-                                           18, shortenNamesByRemovingVowelsFirst, null);
+                                           18, shortenNamesByRemovingVowelsFirst, fixBreakBug, null);
             }
         }
         public static string GetIndexName(Column column, bool shortenNamesByRemovingVowelsFirst,
-                                          string defaultTableNamePrefix)
+                                          bool fixBreakBug, string defaultTableNamePrefix)
         {
             if (!string.IsNullOrEmpty(column.IndexName))
             {
@@ -243,7 +251,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
             else
             {
                 return ShortenDatabaseName("IX_" + RemoveTableNamePrefix(column.Table.TableName, defaultTableNamePrefix) +
-                                           "_" + column.ColumnName, 18, shortenNamesByRemovingVowelsFirst, null);
+                                           "_" + column.ColumnName, 18, shortenNamesByRemovingVowelsFirst, fixBreakBug, null);
             }
         }
 

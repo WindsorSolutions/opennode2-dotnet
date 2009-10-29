@@ -106,6 +106,10 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 {
                     continue;   // Ignore, already taken care of on root element only
                 }
+                if (mappingAttribute is AdditionalAbbreviationsAttribute)
+                {
+                    continue;   // Ignore, already taken care of on root element only
+                }
                 if (mappingAttribute is DefaultStringDbValuesAttribute)
                 {
                     continue;   // Ignore, already taken care of on root element only
@@ -126,11 +130,19 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 {
                     continue;   // Ignore, already taken care of on root element only
                 }
+                if (mappingAttribute is NamePostfixAppliedAttribute)
+                {
+                    continue;   // Ignore, already taken care of on root element only
+                }
                 if (mappingAttribute is DefaultDecimalPrecision)
                 {
                     continue;   // Ignore, already taken care of on root element only
                 }
                 if (mappingAttribute is ShortenNamesByRemovingVowelsFirstAttribute)
+                {
+                    continue;   // Ignore, already taken care of on root element only
+                }
+                if (mappingAttribute is FixShortenNameBreakBugAttribute)
                 {
                     continue;   // Ignore, already taken care of on root element only
                 }
@@ -175,9 +187,6 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 FieldInfo fieldInfo = (member as FieldInfo);
                 string valueTypePath = Utils.CombineTypePath(objTypePath, member.Name);
                 Type valueType = (propertyInfo != null) ? propertyInfo.PropertyType : fieldInfo.FieldType;
-                if (valueTypePath.Contains("SamplePreparation"))
-                {
-                }
                 attributes = GetMappingAttributesForMember(member, valueTypePath);
                 RelationAttribute lastRelationAttribute = null;
 
@@ -268,7 +277,8 @@ namespace Windsor.Commons.XsdOrm.Implementations
                             }
                             columnAttribute.ColumnName =
                                 Utils.ShortenDatabaseColumnName(Utils.CamelCaseToDatabaseName(columnName),
-                                                                m_ShortenNamesByRemovingVowelsFirst, m_Abbreviations);
+                                                                m_ShortenNamesByRemovingVowelsFirst, m_FixShortenNameBreakBug,
+                                                                m_Abbreviations);
                         }
                         if ((foreignKeyAttribute != null) && (columnAttribute.ColumnType == null) && (columnAttribute.ColumnSize == 0))
                         {
@@ -611,14 +621,16 @@ namespace Windsor.Commons.XsdOrm.Implementations
                         members[memberIndex] = null;
                         continue;
                     }
-                    dbNotNullAttribute = mappingAttribute as DbNotNullAttribute;
-                    if (dbNotNullAttribute != null)
+                    DbNotNullAttribute notNullAttribute = mappingAttribute as DbNotNullAttribute;
+                    if (notNullAttribute != null)
                     {
+                        dbNotNullAttribute = notNullAttribute;
                         continue;
                     }
-                    dbIndexableAttribute = mappingAttribute as DbIndexableAttribute;
-                    if (dbIndexableAttribute != null)
+                    DbIndexableAttribute indexableAttribute = mappingAttribute as DbIndexableAttribute;
+                    if (indexableAttribute != null)
                     {
+                        dbIndexableAttribute = indexableAttribute;
                         continue;
                     }
                     CollectionUtils.Add(mappingAttribute, ref unrecognizedAttributes);
@@ -743,7 +755,8 @@ namespace Windsor.Commons.XsdOrm.Implementations
             }
             string tableName =
                 Utils.ShortenDatabaseTableName(Utils.CamelCaseToDatabaseName(baseTableName), maxChars,
-                                               m_ShortenNamesByRemovingVowelsFirst, m_Abbreviations);
+                                               m_ShortenNamesByRemovingVowelsFirst, m_FixShortenNameBreakBug,
+                                               m_Abbreviations);
             if (!string.IsNullOrEmpty(m_DefaultTableNamePrefix))
             {
                 if (!tableName.StartsWith(m_DefaultTableNamePrefix))
@@ -1083,6 +1096,19 @@ namespace Windsor.Commons.XsdOrm.Implementations
                     }
                 }
             }
+            if (m_NamePostfixAppliedAttributes != null)
+            {
+                foreach (KeyValuePair<string, MappingAttribute> pair in m_NamePostfixAppliedAttributes)
+                {
+                    if (memberName.EndsWith(pair.Key))
+                    {
+                        if (!CollectionUtils.ContainsElementOfType(attributes, pair.Value.GetType()))
+                        {
+                            CollectionUtils.Add(pair.Value.ShallowCopy(), ref attributes);
+                        }
+                    }
+                }
+            }
             return attributes;
         }
         protected Dictionary<string, ObjectPath> ConstructObjectPaths(Dictionary<string, Table> tables)
@@ -1181,16 +1207,18 @@ namespace Windsor.Commons.XsdOrm.Implementations
                     }
                     string memberPrefix =
                         Utils.ShortenDatabaseTableName(Utils.CamelCaseToDatabaseName(memberPath.Substring(startIndex, endIndex - startIndex)),
-                                                       m_ShortenNamesByRemovingVowelsFirst, m_Abbreviations);
+                                                       m_ShortenNamesByRemovingVowelsFirst, m_FixShortenNameBreakBug, m_Abbreviations);
                     if (memberPrefix != null)
                     {
                         columnAttribute.ColumnName = Utils.ShortenDatabaseTableName(memberPrefix + '_' + columnAttribute.ColumnName,
-                                                                                    m_ShortenNamesByRemovingVowelsFirst, null);
+                                                                                    m_ShortenNamesByRemovingVowelsFirst, m_FixShortenNameBreakBug,
+                                                                                    null);
                     }
                     while (table.TryGetColumn(columnAttribute.ColumnName, out sameNameColumn))
                     {
                         columnAttribute.ColumnName = Utils.ShortenDatabaseName(columnAttribute.ColumnName, columnAttribute.ColumnName.Length - 1,
-                                                                               m_ShortenNamesByRemovingVowelsFirst, null);
+                                                                               m_ShortenNamesByRemovingVowelsFirst, m_FixShortenNameBreakBug,
+                                                                               null);
                     }
                 }
             }
@@ -1250,7 +1278,9 @@ namespace Windsor.Commons.XsdOrm.Implementations
             m_DefaultDecimalCreateString = GetDefaultDecimalPrecision(rootType);
             m_AppliedAttributes = GetAppliedAttributes(rootType);
             m_AppliedPathAttributes = GetAppliedPathAttributes(rootType);
+            m_NamePostfixAppliedAttributes = GetNamePostfixAppliedAttributes(rootType);
             m_ShortenNamesByRemovingVowelsFirst = GetShortenNamesByRemovingVowelsFirst(rootType);
+            m_FixShortenNameBreakBug = GetFixShortenNameBreakBugAttribute(rootType);
 
             if (!string.IsNullOrEmpty(m_DefaultTableNamePrefix))
             {
@@ -1520,6 +1550,18 @@ namespace Windsor.Commons.XsdOrm.Implementations
                     "COMMITMENT", "COMMIT"
                     );
             }
+            AdditionalAbbreviationsAttribute addAttr = GetGlobalAttribute<AdditionalAbbreviationsAttribute>(rootType);
+            if ((addAttr != null) && (addAttr.Abbreviations != null))
+            {
+                foreach (KeyValuePair<string, string> pair in addAttr.Abbreviations)
+                {
+                    if (attr.Abbreviations == null)
+                    {
+                        attr.Abbreviations = new Dictionary<string, string>();
+                    }
+                    attr.Abbreviations.Add(pair.Key, pair.Value);
+                }
+            }
             return attr.Abbreviations;
         }
         protected virtual DefaultStringDbValuesAttribute GetDefaultDbStringValues(Type rootType)
@@ -1564,6 +1606,11 @@ namespace Windsor.Commons.XsdOrm.Implementations
         protected virtual bool GetShortenNamesByRemovingVowelsFirst(Type rootType)
         {
             ShortenNamesByRemovingVowelsFirstAttribute attr = GetGlobalAttribute<ShortenNamesByRemovingVowelsFirstAttribute>(rootType);
+            return (attr != null);
+        }
+        protected virtual bool GetFixShortenNameBreakBugAttribute(Type rootType)
+        {
+            FixShortenNameBreakBugAttribute attr = GetGlobalAttribute<FixShortenNameBreakBugAttribute>(rootType);
             return (attr != null);
         }
         protected virtual string GetDefaultDecimalPrecision(Type rootType)
@@ -1625,6 +1672,16 @@ namespace Windsor.Commons.XsdOrm.Implementations
             ConstructAppliedPathAttributes(rootType.GetCustomAttributes(typeof(AppliedPathAttribute), false),
                                            ref appliedPathAttributes);
             return appliedPathAttributes;
+        }
+        private static Dictionary<string, MappingAttribute> GetNamePostfixAppliedAttributes(Type rootType)
+        {
+            Dictionary<string, MappingAttribute> namePostfixAppliedAttributes = null;
+            ConstructNamePostfixAppliedAttributes(rootType.Assembly.GetCustomAttributes(typeof(NamePostfixAppliedAttribute), false),
+                                                  ref namePostfixAppliedAttributes);
+            // Root attributes override asssembly-level attributes
+            ConstructNamePostfixAppliedAttributes(rootType.GetCustomAttributes(typeof(NamePostfixAppliedAttribute), false),
+                                                  ref namePostfixAppliedAttributes);
+            return namePostfixAppliedAttributes;
         }
         protected static void ConstructAppliedAttributes(IList<object> attributes,
                                                          ref Dictionary<Type, Dictionary<string, List<MappingAttribute>>> appliedAttributes)
@@ -1696,6 +1753,23 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 {
                     appliedPathAttributes.Add(new AppliedPathAttributeInfo(attribute.ObjectPath, mappingAttribute));
                 }
+            }
+        }
+        private static void ConstructNamePostfixAppliedAttributes(IList<object> attributes,
+                                                                  ref Dictionary<string, MappingAttribute> namePostfixAppliedAttributes)
+        {
+            if (CollectionUtils.IsNullOrEmpty(attributes))
+            {
+                return;
+            }
+            if (namePostfixAppliedAttributes == null)
+            {
+                namePostfixAppliedAttributes = new Dictionary<string, MappingAttribute>();
+            }
+            foreach (NamePostfixAppliedAttribute attribute in attributes)
+            {
+                MappingAttribute mappingAttribute = GetMappingAttributeFromAppliedAttribute(attribute);
+                namePostfixAppliedAttributes[attribute.AppliedToMemberNameThatEndsWith] = mappingAttribute;
             }
         }
         private static MappingAttribute GetMappingAttributeFromAppliedAttribute(BaseAppliedAttribute appliedAttribute)
@@ -1805,10 +1879,18 @@ namespace Windsor.Commons.XsdOrm.Implementations
         private List<KeyValuePair<string, int>> m_ElementNamePostfixToLength;
         private Dictionary<Type, Dictionary<string, List<MappingAttribute>>> m_AppliedAttributes;
         private List<AppliedPathAttributeInfo> m_AppliedPathAttributes;
+        private Dictionary<string, MappingAttribute> m_NamePostfixAppliedAttributes;
         private string m_SpecifiedFieldPostfixName = "Specified";
         private string m_DefaultTableNamePrefix;
         private string m_DefaultDecimalCreateString;
         private bool m_ShortenNamesByRemovingVowelsFirst;
+        private bool m_FixShortenNameBreakBug = false;
+
+        public bool FixShortenNameBreakBug
+        {
+            get { return m_FixShortenNameBreakBug; }
+            set { m_FixShortenNameBreakBug = value; }
+        }
 
         public bool ShortenNamesByRemovingVowelsFirst
         {

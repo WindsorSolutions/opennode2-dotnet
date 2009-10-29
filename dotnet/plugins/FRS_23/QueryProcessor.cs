@@ -1090,8 +1090,8 @@ namespace Windsor.Node2008.WNOSPlugin.FRS23
                     break;
                 case "getfacilitybyname":
                     list = new List<TypedParameter>(34);
-                    list.Add(new TypedParameter("P01 - FacilityName", "State USPS Code", false, typeof(string), true));
-                    list.Add(new TypedParameter("P02 - FRSRegistryId", "Facility Name (Starts With)", false, typeof(string), true));
+                    list.Add(new TypedParameter("P01 - StateUSPSCode", "State USPS Code", false, typeof(string), true));
+                    list.Add(new TypedParameter("P02 - FacilityName", "Facility Name (Starts With)", false, typeof(string), true));
                     list.Add(new TypedParameter("P03 - StateFacilityId", "State Facility Id", false, typeof(string), true));
                     list.Add(new TypedParameter("P04 - ChangeDate", "Change Date (YYYY-MM-DD)", false, typeof(string), true));
                     list.Add(new TypedParameter("P05 - StateSystemId", "State SystemI d", false, typeof(string), true));

@@ -720,6 +720,11 @@ namespace Windsor.Node2008.WNOS.Logic
         {
             _transactionDao.GetRealtimeTransactionDetails(transactionId);
         }
+        public string GetNetworkTransactionStatus(string localTransactionId, out CommonTransactionStatusCode status,
+                                                  out EndpointVersionType endpointVersion, out string endpointUrl)
+        {
+            return _transactionDao.GetNetworkTransactionStatus(localTransactionId, out status, out endpointVersion, out endpointUrl);
+        }
         #region Properties
 		public IDocumentManagerEx DocumentManager {
 			get {

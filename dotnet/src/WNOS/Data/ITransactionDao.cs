@@ -99,5 +99,7 @@ namespace Windsor.Node2008.WNOS.Data
         void ClearRealtimeTransactionDetails(string transactionId);
         EndpointVersionType GetTransactionEndpointVersionType(string transactionId);
         IList<NodeTransaction> GetOutstandingNetworkTransactions(DateTime newerThan, IEnumerable<CommonTransactionStatusCode> notOutstandingCodes);
+        string GetNetworkTransactionStatus(string localTransactionId, out CommonTransactionStatusCode status,
+                                           out EndpointVersionType endpointVersion, out string endpointUrl);
     }
 }

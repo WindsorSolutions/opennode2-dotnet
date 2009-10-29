@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema 
+targetNamespace="http://www.exchangenetwork.net/schema/icis/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1" xmlns:icis="http://www.exchangenetwork.net/schema/icis/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<!-- INCLUDE STATEMENTS -->
+	<xsd:include schemaLocation="ICIS_Key_Elements_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_Status_v1.5.xsd"/>
+	<!-- SCHEMA HEADER -->
+	<xsd:annotation>
+		<xsd:documentation>Schema Name: ICIS_Limit_Set_v1.5.xsd</xsd:documentation>
+		<xsd:documentation>Current Version Available: http://www.exchangenetwork.net/schema/draft/icis/SchemasVersion1.5</xsd:documentation>
+		<xsd:documentation>Description: ICIS-NPDES limit set data input format</xsd:documentation>
+		<xsd:documentation>Application: ICIS-NPDES</xsd:documentation>
+		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
+		<xsd:documentation>Point of Contact: EPA/Alison Kittle</xsd:documentation>
+		<xsd:documentation>Data Written: July 2006</xsd:documentation>
+		<xsd:documentation>Last Date Modified:3-7-2008</xsd:documentation>
+	</xsd:annotation>
+	<!-- GLOBAL ELEMENT DECLARATIONS -->
+	<xsd:element name="LimitSet" type="icis:LimitSet"/>
+	<xsd:element name="LimitSetSchedule" type="icis:LimitSetSchedule"/>
+	<xsd:element name="AgencyReviewer" type="icis:StringMin1Max5Type"/>
+	<xsd:element name="DMRPrePrintCommentsText" type="icis:StringMin1Max315Type"/>
+	<xsd:element name="InitialDMRDueDate" type="xsd:date"/>
+	<xsd:element name="InitialMonitoringDate" type="xsd:date"/>
+	<xsd:element name="LimitSetModificationEffectiveDate" type="icis:DateType"/>
+	<xsd:element name="LimitSetModificationTypeCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="LimitSetMonthsApplicable" type="icis:MonthTextType"/>
+	<xsd:element name="LimitSetNameText" type="icis:StringMin1Max100Type"/>
+	<xsd:element name="LimitSetUserDefinedDataElement1Text" type="icis:NonNegativeIntegerMin1Max10Type"/>
+	<xsd:element name="LimitSetUserDefinedDataElement2Text" type="icis:StringMin1Max150Type"/>
+	<xsd:element name="NumberSubmissionUnitsInteger" type="icis:Integer2FixedRange01To60Type"/>
+	<xsd:element name="NumberUnitsReportPeriodInteger" type="icis:Integer2FixedRange01To60Type"/>
+	<xsd:element name="ScheduledLimitSet" type="icis:ScheduledLimitSet"/>
+	<xsd:element name="UnscheduledLimitSet" type="icis:UnscheduledLimitSet"/>
+	<!-- COMPLEX TYPE DEFINITIONS -->
+	<xsd:complexType name="LimitSetData">
+		<xsd:sequence>
+			<xsd:element ref="icis:TransactionHeader"/>
+			<xsd:element ref="icis:LimitSet"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="LimitSet">
+		<xsd:complexContent>
+			<xsd:extension base="icis:LimitSetKeyElements">
+				<xsd:sequence>
+					<xsd:choice>
+						<xsd:element ref="icis:ScheduledLimitSet" minOccurs="0"/>
+						<xsd:element ref="icis:UnscheduledLimitSet" minOccurs="0"/>						
+					</xsd:choice>
+					<xsd:element ref="icis:LimitSetMonthsApplicable" minOccurs="0" maxOccurs="12"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ScheduledLimitSet">
+		<xsd:sequence>
+			<xsd:group ref="icis:LimitSetGroup" minOccurs="0"/>
+			<xsd:element ref="icis:LimitSetSchedule" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="UnscheduledLimitSet">
+		<xsd:sequence>
+			<xsd:group ref="icis:LimitSetGroup" minOccurs="0"/>
+			<xsd:element ref="icis:NumberUnitsReportPeriodInteger" minOccurs="0"/>
+			<xsd:element ref="icis:LimitSetModificationTypeCode" minOccurs="0"/>
+			<xsd:element ref="icis:LimitSetModificationEffectiveDate" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="LimitSetGroup">
+		<xsd:sequence>
+			<xsd:element ref="icis:LimitSetNameText" minOccurs="0"/>
+			<xsd:element ref="icis:DMRPrePrintCommentsText" minOccurs="0"/>
+			<xsd:element ref="icis:AgencyReviewer" minOccurs="0"/>
+			<xsd:element ref="icis:LimitSetUserDefinedDataElement1Text" minOccurs="0"/>
+			<xsd:element ref="icis:LimitSetUserDefinedDataElement2Text" minOccurs="0"/>
+			<xsd:element ref="icis:LimitSetStatus" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="LimitSetSchedule">
+		<xsd:sequence>
+			<xsd:element ref="icis:NumberUnitsReportPeriodInteger" minOccurs="0"/>
+			<xsd:element ref="icis:NumberSubmissionUnitsInteger" minOccurs="0"/>
+			<xsd:element ref="icis:InitialMonitoringDate" minOccurs="0"/>
+			<xsd:element ref="icis:InitialDMRDueDate" minOccurs="0"/>
+			<xsd:element ref="icis:LimitSetModificationTypeCode" minOccurs="0"/>
+			<xsd:element ref="icis:LimitSetModificationEffectiveDate" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

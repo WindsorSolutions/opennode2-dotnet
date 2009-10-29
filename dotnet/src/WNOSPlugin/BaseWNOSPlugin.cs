@@ -153,6 +153,10 @@ namespace Windsor.Node2008.WNOSPlugin
             }
             return false;
         }
+        protected void GetConfigParameter<T>(string key, out T value)
+        {
+            GetConfigParameter<T>(key, true, out value);
+        }
         protected bool GetConfigParameter<T>(string key, bool throwExceptionOnError, out T value)
         {
             value = default(T);
@@ -229,7 +233,27 @@ namespace Windsor.Node2008.WNOSPlugin
                 throw new ArgumentException(string.Format("Missing or invalid \"{0}\" data source specified for this service",
                                                           key));
             }
-            return (dbProviderType == null) ? new SpringBaseDao(dbProvider) : new SpringBaseDao(dbProvider, dbProviderType);
+            SpringBaseDao baseDao = (dbProviderType == null) ? new SpringBaseDao(dbProvider) : new SpringBaseDao(dbProvider, dbProviderType);
+            if (baseDao.DbProvider != null)
+            {
+                AppendAuditLogEvent("{0}: {1}", key, baseDao.DbProvider.ConnectionString);
+            }
+            return baseDao;
+        }
+        protected static void GetNonEmptyStringParameter(DataRequest dataRequest, string name, int index, out string value)
+        {
+            if (CollectionUtils.IsNullOrEmpty(dataRequest.Parameters))
+            {
+                throw new ArgumentException(string.Format("The service parameter \"{0}\" was not specified.", name));
+            }
+            if (dataRequest.Parameters.IsByName)
+            {
+                GetNonEmptyStringParameterByName(dataRequest, name, out value);
+            }
+            else
+            {
+                GetNonEmptyStringParameterByIndex(dataRequest, index, out value);
+            }
         }
         protected static bool TryGetNonEmptyStringParameter(DataRequest dataRequest, string name, int index, ref string value)
         {
@@ -385,7 +409,7 @@ namespace Windsor.Node2008.WNOSPlugin
             GetParameterByName<string>(parameters, name, out value);
             if (string.IsNullOrEmpty(value))
             {
-                throw new ArgumentException(string.Format("The string parameter with the name {0} is empty",
+                throw new ArgumentException(string.Format("The string parameter with the name \"{0}\" is empty",
                                                           name));
             }
         }
@@ -771,6 +795,18 @@ namespace Windsor.Node2008.WNOSPlugin
         {
             _configurationArguments[key] = value;
         }
+        protected void AppendConfigArguments<T>() where T : struct, IConvertible
+        {
+            if (!typeof(T).IsEnum)
+            {
+                throw new ArgumentException(typeof(T).ToString() + " is not an Enum");
+            }
+            ICollection<string> descriptions = EnumUtils.GetAllDescriptions<T>();
+            CollectionUtils.ForEach(descriptions, delegate(string description)
+                {
+                    _configurationArguments[description] = null;
+                });
+        }
         public Dictionary<string, IDbProvider> DataProviders
         {
             get { return _dataProviders; }
@@ -781,6 +817,18 @@ namespace Windsor.Node2008.WNOSPlugin
             dbProvider.ConnectionString = provider.ConnectionString;
 
             _dataProviders[key] = dbProvider;
+        }
+        protected void AppendDataProviders<T>() where T : struct, IConvertible
+        {
+            if (!typeof(T).IsEnum)
+            {
+                throw new ArgumentException(typeof(T).ToString() + " is not an Enum");
+            }
+            ICollection<string> descriptions = EnumUtils.GetAllDescriptions<T>();
+            CollectionUtils.ForEach(descriptions, delegate(string description)
+            {
+                _dataProviders[description] = null;
+            });
         }
         public virtual ICollection<ActivityEntry> GetAuditLogEvents()
         {

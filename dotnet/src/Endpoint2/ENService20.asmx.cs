@@ -64,6 +64,7 @@ namespace Windsor.Node2008.Endpoint2
     [WebService(Namespace = "http://www.exchangenetwork.net/wsdl/node/2")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [Microsoft.Web.Services3.Messaging.SoapActor("*")]
+    [SoapDocumentService(RoutingStyle = SoapServiceRoutingStyle.RequestElement)]
     public class ENService20 : Microsoft.Web.Services3.Messaging.SoapService, INetworkNodeBinding2
     {
 

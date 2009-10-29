@@ -75,7 +75,7 @@ namespace Windsor.Node2008.WNOS.Data {
 																	   CommonTransactionStatusCode.Processing;
 
         private const string MAP_TRANSACTION_COLUMNS = "Id;FlowId;NetworkId;Status;ModifiedBy;ModifiedOn;StatusDetail;Operation;WebMethod;EndpointVersion;NetworkEndpointVersion;NetworkEndpointUrl;NetworkEndpointStatus";
-
+        
         private NodeTransaction MapTransaction(IDataReader reader)
         {
             NodeTransaction transaction = new NodeTransaction();
@@ -562,39 +562,24 @@ namespace Windsor.Node2008.WNOS.Data {
         {
             try
             {
-                string flowId = string.Empty;
                 NodeTransaction nodeTransaction =
                     DoSimpleQueryForObjectDelegate<NodeTransaction>(
                         TABLE_NAME, "Id", transactionId,
-                        "FlowId;NetworkId;Status;ModifiedBy;ModifiedOn;StatusDetail;Operation;WebMethod;EndpointVersion;NetworkEndpointVersion;NetworkEndpointUrl;NetworkEndpointStatus",
+                        MAP_TRANSACTION_COLUMNS,
                         delegate(IDataReader reader, int rowNum)
                         {
-                            NodeTransaction transaction = new NodeTransaction();
-                            transaction.Id = transactionId;
-                            int index = 0;
-                            flowId = reader.GetString(index++);
-                            transaction.Status = new TransactionStatus(transactionId);
-                            transaction.NetworkId = reader.GetString(index++);
-                            transaction.Status.Status = EnumUtils.ParseEnum<CommonTransactionStatusCode>(reader.GetString(index++));
-                            transaction.ModifiedById = reader.GetString(index++);
-                            transaction.ModifiedOn = reader.GetDateTime(index++);
-                            transaction.Status.Description = reader.GetString(index++);
-                            transaction.Operation = reader.GetString(index++);
-                            transaction.NodeMethod = EnumUtils.ParseEnum<NodeMethod>(reader.GetString(index++));
-                            transaction.EndpointVersion = EnumUtils.ParseEnum<EndpointVersionType>(reader.GetString(index++));
-                            transaction.NetworkEndpointVersion = EnumUtils.ParseEnum<EndpointVersionType>(reader.GetString(index++));
-                            transaction.NetworkEndpointUrl = reader.GetString(index++);
-                            transaction.NetworkEndpointStatus = EnumUtils.ParseEnum<CommonTransactionStatusCode>(reader.GetString(index++));
-                            return transaction;
+                            return MapTransaction(reader);
                         });
-                nodeTransaction.Flow = FlowDao.GetDataFlow(flowId);
-                if (returnDocsWithStatus == null)
+                if (nodeTransaction != null)
                 {
-                    nodeTransaction.Documents = _documentManager.GetAllDocuments(transactionId);
-                }
-                else
-                {
-                    nodeTransaction.Documents = _documentManager.GetDocumentsByStatus(transactionId, returnDocsWithStatus.Value);
+                    if (returnDocsWithStatus == null)
+                    {
+                        nodeTransaction.Documents = _documentManager.GetAllDocuments(transactionId);
+                    }
+                    else
+                    {
+                        nodeTransaction.Documents = _documentManager.GetDocumentsByStatus(transactionId, returnDocsWithStatus.Value);
+                    }
                 }
                 return nodeTransaction;
             }
@@ -728,16 +713,6 @@ namespace Windsor.Node2008.WNOS.Data {
 		public IList<string> GetAllUnprocessedSubmitTransactionIds() {
             return GetAllUnprocessedTransactionIds(NodeMethod.Submit);
 		}
-		/// <summary>
-		/// Return a list of ids for all unprocessed Notify transactions.
-		/// </summary>
-        public IList<string> GetAllUnprocessedNotifyTransactionIds()
-		{
-            return GetAllUnprocessedTransactionIds(NodeMethod.Notify);
-		}
-        /// <summary>
-        /// Return a list of ids for all unprocessed Solicit transactions.
-        /// </summary>
         public IList<NodeTransaction> GetOutstandingNetworkTransactions(DateTime newerThan, IEnumerable<CommonTransactionStatusCode> notOutstandingCodes)
         {
             if (CollectionUtils.IsNullOrEmpty(notOutstandingCodes))
@@ -749,18 +724,60 @@ namespace Windsor.Node2008.WNOS.Data {
                 string.Format("ModifiedOn >;Id <> NetworkId;NetworkEndpointVersion IS NOT NULL;NetworkEndpointUrl IS NOT NULL;((NetworkEndpointStatus IS NULL) OR (NetworkEndpointStatus NOT {0}))",
                               SpringBaseDao.MakeWhereInClause(notOutstandingCodes));
             List<NodeTransaction> transactions = null;
-            DoSimpleQueryWithRowCallbackDelegate(TABLE_NAME, queryColumns,
+			DoSimpleQueryWithRowCallbackDelegate(TABLE_NAME, queryColumns,
                 new object[] { newerThan }, null, MAP_TRANSACTION_COLUMNS,
-                delegate(IDataReader reader)
-                {
-                    if (transactions == null)
-                    {
+				delegate(IDataReader reader)
+				{
+					if (transactions == null)
+					{
                         transactions = new List<NodeTransaction>();
-                    }
+					}
                     transactions.Add(MapTransaction(reader));
-                });
-            return transactions;
+				});
+			return transactions;
         }
+        public string GetNetworkTransactionStatus(string localTransactionId, out CommonTransactionStatusCode status,
+                                                  out EndpointVersionType endpointVersion, out string endpointUrl)
+        {
+            status = CommonTransactionStatusCode.Unknown;
+            endpointVersion = EndpointVersionType.Undefined;
+            endpointUrl = null;
+            try
+            {
+                CommonTransactionStatusCode statusPriv = CommonTransactionStatusCode.Unknown;
+                EndpointVersionType endpointVersionPriv = EndpointVersionType.Undefined;
+                string endpointUrlPriv = null;
+                string endpointNetworkId =
+                    DoSimpleQueryForObjectDelegate<string>(
+                        TABLE_NAME, "Id", localTransactionId, "NetworkId;NetworkEndpointVersion;NetworkEndpointUrl;NetworkEndpointStatus",
+                        delegate(IDataReader reader, int rowNum)
+                        {
+                            string networkId = reader.GetString(0);
+                            endpointVersionPriv = EnumUtils.ParseEnum<EndpointVersionType>(reader.GetString(1));
+                            endpointUrlPriv = reader.GetString(2);
+                            statusPriv = EnumUtils.ParseEnum<CommonTransactionStatusCode>(reader.GetString(3));
+                            return networkId;
+                        });
+                status = statusPriv;
+                endpointVersion = endpointVersionPriv;
+                endpointUrl = endpointUrlPriv;
+                return endpointNetworkId;
+            }
+            catch (Spring.Dao.IncorrectResultSizeDataAccessException)
+            {
+                return null; // Not found
+            }
+        }
+        /// <summary>
+		/// Return a list of ids for all unprocessed Notify transactions.
+		/// </summary>
+        public IList<string> GetAllUnprocessedNotifyTransactionIds()
+		{
+            return GetAllUnprocessedTransactionIds(NodeMethod.Notify);
+		}
+        /// <summary>
+        /// Return a list of ids for all unprocessed Solicit transactions.
+        /// </summary>
         public IList<string> GetAllUnprocessedSolicitTransactionIds()
         {
             return GetAllUnprocessedTransactionIds(NodeMethod.Solicit);
@@ -1017,6 +1034,8 @@ namespace Windsor.Node2008.WNOS.Data {
             }
 
             return rtnList;
+
+
         }
 
 

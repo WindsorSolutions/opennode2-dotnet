@@ -47,6 +47,6 @@ using Windsor.Node2008.WNOSPlugin;
 [assembly: AssemblyDelaySign(false)]
 [assembly: AssemblyKeyFile("")]
 [assembly: AssemblyKeyName("")]
-[assembly: AssemblyVersion("1.1.8." + AssemblyInfo.cSvnVersion)]
+[assembly: AssemblyVersion("1.1." + AssemblyInfo.cBuildVersion + "." + AssemblyInfo.cSvnVersion)]
 [assembly: PluginDefaultFlowAttribute("PNWWQX")]
 [assembly: PluginPackageNameAttribute("PNWWQX 1.3")]
