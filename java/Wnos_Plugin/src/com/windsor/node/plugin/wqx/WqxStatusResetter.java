@@ -40,7 +40,6 @@ import com.windsor.node.common.domain.DataServiceRequestParameter;
 import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.ProcessContentResult;
 import com.windsor.node.common.domain.ServiceType;
-import com.windsor.node.plugin.BaseWnosPlugin;
 import com.windsor.node.plugin.wqx.dao.WqxStatusDao;
 
 /**
@@ -48,7 +47,7 @@ import com.windsor.node.plugin.wqx.dao.WqxStatusDao;
  * that the next run can set a status of &quot;Pending&quot; if it needs to,
  * while leaving the submission history intact.
  */
-public class WqxStatusResetter extends BaseWnosPlugin {
+public class WqxStatusResetter extends BaseWqxPlugin {
 
     public WqxStatusResetter() {
 
@@ -85,7 +84,7 @@ public class WqxStatusResetter extends BaseWnosPlugin {
                     .add(
                             makeEntry("Attempting to reset CDXPROCESSINGSTATUS so there are no rows marked pending."));
 
-            dao.resetStatus();
+            dao.resetStatus(getOrgIdFromTransaction(transaction));
 
             result.setSuccess(true);
             result.setStatus(CommonTransactionStatusCode.PROCESSED);

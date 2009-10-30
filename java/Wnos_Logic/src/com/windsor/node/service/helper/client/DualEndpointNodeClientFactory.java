@@ -37,9 +37,9 @@ import com.windsor.node.common.util.NodeClientService;
 
 public interface DualEndpointNodeClientFactory {
 
-    NodeClientService makeAndConfigure(PartnerIdentity partern);
+    NodeClientService makeAndConfigure(PartnerIdentity partner);
 
-    NodeClientService makeAndConfigure(PartnerIdentity partern,
+    NodeClientService makeAndConfigure(PartnerIdentity partner,
             NAASAccount credentials);
 
 }

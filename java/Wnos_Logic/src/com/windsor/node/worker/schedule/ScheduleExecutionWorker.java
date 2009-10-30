@@ -46,24 +46,24 @@ import com.windsor.node.common.domain.ScheduledItem;
 import com.windsor.node.common.domain.ScheduledItemSourceType;
 import com.windsor.node.common.domain.ScheduledItemTargetType;
 import com.windsor.node.data.dao.AccountDao;
-import com.windsor.node.data.dao.jdbc.JdbcScheduleDao;
-import com.windsor.node.data.dao.jdbc.JdbcTransactionDao;
+import com.windsor.node.data.dao.ScheduleDao;
+import com.windsor.node.data.dao.TransactionDao;
 import com.windsor.node.service.helper.NotificationHelper;
-import com.windsor.node.util.ScheduleUtil;
 import com.windsor.node.worker.NodeWorker;
 import com.windsor.node.worker.schedule.processor.EmailDataProcessor;
 import com.windsor.node.worker.schedule.processor.FileSystemDataProcessor;
 import com.windsor.node.worker.schedule.processor.LocalServiceDataProcessor;
 import com.windsor.node.worker.schedule.processor.PartnerDataProcessor;
 import com.windsor.node.worker.schedule.processor.SchematronDataProcessor;
+import com.windsor.node.worker.util.ScheduleUtil;
 
 public class ScheduleExecutionWorker extends NodeWorker implements
         InitializingBean {
 
     private static final String NL = "\n";
 
-    private JdbcScheduleDao scheduleDao;
-    private JdbcTransactionDao transactionDao;
+    private ScheduleDao scheduleDao;
+    private TransactionDao transactionDao;
     private NotificationHelper notificationHelper;
     private AccountDao accountDao;
 
@@ -72,6 +72,8 @@ public class ScheduleExecutionWorker extends NodeWorker implements
     private PartnerDataProcessor partnerDataProcessor;
     private FileSystemDataProcessor fileSystemDataProcessor;
     private EmailDataProcessor emailDataProcessor;
+
+    private String executionMachineName;
 
     public ScheduleExecutionWorker() {
         super();
@@ -118,41 +120,45 @@ public class ScheduleExecutionWorker extends NodeWorker implements
      */
     public void run() {
 
-        try {
+        if (!ScheduleExecutionHelper.shouldWeRunHere(getMachineId(),
+                getExecutionMachineName())) {
 
-            logger.debug("Getting next schedule for execution");
-            ScheduledItem schedule = scheduleDao.getForNextExec();
-            logger.debug("Next one to execute: " + schedule);
+            logger
+                    .debug("Configured executionMachineName does not match machineId, schedule will not run.");
 
-            if (schedule != null) {
+        } else {
 
-                Timestamp next = null;
+            try {
 
-                if (schedule.getNextRunOn() != null) {
+                logger.debug("Getting next schedule for execution");
+                ScheduledItem schedule = scheduleDao.getForNextExec();
+                logger.debug("Next one to execute: " + schedule);
 
-                    logger.debug("Calculating next run");
-                    next = ScheduleUtil.calculateNextRun(schedule);
+                if (schedule != null) {
+
+                    Timestamp next = null;
+
+                    if (schedule.getNextRunOn() != null) {
+
+                        logger.debug("Calculating next run");
+                        next = ScheduleUtil.calculateNextRun(schedule);
+                    }
+
+                    logger.debug("Processing");
+                    processSchedule(schedule);
+
+                    logger.debug("Updating next run: " + next);
+                    scheduleDao.setRun(schedule.getId(), next);
                 }
 
-                logger.debug("Processing");
-                processSchedule(schedule);
-
-                logger.debug("Updating next run: " + next);
-                scheduleDao.setRun(schedule.getId(), next);
+            } catch (Exception ex) {
+                // Do not throw exception.
+                // Processing method took care of the logging
+                logger.error("Run Error: " + ex.getMessage(), ex);
             }
-
-        } catch (Exception ex) {
-            // Do not throw exception.
-            // Processing method took care of the logging
-            logger.error("Run Error: " + ex.getMessage(), ex);
-        }
-
+        } // end if shouldWeRunHere
     }
 
-    /**
-     * 
-     * @param request
-     */
     private void processSchedule(ScheduledItem schedule) {
 
         logger.debug("processing: " + schedule);
@@ -286,7 +292,6 @@ public class ScheduleExecutionWorker extends NodeWorker implements
         } finally {
             getActivityService().insert(logEntry);
         }
-
     }
 
     private String getScheduleInfo(Activity logEntry, boolean success) {
@@ -316,19 +321,19 @@ public class ScheduleExecutionWorker extends NodeWorker implements
 
     }
 
-    public JdbcScheduleDao getScheduleDao() {
+    public ScheduleDao getScheduleDao() {
         return scheduleDao;
     }
 
-    public void setScheduleDao(JdbcScheduleDao scheduleDao) {
+    public void setScheduleDao(ScheduleDao scheduleDao) {
         this.scheduleDao = scheduleDao;
     }
 
-    public JdbcTransactionDao getTransactionDao() {
+    public TransactionDao getTransactionDao() {
         return transactionDao;
     }
 
-    public void setTransactionDao(JdbcTransactionDao transactionDao) {
+    public void setTransactionDao(TransactionDao transactionDao) {
         this.transactionDao = transactionDao;
     }
 
@@ -386,6 +391,14 @@ public class ScheduleExecutionWorker extends NodeWorker implements
 
     public void setAccountDao(AccountDao accountDao) {
         this.accountDao = accountDao;
+    }
+
+    public String getExecutionMachineName() {
+        return executionMachineName;
+    }
+
+    public void setExecutionMachineName(String executionMachineName) {
+        this.executionMachineName = executionMachineName;
     }
 
 }

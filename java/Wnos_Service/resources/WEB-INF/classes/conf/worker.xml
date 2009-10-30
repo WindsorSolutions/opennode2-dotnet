@@ -67,7 +67,7 @@
 			ref="partnerDataProcessor" />
 	</bean>
 
-
+    <!-- Processes schedules -->
 	<bean id="scheduleWorker"
 		class="com.windsor.node.worker.schedule.ScheduleExecutionWorker"
 		parent="baseWorker">
@@ -84,6 +84,7 @@
 			ref="fileSystemDataProcessor" />
 		<property name="emailDataProcessor" ref="emailDataProcessor" />
 		<property name="accountDao" ref="accountDao" />
+		<property name="executionMachineName" value="${scheduleWorkerTask.executionMachineName}" />
 	</bean>
 
 

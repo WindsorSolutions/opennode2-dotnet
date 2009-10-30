@@ -67,7 +67,7 @@ import com.windsor.node.service.helper.zip.ZipCompressionService;
  */
 public class UserAuthorizationRequestProcessor extends BaseWnosPlugin {
 
-    public static final String SERVICE_NAME = "FLOW-SECURITY";
+    public static final String SERVICE_NAME = "AuthorizationRequest";
     public static final String NO_PROTECTED_FLOWS = "This OpenNode installation does not have any protected Flows";
     public static final String USER_HAS_PENDING = ": this user already has a pending Authorization Request";
     public static final String NOT_IN_NAAS_NOT_AFFILITATED = ": this account not found in NAAS and not affiliated with this Node.";
@@ -313,13 +313,6 @@ public class UserAuthorizationRequestProcessor extends BaseWnosPlugin {
                 throw new RuntimeException(
                         "Expected only 1 file in zip archive, found "
                                 + uncompressedFileNames.length);
-            }
-
-            if (!FilenameUtils.getExtension(uncompressedFileNames[0])
-                    .equalsIgnoreCase("xml")) {
-
-                throw new RuntimeException(
-                        "Uncompressed file's name must end with \"xml\"");
             }
 
             File uncompressedFile = new File(FilenameUtils.concat(tempFileDir

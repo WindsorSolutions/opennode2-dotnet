@@ -37,7 +37,8 @@ public class WqxGetStatus extends BaseWqxPlugin {
         try {
 
             // use statusDao to get list of pending tran ids
-            List localTranIds = statusDao.getPendingTransactionIds();
+            List<?> localTranIds = statusDao
+                    .getPendingTransactionIds(getOrgIdFromTransaction(transaction));
 
             if (localTranIds.size() == 0) {
 
@@ -53,7 +54,8 @@ public class WqxGetStatus extends BaseWqxPlugin {
                                 + " Pending or Processing transactions"));
 
                 // look up the network ids & associated partner URLs
-                List networkTranIds = new ArrayList(localTranIds.size());
+                List<String> networkTranIds = new ArrayList<String>(
+                        localTranIds.size());
 
                 for (int i = 0; i < localTranIds.size(); i++) {
 

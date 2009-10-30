@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema 
+targetNamespace="http://www.exchangenetwork.net/schema/icis/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1" xmlns:icis="http://www.exchangenetwork.net/schema/icis/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<!-- INCLUDE STATEMENTS -->
+	<!-- SCHEMA HEADER -->
+	<xsd:annotation>
+		<xsd:documentation>Schema Name: ICIS_Status_v1.5.xsd</xsd:documentation>
+		<xsd:documentation>Current Version Available: http://www.exchangenetwork.net/schema/draft/icis/SchemasVersion1.5</xsd:documentation>
+		<xsd:documentation>Description: ICIS-NPDES biosolid permit data input format</xsd:documentation>
+		<xsd:documentation>Application: ICIS-NPDES</xsd:documentation>
+		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
+		<xsd:documentation>Point of Contact: EPA/Alison Kittle</xsd:documentation>
+		<xsd:documentation>Data Written: July 2006</xsd:documentation>
+		<xsd:documentation>Last Date Modified:3-7-2008</xsd:documentation>
+	</xsd:annotation>
+	<!-- GLOBAL ELEMENT DECLARATIONS -->
+	<xsd:element name="CorrectedRNCManualStatusCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="LimitSetStatus" type="icis:LimitSetStatus"/>
+	<xsd:element name="LimitSetStatusIndicator" type="icis:ActiveInactiveType"/>
+	<xsd:element name="LimitSetStatusReasonText" type="icis:StringMin1Max100Type"/>
+	<xsd:element name="LimitSetStatusStartDate" type="icis:DateType"/>
+	<xsd:element name="RNCManualStatusCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="RNCStatusCodeQuarter" type="icis:IntegerRange1To4Type"/>
+	<xsd:element name="RNCStatusCodeYear" type="icis:IntegerRange1970To2099Type"/>
+	<xsd:element name="StatusCode" type="icis:ActiveInactiveType"/>
+	<xsd:element name="StatusEndDate" type="icis:DateType"/>
+	<xsd:element name="StatusReason" type="icis:StringMin1Max200Type"/>	
+	<xsd:element name="StatusStartDate" type="icis:DateType"/>
+	<!-- GROUP DEFINITIONS -->
+	<xsd:group name="StatusGroup">
+		<xsd:sequence>
+			<xsd:element ref="icis:StatusCode"/>
+			<xsd:element ref="icis:StatusStartDate" minOccurs="0"/>
+			<xsd:element ref="icis:StatusEndDate" minOccurs="0"/>
+			<xsd:element ref="icis:StatusReason"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="ComplianceTrackingStatusGroup">
+		<xsd:sequence>
+			<xsd:element ref="icis:StatusCode"/>
+			<xsd:element ref="icis:StatusStartDate"/>
+			<xsd:element ref="icis:StatusReason" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="LimitSetStatus">
+		<xsd:sequence>
+			<xsd:element ref="icis:LimitSetStatusIndicator"/>
+			<xsd:element ref="icis:LimitSetStatusStartDate"/>
+			<xsd:element ref="icis:LimitSetStatusReasonText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="RNCStatusGroup">
+		<xsd:sequence>
+			<xsd:element ref="icis:RNCStatusCodeYear"/>
+			<xsd:element ref="icis:RNCStatusCodeQuarter"/>
+			<xsd:element ref="icis:RNCManualStatusCode" minOccurs="0"/>
+			<xsd:element ref="icis:CorrectedRNCManualStatusCode" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+</xsd:schema>

@@ -121,7 +121,6 @@ public abstract class BaseRcraXmlPlugin extends BaseWnosPlugin {
     private DataSource pluginDataSource;
 
     /* VTL template variables */
-    private String author;
     private String contactInfo;
     private String makeHeader;
     private String notification;
@@ -239,10 +238,10 @@ public abstract class BaseRcraXmlPlugin extends BaseWnosPlugin {
         result.setSuccess(false);
         result.setStatus(CommonTransactionStatusCode.FAILED);
 
+        result.getAuditEntries().add(makeEntry("Validating transaction..."));
+        validateTransaction(transaction);
+
         try {
-            result.getAuditEntries()
-                    .add(makeEntry("Validating transaction..."));
-            validateTransaction(transaction);
 
             setServiceArgs();
 
@@ -282,7 +281,6 @@ public abstract class BaseRcraXmlPlugin extends BaseWnosPlugin {
         } catch (Exception ex) {
 
             error(ex);
-            ex.printStackTrace();
 
             result.setSuccess(false);
             result.setStatus(CommonTransactionStatusCode.FAILED);
@@ -332,8 +330,6 @@ public abstract class BaseRcraXmlPlugin extends BaseWnosPlugin {
         contactInfo = (String) getConfigValueAsString(ARG_HEADER_CONTACT_INFO,
                 doHeader);
         debug("contactInfo: " + contactInfo);
-
-        author = contactInfo;
 
         notification = (String) getConfigValueAsString(ARG_HEADER_NOTIFS,
                 doHeader);

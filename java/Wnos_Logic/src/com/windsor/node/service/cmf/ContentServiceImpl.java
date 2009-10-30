@@ -78,6 +78,11 @@ import com.windsor.node.service.helper.NotificationHelper;
 public class ContentServiceImpl extends BaseService implements ContentService,
         InitializingBean {
 
+    /**
+     * 
+     */
+    private static final String UNABLE_TO_FIND_SERVICE = "Unable to find service with this operation: ";
+
     private static final String ENDS2_PLUGIN_CLASSNAME = "com.windsor.node.plugin.ends2.Ends2GetServicesQueryProcessor";
 
     private final Logger logger = Logger.getLogger(this.getClass());
@@ -432,7 +437,7 @@ public class ContentServiceImpl extends BaseService implements ContentService,
                         .getId(), content.getFlow().getOperation());
 
                 if (submitProcessingService == null) {
-                    logger.error("Unable to find service with this operation: "
+                    logger.error(UNABLE_TO_FIND_SERVICE
                             + content.getFlow().getOperation());
                     throw new IllegalArgumentException(
                             "Invalid flow operation: "
@@ -452,7 +457,7 @@ public class ContentServiceImpl extends BaseService implements ContentService,
                         .getId(), content.getFlow().getFlowName());
 
                 if (submitProcessingService == null) {
-                    logger.error("Unable to find service with this operation: "
+                    logger.error(UNABLE_TO_FIND_SERVICE
                             + content.getFlow().getFlowName());
                 }
 

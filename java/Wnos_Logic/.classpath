@@ -40,5 +40,6 @@
 	<classpathentry exported="true" kind="lib" path="/Resources/lib/Wnos_Logic/velocity-1.6.2-dep.jar"/>
 	<classpathentry exported="true" kind="lib" path="/Resources/lib/Wnos_Logic/velocity-1.6.2.jar"/>
 	<classpathentry kind="lib" path="/Resources/lib/Wnos_Logic/joda-time-1.6.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

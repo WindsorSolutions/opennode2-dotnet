@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
-                http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
-
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd 
+                http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd 
+                http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd 
+                http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 
 	<!-- DAOs -->
 	<bean id="accountDao" class="com.windsor.node.data.dao.jdbc.JdbcAccountDao">
@@ -86,11 +88,38 @@
 		<property name="idGenerator" ref="idGenerator" />
 	</bean>
 
+	<!--
+		transaction mgmt for schedule DAO to prevent phantom "double
+		schedules" in active-active websphere clusters that share a Node Admin
+		db
+	-->
+	<!--
+		the transactional advice (what 'happens'; see the <aop:advisor/> bean
+		below)
+	-->
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<!-- the transactional semantics... -->
+		<tx:attributes>
+			<tx:method name="getForNextExec" read-only="false" isolation="SERIALIZABLE" propagation="REQUIRED" timeout="-1"/>
+		</tx:attributes>
+	</tx:advice>
+	<!--
+		ensure that the above transactional advice runs for a specific method
+	-->
+	<aop:config>
+		<aop:pointcut id="scheduleDaoGetForNextExec"
+			expression="execution(* com.windsor.node.data.dao.jdbc.JdbcScheduleDao.getForNextExec(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="scheduleDaoGetForNextExec" />
+	</aop:config>
+	<!-- similarly, don't forget the PlatformTransactionManager -->
+	<bean id="txManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="jdbcDataSource" />
+	</bean>
 
+	<!-- end transaction declarations -->
 
-	<!-- jdbc -->
-
-	<!-- standard -->
+	<!-- dataSource for all daos -->
 	<bean id="jdbcDataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
 		<property name="driverClassName">

@@ -106,7 +106,7 @@ public class WqxStatusDao extends BaseJdbcDao {
 
     private static final String SQL_RESET_STATUS = UPDATE + TABLE_NAME + SET
             + STATUS + EQUALS + APOS + RESET + APOS + WHERE
-            + STATUS_PENDING_OR_PROCESSING;
+            + STATUS_PENDING_OR_PROCESSING + AND + ORG_PK_FROM_ORG_ID;
 
     private static final String SQL_SELECT_LATEST_PROCESSED_BY_ORG_ID_AND_OPERATION_TYPE = SELECT
             + "max("
@@ -135,7 +135,11 @@ public class WqxStatusDao extends BaseJdbcDao {
             + SUBMISSION_TYPE + EQUALS_PARAM + AND + ORG_PK_FROM_ORG_ID;
 
     private static final String SQL_SELECT_ALL_PENDING_TRANS = SELECT + TRAN_ID
-            + FROM + TABLE_NAME + WHERE + STATUS_PENDING_OR_PROCESSING;
+            + FROM + TABLE_NAME + WHERE + STATUS_PENDING_OR_PROCESSING + AND
+            + ORG_PK_FROM_ORG_ID;
+
+    private static final String OPERATION_TYPE_EQUALS = ", operationType = ";
+    private static final String SQL = "sql: ";
 
     private int[] argTypes = new int[] { Types.VARCHAR, Types.VARCHAR,
             Types.TIMESTAMP, Types.TIMESTAMP, Types.VARCHAR, Types.VARCHAR,
@@ -154,10 +158,10 @@ public class WqxStatusDao extends BaseJdbcDao {
     }
 
     /**
-     * Creates a row in WQX_SUBMISSIONHISTORY if no row with
-     * <code>operationType</code> and <code>operationType</code> and status of
-     * &quot;pending&quot; exists - otherwise throws an
-     * {@link UnsupportedOperationException}.
+     * Creates a row in WQX_SUBMISSIONHISTORY if no row with an operation type
+     * of <code>WqxOperationType.UPDATE_INSERT</code> or
+     * <code>WqxOperationType.DELETE</code> and status of &quot;pending&quot;
+     * exists - otherwise throws an {@link UnsupportedOperationException}.
      * 
      * @param id
      *            primary key for the new row
@@ -200,7 +204,7 @@ public class WqxStatusDao extends BaseJdbcDao {
             logger.debug(args[i].toString());
         }
 
-        logger.debug("sql: " + SQL_INSERT);
+        logger.debug(SQL + SQL_INSERT);
         getJdbcTemplate().update(SQL_INSERT, args, argTypes);
 
     }
@@ -212,7 +216,7 @@ public class WqxStatusDao extends BaseJdbcDao {
 
         checkDaoConfig();
         logger.debug("getPendingTransactionId: orgId = " + orgId
-                + ", operationType = " + operationType);
+                + OPERATION_TYPE_EQUALS + operationType);
 
         if (countPending(orgId, operationType) > 0) {
             tranId = (String) getJdbcTemplate().queryForObject(
@@ -224,15 +228,17 @@ public class WqxStatusDao extends BaseJdbcDao {
 
     }
 
-    public List getPendingTransactionIds() {
+    @SuppressWarnings("unchecked")
+    public List<String> getPendingTransactionIds(String orgId) {
 
-        List idList = null;
+        List<String> idList = null;
 
         checkDaoConfig();
-        logger.debug("getPendingTransactionIds");
+        logger.debug("getPendingTransactionIds for orgId " + orgId);
 
-        logger.debug("sql: " + SQL_SELECT_ALL_PENDING_TRANS);
-        idList = getJdbcTemplate().queryForList(SQL_SELECT_ALL_PENDING_TRANS,
+        logger.debug(SQL + SQL_SELECT_ALL_PENDING_TRANS);
+        idList = (List<String>) getJdbcTemplate().queryForList(
+                SQL_SELECT_ALL_PENDING_TRANS, new Object[] { orgId },
                 String.class);
 
         return idList;
@@ -244,10 +250,10 @@ public class WqxStatusDao extends BaseJdbcDao {
         Timestamp ts = null;
 
         logger.debug("getLatestProcessedTimestamp: orgId = " + orgId
-                + ", operationType = " + operationType);
+                + OPERATION_TYPE_EQUALS + operationType);
         checkDaoConfig();
 
-        logger.debug("sql: "
+        logger.debug(SQL
                 + SQL_SELECT_LATEST_PROCESSED_BY_ORG_ID_AND_OPERATION_TYPE);
 
         ts = (Timestamp) getJdbcTemplate().queryForObject(
@@ -266,26 +272,27 @@ public class WqxStatusDao extends BaseJdbcDao {
         logger.debug("updateStatus: tranId = " + tranId + ", newStatus = "
                 + newStatus);
 
-        logger.debug("sql: " + SQL_UPDATE_STATUS);
+        logger.debug(SQL + SQL_UPDATE_STATUS);
         getJdbcTemplate().update(SQL_UPDATE_STATUS,
                 new Object[] { newStatus.name(), tranId });
     }
 
     /**
      * Sets value of &quot;CDXPROCESSINGSTATUS&quot; from &quot;Pending&quot; to
-     * &quot;Reset&quot;.
+     * &quot;Reset&quot; for a given OrgId.
      */
-    public int resetStatus() {
+    public int resetStatus(String orgId) {
 
         checkDaoConfig();
         logger.debug("resetStatus");
 
         int rowCount;
 
-        logger.debug("sql: " + SQL_RESET_STATUS);
-        rowCount = getJdbcTemplate().update(SQL_RESET_STATUS);
+        logger.debug(SQL + SQL_RESET_STATUS);
+        rowCount = getJdbcTemplate().update(SQL_RESET_STATUS,
+                new Object[] { orgId });
 
-        logger.debug("Reset " + rowCount + " rows");
+        logger.debug("Reset " + rowCount + " rows for OrgId " + orgId);
         return rowCount;
 
     }
@@ -295,7 +302,7 @@ public class WqxStatusDao extends BaseJdbcDao {
         checkDaoConfig();
         logger.debug("getPrimaryKeyForOrgId");
 
-        logger.debug("sql: " + SQL_SELECT_ORG_PK_BY_ORG_ID);
+        logger.debug(SQL + SQL_SELECT_ORG_PK_BY_ORG_ID);
         return (String) getJdbcTemplate().queryForObject(
                 SQL_SELECT_ORG_PK_BY_ORG_ID, new Object[] { orgId },
                 String.class);
@@ -305,7 +312,7 @@ public class WqxStatusDao extends BaseJdbcDao {
 
         checkDaoConfig();
 
-        logger.debug("sql: " + SQL_COUNT_PENDING_BY_OPERATION_TYPE_AND_ORG_ID);
+        logger.debug(SQL + SQL_COUNT_PENDING_BY_OPERATION_TYPE_AND_ORG_ID);
         return getJdbcTemplate().queryForInt(
                 SQL_COUNT_PENDING_BY_OPERATION_TYPE_AND_ORG_ID,
                 new Object[] { operationType.getName(), orgId });

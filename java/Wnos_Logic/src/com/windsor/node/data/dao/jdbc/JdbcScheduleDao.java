@@ -218,6 +218,7 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
 
         Object[] args = new Object[20];
 
+        // CHECKSTYLE:OFF
         // Name
         args[0] = instance.getName();
         // FlowId
@@ -300,6 +301,7 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
         types[18] = Types.VARCHAR;
         // Id
         types[19] = Types.VARCHAR;
+        // CHECKSTYLE:ON
 
         logger.debug("SQL: " + sql);
 

@@ -64,12 +64,6 @@ public abstract class BaseWqxXmlPlugin extends BaseWqxPlugin implements
     /** 1 January, 1899. */
     public static final String ARBITRARY_START_DATE = "1899-01-01";
 
-    /**
-     * Index position for schedule argument (organization id for the data
-     * query).
-     */
-    public static final int ORG_ID_ARG_INDEX = 0;
-
     /** Velocity template variable name. */
     public static final String TEMPLATE_AUTHOR_NAME = "authorName";
 
@@ -102,9 +96,6 @@ public abstract class BaseWqxXmlPlugin extends BaseWqxPlugin implements
     protected String authorName;
     protected String authorOrg;
     protected String contactInfo;
-
-    /* Primary key for base db query, also a VTL variable. */
-    protected String orgId;
 
     public BaseWqxXmlPlugin() {
         super();
@@ -167,7 +158,10 @@ public abstract class BaseWqxXmlPlugin extends BaseWqxPlugin implements
 
         try {
 
-            checkForPendingSubmissions(operationType);
+            String orgId = getOrgIdFromTransaction(transaction);
+
+            checkForPendingSubmissions(operationType, orgId);
+
             result
                     .getAuditEntries()
                     .add(
@@ -284,12 +278,13 @@ public abstract class BaseWqxXmlPlugin extends BaseWqxPlugin implements
         }
 
         debug("Saving transaction status to WQX_SubmissionHistory table...");
-        statusDao.createStatus(getIdGenerator().createId(), orgId,
-                operationType, transaction.getId(),
-                CommonTransactionStatusCode.PENDING);
+        statusDao.createStatus(getIdGenerator().createId(),
+                getOrgIdFromTransaction(transaction), operationType,
+                transaction.getId(), CommonTransactionStatusCode.PENDING);
     }
 
-    private void checkForPendingSubmissions(WqxOperationType operationType) {
+    private void checkForPendingSubmissions(WqxOperationType operationType,
+            String orgId) {
 
         logger.debug("Checking for pending submissions...");
 
@@ -311,16 +306,13 @@ public abstract class BaseWqxXmlPlugin extends BaseWqxPlugin implements
         // schema validation
         velocityHelper.setTemplateArg(TEMPLATE_MAKE_HEADER, "true");
 
-        orgId = getRequiredValueFromTransactionArgs(transaction,
-                ORG_ID_ARG_INDEX);
-        debug("orgId: " + orgId);
-
-        velocityHelper.setTemplateArg(TEMPLATE_ORG_ID, orgId);
+        velocityHelper.setTemplateArg(TEMPLATE_ORG_ID,
+                getOrgIdFromTransaction(transaction));
 
         velocityHelper.setTemplateArg(TEMPLATE_DOC_ID, docId);
 
         Timestamp lastPendingTimestamp = statusDao.getLatestProcessedTimestamp(
-                orgId, operationType);
+                getOrgIdFromTransaction(transaction), operationType);
 
         if (null == lastPendingTimestamp) {
 
@@ -426,20 +418,5 @@ public abstract class BaseWqxXmlPlugin extends BaseWqxPlugin implements
      */
     public void setTempFileName(String tempFileName) {
         this.tempFileName = tempFileName;
-    }
-
-    /**
-     * @return the orgId
-     */
-    public String getOrgId() {
-        return orgId;
-    }
-
-    /**
-     * @param orgId
-     *            the orgId to set
-     */
-    public void setOrgId(String orgId) {
-        this.orgId = orgId;
     }
 }

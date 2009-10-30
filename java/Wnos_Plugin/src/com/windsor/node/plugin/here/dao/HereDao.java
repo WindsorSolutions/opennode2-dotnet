@@ -72,24 +72,8 @@ public class HereDao extends JdbcTemplate {
             String endpointUri, boolean isFacility, String sourceSystemName,
             int numberOfDays) {
 
-        if (StringUtils.isBlank(transactionId)) {
-            throw new IllegalArgumentException("transactionId not set");
-        }
-        logger.debug("transactionId = " + transactionId);
-
-        if (StringUtils.isBlank(endpointUri)) {
-            throw new IllegalArgumentException("endpointUri not set");
-        }
-        logger.debug("endpointUri = " + endpointUri);
-
-        if (StringUtils.isBlank(flowName)) {
-            throw new IllegalArgumentException("flowName not set");
-        }
-        logger.debug("flowName = " + flowName);
-
-        boolean isFullReplace = numberOfDays > MIN_FULL_REFRESH_DAY_COUNT
-                || numberOfDays < 0;
-        logger.debug("isFullReplace = " + isFullReplace);
+        boolean isFullReplace = validateArgs(transactionId, flowName,
+                endpointUri, numberOfDays);
 
         try {
 
@@ -108,23 +92,14 @@ public class HereDao extends JdbcTemplate {
                 }
             }
 
-            Object[] args = new Object[7];
-            args[0] = transactionId;
-            args[1] = endpointUri;
-            args[2] = flowName;
-            args[3] = isFacility ? HERE_YES : HERE_NO;
-            args[4] = sourceSystemName;
-            args[5] = isFullReplace ? HERE_YES : HERE_NO;
-            args[6] = new Timestamp(new Date().getTime());
+            Object[] args = new Object[] { transactionId, endpointUri,
+                    flowName, isFacility ? HERE_YES : HERE_NO,
+                    sourceSystemName, isFullReplace ? HERE_YES : HERE_NO,
+                    new Timestamp(new Date().getTime()) };
 
-            int[] types = new int[7];
-            types[0] = Types.VARCHAR;
-            types[1] = Types.VARCHAR;
-            types[2] = Types.VARCHAR;
-            types[3] = Types.VARCHAR;
-            types[4] = Types.VARCHAR;
-            types[5] = Types.VARCHAR;
-            types[6] = Types.DATE;
+            int[] types = new int[] { Types.VARCHAR, Types.VARCHAR,
+                    Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,
+                    Types.DATE };
 
             logger.debug(SQL_INSERT);
 
@@ -139,6 +114,29 @@ public class HereDao extends JdbcTemplate {
 
         }
 
+    }
+
+    private boolean validateArgs(String transactionId, String flowName,
+            String endpointUri, int numberOfDays) {
+        if (StringUtils.isBlank(transactionId)) {
+            throw new IllegalArgumentException("transactionId not set");
+        }
+        logger.debug("transactionId = " + transactionId);
+
+        if (StringUtils.isBlank(endpointUri)) {
+            throw new IllegalArgumentException("endpointUri not set");
+        }
+        logger.debug("endpointUri = " + endpointUri);
+
+        if (StringUtils.isBlank(flowName)) {
+            throw new IllegalArgumentException("flowName not set");
+        }
+        logger.debug("flowName = " + flowName);
+
+        boolean isFullReplace = numberOfDays > MIN_FULL_REFRESH_DAY_COUNT
+                || numberOfDays < 0;
+        logger.debug("isFullReplace = " + isFullReplace);
+        return isFullReplace;
     }
 
 }

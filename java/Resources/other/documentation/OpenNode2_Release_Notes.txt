@@ -1,4 +1,55 @@
 ================================================================================
+OpenNode2 v1.20 for Java - Release Notes                             2009-09-30
+================================================================================
+
+This release introduces support for the ICIS-NPDES Discharge Monitoring Report
+(DMR) Exchange, and support for recording SDWIS submissions in the HERE staging 
+database. Binary distributions for each plugin are included. Both plugins will 
+work with OpenNode2 v1.18 or later.
+
+Changes to the source distribution includes new and modified configuration files
+required for addressing unpredictable schedule behavior when running in a 
+WebSphere cluster. If building from source, be sure to update your existing 
+configuration files with new required propoerties.  
+
+FIXED/RESOLVED
+========================================
+
+* In hard-to-reproduce circumstances, installing the OpenNode2 on a WebSphere 6.1
+  cluster could result in schedules running in quick succession on each machine 
+  in the cluster. In addition to enhancing transaction controlsd around schedule
+  operations, the new worker.properties file enables forcing schedules to run on
+  only one node in the cluster.
+  
+* Updated the seed script for DB2 to use Timestamp rather than Date.
+
+
+NEW
+========================================
+
+* The ICIS-NPDES plugin supports the DMR exchange only. See the installation
+  guide for setup details.
+  
+* The SDWIS plugin now has an implementation for recording SDWIS submissions to 
+  the HERE Manifest records (SdwisSubmissionRelayProcessor). See the HERE 
+  configuration guide for details. The original SimpleSdwisRequestProcessor is
+  still included.
+
+* Added declarative transaction control around ScheduleDao.getForNextExec(), to
+  avoid multiple Nodes in a WebSphere cluster running the same schedule more or
+  less simultaneously. This necessitated adding .jar files for AspectJ.
+  
+* Externalized the timing settings for the various worker tasks into 
+  worker.properties, making it easier to customize the timings for differen build
+  environments (e.g., dev, test, and production). 
+  
+* The scheduleWorkerTask.executionMachineName property in worker.properties is 
+  empty by default. Setting to an unqualified hostname will limit shcedules to 
+  running only on that host. Leaving it un-set (empty) allows schedules can run 
+  on any machine in a cluster.  
+
+
+================================================================================
 OpenNode2 v1.19 for Java - Release Notes                             2009-09-30
 ================================================================================
 
@@ -9,20 +60,20 @@ the associated installation and configuration guide for details.
 This release  also features a number of small updates to the source code, but 
 does not include a binary distribution.
 
-NEW
-========================================
-* Externalized worker thread startup delay and run intervals to new 
-  worker.properties file, so they can be easily adjusted on a per-environment 
-  basis.
-
-* Added a per-minute option to the scheduler (mainly to facilitate testing).
-
 FIXED/RESOLVED
 ========================================
 * Cleaned up minor issues related to schedules. If you build and install this
   version for use with an existing OpenNode2 Admin database, you'll need to run
   a simple update statement, provided in 
   Resources/database/fixes/fix_NSchedule_data.sql.
+
+NEW
+========================================
+* Externalized worker thread startup delay and run intervals to new 
+  worker.properties file, so they can be easily adjusted on a per-environment 
+  basis.
+
+* Added a per-minute option to the scheduler (mainly to facilitate testing)
 
 ================================================================================
 OpenNode2 v1.18 for Java - Release Notes                             2009-09-15

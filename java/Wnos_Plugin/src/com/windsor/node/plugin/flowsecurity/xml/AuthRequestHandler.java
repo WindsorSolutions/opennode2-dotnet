@@ -35,6 +35,8 @@ import java.sql.Timestamp;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.ISODateTimeFormat;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
@@ -43,7 +45,6 @@ import org.xml.sax.ext.DefaultHandler2;
 import com.windsor.node.common.domain.flowsecurity.AuthRequestElementType;
 import com.windsor.node.common.domain.flowsecurity.AuthorizationRequest;
 import com.windsor.node.common.domain.flowsecurity.FlowRequest;
-import com.windsor.node.util.DateUtil;
 
 /**
  * SAX Document Handler for Flow Security authorization requests - maps an xml
@@ -121,7 +122,10 @@ public class AuthRequestHandler extends DefaultHandler2 {
 
     private Timestamp getTimestampFromString(String elementData) {
 
-        return DateUtil.xmlDateTimeToJdbcTimestamp(elementData);
+        DateTimeFormatter dtf = ISODateTimeFormat.dateTimeParser();
+
+        long asMillis = dtf.parseMillis(elementData);
+        return new Timestamp(asMillis);
 
     }
 

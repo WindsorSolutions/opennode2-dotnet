@@ -143,9 +143,19 @@
 	<!-- email -->
 	<bean id="mailSender"
 		class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		<property name="host">
-			<value>${smtp.gateway}</value>
-		</property>
+		<property name="host" value="${smtp.gateway}" />
+        <property name="port" value="${smtp.gateway.port}" />
+        <!-- Parameters for SMTP AUTH -->
+        <property name="username" value="${smtp.username}" />
+        <property name="password" value="${smtp.password}" />
+        <property name="javaMailProperties">
+        <props>
+            <prop key="mail.smtp.auth">${smtp.auth}</prop>
+            <!-- used by gmail smtp server -->
+            <prop key="mail.smtp.starttls.enable">${smtp.starttls.enable}</prop>
+            <prop key="mail.smtp.starttls.required">${smtp.starttls.required}</prop>
+        </props>
+        </property> 
 	</bean>
 
 	<!-- Velocity -->

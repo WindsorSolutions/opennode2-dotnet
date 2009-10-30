@@ -23,9 +23,3 @@ VALUES
 ;
 COMMIT
 ;
-
-
-
-
-
-

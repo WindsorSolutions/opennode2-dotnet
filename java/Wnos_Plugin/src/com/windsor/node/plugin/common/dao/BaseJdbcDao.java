@@ -63,6 +63,8 @@ public abstract class BaseJdbcDao extends JdbcDaoSupport {
     public static final String R_PAREN = ")";
     public static final String L_PAREN = "(";
     public static final String VALUES = " VALUES ";
+    public static final String MAX = " MAX(";
+    public static final String DISTINCT = " DISTINCT ";
 
     public static final String PARAM = " ? ";
     public static final String GT_PARAM = " > ? ";

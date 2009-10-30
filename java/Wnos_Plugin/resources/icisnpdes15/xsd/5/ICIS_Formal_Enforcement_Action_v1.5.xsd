@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema 
+targetNamespace="http://www.exchangenetwork.net/schema/icis/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1" xmlns:icis="http://www.exchangenetwork.net/schema/icis/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<!-- INCLUDE STATEMENTS -->
+	<xsd:include schemaLocation="ICIS_Key_Elements_v1.5.xsd"/>
+	<!-- SCHEMA HEADER -->
+	<xsd:annotation>
+		<xsd:documentation>Schema Name: ICIS_Formal_Enforcement_Action_v1.5.xsd</xsd:documentation>
+		<xsd:documentation>Current Version Available: http://www.exchangenetwork.net/schema/draft/icis/SchemasVersion1.5</xsd:documentation>
+		<xsd:documentation>Description: ICIS-NPDES compliance monitoring element data input format</xsd:documentation>
+		<xsd:documentation>Application: ICIS-NPDES</xsd:documentation>
+		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
+		<xsd:documentation>Point of Contact: EPA/Alison Kittle</xsd:documentation>
+		<xsd:documentation>Data Written: July 2006</xsd:documentation>
+		<xsd:documentation>Last Date Modified:3-7-2008</xsd:documentation>
+	</xsd:annotation>
+	<!-- GLOBAL ELEMENT DECLARATIONS -->
+	<xsd:element name="CashCivilPenaltyRequiredAmount" type="icis:DecimalRange0To99999999999999.99Type"/>
+	<xsd:element name="CombinedOrSupercededByEAID" type="icis:StringMin1Max20Type"/>
+	<xsd:element name="FinalOrder" type="icis:FinalOrder"/>
+	<xsd:element name="FinalOrderEnteredDate" type="icis:DateType"/>
+	<xsd:element name="FinalOrderIssuedDate" type="icis:DateType"/>
+	<xsd:element name="FinalOrderQNCRComments" type="icis:StringMin1Max2000Type"/>
+	<xsd:element name="FinalOrderTypeCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="FormalEAUserDefinedField1" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="FormalEAUserDefinedField2" type="icis:StringMin1Max50Type"/>
+	<xsd:element name="FormalEAUserDefinedField3" type="icis:StringMin1Max50Type"/>
+	<xsd:element name="FormalEAUserDefinedField4" type="icis:DateType"/>
+	<xsd:element name="FormalEAUserDefinedField5" type="icis:DateType"/>
+	<xsd:element name="FormalEAUserDefinedField6" type="icis:StringMin1Max4000Type"/>
+	<xsd:element name="FormalEnforcementAction" type="icis:FormalEnforcementAction"/>
+	<xsd:element name="NPDESClosedDate" type="icis:DateType"/>
+	<xsd:element name="OtherComments" type="icis:StringMin1Max4000Type"/>
+	<!-- COMPLEX TYPE DEFINITIONS -->
+	<xsd:complexType name="FormalEnforcementActionData">
+		<xsd:sequence>
+			<xsd:element ref="icis:TransactionHeader"/>
+			<xsd:element ref="icis:FormalEnforcementAction"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="FormalEnforcementAction">
+		<xsd:complexContent>
+			<xsd:extension base="icis:EnforcementActionKeyElements">
+				<xsd:sequence>
+					<xsd:element ref="icis:PermitIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="icis:EnforcementActionTypeCode" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="icis:ProgramsViolatedCode" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="icis:CombinedOrSupercededByEAID" minOccurs="0"/>
+					<xsd:element ref="icis:ReasonForDeletingRecord" minOccurs="0"/>
+					<xsd:element ref="icis:FormalEAUserDefinedField1" minOccurs="0"/>
+					<xsd:element ref="icis:FormalEAUserDefinedField2" minOccurs="0"/>
+					<xsd:element ref="icis:FormalEAUserDefinedField3" minOccurs="0"/>
+					<xsd:element ref="icis:FormalEAUserDefinedField4" minOccurs="0"/>
+					<xsd:element ref="icis:FormalEAUserDefinedField5" minOccurs="0"/>
+					<xsd:element ref="icis:FormalEAUserDefinedField6" minOccurs="0"/>
+					<xsd:element ref="icis:FinalOrder" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="FinalOrder">
+		<xsd:sequence>
+			<xsd:element ref="icis:FinalOrderTypeCode"/>
+			<xsd:choice>
+				<xsd:element ref="icis:FinalOrderIssuedDate" minOccurs="0"/>
+				<xsd:element ref="icis:FinalOrderEnteredDate" minOccurs="0"/>
+			</xsd:choice>
+			<xsd:element ref="icis:NPDESClosedDate" minOccurs="0"/>
+			<xsd:element ref="icis:FinalOrderQNCRComments" minOccurs="0"/>
+			<xsd:element ref="icis:CashCivilPenaltyRequiredAmount" minOccurs="0"/>
+			<xsd:element ref="icis:OtherComments" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

@@ -33,6 +33,7 @@ package com.windsor.node.data.dao;
 
 import java.sql.Timestamp;
 
+import com.windsor.node.common.domain.ScheduleExecuteStatus;
 import com.windsor.node.common.domain.ScheduledItem;
 
 public interface ScheduleDao extends DeletableDao, ListableDao {
@@ -46,5 +47,8 @@ public interface ScheduleDao extends DeletableDao, ListableDao {
     ScheduledItem getForNextExec();
 
     void setRun(String id, Timestamp time);
+
+    void setRunInfo(String id, String scheduleInfo,
+            ScheduleExecuteStatus success);
 
 }

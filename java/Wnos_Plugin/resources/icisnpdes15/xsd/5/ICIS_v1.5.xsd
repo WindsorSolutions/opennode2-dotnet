@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:icis="http://www.exchangenetwork.net/schema/icis/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/icis/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1">
+	<!-- INCLUDE STATEMENTS -->
+	<xsd:include schemaLocation="ICIS_Header_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_Basic_Permit_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_Biosolids_Program_Report_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_Biosolids_Permit_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_CAFO_Annual_Report_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_CAFO_Permit_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_CAFO_Inspection_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_Common_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_Compliance_Monitoring_Linkage_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_Compliance_Monitoring_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_Compliance_Schedule_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_CSO_Event_Report_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_CSO_Inspection_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_CSO_Permit_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_Discharge_Monitoring_Report_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_Discharge_Monitoring_Report_Violation_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_DMR_Program_Report_Linkage_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_Effluent_Trade_Partner_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_Enforcement_Action_Violation_Keys_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_Facility_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_Formal_Enforcement_Action_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_General_Permit_Covered_Facility_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_Informal_Enforcement_Action_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_Limit_Set_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_Limits_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_Local_Limits_Program_Report_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_Master_General_Permit_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_Narrative_Condition_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_Permit_Schedule_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_Permit_Tracking_Event_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_Permitted_Feature_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_Pretreatment_Inspection_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_Pretreatment_Permit_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_Pretreatment_Program_Summary_Report_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_Schedule_Event_Violation_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_Single_Event_Violation_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_SSO_Annual_Report_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_SSO_Event_Report_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_SSO_Inspection_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_SSO_Monthly_Event_Report_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_POTW_Permit_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_Sub_Activity_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_SW_MS4_Large_Permit_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_SW_Construction_Permit_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_SW_Event_Report_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_SW_Inspection_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_SW_Industrial_Permit_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_SW_MS4_Large_Permit_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_SW_MS4_Program_Report_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_SW_MS4_Small_Permit_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_Unpermitted_Facility_v1.5.xsd"/>
+	<!-- SCHEMA HEADER -->
+	<xsd:annotation>
+		<xsd:documentation>Schema Name: ICIS_v1.5.xsd</xsd:documentation>
+		<xsd:documentation>Current Version Available: http://www.exchangenetwork.net/schema/draft/icis/SchemasVersion1.5</xsd:documentation>
+		<xsd:documentation>Description: ICIS-NPDES main schema </xsd:documentation>
+		<xsd:documentation>Application: ICIS-NPDES</xsd:documentation>
+		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
+		<xsd:documentation>Point of Contact: EPA/Alison Kittle</xsd:documentation>
+		<xsd:documentation>Data Written: July 2006</xsd:documentation>
+		<xsd:documentation>Last Date Modified:3-7-2008</xsd:documentation>
+	</xsd:annotation>
+	<!-- COMPLEX TYPE DEFINITIONS -->
+	<xsd:element name="Document">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="Header" type="icis:HeaderData"/>
+				<xsd:element name="Payload" type="icis:PayloadData" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="PayloadData">
+		<xsd:choice>
+			<xsd:element name="BasicPermitData" type="icis:BasicPermitData" maxOccurs="unbounded"/>
+			<xsd:element name="BiosolidsPermitData" type="icis:BiosolidsPermitData" maxOccurs="unbounded"/>
+			<xsd:element name="BiosolidsProgramReportData" type="icis:BiosolidsProgramReportData" maxOccurs="unbounded"/>
+			<xsd:element name="CAFOAnnualReportData" type="icis:CAFOAnnualReportData" maxOccurs="unbounded"/>
+			<xsd:element name="CAFOInspectionData" type="icis:CAFOInspectionData" maxOccurs="unbounded"/>
+			<xsd:element name="CAFOPermitData" type="icis:CAFOPermitData" maxOccurs="unbounded"/>
+			<xsd:element name="ComplianceMonitoringLinkageData" type="icis:ComplianceMonitoringLinkageData" maxOccurs="unbounded"/>
+			<xsd:element name="ComplianceMonitoringData" type="icis:ComplianceMonitoringData" maxOccurs="unbounded"/>
+			<xsd:element name="ComplianceScheduleData" type="icis:ComplianceScheduleData" maxOccurs="unbounded"/>
+			<xsd:element name="CSOEventReportData" type="icis:CSOEventReportData" maxOccurs="unbounded"/>
+			<xsd:element name="CSOInspectionData" type="icis:CSOInspectionData" maxOccurs="unbounded"/>
+			<xsd:element name="CSOPermitData" type="icis:CSOPermitData" maxOccurs="unbounded"/>
+			<xsd:element name="DischargeMonitoringReportData" type="icis:DischargeMonitoringReportData" maxOccurs="unbounded"/>
+			<xsd:element name="DMRViolationData" type="icis:DMRViolationData" maxOccurs="unbounded"/>
+			<xsd:element name="DMRProgramReportLinkageData" type="icis:DMRProgramReportLinkageData" maxOccurs="unbounded"/>
+			<xsd:element name="EffluentTradePartnerData" type="icis:EffluentTradePartnerData" maxOccurs="unbounded"/>
+			<xsd:element name="EnforcementActionViolationKeyData" type="icis:EnforcementActionViolationKeyData" maxOccurs="unbounded"/>
+			<xsd:element name="FacilityData" type="icis:FacilityData" maxOccurs="unbounded"/>
+			<xsd:element name="FormalEnforcementActionData" type="icis:FormalEnforcementActionData" maxOccurs="unbounded"/>
+			<xsd:element name="GeneralPermitData" type="icis:GeneralPermitData" maxOccurs="unbounded"/>
+			<xsd:element name="InformalEnforcementActionData" type="icis:InformalEnforcementActionData" maxOccurs="unbounded"/>
+			<xsd:element name="LimitSetData" type="icis:LimitSetData" maxOccurs="unbounded"/>
+			<xsd:element name="LimitsData" type="icis:LimitsData" maxOccurs="unbounded"/>
+			<xsd:element name="LocalLimitsProgramReportData" type="icis:LocalLimitsProgramReportData" maxOccurs="unbounded"/>
+			<xsd:element name="MasterGeneralPermitData" type="icis:MasterGeneralPermitData" maxOccurs="unbounded"/>
+			<xsd:element name="NarrativeConditionData" type="icis:NarrativeConditionData" maxOccurs="unbounded"/>
+			<xsd:element name="PermitScheduleData" type="icis:PermitScheduleData" maxOccurs="unbounded"/>
+			<xsd:element name="PermittedFeatureData" type="icis:PermittedFeatureData" maxOccurs="unbounded"/>
+			<xsd:element name="PermitTrackingEventData" type="icis:PermitTrackingEventData" maxOccurs="unbounded"/>
+			<xsd:element name="PretreatmentInspectionData" type="icis:PretreatmentInspectionData" maxOccurs="unbounded"/>
+			<xsd:element name="PretreatmentPermitData" type="icis:PretreatmentPermitData" maxOccurs="unbounded"/>
+			<xsd:element name="PretreatmentPerformanceSummaryData" type="icis:PretreatmentPerformanceSummaryData" maxOccurs="unbounded"/>
+			<xsd:element name="ScheduleEventViolationData" type="icis:ScheduleEventViolationData" maxOccurs="unbounded"/>
+			<xsd:element name="SingleEventViolationData" type="icis:SingleEventViolationData" maxOccurs="unbounded"/>
+			<xsd:element name="SSOAnnualReportData" type="icis:SSOAnnualReportData" maxOccurs="unbounded"/>
+			<xsd:element name="SSOEventReportData" type="icis:SSOEventReportData" maxOccurs="unbounded"/>
+			<xsd:element name="SSOInspectionData" type="icis:SSOInspectionData" maxOccurs="unbounded"/>
+			<xsd:element name="SSOMonthlyEventReportData" type="icis:SSOMonthlyEventReportData" maxOccurs="unbounded"/>
+			<xsd:element name="POTWPermitData" type="icis:POTWPermitData" maxOccurs="unbounded"/>
+			<xsd:element name="SubActivityData" type="icis:SubActivityData" maxOccurs="unbounded"/>
+			<xsd:element name="SWConstructionPermitData" type="icis:SWConstructionPermitData" maxOccurs="unbounded"/>
+			<xsd:element name="SWEventReportData" type="icis:SWEventReportData" maxOccurs="unbounded"/>
+			<xsd:element name="SWIndustrialPermitData" type="icis:SWIndustrialPermitData" maxOccurs="unbounded"/>
+			<xsd:element name="SWInspectionData" type="icis:SWInspectionData" maxOccurs="unbounded"/>
+			<xsd:element name="SWMS4LargePermitData" type="icis:SWMS4LargePermitData" maxOccurs="unbounded"/>
+			<xsd:element name="SWMS4ProgramReportData" type="icis:SWMS4ProgramReportData" maxOccurs="unbounded"/>
+			<xsd:element name="SWMS4SmallPermitData" type="icis:SWMS4SmallPermitData" maxOccurs="unbounded"/>
+			<xsd:element name="UnpermittedFacilityData" type="icis:UnpermittedFacilityData" maxOccurs="unbounded"/>
+		</xsd:choice>
+		<xsd:attribute name="Operation" type="icis:OperationType" use="required"/>
+	</xsd:complexType>
+	<xsd:simpleType name="OperationType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="BasicPermitSubmission"/>
+			<xsd:enumeration value="BiosolidsPermitSubmission"/>
+			<xsd:enumeration value="BiosolidsProgramReportSubmission"/>
+			<xsd:enumeration value="CAFOAnnualReportSubmission"/>
+			<xsd:enumeration value="CAFOInspectionSubmission"/>
+			<xsd:enumeration value="CAFOPermitSubmission"/>
+			<xsd:enumeration value="ComplianceMonitoringLinkageSubmission"/>
+			<xsd:enumeration value="ComplianceMonitoringSubmission"/>
+			<xsd:enumeration value="ComplianceScheduleSubmission"/>
+			<xsd:enumeration value="CSOEventReportSubmission"/>
+			<xsd:enumeration value="CSOInspectionSubmission"/>
+			<xsd:enumeration value="CSOPermitSubmission"/>
+			<xsd:enumeration value="DischargeMonitoringReportSubmission"/>
+			<xsd:enumeration value="DMRProgramReportLinkageSubmission"/>
+			<xsd:enumeration value="DMRViolationSubmission"/>
+			<xsd:enumeration value="EffluentTradePartnerSubmission"/>
+			<xsd:enumeration value="EnforcementActionViolationKeySubmission"/>
+			<xsd:enumeration value="FacilitySubmission"/>
+			<xsd:enumeration value="FormalEnforcementActionSubmission"/>
+			<xsd:enumeration value="GeneralPermitSubmission"/>
+			<xsd:enumeration value="InformalEnforcementActionSubmission"/>
+			<xsd:enumeration value="LimitSetSubmission"/>
+			<xsd:enumeration value="LimitsSubmission"/>
+			<xsd:enumeration value="LocalLimitsProgramReportSubmission"/>
+			<xsd:enumeration value="MasterGeneralPermitSubmission"/>
+			<xsd:enumeration value="NarrativeConditionSubmission"/>
+			<xsd:enumeration value="PermitScheduleSubmission"/>
+			<xsd:enumeration value="PermittedFeatureSubmission"/>
+			<xsd:enumeration value="PermitTrackingEventSubmission"/>
+			<xsd:enumeration value="PretreatmentInspectionSubmission"/>
+			<xsd:enumeration value="PretreatmentPermitSubmission"/>
+			<xsd:enumeration value="PretreatmentPerformanceSummarySubmission"/>
+			<xsd:enumeration value="ScheduleEventViolationSubmission"/>
+			<xsd:enumeration value="SingleEventViolationSubmission"/>
+			<xsd:enumeration value="SSOAnnualReportSubmission"/>
+			<xsd:enumeration value="SSOEventReportSubmission"/>
+			<xsd:enumeration value="SSOInspectionSubmission"/>
+			<xsd:enumeration value="SSOMonthlyEventReportSubmission"/>
+			<xsd:enumeration value="POTWPermitSubmission"/>
+			<xsd:enumeration value="SubActivitySubmission"/>
+			<xsd:enumeration value="SWConstructionPermitSubmission"/>
+			<xsd:enumeration value="SWEventReportSubmission"/>
+			<xsd:enumeration value="SWIndustrialPermitSubmission"/>
+			<xsd:enumeration value="SWInspectionSubmission"/>
+			<xsd:enumeration value="SWMS4LargePermitSubmission"/>
+			<xsd:enumeration value="SWMS4ProgramReportSubmission"/>
+			<xsd:enumeration value="SWMS4SmallPermitSubmission"/>
+			<xsd:enumeration value="UnpermittedFacilitySubmission"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

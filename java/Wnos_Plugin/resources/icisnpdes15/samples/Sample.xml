@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="http://www.exchangenetwork.net/schema/icis/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.exchangenetwork.net/schema/icis/1 C:\PROJECTS\Node2008dotNet\plugins\ICIS-NPDES_15\xml_schema\index.xsd">
+	<Header>
+		<Id>UUStaffer1</Id>
+		<Author>Jane Doe</Author>
+		<Organization>UU Department of Environmental Protection</Organization>
+		<Title>Discharge Monitoring Report Submission</Title>
+		<CreationTime>2001-12-17T09:30:47.0Z</CreationTime>
+		<Comment>2nd resubmittal of rejected transactions from May submission</Comment>
+		<DataService>ICIS</DataService>
+		<ContactInfo>123 Main Street, Anytown UU, 00555, (888) 555-1212, jane.doe@uudeq.state.us</ContactInfo>
+		<Property>
+			<name>e-mail</name>
+			<value>doe.john@state.us</value>
+		</Property>
+		<Property>
+			<name>Source</name>
+			<value>e-DMR</value>
+		</Property>
+	</Header>
+	<Payload Operation="DischargeMonitoringReportSubmission">
+		<DischargeMonitoringReportData>
+			<TransactionHeader>
+				<TransactionType>C</TransactionType>
+				<TransactionTimestamp>2001-12-17T09:30:47.0Z</TransactionTimestamp>
+			</TransactionHeader>
+			<DischargeMonitoringReport>
+				<PermitIdentifier>AL1005932</PermitIdentifier>
+				<PermittedFeatureIdentifier>001</PermittedFeatureIdentifier>
+				<LimitSetDesignator>A</LimitSetDesignator>
+				<MonitoringPeriodEndDate>2005-12-31</MonitoringPeriodEndDate>
+				<SignatureDate>2005-12-31</SignatureDate>
+				<PrincipalExecutiveOfficerFirstName>John</PrincipalExecutiveOfficerFirstName>
+				<PrincipalExecutiveOfficerLastName>Doe</PrincipalExecutiveOfficerLastName>
+				<PrincipalExecutiveOfficerTitle>Chief Executive Officer</PrincipalExecutiveOfficerTitle>
+				<PrincipalExecutiveOfficerTelephone>8005551212</PrincipalExecutiveOfficerTelephone>
+				<SignatoryFirstName>Jane</SignatoryFirstName>
+				<SignatoryLastName>Doe</SignatoryLastName>
+				<SignatoryTelephone>8506052578</SignatoryTelephone>
+				<ReportCommentText>Second time report was late.</ReportCommentText>
+				<ReportParameter>
+					<ParameterCode>01042</ParameterCode>
+					<MonitoringSiteDescriptionCode>SL</MonitoringSiteDescriptionCode>
+					<LimitSeasonNumber>0</LimitSeasonNumber>
+					<ReportSampleTypeText>ES</ReportSampleTypeText>
+					<ReportingFrequencyCode>01/07</ReportingFrequencyCode>
+					<ReportNumberOfExcursions>3</ReportNumberOfExcursions>
+					<ConcentrationNumericReportUnitMeasureCode>28</ConcentrationNumericReportUnitMeasureCode>
+					<QuantityNumericReportUnitMeasureCode>01</QuantityNumericReportUnitMeasureCode>
+					<NumericReport>
+						<NumericReportCode>Q1</NumericReportCode>
+						<NumericReportReceivedDate>2005-12-31</NumericReportReceivedDate>
+						<NumericConditionQuantity>300.5</NumericConditionQuantity>
+						<NumericConditionAdjustedQuantity>25.001</NumericConditionAdjustedQuantity>
+						<NumericConditionQualifier>&gt;</NumericConditionQualifier>
+					</NumericReport>
+					<NumericReport>
+						<NumericReportCode>Q2</NumericReportCode>
+						<NumericReportReceivedDate>2005-12-31</NumericReportReceivedDate>
+						<NumericConditionQuantity>200.5</NumericConditionQuantity>
+						<NumericConditionAdjustedQuantity>25.001</NumericConditionAdjustedQuantity>
+						<NumericConditionQualifier>&gt;=</NumericConditionQualifier>
+					</NumericReport>
+					<NumericReport>
+						<NumericReportCode>C1</NumericReportCode>
+						<NumericReportReceivedDate>2005-12-31</NumericReportReceivedDate>
+						<NumericReportNoDischargeIndicator>K</NumericReportNoDischargeIndicator>
+					</NumericReport>
+					<NumericReport>
+						<NumericReportCode>C2</NumericReportCode>
+						<NumericReportReceivedDate>2005-12-31</NumericReportReceivedDate>
+						<NumericConditionQuantity>100.5</NumericConditionQuantity>
+						<NumericConditionAdjustedQuantity>25.001</NumericConditionAdjustedQuantity>
+						<NumericConditionQualifier>&lt;</NumericConditionQualifier>
+					</NumericReport>
+					<NumericReport>
+						<NumericReportCode>C3</NumericReportCode>
+						<NumericReportReceivedDate>2005-12-31</NumericReportReceivedDate>
+						<NumericConditionQuantity>400.5</NumericConditionQuantity>
+						<NumericConditionAdjustedQuantity>25.001</NumericConditionAdjustedQuantity>
+						<NumericConditionQualifier>&lt;=</NumericConditionQualifier>
+					</NumericReport>
+				</ReportParameter>
+				<LandApplicationSite>
+					<PollutantMetForLandApplication>0001</PollutantMetForLandApplication>
+					<PathogenReductionIndicator>Y</PathogenReductionIndicator>
+					<VectorReductionIndicator>Y</VectorReductionIndicator>
+					<AgronomicGallonsRateForField>9554</AgronomicGallonsRateForField>
+					<AgronomicDMTRateForField>845</AgronomicDMTRateForField>
+					<ClassAAlternativeUsed>DTU</ClassAAlternativeUsed>
+					<ClassAAlternativesText>Heat Treatment</ClassAAlternativesText>
+					<ClassBAlternativeUsed>SIG</ClassBAlternativeUsed>
+					<ClassBAlternativesText>Mesophilic anaerobic digestion</ClassBAlternativesText>
+					<VARAlternativeUsed>INJ</VARAlternativeUsed>
+					<VARAlternativesText>Raising the pH</VARAlternativesText>
+					<CropTypesPlanted>WH</CropTypesPlanted>
+					<CropTypesHarvested>CO</CropTypesHarvested>
+				</LandApplicationSite>
+				<SurfaceDisposalSite>
+					<PathogenReductionIndicator>Y</PathogenReductionIndicator>
+					<VectorReductionIndicator>Y</VectorReductionIndicator>
+					<ManagementPracticesIndicator>Y</ManagementPracticesIndicator>
+					<CertificationStatementIndicator>Y</CertificationStatementIndicator>
+					<CertifierFirstName>John</CertifierFirstName>
+					<CertifierLastName>Doe</CertifierLastName>
+					<ClassAAlternativeUsed>DTU</ClassAAlternativeUsed>
+					<ClassAAlternativesText>Heat Treatment</ClassAAlternativesText>
+					<ClassBAlternativeUsed>SIG</ClassBAlternativeUsed>
+					<ClassBAlternativesText>Mesophilic anaerobic digestion</ClassBAlternativesText>
+					<VARAlternativeUsed>INJ</VARAlternativeUsed>
+					<VARAlternativesText>Raising the pH</VARAlternativesText>
+				</SurfaceDisposalSite>
+				<Incinerator>
+					<BerylliumComplianceIndicator>Y</BerylliumComplianceIndicator>
+					<MercuryComplianceIndicator>Y</MercuryComplianceIndicator>
+				</Incinerator>
+				<CoDisposalSite>
+					<Part258ComplianceIndicator>Y</Part258ComplianceIndicator>
+					<PaintFilterTestResult>P</PaintFilterTestResult>
+					<TCLPTestResult>F</TCLPTestResult>
+				</CoDisposalSite>
+			</DischargeMonitoringReport>
+		</DischargeMonitoringReportData>
+	</Payload>
+</Document>

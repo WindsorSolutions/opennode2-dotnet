@@ -47,7 +47,7 @@ import com.windsor.node.common.service.admin.ScheduleService;
 import com.windsor.node.data.dao.ScheduleDao;
 import com.windsor.node.service.BaseService;
 import com.windsor.node.util.DateUtil;
-import com.windsor.node.util.ScheduleUtil;
+import com.windsor.node.worker.util.ScheduleUtil;
 
 public class ScheduleServiceImpl extends BaseService implements
         ScheduleService, InitializingBean {

@@ -8,5 +8,6 @@
 	<classpathentry kind="lib" path="resources/lib-build/hamcrest-core-1.1.jar"/>
 	<classpathentry kind="lib" path="resources/lib-build/hamcrest-library-1.1.jar"/>
 	<classpathentry kind="lib" path="resources/lib-build/jmock-2.5.1.jar"/>
+	<classpathentry kind="lib" path="resources/lib-build/joda-time-1.6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

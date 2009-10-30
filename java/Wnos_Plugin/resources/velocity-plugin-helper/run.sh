@@ -1,6 +1,6 @@
 CP=${CLASSPATH}
 
-# Set path to the Java SDK
+# Set path to the Java SDK (5 or higher)
 JDK=${JAVA_HOME}
 CP=${CP}:${JDK};
 

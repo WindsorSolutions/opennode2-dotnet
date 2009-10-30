@@ -1,6 +1,6 @@
 @ECHO OFF
 
-:: Set path to the Java SDK 1.4.2 bin dir
+:: Set path to the Java SDK 5 (or higher) bin dir
 set JDK=%JAVA_HOME%
 
 

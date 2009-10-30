@@ -7,6 +7,7 @@ import javax.sql.DataSource;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 
+import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.PartnerIdentity;
 import com.windsor.node.common.domain.ServiceType;
 import com.windsor.node.common.util.NodeClientService;
@@ -23,10 +24,15 @@ public abstract class BaseWqxPlugin extends BaseWnosPlugin implements
         InitializingBean {
 
     /**
+     * Index position for schedule argument (organization id for the data
+     * query).
+     */
+    protected static final int ORG_ID_ARG_INDEX = 0;
+
+    /**
      * Required runtime argument, set in service configuration.
      */
     protected static final String ARG_PARTNER_NAME = "Submission Partner Name";
-
     /* Helpers */
     protected SettingServiceProvider settingService;
     protected IdGenerator idGenerator;
@@ -110,7 +116,7 @@ public abstract class BaseWqxPlugin extends BaseWnosPlugin implements
 
         logger.debug("Looking for partner named " + partnerName);
 
-        List partners = partnerDao.get();
+        List<?> partners = partnerDao.get();
 
         PartnerIdentity partner = null;
 
@@ -144,6 +150,14 @@ public abstract class BaseWqxPlugin extends BaseWnosPlugin implements
         String msg = "Creating Node Client with partner ";
         debug(msg + partner);
         return clientFactory.makeAndConfigure(partner);
+    }
+
+    protected String getOrgIdFromTransaction(NodeTransaction tran) {
+
+        String orgId = getRequiredValueFromTransactionArgs(tran,
+                ORG_ID_ARG_INDEX);
+        debug("orgId: " + orgId);
+        return orgId;
     }
 
 }
