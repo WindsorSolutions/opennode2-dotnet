@@ -270,6 +270,7 @@ namespace Windsor.Commons.Core
                             {
                                 sb.Append(separator);
                             }
+                            twoOrMoreUpperChars = false;
                         }
                         else
                         {
@@ -301,15 +302,107 @@ namespace Windsor.Commons.Core
                     sb.Append(curChar);
                     lastCharWasNumber = true;
                     lastCharWasLower = true;
+                    twoOrMoreUpperChars = false;
                 }
                 else
                 {
                     sb.Append(curChar);
                     lastCharWasLower = true;
                     lastCharWasNumber = false;
+                    twoOrMoreUpperChars = false;
                 }
             }
             return sb.ToString();
         }
+        public static bool IsNullOrEmpty(object value)
+        {
+            if (value == null)
+            {
+                return true;
+            }
+            string valueStr = value.ToString();
+            return string.IsNullOrEmpty(valueStr);
+        }
+        public static string BreakUpText(string text, int numBreakChars, string breakString)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                return text;
+            }
+            StringBuilder sb = null;
+            int currentNonWhitepaceCount = 0, currentCharIndex = 0;
+            foreach (char currentChar in text)
+            {
+                if (char.IsWhiteSpace(currentChar) || (currentChar == '-'))
+                {
+                    currentNonWhitepaceCount = 0;
+                }
+                else {
+                    if (++currentNonWhitepaceCount > numBreakChars)
+                    {
+                        if (sb == null)
+                        {
+                            sb = new StringBuilder(text);
+                        }
+                        sb.Insert(currentCharIndex, breakString);
+                        currentCharIndex += breakString.Length;
+                        currentNonWhitepaceCount = 1;
+                    }
+                }
+                ++currentCharIndex;
+            }
+            return (sb == null) ? text : sb.ToString();
+        }
+
+        [System.Runtime.InteropServices.DllImport("rpcrt4.dll", SetLastError = true)]
+        static extern int UuidCreateSequential(out Guid guid);
+
+        public static string CreateSequentialGuid()
+        {
+            const int RPC_S_OK = 0;
+            Guid guid;
+            int hr = UuidCreateSequential(out guid);
+            if (hr != RPC_S_OK)
+            {
+                throw new ApplicationException("UuidCreateSequential failed: " + hr);
+            }
+            return guid.ToString();
+        }
+        //public static string WrapText(string text, int numBreakChars)
+        //{
+        //    text = BreakUpText(text, numBreakChars, Environment.NewLine);
+        //    if (string.IsNullOrEmpty(text))
+        //    {
+        //        return text;
+        //    }
+        //    StringBuilder sb = null;
+        //    int currentDestCharIndex = 0, currentSrcCharIndex = 0;
+        //    while (currentSrcCharIndex < text.Length)
+        //    {
+        //        int srcIndex = text.IndexOf(Environment.NewLine, currentSrcCharIndex);
+        //        int deltaChars = (srcIndex < 0) ? (text.Length - currentSrcCharIndex) : (srcIndex - currentSrcCharIndex);
+        //        if (deltaChars > numBreakChars)
+        //        {
+        //            if (sb == null)
+        //            {
+        //                sb = new StringBuilder(text);
+        //            }
+        //            do
+        //            {
+        //                currentDestCharIndex += numBreakChars;
+        //                sb.Insert(currentDestCharIndex, Environment.NewLine);
+        //                currentDestCharIndex += Environment.NewLine.Length;
+        //                deltaChars -= numBreakChars;
+        //            } while (deltaChars > numBreakChars);
+        //        }
+        //        currentDestCharIndex += deltaChars + Environment.NewLine.Length;
+        //        if (srcIndex < 0)
+        //        {
+        //            break;
+        //        }
+        //        currentSrcCharIndex = srcIndex + Environment.NewLine.Length;
+        //    }
+        //    return (sb == null) ? text : sb.ToString();
+        //}
     }
 }
