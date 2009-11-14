@@ -51,12 +51,31 @@ using Spring.Data.Core;
 using System.ComponentModel;
 using Windsor.Commons.Core;
 using Windsor.Commons.Spring;
+using Windsor.Node2008.WNOSPlugin.WQX2Xsd;
 
 namespace Windsor.Node2008.WNOSPlugin.WQX2
 {
     [Serializable]
-    internal static class WQXPluginMappers
+    internal class WQXPluginMapper
     {
+        private string _attachedBinaryObjectFolder;
+        private int _attachedBinaryFileCount;
+
+        public WQXPluginMapper(string attachedBinaryObjectFolder)
+        {
+            _attachedBinaryObjectFolder = attachedBinaryObjectFolder;
+        }
+        public string AttachedBinaryObjectFolder
+        {
+            get { return _attachedBinaryObjectFolder; }
+            set { _attachedBinaryObjectFolder = value; }
+        }
+        public int AttachedBinaryFileCount
+        {
+            get { return _attachedBinaryFileCount; }
+            set { _attachedBinaryFileCount = value; }
+        }
+
         public static ProjectMonitoringLocationWeightingDataType MapProjectMonitoringLocationWeighting(NamedNullMappingDataReader readerEx)
         {
             ProjectMonitoringLocationWeightingDataType weighting = new ProjectMonitoringLocationWeightingDataType();
@@ -77,7 +96,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
             {
                 weighting.ReferenceLocationEndDate = readerEx.GetDateTime("REFLOCATIONENDDATE");
             }
-            if (!readerEx.IsDBNull("RESOURCETITLE"))
+            if (!readerEx.IsDBNull("RESOURCETITLE") || !readerEx.IsDBNull("RESOURCEID"))
             {
                 weighting.ReferenceLocationCitation = new BibliographicReferenceDataType();
                 weighting.ReferenceLocationCitation.ResourceTitleName = readerEx.GetString("RESOURCETITLE");
@@ -97,7 +116,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
             activityMetric.ActivityMetricType.MetricTypeIdentifier = readerEx.GetString("METRICTYPEID");
             activityMetric.ActivityMetricType.MetricTypeIdentifierContext = readerEx.GetString("METRICTYPEIDCONTEXT");
             activityMetric.ActivityMetricType.MetricTypeName = readerEx.GetNullString("METRICTYPENAME");
-            if (!readerEx.IsDBNull("CITATIONRESOURCETITLE"))
+            if (!readerEx.IsDBNull("CITATIONRESOURCETITLE") || !readerEx.IsDBNull("CITATIONRESOURCEID"))
             {
                 activityMetric.ActivityMetricType.MetricTypeCitation = new BibliographicReferenceDataType();
                 activityMetric.ActivityMetricType.MetricTypeCitation.ResourceTitleName = readerEx.GetString("CITATIONRESOURCETITLE");
@@ -119,6 +138,15 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                 activityMetric.IndexIdentifier[0] = readerEx.GetString("METRICINDEXID");
             }
             return activityMetric;
+        }
+        public AttachedBinaryObjectDataType MapAttachedBinaryObject(NamedNullMappingDataReader readerEx)
+        {
+            AttachedBinaryObjectDataType attachedBinaryObject = new AttachedBinaryObjectDataType();
+            attachedBinaryObject.BinaryObjectFileName = readerEx.GetString("BINARYOBJECTFILE");
+            attachedBinaryObject.BinaryObjectFileTypeCode = readerEx.GetString("BINARYOBJECTFILETYPECODE");
+            SaveAttachedBinaryContent(attachedBinaryObject.BinaryObjectFileName,
+                                      readerEx.GetNullBytes("BINARYOBJECTCONTENT"));
+            return attachedBinaryObject;
         }
         public static OrganizationDescriptionDataType MapOrganizationDescription(NamedNullMappingDataReader readerEx)
         {
@@ -230,7 +258,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                 result.BiologicalResultDescription.TaxonomicDetails.FunctionalFeedingGroupName = new string[1];
                 result.BiologicalResultDescription.TaxonomicDetails.FunctionalFeedingGroupName[0] = readerEx.GetString("TAXDETAILSFUNCFEEDINGGROUP");
             }
-            if (!readerEx.IsDBNull("CITATIONRESOURCETITLE"))
+            if (!readerEx.IsDBNull("CITATIONRESOURCETITLE") || !readerEx.IsDBNull("CITATIONRESOURCEID"))
             {
                 result.BiologicalResultDescription.TaxonomicDetails.TaxonomicDetailsCitation = new BibliographicReferenceDataType();
                 result.BiologicalResultDescription.TaxonomicDetails.TaxonomicDetailsCitation.ResourceTitleName = readerEx.GetString("CITATIONRESOURCETITLE");
@@ -249,7 +277,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                 result.BiologicalResultDescription.FrequencyClassInformation[0].LowerClassBoundValue = readerEx.GetNullString("FREQCLASSLOWERBOUNDVALUE");
                 result.BiologicalResultDescription.FrequencyClassInformation[0].UpperClassBoundValue = readerEx.GetNullString("FREQCLASSUPPERBOUNDVALUE");
             }
-            if (!readerEx.IsDBNull("ANALYTICALMETHODID"))
+            if (!readerEx.IsDBNull("ANALYTICALMETHODID") || !readerEx.IsDBNull("ANALYTICALMETHODIDCONTEXT"))
             {
                 result.ResultAnalyticalMethod = new ResultAnalyticalMethodDataType();
                 result.ResultAnalyticalMethod.MethodIdentifier = readerEx.GetString("ANALYTICALMETHODID");
@@ -292,6 +320,16 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
 #endif
             return result;
         }
+        protected static DateTime GetDateTimeByObject(NamedNullMappingDataReader readerEx, string colName)
+        {
+            int index = readerEx.GetOrdinal(colName);
+            object value = readerEx.GetValue(index);
+            if (value.GetType() != typeof(DateTime))
+            {
+                return DateTime.Parse(value.ToString());
+            }
+            return (DateTime)value;
+        }
         public static ActivityDataType MapActivity(NamedNullMappingDataReader readerEx)
         {
             ActivityDataType activity = new ActivityDataType();
@@ -318,7 +356,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
             activity.ActivityDescription.ActivityDepthAltitudeReferencePointText = readerEx.GetNullString("DEPTHALTITUDEREFPOINT");
             activity.ActivityDescription.MonitoringLocationIdentifier = readerEx.GetNullString("MONLOCID");
             activity.ActivityDescription.ActivityCommentText = readerEx.GetNullString("ACTIVITYCOMMENT");
-            if (!readerEx.IsDBNull("LATITUDEMEASURE"))
+            if (!readerEx.IsDBNull("LATITUDEMEASURE") || !readerEx.IsDBNull("LONGITUDEMEASURE") ||
+                !readerEx.IsDBNull("HORIZCOLLMETHOD") || !readerEx.IsDBNull("HORIZCOORDREFSYSDATUM"))
             {
                 activity.ActivityLocation = new ActivityLocationDataType();
                 activity.ActivityLocation.LatitudeMeasure = ToDecimal(readerEx.GetString("LATITUDEMEASURE"));
@@ -343,7 +382,9 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
             activity.BiologicalActivityDescription.BiologicalHabitatCollectionInformation.ReachLengthMeasure =
                 GetNullMeasureCompactData(readerEx, "BIOHABREACHWIDTHMEASURE", "BIOHABREACHWIDTHMEASUREUNIT");
             activity.BiologicalActivityDescription.BiologicalHabitatCollectionInformation.PassCount = readerEx.GetNullString("BIOHABPASSCOUNT");
-            if (!readerEx.IsDBNull("BIOHABNETTYPE"))
+            if (!readerEx.IsDBNull("BIOHABNETTYPE") || 
+                !readerEx.IsDBNull("BIOHABNETSURFACEAREAMEASURE") || !readerEx.IsDBNull("BIOHABNETSURFACEMEASUREUNIT") ||
+                !readerEx.IsDBNull("BIOHABNETMESHSIZEMEASURE") || !readerEx.IsDBNull("BIOHABNETMESHMEASUREUNIT"))
             {
                 activity.BiologicalActivityDescription.BiologicalHabitatCollectionInformation.NetInformation = new NetInformationDataType();
                 activity.BiologicalActivityDescription.BiologicalHabitatCollectionInformation.NetInformation.NetTypeName =
@@ -359,7 +400,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
             }
             activity.BiologicalActivityDescription.ToxicityTestType = readerEx.GetNullString("BIOACTIVITYTOXICITYTESTTYPE");
             activity.SampleDescription = new SampleDescriptionDataType();
-            if (!readerEx.IsDBNull("SAMPCOLLMETHODID"))
+            if (!readerEx.IsDBNull("SAMPCOLLMETHODID") || !readerEx.IsDBNull("SAMPCOLLMETHODIDCONTEXT") || !readerEx.IsDBNull("SAMPCOLLMETHOD"))
             {
                 activity.SampleDescription.SampleCollectionMethod = new ReferenceMethodDataType();
                 activity.SampleDescription.SampleCollectionMethod.MethodIdentifier = readerEx.GetString("SAMPCOLLMETHODID");
@@ -370,10 +411,11 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
             } 
             activity.SampleDescription.SampleCollectionEquipmentName = readerEx.GetString("SAMPCOLLEQUIPMENT");
             activity.SampleDescription.SampleCollectionEquipmentCommentText = readerEx.GetNullString("SAMPCOLLEQUIPMENTCOMMENT");
-            if (!readerEx.IsDBNull("SAMPPREPCONTTYPE"))
+            if (!readerEx.IsDBNull("SAMPPREPCONTTYPE") || !readerEx.IsDBNull("SAMPPREPCONTCOLOR") || !readerEx.IsDBNull("SAMPPREPCONTSAMPTRANSSTORDESC") ||
+                !readerEx.IsDBNull("SAMPPREPID") || !readerEx.IsDBNull("SAMPPREPIDCONTEXT") || !readerEx.IsDBNull("SAMPPREP"))
             {
                 activity.SampleDescription.SamplePreparation = new SamplePreparationDataType();
-                if (!readerEx.IsDBNull("SAMPPREPID"))
+                if (!readerEx.IsDBNull("SAMPPREPID") || !readerEx.IsDBNull("SAMPPREPIDCONTEXT") || !readerEx.IsDBNull("SAMPPREP"))
                 {
                     activity.SampleDescription.SamplePreparation.SamplePreparationMethod = new ReferenceMethodDataType();
                     activity.SampleDescription.SamplePreparation.SamplePreparationMethod.MethodIdentifier = readerEx.GetString("SAMPPREPID");
@@ -414,7 +456,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
             {
                 location.MonitoringLocationIdentity.TribalLandName = readerEx.GetNullString("TRIBALLANDNAME");
             }
-            if (!readerEx.IsDBNull("LATITUDEMEASURE"))
+            if (!readerEx.IsDBNull("LATITUDEMEASURE") || !readerEx.IsDBNull("LONGITUDEMEASURE") || !readerEx.IsDBNull("HORIZCOLLMETHOD") ||
+                !readerEx.IsDBNull("HORIZCOORDREFSYSDATUM"))
             {
                 location.MonitoringLocationGeospatial = new MonitoringLocationGeospatialDataType();
                 location.MonitoringLocationGeospatial.LatitudeMeasure = ToDecimal(readerEx.GetString("LATITUDEMEASURE"));
@@ -444,6 +487,36 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
             return location;
 
         }
+        public static BiologicalHabitatIndexDataType MapBiologicalHabitatIndex(NamedNullMappingDataReader readerEx)
+        {
+            BiologicalHabitatIndexDataType habitat = new BiologicalHabitatIndexDataType();
+            habitat.IndexIdentifier = readerEx.GetString("INDEXID");
+            habitat.IndexType = new IndexTypeDataType();
+            habitat.IndexType.IndexTypeIdentifier = readerEx.GetString("INDEXTYPEID");
+            habitat.IndexType.IndexTypeIdentifierContext = readerEx.GetString("INDEXTYPEIDCONTEXT");
+            habitat.IndexType.IndexTypeName = readerEx.GetString("INDEXTYPENAME");
+            if (!readerEx.IsDBNull("RESOURCEID") || !readerEx.IsDBNull("RESOURCEDATE") || !readerEx.IsDBNull("RESOURCETITLE"))
+            {
+                habitat.IndexType.IndexTypeCitation = new BibliographicReferenceDataType();
+                habitat.IndexType.IndexTypeCitation.ResourceTitleName = readerEx.GetString("RESOURCETITLE");
+                habitat.IndexType.IndexTypeCitation.ResourceCreatorName = readerEx.GetNullString("RESOURCECREATOR");
+                habitat.IndexType.IndexTypeCitation.ResourceSubjectText = readerEx.GetNullString("RESOURCESUBJECT");
+                habitat.IndexType.IndexTypeCitation.ResourcePublisherName = readerEx.GetNullString("RESOURCEPUBLISHER");
+                habitat.IndexType.IndexTypeCitation.ResourceDate = GetDateTimeByObject(readerEx, "RESOURCEDATE");
+                habitat.IndexType.IndexTypeCitation.ResourceIdentifier = readerEx.GetString("RESOURCEID");
+            }
+            habitat.IndexType.IndexTypeScaleText = readerEx.GetNullString("INDEXTYPESCALE");
+            habitat.IndexScoreNumeric = readerEx.GetString("INDEXSCORE");
+            habitat.IndexQualifierCode = readerEx.GetNullString("INDEXQUALIFIERCODE");
+            habitat.IndexCommentText = readerEx.GetNullString("INDEXCOMMENT");
+            habitat.IndexCalculatedDateSpecified = !readerEx.IsDBNull("INDEXCALCULATEDDATE");
+            if (habitat.IndexCalculatedDateSpecified)
+            {
+                habitat.IndexCalculatedDate = GetDateTimeByObject(readerEx, "INDEXCALCULATEDDATE");
+            }
+            habitat.MonitoringLocationIdentifier = readerEx.GetString("MONLOCID");
+            return habitat;
+        }
         public static AlternateMonitoringLocationIdentityDataType MapAlternateMonitoringLocationIdentity(NamedNullMappingDataReader readerEx)
         {
             AlternateMonitoringLocationIdentityDataType location = new AlternateMonitoringLocationIdentityDataType();
@@ -462,7 +535,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
         public static LabSamplePreparationDataType MapLabSamplePreparation(NamedNullMappingDataReader readerEx)
         {
             LabSamplePreparationDataType labSamplePreparation = new LabSamplePreparationDataType();
-            if (!readerEx.IsDBNull("METHODID"))
+            if (!readerEx.IsDBNull("METHODID") || !readerEx.IsDBNull("METHODIDCONTEXT") || !readerEx.IsDBNull("METHODNAME"))
             {
                 labSamplePreparation.LabSamplePreparationMethod = new ReferenceMethodDataType();
                 labSamplePreparation.LabSamplePreparationMethod.MethodIdentifier = readerEx.GetString("METHODID");
@@ -498,9 +571,9 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
         {
             return string.IsNullOrEmpty(value) ? 0 : decimal.Parse(value);
         }
-        public static string ToDbString(DateTime value)
+        public static string ToDateString(bool isOracle, DateTime value)
         {
-            return value.ToString("yyyy-MM-dd HH:mm:ss");
+            return isOracle ? value.ToString("dd-MMM-yyyy") : value.ToString("yyyy-MM-dd HH:mm:ss");
         }
         public static WQXTimeDataType GetNullTimeData(NamedNullMappingDataReader readerEx, string timeName,
                                                        string zoneName)
@@ -532,6 +605,28 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
             else
             {
                 return null;
+            }
+        }
+        public void SaveAttachedBinaryContent(string name, byte[] content)
+        {
+            if (!CollectionUtils.IsNullOrEmpty(content))
+            {
+                if (string.IsNullOrEmpty(name))
+                {
+                    throw new ArgumentException("An attached binary object did not have a name.");
+                }
+                if (!Directory.Exists(_attachedBinaryObjectFolder))
+                {
+                    Directory.CreateDirectory(_attachedBinaryObjectFolder);
+                }
+                string filePath = Path.Combine(_attachedBinaryObjectFolder, name);
+                if ( File.Exists(filePath) )
+                {
+                    throw new ArgumentException(string.Format("A duplicate name was found for an attached binary object: \"{0}\"",
+                                                              name));
+                }
+                File.WriteAllBytes(filePath, content);
+                ++_attachedBinaryFileCount;
             }
         }
     }

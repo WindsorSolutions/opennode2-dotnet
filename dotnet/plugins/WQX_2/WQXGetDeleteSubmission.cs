@@ -49,6 +49,7 @@ using Spring.Data.Common;
 using Spring.Transaction.Support;
 using Spring.Data.Core;
 using System.ComponentModel;
+using Windsor.Node2008.WNOSPlugin.WQX2Xsd;
 
 namespace Windsor.Node2008.WNOSPlugin.WQX2
 {
@@ -66,7 +67,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
         /// <param name="requestId"></param>
         public virtual void ProcessSolicit(string requestId)
         {
-            ProcessSolicitInit(requestId, true);
+            ProcessQuerySolicitInit(requestId, true);
 
             CheckForPendingSubmissions(Submission_Type.Delete);
 
@@ -76,7 +77,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
             {
                 WQXDeleteDataType data = GetDeleteData();
 
-                string transactionId = GenerateSubmissionFileAndSubmit(data);
+                string transactionId = GenerateSubmissionFileAndSubmit(Submission_Type.Delete, data);
 
                 UpdatePendingSubmissionInfo(recordId, transactionId);
             }

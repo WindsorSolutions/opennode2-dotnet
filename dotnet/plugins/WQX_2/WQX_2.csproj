@@ -66,6 +66,7 @@
       <HintPath>..\..\lib\Common.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Spring.Data, Version=1.2.0.20313, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
       <HintPath>..\..\lib\Spring.Data.dll</HintPath>
     </Reference>
@@ -81,9 +82,16 @@
     <Compile Include="WQXPluginBase.cs" />
     <Compile Include="WQXPluginMappers.cs" />
     <Compile Include="WQXProcessInsertUpdateSolicit.cs" />
+    <Compile Include="WQXQuerySolicitProcessor.cs" />
+    <Compile Include="WQXSubmissionProcessor.cs" />
+    <Compile Include="WQXTestPullPushProcessor.cs" />
     <Compile Include="WQXTestSubmitAcceptor.cs" />
     <Compile Include="xml_schema\index.cs" />
     <Compile Include="xml_schema\index2.cs" />
+    <Compile Include="xml_schema\WQX_v1_0.cs" />
+    <Compile Include="xml_schema\WQX_v1_0_2.cs" />
+    <Compile Include="xml_schema\WQX_v2_0.cs" />
+    <Compile Include="xml_schema\WQX_v2_0_2.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
@@ -118,6 +126,10 @@
     <ProjectReference Include="..\..\src\AssemblyInfo\AssemblyInfo.csproj">
       <Project>{FBFF305C-3C14-4013-88F4-EAB636399C2C}</Project>
       <Name>AssemblyInfo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Windsor-Commons-XsdOrm\Windsor.Commons.XsdOrm.csproj">
+      <Project>{8A62B9FD-50DC-4712-9237-ADE3CDC0A3D4}</Project>
+      <Name>Windsor.Commons.XsdOrm</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\WNOSDomain\WNOSDomain.csproj">
       <Project>{0AD3D68F-4A02-4080-BFF2-8AD1BAB259AA}</Project>

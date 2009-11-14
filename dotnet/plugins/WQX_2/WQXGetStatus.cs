@@ -71,7 +71,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
         /// <param name="requestId"></param>
         public virtual void ProcessTask(string requestId)
         {
-            ProcessSolicitInit(requestId, true);
+            ProcessQuerySolicitInit(requestId, true);
 
             IList<PendingSubmissionInfo> pendingSubmissions = GetPendingSubmissions();
 

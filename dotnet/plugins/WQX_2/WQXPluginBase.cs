@@ -52,6 +52,7 @@ using System.ComponentModel;
 using Windsor.Commons.Core;
 using Windsor.Commons.Logging;
 using Windsor.Commons.Spring;
+using Windsor.Node2008.WNOSPlugin.WQX2Xsd;
 
 namespace Windsor.Node2008.WNOSPlugin.WQX2
 {
@@ -72,6 +73,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
             WQX_PROJECTACTIVITY,
             WQX_ACTIVITYMETRIC,
             WQX_MONITORINGLOCATION,
+            WQX_BIOLOGICALHABITATINDEX,
             WQX_DELETES,
         }
         protected enum Submission_Type
@@ -130,6 +132,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
         protected const string PARAM_ADD_HEADER_KEY = "AddHeader";
         protected const string PARAM_USE_SUBMISSION_HISTORY_TABLE_KEY = "UseSubmissionHistoryTable";
         protected const string PARAM_WQX_UPDATE_DATE_KEY = "WQXUpdateDate";
+        protected const string PARAM_ACTIVITY_START_DATE_KEY = "ActivityStartDate";
         protected static readonly ILogEx LOG = LogManagerEx.GetLogger(MethodBase.GetCurrentMethod());
 
         // TODO: What are the correct names for these values
@@ -151,12 +154,15 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
 
         protected string _organizationIdentifier;
         protected DateTime _wqxUpdateDate = MIN_VALID_DATE_TIME;
+        protected string _wqxUpdateDateDbString;
+        protected DateTime _activityStartDate = DateTime.MinValue;
         protected DataRequest _dataRequest;
         protected PartnerIdentity _epaPartnerNode;
         protected SpringBaseDao _baseDao;
         protected IdProvider _idProvider;
         protected bool _addHeader = true;
         protected bool _useSubmissionHistoryTable = true;
+        internal WQXPluginMapper _wqxPluginMapper;
 
         // Data stores:
         protected Dictionary<string, ProjectDataType> _projects;
@@ -176,7 +182,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
         /// <summary>
         /// ProcessSolicit
         /// </summary>
-        public virtual void ProcessSolicitInit(string requestId, bool validatePartnerName)
+        public virtual void ProcessQuerySolicitInit(string requestId, bool validatePartnerName)
         {
             LazyInit(validatePartnerName);
 
@@ -215,6 +221,9 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
             }
 
             _baseDao = ValidateDBProvider(SOURCE_PROVIDER_KEY, typeof(NamedNullMappingDataReader));
+
+            string attachedBinaryObjectsFolder = Path.Combine(_settingsProvider.TempFolderPath, Guid.NewGuid().ToString());
+            _wqxPluginMapper = new WQXPluginMapper(attachedBinaryObjectsFolder);
         }
         protected virtual void ValidateRequest(string requestId)
         {
@@ -227,6 +236,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
             {
                 GetParameterByName(_dataRequest, PARAM_ORGANIZATION_IDENTIFIER_KEY, out _organizationIdentifier);
                 TryGetParameterByName(_dataRequest, PARAM_WQX_UPDATE_DATE_KEY, ref _wqxUpdateDate);
+                TryGetParameterByName(_dataRequest, PARAM_ACTIVITY_START_DATE_KEY, ref _activityStartDate);
                 TryGetParameterByName(_dataRequest, PARAM_ADD_HEADER_KEY, ref _addHeader);
                 TryGetParameterByName(_dataRequest, PARAM_USE_SUBMISSION_HISTORY_TABLE_KEY, ref _useSubmissionHistoryTable);
             }
@@ -237,8 +247,9 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                 TryGetParameterByIndex(_dataRequest, 2, ref _addHeader);
                 TryGetParameterByIndex(_dataRequest, 3, ref _useSubmissionHistoryTable);
             }
-            AppendAuditLogEvent("Running submission for organization \"{0}\"",
-                                      _organizationIdentifier);
+            SpringBaseDao.ValidateAgainstSqlInjection(_organizationIdentifier);
+            _wqxUpdateDateDbString = WQXPluginMapper.ToDateString(_baseDao.IsOracleDatabase, _wqxUpdateDate);
+            AppendAuditLogEvent("Running submission for organization \"{0}\"", _organizationIdentifier);
         }
         /// <summary>
         /// Return the Query, Solicit, or Execute data service parameters for specified data service.
@@ -348,7 +359,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                     Tables.WQX_SUBMISSIONHISTORY.ToString(),
                     "RECORDID;PARENTID;SCHEDULERUNDATE;WQXUPDATEDATE;SUBMISSIONTYPE;LOCALTRANSACTIONID;CDXPROCESSINGSTATUS",
                     new object[] { recordId, _organizationRecordId, DateTime.Now, _wqxUpdateDate, 
-                                   EnumUtils.ToDescription(submissionType), string.Empty,
+                                   EnumUtils.ToDescription(submissionType), "PENDING",
                                    EnumUtils.ToDescription(CDX_Processing_Status.Pending) }
                                   );
                 return recordId;
@@ -398,7 +409,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                         );
             }
         }
-        protected virtual WQXDataType GetInsertUpdateData()
+        protected virtual object GetInsertUpdateData()
         {
             WQXDataType data = new WQXDataType();
             data.Organization = new OrganizationDataType();
@@ -416,6 +427,14 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
             data.Organization.Activity = GetOrganizationActivities();
 
             data.Organization.MonitoringLocation = GetOrganizationMonitoringLocations();
+
+            data.Organization.BiologicalHabitatIndex = GetOrganizationBiologicalHabitatIndex();
+
+            if (_wqxPluginMapper.AttachedBinaryFileCount > 0)
+            {
+                AppendAuditLogEvent("Found {0} attached binary objects to submit",
+                                   _wqxPluginMapper.AttachedBinaryFileCount.ToString());
+            }
 
             return data;
         }
@@ -497,9 +516,9 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                 sb.Append("didn't find any deleted monitoring locations to submit");
             }
             AppendAuditLogEvent(sb.ToString());
-            data.OrganizationDelete[0].ProjectIdentifier = WQXPluginMappers.ToArray(projectIds);
-            data.OrganizationDelete[0].ActivityIdentifier = WQXPluginMappers.ToArray(activityIds);
-            data.OrganizationDelete[0].MonitoringLocationIdentifier = WQXPluginMappers.ToArray(monitoringLocIds);
+            data.OrganizationDelete[0].ProjectIdentifier = WQXPluginMapper.ToArray(projectIds);
+            data.OrganizationDelete[0].ActivityIdentifier = WQXPluginMapper.ToArray(activityIds);
+            data.OrganizationDelete[0].MonitoringLocationIdentifier = WQXPluginMapper.ToArray(monitoringLocIds);
             return data;
         }
         protected virtual void ValidateOrganization()
@@ -532,7 +551,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                 delegate(IDataReader reader)
                 {
                     NamedNullMappingDataReader readerEx = (NamedNullMappingDataReader)reader;
-                    organizationDescriptionDataType = WQXPluginMappers.MapOrganizationDescription(readerEx);
+                    organizationDescriptionDataType = WQXPluginMapper.MapOrganizationDescription(readerEx);
                 });
 
             if (organizationDescriptionDataType == null)
@@ -552,11 +571,11 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                 delegate(IDataReader reader)
                 {
                     NamedNullMappingDataReader readerEx = (NamedNullMappingDataReader)reader;
-                    OrganizationAddressDataType address = WQXPluginMappers.MapOrganizationAddress(readerEx);
+                    OrganizationAddressDataType address = WQXPluginMapper.MapOrganizationAddress(readerEx);
                     if (addresses == null) addresses = new List<OrganizationAddressDataType>();
                     addresses.Add(address);
                 });
-            return WQXPluginMappers.ToArray(addresses);
+            return WQXPluginMapper.ToArray(addresses);
         }
         protected virtual ElectronicAddressDataType[] GetOrganizationElectronicAddress()
         {
@@ -568,11 +587,11 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                 delegate(IDataReader reader)
                 {
                     NamedNullMappingDataReader readerEx = (NamedNullMappingDataReader)reader;
-                    ElectronicAddressDataType address = WQXPluginMappers.MapElectronicAddress(readerEx);
+                    ElectronicAddressDataType address = WQXPluginMapper.MapElectronicAddress(readerEx);
                     if (electronicAddresses == null) electronicAddresses = new List<ElectronicAddressDataType>();
                     electronicAddresses.Add(address);
                 });
-            return WQXPluginMappers.ToArray(electronicAddresses);
+            return WQXPluginMapper.ToArray(electronicAddresses);
         }
         protected virtual TelephonicDataType[] GetOrganizationTelephonic()
         {
@@ -584,11 +603,11 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                 delegate(IDataReader reader)
                 {
                     NamedNullMappingDataReader readerEx = (NamedNullMappingDataReader)reader;
-                    TelephonicDataType telephonic = WQXPluginMappers.MapTelephonic(readerEx);
+                    TelephonicDataType telephonic = WQXPluginMapper.MapTelephonic(readerEx);
                     if (telephonics == null) telephonics = new List<TelephonicDataType>();
                     telephonics.Add(telephonic);
                 });
-            return WQXPluginMappers.ToArray(telephonics);
+            return WQXPluginMapper.ToArray(telephonics);
         }
         protected virtual ProjectDataType[] GetOrganizationProjects()
         {
@@ -603,7 +622,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                     NamedNullMappingDataReader readerEx = (NamedNullMappingDataReader)reader;
                     if (projectRecordIds == null) projectRecordIds = new List<string>();
                     projectRecordIds.Add(readerEx.GetString("RECORDID"));
-                    ProjectDataType project = WQXPluginMappers.MapProject(readerEx);
+                    ProjectDataType project = WQXPluginMapper.MapProject(readerEx);
                     if (projects == null) projects = new List<ProjectDataType>();
                     projects.Add(project);
                 });
@@ -612,22 +631,23 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                 AppendAuditLogEvent("Found {0} updated projects to submit",
                                           projects.Count.ToString());
                 GetProjectMonitoringLocationWeighting(projectRecordIds, projects);
+                GetProjectAttachedBinaryObjects(projectRecordIds, projects);
             }
             else
             {
                 AppendAuditLogEvent("Didn't find any updated projects to submit");
             }
-            return WQXPluginMappers.ToArray(projects);
+            return WQXPluginMapper.ToArray(projects);
         }
-        protected virtual void GetProjectMonitoringLocationWeighting(IList<string> projectRecordIds, 
+        protected virtual void GetProjectMonitoringLocationWeighting(IList<string> projectRecordIds,
                                                                      IList<ProjectDataType> projects)
         {
             string selectText =
                 string.Format("SELECT pml.* FROM WQX_PROJECTMONLOC pml, WQX_PROJECT p WHERE " +
                               "p.PARENTID = '{0}' AND p.WQXUPDATEDATE > '{1}' AND p.RECORDID = pml.PARENTID",
-                               _organizationRecordId, WQXPluginMappers.ToDbString(_wqxUpdateDate));
+                               _organizationRecordId, _wqxUpdateDateDbString);
             _baseDao.MapArrayObjects<ProjectMonitoringLocationWeightingDataType>(
-                "PARENTID", projectRecordIds, selectText, WQXPluginMappers.MapProjectMonitoringLocationWeighting,
+                "PARENTID", projectRecordIds, selectText, WQXPluginMapper.MapProjectMonitoringLocationWeighting,
                 delegate(ProjectMonitoringLocationWeightingDataType[] array, int listKeyFieldsIndex)
                 {
                     projects[listKeyFieldsIndex].ProjectMonitoringLocationWeighting = array;
@@ -646,7 +666,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                     NamedNullMappingDataReader readerEx = (NamedNullMappingDataReader)reader;
                     if (activityRecordIds == null) activityRecordIds = new List<string>();
                     activityRecordIds.Add(readerEx.GetString("RECORDID"));
-                    ActivityDataType activity = WQXPluginMappers.MapActivity(readerEx);
+                    ActivityDataType activity = WQXPluginMapper.MapActivity(readerEx);
                     if (activities == null) activities = new List<ActivityDataType>();
                     activities.Add(activity);
                 });
@@ -657,11 +677,14 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                 GetActivityConductingOrganizationText(activityRecordIds, activities);
                 GetActivityProjectIdentifier(activityRecordIds, activities);
                 GetActivityActivityMetric(activityRecordIds, activities);
+                GetActivityAttachedBinaryObjects(activityRecordIds, activities);
                 GetActivityResult(activityRecordIds, activities);
-            } else {
+            }
+            else
+            {
                 AppendAuditLogEvent("Didn't find any updated activities to submit");
             }
-            return WQXPluginMappers.ToArray(activities);
+            return WQXPluginMapper.ToArray(activities);
         }
         protected virtual MonitoringLocationDataType[] GetOrganizationMonitoringLocations()
         {
@@ -676,7 +699,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                     NamedNullMappingDataReader readerEx = (NamedNullMappingDataReader)reader;
                     if (locationRecordIds == null) locationRecordIds = new List<string>();
                     locationRecordIds.Add(readerEx.GetString("RECORDID"));
-                    MonitoringLocationDataType location = WQXPluginMappers.MapMonitoringLocation(readerEx);
+                    MonitoringLocationDataType location = WQXPluginMapper.MapMonitoringLocation(readerEx);
                     if (locations == null) locations = new List<MonitoringLocationDataType>();
                     locations.Add(location);
                 });
@@ -684,13 +707,30 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
             {
                 AppendAuditLogEvent("Found {0} updated monitoring locations to submit",
                                           locations.Count.ToString());
+                GetMonLocAttachedBinaryObjects(locationRecordIds, locations);
                 GetAltMonLoc(locationRecordIds, locations);
             }
             else
             {
                 AppendAuditLogEvent("Didn't find any updated monitoring locations to submit");
             }
-            return WQXPluginMappers.ToArray(locations);
+            return WQXPluginMapper.ToArray(locations);
+        }
+        private BiologicalHabitatIndexDataType[] GetOrganizationBiologicalHabitatIndex()
+        {
+            List<BiologicalHabitatIndexDataType> habitats = null;
+            _baseDao.DoSimpleQueryWithRowCallbackDelegate(
+                Tables.WQX_BIOLOGICALHABITATINDEX.ToString(),
+                "PARENTID;WQXUPDATEDATE >",
+                new object[] { _organizationRecordId, _wqxUpdateDate },
+                delegate(IDataReader reader)
+                {
+                    NamedNullMappingDataReader readerEx = (NamedNullMappingDataReader)reader;
+                    BiologicalHabitatIndexDataType habitat = WQXPluginMapper.MapBiologicalHabitatIndex(readerEx);
+                    if (habitats == null) habitats = new List<BiologicalHabitatIndexDataType>();
+                    habitats.Add(habitat);
+                });
+            return WQXPluginMapper.ToArray(habitats);
         }
         protected virtual void GetAltMonLoc(IList<string> locationRecordIds,
                                             IList<MonitoringLocationDataType> locations)
@@ -698,9 +738,9 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
             string selectText =
                 string.Format("SELECT aml.* FROM WQX_ALTMONLOC aml, WQX_MONITORINGLOCATION ml WHERE " +
                               "ml.PARENTID = '{0}' AND ml.WQXUPDATEDATE > '{1}' AND ml.RECORDID = aml.PARENTID",
-                               _organizationRecordId, WQXPluginMappers.ToDbString(_wqxUpdateDate));
+                               _organizationRecordId, _wqxUpdateDateDbString);
             _baseDao.MapArrayObjects<AlternateMonitoringLocationIdentityDataType>(
-                "PARENTID", locationRecordIds, selectText, WQXPluginMappers.MapAlternateMonitoringLocationIdentity,
+                "PARENTID", locationRecordIds, selectText, WQXPluginMapper.MapAlternateMonitoringLocationIdentity,
                 delegate(AlternateMonitoringLocationIdentityDataType[] array, int listKeyFieldsIndex)
                 {
                     locations[listKeyFieldsIndex].MonitoringLocationIdentity.AlternateMonitoringLocationIdentity = array;
@@ -710,13 +750,13 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
         {
             return readerEx.GetString("ACTIVITYCONDUCTINGORG");
         }
-        protected virtual void GetActivityConductingOrganizationText(IList<string> activityRecordIds, 
+        protected virtual void GetActivityConductingOrganizationText(IList<string> activityRecordIds,
                                                                      IList<ActivityDataType> activities)
         {
             string selectText =
                 string.Format("SELECT aco.ACTIVITYCONDUCTINGORG, aco.PARENTID FROM WQX_ACTIVITYCONDUCTINGORG aco, WQX_ACTIVITY a WHERE " +
                               "a.PARENTID = '{0}' AND a.WQXUPDATEDATE > '{1}' AND aco.PARENTID = a.RECORDID",
-                               _organizationRecordId, WQXPluginMappers.ToDbString(_wqxUpdateDate));
+                               _organizationRecordId, _wqxUpdateDateDbString);
             _baseDao.MapArrayObjects<string>(
                 "PARENTID", activityRecordIds, selectText, MapActivityConductingOrganizationText,
                 delegate(string[] array, int listKeyFieldsIndex)
@@ -728,14 +768,14 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
         {
             return readerEx.GetString("PROJECTID");
         }
-        protected virtual void GetActivityProjectIdentifier(IList<string> activityRecordIds, 
+        protected virtual void GetActivityProjectIdentifier(IList<string> activityRecordIds,
                                                             IList<ActivityDataType> activities)
         {
             string selectText =
                 string.Format("SELECT p.PROJECTID, pa.ACTIVITYPARENTID FROM WQX_PROJECTACTIVITY pa, WQX_ACTIVITY a, WQX_PROJECT p WHERE " +
                               "a.PARENTID = '{0}' AND a.WQXUPDATEDATE > '{1}' AND pa.ACTIVITYPARENTID = a.RECORDID AND " +
                               "pa.PROJECTPARENTID = p.RECORDID",
-                               _organizationRecordId, WQXPluginMappers.ToDbString(_wqxUpdateDate));
+                               _organizationRecordId, _wqxUpdateDateDbString);
             _baseDao.MapArrayObjects<string>(
                 "ACTIVITYPARENTID", activityRecordIds, selectText, MapActivityProjectIdentifier,
                 delegate(string[] array, int listKeyFieldsIndex)
@@ -749,12 +789,69 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
             string selectText =
                 string.Format("SELECT am.* FROM WQX_ACTIVITYMETRIC am, WQX_ACTIVITY a WHERE " +
                               "a.PARENTID = '{0}' AND a.WQXUPDATEDATE > '{1}' AND am.PARENTID = a.RECORDID",
-                               _organizationRecordId, WQXPluginMappers.ToDbString(_wqxUpdateDate));
+                               _organizationRecordId, _wqxUpdateDateDbString);
             _baseDao.MapArrayObjects<ActivityMetricDataType>(
-                "PARENTID", activityRecordIds, selectText, WQXPluginMappers.MapActivityMetric,
+                "PARENTID", activityRecordIds, selectText, WQXPluginMapper.MapActivityMetric,
                 delegate(ActivityMetricDataType[] array, int listKeyFieldsIndex)
                 {
                     activities[listKeyFieldsIndex].ActivityMetric = array;
+                });
+        }
+        protected virtual void GetActivityAttachedBinaryObjects(IList<string> activityRecordIds,
+                                                                IList<ActivityDataType> activities)
+        {
+            string selectText =
+                string.Format("SELECT ab.* FROM WQX_ACTATTACHEDBINARYOBJECT ab, WQX_ACTIVITY a WHERE " +
+                              "a.PARENTID = '{0}' AND a.WQXUPDATEDATE > '{1}' AND ab.PARENTID = a.RECORDID",
+                               _organizationRecordId, _wqxUpdateDateDbString);
+            _baseDao.MapArrayObjects<AttachedBinaryObjectDataType>(
+                "PARENTID", activityRecordIds, selectText, _wqxPluginMapper.MapAttachedBinaryObject,
+                delegate(AttachedBinaryObjectDataType[] array, int listKeyFieldsIndex)
+                {
+                    activities[listKeyFieldsIndex].AttachedBinaryObject = array;
+                });
+        }
+        protected virtual void GetProjectAttachedBinaryObjects(IList<string> projectRecordIds,
+                                                               IList<ProjectDataType> projects)
+        {
+            string selectText =
+                string.Format("SELECT ab.* FROM WQX_PROJATTACHEDBINARYOBJECT ab, WQX_PROJECT p WHERE " +
+                              "p.PARENTID = '{0}' AND p.WQXUPDATEDATE > '{1}' AND p.RECORDID = ab.PARENTID",
+                               _organizationRecordId, _wqxUpdateDateDbString);
+            _baseDao.MapArrayObjects<AttachedBinaryObjectDataType>(
+                "PARENTID", projectRecordIds, selectText, _wqxPluginMapper.MapAttachedBinaryObject,
+                delegate(AttachedBinaryObjectDataType[] array, int listKeyFieldsIndex)
+                {
+                    projects[listKeyFieldsIndex].AttachedBinaryObject = array;
+                });
+        }
+        protected virtual void GetResultAttachedBinaryObjects(IList<string> resultRecordIds,
+                                                              IList<ResultDataType> results)
+        {
+            string selectText =
+                string.Format("SELECT ab.* FROM WQX_RESULTATTACHEDBINARYOBJECT ab, WQX_RESULT r, WQX_ACTIVITY a WHERE " +
+                              "a.PARENTID = '{0}' AND a.WQXUPDATEDATE > '{1}' AND ab.PARENTID = r.RECORDID AND " +
+                              "r.PARENTID = a.RECORDID",
+                               _organizationRecordId, _wqxUpdateDateDbString);
+            _baseDao.MapArrayObjects<AttachedBinaryObjectDataType>(
+                "PARENTID", resultRecordIds, selectText, _wqxPluginMapper.MapAttachedBinaryObject,
+                delegate(AttachedBinaryObjectDataType[] array, int listKeyFieldsIndex)
+                {
+                    results[listKeyFieldsIndex].AttachedBinaryObject = array;
+                });
+        }
+        protected virtual void GetMonLocAttachedBinaryObjects(IList<string> locationRecordIds,
+                                                              IList<MonitoringLocationDataType> locations)
+        {
+            string selectText =
+                string.Format("SELECT ab.* FROM WQX_MONLOCATTACHEDBINARYOBJECT ab, WQX_MONITORINGLOCATION ml WHERE " +
+                              "ml.PARENTID = '{0}' AND ml.WQXUPDATEDATE > '{1}' AND ml.RECORDID = ab.PARENTID",
+                               _organizationRecordId, _wqxUpdateDateDbString);
+            _baseDao.MapArrayObjects<AttachedBinaryObjectDataType>(
+                "PARENTID", locationRecordIds, selectText, _wqxPluginMapper.MapAttachedBinaryObject,
+                delegate(AttachedBinaryObjectDataType[] array, int listKeyFieldsIndex)
+                {
+                    locations[listKeyFieldsIndex].AttachedBinaryObject = array;
                 });
         }
         protected virtual void GetActivityResult(IList<string> activityRecordIds,
@@ -765,9 +862,9 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
             string selectText =
                 string.Format("SELECT r.* FROM WQX_RESULT r, WQX_ACTIVITY a WHERE " +
                               "a.PARENTID = '{0}' AND a.WQXUPDATEDATE > '{1}' AND r.PARENTID = a.RECORDID",
-                               _organizationRecordId, WQXPluginMappers.ToDbString(_wqxUpdateDate));
+                               _organizationRecordId, _wqxUpdateDateDbString);
             _baseDao.MapArrayObjects<ResultDataType>(
-                "PARENTID", activityRecordIds, selectText, WQXPluginMappers.MapResult,
+                "PARENTID", activityRecordIds, selectText, WQXPluginMapper.MapResult,
                 delegate(ResultDataType[] array, int listKeyFieldsIndex)
                 {
                     activities[listKeyFieldsIndex].Result = array;
@@ -782,6 +879,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
             {
                 GetResultLabSamplePrep(resultRecordIds, results);
                 GetResultDetectionQuantitationLimit(resultRecordIds, results);
+                GetResultAttachedBinaryObjects(resultRecordIds, results);
             }
         }
         protected virtual void GetResultLabSamplePrep(IList<string> resultRecordIds,
@@ -791,9 +889,9 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                 string.Format("SELECT lsp.* FROM WQX_LABSAMPLEPREP lsp, WQX_RESULT r, WQX_ACTIVITY a WHERE " +
                               "a.PARENTID = '{0}' AND a.WQXUPDATEDATE > '{1}' AND lsp.PARENTID = r.RECORDID AND " +
                               "r.PARENTID = a.RECORDID",
-                               _organizationRecordId, WQXPluginMappers.ToDbString(_wqxUpdateDate));
+                               _organizationRecordId, _wqxUpdateDateDbString);
             _baseDao.MapArrayObjects<LabSamplePreparationDataType>(
-                "PARENTID", resultRecordIds, selectText, WQXPluginMappers.MapLabSamplePreparation,
+                "PARENTID", resultRecordIds, selectText, WQXPluginMapper.MapLabSamplePreparation,
                 delegate(LabSamplePreparationDataType[] array, int listKeyFieldsIndex)
                 {
                     results[listKeyFieldsIndex].LabSamplePreparation = array;
@@ -806,9 +904,9 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                 string.Format("SELECT dql.* FROM WQX_RESULTDETECTQUANTLIMIT dql, WQX_RESULT r, WQX_ACTIVITY a WHERE " +
                               "a.PARENTID = '{0}' AND a.WQXUPDATEDATE > '{1}' AND dql.PARENTID = r.RECORDID AND " +
                               "r.PARENTID = a.RECORDID",
-                               _organizationRecordId, WQXPluginMappers.ToDbString(_wqxUpdateDate));
+                               _organizationRecordId, _wqxUpdateDateDbString);
             _baseDao.MapArrayObjects<DetectionQuantitationLimitDataType>(
-                "PARENTID", resultRecordIds, selectText, WQXPluginMappers.MapDetectionQuantitationLimit,
+                "PARENTID", resultRecordIds, selectText, WQXPluginMapper.MapDetectionQuantitationLimit,
                 delegate(DetectionQuantitationLimitDataType[] array, int listKeyFieldsIndex)
                 {
                     results[listKeyFieldsIndex].ResultLabInformation.ResultDetectionQuantitationLimit = array;
@@ -853,6 +951,12 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                 {
                     _compressionHelper.CompressFile(tempXmlFilePath, tempZipFilePath);
                 }
+                if (_wqxPluginMapper.AttachedBinaryFileCount > 0)
+                {
+                    AppendAuditLogEvent("Found {0} attached binary objects (with content) to submit",
+                                        _wqxPluginMapper.AttachedBinaryFileCount.ToString());
+                    _compressionHelper.CompressDirectory(tempZipFilePath, _wqxPluginMapper.AttachedBinaryObjectFolder);
+                }
                 return tempZipFilePath;
             }
             catch (Exception)
@@ -864,15 +968,11 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
             {
                 FileUtils.SafeDeleteFile(tempXmlFilePath);
                 FileUtils.SafeDeleteFile(tempXmlFilePath2);
+                if (_wqxPluginMapper.AttachedBinaryFileCount > 0)
+                {
+                    FileUtils.SafeDeleteDirectory(_wqxPluginMapper.AttachedBinaryObjectFolder);
+                }
             }
-        }
-        protected string GenerateSubmissionFileAndSubmit(WQXDataType data)
-        {
-            return GenerateSubmissionFileAndSubmit(Submission_Type.UpdateInsert, data);
-        }
-        protected string GenerateSubmissionFileAndSubmit(WQXDeleteDataType data)
-        {
-            return GenerateSubmissionFileAndSubmit(Submission_Type.Delete, data);
         }
         protected string GenerateSubmissionFileAndSubmit(Submission_Type submissionType, object data)
         {
@@ -882,23 +982,32 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
             {
                 AppendAuditLogEvent("Submitting results to endpoint \"{0}\"",
                                           _epaPartnerNode.Name);
-                using (INodeEndpointClient endpointClient = _nodeEndpointClientFactory.Make(_epaPartnerNode.Url, _epaPartnerNode.Version))
+                try
                 {
-                    if (endpointClient.Version == EndpointVersionType.EN20)
+                    using (INodeEndpointClient endpointClient = _nodeEndpointClientFactory.Make(_epaPartnerNode.Url, _epaPartnerNode.Version))
                     {
-                        transactionId =
-                            endpointClient.Submit(WQX_FLOW_NAME, "default",
-                                                  string.Empty, new string[] { submitFile });
+                        if (endpointClient.Version == EndpointVersionType.EN20)
+                        {
+                            transactionId =
+                                endpointClient.Submit(WQX_FLOW_NAME, "default",
+                                                      string.Empty, new string[] { submitFile });
+                        }
+                        else
+                        {
+                            transactionId =
+                                endpointClient.Submit(WQX_FLOW_NAME, null, new string[] { submitFile });
+                        }
                     }
-                    else
-                    {
-                        transactionId =
-                            endpointClient.Submit(WQX_FLOW_NAME, null, new string[] { submitFile });
-                    }
+                    AppendAuditLogEvent("Successfully submitted results to endpoint \"{0}\" with returned transaction id \"{1}\"",
+                                              _epaPartnerNode.Name, transactionId);
                 }
-                AppendAuditLogEvent("Successfully submitted results to endpoint \"{0}\" with returned transaction id \"{1}\"",
-                                          _epaPartnerNode.Name, transactionId);
-                _transactionManager.SetNetworkId(_dataRequest.TransactionId, transactionId, _epaPartnerNode.Version, 
+                catch (Exception e)
+                {
+                    AppendAuditLogEvent("Failed to submit results to endpoint \"{0}\": {1}",
+                                        _epaPartnerNode.Name, ExceptionUtils.ToShortString(e));
+                    throw;
+                }
+                _transactionManager.SetNetworkId(_dataRequest.TransactionId, transactionId, _epaPartnerNode.Version,
                                                  _epaPartnerNode.Url);
             }
             catch (Exception e)
@@ -948,7 +1057,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                 {
                     statusCode = endpointClient.GetStatus(localTransactionId);
                     // TODO: What status indicates success or failure?
-                    if ( (statusCode == CommonTransactionStatusCode.Processed) ||
+                    if ((statusCode == CommonTransactionStatusCode.Processed) ||
                          (statusCode == CommonTransactionStatusCode.Completed))
                     {
                         pendingStatus = CDX_Processing_Status.Completed;
@@ -979,6 +1088,30 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                 // Don't throw
                 return false;
             }
+        }
+        protected static int TotalResultCount(WQXDataType data)
+        {
+            int count = 0;
+            if ((data != null) && (data.Organization != null) && (data.Organization.Activity != null))
+            {
+                foreach (ActivityDataType activity in data.Organization.Activity)
+                {
+                    count += (activity.Result == null) ? 0 : activity.Result.Length;
+                }
+            }
+            return count;
+        }
+        protected static int TotalResultCount(Windsor.Node2008.WNOSPlugin.WQX2XsdOrm.WQXDataType data)
+        {
+            int count = 0;
+            if ((data != null) && (data.Organization != null) && (data.Organization.Activity != null))
+            {
+                foreach (Windsor.Node2008.WNOSPlugin.WQX2XsdOrm.ActivityDataType activity in data.Organization.Activity)
+                {
+                    count += (activity.Result == null) ? 0 : activity.Result.Length;
+                }
+            }
+            return count;
         }
     }
 }

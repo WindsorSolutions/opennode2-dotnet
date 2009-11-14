@@ -49,44 +49,52 @@ using Spring.Data.Common;
 using Spring.Transaction.Support;
 using Spring.Data.Core;
 using System.ComponentModel;
-using Windsor.Node2008.WNOSPlugin.WQX2Xsd;
+using Windsor.Commons.Core;
+using Windsor.Node2008.WNOSPlugin.WQX2XsdOrm;
+using Windsor.Commons.XsdOrm;
+using Windsor.Commons.Spring;
 
 namespace Windsor.Node2008.WNOSPlugin.WQX2
 {
     [Serializable]
-    public class WQXGetInsertUpdateSubmission : WQXPluginBase, ISolicitProcessor
+    public class WQXTestPullPushProcessor : WQXQuerySolicitProcessor
     {
         #region fields
+        protected const string DEST_PROVIDER_KEY = "Data Destination";
         #endregion
 
         #region ISolicitProcessor Interface Implementation
 
-        /// <summary>
-        /// ProcessSolicit
-        /// </summary>
-        /// <param name="requestId"></param>
-        public virtual void ProcessSolicit(string requestId)
+        public WQXTestPullPushProcessor()
         {
-            ProcessQuerySolicitInit(requestId, true);
-
-            CheckForPendingSubmissions(Submission_Type.UpdateInsert);
-
-            string recordId = SetPendingSubmission(Submission_Type.UpdateInsert);
-
-            try
-            {
-                object data = GetInsertUpdateData();
-
-                string transactionId = GenerateSubmissionFileAndSubmit(Submission_Type.UpdateInsert, data);
-
-                UpdatePendingSubmissionInfo(recordId, transactionId);
-            }
-            catch (Exception)
-            {
-                SetSubmissionFailed(recordId);
-                throw;
-            }
+            DataProviders.Add(DEST_PROVIDER_KEY, null);
         }
+
+        protected override object GetInsertUpdateData()
+        {
+            object data = base.GetInsertUpdateData();
+            WQXDataType wqxData = (WQXDataType)data;
+
+            SpringBaseDao destDao = ValidateDBProvider(DEST_PROVIDER_KEY, typeof(NamedNullMappingDataReader));
+
+            IObjectsToDatabase objectsToDatabase;
+            GetServiceImplementation(out objectsToDatabase);
+
+            AppendAuditLogEvent("Building database if it does not exist");
+            objectsToDatabase.BuildDatabase(data.GetType(), destDao);
+
+            AppendAuditLogEvent("Storing {0} Projects, {1} Activities, {2} Biological Habitat Indexes, {3} Monitoring Locations, and {4} Activity Groups into the database",
+                                CollectionUtils.Count(wqxData.Organization.Project).ToString(),
+                                CollectionUtils.Count(wqxData.Organization.Activity).ToString(),
+                                CollectionUtils.Count(wqxData.Organization.BiologicalHabitatIndex).ToString(),
+                                CollectionUtils.Count(wqxData.Organization.MonitoringLocation).ToString(),
+                                CollectionUtils.Count(wqxData.Organization.ActivityGroup).ToString());
+            
+            objectsToDatabase.SaveToDatabase(data, destDao);
+
+            return data;
+        }
+
         #endregion
     }
 }

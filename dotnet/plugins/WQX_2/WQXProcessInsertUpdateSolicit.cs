@@ -50,6 +50,7 @@ using Spring.Transaction.Support;
 using Spring.Data.Core;
 using System.ComponentModel;
 using Windsor.Commons.Core;
+using Windsor.Node2008.WNOSPlugin.WQX2Xsd;
 
 namespace Windsor.Node2008.WNOSPlugin.WQX2
 {
@@ -74,13 +75,13 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
         /// <param name="requestId"></param>
         public virtual void ProcessSolicit(string requestId)
         {
-            ProcessSolicitInit(requestId, false);
+            ProcessQuerySolicitInit(requestId, false);
             _useSubmissionHistoryTable = false;
 
             string submitFile = null;
             try
             {
-                WQXDataType data = GetInsertUpdateData();
+                object data = GetInsertUpdateData();
 
                 submitFile = GenerateSubmissionFileAndAddToTransaction(Submission_Type.UpdateInsert, data);
             }
