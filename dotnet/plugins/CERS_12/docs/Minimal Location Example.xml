@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="CER_StyleSheet.xslt"?>
+<cer:CERS xsi:schemaLocation="http://www.exchangenetwork.net/schema/cer/1 index.xsd" xmlns:cer="http://www.exchangenetwork.net/schema/cer/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <cer:UserIdentifier>John.Doe@epa.gov</cer:UserIdentifier>
+   <cer:ProgramSystemCode>WS</cer:ProgramSystemCode>
+   <cer:EmissionsYear>2008</cer:EmissionsYear>
+   <cer:EmissionsCreationDate>2008-12-31</cer:EmissionsCreationDate>
+   <cer:SubmittalComment>Washington State reports dry cleaning emissions for Thurston County.</cer:SubmittalComment>
+   <cer:Location>
+      <cer:StateAndCountyFIPSCode>53067</cer:StateAndCountyFIPSCode>
+   </cer:Location>
+</cer:CERS>

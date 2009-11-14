@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="CER_StyleSheet.xslt"?>
+<cer:CERS xsi:schemaLocation="http://www.exchangenetwork.net/schema/cer/1 index.xsd" xmlns:cer="http://www.exchangenetwork.net/schema/cer/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <cer:UserIdentifier>Sam_Smith</cer:UserIdentifier>
+   <cer:ProgramSystemCode>VA DEQ</cer:ProgramSystemCode>
+   <cer:EmissionsYear>2008</cer:EmissionsYear>
+   <cer:EmissionsCreationDate>2008-12-31</cer:EmissionsCreationDate>
+   <cer:SubmittalComment>This example contains updates to multiple facility sites in the state of Virginia.  These sites were reporting using EIS identifiers.</cer:SubmittalComment>
+   <cer:FacilitySite>
+      <cer:FacilityIdentification>
+         <cer:FacilitySiteIdentifier>7846129</cer:FacilitySiteIdentifier>
+         <cer:ProgramSystemCode>EIS</cer:ProgramSystemCode>
+      </cer:FacilityIdentification>
+      <cer:EmissionsUnit>
+         <cer:UnitIdentification>
+            <cer:Identifier>1476821</cer:Identifier>
+            <cer:ProgramSystemCode>EIS</cer:ProgramSystemCode>
+         </cer:UnitIdentification>
+         <cer:UnitEmissionsProcess>
+            <cer:ProcessIdentification>
+               <cer:Identifier>1476822</cer:Identifier>
+               <cer:ProgramSystemCode>EIS</cer:ProgramSystemCode>
+            </cer:ProcessIdentification>
+            <cer:ProcessIdentification>
+               <cer:Identifier>1A</cer:Identifier>
+               <cer:ProgramSystemCode>VA DEQ</cer:ProgramSystemCode>
+            </cer:ProcessIdentification>
+            <cer:ReportingPeriod>
+               <cer:ReportingPeriodTypeCode>A</cer:ReportingPeriodTypeCode>
+               <cer:EmissionOperatingTypeCode>R</cer:EmissionOperatingTypeCode>
+               <cer:CalculationParameterTypeCode>I</cer:CalculationParameterTypeCode>
+               <cer:CalculationParameterValue>6.698</cer:CalculationParameterValue>
+               <cer:CalculationParameterUnitofMeasure>E6M3</cer:CalculationParameterUnitofMeasure>
+               <cer:CalculationMaterialCode>518</cer:CalculationMaterialCode>
+               <cer:CalculationDataSource>Landfill model estimates.</cer:CalculationDataSource>
+               <cer:ReportingPeriodEmissions>
+                  <cer:PollutantCode>75092</cer:PollutantCode>
+                  <cer:TotalEmissions>449.33</cer:TotalEmissions>
+                  <cer:EmissionsUnitofMeasureCode>LB</cer:EmissionsUnitofMeasureCode>
+                  <cer:EmissionCalculationMethodCode>8</cer:EmissionCalculationMethodCode>
+                  <cer:EmissionsComment>Emissions generated from AP-42 spreadsheet.</cer:EmissionsComment>
+               </cer:ReportingPeriodEmissions>
+               <cer:ReportingPeriodEmissions>
+                  <cer:PollutantCode>71556</cer:PollutantCode>
+                  <cer:TotalEmissions>23.7</cer:TotalEmissions>
+                  <cer:EmissionsUnitofMeasureCode>LB</cer:EmissionsUnitofMeasureCode>
+                  <cer:EmissionCalculationMethodCode>8</cer:EmissionCalculationMethodCode>
+                  <cer:EmissionsComment>Emissions generated from AP-42 spreadsheet.</cer:EmissionsComment>
+               </cer:ReportingPeriodEmissions>
+            </cer:ReportingPeriod>
+         </cer:UnitEmissionsProcess>
+      </cer:EmissionsUnit>
+      <cer:EmissionsUnit>
+         <cer:UnitDescription>Landfill gas flare</cer:UnitDescription>
+         <cer:UnitTypeCode>107</cer:UnitTypeCode>
+         <cer:UnitStatusCode>OP</cer:UnitStatusCode>
+         <cer:UnitStatusCodeYear>2008</cer:UnitStatusCodeYear>
+         <cer:UnitOperationDate>1967-01-01</cer:UnitOperationDate>
+         <cer:UnitIdentification>
+            <cer:Identifier>1112371</cer:Identifier>
+            <cer:ProgramSystemCode>EIS</cer:ProgramSystemCode>
+         </cer:UnitIdentification>
+         <cer:UnitEmissionsProcess>
+            <cer:SourceClassificationCode>50100410</cer:SourceClassificationCode>
+            <cer:ProcessDescription>Waste gas flare</cer:ProcessDescription>
+            <cer:ProcessComment>Waste Gas Destruction - Waste Gas Flares</cer:ProcessComment>
+            <cer:ProcessIdentification>
+               <cer:Identifier>1B</cer:Identifier>
+               <cer:ProgramSystemCode>VA DEQ</cer:ProgramSystemCode>
+            </cer:ProcessIdentification>
+            <cer:ProcessIdentification>
+               <cer:Identifier>1476823</cer:Identifier>
+               <cer:ProgramSystemCode>EIS</cer:ProgramSystemCode>
+            </cer:ProcessIdentification>
+            <cer:ReportingPeriod>
+               <cer:ReportingPeriodTypeCode>A</cer:ReportingPeriodTypeCode>
+               <cer:EmissionOperatingTypeCode>R</cer:EmissionOperatingTypeCode>
+               <cer:CalculationParameterTypeCode>I</cer:CalculationParameterTypeCode>
+               <cer:CalculationParameterValue>6.698</cer:CalculationParameterValue>
+               <cer:CalculationParameterUnitofMeasure>E6M3</cer:CalculationParameterUnitofMeasure>
+               <cer:CalculationMaterialCode>518</cer:CalculationMaterialCode>
+               <cer:CalculationDataSource>Landfill model estimates.</cer:CalculationDataSource>
+               <cer:ReportingPeriodComment>Landfill model estimates.</cer:ReportingPeriodComment>
+               <cer:ReportingPeriodEmissions>
+                  <cer:PollutantCode>7647010</cer:PollutantCode>
+                  <cer:TotalEmissions>544.4</cer:TotalEmissions>
+                  <cer:EmissionsUnitofMeasureCode>LB</cer:EmissionsUnitofMeasureCode>
+                  <cer:EmissionCalculationMethodCode>8</cer:EmissionCalculationMethodCode>
+                  <cer:EmissionsComment>Emissions generated from AP-42 spreadsheet.</cer:EmissionsComment>
+               </cer:ReportingPeriodEmissions>
+               <cer:ReportingPeriodEmissions>
+                  <cer:PollutantCode>SO2</cer:PollutantCode>
+                  <cer:TotalEmissions>1112</cer:TotalEmissions>
+                  <cer:EmissionsUnitofMeasureCode>LB</cer:EmissionsUnitofMeasureCode>
+                  <cer:EmissionCalculationMethodCode>8</cer:EmissionCalculationMethodCode>
+                  <cer:EmissionsComment>Emissions generated from AP-42 spreadsheet.</cer:EmissionsComment>
+               </cer:ReportingPeriodEmissions>
+               <cer:ReportingPeriodEmissions>
+                  <cer:PollutantCode>NOX</cer:PollutantCode>
+                  <cer:TotalEmissions>1.59</cer:TotalEmissions>
+                  <cer:EmissionsUnitofMeasureCode>TON</cer:EmissionsUnitofMeasureCode>
+                  <cer:EmissionCalculationMethodCode>8</cer:EmissionCalculationMethodCode>
+                  <cer:EmissionsComment>Emissions generated from AP-42 spreadsheet.</cer:EmissionsComment>
+               </cer:ReportingPeriodEmissions>
+            </cer:ReportingPeriod>
+            <cer:ReleasePointApportionment>
+               <cer:AveragePercentEmissions>100</cer:AveragePercentEmissions>
+               <cer:ReleasePointApportionmentComment>All emissions are vented from the unit to a single stack.</cer:ReleasePointApportionmentComment>
+               <cer:ReleasePointApportionmentIdentification>
+                  <cer:Identifier>304124</cer:Identifier>
+                  <cer:ProgramSystemCode>VADEQ</cer:ProgramSystemCode>
+               </cer:ReleasePointApportionmentIdentification>
+            </cer:ReleasePointApportionment>
+         </cer:UnitEmissionsProcess>
+      </cer:EmissionsUnit>
+   </cer:FacilitySite>
+   <cer:FacilitySite>
+      <cer:FacilityIdentification>
+         <cer:FacilitySiteIdentifier>70244</cer:FacilitySiteIdentifier>
+         <cer:ProgramSystemCode>EIS</cer:ProgramSystemCode>
+      </cer:FacilityIdentification>
+      <cer:EmissionsUnit>
+         <cer:UnitIdentification>
+            <cer:Identifier>TNK A</cer:Identifier>
+            <cer:ProgramSystemCode>VADEQ</cer:ProgramSystemCode>
+         </cer:UnitIdentification>
+         <cer:UnitEmissionsProcess>
+            <cer:ProcessIdentification>
+               <cer:Identifier>1A</cer:Identifier>
+               <cer:ProgramSystemCode>VADEQ</cer:ProgramSystemCode>
+            </cer:ProcessIdentification>
+            <cer:ReportingPeriod>
+               <cer:ReportingPeriodTypeCode>A</cer:ReportingPeriodTypeCode>
+               <cer:EmissionOperatingTypeCode>R</cer:EmissionOperatingTypeCode>
+               <cer:CalculationParameterTypeCode>I</cer:CalculationParameterTypeCode>
+               <cer:CalculationParameterValue>1027</cer:CalculationParameterValue>
+               <cer:CalculationParameterUnitofMeasure>E3GAL</cer:CalculationParameterUnitofMeasure>
+               <cer:CalculationMaterialCode>127</cer:CalculationMaterialCode>
+               <cer:CalculationDataYear>2007</cer:CalculationDataYear>
+               <cer:CalculationDataSource>Facility records</cer:CalculationDataSource>
+               <cer:ReportingPeriodComment>Annual Facility throughput records.</cer:ReportingPeriodComment>
+               <cer:OperatingDetails>
+                  <cer:ActualHoursPerPeriod>8760</cer:ActualHoursPerPeriod>
+                  <cer:AverageDaysPerWeek>7</cer:AverageDaysPerWeek>
+                  <cer:AverageHoursPerDay>24</cer:AverageHoursPerDay>
+                  <cer:AverageWeeksPerPeriod>52</cer:AverageWeeksPerPeriod>
+               </cer:OperatingDetails>
+               <cer:ReportingPeriodEmissions>
+                  <cer:PollutantCode>VOC</cer:PollutantCode>
+                  <cer:TotalEmissions>2.93</cer:TotalEmissions>
+                  <cer:EmissionsUnitofMeasureCode>TON</cer:EmissionsUnitofMeasureCode>
+                  <cer:EmissionFactor>5.7</cer:EmissionFactor>
+                  <cer:EmissionFactorNumeratorUnitofMeasureCode>LB</cer:EmissionFactorNumeratorUnitofMeasureCode>
+                  <cer:EmissionFactorDenominatorUnitofMeasureCode>E3GAL</cer:EmissionFactorDenominatorUnitofMeasureCode>
+                  <cer:EmissionCalculationMethodCode>8</cer:EmissionCalculationMethodCode>
+               </cer:ReportingPeriodEmissions>
+            </cer:ReportingPeriod>
+         </cer:UnitEmissionsProcess>
+      </cer:EmissionsUnit>
+      <cer:EmissionsUnit>
+         <cer:UnitIdentification>
+            <cer:Identifier>TNK B</cer:Identifier>
+            <cer:ProgramSystemCode>VADEQ</cer:ProgramSystemCode>
+         </cer:UnitIdentification>
+         <cer:UnitEmissionsProcess>
+            <cer:ProcessIdentification>
+               <cer:Identifier>1B</cer:Identifier>
+               <cer:ProgramSystemCode>VADEQ</cer:ProgramSystemCode>
+            </cer:ProcessIdentification>
+            <cer:ReportingPeriod>
+               <cer:ReportingPeriodTypeCode>A</cer:ReportingPeriodTypeCode>
+               <cer:EmissionOperatingTypeCode>R</cer:EmissionOperatingTypeCode>
+               <cer:CalculationParameterTypeCode>I</cer:CalculationParameterTypeCode>
+               <cer:CalculationParameterValue>12800</cer:CalculationParameterValue>
+               <cer:CalculationParameterUnitofMeasure>E3GAL</cer:CalculationParameterUnitofMeasure>
+               <cer:CalculationMaterialCode>127</cer:CalculationMaterialCode>
+               <cer:CalculationDataYear>2007</cer:CalculationDataYear>
+               <cer:CalculationDataSource>Facility records</cer:CalculationDataSource>
+               <cer:ReportingPeriodComment>Annual Facility throughput records.</cer:ReportingPeriodComment>
+               <cer:OperatingDetails>
+                  <cer:ActualHoursPerPeriod>8760</cer:ActualHoursPerPeriod>
+                  <cer:AverageDaysPerWeek>7</cer:AverageDaysPerWeek>
+                  <cer:AverageHoursPerDay>24</cer:AverageHoursPerDay>
+                  <cer:AverageWeeksPerPeriod>52</cer:AverageWeeksPerPeriod>
+               </cer:OperatingDetails>
+               <cer:ReportingPeriodEmissions>
+                  <cer:PollutantCode>VOC</cer:PollutantCode>
+                  <cer:TotalEmissions>34.56</cer:TotalEmissions>
+                  <cer:EmissionsUnitofMeasureCode>LB</cer:EmissionsUnitofMeasureCode>
+                  <cer:EmissionFactor>5.4</cer:EmissionFactor>
+                  <cer:EmissionFactorNumeratorUnitofMeasureCode>LB</cer:EmissionFactorNumeratorUnitofMeasureCode>
+                  <cer:EmissionFactorDenominatorUnitofMeasureCode>E3GAL</cer:EmissionFactorDenominatorUnitofMeasureCode>
+                  <cer:EmissionCalculationMethodCode>8</cer:EmissionCalculationMethodCode>
+               </cer:ReportingPeriodEmissions>
+            </cer:ReportingPeriod>
+         </cer:UnitEmissionsProcess>
+      </cer:EmissionsUnit>
+      <cer:EmissionsUnit>
+         <cer:UnitIdentification>
+			<cer:Identifier>LRCK-1</cer:Identifier>
+            <cer:ProgramSystemCode>VADEQ</cer:ProgramSystemCode>
+         </cer:UnitIdentification>
+         <cer:UnitEmissionsProcess>
+            <cer:ProcessIdentification>
+               <cer:Identifier>LRCK-1</cer:Identifier>
+               <cer:ProgramSystemCode>VADEQ</cer:ProgramSystemCode>
+            </cer:ProcessIdentification>
+            <cer:ReportingPeriod>
+               <cer:ReportingPeriodTypeCode>A</cer:ReportingPeriodTypeCode>
+               <cer:EmissionOperatingTypeCode>R</cer:EmissionOperatingTypeCode>
+               <cer:CalculationParameterTypeCode>I</cer:CalculationParameterTypeCode>
+               <cer:CalculationParameterValue>13827</cer:CalculationParameterValue>
+               <cer:CalculationParameterUnitofMeasure>E3GAL</cer:CalculationParameterUnitofMeasure>
+               <cer:CalculationMaterialCode>127</cer:CalculationMaterialCode>
+               <cer:CalculationDataYear>2007</cer:CalculationDataYear>
+               <cer:CalculationDataSource>Facility records</cer:CalculationDataSource>
+               <cer:ReportingPeriodComment>Annual Facility throughput records.</cer:ReportingPeriodComment>
+               <cer:OperatingDetails>
+                  <cer:ActualHoursPerPeriod>8760</cer:ActualHoursPerPeriod>
+                  <cer:AverageDaysPerWeek>7</cer:AverageDaysPerWeek>
+                  <cer:AverageHoursPerDay>24</cer:AverageHoursPerDay>
+                  <cer:AverageWeeksPerPeriod>52</cer:AverageWeeksPerPeriod>
+               </cer:OperatingDetails>
+               <cer:ReportingPeriodEmissions>
+                  <cer:PollutantCode>VOC</cer:PollutantCode>
+                  <cer:TotalEmissions>1717</cer:TotalEmissions>
+                  <cer:EmissionsUnitofMeasureCode>LB</cer:EmissionsUnitofMeasureCode>
+                  <cer:EmissionFactor>4.8</cer:EmissionFactor>
+                  <cer:EmissionFactorNumeratorUnitofMeasureCode>LB</cer:EmissionFactorNumeratorUnitofMeasureCode>
+                  <cer:EmissionFactorDenominatorUnitofMeasureCode>E3GAL</cer:EmissionFactorDenominatorUnitofMeasureCode>
+                  <cer:EmissionCalculationMethodCode>8</cer:EmissionCalculationMethodCode>
+               </cer:ReportingPeriodEmissions>
+            </cer:ReportingPeriod>
+         </cer:UnitEmissionsProcess>
+      </cer:EmissionsUnit>
+   </cer:FacilitySite>
+</cer:CERS>

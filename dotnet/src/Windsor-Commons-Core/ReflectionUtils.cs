@@ -98,14 +98,14 @@ namespace Windsor.Commons.Core
         public static object GetPublicOrPrivatePropertyValue(object obj, string propertyName, bool declaredOnly)
         {
             BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
-            if ( declaredOnly )
+            if (declaredOnly)
             {
                 flags |= BindingFlags.DeclaredOnly;
             }
             PropertyInfo propInfo = obj.GetType().GetProperty(propertyName, flags);
             if (propInfo == null)
             {
-                throw new ArgumentException(string.Format("The property {0} was not found for the object {1}", 
+                throw new ArgumentException(string.Format("The property {0} was not found for the object {1}",
                                                           propertyName, obj.GetType().FullName));
             }
             return propInfo.GetValue(obj, null);
@@ -203,6 +203,76 @@ namespace Windsor.Commons.Core
             throw new ArgumentException(string.Format("The object {0} does not contain a property or field with the name {1}",
                                                       objectType.FullName, memberName));
         }
+        private static bool BuildMemberString(int maxNumChars, MemberInfo prop, object obj, StringBuilder sb)
+        {
+            ToStringQualifierAttribute qualifier = null;
+            if (prop.IsDefined(typeof(ToStringQualifierAttribute), false))
+            {
+                object[] qualifiers = prop.GetCustomAttributes(typeof(ToStringQualifierAttribute), false);
+                if (qualifiers.Length > 0)
+                {
+                    qualifier = qualifiers[0] as ToStringQualifierAttribute;
+                    if (qualifier != null)
+                    {
+                        if (qualifier.Ignore)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            if (sb.Length >= maxNumChars)
+            {
+                return false;
+            }
+            if (sb.Length > 0)
+            {
+                sb.Append("; ");
+            }
+            sb.AppendFormat("{0}=\"", prop.Name);
+            try
+            {
+                object value;
+                PropertyInfo propInfo = prop as PropertyInfo;
+                if (prop != null)
+                {
+                    value = propInfo.GetValue(obj, null);
+                }
+                else
+                {
+                    value = ((FieldInfo)prop).GetValue(obj);
+                }
+                if (value == null)
+                {
+                    sb.Append("null");
+                }
+                else
+                {
+                    ICollection collection = value as ICollection;
+                    if (collection != null)
+                    {
+                        if ((qualifier != null) && qualifier.CollectionCountOnly)
+                        {
+                            AppendCollectionCountString(collection, maxNumChars, sb);
+                        }
+                        else
+                        {
+                            AppendCollectionString(collection, maxNumChars, sb);
+                        }
+                    }
+                    else
+                    {
+                        sb.Append(value.ToString());
+                    }
+                }
+            }
+            catch (Exception e2)
+            {
+                sb.Append("ERROR: " + e2.Message);
+            }
+            sb.Append("\"");
+            return true;
+        }
         public static string GetPublicPropertiesString(object obj, int maxNumChars)
         {
             if (IsCurGetPublicPropertiesStringObject(obj))
@@ -224,63 +294,18 @@ namespace Windsor.Commons.Core
                         PropertyInfo[] properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
                         foreach (PropertyInfo prop in properties)
                         {
-                            ToStringQualifierAttribute qualifier = null;
-                            if (prop.IsDefined(typeof(ToStringQualifierAttribute), false))
-                            {
-                                object[] qualifiers = prop.GetCustomAttributes(typeof(ToStringQualifierAttribute), false);
-                                if (qualifiers.Length > 0)
-                                {
-                                    qualifier = qualifiers[0] as ToStringQualifierAttribute;
-                                    if (qualifier != null)
-                                    {
-                                        if (qualifier.Ignore)
-                                        {
-                                            continue;
-                                        }
-                                    }
-                                }
-                            }
-                            if (sb.Length >= maxNumChars)
+                            if (!BuildMemberString(maxNumChars, prop, obj, sb))
                             {
                                 break;
                             }
-                            if (sb.Length > 0)
+                        }
+                        FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
+                        foreach (FieldInfo field in fields)
+                        {
+                            if (!BuildMemberString(maxNumChars, field, obj, sb))
                             {
-                                sb.Append("; ");
+                                break;
                             }
-                            sb.AppendFormat("{0}=\"", prop.Name);
-                            try
-                            {
-                                object value = prop.GetValue(obj, null);
-                                if (value == null)
-                                {
-                                    sb.Append("null");
-                                }
-                                else
-                                {
-                                    ICollection collection = value as ICollection;
-                                    if (collection != null)
-                                    {
-                                        if ((qualifier != null) && qualifier.CollectionCountOnly)
-                                        {
-                                            AppendCollectionCountString(collection, maxNumChars, sb);
-                                        }
-                                        else
-                                        {
-                                            AppendCollectionString(collection, maxNumChars, sb);
-                                        }
-                                    }
-                                    else
-                                    {
-                                        sb.Append(value.ToString());
-                                    }
-                                }
-                            }
-                            catch (Exception e2)
-                            {
-                                sb.Append("ERROR: " + e2.Message);
-                            }
-                            sb.Append("\"");
                         }
                         ICollection mainCollection = obj as ICollection;
                         if (mainCollection != null)
@@ -432,6 +457,40 @@ namespace Windsor.Commons.Core
                 }
             }
             return null;
+        }
+        public static MemberInfo GetInstanceMember<T>(string memberName)
+        {
+            return GetInstanceMember<T>(memberName, true, true);
+        }
+        public static MemberInfo GetInstanceMember<T>(string memberName, bool includeInheritedMembers,
+                                                      bool includeNonPublicMembers)
+        {
+            ExceptionUtils.ThrowIfEmptyString(memberName, "memberName");
+
+            Type type = typeof(T);
+
+            BindingFlags flags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+            if (!includeInheritedMembers)
+            {
+                flags |= BindingFlags.DeclaredOnly;
+            }
+            if (includeNonPublicMembers)
+            {
+                flags |= BindingFlags.NonPublic;
+            }
+
+            PropertyInfo property = type.GetProperty(memberName, flags);
+            if (property == null)
+            {
+                FieldInfo field = type.GetField(memberName, flags);
+                if (field == null)
+                {
+                    throw new ArgumentException(string.Format("Did not find member \"{0}\" on type \"{1}\"", memberName,
+                                                              type.FullName));
+                }
+                return field;
+            }
+            return property;
         }
 
         [ThreadStatic]

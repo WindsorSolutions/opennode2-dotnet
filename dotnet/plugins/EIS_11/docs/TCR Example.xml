@@ -1,0 +1,594 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="CER_StyleSheet.xslt"?>
+<cer:CERS xsi:schemaLocation="http://www.exchangenetwork.net/schema/cer/1 index.xsd" xmlns:cer="http://www.exchangenetwork.net/schema/cer/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <cer:UserIdentifier>K. Edwards</cer:UserIdentifier>
+   <cer:ProgramSystemCode>TCR</cer:ProgramSystemCode>
+   <cer:EmissionsYear>2008</cer:EmissionsYear>
+   <cer:EmissionsCreationDate>2008-12-31</cer:EmissionsCreationDate>
+   <cer:FacilitySite>
+      <cer:FacilitySiteName>Ivy Sanitary Landfill</cer:FacilitySiteName>
+      <cer:FacilitySiteDescription>Permanently shutdown municpal landfill located near Charlottesville, VA</cer:FacilitySiteDescription>
+      <cer:FacilitySiteStatusCodeYear>2008</cer:FacilitySiteStatusCodeYear>
+      <cer:FacilityNAICS>
+         <cer:NAICSCode>562212</cer:NAICSCode>
+      </cer:FacilityNAICS>
+      <cer:FacilityIdentification>
+         <cer:FacilitySiteIdentifier>F-2421</cer:FacilitySiteIdentifier>
+         <cer:ProgramSystemCode>TCR</cer:ProgramSystemCode>
+      </cer:FacilityIdentification>
+      <cer:FacilitySiteAddress>
+         <cer:LocationAddressText>4576 Dick Woods Road</cer:LocationAddressText>
+         <cer:LocalityName>Charlottesville</cer:LocalityName>
+         <cer:LocationAddressStateCode>VA</cer:LocationAddressStateCode>
+         <cer:LocationAddressPostalCode>22903</cer:LocationAddressPostalCode>
+      </cer:FacilitySiteAddress>
+      <cer:EmissionsUnit>
+         <cer:Scope>Scope 1</cer:Scope>
+         <cer:UnitDescription>Landfill Area Fugitive Emissions</cer:UnitDescription>
+         <cer:UnitTypeCode>300</cer:UnitTypeCode>
+         <cer:UnitStatusCodeYear>2008</cer:UnitStatusCodeYear>
+         <cer:UnitIdentification>
+				<cer:Identifier>1</cer:Identifier>
+				<cer:ProgramSystemCode>TCR</cer:ProgramSystemCode>
+		 </cer:UnitIdentification>
+         <cer:UnitEmissionsProcess>
+            <cer:ProcessTypeCode>Other</cer:ProcessTypeCode>
+            <cer:ProcessDescription>Landfill Area Fugitive Emissions</cer:ProcessDescription>
+            <cer:ProcessComment>Fugitive Emissions from 76 acres of landfill cells.</cer:ProcessComment>
+            <cer:ReportingPeriod>
+               <cer:ReportingPeriodTypeCode>A</cer:ReportingPeriodTypeCode>
+               <cer:EmissionOperatingTypeCode>R</cer:EmissionOperatingTypeCode>
+               <cer:ReportingPeriodEmissions>
+                  <cer:PollutantCode>CH4</cer:PollutantCode>
+                  <cer:TotalEmissions>4555.979000</cer:TotalEmissions>
+                  <cer:EmissionsUnitofMeasureCode>metric tons</cer:EmissionsUnitofMeasureCode>
+                  <cer:EmissionCalculationMethodCode>Pre-Calculated</cer:EmissionCalculationMethodCode>
+                  <cer:CalculationMethodAccuracyAssessmentCode>Tier C</cer:CalculationMethodAccuracyAssessmentCode>
+                  <cer:CO2Equivalent>
+                     <cer:CO2e>95675.560000</cer:CO2e>
+                     <cer:CO2eUnitofMeasureCode>metric tons</cer:CO2eUnitofMeasureCode>
+                     <cer:CO2ConversionFactor>[QUANTITY]*21</cer:CO2ConversionFactor>
+                     <cer:CO2ConversionFactorSource>IPCC  1996</cer:CO2ConversionFactorSource>
+                  </cer:CO2Equivalent>
+               </cer:ReportingPeriodEmissions>
+            </cer:ReportingPeriod>
+         </cer:UnitEmissionsProcess>
+      </cer:EmissionsUnit>
+      <cer:EmissionsUnit>
+         <cer:Scope>Scope 1 - Combustion (Stationary)</cer:Scope>
+         <cer:UnitDescription>Unit B:  Waste Gas Flare (CH4 and N2O)</cer:UnitDescription>
+         <cer:UnitTypeCode>300</cer:UnitTypeCode>
+         <cer:UnitStatusCodeYear>2008</cer:UnitStatusCodeYear>
+         <cer:UnitIdentification>
+			 <cer:Identifier>2</cer:Identifier>
+			 <cer:ProgramSystemCode>TCR</cer:ProgramSystemCode>
+		 </cer:UnitIdentification>
+         <cer:UnitEmissionsProcess>
+            <cer:ProcessTypeCode>(Unknown) Industrial Sector</cer:ProcessTypeCode>
+            <cer:ProcessComment>CO2 Emissions from Flare Stack</cer:ProcessComment>
+            <cer:ReportingPeriod>
+               <cer:ReportingPeriodTypeCode>A</cer:ReportingPeriodTypeCode>
+               <cer:EmissionOperatingTypeCode>R</cer:EmissionOperatingTypeCode>
+               <cer:SupplementalCalculationParameter>
+                  <cer:SupplementalCalculationParameterType>Heat Content</cer:SupplementalCalculationParameterType>
+                  <cer:SupplementalCalculationParameterValue>502.50000</cer:SupplementalCalculationParameterValue>
+                  <cer:SupplementalCalculationParameterNumeratorUnitofMeasureCode>Btu / Standard cubic foot</cer:SupplementalCalculationParameterNumeratorUnitofMeasureCode>
+               </cer:SupplementalCalculationParameter>
+               <cer:SupplementalCalculationParameter>
+                  <cer:SupplementalCalculationParameterType>Oxidation Factor</cer:SupplementalCalculationParameterType>
+                  <cer:SupplementalCalculationParameterValue>1.00000</cer:SupplementalCalculationParameterValue>
+               </cer:SupplementalCalculationParameter>
+               <cer:ReportingPeriodEmissions>
+                  <cer:PollutantCode>CO2</cer:PollutantCode>
+                  <cer:TotalEmissions>24633046.4920</cer:TotalEmissions>
+                  <cer:EmissionsUnitofMeasureCode>metric tons</cer:EmissionsUnitofMeasureCode>
+                  <cer:EmissionFactor>52.07000</cer:EmissionFactor>
+                  <cer:EmissionFactorText>kg CO2 / MMBtu</cer:EmissionFactorText>
+                  <cer:EmissionCalculationMethodCode>Calculated</cer:EmissionCalculationMethodCode>
+                  <cer:CalculationMethodAccuracyAssessmentCode>Tier C</cer:CalculationMethodAccuracyAssessmentCode>
+                  <cer:CO2Equivalent>
+                     <cer:CO2e>24633046.490000</cer:CO2e>
+                     <cer:CO2eUnitofMeasureCode>metric tons</cer:CO2eUnitofMeasureCode>
+                     <cer:CO2ConversionFactor>[QUANTITY]</cer:CO2ConversionFactor>
+                     <cer:CO2ConversionFactorSource>IPCC  1996</cer:CO2ConversionFactorSource>
+                  </cer:CO2Equivalent>
+               </cer:ReportingPeriodEmissions>
+            </cer:ReportingPeriod>
+         </cer:UnitEmissionsProcess>
+      </cer:EmissionsUnit>
+      <cer:EmissionsUnit>
+         <cer:Scope>Biomass Combustion (Stationary)</cer:Scope>
+         <cer:UnitDescription>Unit B:  Waste Gas Flare (CO2)</cer:UnitDescription>
+         <cer:UnitTypeCode>300</cer:UnitTypeCode>
+         <cer:UnitStatusCodeYear>2008</cer:UnitStatusCodeYear>
+         <cer:UnitIdentification>
+			 <cer:Identifier>3</cer:Identifier>
+			 <cer:ProgramSystemCode>TCR</cer:ProgramSystemCode>
+		 </cer:UnitIdentification>
+         <cer:UnitEmissionsProcess>
+            <cer:ProcessTypeCode>(Unknown) Industrial Sector</cer:ProcessTypeCode>
+            <cer:ProcessComment>Emissions from Flare Stack</cer:ProcessComment>
+            <cer:ReportingPeriod>
+               <cer:ReportingPeriodTypeCode>A</cer:ReportingPeriodTypeCode>
+               <cer:EmissionOperatingTypeCode>R</cer:EmissionOperatingTypeCode>
+               <cer:SupplementalCalculationParameter>
+                  <cer:SupplementalCalculationParameterType>Heat Content</cer:SupplementalCalculationParameterType>
+                  <cer:SupplementalCalculationParameterValue>502.50000</cer:SupplementalCalculationParameterValue>
+                  <cer:SupplementalCalculationParameterNumeratorUnitofMeasureCode>Btu / Standard cubic foot</cer:SupplementalCalculationParameterNumeratorUnitofMeasureCode>
+               </cer:SupplementalCalculationParameter>
+               <cer:ReportingPeriodEmissions>
+                  <cer:PollutantCode>CH4</cer:PollutantCode>
+                  <cer:TotalEmissions>.237720</cer:TotalEmissions>
+                  <cer:EmissionsUnitofMeasureCode>metric tons</cer:EmissionsUnitofMeasureCode>
+                  <cer:EmissionFactor>1.00000</cer:EmissionFactor>
+                  <cer:EmissionFactorText>g CH4 / MMBtu</cer:EmissionFactorText>
+                  <cer:EmissionCalculationMethodCode>Calculated</cer:EmissionCalculationMethodCode>
+                  <cer:CalculationMethodAccuracyAssessmentCode>Tier B</cer:CalculationMethodAccuracyAssessmentCode>
+                  <cer:CO2Equivalent>
+                     <cer:CO2e>4.990000</cer:CO2e>
+                     <cer:CO2eUnitofMeasureCode>metric tons</cer:CO2eUnitofMeasureCode>
+                     <cer:CO2ConversionFactor>[QUANTITY]*21</cer:CO2ConversionFactor>
+                     <cer:CO2ConversionFactorSource>IPCC  1996</cer:CO2ConversionFactorSource>
+                  </cer:CO2Equivalent>
+               </cer:ReportingPeriodEmissions>
+               <cer:ReportingPeriodEmissions>
+                  <cer:PollutantCode>N2O</cer:PollutantCode>
+                  <cer:TotalEmissions>.023772</cer:TotalEmissions>
+                  <cer:EmissionsUnitofMeasureCode>metric tons</cer:EmissionsUnitofMeasureCode>
+                  <cer:EmissionFactor>0.100000</cer:EmissionFactor>
+                  <cer:EmissionFactorText>g N2O / MMBtu</cer:EmissionFactorText>
+                  <cer:EmissionCalculationMethodCode>Calculated</cer:EmissionCalculationMethodCode>
+                  <cer:CalculationMethodAccuracyAssessmentCode>Tier B</cer:CalculationMethodAccuracyAssessmentCode>
+                  <cer:CO2Equivalent>
+                     <cer:CO2e>7.370000</cer:CO2e>
+                     <cer:CO2eUnitofMeasureCode>metric tons</cer:CO2eUnitofMeasureCode>
+                     <cer:CO2ConversionFactor>[QUANTITY]*310</cer:CO2ConversionFactor>
+                     <cer:CO2ConversionFactorSource>IPCC  1996</cer:CO2ConversionFactorSource>
+                  </cer:CO2Equivalent>
+               </cer:ReportingPeriodEmissions>
+            </cer:ReportingPeriod>
+         </cer:UnitEmissionsProcess>
+      </cer:EmissionsUnit>
+   </cer:FacilitySite>
+   <cer:FacilitySite>
+      <cer:FacilitySiteName>Petersburg Generation Station</cer:FacilitySiteName>
+      <cer:FacilitySiteDescription>Electricity generation facility with two boilers</cer:FacilitySiteDescription>
+      <cer:FacilitySiteStatusCodeYear>2008</cer:FacilitySiteStatusCodeYear>
+      <cer:FacilityNAICS>
+         <cer:NAICSCode>2211</cer:NAICSCode>
+      </cer:FacilityNAICS>
+      <cer:FacilityIdentification>
+         <cer:FacilitySiteIdentifier>F-2422</cer:FacilitySiteIdentifier>
+         <cer:ProgramSystemCode>TCR</cer:ProgramSystemCode>
+      </cer:FacilityIdentification>
+      <cer:FacilitySiteAddress>
+         <cer:LocationAddressText>6925 North State Road 57</cer:LocationAddressText>
+         <cer:LocalityName>Petersburg</cer:LocalityName>
+         <cer:LocationAddressStateCode>IN</cer:LocationAddressStateCode>
+         <cer:LocationAddressPostalCode>47567</cer:LocationAddressPostalCode>
+      </cer:FacilitySiteAddress>
+      <cer:EmissionsUnit>
+         <cer:Scope>Scope 1 - Combustion (Stationary)</cer:Scope>
+         <cer:UnitDescription>Unit 1: Tangential Boiler</cer:UnitDescription>
+         <cer:UnitStatusCodeYear>2008</cer:UnitStatusCodeYear>
+         <cer:UnitIdentification>
+			 <cer:Identifier>4</cer:Identifier>
+			 <cer:ProgramSystemCode>TCR</cer:ProgramSystemCode>
+		 </cer:UnitIdentification>
+         <cer:UnitEmissionsProcess>
+            <cer:ProcessTypeCode>(Unknown) Electric Power Sector</cer:ProcessTypeCode>
+            <cer:ProcessComment>Tangential Boiler</cer:ProcessComment>
+            <cer:ReportingPeriod>
+               <cer:ReportingPeriodTypeCode>A</cer:ReportingPeriodTypeCode>
+               <cer:EmissionOperatingTypeCode>R</cer:EmissionOperatingTypeCode>
+               <cer:SupplementalCalculationParameter>
+                  <cer:SupplementalCalculationParameterType>Heat Content</cer:SupplementalCalculationParameterType>
+                  <cer:SupplementalCalculationParameterValue>16.00000</cer:SupplementalCalculationParameterValue>
+                  <cer:SupplementalCalculationParameterNumeratorUnitofMeasureCode>MMBTU/ Short ton</cer:SupplementalCalculationParameterNumeratorUnitofMeasureCode>
+               </cer:SupplementalCalculationParameter>
+               <cer:SupplementalCalculationParameter>
+                  <cer:SupplementalCalculationParameterType>Oxidation Factor</cer:SupplementalCalculationParameterType>
+                  <cer:SupplementalCalculationParameterValue>1.000</cer:SupplementalCalculationParameterValue>
+               </cer:SupplementalCalculationParameter>
+               <cer:ReportingPeriodEmissions>
+                  <cer:PollutantCode>CO2</cer:PollutantCode>
+                  <cer:TotalEmissions>2276801.787040</cer:TotalEmissions>
+                  <cer:EmissionsUnitofMeasureCode>metric tons</cer:EmissionsUnitofMeasureCode>
+                  <cer:EmissionFactor>96.43000</cer:EmissionFactor>
+                  <cer:EmissionFactorText>kg CO2 / MMBtu</cer:EmissionFactorText>
+                  <cer:EmissionCalculationMethodCode>Calculated</cer:EmissionCalculationMethodCode>
+                  <cer:CalculationMethodAccuracyAssessmentCode>Tier B</cer:CalculationMethodAccuracyAssessmentCode>
+                  <cer:CO2Equivalent>
+                     <cer:CO2e>2276801.790000</cer:CO2e>
+                     <cer:CO2eUnitofMeasureCode>metric tons</cer:CO2eUnitofMeasureCode>
+                     <cer:CO2ConversionFactor>[QUANTITY]</cer:CO2ConversionFactor>
+                     <cer:CO2ConversionFactorSource>IPCC  1996</cer:CO2ConversionFactorSource>
+                  </cer:CO2Equivalent>
+               </cer:ReportingPeriodEmissions>
+               <cer:ReportingPeriodEmissions>
+                  <cer:PollutantCode>CH4</cer:PollutantCode>
+                  <cer:TotalEmissions>23.610928</cer:TotalEmissions>
+                  <cer:EmissionsUnitofMeasureCode>metric tons</cer:EmissionsUnitofMeasureCode>
+                  <cer:EmissionFactor>1.00000</cer:EmissionFactor>
+                  <cer:EmissionFactorText>g CH4 / MMBtu</cer:EmissionFactorText>
+                  <cer:EmissionCalculationMethodCode>Calculated</cer:EmissionCalculationMethodCode>
+                  <cer:CalculationMethodAccuracyAssessmentCode>Tier C</cer:CalculationMethodAccuracyAssessmentCode>
+                  <cer:CO2Equivalent>
+                     <cer:CO2e>495.830000</cer:CO2e>
+                     <cer:CO2eUnitofMeasureCode>metric tons</cer:CO2eUnitofMeasureCode>
+                     <cer:CO2ConversionFactor>[QUANTITY]*21</cer:CO2ConversionFactor>
+                     <cer:CO2ConversionFactorSource>IPCC  1996</cer:CO2ConversionFactorSource>
+                  </cer:CO2Equivalent>
+               </cer:ReportingPeriodEmissions>
+               <cer:ReportingPeriodEmissions>
+                  <cer:PollutantCode>N2O</cer:PollutantCode>
+                  <cer:TotalEmissions>37.777485</cer:TotalEmissions>
+                  <cer:EmissionsUnitofMeasureCode>metric tons</cer:EmissionsUnitofMeasureCode>
+                  <cer:EmissionFactor>1.60000</cer:EmissionFactor>
+                  <cer:EmissionFactorText>g N2O / MMBtu</cer:EmissionFactorText>
+                  <cer:EmissionCalculationMethodCode>Calculated</cer:EmissionCalculationMethodCode>
+                  <cer:CalculationMethodAccuracyAssessmentCode>Tier C</cer:CalculationMethodAccuracyAssessmentCode>
+                  <cer:CO2Equivalent>
+                     <cer:CO2e>11711.020000</cer:CO2e>
+                     <cer:CO2eUnitofMeasureCode>metric tons</cer:CO2eUnitofMeasureCode>
+                     <cer:CO2ConversionFactor>[QUANTITY]*310</cer:CO2ConversionFactor>
+                     <cer:CO2ConversionFactorSource>IPCC  1996</cer:CO2ConversionFactorSource>
+                  </cer:CO2Equivalent>
+               </cer:ReportingPeriodEmissions>
+            </cer:ReportingPeriod>
+         </cer:UnitEmissionsProcess>
+      </cer:EmissionsUnit>
+      <cer:EmissionsUnit>
+         <cer:Scope>Scope 1 - Combustion (Stationary)</cer:Scope>
+         <cer:UnitDescription>Unit 2: Tangential Boiler</cer:UnitDescription>
+         <cer:UnitStatusCodeYear>2008</cer:UnitStatusCodeYear>
+         <cer:UnitIdentification>
+			 <cer:Identifier>5</cer:Identifier>
+			 <cer:ProgramSystemCode>TCR</cer:ProgramSystemCode>
+		 </cer:UnitIdentification>
+         <cer:UnitEmissionsProcess>
+            <cer:ProcessTypeCode>(Unknown) Electric Power Sector</cer:ProcessTypeCode>
+            <cer:ProcessComment>Tangential Boiler</cer:ProcessComment>
+            <cer:ReportingPeriod>
+               <cer:ReportingPeriodTypeCode>A</cer:ReportingPeriodTypeCode>
+               <cer:EmissionOperatingTypeCode>R</cer:EmissionOperatingTypeCode>
+               <cer:SupplementalCalculationParameter>
+                  <cer:SupplementalCalculationParameterType>Heat Content</cer:SupplementalCalculationParameterType>
+                  <cer:SupplementalCalculationParameterValue>16.00000</cer:SupplementalCalculationParameterValue>
+                  <cer:SupplementalCalculationParameterNumeratorUnitofMeasureCode>MMBTU/ Short ton</cer:SupplementalCalculationParameterNumeratorUnitofMeasureCode>
+               </cer:SupplementalCalculationParameter>
+               <cer:SupplementalCalculationParameter>
+                  <cer:SupplementalCalculationParameterType>Oxidation Factor</cer:SupplementalCalculationParameterType>
+                  <cer:SupplementalCalculationParameterValue>1.000</cer:SupplementalCalculationParameterValue>
+               </cer:SupplementalCalculationParameter>
+               <cer:ReportingPeriodEmissions>
+                  <cer:PollutantCode>CO2</cer:PollutantCode>
+                  <cer:TotalEmissions>4082084.017280</cer:TotalEmissions>
+                  <cer:EmissionsUnitofMeasureCode>metric tons</cer:EmissionsUnitofMeasureCode>
+                  <cer:EmissionFactor>96.43000</cer:EmissionFactor>
+                  <cer:EmissionFactorText>kg CO2 / MMBtu</cer:EmissionFactorText>
+                  <cer:EmissionCalculationMethodCode>Calculated</cer:EmissionCalculationMethodCode>
+                  <cer:CalculationMethodAccuracyAssessmentCode>Tier B</cer:CalculationMethodAccuracyAssessmentCode>
+                  <cer:CO2Equivalent>
+                     <cer:CO2e>4082084.020000</cer:CO2e>
+                     <cer:CO2eUnitofMeasureCode>metric tons</cer:CO2eUnitofMeasureCode>
+                     <cer:CO2ConversionFactor>[QUANTITY]</cer:CO2ConversionFactor>
+                     <cer:CO2ConversionFactorSource>IPCC  1996</cer:CO2ConversionFactorSource>
+                  </cer:CO2Equivalent>
+               </cer:ReportingPeriodEmissions>
+               <cer:ReportingPeriodEmissions>
+                  <cer:PollutantCode>CH4</cer:PollutantCode>
+                  <cer:TotalEmissions>42.332096</cer:TotalEmissions>
+                  <cer:EmissionsUnitofMeasureCode>metric tons</cer:EmissionsUnitofMeasureCode>
+                  <cer:EmissionFactor>1.00000</cer:EmissionFactor>
+                  <cer:EmissionFactorText>g CH4 / MMBtu</cer:EmissionFactorText>
+                  <cer:EmissionCalculationMethodCode>Calculated</cer:EmissionCalculationMethodCode>
+                  <cer:CalculationMethodAccuracyAssessmentCode>Tier C</cer:CalculationMethodAccuracyAssessmentCode>
+                  <cer:CO2Equivalent>
+                     <cer:CO2e>888.970000</cer:CO2e>
+                     <cer:CO2eUnitofMeasureCode>metric tons</cer:CO2eUnitofMeasureCode>
+                     <cer:CO2ConversionFactor>[QUANTITY]*21</cer:CO2ConversionFactor>
+                     <cer:CO2ConversionFactorSource>IPCC  1996</cer:CO2ConversionFactorSource>
+                  </cer:CO2Equivalent>
+               </cer:ReportingPeriodEmissions>
+               <cer:ReportingPeriodEmissions>
+                  <cer:PollutantCode>N2O</cer:PollutantCode>
+                  <cer:TotalEmissions>67.731354</cer:TotalEmissions>
+                  <cer:EmissionsUnitofMeasureCode>metric tons</cer:EmissionsUnitofMeasureCode>
+                  <cer:EmissionFactor>1.60000</cer:EmissionFactor>
+                  <cer:EmissionFactorText>g N2O / MMBtu</cer:EmissionFactorText>
+                  <cer:EmissionCalculationMethodCode>Calculated</cer:EmissionCalculationMethodCode>
+                  <cer:CalculationMethodAccuracyAssessmentCode>Tier C</cer:CalculationMethodAccuracyAssessmentCode>
+                  <cer:CO2Equivalent>
+                     <cer:CO2e>20996.720000</cer:CO2e>
+                     <cer:CO2eUnitofMeasureCode>metric tons</cer:CO2eUnitofMeasureCode>
+                     <cer:CO2ConversionFactor>[QUANTITY]*310</cer:CO2ConversionFactor>
+                     <cer:CO2ConversionFactorSource>IPCC  1996</cer:CO2ConversionFactorSource>
+                  </cer:CO2Equivalent>
+               </cer:ReportingPeriodEmissions>
+            </cer:ReportingPeriod>
+         </cer:UnitEmissionsProcess>
+      </cer:EmissionsUnit>
+   </cer:FacilitySite>
+   <cer:FacilitySite>
+      <cer:FacilitySiteName>Elkhart County, IN. Mobile Fleet</cer:FacilitySiteName>
+      <cer:FacilitySiteDescription>Mobile fleet for Elkhart County</cer:FacilitySiteDescription>
+      <cer:FacilitySiteStatusCodeYear>2008</cer:FacilitySiteStatusCodeYear>
+      <cer:FacilityNAICS>
+         <cer:NAICSCode>485999</cer:NAICSCode>
+      </cer:FacilityNAICS>
+      <cer:FacilityIdentification>
+         <cer:FacilitySiteIdentifier>F-2423</cer:FacilitySiteIdentifier>
+         <cer:ProgramSystemCode>TCR</cer:ProgramSystemCode>
+      </cer:FacilityIdentification>
+      <cer:FacilitySiteAddress>
+         <cer:LocationAddressStateCode>IN</cer:LocationAddressStateCode>
+      </cer:FacilitySiteAddress>
+      <cer:EmissionsUnit>
+         <cer:Scope>Scope 1 - Combustion (Mobile)</cer:Scope>
+         <cer:UnitDescription>Light-duty gasoline trucks</cer:UnitDescription>
+         <cer:UnitStatusCodeYear>2008</cer:UnitStatusCodeYear>
+         <cer:UnitIdentification>
+			 <cer:Identifier>6</cer:Identifier>
+			 <cer:ProgramSystemCode>TCR</cer:ProgramSystemCode>
+		 </cer:UnitIdentification>
+         <cer:UnitEmissionsProcess>
+            <cer:ProcessTypeCode>Light Trucks (Moderate)</cer:ProcessTypeCode>
+            <cer:ReportingPeriod>
+               <cer:ReportingPeriodTypeCode>A</cer:ReportingPeriodTypeCode>
+               <cer:EmissionOperatingTypeCode>R</cer:EmissionOperatingTypeCode>
+               <cer:SupplementalCalculationParameter>
+                  <cer:SupplementalCalculationParameterType>Heat Content</cer:SupplementalCalculationParameterType>
+                  <cer:SupplementalCalculationParameterValue>5.82500</cer:SupplementalCalculationParameterValue>
+                  <cer:SupplementalCalculationParameterNumeratorUnitofMeasureCode>MMBTU / barrel</cer:SupplementalCalculationParameterNumeratorUnitofMeasureCode>
+               </cer:SupplementalCalculationParameter>
+               <cer:SupplementalCalculationParameter>
+                  <cer:SupplementalCalculationParameterType>Oxidation Factor</cer:SupplementalCalculationParameterType>
+                  <cer:SupplementalCalculationParameterValue>1.00000</cer:SupplementalCalculationParameterValue>
+               </cer:SupplementalCalculationParameter>
+               <cer:ReportingPeriodEmissions>
+                  <cer:PollutantCode>CO2</cer:PollutantCode>
+                  <cer:TotalEmissions>10150.000000</cer:TotalEmissions>
+                  <cer:EmissionsUnitofMeasureCode>metric tons</cer:EmissionsUnitofMeasureCode>
+                  <cer:EmissionFactor>10.15000</cer:EmissionFactor>
+                  <cer:EmissionFactorText>kg CO2 / gallon</cer:EmissionFactorText>
+                  <cer:EmissionCalculationMethodCode>Calculated</cer:EmissionCalculationMethodCode>
+                  <cer:CalculationMethodAccuracyAssessmentCode>Tier B</cer:CalculationMethodAccuracyAssessmentCode>
+                  <cer:CO2Equivalent>
+                     <cer:CO2e>10150.000000</cer:CO2e>
+                     <cer:CO2eUnitofMeasureCode>metric tons</cer:CO2eUnitofMeasureCode>
+                     <cer:CO2ConversionFactor>[QUANTITY]</cer:CO2ConversionFactor>
+                     <cer:CO2ConversionFactorSource>IPCC  1996</cer:CO2ConversionFactorSource>
+                  </cer:CO2Equivalent>
+               </cer:ReportingPeriodEmissions>
+               <cer:ReportingPeriodEmissions>
+                  <cer:PollutantCode>CH4</cer:PollutantCode>
+                  <cer:TotalEmissions>.016920</cer:TotalEmissions>
+                  <cer:EmissionsUnitofMeasureCode>metric tons</cer:EmissionsUnitofMeasureCode>
+                  <cer:EmissionFactor>.00090</cer:EmissionFactor>
+                  <cer:EmissionFactorText>g CH4 / mile</cer:EmissionFactorText>
+                  <cer:EmissionCalculationMethodCode>Calculated</cer:EmissionCalculationMethodCode>
+                  <cer:CalculationMethodAccuracyAssessmentCode>Tier A</cer:CalculationMethodAccuracyAssessmentCode>
+                  <cer:CO2Equivalent>
+                     <cer:CO2e>0.360000</cer:CO2e>
+                     <cer:CO2eUnitofMeasureCode>metric tons</cer:CO2eUnitofMeasureCode>
+                     <cer:CO2ConversionFactor>[QUANTITY]*21</cer:CO2ConversionFactor>
+                     <cer:CO2ConversionFactorSource>IPCC  1996</cer:CO2ConversionFactorSource>
+                  </cer:CO2Equivalent>
+               </cer:ReportingPeriodEmissions>
+               <cer:ReportingPeriodEmissions>
+                  <cer:PollutantCode>N2O</cer:PollutantCode>
+                  <cer:TotalEmissions>.026320</cer:TotalEmissions>
+                  <cer:EmissionsUnitofMeasureCode>metric tons</cer:EmissionsUnitofMeasureCode>
+                  <cer:EmissionFactor>.00140</cer:EmissionFactor>
+                  <cer:EmissionFactorText>g N2O / mile</cer:EmissionFactorText>
+                  <cer:EmissionCalculationMethodCode>Calculated</cer:EmissionCalculationMethodCode>
+                  <cer:CalculationMethodAccuracyAssessmentCode>Tier A</cer:CalculationMethodAccuracyAssessmentCode>
+                  <cer:CO2Equivalent>
+                     <cer:CO2e>0.8160000</cer:CO2e>
+                     <cer:CO2eUnitofMeasureCode>metric tons</cer:CO2eUnitofMeasureCode>
+                     <cer:CO2ConversionFactor>[QUANTITY]*310</cer:CO2ConversionFactor>
+                     <cer:CO2ConversionFactorSource>IPCC  1996</cer:CO2ConversionFactorSource>
+                  </cer:CO2Equivalent>
+               </cer:ReportingPeriodEmissions>
+            </cer:ReportingPeriod>
+         </cer:UnitEmissionsProcess>
+      </cer:EmissionsUnit>
+   </cer:FacilitySite>
+   <cer:FacilitySite>
+      <cer:FacilitySiteName>General Consulting Company: Florida Offices</cer:FacilitySiteName>
+      <cer:FacilitySiteDescription>Aggregate of all professional office buildings operated by General Consulting Company in Florida</cer:FacilitySiteDescription>
+      <cer:FacilitySiteStatusCodeYear>2008</cer:FacilitySiteStatusCodeYear>
+      <cer:FacilityNAICS>
+         <cer:NAICSCode>541</cer:NAICSCode>
+      </cer:FacilityNAICS>
+      <cer:FacilityIdentification>
+         <cer:FacilitySiteIdentifier>F-2425</cer:FacilitySiteIdentifier>
+         <cer:ProgramSystemCode>TCR</cer:ProgramSystemCode>
+      </cer:FacilityIdentification>
+      <cer:FacilitySiteAddress>
+         <cer:LocationAddressStateCode>FL</cer:LocationAddressStateCode>
+      </cer:FacilitySiteAddress>
+      <cer:FacilitySiteAttachedFile>
+         <cer:AttachmentFileName>TEST DOCUMENT</cer:AttachmentFileName>
+         <cer:AttachmentFileDescription>Verification Document</cer:AttachmentFileDescription>
+         <cer:AttachmentFileContentTypeCode>DOC</cer:AttachmentFileContentTypeCode>
+      </cer:FacilitySiteAttachedFile>
+      <cer:EmissionsUnit>
+         <cer:Scope>Scope 2 - Indirect</cer:Scope>
+         <cer:UnitDescription>Electricity Use</cer:UnitDescription>
+         <cer:UnitStatusCodeYear>2008</cer:UnitStatusCodeYear>
+         <cer:UnitIdentification>
+			 <cer:Identifier>7</cer:Identifier>
+			 <cer:ProgramSystemCode>TCR</cer:ProgramSystemCode>
+		 </cer:UnitIdentification>
+         <cer:UnitEmissionsProcess>
+            <cer:ProcessTypeCode>Use Of Purchased Electricity</cer:ProcessTypeCode>
+            <cer:ReportingPeriod>
+               <cer:ReportingPeriodTypeCode>A</cer:ReportingPeriodTypeCode>
+               <cer:EmissionOperatingTypeCode>R</cer:EmissionOperatingTypeCode>
+               <cer:ReportingPeriodEmissions>
+                  <cer:PollutantCode>CO2</cer:PollutantCode>
+                  <cer:TotalEmissions>945403.860765</cer:TotalEmissions>
+                  <cer:EmissionsUnitofMeasureCode>metric tons</cer:EmissionsUnitofMeasureCode>
+                  <cer:EmissionFactor>1327.66000</cer:EmissionFactor>
+                  <cer:EmissionFactorText>lbs CO2 / MWh</cer:EmissionFactorText>
+                  <cer:EmissionCalculationMethodCode>Calculated</cer:EmissionCalculationMethodCode>
+                  <cer:CalculationMethodAccuracyAssessmentCode>Tier C</cer:CalculationMethodAccuracyAssessmentCode>
+                  <cer:CO2Equivalent>
+                     <cer:CO2e>945403.860000</cer:CO2e>
+                     <cer:CO2eUnitofMeasureCode>metric tons</cer:CO2eUnitofMeasureCode>
+                     <cer:CO2ConversionFactor>[QUANTITY]</cer:CO2ConversionFactor>
+                     <cer:CO2ConversionFactorSource>IPCC  1996</cer:CO2ConversionFactorSource>
+                  </cer:CO2Equivalent>
+               </cer:ReportingPeriodEmissions>
+               <cer:ReportingPeriodEmissions>
+                  <cer:PollutantCode>CH4</cer:PollutantCode>
+                  <cer:TotalEmissions>38.452472</cer:TotalEmissions>
+                  <cer:EmissionsUnitofMeasureCode>metric tons</cer:EmissionsUnitofMeasureCode>
+                  <cer:EmissionFactor>0.05400</cer:EmissionFactor>
+                  <cer:EmissionFactorText>lbs CH4 / MWh</cer:EmissionFactorText>
+                  <cer:EmissionCalculationMethodCode>Calculated</cer:EmissionCalculationMethodCode>
+                  <cer:CalculationMethodAccuracyAssessmentCode>Tier C</cer:CalculationMethodAccuracyAssessmentCode>
+                  <cer:CO2Equivalent>
+                     <cer:CO2e>807.500000</cer:CO2e>
+                     <cer:CO2eUnitofMeasureCode>metric tons</cer:CO2eUnitofMeasureCode>
+                     <cer:CO2ConversionFactor>[QUANTITY]*21</cer:CO2ConversionFactor>
+                     <cer:CO2ConversionFactorSource>IPCC  1996</cer:CO2ConversionFactorSource>
+                  </cer:CO2Equivalent>
+               </cer:ReportingPeriodEmissions>
+               <cer:ReportingPeriodEmissions>
+                  <cer:PollutantCode>N2O</cer:PollutantCode>
+                  <cer:TotalEmissions>11.393325</cer:TotalEmissions>
+                  <cer:EmissionsUnitofMeasureCode>metric tons</cer:EmissionsUnitofMeasureCode>
+                  <cer:EmissionFactor>0.01600</cer:EmissionFactor>
+                  <cer:EmissionFactorText>lbs N2O / MWh</cer:EmissionFactorText>
+                  <cer:EmissionCalculationMethodCode>Calculated</cer:EmissionCalculationMethodCode>
+                  <cer:CalculationMethodAccuracyAssessmentCode>Tier C</cer:CalculationMethodAccuracyAssessmentCode>
+                  <cer:CO2Equivalent>
+                     <cer:CO2e>3531.930000</cer:CO2e>
+                     <cer:CO2eUnitofMeasureCode>metric tons</cer:CO2eUnitofMeasureCode>
+                     <cer:CO2ConversionFactor>[QUANTITY]*310</cer:CO2ConversionFactor>
+                     <cer:CO2ConversionFactorSource>IPCC  1996</cer:CO2ConversionFactorSource>
+                  </cer:CO2Equivalent>
+               </cer:ReportingPeriodEmissions>
+            </cer:ReportingPeriod>
+         </cer:UnitEmissionsProcess>
+      </cer:EmissionsUnit>
+   </cer:FacilitySite>
+   <cer:FacilitySite>
+      <cer:FacilitySiteName>Charlottesville Cement</cer:FacilitySiteName>
+      <cer:FacilitySiteDescription>Cement plant located near Charlottesville, VA.</cer:FacilitySiteDescription>
+      <cer:FacilityNAICS>
+         <cer:NAICSCode>32731</cer:NAICSCode>
+      </cer:FacilityNAICS>
+      <cer:FacilityIdentification>
+         <cer:FacilitySiteIdentifier>F-2424</cer:FacilitySiteIdentifier>
+         <cer:ProgramSystemCode>TCR</cer:ProgramSystemCode>
+      </cer:FacilityIdentification>
+      <cer:FacilitySiteAddress>
+         <cer:LocationAddressText>5698 Jarmans Gap Road</cer:LocationAddressText>
+         <cer:LocalityName>Crozet</cer:LocalityName>
+         <cer:LocationAddressStateCode>VA</cer:LocationAddressStateCode>
+         <cer:LocationAddressPostalCode>22932</cer:LocationAddressPostalCode>
+      </cer:FacilitySiteAddress>
+      <cer:EmissionsUnit>
+         <cer:Scope>Scope 1 - Process</cer:Scope>
+         <cer:UnitDescription>Cement Process 1 (CO2 from Clinker)</cer:UnitDescription>
+         <cer:UnitIdentification>
+			 <cer:Identifier>8</cer:Identifier>
+			 <cer:ProgramSystemCode>TCR</cer:ProgramSystemCode>
+		 </cer:UnitIdentification>
+         <cer:UnitEmissionsProcess>
+            <cer:ProcessTypeCode>Cement Production (Clinker Method: Clinker)</cer:ProcessTypeCode>
+            <cer:ReportingPeriod>
+               <cer:ReportingPeriodTypeCode>A</cer:ReportingPeriodTypeCode>
+               <cer:EmissionOperatingTypeCode>R</cer:EmissionOperatingTypeCode>
+               <cer:ReportingPeriodEmissions>
+                  <cer:PollutantCode>CO2</cer:PollutantCode>
+                  <cer:TotalEmissions>411383.700000</cer:TotalEmissions>
+                  <cer:EmissionsUnitofMeasureCode>metric tons</cer:EmissionsUnitofMeasureCode>
+                  <cer:EmissionFactor>525.00000</cer:EmissionFactor>
+                  <cer:EmissionFactorText>kg CO2 / metric ton Clinker</cer:EmissionFactorText>
+                  <cer:EmissionCalculationMethodCode>Calculated</cer:EmissionCalculationMethodCode>
+                  <cer:CalculationMethodAccuracyAssessmentCode>Tier B</cer:CalculationMethodAccuracyAssessmentCode>
+                  <cer:CO2Equivalent>
+                     <cer:CO2e>411383.700000</cer:CO2e>
+                     <cer:CO2eUnitofMeasureCode>metric tons</cer:CO2eUnitofMeasureCode>
+                     <cer:CO2ConversionFactor>[QUANTITY]</cer:CO2ConversionFactor>
+                     <cer:CO2ConversionFactorSource>IPCC  1996</cer:CO2ConversionFactorSource>
+                  </cer:CO2Equivalent>
+               </cer:ReportingPeriodEmissions>
+            </cer:ReportingPeriod>
+         </cer:UnitEmissionsProcess>
+      </cer:EmissionsUnit>
+      <cer:EmissionsUnit>
+         <cer:Scope>Scope 1 - Process</cer:Scope>
+         <cer:UnitDescription>Cement Process 2 (CO2 from CKD)</cer:UnitDescription>
+         <cer:UnitIdentification>
+			 <cer:Identifier>9</cer:Identifier>
+			 <cer:ProgramSystemCode>TCR</cer:ProgramSystemCode>
+		 </cer:UnitIdentification>
+         <cer:UnitEmissionsProcess>
+            <cer:ProcessTypeCode>Cement Production (Clinker Method: CKD)</cer:ProcessTypeCode>
+            <cer:ReportingPeriod>
+               <cer:ReportingPeriodTypeCode>A</cer:ReportingPeriodTypeCode>
+               <cer:EmissionOperatingTypeCode>R</cer:EmissionOperatingTypeCode>
+               <cer:ReportingPeriodEmissions>
+                  <cer:PollutantCode>CO2</cer:PollutantCode>
+                  <cer:TotalEmissions>517824.300000</cer:TotalEmissions>
+                  <cer:EmissionsUnitofMeasureCode>metric tons</cer:EmissionsUnitofMeasureCode>
+                  <cer:EmissionFactor>525.00000</cer:EmissionFactor>
+                  <cer:EmissionFactorText>kg CO2/ metric ton CKD</cer:EmissionFactorText>
+                  <cer:EmissionCalculationMethodCode>Calculated</cer:EmissionCalculationMethodCode>
+                  <cer:CalculationMethodAccuracyAssessmentCode>Tier B</cer:CalculationMethodAccuracyAssessmentCode>
+                  <cer:CO2Equivalent>
+                     <cer:CO2e>517824.300000</cer:CO2e>
+                     <cer:CO2eUnitofMeasureCode>metric tons</cer:CO2eUnitofMeasureCode>
+                     <cer:CO2ConversionFactor>[QUANTITY]</cer:CO2ConversionFactor>
+                     <cer:CO2ConversionFactorSource>IPCC  1996</cer:CO2ConversionFactorSource>
+                  </cer:CO2Equivalent>
+               </cer:ReportingPeriodEmissions>
+            </cer:ReportingPeriod>
+         </cer:UnitEmissionsProcess>
+      </cer:EmissionsUnit>
+      <cer:EmissionsUnit>
+         <cer:Scope>Scope 1 - Process</cer:Scope>
+         <cer:UnitDescription>Cement Process 3 (CO2 from Non-Carbonate Carbon)</cer:UnitDescription>
+         <cer:UnitStatusCodeYear>2008</cer:UnitStatusCodeYear>
+         <cer:UnitIdentification>
+			 <cer:Identifier>10</cer:Identifier>
+			 <cer:ProgramSystemCode>TCR</cer:ProgramSystemCode>
+		 </cer:UnitIdentification>
+         <cer:UnitEmissionsProcess>
+            <cer:ProcessTypeCode>Cement Production (Clinker Method: Non-Carbonate Carbon)</cer:ProcessTypeCode>
+            <cer:ReportingPeriod>
+               <cer:ReportingPeriodTypeCode>A</cer:ReportingPeriodTypeCode>
+               <cer:EmissionOperatingTypeCode>R</cer:EmissionOperatingTypeCode>
+               <cer:ReportingPeriodEmissions>
+                  <cer:PollutantCode>CO2</cer:PollutantCode>
+                  <cer:TotalEmissions>4677.924000</cer:TotalEmissions>
+                  <cer:EmissionsUnitofMeasureCode>metric tons</cer:EmissionsUnitofMeasureCode>
+                  <cer:EmissionFactor>0.00200</cer:EmissionFactor>
+                  <cer:EmissionFactorText>kg CO2/ metric ton CKD</cer:EmissionFactorText>
+                  <cer:EmissionCalculationMethodCode>Calculated</cer:EmissionCalculationMethodCode>
+                  <cer:CalculationMethodAccuracyAssessmentCode>Tier B</cer:CalculationMethodAccuracyAssessmentCode>
+                  <cer:CO2Equivalent>
+                     <cer:CO2e>4677.920000</cer:CO2e>
+                     <cer:CO2eUnitofMeasureCode>metric tons</cer:CO2eUnitofMeasureCode>
+                     <cer:CO2ConversionFactor>[QUANTITY]</cer:CO2ConversionFactor>
+                     <cer:CO2ConversionFactorSource>IPCC  1996</cer:CO2ConversionFactorSource>
+                  </cer:CO2Equivalent>
+               </cer:ReportingPeriodEmissions>
+            </cer:ReportingPeriod>
+         </cer:UnitEmissionsProcess>
+      </cer:EmissionsUnit>
+   </cer:FacilitySite>
+   <cer:QualityFinding>
+	  <cer:QualityIdentifier>5987</cer:QualityIdentifier>
+      <cer:ProgramSystemCode>TCR</cer:ProgramSystemCode>
+      <cer:QualityStatusCode>APPROVED</cer:QualityStatusCode>
+      <cer:QualityLevelofAssuranceCode>Reasonable Level of Assurance</cer:QualityLevelofAssuranceCode>
+      <cer:QualityDeterminationDate>2008-05-23</cer:QualityDeterminationDate>
+   </cer:QualityFinding>
+</cer:CERS>

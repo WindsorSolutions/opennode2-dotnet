@@ -58,9 +58,11 @@
     <Compile Include="IDbConnectionFactory.cs" />
     <Compile Include="IDocumentManager.cs" />
     <Compile Include="IFlowManager.cs" />
+    <Compile Include="IHeaderDocument2Helper.cs" />
     <Compile Include="IHeaderDocumentHelper.cs" />
     <Compile Include="Implementations\CompressionHelper.cs" />
     <Compile Include="Implementations\CryptographyProvider.cs" />
+    <Compile Include="Implementations\HeaderDocument2Helper.cs" />
     <Compile Include="Implementations\HeaderDocumentHelper.cs" />
     <Compile Include="Implementations\HeaderDocumentHelperQualified.cs">
       <SubType>Code</SubType>
@@ -69,6 +71,7 @@
     <Compile Include="Implementations\HeaderIdentity_v11Qualified.cs">
       <SubType>code</SubType>
     </Compile>
+    <Compile Include="Implementations\HeaderIdentity_v20.cs" />
     <Compile Include="Implementations\SerializationHelper.cs" />
     <Compile Include="Implementations\XmlValidationHelper.cs" />
     <Compile Include="INAASManager.cs" />

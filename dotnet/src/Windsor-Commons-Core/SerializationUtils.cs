@@ -50,6 +50,17 @@ namespace Windsor.Commons.Core
     {
         #region ISerializationHelper Members
 
+        private readonly XmlSerializerNamespaces _unqualifiedNamespace;
+        private readonly XmlWriterSettings _omitXmlDeclarationWriterSettings;
+
+        public SerializationUtils()
+        {
+            _unqualifiedNamespace = new XmlSerializerNamespaces();
+            _unqualifiedNamespace.Add("", "");
+            _omitXmlDeclarationWriterSettings = new XmlWriterSettings();
+            _omitXmlDeclarationWriterSettings.OmitXmlDeclaration = true;
+        }
+
         /// <summary>
         /// Deserialize
         /// </summary>
@@ -61,39 +72,58 @@ namespace Windsor.Commons.Core
         {
             return Deserialize<T>(StringUtils.UTF8.GetBytes(xml));
         }
+        public T FromXml<T>(string xml)
+        {
+            return Deserialize<T>(xml, null);
+        }
 
-		/// <summary>
-		/// Deserialize
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="xml"></param>
-		/// <param name="unknownElementHandler"></param>
-		/// <returns></returns>
-		public T Deserialize<T>(byte[] bytes) {
-			return Deserialize<T>(bytes, null);
-		}
-		/// <summary>
-		/// Deserialize
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="xml"></param>
-		/// <param name="unknownElementHandler"></param>
-		/// <returns></returns>
-		public T Deserialize<T>(byte[] bytes, XmlElementEventHandler unknownElementHandler)
-		{
-			XmlSerializer serializer = new XmlSerializer(typeof(T));
-			serializer.UnknownElement += new XmlElementEventHandler(DefaultUnknownElementHandler);
+        /// <summary>
+        /// Deserialize
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="xml"></param>
+        /// <param name="unknownElementHandler"></param>
+        /// <returns></returns>
+        public T Deserialize<T>(byte[] bytes)
+        {
+            return Deserialize<T>(bytes, null);
+        }
+        /// <summary>
+        /// Deserialize
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="xml"></param>
+        /// <param name="unknownElementHandler"></param>
+        /// <returns></returns>
+        public T Deserialize<T>(byte[] bytes, XmlElementEventHandler unknownElementHandler)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(T));
+            serializer.UnknownElement += new XmlElementEventHandler(DefaultUnknownElementHandler);
 
-			if (unknownElementHandler != null)
-			{
-				serializer.UnknownElement += unknownElementHandler;
-			}
+            if (unknownElementHandler != null)
+            {
+                serializer.UnknownElement += unknownElementHandler;
+            }
 
-			using (XmlReader reader = XmlReader.Create(new MemoryStream(bytes)))
-			{
-				return (T)serializer.Deserialize(reader);
-			}
-		}
+            using (XmlReader reader = XmlReader.Create(new MemoryStream(bytes)))
+            {
+                return (T)serializer.Deserialize(reader);
+            }
+        }
+        /// <summary>
+        /// Deserialize
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="xml"></param>
+        /// <param name="unknownElementHandler"></param>
+        /// <returns></returns>
+        public T Deserialize<T>(XmlReader reader)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(T));
+            serializer.UnknownElement += new XmlElementEventHandler(DefaultUnknownElementHandler);
+
+            return (T)serializer.Deserialize(reader);
+        }
         /// <summary>
         /// Deserialize
         /// </summary>
@@ -127,8 +157,8 @@ namespace Windsor.Commons.Core
                 return (T)serializer.Deserialize(reader);
             }
         }
-		
-		/// <summary>
+
+        /// <summary>
         /// Default 
         /// </summary>
         /// <param name="sender"></param>
@@ -167,7 +197,7 @@ namespace Windsor.Commons.Core
         /// <param name="unknownElementHandler"></param>
         /// <param name="deleteAfterDeserialization"></param>
         /// <returns></returns>
-        public T Deserialize<T>(string sourceFile, XmlElementEventHandler unknownElementHandler, 
+        public T Deserialize<T>(string sourceFile, XmlElementEventHandler unknownElementHandler,
                                 bool deleteAfterDeserialization)
         {
 
@@ -183,13 +213,13 @@ namespace Windsor.Commons.Core
             {
                 if (deleteAfterDeserialization)
                 {
-                    T result = (T) serializer.Deserialize(reader);
+                    T result = (T)serializer.Deserialize(reader);
                     File.Delete(sourceFile);
                     return result;
                 }
                 else
                 {
-                    return (T) serializer.Deserialize(reader);
+                    return (T)serializer.Deserialize(reader);
                 }
             }
         }
@@ -241,10 +271,14 @@ namespace Windsor.Commons.Core
             {
                 return null;
             }
-
-            return new StreamReader(new MemoryStream(Serialize(obj))).ReadToEnd();
+            using (MemoryStream memStream = new MemoryStream(Serialize(obj)))
+            {
+                using (StreamReader reader = new StreamReader(memStream))
+                {
+                    return reader.ReadToEnd();
+                }
+            }
         }
-
 
 
         public string SerializeToBase64String(object obj)
@@ -309,6 +343,34 @@ namespace Windsor.Commons.Core
             byte[] buffer = Convert.FromBase64String(str);
             return BinaryDeserialize<T>(buffer);
         }
+        public string ToLiteXml<T>(T obj)
+        {
+            using (StringWriter stringWriter = new StringWriter())
+            {
+                using (XmlWriter xmlWriter = XmlWriter.Create(stringWriter, _omitXmlDeclarationWriterSettings))
+                {
+                    XmlSerializer serializer = new XmlSerializer(typeof(T));
+                    serializer.Serialize(xmlWriter, obj, _unqualifiedNamespace);
+                    string xmlText = stringWriter.ToString();
+                    return xmlText;
+                }
+            }
+        }
         #endregion
+    }
+    public class NamespaceSpecifiedXmlTextReader : XmlTextReader
+    {
+        public NamespaceSpecifiedXmlTextReader(string namespaceUrl, System.IO.TextReader reader) : base(reader)
+        { _namespaceUrl = namespaceUrl;  }
+        public NamespaceSpecifiedXmlTextReader(string namespaceUrl, Stream stream) : base(stream)
+        { _namespaceUrl = namespaceUrl;  }
+        public NamespaceSpecifiedXmlTextReader(string namespaceUrl, string filePath) : base(filePath)
+        { _namespaceUrl = namespaceUrl;  }
+
+        public override string NamespaceURI
+        {
+            get { return _namespaceUrl; }
+        }
+        private string _namespaceUrl;
     }
 }
