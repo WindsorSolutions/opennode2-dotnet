@@ -69,8 +69,11 @@ namespace Windsor.Commons.XsdOrm.Implementations
                     columnParamNames.Clear(); columnParamNames.Capacity = tableInfo.Columns.Count;
                     foreach (Column column in tableInfo.Columns)
                     {
-                        columnNames.Add(column.ColumnName);
-                        columnParamNames.Add(baseDao.DbProvider.CreateParameterName(column.ColumnName));
+                        if (!column.NoLoad)
+                        {
+                            columnNames.Add(column.ColumnName);
+                            columnParamNames.Add(baseDao.DbProvider.CreateParameterName(column.ColumnName));
+                        }
                     }
                     if (columnNames.Count > 0)
                     {

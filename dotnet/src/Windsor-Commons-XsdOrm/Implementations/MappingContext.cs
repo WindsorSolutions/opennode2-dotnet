@@ -241,6 +241,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 // Parse each mapping attribute associated with this class member
                 DbNotNullAttribute dbNotNullAttribute = null;
                 DbIndexableAttribute dbIndexableAttribute = null;
+                DbNoLoadAttribute dbNoLoadAttribute = null;
                 Column newColumn = null;
                 Relation newRelation = null;
                 SameTableElementInfo newSameTableElementInfo = null;
@@ -304,6 +305,10 @@ namespace Windsor.Commons.XsdOrm.Implementations
                                 else if (valueType == typeof(int))
                                 {
                                     columnAttribute.ColumnType = DbType.Int32;
+                                }
+                                else if (valueType == typeof(byte[]))
+                                {
+                                    columnAttribute.ColumnType = DbType.Binary;
                                 }
                                 else
                                 {
@@ -633,6 +638,12 @@ namespace Windsor.Commons.XsdOrm.Implementations
                         dbIndexableAttribute = indexableAttribute;
                         continue;
                     }
+                    DbNoLoadAttribute noLoadAttribute = mappingAttribute as DbNoLoadAttribute;
+                    if (noLoadAttribute != null)
+                    {
+                        dbNoLoadAttribute = noLoadAttribute;
+                        continue;
+                    }
                     CollectionUtils.Add(mappingAttribute, ref unrecognizedAttributes);
                 }
                 if (unrecognizedAttributes != null)
@@ -667,6 +678,18 @@ namespace Windsor.Commons.XsdOrm.Implementations
                     else
                     {
                         throw new MappingException("The member \"{0}\" of the class \"{1}\" has a DbIndexableAttribute attribute applied to it, but it is not a database column.",
+                                                   member.Name, objType.FullName);
+                    }
+                }
+                if (dbNoLoadAttribute != null)
+                {
+                    if (newColumn != null)
+                    {
+                        newColumn.NoLoad = true;
+                    }
+                    else
+                    {
+                        throw new MappingException("The member \"{0}\" of the class \"{1}\" has a DbNoLoadAttribute attribute applied to it, but it is not a database column.",
                                                    member.Name, objType.FullName);
                     }
                 }

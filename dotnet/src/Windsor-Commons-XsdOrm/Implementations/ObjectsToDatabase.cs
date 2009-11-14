@@ -290,9 +290,38 @@ namespace Windsor.Commons.XsdOrm.Implementations
                         }
                         return null;
                     });
+                    AddTableDescriptions(tables.Values, baseDao);
                     AddColumnDescriptions(descriptionColumns, mappingContext, baseDao);
                     return null;
                 });
+            }
+        }
+        protected virtual void AddTableDescriptions(IEnumerable<Table> tables, SpringBaseDao baseDao)
+        {
+            if (baseDao.IsOracleDatabase)
+            {
+                baseDao.AdoTemplate.ClassicAdoTemplate.Execute(delegate(IDbCommand dbCommand)
+                    {
+                        foreach (Table table in tables)
+                        {
+                            string tableDescription = "Schema element: " + table.TableRootType.Name;
+                            dbCommand.CommandType = CommandType.Text;
+                            dbCommand.CommandText =
+                               string.Format("COMMENT ON TABLE {0} IS '{1}'", table.TableName, tableDescription);
+                            dbCommand.ExecuteNonQuery();
+                        }
+                        return null;
+                    });
+            }
+            else
+            {
+                foreach (Table table in tables)
+                {
+                    string tableDescription = "Schema element: " + table.TableRootType.Name;
+                    baseDao.DoStoredProc("sp_addextendedproperty", "name;value;level0type;level0name;level1type;level1name",
+                                     "MS_Description", tableDescription, "SCHEMA", "dbo", "TABLE",
+                                     table.TableName);
+                }
             }
         }
         protected virtual void AddColumnDescriptions(IList<Column> columns, MappingContext mappingContext,
@@ -436,6 +465,10 @@ namespace Windsor.Commons.XsdOrm.Implementations
                         // Timestamp
                         return "TIMESTAMP";
                     }
+                    else if (column.ColumnSize == 0)
+                    {
+                        return baseDao.IsOracleDatabase ? "BLOB" : "VARBINARY(MAX)";
+                    }
                     else
                     {
                         throw new MappingException("Column \"{0}\" of table \"{1}\" has an invalid database data type: \"{2}\"",
@@ -504,11 +537,6 @@ namespace Windsor.Commons.XsdOrm.Implementations
                             parameter.Direction = ParameterDirection.Input;
                             parameter.Size = column.ColumnSize;
                             parameter.ParameterName = column.ColumnName;
-#if DEBUG
-                            if (column.ColumnType.Value == DbType.DateTime)
-                            {
-                            }
-#endif // DEBUG
                             parameter.Value =
                                 column.GetInsertColumnValue(objectToSave,
                                                             previousInsertColumnValues);

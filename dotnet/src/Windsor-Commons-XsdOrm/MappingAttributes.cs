@@ -830,6 +830,14 @@ namespace Windsor.Commons.XsdOrm
             return "Indexable";
         }
     }
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
+    public class DbNoLoadAttribute : MappingAttribute
+    {
+        public override string GetShortDescription()
+        {
+            return "NoLoad";
+        }
+    }
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Assembly)]
     public class ShortenNamesByRemovingVowelsFirstAttribute : MappingAttribute
     {

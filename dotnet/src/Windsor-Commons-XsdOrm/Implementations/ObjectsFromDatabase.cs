@@ -171,12 +171,6 @@ namespace Windsor.Commons.XsdOrm.Implementations
                     ObjectTableInfo tableInfo = objectPathInstance.TableInfo;
                     if (tableInfo != null)
                     {
-                        if (tableInfo.Columns.Count > reader.FieldCount)
-                        {
-                            throw new IndexOutOfRangeException(string.Format("The number of selected column values ({0}) is less than the expected number ({1}) for the object \"{2}\" and sql \"{3}\".",
-                                                                             reader.FieldCount.ToString(), tableInfo.Columns.Count.ToString(),
-                                                                             objectPath, objectPathInstance.SelectSql));
-                        }
                         if (objectToSet == null)
                         {
                             objectToSet = Activator.CreateInstance(objectType);
@@ -186,23 +180,32 @@ namespace Windsor.Commons.XsdOrm.Implementations
                         bool skip = false;
                         foreach (Column column in tableInfo.Columns)
                         {
-                            object value = reader.GetValue(i++);
-                            column.SetMemberValue(objectToSet, value);
-                            if ( column.IsPrimaryKey )
+                            if (!column.NoLoad)
                             {
-                                pk = value.ToString();
-                            }
-                            else if (column.IsForeignKey)
-                            {
-                                fk = value.ToString();
-                                if ((pkParentMap != null) && !pkParentMap.ContainsKey(fk))
+                                object value = reader.GetValue(i++);
+                                column.SetMemberValue(objectToSet, value);
+                                if (column.IsPrimaryKey)
                                 {
-                                    skip = true;
-                                    break;
+                                    pk = value.ToString();
+                                }
+                                else if (column.IsForeignKey)
+                                {
+                                    fk = value.ToString();
+                                    if ((pkParentMap != null) && !pkParentMap.ContainsKey(fk))
+                                    {
+                                        skip = true;
+                                        break;
+                                    }
                                 }
                             }
                         }
                         if (skip) continue;
+                        if (i != reader.FieldCount)
+                        {
+                            throw new IndexOutOfRangeException(string.Format("The number of selected column values ({0}) is less than the expected number ({1}) for the object \"{2}\" and sql \"{3}\".",
+                                                                             reader.FieldCount.ToString(), i.ToString(),
+                                                                             objectPath, objectPathInstance.SelectSql));
+                        }
                         if (fk == null)
                         {
                             // Object does not have fk, so set fk to pk

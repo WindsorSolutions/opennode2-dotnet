@@ -119,6 +119,11 @@ namespace Windsor.Commons.XsdOrm.Implementations
             get { return m_IsIndexable; }
             set { m_IsIndexable = value; }
         }
+        public bool NoLoad
+        {
+            get { return m_NoLoad; }
+            set { m_NoLoad = value; }
+        }
         public string IndexName
         {
             get { return m_IndexName; }
@@ -189,6 +194,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
         protected int m_ColumnSize;
         protected bool m_IsNullable;
         protected bool m_IsIndexable;
+        protected bool m_NoLoad;
         protected string m_IndexName;
         protected string m_ColumnDescription;
         protected bool m_IsDbBoolString;
@@ -238,7 +244,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
             object value = GetMemberValue(objectToSave);
             if (value == null)
             {
-                value = Guid.NewGuid().ToString();
+                value = StringUtils.CreateSequentialGuid();
                 SetMemberValue(objectToSave, value);
             }
             return value;

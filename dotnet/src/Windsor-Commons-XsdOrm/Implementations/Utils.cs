@@ -343,8 +343,9 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 case DbType.AnsiStringFixedLength:
                 case DbType.String:
                 case DbType.StringFixedLength:
-                case DbType.Binary:
                     return (dbSize > 0);
+                case DbType.Binary:
+                    return ((dbSize == 0) || (dbSize == 8));    // dbSize == 8 is Timestamp
                 default:
                     return (dbSize == 0);
             }
