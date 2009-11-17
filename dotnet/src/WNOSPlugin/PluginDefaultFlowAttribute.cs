@@ -93,4 +93,19 @@ namespace Windsor.Node2008.WNOSPlugin
             set { _name = value; }
         }
     }
+    [AttributeUsage(AttributeTargets.Assembly)]
+    public class PluginSQLDDLRelativeFolderAttribute : Attribute
+    {
+        private string _relativePath;
+
+        public PluginSQLDDLRelativeFolderAttribute(string relativePath)
+        {
+            _relativePath = relativePath;
+        }
+        public string RelativePath
+        {
+            get { return _relativePath; }
+            set { _relativePath = value; }
+        }
+    }
 }
