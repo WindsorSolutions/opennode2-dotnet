@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:uic="http://www.exchangenetwork.net/schema/uic/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/uic/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:include schemaLocation="UIC_SimpleContent_v1.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+        Schema Name  : UIC_Constituent_v1.0.xsd
+        Description   : information on corrective actions taken to address deficiencies observed during the inspection.
+        Developed by  : 	 Lockheed Martin
+        Point of Contact :   Lockheed Martin
+</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="ConstituentDetailType">
+		<xsd:annotation>
+			<xsd:documentation>Defines the Constituent information structure.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="uic:ConstituentIdentifier"/>
+			<xsd:element ref="uic:MeasureValue" minOccurs="0"/>
+			<xsd:element ref="uic:MeasureUnitCode" minOccurs="0"/>
+			<xsd:element ref="uic:ConstituentNameText" minOccurs="0"/>
+			<xsd:element ref="uic:ConstituentWasteIdentifier"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ConstituentDetail" type="uic:ConstituentDetailType"/>
+</xsd:schema>
