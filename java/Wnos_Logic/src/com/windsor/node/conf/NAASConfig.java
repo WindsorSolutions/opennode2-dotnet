@@ -63,8 +63,8 @@ public class NAASConfig implements InitializingBean {
             throw new RuntimeException("mgrEndpoint not set");
         }
 
-        validNAASAccount(adminAccount);
-        validNAASAccount(runtimeAccount);
+        validateNAASAccount(adminAccount);
+        validateNAASAccount(runtimeAccount);
 
         if (StringUtils.isBlank(nodeId)) {
             throw new RuntimeException("nodeId not set");
@@ -73,29 +73,29 @@ public class NAASConfig implements InitializingBean {
     }
 
     /**
-     * Prevents duplicate validatio on the same type
+     * Prevents duplicate validation on the same type
      * 
      * @param account
      */
-    private void validNAASAccount(NAASAccount account) {
+    private void validateNAASAccount(NAASAccount account) {
         if (adminAccount == null) {
-            throw new RuntimeException("adminAccount not set");
+            throw new RuntimeException("NASSAccount not set");
         }
 
         if (StringUtils.isBlank(adminAccount.getUsername())) {
-            throw new RuntimeException("adminAccount username not set");
+            throw new RuntimeException("username not set");
         }
 
         if (StringUtils.isBlank(adminAccount.getPassword())) {
-            throw new RuntimeException("adminAccount password not set");
+            throw new RuntimeException("password not set");
         }
 
         if (StringUtils.isBlank(adminAccount.getDomain())) {
-            throw new RuntimeException("adminAccount domain not set");
+            throw new RuntimeException("domain not set");
         }
 
         if (StringUtils.isBlank(adminAccount.getAuthMethod())) {
-            throw new RuntimeException("adminAccount auth method not set");
+            throw new RuntimeException("auth method not set");
         }
 
     }

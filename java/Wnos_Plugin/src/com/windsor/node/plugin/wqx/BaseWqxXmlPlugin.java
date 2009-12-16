@@ -34,6 +34,9 @@ package com.windsor.node.plugin.wqx;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.sql.DataSource;
 
@@ -54,9 +57,6 @@ import com.windsor.node.common.util.NodeClientService;
 import com.windsor.node.plugin.common.velocity.VelocityHelper;
 import com.windsor.node.plugin.common.velocity.jdbc.JdbcVelocityHelper;
 import com.windsor.node.plugin.wqx.dao.WqxStatusDao;
-import com.windsor.node.service.helper.CompressionService;
-import com.windsor.node.service.helper.IdGenerator;
-import com.windsor.node.service.helper.settings.SettingServiceProvider;
 
 public abstract class BaseWqxXmlPlugin extends BaseWqxPlugin implements
         InitializingBean {
@@ -85,17 +85,38 @@ public abstract class BaseWqxXmlPlugin extends BaseWqxPlugin implements
     /** Velocity template variable name. */
     public static final String TEMPLATE_MAKE_HEADER = "makeHeader";
 
-    public static final String XML_EXT = ".xml";
+    /** Velocity template variable name. */
+    public static final String TEMPLATE_START_DATE = "startDate";
+
+    /** Velocity template variable name. */
+    public static final String TEMPLATE_END_DATE = "endDate";
+
+    protected static final String XML_EXT = ".xml";
+
+    protected static final int PARAM_INDEX_ORGID = 0;
+    protected static final int PARAM_INDEX_ADD_HEADER = 1;
+    protected static final int PARAM_INDEX_USE_HISTORY = 2;
+    protected static final int PARAM_INDEX_START_DATE = 3;
+    protected static final int PARAM_INDEX_END_DATE = 4;
 
     /* Helpers */
-    protected VelocityHelper velocityHelper = new JdbcVelocityHelper();
-    protected String tempFilePath;
-    protected String tempFileName;
+    private VelocityHelper velocityHelper = new JdbcVelocityHelper();
+    private String tempFilePath;
+    private String tempFileName;
 
     /* VTL template variables */
-    protected String authorName;
-    protected String authorOrg;
-    protected String contactInfo;
+    private String authorName;
+    private String authorOrg;
+    private String contactInfo;
+
+    /* request, i.e., schedule, parameters */
+    private String orgId;
+    private boolean makeHeader = true;
+    private boolean useSubmissionHistory = true;
+    private Timestamp startDate;
+    private Timestamp endDate;
+
+    // private Timestamp
 
     public BaseWqxXmlPlugin() {
         super();
@@ -137,20 +158,15 @@ public abstract class BaseWqxXmlPlugin extends BaseWqxPlugin implements
         velocityHelper.configure((DataSource) getDataSources().get(
                 ARG_DS_SOURCE), getPluginSourceDir().getAbsolutePath());
 
-        compressionService = (CompressionService) getServiceFactory()
-                .makeService(CompressionService.class);
-
-        if (compressionService == null) {
-            throw new RuntimeException("Unable to obtain CompressionService");
-        }
-
     }
 
     protected ProcessContentResult generateAndSubmitFile(NodeTransaction aTran,
             String templateName, String outfileBaseName,
             WqxOperationType operationType) {
 
-        debug("Processing transaction...");
+        debug("Validating transaction...");
+        validateTransaction(aTran);
+
         NodeTransaction transaction = aTran;
         ProcessContentResult result = new ProcessContentResult();
         result.setSuccess(false);
@@ -158,26 +174,26 @@ public abstract class BaseWqxXmlPlugin extends BaseWqxPlugin implements
 
         try {
 
-            String orgId = getOrgIdFromTransaction(transaction);
+            setOptionsFromTransactionParams(transaction);
 
-            checkForPendingSubmissions(operationType, orgId);
+            if (useSubmissionHistory) {
 
-            result
-                    .getAuditEntries()
-                    .add(
-                            makeEntry("No pending submissions, validating transaction..."));
+                checkForPendingSubmissions(operationType, orgId);
+                result.getAuditEntries().add(
+                        makeEntry("No pending submissions"));
 
-            validateTransaction(transaction);
-
-            debug("transaction is valid");
+            } else {
+                result.getAuditEntries().add(
+                        makeEntry("Ignoring submission history."));
+            }
 
             /* CREATE THE DOCUMENT TO SUBMIT */
             result.getAuditEntries().add(makeEntry("Generating xml file..."));
 
-            String docId = idGenerator.createId();
+            String docId = getIdGenerator().createId();
 
-            generateXmlDoc(transaction, operationType, outfileBaseName,
-                    templateName, docId);
+            generateXmlDoc(orgId, operationType, outfileBaseName, templateName,
+                    docId);
 
             result.getAuditEntries().add(
                     makeEntry("Xml file generated with template "
@@ -216,16 +232,21 @@ public abstract class BaseWqxXmlPlugin extends BaseWqxPlugin implements
             debug("submission returned with network transaction id "
                     + transaction.getNetworkId());
 
-            transactionDao.updateNetworkId(transaction.getId(), transaction
-                    .getNetworkId());
+            getTransactionDao().updateNetworkId(transaction.getId(),
+                    transaction.getNetworkId());
 
-            debug("resultTran.getId(): " + transaction.getId());
-            debug("resultTran.getNetworkId(): " + transaction.getNetworkId());
+            result.getAuditEntries().add(
+                    makeEntry("resultTran.getId(): " + transaction.getId()));
+            result.getAuditEntries().add(
+                    makeEntry("resultTran.getNetworkId(): "
+                            + transaction.getNetworkId()));
 
             /* SAVE RESULTS */
-            saveSubmissionHistory(transaction, operationType);
-            result.getAuditEntries().add(
-                    makeEntry("Recorded document submission."));
+            if (useSubmissionHistory) {
+                saveSubmissionHistory(transaction, operationType);
+                result.getAuditEntries().add(
+                        makeEntry("Recorded document submission."));
+            }
 
             result.setSuccess(true);
             result.setStatus(CommonTransactionStatusCode.PENDING);
@@ -248,6 +269,92 @@ public abstract class BaseWqxXmlPlugin extends BaseWqxPlugin implements
         return result;
     }
 
+    /**
+     * @param transaction
+     * @throws ParseException
+     */
+    private void setOptionsFromTransactionParams(NodeTransaction transaction)
+            throws ParseException {
+
+        /*
+         * orgId is required - validateTransaction() will have already thrown an
+         * exception if it's missing
+         */
+        orgId = getOrgIdFromTransaction(transaction);
+        debug("orgId = " + orgId);
+
+        int argCount = transaction.getRequest().getParameters().size();
+
+        if (argCount >= 2) {
+            String addHeader = getOptionalValueFromTransactionArgs(transaction,
+                    PARAM_INDEX_ADD_HEADER);
+
+            /* makeHeader defaults to true */
+            if (StringUtils.isNotBlank(addHeader)) {
+                makeHeader = Boolean.parseBoolean(addHeader);
+                debug("makeHeader = " + makeHeader);
+            }
+        }
+
+        if (argCount >= 3) {
+            /* useSubmissionHistory defaults to true */
+            String useHistory = getOptionalValueFromTransactionArgs(
+                    transaction, PARAM_INDEX_USE_HISTORY);
+
+            if (StringUtils.isNotBlank(useHistory)) {
+                useSubmissionHistory = Boolean.parseBoolean(useHistory);
+                debug("useSubmissionHistory = " + useSubmissionHistory);
+            }
+        }
+
+        if (argCount >= 4) {
+            /* both start & end dates are optional. */
+            String startString = getOptionalValueFromTransactionArgs(
+                    transaction, PARAM_INDEX_START_DATE);
+            debug("startString = " + startString);
+
+            String endString = null;
+
+            if (argCount >= 5) {
+                endString = getOptionalValueFromTransactionArgs(transaction,
+                        PARAM_INDEX_END_DATE);
+                debug("endString = " + endString);
+            }
+
+            /* if start is empty, ignore end. */
+            if (StringUtils.isNotBlank(startString)) {
+
+                startDate = makeTimestamp(startString);
+                debug("startDate = " + startDate);
+
+                /* if start not empty but end is, set end to now */
+                if (StringUtils.isNotBlank(endString)) {
+
+                    endDate = makeTimestamp(endString);
+
+                } else {
+
+                    endDate = new Timestamp(System.currentTimeMillis());
+                }
+                debug("endDate = " + endDate);
+            }
+        }
+
+    }
+
+    /**
+     * @param optionalValueFromTransactionArgs
+     * @return
+     * @throws ParseException
+     */
+    private Timestamp makeTimestamp(String s) throws ParseException {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = sdf.parse(s);
+
+        return new Timestamp(date.getTime());
+    }
+
     protected File getResultFile() throws IOException {
 
         File resultFile = new File(getTempFileName());
@@ -264,9 +371,8 @@ public abstract class BaseWqxXmlPlugin extends BaseWqxPlugin implements
 
         super.validateTransaction(transaction);
 
-        if (transaction.getRequest().getParameters().size() != 1) {
-            throw new RuntimeException(
-                    "Invalid number of parameters. Expected " + TEMPLATE_ORG_ID);
+        if (null == transaction.getRequest().getParameters().get(0)) {
+            throw new RuntimeException("Missing parameter: " + TEMPLATE_ORG_ID);
         }
     }
 
@@ -278,7 +384,7 @@ public abstract class BaseWqxXmlPlugin extends BaseWqxPlugin implements
         }
 
         debug("Saving transaction status to WQX_SubmissionHistory table...");
-        statusDao.createStatus(getIdGenerator().createId(),
+        getStatusDao().createStatus(getIdGenerator().createId(),
                 getOrgIdFromTransaction(transaction), operationType,
                 transaction.getId(), CommonTransactionStatusCode.PENDING);
     }
@@ -288,33 +394,72 @@ public abstract class BaseWqxXmlPlugin extends BaseWqxPlugin implements
 
         logger.debug("Checking for pending submissions...");
 
-        if (null != statusDao.getPendingTransactionId(orgId, operationType)) {
+        if (null != getStatusDao()
+                .getPendingTransactionId(orgId, operationType)) {
             throw new UnsupportedOperationException(
                     WqxStatusDao.NO_NEW_STATUS_WHEN_PENDING);
         }
     }
 
-    private void generateXmlDoc(NodeTransaction transaction,
-            WqxOperationType operationType, String outfileBaseName,
-            String templateName, String docId) {
-
-        velocityHelper.setTemplateArg(TEMPLATE_AUTHOR_NAME, authorName);
-        velocityHelper.setTemplateArg(TEMPLATE_AUTHOR_ORG, authorOrg);
-        velocityHelper.setTemplateArg(TEMPLATE_CONTACT_INFO, contactInfo);
+    private int generateXmlDoc(String orgId, WqxOperationType operationType,
+            String outfileBaseName, String templateName, String docId) {
 
         // we set this template var to "false" in our unit test to simplify
         // schema validation
-        velocityHelper.setTemplateArg(TEMPLATE_MAKE_HEADER, "true");
+        velocityHelper.setTemplateArg(TEMPLATE_MAKE_HEADER, makeHeader);
 
-        velocityHelper.setTemplateArg(TEMPLATE_ORG_ID,
-                getOrgIdFromTransaction(transaction));
+        if (makeHeader) {
+            velocityHelper.setTemplateArg(TEMPLATE_AUTHOR_NAME, authorName);
+            velocityHelper.setTemplateArg(TEMPLATE_AUTHOR_ORG, authorOrg);
+            velocityHelper.setTemplateArg(TEMPLATE_CONTACT_INFO, contactInfo);
+        }
+
+        velocityHelper.setTemplateArg(TEMPLATE_ORG_ID, orgId);
 
         velocityHelper.setTemplateArg(TEMPLATE_DOC_ID, docId);
 
-        Timestamp lastPendingTimestamp = statusDao.getLatestProcessedTimestamp(
-                getOrgIdFromTransaction(transaction), operationType);
+        /*
+         * if startDate isn't null, the template will ignore the
+         * lastProcessedTimestamp and instead query for items >= startDate and <
+         * endDate
+         */
+        if (null != startDate) {
 
-        if (null == lastPendingTimestamp) {
+            velocityHelper.setTemplateArg(TEMPLATE_START_DATE, startDate
+                    .toString());
+            velocityHelper
+                    .setTemplateArg(TEMPLATE_END_DATE, endDate.toString());
+        } else {
+
+            Timestamp lastProcessedTimestamp = getLastProcessedTimestamp(orgId,
+                    operationType);
+
+            if (null == lastProcessedTimestamp) {
+
+                velocityHelper.setTemplateArg(TEMPLATE_LAST_PROCESSED,
+                        ARBITRARY_START_DATE);
+
+            } else {
+
+                velocityHelper.setTemplateArg(TEMPLATE_LAST_PROCESSED,
+                        lastProcessedTimestamp.toString());
+            }
+        }
+
+        setTempFilePath(FilenameUtils.concat(getSettingService().getTempDir()
+                .getAbsolutePath(), outfileBaseName + docId + XML_EXT));
+
+        return velocityHelper.merge(templateName, getTempFilePath());
+
+    }
+
+    private Timestamp getLastProcessedTimestamp(String orgId,
+            WqxOperationType operationType) {
+
+        Timestamp lastProcessedTimestamp = getStatusDao()
+                .getLatestProcessedTimestamp(orgId, operationType);
+
+        if (null == lastProcessedTimestamp) {
 
             velocityHelper.setTemplateArg(TEMPLATE_LAST_PROCESSED,
                     ARBITRARY_START_DATE);
@@ -322,14 +467,10 @@ public abstract class BaseWqxXmlPlugin extends BaseWqxPlugin implements
         } else {
 
             velocityHelper.setTemplateArg(TEMPLATE_LAST_PROCESSED,
-                    lastPendingTimestamp.toString());
+                    lastProcessedTimestamp.toString());
         }
 
-        setTempFilePath(FilenameUtils.concat(settingService.getTempDir()
-                .getAbsolutePath(), outfileBaseName + docId + XML_EXT));
-
-        velocityHelper.merge(templateName, getTempFilePath());
-
+        return lastProcessedTimestamp;
     }
 
     private Document makeDocument(NodeTransaction transaction, String docId)
@@ -363,38 +504,10 @@ public abstract class BaseWqxXmlPlugin extends BaseWqxPlugin implements
     }
 
     /**
-     * @return
-     */
-    public SettingServiceProvider getSettingService() {
-        return settingService;
-    }
-
-    /**
-     * @return
-     */
-    public IdGenerator getIdGenerator() {
-        return idGenerator;
-    }
-
-    /**
-     * @return
-     */
-    public CompressionService getCompressionService() {
-        return compressionService;
-    }
-
-    /**
      * @return the tempFilePath
      */
     public String getTempFilePath() {
         return tempFilePath;
-    }
-
-    /**
-     * @return
-     */
-    public File getTempDir() {
-        return settingService.getTempDir();
     }
 
     /**

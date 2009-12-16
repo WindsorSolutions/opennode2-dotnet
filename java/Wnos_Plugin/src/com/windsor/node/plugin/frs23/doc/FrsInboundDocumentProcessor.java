@@ -125,7 +125,7 @@ public class FrsInboundDocumentProcessor extends BaseWnosPlugin {
         try {
 
             result.getAuditEntries().add(
-                    makeEntry("Vaildating transaction and documents..."));
+                    makeEntry("Validating transaction and documents..."));
             /*
              * Parsing Test
              */

@@ -186,7 +186,13 @@ public class NetworkNode2Stub extends org.apache.axis2.client.Stub {
         _serviceClient.getOptions().setAction("\"\"");
         logger.debug("Resetting timeout to: " + soTimeout);
         _serviceClient.getOptions().setTimeOutInMilliSeconds(soTimeout);
+        logger.debug("Adding empty SOAP ACTION header");
         headers.add(new Header(HTTPConstants.HEADER_SOAP_ACTION, ""));
+
+        // TransportOutDescription tOut =
+        // _serviceClient.getOptions().getTransportOut();
+        // TransportSender tSender = tOut.getSender();
+        // tSender.stop()
 
     }
 
@@ -246,6 +252,7 @@ public class NetworkNode2Stub extends org.apache.axis2.client.Stub {
 
             // WINDSOR HACK
             _messageContext.setProperty(HTTPConstants.HTTP_HEADERS, headers);
+            _messageContext.removeProperty(HTTPConstants.HEADER_CONTENT_LENGTH);
 
             // add the message contxt to the operation client
             _operationClient.addMessageContext(_messageContext);
@@ -321,6 +328,7 @@ public class NetworkNode2Stub extends org.apache.axis2.client.Stub {
 
             // WINDSOR HACK
             _messageContext.setProperty(HTTPConstants.HTTP_HEADERS, headers);
+            _messageContext.removeProperty(HTTPConstants.HEADER_CONTENT_LENGTH);
 
             // add the message contxt to the operation client
             _operationClient.addMessageContext(_messageContext);
@@ -396,6 +404,7 @@ public class NetworkNode2Stub extends org.apache.axis2.client.Stub {
 
             // WINDSOR HACK
             _messageContext.setProperty(HTTPConstants.HTTP_HEADERS, headers);
+            _messageContext.removeProperty(HTTPConstants.HEADER_CONTENT_LENGTH);
 
             // add the message contxt to the operation client
             _operationClient.addMessageContext(_messageContext);
@@ -470,6 +479,7 @@ public class NetworkNode2Stub extends org.apache.axis2.client.Stub {
 
             // WINDSOR HACK
             _messageContext.setProperty(HTTPConstants.HTTP_HEADERS, headers);
+            _messageContext.removeProperty(HTTPConstants.HEADER_CONTENT_LENGTH);
 
             // add the message contxt to the operation client
             _operationClient.addMessageContext(_messageContext);
@@ -544,6 +554,7 @@ public class NetworkNode2Stub extends org.apache.axis2.client.Stub {
 
             // WINDSOR HACK
             _messageContext.setProperty(HTTPConstants.HTTP_HEADERS, headers);
+            _messageContext.removeProperty(HTTPConstants.HEADER_CONTENT_LENGTH);
 
             // add the message contxt to the operation client
             _operationClient.addMessageContext(_messageContext);
@@ -618,6 +629,7 @@ public class NetworkNode2Stub extends org.apache.axis2.client.Stub {
 
             // WINDSOR HACK
             _messageContext.setProperty(HTTPConstants.HTTP_HEADERS, headers);
+            _messageContext.removeProperty(HTTPConstants.HEADER_CONTENT_LENGTH);
 
             // add the message contxt to the operation client
             _operationClient.addMessageContext(_messageContext);
@@ -693,8 +705,9 @@ public class NetworkNode2Stub extends org.apache.axis2.client.Stub {
 
             // WINDSOR HACK
             _messageContext.setProperty(HTTPConstants.HTTP_HEADERS, headers);
+            _messageContext.removeProperty(HTTPConstants.HEADER_CONTENT_LENGTH);
 
-            // add the message contxt to the operation client
+            // add the message context to the operation client
             _operationClient.addMessageContext(_messageContext);
 
             // execute the operation client
@@ -769,8 +782,9 @@ public class NetworkNode2Stub extends org.apache.axis2.client.Stub {
 
             // WINDSOR HACK
             _messageContext.setProperty(HTTPConstants.HTTP_HEADERS, headers);
+            _messageContext.removeProperty(HTTPConstants.HEADER_CONTENT_LENGTH);
 
-            // add the message contxt to the operation client
+            // add the message context to the operation client
             _operationClient.addMessageContext(_messageContext);
 
             // execute the operation client
@@ -845,8 +859,9 @@ public class NetworkNode2Stub extends org.apache.axis2.client.Stub {
 
             // WINDSOR HACK
             _messageContext.setProperty(HTTPConstants.HTTP_HEADERS, headers);
+            _messageContext.removeProperty(HTTPConstants.HEADER_CONTENT_LENGTH);
 
-            // add the message contxt to the operation client
+            // add the message context to the operation client
             _operationClient.addMessageContext(_messageContext);
 
             // execute the operation client
@@ -919,8 +934,9 @@ public class NetworkNode2Stub extends org.apache.axis2.client.Stub {
 
             // WINDSOR HACK
             _messageContext.setProperty(HTTPConstants.HTTP_HEADERS, headers);
+            _messageContext.removeProperty(HTTPConstants.HEADER_CONTENT_LENGTH);
 
-            // add the message contxt to the operation client
+            // add the message context to the operation client
             _operationClient.addMessageContext(_messageContext);
 
             // execute the operation client

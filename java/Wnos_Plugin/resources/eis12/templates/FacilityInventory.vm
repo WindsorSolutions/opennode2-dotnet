@@ -1,0 +1,1145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+#parse("eis_head.vm")
+#foreach($facSite in $helper.getData("select fac_site_id, fac_site_name, fac_catg_code, fac_catg_code, fac_site_desc, fac_site_stat_code, fac_site_stat_code_year, sect_type_code, agn_name, fac_site_cmnt, lat_meas, long_meas, src_map_scale_num, horz_acc_meas, horz_acc_unt_meas, horz_coll_meth_code, horz_ref_datum_code, geo_ref_pt_code, data_coll_date, geo_cmnt, vert_meas, vert_unt_meas_code, vert_coll_meth_code, vert_ref_datum_code, verf_meth_code, coord_data_src_code, geom_type_code, area_wtin_perm, area_wtin_perm_unt_meas_code, pcnt_area_prod_emis, atch_file_name, atch_file_desc, atch_file_size, atch_file_cont_type_code from cers_fac_site where cers_id = ? ", $cer.cers_id))
+	<cer:FacilitySite>
+#if($facSite.get("fac_catg_code"))
+		<cer:FacilityCategoryCode>$facSite.get("fac_catg_code")</cer:FacilityCategoryCode>
+#end
+#if($facSite.get("fac_site_name"))
+		<cer:FacilitySiteName>$facSite.get("fac_site_name")</cer:FacilitySiteName>
+#end
+#if($facSite.get("fac_site_desc"))
+		<cer:FacilitySiteDescription>$facSite.get("fac_site_desc")</cer:FacilitySiteDescription>
+#end
+#if($facSite.get("fac_site_stat_code"))
+		<cer:FacilitySiteStatusCode>$facSite.get("fac_site_stat_code")</cer:FacilitySiteStatusCode>
+#end
+#if($facSite.get("fac_site_stat_code_year"))
+		<cer:FacilitySiteStatusCodeYear>$facSite.get("fac_site_stat_code_year")</cer:FacilitySiteStatusCodeYear>
+#end
+#if($facSite.get("sect_type_code"))
+		<cer:SectorTypeCode>$facSite.get("sect_type_code")</cer:SectorTypeCode>
+#end
+#if($facSite.get("agn_name"))
+		<cer:AgencyName>$facSite.get("agn_name")</cer:AgencyName>
+#end
+#if($facSite.get("fac_site_cmnt"))
+		<cer:FacilitySiteComment>$facSite.get("fac_site_cmnt")</cer:FacilitySiteComment>
+#end
+#foreach($facNaics in $helper.getData("SELECT * FROM CERS_FAC_NAICS WHERE FAC_SITE_ID = ? ", $facSite.get("fac_site_id")))
+		<cer:FacilityNAICS>
+#if($facNaics.get("naics_code"))
+			<cer:NAICSCode>$facNaics.get("naics_code")</cer:NAICSCode>
+#end
+#if($facNaics.get("naics_pri_ind"))
+			<cer:NAICSPrimaryIndicator>$facNaics.get("naics_code")</cer:NAICSPrimaryIndicator>
+#end
+		</cer:FacilityNAICS>
+#end ##foreach($facNaics)
+#foreach($facIden in $helper.getData("SELECT * FROM CERS_FAC_IDEN WHERE FAC_SITE_ID = ? ", $facSite.get("fac_site_id")))
+		<cer:FacilityIdentification>
+#if($facIden.get("fac_site_iden"))
+			<cer:FacilitySiteIdentifier>$facIden.get("fac_site_iden")</cer:FacilitySiteIdentifier>
+#end
+#if($facIden.get("prog_sys_code"))
+			<cer:ProgramSystemCode>$facIden.get("prog_sys_code")</cer:ProgramSystemCode>
+#end
+#if($facIden.get("sta_and_cnty_fips_code"))
+			<cer:StateAndCountyFIPSCode>$facIden.get("sta_and_cnty_fips_code")</cer:StateAndCountyFIPSCode>
+#end
+#if($facIden.get("trib_code"))
+			<cer:TribalCode>$facIden.get("trib_code")</cer:TribalCode>
+#end
+#if($facIden.get("sta_and_ctry_fips_code"))
+			<cer:StateAndCountryFIPSCode>$facIden.get("sta_and_ctry_fips_code")</cer:StateAndCountryFIPSCode>
+#end
+#if($facIden.get("effc_date"))
+			<cer:EffectiveDate>$helper.toXmlDate($facIden.get("effc_date"))</cer:EffectiveDate>
+#end
+#if($facIden.get("end_date"))
+			<cer:EndDate>$helper.toXmlDate($facIden.get("end_date"))</cer:EndDate>
+#end
+		</cer:FacilityIdentification>
+#end ##foreach(facIden)
+#foreach($facAltName in $helper.getData("SELECT * FROM CERS_ALT_FAC_NAME WHERE FAC_SITE_ID = ? ", $facSite.get("fac_site_id")))
+		<cer:AlternativeFacilityName>
+#if($facAltName.get("alt_name"))
+			<cer:AlternativeName>$facAltName.get("alt_name")</cer:AlternativeName>
+#end
+#if($facAltName.get("prog_sys_code"))
+			<cer:ProgramSystemCode>$facAltName.get("prog_sys_code")</cer:ProgramSystemCode>
+#end
+#if($facAltName.get("alt_name_type_txt"))
+			<cer:AlternativeNameTypeText>$facAltName.get("alt_name_type_txt")</cer:AlternativeNameTypeText>
+#end
+#if($facAltName.get("effc_date"))
+			<cer:EffectiveDate>$helper.toXmlDate($facAltName.get("effc_date"))</cer:EffectiveDate>
+#end
+		</cer:AlternativeFacilityName>
+#end ##foreach(facAltName)
+#foreach($facAddr in $helper.getData("SELECT * FROM CERS_FAC_SITE_ADDR WHERE FAC_SITE_ID = ? ", $facSite.get("fac_site_id")))
+		<cer:FacilitySiteAddress>
+#if($facAddr.get("mail_addr_txt"))
+			<cer:MailingAddressText>$facAddr.get("mail_addr_txt")</cer:MailingAddressText>
+#end
+#if($facAddr.get("supp_addr_txt"))
+			<cer:SupplementalAddressText>$facAddr.get("supp_addr_txt")</cer:SupplementalAddressText>
+#end
+#if($facAddr.get("mail_addr_city_name"))
+			<cer:MailingAddressCityName>$facAddr.get("mail_addr_city_name")</cer:MailingAddressCityName>
+#end
+#if($facAddr.get("mail_addr_cnty_txt"))
+			<cer:MailingAddressCountyText>$facAddr.get("mail_addr_cnty_txt")</cer:MailingAddressCountyText>
+#end
+#if($facAddr.get("mail_addr_sta_code"))
+			<cer:MailingAddressStateCode>$facAddr.get("mail_addr_sta_code")</cer:MailingAddressStateCode>
+#end
+#if($facAddr.get("mail_addr_post_code"))
+			<cer:MailingAddressPostalCode>$facAddr.get("mail_addr_post_code")</cer:MailingAddressPostalCode>
+#end
+#if($facAddr.get("mail_addr_ctry_code"))
+			<cer:MailingAddressCountryCode>$facAddr.get("mail_addr_ctry_code")</cer:MailingAddressCountryCode>
+#end
+#if($facAddr.get("loc_addr_txt"))
+			<cer:LocationAddressText>$facAddr.get("loc_addr_txt")</cer:LocationAddressText>
+#end
+#if($facAddr.get("supp_loc_txt"))
+			<cer:SupplementalLocationText>$facAddr.get("supp_loc_txt")</cer:SupplementalLocationText>
+#end
+#if($facAddr.get("loca_name"))
+			<cer:LocalityName>$facAddr.get("loca_name")</cer:LocalityName>
+#end
+#if($facAddr.get("loc_addr_sta_code"))
+			<cer:LocationAddressStateCode>$facAddr.get("loc_addr_sta_code")</cer:LocationAddressStateCode>
+#end
+#if($facAddr.get("loc_addr_post_code"))
+			<cer:LocationAddressPostalCode>$facAddr.get("loc_addr_post_code")</cer:LocationAddressPostalCode>
+#end
+#if($facAddr.get("loc_addr_ctry_code"))
+			<cer:LocationAddressCountryCode>$facAddr.get("loc_addr_ctry_code")</cer:LocationAddressCountryCode>
+#end
+#if($facAddr.get("addr_cmnt"))
+			<cer:AddressComment>$facAddr.get("addr_cmnt")</cer:AddressComment>
+#end
+		</cer:FacilitySiteAddress>
+#end ##foreach(facAddr)
+#if($facSite.get("lat_meas") || $facSite.get("long_meas") || $facSite.get("src_map_scale_num") || $facSite.get("horz_acc_meas") || $facSite.get("horz_acc_unt_meas") || $facSite.get("horz_coll_meth_code") || $facSite.get("horz_ref_datum_code") || $facSite.get("geo_ref_pt_code") || $facSite.get("data_coll_date") || $facSite.get("geo_cmnt") || $facSite.get("vert_meas") || $facSite.get("vert_unt_meas_code") || $facSite.get("vert_coll_meth_code") || $facSite.get("vert_ref_datum_code") || $facSite.get("verf_meth_code") || $facSite.get("coord_data_src_code") || $facSite.get("geom_type_code") || $facSite.get("area_wtin_perm") || $facSite.get("area_wtin_perm_unt_meas_code"))
+		<cer:FacilitySiteGeographicCoordinates>
+#if($facSite.get("lat_meas"))
+			<cer:LatitudeMeasure>$facSite.get("lat_meas")</cer:LatitudeMeasure>
+#end
+#if($facSite.get("long_meas"))
+			<cer:LongitudeMeasure>$facSite.get("long_meas")</cer:LongitudeMeasure>
+#end
+#if($facSite.get("src_map_scale_num"))
+			<cer:SourceMapScaleNumber>$facSite.get("src_map_scale_num")</cer:SourceMapScaleNumber>
+#end
+#if($facSite.get("horz_acc_meas"))
+			<cer:HorizontalAccuracyMeasure>$facSite.get("horz_acc_meas")</cer:HorizontalAccuracyMeasure>
+#end
+#if($facSite.get("horz_acc_unt_meas"))
+			<cer:HorizontalAccuracyUnitofMeasure>$facSite.get("horz_acc_unt_meas")</cer:HorizontalAccuracyUnitofMeasure>
+#end
+#if($facSite.get("horz_coll_meth_code"))
+			<cer:HorizontalCollectionMethodCode>$facSite.get("horz_coll_meth_code")</cer:HorizontalCollectionMethodCode>
+#end
+#if($facSite.get("horz_ref_datum_code"))
+			<cer:HorizontalReferenceDatumCode>$facSite.get("horz_ref_datum_code")</cer:HorizontalReferenceDatumCode>
+#end
+#if($facSite.get("geo_ref_pt_code"))
+			<cer:GeographicReferencePointCode>$facSite.get("geo_ref_pt_code")</cer:GeographicReferencePointCode>
+#end
+#if($facSite.get("data_coll_date"))
+			<cer:DataCollectionDate>$helper.toXmlDate($facSite.get("data_coll_date"))</cer:DataCollectionDate>
+#end
+#if($facSite.get("geo_cmnt"))
+			<cer:GeographicComment>$facSite.get("geo_cmnt")</cer:GeographicComment>
+#end
+#if($facSite.get("vert_meas"))
+			<cer:VerticalMeasure>$facSite.get("vert_meas")</cer:VerticalMeasure>
+#end
+#if($facSite.get("vert_unt_meas_code"))
+			<cer:VerticalUnitofMeasureCode>$facSite.get("vert_unt_meas_code")</cer:VerticalUnitofMeasureCode>
+#end
+#if($facSite.get("vert_coll_meth_code"))
+			<cer:VerticalCollectionMethodCode>$facSite.get("vert_coll_meth_code")</cer:VerticalCollectionMethodCode>
+#end
+#if($facSite.get("vert_ref_datum_code"))
+			<cer:VerticalReferenceDatumCode>$facSite.get("vert_ref_datum_code")</cer:VerticalReferenceDatumCode>
+#end
+#if($facSite.get("verf_meth_code"))
+			<cer:VerificationMethodCode>$facSite.get("verf_meth_code")</cer:VerificationMethodCode>
+#end
+#if($facSite.get("coord_data_src_code"))
+			<cer:CoordinateDataSourceCode>$facSite.get("coord_data_src_code")</cer:CoordinateDataSourceCode>
+#end
+#if($facSite.get("geom_type_code"))
+			<cer:GeometricTypeCode>$facSite.get("geom_type_code")</cer:GeometricTypeCode>
+#end
+#if($facSite.get("area_wtin_perm"))
+			<cer:AreaWithinPerimeter>$facSite.get("area_wtin_perm")</cer:AreaWithinPerimeter>
+#end
+#if($facSite.get("area_wtin_perm_unt_meas_code"))
+			<cer:AreaWithinPerimeterUnitofMeasureCode>$facSite.get("area_wtin_perm_unt_meas_code")</cer:AreaWithinPerimeterUnitofMeasureCode>
+#end
+#if($facSite.get("pcnt_area_prod_emis"))
+			<cer:PercentofAreaProducingEmissions>$facSite.get("pcnt_area_prod_emis")</cer:PercentofAreaProducingEmissions>
+#end
+		</cer:FacilitySiteGeographicCoordinates>
+#end ##if($facSite.get("lat_meas") || $facSite.get("long_meas") ...)
+#foreach($facSiteQualIden in $helper.getData("SELECT * FROM CERS_FAC_SITE_QLTY_IDEN WHERE FAC_SITE_ID = ? ", $facSite.get("fac_site_id")))
+		<cer:FacilitySiteQualityIdentification>
+#if($facSiteQualIden.get("qlty_iden"))
+			<cer:QualityIdentifier>$facSiteQualIden.get("qlty_iden")</cer:QualityIdentifier>
+#end
+#if($facSiteQualIden.get("prog_sys_code"))
+			<cer:ProgramSystemCode>$facSiteQualIden.get("prog_sys_code")</cer:ProgramSystemCode>
+#end
+		</cer:FacilitySiteQualityIdentification>
+#end ##foreach(facSiteQualIden)
+#if($facSite.get("atch_file_name") || $facSite.get("atch_file_desc") || $facSite.get("atch_file_size") || $facSite.get("atch_file_cont_type_code"))
+		<cer:FacilitySiteAttachedFile>
+#if($facSite.get("atch_file_name"))
+			<cer:AttachmentFileName>$facSite.get("atch_file_name")</cer:AttachmentFileName>
+#end
+#if($facSite.get("atch_file_desc"))
+			<cer:AttachmentFileDescription>$facSite.get("atch_file_desc")</cer:AttachmentFileDescription>
+#end
+#if($facSite.get("atch_file_size"))
+			<cer:AttachmentFileSize>$facSite.get("atch_file_size")</cer:AttachmentFileSize>
+#end
+#if($facSite.get("atch_file_cont_type_code"))
+			<cer:AttachmentFileContentTypeCode>$facSite.get("atch_file_cont_type_code")</cer:AttachmentFileContentTypeCode>
+#end
+		</cer:FacilitySiteAttachedFile>
+#end ##if($facSite.get("atch_file_cont") || $facSite.get("atch_file_name"...)
+#foreach($facSiteAffl in $helper.getData("SELECT * FROM CERS_AFFL WHERE FAC_SITE_ID = ? ", $facSite.get("fac_site_id")))
+		<cer:FacilitySiteAffiliation>
+#if($facSiteAffl.get("affl_type_code"))
+			<cer:AffiliationTypeCode>$facSiteAffl.get("affl_type_code")</cer:AffiliationTypeCode>
+#end
+#if($facSiteAffl.get("affl_start_date"))
+			<cer:AffiliationStartDate>$helper.toXmlDate($facSiteAffl.get("affl_start_date"))</cer:AffiliationStartDate>
+#end
+#if($facSiteAffl.get("affl_end_date"))
+			<cer:AffiliationEndDate>$helper.toXmlDate($facSiteAffl.get("affl_end_date"))</cer:AffiliationEndDate>
+#end
+#foreach($facSiteAfflOrg in $helper.getData("SELECT affl_org_id, org_formal_name, pcnt_owner, cons_meth, atch_file_name, atch_file_desc, atch_file_size, atch_file_cont_type_code FROM CERS_AFFL_ORG WHERE AFFL_ID = ? ", $facSiteAffl.get("affl_id")))
+			<cer:AffiliationOrganization>
+#if($facSiteAfflOrg.get("org_formal_name"))
+				<cer:OrganizationFormalName>$facSiteAfflOrg.get("org_formal_name")</cer:OrganizationFormalName>
+#end
+#if($facSiteAfflOrg.get("pcnt_owner"))
+				<cer:PercentOwnership>$facSiteAfflOrg.get("pcnt_owner")</cer:PercentOwnership>
+#end
+#if($facSiteAfflOrg.get("cons_meth"))
+				<cer:ConsolidationMethodology>$facSiteAfflOrg.get("cons_meth")</cer:ConsolidationMethodology>
+#end
+#foreach($facSiteAfflOrgIden in $helper.getData("SELECT * FROM CERS_AFFL_ORG_IDEN WHERE AFFL_ORG_ID = ? ", $facSiteAfflOrg.get("affl_org_id")))
+				<cer:OrganizationIdentification>
+#if($facSiteAfflOrgIden.get("iden"))
+					<cer:Identifier>$facSiteAfflOrgIden.get("iden")</cer:Identifier>
+#end
+#if($facSiteAfflOrgIden.get("prog_sys_code"))
+					<cer:ProgramSystemCode>$facSiteAfflOrgIden.get("prog_sys_code")</cer:ProgramSystemCode>
+#end
+#if($facSiteAfflOrgIden.get("effc_date"))
+					<cer:EffectiveDate>$helper.toXmlDate($facSiteAfflOrgIden.get("effc_date"))</cer:EffectiveDate>
+#end
+#if($facSiteAfflOrgIden.get("end_date"))
+					<cer:EndDate>$helper.toXmlDate($facSiteAfflOrgIden.get("end_date"))</cer:EndDate>
+#end
+				</cer:OrganizationIdentification>
+#end ##foreach($facSiteAfflOrgIden)
+#foreach($facSiteAfflOrgAddr in $helper.getData("SELECT * FROM CERS_AFFL_ORG_ADDR WHERE AFFL_ORG_ID = ? ", $facSiteAfflOrg.get("affl_org_id")))
+				<cer:OrganizationAddress>
+#if($facSiteAfflOrgAddr.get("mail_addr_txt"))
+					<cer:MailingAddressText>$facSiteAfflOrgAddr.get("mail_addr_txt")</cer:MailingAddressText>
+#end
+#if($facSiteAfflOrgAddr.get("supp_addr_txt"))
+					<cer:SupplementalAddressText>$facSiteAfflOrgAddr.get("supp_addr_txt")</cer:SupplementalAddressText>
+#end
+#if($facSiteAfflOrgAddr.get("mail_addr_city_name"))
+					<cer:MailingAddressCityName>$facSiteAfflOrgAddr.get("mail_addr_city_name")</cer:MailingAddressCityName>
+#end
+#if($facSiteAfflOrgAddr.get("mail_addr_cnty_txt"))
+					<cer:MailingAddressCountyText>$facSiteAfflOrgAddr.get("mail_addr_cnty_txt")</cer:MailingAddressCountyText>
+#end
+#if($facSiteAfflOrgAddr.get("mail_addr_sta_code"))
+					<cer:MailingAddressStateCode>$facSiteAfflOrgAddr.get("mail_addr_sta_code")</cer:MailingAddressStateCode>
+#end
+#if($facSiteAfflOrgAddr.get("mail_addr_post_code"))
+					<cer:MailingAddressPostalCode>$facSiteAfflOrgAddr.get("mail_addr_post_code")</cer:MailingAddressPostalCode>
+#end
+#if($facSiteAfflOrgAddr.get("mail_addr_ctry_code"))
+					<cer:MailingAddressCountryCode>$facSiteAfflOrgAddr.get("mail_addr_ctry_code")</cer:MailingAddressCountryCode>
+#end
+#if($facSiteAfflOrgAddr.get("loc_addr_txt"))
+					<cer:LocationAddressText>$facSiteAfflOrgAddr.get("loc_addr_txt")</cer:LocationAddressText>
+#end
+#if($facSiteAfflOrgAddr.get("supp_loc_txt"))
+					<cer:SupplementalLocationText>$facSiteAfflOrgAddr.get("supp_loc_txt")</cer:SupplementalLocationText>
+#end
+#if($facSiteAfflOrgAddr.get("loca_name"))
+					<cer:LocalityName>$facSiteAfflOrgAddr.get("loca_name")</cer:LocalityName>
+#end
+#if($facSiteAfflOrgAddr.get("loc_addr_sta_code"))
+					<cer:LocationAddressStateCode>$facSiteAfflOrgAddr.get("loc_addr_sta_code")</cer:LocationAddressStateCode>
+#end
+#if($facSiteAfflOrgAddr.get("loc_addr_post_code"))
+					<cer:LocationAddressPostalCode>$facSiteAfflOrgAddr.get("loc_addr_post_code")</cer:LocationAddressPostalCode>
+#end
+#if($facSiteAfflOrgAddr.get("loc_addr_ctry_code"))
+					<cer:LocationAddressCountryCode>$facSiteAfflOrgAddr.get("loc_addr_ctry_code")</cer:LocationAddressCountryCode>
+#end
+#if($facSiteAfflOrgAddr.get("addr_cmnt"))
+					<cer:AddressComment>$facSiteAfflOrgAddr.get("addr_cmnt")</cer:AddressComment>
+#end
+				</cer:OrganizationAddress>
+#end ##foreach($facSiteAfflOrgAddr)
+#foreach($facSiteAfflOrgComm in $helper.getData("SELECT * FROM CERS_AFFL_ORG_COMMUN WHERE AFFL_ORG_ID = ? ", $facSiteAfflOrg.get("affl_org_id")))
+				<cer:OrganizationCommunication>
+#if($facSiteAfflOrgComm.get("tele_num_txt"))
+					<cer:TelephoneNumberText>$facSiteAfflOrgComm.get("tele_num_txt")</cer:TelephoneNumberText>
+#end
+#if($facSiteAfflOrgComm.get("tele_num_type_name"))
+					<cer:TelephoneNumberTypeName>$facSiteAfflOrgComm.get("tele_num_type_name")</cer:TelephoneNumberTypeName>
+#end
+#if($facSiteAfflOrgComm.get("tele_ext_num_txt"))
+					<cer:TelephoneExtensionNumberText>$facSiteAfflOrgComm.get("tele_ext_num_txt")</cer:TelephoneExtensionNumberText>
+#end
+#if($facSiteAfflOrgComm.get("elec_addr_txt"))
+					<cer:ElectronicAddressText>$facSiteAfflOrgComm.get("elec_addr_txt")</cer:ElectronicAddressText>
+#end
+#if($facSiteAfflOrgComm.get("elec_addr_type_name"))
+					<cer:ElectronicAddressTypeName>$facSiteAfflOrgComm.get("elec_addr_type_name")</cer:ElectronicAddressTypeName>
+#end
+				</cer:OrganizationCommunication>
+#end ##foreach($facSiteAfflOrgComm)
+#foreach($facSiteAfflOrgIndv in $helper.getData("SELECT * FROM CERS_AFFL_ORG_INDV WHERE AFFL_ORG_ID = ? ", $facSiteAfflOrg.get("affl_org_id")))
+				<cer:OrganizationIndividual>
+#if($facSiteAfflOrgIndv.get("indv_title_txt"))
+					<cer:IndividualTitleText>$facSiteAfflOrgIndv.get("indv_title_txt")</cer:IndividualTitleText>
+#end
+#if($facSiteAfflOrgIndv.get("name_prefix_txt"))
+					<cer:NamePrefixText>$facSiteAfflOrgIndv.get("name_prefix_txt")</cer:NamePrefixText>
+#end
+#if($facSiteAfflOrgIndv.get("first_name"))
+					<cer:FirstName>$facSiteAfflOrgIndv.get("first_name")</cer:FirstName>
+#end
+#if($facSiteAfflOrgIndv.get("middle_name"))
+					<cer:MiddleName>$facSiteAfflOrgIndv.get("middle_name")</cer:MiddleName>
+#end
+#if($facSiteAfflOrgIndv.get("last_name"))
+					<cer:LastName>$facSiteAfflOrgIndv.get("last_name")</cer:LastName>
+#end
+#if($facSiteAfflOrgIndv.get("name_suffix_txt"))
+					<cer:NameSuffixText>$facSiteAfflOrgIndv.get("name_suffix_txt")</cer:NameSuffixText>
+#end
+#foreach($facSiteAfflOrgIndvIden in $helper.getData("SELECT * FROM CERS_AFFL_ORG_INDV_IDEN WHERE AFFL_ORG_INDV_ID = ? ", $facSiteAfflOrgIndv.get("affl_org_indv_id")))
+					<cer:IndividualIdentification>
+#if($facSiteAfflOrgIndvIden.get("iden"))
+						<cer:Identifier>$facSiteAfflOrgIndvIden.get("iden")</cer:Identifier>
+#end
+#if($facSiteAfflOrgIndvIden.get("prog_sys_code"))
+						<cer:ProgramSystemCode>$facSiteAfflOrgIndvIden.get("prog_sys_code")</cer:ProgramSystemCode>
+#end
+#if($facSiteAfflOrgIndvIden.get("effc_date"))
+						<cer:EffectiveDate>$helper.toXmlDate($facSiteAfflOrgIndvIden.get("effc_date"))</cer:EffectiveDate>
+#end
+#if($facSiteAfflOrgIndvIden.get("end_date"))
+						<cer:EndDate>$helper.toXmlDate($facSiteAfflOrgIndvIden.get("end_date"))</cer:EndDate>
+#end
+					</cer:IndividualIdentification>
+#end ##foreach($facSiteAfflOrgIndvIden)
+#foreach($facSiteAfflOrgIndvAddr in $helper.getData("SELECT * FROM CERS_AFFL_ORG_INDV_ADDR WHERE AFFL_ORG_INDV_ID = ? ", $facSiteAfflOrgIndv.get("affl_org_indv_id")))
+					<cer:IndividualAddress>
+#if($facSiteAfflOrgIndvAddr.get("mail_addr_txt"))
+						<cer:MailingAddressText>$facSiteAfflOrgIndvAddr.get("mail_addr_txt")</cer:MailingAddressText>
+#end
+#if($facSiteAfflOrgIndvAddr.get("supp_addr_txt"))
+						<cer:SupplementalAddressText>$facSiteAfflOrgIndvAddr.get("supp_addr_txt")</cer:SupplementalAddressText>
+#end
+#if($facSiteAfflOrgIndvAddr.get("mail_addr_city_name"))
+						<cer:MailingAddressCityName>$facSiteAfflOrgIndvAddr.get("mail_addr_city_name")</cer:MailingAddressCityName>
+#end
+#if($facSiteAfflOrgIndvAddr.get("mail_addr_cnty_txt"))
+						<cer:MailingAddressCountyText>$facSiteAfflOrgIndvAddr.get("mail_addr_cnty_txt")</cer:MailingAddressCountyText>
+#end
+#if($facSiteAfflOrgIndvAddr.get("mail_addr_sta_code"))
+						<cer:MailingAddressStateCode>$facSiteAfflOrgIndvAddr.get("mail_addr_sta_code")</cer:MailingAddressStateCode>
+#end
+#if($facSiteAfflOrgIndvAddr.get("mail_addr_post_code"))
+						<cer:MailingAddressPostalCode>$facSiteAfflOrgIndvAddr.get("mail_addr_post_code")</cer:MailingAddressPostalCode>
+#end
+#if($facSiteAfflOrgIndvAddr.get("mail_addr_ctry_code"))
+						<cer:MailingAddressCountryCode>$facSiteAfflOrgIndvAddr.get("mail_addr_ctry_code")</cer:MailingAddressCountryCode>
+#end
+#if($facSiteAfflOrgIndvAddr.get("loc_addr_txt"))
+						<cer:LocationAddressText>$facSiteAfflOrgIndvAddr.get("loc_addr_txt")</cer:LocationAddressText>
+#end
+#if($facSiteAfflOrgIndvAddr.get("supp_loc_txt"))
+						<cer:SupplementalLocationText>$facSiteAfflOrgIndvAddr.get("supp_loc_txt")</cer:SupplementalLocationText>
+#end
+#if($facSiteAfflOrgIndvAddr.get("loca_name"))
+						<cer:LocalityName>$facSiteAfflOrgIndvAddr.get("loca_name")</cer:LocalityName>
+#end
+#if($facSiteAfflOrgIndvAddr.get("loc_addr_sta_code"))
+						<cer:LocationAddressStateCode>$facSiteAfflOrgIndvAddr.get("loc_addr_sta_code")</cer:LocationAddressStateCode>
+#end
+#if($facSiteAfflOrgIndvAddr.get("loc_addr_post_code"))
+						<cer:LocationAddressPostalCode>$facSiteAfflOrgIndvAddr.get("loc_addr_post_code")</cer:LocationAddressPostalCode>
+#end
+#if($facSiteAfflOrgIndvAddr.get("loc_addr_ctry_code"))
+						<cer:LocationAddressCountryCode>$facSiteAfflOrgIndvAddr.get("loc_addr_ctry_code")</cer:LocationAddressCountryCode>
+#end
+#if($facSiteAfflOrgIndvAddr.get("addr_cmnt"))
+						<cer:AddressComment>$facSiteAfflOrgIndvAddr.get("addr_cmnt")</cer:AddressComment>
+#end
+					</cer:IndividualAddress>
+#end ##foreach($facSiteAfflOrgIndvAddr)
+#foreach($facSiteAfflOrgIndvComm in $helper.getData("SELECT * FROM CERS_AFFL_ORG_INDV_COMMUN WHERE AFFL_ORG_INDV_ID = ? ", $facSiteAfflOrgIndv.get("affl_org_indv_id")))
+					<cer:IndividualCommunication>
+#if($facSiteAfflOrgIndvComm.get("tele_num_txt"))
+						<cer:TelephoneNumberText>$facSiteAfflOrgIndvComm.get("tele_num_txt")</cer:TelephoneNumberText>
+#end
+#if($facSiteAfflOrgIndvComm.get("tele_num_type_name"))
+						<cer:TelephoneNumberTypeName>$facSiteAfflOrgIndvComm.get("tele_num_type_name")</cer:TelephoneNumberTypeName>
+#end
+#if($facSiteAfflOrgIndvComm.get("tele_ext_num_txt"))
+						<cer:TelephoneExtensionNumberText>$facSiteAfflOrgIndvComm.get("tele_ext_num_txt")</cer:TelephoneExtensionNumberText>
+#end
+#if($facSiteAfflOrgIndvComm.get("elec_addr_txt"))
+						<cer:ElectronicAddressText>$facSiteAfflOrgIndvComm.get("elec_addr_txt")</cer:ElectronicAddressText>
+#end
+#if($facSiteAfflOrgIndvComm.get("elec_addr_type_name"))
+						<cer:ElectronicAddressTypeName>$facSiteAfflOrgIndvComm.get("elec_addr_type_name")</cer:ElectronicAddressTypeName>
+#end
+					</cer:IndividualCommunication>
+#end ##foreach($facSiteAfflOrgIndvComm)
+				</cer:OrganizationIndividual>
+#end ##foreach($facSiteAfflOrgIndv)
+#if($facSiteAfflOrg.get("atch_file_name") || $facSiteAfflOrg.get("atch_file_desc") || $facSiteAfflOrg.get("atch_file_size") || $facSiteAfflOrg.get("atch_file_cont_type_code"))
+				<cer:OrganizationAttachedFile>
+#if($facSiteAfflOrg.get("atch_file_name"))
+					<cer:AttachmentFileName>$facSiteAfflOrg.get("atch_file_name")</cer:AttachmentFileName>
+#end
+#if($facSiteAfflOrg.get("atch_file_desc"))
+					<cer:AttachmentFileDescription>$facSiteAfflOrg.get("atch_file_desc")</cer:AttachmentFileDescription>
+#end
+#if($facSiteAfflOrg.get("atch_file_size"))
+					<cer:AttachmentFileSize>$facSiteAfflOrg.get("atch_file_size")</cer:AttachmentFileSize>
+#end
+#if($facSiteAfflOrg.get("atch_file_cont_type_code"))
+					<cer:AttachmentFileContentTypeCode>$facSiteAfflOrg.get("atch_file_cont_type_code")</cer:AttachmentFileContentTypeCode>
+#end
+				</cer:OrganizationAttachedFile>
+#end ##if($facSiteAfflOrg.get("atch_file_name") || $facSiteAfflOrg.get("atch_file_desc")...)
+			</cer:AffiliationOrganization>
+#end ##foreach($facSiteAfflOrg)
+#foreach($facSiteAfflIndv in $helper.getData("SELECT * FROM CERS_AFFL_INDV WHERE AFFL_ID = ? ", $facSiteAffl.get("affl_id")))
+			<cer:AffiliationIndividual>
+#if($facSiteAfflIndv.get("indv_title_txt"))
+				<cer:IndividualTitleText>$facSiteAfflIndv.get("indv_title_txt")</cer:IndividualTitleText>
+#end
+#if($facSiteAfflIndv.get("name_prefix_txt"))
+				<cer:NamePrefixText>$facSiteAfflIndv.get("name_prefix_txt")</cer:NamePrefixText>
+#end
+#if($facSiteAfflIndv.get("first_name"))
+				<cer:FirstName>$facSiteAfflIndv.get("first_name")</cer:FirstName>
+#end
+#if($facSiteAfflIndv.get("middle_name"))
+				<cer:MiddleName>$facSiteAfflIndv.get("middle_name")</cer:MiddleName>
+#end
+#if($facSiteAfflIndv.get("last_name"))
+				<cer:LastName>$facSiteAfflIndv.get("last_name")</cer:LastName>
+#end
+#if($facSiteAfflIndv.get("name_suffix_txt"))
+				<cer:NameSuffixText>$facSiteAfflIndv.get("name_suffix_txt")</cer:NameSuffixText>
+#end
+#foreach($facSiteAfflIndvIden in $helper.getData("SELECT * FROM CERS_AFFL_INDV_IDEN WHERE AFFL_INDV_ID = ? ", $facSiteAfflIndv.get("affl_indv_id")))
+				<cer:IndividualIdentification>
+#if($facSiteAfflIndvIden.get("iden"))
+					<cer:Identifier>$facSiteAfflIndvIden.get("iden")</cer:Identifier>
+#end
+#if($facSiteAfflIndvIden.get("prog_sys_code"))
+					<cer:ProgramSystemCode>$facSiteAfflIndvIden.get("prog_sys_code")</cer:ProgramSystemCode>
+#end
+#if($facSiteAfflIndvIden.get("effc_date"))
+					<cer:EffectiveDate>$helper.toXmlDate($facSiteAfflIndvIden.get("effc_date"))</cer:EffectiveDate>
+#end
+#if($facSiteAfflIndvIden.get("end_date"))
+					<cer:EndDate>$helper.toXmlDate($facSiteAfflIndvIden.get("end_date"))</cer:EndDate>
+#end
+				</cer:IndividualIdentification>
+#end ##foreach($facSiteAfflIndvIden)
+#foreach($facSiteAfflIndvAddr in $helper.getData("SELECT * FROM CERS_AFFL_INDV_ADDR WHERE AFFL_INDV_ID = ? ", $facSiteAfflIndv.get("affl_indv_id")))
+				<cer:IndividualAddress>
+#if($facSiteAfflIndvAddr.get("mail_addr_txt"))
+					<cer:MailingAddressText>$facSiteAfflIndvAddr.get("mail_addr_txt")</cer:MailingAddressText>
+#end
+#if($facSiteAfflIndvAddr.get("supp_addr_txt"))
+					<cer:SupplementalAddressText>$facSiteAfflIndvAddr.get("supp_addr_txt")</cer:SupplementalAddressText>
+#end
+#if($facSiteAfflIndvAddr.get("mail_addr_city_name"))
+					<cer:MailingAddressCityName>$facSiteAfflIndvAddr.get("mail_addr_city_name")</cer:MailingAddressCityName>
+#end
+#if($facSiteAfflIndvAddr.get("mail_addr_cnty_txt"))
+					<cer:MailingAddressCountyText>$facSiteAfflIndvAddr.get("mail_addr_cnty_txt")</cer:MailingAddressCountyText>
+#end
+#if($facSiteAfflIndvAddr.get("mail_addr_sta_code"))
+					<cer:MailingAddressStateCode>$facSiteAfflIndvAddr.get("mail_addr_sta_code")</cer:MailingAddressStateCode>
+#end
+#if($facSiteAfflIndvAddr.get("mail_addr_post_code"))
+					<cer:MailingAddressPostalCode>$facSiteAfflIndvAddr.get("mail_addr_post_code")</cer:MailingAddressPostalCode>
+#end
+#if($facSiteAfflIndvAddr.get("mail_addr_ctry_code"))
+					<cer:MailingAddressCountryCode>$facSiteAfflIndvAddr.get("mail_addr_ctry_code")</cer:MailingAddressCountryCode>
+#end
+#if($facSiteAfflIndvAddr.get("loc_addr_txt"))
+					<cer:LocationAddressText>$facSiteAfflIndvAddr.get("loc_addr_txt")</cer:LocationAddressText>
+#end
+#if($facSiteAfflIndvAddr.get("supp_loc_txt"))
+					<cer:SupplementalLocationText>$facSiteAfflIndvAddr.get("supp_loc_txt")</cer:SupplementalLocationText>
+#end
+#if($facSiteAfflIndvAddr.get("loca_name"))
+					<cer:LocalityName>$facSiteAfflIndvAddr.get("loca_name")</cer:LocalityName>
+#end
+#if($facSiteAfflIndvAddr.get("loc_addr_sta_code"))
+					<cer:LocationAddressStateCode>$facSiteAfflIndvAddr.get("loc_addr_sta_code")</cer:LocationAddressStateCode>
+#end
+#if($facSiteAfflIndvAddr.get("loc_addr_post_code"))
+					<cer:LocationAddressPostalCode>$facSiteAfflIndvAddr.get("loc_addr_post_code")</cer:LocationAddressPostalCode>
+#end
+#if($facSiteAfflIndvAddr.get("loc_addr_ctry_code"))
+					<cer:LocationAddressCountryCode>$facSiteAfflIndvAddr.get("loc_addr_ctry_code")</cer:LocationAddressCountryCode>
+#end
+#if($facSiteAfflIndvAddr.get("addr_cmnt"))
+					<cer:AddressComment>$facSiteAfflIndvAddr.get("addr_cmnt")</cer:AddressComment>
+#end
+				</cer:IndividualAddress>
+#end ##foreach($facSiteAfflIndvAddr)
+#foreach($facSiteAfflIndvComm in $helper.getData("SELECT * FROM CERS_AFFL_INDV_COMMUN WHERE AFFL_INDV_ID = ? ", $facSiteAfflIndv.get("affl_indv_id")))
+				<cer:IndividualCommunication>
+#if($facSiteAfflIndvComm.get("tele_num_txt"))
+					<cer:TelephoneNumberText>$facSiteAfflIndvComm.get("tele_num_txt")</cer:TelephoneNumberText>
+#end
+#if($facSiteAfflIndvComm.get("tele_num_type_name"))
+					<cer:TelephoneNumberTypeName>$facSiteAfflIndvComm.get("tele_num_type_name")</cer:TelephoneNumberTypeName>
+#end
+#if($facSiteAfflIndvComm.get("tele_ext_num_txt"))
+					<cer:TelephoneExtensionNumberText>$facSiteAfflIndvComm.get("tele_ext_num_txt")</cer:TelephoneExtensionNumberText>
+#end
+#if($facSiteAfflIndvComm.get("elec_addr_txt"))
+					<cer:ElectronicAddressText>$facSiteAfflIndvComm.get("elec_addr_txt")</cer:ElectronicAddressText>
+#end
+#if($facSiteAfflIndvComm.get("elec_addr_type_name"))
+					<cer:ElectronicAddressTypeName>$facSiteAfflIndvComm.get("elec_addr_type_name")</cer:ElectronicAddressTypeName>
+#end
+				</cer:IndividualCommunication>
+#end ##foreach($facSiteAfflIndvComm)
+			</cer:AffiliationIndividual>
+#end ##foreach($facSiteAfflIndv)
+		</cer:FacilitySiteAffiliation>
+#end ##foreach($facSiteAffl)
+#foreach($facEmisUnit in $helper.getData("SELECT * FROM CERS_EMIS_UNIT WHERE FAC_SITE_ID = ? ", $facSite.get("fac_site_id")))
+		<cer:EmissionsUnit>
+#if($facEmisUnit.get("scope"))
+			<cer:Scope>$facEmisUnit.get("scope")</cer:Scope>
+#end
+#if($facEmisUnit.get("unit_desc"))
+			<cer:UnitDescription>$facEmisUnit.get("unit_desc")</cer:UnitDescription>
+#end
+#if($facEmisUnit.get("unit_type_code"))
+			<cer:UnitTypeCode>$facEmisUnit.get("unit_type_code")</cer:UnitTypeCode>
+#end
+#if($facEmisUnit.get("unit_src_loc"))
+			<cer:UnitSourceLocation>$facEmisUnit.get("unit_src_loc")</cer:UnitSourceLocation>
+#end
+#if($facEmisUnit.get("insig_src_ind"))
+			<cer:InsignificantSourceIndicator>$facEmisUnit.get("insig_src_ind")</cer:InsignificantSourceIndicator>
+#end
+#if($facEmisUnit.get("unit_dsgn_cap"))
+			<cer:UnitDesignCapacity>$facEmisUnit.get("unit_dsgn_cap")</cer:UnitDesignCapacity>
+#end
+#if($facEmisUnit.get("unit_dsgn_cap_unt_meas_code"))
+			<cer:UnitDesignCapacityUnitofMeasureCode>$facEmisUnit.get("unit_dsgn_cap_unt_meas_code")</cer:UnitDesignCapacityUnitofMeasureCode>
+#end
+#if($facEmisUnit.get("unit_stat_code"))
+			<cer:UnitStatusCode>$facEmisUnit.get("unit_stat_code")</cer:UnitStatusCode>
+#end
+#if($facEmisUnit.get("unit_stat_code_year"))
+			<cer:UnitStatusCodeYear>$facEmisUnit.get("unit_stat_code_year")</cer:UnitStatusCodeYear>
+#end
+#if($facEmisUnit.get("unit_oper_date"))
+			<cer:UnitOperationDate>$helper.toXmlDate($facEmisUnit.get("unit_oper_date"))</cer:UnitOperationDate>
+#end
+#if($facEmisUnit.get("unit_commer_oper_date"))
+			<cer:UnitCommercialOperationDate>$helper.toXmlDate($facEmisUnit.get("unit_commer_oper_date"))</cer:UnitCommercialOperationDate>
+#end
+#if($facEmisUnit.get("unit_cmnt"))
+			<cer:UnitComment>$facEmisUnit.get("unit_cmnt")</cer:UnitComment>
+#end
+#foreach($facEmisUnitQltyIden in $helper.getData("SELECT * FROM CERS_EMIS_UNIT_QLTY_IDEN WHERE EMIS_UNIT_ID = ? ", $facEmisUnit.get("emis_unit_id")))
+			<cer:UnitQualityIdentification>
+#if($facEmisUnitQltyIden.get("qlty_iden"))
+				<cer:QualityIdentifier>$facEmisUnitQltyIden.get("qlty_iden")</cer:QualityIdentifier>
+#end
+#if($facEmisUnitQltyIden.get("prog_sys_code"))
+				<cer:ProgramSystemCode>$facEmisUnitQltyIden.get("prog_sys_code")</cer:ProgramSystemCode>
+#end
+			</cer:UnitQualityIdentification>
+#end ##foreach($facEmisUnitQltyIden)
+#foreach($facEmisUnitIden in $helper.getData("SELECT * FROM CERS_EMIS_UNIT_IDEN WHERE EMIS_UNIT_ID = ? ", $facEmisUnit.get("emis_unit_id")))
+			<cer:UnitIdentification>
+#if($facEmisUnitIden.get("iden"))
+				<cer:Identifier>$facEmisUnitIden.get("iden")</cer:Identifier>
+#end
+#if($facEmisUnitIden.get("prog_sys_code"))
+				<cer:ProgramSystemCode>$facEmisUnitIden.get("prog_sys_code")</cer:ProgramSystemCode>
+#end
+#if($facEmisUnitIden.get("effc_date"))
+				<cer:EffectiveDate>$helper.toXmlDate($facEmisUnitIden.get("effc_date"))</cer:EffectiveDate>
+#end
+#if($facEmisUnitIden.get("end_date"))
+				<cer:EndDate>$helper.toXmlDate($facEmisUnitIden.get("end_date"))</cer:EndDate>
+#end
+			</cer:UnitIdentification>
+#end ##foreach($facEmisUnitIden)
+#foreach($facEmisUnitRgln in $helper.getData("SELECT * FROM CERS_EMIS_UNIT_RGLN WHERE EMIS_UNIT_ID = ? ", $facEmisUnit.get("emis_unit_id")))
+			<cer:UnitRegulation>
+#if($facEmisUnitRgln.get("rgtry_code"))
+				<cer:RegulatoryCode>$facEmisUnitRgln.get("rgtry_code")</cer:RegulatoryCode>
+#end
+#if($facEmisUnitRgln.get("agn_code_txt"))
+				<cer:AgencyCodeText>$facEmisUnitRgln.get("agn_code_txt")</cer:AgencyCodeText>
+#end
+#if($facEmisUnitRgln.get("rgtry_start_year"))
+				<cer:RegulatoryStartYear>$facEmisUnitRgln.get("rgtry_start_year")</cer:RegulatoryStartYear>
+#end
+#if($facEmisUnitRgln.get("rgtry_end_year"))
+				<cer:RegulatoryEndYear>$facEmisUnitRgln.get("rgtry_end_year")</cer:RegulatoryEndYear>
+#end
+#if($facEmisUnitRgln.get("rgln_cmnt"))
+				<cer:RegulationComment>$facEmisUnitRgln.get("rgln_cmnt")</cer:RegulationComment>
+#end
+			</cer:UnitRegulation>
+#end ##foreach($facEmisUnitRgln)
+#if($facEmisUnit.get("ctrl_apch_desc") || $facEmisUnit.get("pcnt_ctrl_apch_cap_efcy") || $facEmisUnit.get("pcnt_ctrl_apch_efct") || $facEmisUnit.get("pcnt_ctrl_apch_pen") || $facEmisUnit.get("first_inven_year") || $facEmisUnit.get("last_inven_year") || $facEmisUnit.get("ctrl_apch_cmnt"))
+			<cer:UnitControlApproach>
+#if($facEmisUnit.get("ctrl_apch_desc"))
+				<cer:ControlApproachDescription>$facEmisUnit.get("ctrl_apch_desc")</cer:ControlApproachDescription>
+#end
+#if($facEmisUnit.get("pcnt_ctrl_apch_cap_efcy"))
+				<cer:PercentControlApproachCaptureEfficiency>$facEmisUnit.get("pcnt_ctrl_apch_cap_efcy")</cer:PercentControlApproachCaptureEfficiency>
+#end
+#if($facEmisUnit.get("pcnt_ctrl_apch_efct"))
+				<cer:PercentControlApproachEffectiveness>$facEmisUnit.get("pcnt_ctrl_apch_efct")</cer:PercentControlApproachEffectiveness>
+#end
+#if($facEmisUnit.get("pcnt_ctrl_apch_pen"))
+				<cer:PercentControlApproachPenetration>$facEmisUnit.get("pcnt_ctrl_apch_pen")</cer:PercentControlApproachPenetration>
+#end
+#if($facEmisUnit.get("first_inven_year"))
+				<cer:FirstInventoryYear>$facEmisUnit.get("first_inven_year")</cer:FirstInventoryYear>
+#end
+#if($facEmisUnit.get("last_inven_year"))
+				<cer:LastInventoryYear>$facEmisUnit.get("last_inven_year")</cer:LastInventoryYear>
+#end
+#if($facEmisUnit.get("ctrl_apch_cmnt"))
+				<cer:ControlApproachComment>$facEmisUnit.get("ctrl_apch_cmnt")</cer:ControlApproachComment>
+#end
+#foreach($facEmisUnitCtrlApchCtrlMs in $helper.getData("SELECT * FROM CERS_EMS_UNT_CTRL_APCH_CTRL_MS WHERE EMIS_UNIT_ID = ? ", $facEmisUnit.get("emis_unit_id")))
+				<cer:ControlMeasure>
+#if($facEmisUnitCtrlApchCtrlMs.get("ctrl_meas_code"))
+					<cer:ControlMeasureCode>$facEmisUnitCtrlApchCtrlMs.get("ctrl_meas_code")</cer:ControlMeasureCode>
+#end
+#if($facEmisUnitCtrlApchCtrlMs.get("ctrl_meas_seq"))
+					<cer:ControlMeasureSequence>$facEmisUnitCtrlApchCtrlMs.get("ctrl_meas_seq")</cer:ControlMeasureSequence>
+#end
+				</cer:ControlMeasure>
+#end ##foreach($facEmisUnitCtrlApchCtrlMs)
+#foreach($facEmisUnitCtrlApchCtrlPlt in $helper.getData("SELECT * FROM CERS_EMS_UNT_CTRL_APCH_CTR_PLT WHERE EMIS_UNIT_ID = ? ", $facEmisUnit.get("emis_unit_id")))
+				<cer:ControlPollutant>
+#if($facEmisUnitCtrlApchCtrlPlt.get("polt_code"))
+					<cer:PollutantCode>$facEmisUnitCtrlApchCtrlPlt.get("polt_code")</cer:PollutantCode>
+#end
+#if($facEmisUnitCtrlApchCtrlPlt.get("pcnt_ctrl_meas_redc_efcy"))
+					<cer:PercentControlMeasuresReductionEfficiency>$facEmisUnitCtrlApchCtrlPlt.get("pcnt_ctrl_meas_redc_efcy")</cer:PercentControlMeasuresReductionEfficiency>
+#end
+				</cer:ControlPollutant>
+#end ##foreach($facEmisUnitCtrlApchCtrlPlt)
+			</cer:UnitControlApproach>
+#end ##if($facEmisUnit.get("ctrl_apch_desc") || $facEmisUnit.get("pcnt_ctrl_apch_cap_efcy")...)
+#foreach($facEmisUnitProc in $helper.getData("SELECT * FROM CERS_EMIS_UNIT_PROC WHERE EMIS_UNIT_ID = ? ", $facEmisUnit.get("emis_unit_id")))
+			<cer:UnitEmissionsProcess>
+#if($facEmisUnitProc.get("src_class_code"))
+				<cer:SourceClassificationCode>$facEmisUnitProc.get("src_class_code")</cer:SourceClassificationCode>
+#end
+#if($facEmisUnitProc.get("emis_type_code"))
+				<cer:EmissionsTypeCode>$facEmisUnitProc.get("emis_type_code")</cer:EmissionsTypeCode>
+#end
+#if($facEmisUnitProc.get("aircraft_engine_type_code"))
+				<cer:AircraftEngineTypeCode>$facEmisUnitProc.get("aircraft_engine_type_code")</cer:AircraftEngineTypeCode>
+#end
+#if($facEmisUnitProc.get("proc_type_code"))
+				<cer:ProcessTypeCode>$facEmisUnitProc.get("proc_type_code")</cer:ProcessTypeCode>
+#end
+#if($facEmisUnitProc.get("proc_desc"))
+				<cer:ProcessDescription>$facEmisUnitProc.get("proc_desc")</cer:ProcessDescription>
+#end
+#if($facEmisUnitProc.get("last_emis_year"))
+				<cer:LastEmissionsYear>$facEmisUnitProc.get("last_emis_year")</cer:LastEmissionsYear>
+#end
+#if($facEmisUnitProc.get("proc_cmnt"))
+				<cer:ProcessComment>$facEmisUnitProc.get("proc_cmnt")</cer:ProcessComment>
+#end
+#foreach($facEmisUnitProcIden in $helper.getData("SELECT * FROM CERS_EMIS_UNIT_PROC_IDEN WHERE EMIS_UNIT_PROC_ID = ? ", $facEmisUnitProc.get("emis_unit_proc_id")))
+				<cer:ProcessIdentification>
+#if($facEmisUnitProcIden.get("iden"))
+					<cer:Identifier>$facEmisUnitProcIden.get("iden")</cer:Identifier>
+#end
+#if($facEmisUnitProcIden.get("prog_sys_code"))
+					<cer:ProgramSystemCode>$facEmisUnitProcIden.get("prog_sys_code")</cer:ProgramSystemCode>
+#end
+#if($facEmisUnitProcIden.get("effc_date"))
+					<cer:EffectiveDate>$helper.toXmlDate($facEmisUnitProcIden.get("effc_date"))</cer:EffectiveDate>
+#end
+#if($facEmisUnitProcIden.get("end_date"))
+					<cer:EndDate>$helper.toXmlDate($facEmisUnitProcIden.get("end_date"))</cer:EndDate>
+#end
+				</cer:ProcessIdentification>
+#end ##foreach($facEmisUnitProcIden)
+#foreach($facEmisUnitProcRgln in $helper.getData("SELECT * FROM CERS_EMIS_UNIT_PROC_RGLN WHERE EMIS_UNIT_PROC_ID = ? ", $facEmisUnitProc.get("emis_unit_proc_id")))
+				<cer:ProcessRegulation>
+#if($facEmisUnitProcRgln.get("rgtry_code"))
+					<cer:RegulatoryCode>$facEmisUnitProcRgln.get("rgtry_code")</cer:RegulatoryCode>
+#end
+#if($facEmisUnitProcRgln.get("agn_code_txt"))
+					<cer:AgencyCodeText>$facEmisUnitProcRgln.get("agn_code_txt")</cer:AgencyCodeText>
+#end
+#if($facEmisUnitProcRgln.get("rgtry_start_year"))
+					<cer:RegulatoryStartYear>$facEmisUnitProcRgln.get("rgtry_start_year")</cer:RegulatoryStartYear>
+#end
+#if($facEmisUnitProcRgln.get("rgtry_end_year"))
+					<cer:RegulatoryEndYear>$facEmisUnitProcRgln.get("rgtry_end_year")</cer:RegulatoryEndYear>
+#end
+#if($facEmisUnitProcRgln.get("rgln_cmnt"))
+					<cer:RegulationComment>$facEmisUnitProcRgln.get("rgln_cmnt")</cer:RegulationComment>
+#end
+				</cer:ProcessRegulation>
+#end ##foreach($facEmisUnitProcRgln)
+#if($facEmisUnitProc.get("ctrl_apch_desc") || $facEmisUnitProc.get("pcnt_ctrl_apch_cap_efcy") || $facEmisUnitProc.get("pcnt_ctrl_apch_efct") || $facEmisUnitProc.get("pcnt_ctrl_apch_pen") || $facEmisUnitProc.get("first_inven_year") || $facEmisUnitProc.get("last_inven_year") || $facEmisUnitProc.get("ctrl_apch_cmnt"))
+				<cer:ProcessControlApproach>
+#if($facEmisUnitProc.get("ctrl_apch_desc"))
+					<cer:ControlApproachDescription>$facEmisUnitProc.get("ctrl_apch_desc")</cer:ControlApproachDescription>
+#end
+#if($facEmisUnitProc.get("pcnt_ctrl_apch_cap_efcy"))
+					<cer:PercentControlApproachCaptureEfficiency>$facEmisUnitProc.get("pcnt_ctrl_apch_cap_efcy")</cer:PercentControlApproachCaptureEfficiency>
+#end
+#if($facEmisUnitProc.get("pcnt_ctrl_apch_efct"))
+					<cer:PercentControlApproachEffectiveness>$facEmisUnitProc.get("pcnt_ctrl_apch_efct")</cer:PercentControlApproachEffectiveness>
+#end
+#if($facEmisUnitProc.get("pcnt_ctrl_apch_pen"))
+					<cer:PercentControlApproachPenetration>$facEmisUnitProc.get("pcnt_ctrl_apch_pen")</cer:PercentControlApproachPenetration>
+#end
+#if($facEmisUnitProc.get("first_inven_year"))
+					<cer:FirstInventoryYear>$facEmisUnitProc.get("first_inven_year")</cer:FirstInventoryYear>
+#end
+#if($facEmisUnitProc.get("last_inven_year"))
+					<cer:LastInventoryYear>$facEmisUnitProc.get("last_inven_year")</cer:LastInventoryYear>
+#end
+#if($facEmisUnitProc.get("ctrl_apch_cmnt"))
+					<cer:ControlApproachComment>$facEmisUnitProc.get("ctrl_apch_cmnt")</cer:ControlApproachComment>
+#end
+#foreach($facEmisUnitPrcCtrApcCtMs in $helper.getData("SELECT * FROM CERS_EMS_UNT_PRC_CTR_APC_CT_MS WHERE EMIS_UNIT_PROC_ID = ? ", $facEmisUnitProc.get("emis_unit_proc_id")))
+					<cer:ControlMeasure>
+#if($facEmisUnitPrcCtrApcCtMs.get("ctrl_meas_code"))
+						<cer:ControlMeasureCode>$facEmisUnitPrcCtrApcCtMs.get("ctrl_meas_code")</cer:ControlMeasureCode>
+#end
+#if($facEmisUnitPrcCtrApcCtMs.get("ctrl_meas_seq"))
+						<cer:ControlMeasureSequence>$facEmisUnitPrcCtrApcCtMs.get("ctrl_meas_seq")</cer:ControlMeasureSequence>
+#end
+					</cer:ControlMeasure>
+#end ##foreach($facEmisUnitPrcCtrApcCtMs)
+#foreach($facEmisUnitPrcCtrApcCtPl in $helper.getData("SELECT * FROM CERS_EMS_UNT_PRC_CTR_APC_CT_PL WHERE EMIS_UNIT_PROC_ID = ? ", $facEmisUnitProc.get("emis_unit_proc_id")))
+					<cer:ControlPollutant>
+#if($facEmisUnitPrcCtrApcCtPl.get("polt_code"))
+						<cer:PollutantCode>$facEmisUnitPrcCtrApcCtPl.get("polt_code")</cer:PollutantCode>
+#end
+#if($facEmisUnitPrcCtrApcCtPl.get("pcnt_ctrl_meas_redc_efcy"))
+						<cer:PercentControlMeasuresReductionEfficiency>$facEmisUnitPrcCtrApcCtPl.get("pcnt_ctrl_meas_redc_efcy")</cer:PercentControlMeasuresReductionEfficiency>
+#end
+					</cer:ControlPollutant>
+#end ##foreach($facEmisUnitPrcCtrApcCtPl)
+				</cer:ProcessControlApproach>
+#end ##if($facEmisUnitProc.get("ctrl_apch_desc") || $facEmisUnitProc.get("pcnt_ctrl_apch_cap_efcy")...)
+#foreach($facEmisUnitPrcRptPrd in $helper.getData("SELECT * FROM CERS_EMIS_UNIT_PROC_RPT_PRD WHERE EMIS_UNIT_PROC_ID = ? ", $facEmisUnitProc.get("emis_unit_proc_id")))
+				<cer:ReportingPeriod>
+#if($facEmisUnitPrcRptPrd.get("rpt_prd_type_code"))
+					<cer:ReportingPeriodTypeCode>$facEmisUnitPrcRptPrd.get("rpt_prd_type_code")</cer:ReportingPeriodTypeCode>
+#end
+#if($facEmisUnitPrcRptPrd.get("emis_oper_type_code"))
+					<cer:EmissionOperatingTypeCode>$facEmisUnitPrcRptPrd.get("emis_oper_type_code")</cer:EmissionOperatingTypeCode>
+#end
+#if($facEmisUnitPrcRptPrd.get("start_date"))
+					<cer:StartDate>$helper.toXmlDate($facEmisUnitPrcRptPrd.get("start_date"))</cer:StartDate>
+#end
+#if($facEmisUnitPrcRptPrd.get("end_date"))
+					<cer:EndDate>$helper.toXmlDate($facEmisUnitPrcRptPrd.get("end_date"))</cer:EndDate>
+#end
+#if($facEmisUnitPrcRptPrd.get("calc_parm_type_code"))
+					<cer:CalculationParameterTypeCode>$facEmisUnitPrcRptPrd.get("calc_parm_type_code")</cer:CalculationParameterTypeCode>
+#end
+#if($facEmisUnitPrcRptPrd.get("calc_parm_val"))
+					<cer:CalculationParameterValue>$facEmisUnitPrcRptPrd.get("calc_parm_val")</cer:CalculationParameterValue>
+#end
+#if($facEmisUnitPrcRptPrd.get("calc_parm_unt_meas"))
+					<cer:CalculationParameterUnitofMeasure>$facEmisUnitPrcRptPrd.get("calc_parm_unt_meas")</cer:CalculationParameterUnitofMeasure>
+#end
+#if($facEmisUnitPrcRptPrd.get("calc_material_code"))
+					<cer:CalculationMaterialCode>$facEmisUnitPrcRptPrd.get("calc_material_code")</cer:CalculationMaterialCode>
+#end
+#if($facEmisUnitPrcRptPrd.get("calc_data_year"))
+					<cer:CalculationDataYear>$facEmisUnitPrcRptPrd.get("calc_data_year")</cer:CalculationDataYear>
+#end
+#if($facEmisUnitPrcRptPrd.get("calc_data_src"))
+					<cer:CalculationDataSource>$facEmisUnitPrcRptPrd.get("calc_data_src")</cer:CalculationDataSource>
+#end
+#if($facEmisUnitPrcRptPrd.get("rpt_prd_cmnt"))
+					<cer:ReportingPeriodComment>$facEmisUnitPrcRptPrd.get("rpt_prd_cmnt")</cer:ReportingPeriodComment>
+#end
+#foreach($facEmisUnitPrcRptPrdQlId in $helper.getData("SELECT * FROM CERS_EMS_UNT_PRC_RPT_PRD_QL_ID WHERE EMIS_UNIT_PROC_RPT_PRD_ID = ? ", $facEmisUnitPrcRptPrd.get("emis_unit_proc_rpt_prd_id")))
+					<cer:ReportingPeriodQualityIdentification>
+#if($facEmisUnitPrcRptPrdQlId.get("qlty_iden"))
+						<cer:QualityIdentifier>$facEmisUnitPrcRptPrdQlId.get("qlty_iden")</cer:QualityIdentifier>
+#end
+#if($facEmisUnitPrcRptPrdQlId.get("prog_sys_code"))
+						<cer:ProgramSystemCode>$facEmisUnitPrcRptPrdQlId.get("prog_sys_code")</cer:ProgramSystemCode>
+#end
+					</cer:ReportingPeriodQualityIdentification>
+#end ##foreach($facEmisUnitPrcRptPrdQlId)
+#if($facEmisUnitPrcRptPrd.get("actl_hours_per_prd") || $facEmisUnitPrcRptPrd.get("ave_days_per_week") || $facEmisUnitPrcRptPrd.get("ave_hours_per_day") || $facEmisUnitPrcRptPrd.get("ave_weeks_per_prd") || $facEmisUnitPrcRptPrd.get("pcnt_winter_act") || $facEmisUnitPrcRptPrd.get("pcnt_spring_act") || $facEmisUnitPrcRptPrd.get("pcnt_summer_act") || $facEmisUnitPrcRptPrd.get("pcnt_fall_act"))
+					<cer:OperatingDetails>
+#if($facEmisUnitPrcRptPrd.get("actl_hours_per_prd"))
+						<cer:ActualHoursPerPeriod>$facEmisUnitPrcRptPrd.get("actl_hours_per_prd")</cer:ActualHoursPerPeriod>
+#end
+#if($facEmisUnitPrcRptPrd.get("ave_days_per_week"))
+						<cer:AverageDaysPerWeek>$facEmisUnitPrcRptPrd.get("ave_days_per_week")</cer:AverageDaysPerWeek>
+#end
+#if($facEmisUnitPrcRptPrd.get("ave_hours_per_day"))
+						<cer:AverageHoursPerDay>$facEmisUnitPrcRptPrd.get("ave_hours_per_day")</cer:AverageHoursPerDay>
+#end
+#if($facEmisUnitPrcRptPrd.get("ave_weeks_per_prd"))
+						<cer:AverageWeeksPerPeriod>$facEmisUnitPrcRptPrd.get("ave_weeks_per_prd")</cer:AverageWeeksPerPeriod>
+#end
+#if($facEmisUnitPrcRptPrd.get("pcnt_winter_act"))
+						<cer:PercentWinterActivity>$facEmisUnitPrcRptPrd.get("pcnt_winter_act")</cer:PercentWinterActivity>
+#end
+#if($facEmisUnitPrcRptPrd.get("pcnt_spring_act"))
+						<cer:PercentSpringActivity>$facEmisUnitPrcRptPrd.get("pcnt_spring_act")</cer:PercentSpringActivity>
+#end
+#if($facEmisUnitPrcRptPrd.get("pcnt_summer_act"))
+						<cer:PercentSummerActivity>$facEmisUnitPrcRptPrd.get("pcnt_summer_act")</cer:PercentSummerActivity>
+#end
+#if($facEmisUnitPrcRptPrd.get("pcnt_fall_act"))
+						<cer:PercentFallActivity>$facEmisUnitPrcRptPrd.get("pcnt_fall_act")</cer:PercentFallActivity>
+#end
+					</cer:OperatingDetails>
+#end ##if($facEmisUnitPrcRptPrd.get("actl_hours_per_prd") || $facEmisUnitPrcRptPrd.get("ave_days_per_week")...)
+#foreach($facEmisUnitPrcRptPrdSpClPr in $helper.getData("SELECT * FROM CERS_EMS_UNT_PR_RP_PR_SP_CL_PR WHERE EMIS_UNIT_PROC_RPT_PRD_ID = ? ", $facEmisUnitPrcRptPrd.get("emis_unit_proc_rpt_prd_id")))
+					<cer:SupplementalCalculationParameter>
+#if($facEmisUnitPrcRptPrdSpClPr.get("supp_calc_parm_type"))
+						<cer:SupplementalCalculationParameterType>$facEmisUnitPrcRptPrdSpClPr.get("supp_calc_parm_type")</cer:SupplementalCalculationParameterType>
+#end
+#if($facEmisUnitPrcRptPrdSpClPr.get("supp_calc_parm_val"))
+						<cer:SupplementalCalculationParameterValue>$facEmisUnitPrcRptPrdSpClPr.get("supp_calc_parm_val")</cer:SupplementalCalculationParameterValue>
+#end
+#if($facEmisUnitPrcRptPrdSpClPr.get("spp_clc_prm_nm_unt_ms_cde"))
+						<cer:SupplementalCalculationParameterNumeratorUnitofMeasureCode>$facEmisUnitPrcRptPrdSpClPr.get("spp_clc_prm_nm_unt_ms_cde")</cer:SupplementalCalculationParameterNumeratorUnitofMeasureCode>
+#end
+#if($facEmisUnitPrcRptPrdSpClPr.get("spp_clc_prm_dn_unt_ms_cde"))
+						<cer:SupplementalCalculationParameterDenominatorUnitofMeasureCode>$facEmisUnitPrcRptPrdSpClPr.get("spp_clc_prm_dn_unt_ms_cde")</cer:SupplementalCalculationParameterDenominatorUnitofMeasureCode>
+#end
+#if($facEmisUnitPrcRptPrdSpClPr.get("supp_calc_parm_data_year"))
+						<cer:SupplementalCalculationParameterDataYear>$facEmisUnitPrcRptPrdSpClPr.get("supp_calc_parm_data_year")</cer:SupplementalCalculationParameterDataYear>
+#end
+#if($facEmisUnitPrcRptPrdSpClPr.get("supp_calc_parm_data_src"))
+						<cer:SupplementalCalculationParameterDataSource>$facEmisUnitPrcRptPrdSpClPr.get("supp_calc_parm_data_src")</cer:SupplementalCalculationParameterDataSource>
+#end
+#if($facEmisUnitPrcRptPrdSpClPr.get("supp_calc_parm_cmnt"))
+						<cer:SupplementalCalculationParameterComment>$facEmisUnitPrcRptPrdSpClPr.get("supp_calc_parm_cmnt")</cer:SupplementalCalculationParameterComment>
+#end
+					</cer:SupplementalCalculationParameter>
+#end ##foreach($facEmisUnitPrcRptPrdSpClPr)
+#foreach($facEmisUnitPrcRptPrdEms in $helper.getData("SELECT * FROM CERS_EMS_UNT_PRC_RPT_PRD_EMS WHERE EMIS_UNIT_PROC_RPT_PRD_ID = ? ", $facEmisUnitPrcRptPrd.get("emis_unit_proc_rpt_prd_id")))
+					<cer:ReportingPeriodEmissions>
+#if($facEmisUnitPrcRptPrdEms.get("polt_code"))
+						<cer:PollutantCode>$facEmisUnitPrcRptPrdEms.get("polt_code")</cer:PollutantCode>
+#end
+#if($facEmisUnitPrcRptPrdEms.get("total_emis"))
+						<cer:TotalEmissions>$facEmisUnitPrcRptPrdEms.get("total_emis")</cer:TotalEmissions>
+#end
+#if($facEmisUnitPrcRptPrdEms.get("emis_unt_meas_code"))
+						<cer:EmissionsUnitofMeasureCode>$facEmisUnitPrcRptPrdEms.get("emis_unt_meas_code")</cer:EmissionsUnitofMeasureCode>
+#end
+#if($facEmisUnitPrcRptPrdEms.get("emis_fac"))
+						<cer:EmissionFactor>$facEmisUnitPrcRptPrdEms.get("emis_fac")</cer:EmissionFactor>
+#end
+#if($facEmisUnitPrcRptPrdEms.get("emis_fac_num_unt_meas_code"))
+						<cer:EmissionFactorNumeratorUnitofMeasureCode>$facEmisUnitPrcRptPrdEms.get("emis_fac_num_unt_meas_code")</cer:EmissionFactorNumeratorUnitofMeasureCode>
+#end
+#if($facEmisUnitPrcRptPrdEms.get("emis_fac_den_unt_meas_code"))
+						<cer:EmissionFactorDenominatorUnitofMeasureCode>$facEmisUnitPrcRptPrdEms.get("emis_fac_den_unt_meas_code")</cer:EmissionFactorDenominatorUnitofMeasureCode>
+#end
+#if($facEmisUnitPrcRptPrdEms.get("emis_fac_form_code"))
+						<cer:EmissionFactorFormulaCode>$facEmisUnitPrcRptPrdEms.get("emis_fac_form_code")</cer:EmissionFactorFormulaCode>
+#end
+#if($facEmisUnitPrcRptPrdEms.get("emis_fac_txt"))
+						<cer:EmissionFactorText>$facEmisUnitPrcRptPrdEms.get("emis_fac_txt")</cer:EmissionFactorText>
+#end
+#if($facEmisUnitPrcRptPrdEms.get("emis_calc_meth_code"))
+						<cer:EmissionCalculationMethodCode>$facEmisUnitPrcRptPrdEms.get("emis_calc_meth_code")</cer:EmissionCalculationMethodCode>
+#end
+#if($facEmisUnitPrcRptPrdEms.get("emis_fac_ref_txt"))
+						<cer:EmissionFactorReferenceText>$facEmisUnitPrcRptPrdEms.get("emis_fac_ref_txt")</cer:EmissionFactorReferenceText>
+#end
+#if($facEmisUnitPrcRptPrdEms.get("algor_form_txt"))
+						<cer:AlgorithmFormulaText>$facEmisUnitPrcRptPrdEms.get("algor_form_txt")</cer:AlgorithmFormulaText>
+#end
+#if($facEmisUnitPrcRptPrdEms.get("algor_cmnt"))
+						<cer:AlgorithmComment>$facEmisUnitPrcRptPrdEms.get("algor_cmnt")</cer:AlgorithmComment>
+#end
+#if($facEmisUnitPrcRptPrdEms.get("calc_meth_acc_asmt_code"))
+						<cer:CalculationMethodAccuracyAssessmentCode>$facEmisUnitPrcRptPrdEms.get("calc_meth_acc_asmt_code")</cer:CalculationMethodAccuracyAssessmentCode>
+#end
+#if($facEmisUnitPrcRptPrdEms.get("emis_de_minimis_stat"))
+						<cer:EmissionsDeMinimisStatus>$facEmisUnitPrcRptPrdEms.get("emis_de_minimis_stat")</cer:EmissionsDeMinimisStatus>
+#end
+#if($facEmisUnitPrcRptPrdEms.get("emis_cmnt"))
+						<cer:EmissionsComment>$facEmisUnitPrcRptPrdEms.get("emis_cmnt")</cer:EmissionsComment>
+#end
+#if($facEmisUnitPrcRptPrdEms.get("co_2e") || $facEmisUnitPrcRptPrdEms.get("co_2e_unt_meas_code") || $facEmisUnitPrcRptPrdEms.get("co_2_conv_fac") || $facEmisUnitPrcRptPrdEms.get("co_2_conv_fac_src"))
+						<cer:CO2Equivalent>
+#if($facEmisUnitPrcRptPrdEms.get("co_2e"))
+							<cer:CO2e>$facEmisUnitPrcRptPrdEms.get("co_2e")</cer:CO2e>
+#end
+#if($facEmisUnitPrcRptPrdEms.get("co_2e_unt_meas_code"))
+							<cer:CO2eUnitofMeasureCode>$facEmisUnitPrcRptPrdEms.get("co_2e_unt_meas_code")</cer:CO2eUnitofMeasureCode>
+#end
+#if($facEmisUnitPrcRptPrdEms.get("co_2_conv_fac"))
+							<cer:CO2ConversionFactor>$facEmisUnitPrcRptPrdEms.get("co_2_conv_fac")</cer:CO2ConversionFactor>
+#end
+#if($facEmisUnitPrcRptPrdEms.get("co_2_conv_fac_src"))
+							<cer:CO2ConversionFactorSource>$facEmisUnitPrcRptPrdEms.get("co_2_conv_fac_src")</cer:CO2ConversionFactorSource>
+#end
+						</cer:CO2Equivalent>
+#end ##if($facEmisUnitPrcRptPrdEms.get("co_2e") || $facEmisUnitPrcRptPrdEms.get("co_2e_unt_meas_code")...)
+					</cer:ReportingPeriodEmissions>
+#end ##foreach($facEmisUnitPrcRptPrdEms)
+				</cer:ReportingPeriod>
+#end ##foreach($facEmisUnitPrcRptPrd)
+#foreach($facEmisUnitRelPtApp in $helper.getData("SELECT * FROM CERS_EMS_UNT_PRC_RL_PT_APPR WHERE EMIS_UNIT_PROC_ID = ? ", $facEmisUnitProc.get("emis_unit_proc_id")))
+				<cer:ReleasePointApportionment>
+#if($facEmisUnitRelPtApp.get("ave_pcnt_emis"))
+					<cer:AveragePercentEmissions>$facEmisUnitRelPtApp.get("ave_pcnt_emis")</cer:AveragePercentEmissions>
+#end
+#if($facEmisUnitRelPtApp.get("rel_pt_appr_cmnt"))
+					<cer:ReleasePointApportionmentComment>$facEmisUnitRelPtApp.get("rel_pt_appr_cmnt")</cer:ReleasePointApportionmentComment>
+#end
+#foreach($facEmisUnitRelPtAppIden in $helper.getData("SELECT * FROM CERS_EMS_UNT_PRC_RL_PT_APP_IDN WHERE EMIS_UNIT_PROC_REL_PT_APPR_ID = ? ", $facEmisUnitRelPtApp.get("emis_unit_proc_rel_pt_appr_id")))
+					<cer:ReleasePointApportionmentIdentification>
+#if($facEmisUnitRelPtAppIden.get("iden"))
+						<cer:Identifier>$facEmisUnitRelPtAppIden.get("iden")</cer:Identifier>
+#end
+#if($facEmisUnitRelPtAppIden.get("prog_sys_code"))
+						<cer:ProgramSystemCode>$facEmisUnitRelPtAppIden.get("prog_sys_code")</cer:ProgramSystemCode>
+#end
+#if($facEmisUnitRelPtAppIden.get("effc_date"))
+						<cer:EffectiveDate>$helper.toXmlDate($facEmisUnitRelPtAppIden.get("effc_date"))</cer:EffectiveDate>
+#end
+#if($facEmisUnitRelPtAppIden.get("end_date"))
+						<cer:EndDate>$helper.toXmlDate($facEmisUnitRelPtAppIden.get("end_date"))</cer:EndDate>
+#end
+					</cer:ReleasePointApportionmentIdentification>
+#end ##foreach($facEmisUnitRelPtAppIden)
+				</cer:ReleasePointApportionment>
+#end ##foreach($facEmisUnitRelPtApp)
+			</cer:UnitEmissionsProcess>
+#end ##foreach($facEmisUnitProc)
+		</cer:EmissionsUnit>
+#end ##foreach($facEmisUnit)
+#foreach($facReleasePoint in $helper.getData("SELECT * FROM CERS_REL_PT WHERE FAC_SITE_ID = ? ", $facSite.get("fac_site_id")))
+		<cer:ReleasePoint>
+#if($facReleasePoint.get("rel_pt_type_code"))
+			<cer:ReleasePointTypeCode>$facReleasePoint.get("rel_pt_type_code")</cer:ReleasePointTypeCode>
+#end
+#if($facReleasePoint.get("rel_pt_desc"))
+			<cer:ReleasePointDescription>$facReleasePoint.get("rel_pt_desc")</cer:ReleasePointDescription>
+#end
+#if($facReleasePoint.get("rel_pt_stk_hgt_meas"))
+			<cer:ReleasePointStackHeightMeasure>$facReleasePoint.get("rel_pt_stk_hgt_meas")</cer:ReleasePointStackHeightMeasure>
+#end
+#if($facReleasePoint.get("rel_pt_stk_hgt_unt_meas_code"))
+			<cer:ReleasePointStackHeightUnitofMeasureCode>$facReleasePoint.get("rel_pt_stk_hgt_unt_meas_code")</cer:ReleasePointStackHeightUnitofMeasureCode>
+#end
+#if($facReleasePoint.get("rel_pt_stk_dia_meas"))
+			<cer:ReleasePointStackDiameterMeasure>$facReleasePoint.get("rel_pt_stk_dia_meas")</cer:ReleasePointStackDiameterMeasure>
+#end
+#if($facReleasePoint.get("rel_pt_stk_dia_unt_meas_code"))
+			<cer:ReleasePointStackDiameterUnitofMeasureCode>$facReleasePoint.get("rel_pt_stk_dia_unt_meas_code")</cer:ReleasePointStackDiameterUnitofMeasureCode>
+#end
+#if($facReleasePoint.get("rel_pt_exit_gas_vel_meas"))
+			<cer:ReleasePointExitGasVelocityMeasure>$facReleasePoint.get("rel_pt_exit_gas_vel_meas")</cer:ReleasePointExitGasVelocityMeasure>
+#end
+#if($facReleasePoint.get("rl_pt_ext_gs_vl_unt_ms_cde"))
+			<cer:ReleasePointExitGasVelocityUnitofMeasureCode>$facReleasePoint.get("rl_pt_ext_gs_vl_unt_ms_cde")</cer:ReleasePointExitGasVelocityUnitofMeasureCode>
+#end
+#if($facReleasePoint.get("rel_pt_exit_gas_flow_rate_meas"))
+			<cer:ReleasePointExitGasFlowRateMeasure>$facReleasePoint.get("rel_pt_exit_gas_flow_rate_meas")</cer:ReleasePointExitGasFlowRateMeasure>
+#end
+#if($facReleasePoint.get("rl_pt_ext_gs_flw_rte_unt_ms_cd"))
+			<cer:ReleasePointExitGasFlowRateUnitofMeasureCode>$facReleasePoint.get("rl_pt_ext_gs_flw_rte_unt_ms_cd")</cer:ReleasePointExitGasFlowRateUnitofMeasureCode>
+#end
+#if($facReleasePoint.get("rel_pt_exit_gas_tmp_meas"))
+			<cer:ReleasePointExitGasTemperatureMeasure>$facReleasePoint.get("rel_pt_exit_gas_tmp_meas")</cer:ReleasePointExitGasTemperatureMeasure>
+#end
+#if($facReleasePoint.get("rel_pt_fence_line_dist_meas"))
+			<cer:ReleasePointFenceLineDistanceMeasure>$facReleasePoint.get("rel_pt_fence_line_dist_meas")</cer:ReleasePointFenceLineDistanceMeasure>
+#end
+#if($facReleasePoint.get("rl_pt_fnce_lne_dst_unt_ms_cde"))
+			<cer:ReleasePointFenceLineDistanceUnitofMeasureCode>$facReleasePoint.get("rl_pt_fnce_lne_dst_unt_ms_cde")</cer:ReleasePointFenceLineDistanceUnitofMeasureCode>
+#end
+#if($facReleasePoint.get("rel_pt_fgtv_hgt_meas"))
+			<cer:ReleasePointFugitiveHeightMeasure>$facReleasePoint.get("rel_pt_fgtv_hgt_meas")</cer:ReleasePointFugitiveHeightMeasure>
+#end
+#if($facReleasePoint.get("rel_pt_fgtv_hgt_unt_meas_code"))
+			<cer:ReleasePointFugitiveHeightUnitofMeasureCode>$facReleasePoint.get("rel_pt_fgtv_hgt_unt_meas_code")</cer:ReleasePointFugitiveHeightUnitofMeasureCode>
+#end
+#if($facReleasePoint.get("rel_pt_fgtv_wid_meas"))
+			<cer:ReleasePointFugitiveWidthMeasure>$facReleasePoint.get("rel_pt_fgtv_wid_meas")</cer:ReleasePointFugitiveWidthMeasure>
+#end
+#if($facReleasePoint.get("rel_pt_fgtv_wid_unt_meas_code"))
+			<cer:ReleasePointFugitiveWidthUnitofMeasureCode>$facReleasePoint.get("rel_pt_fgtv_wid_unt_meas_code")</cer:ReleasePointFugitiveWidthUnitofMeasureCode>
+#end
+#if($facReleasePoint.get("rel_pt_fgtv_len_meas"))
+			<cer:ReleasePointFugitiveLengthMeasure>$facReleasePoint.get("rel_pt_fgtv_len_meas")</cer:ReleasePointFugitiveLengthMeasure>
+#end
+#if($facReleasePoint.get("rel_pt_fgtv_len_unt_meas_code"))
+			<cer:ReleasePointFugitiveLengthUnitofMeasureCode>$facReleasePoint.get("rel_pt_fgtv_len_unt_meas_code")</cer:ReleasePointFugitiveLengthUnitofMeasureCode>
+#end
+#if($facReleasePoint.get("rel_pt_fgtv_angle_meas"))
+			<cer:ReleasePointFugitiveAngleMeasure>$facReleasePoint.get("rel_pt_fgtv_angle_meas")</cer:ReleasePointFugitiveAngleMeasure>
+#end
+#if($facReleasePoint.get("rel_pt_cmnt"))
+			<cer:ReleasePointComment>$facReleasePoint.get("rel_pt_cmnt")</cer:ReleasePointComment>
+#end
+#if($facReleasePoint.get("rel_pt_stat_code"))
+			<cer:ReleasePointStatusCode>$facReleasePoint.get("rel_pt_stat_code")</cer:ReleasePointStatusCode>
+#end
+#if($facReleasePoint.get("rel_pt_stat_code_year"))
+			<cer:ReleasePointStatusCodeYear>$facReleasePoint.get("rel_pt_stat_code_year")</cer:ReleasePointStatusCodeYear>
+#end
+#foreach($facReleasePointIden in $helper.getData("SELECT * FROM CERS_REL_PT_IDEN WHERE REL_PT_ID = ? ", $facReleasePoint.get("rel_pt_id")))
+			<cer:ReleasePointIdentification>
+#if($facReleasePointIden.get("iden"))
+				<cer:Identifier>$facReleasePointIden.get("iden")</cer:Identifier>
+#end
+#if($facReleasePointIden.get("prog_sys_code"))
+				<cer:ProgramSystemCode>$facReleasePointIden.get("prog_sys_code")</cer:ProgramSystemCode>
+#end
+#if($facReleasePointIden.get("effc_date"))
+				<cer:EffectiveDate>$helper.toXmlDate($facReleasePointIden.get("effc_date"))</cer:EffectiveDate>
+#end
+#if($facReleasePointIden.get("end_date"))
+				<cer:EndDate>$helper.toXmlDate($facReleasePointIden.get("end_date"))</cer:EndDate>
+#end
+			</cer:ReleasePointIdentification>
+#end ##foreach($facReleasePointIden)
+#foreach($facReleasePointTest in $helper.getData("SELECT * FROM CERS_REL_PT_TST WHERE REL_PT_ID = ? ", $facReleasePoint.get("rel_pt_id")))
+			<cer:ReleasePointTest>
+#if($facReleasePointTest.get("rel_pt_plume_hgt_meas"))
+				<cer:ReleasePointPlumeHeightMeasure>$facReleasePointTest.get("rel_pt_plume_hgt_meas")</cer:ReleasePointPlumeHeightMeasure>
+#end
+#if($facReleasePointTest.get("rel_pt_plume_hgt_unt_meas_code"))
+				<cer:ReleasePointPlumeHeightUnitofMeasureCode>$facReleasePointTest.get("rel_pt_plume_hgt_unt_meas_code")</cer:ReleasePointPlumeHeightUnitofMeasureCode>
+#end
+#if($facReleasePointTest.get("pcnt_oxygen_cont"))
+				<cer:PercentOxygenContent>$facReleasePointTest.get("pcnt_oxygen_cont")</cer:PercentOxygenContent>
+#end
+#if($facReleasePointTest.get("pcnt_mois_cont"))
+				<cer:PercentMoistureContent>$facReleasePointTest.get("pcnt_mois_cont")</cer:PercentMoistureContent>
+#end
+#if($facReleasePointTest.get("rel_pt_tst_date"))
+				<cer:ReleasePointTestDate>$helper.toXmlDate($facReleasePointTest.get("rel_pt_tst_date"))</cer:ReleasePointTestDate>
+#end
+			</cer:ReleasePointTest>
+#end ##foreach($facReleasePointTest)
+#if($facReleasePoint.get("lat_meas") || $facReleasePoint.get("long_meas") || $facReleasePoint.get("src_map_scale_num") || $facReleasePoint.get("horz_acc_meas") || $facReleasePoint.get("horz_acc_unt_meas") || $facReleasePoint.get("horz_coll_meth_code") || $facReleasePoint.get("horz_ref_datum_code") || $facReleasePoint.get("geo_ref_pt_code") || $facReleasePoint.get("data_coll_date") || $facReleasePoint.get("geo_cmnt") || $facReleasePoint.get("vert_meas") || $facReleasePoint.get("vert_unt_meas_code") || $facReleasePoint.get("vert_coll_meth_code") || $facReleasePoint.get("vert_ref_datum_code") || $facReleasePoint.get("verf_meth_code") || $facReleasePoint.get("coord_data_src_code") || $facReleasePoint.get("geom_type_code") || $facReleasePoint.get("area_wtin_perm") || $facReleasePoint.get("area_wtin_perm_unt_meas_code") || $facReleasePoint.get("pcnt_area_prod_emis"))
+			<cer:ReleasePointGeographicCoordinates>
+#if($facReleasePoint.get("lat_meas"))
+				<cer:LatitudeMeasure>$facReleasePoint.get("lat_meas")</cer:LatitudeMeasure>
+#end
+#if($facReleasePoint.get("long_meas"))
+				<cer:LongitudeMeasure>$facReleasePoint.get("long_meas")</cer:LongitudeMeasure>
+#end
+#if($facReleasePoint.get("src_map_scale_num"))
+				<cer:SourceMapScaleNumber>$facReleasePoint.get("src_map_scale_num")</cer:SourceMapScaleNumber>
+#end
+#if($facReleasePoint.get("horz_acc_meas"))
+				<cer:HorizontalAccuracyMeasure>$facReleasePoint.get("horz_acc_meas")</cer:HorizontalAccuracyMeasure>
+#end
+#if($facReleasePoint.get("horz_acc_unt_meas"))
+				<cer:HorizontalAccuracyUnitofMeasure>$facReleasePoint.get("horz_acc_unt_meas")</cer:HorizontalAccuracyUnitofMeasure>
+#end
+#if($facReleasePoint.get("horz_coll_meth_code"))
+				<cer:HorizontalCollectionMethodCode>$facReleasePoint.get("horz_coll_meth_code")</cer:HorizontalCollectionMethodCode>
+#end
+#if($facReleasePoint.get("horz_ref_datum_code"))
+				<cer:HorizontalReferenceDatumCode>$facReleasePoint.get("horz_ref_datum_code")</cer:HorizontalReferenceDatumCode>
+#end
+#if($facReleasePoint.get("geo_ref_pt_code"))
+				<cer:GeographicReferencePointCode>$facReleasePoint.get("geo_ref_pt_code")</cer:GeographicReferencePointCode>
+#end
+#if($facReleasePoint.get("data_coll_date"))
+				<cer:DataCollectionDate>$helper.toXmlDate($facReleasePoint.get("data_coll_date"))</cer:DataCollectionDate>
+#end
+#if($facReleasePoint.get("geo_cmnt"))
+				<cer:GeographicComment>$facReleasePoint.get("geo_cmnt")</cer:GeographicComment>
+#end
+#if($facReleasePoint.get("vert_meas"))
+				<cer:VerticalMeasure>$facReleasePoint.get("vert_meas")</cer:VerticalMeasure>
+#end
+#if($facReleasePoint.get("vert_unt_meas_code"))
+				<cer:VerticalUnitofMeasureCode>$facReleasePoint.get("vert_unt_meas_code")</cer:VerticalUnitofMeasureCode>
+#end
+#if($facReleasePoint.get("vert_coll_meth_code"))
+				<cer:VerticalCollectionMethodCode>$facReleasePoint.get("vert_coll_meth_code")</cer:VerticalCollectionMethodCode>
+#end
+#if($facReleasePoint.get("vert_ref_datum_code"))
+				<cer:VerticalReferenceDatumCode>$facReleasePoint.get("vert_ref_datum_code")</cer:VerticalReferenceDatumCode>
+#end
+#if($facReleasePoint.get("verf_meth_code"))
+				<cer:VerificationMethodCode>$facReleasePoint.get("verf_meth_code")</cer:VerificationMethodCode>
+#end
+#if($facReleasePoint.get("coord_data_src_code"))
+				<cer:CoordinateDataSourceCode>$facReleasePoint.get("coord_data_src_code")</cer:CoordinateDataSourceCode>
+#end
+#if($facReleasePoint.get("geom_type_code"))
+				<cer:GeometricTypeCode>$facReleasePoint.get("geom_type_code")</cer:GeometricTypeCode>
+#end
+#if($facReleasePoint.get("area_wtin_perm"))
+				<cer:AreaWithinPerimeter>$facReleasePoint.get("area_wtin_perm")</cer:AreaWithinPerimeter>
+#end
+#if($facReleasePoint.get("area_wtin_perm_unt_meas_code"))
+				<cer:AreaWithinPerimeterUnitofMeasureCode>$facReleasePoint.get("area_wtin_perm_unt_meas_code")</cer:AreaWithinPerimeterUnitofMeasureCode>
+#end
+#if($facReleasePoint.get("pcnt_area_prod_emis"))
+				<cer:PercentofAreaProducingEmissions>$facReleasePoint.get("pcnt_area_prod_emis")</cer:PercentofAreaProducingEmissions>
+#end
+			</cer:ReleasePointGeographicCoordinates>
+#end ##if($facReleasePoint.get("lat_meas") || $facReleasePoint.get("long_meas")...)
+		</cer:ReleasePoint>
+#end ##foreach($facReleasePoint)
+	</cer:FacilitySite>
+#end##foreach($facSite 
+#parse("eis_foot.vm")

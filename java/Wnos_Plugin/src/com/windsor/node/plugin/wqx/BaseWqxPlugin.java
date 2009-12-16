@@ -1,5 +1,6 @@
 package com.windsor.node.plugin.wqx;
 
+import java.io.File;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -27,20 +28,20 @@ public abstract class BaseWqxPlugin extends BaseWnosPlugin implements
      * Index position for schedule argument (organization id for the data
      * query).
      */
-    protected static final int ORG_ID_ARG_INDEX = 0;
+    protected static final int PARAM_INDEX_ORGID = 0;
 
     /**
      * Required runtime argument, set in service configuration.
      */
     protected static final String ARG_PARTNER_NAME = "Submission Partner Name";
     /* Helpers */
-    protected SettingServiceProvider settingService;
-    protected IdGenerator idGenerator;
-    protected CompressionService compressionService;
-    protected WqxStatusDao statusDao;
-    protected JdbcTransactionDao transactionDao;
-    protected JdbcPartnerDao partnerDao;
-    protected String partnerName;
+    private SettingServiceProvider settingService;
+    private IdGenerator idGenerator;
+    private CompressionService compressionService;
+    private WqxStatusDao statusDao;
+    private JdbcTransactionDao transactionDao;
+    private JdbcPartnerDao partnerDao;
+    private String partnerName;
 
     public BaseWqxPlugin() {
         super();
@@ -110,6 +111,13 @@ public abstract class BaseWqxPlugin extends BaseWnosPlugin implements
             throw new RuntimeException("Unable to obtain partnerDao");
         }
 
+        compressionService = (CompressionService) getServiceFactory()
+                .makeService(CompressionService.class);
+
+        if (compressionService == null) {
+            throw new RuntimeException("Unable to obtain CompressionService");
+        }
+
     }
 
     protected PartnerIdentity makePartner() {
@@ -155,9 +163,72 @@ public abstract class BaseWqxPlugin extends BaseWnosPlugin implements
     protected String getOrgIdFromTransaction(NodeTransaction tran) {
 
         String orgId = getRequiredValueFromTransactionArgs(tran,
-                ORG_ID_ARG_INDEX);
+                PARAM_INDEX_ORGID);
         debug("orgId: " + orgId);
         return orgId;
+    }
+
+    public SettingServiceProvider getSettingService() {
+        return settingService;
+    }
+
+    public void setSettingService(SettingServiceProvider settingService) {
+        this.settingService = settingService;
+    }
+
+    /**
+     * @return
+     */
+    public File getTempDir() {
+        return settingService.getTempDir();
+    }
+
+    public IdGenerator getIdGenerator() {
+        return idGenerator;
+    }
+
+    public void setIdGenerator(IdGenerator idGenerator) {
+        this.idGenerator = idGenerator;
+    }
+
+    public CompressionService getCompressionService() {
+        return compressionService;
+    }
+
+    public void setCompressionService(CompressionService compressionService) {
+        this.compressionService = compressionService;
+    }
+
+    public WqxStatusDao getStatusDao() {
+        return statusDao;
+    }
+
+    public void setStatusDao(WqxStatusDao statusDao) {
+        this.statusDao = statusDao;
+    }
+
+    public JdbcTransactionDao getTransactionDao() {
+        return transactionDao;
+    }
+
+    public void setTransactionDao(JdbcTransactionDao transactionDao) {
+        this.transactionDao = transactionDao;
+    }
+
+    public JdbcPartnerDao getPartnerDao() {
+        return partnerDao;
+    }
+
+    public void setPartnerDao(JdbcPartnerDao partnerDao) {
+        this.partnerDao = partnerDao;
+    }
+
+    public String getPartnerName() {
+        return partnerName;
+    }
+
+    public void setPartnerName(String partnerName) {
+        this.partnerName = partnerName;
     }
 
 }

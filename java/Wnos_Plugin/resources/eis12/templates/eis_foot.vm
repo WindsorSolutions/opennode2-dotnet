@@ -1,0 +1,12 @@
+##this file included by service-specific .vm templates
+$helper.print("rendering eis_foot.vm")
+</cer:CERS>
+#if($makeHeader)#if($makeHeader == "true" || $makeHeader == "TRUE")
+</hdr:Payload>
+</Document>
+#end#end##if($makeHeader
+$helper.print("Template Records: $totalRecCount")
+## Setting the total number of records processed
+$helper.setResultingRecordCount($totalRecCount)
+$helper.print("Total Time:")
+$helper.printElapsedTime()

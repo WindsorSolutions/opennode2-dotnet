@@ -323,7 +323,7 @@ public class TemplateHelper {
         if (null != arg) {
 
             // VTL syntax ["foo", "bar"] creates an ArrayList thru Velocity 1.5
-            if (arg instanceof ArrayList) {
+            if (arg instanceof ArrayList<?>) {
 
                 logger.debug("converting ArrayList to Object[]");
 

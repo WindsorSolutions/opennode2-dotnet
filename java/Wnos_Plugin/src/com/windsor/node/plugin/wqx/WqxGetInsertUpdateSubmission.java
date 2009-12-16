@@ -42,7 +42,7 @@ public class WqxGetInsertUpdateSubmission extends BaseWqxXmlPlugin {
 
     public static final String SERVICE_NAME = "WQXGetInsertUpdateSubmission";
     private static final String TEMPLATE_NAME = "WQX_InsertUpdate.vm";
-    private static final String OUTFILE_BASE_NAME = "WQX_2_InsertUpdate_";
+    private static final String OUTFILE_BASE_NAME = "WQX_2_InsertUpdate";
 
     public WqxGetInsertUpdateSubmission() {
 

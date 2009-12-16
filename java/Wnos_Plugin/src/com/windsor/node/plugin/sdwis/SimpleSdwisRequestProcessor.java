@@ -95,7 +95,7 @@ public class SimpleSdwisRequestProcessor extends BaseWnosPlugin {
         result.setSuccess(false);
         result.setStatus(CommonTransactionStatusCode.FAILED);
 
-        result.getAuditEntries().add(makeEntry("Vaildating transaction..."));
+        result.getAuditEntries().add(makeEntry("Validating transaction..."));
 
         validateTransaction(transaction);
 

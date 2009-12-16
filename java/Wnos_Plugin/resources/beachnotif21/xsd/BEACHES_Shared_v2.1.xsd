@@ -1,0 +1,880 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:bch="http://www.exchangenetwork.net/schema/BEACHES/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/BEACHES/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.1">
+	<xsd:annotation>
+		<xsd:documentation>
+			Schema Name: Shared v2.1
+			Current Version Available At: http://www.exchangenetwork.net/exchanges/water/beach_notif.htm 
+			Description: Schema used to declare all elements, simple data types and elementary complex data types.
+			Application: PRAWN
+			Developed by: EPA ORD/OW  and CGI Federal
+			Point of Contact: eBeaches@cgifederal.com
+			Change History: 
+					20051208 - Initial Creation of Notification Schema v1.2
+					20061108 - Revised to follow EPA/Exchange Network Guidelines
+					20070821 - Revised to upgrade to version 2.0 of the schema
+					20080825 - Revised to upgrade to version 2.1 of the schema
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:simpleType name="Char2">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="2"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Char5">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="5"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Char12">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="12"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Char30">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="30"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Char24">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="24"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Char50">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Char60">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="60"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Char65">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="65"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Char100">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="100"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Char255">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="255"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StateCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:length value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MailingAddressZipCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="5"/>
+			<xsd:maxLength value="12"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StatusDataType" final="list">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="ACTIVE"/>
+			<xsd:enumeration value="INACTIVE"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TelephoneNumberDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:length value="12"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="BeachIdentifierDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:length value="8"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ProcedureBeachIdentifierDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:length value="8"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Number4">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:totalDigits value="4"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Number14">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:totalDigits value="14"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="DistanceUnitOfMeasureCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="FT"/>
+			<xsd:enumeration value="YDS"/>
+			<xsd:enumeration value="MI"/>
+			<xsd:enumeration value="M"/>
+			<xsd:enumeration value="KM"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="BeachSwimSeasonLengthDetailDataType">
+		<xsd:choice>
+			<xsd:sequence>
+				<xsd:element ref="bch:SwimSeasonLengthMeasure"/>
+				<xsd:element ref="bch:SwimSeasonUnitOfMeasureCode"/>
+			</xsd:sequence>
+			<xsd:sequence>
+				<xsd:element ref="bch:SwimSeasonStartDate"/>
+				<xsd:element ref="bch:SwimSeasonEndDate"/>
+			</xsd:sequence>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:simpleType name="SwimSeasonUnitOfMeasureCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="DAYS"/>
+			<xsd:enumeration value="WEEKS"/>
+			<xsd:enumeration value="MONTHS"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="MonitoringFrequencyDetailDataType">
+		<xsd:sequence>
+			<xsd:element ref="bch:SwimSeasonFrequencyMeasure"/>
+			<xsd:element ref="bch:OffSeasonFrequencyMeasure"/>
+			<xsd:element ref="bch:MonitoringFrequencyUnitOfMeasureCode"/>
+			<xsd:element ref="bch:MonitoredIrregularly"/>
+			<xsd:element ref="bch:MonitoredIrregularlyComment" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="MonitoringFrequencyUnitOfMeasureCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="PER_DAY"/>
+			<xsd:enumeration value="PER_WEEK"/>
+			<xsd:enumeration value="PER_MONTH"/>
+			<xsd:enumeration value="PER_YEAR"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="BeachPollutionSourceDetailDataType">
+		<xsd:choice>
+			<xsd:element ref="bch:BeachPollutionSource" maxOccurs="unbounded"/>
+			<xsd:element ref="bch:NoPollutionSourcesIndicator"/>
+			<xsd:element ref="bch:PollutionSourcesUninvestigatedIndicator"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="BeachPollutionSourceDataType">
+		<xsd:sequence>
+			<xsd:element ref="bch:BeachPollutionSourceCode"/>
+			<xsd:element ref="bch:BeachPollutionSourceDescription" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="BeachPollutionSourceCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="AGRICULTURAL"/>
+			<xsd:enumeration value="BOAT"/>
+			<xsd:enumeration value="CAFO"/>
+			<xsd:enumeration value="CSO"/>
+			<xsd:enumeration value="POTW"/>
+			<xsd:enumeration value="RUNOFF"/>
+			<xsd:enumeration value="SEPTIC"/>
+			<xsd:enumeration value="SEWER_LINE"/>
+			<xsd:enumeration value="SSO"/>
+			<xsd:enumeration value="STORM"/>
+			<xsd:enumeration value="WILDLIFE"/>
+			<xsd:enumeration value="UNKNOWN"/>
+			<xsd:enumeration value="OTHER"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NoPollutionSourcesIndicatorDataType">
+		<xsd:restriction base="xsd:boolean">
+			<xsd:pattern value="(true|1)"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="PollutionSourcesUninvestigatedIndicatorDataType">
+		<xsd:restriction base="xsd:boolean">
+			<xsd:pattern value="(true|1)"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="IntNumber1">
+		<xsd:restriction base="xsd:integer">
+			<xsd:totalDigits value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="ActivityReasonDetailDataType">
+		<xsd:sequence>
+			<xsd:element ref="bch:ActivityReasonType"/>
+			<xsd:element ref="bch:ActivityReasonDescriptionText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="ActivityReasonDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="ELEV_BACT"/>
+			<xsd:enumeration value="RAINFALL"/>
+			<xsd:enumeration value="SEWAGE"/>
+			<xsd:enumeration value="CHEM_OIL"/>
+			<xsd:enumeration value="MODEL"/>
+			<xsd:enumeration value="POLICY"/>
+			<xsd:enumeration value="OTHER"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="ActivitySourceDetailDataType">
+		<xsd:sequence>
+			<xsd:element ref="bch:ActivitySourceType"/>
+			<xsd:element ref="bch:ActivitySourceDescriptionText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="ActivitySourceDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="AGRICULTURAL"/>
+			<xsd:enumeration value="BOAT"/>
+			<xsd:enumeration value="CAFO"/>
+			<xsd:enumeration value="CSO"/>
+			<xsd:enumeration value="POTW"/>
+			<xsd:enumeration value="RUNOFF"/>
+			<xsd:enumeration value="SEPTIC"/>
+			<xsd:enumeration value="SEWER_LINE"/>
+			<xsd:enumeration value="SSO"/>
+			<xsd:enumeration value="STORM"/>
+			<xsd:enumeration value="WILDLIFE"/>
+			<xsd:enumeration value="UNKNOWN"/>
+			<xsd:enumeration value="OTHER"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="ActivityIndicatorDetailDataType">
+		<xsd:sequence>
+			<xsd:element ref="bch:ActivityIndicatorType"/>
+			<xsd:element ref="bch:ActivityIndicatorDescriptionText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="ActivityIndicatorDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="PREEMPT"/>
+			<xsd:enumeration value="ENTERO"/>
+			<xsd:enumeration value="TOTAL_COL"/>
+			<xsd:enumeration value="FECAL_COL"/>
+			<xsd:enumeration value="ECOLI"/>
+			<xsd:enumeration value="RATIO"/>
+			<xsd:enumeration value="OTHER"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="ActivityExtentDetailDataType">
+		<xsd:sequence>
+			<xsd:element ref="bch:ActivityExtentStartMeasure" minOccurs="0"/>
+			<xsd:element ref="bch:ActivityExtentLengthMeasure"/>
+			<xsd:element ref="bch:ActivityExtentUnitOfMeasureCode"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="ActivityExtentUnitOfMeasureCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="FT"/>
+			<xsd:enumeration value="YDS"/>
+			<xsd:enumeration value="MI"/>
+			<xsd:enumeration value="M"/>
+			<xsd:enumeration value="KM"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="FIPSCountyCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:length value="5"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="WaterBodyNameCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="ATLANTIC"/>
+			<xsd:enumeration value="PACIFIC"/>
+			<xsd:enumeration value="GULF_MEXICO"/>
+			<xsd:enumeration value="LAKE_SUPR"/>
+			<xsd:enumeration value="LAKE_MCHGN"/>
+			<xsd:enumeration value="LAKE_HURON"/>
+			<xsd:enumeration value="LAKE_ERIE"/>
+			<xsd:enumeration value="LAKE_ONTR"/>
+			<xsd:enumeration value="INLAND"/>
+			<xsd:enumeration value=""/>
+			<xsd:enumeration value=""/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="WaterBodyTypeCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="OPEN_COAST"/>
+			<xsd:enumeration value="SND_BY_INLT"/>
+			<xsd:enumeration value="STILL_WATER"/>
+			<xsd:enumeration value="FLOW_WATER"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="BeachAccessibilityDetailDataType">
+		<xsd:sequence>
+			<xsd:element ref="bch:BeachAccessibilityType"/>
+			<xsd:element ref="bch:BeachAccessibilityComment" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="BeachAccessibilityDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="PUB_PUB_ACC"/>
+			<xsd:enumeration value="PRV_PRV_ACC"/>
+			<xsd:enumeration value="PUB_PRV_ACC"/>
+			<xsd:enumeration value="PRV_PUB_ACC"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="BeachCoordinatePointDetailDataType">
+		<xsd:sequence>
+			<xsd:element ref="bch:LatitudeMeasure"/>
+			<xsd:element ref="bch:LongitudeMeasure"/>
+			<xsd:element ref="bch:SourceMapScaleNumeric" minOccurs="0"/>
+			<xsd:element ref="bch:HorizontalCollectionMethodName"/>
+			<xsd:element ref="bch:HorizontalCoordinateReferenceSystemDatumName"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="LatitudeMeasureDataType">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:totalDigits value="8"/>
+			<xsd:fractionDigits value="6"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="LongitudeMeasureDataType">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:totalDigits value="9"/>
+			<xsd:fractionDigits value="6"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SourceMapScaleNumericDataType">
+		<xsd:restriction base="xsd:nonNegativeInteger"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="HorizontalCollectionMethodNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="150"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="HorizontalCoordinateReferenceSystemDatumNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="6"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- Element Declarations  ================================================================-->
+	<xsd:element name="BeachCoordinateStartPointDetail" type="bch:BeachCoordinatePointDetailDataType">
+		<xsd:annotation>
+			<xsd:documentation>Geospatial description of the starting point of a beach.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="BeachCoordinateEndPointDetail" type="bch:BeachCoordinatePointDetailDataType">
+		<xsd:annotation>
+			<xsd:documentation>Geospatial description of the ending point of a beach.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="LatitudeMeasure" type="bch:LatitudeMeasureDataType">
+		<xsd:annotation>
+			<xsd:documentation>The measure of the angular distance on a meridian north or south of the equator.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="LongitudeMeasure" type="bch:LongitudeMeasureDataType">
+		<xsd:annotation>
+			<xsd:documentation>The measure of the angular distance on a meridian east or west of the prime meridian.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SourceMapScaleNumeric" type="bch:SourceMapScaleNumericDataType">
+		<xsd:annotation>
+			<xsd:documentation>The number that represents the proportional distance on the ground for one unit of measure on the map or photo.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="HorizontalCollectionMethodName" type="bch:HorizontalCollectionMethodNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>The name that identifies the method used to determine the latitude and longitude coordinates for a point on the earth.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="HorizontalCoordinateReferenceSystemDatumName" type="bch:HorizontalCoordinateReferenceSystemDatumNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>The name that describes the reference datum used in determining latitude and longitude coordinates.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="BeachAccessibilityComment" type="bch:Char255">
+		<xsd:annotation>
+			<xsd:documentation>A short comment about the accessibility of the beach</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="BeachAccessibilityType" type="bch:BeachAccessibilityDataType">
+		<xsd:annotation>
+			<xsd:documentation>The accessibility of the beach (ex: PUB_PUB_ACC, PRV_PUB_ACC)</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="BeachAccessibilityDetail" type="bch:BeachAccessibilityDetailDataType">
+		<xsd:annotation>
+			<xsd:documentation>Information about the accessibility of the beach</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="WaterBodyNameCode" type="bch:WaterBodyNameCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The water body name code for the beach.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="WaterBodyTypeCode" type="bch:WaterBodyTypeCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The water body type code for the beach.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ProgramInterestFIPSCountyCode" type="bch:FIPSCountyCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The FIPS county code for the program interest</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ProgramInterestStateCode" type="bch:StateCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The two letter code fot the state the program interest is located in</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ProgramInterestCommentText" type="bch:Char255">
+		<xsd:annotation>
+			<xsd:documentation>A comment about the program interest</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ProgramInterestDescriptionText" type="bch:Char255">
+		<xsd:annotation>
+			<xsd:documentation>A short description of the program interest</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ProgramInterestName" type="bch:Char60">
+		<xsd:annotation>
+			<xsd:documentation>The name of the program interest</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="NamePrefixText" type="bch:Char60">
+		<xsd:annotation>
+			<xsd:documentation>The person's title</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="NameSuffixText" type="bch:Char5">
+		<xsd:annotation>
+			<xsd:documentation>The person's suffix</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="PersonMiddleInitial" type="bch:Char2">
+		<xsd:annotation>
+			<xsd:documentation>The middle initial of the person</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="LastName" type="bch:Char50">
+		<xsd:annotation>
+			<xsd:documentation>The last name of the person</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="FirstName" type="bch:Char50">
+		<xsd:annotation>
+			<xsd:documentation>The first name of the person</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="PersonStatusIndicator" type="bch:StatusDataType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates whether the person is ACTIVE or INACTIVE</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="PersonIdentifier" type="bch:Char12">
+		<xsd:annotation>
+			<xsd:documentation>The unique code that identifies each a person</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="BeachRoleStatusIndicator" type="bch:StatusDataType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates whether the role is ACTIVE or INACTIVE</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="BeachRoleEffectiveDate" type="xsd:dateTime">
+		<xsd:annotation>
+			<xsd:documentation>The date the role becomes effective</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="BeachRolePersonIdentifier" type="bch:Char12">
+		<xsd:annotation>
+			<xsd:documentation>The code for the person associated with the role</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="BeachRoleOrganizationIdentifier" type="bch:Char12">
+		<xsd:annotation>
+			<xsd:documentation>The organization this beach role belongs to</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="BeachRoleTypeCode" type="bch:Char12">
+		<xsd:annotation>
+			<xsd:documentation>The code for the role of the beach (ex: LOCAL, RESPONDENT)</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ActivityExtentUnitOfMeasureCode" type="bch:ActivityExtentUnitOfMeasureCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The unit of length for the measurement</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ActivityExtentLengthMeasure" type="bch:Number14">
+		<xsd:annotation>
+			<xsd:documentation>The length of the measure</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ActivityExtentStartMeasure" type="bch:Number14">
+		<xsd:annotation>
+			<xsd:documentation/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ActivityExtentDetail" type="bch:ActivityExtentDetailDataType">
+		<xsd:annotation>
+			<xsd:documentation>The distance of the beach that the activity affects</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ActivityDescriptionText" type="bch:Char255">
+		<xsd:annotation>
+			<xsd:documentation>A short description of the activity</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ActivityCommentText" type="bch:Char255">
+		<xsd:annotation>
+			<xsd:documentation>A comment about the activity</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ActivityMonitoringStationIdentifier" type="bch:Char65">
+		<xsd:annotation>
+			<xsd:documentation>The unique identifier for the monitoring station</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ActivityIndicatorDescriptionText" type="bch:Char255">
+		<xsd:annotation>
+			<xsd:documentation>A short description of the type of indicator</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ActivityIndicatorType" type="bch:ActivityIndicatorDataType">
+		<xsd:annotation>
+			<xsd:documentation>The code for the indicator</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ActivityIndicatorDetail" type="bch:ActivityIndicatorDetailDataType">
+		<xsd:annotation>
+			<xsd:documentation>The indicator used to test the activity</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ActivitySourceDescriptionText" type="bch:Char255">
+		<xsd:annotation>
+			<xsd:documentation>A short description of the source of the activity</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ActivitySourceType" type="bch:ActivitySourceDataType">
+		<xsd:annotation>
+			<xsd:documentation>The code for the source of the activity</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ActivitySourceDetail" type="bch:ActivitySourceDetailDataType">
+		<xsd:annotation>
+			<xsd:documentation>Describes the source of the activity</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ActivityReasonDescriptionText" type="bch:Char255">
+		<xsd:annotation>
+			<xsd:documentation>A short description of the reason for the activity</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ActivityReasonType" type="bch:ActivityReasonDataType">
+		<xsd:annotation>
+			<xsd:documentation>The code for the reason for the activity</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ActivityReasonDetail" type="bch:ActivityReasonDetailDataType">
+		<xsd:annotation>
+			<xsd:documentation>The reason for the activity</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ActivityActualStartDate" type="xsd:dateTime">
+		<xsd:annotation>
+			<xsd:documentation>The start date for the activity</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ActivityActualStopDate" type="xsd:dateTime">
+		<xsd:annotation>
+			<xsd:documentation>The stop date for the activity</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ActivityName" type="bch:Char60">
+		<xsd:annotation>
+			<xsd:documentation>The name of the activity being reported for the beach</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ActivityTypeCode" type="bch:Char12">
+		<xsd:annotation>
+			<xsd:documentation>The code for the type of activity being reported (ex: CLOSURE, CONTAM_ADV)</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="BeachTierRanking" type="bch:IntNumber1">
+		<xsd:annotation>
+			<xsd:documentation>The tier of the beach</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="BeachActBeachIndicator" type="xsd:boolean">
+		<xsd:annotation>
+			<xsd:documentation>True if the beach qualifies as a BEACH Act beach.  False in any other case</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="BeachPollutionSourceDescription" type="bch:Char255">
+		<xsd:annotation>
+			<xsd:documentation>A short description of the pollution source</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="BeachPollutionSourceCode" type="bch:BeachPollutionSourceCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The code representing the source of the polution</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="BeachPollutionSourceDetail" type="bch:BeachPollutionSourceDetailDataType">
+		<xsd:annotation>
+			<xsd:documentation>Description of the polution source</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MonitoringFrequencyUnitOfMeasureCode" type="bch:MonitoringFrequencyUnitOfMeasureCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The unit of time that is used for the measurements</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OffSeasonFrequencyMeasure" type="bch:Number14">
+		<xsd:annotation>
+			<xsd:documentation>The number that represents the lenght of the off season</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SwimSeasonFrequencyMeasure" type="bch:Number14">
+		<xsd:annotation>
+			<xsd:documentation>The number that represents the length of the swim season</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MonitoredIrregularly" type="xsd:boolean">
+		<xsd:annotation>
+			<xsd:documentation>True if a beach is sporadically monitored.  False in any other case</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MonitoredIrregularlyComment" type="bch:Char255">
+		<xsd:annotation>
+			<xsd:documentation>Any comments about the monitoring frequency of the beach.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MonitoringFrequencyDetail" type="bch:MonitoringFrequencyDetailDataType">
+		<xsd:annotation>
+			<xsd:documentation>The frequency the beach is monitored</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SwimSeasonUnitOfMeasureCode" type="bch:SwimSeasonUnitOfMeasureCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The unit of measure for the length of the swim season</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SwimSeasonLengthMeasure" type="bch:Number14">
+		<xsd:annotation>
+			<xsd:documentation>The number that descreibes the length of the swim season</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SwimSeasonStartDate" type="xsd:date">
+		<xsd:annotation>
+			<xsd:documentation>The start date of the swim season</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SwimSeasonEndDate" type="xsd:date">
+		<xsd:annotation>
+			<xsd:documentation>The end date of the swim season</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="BeachSwimSeasonLengthDetail" type="bch:BeachSwimSeasonLengthDetailDataType">
+		<xsd:annotation>
+			<xsd:documentation>The length of the swim season</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:annotation>
+		<xsd:documentation>The length of the swim season</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="ExtentUnitOfMeasureCode" type="bch:DistanceUnitOfMeasureCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The unit of measurement</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OrganizationIdentifier" type="bch:Char12">
+		<xsd:annotation>
+			<xsd:documentation>The unique code that identifies each organization</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OrganizationTypeCode" type="bch:Char12">
+		<xsd:annotation>
+			<xsd:documentation>Details the type of agency being described</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OrganizationName" type="bch:Char60">
+		<xsd:annotation>
+			<xsd:documentation>Details the name of the organization being described</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OrganizationDescriptionText" type="bch:Char255">
+		<xsd:annotation>
+			<xsd:documentation>A short text description of the organization</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OrganizationAbbreviationText" type="bch:Char30">
+		<xsd:annotation>
+			<xsd:documentation>The abbreviation of the organization being described</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MailingAddressTypeCode" type="bch:Char12">
+		<xsd:annotation>
+			<xsd:documentation>Details what type the mailing address is</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MailingAddressStreetLine1Text" type="bch:Char100">
+		<xsd:annotation>
+			<xsd:documentation>The first line of the address</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MailingAddressStreetLine2Text" type="bch:Char100">
+		<xsd:annotation>
+			<xsd:documentation>The second line of the address</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MailingAddressStreetLine3Text" type="bch:Char100">
+		<xsd:annotation>
+			<xsd:documentation>The third line of the address</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MailingAddressCityName" type="bch:Char50">
+		<xsd:annotation>
+			<xsd:documentation>The city name of the address</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="StateCode" type="bch:StateCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The state code of the address</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="AddressPostalCode" type="bch:MailingAddressZipCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The zip code of the address</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MailingAddressEffectiveDate" type="xsd:dateTime">
+		<xsd:annotation>
+			<xsd:documentation>The date the change becomes effective</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MailingAddressStatusIndicator" type="bch:StatusDataType">
+		<xsd:annotation>
+			<xsd:documentation>The status that the mailing address will be changed to</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ElectronicAddressTypeCode" type="bch:Char12">
+		<xsd:annotation>
+			<xsd:documentation>The type of electronic address being described (ex: EMAIL, URL)</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ElectronicAddressText" type="bch:Char255">
+		<xsd:annotation>
+			<xsd:documentation>The actual address being described</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ElectronicAddressEffectiveDate" type="xsd:dateTime">
+		<xsd:annotation>
+			<xsd:documentation>The date the change becomes effective</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ElectronicAddressStatusIndicator" type="bch:StatusDataType">
+		<xsd:annotation>
+			<xsd:documentation>The status the address will be changed to</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TelephoneTypeCode" type="bch:Char12">
+		<xsd:annotation>
+			<xsd:documentation>The type of telephone number being described (ex: VOICE, FAX)</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TelephoneNumberText" type="bch:TelephoneNumberDataType">
+		<xsd:annotation>
+			<xsd:documentation>The actual telephone number being described (Must include "-".  ex: xxx-xxx-xxxx)</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TelephoneEffectiveDate" type="xsd:dateTime">
+		<xsd:annotation>
+			<xsd:documentation>The date the number becomes effective</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TelephoneStatusIndicator" type="bch:StatusDataType">
+		<xsd:annotation>
+			<xsd:documentation>The status the number will be changed to (ex: ACTIVE, INACTIVE)</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="BeachIdentifier" type="bch:BeachIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>The unique code that identifies the beach</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ProcedureTypeCode" type="bch:Char12">
+		<xsd:annotation>
+			<xsd:documentation>The code that identifies the procedure</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ProcedureDescriptionText" type="bch:Char255">
+		<xsd:annotation>
+			<xsd:documentation>The description of the procedure</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ProcedureIdentifier" type="bch:Char12">
+		<xsd:annotation>
+			<xsd:documentation>The code that identifies the procedure</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ProcedureBeachIdentifier" type="bch:ProcedureBeachIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>The unique code that identifies the beach</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="AttributeEffectiveYear" type="bch:Number4">
+		<xsd:annotation>
+			<xsd:documentation>The year the attribute is effective</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ExtentLengthMeasure" type="bch:Number14">
+		<xsd:annotation>
+			<xsd:documentation>The length of the object</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="NotificiationDataCompleteIndicator" type="xsd:boolean">
+		<xsd:annotation>
+			<xsd:documentation>True if all Notification Data has been submitted for the year.  False in any other case</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MonitoringDataCompleteIndicator" type="xsd:boolean">
+		<xsd:annotation>
+			<xsd:documentation>True if all Monitoring Data has been submitted for the year.  False in any other case</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="LocationDataCompleteIndicator" type="xsd:boolean">
+		<xsd:annotation>
+			<xsd:documentation>True if all Location Data has been submitted for the year.  False in any other case</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CompletionYear" type="bch:Number4">
+		<xsd:annotation>
+			<xsd:documentation>The year the status indicators are for.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="NoPollutionSourcesIndicator" type="bch:NoPollutionSourcesIndicatorDataType">
+		<xsd:annotation>
+			<xsd:documentation>This can only be true.  Only one of the following is allowed: a list of pollution sources, NoPollutionSources must be true, or PollutionSourcesUninvestigated must be true.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="PollutionSourcesUninvestigatedIndicator" type="bch:PollutionSourcesUninvestigatedIndicatorDataType">
+		<xsd:annotation>
+			<xsd:documentation>This can only be true.  Only one of the following is allowed: a list of pollution sources, NoPollutionSources must be true, or PollutionSourcesUninvestigated must be true.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="BeachPollutionSource" type="bch:BeachPollutionSourceDataType">
+		<xsd:annotation>
+			<xsd:documentation>A list of pollution sources.  Only one of the following is allowed: a list of pollution sources, NoPollutionSources must be true, or PollutionSourcesUninvestigated must be true.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="BeachCoordinateDescriptionText" type="bch:Char255">
+		<xsd:annotation>
+			<xsd:documentation>A short description of this coordinate point.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

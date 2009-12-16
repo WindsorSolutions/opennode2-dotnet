@@ -1,5 +1,68 @@
 ================================================================================
-OpenNode2 v1.20 for Java - Release Notes                             2009-09-30
+OpenNode2 v1.21 for Java - Release Notes                             2009-12-16
+================================================================================
+This source release is accompanied by a binary release of the new EIS v.1.2, 
+UIC v 1.0, and BEACHES v2.1 plugins, and updates to WQX, RCRA, and 
+MapForceBridge plugins.
+
+FIXED/RESOLVED
+========================================
+  
+* Fixed a bug in the RCRA plugin whereby the document header might not be 
+  written, regardless of the configuration argument setting. Also cleaned up 
+  namespace qualification problems in the Veolcity templates.
+  
+* Fixed a bug in the MapForceBridge plugin that prevented the plugin from 
+  loading the supporting .jar file.
+
+* In order to work around limitations in Microsoft Internet Security and
+  Acceleration (ISA) Server 2006 when it's used as a proxy, both endpoints omit 
+  sending the HTTP "ContentLength" header.
+
+* Both endpoints can now accept self-signed SSL certificates without adding them
+  to the local certificate store, and can accept expired certs as well. This
+  "feature" is based on user  demand for easy configuration in development and 
+  test environments. 
+  
+  To revert to the default settings requires modifying HTTP transport settings 
+  (commenting the current setting and un-commenting the originals) in these 
+  files:
+  
+  - Endpoint/src/org/apache/axis/client client-config.wsdd (near line 10)
+  - Endpoint2/resources/WEB-INF/conf/axis2.xml (near line 295)
+
+NEW
+========================================
+
+Three new plugins! See their repsective Implementation Guides for installation
+and configuration details.
+
+* UIC10 
+
+* EIS12 
+
+* BEACHES21
+
+* The WQX plugin now supports setting start and end dates for data extracted,
+  as well as for ignoring the status and history of prior submissions. See the
+  updated configuration guide for details.
+  
+* Updated the Oracle JDBC driver from ojdbc14_g.jar to ojdbc5_g.jar. This 
+  version is fully compatible and recommended for running with JDK 5, and is
+  also compatible with Oracle 11g.
+   
+* The windsor_checkstyle_rules.xml file has been converted to be compatible 
+  with Checkstyle 5.0. Using this version in Eclipse requires removing the 
+  eclipse-cs plugin for Checkstyle 4.0 and installing the version for Checkstyle
+  5.0.
+  
+* Added jtds-1.2.4.jar to the source and binary distributions. JTDS is a free, 
+  open source JDBC driver for MS SQL Server and Sybase, and a viable alternative 
+  to Microsoft's own JDBC driver. It's distributed under the LGPL license. See 
+  http://jtds.sourceforge.net/ for further details.
+
+================================================================================
+OpenNode2 v1.20 for Java - Release Notes                             2009-10-30
 ================================================================================
 
 This release introduces support for the ICIS-NPDES Discharge Monitoring Report

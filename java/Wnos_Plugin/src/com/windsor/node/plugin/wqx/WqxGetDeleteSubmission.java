@@ -42,7 +42,7 @@ public class WqxGetDeleteSubmission extends BaseWqxXmlPlugin {
 
     public static final String SERVICE_NAME = "WQXGetDeleteSubmission";
     private static final String TEMPLATE_NAME = "WQX_Delete.vm";
-    private static final String OUTFILE_BASE_NAME = "WQX_2_Delete_";
+    private static final String OUTFILE_BASE_NAME = "WQX_2_Delete";
 
     public WqxGetDeleteSubmission() {
 

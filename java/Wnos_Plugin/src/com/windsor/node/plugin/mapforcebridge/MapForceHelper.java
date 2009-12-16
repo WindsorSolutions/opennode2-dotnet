@@ -66,7 +66,7 @@ import com.altova.TraceProvider;
  */
 public class MapForceHelper {
 
-    public static final String MAPFORCE_PLUGIN_JAR_NAME = "mapforce.jar";
+    public static final String MAPFORCE_PLUGIN_JAR_NAME = "mapforcebridge.jar";
 
     private static Logger logger = Logger.getLogger(MapForceHelper.class);
 

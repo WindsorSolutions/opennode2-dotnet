@@ -191,7 +191,7 @@ public class Ends2GetServicesQueryProcessor extends BaseWnosPlugin implements
         try {
 
             result.getAuditEntries()
-                    .add(makeEntry("Vaildating transaction..."));
+                    .add(makeEntry("Validating transaction..."));
             validateTransaction(transaction);
 
             /* set up template parameters from the Node's runtime environment. */

@@ -51,10 +51,10 @@ public class DmrSubmissionGenerator extends BaseWnosPlugin implements
     protected static final String TEMPLATE_ICIS_ID = "icisId";
     protected static final String TEMPLATE_LAST_PAYLOAD_UPDATE = "lastPayloadUpdateDate";
 
-    protected static final int USER_ID_PARAM_INDEX = 0;
-    protected static final int LAST_UPDATE_PARAM_INDEX = 1;
-    protected static final int USE_HISTORY_PARAM_INDEX = 2;
-    protected static final int IGNORE_PREVIOUS_PARAM_INDEX = 3;
+    protected static final int PARAM_INDEX_USERID = 0;
+    protected static final int PARAM_INDEX_LAST_UPDATE = 1;
+    protected static final int PARAM_INDEX_USE_HISTORY = 2;
+    protected static final int PARAM_INDEX_IGNORE_PREVIOUS = 3;
 
     private static final String FALSE = "false";
     private static final String TRUE = "true";
@@ -370,11 +370,11 @@ public class DmrSubmissionGenerator extends BaseWnosPlugin implements
      */
     protected void setPropertiesFromRequestParams(NodeTransaction transaction) {
 
-        setIcisId((String) transaction.getRequest().getParameters().get(
-                USER_ID_PARAM_INDEX));
+        setIcisId(getRequiredValueFromTransactionArgs(transaction,
+                PARAM_INDEX_USERID));
 
-        String lastUpdateStr = (String) transaction.getRequest()
-                .getParameters().get(LAST_UPDATE_PARAM_INDEX);
+        String lastUpdateStr = getOptionalValueFromTransactionArgs(transaction,
+                PARAM_INDEX_LAST_UPDATE);
 
         SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
 
@@ -397,8 +397,8 @@ public class DmrSubmissionGenerator extends BaseWnosPlugin implements
             throw new RuntimeException(ERR_BAD_DATE_FORMAT);
         }
 
-        String useHistoryStr = (String) transaction.getRequest()
-                .getParameters().get(USE_HISTORY_PARAM_INDEX);
+        String useHistoryStr = getOptionalValueFromTransactionArgs(transaction,
+                PARAM_INDEX_USE_HISTORY);
 
         if (StringUtils.isBlank(useHistoryStr)
                 || useHistoryStr.equalsIgnoreCase(TRUE)) {
@@ -410,8 +410,9 @@ public class DmrSubmissionGenerator extends BaseWnosPlugin implements
             setUseSubmissionHistory(false);
         }
 
-        String ignorePreviousStr = (String) transaction.getRequest()
-                .getParameters().get(IGNORE_PREVIOUS_PARAM_INDEX);
+        String ignorePreviousStr = getOptionalValueFromTransactionArgs(
+                transaction, PARAM_INDEX_IGNORE_PREVIOUS);
+
         if (StringUtils.isBlank(ignorePreviousStr)
                 || ignorePreviousStr.equalsIgnoreCase(FALSE)) {
 
@@ -428,8 +429,8 @@ public class DmrSubmissionGenerator extends BaseWnosPlugin implements
 
         super.validateTransaction(transaction);
 
-        if (StringUtils.isBlank((String) transaction.getRequest()
-                .getParameters().get(USER_ID_PARAM_INDEX))) {
+        if (StringUtils.isBlank(getRequiredValueFromTransactionArgs(
+                transaction, PARAM_INDEX_USERID))) {
 
             logger.error(ERR_USER_ID_REQUIRED);
             throw new RuntimeException(ERR_USER_ID_REQUIRED);

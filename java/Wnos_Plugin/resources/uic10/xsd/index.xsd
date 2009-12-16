@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:uic="http://www.exchangenetwork.net/schema/uic/1" targetNamespace="http://www.exchangenetwork.net/schema/uic/1" version="1.0">
+	<xsd:include schemaLocation="0/uic_uic_v1.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name : 			Index.xsd
+		Current Version Available At :	
+		Description : 			This schema defines the data elements and structure for the transferring of EPA UIC data.
+		Application : 			Underground Injection Control (UIC)
+		Developed by : 	 		Lockheed Martin
+		Point of Contact : 		Lockheed Martin
+		</xsd:documentation>
+	</xsd:annotation>
+</xsd:schema>

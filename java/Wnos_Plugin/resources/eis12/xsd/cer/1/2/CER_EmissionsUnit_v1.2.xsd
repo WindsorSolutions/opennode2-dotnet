@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:cer="http://www.exchangenetwork.net/schema/cer/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/cer/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2">
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name  : CER_EmissionsUnit_v1.2.xsd
+        Current Version Available At : http://www.exchangenetwork.net/schema/cer/1/2/CER_EmissionsUnit_v1.2.xsd
+        Description   : Identifies an activity, stationary article, process equipment, machine, or other device from which air pollutants emanate or are emitted either directly or indirectly into the environment at the facility site.
+        Developed by  : 	 Perrin Quarles Associates, Inc.
+        Point of Contact : Perrin Quarles Associates, Inc.	
+        </xsd:documentation>
+	</xsd:annotation>
+	<xsd:include schemaLocation="CER_SimpleContent_v1.2.xsd"/>
+	<xsd:include schemaLocation="CER_QualityIdentification_v1.2.xsd"/>
+	<xsd:include schemaLocation="CER_Identification_v1.2.xsd"/>
+	<xsd:include schemaLocation="CER_Regulation_v1.2.xsd"/>
+	<xsd:include schemaLocation="CER_ControlApproach_v1.2.xsd"/>
+	<xsd:include schemaLocation="CER_Process_v1.2.xsd"/>
+	<xsd:complexType name="EmissionsUnitDataType">
+		<xsd:sequence>
+			<xsd:element ref="cer:Scope" minOccurs="0"/>
+			<xsd:element ref="cer:UnitDescription" minOccurs="0"/>
+			<xsd:element ref="cer:UnitTypeCode" minOccurs="0"/>
+			<xsd:element ref="cer:UnitSourceLocation" minOccurs="0"/>
+			<xsd:element ref="cer:InsignificantSourceIndicator" minOccurs="0"/>
+			<xsd:element ref="cer:UnitDesignCapacity" minOccurs="0"/>
+			<xsd:element ref="cer:UnitDesignCapacityUnitofMeasureCode" minOccurs="0"/>
+			<xsd:element ref="cer:UnitStatusCode" minOccurs="0"/>
+			<xsd:element ref="cer:UnitStatusCodeYear" minOccurs="0"/>
+			<xsd:element ref="cer:UnitOperationDate" minOccurs="0"/>
+			<xsd:element ref="cer:UnitCommercialOperationDate" minOccurs="0"/>
+			<xsd:element ref="cer:UnitComment" minOccurs="0"/>
+			<xsd:element ref="cer:UnitQualityIdentification" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="cer:UnitIdentification" maxOccurs="unbounded"/>
+			<xsd:element ref="cer:UnitRegulation" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="cer:UnitControlApproach" minOccurs="0"/>
+			<xsd:element ref="cer:UnitEmissionsProcess" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="EmissionsUnit" type="cer:EmissionsUnitDataType"/>
+</xsd:schema>

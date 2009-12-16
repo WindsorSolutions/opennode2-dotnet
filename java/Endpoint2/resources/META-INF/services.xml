@@ -12,7 +12,7 @@
         <!-- end Spring integration -->
         <!-- the Axis2 way -->
         <!-- <parameter name="ServiceClass">com.windsor.node.ws2.service.Endpoint2ServiceImpl</parameter> -->
-        <parameter name="useOriginalwsdl">true</parameter>
+        <parameter name="useOriginalwsdl">false</parameter>
         <parameter name="modifyUserWSDLPortAddress">true</parameter>
         <parameter name="enableMTOM">true</parameter>
         <operation name="Execute" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://www.exchangenetwork.net/wsdl/node/2">

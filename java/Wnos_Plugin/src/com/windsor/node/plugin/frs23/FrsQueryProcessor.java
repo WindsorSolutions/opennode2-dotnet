@@ -150,7 +150,7 @@ public class FrsQueryProcessor extends BaseWnosPlugin {
              * ARGUMENTS
              */
             result.getAuditEntries()
-                    .add(makeEntry("Vaildating transaction..."));
+                    .add(makeEntry("Validating transaction..."));
             validateTransaction(transaction);
 
             result.getAuditEntries().add(makeEntry("Acquiring arguments..."));

@@ -120,7 +120,7 @@ public class DrDasProxyService extends BaseWnosPlugin {
         try {
 
             result.getAuditEntries()
-                    .add(makeEntry("Vaildating transaction..."));
+                    .add(makeEntry("Validating transaction..."));
 
             validateTransaction(transaction);
 

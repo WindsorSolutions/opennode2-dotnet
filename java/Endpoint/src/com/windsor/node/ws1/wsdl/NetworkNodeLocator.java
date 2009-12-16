@@ -39,154 +39,154 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.windsor.node.ws1.wsdl;
 
 public class NetworkNodeLocator extends org.apache.axis.client.Service
-		implements NetworkNode {
+        implements NetworkNode {
 
-	static final long serialVersionUID = 1;
+    static final long serialVersionUID = 1;
 
-	/**
-	 * A set of services for the National Environmental Information Exchange
-	 * Network (NEIEN)
-	 */
+    /**
+     * A set of services for the National Environmental Information Exchange
+     * Network (NEIEN)
+     */
 
-	public NetworkNodeLocator() {
-	}
+    public NetworkNodeLocator() {
+    }
 
-	public NetworkNodeLocator(org.apache.axis.EngineConfiguration config) {
-		super(config);
-	}
+    public NetworkNodeLocator(org.apache.axis.EngineConfiguration config) {
+        super(config);
+    }
 
-	public NetworkNodeLocator(java.lang.String wsdlLoc,
-			javax.xml.namespace.QName sName)
-			throws javax.xml.rpc.ServiceException {
-		super(wsdlLoc, sName);
-	}
+    public NetworkNodeLocator(java.lang.String wsdlLoc,
+            javax.xml.namespace.QName sName)
+            throws javax.xml.rpc.ServiceException {
+        super(wsdlLoc, sName);
+    }
 
-	// Use to get a proxy class for NetworkNodePortType
-	private java.lang.String NetworkNodePortType_address = "https://epacdxnode.net/cdx/services/NetworkNodePortType_V10";
+    // Use to get a proxy class for NetworkNodePortType
+    private java.lang.String NetworkNodePortType_address = "https://epacdxnode.net/cdx/services/NetworkNodePortType_V10";
 
-	public java.lang.String getNetworkNodePortTypeAddress() {
-		return NetworkNodePortType_address;
-	}
+    public java.lang.String getNetworkNodePortTypeAddress() {
+        return NetworkNodePortType_address;
+    }
 
-	// The WSDD service name defaults to the port name.
-	private java.lang.String NetworkNodePortTypeWSDDServiceName = "NetworkNodePortType";
+    // The WSDD service name defaults to the port name.
+    private java.lang.String NetworkNodePortTypeWSDDServiceName = "NetworkNodePortType";
 
-	public java.lang.String getNetworkNodePortTypeWSDDServiceName() {
-		return NetworkNodePortTypeWSDDServiceName;
-	}
+    public java.lang.String getNetworkNodePortTypeWSDDServiceName() {
+        return NetworkNodePortTypeWSDDServiceName;
+    }
 
-	public void setNetworkNodePortTypeWSDDServiceName(java.lang.String name) {
-		NetworkNodePortTypeWSDDServiceName = name;
-	}
+    public void setNetworkNodePortTypeWSDDServiceName(java.lang.String name) {
+        NetworkNodePortTypeWSDDServiceName = name;
+    }
 
-	public NetworkNodePortType_PortType getNetworkNodePortType()
-			throws javax.xml.rpc.ServiceException {
-		java.net.URL endpoint;
-		try {
-			endpoint = new java.net.URL(NetworkNodePortType_address);
-		} catch (java.net.MalformedURLException e) {
-			throw new javax.xml.rpc.ServiceException(e);
-		}
-		return getNetworkNodePortType(endpoint);
-	}
+    public NetworkNodePortType_PortType getNetworkNodePortType()
+            throws javax.xml.rpc.ServiceException {
+        java.net.URL endpoint;
+        try {
+            endpoint = new java.net.URL(NetworkNodePortType_address);
+        } catch (java.net.MalformedURLException e) {
+            throw new javax.xml.rpc.ServiceException(e);
+        }
+        return getNetworkNodePortType(endpoint);
+    }
 
-	public NetworkNodePortType_PortType getNetworkNodePortType(
-			java.net.URL portAddress) throws javax.xml.rpc.ServiceException {
-		try {
-			NetworkNodeBindingStub _stub = new NetworkNodeBindingStub(
-					portAddress, this);
-			_stub.setPortName(getNetworkNodePortTypeWSDDServiceName());
-			return _stub;
-		} catch (org.apache.axis.AxisFault e) {
-			return null;
-		}
-	}
+    public NetworkNodePortType_PortType getNetworkNodePortType(
+            java.net.URL portAddress) throws javax.xml.rpc.ServiceException {
+        try {
+            NetworkNodeBindingStub _stub = new NetworkNodeBindingStub(
+                    portAddress, this);
+            _stub.setPortName(getNetworkNodePortTypeWSDDServiceName());
+            return _stub;
+        } catch (org.apache.axis.AxisFault e) {
+            return null;
+        }
+    }
 
-	public void setNetworkNodePortTypeEndpointAddress(java.lang.String address) {
-		NetworkNodePortType_address = address;
-	}
+    public void setNetworkNodePortTypeEndpointAddress(java.lang.String address) {
+        NetworkNodePortType_address = address;
+    }
 
-	/**
-	 * For the given interface, get the stub implementation. If this service has
-	 * no port for the given interface, then ServiceException is thrown.
-	 */
-	public java.rmi.Remote getPort(Class serviceEndpointInterface)
-			throws javax.xml.rpc.ServiceException {
-		try {
-			if (NetworkNodePortType_PortType.class
-					.isAssignableFrom(serviceEndpointInterface)) {
-				NetworkNodeBindingStub _stub = new NetworkNodeBindingStub(
-						new java.net.URL(NetworkNodePortType_address), this);
-				_stub.setPortName(getNetworkNodePortTypeWSDDServiceName());
-				return _stub;
-			}
-		} catch (java.lang.Throwable t) {
-			throw new javax.xml.rpc.ServiceException(t);
-		}
-		throw new javax.xml.rpc.ServiceException(
-				"There is no stub implementation for the interface:  "
-						+ (serviceEndpointInterface == null ? "null"
-								: serviceEndpointInterface.getName()));
-	}
+    /**
+     * For the given interface, get the stub implementation. If this service has
+     * no port for the given interface, then ServiceException is thrown.
+     */
+    public java.rmi.Remote getPort(Class serviceEndpointInterface)
+            throws javax.xml.rpc.ServiceException {
+        try {
+            if (NetworkNodePortType_PortType.class
+                    .isAssignableFrom(serviceEndpointInterface)) {
+                NetworkNodeBindingStub _stub = new NetworkNodeBindingStub(
+                        new java.net.URL(NetworkNodePortType_address), this);
+                _stub.setPortName(getNetworkNodePortTypeWSDDServiceName());
+                return _stub;
+            }
+        } catch (java.lang.Throwable t) {
+            throw new javax.xml.rpc.ServiceException(t);
+        }
+        throw new javax.xml.rpc.ServiceException(
+                "There is no stub implementation for the interface:  "
+                        + (serviceEndpointInterface == null ? "null"
+                                : serviceEndpointInterface.getName()));
+    }
 
-	/**
-	 * For the given interface, get the stub implementation. If this service has
-	 * no port for the given interface, then ServiceException is thrown.
-	 */
-	public java.rmi.Remote getPort(javax.xml.namespace.QName portName,
-			Class serviceEndpointInterface)
-			throws javax.xml.rpc.ServiceException {
-		if (portName == null) {
-			return getPort(serviceEndpointInterface);
-		}
-		java.lang.String inputPortName = portName.getLocalPart();
-		if ("NetworkNodePortType".equals(inputPortName)) {
-			return getNetworkNodePortType();
-		} else {
-			java.rmi.Remote _stub = getPort(serviceEndpointInterface);
-			((org.apache.axis.client.Stub) _stub).setPortName(portName);
-			return _stub;
-		}
-	}
+    /**
+     * For the given interface, get the stub implementation. If this service has
+     * no port for the given interface, then ServiceException is thrown.
+     */
+    public java.rmi.Remote getPort(javax.xml.namespace.QName portName,
+            Class serviceEndpointInterface)
+            throws javax.xml.rpc.ServiceException {
+        if (portName == null) {
+            return getPort(serviceEndpointInterface);
+        }
+        java.lang.String inputPortName = portName.getLocalPart();
+        if ("NetworkNodePortType".equals(inputPortName)) {
+            return getNetworkNodePortType();
+        } else {
+            java.rmi.Remote _stub = getPort(serviceEndpointInterface);
+            ((org.apache.axis.client.Stub) _stub).setPortName(portName);
+            return _stub;
+        }
+    }
 
-	public javax.xml.namespace.QName getServiceName() {
-		return new javax.xml.namespace.QName(
-				"http://www.ExchangeNetwork.net/schema/v1.0/node.wsdl",
-				"NetworkNode");
-	}
+    public javax.xml.namespace.QName getServiceName() {
+        return new javax.xml.namespace.QName(
+                "http://www.ExchangeNetwork.net/schema/v1.0/node.wsdl",
+                "NetworkNode");
+    }
 
-	private java.util.HashSet ports = null;
+    private java.util.HashSet ports = null;
 
-	public java.util.Iterator getPorts() {
-		if (ports == null) {
-			ports = new java.util.HashSet();
-			ports.add(new javax.xml.namespace.QName(
-					"http://www.ExchangeNetwork.net/schema/v1.0/node.wsdl",
-					"NetworkNodePortType"));
-		}
-		return ports.iterator();
-	}
+    public java.util.Iterator getPorts() {
+        if (ports == null) {
+            ports = new java.util.HashSet();
+            ports.add(new javax.xml.namespace.QName(
+                    "http://www.ExchangeNetwork.net/schema/v1.0/node.wsdl",
+                    "NetworkNodePortType"));
+        }
+        return ports.iterator();
+    }
 
-	/**
-	 * Set the endpoint address for the specified port name.
-	 */
-	public void setEndpointAddress(java.lang.String portName,
-			java.lang.String address) throws javax.xml.rpc.ServiceException {
+    /**
+     * Set the endpoint address for the specified port name.
+     */
+    public void setEndpointAddress(java.lang.String portName,
+            java.lang.String address) throws javax.xml.rpc.ServiceException {
 
-		if ("NetworkNodePortType".equals(portName)) {
-			setNetworkNodePortTypeEndpointAddress(address);
-		} else { // Unknown Port Name
-			throw new javax.xml.rpc.ServiceException(
-					" Cannot set Endpoint Address for Unknown Port" + portName);
-		}
-	}
+        if ("NetworkNodePortType".equals(portName)) {
+            setNetworkNodePortTypeEndpointAddress(address);
+        } else { // Unknown Port Name
+            throw new javax.xml.rpc.ServiceException(
+                    " Cannot set Endpoint Address for Unknown Port" + portName);
+        }
+    }
 
-	/**
-	 * Set the endpoint address for the specified port name.
-	 */
-	public void setEndpointAddress(javax.xml.namespace.QName portName,
-			java.lang.String address) throws javax.xml.rpc.ServiceException {
-		setEndpointAddress(portName.getLocalPart(), address);
-	}
+    /**
+     * Set the endpoint address for the specified port name.
+     */
+    public void setEndpointAddress(javax.xml.namespace.QName portName,
+            java.lang.String address) throws javax.xml.rpc.ServiceException {
+        setEndpointAddress(portName.getLocalPart(), address);
+    }
 
 }

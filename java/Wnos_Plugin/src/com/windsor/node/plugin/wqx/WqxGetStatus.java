@@ -9,8 +9,6 @@ import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.PartnerIdentity;
 import com.windsor.node.common.domain.ProcessContentResult;
 import com.windsor.node.common.util.NodeClientService;
-import com.windsor.node.service.helper.IdGenerator;
-import com.windsor.node.service.helper.settings.SettingServiceProvider;
 
 public class WqxGetStatus extends BaseWqxPlugin {
 
@@ -37,8 +35,8 @@ public class WqxGetStatus extends BaseWqxPlugin {
         try {
 
             // use statusDao to get list of pending tran ids
-            List<?> localTranIds = statusDao
-                    .getPendingTransactionIds(getOrgIdFromTransaction(transaction));
+            List<?> localTranIds = getStatusDao().getPendingTransactionIds(
+                    getOrgIdFromTransaction(transaction));
 
             if (localTranIds.size() == 0) {
 
@@ -59,7 +57,7 @@ public class WqxGetStatus extends BaseWqxPlugin {
 
                 for (int i = 0; i < localTranIds.size(); i++) {
 
-                    NodeTransaction tran = transactionDao.get(
+                    NodeTransaction tran = getTransactionDao().get(
                             (String) localTranIds.get(0), false);
 
                     networkTranIds.add(tran.getNetworkId());
@@ -100,11 +98,11 @@ public class WqxGetStatus extends BaseWqxPlugin {
                             .equals(CommonTransactionStatusCode.COMPLETED)
                             || remoteStatus
                                     .equals(CommonTransactionStatusCode.PROCESSED)) {
-                        statusDao.updateStatus(localTranId,
+                        getStatusDao().updateStatus(localTranId,
                                 CommonTransactionStatusCode.COMPLETED);
                     } else if (remoteStatus
                             .equals(CommonTransactionStatusCode.FAILED)) {
-                        statusDao.updateStatus(localTranId,
+                        getStatusDao().updateStatus(localTranId,
                                 CommonTransactionStatusCode.FAILED);
                     }
                 }
@@ -129,22 +127,6 @@ public class WqxGetStatus extends BaseWqxPlugin {
         }
 
         return result;
-    }
-
-    public SettingServiceProvider getSettingService() {
-        return settingService;
-    }
-
-    public void setSettingService(SettingServiceProvider settingService) {
-        this.settingService = settingService;
-    }
-
-    public IdGenerator getIdGenerator() {
-        return idGenerator;
-    }
-
-    public void setIdGenerator(IdGenerator idGenerator) {
-        this.idGenerator = idGenerator;
     }
 
     /*

@@ -79,7 +79,7 @@ public class LogFileRetriever extends BaseWnosPlugin {
 
         try {
             result.getAuditEntries()
-                    .add(makeEntry("Vaildating transaction..."));
+                    .add(makeEntry("Validating transaction..."));
             validateTransaction(transaction);
 
             /* HELPERS */

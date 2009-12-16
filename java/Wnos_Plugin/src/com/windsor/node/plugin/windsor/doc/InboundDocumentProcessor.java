@@ -211,7 +211,7 @@ public class InboundDocumentProcessor extends BaseWnosPlugin {
         try {
 
             result.getAuditEntries().add(
-                    makeEntry("Vaildating transaction and documents..."));
+                    makeEntry("Validating transaction and documents..."));
 
             validateTransaction(transaction);
 

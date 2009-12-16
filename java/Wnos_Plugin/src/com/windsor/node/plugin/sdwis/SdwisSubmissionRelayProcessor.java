@@ -64,6 +64,7 @@ import com.windsor.node.common.domain.PartnerIdentity;
 import com.windsor.node.common.domain.ProcessContentResult;
 import com.windsor.node.common.domain.ServiceType;
 import com.windsor.node.common.util.NodeClientService;
+import com.windsor.node.conf.NAASConfig;
 import com.windsor.node.plugin.BaseWnosPlugin;
 import com.windsor.node.plugin.sdwis.dao.HereDao;
 import com.windsor.node.service.helper.IdGenerator;
@@ -151,16 +152,8 @@ public class SdwisSubmissionRelayProcessor extends BaseWnosPlugin {
         result.setSuccess(false);
         result.setStatus(CommonTransactionStatusCode.FAILED);
 
-        result.getAuditEntries().add(makeEntry("Vaildating transaction..."));
+        result.getAuditEntries().add(makeEntry("Validating transaction..."));
         validateTransaction(transaction);
-
-        if (!transaction.getWebMethod().equals(NodeMethodType.SUBMIT)) {
-
-            String mesg = "Invalid method type: " + transaction.getWebMethod();
-            result.getAuditEntries().add(makeEntry(mesg));
-
-            throw new RuntimeException(mesg);
-        }
 
         int numOfDocs = 0;
 
@@ -188,19 +181,28 @@ public class SdwisSubmissionRelayProcessor extends BaseWnosPlugin {
                             + submitEndpointUri));
             NodeClientService client = null;
 
-            if (StringUtils.isBlank(submitUserName)
-                    || StringUtils.isBlank(submitPassword)) {
+            if (StringUtils.isBlank(getSubmitUserName())
+                    || StringUtils.isBlank(getSubmitPassword())) {
 
                 result.getAuditEntries().add(
                         makeEntry("Using the Node's id & password to submit."));
-                client = makeAndConfigureNodeClientService(submitEndpointUri);
+
+                NAASConfig naasConfig = (NAASConfig) getServiceFactory()
+                        .makeService(NAASConfig.class);
+
+                client = createClientForIdAndPasswd(naasConfig
+                        .getRuntimeAccount().getUsername(), naasConfig
+                        .getRuntimeAccount().getPassword(),
+                        getSubmitEndpointUri());
 
             } else {
 
                 result.getAuditEntries().add(
-                        makeEntry("Submitting for user id " + submitUserName));
+                        makeEntry("Submitting for user id "
+                                + getSubmitUserName()));
 
-                client = createClientForIdAndPasswd();
+                client = createClientForIdAndPasswd(getSubmitUserName(),
+                        getSubmitPassword(), getSubmitEndpointUri());
             }
 
             if (client == null) {
@@ -249,30 +251,29 @@ public class SdwisSubmissionRelayProcessor extends BaseWnosPlugin {
         return result;
     }
 
-    private NodeClientService createClientForIdAndPasswd()
-            throws MalformedURLException {
+    private NodeClientService createClientForIdAndPasswd(String name,
+            String passwd, String endpointUri) throws MalformedURLException {
         NodeClientService client;
         NAASAccount credentials = new NAASAccount();
         credentials.setAuthMethod("password");
-        credentials.setUsername(submitUserName);
-        credentials.setPassword(submitPassword);
+        credentials.setUsername(name);
+        credentials.setPassword(passwd);
 
         PartnerIdentity partner = new PartnerIdentity();
-        partner.setUrl(new URL(submitEndpointUri));
+        partner.setUrl(new URL(endpointUri));
 
         /*
          * try to guess the endpoint version - PartnerIdentity defaults to EN20
          */
-        if (submitEndpointUri.endsWith("ENService11.asmx")
-                || submitEndpointUri.endsWith("v11")
-                || submitEndpointUri.endsWith("V10")) {
+        if (endpointUri.endsWith("ENService11.asmx")
+                || endpointUri.endsWith("v11") || endpointUri.endsWith("V10")) {
 
             partner.setVersion(EndpointVersionType.EN11);
         }
 
         debug("Submission target endpoint version: " + partner.getVersion());
 
-        client = clientFactory.makeAndConfigure(partner, credentials);
+        client = getClientFactory().makeAndConfigure(partner, credentials);
         return client;
     }
 
@@ -414,6 +415,11 @@ public class SdwisSubmissionRelayProcessor extends BaseWnosPlugin {
 
         super.validateTransaction(tran);
 
+        if (!tran.getWebMethod().equals(NodeMethodType.SUBMIT)) {
+            throw new RuntimeException("Invalid method type: "
+                    + tran.getWebMethod());
+        }
+
         if (null == tran.getDocuments() || tran.getDocuments().size() != 1) {
             throw new RuntimeException("Transaction must contain one Document.");
         }
@@ -484,8 +490,8 @@ public class SdwisSubmissionRelayProcessor extends BaseWnosPlugin {
     private void validateHelpers() {
 
         if (null == settingService) {
-            settingService = (SettingServiceProvider) getServiceFactory()
-                    .makeService(SettingServiceProvider.class);
+            setSettingService((SettingServiceProvider) getServiceFactory()
+                    .makeService(SettingServiceProvider.class));
         }
 
         if (settingService == null) {
@@ -576,6 +582,14 @@ public class SdwisSubmissionRelayProcessor extends BaseWnosPlugin {
 
     public void setSubmitEndpointUri(String submitEndpointUri) {
         this.submitEndpointUri = submitEndpointUri;
+    }
+
+    public DualEndpointNodeClientFactory getClientFactory() {
+        return clientFactory;
+    }
+
+    public void setClientFactory(DualEndpointNodeClientFactory clientFactory) {
+        this.clientFactory = clientFactory;
     }
 
 }

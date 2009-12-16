@@ -106,7 +106,7 @@ public class InboundDocumentRelayProcessor extends BaseWnosPlugin {
         try {
 
             result.getAuditEntries()
-                    .add(makeEntry("Vaildating transaction..."));
+                    .add(makeEntry("Validating transaction..."));
 
             /*
              * 

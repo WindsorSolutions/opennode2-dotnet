@@ -271,8 +271,8 @@ public class WindsorHTTPSender extends BasicHandler {
                     HTTPConstants.HEADER_CONTENT_TYPE);
             String contentLocation = getHeader(method,
                     HTTPConstants.HEADER_CONTENT_LOCATION);
-            String contentLength = getHeader(method,
-                    HTTPConstants.HEADER_CONTENT_LENGTH);
+            // String contentLength = getHeader(method,
+            // HTTPConstants.HEADER_CONTENT_LENGTH);
 
             if ((returnCode > 199) && (returnCode < 300)) {
 
@@ -337,9 +337,6 @@ public class WindsorHTTPSender extends BasicHandler {
             outMsg.setMessageType(Message.RESPONSE);
             msgContext.setResponseMessage(outMsg);
             if (log.isDebugEnabled()) {
-                if (null == contentLength) {
-                    log.debug(Messages.getMessage("no00", "Content-Length"));
-                }
                 log.debug(Messages.getMessage("xmlRecd00"));
                 log.debug("-----------------------------------------------");
                 log.debug(outMsg.getSOAPPartAsString());

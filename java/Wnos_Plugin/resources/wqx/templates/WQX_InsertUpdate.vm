@@ -1,1046 +1,1075 @@
-<?xml version="1.0" encoding="UTF-8"?>  
-#set ($totalRecCount = 0)    
-$helper.startStopWatch()
-$helper.print("lastProcessedTimestamp:")$helper.print($helper.toDbDateString($lastProcessedTimestamp))
+<?xml version="1.0" encoding="UTF-8"?>$helper.startStopWatch()
+#if($lastProcessedTimestamp)
+#set($lastProcessedTimestamp = $helper.toDbDateString($lastProcessedTimestamp))
+$helper.print("lastProcessedTimestamp: $lastProcessedTimestamp")
+#set($projectQuery = "SELECT recordid, projectid, projectname, projectdesc, samplingdesigntypecode, qappapprovedind, qappapprovalagencyname FROM WQX_PROJECT P WHERE PARENTID = ? AND WQXUPDATEDATE >= '$lastProcessedTimestamp' ") 
+#set($monLocQuery = "SELECT recordid, parentid, monitoringlocationid, monlocname, monloctype, monlocdesc, huceightdigitcode, huctwelvedigitcode, triballandind, triballandname, latitudemeasure, longitudemeasure, sourcemapscale, horizaccuracymeasure, horizaccuracymeasureunit, horizcollmethod, horizcoordrefsysdatum, verticalmeasure, verticalmeasureunit, verticalcollmethod, verticalcoordrefsysdatum, countrycode, statecode, countycode, welltype, aquifername, formationtype, wellholedepthmeasure, wellholedepthmeasureunit, wqxupdatedate FROM WQX_MONITORINGLOCATION WHERE PARENTID = ?  AND WQXUPDATEDATE >= '$lastProcessedTimestamp' ")
+#set($bioHabIndexQuery = "SELECT indexid, indextypeid, indextypeidcontext, indextypename, resourcetitle, resourcedate, resourceid, indextypescale, indexscore, indexcalculateddate, monlocid FROM WQX_BIOLOGICALHABITATINDEX WHERE PARENTID = ? AND WQXUPDATEDATE >= '$lastProcessedTimestamp' ")
+#set($activityQuery = "SELECT recordid, activityid, activitytypecode, activitymedia, activitymediasubdivision, activitystartdate, starttime, starttimezone, activityenddate, endtime, endtimezone, relativedepth, depthheightmeasure, depthheightmeasureunit, topdepthheightmeasure, topdepthheightmeasureunit, bottomdepthheightmeasure, bottomdepthheightmeasureunit, depthaltituderefpoint, monlocid, activitycomment, latitudemeasure, longitudemeasure, sourcemapscale, horizaccuracymeasure, horizaccuracymeasureunit, horizcollmethod, horizcoordrefsysdatum, bioactivityassemblagesampd, biohabcolldurationmeasure, biohabcolldurationmeasureunit, biohabreachlengthmeasure, biohabreachlengthmeasureunit, biohabreachwidthmeasure, biohabreachwidthmeasureunit, biohabpasscount, biohabnettype, biohabnetsurfaceareameasure, biohabnetsurfacemeasureunit, biohabnetmeshsizemeasure, biohabnetmeshmeasureunit, biohabnetboatspeedmeasure, biohabnetboatspeedmeasureunit, biohabnetcurrspeedmeasure, biohabnetcurrspeedmeasureunit, bioactivitytoxicitytesttype, sampcollmethodid, sampcollmethodidcontext, sampcollmethod, sampcollmethodqualifier, sampcollmethoddesc, sampcollequipment, sampcollequipmentcomment, sampprepid, sampprepidcontext, sampprep, sampprepqualifiertype, sampprepdesc, sampprepconttype, sampprepcontcolor, sampprepcontchempreservused, sampprepcontthermalpreservused, sampprepcontsamptransstordesc, resultcount from WQX_ACTIVITY WHERE PARENTID = ?  AND WQXUPDATEDATE >= '$lastProcessedTimestamp' ")
+#set($activityGroupQuery = "SELECT A.activitygroupid, A.activitygroupname, A.activitygrouptypecode, B.activityparentid FROM WQX_ACTIVITYGROUP A,  WQX_ACTIVITYACTIVITYGROUP B WHERE B.ACTIVITYGROUPPARENTID = A.RECORDID and A.PARENTID = ?  AND WQXUPDATEDATE >= '$lastProcessedTimestamp' ")
+#elseif($startDate && $endDate)
+#set($startDate = $helper.toDbDateString($startDate))
+#set($endDate = $helper.toDbDateString($endDate))
+$helper.print("startDate: $startDate")$helper.print("endDate: $endDate")
+#set($projectQuery ="SELECT recordid, projectid, projectname, projectdesc, samplingdesigntypecode, qappapprovedind, qappapprovalagencyname FROM WQX_PROJECT P WHERE PARENTID = ? AND WQXUPDATEDATE >= '$startDate' AND WQXUPDATEDATE < '$endDate' ")
+#set($monLocQuery = "SELECT recordid, parentid, monitoringlocationid, monlocname, monloctype, monlocdesc, huceightdigitcode, huctwelvedigitcode, triballandind, triballandname, latitudemeasure, longitudemeasure, sourcemapscale, horizaccuracymeasure, horizaccuracymeasureunit, horizcollmethod, horizcoordrefsysdatum, verticalmeasure, verticalmeasureunit, verticalcollmethod, verticalcoordrefsysdatum, countrycode, statecode, countycode, welltype, aquifername, formationtype, wellholedepthmeasure, wellholedepthmeasureunit, wqxupdatedate FROM WQX_MONITORINGLOCATION WHERE PARENTID = ?  AND WQXUPDATEDATE >= '$startDate' AND WQXUPDATEDATE < '$endDate' ")
+#set($bioHabIndexQuery = "SELECT indexid, indextypeid, indextypeidcontext, indextypename, resourcetitle, resourcedate, resourceid, indextypescale, indexscore, indexcalculateddate, monlocid FROM WQX_BIOLOGICALHABITATINDEX WHERE PARENTID = ? AND WQXUPDATEDATE >= '$startDate' AND WQXUPDATEDATE < '$endDate' ")
+#set($activityQuery = "SELECT recordid, activityid, activitytypecode, activitymedia, activitymediasubdivision, activitystartdate, starttime, starttimezone, activityenddate, endtime, endtimezone, relativedepth, depthheightmeasure, depthheightmeasureunit, topdepthheightmeasure, topdepthheightmeasureunit, bottomdepthheightmeasure, bottomdepthheightmeasureunit, depthaltituderefpoint, monlocid, activitycomment, latitudemeasure, longitudemeasure, sourcemapscale, horizaccuracymeasure, horizaccuracymeasureunit, horizcollmethod, horizcoordrefsysdatum, bioactivityassemblagesampd, biohabcolldurationmeasure, biohabcolldurationmeasureunit, biohabreachlengthmeasure, biohabreachlengthmeasureunit, biohabreachwidthmeasure, biohabreachwidthmeasureunit, biohabpasscount, biohabnettype, biohabnetsurfaceareameasure, biohabnetsurfacemeasureunit, biohabnetmeshsizemeasure, biohabnetmeshmeasureunit, biohabnetboatspeedmeasure, biohabnetboatspeedmeasureunit, biohabnetcurrspeedmeasure, biohabnetcurrspeedmeasureunit, bioactivitytoxicitytesttype, sampcollmethodid, sampcollmethodidcontext, sampcollmethod, sampcollmethodqualifier, sampcollmethoddesc, sampcollequipment, sampcollequipmentcomment, sampprepid, sampprepidcontext, sampprep, sampprepqualifiertype, sampprepdesc, sampprepconttype, sampprepcontcolor, sampprepcontchempreservused, sampprepcontthermalpreservused, sampprepcontsamptransstordesc, resultcount from WQX_ACTIVITY WHERE PARENTID = ?  AND WQXUPDATEDATE >= '$startDate' AND WQXUPDATEDATE < '$endDate' ")
+#set($activityGroupQuery = "SELECT A.activitygroupid, A.activitygroupname, A.activitygrouptypecode, B.activityparentid FROM WQX_ACTIVITYGROUP A,  WQX_ACTIVITYACTIVITYGROUP B WHERE B.ACTIVITYGROUPPARENTID = A.RECORDID and A.PARENTID = ?  AND WQXUPDATEDATE >= '$startDate' AND WQXUPDATEDATE < '$endDate' ")
+#end##if($lastProcessedTimestamp)
 #if($makeHeader)#if($makeHeader == "true" || $makeHeader == "TRUE")
 <Document Id="$docId" 
           xmlns="http://www.exchangenetwork.net/schema/v1.0/ExchangeNetworkDocument.xsd" 
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <Header>
-        <Author>$authorName</Author>
-        <Organization>$authorOrg</Organization>
-        <Title>WQX Update-Insert</Title>
-        <CreationTime>$helper.getCurrentDateTime()</CreationTime>
-        <ContactInfo>$contactInfo</ContactInfo>
-    </Header>
-	<Payload Operation="Update-Insert">
+<Header>
+    <Author>$authorName</Author>
+    <Organization>$authorOrg</Organization>
+    <Title>WQX</Title>
+    <CreationTime>$helper.getCurrentDateTime()</CreationTime>
+    <ContactInfo>$contactInfo</ContactInfo>
+</Header>
+<Payload Operation="Update-Insert">
 #end#end##if($makeHeader)
-    	<WQX xmlns="http://www.exchangenetwork.net/schema/wqx/2" 
-             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:schemaLocation="http://www.exchangenetwork.net/schema/wqx/2 http://www.exchangenetwork.net/schema/wqx/2/0/WQX_WQX_v2.0.xsd">
+<WQX xmlns="http://www.exchangenetwork.net/schema/wqx/2" 
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://www.exchangenetwork.net/schema/wqx/2 http://www.exchangenetwork.net/schema/wqx/2/0/WQX_WQX_v2.0.xsd">
 #set($org = $helper.getObject("SELECT recordid, orgid, orgformalname, orgdesc, tribalcode FROM WQX_ORGANIZATION WHERE ORGID = ? ", $orgId))
-        <Organization>
+    <Organization>
 #if($org.get("recordid") || $org.get("orgid") || $org.get("orgformalname") || $org.get("orgdesc") || $org.get("tribalcode"))
-            <OrganizationDescription>
+        <OrganizationDescription>
 #if($org.get("orgid"))
-                <OrganizationIdentifier>$org.get("orgid")</OrganizationIdentifier>
+            <OrganizationIdentifier>$org.get("orgid")</OrganizationIdentifier>
 #end
 #if($org.get("orgformalname"))
-                <OrganizationFormalName>$org.get("orgformalname")</OrganizationFormalName>
+            <OrganizationFormalName>$org.get("orgformalname")</OrganizationFormalName>
 #end
 #if($org.get("orgdesc"))
-                <OrganizationDescriptionText>$org.get("orgdesc")</OrganizationDescriptionText>
+            <OrganizationDescriptionText>$org.get("orgdesc")</OrganizationDescriptionText>
 #end
 #if($org.get("tribalcode"))
-                <TribalCode>$org.get("tribalcode")</TribalCode>
+            <TribalCode>$org.get("tribalcode")</TribalCode>
 #end
-            </OrganizationDescription>
+        </OrganizationDescription>
 #end##if(... || ...)
 #foreach($elecAddr in $helper.getData("SELECT electronicaddress, electronicaddresstype FROM WQX_ELECTRONICADDRESS WHERE PARENTID = ? ", $org.get("recordid")))
-            <ElectronicAddress>
+        <ElectronicAddress>
 #if($elecAddr.get("electronicaddress"))
-                <ElectronicAddressText>$elecAddr.get("electronicaddress")</ElectronicAddressText>
+            <ElectronicAddressText>$elecAddr.get("electronicaddress")</ElectronicAddressText>
 #end
 #if($elecAddr.get("electronicaddresstype"))
-                <ElectronicAddressTypeName>$elecAddr.get("electronicaddresstype")</ElectronicAddressTypeName>
+            <ElectronicAddressTypeName>$elecAddr.get("electronicaddresstype")</ElectronicAddressTypeName>
 #end
             </ElectronicAddress>
 #end##foreach($elecAddr in $helper.getData
 #foreach($telephonic in $helper.getData("SELECT telephonenumber, telephonenumbertype, telephoneext FROM WQX_TELEPHONIC WHERE PARENTID = ? ", $org.get("recordid")))
-            <Telephonic>
+        <Telephonic>
 #if($telephonic.get("telephonenumber"))
-                <TelephoneNumberText>$telephonic.get("telephonenumber")</TelephoneNumberText>
+            <TelephoneNumberText>$telephonic.get("telephonenumber")</TelephoneNumberText>
 #end
 #if($telephonic.get("telephonenumbertype"))
-                <TelephoneNumberTypeName>$telephonic.get("telephonenumbertype")</TelephoneNumberTypeName>
+            <TelephoneNumberTypeName>$telephonic.get("telephonenumbertype")</TelephoneNumberTypeName>
 #end
 #if($telephonic.get("telephoneext"))
-                <TelephoneExtensionNumberText>$telephonic.get("telephoneext")</TelephoneExtensionNumberText>
+            <TelephoneExtensionNumberText>$telephonic.get("telephoneext")</TelephoneExtensionNumberText>
 #end
-            </Telephonic>
+        </Telephonic>
 #end##foreach($telephonic in $helper.getData
 #foreach($orgAddr in $helper.getData("SELECT addresstype, address, supplementaladdress, locality, statecode, postalcode, countrycode, countycode FROM WQX_ORGADDRESS WHERE PARENTID = ? ", $org.get("recordid")))
-            <OrganizationAddress>
+        <OrganizationAddress>
 #if($orgAddr.get("addresstype"))
-                <AddressTypeName>$orgAddr.get("addresstype")</AddressTypeName>
+            <AddressTypeName>$orgAddr.get("addresstype")</AddressTypeName>
 #end
 #if($orgAddr.get("address"))
-                <AddressText>$orgAddr.get("address")</AddressText>
+            <AddressText>$orgAddr.get("address")</AddressText>
 #end
 #if($orgAddr.get("supplementaladdress"))
-                <SupplementalAddressText>$orgAddr.get("supplementaladdress")</SupplementalAddressText>
+            <SupplementalAddressText>$orgAddr.get("supplementaladdress")</SupplementalAddressText>
 #end
 #if($orgAddr.get("locality"))
-                <LocalityName>$orgAddr.get("locality")</LocalityName>
+            <LocalityName>$orgAddr.get("locality")</LocalityName>
 #end
 #if($orgAddr.get("statecode"))
-                <StateCode>$orgAddr.get("statecode")</StateCode>
+            <StateCode>$orgAddr.get("statecode")</StateCode>
 #end
 #if($orgAddr.get("postalcode"))
-                <PostalCode>$orgAddr.get("postalcode")</PostalCode>
+            <PostalCode>$orgAddr.get("postalcode")</PostalCode>
 #end
 #if($orgAddr.get("countrycode"))
-                <CountryCode>$orgAddr.get("countrycode")</CountryCode>
+            <CountryCode>$orgAddr.get("countrycode")</CountryCode>
 #end
 #if($orgAddr.get("countycode"))
-                <CountyCode>$orgAddr.get("countycode")</CountyCode>
+            <CountyCode>$orgAddr.get("countycode")</CountyCode>
 #end
-            </OrganizationAddress>
+        </OrganizationAddress>
 #end##foreach($orgAddr in $helper.getData
-#foreach($project in $helper.getData("SELECT recordid, projectid, projectname, projectdesc, samplingdesigntypecode, qappapprovedind, qappapprovalagencyname FROM WQX_PROJECT P WHERE PARENTID = ? AND WQXUPDATEDATE >= ? ", [$org.get("recordid"), $helper.toDbDateString($lastProcessedTimestamp)]))
-            <Project>
+$helper.print("getting Projects...")
+$helper.printElapsedTime()    
+#foreach($project in $helper.getData($projectQuery, $org.get("recordid")))
+#set($totalProjectCount = $velocityCount)
+        <Project>
 #if($project.get("projectid"))
-                <ProjectIdentifier>$project.get("projectid")</ProjectIdentifier>
+            <ProjectIdentifier>$project.get("projectid")</ProjectIdentifier>
 #end
 #if($project.get("projectname"))
-                <ProjectName>$project.get("projectname")</ProjectName>
+            <ProjectName>$project.get("projectname")</ProjectName>
 #end
 #if($project.get("projectdesc"))
-                <ProjectDescriptionText>$project.get("projectdesc")</ProjectDescriptionText>
+            <ProjectDescriptionText>$project.get("projectdesc")</ProjectDescriptionText>
 #end
 #if($project.get("samplingdesigntypecode"))
-                <SamplingDesignTypeCode>$project.get("samplingdesigntypecode")</SamplingDesignTypeCode>
+            <SamplingDesignTypeCode>$project.get("samplingdesigntypecode")</SamplingDesignTypeCode>
 #end
 #if($project.get("qappapprovedind"))
-                <QAPPApprovedIndicator>$helper.toXmlBoolean($project.get("qappapprovedind"))</QAPPApprovedIndicator>
+            <QAPPApprovedIndicator>$helper.toXmlBoolean($project.get("qappapprovedind"))</QAPPApprovedIndicator>
 #end
 #if($project.get("qappapprovalagencyname"))
-                <QAPPApprovalAgencyName>$project.get("qappapprovalagencyname")</QAPPApprovalAgencyName>
+            <QAPPApprovalAgencyName>$project.get("qappapprovalagencyname")</QAPPApprovalAgencyName>
 #end
 #foreach($attachment in $helper.getData("SELECT recordid, binaryobjectfile, binaryobjectfiletypecode FROM WQX_PROJATTACHEDBINARYOBJECT WHERE PARENTID = ? ", $project.get("recordid")))
-                <AttachedBinaryObject>
+            <AttachedBinaryObject>
 #if($attachment.get("binaryobjectfile"))
-                    <BinaryObjectFileName>$attachment.get("binaryobjectfile")</BinaryObjectFileName>
+                <BinaryObjectFileName>$attachment.get("binaryobjectfile")</BinaryObjectFileName>
 #end
 #if($attachment.get("binaryobjectfiletypecode"))
-                    <BinaryObjectFileTypeCode>$attachment.get("binaryobjectfiletypecode")</BinaryObjectFileTypeCode>
+                <BinaryObjectFileTypeCode>$attachment.get("binaryobjectfiletypecode")</BinaryObjectFileTypeCode>
 #end
                 </AttachedBinaryObject>
 #end##foreach($attachment in $helper.getData
 #foreach($monLocWeight in $helper.getData("SELECT recordid, parentid, monlocid, locweightingfacmeasure, locweightingfacmeasureunit, statisticalstratum, locationcatery, locationstatus, reflocationtypecode, reflocationstartdate, reflocationenddate, resourcetitle, resourcecreator, resourcesubject, resourcepublisher, resourcedate, resourceid, projmonloccomment FROM WQX_PROJECTMONLOC WHERE PARENTID = ? ", $project.get("recordid")))
-                <ProjectMonitoringLocationWeighting>
+            <ProjectMonitoringLocationWeighting>
 #if($monLocWeight.get("monlocid"))
-                    <MonitoringLocationIdentifier>$monLocWeight.get("monlocid")</MonitoringLocationIdentifier>
+                <MonitoringLocationIdentifier>$monLocWeight.get("monlocid")</MonitoringLocationIdentifier>
 #end
 #if($monLocWeight.get("locweightingfacmeasure") || $monLocWeight.get("locweightingfacmeasureunit"))
-                    <LocationWeightingFactorMeasure>
+                <LocationWeightingFactorMeasure>
 #if($monLocWeight.get("locweightingfacmeasure"))
-                        <MeasureValue>$monLocWeight.get("locweightingfacmeasure")</MeasureValue>
+                    <MeasureValue>$monLocWeight.get("locweightingfacmeasure")</MeasureValue>
 #end
 #if($monLocWeight.get("locweightingfacmeasureunit"))
-                        <MeasureUnitCode>$monLocWeight.get("locweightingfacmeasureunit")</MeasureUnitCode>
+                    <MeasureUnitCode>$monLocWeight.get("locweightingfacmeasureunit")</MeasureUnitCode>
 #end
                     </LocationWeightingFactorMeasure>
 #end##if(... || ...)
 #if($monLocWeight.get("statisticalstratum"))
-                    <StatisticalStratumText>$monLocWeight.get("statisticalstratum")</StatisticalStratumText>
+                <StatisticalStratumText>$monLocWeight.get("statisticalstratum")</StatisticalStratumText>
 #end
 #if($monLocWeight.get("locationcatery"))
-                    <LocationCategoryName>$monLocWeight.get("locationcatery")</LocationCategoryName>
+                <LocationCategoryName>$monLocWeight.get("locationcatery")</LocationCategoryName>
 #end
 #if($monLocWeight.get("locationstatus"))
-                    <LocationStatusName>$monLocWeight.get("locationstatus")</LocationStatusName>
+                <LocationStatusName>$monLocWeight.get("locationstatus")</LocationStatusName>
 #end
 #if($monLocWeight.get("reflocationtypecode"))
-                    <ReferenceLocationTypeCode>$monLocWeight.get("reflocationtypecode")</ReferenceLocationTypeCode>
+                <ReferenceLocationTypeCode>$monLocWeight.get("reflocationtypecode")</ReferenceLocationTypeCode>
 #end
 #if($monLocWeight.get("projmonloccomment"))
-                    <CommentText>$monLocWeight.get("projmonloccomment")</CommentText>
+                <CommentText>$monLocWeight.get("projmonloccomment")</CommentText>
 #end
                 </ProjectMonitoringLocationWeighting>
 #end##foreach($monLocWeight in $helper.getData
-            </Project>
+        </Project>
 #end##foreach($project in $helper.getData
 $helper.print("getting MonitoringLocations...")
 $helper.printElapsedTime()    
-#foreach($monitoringLoc in $helper.getData("SELECT recordid, parentid, monitoringlocationid, monlocname, monloctype, monlocdesc, huceightdigitcode, huctwelvedigitcode, triballandind, triballandname, latitudemeasure, longitudemeasure, sourcemapscale, horizaccuracymeasure, horizaccuracymeasureunit, horizcollmethod, horizcoordrefsysdatum, verticalmeasure, verticalmeasureunit, verticalcollmethod, verticalcoordrefsysdatum, countrycode, statecode, countycode, welltype, aquifername, formationtype, wellholedepthmeasure, wellholedepthmeasureunit, wqxupdatedate FROM WQX_MONITORINGLOCATION WHERE PARENTID = ?  AND WQXUPDATEDATE >= ? ", [$org.get("recordid"), $helper.toDbDateString($lastProcessedTimestamp)]))
-            <MonitoringLocation>
+#foreach($monitoringLoc in $helper.getData($monLocQuery, $org.get("recordid")))
+#set($totalMonitoringLocationCount = $velocityCount)
+        <MonitoringLocation>
 #if($monitoringLoc.get("monitoringlocationid") || $monitoringLoc.get("monlocname") || $monitoringLoc.get("monloctype") || $monitoringLoc.get("monlocdesc") || $monitoringLoc.get("huceightdigitcode") || $monitoringLoc.get("huctwelvedigitcode") || $monitoringLoc.get("triballandind") || $monitoringLoc.get("triballandname") || $monitoringLoc.get("latitudemeasure") || $monitoringLoc.get("longitudemeasure") || $monitoringLoc.get("sourcemapscale") || $monitoringLoc.get("horizaccuracymeasure") || $monitoringLoc.get("horizaccuracymeasureunit") || $monitoringLoc.get("horizcollmethod") || $monitoringLoc.get("horizcoordrefsysdatum") || $monitoringLoc.get("verticalmeasure") || $monitoringLoc.get("verticalmeasureunit") || $monitoringLoc.get("verticalcollmethod") || $monitoringLoc.get("verticalcoordrefsysdatum") || $monitoringLoc.get("countrycode") || $monitoringLoc.get("statecode") || $monitoringLoc.get("countycode") || $monitoringLoc.get("welltype") || $monitoringLoc.get("aquifername") || $monitoringLoc.get("formationtype") || $monitoringLoc.get("wellholedepthmeasure") || $monitoringLoc.get("wellholedepthmeasureunit"))
-                <MonitoringLocationIdentity>
+            <MonitoringLocationIdentity>
 #if($monitoringLoc.get("monitoringlocationid"))
-                    <MonitoringLocationIdentifier>$monitoringLoc.get("monitoringlocationid")</MonitoringLocationIdentifier>
+                <MonitoringLocationIdentifier>$monitoringLoc.get("monitoringlocationid")</MonitoringLocationIdentifier>
 #end
 #if($monitoringLoc.get("monlocname"))
-                    <MonitoringLocationName>$monitoringLoc.get("monlocname")</MonitoringLocationName>
+                <MonitoringLocationName>$monitoringLoc.get("monlocname")</MonitoringLocationName>
 #end
 #if($monitoringLoc.get("monloctype"))
-                    <MonitoringLocationTypeName>$monitoringLoc.get("monloctype")</MonitoringLocationTypeName>
+                <MonitoringLocationTypeName>$monitoringLoc.get("monloctype")</MonitoringLocationTypeName>
 #end
 #if($monitoringLoc.get("monlocdesc"))
-                    <MonitoringLocationDescriptionText>$monitoringLoc.get("monlocdesc")</MonitoringLocationDescriptionText>
+                <MonitoringLocationDescriptionText>$monitoringLoc.get("monlocdesc")</MonitoringLocationDescriptionText>
 #end
 #if($monitoringLoc.get("huceightdigitcode"))
-                    <HUCEightDigitCode>$monitoringLoc.get("huceightdigitcode")</HUCEightDigitCode>
+                <HUCEightDigitCode>$monitoringLoc.get("huceightdigitcode")</HUCEightDigitCode>
 #end
 #if($monitoringLoc.get("huctwelvedigitcode"))
-                    <HUCTwelveDigitCode>$monitoringLoc.get("huctwelvedigitcode")</HUCTwelveDigitCode>
+                <HUCTwelveDigitCode>$monitoringLoc.get("huctwelvedigitcode")</HUCTwelveDigitCode>
 #end
 #if($monitoringLoc.get("triballandind"))
-                    <TribalLandIndicator>$helper.toXmlBoolean($monitoringLoc.get("triballandind"))</TribalLandIndicator>
+                <TribalLandIndicator>$helper.toXmlBoolean($monitoringLoc.get("triballandind"))</TribalLandIndicator>
 #end
 #if($monitoringLoc.get("triballandname"))
-                    <TribalLandName>$monitoringLoc.get("triballandname")</TribalLandName>
+                <TribalLandName>$monitoringLoc.get("triballandname")</TribalLandName>
 #end
 #foreach($altMonLoc in $helper.getData("SELECT monlocid, monlocidcontext FROM WQX_ALTMONLOC WHERE PARENTID = ? ", $monitoringLoc.get("recordid")))
-                    <AlternateMonitoringLocationIdentity>
+                <AlternateMonitoringLocationIdentity>
 #if($altMonLoc.get("monlocid"))
-                        <MonitoringLocationIdentifier>$altMonLoc.get("monlocid")</MonitoringLocationIdentifier>
+                    <MonitoringLocationIdentifier>$altMonLoc.get("monlocid")</MonitoringLocationIdentifier>
 #end
 #if($altMonLoc.get("monlocidcontext"))
-                        <MonitoringLocationIdentifierContext>$altMonLoc.get("monlocidcontext")</MonitoringLocationIdentifierContext>
+                    <MonitoringLocationIdentifierContext>$altMonLoc.get("monlocidcontext")</MonitoringLocationIdentifierContext>
 #end
                     </AlternateMonitoringLocationIdentity>
 #end##foreach($altMonLoc in $helper.getData
-                </MonitoringLocationIdentity>
+            </MonitoringLocationIdentity>
 #end
 #if($monitoringLoc.get("latitudemeasure") || $monitoringLoc.get("longitudemeasure") || $monitoringLoc.get("sourcemapscale") || $monitoringLoc.get("horizaccuracymeasure") || $monitoringLoc.get("horizaccuracymeasureunit") || $monitoringLoc.get("horizcollmethod") || $monitoringLoc.get("horizcoordrefsysdatum") || $monitoringLoc.get("verticalmeasure") || $monitoringLoc.get("verticalmeasureunit") || $monitoringLoc.get("verticalcollmethod") || $monitoringLoc.get("verticalcoordrefsysdatum") || $monitoringLoc.get("countrycode") || $monitoringLoc.get("statecode") || $monitoringLoc.get("countycode"))
-                <MonitoringLocationGeospatial>
+            <MonitoringLocationGeospatial>
 #if($monitoringLoc.get("latitudemeasure"))
-                    <LatitudeMeasure>$monitoringLoc.get("latitudemeasure")</LatitudeMeasure>
+                <LatitudeMeasure>$monitoringLoc.get("latitudemeasure")</LatitudeMeasure>
 #end
 #if($monitoringLoc.get("longitudemeasure"))
-                    <LongitudeMeasure>$monitoringLoc.get("longitudemeasure")</LongitudeMeasure>
+                <LongitudeMeasure>$monitoringLoc.get("longitudemeasure")</LongitudeMeasure>
 #end
 #if($monitoringLoc.get("sourcemapscale"))
-                    <SourceMapScaleNumeric>$monitoringLoc.get("sourcemapscale")</SourceMapScaleNumeric>
+                <SourceMapScaleNumeric>$monitoringLoc.get("sourcemapscale")</SourceMapScaleNumeric>
 #end
 #if($monitoringLoc.get("horizaccuracymeasure") || $monitoringLoc.get("horizaccuracymeasureunit"))
-                    <HorizontalAccuracyMeasure>
+                <HorizontalAccuracyMeasure>
 #if($monitoringLoc.get("horizaccuracymeasure"))
-                        <MeasureValue>$monitoringLoc.get("horizaccuracymeasure")</MeasureValue>
+                    <MeasureValue>$monitoringLoc.get("horizaccuracymeasure")</MeasureValue>
 #end
 #if($monitoringLoc.get("horizaccuracymeasureunit"))
-                        <MeasureUnitCode>$monitoringLoc.get("horizaccuracymeasureunit")</MeasureUnitCode>
+                    <MeasureUnitCode>$monitoringLoc.get("horizaccuracymeasureunit")</MeasureUnitCode>
 #end
                     </HorizontalAccuracyMeasure>
 #end##if(... || ...)
 #if($monitoringLoc.get("horizcollmethod"))
-                    <HorizontalCollectionMethodName>$monitoringLoc.get("horizcollmethod")</HorizontalCollectionMethodName>
+                <HorizontalCollectionMethodName>$monitoringLoc.get("horizcollmethod")</HorizontalCollectionMethodName>
 #end
 #if($monitoringLoc.get("horizcoordrefsysdatum"))
-                    <HorizontalCoordinateReferenceSystemDatumName>$monitoringLoc.get("horizcoordrefsysdatum")</HorizontalCoordinateReferenceSystemDatumName>
+                <HorizontalCoordinateReferenceSystemDatumName>$monitoringLoc.get("horizcoordrefsysdatum")</HorizontalCoordinateReferenceSystemDatumName>
 #end
 #if($monitoringLoc.get("verticalmeasure") || $monitoringLoc.get("verticalmeasureunit"))
-                    <VerticalMeasure>
+                <VerticalMeasure>
 #if($monitoringLoc.get("verticalmeasure"))
-                        <MeasureValue>$monitoringLoc.get("verticalmeasure")</MeasureValue>
+                    <MeasureValue>$monitoringLoc.get("verticalmeasure")</MeasureValue>
 #end
 #if($monitoringLoc.get("verticalmeasureunit"))
-                        <MeasureUnitCode>$monitoringLoc.get("verticalmeasureunit")</MeasureUnitCode>
+                    <MeasureUnitCode>$monitoringLoc.get("verticalmeasureunit")</MeasureUnitCode>
 #end
                     </VerticalMeasure>
 #end##if(... || ...)
 #if($monitoringLoc.get("verticalcollmethod"))
-                    <VerticalCollectionMethodName>$monitoringLoc.get("verticalcollmethod")</VerticalCollectionMethodName>
+                <VerticalCollectionMethodName>$monitoringLoc.get("verticalcollmethod")</VerticalCollectionMethodName>
 #end
 #if($monitoringLoc.get("verticalcoordrefsysdatum"))
-                    <VerticalCoordinateReferenceSystemDatumName>$monitoringLoc.get("verticalcoordrefsysdatum")</VerticalCoordinateReferenceSystemDatumName>
+                <VerticalCoordinateReferenceSystemDatumName>$monitoringLoc.get("verticalcoordrefsysdatum")</VerticalCoordinateReferenceSystemDatumName>
 #end
 #if($monitoringLoc.get("countrycode"))
-                    <CountryCode>$monitoringLoc.get("countrycode")</CountryCode>
+                <CountryCode>$monitoringLoc.get("countrycode")</CountryCode>
 #end
 #if($monitoringLoc.get("statecode"))
-                    <StateCode>$monitoringLoc.get("statecode")</StateCode>
+                <StateCode>$monitoringLoc.get("statecode")</StateCode>
 #end
 #if($monitoringLoc.get("countycode"))
-                    <CountyCode>$monitoringLoc.get("countycode")</CountyCode>
+                <CountyCode>$monitoringLoc.get("countycode")</CountyCode>
 #end
                 </MonitoringLocationGeospatial>
 #end##if(... || ...)
 #if($monitoringLoc.get("welltype") || $monitoringLoc.get("aquifername") || $monitoringLoc.get("formationtype") || $monitoringLoc.get("wellholedepthmeasure") || $monitoringLoc.get("wellholedepthmeasureunit"))
-                <WellInformation>
+            <WellInformation>
 #if($monitoringLoc.get("welltype"))
-                    <WellTypeText>$monitoringLoc.get("welltype")</WellTypeText>
+                <WellTypeText>$monitoringLoc.get("welltype")</WellTypeText>
 #end
 #if($monitoringLoc.get("aquifername"))
-                    <AquiferName>$monitoringLoc.get("aquifername")</AquiferName>
+                <AquiferName>$monitoringLoc.get("aquifername")</AquiferName>
 #end
 #if($monitoringLoc.get("formationtype"))
-                    <FormationTypeText>$monitoringLoc.get("formationtype")</FormationTypeText>
+                <FormationTypeText>$monitoringLoc.get("formationtype")</FormationTypeText>
 #end
 #if($monitoringLoc.get("wellholedepthmeasure") || $monitoringLoc.get("wellholedepthmeasureunit"))
-                    <WellHoleDepthMeasure>
+                <WellHoleDepthMeasure>
 #if($monitoringLoc.get("wellholedepthmeasure"))
-                        <MeasureValue>$monitoringLoc.get("wellholedepthmeasure")</MeasureValue>
+                    <MeasureValue>$monitoringLoc.get("wellholedepthmeasure")</MeasureValue>
 #end
 #if($monitoringLoc.get("wellholedepthmeasureunit"))
-                        <MeasureUnitCode>$monitoringLoc.get("wellholedepthmeasureunit")</MeasureUnitCode>
+                    <MeasureUnitCode>$monitoringLoc.get("wellholedepthmeasureunit")</MeasureUnitCode>
 #end
                     </WellHoleDepthMeasure>
 #end##if(... || ...)
-                </WellInformation>
+            </WellInformation>
 #end##if(... || ...)
 #foreach($monLocAttachment in $helper.getData("SELECT binaryobjectfile, binaryobjectfiletypecode FROM WQX_MONLOCATTACHEDBINARYOBJECT WHERE PARENTID = ? ", $monitoringLoc.get("recordid")))
-                <AttachedBinaryObject>
+            <AttachedBinaryObject>
 #if($monLocAttachment.get("binaryobjectfile"))
-                    <BinaryObjectFileName>$monLocAttachment.get("binaryobjectfile")</BinaryObjectFileName>
+                <BinaryObjectFileName>$monLocAttachment.get("binaryobjectfile")</BinaryObjectFileName>
 #end
 #if($monLocAttachment.get("binaryobjectfiletypecode"))
-                    <BinaryObjectFileTypeCode>$monLocAttachment.get("binaryobjectfiletypecode")</BinaryObjectFileTypeCode>
+                <BinaryObjectFileTypeCode>$monLocAttachment.get("binaryobjectfiletypecode")</BinaryObjectFileTypeCode>
 #end
                 </AttachedBinaryObject>
 #end##foreach($monLocAttachment in $helper.getData
-            </MonitoringLocation>
+        </MonitoringLocation>
 #end##foreach($monLoc in $helper.getData
 $helper.print("Done with MonitoringLocations, getting BiologicalHabitatIndexes...")
 $helper.printElapsedTime()
-#foreach($habitatIndex in $helper.getData("SELECT indexid, indextypeid, indextypeidcontext, indextypename, resourcetitle, resourcedate, resourceid, indextypescale, indexscore, indexcalculateddate, monlocid FROM WQX_BIOLOGICALHABITATINDEX WHERE PARENTID = ? AND WQXUPDATEDATE >= ? ", [$org.get("recordid"), $helper.toDbDateString($lastProcessedTimestamp)]))
+#foreach($habitatIndex in $helper.getData($bioHabIndexQuery, $org.get("recordid")))
+#set($totalBiologicalHabitatIndexCount = $velocityCount)
             <BiologicalHabitatIndex>
 #if($habitatIndex.get("indexid"))
-                <IndexIdentifier>$habitatIndex.get("indexid")</IndexIdentifier>
+            <IndexIdentifier>$habitatIndex.get("indexid")</IndexIdentifier>
 #end
 #if($habitatIndex.get("indextypeid") || $habitatIndex.get("indextypeidcontext") || $habitatIndex.get("indextypename") || $habitatIndex.get("resourcetitle") || $habitatIndex.get("resourcedate") || $habitatIndex.get("resourceid") || $habitatIndex.get("indextypescale"))
-                <IndexType>
-                    <IndexTypeIdentifier>$habitatIndex.get("indextypeid")</IndexTypeIdentifier>
-                    <IndexTypeIdentifierContext>$habitatIndex.get("indextypeidcontext")</IndexTypeIdentifierContext>
-                    <IndexTypeName>$habitatIndex.get("indextypename")</IndexTypeName>
+            <IndexType>
+                <IndexTypeIdentifier>$habitatIndex.get("indextypeid")</IndexTypeIdentifier>
+                <IndexTypeIdentifierContext>$habitatIndex.get("indextypeidcontext")</IndexTypeIdentifierContext>
+                <IndexTypeName>$habitatIndex.get("indextypename")</IndexTypeName>
 #if($habitatIndex.get("resourcetitle") || $habitatIndex.get("resourcedate") || $habitatIndex.get("resourceid"))
-                    <IndexTypeCitation>
+                <IndexTypeCitation>
 #if($habitatIndex.get("resourcetitle"))
-                        <ResourceTitleName>$habitatIndex.get("resourcetitle")</ResourceTitleName>
+                    <ResourceTitleName>$habitatIndex.get("resourcetitle")</ResourceTitleName>
 #end
 #if($habitatIndex.get("resourcedate"))
-                        <ResourceDate>$helper.toXmlDate($habitatIndex.get("resourcedate"))</ResourceDate>
+                    <ResourceDate>$helper.toXmlDate($habitatIndex.get("resourcedate"))</ResourceDate>
 #end
 #if($habitatIndex.get("resourceid"))
-                        <ResourceIdentifier>$habitatIndex.get("resourceid")</ResourceIdentifier>
+                    <ResourceIdentifier>$habitatIndex.get("resourceid")</ResourceIdentifier>
 #end
                     </IndexTypeCitation>
 #end##if(... || ...)
 #if($habitatIndex.get("indextypescale"))
-                    <IndexTypeScaleText>$habitatIndex.get("indextypescale")</IndexTypeScaleText>
+                <IndexTypeScaleText>$habitatIndex.get("indextypescale")</IndexTypeScaleText>
 #end
                 </IndexType>
 #end##if(... || ...)
 #if($habitatIndex.get("indexscore"))
-                <IndexScoreNumeric>$habitatIndex.get("indexscore")</IndexScoreNumeric>
+            <IndexScoreNumeric>$habitatIndex.get("indexscore")</IndexScoreNumeric>
 #end
 #if($habitatIndex.get("indexcalculateddate"))
-                <IndexCalculatedDate>$helper.toXmlDate($habitatIndex.get("indexcalculateddate"))</IndexCalculatedDate>
+            <IndexCalculatedDate>$helper.toXmlDate($habitatIndex.get("indexcalculateddate"))</IndexCalculatedDate>
 #end
 #if($habitatIndex.get("monlocid"))
-                <MonitoringLocationIdentifier>$habitatIndex.get("monlocid")</MonitoringLocationIdentifier>
+            <MonitoringLocationIdentifier>$habitatIndex.get("monlocid")</MonitoringLocationIdentifier>
 #end
             </BiologicalHabitatIndex>
 #end##foreach($habitatIndex in $helper.getData
 $helper.print("Done with BiologicalHabitatIndexes, getting Activities...")
 $helper.printElapsedTime()
-#foreach($activity in $helper.getData("SELECT recordid, activityid, activitytypecode, activitymedia, activitymediasubdivision, activitystartdate, starttime, starttimezone, activityenddate, endtime, endtimezone, relativedepth, depthheightmeasure, depthheightmeasureunit, topdepthheightmeasure, topdepthheightmeasureunit, bottomdepthheightmeasure, bottomdepthheightmeasureunit, depthaltituderefpoint, monlocid, activitycomment, latitudemeasure, longitudemeasure, sourcemapscale, horizaccuracymeasure, horizaccuracymeasureunit, horizcollmethod, horizcoordrefsysdatum, bioactivityassemblagesampd, biohabcolldurationmeasure, biohabcolldurationmeasureunit, biohabreachlengthmeasure, biohabreachlengthmeasureunit, biohabreachwidthmeasure, biohabreachwidthmeasureunit, biohabpasscount, biohabnettype, biohabnetsurfaceareameasure, biohabnetsurfacemeasureunit, biohabnetmeshsizemeasure, biohabnetmeshmeasureunit, biohabnetboatspeedmeasure, biohabnetboatspeedmeasureunit, biohabnetcurrspeedmeasure, biohabnetcurrspeedmeasureunit, bioactivitytoxicitytesttype, sampcollmethodid, sampcollmethodidcontext, sampcollmethod, sampcollmethodqualifier, sampcollmethoddesc, sampcollequipment, sampcollequipmentcomment, sampprepid, sampprepidcontext, sampprep, sampprepqualifiertype, sampprepdesc, sampprepconttype, sampprepcontcolor, sampprepcontchempreservused, sampprepcontthermalpreservused, sampprepcontsamptransstordesc, resultcount from WQX_ACTIVITY WHERE PARENTID = ?  AND WQXUPDATEDATE >= ? ", [$org.get("recordid"), $helper.toDbDateString($lastProcessedTimestamp)]))
+#foreach($activity in $helper.getData($activityQuery, $org.get("recordid")))
+#set($totalActivityCount = $velocityCount)
         <Activity>
 #if($activity.get("activityid") || $activity.get("activitytypecode") || $activity.get("activitymedia") || $activity.get("activitymediasubdivision") || $activity.get("activitystartdate") || $activity.get("starttime") || $activity.get("starttimezone") || $activity.get("activityenddate") || $activity.get("endtime") || $activity.get("endtimezone") || $activity.get("relativedepth") || $activity.get("depthheightmeasure") || $activity.get("depthheightmeasureunit") || $activity.get("topdepthheightmeasure") || $activity.get("topdepthheightmeasureunit") || $activity.get("bottomdepthheightmeasure") || $activity.get("bottomdepthheightmeasureunit") || $activity.get("depthaltituderefpoint") || $activity.get("monlocid"))
-            <ActivityDescription>
+        <ActivityDescription>
 #if($activity.get("activityid"))
-                <ActivityIdentifier>$activity.get("activityid")</ActivityIdentifier>
+            <ActivityIdentifier>$activity.get("activityid")</ActivityIdentifier>
 #end
 #if($activity.get("activitytypecode"))
-                <ActivityTypeCode>$activity.get("activitytypecode")</ActivityTypeCode>
+            <ActivityTypeCode>$activity.get("activitytypecode")</ActivityTypeCode>
 #end
 #if($activity.get("activitymedia"))
-                <ActivityMediaName>$activity.get("activitymedia")</ActivityMediaName>
+            <ActivityMediaName>$activity.get("activitymedia")</ActivityMediaName>
 #end
 #if($activity.get("activitymediasubdivision"))
-                <ActivityMediaSubdivisionName>$activity.get("activitymediasubdivision")</ActivityMediaSubdivisionName>
+            <ActivityMediaSubdivisionName>$activity.get("activitymediasubdivision")</ActivityMediaSubdivisionName>
 #end
 #if($activity.get("activitystartdate"))
-                <ActivityStartDate>$helper.toXmlDate($activity.get("activitystartdate"))</ActivityStartDate>
+            <ActivityStartDate>$helper.toXmlDate($activity.get("activitystartdate"))</ActivityStartDate>
 #end
 #if($activity.get("starttime") && $activity.get("starttimezone"))
-                <ActivityStartTime>
+            <ActivityStartTime>
 #if($activity.get("starttime"))
-                    <Time>$helper.amPmStringToXmlTime($activity.get("starttime"))</Time>
+                <Time>$helper.amPmStringToXmlTime($activity.get("starttime"))</Time>
 #end
 #if($activity.get("starttimezone"))
-                    <TimeZoneCode>$activity.get("starttimezone")</TimeZoneCode>
+                <TimeZoneCode>$activity.get("starttimezone")</TimeZoneCode>
 #end
                 </ActivityStartTime>
 #end##if(... || ...)
 #if($activity.get("activityenddate"))
-                <ActivityEndDate>$helper.toXmlDate($activity.get("activityenddate"))</ActivityEndDate>
+            <ActivityEndDate>$helper.toXmlDate($activity.get("activityenddate"))</ActivityEndDate>
 #end
 #if($activity.get("endtime") && $activity.get("endtimezone"))
-                <ActivityEndTime>
+            <ActivityEndTime>
 #if($activity.get("endtime"))
-                    <Time>$helper.amPmStringToXmlTime($activity.get("endtime"))</Time>
+                <Time>$helper.amPmStringToXmlTime($activity.get("endtime"))</Time>
 #end
 #if($activity.get("endtimezone"))
-                    <TimeZoneCode>$activity.get("endtimezone")</TimeZoneCode>
+                <TimeZoneCode>$activity.get("endtimezone")</TimeZoneCode>
 #end
                 </ActivityEndTime>
 #end##if(... || ...)
 #if($activity.get("relativedepth"))
-                <ActivityRelativeDepthName>$activity.get("relativedepth")</ActivityRelativeDepthName>
+            <ActivityRelativeDepthName>$activity.get("relativedepth")</ActivityRelativeDepthName>
 #end
 #if($activity.get("depthheightmeasure") || $activity.get("depthheightmeasureunit"))
-                <ActivityDepthHeightMeasure>
+            <ActivityDepthHeightMeasure>
 #if($activity.get("depthheightmeasure"))
-                    <MeasureValue>$activity.get("depthheightmeasure")</MeasureValue>
+                <MeasureValue>$activity.get("depthheightmeasure")</MeasureValue>
 #end
 #if($activity.get("depthheightmeasureunit"))
-                    <MeasureUnitCode>$activity.get("depthheightmeasureunit")</MeasureUnitCode>
+                <MeasureUnitCode>$activity.get("depthheightmeasureunit")</MeasureUnitCode>
 #end
                 </ActivityDepthHeightMeasure>
 #end##if(... || ...)
 #if($activity.get("topdepthheightmeasure") || $activity.get("topdepthheightmeasureunit"))
-                <ActivityTopDepthHeightMeasure>
+            <ActivityTopDepthHeightMeasure>
 #if($activity.get("topdepthheightmeasure"))
-                    <MeasureValue>$activity.get("topdepthheightmeasure")</MeasureValue>
+                <MeasureValue>$activity.get("topdepthheightmeasure")</MeasureValue>
 #end
 #if($activity.get("topdepthheightmeasureunit"))
-                    <MeasureUnitCode>$activity.get("topdepthheightmeasureunit")</MeasureUnitCode>
+                <MeasureUnitCode>$activity.get("topdepthheightmeasureunit")</MeasureUnitCode>
 #end
                 </ActivityTopDepthHeightMeasure>
 #end##if(... || ...)
 #if($activity.get("bottomdepthheightmeasure") || $activity.get("bottomdepthheightmeasureunit"))
-                <ActivityBottomDepthHeightMeasure>
+            <ActivityBottomDepthHeightMeasure>
 #if($activity.get("bottomdepthheightmeasure"))
-                    <MeasureValue>$activity.get("bottomdepthheightmeasure")</MeasureValue>
+                <MeasureValue>$activity.get("bottomdepthheightmeasure")</MeasureValue>
 #end
 #if($activity.get("bottomdepthheightmeasureunit"))
-                    <MeasureUnitCode>$activity.get("bottomdepthheightmeasureunit")</MeasureUnitCode>
+                <MeasureUnitCode>$activity.get("bottomdepthheightmeasureunit")</MeasureUnitCode>
 #end
                 </ActivityBottomDepthHeightMeasure>
 #end##if(... || ...)
 #if($activity.get("depthaltituderefpoint"))
-                <ActivityDepthAltitudeReferencePointText>$activity.get("depthaltituderefpoint")</ActivityDepthAltitudeReferencePointText>
+            <ActivityDepthAltitudeReferencePointText>$activity.get("depthaltituderefpoint")</ActivityDepthAltitudeReferencePointText>
 #end
 #foreach($projectId in $helper.getList("SELECT projectid FROM WQX_PROJECT WHERE WQX_PROJECT.RECORDID IN (SELECT projectparentid FROM WQX_PROJECTACTIVITY WHERE WQX_PROJECTACTIVITY.ACTIVITYPARENTID = ?) ", $activity.get("recordid"), "projectid"))
-                <ProjectIdentifier>$projectId</ProjectIdentifier>
+            <ProjectIdentifier>$projectId</ProjectIdentifier>
 #end##foreach($projectId in $helper.getList
 #foreach($conductingOrg in $helper.getList("SELECT activityconductingorg FROM WQX_ACTIVITYCONDUCTINGORG WHERE PARENTID = ? ", $activity.get("recordid"), "activityconductingorg"))
-                <ActivityConductingOrganizationText>$conductingOrg</ActivityConductingOrganizationText>
+            <ActivityConductingOrganizationText>$conductingOrg</ActivityConductingOrganizationText>
 #end##foreach($conductingOrg in $helper.getList
 #if($activity.get("monlocid"))
-                <MonitoringLocationIdentifier>$activity.get("monlocid")</MonitoringLocationIdentifier>
+            <MonitoringLocationIdentifier>$activity.get("monlocid")</MonitoringLocationIdentifier>
 #end
 #if($activity.get("activitycomment"))
-                <ActivityCommentText>$activity.get("activitycomment")</ActivityCommentText>
+            <ActivityCommentText>$activity.get("activitycomment")</ActivityCommentText>
 #end
             </ActivityDescription>
 #end##if(... || ...)
 #if($activity.get("latitudemeasure") || $activity.get("longitudemeasure") || $activity.get("sourcemapscale") || $activity.get("horizaccuracymeasure") || $activity.get("horizaccuracymeasureunit") || $activity.get("horizcollmethod") || $activity.get("horizcoordrefsysdatum"))
-            <ActivityLocation>
+        <ActivityLocation>
 #if($activity.get("latitudemeasure"))
-                <LatitudeMeasure>$activity.get("latitudemeasure")</LatitudeMeasure>
+            <LatitudeMeasure>$activity.get("latitudemeasure")</LatitudeMeasure>
 #end
 #if($activity.get("longitudemeasure"))
-                <LongitudeMeasure>$activity.get("longitudemeasure")</LongitudeMeasure>
+            <LongitudeMeasure>$activity.get("longitudemeasure")</LongitudeMeasure>
 #end
 #if($activity.get("sourcemapscale"))
-                <SourceMapScaleNumeric>$activity.get("sourcemapscale")</SourceMapScaleNumeric>
+            <SourceMapScaleNumeric>$activity.get("sourcemapscale")</SourceMapScaleNumeric>
 #end
 #if($activity.get("horizaccuracymeasure") || $activity.get("horizaccuracymeasureunit"))
-                <HorizontalAccuracyMeasure>
+            <HorizontalAccuracyMeasure>
 #if($activity.get("horizaccuracymeasure"))
-                    <MeasureValue>$activity.get("horizaccuracymeasure")</MeasureValue>
+                <MeasureValue>$activity.get("horizaccuracymeasure")</MeasureValue>
 #end
 #if($activity.get("horizaccuracymeasureunit"))
-                    <MeasureUnitCode>$activity.get("horizaccuracymeasureunit")</MeasureUnitCode>
+                <MeasureUnitCode>$activity.get("horizaccuracymeasureunit")</MeasureUnitCode>
 #end
                 </HorizontalAccuracyMeasure>
 #end##if(... || ...)
 #if($activity.get("horizcollmethod"))
-                <HorizontalCollectionMethodName>$activity.get("horizcollmethod")</HorizontalCollectionMethodName>
+            <HorizontalCollectionMethodName>$activity.get("horizcollmethod")</HorizontalCollectionMethodName>
 #end
 #if($activity.get("horizcoordrefsysdatum"))
-                <HorizontalCoordinateReferenceSystemDatumName>$activity.get("horizcoordrefsysdatum")</HorizontalCoordinateReferenceSystemDatumName>
+            <HorizontalCoordinateReferenceSystemDatumName>$activity.get("horizcoordrefsysdatum")</HorizontalCoordinateReferenceSystemDatumName>
 #end
             </ActivityLocation>
 #end##if(... || ...)
 #if($activity.get("bioactivityassemblagesampd") || $activity.get("biohabcolldurationmeasure") || $activity.get("biohabcolldurationmeasureunit") || $activity.get("biohabreachlengthmeasure") || $activity.get("biohabreachlengthmeasureunit") || $activity.get("biohabreachwidthmeasure") || $activity.get("biohabreachwidthmeasureunit") || $activity.get("biohabpasscount"))
-            <BiologicalActivityDescription>
+        <BiologicalActivityDescription>
 #if($activity.get("bioactivityassemblagesampd"))
-                <AssemblageSampledName>$activity.get("bioactivityassemblagesampd")</AssemblageSampledName>
+            <AssemblageSampledName>$activity.get("bioactivityassemblagesampd")</AssemblageSampledName>
 #end
 #if($activity.get("biohabcolldurationmeasure") || $activity.get("biohabcolldurationmeasureunit") || $activity.get("biohabreachlengthmeasure") || $activity.get("biohabreachlengthmeasureunit") || $activity.get("biohabreachwidthmeasure") || $activity.get("biohabreachwidthmeasureunit"))
-                <BiologicalHabitatCollectionInformation>
+            <BiologicalHabitatCollectionInformation>
 #if($activity.get("biohabcolldurationmeasure") || $activity.get("biohabcolldurationmeasureunit"))
-                    <CollectionDuration>
+                <CollectionDuration>
 #if($activity.get("biohabcolldurationmeasure"))
-                        <MeasureValue>$activity.get("biohabcolldurationmeasure")</MeasureValue>
+                    <MeasureValue>$activity.get("biohabcolldurationmeasure")</MeasureValue>
 #end
 #if($activity.get("biohabcolldurationmeasureunit"))
-                        <MeasureUnitCode>$activity.get("biohabcolldurationmeasureunit")</MeasureUnitCode>
+                    <MeasureUnitCode>$activity.get("biohabcolldurationmeasureunit")</MeasureUnitCode>
 #end
                     </CollectionDuration>
 #end##if(... || ...)
 #if($activity.get("biohabreachlengthmeasure") || $activity.get("biohabreachlengthmeasureunit"))
-                    <ReachLengthMeasure>
+                <ReachLengthMeasure>
 #if($activity.get("biohabreachlengthmeasure"))
-                        <MeasureValue>$activity.get("biohabreachlengthmeasure")</MeasureValue>
+                    <MeasureValue>$activity.get("biohabreachlengthmeasure")</MeasureValue>
 #end
 #if($activity.get("biohabreachlengthmeasureunit"))
-                        <MeasureUnitCode>$activity.get("biohabreachlengthmeasureunit")</MeasureUnitCode>
+                    <MeasureUnitCode>$activity.get("biohabreachlengthmeasureunit")</MeasureUnitCode>
 #end
                     </ReachLengthMeasure>
 #end##if(... || ...)
 #if($activity.get("biohabreachwidthmeasure") || $activity.get("biohabreachwidthmeasureunit"))
-                    <ReachWidthMeasure>
+                <ReachWidthMeasure>
 #if($activity.get("biohabreachwidthmeasure"))
-                        <MeasureValue>$activity.get("biohabreachwidthmeasure")</MeasureValue>
+                    <MeasureValue>$activity.get("biohabreachwidthmeasure")</MeasureValue>
 #end
 #if($activity.get("biohabreachwidthmeasureunit"))
-                        <MeasureUnitCode>$activity.get("biohabreachwidthmeasureunit")</MeasureUnitCode>
+                    <MeasureUnitCode>$activity.get("biohabreachwidthmeasureunit")</MeasureUnitCode>
 #end
                     </ReachWidthMeasure>
 #end#end##if(... || ...)
 #if($activity.get("biohabpasscount"))
-                    <PassCount>$activity.get("biohabpasscount")</PassCount>
+                <PassCount>$activity.get("biohabpasscount")</PassCount>
 #end
 #if($activity.get("biohabnettype") || $activity.get("biohabnetsurfaceareameasure") || $activity.get("biohabnetsurfacemeasureunit") || $activity.get("biohabnetmeshsizemeasure") || $activity.get("biohabnetmeshmeasureunit") || $activity.get("biohabnetboatspeedmeasure") || $activity.get("biohabnetboatspeedmeasureunit") || $activity.get("biohabnetcurrspeedmeasure") || $activity.get("biohabnetcurrspeedmeasureunit"))
-                    <NetInformation>
+                <NetInformation>
 #if($activity.get("biohabnettype"))
-                        <NetTypeName>$activity.get("biohabnettype")</NetTypeName>
+                    <NetTypeName>$activity.get("biohabnettype")</NetTypeName>
 #end
 #if($activity.get("biohabnetsurfaceareameasure") || $activity.get("biohabnetsurfacemeasureunit"))
-                        <NetSurfaceAreaMeasure>
+                    <NetSurfaceAreaMeasure>
 #if($activity.get("biohabnetsurfaceareameasure"))
-                            <MeasureValue>$activity.get("biohabnetsurfaceareameasure")</MeasureValue>
+                        <MeasureValue>$activity.get("biohabnetsurfaceareameasure")</MeasureValue>
 #end
 #if($activity.get("biohabnetsurfacemeasureunit"))
-                            <MeasureUnitCode>$activity.get("biohabnetsurfacemeasureunit")</MeasureUnitCode>
+                        <MeasureUnitCode>$activity.get("biohabnetsurfacemeasureunit")</MeasureUnitCode>
 #end
                         </NetSurfaceAreaMeasure>
 #end##if(... || ...)
 #if($activity.get("biohabnetmeshsizemeasure") || $activity.get("biohabnetmeshmeasureunit"))
-                        <NetMeshSizeMeasure>
+                    <NetMeshSizeMeasure>
 #if($activity.get("biohabnetmeshsizemeasure"))
-                            <MeasureValue>$activity.get("biohabnetmeshsizemeasure")</MeasureValue>
+                        <MeasureValue>$activity.get("biohabnetmeshsizemeasure")</MeasureValue>
 #end
 #if($activity.get("biohabnetmeshmeasureunit"))
-                            <MeasureUnitCode>$activity.get("biohabnetmeshmeasureunit")</MeasureUnitCode>
+                        <MeasureUnitCode>$activity.get("biohabnetmeshmeasureunit")</MeasureUnitCode>
 #end
                         </NetMeshSizeMeasure>
 #end##if(... || ...)
 #if($activity.get("biohabnetboatspeedmeasure") || $activity.get("biohabnetboatspeedmeasureunit"))
-                        <BoatSpeedMeasure>
+                    <BoatSpeedMeasure>
 #if($activity.get("biohabnetboatspeedmeasure"))
-                            <MeasureValue>$activity.get("biohabnetboatspeedmeasure")</MeasureValue>
+                        <MeasureValue>$activity.get("biohabnetboatspeedmeasure")</MeasureValue>
 #end
 #if($activity.get("biohabnetboatspeedmeasureunit"))
-                            <MeasureUnitCode>$activity.get("biohabnetboatspeedmeasureunit")</MeasureUnitCode>
+                        <MeasureUnitCode>$activity.get("biohabnetboatspeedmeasureunit")</MeasureUnitCode>
 #end
                         </BoatSpeedMeasure>
 #end##if(... || ...)
 #if($activity.get("biohabnetcurrspeedmeasure") || $activity.get("biohabnetcurrspeedmeasureunit"))
-                        <CurrentSpeedMeasure>
+                    <CurrentSpeedMeasure>
 #if($activity.get("biohabnetcurrspeedmeasure"))
-                            <MeasureValue>$activity.get("biohabnetcurrspeedmeasure")</MeasureValue>
+                        <MeasureValue>$activity.get("biohabnetcurrspeedmeasure")</MeasureValue>
 #end
 #if($activity.get("biohabnetcurrspeedmeasureunit"))
-                            <MeasureUnitCode>$activity.get("biohabnetcurrspeedmeasureunit")</MeasureUnitCode>
+                        <MeasureUnitCode>$activity.get("biohabnetcurrspeedmeasureunit")</MeasureUnitCode>
 #end
                         </CurrentSpeedMeasure>
 #end##if(... || ...)
-                    </NetInformation>
-                </BiologicalHabitatCollectionInformation>
+                </NetInformation>
+            </BiologicalHabitatCollectionInformation>
 #end##if(... || ...)
 #if($activity.get("bioactivitytoxicitytesttype"))
-                <ToxicityTestType>$activity.get("bioactivitytoxicitytesttype")</ToxicityTestType>
+            <ToxicityTestType>$activity.get("bioactivitytoxicitytesttype")</ToxicityTestType>
 #end
             </BiologicalActivityDescription>
 #end##if(... || ...)
 #if($activity.get("sampcollmethodid") || $activity.get("sampcollmethodidcontext") || $activity.get("sampcollmethod") || $activity.get("sampcollmethodqualifier") || $activity.get("sampcollmethoddesc") || $activity.get("sampcollequipment") || $activity.get("sampcollequipmentcomment") || $activity.get("sampprepid") || $activity.get("sampprepidcontext") || $activity.get("sampprep") || $activity.get("sampprepqualifiertype") || $activity.get("sampprepdesc") || $activity.get("sampprepconttype") || $activity.get("sampprepcontcolor") || $activity.get("sampprepcontchempreservused") || $activity.get("sampprepcontthermalpreservused") || $activity.get("sampprepcontsamptransstordesc"))
-            <SampleDescription>
+        <SampleDescription>
 #if($activity.get("sampcollmethodid") || $activity.get("sampcollmethodidcontext") || $activity.get("sampcollmethod") || $activity.get("sampcollmethodqualifier") || $activity.get("sampcollmethoddesc"))
-                <SampleCollectionMethod>
+            <SampleCollectionMethod>
 #if($activity.get("sampcollmethodid"))
-                    <MethodIdentifier>$activity.get("sampcollmethodid")</MethodIdentifier>
+                <MethodIdentifier>$activity.get("sampcollmethodid")</MethodIdentifier>
 #end
 #if($activity.get("sampcollmethodidcontext"))
-                    <MethodIdentifierContext>$activity.get("sampcollmethodidcontext")</MethodIdentifierContext>
+                <MethodIdentifierContext>$activity.get("sampcollmethodidcontext")</MethodIdentifierContext>
 #end
 #if($activity.get("sampcollmethod"))
-                    <MethodName>$activity.get("sampcollmethod")</MethodName>
+                <MethodName>$activity.get("sampcollmethod")</MethodName>
 #end
 #if($activity.get("sampcollmethodqualifier"))
-                    <MethodQualifierTypeName>$activity.get("sampcollmethodqualifier")</MethodQualifierTypeName>
+                <MethodQualifierTypeName>$activity.get("sampcollmethodqualifier")</MethodQualifierTypeName>
 #end
 #if($activity.get("sampcollmethoddesc"))
-                    <MethodDescriptionText>$activity.get("sampcollmethoddesc")</MethodDescriptionText>
+                <MethodDescriptionText>$activity.get("sampcollmethoddesc")</MethodDescriptionText>
 #end
                 </SampleCollectionMethod>
 #end##if(... || ...)
 #if($activity.get("sampcollequipment"))
-                <SampleCollectionEquipmentName>$activity.get("sampcollequipment")</SampleCollectionEquipmentName>
+            <SampleCollectionEquipmentName>$activity.get("sampcollequipment")</SampleCollectionEquipmentName>
 #end
 #if($activity.get("sampcollequipmentcomment"))
-                <SampleCollectionEquipmentCommentText>$activity.get("sampcollequipmentcomment")</SampleCollectionEquipmentCommentText>
+            <SampleCollectionEquipmentCommentText>$activity.get("sampcollequipmentcomment")</SampleCollectionEquipmentCommentText>
 #end
 #if($activity.get("sampprepid") || $activity.get("sampprepidcontext") || $activity.get("sampprep") || $activity.get("sampprepqualifiertype") || $activity.get("sampprepdesc") || $activity.get("sampprepconttype") || $activity.get("sampprepcontcolor") || $activity.get("sampprepcontchempreservused") || $activity.get("sampprepcontthermalpreservused") || $activity.get("sampprepcontsamptransstordesc"))
-                <SamplePreparation>
+            <SamplePreparation>
 #if($activity.get("sampprepid") || $activity.get("sampprepidcontext") || $activity.get("sampprep") || $activity.get("sampprepqualifiertype") || $activity.get("sampprepdesc"))
-                    <SamplePreparationMethod>
+                <SamplePreparationMethod>
 #if($activity.get("sampprepid"))
-                        <MethodIdentifier>$activity.get("sampprepid")</MethodIdentifier>
+                    <MethodIdentifier>$activity.get("sampprepid")</MethodIdentifier>
 #end
 #if($activity.get("sampprepidcontext"))
-                        <MethodIdentifierContext>$activity.get("sampprepidcontext")</MethodIdentifierContext>
+                    <MethodIdentifierContext>$activity.get("sampprepidcontext")</MethodIdentifierContext>
 #end
 #if($activity.get("sampprep"))
-                        <MethodName>$activity.get("sampprep")</MethodName>
+                    <MethodName>$activity.get("sampprep")</MethodName>
 #end
 #if($activity.get("sampprepqualifiertype"))
-                        <MethodQualifierTypeName>$activity.get("sampprepqualifiertype")</MethodQualifierTypeName>
+                    <MethodQualifierTypeName>$activity.get("sampprepqualifiertype")</MethodQualifierTypeName>
 #end
 #if($activity.get("sampprepdesc"))
-                        <MethodDescriptionText>$activity.get("sampprepdesc")</MethodDescriptionText>
+                    <MethodDescriptionText>$activity.get("sampprepdesc")</MethodDescriptionText>
 #end
                     </SamplePreparationMethod>
 #end##if(... || ...)
 #if($activity.get("sampprepconttype"))
-                    <SampleContainerTypeName>$activity.get("sampprepconttype")</SampleContainerTypeName>
+                <SampleContainerTypeName>$activity.get("sampprepconttype")</SampleContainerTypeName>
 #end
 #if($activity.get("sampprepcontcolor"))
-                    <SampleContainerColorName>$activity.get("sampprepcontcolor")</SampleContainerColorName>
+                <SampleContainerColorName>$activity.get("sampprepcontcolor")</SampleContainerColorName>
 #end
 #if($activity.get("sampprepcontchempreservused"))
-                    <ChemicalPreservativeUsedName>$activity.get("sampprepcontchempreservused")</ChemicalPreservativeUsedName>
+                <ChemicalPreservativeUsedName>$activity.get("sampprepcontchempreservused")</ChemicalPreservativeUsedName>
 #end
 #if($activity.get("sampprepcontthermalpreservused"))
-                    <ThermalPreservativeUsedName>$activity.get("sampprepcontthermalpreservused")</ThermalPreservativeUsedName>
+                <ThermalPreservativeUsedName>$activity.get("sampprepcontthermalpreservused")</ThermalPreservativeUsedName>
 #end
 #if($activity.get("sampprepcontsamptransstordesc"))
-                    <SampleTransportStorageDescription>$activity.get("sampprepcontsamptransstordesc")</SampleTransportStorageDescription>
+                <SampleTransportStorageDescription>$activity.get("sampprepcontsamptransstordesc")</SampleTransportStorageDescription>
 #end
                 </SamplePreparation>
 #end##if(... || ...)
-            </SampleDescription>
+        </SampleDescription>
 #end##if(... || ...)
 #foreach($activityMetric in $helper.getData("SELECT metrictypeid, metrictypeidcontext, metrictypename, citationresourcetitle, citationresourcecreator, citationresourcesubject, citationresourcepublisher, citationresourcedate, citationresourceid, metrictypescale, metrictypeformuladesc, metricvaluemeasure, metricvaluemeasureunit, metricscore, metriccomment, metricindexid FROM WQX_ACTIVITYMETRIC WHERE PARENTID = ? ", $activity.get("recordid")))
-            <ActivityMetric>
+        <ActivityMetric>
 #if($activityMetric.get("metrictypeid") || $activityMetric.get("metrictypeidcontext") || $activityMetric.get("metrictypename") || $activityMetric.get("citationresourcetitle") || $activityMetric.get("citationresourcecreator") || $activityMetric.get("citationresourcesubject") || $activityMetric.get("citationresourcepublisher") || $activityMetric.get("citationresourcedate") || $activityMetric.get("citationresourceid") || $activityMetric.get("metrictypescale") || $activityMetric.get("metrictypeformuladesc") || $activityMetric.get("metricvaluemeasure") || $activityMetric.get("metricvaluemeasureunit") || $activityMetric.get("metricscore") || $activityMetric.get("metriccomment") || $activityMetric.get("metricindexid"))
-                <ActivityMetricType>
+            <ActivityMetricType>
 #if($activityMetric.get("metrictypeid"))
-                    <MetricTypeIdentifier>$activityMetric.get("metrictypeid")</MetricTypeIdentifier>
+                <MetricTypeIdentifier>$activityMetric.get("metrictypeid")</MetricTypeIdentifier>
 #end
 #if($activityMetric.get("metrictypeidcontext"))
-                    <MetricTypeIdentifierContext>$activityMetric.get("metrictypeidcontext")</MetricTypeIdentifierContext>
+                <MetricTypeIdentifierContext>$activityMetric.get("metrictypeidcontext")</MetricTypeIdentifierContext>
 #end
 #if($activityMetric.get("metrictypename"))getting Results...
-                    <MetricTypeName>$activityMetric.get("metrictypename")</MetricTypeName>
+                <MetricTypeName>$activityMetric.get("metrictypename")</MetricTypeName>
 #end
 #if($activityMetric.get("citationresourcetitle") || $activityMetric.get("citationresourcecreator") || $activityMetric.get("citationresourcesubject") || $activityMetric.get("citationresourcepublisher") || $activityMetric.get("citationresourcedate") || $activityMetric.get("citationresourceid"))
-                    <MetricTypeCitation>
+                <MetricTypeCitation>
 #if($activityMetric.get("citationresourcetitle"))
-                        <ResourceTitleName>$activityMetric.get("citationresourcetitle")</ResourceTitleName>
+                    <ResourceTitleName>$activityMetric.get("citationresourcetitle")</ResourceTitleName>
 #end
 #if($activityMetric.get("citationresourcecreator"))
-                        <ResourceCreatorName>$activityMetric.get("citationresourcecreator")</ResourceCreatorName>
+                    <ResourceCreatorName>$activityMetric.get("citationresourcecreator")</ResourceCreatorName>
 #end
 #if($activityMetric.get("citationresourcesubject"))
-                        <ResourceSubjectText>$activityMetric.get("citationresourcesubject")</ResourceSubjectText>
+                    <ResourceSubjectText>$activityMetric.get("citationresourcesubject")</ResourceSubjectText>
 #end
 #if($activityMetric.get("citationresourcepublisher"))
-                        <ResourcePublisherName>$activityMetric.get("citationresourcepublisher")</ResourcePublisherName>
+                    <ResourcePublisherName>$activityMetric.get("citationresourcepublisher")</ResourcePublisherName>
 #end
 #if($activityMetric.get("citationresourcedate"))
-                        <ResourceDate>$helper.toXmlDate($activityMetric.get("citationresourcedate"))</ResourceDate>
+                    <ResourceDate>$helper.toXmlDate($activityMetric.get("citationresourcedate"))</ResourceDate>
 #end
 #if($activityMetric.get("citationresourceid"))
-                        <ResourceIdentifier>$activityMetric.get("citationresourceid")</ResourceIdentifier>
+                    <ResourceIdentifier>$activityMetric.get("citationresourceid")</ResourceIdentifier>
 #end
                     </MetricTypeCitation>
 #end##if(... || ...)
 #if($activityMetric.get("metrictypescale"))
-                    <MetricTypeScaleText>$activityMetric.get("metrictypescale")</MetricTypeScaleText>
+                <MetricTypeScaleText>$activityMetric.get("metrictypescale")</MetricTypeScaleText>
 #end
 #if($activityMetric.get("metrictypeformuladesc"))
-                    <FormulaDescriptionText>$activityMetric.get("metrictypeformuladesc")</FormulaDescriptionText>
+                <FormulaDescriptionText>$activityMetric.get("metrictypeformuladesc")</FormulaDescriptionText>
 #end
                 </ActivityMetricType>
 #end##if(... || ...)
 #if($activityMetric.get("metricvaluemeasure") || $activityMetric.get("metricvaluemeasureunit"))
-                <MetricValueMeasure>
+            <MetricValueMeasure>
 #if($activityMetric.get("metricvaluemeasure"))
-                    <MeasureValue>$activityMetric.get("metricvaluemeasure")</MeasureValue>
+                <MeasureValue>$activityMetric.get("metricvaluemeasure")</MeasureValue>
 #end
 #if($activityMetric.get("metricvaluemeasureunit"))
-                    <MeasureUnitCode>$activityMetric.get("metricvaluemeasureunit")</MeasureUnitCode>
+                <MeasureUnitCode>$activityMetric.get("metricvaluemeasureunit")</MeasureUnitCode>
 #end
                 </MetricValueMeasure>
 #end##if(... || ...)
 #if($activityMetric.get("metricscore"))
-                <MetricScoreNumeric>$activityMetric.get("metricscore")</MetricScoreNumeric>
+            <MetricScoreNumeric>$activityMetric.get("metricscore")</MetricScoreNumeric>
 #end
 #if($activityMetric.get("metriccomment"))
-                <MetricCommentText>$activityMetric.get("metriccomment")</MetricCommentText>
+            <MetricCommentText>$activityMetric.get("metriccomment")</MetricCommentText>
 #end
 #if($activityMetric.get("metricindexid"))
-                <IndexIdentifier>$activityMetric.get("metricindexid")</IndexIdentifier>
+            <IndexIdentifier>$activityMetric.get("metricindexid")</IndexIdentifier>
 #end
             </ActivityMetric>
 #end##foreach($activityMetric in $helper.getData
 #foreach($activityAttachment in $helper.getData("SELECT binaryobjectfile, binaryobjectfiletypecode FROM WQX_ACTATTACHEDBINARYOBJECT WHERE PARENTID = ? ", $activity.get("recordid")))
-            <AttachedBinaryObject>
+        <AttachedBinaryObject>
 #if($activityAttachment.get("binaryobjectfile"))
-                <BinaryObjectFileName>$activityAttachment.get("binaryobjectfile")</BinaryObjectFileName>
+            <BinaryObjectFileName>$activityAttachment.get("binaryobjectfile")</BinaryObjectFileName>
 #end
 #if($activityAttachment.get("binaryobjectfiletypecode"))
-                <BinaryObjectFileTypeCode>$activityAttachment.get("binaryobjectfiletypecode")</BinaryObjectFileTypeCode>
+            <BinaryObjectFileTypeCode>$activityAttachment.get("binaryobjectfiletypecode")</BinaryObjectFileTypeCode>
 #end
             </AttachedBinaryObject>
 #end##foreach($activityAttachment in $helper.getData
 #if($activity.get("resultcount"))
-            <ResultCount>$activity.get("resultcount")</ResultCount>
+        <ResultCount>$activity.get("resultcount")</ResultCount>
 #end
 #foreach ($result in $helper.getData("SELECT recordid, dataloggerlinename, resultdetectioncondition, characteristicname, methodspeciationname, resultsampfraction, resultmeasure, resultmeasureunit, resultmeasurequalifiercode, statusid, statisticalbasecode, valuetype, weightbasis, timebasis, temperaturebasis, particlesizebasis, precisionvalue, biasvalue, confidenceintervalvalue, upperconfidencelimitvalue, lowerconfidencelimitvalue, resultcomment, depthheightmeasure, depthheightmeasureunit, depthaltituderefpoint, resultsamppoint, bioresultintent, bioresultindividualid, bioresultsubjecttaxonomic, bioresultunidentifiedspeciesid, bioresultsamptissueanatomy, grpsummcountweightmeasure, grpsummcountweightmeasureunit, taxdetailscellform, taxdetailscellshape, taxdetailshabitname, taxdetailsvoltinism, taxdetailspolltolerance, taxdetailspolltolerancescale, taxdetailstrophiclevel, taxdetailsfuncfeedinggroup, citationresourcetitle, citationresourcecreator, citationresourcesubject, citationresourcepublisher, citationresourcedate, citationresourceid, freqclassdesccode, freqclassdescunitcode, freqclasslowerboundvalue, freqclassupperboundvalue, analyticalmethodid, analyticalmethodidcontext, analyticalmethodname, analyticalmethodqualifiertype, analyticalmethoddesc, labname, labanalysisstartdate, labanalysisstarttime, labanalysisstarttimezonecode, labanalysisenddate, labanalysisendtime, labanalysisendtimezonecode, resultlabcommentcode, labaccind, labaccauthorityname, labtaxaccind, labtaxaccauthorityname FROM WQX_RESULT WHERE PARENTID = ? ", $activity.get("recordid")))
-            <Result>
+        <Result>
 #if($result.get("dataloggerlinename") || $result.get("resultdetectioncondition") || $result.get("characteristicname") || $result.get("methodspeciationname") || $result.get("resultsampfraction") || $result.get("resultmeasure") || $result.get("resultmeasureunit") || $result.get("resultmeasurequalifiercode") || $result.get("statusid") || $result.get("statisticalbasecode") || $result.get("valuetype") || $result.get("weightbasis") || $result.get("timebasis") || $result.get("temperaturebasis") || $result.get("particlesizebasis") || $result.get("precisionvalue") || $result.get("biasvalue") || $result.get("confidenceintervalvalue") || $result.get("upperconfidencelimitvalue") || $result.get("lowerconfidencelimitvalue") || $result.get("resultcomment") || $result.get("depthheightmeasure") || $result.get("depthheightmeasureunit") || $result.get("depthaltituderefpoint") || $result.get("resultsamppoint") || $result.get("bioresultintent") || $result.get("bioresultindividualid") || $result.get("bioresultsubjecttaxonomic") || $result.get("bioresultunidentifiedspeciesid") || $result.get("bioresultsamptissueanatomy") || $result.get("grpsummcountweightmeasure") || $result.get("grpsummcountweightmeasureunit") || $result.get("taxdetailscellform") || $result.get("taxdetailscellshape") || $result.get("taxdetailshabitname") || $result.get("taxdetailsvoltinism") || $result.get("taxdetailspolltolerance") || $result.get("taxdetailspolltolerancescale") || $result.get("taxdetailstrophiclevel") || $result.get("taxdetailsfuncfeedinggroup") || $result.get("citationresourcetitle") || $result.get("citationresourcecreator") || $result.get("citationresourcesubject") || $result.get("citationresourcepublisher") || $result.get("citationresourcedate") || $result.get("citationresourceid") || $result.get("freqclassdesccode") || $result.get("freqclassdescunitcode") || $result.get("freqclasslowerboundvalue") || $result.get("freqclassupperboundvalue") || $result.get("analyticalmethodid") || $result.get("analyticalmethodidcontext") || $result.get("analyticalmethodname") || $result.get("analyticalmethodqualifiertype") || $result.get("analyticalmethoddesc") || $result.get("labname") || $result.get("labanalysisstartdate") || $result.get("labanalysisstarttime") || $result.get("labanalysisstarttimezonecode") || $result.get("labanalysisenddate") || $result.get("labanalysisendtime") || $result.get("labanalysisendtimezonecode") || $result.get("resultlabcommentcode") || $result.get("labaccind")  || $result.get("labaccauthorityname") || $result.get("labtaxaccind") || $result.get("labtaxaccauthorityname"))
-                <ResultDescription>
+            <ResultDescription>
 #if($result.get("dataloggerlinename"))
-                    <DataLoggerLineName>$result.get("dataloggerlinename")</DataLoggerLineName>
+                <DataLoggerLineName>$result.get("dataloggerlinename")</DataLoggerLineName>
 #end
 #if($result.get("resultdetectioncondition"))
-                    <ResultDetectionConditionText>$result.get("resultdetectioncondition")</ResultDetectionConditionText>
+                <ResultDetectionConditionText>$result.get("resultdetectioncondition")</ResultDetectionConditionText>
 #end
 #if($result.get("characteristicname"))
-                    <CharacteristicName>$result.get("characteristicname")</CharacteristicName>
+                <CharacteristicName>$result.get("characteristicname")</CharacteristicName>
 #end
 #if($result.get("methodspeciationname"))
-                    <MethodSpeciationName>$result.get("methodspeciationname")</MethodSpeciationName>
+                <MethodSpeciationName>$result.get("methodspeciationname")</MethodSpeciationName>
 #end
 #if($result.get("resultsampfraction"))
-                    <ResultSampleFractionText>$result.get("resultsampfraction")</ResultSampleFractionText>
+                <ResultSampleFractionText>$result.get("resultsampfraction")</ResultSampleFractionText>
 #end
 #if($result.get("resultmeasure") || $result.get("resultmeasureunit") || $result.get("resultmeasurequalifiercode"))
-                    <ResultMeasure>
+                <ResultMeasure>
 #if($result.get("resultmeasure"))
-                        <ResultMeasureValue>$result.get("resultmeasure")</ResultMeasureValue>
+                    <ResultMeasureValue>$result.get("resultmeasure")</ResultMeasureValue>
 #end
 #if($result.get("resultmeasureunit"))
-                        <MeasureUnitCode>$result.get("resultmeasureunit")</MeasureUnitCode>
+                    <MeasureUnitCode>$result.get("resultmeasureunit")</MeasureUnitCode>
 #end
 #if($result.get("resultmeasurequalifiercode"))
-                        <MeasureQualifierCode>$result.get("resultmeasurequalifiercode")</MeasureQualifierCode>
+                    <MeasureQualifierCode>$result.get("resultmeasurequalifiercode")</MeasureQualifierCode>
 #end
                     </ResultMeasure>
 #end##if(... || ...)
 #if($result.get("statusid"))
-                    <ResultStatusIdentifier>$result.get("statusid")</ResultStatusIdentifier>
+                <ResultStatusIdentifier>$result.get("statusid")</ResultStatusIdentifier>
 #end
 #if($result.get("statisticalbasecode"))
-                    <StatisticalBaseCode>$result.get("statisticalbasecode")</StatisticalBaseCode>
+                <StatisticalBaseCode>$result.get("statisticalbasecode")</StatisticalBaseCode>
 #end
 #if($result.get("valuetype"))
-                    <ResultValueTypeName>$result.get("valuetype")</ResultValueTypeName>
+                <ResultValueTypeName>$result.get("valuetype")</ResultValueTypeName>
 #end
 #if($result.get("weightbasis"))
-                    <ResultWeightBasisText>$result.get("weightbasis")</ResultWeightBasisText>
+                <ResultWeightBasisText>$result.get("weightbasis")</ResultWeightBasisText>
 #end
 #if($result.get("timebasis"))
-                    <ResultTimeBasisText>$result.get("timebasis")</ResultTimeBasisText>
+                <ResultTimeBasisText>$result.get("timebasis")</ResultTimeBasisText>
 #end
 #if($result.get("temperaturebasis"))
-                    <ResultTemperatureBasisText>$result.get("temperaturebasis")</ResultTemperatureBasisText>
+                <ResultTemperatureBasisText>$result.get("temperaturebasis")</ResultTemperatureBasisText>
 #end
 #if($result.get("particlesizebasis"))
-                    <ResultParticleSizeBasisText>$result.get("particlesizebasis")</ResultParticleSizeBasisText>
+                <ResultParticleSizeBasisText>$result.get("particlesizebasis")</ResultParticleSizeBasisText>
 #end
 #if($result.get("precisionvalue") || $result.get("biasvalue") || $result.get("confidenceintervalvalue") || $result.get("upperconfidencelimitvalue") || $result.get("lowerconfidencelimitvalue"))
-                    <DataQuality>
+                <DataQuality>
 #if($result.get("precisionvalue"))
-                        <PrecisionValue>$result.get("precisionvalue")</PrecisionValue>
+                    <PrecisionValue>$result.get("precisionvalue")</PrecisionValue>
 #end
 #if($result.get("biasvalue"))
-                        <BiasValue>$result.get("biasvalue")</BiasValue>
+                    <BiasValue>$result.get("biasvalue")</BiasValue>
 #end
 #if($result.get("confidenceintervalvalue"))
-                        <ConfidenceIntervalValue>$result.get("confidenceintervalvalue")</ConfidenceIntervalValue>
+                    <ConfidenceIntervalValue>$result.get("confidenceintervalvalue")</ConfidenceIntervalValue>
 #end
 #if($result.get("upperconfidencelimitvalue"))
-                        <UpperConfidenceLimitValue>$result.get("upperconfidencelimitvalue")</UpperConfidenceLimitValue>
+                    <UpperConfidenceLimitValue>$result.get("upperconfidencelimitvalue")</UpperConfidenceLimitValue>
 #end
 #if($result.get("lowerconfidencelimitvalue"))
-                        <LowerConfidenceLimitValue>$result.get("lowerconfidencelimitvalue")</LowerConfidenceLimitValue>
+                    <LowerConfidenceLimitValue>$result.get("lowerconfidencelimitvalue")</LowerConfidenceLimitValue>
 #end
                     </DataQuality>
 #end##if(... || ...)
 #if($result.get("resultcomment"))
-                    <ResultCommentText>$result.get("resultcomment")</ResultCommentText>
+                <ResultCommentText>$result.get("resultcomment")</ResultCommentText>
 #end
 #if($result.get("depthheightmeasure") || $result.get("depthheightmeasureunit"))
-                    <ResultDepthHeightMeasure>
+                <ResultDepthHeightMeasure>
 #if($result.get("depthheightmeasure"))
-                        <MeasureValue>$result.get("depthheightmeasure")</MeasureValue>
+                    <MeasureValue>$result.get("depthheightmeasure")</MeasureValue>
 #end
 #if($result.get("depthheightmeasureunit"))
-                        <MeasureUnitCode>$result.get("depthheightmeasureunit")</MeasureUnitCode>
+                    <MeasureUnitCode>$result.get("depthheightmeasureunit")</MeasureUnitCode>
 #end
                     </ResultDepthHeightMeasure>
 #end##if(... || ...)
 #if($result.get("depthaltituderefpoint"))
-                    <ResultDepthAltitudeReferencePointText>$result.get("depthaltituderefpoint")</ResultDepthAltitudeReferencePointText>
+                <ResultDepthAltitudeReferencePointText>$result.get("depthaltituderefpoint")</ResultDepthAltitudeReferencePointText>
 #end
 #if($result.get("resultsamppoint"))
-                    <ResultSamplingPointName>$result.get("resultsamppoint")</ResultSamplingPointName>
+                <ResultSamplingPointName>$result.get("resultsamppoint")</ResultSamplingPointName>
 #end
                 </ResultDescription>
 #end##if(... || ...)
 #if($result.get("bioresultintent") || $result.get("bioresultindividualid") || $result.get("bioresultsubjecttaxonomic") || $result.get("bioresultunidentifiedspeciesid") || $result.get("bioresultsamptissueanatomy") || $result.get("grpsummcountweightmeasure") || $result.get("grpsummcountweightmeasureunit") || $result.get("taxdetailscellform") || $result.get("taxdetailscellshape") || $result.get("taxdetailshabitname") || $result.get("taxdetailsvoltinism") || $result.get("taxdetailspolltolerance") || $result.get("taxdetailspolltolerancescale") || $result.get("taxdetailstrophiclevel") || $result.get("taxdetailsfuncfeedinggroup") || $result.get("citationresourcetitle") || $result.get("citationresourcecreator") || $result.get("citationresourcesubject") || $result.get("citationresourcepublisher") || $result.get("citationresourcedate") || $result.get("citationresourceid") || $result.get("freqclassdesccode") || $result.get("freqclassdescunitcode") || $result.get("freqclasslowerboundvalue") || $result.get("freqclassupperboundvalue"))
-                <BiologicalResultDescription>
+            <BiologicalResultDescription>
 #if($result.get("bioresultintent"))
-                    <BiologicalIntentName>$result.get("bioresultintent")</BiologicalIntentName>
+                <BiologicalIntentName>$result.get("bioresultintent")</BiologicalIntentName>
 #end
 #if($result.get("bioresultindividualid"))
-                    <BiologicalIndividualIdentifier>$result.get("bioresultindividualid")</BiologicalIndividualIdentifier>
+                <BiologicalIndividualIdentifier>$result.get("bioresultindividualid")</BiologicalIndividualIdentifier>
 #end
 #if($result.get("bioresultsubjecttaxonomic"))
-                    <SubjectTaxonomicName>$result.get("bioresultsubjecttaxonomic")</SubjectTaxonomicName>
+                <SubjectTaxonomicName>$result.get("bioresultsubjecttaxonomic")</SubjectTaxonomicName>
 #end
 #if($result.get("bioresultunidentifiedspeciesid"))
-                    <UnidentifiedSpeciesIdentifier>$result.get("bioresultunidentifiedspeciesid")</UnidentifiedSpeciesIdentifier>
+                <UnidentifiedSpeciesIdentifier>$result.get("bioresultunidentifiedspeciesid")</UnidentifiedSpeciesIdentifier>
 #end
 #if($result.get("bioresultsamptissueanatomy"))
-                    <SampleTissueAnatomyName>$result.get("bioresultsamptissueanatomy")</SampleTissueAnatomyName>
+                <SampleTissueAnatomyName>$result.get("bioresultsamptissueanatomy")</SampleTissueAnatomyName>
 #end
 #if($result.get("grpsummcountweightmeasure") || $result.get("grpsummcountweightmeasureunit"))
-                    <GroupSummaryCountWeight>
+                <GroupSummaryCountWeight>
 #if($result.get("grpsummcountweightmeasure"))
-                        <MeasureValue>$result.get("grpsummcountweightmeasure")</MeasureValue>
+                    <MeasureValue>$result.get("grpsummcountweightmeasure")</MeasureValue>
 #end
 #if($result.get("grpsummcountweightmeasureunit"))
-                        <MeasureUnitCode>$result.get("grpsummcountweightmeasureunit")</MeasureUnitCode>
+                    <MeasureUnitCode>$result.get("grpsummcountweightmeasureunit")</MeasureUnitCode>
 #end
                     </GroupSummaryCountWeight>
 #end##if(... || ...)
 #if($result.get("taxdetailscellform") || $result.get("taxdetailscellshape") || $result.get("taxdetailshabitname") || $result.get("taxdetailsvoltinism") || $result.get("taxdetailspolltolerance") || $result.get("taxdetailspolltolerancescale") || $result.get("taxdetailstrophiclevel") || $result.get("taxdetailsfuncfeedinggroup") || $result.get("citationresourcetitle") || $result.get("citationresourcecreator") || $result.get("citationresourcesubject") || $result.get("citationresourcepublisher") || $result.get("citationresourcedate") || $result.get("citationresourceid"))
-                    <TaxonomicDetails>
+                <TaxonomicDetails>
 #if($result.get("taxdetailscellform"))
-                        <CellFormName>$result.get("taxdetailscellform")</CellFormName>
+                    <CellFormName>$result.get("taxdetailscellform")</CellFormName>
 #end
 #if($result.get("taxdetailscellshape"))
-                        <CellShapeName>$result.get("taxdetailscellshape")</CellShapeName>
+                    <CellShapeName>$result.get("taxdetailscellshape")</CellShapeName>
 #end
 #if($result.get("taxdetailshabitname"))
-                        <HabitName>$result.get("taxdetailshabitname")</HabitName>
+                    <HabitName>$result.get("taxdetailshabitname")</HabitName>
 #end
 #if($result.get("taxdetailsvoltinism"))
-                        <VoltinismName>$result.get("taxdetailsvoltinism")</VoltinismName>
+                    <VoltinismName>$result.get("taxdetailsvoltinism")</VoltinismName>
 #end
 #if($result.get("taxdetailspolltolerance"))
-                        <TaxonomicPollutionTolerance>$result.get("taxdetailspolltolerance")</TaxonomicPollutionTolerance>
+                    <TaxonomicPollutionTolerance>$result.get("taxdetailspolltolerance")</TaxonomicPollutionTolerance>
 #end
 #if($result.get("taxdetailspolltolerancescale"))
-                        <TaxonomicPollutionToleranceScaleText>$result.get("taxdetailspolltolerancescale")</TaxonomicPollutionToleranceScaleText>
+                    <TaxonomicPollutionToleranceScaleText>$result.get("taxdetailspolltolerancescale")</TaxonomicPollutionToleranceScaleText>
 #end
 #if($result.get("taxdetailstrophiclevel"))
-                        <TrophicLevelName>$result.get("taxdetailstrophiclevel")</TrophicLevelName>
+                    <TrophicLevelName>$result.get("taxdetailstrophiclevel")</TrophicLevelName>
 #end
 #if($result.get("taxdetailsfuncfeedinggroup"))
-                        <FunctionalFeedingGroupName>$result.get("taxdetailsfuncfeedinggroup")</FunctionalFeedingGroupName>
+                    <FunctionalFeedingGroupName>$result.get("taxdetailsfuncfeedinggroup")</FunctionalFeedingGroupName>
 #end
 #if($result.get("citationresourcetitle") || $result.get("citationresourcecreator") || $result.get("citationresourcesubject") || $result.get("citationresourcepublisher") || $result.get("citationresourcedate") || $result.get("citationresourceid"))
-                        <TaxonomicDetailsCitation>
+                    <TaxonomicDetailsCitation>
 #if($result.get("citationresourcetitle"))
-                            <ResourceTitleName>$result.get("citationresourcetitle")</ResourceTitleName>
+                        <ResourceTitleName>$result.get("citationresourcetitle")</ResourceTitleName>
 #end
 #if($result.get("citationresourcecreator"))
-                            <ResourceCreatorName>$result.get("citationresourcecreator")</ResourceCreatorName>
+                        <ResourceCreatorName>$result.get("citationresourcecreator")</ResourceCreatorName>
 #end
 #if($result.get("citationresourcesubject"))
-                            <ResourceSubjectText>$result.get("citationresourcesubject")</ResourceSubjectText>
+                        <ResourceSubjectText>$result.get("citationresourcesubject")</ResourceSubjectText>
 #end
 #if($result.get("citationresourcepublisher"))
-                            <ResourcePublisherName>$result.get("citationresourcepublisher")</ResourcePublisherName>
+                        <ResourcePublisherName>$result.get("citationresourcepublisher")</ResourcePublisherName>
 #end
 #if($result.get("citationresourcedate"))
-                            <ResourceDate>$helper.toXmlDate($result.get("citationresourcedate"))</ResourceDate>
+                        <ResourceDate>$helper.toXmlDate($result.get("citationresourcedate"))</ResourceDate>
 #end
 #if($result.get("citationresourceid"))
-                            <ResourceIdentifier>$result.get("citationresourceid")</ResourceIdentifier>
+                        <ResourceIdentifier>$result.get("citationresourceid")</ResourceIdentifier>
 #end
                         </TaxonomicDetailsCitation>
 #end##if(... || ...)
-                    </TaxonomicDetails>
+                </TaxonomicDetails>
 #end##if(... || ...)
 #if($result.get("freqclassdesccode") || $result.get("freqclassdescunitcode") || $result.get("freqclasslowerboundvalue") || $result.get("freqclassupperboundvalue"))
-                    <FrequencyClassInformation>
+                <FrequencyClassInformation>
 #if($result.get("freqclassdesccode"))
-                        <FrequencyClassDescriptorCode>$result.get("freqclassdesccode")</FrequencyClassDescriptorCode>
+                    <FrequencyClassDescriptorCode>$result.get("freqclassdesccode")</FrequencyClassDescriptorCode>
 #end
 #if($result.get("freqclassdescunitcode"))
-                        <FrequencyClassDescriptorUnitCode>$result.get("freqclassdescunitcode")</FrequencyClassDescriptorUnitCode>
+                    <FrequencyClassDescriptorUnitCode>$result.get("freqclassdescunitcode")</FrequencyClassDescriptorUnitCode>
 #end
 #if($result.get("freqclasslowerboundvalue"))
-                        <LowerClassBoundValue>$result.get("freqclasslowerboundvalue")</LowerClassBoundValue>
+                    <LowerClassBoundValue>$result.get("freqclasslowerboundvalue")</LowerClassBoundValue>
 #end
 #if($result.get("freqclassupperboundvalue"))
-                        <UpperClassBoundValue></UpperClassBoundValue>
+                    <UpperClassBoundValue></UpperClassBoundValue>
 #end
                     </FrequencyClassInformation>
 #end##if(... || ...)
-                </BiologicalResultDescription>
+            </BiologicalResultDescription>
 #end##if(... || ...)
 #foreach($resultAttachment in $helper.getData("SELECT binaryobjectfile, binaryobjectfiletypecode FROM WQX_RESULTATTACHEDBINARYOBJECT WHERE PARENTID = ? ", $result.get("recordid")))
-                <AttachedBinaryObject>
+            <AttachedBinaryObject>
 #if($resultAttachment.get("binaryobjectfile"))
-                    <BinaryObjectFileName>$resultAttachment.get("binaryobjectfile")</BinaryObjectFileName>
+                <BinaryObjectFileName>$resultAttachment.get("binaryobjectfile")</BinaryObjectFileName>
 #end
 #if($resultAttachment.get("binaryobjectfiletypecode"))
-                    <BinaryObjectFileTypeCode>$resultAttachment.get("binaryobjectfiletypecode")</BinaryObjectFileTypeCode>
+                <BinaryObjectFileTypeCode>$resultAttachment.get("binaryobjectfiletypecode")</BinaryObjectFileTypeCode>
 #end
                 </AttachedBinaryObject>
 #end##foreach($resultAttachment in $helper.getData
 #if($result.get("analyticalmethodid") || $result.get("analyticalmethodidcontext") || $result.get("analyticalmethodname") || $result.get("analyticalmethodqualifiertype") || $result.get("analyticalmethoddesc"))
-                <ResultAnalyticalMethod>
+            <ResultAnalyticalMethod>
 #if($result.get("analyticalmethodid"))
-                    <MethodIdentifier>$result.get("analyticalmethodid")</MethodIdentifier>
+                <MethodIdentifier>$result.get("analyticalmethodid")</MethodIdentifier>
 #end
 #if($result.get("analyticalmethodidcontext"))
-                    <MethodIdentifierContext>$result.get("analyticalmethodidcontext")</MethodIdentifierContext>
+                <MethodIdentifierContext>$result.get("analyticalmethodidcontext")</MethodIdentifierContext>
 #end
 #if($result.get("analyticalmethodname"))
-                    <MethodName>$result.get("analyticalmethodname")</MethodName>
+                <MethodName>$result.get("analyticalmethodname")</MethodName>
 #end
 #if($result.get("analyticalmethodqualifiertype"))
-                    <MethodQualifierTypeName>$result.get("analyticalmethodqualifiertype")</MethodQualifierTypeName>
+                <MethodQualifierTypeName>$result.get("analyticalmethodqualifiertype")</MethodQualifierTypeName>
 #end
 #if($result.get("analyticalmethoddesc"))
-                    <MethodDescriptionText>$result.get("analyticalmethoddesc")</MethodDescriptionText>
+                <MethodDescriptionText>$result.get("analyticalmethoddesc")</MethodDescriptionText>
 #end
                 </ResultAnalyticalMethod>
 #end##if(... || ...)
 #if($result.get("labname") || $result.get("labanalysisstartdate") || $result.get("labanalysisstarttime") || $result.get("labanalysisstarttimezonecode") || $result.get("labanalysisenddate") || $result.get("labanalysisendtime") || $result.get("labanalysisendtimezonecode") || $result.get("resultlabcommentcode"))
-                <ResultLabInformation>
+            <ResultLabInformation>
 #if($result.get("labname"))
-                    <LaboratoryName>$result.get("labname")</LaboratoryName>
+                <LaboratoryName>$result.get("labname")</LaboratoryName>
 #end
 #if($result.get("labanalysisstartdate"))
-                    <AnalysisStartDate>$helper.toXmlDate($result.get("labanalysisstartdate"))</AnalysisStartDate>
+                <AnalysisStartDate>$helper.toXmlDate($result.get("labanalysisstartdate"))</AnalysisStartDate>
 #end
 #if($result.get("labanalysisstarttime") && $result.get("labanalysisstarttimezonecode"))
-                    <AnalysisStartTime>
+                <AnalysisStartTime>
 #if($result.get("labanalysisstarttime"))
-                        <Time>$helper.amPmStringToXmlTime($result.get("labanalysisstarttime"))</Time>
+                    <Time>$helper.amPmStringToXmlTime($result.get("labanalysisstarttime"))</Time>
 #end
 #if($result.get("labanalysisstarttimezonecode"))
-                        <TimeZoneCode>$result.get("labanalysisstarttimezonecode")</TimeZoneCode>
+                    <TimeZoneCode>$result.get("labanalysisstarttimezonecode")</TimeZoneCode>
 #end
                     </AnalysisStartTime>
 #end##if(... || ...)
 #if($result.get("labanalysisenddate"))
-                    <AnalysisEndDate>$helper.toXmlDate($result.get("labanalysisenddate"))</AnalysisEndDate>
+                <AnalysisEndDate>$helper.toXmlDate($result.get("labanalysisenddate"))</AnalysisEndDate>
 #end
 #if($result.get("labanalysisendtime") && $result.get("labanalysisendtimezonecode"))
-                    <AnalysisEndTime>
+                <AnalysisEndTime>
 #if($result.get("labanalysisendtime"))
-                        <Time>$helper.amPmStringToXmlTime($result.get("labanalysisendtime"))</Time>
+                    <Time>$helper.amPmStringToXmlTime($result.get("labanalysisendtime"))</Time>
 #end
 #if($result.get("labanalysisendtimezonecode"))
-                        <TimeZoneCode>$result.get("labanalysisendtimezonecode")</TimeZoneCode>
+                    <TimeZoneCode>$result.get("labanalysisendtimezonecode")</TimeZoneCode>
 #end
                    </AnalysisEndTime>
 #end##if(... || ...)
 #if($result.get("resultlabcommentcode"))
-                    <ResultLaboratoryCommentCode>$result.get("resultlabcommentcode")</ResultLaboratoryCommentCode>
+                <ResultLaboratoryCommentCode>$result.get("resultlabcommentcode")</ResultLaboratoryCommentCode>
 #end
 #foreach($quantLimit in $helper.getData("SELECT detectquantlimittype, detectquantlimitmeasure, detectquantlimitmeasunitcode FROM WQX_RESULTDETECTQUANTLIMIT WHERE PARENTID = ? ", $result.get("recordid"))) 
-                    <ResultDetectionQuantitationLimit>
+                <ResultDetectionQuantitationLimit>
 #if($quantLimit.get("detectquantlimittype") || $quantLimit.get("detectquantlimitmeasure") || $quantLimit.get("detectquantlimitmeasunitcode"))
 #if($quantLimit.get("detectquantlimittype"))
-                        <DetectionQuantitationLimitTypeName>$quantLimit.get("detectquantlimittype")</DetectionQuantitationLimitTypeName>
+                    <DetectionQuantitationLimitTypeName>$quantLimit.get("detectquantlimittype")</DetectionQuantitationLimitTypeName>
 #end
 #if($quantLimit.get("detectquantlimitmeasure") || $quantLimit.get("detectquantlimitmeasunitcode"))
-                        <DetectionQuantitationLimitMeasure>
+                    <DetectionQuantitationLimitMeasure>
 #if($quantLimit.get("detectquantlimitmeasure"))
-                            <MeasureValue>$quantLimit.get("detectquantlimitmeasure")</MeasureValue>
+                        <MeasureValue>$quantLimit.get("detectquantlimitmeasure")</MeasureValue>
 #end
 #if($quantLimit.get("detectquantlimitmeasunitcode"))
-                            <MeasureUnitCode>$quantLimit.get("detectquantlimitmeasunitcode")</MeasureUnitCode>
+                        <MeasureUnitCode>$quantLimit.get("detectquantlimitmeasunitcode")</MeasureUnitCode>
 #end
                         </DetectionQuantitationLimitMeasure>
 #end#end##if(... || ...)
-                    </ResultDetectionQuantitationLimit>
+                </ResultDetectionQuantitationLimit>
 #end##foreach($quantLimit in $helper.getData
 #if($result.get("labaccind"))
-                    <LaboratoryAccreditationIndicator>$helper.toXmlBoolean($result.get("labaccind"))</LaboratoryAccreditationIndicator>
+                <LaboratoryAccreditationIndicator>$helper.toXmlBoolean($result.get("labaccind"))</LaboratoryAccreditationIndicator>
 #end
 #if($result.get("labaccauthorityname"))
-                    <LaboratoryAccreditationAuthorityName>$result.get("labaccauthorityname")</LaboratoryAccreditationAuthorityName>
+                <LaboratoryAccreditationAuthorityName>$result.get("labaccauthorityname")</LaboratoryAccreditationAuthorityName>
 #end
 #if($result.get("labtaxaccind"))
-                    <TaxonomistAccreditationIndicator>$result.get("labtaxaccind")</TaxonomistAccreditationIndicator>
+                <TaxonomistAccreditationIndicator>$result.get("labtaxaccind")</TaxonomistAccreditationIndicator>
 #end
 #if($result.get("labtaxaccauthorityname"))
-                    <TaxonomistAccreditationAuthorityName>$result.get("labtaxaccauthorityname")</TaxonomistAccreditationAuthorityName>
+                <TaxonomistAccreditationAuthorityName>$result.get("labtaxaccauthorityname")</TaxonomistAccreditationAuthorityName>
 #end
                 </ResultLabInformation>
 #end##if(... || ...)
 #foreach($samplePrep in $helper.getData("SELECT methodid, methodidcontext, methodname, methodqualifiertype, methoddesc, prepstartdate, prepstarttime, prepstarttimezonecode, prependdate, prependtime, prependtimezonecode, substancedilutionfactor FROM WQX_LABSAMPLEPREP WHERE PARENTID = ? ", $result.get("recordid")))
-                <LabSamplePreparation>
+            <LabSamplePreparation>
 #if($samplePrep.get("methodid") || $samplePrep.get("methodidcontext") || $samplePrep.get("methodname") || $samplePrep.get("methodqualifiertype") || $samplePrep.get("methoddesc"))
-                    <LabSamplePreparationMethod>
+                <LabSamplePreparationMethod>
 #if($samplePrep.get("methodid"))
-                        <MethodIdentifier>$samplePrep.get("methodid")</MethodIdentifier>
+                    <MethodIdentifier>$samplePrep.get("methodid")</MethodIdentifier>
 #end
 #if($samplePrep.get("methodidcontext"))
-                        <MethodIdentifierContext>$samplePrep.get("methodidcontext")</MethodIdentifierContext>
+                    <MethodIdentifierContext>$samplePrep.get("methodidcontext")</MethodIdentifierContext>
 #end
 #if($samplePrep.get("methodname"))
-                        <MethodName>$samplePrep.get("methodname")</MethodName>
+                    <MethodName>$samplePrep.get("methodname")</MethodName>
 #end
 #if($samplePrep.get("methodqualifiertype"))
-                        <MethodQualifierTypeName>$samplePrep.get("methodqualifiertype")</MethodQualifierTypeName>
+                    <MethodQualifierTypeName>$samplePrep.get("methodqualifiertype")</MethodQualifierTypeName>
 #end
 #if($samplePrep.get("methoddesc"))
-                        <MethodDescriptionText>$samplePrep.get("methoddesc")</MethodDescriptionText>
+                    <MethodDescriptionText>$samplePrep.get("methoddesc")</MethodDescriptionText>
 #end
                     </LabSamplePreparationMethod>
 #end##if(... || ...)
 #if($samplePrep.get("prepstartdate"))
-                    <PreparationStartDate>$helper.toXmlDate($samplePrep.get("prepstartdate"))</PreparationStartDate>
+                <PreparationStartDate>$helper.toXmlDate($samplePrep.get("prepstartdate"))</PreparationStartDate>
 #end
 #if($samplePrep.get("prepstarttime") && $samplePrep.get("prepstarttimezonecode"))
-                    <PreparationStartTime>
+                <PreparationStartTime>
 #if($samplePrep.get("prepstarttime"))
-                        <Time>$helper.amPmStringToXmlTime($samplePrep.get("prepstarttime"))</Time>
+                    <Time>$helper.amPmStringToXmlTime($samplePrep.get("prepstarttime"))</Time>
 #end
 #if($samplePrep.get("prepstarttimezonecode"))
-                        <TimeZoneCode>$samplePrep.get("prepstarttimezonecode")</TimeZoneCode>
+                    <TimeZoneCode>$samplePrep.get("prepstarttimezonecode")</TimeZoneCode>
 #end
                     </PreparationStartTime>
 #end##if(... || ...)
 #if($samplePrep.get("prependdate"))
-                    <PreparationEndDate>$helper.toXmlDate($samplePrep.get("prependdate"))</PreparationEndDate>
+                <PreparationEndDate>$helper.toXmlDate($samplePrep.get("prependdate"))</PreparationEndDate>
 #end
 #if($samplePrep.get("prependtime") && $samplePrep.get("prependtimezonecode"))
-                    <PreparationEndTime>
-                        <Time>$helper.amPmStringToXmlTime($samplePrep.get("prependtime"))</Time>
-                        <TimeZoneCode>$samplePrep.get("prependtimezonecode")</TimeZoneCode>
-                    </PreparationEndTime>
+                <PreparationEndTime>
+                    <Time>$helper.amPmStringToXmlTime($samplePrep.get("prependtime"))</Time>
+                    <TimeZoneCode>$samplePrep.get("prependtimezonecode")</TimeZoneCode>
+                </PreparationEndTime>
 #end##if(... || ...)
 #if($samplePrep.get("substancedilutionfactor"))
-                    <SubstanceDilutionFactorNumeric>$samplePrep.get("substancedilutionfactor")</SubstanceDilutionFactorNumeric>
+                <SubstanceDilutionFactorNumeric>$samplePrep.get("substancedilutionfactor")</SubstanceDilutionFactorNumeric>
 #end
                 </LabSamplePreparation>
 #end##foreach($samplePrep in $helper.getData
-            </Result>
+        </Result>
 #end##foreach ($result in $helper.getData
-        </Activity>
+    </Activity>
 #end##foreach($activity in $helper.getData
 $helper.print("done with Results and Activities, getting ActivityGroups...")
 $helper.printElapsedTime()
-#foreach($activityGroup in $helper.getData("SELECT A.activitygroupid, A.activitygroupname, A.activitygrouptypecode, B.activityparentid FROM WQX_ACTIVITYGROUP A,  WQX_ACTIVITYACTIVITYGROUP B WHERE B.ACTIVITYGROUPPARENTID = A.RECORDID and A.PARENTID = ?  AND WQXUPDATEDATE >= ? ", [$org.get("recordid"), $helper.toDbDateString($lastProcessedTimestamp)]))
+#foreach($activityGroup in $helper.getData($activityGroupQuery, $org.get("recordid")))
+#set($totalActivityGroupCount = $velocityCount)
         <ActivityGroup>
 #if($activityGroup.get("activitygroupid"))
-            <ActivityGroupIdentifier>$activityGroup.get("activitygroupid")</ActivityGroupIdentifier>
+        <ActivityGroupIdentifier>$activityGroup.get("activitygroupid")</ActivityGroupIdentifier>
 #end
 #if($activityGroup.get("activitygroupname"))
-            <ActivityGroupName>$activityGroup.get("activitygroupname")</ActivityGroupName>
+        <ActivityGroupName>$activityGroup.get("activitygroupname")</ActivityGroupName>
 #end
 #if($activityGroup.get("activitygrouptypecode"))
-            <ActivityGroupTypeCode>$activityGroup.get("activitygrouptypecode")</ActivityGroupTypeCode>
+        <ActivityGroupTypeCode>$activityGroup.get("activitygrouptypecode")</ActivityGroupTypeCode>
 #end
 #if($activityGroup.get("activityparentid"))
-            <ActivityIdentifier>$activityGroup.get("activityparentid")</ActivityIdentifier>
+        <ActivityIdentifier>$activityGroup.get("activityparentid")</ActivityIdentifier>
 #end
         </ActivityGroup>
 #end##foreach($activityGroup in $helper.getData
-        </Organization>
-        </WQX>
+    </Organization>
+</WQX>
 #if($makeHeader)#if($makeHeader == "true" || $makeHeader == "TRUE")
-    </Payload>
+</Payload>
 </Document>
 #end#end##if($makeHeader)
 $helper.print("Template merge complete! Total elapsed time:")
 $helper.printElapsedTime()
+#set($totalRecordCount = 0)
+#if($totalProjectCount)#set($totalRecordCount = $totalProjectCount)$helper.print("Total Projects: $totalProjectCount")#end
+#if($totalMonitoringLocationCount)#set($totalRecordCount = $totalRecordCount + $totalMonitoringLocationCount)$helper.print("Total MonitoringLocations: $totalMonitoringLocationCount")#end
+#if($totalBiologicalHabitatIndexCount)#set($totalRecordCount = $totalRecordCount + $totalBiologicalHabitatIndexCount)$helper.print("Total BiologicalHabitatIndexes: $totalBiologicalHabitatIndexCount")#end
+#if($totalActivityCount)#set($totalRecordCount = $totalRecordCount + $totalActivityCount)$helper.print("Total Activities: $totalActivityCount")#end
+#if($totalActivityGroupCount)#set($totalRecordCount = $totalRecordCount + $totalActivityGroupCount)$helper.print("Total Activity Groups: $totalActivityGroupCount")#end
+#if($totalRecordCount)$helper.setResultingRecordCount($totalRecordCount)$helper.print("Total record count: $totalRecordCount")#end

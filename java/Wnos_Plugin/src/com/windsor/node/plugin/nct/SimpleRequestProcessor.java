@@ -154,7 +154,7 @@ public class SimpleRequestProcessor extends BaseWnosPlugin {
         try {
 
             result.getAuditEntries()
-                    .add(makeEntry("Vaildating transaction..."));
+                    .add(makeEntry("Validating transaction..."));
             validateTransaction(transaction);
 
             result.getAuditEntries().add(

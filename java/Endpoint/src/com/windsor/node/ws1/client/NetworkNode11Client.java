@@ -65,11 +65,6 @@ import com.windsor.node.ws1.wsdl.NodeDocument;
  */
 public class NetworkNode11Client implements NodeClientService {
 
-    // static {
-    // System.setProperty("axis.ClientConfigFile",
-    // "com/windsor/node/ws1/client/client-config.wsdd");
-    // }
-
     private static final Logger logger = Logger
             .getLogger(NetworkNode11Client.class.getName());
 
@@ -347,7 +342,7 @@ public class NetworkNode11Client implements NodeClientService {
             logger.error(ex);
             String message = ex.getMessage();
             if (StringUtils.isBlank(message)) {
-                message = "Endpoint has thrown an unhanded exception. "
+                message = "Endpoint has thrown an unhandled exception. "
                         + "Most likely the remote service is not operational.";
             }
             throw new RuntimeException("Error while authenticating to: "

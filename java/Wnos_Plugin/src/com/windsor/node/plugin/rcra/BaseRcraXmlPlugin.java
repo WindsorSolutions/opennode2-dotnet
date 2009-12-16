@@ -39,6 +39,7 @@ import javax.sql.DataSource;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang.StringUtils;
 
 import com.windsor.node.common.domain.CommonContentType;
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
@@ -57,6 +58,11 @@ import com.windsor.node.service.helper.IdGenerator;
 import com.windsor.node.service.helper.settings.SettingServiceProvider;
 
 public abstract class BaseRcraXmlPlugin extends BaseWnosPlugin {
+
+    /**
+     * 
+     */
+    private static final String NOT_SET = " not set";
 
     /**
      * Required runtime argument, set in service configuration.
@@ -214,15 +220,15 @@ public abstract class BaseRcraXmlPlugin extends BaseWnosPlugin {
         }
 
         if (!getConfigurationArguments().containsKey(ARG_ADD_HEADER)) {
-            throw new RuntimeException(ARG_ADD_HEADER + " not set");
+            throw new RuntimeException(ARG_ADD_HEADER + NOT_SET);
         }
 
         if (!getConfigurationArguments().containsKey(ARG_RCRA_INFO_STATE_CODE)) {
-            throw new RuntimeException(ARG_RCRA_INFO_STATE_CODE + " not set");
+            throw new RuntimeException(ARG_RCRA_INFO_STATE_CODE + NOT_SET);
         }
 
         if (!getConfigurationArguments().containsKey(ARG_RCRA_INFO_USER_ID)) {
-            throw new RuntimeException(ARG_RCRA_INFO_USER_ID + " not set");
+            throw new RuntimeException(ARG_RCRA_INFO_USER_ID + NOT_SET);
         }
 
         debug("Plugin validated");
@@ -309,41 +315,57 @@ public abstract class BaseRcraXmlPlugin extends BaseWnosPlugin {
 
     private void setServiceArgs() {
 
-        /* required args */
-        if (null == makeHeader) {
-            makeHeader = (String) getRequiredConfigValueAsString(ARG_ADD_HEADER);
-            debug("add header: " + makeHeader);
+        /*
+         * required args - conditionals to facilitate testing via Spring wire-up
+         * of plugin
+         */
+        if (StringUtils.isBlank(makeHeader)) {
+            makeHeader = ((String) getRequiredConfigValueAsString(ARG_ADD_HEADER))
+                    .toLowerCase();
         }
+        debug("makeHeader: " + makeHeader);
 
         boolean doHeader = makeHeader.equalsIgnoreCase("true");
+        debug("doHeader: " + doHeader);
 
-        if (null == rcraInfoStateCode) {
+        if (StringUtils.isBlank(rcraInfoStateCode)) {
             rcraInfoStateCode = (String) getRequiredConfigValueAsString(ARG_RCRA_INFO_STATE_CODE);
-            debug("rcraInfoStateCode: " + rcraInfoStateCode);
         }
+        debug("rcraInfoStateCode: " + rcraInfoStateCode);
 
-        if (null == rcraInfoUserId) {
+        if (StringUtils.isBlank(rcraInfoUserId)) {
             rcraInfoUserId = (String) getRequiredConfigValueAsString(ARG_RCRA_INFO_USER_ID);
-            debug("rcraInfoUserId: " + rcraInfoUserId);
         }
+        debug("rcraInfoUserId: " + rcraInfoUserId);
+
         /* optional - header elements */
-        contactInfo = (String) getConfigValueAsString(ARG_HEADER_CONTACT_INFO,
-                doHeader);
+        if (StringUtils.isBlank(contactInfo)) {
+            contactInfo = (String) getConfigValueAsString(
+                    ARG_HEADER_CONTACT_INFO, doHeader);
+        }
         debug("contactInfo: " + contactInfo);
 
-        notification = (String) getConfigValueAsString(ARG_HEADER_NOTIFS,
-                doHeader);
+        if (StringUtils.isBlank(notification)) {
+            notification = (String) getConfigValueAsString(ARG_HEADER_NOTIFS,
+                    doHeader);
+        }
         debug("notification: " + notification);
 
-        payloadOperation = (String) getConfigValueAsString(
-                ARG_HEADER_PAYLOAD_OP, doHeader);
+        if (StringUtils.isBlank(payloadOperation)) {
+            payloadOperation = (String) getConfigValueAsString(
+                    ARG_HEADER_PAYLOAD_OP, doHeader);
+        }
         debug("payloadOperation: " + payloadOperation);
 
-        providingOrg = (String) getConfigValueAsString(ARG_HEADER_ORG_NAME,
-                doHeader);
+        if (StringUtils.isBlank(providingOrg)) {
+            providingOrg = (String) getConfigValueAsString(ARG_HEADER_ORG_NAME,
+                    doHeader);
+        }
         debug("providingOrg: " + providingOrg);
 
-        title = (String) getConfigValueAsString(ARG_HEADER_TITLE, doHeader);
+        if (StringUtils.isBlank(title)) {
+            title = (String) getConfigValueAsString(ARG_HEADER_TITLE, doHeader);
+        }
         debug("title: " + title);
 
         velocityHelper.configure(pluginDataSource, getPluginSourceDir()

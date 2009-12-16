@@ -146,7 +146,7 @@ public class SimpleWnosPluginImplementation extends BaseWnosPlugin {
         result.setStatus(CommonTransactionStatusCode.FAILED);
 
         result.getAuditEntries().add(
-                new ActivityEntry("Vaildating transaction"));
+                new ActivityEntry("Validating transaction"));
 
         try {
 

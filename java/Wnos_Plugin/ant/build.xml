@@ -7,6 +7,8 @@
     <property file="shared.plugin.properties" />
 
     <property name="aqs.root" value="aqs" />
+    <property name="beachnotif21.root" value="beachnotif21" />
+    <property name="eis12.root" value="eis12" />
     <property name="ends2.root" value="ends2" />
     <property name="flowsecurity.root" value="flowsecurity" />
     <property name="frs23.root" value="frs23" />
@@ -18,6 +20,7 @@
     <property name="rcra.root" value="rcra" />
     <property name="sample.root" value="sample" />
     <property name="sdwis.root" value="sdwis" />
+    <property name="uic10.root" value="uic10" />
     <property name="windsor.root" value="windsor" />
     <property name="wqx.root" value="wqx" />
 
@@ -79,6 +82,12 @@
         <echo message="Running ${run.target} in ${aqs.root}" />
         <ant dir="${aqs.root}" target="${run.target}" inheritAll="false" inheritRefs="false" />
 
+        <echo message="Running ${run.target} in ${beachnotif21.root}" />
+        <ant dir="${beachnotif21.root}" target="${run.target}" inheritAll="false" inheritRefs="false" />
+
+        <echo message="Running ${run.target} in ${eis12.root}" />
+        <ant dir="${eis12.root}" target="${run.target}" inheritAll="false" inheritRefs="false" />
+
         <echo message="Running ${run.target} in ${ends2.root}" />
         <ant dir="${ends2.root}" target="${run.target}" inheritAll="false" inheritRefs="false" />
 
@@ -111,6 +120,9 @@
 
         <echo message="Running ${run.target} in ${sdwis.root}" />
         <ant dir="${sdwis.root}" target="${run.target}" inheritAll="false" inheritRefs="false" />
+
+        <echo message="Running ${run.target} in ${uic10.root}" />
+        <ant dir="${uic10.root}" target="${run.target}" inheritAll="false" inheritRefs="false" />
 
         <echo message="Running ${run.target} in ${windsor.root}" />
         <ant dir="${windsor.root}" target="${run.target}" inheritAll="false" inheritRefs="false" />

@@ -145,7 +145,7 @@ public class MapForceBridge extends BaseWnosPlugin implements InitializingBean {
 
             /* ARGUMENTS */
             result.getAuditEntries()
-                    .add(makeEntry("Vaildating transaction..."));
+                    .add(makeEntry("Validating transaction..."));
             validateTransaction(transaction);
 
             /* parameters for the MapForce "run" method are positional */

@@ -190,7 +190,7 @@ public class UserAuthorizationRequestProcessor extends BaseWnosPlugin {
             }
 
             result.getAuditEntries().add(
-                    makeEntry("Vaildating transaction and documents..."));
+                    makeEntry("Validating transaction and documents..."));
 
             /* 2: Verify exactly one Document in transaction */
             validateTransaction(transaction);

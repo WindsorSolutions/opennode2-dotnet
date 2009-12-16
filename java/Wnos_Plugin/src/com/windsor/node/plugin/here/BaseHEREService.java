@@ -230,7 +230,7 @@ public abstract class BaseHEREService extends BaseWnosPlugin {
          * these could throw fatal errors, and we want the real err message to
          * reach the client, so we call outside the try/catch block
          */
-        result.getAuditEntries().add(makeEntry("Vaildating transaction..."));
+        result.getAuditEntries().add(makeEntry("Validating transaction..."));
         validateTransaction(transaction);
 
         HEREArgs args = new HEREArgs(transaction, getTempDir(), argAsDate);

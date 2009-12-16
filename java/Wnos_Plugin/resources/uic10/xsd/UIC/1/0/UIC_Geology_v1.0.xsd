@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:uic="http://www.exchangenetwork.net/schema/uic/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/uic/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:include schemaLocation="UIC_SimpleContent_v1.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+        Schema Name  : UIC_Geology_v1.0.xsd
+        Description   : Information on basic hydro-geologic parameters and depths for the “key” sub-surface formations penetrated by the Class I injection well and other deep-well injection.
+        Developed by  : 	 Lockheed Martin
+        Point of Contact :   Lockheed Martin
+</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="GeologyDetailType">
+		<xsd:annotation>
+			<xsd:documentation>Defines the Geology information structure.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="uic:GeologyIdentifier"/>
+			<xsd:element ref="uic:GeologyConfiningZoneName" minOccurs="0"/>
+			<xsd:element ref="uic:GeologyConfiningZoneTopNumeric" minOccurs="0"/>
+			<xsd:element ref="uic:GeologyConfiningZoneBottomNumeric" minOccurs="0"/>
+			<xsd:element ref="uic:GeologyLithologicConfiningZoneText" minOccurs="0"/>
+			<xsd:element ref="uic:GeologyInjectionZoneFormationName" minOccurs="0"/>
+			<xsd:element ref="uic:GeologyBottomInjectionZoneNumeric" minOccurs="0"/>
+			<xsd:element ref="uic:GeologyLithologicInjectionZoneText" minOccurs="0"/>
+			<xsd:element ref="uic:GeologyTopInjectionIntervalNumeric" minOccurs="0"/>
+			<xsd:element ref="uic:GeologyBottomInjectionIntervalNumeric" minOccurs="0"/>
+			<xsd:element ref="uic:GeologyInjectioneZonePermeabilityRateNumeric" minOccurs="0"/>
+			<xsd:element ref="uic:GeologyInjectionZonePorosityPercentNumeric" minOccurs="0"/>
+			<xsd:element ref="uic:GeologyUSDWDepthNumeric" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="GeologyDetail" type="uic:GeologyDetailType"/>
+</xsd:schema>

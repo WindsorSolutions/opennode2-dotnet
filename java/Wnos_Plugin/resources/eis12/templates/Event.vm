@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+#parse("eis_head.vm")
+#foreach($event in $helper.getData("select event_id, cers_id, event_iden, prog_sys_code, event_name, land_mgr, loc_desc, event_class_code, event_size_src_code, cont_date, recur_ind_code, recur_year, grnd_based_data_src_code, remote_sensing_data_src_code, fuel_cons_and_emis_model_code, fuel_type_model_code, fuel_selc_code, ignit_meth_code, ignit_loc_code, ignit_orien_code, event_cmnt, atch_file_name, atch_file_desc, atch_file_size, atch_file_cont_type_code from cers_event where cers_id = ? ", $cer.cers_id))
+    <cer:Event>
+        <cer:EventIdentifier>$event.event_iden</cer:EventIdentifier>
+        <cer:ProgramSystemCode>$event.prog_sys_code</cer:ProgramSystemCode>
+#if($event.event_name)
+        <cer:EventName>$event.event_name</cer:EventName>
+#end
+#if($event.land_mgr)
+        <cer:LandManager>$event.land_mgr</cer:LandManager>
+#end
+#if($event.loc_desc)
+        <cer:LocationDescription>$event.loc_desc</cer:LocationDescription>
+#end
+#if($event.event_class_code)
+        <cer:EventClassificationCode>$event.event_class_code</cer:EventClassificationCode>
+#end
+#if($event.event_size_src_code)
+        <cer:EventSizeSourceCode>$event.event_size_src_code</cer:EventSizeSourceCode>
+#end
+#if($event.cont_date)
+        <cer:ContainmentDate>$event.cont_date</cer:ContainmentDate>
+#end
+#if($event.recur_ind_code)
+        <cer:RecurrenceIndicatorCode>$event.recur_ind_code</cer:RecurrenceIndicatorCode>
+#end
+#if($event.recur_year)
+        <cer:RecurrenceYear>$event.recur_year</cer:RecurrenceYear>
+#end
+#if($event.grnd_based_data_src_code)
+        <cer:GroundBasedDataSourceCode>$event.grnd_based_data_src_code</cer:GroundBasedDataSourceCode>
+#end
+#if($event.remote_sensing_data_src_code)
+        <cer:RemoteSensingDataSourceCode>$event.remote_sensing_data_src_code</cer:RemoteSensingDataSourceCode>
+#end
+#if($event.fuel_cons_and_emis_model_code)
+        <cer:FuelConsumptionAndEmissionsModelCode>$event.fuel_cons_and_emis_model_code</cer:FuelConsumptionAndEmissionsModelCode>
+#end
+#if($event.fuel_type_model_code)
+        <cer:FuelTypeModelCode>$event.fuel_type_model_code</cer:FuelTypeModelCode>
+#end
+#if($event.fuel_selc_code)
+        <cer:FuelSelectionCode>$event.fuel_selc_code</cer:FuelSelectionCode>
+#end
+#if($event.ignit_meth_code)
+        <cer:IgnitionMethodCode>$event.ignit_meth_code</cer:IgnitionMethodCode>
+#end
+#if($event.ignit_loc_code)
+        <cer:IgnitionLocationCode>$event.ignit_loc_code</cer:IgnitionLocationCode>
+#end
+#if($event.ignit_orien_code)
+        <cer:IgnitionOrientationCode>$event.ignit_orien_code</cer:IgnitionOrientationCode>
+#end
+#if($event.event_cmnt)
+        <cer:EventComment>$event.event_cmnt</cer:EventComment>
+#end
+#if($event.atch_file_name || $event.atch_file_desc || $event.atch_file_size || $event.atch_file_cont_type_code)
+        <cer:EventAttachedFile>
+            <cer:AttachmentFileName>$event.atch_file_name</cer:cer:AttachmentFileName>
+            <cer:AttachmentFileDescription>$event.atch_file_desc</cer:cer:AttachmentFileDescription>
+#if($event.atch_file_size)
+            <cer:AttachmentFileSize>$event.atch_file_size</cer:cer:AttachmentFileSize>
+#end
+#if($event.atch_file_cont_type_code)
+            <cer:AttachmentFileContentTypeCode>$event.atch_file_cont_type_code</cer:cer:AttachmentFileContentTypeCode>
+#end
+        </cer:EventAttachedFile>
+#end##if($event.atch...
+#foreach($mergedEvent in $helper.getData("select merged_events_id, event_iden, prog_sys_code, merged_date, merged_events_cmnt from cers_merged_events where event_id = ? ", $event.event_id)) 
+        <cer:MergedEvents>
+           <cer:EventIdentifier>$mergedEvent.event_iden</cer:EventIdentifier>
+           <cer:ProgramSystemCode>$mergedEvent.prog_sys_code</cer:ProgramSystemCode>
+#if($mergedEvent.merged_date)
+           <cer:MergedDate>$helper.toXmlDate($mergedEvent.merged_date)</cer:MergedDate>
+#end
+#if($mergedEvent.merged_events_cmnt)
+           <cer:MergedEventsComment>$mergedEvent.merged_events_cmnt</cer:MergedEventsComment>
+#end
+        </cer:MergedEvents>
+#end##foreach($mergedEvent
+#foreach($evenRptPrd in $helper.getData("select event_rpt_prd_id, event_id, event_begin_date, event_end_date, event_stage_code, begin_hour, end_hour, event_rpt_prd_cmnt from cers_event_rpt_prd where event_id = ? ", $event.event_id)) 
+        <cer:EventReportingPeriod>
+            <cer:EventBeginDate>$helper.toXmlDate($evenRptPrd.event_begin_date)</cer:EventBeginDate>
+            <cer:EventEndDate>$helper.toXmlDate($evenRptPrd.event_end_date)</cer:EventEndDate>
+            <cer:EventStageCode>$evenRptPrd.event_stage_code</cer:EventStageCode>
+#if($evenRptPrd.begin_hour)
+            <cer:BeginHour>$evenRptPrd.begin_hour</cer:BeginHour>
+#end
+#if($evenRptPrd.end_hour)
+            <cer:EndHour>$evenRptPrd.end_hour</cer:EndHour>
+#end
+#if($evenRptPrd.event_rpt_prd_cmnt)
+            <cer:EventReportingPeriodComment>$evenRptPrd.event_rpt_prd_cmnt</cer:EventReportingPeriodComment>
+#end
+#foreach($eventLoc in $helper.getData("select event_loc_id, event_rpt_prd_id, sta_and_cnty_fips_code, trib_code, sta_and_ctry_fips_code, lat_meas, long_meas, src_map_scale_num, horz_acc_meas, horz_acc_unt_meas, horz_coll_meth_code, horz_ref_datum_code, geo_ref_pt_code, data_coll_date, geo_cmnt, vert_meas, vert_unt_meas_code, vert_coll_meth_code, vert_ref_datum_code, verf_meth_code, coord_data_src_code, geom_type_code, area_wtin_perm, area_wtin_perm_unt_meas_code, pcnt_area_prod_emis from cers_event_loc where event_rpt_prd_id = ? ", $evenRptPrd.event_rpt_prd_id))
+            <cer:EventLocation>
+                <cer:StateAndCountyFIPSCode>$eventLoc.sta_and_cnty_fips_code</cer:StateAndCountyFIPSCode>
+                <cer:TribalCode>$eventLoc.trib_code</cer:TribalCode>
+                <cer:StateAndCountryFIPSCode>$eventLoc.sta_and_ctry_fips_code</cer:StateAndCountryFIPSCode>
+                <cer:EventGeographicCoordinates>
+                    <cer:LatitudeMeasure>$eventLoc.lat_meas</cer:LatitudeMeasure>
+                    <cer:LongitudeMeasure>$eventLoc.long_meas</cer:LongitudeMeasure>
+#if($eventLoc.src_map_scale_num)
+                    <cer:SourceMapScaleNumber>$eventLoc.src_map_scale_num</cer:SourceMapScaleNumber>
+#end
+#if($eventLoc.horz_acc_meas)
+                    <cer:HorizontalAccuracyMeasure>$eventLoc.horz_acc_meas</cer:HorizontalAccuracyMeasure>
+#end
+#if($eventLoc.horz_acc_unt_meas)
+                    <cer:HorizontalAccuracyUnitofMeasure>$eventLoc.horz_acc_unt_meas</cer:HorizontalAccuracyUnitofMeasure>
+#end
+#if($eventLoc.horz_coll_meth_code)
+                    <cer:HorizontalCollectionMethodCode>$eventLoc.horz_coll_meth_code</cer:HorizontalCollectionMethodCode>
+#end
+#if($eventLoc.horz_ref_datum_code)
+                    <cer:HorizontalReferenceDatumCode>$eventLoc.horz_ref_datum_code</cer:HorizontalReferenceDatumCode>
+#end
+#if($eventLoc.geo_ref_pt_code)
+                    <cer:GeographicReferencePointCode>$eventLoc.geo_ref_pt_code</cer:GeographicReferencePointCode>
+#end
+#if($eventLoc.data_coll_date)
+                    <cer:DataCollectionDate>$helper.toXmlDate($eventLoc.data_coll_date)</cer:DataCollectionDate>
+#end
+#if($eventLoc.geo_cmnt)
+                    <cer:GeographicComment>$eventLoc.geo_cmnt</cer:GeographicComment>
+#end
+#if($eventLoc.vert_meas)
+                    <cer:VerticalMeasure>$eventLoc.vert_meas</cer:VerticalMeasure>
+#end
+#if($eventLoc.vert_unt_meas_code)
+                    <cer:VerticalUnitofMeasureCode>$eventLoc.vert_unt_meas_code</cer:VerticalUnitofMeasureCode>
+#end
+#if($eventLoc.vert_coll_meth_code)
+                    <cer:VerticalCollectionMethodCode>$eventLoc.vert_coll_meth_code</cer:VerticalCollectionMethodCode>
+#end
+#if($eventLoc.vert_ref_datum_code)
+                    <cer:VerticalReferenceDatumCode>$eventLoc.vert_ref_datum_code</cer:VerticalReferenceDatumCode>
+#end
+#if($eventLoc.verf_meth_code)
+                    <cer:VerificationMethodCode>$eventLoc.verf_meth_code</cer:VerificationMethodCode>
+#end
+#if($eventLoc.coord_data_src_code)
+                    <cer:CoordinateDataSourceCode>$eventLoc.coord_data_src_code</cer:CoordinateDataSourceCode>
+#end
+#if($eventLoc.geom_type_code)
+                    <cer:GeometricTypeCode>$eventLoc.geom_type_code</cer:GeometricTypeCode>
+#end
+#if($eventLoc.area_wtin_perm)
+                    <cer:AreaWithinPerimeter>$eventLoc.area_wtin_perm</cer:AreaWithinPerimeter>
+#end
+#if($eventLoc.area_wtin_perm_unt_meas_code)
+                    <cer:AreaWithinPerimeterUnitofMeasureCode>$eventLoc.area_wtin_perm_unt_meas_code</cer:AreaWithinPerimeterUnitofMeasureCode>
+#end
+#if($eventLoc.pcnt_area_prod_emis)
+                    <cer:PercentofAreaProducingEmissions>$eventLoc.pcnt_area_prod_emis</cer:PercentofAreaProducingEmissions>
+#end
+                </cer:EventGeographicCoordinates>
+#foreach($geoParam in $helper.getData("select geospatial_params_id, event_loc_id, shape_file_iden, area_wtin_shape, area_wtin_shape_unt_meas_code, pcnt_area_prod_emis, geospatial_params_cmnt from cers_geospatial_params where event_loc_id = ? ", $eventLoc.event_loc_id))
+                <cer:GeospatialParameters>
+                    <cer:ShapeFileIdentifier>$geoParam.shape_file_iden</cer:ShapeFileIdentifier>
+#if($geoParam.area_wtin_shape)
+                    <cer:AreaWithinShape>$geoParam.area_wtin_shape</cer:AreaWithinShape>
+#end
+#if($geoParam.area_wtin_shape_unt_meas_code)
+                    <cer:AreaWithinShapeUnitofMeasureCode>$geoParam.area_wtin_shape_unt_meas_code</cer:AreaWithinShapeUnitofMeasureCode>
+#end
+#if($geoParam.pcnt_area_prod_emis)
+                    <cer:PercentofAreaProducingEmissions>$geoParam.pcnt_area_prod_emis</cer:PercentofAreaProducingEmissions>
+#end
+#if($geoParam.geospatial_params_cmnt)
+                    <cer:GeospatialParametersComment>$geoParam.geospatial_params_cmnt</cer:GeospatialParametersComment>
+#end
+                </cer:GeospatialParameters>
+#end##foreach($geoParam
+#foreach($eep in $helper.getData("select event_emis_proc_id, event_loc_id, src_class_code, fuel_config_code, fuel_loading, fuel_loading_unt_meas_code, amt_fuel_cons, amt_fuel_cons_unt_meas_code, pcnt_ten_hour_fuel_mois, pcnt_one_thsd_hour_fuel_mois, pcnt_live_fuel_mois, pcnt_duff_fuel_mois, heat_rel, heat_rel_unt_meas_code, emis_redc_technique_code, event_emis_proc_cmnt from cers_event_emis_proc where event_loc_id = ? ", $eventLoc.event_loc_id))
+                <cer:EventEmissionsProcess>
+                    <cer:SourceClassificationCode>$eep.src_class_code</cer:SourceClassificationCode>
+#if($eep.fuel_config_code)
+                    <cer:FuelConfigurationCode>$eep.fuel_config_code</cer:FuelConfigurationCode>
+#end
+#if($eep.fuel_loading)
+                    <cer:FuelLoading>$eep.fuel_loading</cer:FuelLoading>
+#end
+#if($eep.fuel_loading_unt_meas_code)
+                    <cer:FuelLoadingUnitofMeasureCode>$eep.fuel_loading_unt_meas_code</cer:FuelLoadingUnitofMeasureCode>
+#end
+#if($eep.amt_fuel_cons)
+                    <cer:AmountofFuelConsumed>$eep.amt_fuel_cons</cer:AmountofFuelConsumed>
+#end
+#if($eep.amt_fuel_cons_unt_meas_code)
+                    <cer:AmountofFuelConsumedUnitofMeasureCode>$eep.amt_fuel_cons_unt_meas_code</cer:AmountofFuelConsumedUnitofMeasureCode>
+#end
+#if($eep.pcnt_ten_hour_fuel_mois)
+                    <cer:PercentTenHourFuelMoisture>$eep.pcnt_ten_hour_fuel_mois</cer:PercentTenHourFuelMoisture>
+#end
+#if($eep.pcnt_one_thsd_hour_fuel_mois)
+                    <cer:PercentOneThousandHourFuelMoisture>$eep.pcnt_one_thsd_hour_fuel_mois</cer:PercentOneThousandHourFuelMoisture>
+#end
+#if($eep.pcnt_live_fuel_mois)
+                    <cer:PercentLiveFuelMoisture>$eep.pcnt_live_fuel_mois</cer:PercentLiveFuelMoisture>
+#end
+#if($eep.pcnt_duff_fuel_mois)
+                    <cer:PercentDuffFuelMoisture>$eep.pcnt_duff_fuel_mois</cer:PercentDuffFuelMoisture>
+#end
+#if($eep.heat_rel)
+                    <cer:HeatRelease>$eep.heat_rel</cer:HeatRelease>
+#end
+#if($eep.heat_rel_unt_meas_code)
+                    <cer:HeatReleaseUnitofMeasureCode>$eep.heat_rel_unt_meas_code</cer:HeatReleaseUnitofMeasureCode>
+#end
+#if($eep.emis_redc_technique_code)
+                    <cer:EmissionReductionTechniqueCode>$eep.emis_redc_technique_code</cer:EmissionReductionTechniqueCode>
+#end
+#if($eep.event_emis_proc_cmnt)
+                    <cer:EventEmissionsProcessComment>$eep.event_emis_proc_cmnt</
+#end
+#foreach($eepE in $helper.getData("select event_emis_emis_id, event_emis_proc_id, polt_code, total_emis, emis_unt_meas_code, emis_fac, emis_fac_num_unt_meas_code, emis_fac_den_unt_meas_code, emis_fac_form_code, emis_fac_txt, emis_calc_meth_code, emis_fac_ref_txt, algor_form_txt, algor_cmnt, calc_meth_acc_asmt_code, emis_de_minimis_stat, emis_cmnt, co_2e, co_2e_unt_meas_code, co_2_conv_fac, co_2_conv_fac_src from cers_event_emis_emis where event_emis_proc_id = ? ", $eep.event_emis_proc_id))
+                    <cer:EventEmissionsProcessEmissions>
+                        <cer:PollutantCode>$eepE.polt_code</cer:PollutantCode>
+                        <cer:TotalEmissions>$eepE.total_emis</cer:TotalEmissions>
+#if($eepE.emis_unt_meas_code)
+                        <cer:EmissionsUnitofMeasureCode>$eepE.emis_unt_meas_code</cer:EmissionsUnitofMeasureCode>
+#end
+#if($eepE.emis_fac)
+                        <cer:EmissionFactor>$eepE.emis_fac</cer:EmissionFactor>
+#end
+#if($eepE.emis_fac_num_unt_meas_code)
+                        <cer:EmissionFactorNumeratorUnitofMeasureCode>$eepE.emis_fac_num_unt_meas_code</cer:EmissionFactorNumeratorUnitofMeasureCode>
+#end
+#if($eepE.emis_fac_den_unt_meas_code)
+                        <cer:EmissionFactorDenominatorUnitofMeasureCode>$eepE.emis_fac_den_unt_meas_code</cer:EmissionFactorDenominatorUnitofMeasureCode>
+#end
+#if($eepE.emis_fac_form_code)
+                        <cer:EmissionFactorFormulaCode>$eepE.emis_fac_form_code</cer:EmissionFactorFormulaCode>
+#end
+#if($eepE.emis_fac_txt)
+                        <cer:EmissionFactorText>$eepE.emis_fac_txt</cer:EmissionFactorText>
+#end
+#if($eepE.emis_calc_meth_code)
+                        <cer:EmissionCalculationMethodCode>$eepE.emis_calc_meth_code</cer:EmissionCalculationMethodCode>
+#end
+#if($eepE.emis_fac_ref_txt)
+                        <cer:EmissionFactorReferenceText>$eepE.emis_fac_ref_txt</cer:EmissionFactorReferenceText>
+#end
+#if($eepE.algor_form_txt)
+                        <cer:AlgorithmFormulaText>$eepE.algor_form_txt</cer:AlgorithmFormulaText>
+#end
+#if($eepE.algor_cmnt)
+                        <cer:AlgorithmComment>$eepE.algor_cmnt</cer:AlgorithmComment>
+#end
+#if($eepE.calc_meth_acc_asmt_code)
+                        <cer:CalculationMethodAccuracyAssessmentCode>$eepE.calc_meth_acc_asmt_code</cer:CalculationMethodAccuracyAssessmentCode>
+#end
+#if($eepE.emis_de_minimis_stat)
+                        <cer:EmissionsDeMinimisStatus>$eepE.emis_de_minimis_stat</cer:EmissionsDeMinimisStatus>
+#end
+#if($eepE.emis_cmnt)
+                        <cer:EmissionsComment>$eepE.emis_cmnt</cer:EmissionsComment>
+#end
+#if($eepE.co_2e)
+                        <cer:CO2Equivalent>
+                            <cer:CO2e>$eepE.co_2e</cer:CO2e>
+#if($eepE.co_2e_unt_meas_code)
+                            <cer:CO2eUnitofMeasureCode>$eepE.co_2e_unt_meas_code</cer:CO2eUnitofMeasureCode>
+#end
+#if($eepE.co_2_conv_fac)
+                            <cer:CO2ConversionFactor>$eepE.co_2_conv_fac</cer:CO2ConversionFactor>
+#end
+#if($eepE.co_2_conv_fac_src)
+                            <cer:CO2ConversionFactorSource>$eepE.co_2_conv_fac_src</cer:CO2ConversionFactorSource>
+#end
+                        </cer:CO2Equivalent>
+#end##if($eepE.co_2e)
+                    </cer:EventEmissionsProcessEmissions>
+#end##foreach($eepE
+                </cer:EventEmissionsProcess>
+#end##foreach($eep
+            </cer:EventLocation>
+#end##foreach($eventLoc
+        </cer:EventReportingPeriod>
+#end##foreach($evenRptPrd
+    </cer:Event>
+#end##foreach($event 
+#parse("eis_foot.vm")

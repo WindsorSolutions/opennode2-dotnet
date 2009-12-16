@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="SharedBuildLogic" basedir="." default="build.jar">
-    <!-- properties & entities for all Node projects -->
-    <property file="build.properties" />
     <property name="resource.base.dir" value="${basedir}/../Resources" />
+    <!-- properties specific to this project -->
+    <property file="build.properties" />
+    <!-- load the props shared across all projects -->
     <property file="${resource.base.dir}/ant/shared.build.properties" />
+    <!-- load the version numbers -->
+    <property file="${resource.base.dir}/ant/major.version.properties" />
+    <property file="${resource.base.dir}/ant/minor.version.properties" />
+    <property file="${resource.base.dir}/ant/build.number.properties" />
+
     <property name="resources.local" value="${basedir}/resources" />
     <property name="env.dir.local" value="${basedir}/env/${env.dir}" />
     <property name="log4j.properties" value="${env.dir.local}/log4j.properties" />
@@ -13,7 +19,9 @@
     <property name="src" value="${basedir}/src" />
     <property name="test" value="${basedir}/test" />
     <property name="build" value="${basedir}/build" />
-    <property name="dist" value="${resource.base.dir}/dist" />
+    <property name="full.version" value="${major.version}.${minor.version}" />
+    <property name="dist.root" value="${resource.base.dir}/dist" />
+    <property name="dist.target" value="${dist.root}/${env.dir}/${full.version}" />
     <property name="web.dir" value="${appserver.deploy.dir}/${jarName}" />
     <property name="web.inf" value="${build}/WEB-INF" />
     <property name="web.inf.lib" value="${web.inf}/lib" />
@@ -23,7 +31,7 @@
     <fileset id="runtime.jars" includes="*.jar" dir="${runtime.jar.location}" />
     <fileset id="buildtime.jars" includes="*.jar" dir="${buildtime.jar.location}" />
     <fileset id="junit.jar" file="${resource.base.dir}/lib/Junit3/junit.jar" />
-    <fileset id="project.jars" dir="${dist}/${env.dir}" includes="${project.jar.dependencies}" />
+    <fileset id="project.jars" dir="${dist.target}" includes="${project.jar.dependencies}" />
 
     <path id="build.class.path">
         <fileset refid="project.jars" />
@@ -40,6 +48,9 @@
         <echo message="Target appserver: ${appserver}" />
         <echo message="update.major.version: ${update.major.version}" />
         <echo message="update.minor.version: ${update.minor.version}" />
+        <echo message="last major.version: ${major.version}" />
+        <echo message="last minor.version: ${minor.version}" />
+        <echo message="last build.number: ${build.number}" />
         <echo message="Use verbose output? ${verbosity}" />
         <antcall target="setServerAndLoggingType" inheritall="true" />
     </target>
@@ -77,12 +88,12 @@
     </target>
 
     <target name="clean">
-        <echo message="Cleaning ${build} and ${dist}/${env.dir}" />
+        <echo message="Cleaning ${build} and ${dist.target}" />
         <mkdir dir="${build}" />
-        <mkdir dir="${dist}/${env.dir}" />
+        <mkdir dir="${dist.target}" />
         <delete includeemptydirs="true">
             <fileset dir="${build}" includes="**/*" />
-            <fileset dir="${dist}/${env.dir}" includes="${jarName}.${fileExt}, ${jarName}.${fileExt}.asc, ${jarName}.${fileExt}.MD5" />
+            <fileset dir="${dist.target}" includes="${jarName}.${fileExt}, ${jarName}.${fileExt}.asc, ${jarName}.${fileExt}.MD5" />
         </delete>
     </target>
 
@@ -98,17 +109,13 @@
         <echo message="Project .jar dependencies: ${project.jar.dependencies}" />
 
         <mkdir dir="${build}" />
-        <mkdir dir="${dist}" />
+        <mkdir dir="${dist.root}" />
         <available file="${test}" type="dir" property="hasTests" />
 
         <copy file="${manifest.src}" todir="${java.io.tmpdir}" overwrite="yes" verbose="${verbosity}" preservelastmodified="false" />
         <property name="manifest.file" value="${java.io.tmpdir}/MANIFEST.MF" />
-        
-        <!-- load the version numbers -->
-        <property file="${resource.base.dir}/ant/major.version.properties" />
-        <property file="${resource.base.dir}/ant/minor.version.properties" />
-        <property file="${resource.base.dir}/ant/build.number.properties" />
-        
+
+
         <tstamp>
             <format property="build.time" pattern="dd MMMM, yyyy hh:mm z" timezone="America/Los_Angeles" />
         </tstamp>
@@ -176,9 +183,9 @@
     </target>
 
     <target depends="compile.src, bundle.libs" name="build.jar" description="Makes a production-worthy jar file">
-        <echo message="Making ${jarName}.${fileExt} in ${dist}/${env.dir}" />
-        <mkdir dir="${dist}/${env.dir}" />
-        <property name="outfile" value="${dist}/${env.dir}/${jarName}.${fileExt}" />
+        <echo message="Making ${jarName}.${fileExt} in ${dist.target}" />
+        <mkdir dir="${dist.target}" />
+        <property name="outfile" value="${dist.target}/${jarName}.${fileExt}" />
         <jar destfile="${outfile}" manifest="${manifest.file}">
             <fileset excludes="**/Test*.class" dir="${build}" />
         </jar>
@@ -193,9 +200,9 @@
     </target>
 
     <target depends="compile.test, bundle.libs" name="build.test.jar" description="Makes a jar file that includes unit tests">
-        <echo message="Making ${jarName}.${fileExt} in ${dist}/${env.dir}" />
-        <mkdir dir="${dist}/${env.dir}" />
-        <property name="outfile" value="${dist}/${env.dir}/${jarName}.${fileExt}" />
+        <echo message="Making ${jarName}.${fileExt} in ${dist.target}" />
+        <mkdir dir="${dist.target}" />
+        <property name="outfile" value="${dist.target}/${jarName}.${fileExt}" />
         <jar destfile="${outfile}" manifest="${manifest.file}">
             <fileset dir="${build}" />
         </jar>
@@ -211,7 +218,7 @@
         <echo message="Deleting logfile ${jarName}.log from ${resource.base.dir}/home/log" />
         <delete file="${resource.base.dir}/home/log/${jarName}.log" />
         <echo message="Deploying new ${jarName}.${fileExt}" />
-        <copy file="${dist}/${env.dir}/${jarName}.${fileExt}" toDir="${appserver.deploy.dir}" verbose="${verbosity}" preservelastmodified="false" />
+        <copy file="${dist.target}/${jarName}.${fileExt}" toDir="${appserver.deploy.dir}" verbose="${verbosity}" preservelastmodified="false" />
     </target>
 
     <target name="build.test.deploy" depends="build.test.jar" if="isWarOutput" description="Calls build.test.jar and deploys to appserver">
@@ -222,7 +229,7 @@
         <echo message="Deleting logfile ${jarName}.log from ${resource.base.dir}/home/log" />
         <delete file="${resource.base.dir}/home/log/${jarName}.log" />
         <echo message="Deploying new ${jarName}.${fileExt}" />
-        <copy file="${dist}/${env.dir}/${jarName}.${fileExt}" toDir="${appserver.deploy.dir}" verbose="${verbosity}" preservelastmodified="false" />
+        <copy file="${dist.target}/${jarName}.${fileExt}" toDir="${appserver.deploy.dir}" verbose="${verbosity}" preservelastmodified="false" />
     </target>
 
     <target name="hot.deploy" depends="init" if="isWarOutput" description="Deploy application jsps and static files only">
