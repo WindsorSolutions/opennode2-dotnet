@@ -12,24 +12,18 @@
     <property name="version.properties.comment" value="CALLED BY project.build.xml - DO NOT EDIT MANUALLY! (unless you know what you're doing :-)" />
 
     <property file="shared.build.properties" />
+    <!--
     <property file="major.version.properties" />
     <property file="minor.version.properties" />
     <property file="build.number.properties" />
-
+    -->
+    
     <target name="get.env" description="displays build configuration options">
-        <!-- load the version numbers -->
-        <property file="${resource.base.dir}/ant/major.version.properties" />
-        <property file="${resource.base.dir}/ant/minor.version.properties" />
-        <property file="${resource.base.dir}/ant/build.number.properties" />
-
         <echo message="Build environment: ${env.dir}" />
         <echo message="Target JDK for compilation: ${jdk.version}" />
         <echo message="Target appserver: ${appserver}" />
         <echo message="update.major.version: ${update.major.version}" />
         <echo message="update.minor.version: ${update.minor.version}" />
-        <echo message="last major.version: ${major.version}" />
-        <echo message="last minor.version: ${minor.version}" />
-        <echo message="last build.number: ${build.number}" />
         <echo message="Use verbose output? ${verbosity}" />
     </target>
 
@@ -160,8 +154,10 @@
     </target>
 
     <target name="copyCommonAndLogicJars" if="copyCommonAndLogicJars">
-        <copy file="../dist/${env.dir}/nodeCommon.jar" todir="../../Wnos_Plugin/resources/lib-build" verbose="${verbosity}" />
-        <copy file="../dist/${env.dir}/nodeLogic.jar" todir="../../Wnos_Plugin/resources/lib-build" verbose="${verbosity}" />
+        <property file="major.version.properties" />
+        <property file="minor.version.properties" />
+        <copy file="../dist/${env.dir}/${major.version}.${minor.version}/nodeCommon.jar" todir="../../Wnos_Plugin/resources/lib-build" verbose="${verbosity}" />
+        <copy file="../dist/${env.dir}/${major.version}.${minor.version}/nodeLogic.jar" todir="../../Wnos_Plugin/resources/lib-build" verbose="${verbosity}" />
     </target>
 
 </project>

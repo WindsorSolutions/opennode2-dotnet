@@ -1,4 +1,18 @@
 ================================================================================
+OpenNode2 v1.22 for Java - Release Notes                             2009-12-17
+================================================================================
+A quick bug-fix release.
+
+FIXED/RESOLVED
+========================================
+  
+* The BEACHES plugin now handles <BeachSwimSeasonLengthDetail> elements, and the 
+  DDL files have been corrected.
+  
+* A bugs in the build scripts that prevented nodeCommon.jar and nodeLogic.jar
+  from properly updating in the Wnos_Plugin project has been addressed.
+    
+================================================================================
 OpenNode2 v1.21 for Java - Release Notes                             2009-12-16
 ================================================================================
 This source release is accompanied by a binary release of the new EIS v.1.2, 
@@ -21,7 +35,7 @@ FIXED/RESOLVED
 
 * Both endpoints can now accept self-signed SSL certificates without adding them
   to the local certificate store, and can accept expired certs as well. This
-  "feature" is based on user  demand for easy configuration in development and 
+  "feature" is based on user demand for easy configuration in development and 
   test environments. 
   
   To revert to the default settings requires modifying HTTP transport settings 
