@@ -238,13 +238,22 @@ $helper.startStopWatch()
 #end
             </BeachExtentDetail>
 #end
-#if(($beach.swimseasonlength)||($beach.swimseasonunitofmeasure))
+#if($beach.swimseasonlength||$beach.swimseasonunitofmeasure || $beach.swimseasonstartdate || $beach.swimseasonenddate)
+#if($beach.swimseasonlength||$beach.swimseasonunitofmeasure)
             <BeachSwimSeasonLengthDetail>
 #if($beach.swimseasonlength)
                 <SwimSeasonLengthMeasure>$beach.swimseasonlength</SwimSeasonLengthMeasure>
 #end
 #if($beach.swimseasonunitofmeasure)
                 <SwimSeasonUnitOfMeasureCode>$beach.swimseasonunitofmeasure</SwimSeasonUnitOfMeasureCode>
+#end
+#elseif($beach.swimseasonstartdate || $beach.swimseasonenddate)
+#if($beach.swimseasonstartdate)
+                <SwimSeasonStartDate>$beach.swimseasonstartdate</SwimSeasonStartDate>
+#end
+#if($beach.swimseasonenddate)
+                <SwimSeasonEndDate>$beach.swimseasonenddate</SwimSeasonEndDate>
+#end
 #end
             </BeachSwimSeasonLengthDetail>
 #end

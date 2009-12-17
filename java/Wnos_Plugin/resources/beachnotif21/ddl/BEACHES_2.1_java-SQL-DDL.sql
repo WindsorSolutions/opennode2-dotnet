@@ -1,693 +1,399 @@
---------------------------------------------------------
---  File created - Friday-October-02-2009   
---------------------------------------------------------
---------------------------------------------------------
---  DDL for Sequence NOTIF_ACTIVITYINDICATOR_ID_SEQ
---------------------------------------------------------
- 
-   --CREATE SEQUENCE  "NOTIF_ACTIVITYINDICATOR_ID_SEQ"  MINVALUE 0 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH 162 NOCACHE  ORDER  NOCYCLE ;
---------------------------------------------------------
---  DDL for Sequence NOTIF_ACTIVITYREASON_ID_SEQ
---------------------------------------------------------
- 
-   --CREATE SEQUENCE  "NOTIF_ACTIVITYREASON_ID_SEQ"  MINVALUE 0 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH 162 NOCACHE  ORDER  NOCYCLE ;
---------------------------------------------------------
---  DDL for Sequence NOTIF_ACTIVITYSOURCE_ID_SEQ
---------------------------------------------------------
- 
-   --CREATE SEQUENCE  "NOTIF_ACTIVITYSOURCE_ID_SEQ"  MINVALUE 0 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH 162 NOCACHE  ORDER  NOCYCLE ;
---------------------------------------------------------
---  DDL for Sequence NOTIF_BEACHACTIVITY_ID_SEQ
---------------------------------------------------------
- 
-   --CREATE SEQUENCE  "NOTIF_BEACHACTIVITY_ID_SEQ"  MINVALUE 0 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH 162 NOCACHE  ORDER  NOCYCLE ;
---------------------------------------------------------
---  DDL for Sequence NOTIF_BEACHPOLLUTION_ID_SEQ
---------------------------------------------------------
- 
-   --CREATE SEQUENCE  "NOTIF_BEACHPOLLUTION_ID_SEQ"  MINVALUE 0 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH 1231 NOCACHE  ORDER  NOCYCLE ;
---------------------------------------------------------
---  DDL for Sequence NOTIF_BEACHPROCEDURE_ID_SEQ
---------------------------------------------------------
- 
-   --CREATE SEQUENCE  "NOTIF_BEACHPROCEDURE_ID_SEQ"  MINVALUE 0 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH 1231 NOCACHE  ORDER  NOCYCLE ;
---------------------------------------------------------
---  DDL for Sequence NOTIF_BEACH_ID_SEQ
---------------------------------------------------------
- 
-   --CREATE SEQUENCE  "NOTIF_BEACH_ID_SEQ"  MINVALUE 0 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH 124 NOCACHE  ORDER  NOCYCLE ;
---------------------------------------------------------
---  DDL for Sequence NOTIF_ORGANIZATION_ID_SEQ
---------------------------------------------------------
- 
-   --CREATE SEQUENCE  "NOTIF_ORGANIZATION_ID_SEQ"  MINVALUE 0 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH 29 NOCACHE  ORDER  NOCYCLE ;
---------------------------------------------------------
---  DDL for Sequence NOTIF_ORGBEACHROLE_ID_SEQ
---------------------------------------------------------
- 
-   --CREATE SEQUENCE  "NOTIF_ORGBEACHROLE_ID_SEQ"  MINVALUE 0 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH 1149 NOCACHE  ORDER  NOCYCLE ;
---------------------------------------------------------
---  DDL for Sequence NOTIF_ORGELECTRONICADDR_ID_SEQ
---------------------------------------------------------
- 
-   --CREATE SEQUENCE  "NOTIF_ORGELECTRONICADDR_ID_SEQ"  MINVALUE 0 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH 29 NOCACHE  ORDER  NOCYCLE ;
---------------------------------------------------------
---  DDL for Sequence NOTIF_ORGMAILINGADDR_ID_SEQ
---------------------------------------------------------
- 
-   --CREATE SEQUENCE  "NOTIF_ORGMAILINGADDR_ID_SEQ"  MINVALUE 0 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH 29 NOCACHE  ORDER  NOCYCLE ;
---------------------------------------------------------
---  DDL for Sequence NOTIF_ORGTELEPHONE_ID_SEQ
---------------------------------------------------------
- 
-   --CREATE SEQUENCE  "NOTIF_ORGTELEPHONE_ID_SEQ"  MINVALUE 0 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH 29 NOCACHE  ORDER  NOCYCLE ;
---------------------------------------------------------
---  DDL for Sequence NOTIF_PERSONBEACHROLE_ID_SEQ
---------------------------------------------------------
- 
-   --CREATE SEQUENCE  "NOTIF_PERSONBEACHROLE_ID_SEQ"  MINVALUE 0 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH 1149 NOCACHE  ORDER  NOCYCLE ;
---------------------------------------------------------
---  DDL for Sequence NOTIF_PERSONELECTRADDR_ID_SEQ
---------------------------------------------------------
- 
-   --CREATE SEQUENCE  "NOTIF_PERSONELECTRADDR_ID_SEQ"  MINVALUE 0 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH 29 NOCACHE  ORDER  NOCYCLE ;
---------------------------------------------------------
---  DDL for Sequence NOTIF_PERSONMAILINGADDR_ID_SEQ
---------------------------------------------------------
- 
-   --CREATE SEQUENCE  "NOTIF_PERSONMAILINGADDR_ID_SEQ"  MINVALUE 0 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH 29 NOCACHE  ORDER  NOCYCLE ;
---------------------------------------------------------
---  DDL for Sequence NOTIF_PERSONTELEPHONE_ID_SEQ
---------------------------------------------------------
- 
-   --CREATE SEQUENCE  "NOTIF_PERSONTELEPHONE_ID_SEQ"  MINVALUE 0 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH 29 NOCACHE  ORDER  NOCYCLE ;
---------------------------------------------------------
---  DDL for Sequence NOTIF_PERSON_ID_SEQ
---------------------------------------------------------
- 
-   --CREATE SEQUENCE  "NOTIF_PERSON_ID_SEQ"  MINVALUE 0 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH 29 NOCACHE  ORDER  NOCYCLE ;
---------------------------------------------------------
---  DDL for Sequence NOTIF_YEARCOMPLETION_ID_SEQ
---------------------------------------------------------
- 
-   --CREATE SEQUENCE  "NOTIF_YEARCOMPLETION_ID_SEQ"  MINVALUE 0 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH 31 NOCACHE  ORDER  NOCYCLE ;
---------------------------------------------------------
---  DDL for Table NOTIF_ACTIVITYINDICATOR
---------------------------------------------------------
+/* This script creates the staging tables for the Beach Notification v2.1 data flow for the Java OpenNode2 */
 
-IF  EXISTS (SELECT * 
-			  FROM sys.objects 
-			 WHERE object_id = OBJECT_ID(N'NOTIF_ACTIVITYINDICATOR') 
-			   AND TYPE IN (N'U'))
+/* SQL Server */
 
-DROP TABLE NOTIF_ACTIVITYINDICATOR
-GO
- 
-  CREATE TABLE "NOTIF_ACTIVITYINDICATOR" 
-   (	"ID" int identity(1,1) not null, 
-	"ACTIVITY_ID" int, 
-	"INDICATORTYPE" VARCHAR(60), 
-	"INDICATORDESCRIPTION" VARCHAR(255)
-   ) ;
---------------------------------------------------------
---  DDL for Table NOTIF_ACTIVITYREASON
---------------------------------------------------------
-IF  EXISTS (SELECT * 
-			  FROM sys.objects 
-			 WHERE object_id = OBJECT_ID(N'NOTIF_ACTIVITYREASON') 
-			   AND TYPE IN (N'U'))
+CREATE TABLE NOTIF_ACTIVITYINDICATOR ( 
+	ID                  	INTEGER NOT NULL IDENTITY (1, 1),
+	ACTIVITY_ID         	INTEGER NOT NULL,
+	INDICATORTYPE       	VARCHAR(60) NOT NULL,
+	INDICATORDESCRIPTION	VARCHAR(255) NULL 
+	)
 
-DROP TABLE NOTIF_ACTIVITYREASON
-GO
- 
-  CREATE TABLE "NOTIF_ACTIVITYREASON" 
-   (	"ID" int identity(1,1) not null, 
-	"ACTIVITY_ID" int, 
-	"REASONTYPE" varchar(60), 
-	"REASONDESCRIPTION" varchar(255)
-   ) ;
---------------------------------------------------------
---  DDL for Table NOTIF_ACTIVITYSOURCE
---------------------------------------------------------
-IF  EXISTS (SELECT * 
-			  FROM sys.objects 
-			 WHERE object_id = OBJECT_ID(N'NOTIF_ACTIVITYSOURCE') 
-			   AND TYPE IN (N'U'))
+CREATE TABLE NOTIF_ACTIVITYREASON ( 
+	ID               	INTEGER NOT NULL IDENTITY (1, 1),
+	ACTIVITY_ID      	INTEGER NOT NULL,
+	REASONTYPE       	VARCHAR(60) NOT NULL,
+	REASONDESCRIPTION	VARCHAR(255) NULL 
+	)
 
-DROP TABLE NOTIF_ACTIVITYSOURCE
-GO
- 
-  CREATE TABLE "NOTIF_ACTIVITYSOURCE" 
-   (	"ID" int identity(1,1) not null, 
-	"ACTIVITY_ID" int, 
-	"SOURCETYPE" varchar(60), 
-	"SOURCEDESCRIPTION" varchar(255)
-   ) ;
---------------------------------------------------------
---  DDL for Table NOTIF_BEACH
---------------------------------------------------------
-IF  EXISTS (SELECT * 
-			  FROM sys.objects 
-			 WHERE object_id = OBJECT_ID(N'NOTIF_BEACH') 
-			   AND TYPE IN (N'U'))
+CREATE TABLE NOTIF_ACTIVITYSOURCE ( 
+	ID               	INTEGER NOT NULL IDENTITY (1, 1),
+	ACTIVITY_ID      	INTEGER NOT NULL,
+	SOURCETYPE       	VARCHAR(60) NOT NULL,
+	SOURCEDESCRIPTION	VARCHAR(255) NULL 
+	)
 
-DROP TABLE NOTIF_BEACH
-GO
- 
-  CREATE TABLE "NOTIF_BEACH" 
-   (	"ID" int identity(1,1) not null, 
-	"BEACHIDENTIFIER" varchar(8), 
-	"BEACHNAME" varchar(60), 
-	"BEACHDESCRIPTION" varchar(255), 
-	"BEACHCOMMENT" varchar(255), 
-	"BEACHSTATECODE" CHAR(2), 
-	"BEACHFIPSCOUNTYCODE" varchar(5), 
-	"BEACHACCESSTYPE" varchar(12), 
-	"BEACHACCESSCOMMENT" varchar(255), 
-	"EFFECTIVEYEAR" varchar(4), 
-	"EXTENTLENGTHMEASURE" int, 
-	"EXTENTUNITOFMEASURE" varchar(12), 
-	"SWIMSEASONSTARTDATE" varchar(25), 
-	"SWIMSEASONENDDATE" varchar(25), 
-	"SWIMSEASONLENGTH" int, 
-	"SWIMSEASONUNITOFMEASURE" varchar(12), 
-	"SWIMSEASONFREQUENCYMEASURE" int, 
-	"OFFSEASONFREQUENCYMEASURE" int, 
-	"MONITORINGFREQUNITOFMEASURE" varchar(255), 
-	"MONITOREDIRREGULARLY" varchar(5), 
-	"MONITOREDIRREGULARLYCOMMENT" varchar(255), 
-	"BEACHTIERRANKING" varchar(1), 
-	"BEACHACTBEACHINDICATOR" varchar(5), 
-	"NOPOLLUTIONSOURCES" varchar(5), 
-	"POLLUTIONSOURCESUNINVESTIGATED" varchar(5), 
-	"WATERBODYNAMECODE" varchar(25), 
-	"WATERBODYTYPECODE" varchar(25), 
-	"STARTLATMEASURE" varchar(25), 
-	"STARTLONGMEASURE" varchar(25), 
-	"ENDLATMEASURE" varchar(25), 
-	"ENDLONGMEASURE" varchar(25), 
-	"SOURCEMAPSCALE" varchar(25), 
-	"HORIZCOLLMETHOD" varchar(25), 
-	"HORIZCOLLDATUM" varchar(25)
-   ) ;
---------------------------------------------------------
---  DDL for Table NOTIF_BEACHACTIVITY
---------------------------------------------------------
-IF  EXISTS (SELECT * 
-			  FROM sys.objects 
-			 WHERE object_id = OBJECT_ID(N'NOTIF_BEACHACTIVITY') 
-			   AND TYPE IN (N'U'))
+CREATE TABLE NOTIF_BEACH ( 
+	ID                            	INTEGER NOT NULL IDENTITY (1, 1),
+	BEACHIDENTIFIER               	VARCHAR(8) NOT NULL,
+	BEACHNAME                     	VARCHAR(60) NOT NULL,
+	BEACHDESCRIPTION              	VARCHAR(255) NOT NULL,
+	BEACHCOMMENT                  	VARCHAR(255) NULL,
+	BEACHSTATECODE                	CHAR(2) NOT NULL,
+	BEACHFIPSCOUNTYCODE           	VARCHAR(5) NOT NULL,
+	BEACHACCESSTYPE               	VARCHAR(12) NOT NULL,
+	BEACHACCESSCOMMENT            	VARCHAR(255) NULL,
+	EFFECTIVEYEAR                 	VARCHAR(4) NOT NULL,
+	EXTENTLENGTHMEASURE           	INTEGER NOT NULL,
+	EXTENTUNITOFMEASURE           	VARCHAR(12) NOT NULL,
+	SWIMSEASONSTARTDATE           	VARCHAR(25) NULL,
+	SWIMSEASONENDDATE             	VARCHAR(25) NULL,
+	SWIMSEASONLENGTH              	INTEGER NULL,
+	SWIMSEASONUNITOFMEASURE       	VARCHAR(12) NULL,
+	SWIMSEASONFREQUENCYMEASURE    	INTEGER NOT NULL,
+	OFFSEASONFREQUENCYMEASURE     	INTEGER NOT NULL,
+	MONITORINGFREQUNITOFMEASURE   	VARCHAR(255) NOT NULL,
+	MONITOREDIRREGULARLY          	VARCHAR(5) NOT NULL,
+	MONITOREDIRREGULARLYCOMMENT   	VARCHAR(255) NULL,
+	BEACHTIERRANKING              	VARCHAR(1) NOT NULL,
+	BEACHACTBEACHINDICATOR        	VARCHAR(5) NOT NULL,
+	NOPOLLUTIONSOURCES            	VARCHAR(5) NULL,
+	POLLUTIONSOURCESUNINVESTIGATED	VARCHAR(5) NULL,
+	WATERBODYNAMECODE             	VARCHAR(25) NULL,
+	WATERBODYTYPECODE             	VARCHAR(25) NULL,
+	STARTLATMEASURE               	VARCHAR(25) NULL,
+	STARTLONGMEASURE              	VARCHAR(25) NULL,
+	ENDLATMEASURE                 	VARCHAR(25) NULL,
+	ENDLONGMEASURE                	VARCHAR(25) NULL,
+	SOURCEMAPSCALE                	VARCHAR(25) NULL,
+	HORIZCOLLMETHOD               	VARCHAR(25) NULL,
+	HORIZCOLLDATUM                	VARCHAR(25) NULL 
+	)
 
-DROP TABLE NOTIF_BEACHACTIVITY
-GO
- 
-  CREATE TABLE "NOTIF_BEACHACTIVITY" 
-   (	"ID" int identity(1,1) not null, 
-	"BEACH_ID" int, 
-	"ACTIVITYTYPECODE" varchar(12), 
-	"ACTIVITYNAME" varchar(60), 
-	"ACTUALSTARTDATE" varchar(25), 
-	"ACTUALSTOPDATE" varchar(25), 
-	"MONITORINGSTATIONIDENTIFIER" varchar(65), 
-	"ACTIVITYDESCRIPTION" varchar(255), 
-	"ACTIVITYCOMMENT" varchar(255), 
-	"EXTENTSTARTMEASURE" int, 
-	"EXTENTLENGTHMEASURE" int, 
-	"EXTENTUNITOFMEASURE" varchar(255), 
-	"SENTTOEPA" CHAR(1)
-   ) ;
---------------------------------------------------------
---  DDL for Table NOTIF_BEACHACTIVITYDATES
---------------------------------------------------------
-IF  EXISTS (SELECT * 
-			  FROM sys.objects 
-			 WHERE object_id = OBJECT_ID(N'NOTIF_BEACHACTIVITYDATES') 
-			   AND TYPE IN (N'U'))
+CREATE TABLE NOTIF_BEACHACTIVITY ( 
+	ID                         	INTEGER NOT NULL IDENTITY (1, 1),
+	BEACH_ID                   	INTEGER NOT NULL,
+	ACTIVITYTYPECODE           	VARCHAR(12) NOT NULL,
+	ACTIVITYNAME               	VARCHAR(60) NOT NULL,
+	ACTUALSTARTDATE            	VARCHAR(25) NOT NULL,
+	ACTUALSTOPDATE             	VARCHAR(25) NOT NULL,
+	MONITORINGSTATIONIDENTIFIER	VARCHAR(65) NULL,
+	ACTIVITYDESCRIPTION        	VARCHAR(255) NULL,
+	ACTIVITYCOMMENT            	VARCHAR(255) NULL,
+	EXTENTSTARTMEASURE         	INTEGER NULL,
+	EXTENTLENGTHMEASURE        	INTEGER NULL,
+	EXTENTUNITOFMEASURE        	VARCHAR(255) NULL,
+	SENTTOEPA                  	CHAR(1) NULL 
+	)
 
-DROP TABLE NOTIF_BEACHACTIVITYDATES
-GO
- 
-  CREATE TABLE "NOTIF_BEACHACTIVITYDATES" 
-   (	"BEACH_ID" varchar(8), 
-	"STARTDATE" DATETIME, 
-	"ENDDATE" DATETIME
-   ) ;
---------------------------------------------------------
---  DDL for Table NOTIF_BEACHPOLLUTION
---------------------------------------------------------
-IF  EXISTS (SELECT * 
-			  FROM sys.objects 
-			 WHERE object_id = OBJECT_ID(N'NOTIF_BEACHPOLLUTION') 
-			   AND TYPE IN (N'U'))
+CREATE TABLE NOTIF_BEACHPOLLUTION ( 
+	ID                        	INTEGER NOT NULL IDENTITY (1, 1),
+	BEACH_ID                  	INTEGER NOT NULL,
+	POLLUTIONSOURCECODE       	VARCHAR(12) NOT NULL,
+	POLLUTIONSOURCEDESCRIPTION	VARCHAR(255) NULL 
+	)
 
-DROP TABLE NOTIF_BEACHPOLLUTION
-GO
- 
-  CREATE TABLE "NOTIF_BEACHPOLLUTION" 
-   (	"ID" int identity(1,1) not null, 
-	"BEACH_ID" int, 
-	"POLLUTIONSOURCECODE" varchar(12), 
-	"POLLUTIONSOURCEDESCRIPTION" varchar(255)
-   ) ;
---------------------------------------------------------
---  DDL for Table NOTIF_BEACHPROCEDURE
---------------------------------------------------------
-IF  EXISTS (SELECT * 
-			  FROM sys.objects 
-			 WHERE object_id = OBJECT_ID(N'NOTIF_BEACHPROCEDURE') 
-			   AND TYPE IN (N'U'))
+CREATE TABLE NOTIF_BEACHPROCEDURE ( 
+	ID                  	INTEGER NOT NULL IDENTITY (1, 1),
+	BEACH_ID            	INTEGER NOT NULL,
+	PROCEDUREIDENTIFIER 	VARCHAR(8) NOT NULL,
+	PROCEDURETYPECODE   	VARCHAR(12) NOT NULL,
+	PROCEDUREDESCRIPTION	VARCHAR(255) NOT NULL 
+	)
 
-DROP TABLE NOTIF_BEACHPROCEDURE
-GO
- 
-  CREATE TABLE "NOTIF_BEACHPROCEDURE" 
-   (	"ID" int identity(1,1) not null, 
-	"BEACH_ID" int, 
-	"PROCEDUREIDENTIFIER" varchar(8), 
-	"PROCEDURETYPECODE" varchar(12), 
-	"PROCEDUREDESCRIPTION" varchar(255)
-   ) ;
---------------------------------------------------------
---  DDL for Table NOTIF_ORGANIZATION
---------------------------------------------------------
-IF  EXISTS (SELECT * 
-			  FROM sys.objects 
-			 WHERE object_id = OBJECT_ID(N'NOTIF_ORGANIZATION') 
-			   AND TYPE IN (N'U'))
+CREATE TABLE NOTIF_ORGANIZATION ( 
+	ID                      	INTEGER NOT NULL IDENTITY (1, 1),
+	ORGANIZATIONIDENTIFIER  	VARCHAR(12) NOT NULL,
+	ORGANIZATIONTYPECODE    	VARCHAR(12) NOT NULL,
+	ORGANIZATIONNAME        	VARCHAR(60) NOT NULL,
+	ORGANIZATIONDESCRIPTION 	VARCHAR(255) NULL,
+	ORGANIZATIONABBREVIATION	VARCHAR(30) NULL 
+	)
 
-DROP TABLE NOTIF_ORGANIZATION
-GO
- 
-  CREATE TABLE "NOTIF_ORGANIZATION" 
-   (	"ID" int identity(1,1) not null, 
-	"ORGANIZATIONIDENTIFIER" varchar(12), 
-	"ORGANIZATIONTYPECODE" varchar(12), 
-	"ORGANIZATIONNAME" varchar(60), 
-	"ORGANIZATIONDESCRIPTION" varchar(255), 
-	"ORGANIZATIONABBREVIATION" varchar(30)
-   ) ;
---------------------------------------------------------
---  DDL for Table NOTIF_ORGANIZATIONBEACHROLE
---------------------------------------------------------
-IF  EXISTS (SELECT * 
-			  FROM sys.objects 
-			 WHERE object_id = OBJECT_ID(N'NOTIF_ORGANIZATIONBEACHROLE') 
-			   AND TYPE IN (N'U'))
+CREATE TABLE NOTIF_ORGANIZATIONBEACHROLE ( 
+	ID               	INTEGER NOT NULL IDENTITY (1, 1),
+	BEACH_ID         	INTEGER NOT NULL,
+	ORGANIZATION_ID  	INTEGER NOT NULL,
+	ROLETYPECODE     	VARCHAR(12) NOT NULL,
+	ROLEEFFECTIVEDATE	VARCHAR(25) NOT NULL,
+	ROLESTATUS       	VARCHAR(8) NOT NULL 
+	)
 
-DROP TABLE NOTIF_ORGANIZATIONBEACHROLE
-GO
- 
-  CREATE TABLE "NOTIF_ORGANIZATIONBEACHROLE" 
-   (	"ID" int identity(1,1) not null, 
-	"BEACH_ID" int, 
-	"ORGANIZATION_ID" int, 
-	"ROLETYPECODE" varchar(12), 
-	"ROLEEFFECTIVEDATE" varchar(25), 
-	"ROLESTATUS" varchar(8)
-   ) ;
---------------------------------------------------------
---  DDL for Table NOTIF_ORGANIZATIONMAILINGADDR
---------------------------------------------------------
-IF  EXISTS (SELECT * 
-			  FROM sys.objects 
-			 WHERE object_id = OBJECT_ID(N'NOTIF_ORGANIZATIONMAILINGADDR') 
-			   AND TYPE IN (N'U'))
+CREATE TABLE NOTIF_ORGANIZATIONMAILINGADDR ( 
+	ID                      	INTEGER NOT NULL IDENTITY (1, 1),
+	ORGANIZATION_ID         	INTEGER NOT NULL,
+	MAILINGADDRTYPECODE     	VARCHAR(12) NOT NULL,
+	MAILINGADDRLINE1        	VARCHAR(100) NOT NULL,
+	MAILINGADDRLINE2        	VARCHAR(100) NULL,
+	MAILINGADDRLINE3        	VARCHAR(100) NULL,
+	MAILINGADDRCITY         	VARCHAR(50) NOT NULL,
+	STATECODE               	CHAR(2) NOT NULL,
+	ZIPCODE                 	VARCHAR(12) NOT NULL,
+	MAILINGADDREFFECTIVEDATE	VARCHAR(25) NOT NULL,
+	MAILINGADDRSTATUS       	VARCHAR(8) NOT NULL 
+	)
 
-DROP TABLE NOTIF_ORGANIZATIONMAILINGADDR
-GO
- 
-  CREATE TABLE "NOTIF_ORGANIZATIONMAILINGADDR" 
-   (	"ID" int identity(1,1) not null, 
-	"ORGANIZATION_ID" int, 
-	"MAILINGADDRTYPECODE" varchar(12), 
-	"MAILINGADDRLINE1" varchar(100), 
-	"MAILINGADDRLINE2" varchar(100), 
-	"MAILINGADDRLINE3" varchar(100), 
-	"MAILINGADDRCITY" varchar(50), 
-	"STATECODE" CHAR(2), 
-	"ZIPCODE" varchar(12), 
-	"MAILINGADDREFFECTIVEDATE" varchar(25), 
-	"MAILINGADDRSTATUS" varchar(8)
-   ) ;
---------------------------------------------------------
---  DDL for Table NOTIF_ORGANIZATIONTELEPHONE
---------------------------------------------------------
-IF  EXISTS (SELECT * 
-			  FROM sys.objects 
-			 WHERE object_id = OBJECT_ID(N'NOTIF_ORGANIZATIONTELEPHONE') 
-			   AND TYPE IN (N'U'))
+CREATE TABLE NOTIF_ORGANIZATIONTELEPHONE ( 
+	ID                    	INTEGER NOT NULL IDENTITY (1, 1),
+	ORGANIZATION_ID       	INTEGER NOT NULL,
+	TELEPHONETYPECODE     	VARCHAR(12) NOT NULL,
+	TELEPHONEINTEGER       	VARCHAR(12) NOT NULL,
+	TELEPHONEEFFECTIVEDATE	VARCHAR(25) NOT NULL,
+	TELEPHONESTATUS       	VARCHAR(8) NOT NULL 
+	)
 
-DROP TABLE NOTIF_ORGANIZATIONTELEPHONE
-GO
- 
-  CREATE TABLE "NOTIF_ORGANIZATIONTELEPHONE" 
-   (	"ID" int identity(1,1) not null, 
-	"ORGANIZATION_ID" int, 
-	"TELEPHONETYPECODE" varchar(12), 
-	"TELEPHONEint" varchar(12), 
-	"TELEPHONEEFFECTIVEDATE" varchar(25), 
-	"TELEPHONESTATUS" varchar(8)
-   ) ;
---------------------------------------------------------
---  DDL for Table NOTIF_ORGELECTRONICADDR
---------------------------------------------------------
-IF  EXISTS (SELECT * 
-			  FROM sys.objects 
-			 WHERE object_id = OBJECT_ID(N'NOTIF_ORGELECTRONICADDR') 
-			   AND TYPE IN (N'U'))
+CREATE TABLE NOTIF_ORGELECTRONICADDR ( 
+	ID                    	INTEGER NOT NULL IDENTITY (1, 1),
+	ORGANIZATION_ID       	INTEGER NOT NULL,
+	ELECTRONICADDRTYPECODE	VARCHAR(12) NOT NULL,
+	ELECTRONICADDR        	VARCHAR(255) NOT NULL,
+	ELECTRONICADDREFFDATE 	VARCHAR(25) NOT NULL,
+	ELECTRONICADDRSTATUS  	VARCHAR(8) NOT NULL 
+	)
 
-DROP TABLE NOTIF_ORGELECTRONICADDR
-GO
- 
-  CREATE TABLE "NOTIF_ORGELECTRONICADDR" 
-   (	"ID" int identity(1,1) not null, 
-	"ORGANIZATION_ID" int, 
-	"ELECTRONICADDRTYPECODE" varchar(12), 
-	"ELECTRONICADDR" varchar(255), 
-	"ELECTRONICADDREFFDATE" varchar(25), 
-	"ELECTRONICADDRSTATUS" varchar(8)
-   ) ;
---------------------------------------------------------
---  DDL for Table NOTIF_PERSON
---------------------------------------------------------
-IF  EXISTS (SELECT * 
-			  FROM sys.objects 
-			 WHERE object_id = OBJECT_ID(N'NOTIF_PERSON') 
-			   AND TYPE IN (N'U'))
+CREATE TABLE NOTIF_PERSON ( 
+	ID              	INTEGER NOT NULL IDENTITY (1, 1),
+	ORGANIZATION_ID 	INTEGER NOT NULL,
+	PERSONIDENTIFIER	VARCHAR(12) NOT NULL,
+	PERSONSTATUS    	VARCHAR(8) NOT NULL,
+	FIRSTNAME       	VARCHAR(50) NOT NULL,
+	LASTNAME        	VARCHAR(50) NOT NULL,
+	MIDDLEINITIAL   	VARCHAR(2) NULL,
+	SUFFIX          	VARCHAR(5) NULL,
+	TITLE           	VARCHAR(60) NULL 
+	)
 
-DROP TABLE NOTIF_PERSON
-GO
- 
-  CREATE TABLE "NOTIF_PERSON" 
-   (	"ID" int identity(1,1) not null, 
-	"ORGANIZATION_ID" int, 
-	"PERSONIDENTIFIER" varchar(12), 
-	"PERSONSTATUS" varchar(8), 
-	"FIRSTNAME" varchar(50), 
-	"LASTNAME" varchar(50), 
-	"MIDDLEINITIAL" varchar(2), 
-	"SUFFIX" varchar(5), 
-	"TITLE" varchar(60)
-   ) ;
---------------------------------------------------------
---  DDL for Table NOTIF_PERSONBEACHROLE
---------------------------------------------------------
-IF  EXISTS (SELECT * 
-			  FROM sys.objects 
-			 WHERE object_id = OBJECT_ID(N'NOTIF_PERSONBEACHROLE') 
-			   AND TYPE IN (N'U'))
+CREATE TABLE NOTIF_PERSONBEACHROLE ( 
+	ID               	INTEGER NOT NULL IDENTITY (1, 1),
+	BEACH_ID         	INTEGER NOT NULL,
+	PERSON_ID        	INTEGER NOT NULL,
+	ROLETYPECODE     	VARCHAR(12) NOT NULL,
+	ROLEEFFECTIVEDATE	VARCHAR(25) NOT NULL,
+	ROLESTATUS       	VARCHAR(8) NOT NULL 
+	)
 
-DROP TABLE NOTIF_PERSONBEACHROLE
-GO
- 
-  CREATE TABLE "NOTIF_PERSONBEACHROLE" 
-   (	"ID" int identity(1,1) not null, 
-	"BEACH_ID" int, 
-	"PERSON_ID" int, 
-	"ROLETYPECODE" varchar(12), 
-	"ROLEEFFECTIVEDATE" varchar(25), 
-	"ROLESTATUS" varchar(8)
-   ) ;
---------------------------------------------------------
---  DDL for Table NOTIF_PERSONELECTRONICADDRESS
---------------------------------------------------------
-IF  EXISTS (SELECT * 
-			  FROM sys.objects 
-			 WHERE object_id = OBJECT_ID(N'NOTIF_PERSONELECTRONICADDRESS') 
-			   AND TYPE IN (N'U'))
+CREATE TABLE NOTIF_PERSONELECTRONICADDRESS ( 
+	ID                            	INTEGER NOT NULL IDENTITY (1, 1),
+	PERSON_ID                     	INTEGER NOT NULL,
+	ELECTRONICADDRESSTYPECODE     	VARCHAR(12) NOT NULL,
+	ELECTRONICADDRESS             	VARCHAR(255) NOT NULL,
+	ELECTRONICADDRESSEFFECTIVEDATE	VARCHAR(25) NOT NULL,
+	ELECTRONICADDRESSSTATUS       	VARCHAR(8) NOT NULL 
+	)
 
-DROP TABLE NOTIF_PERSONELECTRONICADDRESS
-GO
- 
-  CREATE TABLE "NOTIF_PERSONELECTRONICADDRESS" 
-   (	"ID" int identity(1,1) not null, 
-	"PERSON_ID" int, 
-	"ELECTRONICADDRESSTYPECODE" varchar(12), 
-	"ELECTRONICADDRESS" varchar(255), 
-	"ELECTRONICADDRESSEFFECTIVEDATE" varchar(25), 
-	"ELECTRONICADDRESSSTATUS" varchar(8)
-   ) ;
---------------------------------------------------------
---  DDL for Table NOTIF_PERSONMAILINGADDRESS
---------------------------------------------------------
-IF  EXISTS (SELECT * 
-			  FROM sys.objects 
-			 WHERE object_id = OBJECT_ID(N'NOTIF_PERSONMAILINGADDRESS') 
-			   AND TYPE IN (N'U'))
+CREATE TABLE NOTIF_PERSONMAILINGADDRESS ( 
+	ID                      	INTEGER NOT NULL IDENTITY (1, 1),
+	PERSON_ID               	INTEGER NOT NULL,
+	MAILINGADDRTYPECODE     	VARCHAR(12) NOT NULL,
+	MAILINGADDRLINE1        	VARCHAR(100) NOT NULL,
+	MAILINGADDRLINE2        	VARCHAR(100) NULL,
+	MAILINGADDRLINE3        	VARCHAR(100) NULL,
+	MAILINGADDRCITY         	VARCHAR(50) NOT NULL,
+	STATECODE               	CHAR(2) NOT NULL,
+	ZIPCODE                 	VARCHAR(12) NOT NULL,
+	MAILINGADDREFFECTIVEDATE	VARCHAR(25) NOT NULL,
+	MAILINGADDRSTATUS       	VARCHAR(8) NOT NULL 
+	)
 
-DROP TABLE NOTIF_PERSONMAILINGADDRESS
-GO
- 
-  CREATE TABLE "NOTIF_PERSONMAILINGADDRESS" 
-   (	"ID" int identity(1,1) not null, 
-	"PERSON_ID" int, 
-	"MAILINGADDRTYPECODE" varchar(12), 
-	"MAILINGADDRLINE1" varchar(100), 
-	"MAILINGADDRLINE2" varchar(100), 
-	"MAILINGADDRLINE3" varchar(100), 
-	"MAILINGADDRCITY" varchar(50), 
-	"STATECODE" CHAR(2), 
-	"ZIPCODE" varchar(12), 
-	"MAILINGADDREFFECTIVEDATE" varchar(25), 
-	"MAILINGADDRSTATUS" varchar(8)
-   ) ;
---------------------------------------------------------
---  DDL for Table NOTIF_PERSONTELEPHONE
---------------------------------------------------------
-IF  EXISTS (SELECT * 
-			  FROM sys.objects 
-			 WHERE object_id = OBJECT_ID(N'NOTIF_PERSONTELEPHONE') 
-			   AND TYPE IN (N'U'))
+CREATE TABLE NOTIF_PERSONTELEPHONE ( 
+	ID                    	INTEGER NOT NULL IDENTITY (1, 1),
+	PERSON_ID             	INTEGER NOT NULL,
+	TELEPHONETYPECODE     	VARCHAR(12) NOT NULL,
+	TELEPHONEINTEGER       	VARCHAR(12) NOT NULL,
+	TELEPHONEEFFECTIVEDATE	VARCHAR(25) NOT NULL,
+	TELEPHONESTATUS       	VARCHAR(8) NOT NULL 
+	)
 
-DROP TABLE NOTIF_PERSONTELEPHONE
-GO
- 
-  CREATE TABLE "NOTIF_PERSONTELEPHONE" 
-   (	"ID" int identity(1,1) not null, 
-	"PERSON_ID" int, 
-	"TELEPHONETYPECODE" varchar(12), 
-	"TELEPHONEint" varchar(12), 
-	"TELEPHONEEFFECTIVEDATE" varchar(25), 
-	"TELEPHONESTATUS" varchar(8)
-   ) ;
---------------------------------------------------------
---  DDL for Table NOTIF_YEARCOMPLETION
---------------------------------------------------------
-IF  EXISTS (SELECT * 
-			  FROM sys.objects 
-			 WHERE object_id = OBJECT_ID(N'NOTIF_YEARCOMPLETION') 
-			   AND TYPE IN (N'U'))
+CREATE TABLE NOTIF_YEARCOMPLETION ( 
+	ID                           	INTEGER NOT NULL IDENTITY (1, 1),
+	COMPLETIONYEAR               	INTEGER NOT NULL,
+	NOTIFICATIONDATACOMPLETIONIND	VARCHAR(5) NULL,
+	MONITORINGDATACOMPLETIONIND  	VARCHAR(5) NULL,
+	LOCATIONDATACOMPLETIONIND    	VARCHAR(5) NULL 
+	)
 
-DROP TABLE NOTIF_YEARCOMPLETION
-GO
- 
-  CREATE TABLE "NOTIF_YEARCOMPLETION" 
-   (	"ID" int identity(1,1) not null, 
-	"COMPLETIONYEAR" int, 
-	"NOTIFICATIONDATACOMPLETIONIND" varchar(5), 
-	"MONITORINGDATACOMPLETIONIND" varchar(5), 
-	"LOCATIONDATACOMPLETIONIND" varchar(5)
-   ) ;
---------------------------------------------------------
---  DDL for Index NOTIF_ACTIVITYINDICATOR
---------------------------------------------------------
- 
-  CREATE INDEX "NOTIF_ACTIVITYINDICATOR" ON "NOTIF_ACTIVITYINDICATOR" ("ACTIVITY_ID") 
-  ;
---------------------------------------------------------
---  DDL for Index NOTIF_ACTIVITYREASON
---------------------------------------------------------
- 
-  CREATE INDEX "NOTIF_ACTIVITYREASON" ON "NOTIF_ACTIVITYREASON" ("ACTIVITY_ID") 
-  ;
---------------------------------------------------------
---  DDL for Index NOTIF_ACTIVITYSOURCE
---------------------------------------------------------
- 
-  CREATE INDEX "NOTIF_ACTIVITYSOURCE" ON "NOTIF_ACTIVITYSOURCE" ("ACTIVITY_ID") 
-  ;
---------------------------------------------------------
---  DDL for Index NOTIF_BEACHACTIVITY
---------------------------------------------------------
- 
-  CREATE INDEX "NOTIF_BEACHACTIVITY" ON "NOTIF_BEACHACTIVITY" ("BEACH_ID") 
-  ;
---------------------------------------------------------
---  DDL for Index NOTIF_BEACHPOLLUTION
---------------------------------------------------------
- 
-  CREATE INDEX "NOTIF_BEACHPOLLUTION" ON "NOTIF_BEACHPOLLUTION" ("BEACH_ID") 
-  ;
---------------------------------------------------------
---  DDL for Index NOTIF_BEACHPROCEDURE
---------------------------------------------------------
- 
-  CREATE INDEX "NOTIF_BEACHPROCEDURE" ON "NOTIF_BEACHPROCEDURE" ("BEACH_ID") 
-  ;
---------------------------------------------------------
---  DDL for Index NOTIF_ORGANIZATIONBEACHROLE
---------------------------------------------------------
- 
-  CREATE INDEX "NOTIF_ORGANIZATIONBEACHROLE" ON "NOTIF_ORGANIZATIONBEACHROLE" ("ORGANIZATION_ID") 
-  ;
---------------------------------------------------------
---  DDL for Index NOTIF_ORGANIZATIONMAILINGADDR
---------------------------------------------------------
- 
-  CREATE INDEX "NOTIF_ORGANIZATIONMAILINGADDR" ON "NOTIF_ORGANIZATIONMAILINGADDR" ("ORGANIZATION_ID") 
-  ;
---------------------------------------------------------
---  DDL for Index NOTIF_ORGANIZATIONTELEPHONE
---------------------------------------------------------
- 
-  CREATE INDEX "NOTIF_ORGANIZATIONTELEPHONE" ON "NOTIF_ORGANIZATIONTELEPHONE" ("ORGANIZATION_ID") 
-  ;
---------------------------------------------------------
---  DDL for Index NOTIF_ORGELECTRONICADDR
---------------------------------------------------------
- 
-  CREATE INDEX "NOTIF_ORGELECTRONICADDR" ON "NOTIF_ORGELECTRONICADDR" ("ORGANIZATION_ID") 
-  ;
---------------------------------------------------------
---  DDL for Index NOTIF_PERSON
---------------------------------------------------------
- 
-  CREATE INDEX "NOTIF_PERSON" ON "NOTIF_PERSON" ("ORGANIZATION_ID") 
-  ;
---------------------------------------------------------
---  DDL for Index NOTIF_PERSONBEACHROLE
---------------------------------------------------------
- 
-  CREATE INDEX "NOTIF_PERSONBEACHROLE" ON "NOTIF_PERSONBEACHROLE" ("BEACH_ID") 
-  ;
---------------------------------------------------------
---  DDL for Index NOTIF_PERSONELECTRONICADDRESS
---------------------------------------------------------
- 
-  CREATE INDEX "NOTIF_PERSONELECTRONICADDRESS" ON "NOTIF_PERSONELECTRONICADDRESS" ("PERSON_ID") 
-  ;
---------------------------------------------------------
---  DDL for Index NOTIF_PERSONMAILINGADDRESS
---------------------------------------------------------
- 
-  CREATE INDEX "NOTIF_PERSONMAILINGADDRESS" ON "NOTIF_PERSONMAILINGADDRESS" ("PERSON_ID") 
-  ;
---------------------------------------------------------
---  DDL for Index NOTIF_PERSONTELEPHONE
---------------------------------------------------------
- 
-  CREATE INDEX "NOTIF_PERSONTELEPHONE" ON "NOTIF_PERSONTELEPHONE" ("PERSON_ID") 
-  ;
---------------------------------------------------------
---  DDL for Index NOTIF_SENTTOEPA
---------------------------------------------------------
- 
-  CREATE INDEX "NOTIF_SENTTOEPA" ON "NOTIF_BEACHACTIVITY" ("SENTTOEPA") 
-  ;
---------------------------------------------------------
---  DDL for Index PK_NOTIF_ACTIVITYINDICATOR
---------------------------------------------------------
- 
-  CREATE UNIQUE INDEX "PK_NOTIF_ACTIVITYINDICATOR" ON "NOTIF_ACTIVITYINDICATOR" ("ID") 
-  ;
---------------------------------------------------------
---  DDL for Index PK_NOTIF_ACTIVITYREASON
---------------------------------------------------------
- 
-  CREATE UNIQUE INDEX "PK_NOTIF_ACTIVITYREASON" ON "NOTIF_ACTIVITYREASON" ("ID") 
-  ;
---------------------------------------------------------
---  DDL for Index PK_NOTIF_ACTIVITYSOURCE
---------------------------------------------------------
- 
-  CREATE UNIQUE INDEX "PK_NOTIF_ACTIVITYSOURCE" ON "NOTIF_ACTIVITYSOURCE" ("ID") 
-  ;
---------------------------------------------------------
---  DDL for Index PK_NOTIF_BEACH
---------------------------------------------------------
- 
-  CREATE UNIQUE INDEX "PK_NOTIF_BEACH" ON "NOTIF_BEACH" ("ID") 
-  ;
---------------------------------------------------------
---  DDL for Index PK_NOTIF_BEACHACTIVITY
---------------------------------------------------------
- 
-  CREATE UNIQUE INDEX "PK_NOTIF_BEACHACTIVITY" ON "NOTIF_BEACHACTIVITY" ("ID") 
-  ;
---------------------------------------------------------
---  DDL for Index PK_NOTIF_BEACHPOLLUTION
---------------------------------------------------------
- 
-  CREATE UNIQUE INDEX "PK_NOTIF_BEACHPOLLUTION" ON "NOTIF_BEACHPOLLUTION" ("ID") 
-  ;
---------------------------------------------------------
---  DDL for Index PK_NOTIF_BEACHPROCEDURE
---------------------------------------------------------
- 
-  CREATE UNIQUE INDEX "PK_NOTIF_BEACHPROCEDURE" ON "NOTIF_BEACHPROCEDURE" ("ID") 
-  ;
---------------------------------------------------------
---  DDL for Index PK_NOTIF_ORGANIZATION
---------------------------------------------------------
- 
-  CREATE UNIQUE INDEX "PK_NOTIF_ORGANIZATION" ON "NOTIF_ORGANIZATION" ("ID") 
-  ;
---------------------------------------------------------
---  DDL for Index PK_NOTIF_ORGANIZATIONBEACHROLE
---------------------------------------------------------
- 
-  CREATE UNIQUE INDEX "PK_NOTIF_ORGANIZATIONBEACHROLE" ON "NOTIF_ORGANIZATIONBEACHROLE" ("ID") 
-  ;
---------------------------------------------------------
---  DDL for Index PK_NOTIF_ORGANIZATIONTELEPHONE
---------------------------------------------------------
- 
-  CREATE UNIQUE INDEX "PK_NOTIF_ORGANIZATIONTELEPHONE" ON "NOTIF_ORGANIZATIONTELEPHONE" ("ID") 
-  ;
---------------------------------------------------------
---  DDL for Index PK_NOTIF_ORGELECTRONICADDR
---------------------------------------------------------
- 
-  CREATE UNIQUE INDEX "PK_NOTIF_ORGELECTRONICADDR" ON "NOTIF_ORGELECTRONICADDR" ("ID") 
-  ;
---------------------------------------------------------
---  DDL for Index PK_NOTIF_ORGMAILINGADDR
---------------------------------------------------------
- 
-  CREATE UNIQUE INDEX "PK_NOTIF_ORGMAILINGADDR" ON "NOTIF_ORGANIZATIONMAILINGADDR" ("ID") 
-  ;
---------------------------------------------------------
---  DDL for Index PK_NOTIF_PERSON
---------------------------------------------------------
- 
-  CREATE UNIQUE INDEX "PK_NOTIF_PERSON" ON "NOTIF_PERSON" ("ID") 
-  ;
---------------------------------------------------------
---  DDL for Index PK_NOTIF_PERSONBEACHROLE
---------------------------------------------------------
- 
-  CREATE UNIQUE INDEX "PK_NOTIF_PERSONBEACHROLE" ON "NOTIF_PERSONBEACHROLE" ("ID") 
-  ;
---------------------------------------------------------
---  DDL for Index PK_NOTIF_PERSONELECTRONICADDR
---------------------------------------------------------
- 
-  CREATE UNIQUE INDEX "PK_NOTIF_PERSONELECTRONICADDR" ON "NOTIF_PERSONELECTRONICADDRESS" ("ID") 
-  ;
---------------------------------------------------------
---  DDL for Index PK_NOTIF_PERSONMAILINGADDRESS
---------------------------------------------------------
- 
-  CREATE UNIQUE INDEX "PK_NOTIF_PERSONMAILINGADDRESS" ON "NOTIF_PERSONMAILINGADDRESS" ("ID") 
-  ;
---------------------------------------------------------
---  DDL for Index PK_NOTIF_PERSONTELEPHONE
---------------------------------------------------------
- 
-  CREATE UNIQUE INDEX "PK_NOTIF_PERSONTELEPHONE" ON "NOTIF_PERSONTELEPHONE" ("ID") 
-  ;
---------------------------------------------------------
---  DDL for Index PK_NOTIF_YEARCOMPLETION
---------------------------------------------------------
- 
-  CREATE UNIQUE INDEX "PK_NOTIF_YEARCOMPLETION" ON "NOTIF_YEARCOMPLETION" ("ID") 
+
+ALTER TABLE NOTIF_ACTIVITYINDICATOR
+	ADD CONSTRAINT PK_NOTIF_ACTIVITYINDICATOR
+	PRIMARY KEY (ID)
+
+
+ALTER TABLE NOTIF_ACTIVITYREASON
+	ADD CONSTRAINT PK_NOTIF_ACTIVITYREASON
+	PRIMARY KEY (ID)
+	
+
+ALTER TABLE NOTIF_ACTIVITYSOURCE
+	ADD CONSTRAINT PK_NOTIF_ACTIVITYSOURCE
+	PRIMARY KEY (ID)
+	
+
+ALTER TABLE NOTIF_BEACH
+	ADD CONSTRAINT PK_NOTIF_BEACH
+	PRIMARY KEY (ID)
+	
+
+ALTER TABLE NOTIF_BEACHACTIVITY
+	ADD CONSTRAINT PK_NOTIF_BEACHACTIVITY
+	PRIMARY KEY (ID)
+	
+
+ALTER TABLE NOTIF_BEACHPOLLUTION
+	ADD CONSTRAINT PK_NOTIF_BEACHPOLLUTION
+	PRIMARY KEY (ID)
+	
+
+ALTER TABLE NOTIF_BEACHPROCEDURE
+	ADD CONSTRAINT PK_NOTIF_BEACHPROCEDURE
+	PRIMARY KEY (ID)
+	
+
+ALTER TABLE NOTIF_ORGANIZATION
+	ADD CONSTRAINT PK_NOTIF_ORGANIZATION
+	PRIMARY KEY (ID)
+	
+
+ALTER TABLE NOTIF_ORGANIZATIONBEACHROLE
+	ADD CONSTRAINT PK_NOTIF_ORGANIZATIONBEACHROLE
+	PRIMARY KEY (ID)
+	
+
+ALTER TABLE NOTIF_ORGANIZATIONMAILINGADDR
+	ADD CONSTRAINT PK_NOTIF_ORGMAILINGADDR
+	PRIMARY KEY (ID)
+	
+
+ALTER TABLE NOTIF_ORGANIZATIONTELEPHONE
+	ADD CONSTRAINT PK_NOTIF_ORGANIZATIONTELEPHONE
+	PRIMARY KEY (ID)
+	
+
+ALTER TABLE NOTIF_ORGELECTRONICADDR
+	ADD CONSTRAINT PK_NOTIF_ORGELECTRONICADDR
+	PRIMARY KEY (ID)
+	
+
+ALTER TABLE NOTIF_PERSON
+	ADD CONSTRAINT PK_NOTIF_PERSON
+	PRIMARY KEY (ID)
+	
+
+ALTER TABLE NOTIF_PERSONBEACHROLE
+	ADD CONSTRAINT PK_NOTIF_PERSONBEACHROLE
+	PRIMARY KEY (ID)
+	
+
+ALTER TABLE NOTIF_PERSONELECTRONICADDRESS
+	ADD CONSTRAINT PK_NOTIF_PERSONELECTRONICADDR
+	PRIMARY KEY (ID)
+	
+
+ALTER TABLE NOTIF_PERSONMAILINGADDRESS
+	ADD CONSTRAINT PK_NOTIF_PERSONMAILINGADDRESS
+	PRIMARY KEY (ID)
+	
+
+ALTER TABLE NOTIF_PERSONTELEPHONE
+	ADD CONSTRAINT PK_NOTIF_PERSONTELEPHONE
+	PRIMARY KEY (ID)
+	
+
+ALTER TABLE NOTIF_YEARCOMPLETION
+	ADD CONSTRAINT PK_NOTIF_YEARCOMPLETION
+	PRIMARY KEY (ID)
+	
+
+
+
+ALTER TABLE NOTIF_ACTIVITYINDICATOR
+	ADD CONSTRAINT FK_ACTIVITYINDICATOR_BEACHACT
+	FOREIGN KEY(ACTIVITY_ID)
+	REFERENCES NOTIF_BEACHACTIVITY(ID)
+
+
+ALTER TABLE NOTIF_ACTIVITYREASON
+	ADD CONSTRAINT FK_ACTIVITYREASON_BEACHACT
+	FOREIGN KEY(ACTIVITY_ID)
+	REFERENCES NOTIF_BEACHACTIVITY(ID)
+
+
+ALTER TABLE NOTIF_ACTIVITYSOURCE
+	ADD CONSTRAINT FK_ACTIVITYSOURCE_BEACHACT
+	FOREIGN KEY(ACTIVITY_ID)
+	REFERENCES NOTIF_BEACHACTIVITY(ID)
+
+
+ALTER TABLE NOTIF_BEACHACTIVITY
+	ADD CONSTRAINT FK_BEACHACTIVITY_BEACH
+	FOREIGN KEY(BEACH_ID)
+	REFERENCES NOTIF_BEACH(ID)
+
+
+ALTER TABLE NOTIF_BEACHPOLLUTION
+	ADD CONSTRAINT FK_BEACHPOLLUTION_BEACH
+	FOREIGN KEY(BEACH_ID)
+	REFERENCES NOTIF_BEACH(ID)
+
+
+ALTER TABLE NOTIF_BEACHPROCEDURE
+	ADD CONSTRAINT FK_BEACHPROCEDURE_BEACH
+	FOREIGN KEY(BEACH_ID)
+	REFERENCES NOTIF_BEACH(ID)
+
+
+ALTER TABLE NOTIF_ORGANIZATIONBEACHROLE
+	ADD CONSTRAINT FK_ORGANIZATIONBEACHROLE_ORG
+	FOREIGN KEY(ORGANIZATION_ID)
+	REFERENCES NOTIF_ORGANIZATION(ID)
+
+
+ALTER TABLE NOTIF_ORGANIZATIONBEACHROLE
+	ADD CONSTRAINT FK_ORGANIZATIONBEACHROLE_BEACH
+	FOREIGN KEY(BEACH_ID)
+	REFERENCES NOTIF_BEACH(ID)
+
+
+ALTER TABLE NOTIF_ORGANIZATIONMAILINGADDR
+	ADD CONSTRAINT FK_ORGANIZATION_ORGMAILINGADDR
+	FOREIGN KEY(ORGANIZATION_ID)
+	REFERENCES NOTIF_ORGANIZATION(ID)
+
+
+ALTER TABLE NOTIF_ORGANIZATIONTELEPHONE
+	ADD CONSTRAINT FK_ORGANIZATIONTELEPHONE_ORG
+	FOREIGN KEY(ORGANIZATION_ID)
+	REFERENCES NOTIF_ORGANIZATION(ID)
+
+
+ALTER TABLE NOTIF_ORGELECTRONICADDR
+	ADD CONSTRAINT FK_ORGELECTRONICADDR_ORG
+	FOREIGN KEY(ORGANIZATION_ID)
+	REFERENCES NOTIF_ORGANIZATION(ID)
+
+
+ALTER TABLE NOTIF_PERSON
+	ADD CONSTRAINT FK_PERSON_ORGANIZATION
+	FOREIGN KEY(ORGANIZATION_ID)
+	REFERENCES NOTIF_ORGANIZATION(ID)
+
+
+ALTER TABLE NOTIF_PERSONBEACHROLE
+	ADD CONSTRAINT FK_PERSONBEACHROLE_PERSON
+	FOREIGN KEY(PERSON_ID)
+	REFERENCES NOTIF_PERSON(ID)
+
+
+ALTER TABLE NOTIF_PERSONBEACHROLE
+	ADD CONSTRAINT FK_PERSONBEACHROLE_BEACH
+	FOREIGN KEY(BEACH_ID)
+	REFERENCES NOTIF_BEACH(ID)
+
+
+ALTER TABLE NOTIF_PERSONELECTRONICADDRESS
+	ADD CONSTRAINT FK_PERSONELECTRONICADD_PERSON
+	FOREIGN KEY(PERSON_ID)
+	REFERENCES NOTIF_PERSON(ID)
+
+
+ALTER TABLE NOTIF_PERSONMAILINGADDRESS
+	ADD CONSTRAINT FK_PERSONMAILINGADDRESS_PERSON
+	FOREIGN KEY(PERSON_ID)
+	REFERENCES NOTIF_PERSON(ID)
+
+
+ALTER TABLE NOTIF_PERSONTELEPHONE
+	ADD CONSTRAINT FK_PERSONTELEPHONE_PERSON
+	FOREIGN KEY(PERSON_ID)
+	REFERENCES NOTIF_PERSON(ID)
+
+
