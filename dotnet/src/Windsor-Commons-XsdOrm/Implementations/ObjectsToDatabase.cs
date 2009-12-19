@@ -228,7 +228,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 return;
             }
             string commandSeparator = baseDao.IsOracleDatabase ? ";" : ";";
-            List<Column> descriptionColumns = new List<Column>(); ;
+            List<Column> descriptionColumns = new List<Column>();
             StringBuilder sqlString = new StringBuilder();
             List<string> postCommands = new List<string>();
             List<string> indexNames = new List<string>();

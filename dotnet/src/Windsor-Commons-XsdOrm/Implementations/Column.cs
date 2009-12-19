@@ -74,10 +74,16 @@ namespace Windsor.Commons.XsdOrm.Implementations
             m_IsNullable = columnAttribute.IsNullable;
             m_IsIndexable = columnAttribute.IsIndexable;
             m_IndexName = columnAttribute.IndexName;
-            if ((m_ColumnType != null) && Utils.IsStringColumnType(m_ColumnType.Value) && (m_ColumnSize == 1) &&
-                (this.MemberType == typeof(bool)))
+            if (m_ColumnType != null)
             {
-                m_IsDbBoolString = true;
+                if (Utils.IsStringColumnType(m_ColumnType.Value) && (m_ColumnSize == 1) && (this.MemberType == typeof(bool)))
+                {
+                    m_IsDbBoolString = true;
+                }
+                else if (Utils.IsFloatingPointType(m_ColumnType.Value) && (this.MemberType == typeof(string)))
+                {
+                    m_IsDecimalString = true;
+                }
             }
         }
 
@@ -186,6 +192,18 @@ namespace Windsor.Commons.XsdOrm.Implementations
                                                value, this.ToString());
                 }
             }
+            else if (m_IsDecimalString)
+            {
+                if (value != null)
+                {
+                    string valueStr = value.ToString();;
+                    if ( valueStr.IndexOf('.') > 0 )
+                    {
+                        valueStr = valueStr.TrimEnd('0').TrimEnd('.');
+                    }
+                    value = valueStr;
+                }
+            }
             base.SetMemberValue<T>(instance, value);
         }
         protected Table m_Table;
@@ -198,6 +216,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
         protected string m_IndexName;
         protected string m_ColumnDescription;
         protected bool m_IsDbBoolString;
+        protected bool m_IsDecimalString;
     }
 
     public class PrimaryKeyColumn : Column

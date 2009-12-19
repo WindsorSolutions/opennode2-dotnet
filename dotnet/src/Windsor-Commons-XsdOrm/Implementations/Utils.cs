@@ -320,6 +320,17 @@ namespace Windsor.Commons.XsdOrm.Implementations
                     return false;
             }
         }
+        public static bool IsFloatingPointType(DbType dbType)
+        {
+            switch (dbType)
+            {
+                case DbType.Decimal:
+                case DbType.Double:
+                    return true;
+                default:
+                    return false;
+            }
+        }
         public static bool IsIntegerColumnType(DbType dbType)
         {
             switch (dbType)

@@ -285,10 +285,10 @@ namespace Windsor.Commons.XsdOrm.Implementations
                             {
                                 value = Enum.Parse(m_MemberType, value.ToString(), true);
                             }
-                            catch (Exception)
+                            catch (Exception e)
                             {
                                 throw new ArgumentException(string.Format("Failed to convert value \"{0}\" to enum type \"{1}\" for member \"{2}\"",
-                                                                          value, m_MemberType.FullName, m_MemberInfoPath));
+                                                                          value, m_MemberType.FullName, m_MemberInfoPath), e);
                             }
                         }
                         else
@@ -306,7 +306,15 @@ namespace Windsor.Commons.XsdOrm.Implementations
                         }
                         else
                         {
-                            value = Convert.ChangeType(value, m_MemberType);
+                            try
+                            {
+                                value = Convert.ChangeType(value, m_MemberType);
+                            }
+                            catch (Exception e)
+                            {
+                                throw new ArgumentException(string.Format("Failed to convert value \"{0}\" to type \"{1}\" for member \"{2}\"",
+                                                                          value, m_MemberType.FullName, m_MemberInfoPath), e);
+                            }
                         }
                     }
                 }
