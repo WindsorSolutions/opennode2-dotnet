@@ -1,4 +1,21 @@
 ================================================================================
+OpenNode2 v1.23 for Java - Release Notes                             2009-12-31
+================================================================================
+The purpose ofthis update is to address an issue in the WQX plugin.
+
+FIXED/RESOLVED
+========================================
+  
+* In testing WQX at CDX, it became clear that, unlike other data exchanges, WQX
+  submissions in which the filename ends in ".xml.zip" will be rejected by the 
+  back-end Node; they will pass schema validation and produce a Validation
+  Results file, but the staus will be "FAILED" and no Processing Report will be
+  produced.
+  
+  The WQX plugin has been modified to generate zip files that end in ".zip"
+  rather than ".xml.zip". 
+
+================================================================================
 OpenNode2 v1.22 for Java - Release Notes                             2009-12-17
 ================================================================================
 A quick bug-fix release.

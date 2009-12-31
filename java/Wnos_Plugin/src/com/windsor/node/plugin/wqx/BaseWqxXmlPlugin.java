@@ -32,11 +32,15 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.windsor.node.plugin.wqx;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import javax.sql.DataSource;
 
@@ -57,6 +61,7 @@ import com.windsor.node.common.util.NodeClientService;
 import com.windsor.node.plugin.common.velocity.VelocityHelper;
 import com.windsor.node.plugin.common.velocity.jdbc.JdbcVelocityHelper;
 import com.windsor.node.plugin.wqx.dao.WqxStatusDao;
+import com.windsor.node.util.IOUtil;
 
 public abstract class BaseWqxXmlPlugin extends BaseWqxPlugin implements
         InitializingBean {
@@ -92,6 +97,8 @@ public abstract class BaseWqxXmlPlugin extends BaseWqxPlugin implements
     public static final String TEMPLATE_END_DATE = "endDate";
 
     protected static final String XML_EXT = ".xml";
+
+    private static final int MEGA = 1024;
 
     protected static final int PARAM_INDEX_ORGID = 0;
     protected static final int PARAM_INDEX_ADD_HEADER = 1;
@@ -482,8 +489,7 @@ public abstract class BaseWqxXmlPlugin extends BaseWqxPlugin implements
 
         if (transaction.getRequest().getType() != RequestType.QUERY) {
 
-            String zippedFilePath = getCompressionService().zip(
-                    getTempFilePath());
+            String zippedFilePath = zip(getTempFilePath());
             doc.setType(CommonContentType.ZIP);
 
             doc.setDocumentName(FilenameUtils.getName(zippedFilePath));
@@ -501,6 +507,70 @@ public abstract class BaseWqxXmlPlugin extends BaseWqxPlugin implements
         }
 
         return doc;
+    }
+
+    /**
+     * Copied from ZipComressionService in Wnos_Logic, and modified so that the
+     * resulting ZIP file has only a .zip extension, rather than .xml.zip.
+     * <p>
+     * This is required by the mid-tier EPA node for WQX, which fails silently
+     * with a NullPointerException if it encounters &quot;foo.xml.zip&quot;
+     * </p>
+     * 
+     * @param sourceFilePath
+     * @return
+     */
+    private String zip(String sourceFilePath) {
+
+        byte[] buf = new byte[MEGA];
+
+        debug("Zipping " + sourceFilePath);
+
+        try {
+
+            File sourceFile = IOUtil.getExistentFile(sourceFilePath);
+
+            String resultPath = FilenameUtils.concat(FilenameUtils
+                    .getFullPath(sourceFilePath), FilenameUtils
+                    .getBaseName(sourceFilePath)
+                    + ".zip");
+
+            debug("Result will be " + resultPath);
+
+            ZipOutputStream out = new ZipOutputStream(new FileOutputStream(
+                    resultPath));
+
+            FileInputStream in = new FileInputStream(sourceFile);
+
+            // Add ZIP entry to output stream.
+            out.putNextEntry(new ZipEntry(sourceFile.getName()));
+
+            // Transfer bytes from the file to the ZIP file
+            int len;
+            while ((len = in.read(buf)) > 0) {
+                out.write(buf, 0, len);
+            }
+
+            // Complete the entry
+            out.closeEntry();
+            in.close();
+
+            // Complete the ZIP file
+            out.close();
+
+            debug("Zip operation succeeded.");
+            return resultPath;
+
+        } catch (IOException ioe) {
+
+            logger.error("Unhandled exception: " + ioe.getMessage());
+
+            ioe.printStackTrace();
+
+            throw new RuntimeException("Error while zipping file: "
+                    + sourceFilePath, ioe);
+        }
+
     }
 
     /**
