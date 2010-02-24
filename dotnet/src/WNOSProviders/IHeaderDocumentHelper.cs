@@ -46,6 +46,7 @@ namespace Windsor.Node2008.WNOSProviders
         void AddPropery(string key, string value);
         void Configure(string author, string org, string title, string dataService, string contactInfo, string sensitivity);
         void Serialize(string filePath);
+        void SerializeWithLineBreaks(string filePath);
         byte[] Serialize();
         void Load(string serializeFilePath);
         void Load(byte[] content);

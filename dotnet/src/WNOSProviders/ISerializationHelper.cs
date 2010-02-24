@@ -57,7 +57,9 @@ namespace Windsor.Node2008.WNOSProviders
         T Deserialize<T>(XmlElement element);
 
         void Serialize(object obj, string targetPath);
+        void SerializeWithLineBreaks(object obj, string targetPath);
         byte[] Serialize(object obj);
+        byte[] SerializeWithLineBreaks(object obj);
         string SerializeToBase64String(object obj);
         string ToXml(object obj);
         string SerializeToTempFile(object obj);

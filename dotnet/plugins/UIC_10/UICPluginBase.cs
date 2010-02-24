@@ -146,7 +146,7 @@ namespace Windsor.Node2008.WNOSPlugin.UIC_10
             string tempXmlFilePath = _settingsProvider.NewTempFilePath(".xml");
             try
             {
-                _serializationHelper.Serialize(data, tempXmlFilePath);
+                _serializationHelper.SerializeWithLineBreaks(data, tempXmlFilePath);
 
                 if (_addHeader)
                 {
@@ -172,7 +172,7 @@ namespace Windsor.Node2008.WNOSPlugin.UIC_10
                         headerDocumentHelper.AddPayload(EnumUtils.ToDescription(Submission_Type.DeleteInsert),
                                                         doc.DocumentElement);
 
-                        headerDocumentHelper.Serialize(tempXmlFilePath2);
+                        headerDocumentHelper.SerializeWithLineBreaks(tempXmlFilePath2);
 
                         _compressionHelper.CompressFile(tempXmlFilePath2, tempZipFilePath);
                     }

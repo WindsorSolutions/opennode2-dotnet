@@ -43,7 +43,7 @@ namespace Windsor.Node2008.WNOS.AssemblyInfo
 	/// </summary>
     public static partial class AssemblyInfo
     {
-        public const string cBuildVersion = "12";
+        public const string cBuildVersion = "13";
         public const string cSvnVersion = "$WCREV$";
 
         // [assembly: AssemblyVersion(AssemblyInfoServer.cAssemblyVersion)]

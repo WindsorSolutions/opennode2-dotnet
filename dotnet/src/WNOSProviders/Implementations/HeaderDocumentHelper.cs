@@ -128,6 +128,14 @@ namespace Windsor.Node2008.WNOSProviders.Implementation
 
             _serializationHelper.Serialize(_hd, filePath);
         }
+        public void SerializeWithLineBreaks(string filePath)
+        {
+            _hd.Header.Notification = _notifs.ToArray();
+            _hd.Header.Property = _properties.ToArray();
+            _hd.Payload = _payloads.ToArray();
+
+            _serializationHelper.SerializeWithLineBreaks(_hd, filePath);
+        }
 
         public byte[] Serialize()
         {

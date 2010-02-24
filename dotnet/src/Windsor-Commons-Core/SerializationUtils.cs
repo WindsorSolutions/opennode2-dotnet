@@ -234,9 +234,28 @@ namespace Windsor.Commons.Core
                 serializer.Serialize(writer, obj);
             }
         }
+        public void SerializeWithLineBreaks(object obj, string targetPath)
+        {
+            XmlSerializer serializer = new XmlSerializer(obj.GetType());
+
+            using (XmlTextWriter writer = new XmlTextWriter(targetPath, StringUtils.UTF8))
+            {
+                writer.Formatting = Formatting.Indented;
+                serializer.Serialize(writer, obj);
+            }
+        }
 
 
+        public byte[] SerializeWithLineBreaks(object obj)
+        {
+            return Serialize(obj, true);
+        }
         public byte[] Serialize(object obj)
+        {
+
+            return Serialize(obj, false);
+        }
+        private byte[] Serialize(object obj, bool includeLineBreaks)
         {
 
             if (obj == null)
@@ -250,7 +269,14 @@ namespace Windsor.Commons.Core
             {
                 using (XmlTextWriter tw = new XmlTextWriter(ms, StringUtils.UTF8))
                 {
-                    tw.Formatting = Formatting.None;
+                    if (includeLineBreaks)
+                    {
+                        tw.Formatting = Formatting.Indented;
+                    }
+                    else
+                    {
+                        tw.Formatting = Formatting.None;
+                    }
                     XmlSerializer saveXML = new XmlSerializer(obj.GetType());
                     saveXML.Serialize(tw, obj);
                     ms.Flush();
@@ -263,8 +289,6 @@ namespace Windsor.Commons.Core
             return result;
 
         }
-
-
         public string ToXml(object obj)
         {
             if (obj == null)
