@@ -3,7 +3,7 @@ $helper.print("rendering eis_foot.vm")
 </cer:CERS>
 #if($makeHeader)#if($makeHeader == "true" || $makeHeader == "TRUE")
 </hdr:Payload>
-</Document>
+</hdr:Document>
 #end#end##if($makeHeader
 $helper.print("Template Records: $totalRecCount")
 ## Setting the total number of records processed

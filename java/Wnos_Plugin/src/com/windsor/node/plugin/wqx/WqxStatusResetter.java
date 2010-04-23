@@ -62,7 +62,7 @@ public class WqxStatusResetter extends BaseWqxPlugin {
         debug("Setting service types");
         getSupportedPluginTypes().add(ServiceType.SOLICIT);
 
-        debug("DwqHistoryResetter initialized");
+        debug("WqxStatusResetter initialized");
     }
 
     public ProcessContentResult process(NodeTransaction transaction) {
@@ -71,7 +71,7 @@ public class WqxStatusResetter extends BaseWqxPlugin {
 
         ProcessContentResult result = new ProcessContentResult();
         result.setSuccess(false);
-        result.setStatus(CommonTransactionStatusCode.FAILED);
+        result.setStatus(CommonTransactionStatusCode.Failed);
 
         try {
 
@@ -87,7 +87,7 @@ public class WqxStatusResetter extends BaseWqxPlugin {
             dao.resetStatus(getOrgIdFromTransaction(transaction));
 
             result.setSuccess(true);
-            result.setStatus(CommonTransactionStatusCode.PROCESSED);
+            result.setStatus(CommonTransactionStatusCode.Processed);
             result.getAuditEntries().add(makeEntry("Done: OK"));
 
         } catch (Exception ex) {
@@ -96,7 +96,7 @@ public class WqxStatusResetter extends BaseWqxPlugin {
             ex.printStackTrace();
 
             result.setSuccess(false);
-            result.setStatus(CommonTransactionStatusCode.FAILED);
+            result.setStatus(CommonTransactionStatusCode.Failed);
 
             result.getAuditEntries().add(
                     makeEntry("Error while executing: "

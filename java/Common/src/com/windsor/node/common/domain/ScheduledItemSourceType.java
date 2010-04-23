@@ -31,40 +31,26 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.windsor.node.common.domain;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
-import org.apache.commons.lang.enums.Enum;
+public enum ScheduledItemSourceType {
 
-public final class ScheduledItemSourceType extends Enum {
+    None, WebServiceSolicit, WebServiceQuery, LocalService, File;
 
-    public static final ScheduledItemSourceType NONE = new ScheduledItemSourceType(
-            "None");
-    public static final ScheduledItemSourceType WEBSERVICE_SOLICIT = new ScheduledItemSourceType(
-            "WebServiceSolicit");
-    public static final ScheduledItemSourceType WEBSERVICE_QUERY = new ScheduledItemSourceType(
-            "WebServiceQuery");
-    public static final ScheduledItemSourceType LOCAL_SERVICE = new ScheduledItemSourceType(
-            "LocalService");
-    public static final ScheduledItemSourceType FILE = new ScheduledItemSourceType(
-            "File");
-
-    private static final long serialVersionUID = 1;
+    private static final long serialVersionUID = 2;
     
-    private ScheduledItemSourceType(String type) {
-        super(type);
-    }
-
-    public static Map getEnumMap() {
-        return getEnumMap(ScheduledItemSourceType.class);
-    }
-
-    public static List getEnumList() {
-        return getEnumList(ScheduledItemSourceType.class);
-    }
-
-    public static Iterator iterator() {
-        return iterator(ScheduledItemSourceType.class);
-    }
+//    private ScheduledItemSourceType(String type) {
+//        super(type);
+//    }
+//
+//    public static Map getEnumMap() {
+//        return getEnumMap(ScheduledItemSourceType.class);
+//    }
+//
+//    public static List getEnumList() {
+//        return getEnumList(ScheduledItemSourceType.class);
+//    }
+//
+//    public static Iterator iterator() {
+//        return iterator(ScheduledItemSourceType.class);
+//    }
 }

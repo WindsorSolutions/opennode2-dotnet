@@ -171,8 +171,7 @@ public class EditScheduleController extends BaseSimpleFormController implements
 
                     } else {
 
-                        logger.debug(AdminConstants.SAVING
-                                + schedule.getId());
+                        logger.debug(AdminConstants.SAVING + schedule.getId());
                         if (StringUtils.isBlank(schedule.getId())) {
                             schedule.setId(null);
                         }
@@ -185,13 +184,14 @@ public class EditScheduleController extends BaseSimpleFormController implements
 
                     logger.error(ex);
 
-                    request.setAttribute(AdminConstants.ERROR_KEY, ex.getMessage());
+                    request.setAttribute(AdminConstants.ERROR_KEY, ex
+                            .getMessage());
 
                     request.setAttribute(AdminConstants.COMMAND_KEY, schedule);
 
                     view = new ModelAndView(getFormView(),
-                            AdminConstants.MODEL_KEY, getReferenceData(
-                                    request, visit));
+                            AdminConstants.MODEL_KEY, getReferenceData(request,
+                                    visit));
 
                 }
             }
@@ -201,22 +201,24 @@ public class EditScheduleController extends BaseSimpleFormController implements
 
     }
 
-    protected Map getReferenceData(HttpServletRequest request, NodeVisit visit) {
+    protected Map<String, Object> getReferenceData(HttpServletRequest request,
+            NodeVisit visit) {
 
-        Map model = new HashMap();
+        Map<String, Object> model = new HashMap<String, Object>();
         model.put(AdminConstants.VISIT_KEY, visit);
 
         // Set the selected tab
         model.put(AdminConstants.TAB_KEY, SiteTabUtils.TAB_SCHEDULE);
 
         // set the side bar
-        model.put(AdminConstants.BARS_KEY, SideBarUtils.getScheduleBars(request, 0));
+        model.put(AdminConstants.BARS_KEY, SideBarUtils.getScheduleBars(
+                request, 0));
 
         // set flows/exchanges
         model.put("flows", flowService.getFlows(visit, false));
 
         // set frequency types
-        model.put("frequencyTypes", ScheduleFrequencyType.getEnumList());
+        model.put("frequencyTypes", ScheduleFrequencyType.values());
 
         // set partner types
         model.put("partners", partnerService.get(visit));
@@ -225,7 +227,8 @@ public class EditScheduleController extends BaseSimpleFormController implements
 
     }
 
-    protected Map referenceData(HttpServletRequest request) throws Exception {
+    protected Map<String, Object> referenceData(HttpServletRequest request)
+            throws Exception {
 
         NodeVisit visit = VisitUtils.getVisit(request);
 
@@ -234,9 +237,9 @@ public class EditScheduleController extends BaseSimpleFormController implements
             return null;
         }
 
-        Map modelHolder = new HashMap();
-        modelHolder.put(AdminConstants.MODEL_KEY, getReferenceData(
-                request, visit));
+        Map<String, Object> modelHolder = new HashMap<String, Object>();
+        modelHolder.put(AdminConstants.MODEL_KEY, getReferenceData(request,
+                visit));
         return modelHolder;
 
     }
@@ -286,8 +289,8 @@ public class EditScheduleController extends BaseSimpleFormController implements
         if (schedule == null) {
             schedule = new ScheduledItem();
         } else {
-            Map services = flowService.getActiveServiceMapByFlowId(schedule
-                    .getFlowId());
+            Map<String, String> services = flowService
+                    .getActiveServiceMapByFlowId(schedule.getFlowId());
             schedule.setServices(services);
         }
 

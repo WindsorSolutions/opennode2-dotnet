@@ -12,9 +12,8 @@
         <!-- end Spring integration -->
         <!-- the Axis2 way -->
         <!-- <parameter name="ServiceClass">com.windsor.node.ws2.service.Endpoint2ServiceImpl</parameter> -->
-        <parameter name="useOriginalwsdl">false</parameter>
-        <parameter name="modifyUserWSDLPortAddress">true</parameter>
-        <parameter name="enableMTOM">true</parameter>
+        <parameter name="useOriginalwsdl">true</parameter>
+        <parameter name="modifyUserWSDLPortAddress">false</parameter>
         <operation name="Execute" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://www.exchangenetwork.net/wsdl/node/2">
             <actionMapping />
             <outputActionMapping>http://www.exchangenetwork.net/wsdl/node/2/NetworkNodePortType2/ExecuteResponse</outputActionMapping>
@@ -28,6 +27,7 @@
             <faultActionMapping faultName="NodeFaultMessage">urn:AuthenticateNodeFaultMessage</faultActionMapping>
         </operation>
         <operation name="Download" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://www.exchangenetwork.net/wsdl/node/2">
+            <parameter name="enableMTOM">true</parameter>
             <actionMapping />
             <outputActionMapping>http://www.exchangenetwork.net/wsdl/node/2/NetworkNodePortType2/DownloadResponse</outputActionMapping>
             <faultActionMapping faultName="NodeFaultDetail">http://www.exchangenetwork.net/wsdl/node/2/NetworkNodePortType2/Download/Fault/NodeFaultDetail</faultActionMapping>
@@ -52,6 +52,7 @@
             <faultActionMapping faultName="NodeFaultMessage">urn:GetServicesNodeFaultMessage</faultActionMapping>
         </operation>
         <operation name="Submit" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://www.exchangenetwork.net/wsdl/node/2">
+            <parameter name="enableMTOM">true</parameter>
             <actionMapping />
             <outputActionMapping>http://www.exchangenetwork.net/wsdl/node/2/NetworkNodePortType2/SubmitResponse</outputActionMapping>
             <faultActionMapping faultName="NodeFaultDetail">http://www.exchangenetwork.net/wsdl/node/2/NetworkNodePortType2/Submit/Fault/NodeFaultDetail</faultActionMapping>

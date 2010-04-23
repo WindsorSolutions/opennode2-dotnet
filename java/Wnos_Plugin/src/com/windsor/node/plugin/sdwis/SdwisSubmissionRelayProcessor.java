@@ -150,7 +150,7 @@ public class SdwisSubmissionRelayProcessor extends BaseWnosPlugin {
 
         ProcessContentResult result = new ProcessContentResult();
         result.setSuccess(false);
-        result.setStatus(CommonTransactionStatusCode.FAILED);
+        result.setStatus(CommonTransactionStatusCode.Failed);
 
         result.getAuditEntries().add(makeEntry("Validating transaction..."));
         validateTransaction(transaction);
@@ -228,10 +228,10 @@ public class SdwisSubmissionRelayProcessor extends BaseWnosPlugin {
                     transaction.getRequest().getPaging().getStart(),
                     transaction.getRequest().getPaging().getCount(), true));
 
-            submission.setDocumentStatus(CommonTransactionStatusCode.PROCESSED);
+            submission.setDocumentStatus(CommonTransactionStatusCode.Processed);
 
             result.setSuccess(true);
-            result.setStatus(CommonTransactionStatusCode.PROCESSED);
+            result.setStatus(CommonTransactionStatusCode.Processed);
             result.getAuditEntries().add(makeEntry("Done: OK"));
 
         } catch (Exception ex) {
@@ -239,7 +239,7 @@ public class SdwisSubmissionRelayProcessor extends BaseWnosPlugin {
             error(ex);
 
             result.setSuccess(false);
-            result.setStatus(CommonTransactionStatusCode.FAILED);
+            result.setStatus(CommonTransactionStatusCode.Failed);
 
             result.getAuditEntries().add(
                     makeEntry("Error while executing: "

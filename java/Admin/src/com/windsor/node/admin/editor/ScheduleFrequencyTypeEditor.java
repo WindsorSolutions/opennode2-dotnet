@@ -40,11 +40,11 @@ public class ScheduleFrequencyTypeEditor extends ClassEditor {
 
     public void setAsText(String text) throws IllegalArgumentException {
         if (StringUtils.isBlank(text)) {
-            setValue(ScheduleFrequencyType.ONCE);
+            setValue(ScheduleFrequencyType.Once);
         } else {
 
             try {
-                setValue(ScheduleFrequencyType.getEnumMap().get(text));
+                setValue(ScheduleFrequencyType.valueOf(text));
             } catch (Exception ex) {
                 throw new IllegalArgumentException(
                         "Value could not be converted: " + text);
@@ -58,7 +58,7 @@ public class ScheduleFrequencyTypeEditor extends ClassEditor {
         if (value == null) {
             return null;
         } else {
-            return value.getName();
+            return value.toString();
         }
     }
 }

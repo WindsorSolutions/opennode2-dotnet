@@ -82,6 +82,10 @@ public abstract class BaseWqxPlugin extends BaseWnosPlugin implements
         statusDao = new WqxStatusDao((DataSource) getDataSources().get(
                 ARG_DS_SOURCE));
 
+        if (statusDao == null) {
+            throw new RuntimeException("Unable to obtain statusDao");
+        }
+
         settingService = (SettingServiceProvider) getServiceFactory()
                 .makeService(SettingServiceProvider.class);
 

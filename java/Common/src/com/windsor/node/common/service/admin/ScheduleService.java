@@ -43,44 +43,52 @@ import com.windsor.node.common.domain.ScheduledItem;
  */
 public interface ScheduleService {
     /**
-     * save
+     * Save a Schedule to the database.
      * 
      * @param instance
+     *            the ScheduledItem to save
      * @param visit
-     * @return
+     *            authenticated NodeVisit
+     * @return the saved ScheduledItem
      */
     ScheduledItem save(ScheduledItem instance, NodeVisit visit);
 
     /**
-     * get
+     * Get a Schedule from the database by id.
      * 
      * @param scheduleId
      * @param visit
-     * @return
+     *            authenticated NodeVisit
+     * @return the saved ScheduledItem
      */
     ScheduledItem get(String scheduleId, NodeVisit visit);
 
     /**
-     * delete
+     * Delete a Schedule from the database by id.
      * 
      * @param scheduleId
      * @param visit
+     *            authenticated NodeVisit
      */
     void delete(String scheduleId, NodeVisit visit);
 
     /**
-     * get
+     * Get the list of all Schedules in the database.
      * 
      * @param visit
-     * @return
+     *            authenticated NodeVisit
+     * @return a List of ScheduledItems
      */
     List<ScheduledItem> get(NodeVisit visit);
 
     /**
-     * saveAndRunNow
+     * Save a Schedule and flag it for running the next time the scheduler polls
+     * the database.
      * 
      * @param instance
+     *            the ScheduledItem to save
      * @param visit
+     *            authenticated NodeVisit
      */
     void saveAndRunNow(ScheduledItem instance, NodeVisit visit);
 

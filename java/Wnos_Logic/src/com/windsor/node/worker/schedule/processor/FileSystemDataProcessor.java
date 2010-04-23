@@ -85,7 +85,7 @@ public class FileSystemDataProcessor implements InitializingBean {
             Document doc = new Document();
             doc.setContent(FileUtils.readFileToByteArray(fsFile));
             doc.setDocumentName(fsFile.getName());
-            doc.setDocumentStatus(CommonTransactionStatusCode.PROCESSING);
+            doc.setDocumentStatus(CommonTransactionStatusCode.Processing);
             doc
                     .setDocumentStatusDetail("Results of schedule file retrieval from "
                             + filePath + " performed on");

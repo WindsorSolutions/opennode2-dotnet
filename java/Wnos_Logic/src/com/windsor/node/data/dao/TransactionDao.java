@@ -110,7 +110,7 @@ public interface TransactionDao extends DeletableDao, ListableDao {
      * @param useNetworkId
      * @return
      */
-    List getDocuments(String transactionId, boolean useNetworkId,
+    List<Document> getDocuments(String transactionId, boolean useNetworkId,
             boolean loadDocContent);
 
     /**

@@ -31,30 +31,10 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.windsor.node.common.domain;
 
-
 public enum CommonTransactionStatusCode {
 
-    UNKNOWN("Unknown"),
-    RECEIVED("Received"),
-    PROCESSING("Processing"),
-    PENDING("Pending"),
-    FAILED("Failed"),
-    CANCELLED("Cancelled"),
-    APPROVED("Approved"),
-    PROCESSED("Processed"),
-    COMPLETED("Completed");
+    Unknown, Received, Processing, Pending, Failed, Cancelled, Approved, Processed, Completed;
 
-    private static final long serialVersionUID = 4;
-
-    private String type;
-
-    private CommonTransactionStatusCode(String s) {
-        this.type = s;
-    }
-
-    @Override
-    public String toString() {
-        return this.type;
-    }
+    private static final long serialVersionUID = 5;
 
 }

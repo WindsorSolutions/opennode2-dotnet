@@ -96,10 +96,10 @@
 				</tr>
 				
 				<tr>
-					<td class="label" width="5%" style="text-align: right; vertical-align: top;">Active:</td>
+					<td class="label" width="5%" style="text-align: right; vertical-align: top;"><label for="Active">Active:</label></td>
 					<td class="ctrl" width="95%"><spring:bind path="command.service.active">
 						<input type="hidden" name="_<c:out value="${status.expression}"/>">
-	        			<input type="checkbox" style="vertical-align: middle;" 
+	        			<input type="checkbox" id="Active" style="vertical-align: middle;" 
 	        			name="<c:out value="${status.expression}"/>" value="true"
 	           			 <c:if test="${status.value}">checked</c:if>/>
 	           			 &nbsp;Making service inactive will prevent it from being accessible using the Web Service interface.

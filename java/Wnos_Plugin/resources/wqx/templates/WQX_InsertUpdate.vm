@@ -734,7 +734,7 @@ $helper.printElapsedTime()
 #if($result.get("resultmeasurequalifiercode"))
                     <MeasureQualifierCode>$result.get("resultmeasurequalifiercode")</MeasureQualifierCode>
 #end
-                    </ResultMeasure>
+                </ResultMeasure>
 #end##if(... || ...)
 #if($result.get("statusid"))
                 <ResultStatusIdentifier>$result.get("statusid")</ResultStatusIdentifier>
@@ -900,7 +900,7 @@ $helper.printElapsedTime()
 #if($resultAttachment.get("binaryobjectfiletypecode"))
                 <BinaryObjectFileTypeCode>$resultAttachment.get("binaryobjectfiletypecode")</BinaryObjectFileTypeCode>
 #end
-                </AttachedBinaryObject>
+            </AttachedBinaryObject>
 #end##foreach($resultAttachment in $helper.getData
 #if($result.get("analyticalmethodid") || $result.get("analyticalmethodidcontext") || $result.get("analyticalmethodname") || $result.get("analyticalmethodqualifiertype") || $result.get("analyticalmethoddesc"))
             <ResultAnalyticalMethod>
@@ -919,9 +919,10 @@ $helper.printElapsedTime()
 #if($result.get("analyticalmethoddesc"))
                 <MethodDescriptionText>$result.get("analyticalmethoddesc")</MethodDescriptionText>
 #end
-                </ResultAnalyticalMethod>
+            </ResultAnalyticalMethod>
 #end##if(... || ...)
-#if($result.get("labname") || $result.get("labanalysisstartdate") || $result.get("labanalysisstarttime") || $result.get("labanalysisstarttimezonecode") || $result.get("labanalysisenddate") || $result.get("labanalysisendtime") || $result.get("labanalysisendtimezonecode") || $result.get("resultlabcommentcode"))
+#set($quantlimits = $helper.getData("SELECT detectquantlimittype, detectquantlimitmeasure, detectquantlimitmeasunitcode FROM WQX_RESULTDETECTQUANTLIMIT WHERE PARENTID = ? ", $result.get("recordid")))
+#if($quantlimits || $result.get("labname") || $result.get("labanalysisstartdate") || $result.get("labanalysisstarttime") || $result.get("labanalysisstarttimezonecode") || $result.get("labanalysisenddate") || $result.get("labanalysisendtime") || $result.get("labanalysisendtimezonecode") || $result.get("resultlabcommentcode"))
             <ResultLabInformation>
 #if($result.get("labname"))
                 <LaboratoryName>$result.get("labname")</LaboratoryName>
@@ -937,7 +938,7 @@ $helper.printElapsedTime()
 #if($result.get("labanalysisstarttimezonecode"))
                     <TimeZoneCode>$result.get("labanalysisstarttimezonecode")</TimeZoneCode>
 #end
-                    </AnalysisStartTime>
+                </AnalysisStartTime>
 #end##if(... || ...)
 #if($result.get("labanalysisenddate"))
                 <AnalysisEndDate>$helper.toXmlDate($result.get("labanalysisenddate"))</AnalysisEndDate>
@@ -950,12 +951,12 @@ $helper.printElapsedTime()
 #if($result.get("labanalysisendtimezonecode"))
                     <TimeZoneCode>$result.get("labanalysisendtimezonecode")</TimeZoneCode>
 #end
-                   </AnalysisEndTime>
+                </AnalysisEndTime>
 #end##if(... || ...)
 #if($result.get("resultlabcommentcode"))
                 <ResultLaboratoryCommentCode>$result.get("resultlabcommentcode")</ResultLaboratoryCommentCode>
 #end
-#foreach($quantLimit in $helper.getData("SELECT detectquantlimittype, detectquantlimitmeasure, detectquantlimitmeasunitcode FROM WQX_RESULTDETECTQUANTLIMIT WHERE PARENTID = ? ", $result.get("recordid"))) 
+#foreach($quantLimit in $quantlimits)
                 <ResultDetectionQuantitationLimit>
 #if($quantLimit.get("detectquantlimittype") || $quantLimit.get("detectquantlimitmeasure") || $quantLimit.get("detectquantlimitmeasunitcode"))
 #if($quantLimit.get("detectquantlimittype"))
@@ -969,7 +970,7 @@ $helper.printElapsedTime()
 #if($quantLimit.get("detectquantlimitmeasunitcode"))
                         <MeasureUnitCode>$quantLimit.get("detectquantlimitmeasunitcode")</MeasureUnitCode>
 #end
-                        </DetectionQuantitationLimitMeasure>
+                    </DetectionQuantitationLimitMeasure>
 #end#end##if(... || ...)
                 </ResultDetectionQuantitationLimit>
 #end##foreach($quantLimit in $helper.getData

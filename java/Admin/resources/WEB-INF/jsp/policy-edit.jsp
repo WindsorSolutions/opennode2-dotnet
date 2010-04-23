@@ -50,8 +50,7 @@
 					style="border: 0; vertical-align: middle; padding-right: 3px;" /><fmt:message key="secPolicyEditProtectedInfo" /></div>
 				<table id="formTable" width="100%" cellpadding="2" cellspacing="0">
 
-					<c:forEach var="ass" items="${command.flowAssignemnts}"
-						varStatus="status">
+					<c:forEach var="ass" items="${command.flowAssignemnts}" varStatus="status">
 
 						<tr
 							class="<c:choose><c:when test="${status.index % 2 == 0}">rowOdd</c:when>
@@ -69,8 +68,8 @@
 								</c:otherwise>
 							</c:choose></td>
 
-							<td nowrap="nowrap"><c:out value="${ass.label}" /></td>
-							<td align="right"><input type="checkbox" name="selectedFlow"
+							<td nowrap="nowrap"><label for="<c:out value="${ass.flowId}" />"><c:out value="${ass.label}" /></label></td>
+							<td align="right"><input type="checkbox" id="<c:out value="${ass.flowId}" />" name="selectedFlow"
 								value="<c:out value="${ass.flowId}" />"
 								<c:if test="${ass.assigned == true}">checked</c:if>
 								<c:if test="${ass.flowProtected == false}">disabled</c:if> /></td>

@@ -91,10 +91,10 @@
 			</tr>
 
 			<tr>
-				<td class="label" width="5%" style="text-align: right; vertical-align: top;">Protected:</td>
+				<td class="label" width="5%" style="text-align: right; vertical-align: top;"><label for="Protected">Protected:</label></td>
 				<td class="ctrl" width="95%"><spring:bind path="command.secured">
 					<input type="hidden" name="_<c:out value="${status.expression}"/>">
-        			<input type="checkbox" name="<c:out value="${status.expression}"/>" value="true"
+        			<input type="checkbox" id="Protected" name="<c:out value="${status.expression}"/>" value="true"
            			 <c:if test="${status.value}">checked</c:if>/>
 				</spring:bind>
 				<fmt:message key="flowItemDefaultSecurityText" />

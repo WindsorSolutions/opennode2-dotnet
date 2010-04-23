@@ -9,6 +9,7 @@
         <mkdir dir="${dist}/${plugin.dir}" />
         <copy todir="${dist}/${plugin.dir}" verbose="${verbosity}" preservelastmodified="false">
             <fileset dir="${plugin.resource.dir}/templates" includes="*.vm" />
+        	<fileset dir="${plugin.resource.dir}/ddl" includes="*.sql" />
         </copy>
     </target>
 </project>

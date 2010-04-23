@@ -37,13 +37,11 @@ import java.util.Date;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-
 import org.springframework.beans.propertyeditors.ClassEditor;
 
 public class CustomTimestampEditor extends ClassEditor {
 
-    protected Logger logger = Logger
-            .getLogger(CustomTimestampEditor.class);
+    protected Logger logger = Logger.getLogger(CustomTimestampEditor.class);
 
     private final SimpleDateFormat format;
 
@@ -53,8 +51,11 @@ public class CustomTimestampEditor extends ClassEditor {
     }
 
     public void setAsText(String text) throws IllegalArgumentException {
+
         if (StringUtils.isBlank(text)) {
+
             setValue(null);
+
         } else {
 
             try {

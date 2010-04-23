@@ -30,7 +30,7 @@ public class WqxGetStatus extends BaseWqxPlugin {
 
         ProcessContentResult result = new ProcessContentResult();
         result.setSuccess(false);
-        result.setStatus(CommonTransactionStatusCode.FAILED);
+        result.setStatus(CommonTransactionStatusCode.Failed);
 
         try {
 
@@ -95,22 +95,22 @@ public class WqxGetStatus extends BaseWqxPlugin {
 
                     // update status in staging tables
                     if (remoteStatus
-                            .equals(CommonTransactionStatusCode.COMPLETED)
+                            .equals(CommonTransactionStatusCode.Completed)
                             || remoteStatus
-                                    .equals(CommonTransactionStatusCode.PROCESSED)) {
+                                    .equals(CommonTransactionStatusCode.Processed)) {
                         getStatusDao().updateStatus(localTranId,
-                                CommonTransactionStatusCode.COMPLETED);
+                                CommonTransactionStatusCode.Completed);
                     } else if (remoteStatus
-                            .equals(CommonTransactionStatusCode.FAILED)) {
+                            .equals(CommonTransactionStatusCode.Failed)) {
                         getStatusDao().updateStatus(localTranId,
-                                CommonTransactionStatusCode.FAILED);
+                                CommonTransactionStatusCode.Failed);
                     }
                 }
 
             }
 
             result.setSuccess(true);
-            result.setStatus(CommonTransactionStatusCode.COMPLETED);
+            result.setStatus(CommonTransactionStatusCode.Completed);
             result.getAuditEntries().add(makeEntry("Done: OK"));
 
         } catch (Exception ex) {
@@ -118,7 +118,7 @@ public class WqxGetStatus extends BaseWqxPlugin {
             ex.printStackTrace();
 
             result.setSuccess(false);
-            result.setStatus(CommonTransactionStatusCode.FAILED);
+            result.setStatus(CommonTransactionStatusCode.Failed);
 
             result.getAuditEntries().add(
                     makeEntry("Error while executing: "

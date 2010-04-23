@@ -32,7 +32,6 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.windsor.node.common.domain;
 
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.Map;
 import java.util.Random;
 
@@ -49,21 +48,21 @@ public class ScheduledItem extends AuditableIdentity {
     private String flowId;
     private Timestamp startOn;
     private Timestamp endOn;
-    private ScheduledItemSourceType sourceType = ScheduledItemSourceType.NONE;
+    private ScheduledItemSourceType sourceType = ScheduledItemSourceType.None;
     private String sourceId;
     private String sourceOperation;
     private ByIndexOrNameMap sourceArgs = new ByIndexOrNameMap();
-    private ScheduledItemTargetType targetType = ScheduledItemTargetType.NONE;
+    private ScheduledItemTargetType targetType = ScheduledItemTargetType.None;
     private String targetId;
     private String lastExecutionInfo;
     private Timestamp lastExecutedOn;
     private Timestamp nextRunOn;
-    private ScheduleFrequencyType frequencyType = ScheduleFrequencyType.ONCE;
+    private ScheduleFrequencyType frequencyType = ScheduleFrequencyType.Once;
     private int frequency = 0;
     private boolean active = true;
     private boolean runNow = false;
     private ScheduleExecuteStatus executeStatus = ScheduleExecuteStatus.Success;
-    
+
     /**
      * Map of service id's & names associated with a flow id.
      * <p>
@@ -71,10 +70,10 @@ public class ScheduledItem extends AuditableIdentity {
      * </p>
      * 
      */
-    private transient Map services;
+    private transient Map<String, String> services;
 
     public ScheduledItem() {
-        
+
         long now = System.currentTimeMillis();
         startOn = new Timestamp(now);
         endOn = new Timestamp(now);
@@ -282,11 +281,11 @@ public class ScheduledItem extends AuditableIdentity {
                 .isEquals();
     }
 
-    public Map getServices() {
+    public Map<String, String> getServices() {
         return services;
     }
 
-    public void setServices(Map services) {
+    public void setServices(Map<String, String> services) {
         this.services = services;
     }
 }

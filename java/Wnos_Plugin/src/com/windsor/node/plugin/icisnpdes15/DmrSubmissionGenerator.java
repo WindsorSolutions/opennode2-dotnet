@@ -99,7 +99,7 @@ public class DmrSubmissionGenerator extends BaseWnosPlugin implements
 
         ProcessContentResult result = new ProcessContentResult();
         result.setSuccess(false);
-        result.setStatus(CommonTransactionStatusCode.FAILED);
+        result.setStatus(CommonTransactionStatusCode.Failed);
         result.getAuditEntries().add(makeEntry("Preparing DMR submission..."));
 
         try {
@@ -163,7 +163,7 @@ public class DmrSubmissionGenerator extends BaseWnosPlugin implements
             result.getDocuments().add(doc);
 
             result.setSuccess(true);
-            result.setStatus(CommonTransactionStatusCode.PROCESSED);
+            result.setStatus(CommonTransactionStatusCode.Processed);
             result.getAuditEntries().add(makeEntry("Done: OK"));
 
         } catch (Exception ex) {
@@ -171,7 +171,7 @@ public class DmrSubmissionGenerator extends BaseWnosPlugin implements
             error(ex);
             ex.printStackTrace();
             result.setSuccess(false);
-            result.setStatus(CommonTransactionStatusCode.FAILED);
+            result.setStatus(CommonTransactionStatusCode.Failed);
 
             result.getAuditEntries().add(
                     makeEntry("Error while executing: "
@@ -252,8 +252,8 @@ public class DmrSubmissionGenerator extends BaseWnosPlugin implements
 
         boolean hasPending = false;
 
-        if (!status.equals(CommonTransactionStatusCode.COMPLETED)
-                && !status.equals(CommonTransactionStatusCode.FAILED)) {
+        if (!status.equals(CommonTransactionStatusCode.Completed)
+                && !status.equals(CommonTransactionStatusCode.Failed)) {
 
             hasPending = true;
         }

@@ -50,7 +50,7 @@ public class TransactionStatus implements Serializable {
 
     public TransactionStatus(String transactionId) {
         this.transactionId = transactionId;
-        this.status = CommonTransactionStatusCode.RECEIVED;
+        this.status = CommonTransactionStatusCode.Received;
         this.description = "";
     }
 

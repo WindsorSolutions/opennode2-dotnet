@@ -40,11 +40,11 @@ public class ScheduledItemTargetTypeEditor extends ClassEditor {
 
     public void setAsText(String text) throws IllegalArgumentException {
         if (StringUtils.isBlank(text)) {
-            setValue(ScheduledItemTargetType.NONE);
+            setValue(ScheduledItemTargetType.None);
         } else {
 
             try {
-                setValue(ScheduledItemTargetType.getEnumMap().get(text));
+                setValue(ScheduledItemTargetType.valueOf(text));
             } catch (Exception ex) {
                 throw new IllegalArgumentException(
                         "Value could not be converted: " + text);
@@ -58,7 +58,7 @@ public class ScheduledItemTargetTypeEditor extends ClassEditor {
         if (value == null) {
             return null;
         } else {
-            return value.getName();
+            return value.toString();
         }
     }
 }

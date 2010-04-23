@@ -9,16 +9,15 @@
     <OrganizationAffiliation>Windsor Solutions, Inc.</OrganizationAffiliation>
     <TelephoneNumber>503-544-1515</TelephoneNumber>
     <EmailAddress>ted1207960235@windsorsolutions.com</EmailAddress>
-    <AffiliatedNodeId>NY</AffiliatedNodeId>
+    <AffiliatedNodeId>WA</AffiliatedNodeId>
     <AffiliatedCounty>Skamania</AffiliatedCounty>
     <PurposeDescription>I need node access now, dammit!</PurposeDescription>
-    <RequestedDataSourceNames>here</RequestedDataSourceNames>
     <RequestedDataSourceNames>HERE-CAFO</RequestedDataSourceNames>
     <RequestedDataSourceNames>HERE-TIER2</RequestedDataSourceNames>
     <RequestedDataSourceNames>HERE-FRS</RequestedDataSourceNames>
     <RequestedDataSourceNames>Bogus</RequestedDataSourceNames>
-    <RequestedDataSourceNames>HERE-SDWIS</RequestedDataSourceNames>
-    <RequestedNodeIds>NY</RequestedNodeIds>
+    <RequestedDataSourceNames>here</RequestedDataSourceNames>
+    <RequestedNodeIds>WA</RequestedNodeIds>
     <RequestedNodeIds>NV</RequestedNodeIds>
     <RequestedNodeIds>ND</RequestedNodeIds>
 </AuthorizationRequest>

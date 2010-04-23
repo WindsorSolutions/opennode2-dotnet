@@ -53,16 +53,14 @@ import com.windsor.node.common.domain.NodeVisit;
 import com.windsor.node.common.service.admin.ScheduleService;
 
 /**
+ * TODO: need better javadocs
  * 
  * @author Mark Chmarny
- * 
- *         TODO: need better javadocs
  */
 public class ScheduleController extends AbstractController implements
         InitializingBean {
 
-    protected Logger logger = Logger
-            .getLogger(ScheduleController.class);
+    protected Logger logger = Logger.getLogger(ScheduleController.class);
 
     private ScheduleService scheduleService;
     private String listView;
@@ -76,23 +74,19 @@ public class ScheduleController extends AbstractController implements
         if (scheduleService == null) {
             throw new Exception("scheduleService not set");
         }
-
     }
 
     protected void initBinder(HttpServletRequest request,
             ServletRequestDataBinder binder) throws Exception {
 
         CustomTimestampEditor timestampEditor = new CustomTimestampEditor(
-                getMessageSourceAccessor().getMessage(AdminConstants.SCHEDULE_DATETIME_FORMAT_KEY,
+                getMessageSourceAccessor().getMessage(
+                        AdminConstants.SCHEDULE_DATETIME_FORMAT_KEY,
                         AdminConstants.DATETIME_FORMAT));
 
         binder.registerCustomEditor(java.sql.Timestamp.class, timestampEditor);
-
     }
 
-    /**
-     * Sets some values into the model and view
-     */
     protected ModelAndView handleRequestInternal(HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
@@ -103,7 +97,7 @@ public class ScheduleController extends AbstractController implements
             return VisitUtils.getUnauthedView(request);
         }
 
-        Map model = new HashMap();
+        Map<String, Object> model = new HashMap<String, Object>();
         model.put(AdminConstants.VISIT_KEY, visit);
 
         // Set the selected tab
@@ -117,10 +111,10 @@ public class ScheduleController extends AbstractController implements
         model.put("schedules", getScheduleService().get(visit));
 
         // set the side bar
-        model.put(AdminConstants.BARS_KEY, SideBarUtils.getScheduleBars(request, 0));
+        model.put(AdminConstants.BARS_KEY, SideBarUtils.getScheduleBars(
+                request, 0));
 
-        return new ModelAndView(getListView(), AdminConstants.MODEL_KEY,
-                model);
+        return new ModelAndView(getListView(), AdminConstants.MODEL_KEY, model);
 
     }
 

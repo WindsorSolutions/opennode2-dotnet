@@ -113,7 +113,7 @@ public class NodeTransactionTaskWorker extends NodeWorker implements
 
                 // just mark it processed and move on
                 transactionDao.updateStatus(transaction.getId(),
-                        CommonTransactionStatusCode.PROCESSED);
+                        CommonTransactionStatusCode.Processed);
 
                 logger
                         .debug("Updating transaction status to processed as there is nothing to do");
@@ -227,7 +227,7 @@ public class NodeTransactionTaskWorker extends NodeWorker implements
                 }
 
                 getTransactionDao().updateStatus(transaction.getId(),
-                        CommonTransactionStatusCode.PROCESSED);
+                        CommonTransactionStatusCode.Processed);
 
             } else {
 
@@ -368,7 +368,7 @@ public class NodeTransactionTaskWorker extends NodeWorker implements
                     logEntry.setType(ActivityType.Error);
 
                     getTransactionDao().updateStatus(transaction.getId(),
-                            CommonTransactionStatusCode.FAILED);
+                            CommonTransactionStatusCode.Failed);
 
                 } // checking if result was a success
 
@@ -384,7 +384,7 @@ public class NodeTransactionTaskWorker extends NodeWorker implements
 
             if (transaction != null) {
                 getTransactionDao().updateStatus(transaction.getId(),
-                        CommonTransactionStatusCode.FAILED);
+                        CommonTransactionStatusCode.Failed);
             }
 
         } finally {

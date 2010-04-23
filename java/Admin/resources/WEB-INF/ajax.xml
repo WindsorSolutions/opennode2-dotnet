@@ -26,13 +26,15 @@
 			<bean
 				class="com.windsor.node.admin.ajax.StringArraySearchService" />
 		</property>
-		<property name="list">
-			<list>
-				<value>com.ibm.db2.jcc.DB2Driver</value>
-				<value>com.microsoft.sqlserver.jdbc.SQLServerDriver</value>
-				<value>com.mysql.jdbc.Driver</value>
-				<value>oracle.jdbc.OracleDriver</value>
-			</list>
-		</property>
+        <property name="list">
+            <list>
+                <value>com.ibm.db2.jcc.DB2Driver</value>
+                <value>net.sourceforge.jtds.jdbc.Driver</value>
+                <value>com.microsoft.sqlserver.jdbc.SQLServerDriver</value>
+                <value>com.mysql.jdbc.Driver</value>
+                <value>net.sourceforge.jtds.jdbc.Driver</value>
+                <value>oracle.jdbc.OracleDriver</value>
+            </list>
+        </property>
 	</bean>
 </beans>

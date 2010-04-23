@@ -49,7 +49,7 @@ public class NodeTransaction extends AuditableIdentity {
     private UserAccount creator;
 
     public NodeTransaction() {
-        status = new TransactionStatus(CommonTransactionStatusCode.UNKNOWN);
+        status = new TransactionStatus(CommonTransactionStatusCode.Unknown);
         this.documents = new ArrayList<Document>();
     }
 

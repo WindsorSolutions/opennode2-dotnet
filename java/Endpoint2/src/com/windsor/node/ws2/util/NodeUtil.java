@@ -231,7 +231,7 @@ public class NodeUtil {
 
     public static NodeDocumentType getNodeDocumentFromWnosDoc(Document wnosDoc) {
 
-        logger.debug("WNOS Doc: " + wnosDoc);
+        logger.debug("Creating attachment from WNOS Doc: " + wnosDoc);
 
         try {
 
@@ -239,26 +239,30 @@ public class NodeUtil {
             AttachmentType attachment = new AttachmentType();
 
             // Document attributes
-            logger.debug("setting documentFormat");
+            logger.debug("setting documentFormat to "
+                    + wnosDoc.getType().getName());
             newDoc.setDocumentFormat(DocumentFormatType.Factory
                     .fromValue(wnosDoc.getType().getName()));
 
-            logger.debug("setting documentId");
+            logger.debug("setting documentId to " + wnosDoc.getDocumentId());
             newDoc.setDocumentId(new Id(wnosDoc.getDocumentId()));
-            logger.debug("setting documentName");
+            logger
+                    .debug("setting documentName to "
+                            + wnosDoc.getDocumentName());
             newDoc.setDocumentName(wnosDoc.getDocumentName());
 
             // Content Type
-            logger.error("Creating datasource...");
             ContentType_type0 contentType = new ContentType_type0();
             if (wnosDoc.getType().equals(CommonContentType.XML_STR)) {
                 contentType.setContentType_type0("application/xml");
             } else {
                 contentType.setContentType_type0("application/octet-stream");
             }
+            logger.error("Set contentType to "
+                    + contentType.getContentType_type0());
 
             // Actual attachment
-            logger.error("Creating datasource...");
+            logger.error("Creating datasource for the attachment...");
             ByteArrayDataSource bads = new ByteArrayDataSource(wnosDoc
                     .getContent());
             logger.error("Creating data handler...");
@@ -268,6 +272,7 @@ public class NodeUtil {
             attachment.setContentType(contentType);
             newDoc.setDocumentContent(attachment);
 
+            logger.debug("Attachment ready to go,");
             return newDoc;
 
         } catch (Exception ex) {

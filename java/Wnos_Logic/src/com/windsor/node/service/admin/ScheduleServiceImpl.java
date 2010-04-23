@@ -54,6 +54,11 @@ public class ScheduleServiceImpl extends BaseService implements
 
     private ScheduleDao scheduleDao;
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.windsor.node.service.BaseService#afterPropertiesSet()
+     */
     public void afterPropertiesSet() {
 
         super.afterPropertiesSet();
@@ -64,6 +69,13 @@ public class ScheduleServiceImpl extends BaseService implements
 
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.windsor.node.common.service.admin.ScheduleService#delete(java.lang
+     * .String, com.windsor.node.common.domain.NodeVisit)
+     */
     public void delete(String scheduleId, NodeVisit visit) {
 
         if (StringUtils.isBlank(scheduleId)) {
@@ -109,14 +121,25 @@ public class ScheduleServiceImpl extends BaseService implements
     /**
      * get
      */
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.windsor.node.common.service.admin.ScheduleService#get(java.lang.String
+     * , com.windsor.node.common.domain.NodeVisit)
+     */
     public ScheduledItem get(String scheduleId, NodeVisit visit) {
 
         return scheduleDao.get(scheduleId);
 
     }
 
-    /**
-     * get
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.windsor.node.common.service.admin.ScheduleService#get(com.windsor
+     * .node.common.domain.NodeVisit)
      */
     @SuppressWarnings("unchecked")
     public List<ScheduledItem> get(NodeVisit visit) {
@@ -125,17 +148,20 @@ public class ScheduleServiceImpl extends BaseService implements
     }
 
     /**
-     * get
-     * 
-     * @return
+     * @return List of Schedules
      */
     public List<?> get() {
 
         return scheduleDao.get();
     }
 
-    /**
-     * runNow
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.windsor.node.common.service.admin.ScheduleService#saveAndRunNow(com
+     * .windsor.node.common.domain.ScheduledItem,
+     * com.windsor.node.common.domain.NodeVisit)
      */
     public void saveAndRunNow(ScheduledItem instance, NodeVisit visit) {
 
@@ -148,6 +174,14 @@ public class ScheduleServiceImpl extends BaseService implements
 
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.windsor.node.common.service.admin.ScheduleService#save(com.windsor
+     * .node.common.domain.ScheduledItem,
+     * com.windsor.node.common.domain.NodeVisit)
+     */
     public ScheduledItem save(ScheduledItem instance, NodeVisit visit) {
 
         if (instance == null) {
@@ -206,6 +240,9 @@ public class ScheduleServiceImpl extends BaseService implements
 
     }
 
+    /**
+     * @param scheduleDao
+     */
     public void setScheduleDao(ScheduleDao scheduleDao) {
         this.scheduleDao = scheduleDao;
     }

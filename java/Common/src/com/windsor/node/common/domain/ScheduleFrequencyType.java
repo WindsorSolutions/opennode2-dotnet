@@ -31,43 +31,10 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.windsor.node.common.domain;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+public enum ScheduleFrequencyType {
 
-import org.apache.commons.lang.enums.Enum;
+    Once, Minutes, Hours, Days, Weeks, Months;
 
-public final class ScheduleFrequencyType extends Enum {
-
-    public static final ScheduleFrequencyType ONCE = new ScheduleFrequencyType(
-            "Once");
-    public static final ScheduleFrequencyType MINUTE = new ScheduleFrequencyType(
-            "Minute(s)");
-    public static final ScheduleFrequencyType HOUR = new ScheduleFrequencyType(
-            "Hour(s)");
-    public static final ScheduleFrequencyType DAY = new ScheduleFrequencyType(
-            "Day(s)");
-    public static final ScheduleFrequencyType WEEK = new ScheduleFrequencyType(
-            "Week(s)");
-    public static final ScheduleFrequencyType MONTH = new ScheduleFrequencyType(
-            "Month(s)");
-
-    private static final long serialVersionUID = 2;
-
-    private ScheduleFrequencyType(String type) {
-        super(type);
-    }
-
-    public static Map getEnumMap() {
-        return getEnumMap(ScheduleFrequencyType.class);
-    }
-
-    public static List getEnumList() {
-        return getEnumList(ScheduleFrequencyType.class);
-    }
-
-    public static Iterator iterator() {
-        return iterator(ScheduleFrequencyType.class);
-    }
+    private static final long serialVersionUID = 3;
 
 }

@@ -48,7 +48,7 @@ import com.windsor.node.data.dao.ActivityDao;
 public class BaseService {
 
     /** Logger for this class and subclasses */
-    public final Logger logger = Logger.getLogger(this.getClass());
+    protected final Logger logger = Logger.getLogger(this.getClass());
 
     private UserAccount adminAccount;
 

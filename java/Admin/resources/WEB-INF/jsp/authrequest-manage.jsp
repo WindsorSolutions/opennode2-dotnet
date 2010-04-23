@@ -104,13 +104,17 @@
 		                                            <c:forEach var="requestedFlow" items="${authRequest.requestedFlows}" varStatus="status">
 		                                              <tr class="<c:choose><c:when test="${status.index % 2 == 0}">rowOdd</c:when><c:otherwise>rowEven</c:otherwise></c:choose>">
 		                                                <td width="4%" align="right" valign="middle">
-		                                                    <img alt="" src="img/flow2.gif" style="border: 0; padding-right: 3px;" />
+		                                                    <label for="<c:out value="requestedFlows[${status.index}].accessGranted" />">
+		                                                      <img alt="" src="img/flow2.gif" style="border: 0; padding-right: 3px;" />
+		                                                    </label>
 		                                                </td>
 		                                                <td  width="76%" nowrap="nowrap">
 		                                                  <input type="hidden" 
 		                                                      name="<c:out value="requestedFlows[${status.index}].id" />" 
 		                                                      value="<c:out value="${requestedFlow.id}" />" />
-		                                                  <c:out value="${requestedFlow.flowName}" />
+		                                                  <label for="<c:out value="requestedFlows[${status.index}].accessGranted" />">
+		                                                      <c:out value="${requestedFlow.flowName}" />
+		                                                  </label>
                                                           <input type="hidden" 
                                                               name="<c:out value="requestedFlows[${status.index}].flowName" />" 
                                                               value="<c:out value="${requestedFlow.flowName}" />" />

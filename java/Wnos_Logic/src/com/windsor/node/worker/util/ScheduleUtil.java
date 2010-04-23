@@ -39,11 +39,12 @@ import com.windsor.node.common.domain.ScheduleFrequencyType;
 import com.windsor.node.common.domain.ScheduledItem;
 import com.windsor.node.util.DateUtil;
 
-/**
- *
- */
 public final class ScheduleUtil {
 
+    /**
+     * 
+     */
+    private static final String ADDED = "Added ";
     private static Logger logger = Logger.getLogger(ScheduleUtil.class);
 
     private ScheduleUtil() {
@@ -52,6 +53,15 @@ public final class ScheduleUtil {
 
     /**
      * Given a populated Schedule, determine the next execution time.
+     * 
+     * <p>
+     * Called when saving, and just prior to running, a Schedule.
+     * </p>
+     * 
+     * <p>
+     * We assume that the Schedule's start date is less than the end date - the
+     * ScheduleValidator enforces this in the Node Admin UI.
+     * </p>
      * 
      * @param schedule
      * @return Timestamp for the next run, possibly null
@@ -71,78 +81,78 @@ public final class ScheduleUtil {
         logger.debug("Start: " + start);
         logger.debug("End  : " + end);
         logger.debug("Last : " + last);
-        logger.debug("Next : " + savedNextRun);
+        logger.debug("Next run from db : " + savedNextRun);
 
-        if (now.before(start) || now.after(end)) {
+        /* If current time is after end time, we'll return null */
+        if (now.after(end)) {
 
-            logger
-                    .debug("Current time is outside of the start/end window, next run is: "
-                            + next);
+            logger.debug("End date has passed.");
+
+        } else if (now.before(start)) {
+            /* no need to set next if we haven't started */
+            logger.debug("Start date is in the future.");
 
         } else if (schedule.getFrequencyType().equals(
-                ScheduleFrequencyType.ONCE)) {
+                ScheduleFrequencyType.Once)) {
 
             logger.debug("Run-once schedule, next run is: " + next);
 
         } else {
-
+            /* it's time for either the first or a subsequent run */
             if (last == null || now.after(savedNextRun)) {
                 last = now;
             }
 
-            if (schedule.getFrequencyType()
-                    .equals(ScheduleFrequencyType.MINUTE)) {
-
+            switch (schedule.getFrequencyType()) {
+            case Minutes:
                 next = new Timestamp(DateUtil.getNextNMinute(last, frequency)
                         .getTime());
 
-                logger.debug("Added " + frequency + " minute(s), next run is: "
+                logger.debug(ADDED + frequency + " minute(s), next run is: "
                         + next);
+                break;
 
-            } else if (schedule.getFrequencyType().equals(
-                    ScheduleFrequencyType.HOUR)) {
-
+            case Hours:
                 next = new Timestamp(DateUtil.getNextNHour(last, frequency)
                         .getTime());
 
-                logger.debug("Added " + frequency + " hour(s), next run is: "
+                logger.debug(ADDED + frequency + " hour(s), next run is: "
                         + next);
-
-            } else if (schedule.getFrequencyType().equals(
-                    ScheduleFrequencyType.DAY)) {
-
+                break;
+            case Days:
                 next = new Timestamp(DateUtil.getNextNDay(last, frequency)
                         .getTime());
 
-                logger.debug("Added " + frequency + " day(s), next run is: "
+                logger.debug(ADDED + frequency + " day(s), next run is: "
                         + next);
+                break;
 
-            } else if (schedule.getFrequencyType().equals(
-                    ScheduleFrequencyType.WEEK)) {
+            case Weeks:
+                next = new Timestamp(DateUtil.getNextNWeek(last, frequency)
+                        .getTime());
 
-                next = new Timestamp(DateUtil.getNextNDay(last,
-                        frequency * DateUtil.DAYS_PER_WEEK).getTime());
-
-                logger.debug("Added " + frequency + " week(s), next run is: "
+                logger.debug(ADDED + frequency + " day(s), next run is: "
                         + next);
+                break;
 
-            } else if (schedule.getFrequencyType().equals(
-                    ScheduleFrequencyType.MONTH)) {
-
+            case Months:
                 next = new Timestamp(DateUtil.getNextNMonth(last, frequency)
                         .getTime());
 
-                logger.debug("Added " + frequency + " month(s), next run is: "
+                logger.debug(ADDED + frequency + " month(s), next run is: "
                         + next);
+                break;
+            default:
 
             }
         }
 
         if (null != next && next.after(end)) {
 
-            next = null;
             logger.debug("Next run " + next
-                    + " would be after the schedule's end time " + end);
+                    + " would be after the schedule's end time " + end
+                    + ", returning null");
+            next = null;
         }
 
         return next;

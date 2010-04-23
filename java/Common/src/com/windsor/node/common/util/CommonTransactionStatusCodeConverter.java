@@ -43,7 +43,7 @@ public final class CommonTransactionStatusCodeConverter {
 
         CommonTransactionStatusCode ctsc = null;
 
-        Object o = CommonTransactionStatusCode.valueOf(s.toUpperCase());
+        Object o = CommonTransactionStatusCode.valueOf(initCap(s));
 
         if ((null != o) && (o instanceof CommonTransactionStatusCode)) {
             ctsc = (CommonTransactionStatusCode) o;
@@ -54,16 +54,25 @@ public final class CommonTransactionStatusCodeConverter {
         return ctsc;
     }
 
+    private static String initCap(String s) {
+
+        StringBuilder buf = new StringBuilder(s.length());
+        buf.append(s.substring(0, 1).toUpperCase());
+        buf.append(s.substring(1).toLowerCase());
+
+        return buf.toString();
+    }
+
     public static Wsdl11TransactionStatusCode convertTo11Type(
             CommonTransactionStatusCode ctsc) {
         Wsdl11TransactionStatusCode wtsc = null;
 
         // account for special types that do not directly map to the common type
-        if (ctsc.equals(CommonTransactionStatusCode.PROCESSING)) {
+        if (ctsc.equals(CommonTransactionStatusCode.Processing)) {
             wtsc = Wsdl11TransactionStatusCode.PENDING;
-        } else if (ctsc.equals(CommonTransactionStatusCode.CANCELLED)) {
+        } else if (ctsc.equals(CommonTransactionStatusCode.Cancelled)) {
             wtsc = Wsdl11TransactionStatusCode.FAILED;
-        } else if (ctsc.equals(CommonTransactionStatusCode.APPROVED)) {
+        } else if (ctsc.equals(CommonTransactionStatusCode.Approved)) {
             wtsc = Wsdl11TransactionStatusCode.PROCESSED;
         } else {
             String s = ctsc.toString();

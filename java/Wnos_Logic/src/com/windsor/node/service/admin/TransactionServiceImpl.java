@@ -439,7 +439,7 @@ public class TransactionServiceImpl extends BaseService implements
         tran.setModifiedById(account.getId());
         tran.setCreator(account);
         tran.setStatus(new TransactionStatus(
-                CommonTransactionStatusCode.RECEIVED));
+                CommonTransactionStatusCode.Received));
 
         return transactionDao.save(tran);
 

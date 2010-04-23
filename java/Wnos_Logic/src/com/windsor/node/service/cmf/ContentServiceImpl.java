@@ -484,7 +484,7 @@ public class ContentServiceImpl extends BaseService implements ContentService,
             if (StringUtils.isBlank(content.getTransactionId())) {
                 tran = transactionDao.make(flow.getId(), account.getId(),
                         NodeMethodType.SUBMIT,
-                        CommonTransactionStatusCode.RECEIVED);
+                        CommonTransactionStatusCode.Received);
             } else {
                 tran = transactionDao.get(content.getTransactionId(), true);
                 if (tran == null) {
@@ -556,7 +556,7 @@ public class ContentServiceImpl extends BaseService implements ContentService,
             status.setTransactionId(tran.getNetworkId());
             status.setDescription("Received " + content.getDocuments().size()
                     + " documents");
-            status.setStatus(CommonTransactionStatusCode.RECEIVED);
+            status.setStatus(CommonTransactionStatusCode.Received);
 
             return status;
 

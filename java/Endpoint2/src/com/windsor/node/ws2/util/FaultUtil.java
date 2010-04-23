@@ -41,10 +41,13 @@ import org.apache.log4j.Logger;
 
 import com.windsor.node.ws2.Endpoint2FaultMessage;
 
-public class FaultUtil {
+public final class FaultUtil {
 
     private static final Logger logger = Logger.getLogger(FaultUtil.class
             .getName());
+
+    private FaultUtil() {
+    }
 
     /**
      * parseNodeFault
@@ -76,25 +79,27 @@ public class FaultUtil {
 
                 // org.apache.axiom.om
                 OMElement faultElt = fault.getDetail();
-                logger.debug("Fault Detail: " + faultElt);
 
-                NodeFaultDetailType faultDetail = NodeFaultDetailType.Factory
-                        .parse(faultElt.getXMLStreamReader());
+                if (null != faultElt) {
+                    logger.debug("Fault Detail: " + faultElt);
 
-                logger.debug("Fault Detail Description: "
-                        + faultDetail.getDescription());
+                    NodeFaultDetailType faultDetail = NodeFaultDetailType.Factory
+                            .parse(faultElt.getXMLStreamReader());
 
-                if (StringUtils.isNotBlank(ex.getMessage())) {
-                    faultDetail.setDescription(ex.getMessage() + " ("
-                            + faultDetail.getErrorCode() + " - "
-                            + faultDetail.getDescription() + ")");
-
-                    logger.debug("updated Fault Detail Description: "
+                    logger.debug("Fault Detail Description: "
                             + faultDetail.getDescription());
+
+                    if (StringUtils.isNotBlank(ex.getMessage())) {
+                        faultDetail.setDescription(ex.getMessage() + " ("
+                                + faultDetail.getErrorCode() + " - "
+                                + faultDetail.getDescription() + ")");
+
+                        logger.debug("updated Fault Detail Description: "
+                                + faultDetail.getDescription());
+                    }
+
+                    result = new Endpoint2FaultMessage(faultDetail);
                 }
-
-                result = new Endpoint2FaultMessage(faultDetail);
-
             } catch (Exception innerEx) {
 
                 String exMessage = "Error while parsing fault:"
@@ -113,7 +118,7 @@ public class FaultUtil {
 
     }
 
-    public static final Endpoint2FaultMessage makeFault(ErrorCodeList code,
+    public static Endpoint2FaultMessage makeFault(ErrorCodeList code,
             String description) {
 
         Endpoint2FaultMessage fault = new Endpoint2FaultMessage();

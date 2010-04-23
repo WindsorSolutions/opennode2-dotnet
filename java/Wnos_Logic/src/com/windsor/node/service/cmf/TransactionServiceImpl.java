@@ -201,7 +201,7 @@ public class TransactionServiceImpl extends BaseService implements
 
             if (tran != null) {
                 transactionDao.updateStatus(tran.getId(),
-                        CommonTransactionStatusCode.FAILED);
+                        CommonTransactionStatusCode.Failed);
             }
 
             throw new RuntimeException(ERROR_PREFIX + ex.getMessage(), ex);
@@ -335,7 +335,7 @@ public class TransactionServiceImpl extends BaseService implements
 
             NodeTransaction tran = transactionDao.make(flow.getId(), account
                     .getId(), NodeMethodType.NOTIFY,
-                    CommonTransactionStatusCode.RECEIVED);
+                    CommonTransactionStatusCode.Received);
 
             logger.debug("Transaction: " + tran);
 
@@ -391,7 +391,7 @@ public class TransactionServiceImpl extends BaseService implements
                 doc.setContent(mf.format(args, sb, fp).toString().getBytes(
                         "UTF-8"));
                 doc.setDocumentName(notif.getName());
-                doc.setDocumentStatus(CommonTransactionStatusCode.RECEIVED);
+                doc.setDocumentStatus(CommonTransactionStatusCode.Received);
                 doc
                         .setDocumentStatusDetail("Notification messages parsed into XML");
                 doc.setType(CommonContentType.XML);
@@ -417,7 +417,7 @@ public class TransactionServiceImpl extends BaseService implements
             status.setTransactionId(tran.getNetworkId());
             status.setDescription("Received notification with "
                     + tran.getDocuments().size() + " documents");
-            status.setStatus(CommonTransactionStatusCode.RECEIVED);
+            status.setStatus(CommonTransactionStatusCode.Received);
 
             logger.debug("Status: " + status);
 
@@ -486,7 +486,7 @@ public class TransactionServiceImpl extends BaseService implements
 
             if (tran != null) {
                 transactionDao.updateStatus(tran.getId(),
-                        CommonTransactionStatusCode.FAILED);
+                        CommonTransactionStatusCode.Failed);
             }
 
             throw new RuntimeException(ERROR_PREFIX + ex.getMessage(), ex);
@@ -560,7 +560,7 @@ public class TransactionServiceImpl extends BaseService implements
 
             if (tran != null) {
                 transactionDao.updateStatus(tran.getId(),
-                        CommonTransactionStatusCode.FAILED);
+                        CommonTransactionStatusCode.Failed);
             }
 
             throw new RuntimeException(ERROR_PREFIX + ex.getMessage(), ex);
@@ -676,7 +676,7 @@ public class TransactionServiceImpl extends BaseService implements
 
                 tran = transactionDao.make(flow.getId(), request
                         .getModifiedById(), NodeMethodType.QUERY,
-                        CommonTransactionStatusCode.PROCESSED);
+                        CommonTransactionStatusCode.Processed);
 
                 notificationHelper.sendQueries(request);
 
@@ -686,7 +686,7 @@ public class TransactionServiceImpl extends BaseService implements
 
                 tran = transactionDao.make(flow.getId(), request
                         .getModifiedById(), NodeMethodType.SOLICIT,
-                        CommonTransactionStatusCode.RECEIVED);
+                        CommonTransactionStatusCode.Received);
 
                 notificationHelper.sendSolicits(request);
 

@@ -281,7 +281,7 @@ public class RequestProcesor implements NetworkNodePortType {
             notification.setName(inDoc.getName());
 
             TransactionStatus status = new TransactionStatus();
-            status.setStatus(CommonTransactionStatusCode.RECEIVED);
+            status.setStatus(CommonTransactionStatusCode.Received);
 
             if (inDoc.getContent() != null) {
                 status

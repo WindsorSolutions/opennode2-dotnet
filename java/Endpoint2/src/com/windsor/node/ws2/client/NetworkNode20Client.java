@@ -105,38 +105,14 @@ public class NetworkNode20Client implements NodeClientService {
     private String localEndpointUrl;
     private File tempDir;
 
-    public void configure(URL partnerEndpointUrl, String localEndpointUrl,
-            NAASAccount credentials, File tempDir) {
+    /**
+     * @param ex
+     * @return
+     */
+    private String appendExceptionDetail(Exception ex) {
 
-        if (tempDir == null || !tempDir.exists() || !tempDir.isDirectory()) {
-            throw new RuntimeException("Null tempDir");
-        }
-
-        if (partnerEndpointUrl == null) {
-            throw new RuntimeException("Null partner");
-        }
-
-        if (StringUtils.isBlank(localEndpointUrl)) {
-            throw new RuntimeException("Null partner");
-        }
-
-        if (credentials == null
-                || StringUtils.isBlank(credentials.getUsername())
-                || StringUtils.isBlank(credentials.getPassword())) {
-            throw new RuntimeException("Null credentials");
-        }
-
-        this.partnerEndpointUrl = partnerEndpointUrl;
-        logger.debug("En20Client created with URL: " + partnerEndpointUrl);
-
-        this.credential = credentials;
-        logger.debug("Using account: " + credentials.getUsername());
-
-        this.localEndpointUrl = localEndpointUrl;
-        logger.debug("Local endpoint: " + localEndpointUrl);
-
-        this.tempDir = tempDir;
-        logger.debug("Temp Dir: " + tempDir);
+        return ": message " + ex.getMessage() + "(" + ex.getClass().getName()
+                + ")";
     }
 
     /**
@@ -147,7 +123,8 @@ public class NetworkNode20Client implements NodeClientService {
      * @throws AxisFault
      */
     private NetworkNode2Stub getStub(String operation) throws AxisFault {
-        logger.debug("Getting stub for: " + partnerEndpointUrl.toString());
+        logger.debug("Getting stub for: " + partnerEndpointUrl.toString()
+                + " and operation " + operation);
         return new NetworkNode2Stub(partnerEndpointUrl.toString());
     }
 
@@ -184,8 +161,42 @@ public class NetworkNode20Client implements NodeClientService {
             logger.error(ex);
             throw new RuntimeException("Error while authenticating to: "
                     + partnerEndpointUrl + " using: "
-                    + credential.getUsername() + " Message: " + ex.getMessage());
+                    + credential.getUsername() + appendExceptionDetail(ex));
         }
+    }
+
+    public void configure(URL partnerEndpointUrl, String localEndpointUrl,
+            NAASAccount credentials, File tempDir) {
+
+        if (tempDir == null || !tempDir.exists() || !tempDir.isDirectory()) {
+            throw new RuntimeException("Null tempDir");
+        }
+
+        if (partnerEndpointUrl == null) {
+            throw new RuntimeException("Null partner");
+        }
+
+        if (StringUtils.isBlank(localEndpointUrl)) {
+            throw new RuntimeException("Null partner");
+        }
+
+        if (credentials == null
+                || StringUtils.isBlank(credentials.getUsername())
+                || StringUtils.isBlank(credentials.getPassword())) {
+            throw new RuntimeException("Null credentials");
+        }
+
+        this.partnerEndpointUrl = partnerEndpointUrl;
+        logger.debug("En20Client created with URL: " + partnerEndpointUrl);
+
+        this.credential = credentials;
+        logger.debug("Using account: " + credentials.getUsername());
+
+        this.localEndpointUrl = localEndpointUrl;
+        logger.debug("Local endpoint: " + localEndpointUrl);
+
+        this.tempDir = tempDir;
+        logger.debug("Temp Dir: " + tempDir);
     }
 
     /**
@@ -307,7 +318,7 @@ public class NetworkNode20Client implements NodeClientService {
                     doc.setDocumentId(nodeDoc.getDocumentId().toString());
                 }
                 doc.setDocumentName(nodeDoc.getDocumentName());
-                doc.setDocumentStatus(CommonTransactionStatusCode.RECEIVED);
+                doc.setDocumentStatus(CommonTransactionStatusCode.Received);
                 doc.setDocumentStatusDetail("Document downloaded");
 
                 if (nodeDoc.getDocumentFormat() != null
@@ -325,7 +336,7 @@ public class NetworkNode20Client implements NodeClientService {
             TransactionStatus status = new TransactionStatus(transaction
                     .getNetworkId());
             status.setDescription("Notification performed");
-            status.setStatus(CommonTransactionStatusCode.UNKNOWN);
+            status.setStatus(CommonTransactionStatusCode.Unknown);
 
             transaction.setStatus(status);
 
@@ -334,7 +345,8 @@ public class NetworkNode20Client implements NodeClientService {
         } catch (Exception ex) {
             logger.error(ex);
             throw new RuntimeException("Error while downloading from: "
-                    + partnerEndpointUrl + " using: " + transaction, ex);
+                    + partnerEndpointUrl + " using transaction Id: "
+                    + transaction.getId() + appendExceptionDetail(ex));
         }
 
     }
@@ -382,7 +394,8 @@ public class NetworkNode20Client implements NodeClientService {
         } catch (Exception ex) {
             logger.error(ex);
             throw new RuntimeException("Error while getting status to: "
-                    + partnerEndpointUrl + " using: " + transactionId, ex);
+                    + partnerEndpointUrl + " using: " + transactionId
+                    + appendExceptionDetail(ex));
         }
 
     }
@@ -448,7 +461,7 @@ public class NetworkNode20Client implements NodeClientService {
                     .getNotifyResponse().getTransactionId());
             status.setDescription(response.getNotifyResponse()
                     .getStatusDetail());
-            status.setStatus(CommonTransactionStatusCode.RECEIVED);
+            status.setStatus(CommonTransactionStatusCode.Received);
 
             logger.debug("Status: " + status);
 
@@ -457,7 +470,7 @@ public class NetworkNode20Client implements NodeClientService {
         } catch (Exception ex) {
             logger.error(ex);
             throw new RuntimeException("Error while notifying: "
-                    + ex.getMessage(), ex);
+                    + appendExceptionDetail(ex));
         }
 
     }
@@ -520,7 +533,7 @@ public class NetworkNode20Client implements NodeClientService {
         } catch (Exception ex) {
             logger.error(ex);
             throw new RuntimeException("Error while querying: "
-                    + ex.getMessage(), ex);
+                    + appendExceptionDetail(ex));
         }
 
     }
@@ -608,7 +621,7 @@ public class NetworkNode20Client implements NodeClientService {
         } catch (Exception ex) {
             logger.error(ex);
             throw new RuntimeException("Error while submitting: "
-                    + ex.getMessage(), ex);
+                    + appendExceptionDetail(ex));
         }
 
     }
@@ -686,7 +699,7 @@ public class NetworkNode20Client implements NodeClientService {
                     .getSolicitResponse().getTransactionId());
             status.setDescription(response.getSolicitResponse()
                     .getStatusDetail());
-            status.setStatus(CommonTransactionStatusCode.RECEIVED);
+            status.setStatus(CommonTransactionStatusCode.Received);
             logger.debug("Status: " + status);
 
             return status;
@@ -694,7 +707,7 @@ public class NetworkNode20Client implements NodeClientService {
         } catch (Exception ex) {
             logger.error(ex);
             throw new RuntimeException("Error while soliciting: "
-                    + ex.getMessage(), ex);
+                    + appendExceptionDetail(ex));
         }
 
     }

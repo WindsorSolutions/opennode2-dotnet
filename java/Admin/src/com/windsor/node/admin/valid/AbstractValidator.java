@@ -36,19 +36,23 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 public abstract class AbstractValidator implements Validator {
-    
+
     public static final String FORMAT_ERR_CODE = "FORMAT";
-    
+
     public static final String REQUIRED_ERR_CODE = "REQUIRED";
-    
-    public static final String REQUIRED_MSG = "Required";
-    
+
+    public static final String REQUIRED_MSG = "required";
+
+    public static final String OUT_OF_RANGE_ERR_CODE = "REQUIRED";
+
+    public static final String OUT_OF_RANGE_MSG = "out of range";
+
     protected static final String VALIDATE = "Validate: ";
-    
+
     protected static final String VALIDATING_WITH = "Validating with: ";
-    
+
     protected Logger logger;
-    
+
     public abstract boolean supports(Class arg0);
 
     public abstract void validate(Object arg0, Errors arg1);

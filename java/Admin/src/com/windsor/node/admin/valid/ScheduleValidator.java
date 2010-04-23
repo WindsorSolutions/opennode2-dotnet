@@ -42,7 +42,7 @@ public class ScheduleValidator extends AbstractValidator {
 
     public static final int MAX_ITEM_FREQUENCY = 525600;
     public static final int MIN_ITEM_FREQUENCY = 0;
-    
+
     private static final String AND = " and ";
 
     public ScheduleValidator() {
@@ -61,63 +61,67 @@ public class ScheduleValidator extends AbstractValidator {
 
         logger.debug(VALIDATING_WITH + item);
 
-        if (item == null) {
+        if (null == item) {
+
             throw new RuntimeException("No object to validate.");
-        } else {
-
-            if (StringUtils.isBlank(item.getName())) {
-                logger.debug("getName() is blank");
-                errors.rejectValue("name", REQUIRED_ERR_CODE, REQUIRED_MSG);
-            }
-
-            if (StringUtils.isBlank(item.getFlowId())) {
-                logger.debug("getFlowId() is blank");
-                errors.rejectValue("flowId", REQUIRED_ERR_CODE, REQUIRED_MSG);
-            }
-
-            if (item.getStartOn() == null) {
-                logger.debug("getStartOn() is null");
-                errors.rejectValue("startOn", REQUIRED_ERR_CODE, REQUIRED_MSG);
-            }
-
-            if (StringUtils.isBlank(item.getSourceId())) {
-                logger.debug("getSourceId() is blank");
-                errors.rejectValue("sourceId", REQUIRED_ERR_CODE, REQUIRED_MSG);
-            }
-
-            if (item.getSourceType() == null
-                    || item.getSourceType() == ScheduledItemSourceType.NONE) {
-                logger.debug("getSourceType() is null");
-                errors.rejectValue("sourceType", REQUIRED_ERR_CODE,
-                        REQUIRED_MSG);
-            }
-
-            if ((item.getSourceType() == ScheduledItemSourceType.WEBSERVICE_QUERY || item
-                    .getSourceType() == ScheduledItemSourceType.WEBSERVICE_SOLICIT)
-                    && StringUtils.isBlank(item.getSourceOperation())) {
-                logger.debug("sourceOperation is blank");
-                errors.rejectValue("sourceOperation", REQUIRED_ERR_CODE,
-                        REQUIRED_MSG);
-            }
-
-            if (item.getFrequencyType() == null) {
-                logger.debug("getFrequencyType() is null");
-                errors.rejectValue("frequencyType", REQUIRED_ERR_CODE,
-                        REQUIRED_MSG);
-            }
-
-            if (item.getFrequency() < MIN_ITEM_FREQUENCY
-                    || item.getFrequency() > MAX_ITEM_FREQUENCY) {
-                logger.debug("getFrequency is out of range. Must be between "
-                        + MIN_ITEM_FREQUENCY + AND + MAX_ITEM_FREQUENCY);
-                errors.rejectValue("frequency", REQUIRED_ERR_CODE,
-                        "Argument out of range. Must be between "
-                                + MIN_ITEM_FREQUENCY + AND
-                                + MAX_ITEM_FREQUENCY);
-            }
 
         }
 
-    }
+        if (StringUtils.isBlank(item.getName())) {
+            logger.debug("getName() is blank");
+            errors.rejectValue("name", REQUIRED_ERR_CODE, REQUIRED_MSG);
+        }
 
+        else if (StringUtils.isBlank(item.getFlowId())) {
+            logger.debug("getFlowId() is blank");
+            errors.rejectValue("flowId", REQUIRED_ERR_CODE, REQUIRED_MSG);
+        }
+
+        else if (item.getStartOn() == null) {
+            logger.debug("getStartOn() is null");
+            errors.rejectValue("startOn", REQUIRED_ERR_CODE, REQUIRED_MSG);
+        }
+
+        else if (StringUtils.isBlank(item.getSourceId())) {
+            logger.debug("getSourceId() is blank");
+            errors.rejectValue("sourceId", REQUIRED_ERR_CODE, REQUIRED_MSG);
+        }
+
+        else if (item.getSourceType() == null
+                || item.getSourceType() == ScheduledItemSourceType.None) {
+            logger.debug("getSourceType() is null");
+            errors.rejectValue("sourceType", REQUIRED_ERR_CODE, REQUIRED_MSG);
+        }
+
+        else if ((item.getSourceType() == ScheduledItemSourceType.WebServiceQuery || item
+                .getSourceType() == ScheduledItemSourceType.WebServiceSolicit)
+                && StringUtils.isBlank(item.getSourceOperation())) {
+            logger.debug("sourceOperation is blank");
+            errors.rejectValue("sourceOperation", REQUIRED_ERR_CODE,
+                    REQUIRED_MSG);
+        }
+
+        else if (item.getFrequencyType() == null) {
+            logger.debug("getFrequencyType() is null");
+            errors
+                    .rejectValue("frequencyType", REQUIRED_ERR_CODE,
+                            REQUIRED_MSG);
+        }
+
+        else if (item.getFrequency() < MIN_ITEM_FREQUENCY
+                || item.getFrequency() > MAX_ITEM_FREQUENCY) {
+
+            String msg = "Frequency is out of range. Must be between ";
+            logger.debug(msg + MIN_ITEM_FREQUENCY + AND + MAX_ITEM_FREQUENCY);
+            errors.rejectValue("frequency", REQUIRED_ERR_CODE, msg
+                    + MIN_ITEM_FREQUENCY + AND + MAX_ITEM_FREQUENCY);
+        }
+
+        else if (item.getEndOn().before(item.getStartOn())) {
+
+            String msg = "Ends On is out of range. Must be after Starts On";
+            logger.debug(msg);
+            errors.rejectValue("endOn", OUT_OF_RANGE_ERR_CODE, msg);
+        }
+    }
 }

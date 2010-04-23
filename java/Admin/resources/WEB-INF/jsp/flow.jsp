@@ -34,8 +34,8 @@
                                       style="border: 0; vertical-align: middle; padding-right: 3px;" />
                                 </td>
                                 <td width="93%">
-								    <strong><c:out value="${flow.name}" /></strong>
-									<c:if test="${flow.secured == true}">&nbsp;(Protected)</c:if>
+								    <strong><a href="flow-edit.htm?id=<c:out value="${flow.id}" />" class="whitetext"><c:out value="${flow.name}" /></strong>
+									<c:if test="${flow.secured == true}">&nbsp;(Protected)</c:if></a>
 								</td>
 								<td width="5%" align="right">
 									<input type="image"
@@ -57,8 +57,8 @@
 								<td nowrap="nowrap" width="93%">
 								    <img alt="" src="img/icon_world_dynamic.gif"
 									   style="border: 0; vertical-align: middle; padding-right: 3px;" />
-									<strong><c:out value="${srv.name}" /></strong>&nbsp;
-									(<c:out value="${srv.type}" /><c:if test="${srv.active == false}">&nbsp;[disabled]</c:if>)
+									<strong><a href="service-edit.htm?id=<c:out value="${srv.id}" />" class="blacktext"><c:out value="${srv.name}" /></strong>&nbsp;
+									(<c:out value="${srv.type}" /><c:if test="${srv.active == false}">&nbsp;[disabled]</c:if>)</a>
 								</td>
 								<td width="5%" align="right">
 								    <input type="image"

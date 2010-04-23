@@ -186,7 +186,7 @@ public class Ends2GetServicesQueryProcessor extends BaseWnosPlugin implements
 
         ProcessContentResult result = new ProcessContentResult();
         result.setSuccess(false);
-        result.setStatus(CommonTransactionStatusCode.FAILED);
+        result.setStatus(CommonTransactionStatusCode.Failed);
 
         try {
 
@@ -232,7 +232,7 @@ public class Ends2GetServicesQueryProcessor extends BaseWnosPlugin implements
             result.getDocuments().add(doc);
 
             result.setSuccess(true);
-            result.setStatus(CommonTransactionStatusCode.PROCESSED);
+            result.setStatus(CommonTransactionStatusCode.Processed);
             result.getAuditEntries().add(makeEntry("Done: OK"));
 
         } catch (Exception ex) {
@@ -241,7 +241,7 @@ public class Ends2GetServicesQueryProcessor extends BaseWnosPlugin implements
             ex.printStackTrace();
 
             result.setSuccess(false);
-            result.setStatus(CommonTransactionStatusCode.FAILED);
+            result.setStatus(CommonTransactionStatusCode.Failed);
 
             result.getAuditEntries().add(
                     makeEntry("Error while executing: "

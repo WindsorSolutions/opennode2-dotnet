@@ -1,4 +1,67 @@
 ================================================================================
+OpenNode2 v1.24 for Java - Release Notes                             2010-03-21
+================================================================================
+This release addresses a number of compatibility issues in the Node itself, 
+especially the v.20 endpoint (aka wne2). It also contains an update to some
+third-party libraries, and numerous small enhancements. 
+
+Because of these changes in the Node, plugins with version numbers less than 
+1.24 will not work with this release.
+
+If installing this or a later version to run with a Node Administration database
+used with an earlier release, please run the Nschedule_frequencytype_update.sql
+script in database/fixes before starting the Node.
+
+FIXED/RESOLVED
+========================================
+  
+* Configured wne2 so that the proper WSDL 1.1 is returned when calling 
+  http<s>://<hostname>/wne2/services/v20?wsdl. This requires hard-coding the 
+  protocol, host, and port in the wsdl file, which is now stored in 
+  appropriate "Endpoint2/env/<build target>/v20.wsdl" and handled in the build. 
+  See the comments near the bottom of the WSDL file for an example.
+
+* In order to improve copmatibility with other Node implementations, wne2 was
+  modified to use MTOM only on Submit and Download method calls, and to never set 
+  headers in the SOAP envelope.
+  
+* Modified the built-in v20 client to never send the "SOAP-ACTION" HTTP header,
+  and to never set headers in the SOAP envelope.  
+
+* Refined CommonTransactionStatusCode and related classes to better handle 
+  mixed case in status codes - a compatibility issue across Node implementations.
+  
+* Found and fixed a condition in which an "action=" attribute was added to the
+  HTTP "content-type" header, thus breaking interoperability with certain ENN 
+  v20 endpoint implementations.
+  
+* Refactored fault/exception handling in the built-in ENN v20 client, so it no 
+  longer passed wne2-specific exception types back to wnos. (This would result 
+  in a ClassNotFoundException in wnos, thus masking the original error message.)
+
+NEW
+========================================
+
+* In Node Admin, linked names of items in lists (schedule.htm, flow.htm, etc.) 
+  links (or HTML labels) so clicking the name is the same as clicking the green 
+  "edit" icon.
+  
+* For Schedules, corrected the logic for setting the next run date, and made the 
+  "Next run on: display in Node Admin more sensible (especially after selecting 
+  "Save and run now".
+  
+* In the Schedule Editor, the "Save and run now" button is deactivated whenever
+  the Schedule itself is deactivated.
+  
+* The Manage Schedules page now displays [Inactive] next to the Schedule's name
+  when appropriate. 
+
+* Upgraded Endpoint2 to Axis2 v1.5.1, in the hopes of getting it compatible with
+  WebLogic 10.3.
+
+* Minor updates to DDL for EIS and WQX plugins. 
+
+================================================================================
 OpenNode2 v1.23 for Java - Release Notes                             2009-12-31
 ================================================================================
 The purpose ofthis update is to address an issue in the WQX plugin.

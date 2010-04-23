@@ -99,23 +99,27 @@ function goto(searchValue){
 
 							<tr
 								class="<c:choose><c:when test="${status.index % 2 == 0}">rowOdd</c:when><c:otherwise>rowEven</c:otherwise></c:choose>">
-								<td width="95%" nowrap="nowrap"><c:choose>
-									<c:when test="${user.active}">
-										<img alt="User" src="img/page_user_dark.gif"
-											style="border: 0; vertical-align: middle; padding-right: 3px;" />
-									</c:when>
-									<c:otherwise>
-										<img alt="Inactive" src="img/page_user_light.gif"
-											style="border: 0; vertical-align: middle; padding-right: 3px;" />
-									</c:otherwise>
-								</c:choose> <c:out value="${user.naasUserName}" />&nbsp;( <c:choose>
+								<td width="95%" nowrap="nowrap">								    
+                                    <a href="account-edit.htm?id=<c:out value="${user.id}" />">
+	                                    <c:choose>
+											<c:when test="${user.active}">
+												<img alt="User" src="img/page_user_dark.gif"
+													style="border: 0; vertical-align: middle; padding-right: 3px;" />
+											</c:when>
+											<c:otherwise>
+												<img alt="Inactive" src="img/page_user_light.gif"
+													style="border: 0; vertical-align: middle; padding-right: 3px;" />
+											</c:otherwise>
+								        </c:choose>
+								    </a> 
+								    <a href="account-edit.htm?id=<c:out value="${user.id}" />" class="blacktext"><c:out value="${user.naasUserName}" />&nbsp;( <c:choose>
 									<c:when test="${user.active}">
 										<c:out value="${user.affiliationCode}" />/<c:out value="${user.role}" />
 									</c:when>
 									<c:otherwise>
 										<span class="error">Inactive</span>
 									</c:otherwise>
-								</c:choose>)</td>
+								</c:choose>)</a></td>
 								<td width="5%" style="text-align: right"><input type="image"
 									title="Edit" src="img/action_go.gif" alt="Edit"
 									style="border-width: 0px;"

@@ -28,8 +28,8 @@ $helper.print("handlerQuery: $handlerQuery")
             <hdr:value>$rcraInfoUserId</hdr:value>
         </hdr:Property>
         <hdr:Property>
-        <hdr:name>RCRAInfoStateCode</hdr:name>
-        <hdr:value>$rcraInfoStateCode</hdr:value>
+            <hdr:name>RCRAInfoStateCode</hdr:name>
+            <hdr:value>$rcraInfoStateCode</hdr:value>
         </hdr:Property>
     </hdr:Header>
 <hdr:Payload Operation="$payloadOperation">

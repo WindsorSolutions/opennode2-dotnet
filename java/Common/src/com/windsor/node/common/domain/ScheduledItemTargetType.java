@@ -31,40 +31,11 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.windsor.node.common.domain;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
-import org.apache.commons.lang.enums.Enum;
+public enum ScheduledItemTargetType{
 
-public final class ScheduledItemTargetType extends Enum {
+    None, Partner, Schematron, File, Email;
 
-    public static final ScheduledItemTargetType NONE = new ScheduledItemTargetType(
-            "None");
-    public static final ScheduledItemTargetType PARTNER = new ScheduledItemTargetType(
-            "Partner");
-    public static final ScheduledItemTargetType SCHEMATRON = new ScheduledItemTargetType(
-            "Schematron");
-    public static final ScheduledItemTargetType FILE = new ScheduledItemTargetType(
-            "File");
-    public static final ScheduledItemTargetType EMAIL = new ScheduledItemTargetType(
-            "Email");
+    private static final long serialVersionUID = 2;
 
-    private static final long serialVersionUID = 1;
-    
-    private ScheduledItemTargetType(String type) {
-        super(type);
-    }
-
-    public static Map getEnumMap() {
-        return getEnumMap(ScheduledItemTargetType.class);
-    }
-
-    public static List getEnumList() {
-        return getEnumList(ScheduledItemTargetType.class);
-    }
-
-    public static Iterator iterator() {
-        return iterator(ScheduledItemTargetType.class);
-    }
 }

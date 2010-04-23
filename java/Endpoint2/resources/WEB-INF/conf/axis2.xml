@@ -266,7 +266,7 @@
 	<!--Uncomment if you want to have TCP transport support-->
     <!--transportReceiver name="tcp"
                        class="org.apache.axis2.transport.tcp.TCPServer">
-        <parameter name="port">6060</parameter-->>
+        <parameter name="port">6060</parameter-->
         <!--If you want to give your own host address for EPR generation-->
         <!--uncomment the following paramter , and set it as you required.-->
         <!--<parameter name="hostname">tcp://myApp.com/ws</parameter>-->
@@ -275,9 +275,9 @@
     <!-- ================================================= -->
     <!-- Transport Outs -->
     <!-- ================================================= -->
-
-    <transportSender name="tcp"
-                     class="org.apache.axis2.transport.tcp.TCPTransportSender"/>
+<!-- TCPTransportSender doesn't exist in Axis 1.5 -->
+<!--    <transportSender name="tcp"
+                     class="org.apache.axis2.transport.tcp.TCPTransportSender"/>  -->
     <transportSender name="local"
                      class="org.apache.axis2.transport.local.LocalTransportSender"/>
     <transportSender name="http"
@@ -286,7 +286,7 @@
         <parameter name="Transfer-Encoding">chunked</parameter>
 
         <!-- If following is set to 'true', optional action part of the Content-Type will not be added to the SOAP 1.2 messages -->
-        <!--  <parameter name="OmitSOAP12Action">true</parameter>  -->
+        <parameter name="OmitSOAP12Action">true</parameter>
     </transportSender>
 
 <!-- WindsorHTTPTransportSender accepts self-signed certs without adding them to the local store,

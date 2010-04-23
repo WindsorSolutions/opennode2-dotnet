@@ -8,7 +8,7 @@ $helper.startStopWatch()
 #set($handlerQuery = "SELECT EPA_HDLR_ID FROM RCRA_CME_FAC_SUBM ")
 #end
 $helper.print("handlerQuery: $handlerQuery")
-#if($makeHeader)#if($makeHeader == "true" || $makeHeader == "TRUE")
+#if($makeHeader)#if($makeHeader.equalsIgnoreCase("true"))## || $makeHeader == "TRUE")
 <hdr:Document xmlns:hdr="http://www.exchangenetwork.net/schema/v1.0/ExchangeNetworkDocument.xsd" 
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
     xsi:schemaLocation="http://www.exchangenetwork.net/schema/v1.0/ExchangeNetworkDocument.xsd http://www.exchangenetwork.net/schema/v1.0/ExchangeNetworkDocument.xsd"
@@ -28,8 +28,8 @@ $helper.print("handlerQuery: $handlerQuery")
             <hdr:value>$rcraInfoUserId</hdr:value>
         </hdr:Property>
         <hdr:Property>
-        <hdr:name>RCRAInfoStateCode</hdr:name>
-        <hdr:value>$rcraInfoStateCode</hdr:value>
+            <hdr:name>RCRAInfoStateCode</hdr:name>
+            <hdr:value>$rcraInfoStateCode</hdr:value>
         </hdr:Property>
     </hdr:Header>
 <hdr:Payload Operation="$payloadOperation">

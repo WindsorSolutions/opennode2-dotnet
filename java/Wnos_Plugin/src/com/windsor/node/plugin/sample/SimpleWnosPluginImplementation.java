@@ -143,7 +143,7 @@ public class SimpleWnosPluginImplementation extends BaseWnosPlugin {
 
         ProcessContentResult result = new ProcessContentResult();
         result.setSuccess(false);
-        result.setStatus(CommonTransactionStatusCode.FAILED);
+        result.setStatus(CommonTransactionStatusCode.Failed);
 
         result.getAuditEntries().add(
                 new ActivityEntry("Validating transaction"));
@@ -198,7 +198,7 @@ public class SimpleWnosPluginImplementation extends BaseWnosPlugin {
             result.getDocuments().add(doc);
 
             result.setSuccess(true);
-            result.setStatus(CommonTransactionStatusCode.PROCESSED);
+            result.setStatus(CommonTransactionStatusCode.Processed);
 
         } catch (Exception ex) {
 
@@ -212,7 +212,7 @@ public class SimpleWnosPluginImplementation extends BaseWnosPlugin {
             result.getAuditEntries().add(new ActivityEntry(ex.getMessage()));
 
             result.setSuccess(false);
-            result.setStatus(CommonTransactionStatusCode.FAILED);
+            result.setStatus(CommonTransactionStatusCode.Failed);
 
         }
 

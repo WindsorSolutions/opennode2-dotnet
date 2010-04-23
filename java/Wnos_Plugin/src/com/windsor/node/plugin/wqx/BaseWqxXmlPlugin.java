@@ -177,7 +177,7 @@ public abstract class BaseWqxXmlPlugin extends BaseWqxPlugin implements
         NodeTransaction transaction = aTran;
         ProcessContentResult result = new ProcessContentResult();
         result.setSuccess(false);
-        result.setStatus(CommonTransactionStatusCode.FAILED);
+        result.setStatus(CommonTransactionStatusCode.Failed);
 
         try {
 
@@ -256,7 +256,7 @@ public abstract class BaseWqxXmlPlugin extends BaseWqxPlugin implements
             }
 
             result.setSuccess(true);
-            result.setStatus(CommonTransactionStatusCode.PENDING);
+            result.setStatus(CommonTransactionStatusCode.Pending);
             result.getAuditEntries().add(makeEntry("Done: OK"));
 
         } catch (Exception ex) {
@@ -265,7 +265,7 @@ public abstract class BaseWqxXmlPlugin extends BaseWqxPlugin implements
             ex.printStackTrace();
 
             result.setSuccess(false);
-            result.setStatus(CommonTransactionStatusCode.FAILED);
+            result.setStatus(CommonTransactionStatusCode.Failed);
 
             result.getAuditEntries().add(
                     makeEntry("Error while executing: "
@@ -350,7 +350,7 @@ public abstract class BaseWqxXmlPlugin extends BaseWqxPlugin implements
     }
 
     /**
-     * @param optionalValueFromTransactionArgs
+     * @param s
      * @return
      * @throws ParseException
      */
@@ -393,7 +393,7 @@ public abstract class BaseWqxXmlPlugin extends BaseWqxPlugin implements
         debug("Saving transaction status to WQX_SubmissionHistory table...");
         getStatusDao().createStatus(getIdGenerator().createId(),
                 getOrgIdFromTransaction(transaction), operationType,
-                transaction.getId(), CommonTransactionStatusCode.PENDING);
+                transaction.getId(), CommonTransactionStatusCode.Pending);
     }
 
     private void checkForPendingSubmissions(WqxOperationType operationType,

@@ -216,9 +216,27 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
 
         logger.debug("Setting schedule save arguments from: " + instance);
 
-        Object[] args = new Object[20];
+        Object[] args = scheduleToFieldArray(instance);
+
+        int[] types = jdbcTypesForScheduledItem();
+
+        logger.debug("SQL: " + sql);
+
+        printourArgs(args);
+
+        getJdbcTemplate().update(sql, args, types);
+
+        saveSourceArgs(instance.getSourceArgs(), instance.getId());
+
+        return get(instance.getId());
+
+    }
+
+    private Object[] scheduleToFieldArray(ScheduledItem instance) {
 
         // CHECKSTYLE:OFF
+        Object[] args = new Object[20];
+
         // Name
         args[0] = instance.getName();
         // FlowId
@@ -228,13 +246,13 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
         // EndOn
         args[3] = instance.getEndOn();
         // SourceType
-        args[4] = instance.getSourceType().getName();
+        args[4] = instance.getSourceType().toString();
         // SourceId
         args[5] = instance.getSourceId();
         // SourceOperation
         args[6] = instance.getSourceOperation();
         // TargetType
-        args[7] = instance.getTargetType().getName();
+        args[7] = instance.getTargetType().toString();
         // TargetId
         args[8] = instance.getTargetId();
         // LastExecutionInfo
@@ -244,7 +262,7 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
         // NextRun
         args[11] = instance.getNextRunOn();
         // FrequencyType
-        args[12] = instance.getFrequencyType().getName();
+        args[12] = instance.getFrequencyType().toString();
         // Frequency
         args[13] = new Integer(instance.getFrequency());
         // ModifiedBy
@@ -259,6 +277,13 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
         args[18] = instance.getExecuteStatus().name();
         // id
         args[19] = instance.getId();
+
+        return args;
+    }
+
+    private int[] jdbcTypesForScheduledItem() {
+
+        // CHECKSTYLE:OFF
 
         int[] types = new int[20];
         // Name
@@ -303,16 +328,7 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
         types[19] = Types.VARCHAR;
         // CHECKSTYLE:ON
 
-        logger.debug("SQL: " + sql);
-
-        printourArgs(args);
-
-        getJdbcTemplate().update(sql, args, types);
-
-        saveSourceArgs(instance.getSourceArgs(), instance.getId());
-
-        return get(instance.getId());
-
+        return types;
     }
 
     private void saveSourceArgs(ByIndexOrNameMap sourceArgs, String scheduleId) {
@@ -434,7 +450,7 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
 
             // SourceType
             obj.setSourceType((ScheduledItemSourceType) ScheduledItemSourceType
-                    .getEnumMap().get(rs.getString("SourceType")));
+                    .valueOf(rs.getString("SourceType")));
 
             // SourceId
             obj.setSourceId(rs.getString("SourceId"));
@@ -442,7 +458,8 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
             obj.setSourceOperation(rs.getString("SourceOperation"));
 
             // SourceArgs
-            Map map = getMap(SQL_SELECT_ARG, rs.getString("Id"), false);
+            Map<String, String> map = getMap(SQL_SELECT_ARG,
+                    rs.getString("Id"), false);
             if (MapUtils.isNotEmpty(map)) {
                 ByIndexOrNameMap sourceArgs = new ByIndexOrNameMap(map);
                 obj.setSourceArgs(sourceArgs);
@@ -450,7 +467,7 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
 
             // TargetType
             obj.setTargetType((ScheduledItemTargetType) ScheduledItemTargetType
-                    .getEnumMap().get(rs.getString("TargetType")));
+                    .valueOf(rs.getString("TargetType")));
 
             // TargetId
             obj.setTargetId(rs.getString("TargetId"));
@@ -463,7 +480,7 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
 
             // FrequencyType
             obj.setFrequencyType((ScheduleFrequencyType) ScheduleFrequencyType
-                    .getEnumMap().get(rs.getString("FrequencyType")));
+                    .valueOf(rs.getString("FrequencyType")));
 
             // Frequency
             obj.setFrequency(rs.getInt("Frequency"));

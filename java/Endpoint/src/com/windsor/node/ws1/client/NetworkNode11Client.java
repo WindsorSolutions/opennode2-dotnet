@@ -188,7 +188,7 @@ public class NetworkNode11Client implements NodeClientService {
 
                 doc.setContent(FileUtils.readFileToByteArray(tempFile));
                 doc.setDocumentName(tempFile.getName());
-                doc.setDocumentStatus(CommonTransactionStatusCode.RECEIVED);
+                doc.setDocumentStatus(CommonTransactionStatusCode.Received);
                 doc.setDocumentStatusDetail("Document downloaded");
 
                 transaction.getDocuments().add(doc);
@@ -201,7 +201,7 @@ public class NetworkNode11Client implements NodeClientService {
             TransactionStatus status = new TransactionStatus(transaction
                     .getNetworkId());
             status.setDescription("Notification performed");
-            status.setStatus(CommonTransactionStatusCode.UNKNOWN);
+            status.setStatus(CommonTransactionStatusCode.Unknown);
 
             transaction.setStatus(status);
 
@@ -257,7 +257,7 @@ public class NetworkNode11Client implements NodeClientService {
 
             TransactionStatus status = new TransactionStatus(transactionId);
             status.setDescription("Notification performed");
-            status.setStatus(CommonTransactionStatusCode.RECEIVED);
+            status.setStatus(CommonTransactionStatusCode.Received);
 
             return status;
 
@@ -500,13 +500,13 @@ public class NetworkNode11Client implements NodeClientService {
 
             TransactionStatus status = new TransactionStatus(transactionId);
             status.setDescription("Notification performed");
-            status.setStatus(CommonTransactionStatusCode.RECEIVED);
+            status.setStatus(CommonTransactionStatusCode.Received);
 
             return status;
 
         } catch (Exception ex) {
             logger.error(ex);
-            throw new RuntimeException("Error while solicitung: "
+            throw new RuntimeException("Error while soliciting: "
                     + ex.getMessage(), ex);
         }
     }

@@ -184,7 +184,7 @@ public class ScheduleExecutionWorker extends NodeWorker implements
 
             tran = transactionDao.make(schedule.getFlowId(), schedule
                     .getModifiedById(), NodeMethodType.SCHEDULE,
-                    CommonTransactionStatusCode.PROCESSING);
+                    CommonTransactionStatusCode.Processing);
 
             tran.setCreator(accountDao.get(schedule.getModifiedById()));
 
@@ -198,9 +198,9 @@ public class ScheduleExecutionWorker extends NodeWorker implements
 
             // Check if this is request or generate
             if (schedule.getSourceType().equals(
-                    ScheduledItemSourceType.WEBSERVICE_QUERY)
+                    ScheduledItemSourceType.WebServiceQuery)
                     || schedule.getSourceType().equals(
-                            ScheduledItemSourceType.WEBSERVICE_SOLICIT)) {
+                            ScheduledItemSourceType.WebServiceSolicit)) {
                 // WEBSERVICE
                 logEntry.addEntryAll(partnerDataProcessor.getAndSaveData(tran
                         .getId(), schedule.getSourceId(), schedule
@@ -208,13 +208,13 @@ public class ScheduleExecutionWorker extends NodeWorker implements
                         schedule.getSourceArgs(), tran.getFlow().getName()));
 
             } else if (schedule.getSourceType().equals(
-                    ScheduledItemSourceType.FILE)) {
+                    ScheduledItemSourceType.File)) {
                 // FILE
                 logEntry.addEntryAll(fileSystemDataProcessor.getAndSaveData(
                         tran.getId(), schedule.getSourceId()));
 
             } else if (schedule.getSourceType().equals(
-                    ScheduledItemSourceType.LOCAL_SERVICE)) {
+                    ScheduledItemSourceType.LocalService)) {
                 // LOCALSERVICE
                 logEntry.addEntryAll(localServiceDataProcessor.getAndSaveData(
                         tran, schedule.getSourceId(), schedule
@@ -230,25 +230,25 @@ public class ScheduleExecutionWorker extends NodeWorker implements
              * Target
              */
             if (schedule.getTargetType()
-                    .equals(ScheduledItemTargetType.PARTNER)) {
+                    .equals(ScheduledItemTargetType.Partner)) {
                 // PARTNER
                 logEntry.addEntryAll(partnerDataProcessor.getAndSendData(tran,
                         schedule.getTargetId(), tran.getFlow().getName()));
 
             } else if (schedule.getTargetType().equals(
-                    ScheduledItemTargetType.SCHEMATRON)) {
+                    ScheduledItemTargetType.Schematron)) {
                 // SCHEMATRON
                 logEntry.addEntryAll(schematronDataProcessor
                         .getAndSendData(tran));
 
             } else if (schedule.getTargetType().equals(
-                    ScheduledItemTargetType.EMAIL)) {
+                    ScheduledItemTargetType.Email)) {
                 // EMAIL
                 logEntry.addEntryAll(emailDataProcessor.getAndSendData(tran
                         .getId(), schedule));
 
             } else if (schedule.getTargetType().equals(
-                    ScheduledItemTargetType.FILE)) {
+                    ScheduledItemTargetType.File)) {
                 logEntry.addEntryAll(fileSystemDataProcessor.getAndSendData(
                         tran.getId(), schedule.getTargetId()));
 
@@ -264,7 +264,7 @@ public class ScheduleExecutionWorker extends NodeWorker implements
 
             logger.debug("Updating status to processed for: " + tran.getId());
             transactionDao.updateStatus(tran.getId(),
-                    CommonTransactionStatusCode.PROCESSED);
+                    CommonTransactionStatusCode.Processed);
 
             logger.debug("Sending notifications for: " + schedule);
             notificationHelper.sendSchedule(schedule, tran.getId());
@@ -283,7 +283,7 @@ public class ScheduleExecutionWorker extends NodeWorker implements
 
             if (tran != null) {
                 transactionDao.updateStatus(tran.getId(),
-                        CommonTransactionStatusCode.FAILED);
+                        CommonTransactionStatusCode.Failed);
             }
 
             scheduleDao.setRunInfo(schedule.getId(), getScheduleInfo(logEntry,

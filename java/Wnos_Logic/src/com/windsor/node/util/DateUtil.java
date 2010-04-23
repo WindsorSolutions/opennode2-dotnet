@@ -116,6 +116,20 @@ public final class DateUtil {
         return (Date) calendar.getTime().clone();
     }
 
+    public static Date getNextNMinute(Date date, int n) {
+        GregorianCalendar calendar = new GregorianCalendar();
+        calendar.setTime(date);
+        calendar.add(GregorianCalendar.MINUTE, n);
+        return (Date) calendar.getTime().clone();
+    }
+
+    public static Date getNextNHour(Date date, int n) {
+        GregorianCalendar calendar = new GregorianCalendar();
+        calendar.setTime(date);
+        calendar.add(GregorianCalendar.HOUR_OF_DAY, n);
+        return (Date) calendar.getTime().clone();
+    }
+
     public static Date getNextDay(Date date) {
         GregorianCalendar calendar = new GregorianCalendar();
         calendar.setTime(date);
@@ -130,24 +144,17 @@ public final class DateUtil {
         return (Date) calendar.getTime().clone();
     }
 
+    public static Date getNextNWeek(Date date, int n) {
+        GregorianCalendar calendar = new GregorianCalendar();
+        calendar.setTime(date);
+        calendar.add(GregorianCalendar.DAY_OF_MONTH, n * DAYS_PER_WEEK);
+        return (Date) calendar.getTime().clone();
+    }
+
     public static Date getNextNMonth(Date date, int n) {
         GregorianCalendar calendar = new GregorianCalendar();
         calendar.setTime(date);
         calendar.add(GregorianCalendar.MONTH, n);
-        return (Date) calendar.getTime().clone();
-    }
-
-    public static Date getNextNHour(Date date, int n) {
-        GregorianCalendar calendar = new GregorianCalendar();
-        calendar.setTime(date);
-        calendar.add(GregorianCalendar.HOUR_OF_DAY, n);
-        return (Date) calendar.getTime().clone();
-    }
-
-    public static Date getNextNMinute(Date date, int n) {
-        GregorianCalendar calendar = new GregorianCalendar();
-        calendar.setTime(date);
-        calendar.add(GregorianCalendar.MINUTE, n);
         return (Date) calendar.getTime().clone();
     }
 

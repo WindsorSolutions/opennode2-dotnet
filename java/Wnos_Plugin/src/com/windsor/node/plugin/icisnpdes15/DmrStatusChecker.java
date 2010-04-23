@@ -92,7 +92,7 @@ public class DmrStatusChecker extends BaseWnosPlugin implements
 
         ProcessContentResult result = new ProcessContentResult();
         result.setSuccess(false);
-        result.setStatus(CommonTransactionStatusCode.FAILED);
+        result.setStatus(CommonTransactionStatusCode.Failed);
         result
                 .getAuditEntries()
                 .add(
@@ -130,7 +130,7 @@ public class DmrStatusChecker extends BaseWnosPlugin implements
                     transaction.getRequest().getPaging().getCount(), true));
 
             result.setSuccess(true);
-            result.setStatus(CommonTransactionStatusCode.PROCESSED);
+            result.setStatus(CommonTransactionStatusCode.Processed);
             result.getAuditEntries().add(makeEntry("Done: OK"));
 
         } catch (Exception ex) {
@@ -138,7 +138,7 @@ public class DmrStatusChecker extends BaseWnosPlugin implements
             error(ex);
             ex.printStackTrace();
             result.setSuccess(false);
-            result.setStatus(CommonTransactionStatusCode.FAILED);
+            result.setStatus(CommonTransactionStatusCode.Failed);
 
             result.getAuditEntries().add(
                     makeEntry("Error while executing: "
@@ -158,8 +158,8 @@ public class DmrStatusChecker extends BaseWnosPlugin implements
         CommonTransactionStatusCode status = tran.getStatus().getStatus();
         CommonTransactionStatusCode remoteStatus = null;
 
-        if (!status.equals(CommonTransactionStatusCode.COMPLETED)
-                && !status.equals(CommonTransactionStatusCode.FAILED)) {
+        if (!status.equals(CommonTransactionStatusCode.Completed)
+                && !status.equals(CommonTransactionStatusCode.Failed)) {
 
             debug("Contacting partner...");
             remoteStatus = nodeClient.getStatus(tran.getNetworkId())

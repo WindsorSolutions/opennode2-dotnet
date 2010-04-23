@@ -8,7 +8,7 @@ CREATE TABLE NAccount (
 	Affiliation varchar(50) NOT NULL,
     ModifiedBy  varchar(50) NOT NULL,
     ModifiedOn  datetime NOT NULL 
-    );
+    ) ENGINE=InnoDB;
 
 CREATE TABLE NAccountPolicy ( 
     Id          varchar(50) NOT NULL,
@@ -18,7 +18,7 @@ CREATE TABLE NAccountPolicy (
     IsAllowed   char(1) NOT NULL,
     ModifiedBy  varchar(50) NOT NULL,
     ModifiedOn  datetime NOT NULL 
-    );
+    ) ENGINE=InnoDB;
 
 CREATE TABLE NActivity ( 
     Id              varchar(50) NOT NULL,
@@ -27,14 +27,14 @@ CREATE TABLE NActivity (
     IP              varchar(64) NULL,
     ModifiedBy      varchar(50) NOT NULL,
     ModifiedOn      datetime NOT NULL 
-    );
+    ) ENGINE=InnoDB;
 
 CREATE TABLE NActivityDetail ( 
     Id          varchar(50) NOT NULL,
     ActivityId  varchar(50) NOT NULL,
     Detail      text NOT NULL,
     ModifiedOn  datetime NOT NULL 
-    );
+    ) ENGINE=InnoDB;
 
 CREATE TABLE NConfig ( 
     Id          varchar(255) NOT NULL,
@@ -43,7 +43,7 @@ CREATE TABLE NConfig (
     ModifiedBy  varchar(50) NOT NULL,
     ModifiedOn  datetime NOT NULL,
     IsEditable  char(1) NOT NULL 
-    );
+    ) ENGINE=InnoDB;
 
 CREATE TABLE NConnection ( 
     Id                  varchar(50) NOT NULL,
@@ -52,7 +52,7 @@ CREATE TABLE NConnection (
     ConnectionString    varchar(500) NOT NULL,
     ModifiedBy          varchar(50) NOT NULL,
     ModifiedOn          datetime NOT NULL 
-    );
+    ) ENGINE=InnoDB;
 
 CREATE TABLE NDocument ( 
     Id              varchar(50) NOT NULL,
@@ -63,7 +63,7 @@ CREATE TABLE NDocument (
     Status          varchar(50) NOT NULL,
     StatusDetail    varchar(8192) NULL,
     DocumentContent longblob NULL 
-    );
+    ) ENGINE=InnoDB;
 
 CREATE TABLE NFlow ( 
     Id          varchar(50) NOT NULL,
@@ -74,7 +74,7 @@ CREATE TABLE NFlow (
     ModifiedOn  datetime NOT NULL,
     Code        varchar(255) NOT NULL,
     Description varchar(500) NULL 
-    );
+    ) ENGINE=InnoDB;
 
 CREATE TABLE NNotification ( 
     Id          varchar(50) NOT NULL,
@@ -87,16 +87,16 @@ CREATE TABLE NNotification (
     OnSchedule  char(1) NOT NULL,
     OnDownload  char(1) NOT NULL,
     OnExecute   char(1) NOT NULL 
-    );
+    ) ENGINE=InnoDB;
 
 CREATE TABLE NPartner ( 
     Id          varchar(50) NOT NULL,
-    Name        varchar(50) NOT NULL,
+    Name        varchar(500) NOT NULL,
     Url         varchar(500) NOT NULL,
     ModifiedBy  varchar(50) NOT NULL,
     ModifiedOn  datetime NOT NULL,
     Version     varchar(50) NOT NULL 
-    );
+    ) ENGINE=InnoDB;
 
 CREATE TABLE NPlugin ( 
     Id              varchar(50) NOT NULL,
@@ -104,7 +104,7 @@ CREATE TABLE NPlugin (
     ModifiedBy      varchar(50) NOT NULL,
     ModifiedOn      datetime NOT NULL,
     PluginContent   longblob NOT NULL 
-    );
+    ) ENGINE=InnoDB;
 
 CREATE TABLE NRequest ( 
     Id              varchar(50) NOT NULL,
@@ -115,14 +115,14 @@ CREATE TABLE NRequest (
     RequestType     varchar(50) NOT NULL,
     ModifiedBy      varchar(50) NOT NULL,
     ModifiedOn      datetime NOT NULL 
-    );
+    ) ENGINE=InnoDB;
 
 CREATE TABLE NRequestArg ( 
     Id          varchar(50) NOT NULL,
     RequestId   varchar(50) NOT NULL,
     ArgKey      varchar(255) NOT NULL,
     ArgValue    varchar(1024) NOT NULL 
-    );
+    ) ENGINE=InnoDB;
 
 CREATE TABLE NSchedule ( 
     Id                  varchar(50) NOT NULL,
@@ -145,14 +145,14 @@ CREATE TABLE NSchedule (
     IsActive            varchar(1) NOT NULL,
     IsRunNow            varchar(1) NOT NULL,
     ExecuteStatus       varchar(50) NOT NULL 
-    );
+    ) ENGINE=InnoDB;
 
 CREATE TABLE NScheduleSourceArg ( 
     Id          varchar(50) NOT NULL,
     ScheduleId  varchar(50) NOT NULL,
     ArgKey      varchar(255) NOT NULL,
     ArgValue    text NOT NULL 
-    );
+    ) ENGINE=InnoDB;
 
 CREATE TABLE NService ( 
     Id          varchar(50) NOT NULL,
@@ -164,21 +164,21 @@ CREATE TABLE NService (
     AuthLevel   varchar(50) NOT NULL,
     ModifiedBy  varchar(50) NOT NULL,
     ModifiedOn  datetime NOT NULL 
-    );
+    ) ENGINE=InnoDB;
 
 CREATE TABLE NServiceArg ( 
     Id          varchar(50) NOT NULL,
     ServiceId   varchar(50) NOT NULL,
     ArgKey      varchar(255) NOT NULL,
     ArgValue    varchar(1024) NOT NULL 
-    );
+    ) ENGINE=InnoDB;
 
 CREATE TABLE NServiceConn ( 
     Id              varchar(50) NOT NULL,
     ServiceId       varchar(50) NOT NULL,
     ConnectionId    varchar(50) NOT NULL,
     KeyName         varchar(255) NOT NULL 
-    );
+    ) ENGINE=InnoDB;
 
 CREATE TABLE NTransaction ( 
     Id              varchar(50) NOT NULL,
@@ -190,20 +190,20 @@ CREATE TABLE NTransaction (
     StatusDetail    varchar(8192) NULL,
     Operation       varchar(255) NULL,
     WebMethod       varchar(50) NOT NULL 
-    );
+    ) ENGINE=InnoDB;
 
 CREATE TABLE NTransactionNotification ( 
     Id              varchar(50) NOT NULL,
     TransactionId   varchar(50) NOT NULL,
     Uri             varchar(500) NOT NULL,
     Type            varchar(50) NOT NULL 
-    );
+    ) ENGINE=InnoDB;
 
 CREATE TABLE NTransactionRecipient ( 
     Id              varchar(50) NOT NULL,
     TransactionId   varchar(50) NOT NULL,
     Uri             varchar(500) NOT NULL 
-    );
+    ) ENGINE=InnoDB;
 
 
 ALTER TABLE NAccount

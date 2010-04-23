@@ -32,7 +32,7 @@
                 <td class="label" width="5%" style="text-align: right; vertical-align: top;">Name:</td>
                 <td class="ctrl" width="95%">
                 <spring:bind path="command.name">
-                    <input type="text" 
+                    <input type="text"
                            name="<c:out value="${status.expression}" />" 
                            value="<c:out value="${status.value}" />" class="textbox" />
                            <span class="error" <c:if test="${status.errorMessage == \"\"}">style="display:none;"</c:if> ><c:out value="${status.errorMessage}" /></span>
@@ -41,14 +41,18 @@
             </tr>
             
             <tr>
-                <td class="label" width="5%" style="text-align: right; vertical-align: top;">Active:</td>
-                <td class="ctrl" width="95%"><spring:bind path="command.active">
-                    <input type="hidden" name="_<c:out value="${status.expression}"/>">
-                    <input type="checkbox" name="<c:out value="${status.expression}"/>" value="true"
-                     <c:if test="${status.value}">checked</c:if>/>
-                     <span class="error" <c:if test="${status.errorMessage == \"\"}">style="display:none;"</c:if> ><c:out value="${status.errorMessage}" /></span>
-                </spring:bind>
-                    
+                <td class="label" width="5%" style="text-align: right; vertical-align: top;"><label for="active">Active:</label></td>
+                <td class="ctrl" width="95%">
+	                <spring:bind path="command.active">
+	                    <input type="hidden" name="_<c:out value="${status.expression}"/>">
+	                    <input type="checkbox" id="active" 
+	                       name="<c:out value="${status.expression}"/>" 
+	                       value="true" 
+	                       <c:if test="${status.value}">checked</c:if>
+	                       onClick="flipSaveAndRunNow()"
+	                     />
+	                     <span class="error" <c:if test="${status.errorMessage == \"\"}">style="display:none;"</c:if> ><c:out value="${status.errorMessage}" /></span>
+	                </spring:bind>                    
                 </td>
             </tr>
             
@@ -142,9 +146,9 @@
                                     <select id="frequencyType" name="<c:out value="${status.expression}" />" 
                                         style="width: auto" onchange="setFrequencyLogic()">
                                         <c:forEach var="freq" items="${model.frequencyTypes}">
-                                            <option value="<c:out value="${freq.name}" />" 
-                                            <c:if test="${ freq.name == command.frequencyType.name }">selected</c:if> 
-                                        ><c:out value="${freq.name}" /></option>
+                                            <option value="<c:out value="${freq}" />" 
+                                            <c:if test="${ freq == command.frequencyType }">selected</c:if> >
+                                        <c:out value="${freq}" /></option>
                                         </c:forEach>
                                     </select>
                                     <span class="error" <c:if test="${status.errorMessage == \"\"}">style="display:none;"</c:if> ><c:out value="${status.errorMessage}" /></span>
@@ -166,20 +170,20 @@
                         <tr>
                             <td width="*" colspan="2">
                                 <c:choose>
-                                    <c:when test="${command.sourceType.name == 'LocalService' || command.sourceType.name == 'None' || command.sourceType.name == null || command.sourceType.name == ''}" >
+                                    <c:when test="${command.sourceType == 'LocalService' || command.sourceType == 'None' || command.sourceType == null || command.sourceType == ''}" >
                                        <c:set var="sourceTypeName" value="LocalService" />
                                     </c:when>
                                     <c:otherwise>
-                                       <c:set var="sourceTypeName" value="${command.sourceType.name}" />
+                                       <c:set var="sourceTypeName" value="${command.sourceType}" />
                                     </c:otherwise>
                                 </c:choose>
                                 <spring:bind path="command.sourceType">
                                     
                                     <table cellpadding="1" cellspacing="1">
                                         <tr><td>
-                                            <label for="<c:out value="${status.expression}" />">
+                                            <label for="sourceLocalService">
                                             <img src="img/page_extension.gif" border="0" alt="Local Service" align="bottom" />
-                                            <input type="radio" name="<c:out value="${status.expression}"/>" 
+                                            <input type="radio" id="sourceLocalService" name="<c:out value="${status.expression}"/>" 
                                             <c:if test="${sourceTypeName == 'LocalService'}"> 
                                                checked 
                                             </c:if> 
@@ -188,25 +192,25 @@
                                             Results of local service execution</label>
                                         </td></tr>
                                         <tr><td>
-                                            <label for=<c:out value="${status.expression}" />">
+                                            <label for="sourceWebServiceSolicit">
                                             <img src="img/page_url.gif" border="0" alt="Web Service" align="bottom" />
-                                            <input type="radio" name="<c:out value="${status.expression}"/>" 
+                                            <input type="radio" id="sourceWebServiceSolicit" name="<c:out value="${status.expression}"/>" 
                                             <c:if test="${sourceTypeName == 'WebServiceSolicit'}"> checked </c:if> value="WebServiceSolicit" 
                                             onClick="formatServiceType(2); return true;" />
                                             Results of partner service solicit (Transaction Id)</label>
                                         </td></tr>
                                         <tr><td>
-                                            <label for=<c:out value="${status.expression}" />">
+                                            <label for="sourceWebServiceQuery">
                                             <img src="img/page_url.gif" border="0" alt="Web Service" align="bottom" />
-                                            <input type="radio" name="<c:out value="${status.expression}"/>" 
+                                            <input type="radio" id="sourceWebServiceQuery" name="<c:out value="${status.expression}"/>" 
                                             <c:if test="${sourceTypeName == 'WebServiceQuery'}"> checked </c:if> value="WebServiceQuery" 
                                             onClick="formatServiceType(3); switchTargetType('None'); return true;" />
                                             Results of partner service query (XML)</label>
                                         </td></tr>
                                         <tr><td>
-                                            <label for=<c:out value="${status.expression}" />">
+                                            <label for="sourceFile">
                                             <img src="img/page_text.gif" border="0" alt="File" align="bottom" />
-                                            <input type="radio" name="<c:out value="${status.expression}"/>" 
+                                            <input type="radio" id="sourceFile" name="<c:out value="${status.expression}"/>" 
                                             <c:if test="${sourceTypeName == 'File'}"> checked </c:if> value="File" 
                                             onClick="formatServiceType(4); switchTargetType('None'); return true;" />
                                             File system resource (network path)</label>
@@ -316,7 +320,7 @@
 
                                 <spring:bind path="command.sourceOperation">
                                 <input id="sourceOperation" type="text" name="<c:out value="${status.expression}" />" 
-                                    value="<c:out value="${status.value}" />" class="textbox" cols="20"
+                                    value="<c:out value="${status.value}" />" class="textbox" 
                                     style="width:95%; display:<c:out value="${sourceTypeO}"/>;" />
                                     <span class="error" <c:if test="${status.errorMessage == \"\"}">style="display:none;"</c:if> ><c:out value="${status.errorMessage}" /></span>
                                 </spring:bind>
@@ -360,50 +364,50 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                            <label for=<c:out value="${status.expression}" />">
+                                            <label for="targetRadioNone">
                                             <img src="img/page_text.gif" border="0" alt="None" align="bottom" />
                                             <input type="radio" id="targetRadioNone" name="<c:out value="${status.expression}"/>" 
-                                            <c:if test="${command.targetType.name == 'None' || command.targetType.name == null || command.targetType.name == ''}"> checked </c:if> value="None" 
+                                            <c:if test="${command.targetType == 'None' || command.targetType == null || command.targetType == ''}"> checked </c:if> value="None" 
                                             onClick="switchTargetType('None'); return true;" />
                                             None</label>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
-                                            <label for=<c:out value="${status.expression}" />">
+                                            <label for="targetPartner" >
                                             <img src="img/page_link.gif" border="0" alt="Partner" align="bottom" />
-                                            <input type="radio" name="<c:out value="${status.expression}"/>" 
-                                            <c:if test="${command.targetType.name == 'Partner'}"> checked </c:if> value="Partner" 
+                                            <input type="radio" id="targetPartner" name="<c:out value="${status.expression}"/>" 
+                                            <c:if test="${command.targetType == 'Partner'}"> checked </c:if> value="Partner" 
                                             onClick="switchTargetType('Partner'); return true;" />
                                             Submit result to an Exchange Network partner</label>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
-                                            <label for=<c:out value="${status.expression}" />">
+                                            <label for="targetSchematron">
                                             <img src="img/page_tick.gif" border="0" alt="Schematron" align="bottom" />
-                                            <input type="radio" name="<c:out value="${status.expression}"/>" 
-                                            <c:if test="${command.targetType.name == 'Schematron'}"> checked </c:if> value="Schematron" 
+                                            <input type="radio" id="targetSchematron" name="<c:out value="${status.expression}"/>" 
+                                            <c:if test="${command.targetType == 'Schematron'}"> checked </c:if> value="Schematron" 
                                             onClick="switchTargetType('Schematron'); return true;" />
                                             Submit result to Schematron service for validation</label>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
-                                            <label for=<c:out value="${status.expression}" />">
+                                            <label for="targetFile">
                                             <img src="img/action_save.gif" border="0" alt="File" align="bottom" />
-                                            <input type="radio" name="<c:out value="${status.expression}"/>" 
-                                            <c:if test="${command.targetType.name == 'File'}"> checked </c:if> value="File" 
+                                            <input type="radio" id="targetFile" name="<c:out value="${status.expression}"/>" 
+                                            <c:if test="${command.targetType == 'File'}"> checked </c:if> value="File" 
                                             onClick="switchTargetType('File'); return true;" />
                                             Save uncompressed result to a network path location</label>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label for=<c:out value="${status.expression}" />">
+                                                <label for="targetEmail">
                                                 <img src="img/page_attachment.gif" border="0" alt="Email" align="bottom" />
-                                                <input type="radio" name="<c:out value="${status.expression}"/>" 
-                                                <c:if test="${command.targetType.name == 'Email'}"> checked </c:if> value="Email" 
+                                                <input type="radio" id="targetEmail" name="<c:out value="${status.expression}"/>" 
+                                                <c:if test="${command.targetType == 'Email'}"> checked </c:if> value="Email" 
                                                 onClick="switchTargetType('Email'); return true;" />
                                                 Send compressed result as an email attachment</label>
                                             </td>
@@ -417,7 +421,7 @@
                         <tr>
                             <td width="5%" valign="middle"><div id="targetCommonIdLabel" style="display:
                                 <c:choose>
-                                     <c:when test="${command.targetType.name == 'File' || command.targetType.name == 'Email' || command.targetType.name == 'Partner'}">
+                                     <c:when test="${command.targetType == 'File' || command.targetType == 'Email' || command.targetType == 'Partner'}">
                                          block
                                      </c:when>
                                      <c:otherwise>none</c:otherwise>
@@ -427,7 +431,7 @@
                              <spring:bind path="command.targetId">
                                  <input type="text" id="targetCommonId" name="<c:out value="${status.expression}" />" value="<c:out value="${status.value}" />"  class="textbox" style="display:
                                  <c:choose>
-                                     <c:when test="${command.targetType.name == 'File' || command.targetType.name == 'Email'}">
+                                     <c:when test="${command.targetType == 'File' || command.targetType == 'Email'}">
                                          block
                                      </c:when>
                                      <c:otherwise>none</c:otherwise>
@@ -438,7 +442,7 @@
                                 <select id="targetPartnerList" name="partnerList" 
                                 onchange="$('#targetCommonId').val(this.options[selectedIndex].value)"  
                                 style=" width: 96%; display:<c:choose><c:when 
-                                test="${command.targetType.name == 'Partner'}">block</c:when><c:otherwise>none</c:otherwise></c:choose>;">
+                                test="${command.targetType == 'Partner'}">block</c:when><c:otherwise>none</c:otherwise></c:choose>;">
                                         <option value=""></option>
                                         <c:forEach var="partner" items="${model.partners}">
                                             <option value="<c:out value="${partner.id}" />" 
@@ -468,6 +472,7 @@
                     <input type="button" name="cancel"
                            onclick="location.href='schedule.htm?bi=0'" 
                            value="Cancel" class="button" />
+                           
                     <input type="submit" name="save" 
                            value="Save" class="button" />
                            
@@ -477,10 +482,14 @@
                         </c:if>
                         onclick="return confirm('Are you sure you want to delete this schedule?');"
                         class="button" />
-                                                
-                    <input type="submit" name="now"
-                           onclick="return setRunNowAndSave()" 
-                           value="Save and Run Now" class="button" />   
+
+                    <input id="saveAndRunNow" type="submit" name="now" 
+                        <c:if test="${command.active == null || command.active == \"\" }">
+                            <c:out value='disabled="true"' />
+                        </c:if>
+                        onclick="return setRunNowAndSave()" 
+                        value="Save and Run Now" 
+                        class="button" />
                         
                     <spring:bind path="command.runNow">
                         <input type="hidden" name="_<c:out value="${status.expression}"/>">
@@ -497,8 +506,15 @@
     </tr>
 </table> <!-- Content Table -->
 
- <script type="text/javascript">  
- 
+<script type="text/javascript">
+
+	function flipSaveAndRunNow() {
+
+		currentState = $("#saveAndRunNow").attr("disabled");
+		$("#saveAndRunNow").attr("disabled", !currentState);
+		return true;
+	}
+
     function setServiceList(flowId){ 
         $("#sourceTypeS").load("service-list.htm?flowId=" + flowId, [], function(){$("#sourceTypeS").show()});
     }
@@ -630,6 +646,6 @@
             
     }
                                     
- </script> 
+</script> 
 
 <%@ include file="/WEB-INF/jsp/_foot.jsp"%>

@@ -224,7 +224,7 @@ public abstract class BaseHEREService extends BaseWnosPlugin {
 
         ProcessContentResult result = new ProcessContentResult();
         result.setSuccess(false);
-        result.setStatus(CommonTransactionStatusCode.FAILED);
+        result.setStatus(CommonTransactionStatusCode.Failed);
 
         /*
          * these could throw fatal errors, and we want the real err message to
@@ -302,7 +302,7 @@ public abstract class BaseHEREService extends BaseWnosPlugin {
             result.getDocuments().add(doc);
 
             result.setSuccess(true);
-            result.setStatus(CommonTransactionStatusCode.PROCESSED);
+            result.setStatus(CommonTransactionStatusCode.Processed);
             result.getAuditEntries().add(makeEntry("Done: OK"));
 
             /* SAVE RESULTS */
@@ -317,7 +317,7 @@ public abstract class BaseHEREService extends BaseWnosPlugin {
             error(ex);
 
             result.setSuccess(false);
-            result.setStatus(CommonTransactionStatusCode.FAILED);
+            result.setStatus(CommonTransactionStatusCode.Failed);
 
             result.getAuditEntries().add(
                     makeEntry("Error while executing: "

@@ -16,6 +16,7 @@
 				<include name="**/*" />
 			</fileset>
 		</copy>
+        <copy toDir="${service.dir}/META-INF" file="${env.dir.local}/v20.wsdl" verbose="${verbosity}" />
 		<copy toDir="${service.dir}/META-INF" failonerror="true" verbose="${verbosity}">
 			<fileset dir="${resources.local}/META-INF">
 				<include name="*.*" />

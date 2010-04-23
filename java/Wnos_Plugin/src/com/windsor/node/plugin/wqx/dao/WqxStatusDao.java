@@ -99,9 +99,9 @@ public class WqxStatusDao extends BaseJdbcDao {
 
     private static final String STATUS_PENDING_OR_PROCESSING = L_PAREN
             + L_PAREN + STATUS + EQUALS + APOS
-            + CommonTransactionStatusCode.PENDING.name() + APOS + R_PAREN + OR
+            + CommonTransactionStatusCode.Pending.name() + APOS + R_PAREN + OR
             + L_PAREN + STATUS + EQUALS + APOS
-            + CommonTransactionStatusCode.PROCESSING.name() + APOS + R_PAREN
+            + CommonTransactionStatusCode.Processing.name() + APOS + R_PAREN
             + R_PAREN;
 
     private static final String SQL_RESET_STATUS = UPDATE + TABLE_NAME + SET
@@ -197,7 +197,7 @@ public class WqxStatusDao extends BaseJdbcDao {
         Object[] args = new Object[] { id, orgPk,
                 new Timestamp(System.currentTimeMillis()),
                 new Timestamp(System.currentTimeMillis()),
-                operationType.getName(), localTransactionId, status.name() };
+                operationType.toString(), localTransactionId, status.name() };
 
         logger.debug("args: ");
         for (int i = 0; i < args.length; i++) {
@@ -221,7 +221,7 @@ public class WqxStatusDao extends BaseJdbcDao {
         if (countPending(orgId, operationType) > 0) {
             tranId = (String) getJdbcTemplate().queryForObject(
                     SQL_SELECT_PENDING_TRAN,
-                    new Object[] { operationType.getName(), orgId },
+                    new Object[] { operationType.toString(), orgId },
                     String.class);
         }
         return tranId;
@@ -258,7 +258,7 @@ public class WqxStatusDao extends BaseJdbcDao {
 
         ts = (Timestamp) getJdbcTemplate().queryForObject(
                 SQL_SELECT_LATEST_PROCESSED_BY_ORG_ID_AND_OPERATION_TYPE,
-                new Object[] { operationType.getName(), orgId },
+                new Object[] { operationType.toString(), orgId },
                 Timestamp.class);
 
         return ts;
@@ -315,7 +315,7 @@ public class WqxStatusDao extends BaseJdbcDao {
         logger.debug(SQL + SQL_COUNT_PENDING_BY_OPERATION_TYPE_AND_ORG_ID);
         return getJdbcTemplate().queryForInt(
                 SQL_COUNT_PENDING_BY_OPERATION_TYPE_AND_ORG_ID,
-                new Object[] { operationType.getName(), orgId });
+                new Object[] { operationType.toString(), orgId });
     }
 
 }

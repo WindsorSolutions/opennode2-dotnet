@@ -52,7 +52,7 @@ public class ProcessContentResult implements Serializable {
     private boolean success;
 
     public ProcessContentResult() {
-        status = CommonTransactionStatusCode.UNKNOWN;
+        status = CommonTransactionStatusCode.Unknown;
         this.auditEntries = new ArrayList<ActivityEntry>();
         this.documents = new ArrayList<Document>();
         success = false;

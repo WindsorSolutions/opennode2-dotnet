@@ -101,7 +101,7 @@ public class InboundDocumentRelayProcessor extends BaseWnosPlugin {
 
         ProcessContentResult result = new ProcessContentResult();
         result.setSuccess(false);
-        result.setStatus(CommonTransactionStatusCode.FAILED);
+        result.setStatus(CommonTransactionStatusCode.Failed);
 
         try {
 
@@ -190,7 +190,7 @@ public class InboundDocumentRelayProcessor extends BaseWnosPlugin {
                     .getNetworkId());
 
             result.setSuccess(true);
-            result.setStatus(CommonTransactionStatusCode.PROCESSED);
+            result.setStatus(CommonTransactionStatusCode.Processed);
             result.getAuditEntries().add(makeEntry("Done: OK"));
 
         } catch (Exception ex) {
@@ -199,7 +199,7 @@ public class InboundDocumentRelayProcessor extends BaseWnosPlugin {
             ex.printStackTrace();
 
             result.setSuccess(false);
-            result.setStatus(CommonTransactionStatusCode.FAILED);
+            result.setStatus(CommonTransactionStatusCode.Failed);
 
             result.getAuditEntries().add(
                     makeEntry("Error while executing: "

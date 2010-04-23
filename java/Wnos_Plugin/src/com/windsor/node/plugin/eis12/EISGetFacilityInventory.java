@@ -48,7 +48,7 @@ public class EISGetFacilityInventory extends BaseEisXmlPlugin {
         super();
 
         setServiceName(SERVICE_NAME);
-        setDataCategory(DataCategory.Event);
+        setDataCategory(DataCategory.FacilityInventory);
 
         debug("EISGetFacilityInventory instantiated.");
 

@@ -22,6 +22,9 @@ a {
 }
 
 /* END LINKS */
+
+.black
+
 select {
 	color: #000;
 	font-size: 11px;
@@ -56,6 +59,15 @@ select[disabled] {
 	margin-left: auto;
 	margin-right: auto;
 }
+
+/* blacktext & whitetext used for <a> elements behaving like a label */ 
+.blacktext {
+	color: #000000
+	}
+	
+.whitetext {
+	color: #FFFFFF
+	}
 
 .userInfo {
 	width: 800px;
@@ -373,7 +385,7 @@ td.label{
 
 .listlabel 
 {
-	color: #444;
+	color: #444444;
 }
 
 #formTable .labelLog {

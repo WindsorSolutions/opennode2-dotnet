@@ -42,7 +42,7 @@ public class Document extends SimpleContent {
     private String documentStatusDetail;
 
     public Document() {
-        documentStatus = CommonTransactionStatusCode.RECEIVED;
+        documentStatus = CommonTransactionStatusCode.Received;
     }
 
     public Document(String documentId, String documentName,
@@ -54,7 +54,7 @@ public class Document extends SimpleContent {
     public Document(String documentId, String documentName,
             CommonContentType type, byte[] content) {
         super(type, content);
-        this.documentStatus = CommonTransactionStatusCode.UNKNOWN;
+        this.documentStatus = CommonTransactionStatusCode.Unknown;
         this.documentId = documentId;
         this.documentName = documentName;
     }
@@ -64,7 +64,7 @@ public class Document extends SimpleContent {
     {
         super(type, content);
         this.documentName = documentName;
-        this.documentStatus = CommonTransactionStatusCode.UNKNOWN;
+        this.documentStatus = CommonTransactionStatusCode.Unknown;
     }
 
     public String getDocumentId() {

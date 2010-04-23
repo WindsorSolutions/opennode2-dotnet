@@ -34,41 +34,24 @@ POSSIBILITY OF SUCH DAMAGE.
  */
 package com.windsor.node.plugin.wqx;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.lang.enums.Enum;
-
 /**
  * Operation types are specificed in the WQX document header. *
  */
-public final class WqxOperationType extends Enum {
-    
-    public static final String UPDATE_INSERT_STR = "Update-Insert";
-    
-    public static final WqxOperationType UPDATE_INSERT = new WqxOperationType(
-            UPDATE_INSERT_STR);
-    
-    public static final String DELETE_STR = "Delete";
-    public static final WqxOperationType DELETE = new WqxOperationType("Delete");
+public enum WqxOperationType {
 
-    private static final long serialVersionUID = 1;
+    UPDATE_INSERT("Update-Insert"), DELETE("Delete");
 
-    private WqxOperationType(String type) {
-        super(type);
+    private static final long serialVersionUID = 2;
+
+    private String typeString;
+
+    private WqxOperationType(String typeString) {
+        this.typeString = typeString;
     }
 
-    public static Map getEnumMap() {
-        return getEnumMap(WqxOperationType.class);
-    }
-
-    public static List getEnumList() {
-        return getEnumList(WqxOperationType.class);
-    }
-
-    public static Iterator iterator() {
-        return iterator(WqxOperationType.class);
+    @Override
+    public String toString() {
+        return this.typeString;
     }
 
 }

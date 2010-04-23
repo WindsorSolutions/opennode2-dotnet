@@ -100,7 +100,7 @@ CREATE TABLE NNotification (
 
 CREATE TABLE NPartner ( 
 	Id        	varchar2(50) NOT NULL,
-	Name      	varchar2(50) NOT NULL,
+	Name      	varchar2(500) NOT NULL,
 	Url       	varchar2(500) NOT NULL,
 	ModifiedBy	varchar2(50) NOT NULL,
 	ModifiedOn	date NOT NULL,

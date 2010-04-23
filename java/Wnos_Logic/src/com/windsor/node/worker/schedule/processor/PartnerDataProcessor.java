@@ -86,9 +86,10 @@ public class PartnerDataProcessor implements InitializingBean {
         }
     }
 
-    public List getAndSaveData(String transactionId, String partnerId,
-            String serviceName, ScheduledItemSourceType requestType,
-            ByIndexOrNameMap serviceArgs, String flowName) {
+    public List<ActivityEntry> getAndSaveData(String transactionId,
+            String partnerId, String serviceName,
+            ScheduledItemSourceType requestType, ByIndexOrNameMap serviceArgs,
+            String flowName) {
 
         if (StringUtils.isBlank(transactionId)) {
             throw new RuntimeException("Null transactionId");
@@ -108,7 +109,7 @@ public class PartnerDataProcessor implements InitializingBean {
 
         try {
 
-            List info = new ArrayList();
+            List<ActivityEntry> info = new ArrayList<ActivityEntry>();
 
             logger.debug("PartnerId: " + partnerId);
             info.add(new ActivityEntry("Getting partner..."));
@@ -136,7 +137,7 @@ public class PartnerDataProcessor implements InitializingBean {
             logger.debug("Request: " + request);
             info.add(new ActivityEntry("Executing request..."));
 
-            if (requestType == ScheduledItemSourceType.WEBSERVICE_QUERY) {
+            if (requestType == ScheduledItemSourceType.WebServiceQuery) {
 
                 SimpleContent queryResult = clientService.query(request);
 
@@ -150,7 +151,7 @@ public class PartnerDataProcessor implements InitializingBean {
                 Document doc = new Document(serviceName
                         + "-Partner-Results.zip", CommonContentType.ZIP,
                         compressedBytes);
-                doc.setDocumentStatus(CommonTransactionStatusCode.PROCESSING);
+                doc.setDocumentStatus(CommonTransactionStatusCode.Processing);
 
                 doc.setDocumentStatusDetail("Results of schedule query for "
                         + serviceName
@@ -160,7 +161,7 @@ public class PartnerDataProcessor implements InitializingBean {
 
                 transactionDao.addDocument(transactionId, doc);
 
-            } else if (requestType == ScheduledItemSourceType.WEBSERVICE_SOLICIT) {
+            } else if (requestType == ScheduledItemSourceType.WebServiceSolicit) {
 
                 request.getRecipients().clear();
                 if (partner.getVersion() == EndpointVersionType.EN11) {
@@ -217,7 +218,7 @@ public class PartnerDataProcessor implements InitializingBean {
      * @param dataFlowName
      * @return
      */
-    public List getAndSendDataByUrl(NodeTransaction transaction,
+    public List<ActivityEntry> getAndSendDataByUrl(NodeTransaction transaction,
             String partnerUrl, String dataFlowName) {
 
         if (StringUtils.isBlank(partnerUrl)) {
@@ -243,8 +244,8 @@ public class PartnerDataProcessor implements InitializingBean {
      * @param dataFlowName
      * @return
      */
-    public List getAndSendData(NodeTransaction transaction, String partnerId,
-            String dataFlowName) {
+    public List<ActivityEntry> getAndSendData(NodeTransaction transaction,
+            String partnerId, String dataFlowName) {
 
         if (StringUtils.isBlank(partnerId)) {
             throw new RuntimeException("Null partnerId");
@@ -269,7 +270,7 @@ public class PartnerDataProcessor implements InitializingBean {
      * @param dataFlowName
      * @return
      */
-    public List getAndSendData(NodeTransaction transaction,
+    public List<ActivityEntry> getAndSendData(NodeTransaction transaction,
             PartnerIdentity partner, String dataFlowName) {
 
         if (transaction == null) {
@@ -286,14 +287,14 @@ public class PartnerDataProcessor implements InitializingBean {
 
         try {
 
-            List info = new ArrayList();
+            List<ActivityEntry> info = new ArrayList<ActivityEntry>();
 
             info.add(new ActivityEntry("Getting documents..."));
 
             logger.debug("Getting documents for transaction: "
                     + transaction.getId());
-            List docs = transactionDao.getDocuments(transaction.getId(), false,
-                    true);
+            List<Document> docs = transactionDao.getDocuments(transaction
+                    .getId(), false, true);
 
             if (docs == null || docs.size() < 1) {
                 throw new RuntimeException(
@@ -305,16 +306,22 @@ public class PartnerDataProcessor implements InitializingBean {
 
             transaction.setDocuments(docs);
 
-            info.add(new ActivityEntry("Making partner client..."));
+            String mesg = "Making partner client...";
+            logger.debug(mesg);
+            info.add(new ActivityEntry(mesg));
             NodeClientService clientService = clientFactory
                     .makeAndConfigure(partner);
 
-            info.add(new ActivityEntry("Submitting..."));
+            mesg = "Submitting...";
+            logger.debug(mesg);
+            info.add(new ActivityEntry(mesg));
             NodeTransaction resultTransaction = clientService
                     .submit(transaction);
 
-            info.add(new ActivityEntry("Updating network transaction Id: "
-                    + resultTransaction.getNetworkId()));
+            mesg = "Updating network transaction Id: "
+                    + resultTransaction.getNetworkId();
+            logger.debug(mesg);
+            info.add(new ActivityEntry(mesg));
 
             transactionDao.updateNetworkId(transaction.getId(),
                     resultTransaction.getNetworkId());
@@ -329,10 +336,23 @@ public class PartnerDataProcessor implements InitializingBean {
              * ClassNotFoundException will only mask the real error message -
              * even with our own v20 endpoint!
              */
-            logger.error("Get And Send Data: " + ex.getMessage());
 
-            throw new RuntimeException("Error while retrieving source data: "
-                    + ex.getMessage());
+            StringBuffer buf = new StringBuffer();
+
+            buf.append(ex.getMessage());
+
+            if (null != ex.getCause()) {
+
+                buf.append(ex.getCause().getMessage());
+
+                if (null != ex.getCause().getCause()) {
+
+                    buf.append(ex.getCause().getCause());
+                }
+
+            }
+
+            throw new RuntimeException("getAndSendData: " + buf.toString());
         }
     }
 

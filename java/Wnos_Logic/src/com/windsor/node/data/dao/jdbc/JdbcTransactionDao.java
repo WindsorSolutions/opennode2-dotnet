@@ -255,7 +255,7 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao,
 
     public NodeTransaction getNextReceived(NodeMethodType method) {
 
-        List transactions = get(CommonTransactionStatusCode.RECEIVED, method);
+        List transactions = get(CommonTransactionStatusCode.Received, method);
 
         logger.debug("Transactions found: " + transactions.size());
 
@@ -269,13 +269,13 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao,
 
             // New, Id, Old
 
-            args[0] = CommonTransactionStatusCode.PROCESSING.name();
+            args[0] = CommonTransactionStatusCode.Processing.name();
             args[1] = tran.getId();
             args[2] = tran.getStatus().getStatus().name();
 
             if (1 == getJdbcTemplate().update(SQL_UPDATE_STATUS_TRAN, args)) {
                 tran.getStatus().setStatus(
-                        CommonTransactionStatusCode.PROCESSING);
+                        CommonTransactionStatusCode.Processing);
                 return tran;
             }
 
@@ -291,15 +291,15 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao,
     public List getSubmittedDocumentTransactions() {
 
         return getJdbcTemplate().query(SQL_SELECT_STATUS_DOCS,
-                new Object[] { CommonTransactionStatusCode.RECEIVED.name() },
+                new Object[] { CommonTransactionStatusCode.Received.name() },
                 new TransactionMapper());
     }
 
     /**
      * getDocuments
      */
-    public List getDocuments(String transactionId, boolean useNetworkId,
-            boolean loadDocContent) {
+    public List<Document> getDocuments(String transactionId,
+            boolean useNetworkId, boolean loadDocContent) {
 
         validateStringArg(transactionId);
 
@@ -325,8 +325,8 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao,
             adjustedId = transactionId;
         }
 
-        return getJdbcTemplate().query(sql, new Object[] { adjustedId },
-                new DocumentMapper());
+        return (List<Document>) getJdbcTemplate().query(sql,
+                new Object[] { adjustedId }, new DocumentMapper());
     }
 
     /**

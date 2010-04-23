@@ -60,6 +60,14 @@ import com.windsor.node.service.BaseService;
 public class FlowServiceImpl extends BaseService implements FlowService,
         InitializingBean {
 
+    /**
+     * 
+     */
+    private static final String FLOW_ID_NOT_SET = "flowId not set.";
+    /**
+     * 
+     */
+    private static final String DATA_SERVICE_NOT_SET = "DataService argument not set";
     private FlowDao flowDao;
     private ServiceDao serviceDao;
     private PluginHelper pluginHelper;
@@ -84,7 +92,7 @@ public class FlowServiceImpl extends BaseService implements FlowService,
     public List<String> getFlowPluginImplementors(String flowId, NodeVisit visit) {
 
         if (StringUtils.isBlank(flowId)) {
-            throw new RuntimeException("flowId not set.");
+            throw new RuntimeException(FLOW_ID_NOT_SET);
         }
 
         // Make sure the user performing that action has admin rights
@@ -129,7 +137,7 @@ public class FlowServiceImpl extends BaseService implements FlowService,
     public void deleteDataFlow(String flowId, NodeVisit visit) {
 
         if (StringUtils.isBlank(flowId)) {
-            throw new RuntimeException("flowId not set.");
+            throw new RuntimeException(FLOW_ID_NOT_SET);
         }
 
         // Make sure the user performing that action has admin rights
@@ -374,7 +382,7 @@ public class FlowServiceImpl extends BaseService implements FlowService,
     public BaseWnosPlugin getServiceFromPlugin(DataService instance) {
 
         if (instance == null) {
-            throw new RuntimeException("DataService argument not set");
+            throw new RuntimeException(DATA_SERVICE_NOT_SET);
         }
 
         DataFlow flow = flowDao.get(instance.getFlowId());
@@ -394,7 +402,7 @@ public class FlowServiceImpl extends BaseService implements FlowService,
     public DataService populateFromPlugin(DataService instance) {
 
         if (instance == null) {
-            throw new RuntimeException("DataService argument not set");
+            throw new RuntimeException(DATA_SERVICE_NOT_SET);
         }
 
         try {
