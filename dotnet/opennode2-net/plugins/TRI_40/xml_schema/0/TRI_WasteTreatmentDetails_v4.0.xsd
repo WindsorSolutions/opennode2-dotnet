@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 sp1 (http://www.altova.com) by WDavid Ripley, III (COMPUTER SCIENCES CORP) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:TRI="http://www.exchangenetwork.net/schema/TRI/4" targetNamespace="http://www.exchangenetwork.net/schema/TRI/4" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.0">
+	<xsd:include schemaLocation="TRI_SharedComponents_v4.0.xsd"/>
+	<xsd:include schemaLocation="TRI_WasteTreatmentMethod_v4.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>		
+		Schema Name : 	TRI_WasteTreatmentDetails_v4.0.xsd
+		Current Version Available At :
+		Description : 	Describes the application of any of a variety of different activities or methods to a waste stream
+		Application : Toxic Release Inventory
+		Developed by : 	 Environmental Protection Agency, Windsor Solutions, Inc.
+		Point of Contact : William Rensmith
+		Maintained by : Environmental Protection Agency, CSC
+		Point of Contact : WDavid Ripley III [dripley@csc.com]	
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="WasteTreatmentDetails" type="TRI:WasteTreatmentDetailsDataType">
+		<xsd:annotation>
+			<xsd:documentation>Captures the application of any of a variety of different activities or methods to a waste stream.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="WasteTreatmentDetailsDataType">
+		<xsd:sequence>
+			<xsd:element ref="TRI:WasteStreamSequenceNumber" minOccurs="0"/>
+			<xsd:element ref="TRI:WasteStreamTypeCode"/>
+			<xsd:element ref="TRI:WasteTreatmentMethod" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="TRI:InfluentConcentrationRangeCode" minOccurs="0"/>
+			<xsd:choice>
+				<xsd:element ref="TRI:TreatmentEfficiencyEstimatePercent" minOccurs="0"/>
+				<xsd:element ref="TRI:TreatmentEfficiencyRangeCode" minOccurs="0"/>
+				<xsd:element ref="TRI:TreatmentEfficiencyNAIndicator" minOccurs="0"/>
+			</xsd:choice>
+			<xsd:element ref="TRI:OperatingDataIndicator" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="WasteStreamTypeCode" type="TRI:ToxicReleaseString10Type">
+		<xsd:annotation>
+			<xsd:documentation>Indicates the general waste stream type containing the toxic chemical. </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="InfluentConcentrationRangeCode" type="TRI:InfluentConcentrationRangeCodeType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates the range of concentration of the toxic chemical in the waste stream as it typically enters the waste treatment step or sequence. Unused starting RY2005.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TreatmentEfficiencyEstimatePercent" type="TRI:ToxicReleaseDecimalType">
+		<xsd:annotation>
+			<xsd:documentation>The percentage of the toxic chemical removed from the waste stream through destruction, biological degradation, chemical conversion, or physical removal. Unused starting RY2005.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TreatmentEfficiencyRangeCode" type="TRI:ToxicReleaseStringType">
+		<xsd:annotation>
+			<xsd:documentation>The percentage of the toxic chemical removed from the waste stream through destruction, biological degradation, chemical conversion, or physical removal. Added for RY2005.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TreatmentEfficiencyNAIndicator" type="TRI:ToxicReleaseBooleanType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates whether 'NA' (Not Applicable) was entered on Form R for the waste treatment efficiency estimate. </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OperatingDataIndicator" type="TRI:ToxicReleaseBooleanType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates if the waste treatment efficiency estimate is based on actual operating data. Unused starting RY2005.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SequentialTreatmentIndicator" type="TRI:ToxicReleaseBooleanType">
+		<xsd:annotation>
+			<xsd:documentation>Indicator that shows whether treatment steps were used in sequence, for Reporting Years 1987 through 1990.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="WasteStreamSequenceNumber" type="TRI:ToxicReleaseIntegerType">
+		<xsd:annotation>
+			<xsd:documentation>Sequence in which an on-site waste treatment process is reported on a Form R submission.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!--Waste treatment data type-->
+	<xsd:simpleType name="InfluentConcentrationRangeCodeType">
+		<xsd:annotation>
+			<xsd:documentation>Enumeration of 5 codes type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="1"/>
+			<xsd:enumeration value="2"/>
+			<xsd:enumeration value="3"/>
+			<xsd:enumeration value="4"/>
+			<xsd:enumeration value="5"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

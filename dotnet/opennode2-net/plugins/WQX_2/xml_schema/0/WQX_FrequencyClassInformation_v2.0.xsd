@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:wqx="http://www.exchangenetwork.net/schema/wqx/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/wqx/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+	<xsd:include schemaLocation="WQX_SimpleContent_v2.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+        Schema Name  : WQX_FrequencyClassInformation_v2.0.xsd
+        Description   : This section allows for the definition of a subgroup of biological communities by life stage, physical attribute, or abnormality to support frequency class studies.	
+        Developed by  : EPA Office of Water	 
+        Point of Contact :   Dwane Young
+</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="FrequencyClassInformationDataType">
+		<xsd:sequence>
+			<xsd:element ref="wqx:FrequencyClassDescriptorCode"/>
+			<xsd:element ref="wqx:FrequencyClassDescriptorUnitCode" minOccurs="0"/>
+			<xsd:element ref="wqx:LowerClassBoundValue" minOccurs="0"/>
+			<xsd:element ref="wqx:UpperClassBoundValue" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="FrequencyClassInformation" type="wqx:FrequencyClassInformationDataType">
+		<xsd:annotation>
+			<xsd:documentation>This section allows for the definition of a subgroup of biological communities by life stage, physical attribute, or abnormality to support frequency class studies.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

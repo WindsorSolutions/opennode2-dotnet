@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema targetNamespace="urn:us:net:exchangenetwork" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pnwwqx="urn:us:net:exchangenetwork" version="1.3">
+	<xsd:include schemaLocation=".\PNWWQX_LatitudeMeasureType_v.1.3.xsd"/>
+	<xsd:include schemaLocation=".\PNWWQX_LongitudeMeasureType_v.1.3.xsd"/>
+	<xsd:include schemaLocation=".\PNWWQX_LocationDescriptorContextType_v.1.3.xsd"/>
+	<xsd:include schemaLocation=".\PNWWQX_HorizontalCollectionMethodType_v.1.3.xsd"/>
+	<xsd:include schemaLocation=".\PNWWQX_HorizontalReferenceDatumType_v.1.3.xsd"/>
+	<xsd:include schemaLocation=".\PNWWQX_ReferencePointType_v.1.3.xsd"/>
+	<xsd:include schemaLocation=".\PNWWQX_VerticalMeasureType_v.1.3.xsd"/>
+	<xsd:include schemaLocation=".\PNWWQX_VerticalCollectionMethodType_v.1.3.xsd"/>
+	<xsd:include schemaLocation=".\PNWWQX_VerticalReferenceDatumType_v.1.3.xsd"/>
+	<xsd:include schemaLocation=".\PNWWQX_StationType_v.1.3.xsd"/>
+	<xsd:include schemaLocation=".\PNWWQX_WellDetailType_v.1.3.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name : 					PNWWQX_StationDetailsType_v.1.3.xsd 
+		Current Version Available At :	
+		Description : 					This schema defines the data elements to be shared through the Pacific Northwest Water Quality Data Exchange related to a station location used to monitor or measure water quality.
+		Application : 					Pacific Northwest Water Quality Data Exchange 
+		Developed by : 	 				Pacific Northwest Exchange States; Windsor Solutions, Inc
+		Point of Contact : 				Curtis Cude (cude.curtis@deq.state.or.us)
+										Kevin Jeffery (kevin_jeffery@windsorsolutions.com)	
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="StationDetailsType">
+		<xsd:sequence>
+			<xsd:element ref="pnwwqx:StationIdentifier"/>
+			<xsd:element ref="pnwwqx:StationName"/>
+			<xsd:element ref="pnwwqx:StationLocationDescription" minOccurs="0"/>
+			<xsd:element ref="pnwwqx:StationType"/>
+			<xsd:element ref="pnwwqx:LocationDescriptor" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="pnwwqx:LatitudeMeasure"/>
+			<xsd:element ref="pnwwqx:LongitudeMeasure"/>
+			<xsd:element ref="pnwwqx:HorizontalAccuracyMeasure" minOccurs="0"/>
+			<xsd:element ref="pnwwqx:SourceMapScaleNumber" minOccurs="0"/>
+			<xsd:element ref="pnwwqx:CoordinateDataSourceName" minOccurs="0"/>
+			<xsd:element ref="pnwwqx:HorizontalCollectionMethodText"/>
+			<xsd:element ref="pnwwqx:HorizontalReferenceDatumName"/>
+			<xsd:element ref="pnwwqx:ReferencePointText" minOccurs="0"/>
+			<xsd:element ref="pnwwqx:VerticalMeasure" minOccurs="0"/>
+			<xsd:element ref="pnwwqx:VerticalMeasureUnitofMeasure" minOccurs="0"/>
+			<xsd:element ref="pnwwqx:VerticalAccuracyMeasure" minOccurs="0"/>
+			<xsd:element ref="pnwwqx:VerticalCollectionMethodText" minOccurs="0"/>
+			<xsd:element ref="pnwwqx:VerticalReferenceDatumName" minOccurs="0"/>
+			<xsd:element ref="pnwwqx:VerticalReferencePointContextText" minOccurs="0"/>
+			<xsd:element ref="pnwwqx:WellDetail" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="StationIdentifier" type="xsd:string"/>
+	<xsd:element name="StationName" type="xsd:string"/>
+	<xsd:element name="StationLocationDescription" type="xsd:string"/>
+	<xsd:element name="StationType" type="pnwwqx:StationType"/>
+	<xsd:element name="LocationDescriptor" type="pnwwqx:StationLocationDescriptorType"/>
+	<xsd:element name="LatitudeMeasure" type="pnwwqx:LatitudeMeasureType"/>
+	<xsd:element name="LongitudeMeasure" type="pnwwqx:LongitudeMeasureType"/>
+	<xsd:element name="HorizontalAccuracyMeasure" type="xsd:nonNegativeInteger"/>
+	<xsd:element name="SourceMapScaleNumber" type="xsd:nonNegativeInteger"/>
+	<xsd:element name="CoordinateDataSourceName" type="xsd:string"/>
+	<xsd:element name="HorizontalCollectionMethodText" type="pnwwqx:HorizontalCollectionMethodType"/>
+	<xsd:element name="HorizontalReferenceDatumName" type="pnwwqx:HorizontalReferenceDatumType"/>
+	<xsd:element name="ReferencePointText" type="pnwwqx:ReferencePointType"/>
+	<xsd:element name="VerticalMeasure" type="pnwwqx:VerticalMeasureType"/>
+	<xsd:element name="VerticalMeasureUnitofMeasure" type="xsd:string"/>
+	<xsd:element name="VerticalAccuracyMeasure" type="xsd:nonNegativeInteger"/>
+	<xsd:element name="VerticalCollectionMethodText" type="pnwwqx:VerticalCollectionMethodType"/>
+	<xsd:element name="VerticalReferenceDatumName" type="pnwwqx:VerticalReferenceDatumType"/>
+	<xsd:element name="VerticalReferencePointContextText" type="xsd:string"/>
+	<xsd:element name="WellDetail" type="pnwwqx:WellDetailType"/>
+	<xsd:complexType name="StationLocationDescriptorType">
+		<xsd:sequence>
+			<xsd:element ref="pnwwqx:LocationDescriptorName"/>
+			<xsd:element ref="pnwwqx:LocationDescriptorContext"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="LocationDescriptorName" type="xsd:string"/>
+	<xsd:element name="LocationDescriptorContext" type="pnwwqx:LocationDescriptorContextType"/>
+</xsd:schema>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema targetNamespace="http://www.epa.gov/xml" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:facid="http://www.epa.gov/xml" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="2.3">
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name : 	FACID_HorizontalDatumDataType_v2.3 
+		Current Version Available At :
+		Description : 	Data Type for Horizontal Datum.
+		Application : 
+		Developed by : 	 Environmental Protection Agency, SAIC
+		Point of Contact : Meena Masti	
+	</xsd:documentation>
+	</xsd:annotation>
+	<xsd:simpleType name="HorizontalDatumDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="NAD27"/>
+			<xsd:enumeration value="NAD83"/>
+			<xsd:enumeration value="WGS84"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

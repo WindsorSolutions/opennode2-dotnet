@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:tns="http://exchangenetwork.net/schemas/validator/1.1/validatorEx.wsdl" xmlns:dime="http://schemas.xmlsoap.org/ws/2002/04/dime/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:typens="http://exchangenetwork.net/schemas/validator/1.1/validatorEx.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/wsdl/" name="ValidatorEx" targetNamespace="http://exchangenetwork.net/schemas/validator/1.1/validatorEx.wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://exchangenetwork.net/schemas/validator/1.1/validatorEx.xsd">
+      <xsd:simpleType name="DocumentType">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="AQS_Publishing_v1_0" />
+          <xsd:enumeration value="AQS_Submission_v1_0" />
+          <xsd:enumeration value="AQS_Submission_v2_0" />
+          <xsd:enumeration value="AQS_Submission" />
+          <xsd:enumeration value="Beaches_v2_0" />
+          <xsd:enumeration value="Beaches_v2_1" />
+          <xsd:enumeration value="FRS_v2_2" />
+          <xsd:enumeration value="FRS_v2_3" />
+          <xsd:enumeration value="GEO_v1_0" />
+          <xsd:enumeration value="ICIS_v1_4e" />
+          <xsd:enumeration value="ICIS_v1_5" />
+          <xsd:enumeration value="NEI_AreaNonroad_v3_0" />
+          <xsd:enumeration value="NEI_Biogenic_v3_0" />
+          <xsd:enumeration value="NEI_Onroad_v3_0" />
+          <xsd:enumeration value="NEI_Point_v3_0" />
+          <xsd:enumeration value="RCRA_v1_0" />
+          <xsd:enumeration value="RCRA_v3_0" />
+          <xsd:enumeration value="TRI_v1_1" />
+          <xsd:enumeration value="TRI_v2_0" />
+          <xsd:enumeration value="TRI_v3_0" />
+          <xsd:enumeration value="UIC_v1_0" />
+          <xsd:enumeration value="VERIFY_MotorcycleSubmission_v2_0" />
+          <xsd:enumeration value="WAD_v1_0" />
+          <xsd:enumeration value="WQX_v1_0" />
+          <xsd:enumeration value="WQX_v2_0" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="SchematronType">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="AQS_Submission_v2_0" />
+          <xsd:enumeration value="AQS_Submission_v1_1" />
+          <xsd:enumeration value="NEI_AreaNonroad_v3_0" />
+          <xsd:enumeration value="NEI_Biogenic_v3_0" />
+          <xsd:enumeration value="NEI_Onroad_v3_0" />
+          <xsd:enumeration value="OWWQX_v1_0" />
+          <xsd:enumeration value="OWWQX_v1_0" />
+          <xsd:enumeration value="UIC_v1_0" />
+          <xsd:enumeration value="UIC_v1_0_Subset" />
+          <xsd:enumeration value="VERIFY_MotorcycleSubmission_v2_0" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="ValidationType">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="schema" />
+          <xsd:enumeration value="schematron" />
+          <xsd:enumeration value="all" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="TransformType">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="UIC_v1_0Filter" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="DocumentFormat">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="xml" />
+          <xsd:enumeration value="zip" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="PasswordType">
+        <xsd:restriction base="xsd:string">
+          <xsd:length value="200" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="FileUpload">
+        <xsd:restriction base="xsd:string" />
+      </xsd:simpleType>
+      <xsd:simpleType name="ProcessStatus">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="Pending" />
+          <xsd:enumeration value="Processing" />
+          <xsd:enumeration value="Finished" />
+          <xsd:enumeration value="Failed" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="DocumentStatus">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="Valid" />
+          <xsd:enumeration value="Invalid" />
+          <xsd:enumeration value="Unknown" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:complexType name="ValidationResult">
+        <xsd:sequence>
+          <xsd:element name="transactionId" type="xsd:string" />
+          <xsd:element name="validationType" type="xsd:string" />
+          <xsd:element name="processStatus" type="typens:ProcessStatus" />
+          <xsd:element name="documentStatus" type="typens:DocumentStatus" />
+          <xsd:element name="timeStamp" type="xsd:dateTime" />
+          <xsd:element name="results" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ValidateEx">
+    <wsdl:part name="userId" type="xsd:string" />
+    <wsdl:part name="credentail" type="typens:PasswordType" />
+    <wsdl:part name="transactionId" type="xsd:string" />
+    <wsdl:part name="validationType" type="typens:ValidationType" />
+    <wsdl:part name="documentType" type="typens:DocumentType" />
+    <wsdl:part name="xmlDocument" type="xsd:base64Binary" />
+    <wsdl:part name="docFormat" type="typens:DocumentFormat" />
+    <wsdl:part name="sendResultTo" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="ValidateExResponse">
+    <wsdl:part name="return" type="typens:ValidationResult" />
+  </wsdl:message>
+  <wsdl:message name="GetReport">
+    <wsdl:part name="userId" type="xsd:string" />
+    <wsdl:part name="password" type="typens:PasswordType" />
+    <wsdl:part name="transactionId" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="GetReportResponse">
+    <wsdl:part name="return" type="typens:ValidationResult" />
+  </wsdl:message>
+  <wsdl:message name="TransformFileEx">
+    <wsdl:part name="userId" type="xsd:string" />
+    <wsdl:part name="password" type="typens:PasswordType" />
+    <wsdl:part name="transactionId" type="xsd:string" />
+    <wsdl:part name="styleSheet" type="typens:TransformType" />
+    <wsdl:part name="xmlDocument" type="xsd:base64Binary" />
+    <wsdl:part name="docFormat" type="typens:DocumentFormat" />
+    <wsdl:part name="sendResultTo" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="TransformFileExResponse">
+    <wsdl:part name="return" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:portType name="ValidatorPortType">
+    <wsdl:operation name="ValidateEx">
+      <documentation>Validate an XML document</documentation>
+      <wsdl:input message="tns:ValidateEx" />
+      <wsdl:output message="tns:ValidateExResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetReport">
+      <documentation>Get the status of a validation request</documentation>
+      <wsdl:input message="tns:GetReport" />
+      <wsdl:output message="tns:GetReportResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="TransformFileEx">
+      <documentation>Transform an XML document using XSLT</documentation>
+      <wsdl:input message="tns:TransformFileEx" />
+      <wsdl:output message="tns:TransformFileExResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ValidatorBinding" type="tns:ValidatorPortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <wsdl:operation name="ValidateEx">
+      <soap:operation soapAction="" />
+      <wsdl:input>
+        <dime:message layout="http://schemas.xmlsoap.org/ws/2002/04/dime/closed-layout" wsdl:required="true" />
+        <soap:body use="encoded" namespace="http://exchangenetwork.net/schemas/validator/1.1/validatorEx.xsd" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://exchangenetwork.net/schemas/validator/1.1/validatorEx.xsd" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetReport">
+      <soap:operation soapAction="" />
+      <wsdl:input>
+        <dime:message layout="http://schemas.xmlsoap.org/ws/2002/04/dime/closed-layout" wsdl:required="true" />
+        <soap:body use="encoded" namespace="http://exchangenetwork.net/schemas/validator/1.1/validatorEx.xsd" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://exchangenetwork.net/schemas/validator/1.1/validatorEx.xsd" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TransformFileEx">
+      <soap:operation soapAction="" />
+      <wsdl:input>
+        <dime:message layout="http://schemas.xmlsoap.org/ws/2002/04/dime/closed-layout" wsdl:required="true" />
+        <soap:body use="encoded" namespace="http://exchangenetwork.net/schemas/validator/1.1/validatorEx.xsd" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://exchangenetwork.net/schemas/validator/1.1/validatorEx.xsd" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ValidatorEx">
+    <documentation>A set of xml data validattion services</documentation>
+    <wsdl:port name="ValidatorPortType" binding="tns:ValidatorBinding">
+      <soap:address location="https://cdxtools.epa.gov/xml/validatorEx.wsdl" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

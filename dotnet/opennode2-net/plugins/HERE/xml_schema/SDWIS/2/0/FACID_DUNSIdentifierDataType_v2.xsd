@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<xsd:annotation>
+	<xsd:appinfo>DUNSIdentifierDataType_v2.xsd v2.0 2001-02 </xsd:appinfo>
+	<xsd:documentation>
+		Data Type for DUNS Number.
+	</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType name="DUNSIdentifierDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[0-9]{9}"/>
+			<xsd:length value="9"/>
+		</xsd:restriction>
+</xsd:simpleType>
+</xsd:schema>

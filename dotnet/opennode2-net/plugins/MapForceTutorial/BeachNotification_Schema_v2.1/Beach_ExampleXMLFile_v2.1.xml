@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<BeachDataSubmission xmlns="http://www.exchangenetwork.net/schema/BEACHES/2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.exchangenetwork.net/schema/BEACHES/2 C:/DOCUME~1/bgeake/Desktop/EXCHAN~1/Exchanges/BEACHN~1/BeachNotification_Schema_v2.1/2/1/BEACHES_Notification_v2.1.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<BeachDetail>
+		<BeachIdentifier>MI000286</BeachIdentifier>
+		<BeachNameDetail>
+			<ProgramInterestName>Thompson Park</ProgramInterestName>
+			<ProgramInterestDescriptionText>Thunder Bay</ProgramInterestDescriptionText>
+			<ProgramInterestStateCode>MI</ProgramInterestStateCode>
+			<ProgramInterestFIPSCountyCode>32001</ProgramInterestFIPSCountyCode>
+			<WaterBodyNameCode>LAKE_HURON</WaterBodyNameCode>
+			<BeachAccessibilityDetail>
+				<BeachAccessibilityType>PUB_PUB_ACC</BeachAccessibilityType>
+			</BeachAccessibilityDetail>
+		</BeachNameDetail>
+		<BeachActivityDetail>
+			<ActivityTypeCode>CLOSURE</ActivityTypeCode>
+			<ActivityName>Beach Closure</ActivityName>
+			<ActivityActualStartDate>2009-06-01T00:00:00</ActivityActualStartDate>
+			<ActivityActualStopDate>2009-06-03T00:00:00</ActivityActualStopDate>
+			<ActivityReasonDetail>
+				<ActivityReasonType>ELEV_BACT</ActivityReasonType>
+			</ActivityReasonDetail>
+			<ActivitySourceDetail>
+				<ActivitySourceType>RUNOFF</ActivitySourceType>
+			</ActivitySourceDetail>
+			<ActivityIndicatorDetail>
+				<ActivityIndicatorType>ECOLI</ActivityIndicatorType>
+			</ActivityIndicatorDetail>
+		</BeachActivityDetail>
+		<BeachActivityDetail>
+			<ActivityTypeCode>CLOSURE</ActivityTypeCode>
+			<ActivityName>Beach Closure</ActivityName>
+			<ActivityActualStartDate>2009-06-06T00:00:00</ActivityActualStartDate>
+			<ActivityActualStopDate>2009-06-07T00:00:00</ActivityActualStopDate>
+			<ActivityReasonDetail>
+				<ActivityReasonType>ELEV_BACT</ActivityReasonType>
+			</ActivityReasonDetail>
+			<ActivitySourceDetail>
+				<ActivitySourceType>RUNOFF</ActivitySourceType>
+			</ActivitySourceDetail>
+			<ActivityIndicatorDetail>
+				<ActivityIndicatorType>ECOLI</ActivityIndicatorType>
+			</ActivityIndicatorDetail>
+		</BeachActivityDetail>
+		<BeachActivityDetail>
+			<ActivityTypeCode>CLOSURE</ActivityTypeCode>
+			<ActivityName>Beach Closure</ActivityName>
+			<ActivityActualStartDate>2009-06-10T00:00:00</ActivityActualStartDate>
+			<ActivityActualStopDate>2009-06-11T00:00:00</ActivityActualStopDate>
+			<ActivityReasonDetail>
+				<ActivityReasonType>ELEV_BACT</ActivityReasonType>
+			</ActivityReasonDetail>
+			<ActivitySourceDetail>
+				<ActivitySourceType>RUNOFF</ActivitySourceType>
+			</ActivitySourceDetail>
+			<ActivityIndicatorDetail>
+				<ActivityIndicatorType>ECOLI</ActivityIndicatorType>
+			</ActivityIndicatorDetail>
+		</BeachActivityDetail>
+	</BeachDetail>
+	<BeachDetail>
+		<BeachIdentifier>MI000309</BeachIdentifier>
+		<BeachNameDetail>
+			<ProgramInterestName>Traverse City State Park</ProgramInterestName>
+			<ProgramInterestDescriptionText>Traverse City</ProgramInterestDescriptionText>
+			<ProgramInterestStateCode>MI</ProgramInterestStateCode>
+			<ProgramInterestFIPSCountyCode>32002</ProgramInterestFIPSCountyCode>
+			<WaterBodyNameCode>LAKE_MCHGN</WaterBodyNameCode>
+			<BeachAccessibilityDetail>
+				<BeachAccessibilityType>PUB_PUB_ACC</BeachAccessibilityType>
+			</BeachAccessibilityDetail>
+		</BeachNameDetail>
+	</BeachDetail>
+</BeachDataSubmission>

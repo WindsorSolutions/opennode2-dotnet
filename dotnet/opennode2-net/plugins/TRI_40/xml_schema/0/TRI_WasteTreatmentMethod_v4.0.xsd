@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 sp1 (http://www.altova.com) by WDavid Ripley, III (COMPUTER SCIENCES CORP) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:TRI="http://www.exchangenetwork.net/schema/TRI/4" targetNamespace="http://www.exchangenetwork.net/schema/TRI/4" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.0">
+	<xsd:include schemaLocation="TRI_SharedComponents_v4.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>		
+		Schema Name : 	TRI_WasteTreatmentMethod_v4.0.xsd
+		Current Version Available At :
+		Description : 	The waste treatment activity that is applied to the waste stream containing the toxic chemical
+		Application : Toxic Release Inventory
+		Developed by : 	 Environmental Protection Agency, Windsor Solutions, Inc.
+		Point of Contact : William Rensmith
+		Maintained by : Environmental Protection Agency, CSC
+		Point of Contact : WDavid Ripley III [dripley@csc.com]	
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="WasteTreatmentMethod" type="TRI:WasteTreatmentMethodDataType">
+		<xsd:annotation>
+			<xsd:documentation>Waste treatment information.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="WasteTreatmentMethodDataType">
+		<xsd:annotation>
+			<xsd:documentation>The waste treatment activity that is applied to the waste stream containing the toxic chemical.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="TRI:WasteTreatmentSequenceNumber" minOccurs="0"/>
+			<xsd:element ref="TRI:WasteTreatmentMethodCode" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="WasteTreatmentSequenceNumber" type="TRI:ToxicReleaseIntegerType">
+		<xsd:annotation>
+			<xsd:documentation>Sequence in which a treatment method was entered on TRI Form R.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="WasteTreatmentMethodCode" type="TRI:ToxicReleaseStringType">
+		<xsd:annotation>
+			<xsd:documentation>The waste treatment activity that is applied to the waste stream containing the toxic chemical.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

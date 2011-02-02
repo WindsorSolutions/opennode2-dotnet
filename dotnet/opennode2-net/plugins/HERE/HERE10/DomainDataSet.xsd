@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DomainDataSet" targetNamespace="http://tempuri.org/DomainDataSet.xsd" xmlns:mstns="http://tempuri.org/DomainDataSet.xsd" xmlns="http://tempuri.org/DomainDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection ConnectionStringObject="Data Source=sql1;Initial Catalog=HERE_FLOWS;Integrated Security=True" IsAppSettingsProperty="False" Modifier="Assembly" Name="HERE_FLOWSConnectionString" ParameterPrefix="@" Provider="System.Data.SqlClient">
+          </Connection>
+        </Connections>
+        <Tables>
+        </Tables>
+        <Sources>
+        </Sources>
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DomainDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="DomainDataSet" msprop:Generator_DataSetName="DomainDataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="List" msprop:Generator_UserTableName="List" msprop:Generator_RowDeletedName="ListRowDeleted" msprop:Generator_TableClassName="ListDataTable" msprop:Generator_RowChangedName="ListRowChanged" msprop:Generator_RowClassName="ListRow" msprop:Generator_RowChangingName="ListRowChanging" msprop:Generator_RowEvArgName="ListRowChangeEvent" msprop:Generator_RowEvHandlerName="ListRowChangeEventHandler" msprop:Generator_TablePropName="List" msprop:Generator_TableVarName="tableList" msprop:Generator_RowDeletingName="ListRowDeleting">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ListId" msprop:Generator_UserColumnName="ListId" msprop:Generator_ColumnPropNameInRow="ListId" msprop:Generator_ColumnVarNameInTable="columnListId" msprop:Generator_ColumnPropNameInTable="ListIdColumn" type="xs:string" />
+              <xs:element name="ListName" msprop:Generator_UserColumnName="ListName" msprop:Generator_ColumnPropNameInRow="ListName" msprop:Generator_ColumnVarNameInTable="columnListName" msprop:Generator_ColumnPropNameInTable="ListNameColumn" type="xs:string" />
+              <xs:element name="ListOwnerName" msprop:Generator_UserColumnName="ListOwnerName" msprop:nullValue="_throw" msprop:Generator_ColumnVarNameInTable="columnListOwnerName" msprop:Generator_ColumnPropNameInTable="ListOwnerNameColumn" msprop:Generator_ColumnPropNameInRow="ListOwnerName" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ListItem" msprop:Generator_UserTableName="ListItem" msprop:Generator_RowDeletedName="ListItemRowDeleted" msprop:Generator_TableClassName="ListItemDataTable" msprop:Generator_RowChangedName="ListItemRowChanged" msprop:Generator_RowClassName="ListItemRow" msprop:Generator_RowChangingName="ListItemRowChanging" msprop:Generator_RowEvArgName="ListItemRowChangeEvent" msprop:Generator_RowEvHandlerName="ListItemRowChangeEventHandler" msprop:Generator_TablePropName="ListItem" msprop:Generator_TableVarName="tableListItem" msprop:Generator_RowDeletingName="ListItemRowDeleting">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ListId" msprop:Generator_UserColumnName="ListId" msprop:Generator_ColumnPropNameInRow="ListId" msprop:Generator_ColumnVarNameInTable="columnListId" msprop:Generator_ColumnPropNameInTable="ListIdColumn" type="xs:string" />
+              <xs:element name="ItemCode" msprop:Generator_UserColumnName="ItemCode" msprop:Generator_ColumnPropNameInRow="ItemCode" msprop:Generator_ColumnVarNameInTable="columnItemCode" msprop:Generator_ColumnPropNameInTable="ItemCodeColumn" type="xs:string" />
+              <xs:element name="ItemValue" msprop:Generator_UserColumnName="ItemValue" msprop:Generator_ColumnPropNameInRow="ItemValue" msprop:Generator_ColumnVarNameInTable="columnItemValue" msprop:Generator_ColumnPropNameInTable="ItemValueColumn" type="xs:string" />
+              <xs:element name="ItemDesc" msprop:Generator_UserColumnName="ItemDesc" msprop:Generator_ColumnPropNameInRow="ItemDesc" msprop:nullValue="_null" msprop:Generator_ColumnVarNameInTable="columnItemDesc" msprop:Generator_ColumnPropNameInTable="ItemDescColumn" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:List" />
+      <xs:field xpath="mstns:ListId" />
+    </xs:unique>
+  </xs:element>
+  <xs:annotation>
+    <xs:appinfo>
+      <msdata:Relationship name="List_ListItem" msdata:parent="List" msdata:child="ListItem" msdata:parentkey="ListId" msdata:childkey="ListId" msprop:Generator_UserRelationName="List_ListItem" msprop:Generator_RelationVarName="relationList_ListItem" msprop:Generator_UserChildTable="ListItem" msprop:Generator_UserParentTable="List" msprop:Generator_ParentPropName="ListRow" msprop:Generator_ChildPropName="GetListItemRows" />
+    </xs:appinfo>
+  </xs:annotation>
+</xs:schema>

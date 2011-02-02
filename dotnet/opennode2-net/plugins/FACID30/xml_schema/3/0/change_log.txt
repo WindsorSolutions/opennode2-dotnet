@@ -1,0 +1,111 @@
+----------------------------------------------------
+--
+-- Changes in Facility ID Schema version 3.0
+-- 
+-- Kevin Lyons, Windsor Solutions, Inc
+-- 03/20/2007
+--
+-- TK Conrad, Windsor Solutions, Inc
+-- 02/18/2009
+--
+-----------------------------------------------------
+
+Schema changes are listed below:
+
+GENERAL: Added documentation within schema in the form of annotations.
+
+GENERAL: Adjusted the schema to from the nine file structure to a composite structure.
+
+GENERAL: Schema namespace has changed to "http://www.exchangenetwork.net/schema/facilityid/3"
+
+GENERAL: Implemented Shared Schema Components, where practical and appropriate.
+
+GENERAL: Added root schema files called FacID_FacilityDetials_v3.0.xsd, FacID_FacilityInterest_v3.0.xsd and FacID_FacilityIndex_v3.0.xsd, for each major component in the schema.
+
+GENERAL: Added an Index.xsd component which includes the root schema for the flow.
+
+AFFILIATE: Adjusted the schema to normalize "Affiliates" (Organizations and Individuals). This will mean that shared Affiliates will no longer be duplicated in the provided dataset. This will be accomplished using the Key/KeyRef concept which is supported by the Affiliate "Identity" element.
+
+AFFILIATE: The unique identifier element named, Affiliate Identifier, was added as a required element in order to normalize Organizations and Individuals in the schema.
+
+AFFILIATION: Added a required foreign key element called "Affiliate Identifier" to the Facility Affiliation component to support the normalized relationship to an Affiliate.
+
+AFFILIATION: Due to the implementation of the Shared Schema Components, the Status Text and Status Determination Dates elements were added to the schema.
+
+ALTERNATIVE IDENTIFIERS: Added support for one or many Alternative IDs for an Environmental Interest and/or a Facility.
+
+ALTERNATIVE NAMES: Added support for multiple Alternative Names
+
+DATASOURCE: As partners have the ability to trade information between partners and in some cases, for partners of the exchange, it has become apparent that there is a need to better expose the original source of the exchanged data. The previous schema had a "Source of Data" element which could be used to perform a similar function, but was often confused with the "State Facility Acronym Name". In order to better describe the use and intention of this element, it was renamed to "Originating Partner Name" which will be used to denote the name of the partner that originally provided the data.
+
+DATASOURCE: Due to the migration from the nine file structure to the new composite FacID structure, the Source of Data (now called Originating Partner Name), Last Reported Date and State Facility System Acronym Name components have been consolidated into one "DataSource" component.
+
+DATASOURCE: The "Originating Partner Name" (previously named "Source of Data") is a required element.
+
+ELECTRONIC ADDRESS DATA TYPE: Added support for sharing a URL at the Facility, Environmental Interest and Affiliate level.
+
+ELECTRONIC ADDRESS DATA TYPE: Due to the implementation of the Shared Schema Components all phone, fax, alternative phone and email addresses will now be exchanged via the Electronic Address data type.
+
+ENVIRONMENTAL INTEREST: Added an Active indicator element to the Environmental Interest component to denote whether the Environmental Interest is currently considered to be active.
+
+ENVIRONMENTAL INTEREST: The Environmental Interest Type and Environmental Interest Identifier are required elements.
+
+ENVIRONMENTAL INTEREST: The Federal State Indicator was changed to Shared Schema Agency Type Data Type component to better fit the Shared Schema Component structure. With this change in place, if other agencies start to exchange Facility information, this element will have the ability to store more values than simply "Federal" and "State".
+
+FACILITY SITE: The FRS ID and State Facility Identifier elements were removed from this component and will be represented as the Facility Site ID or Alternative Identifier, when appropriate.
+
+FIPS CODE DATA TYPE: The FIPS Code Data Type component was replaced with the County Identity Data Type Shared Component.
+
+GEOGRAPHIC COORDINATE: Due to the implementation of the Geographic Coordinate Location Shared Schema Component, the following elements are no longer supported; Data Source Name, Vert Accuracy Measure, Sub-Entity Identifier and Sub-Entity Type
+
+LATITUDE MEASURE: Due to the implementation of the GeoRSS standard, this element has been replaced by gml:Pos (Point), gml:PosList (LineString, Polygon) and gml:upperCorner / gml:lowerCorner (Envelope). It is the first element in this tuple.
+
+LONGITUDE MEASURE: Due to the implementation of the GeoRSS standard, this element has been replaced by gml:Pos (Point), gml:PosList (LineString, Polygon) and gml:upperCorner / gml:lowerCorner (Envelope). It is the second element in this tuple.
+
+HORIZONTAL REFERENCE DATUM NAME: Due to the implementation of the GeoRSS standard, this element has been replaced by the attribute srsName of gml:Pos (Point), gml:PosList (LineString, Polygon) or gml:upperCorner / gml:lowerCorner (Envelope).
+
+GEOMETRIC TYPE NAME: Due to the implementation of the GeoRSS standard, this element is no longer specified. Instead, it is inherent in which of the following geometric types have been chosen: gml:Point, gml:LineString, gml:Polygon, or gml:Envelope.
+
+VERTICAL MEASURE: Due to the implementation of the GeoRSS standard, this element has been replaced by gml:Pos (Point), gml:PosList (LineString, Polygon) and gml:upperCorner / gml:lowerCorner (Envelope). It is the third element in this tuple.
+
+VERTICAL REFERENCE DATUM NAME: Due to the implementation of the GeoRSS standard, this element has been replaced by the attribute srsName of gml:Pos (Point), gml:PosList (LineString, Polygon) or gml:upperCorner / gml:lowerCorner (Envelope).
+
+HORIZONTAL METHOD DATA TYPE: Due to the implementation of the Shared Schema Components, Horizontal Method no longer is restricted to a set list of values.
+
+INDIVIDUAL IDENTIFIER: Due to the implementation of the Individual Identity Shared Schema Component, the following elements are now supported for an individual; ID, Name Prefix, First Name, Middle Name, Last Name and Name Suffix
+
+NAICS CODE: Removed the restriction for NAICS codes to be 6 characters in length. The new restriction validates NAICS codes are 2-6 characters in length. Note: the shared component was not used for the NAICS data type due to the fact that the shared component restricts the length to six characters. The structure used was such that the SC_FacilityNAICS Shared Schema Component could easily be implemented should this length restriction be adjusted in the future.
+
+ORGANIZATION: Due to the implementation of the Organization Identity Shared Schema Component, the following elements are no longer supported; Organization DUNS #, Organization Type, Employer Identifier, Ultimate Parent Name and Ultimate Parent DUNS #
+
+REFERENCE POINT DATA TYPE: Due to the implementation of the Shared Schema Components, Reference Point no longer is restricted to a set list of values.
+
+SIC CODE DATA TYPE: Due to the implementation of the Shared Schema Components, SIC Code is no longer restricted to be a numeric value.
+
+STATE IDENTITY: Due to the implementation of the Shared Schema Components, State Code is no longer restricted to be a alpha value which is two characters in length.
+
+VERTICAL MEASURE DATA TYPE: Due to the implementation of the GeoRSS standard, this element has been replaced by the attribute srsName of gml:Pos (Point), gml:PosList (LineString, Polygon) or gml:upperCorner / gml:lowerCorner (Envelope).
+
+VERTICAL METHOD DATA TYPE: Due to the implementation of the Shared Schema Components, Vertical Method no longer is restricted to a set list of values.
+
+GENERAL: Added elements to incorporate geospatial definitions (http://opengis.net/gml/) into the FACID schema, based upon the GeoRSS Application Profile and using recommendations from the Exchange Network Geospatial Task Force (http://www.exchangenetwork.net/exchanges/cross/geo.htm).
+
+GENERAL: Modified all instance files to be compatible with the latest schema changes.
+
+FACILITY: Removed GeographicLocationDescription, added FacilityPrimaryGeographicLocationDescription and FacilityGeographicLocationList.
+
+FACILITY SUMMARY: Removed GeographicLocationDescription, added FacilitySummaryGeographicLocation
+
+FACILITY SUMMARY GEOGRAPHIC LOCATION: New complex element containing gml:Point, facid:HorizontalAccuracyMeasure, and facid:HorizontalCollectionMethod.
+
+FACILITY GEOGRAPHIC LOCATION LIST: New element containing one or more FacilityGeographicLocationDescription complex elements.
+
+FACILITY GEOGRAPHIC LOCATION DESCRIPTION: New complex element based upon the original GeographicLocationDescription containing some geographic elements as defined in  SC_GeographicLocationDescription_v2.0.xsd as well as new geospatial elements from http://opengis.net/gml/. Location can be expressed as a point, linestring, polygon, or envelope.
+
+FACILITY PRIMARY GEOGRAPHIC LOCATION DESCRIPTION: New complex element based upon FacilityGeographicLocationDescription with the location limited to a type of gml:Point (i.e., Latitude/Longitude).
+
+FACILITY COUNT: New root element for the FacilityID exchange to support the GetFacilityCount_v3.0 data service. Contains only one element, FacilityCountMeasure.
+
+FACILITY SIMPLE CONTENT: Added definition for FacilityCountMeasure element.
+
+FACILITY LOCATION ADDRESS: Removed the restriction and complexContent brackets around the list of specific location elements to be included for FACID_FacilityLocationAddress.

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Terrie Sutch (Science Application International Corporation) -->
+<!-- edited with XML Spy v4.4 U (http://www.xmlspy.com) by Surjit De (Science Applications International Corp.) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="2.0">
+	<xsd:include schemaLocation=".\SDWA_CodeList.xsd"/>
+	<xsd:include schemaLocation=".\FACID_MailingAddressDataType_v2.xsd"/>
+	<xsd:include schemaLocation=".\FACID_PhoneFaxEmailDataType_v2.xsd"/>
+	<xsd:include schemaLocation=".\SDWA_WaterSystemDataTypes_v2.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>Data Type Definitions for Legal Entity and Legal Entity Affiliations.</xsd:documentation>
+	</xsd:annotation>
+	<xsd:simpleType name="LegalEntityAddressIdentifierType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="20"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="OrganizationNameTextType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="80"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="AddresseeNameTextType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="70"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MailingAddressCityNameType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="40"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MailingAddressZIPCodeType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="14"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="AffiliationCodeType">
+		<xsd:choice>
+			<xsd:element name="SDWAAffiliationCode" type="SDWAAffiliationCodeType"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="CountryCodeType">
+		<xsd:choice>
+			<xsd:element name="SDWACountryCode" type="SDWACountryCodeType"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="AddressType">
+		<xsd:complexContent>
+			<xsd:restriction base="MailingAddressDataType">
+				<xsd:sequence>
+					<xsd:element name="MailingAddressText">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+								<xsd:maxLength value="50"/>
+								<xsd:minLength value="1"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+					<xsd:element name="SupplementalAddressText" minOccurs="0">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+								<xsd:minLength value="1"/>
+								<xsd:maxLength value="50"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+					<xsd:element name="MailingAddressCityName">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+								<xsd:minLength value="1"/>
+								<xsd:maxLength value="40"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+					<xsd:element name="SDWAUSStateCodeCanadianProvince" type="SDWAStateCodeCanadianProvinceCodeType" minOccurs="0"/>
+					<xsd:element ref="CountryCode"/>
+					<xsd:element name="MailingAddressZIPCode" minOccurs="0">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+								<xsd:minLength value="1"/>
+								<xsd:maxLength value="14"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:restriction>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:annotation>
+		<xsd:documentation>Global Element Declarations for Legal Entity and Legal Entity Affiliations.</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="CountryCode" type="CountryCodeType"/>
+	<xsd:element name="AddresseeNameText" type="AddresseeNameTextType"/>
+	<xsd:element name="LegalEntityAddressIdentifier" type="LegalEntityAddressIdentifierType"/>
+	<xsd:element name="OrganizationNameText" type="OrganizationNameTextType"/>
+	<xsd:element name="Address" type="AddressType"/>
+	<xsd:element name="AffiliationCode" type="AffiliationCodeType"/>
+	<xsd:element name="PhoneFaxEmail">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="PhoneFaxEmailDataType">
+					<xsd:sequence>
+						<xsd:element name="EmailAddressText" minOccurs="0">
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:minLength value="1"/>
+									<xsd:maxLength value="100"/>
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+						<xsd:element name="TelephoneNumber" minOccurs="0">
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:minLength value="1"/>
+									<xsd:maxLength value="15"/>
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+						<xsd:element name="TelephoneNumberExtension" minOccurs="0">
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:minLength value="1"/>
+									<xsd:maxLength value="5"/>
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+						<xsd:element name="FaxNumber" minOccurs="0">
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:minLength value="1"/>
+									<xsd:maxLength value="15"/>
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+						<xsd:element name="AlternateTelephoneNumber" minOccurs="0">
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:minLength value="1"/>
+									<xsd:maxLength value="15"/>
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema 
+targetNamespace="http://www.exchangenetwork.net/schema/icis/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1" xmlns:icis="http://www.exchangenetwork.net/schema/icis/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<!-- INCLUDE STATEMENTS -->
+	<xsd:include schemaLocation="5/ICIS_v1.5.xsd"/>
+</xsd:schema>

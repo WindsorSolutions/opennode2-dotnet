@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:RC="http://www.exchangenetwork.net/schema/RCRA/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/RCRA/5" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="5.1">
+	<xsd:include schemaLocation="./RCRA_Shared_v5.1.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name : 	RCRA_EvaluationCommitment_v5.1
+		Description : 	Linking Data for Commitment/Initiative and Evaluation
+		Developed by : 	U.S. EPA
+	</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="EvaluationCommitmentDataType">
+		<xsd:sequence>
+			<xsd:element ref="RC:TransactionCode" minOccurs="0"/>
+			<xsd:element ref="RC:CommitmentLead"/>
+			<xsd:element ref="RC:CommitmentSequenceNumber"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="EvaluationCommitment" type="RC:EvaluationCommitmentDataType">
+		<xsd:annotation>
+			<xsd:documentation>Linking Data for Commitment/Initiative and Evaluation.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

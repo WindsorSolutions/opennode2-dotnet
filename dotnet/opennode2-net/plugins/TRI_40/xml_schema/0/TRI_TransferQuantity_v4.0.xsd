@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 sp1 (http://www.altova.com) by WDavid Ripley, III (COMPUTER SCIENCES CORP) -->
+<xsd:schema xmlns:TRI="http://www.exchangenetwork.net/schema/TRI/4" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/TRI/4" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.0">
+	<xsd:include schemaLocation="TRI_SharedComponents_v4.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name : 	TRI_TransferQuantity_v4.0.xsd
+		Current Version Available At :
+		Description : 	The quantity of material transfered to a receiving facility and how it was treated, recycled or otherwise disposed
+		Application : Toxic Release Inventory
+		Developed by : 	 Environmental Protection Agency, Windsor Solutions, Inc.
+		Point of Contact : William Rensmith
+		Maintained by : Environmental Protection Agency, CSC
+		Point of Contact : WDavid Ripley III [dripley@csc.com]	
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="TransferQuantity" type="TRI:TransferQuantityDataType">
+		<xsd:annotation>
+			<xsd:documentation>The quantity of material transfered to a receiving facility and how it was treated, recycled ,or otherwise disposed.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="TransferQuantityDataType">
+		<xsd:sequence>
+			<xsd:element ref="TRI:TransferSequenceNumber" minOccurs="0"/>
+			<xsd:element ref="TRI:TransferWasteQuantity" minOccurs="0"/>
+			<xsd:element ref="TRI:WasteManagementTypeCode" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="TransferSequenceNumber" type="TRI:ToxicReleaseIntegerType">
+		<xsd:annotation>
+			<xsd:documentation>Sequence in which an off-site transfer amount is reported on a submission.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="WasteManagementTypeCode" type="TRI:WasteManagementTypeCodeType">
+		<xsd:annotation>
+			<xsd:documentation>The type of waste treatment, disposal, recycling, or energy recovery methods the off-site location uses to manage the toxic chemical.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TransferWasteQuantity" type="TRI:WasteQuantityDataType">
+		<xsd:annotation>
+			<xsd:documentation>Captures a quantity of waste and how the was quantity was determined by the reporter.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!--Transfer quantity data type-->
+	<xsd:simpleType name="WasteManagementTypeCodeType">
+		<xsd:annotation>
+			<xsd:documentation>Enumeration of 33 codes type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="INV"/>
+			<xsd:enumeration value="M10"/>
+			<xsd:enumeration value="M20"/>
+			<xsd:enumeration value="M24"/>
+			<xsd:enumeration value="M26"/>
+			<xsd:enumeration value="M28"/>
+			<xsd:enumeration value="M40"/>
+			<xsd:enumeration value="M41"/>
+			<xsd:enumeration value="M50"/>
+			<xsd:enumeration value="M54"/>
+			<xsd:enumeration value="M56"/>
+			<xsd:enumeration value="M61"/>
+			<xsd:enumeration value="M62"/>
+			<xsd:enumeration value="M63"/>
+			<xsd:enumeration value="M64"/>
+			<xsd:enumeration value="M65"/>
+			<xsd:enumeration value="M66"/>
+			<xsd:enumeration value="M67"/>
+			<xsd:enumeration value="M69"/>
+			<xsd:enumeration value="M71"/>
+			<xsd:enumeration value="M72"/>
+			<xsd:enumeration value="M73"/>
+			<xsd:enumeration value="M79"/>
+			<xsd:enumeration value="M81"/>
+			<xsd:enumeration value="M82"/>
+			<xsd:enumeration value="M90"/>
+			<xsd:enumeration value="M91"/>
+			<xsd:enumeration value="M92"/>
+			<xsd:enumeration value="M93"/>
+			<xsd:enumeration value="M94"/>
+			<xsd:enumeration value="M95"/>
+			<xsd:enumeration value="M99"/>
+			<xsd:enumeration value="NA"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

@@ -1,0 +1,183 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BDA87ACC-153F-4D40-95F3-8D9268E1E9B1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Windsor.Node2008.WNOSPlugin.WQX2</RootNamespace>
+    <AssemblyName>Windsor.Node2008.WNOSPlugin.WQX2</AssemblyName>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <PublishUrl>http://localhost/Windsor.EN.Node41.Plugin.WQX2/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;USE_XSD_ORM</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Common.Logging, Version=1.2.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Spring.Core, Version=1.3.0.20349, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\Spring.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Data, Version=1.2.0.20313, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\Spring.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\src\AssemblyInfo\AssemblyInfo.cs">
+      <Link>AssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="BasePerformWQXSubmission.cs" />
+    <Compile Include="BaseWQXSubmissionPlugin.cs" />
+    <Compile Include="ClearPendingWQXSubmissions.cs" />
+    <Compile Include="ExecuteWQXExtract.cs" />
+    <Compile Include="GetWQXSubmissionStatus.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WQXBaseAuthorizationPlugin.cs" />
+    <Compile Include="WQXExtractAndSubmission.cs" />
+    <Compile Include="WQXFlatFileSubmissionProcessor.cs" />
+    <Compile Include="WQXGetDeleteSubmission.cs" />
+    <Compile Include="WQXGetInsertUpdateSubmission.cs" />
+    <Compile Include="WQXGetStatus.cs" />
+    <Compile Include="WQXPluginBase.cs" />
+    <Compile Include="WQXPluginMappers.cs" />
+    <Compile Include="WQXProcessInsertUpdateSolicit.cs" />
+    <Compile Include="WQXQuerySolicitProcessor.cs" />
+    <Compile Include="WQXSubmissionProcessor.cs" />
+    <Compile Include="WQXTestPullPushProcessor.cs" />
+    <Compile Include="WQXTestSubmitAcceptor.cs" />
+    <Compile Include="xml_schema\WQX_v1_0.cs" />
+    <Compile Include="xml_schema\WQX_v1_0_2.cs" />
+    <Compile Include="xml_schema\WQX_v2_0.cs" />
+    <Compile Include="xml_schema\WQX_v2_0_2.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\windsor-common-net\src\Commons\Windsor-Commons-Core\Windsor.Commons.Core.csproj">
+      <Project>{FE8A985A-F050-4475-B3D6-4E95EE87CF40}</Project>
+      <Name>Windsor.Commons.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\windsor-common-net\src\Commons\Windsor-Commons-Logging\Windsor.Commons.Logging.csproj">
+      <Project>{C201FD80-438C-4252-9655-B3E26F75A5AA}</Project>
+      <Name>Windsor.Commons.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\windsor-common-net\src\Commons\Windsor-Commons-NodeClient\Windsor.Commons.NodeClient.csproj">
+      <Project>{E5B7FB63-FD4F-488F-A620-8E61849BB79A}</Project>
+      <Name>Windsor.Commons.NodeClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\windsor-common-net\src\Commons\Windsor-Commons-NodeDomain\Windsor.Commons.NodeDomain.csproj">
+      <Project>{D5374478-B3C9-4920-93FB-0FA5C2AFA446}</Project>
+      <Name>Windsor.Commons.NodeDomain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\windsor-common-net\src\Commons\Windsor-Commons-Spring\Windsor.Commons.Spring.csproj">
+      <Project>{2249EFD8-40F1-4C41-BCF0-AD29FEDFCBD0}</Project>
+      <Name>Windsor.Commons.Spring</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\windsor-common-net\src\Commons\Windsor-Commons-XsdOrm\Windsor.Commons.XsdOrm.csproj">
+      <Project>{8A62B9FD-50DC-4712-9237-ADE3CDC0A3D4}</Project>
+      <Name>Windsor.Commons.XsdOrm</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\WNOSDomain\WNOSDomain.csproj">
+      <Project>{0AD3D68F-4A02-4080-BFF2-8AD1BAB259AA}</Project>
+      <Name>WNOSDomain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\WNOSPlugin\WNOSPlugin.csproj">
+      <Project>{FF0BCEE5-858F-4DC9-8B7B-51FFB2AA6B70}</Project>
+      <Name>WNOSPlugin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\WNOSProviders\WNOSProviders.csproj">
+      <Project>{D95C862B-FFDC-4936-8835-B0D8DB421B20}</Project>
+      <Name>WNOSProviders</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\WNOSUtility\WNOSUtility.csproj">
+      <Project>{94459097-5EAE-4482-B1E0-F419CEBCC8C7}</Project>
+      <Name>WNOSUtility</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="WQXAuthorization.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="xml_schema\xml_schema.zip" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

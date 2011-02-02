@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<xsd:annotation>
+	<xsd:appinfo>NAICSCodeDataType_v2.xsd v2.0 2001-02 </xsd:appinfo>
+	<xsd:documentation>
+		Data Type for NAICS Code.
+	</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType name="NAICSCodeDataType">
+	<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[0-9]{6}"/>
+			<xsd:length value="6"/>
+	</xsd:restriction>
+</xsd:simpleType>
+</xsd:schema>

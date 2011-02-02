@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<schema targetNamespace="http://www.exchangenetwork.net/schema/tts/1"  xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tts="http://www.exchangenetwork.net/schema/tts/1"
+	elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+    <annotation>
+        <documentation>
+            Schema Name : TransactionTracking.xsd
+            Current Version Available At : http://www.exchangenetwork.net/scheam/tts/1
+            Description : The Exchange Network Trasaction Tracking Service Schema.
+            Technical Contact : Yunhao Zhang (yzhang2006@gmail.com).
+        </documentation>
+    </annotation>
+    <complexType name ="NameValuePair">
+        <sequence>
+            <element name ="PropertyName" type ="string" />
+            <element name ="PropertyValue" type ="anyType" />
+        </sequence>
+    </complexType>
+    <complexType name="TransactionType">
+        <sequence>
+            <element name="TransactionId" type="string"/>
+            <element name="DataflowName" type="string" />
+            <element name="TransactionType" type="string" />
+            <element name="TransactionStatus" type="string" />
+            <element name="StatusDescription" type="string"/>
+            <element name="CreationDateTime" type="dateTime"/>
+            <element name="UserId" type="string" />
+            <element name="Organization" type="string" minOccurs="0" maxOccurs="1"/>
+            <element name="Contact" type="string" minOccurs="0" maxOccurs="1"/>
+        </sequence>
+    </complexType>
+
+    <complexType name="TransactionListType">
+        <sequence>
+            <element name="Transaction" type="tts:TransactionType" minOccurs="0"  maxOccurs="unbounded" />
+        </sequence>
+    </complexType>
+
+    <complexType name="ActivityType">
+        <sequence>
+            <element name="ActivityName" type="string" />
+            <element name="ActivityStatus" type="string" />
+            <element name="Message" type="string"/>
+            <element name="Timestamp" type="dateTime" />
+        </sequence>
+    </complexType>
+    <complexType name="ActivityListType">
+        <sequence>
+            <element name="Activity" type="tts:ActivityType" minOccurs="0"  maxOccurs="unbounded" />
+        </sequence>
+    </complexType>
+    <complexType name="DocumentType">
+        <sequence>
+            <element name="DocumentId" type="string" />
+            <element name="DocumentName" type="string" />
+            <element name="FileName" type="string" />
+            <element name="DocumentType" type="string"/>
+        </sequence>
+    </complexType>
+    <complexType name="DocumentListType">
+        <sequence>
+            <element name="Document" type="tts:DocumentType" minOccurs="0"  maxOccurs="unbounded" />
+        </sequence>
+    </complexType>
+    <complexType name="PropertyListType">
+        <sequence>
+            <element name="Property" type="tts:NameValuePair" minOccurs="0"  maxOccurs="unbounded" />
+        </sequence>
+    </complexType>
+
+    <complexType name="TransactionDetailType">
+        <complexContent>
+            <extension base="tts:TransactionType">
+                <sequence>
+                    <element name="Properties" type="tts:PropertyListType"  >
+                        <annotation>
+                            <documentation>Any other captured information associated with a transaction should be returned as properties.</documentation>
+                        </annotation>
+                    </element>
+                    <element name="ActivityList" type="tts:ActivityListType" />
+                    <element name="DocumentList" type="tts:DocumentListType" minOccurs="0" maxOccurs="1"/>
+                </sequence>
+            </extension>
+        </complexContent>
+    </complexType>
+
+    <element name="TransactionList" type="tts:TransactionListType" >
+        <annotation>
+            <documentation>The root element of a transaction list returned by the GetTransactionList method</documentation>
+        </annotation>
+    </element>
+    <element name="TransactionDetail" type="tts:TransactionDetailType" >
+        <annotation>
+            <documentation>The root element of a transaction Detail returned by the GetTransactionDetail method.</documentation>
+        </annotation>
+    </element>
+    <element name="TransactionCount" type="nonNegativeInteger" >
+        <annotation>
+            <documentation>The number of transactions returned by the GetTransactionCount method.</documentation>
+        </annotation>
+    </element>
+</schema>

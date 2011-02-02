@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- edited with XMLSPY v2004 rel. 4 U (http://www.xmlspy.com) by Douglas Timms (enfoTech & Consulting, Inc.) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wqx="http://www.exchangenetwork.net/schema/wqx/1" targetNamespace="http://www.exchangenetwork.net/schema/wqx/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:include schemaLocation="WQX_OrganizationDescription_v1.0.xsd"/>
+	<xsd:include schemaLocation="WQX_ElectronicAddress_v1.0.xsd"/>
+	<xsd:include schemaLocation="WQX_Telephonic_v1.0.xsd"/>
+	<xsd:include schemaLocation="WQX_OrganizationAddress_v1.0.xsd"/>
+	<xsd:include schemaLocation="WQX_Project_v1.0.xsd"/>
+	<xsd:include schemaLocation="WQX_MonitoringLocation_v1.0.xsd"/>
+	<xsd:include schemaLocation="WQX_Activity_v1.0.xsd"/>
+	<xsd:include schemaLocation="WQX_ActivityGroup_v1.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+  	        Schema Name  : WQX_Organization_v1.0.xsd
+  	        Current Version Available At :  
+  	        Description   : Schema used to transfer organization information.
+  	        Developed by  : EPA Office of Water
+  	        Point of Contact :   Dwane Young
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="OrganizationDataType">
+		<xsd:sequence>
+			<xsd:element ref="wqx:OrganizationDescription"/>
+			<xsd:element ref="wqx:ElectronicAddress" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="wqx:Telephonic" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="wqx:OrganizationAddress" minOccurs="0" maxOccurs="3"/>
+			<xsd:element ref="wqx:Project" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="wqx:MonitoringLocation" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="wqx:Activity" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="wqx:ActivityGroup" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="Organization" type="wqx:OrganizationDataType">
+		<xsd:annotation>
+			<xsd:documentation>Schema used to transfer organization information.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

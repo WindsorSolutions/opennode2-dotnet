@@ -1,0 +1,50 @@
+<publishData>
+  <publishTarget publishUrl="C:\Projects\opennode2-net-branch\BUILD\www\Endpoint2\">
+    <file relUrl="bin/Common.Logging.Log4Net.dll" publishTime="10/05/2010 17:55:45" />
+    <file relUrl="bin/Spring.Services.pdb" publishTime="10/05/2010 17:55:45" />
+    <file relUrl="bin/Windsor.Commons.NodeDomain.dll" publishTime="01/13/2011 14:33:23" />
+    <file relUrl="bin/log4net.dll" publishTime="10/05/2010 17:55:45" />
+    <file relUrl="ENService20.asmx" publishTime="11/30/2010 16:55:01" />
+    <file relUrl="bin/Spring.Core.xml" publishTime="10/05/2010 17:55:45" />
+    <file relUrl="bin/Windsor.Node2008.WNOSProviders.pdb" publishTime="01/13/2011 14:33:25" />
+    <file relUrl="bin/antlr.runtime.dll" publishTime="10/05/2010 17:55:45" />
+    <file relUrl="bin/Common.Logging.dll" publishTime="10/05/2010 17:55:45" />
+    <file relUrl="bin/Spring.Web.xml" publishTime="10/05/2010 17:55:45" />
+    <file relUrl="bin/Microsoft.Web.Services3.dll" publishTime="10/05/2010 17:55:45" />
+    <file relUrl="bin/Spring.Web.dll" publishTime="10/05/2010 17:55:45" />
+    <file relUrl="bin/Spring.Data.xml" publishTime="10/05/2010 17:55:45" />
+    <file relUrl="bin/Spring.Aop.xml" publishTime="10/05/2010 17:55:45" />
+    <file relUrl="bin/Windsor.Commons.Core.dll" publishTime="01/13/2011 14:33:22" />
+    <file relUrl="bin/Windsor.Node2008.WNOSDomain.dll" publishTime="01/13/2011 14:33:24" />
+    <file relUrl="bin/Spring.Aop.pdb" publishTime="10/05/2010 17:55:45" />
+    <file relUrl="bin/Windsor.Node2008.Endpoint2.pdb" publishTime="01/13/2011 14:33:40" />
+    <file relUrl="bin/Spring.Data.dll" publishTime="10/05/2010 17:55:45" />
+    <file relUrl="bin/Windsor.Commons.NodeDomain.pdb" publishTime="01/13/2011 14:33:23" />
+    <file relUrl="bin/Spring.Services.xml" publishTime="10/05/2010 17:55:45" />
+    <file relUrl="bin/Windsor.Commons.GenericCollectionLibrary.pdb" publishTime="01/13/2011 14:33:22" />
+    <file relUrl="bin/Windsor.Commons.Core.pdb" publishTime="01/13/2011 14:33:22" />
+    <file relUrl="bin/Windsor.Commons.Logging.dll" publishTime="01/13/2011 14:33:22" />
+    <file relUrl="bin/Spring.Aop.dll" publishTime="10/05/2010 17:55:45" />
+    <file relUrl="bin/Windsor.Node2008.Endpoint2.dll" publishTime="01/13/2011 14:33:40" />
+    <file relUrl="bin/Spring.Services.dll" publishTime="10/05/2010 17:55:45" />
+    <file relUrl="bin/Windsor.Node2008.WNOSUtility.pdb" publishTime="01/13/2011 14:33:23" />
+    <file relUrl="bin/Windsor.Commons.Compression.dll" publishTime="01/13/2011 14:33:24" />
+    <file relUrl="bin/Spring.Core.dll" publishTime="10/05/2010 17:55:45" />
+    <file relUrl="bin/Windsor.Node2008.WNOSUtility.dll" publishTime="01/13/2011 14:33:24" />
+    <file relUrl="bin/Windsor.Commons.Compression.pdb" publishTime="01/13/2011 14:33:24" />
+    <file relUrl="bin/Spring.Web.pdb" publishTime="10/05/2010 17:55:45" />
+    <file relUrl="bin/Windsor.Node2008.WNOSConnector.pdb" publishTime="01/13/2011 14:33:25" />
+    <file relUrl="bin/Windsor.Node2008.WNOSConnector.dll" publishTime="01/13/2011 14:33:25" />
+    <file relUrl="bin/Windsor.Commons.Logging.pdb" publishTime="01/13/2011 14:33:22" />
+    <file relUrl="bin/Windsor.Commons.Spring.pdb" publishTime="01/13/2011 14:33:23" />
+    <file relUrl="bin/Windsor.Node2008.WNOSProviders.dll" publishTime="01/13/2011 14:33:25" />
+    <file relUrl="bin/Windsor.Commons.GenericCollectionLibrary.dll" publishTime="01/13/2011 14:33:22" />
+    <file relUrl="bin/Spring.Core.pdb" publishTime="10/05/2010 17:55:45" />
+    <file relUrl="bin/Windsor.Commons.Spring.dll" publishTime="01/13/2011 14:33:23" />
+    <file relUrl="Web.config" publishTime="11/30/2010 16:55:01" />
+    <file relUrl="bin/node_v20.wsdl" publishTime="11/30/2010 16:55:01" />
+    <file relUrl="bin/Spring.Data.pdb" publishTime="10/05/2010 17:55:45" />
+    <file relUrl="bin/Windsor.Node2008.WNOSDomain.pdb" publishTime="01/13/2011 14:33:24" />
+    <file relUrl="Global.asax" publishTime="11/30/2010 16:55:01" />
+  </publishTarget>
+</publishData>

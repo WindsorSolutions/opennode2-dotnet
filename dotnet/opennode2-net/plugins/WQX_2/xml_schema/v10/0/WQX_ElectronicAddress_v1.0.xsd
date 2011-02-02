@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:wqx="http://www.exchangenetwork.net/schema/wqx/1" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.exchangenetwork.net/schema/wqx/1" version="1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:include schemaLocation="WQX_SimpleContent_v1.0.xsd" />
+    <xsd:annotation>
+        <xsd:documentation>
+        Schema Name  : WQX_ElectronicAddress_v1.0.xsd
+        Current Version Available At :  
+        Description   : 	A location within a system of worldwide electronic communication where a computer user can access information or receive electronic mail.
+        Developed by  : 	 EPA Office of Water
+        Point of Contact :   Dwane Young
+</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType name="ElectronicAddressDataType">
+        <xsd:sequence>
+            <xsd:element ref="wqx:ElectronicAddressText" minOccurs="0"/>
+            <xsd:element ref="wqx:ElectronicAddressTypeName" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="ElectronicAddress" type="wqx:ElectronicAddressDataType">
+        <xsd:annotation>
+            <xsd:documentation>A location within a system of worldwide electronic communication where a computer user can access information or receive electronic mail.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+</xsd:schema>

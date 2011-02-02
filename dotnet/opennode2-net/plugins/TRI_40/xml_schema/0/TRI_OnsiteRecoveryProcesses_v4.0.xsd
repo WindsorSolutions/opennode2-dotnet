@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 sp1 (http://www.altova.com) by WDavid Ripley, III (COMPUTER SCIENCES CORP) -->
+<xsd:schema xmlns:TRI="http://www.exchangenetwork.net/schema/TRI/4" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/TRI/4" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.0">
+	<xsd:include schemaLocation="TRI_SharedTypes_v4.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>		
+		Schema Name : 	TRI_OnsiteRecoveryProcesses_v4.0.xsd
+		Current Version Available At :
+		Description : 	On-site energy recovery methods used on the chemical
+		Application : Toxic Release Inventory
+		Developed by : 	 Environmental Protection Agency, Windsor Solutions, Inc.
+		Point of Contact : William Rensmith
+		Maintained by : Environmental Protection Agency, CSC
+		Point of Contact : WDavid Ripley III [dripley@csc.com]
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="OnsiteRecoveryProcess" type="TRI:OnsiteRecoveryProcessDataType">
+		<xsd:annotation>
+			<xsd:documentation>The on-site energy recovery methods used on the chemical.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="OnsiteRecoveryProcessDataType">
+		<xsd:choice>
+			<xsd:element ref="TRI:EnergyRecoveryMethodCode" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="TRI:EnergyRecoveryNAIndicator" minOccurs="0"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:element name="EnergyRecoveryMethodCode" type="TRI:AlphaNumericChar3Type">
+		<xsd:annotation>
+			<xsd:documentation>3-character code for the specific energy recovery method applied to the toxic chemical.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="EnergyRecoveryNAIndicator" type="TRI:ToxicReleaseBooleanType">
+		<xsd:annotation>
+			<xsd:documentation>Code indicating that NA was put on the reporting form for on-site energy recovery processes.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

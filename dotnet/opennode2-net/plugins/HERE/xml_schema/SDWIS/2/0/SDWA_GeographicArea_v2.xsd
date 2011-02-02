@@ -1,0 +1,32 @@
+<!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Terrie Sutch (Science Application International Corporation) -->
+<!-- edited with XML Spy v4.3 U (http://www.xmlspy.com) by Terrie Sutch (Science Applications International Corp.) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="2.0">
+	<xsd:include schemaLocation=".\SDWA_GeographicAreaDataTypes_v2.xsd"/>
+	<xsd:include schemaLocation=".\SDWA_MessageNotification_v2.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>Geographic Area Business Object</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="GeographicAreas" type="GeographicAreasType"/>
+	<xsd:element name="GeographicAreaDetails" type="GeographicAreaDetailsType"/>
+	<xsd:complexType name="GeographicAreasType">
+		<xsd:sequence>
+			<xsd:element ref="GeographicAreaDetails" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GeographicAreaDetailsType">
+		<xsd:sequence>
+			<xsd:element ref="PWSIdentifier"/>
+			<xsd:element name="AreasServed" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:choice>
+						<xsd:element ref="StateAndCityServed"/>
+						<xsd:element ref="FIPSCountyCode"/>
+						<xsd:element ref="TribalCode"/>
+					</xsd:choice>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element ref="RetailPopulationZipCode" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="MessageStatus" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

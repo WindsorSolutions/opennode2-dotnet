@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<xsd:annotation>
+	<xsd:appinfo>VerticalMethodDataType_v2.xsd v2.0 2001-02 </xsd:appinfo>
+	<xsd:documentation>
+		Data Type for Vertical Method.
+	</xsd:documentation>
+</xsd:annotation>
+<xsd:simpleType name="VerticalMethodDataType">
+	<xsd:restriction base="xsd:string">
+		<xsd:enumeration value="GPS CARRIER PHASE STATIC RELATIVE POSITION"/>
+		<xsd:enumeration value="GPS CARRIER PHASE KINEMATIC RELATIVE POSITION"/>
+		<xsd:enumeration value="GPS CODE (PSEUDO RANGE) DIFFERENTIAL"/>
+		<xsd:enumeration value="GPS CODE (PSEUDO RANGE) PRECISE POSITION"/>
+		<xsd:enumeration value="GPS CODE (PSEUDO RANGE) STANDARD POSITION (SA OFF)"/>
+		<xsd:enumeration value="GPS CODE (PSEUDO RANGE) STANDARD POSITION (SA ON)"/>
+		<xsd:enumeration value="CLASSICAL SURVEYING TECHNIQUES"/>
+		<xsd:enumeration value="OTHER"/>
+		<xsd:enumeration value="ALTIMETRY"/>
+		<xsd:enumeration value="PRECISE LEVELING-BENCH MARK"/>
+		<xsd:enumeration value="LEVELING-NON BENCH MARK CONTROL POINTS"/>
+		<xsd:enumeration value="TRIGONOMETRIC LEVELING"/>
+		<xsd:enumeration value="PHOTOGRAMMETRIC"/>
+		<xsd:enumeration value="TOPOGRAPHIC MAP INTERPOLATION"/>
+	</xsd:restriction>
+</xsd:simpleType>
+</xsd:schema>

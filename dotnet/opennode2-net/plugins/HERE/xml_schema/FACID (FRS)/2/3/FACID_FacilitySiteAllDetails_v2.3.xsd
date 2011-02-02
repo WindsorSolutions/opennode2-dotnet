@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema targetNamespace="http://www.epa.gov/xml" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:facid="http://www.epa.gov/xml" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="2.3">
+	<xsd:include schemaLocation=".\FACID_FacilitySiteDataType_v2.3.xsd"/>
+	<xsd:include schemaLocation=".\FACID_EnvironmentalInterestDataType_v2.3.xsd"/>
+	<xsd:include schemaLocation=".\FACID_LocationAddressDataType_v2.3.xsd"/>
+	<xsd:include schemaLocation=".\FACID_AltNameDataType_v2.3.xsd"/>
+	<xsd:include schemaLocation=".\FACID_MailingAddressDataType_v2.3.xsd"/>
+	<xsd:include schemaLocation=".\FACID_GeographicCoordinateDataType_v2.3.xsd"/>
+	<xsd:include schemaLocation=".\FACID_SICCodeDataType_v2.3.xsd"/>
+	<xsd:include schemaLocation=".\FACID_PrimaryIndicatorDataType_v2.3.xsd"/>
+	<xsd:include schemaLocation=".\FACID_NAICSCodeDataType_v2.3.xsd"/>
+	<xsd:include schemaLocation=".\FACID_AffiliationDataType_v2.3.xsd"/>
+	<xsd:include schemaLocation=".\FACID_PhoneFaxEmailDataType_v2.3.xsd"/>
+	<xsd:include schemaLocation=".\FACID_IndividualDataType_v2.3.xsd"/>
+	<xsd:include schemaLocation=".\FACID_OrganizationDataType_v2.3.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name : 	FACID_FacilitySiteAllDetails_v2.3 
+		Current Version Available At :
+		Description : 	This schema describes the XML tags for sharing the core Facility Identification data 
+		between partners. Facility identification data includes Site Information, Environmental Interest
+		information, SIC Code information, NAICS Code information, Organizational information,
+		Individual information, Mailing Address information, Alternative Name information, and
+		Geographic coordinate information.
+		Application : 
+		Developed by : 	 Environmental Protection Agency, SAIC
+		Point of Contact : Meena Masti	
+	</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="FacilitySiteAllDetails">
+		<xsd:sequence>
+			<xsd:element ref="facid:FacilitySite" minOccurs="0"/>
+			<xsd:element ref="facid:LocationAddress" minOccurs="0"/>
+			<xsd:element ref="facid:EnvironmentalInterestDetails" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="facid:AlternativeNameInfo" minOccurs="0"/>
+			<xsd:element ref="facid:MailingAddress" minOccurs="0"/>
+			<xsd:element ref="facid:SICCodeDetails" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="facid:NAICSCodeDetails" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="facid:IndividualDetails" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="facid:OrganizationDetails" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="facid:GeographicCoordinates" minOccurs="0"/>
+			<xsd:element ref="facid:SourceOfData" minOccurs="0"/>
+			<xsd:element ref="facid:LastReportedDate" minOccurs="0"/>
+			<xsd:element ref="facid:StateFacilitySystemAcronymName"/>
+			<xsd:element ref="facid:StateFacilityIdentifier"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="FacilitySite" type="facid:FacilitySiteDataType"/>
+	<xsd:element name="LocationAddress" type="facid:LocationAddressDataType"/>
+	<xsd:element name="AlternativeNameInfo" type="facid:AltNameDataType"/>
+	<xsd:element name="MailingAddress" type="facid:MailingAddressDataType"/>
+	<xsd:element name="SICCodeDetails" type="facid:SICCodeDetails"/>
+	<xsd:element name="NAICSCodeDetails" type="facid:NAICSCodeDetails"/>
+	<xsd:element name="IndividualDetails" type="facid:IndividualDetails"/>
+	<xsd:element name="OrganizationDetails" type="facid:OrganizationDetails"/>
+	<xsd:element name="GeographicCoordinates" type="facid:GeographicCoordinateDataType"/>
+	<xsd:element name="SourceOfData" type="xsd:string"/>
+	<xsd:element name="LastReportedDate" type="xsd:date"/>
+	<xsd:element name="StateFacilitySystemAcronymName" type="xsd:string"/>
+	<xsd:element name="StateFacilityIdentifier" type="xsd:string"/>
+	<xsd:element name="SICCode" type="facid:SICCodeDataType"/>
+	<xsd:element name="SICPrimaryIndicator" type="facid:PrimaryIndicatorDataType"/>
+	<xsd:element name="NAICSCode" type="facid:NAICSCodeDataType"/>
+	<xsd:element name="NAICSPrimaryIndicator" type="facid:PrimaryIndicatorDataType"/>
+	<xsd:element name="EnvironmentalInterestDetails" type="facid:EnvironmentalInterestDetails"/>
+	<xsd:element name="Affiliation" type="facid:AffiliationDataType"/>
+	<xsd:element name="PhoneFaxEmail" type="facid:PhoneFaxEmailDataType"/>
+	<xsd:element name="Individual" type="facid:IndividualDataType"/>
+	<xsd:element name="Organization" type="facid:OrganizationDataType"/>
+	<xsd:complexType name="EnvironmentalInterestDetails">
+		<xsd:complexContent>
+			<xsd:extension base="facid:EnvironmentalInterestDataType">
+				<xsd:sequence>
+					<xsd:element ref="facid:SICCodeDetails" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="facid:NAICSCodeDetails" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="facid:IndividualDetails" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="facid:OrganizationDetails" minOccurs="0" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="SICCodeDetails">
+		<xsd:sequence>
+			<xsd:element ref="facid:SICCode"/>
+			<xsd:element ref="facid:SICPrimaryIndicator"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="NAICSCodeDetails">
+		<xsd:sequence>
+			<xsd:element ref="facid:NAICSCode"/>
+			<xsd:element ref="facid:NAICSPrimaryIndicator"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="IndividualDetails">
+		<xsd:sequence>
+			<xsd:element ref="facid:Affiliation" minOccurs="0"/>
+			<xsd:element ref="facid:PhoneFaxEmail" minOccurs="0"/>
+			<xsd:element ref="facid:Individual" minOccurs="0"/>
+			<xsd:element ref="facid:MailingAddress" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OrganizationDetails">
+		<xsd:sequence>
+			<xsd:element ref="facid:Affiliation" minOccurs="0"/>
+			<xsd:element ref="facid:PhoneFaxEmail" minOccurs="0"/>
+			<xsd:element ref="facid:Organization" minOccurs="0"/>
+			<xsd:element ref="facid:MailingAddress" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

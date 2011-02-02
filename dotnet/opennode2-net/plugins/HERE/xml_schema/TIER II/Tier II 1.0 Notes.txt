@@ -1,0 +1,5 @@
+SCHEMA NAME:	TIER II
+VERSION:	1.0
+ARCHIVED BY:	TK Conrad
+DATE:		11/26/2008
+NOTES: 		Pulled from \\Iis2\PRODROOT\xsd\T2. This is the version used in the HERE Client's first release (1.0) and was originally received directly from EnfoTech in 2007. At the time, this included a few fields that were not a part of the published version. Since then, the schema has been formally published to the Exchange Network at http://exchangenetwork.net/schema/TierII/1/TierII_v1.0.zip, so the HERE client may need to be updated to reflect the new schema.

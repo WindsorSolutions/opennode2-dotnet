@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Terrie Sutch (Science Application International Corporation) -->
+<!-- edited with XML Spy v4.3 U (http://www.xmlspy.com) by Terrie Sutch (Science Applications International Corp.) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="2.0">
+	<xsd:include schemaLocation=".\SDWA_CodeList.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>Data Type Definitions for Schedule and Schedule Activity.</xsd:documentation>
+	</xsd:annotation>
+	<xsd:simpleType name="EventScheduleIdentifierType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="20"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="EventScheduleRegulatingAgencyTextType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="80"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="EventActivityCommentTextType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="2000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="EventScheduleRuleCodeType">
+		<xsd:choice>
+			<xsd:element name="SDWAEventScheduleRuleCode" type="SDWAEventScheduleRuleCodeType"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="EventScheduleStatusCodeType">
+		<xsd:choice>
+			<xsd:element name="SDWAEventScheduleStatusCode" type="SDWAEventScheduleStatusCodeType"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="EventActivityCodeType">
+		<xsd:choice>
+			<xsd:element name="SDWAEventScheduleActivityCode" type="SDWAEventActivityCodeType"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="EventActivityReasonCodeType">
+		<xsd:choice>
+			<xsd:element name="SDWAEventActivityReasonCode" type="SDWAEventActivityReasonCodeType"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:simpleType name="EventScheduleActivityIdentifierType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="20"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:annotation>
+		<xsd:documentation>Global Element Declarations for Schedule and Schedule Activity.</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="EventScheduleIdentifier" type="EventScheduleIdentifierType"/>
+	<xsd:element name="EventScheduleRegulatingAgencyText" type="EventScheduleRegulatingAgencyTextType"/>
+	<xsd:element name="EventScheduleRuleCode" type="EventScheduleRuleCodeType"/>
+	<xsd:element name="EventScheduleEffectiveDate" type="xsd:date"/>
+	<xsd:element name="EventScheduleCloseDate" type="xsd:date"/>
+	<xsd:element name="EventScheduleStatusCode" type="EventScheduleStatusCodeType"/>
+	<xsd:element name="EventScheduleReportingDate" type="xsd:date"/>
+	<xsd:element name="EventActivityCode" type="EventActivityCodeType"/>
+	<xsd:element name="EventActivityAchieveDate" type="xsd:date"/>
+	<xsd:element name="EventActivityDueDate" type="xsd:date"/>
+	<xsd:element name="EventActivityReasonCode" type="EventActivityReasonCodeType"/>
+	<xsd:element name="EventActivityCommentText" type="EventActivityCommentTextType"/>
+	<xsd:element name="EventScheduleActivityIdentifier" type="EventScheduleActivityIdentifierType"/>
+</xsd:schema>

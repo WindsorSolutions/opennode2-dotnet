@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:wqx="http://www.exchangenetwork.net/schema/wqx/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/wqx/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+	<xsd:include schemaLocation="WQX_SimpleContent_v2.0.xsd"/>
+	<xsd:include schemaLocation="WQX_AttachedBinaryObject_v2.0.xsd"/>
+	<xsd:include schemaLocation="WQX_ProjectMonitoringLocationWeighting_v2.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+        Schema Name  : OOWQX_Project_v2.0.xsd
+        Description   : 	An environmental data collection effort that has a stated purpose and puts a series of samples/results into a meaningful context.
+        Developed by  : 	EPA Office of Water 
+        Point of Contact :   Dwane Young
+</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="ProjectDataType">
+		<xsd:sequence>
+			<xsd:element ref="wqx:ProjectIdentifier"/>
+			<xsd:element ref="wqx:ProjectName"/>
+			<xsd:element ref="wqx:ProjectDescriptionText" minOccurs="0"/>
+			<xsd:element ref="wqx:SamplingDesignTypeCode" minOccurs="0"/>
+			<xsd:element ref="wqx:QAPPApprovedIndicator" minOccurs="0"/>  
+			<xsd:element ref="wqx:QAPPApprovalAgencyName" minOccurs="0"/>  
+			<xsd:element ref="wqx:AttachedBinaryObject" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="wqx:ProjectMonitoringLocationWeighting" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="Project" type="wqx:ProjectDataType">
+		<xsd:annotation>
+			<xsd:documentation>An environmental data collection effort that has a stated purpose and puts a series of samples and results into a meaningful context.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

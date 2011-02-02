@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:RC="http://www.exchangenetwork.net/schema/RCRA/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/RCRA/5" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="5.1">
+	<xsd:include schemaLocation="./RCRA_Shared_v5.1.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name : 	RCRA_EnvironmentalPermit_v5.1
+		Description : 	Information about environmental permits issued to the handler.
+		Developed by : 	U.S. EPA
+	</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="EnvironmentalPermit" type="RC:EnvironmentalPermitDataType">
+		<xsd:annotation>
+			<xsd:documentation>Information about environmental permits issued to the handler.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="EnvironmentalPermitDataType">
+		<xsd:sequence>
+			<xsd:element ref="RC:TransactionCode" minOccurs="0"/>
+			<xsd:element ref="RC:EnvironmentalPermitID"/>
+			<xsd:element ref="RC:EnvironmentalPermitOwnerName" minOccurs="0"/>
+			<xsd:element ref="RC:EnvironmentalPermitTypeCode" minOccurs="0"/>
+			<xsd:element ref="RC:EnvironmentalPermitDescription"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="EnvironmentalPermitDescription" type="RC:EnvironmentalPermitDescriptionDataType">
+		<xsd:annotation>
+			<xsd:documentation>Description of any permit type indicated as O (Other) in the Permit Type field.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="EnvironmentalPermitID" type="RC:EnvironmentalPermitIDDataType">
+		<xsd:annotation>
+			<xsd:documentation>Identification number of an effective environmental permit issued to the handler, or the number of a filed application for which an environmental permit has not yet been issued.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="EnvironmentalPermitTypeCode" type="RC:EnvironmentalPermitTypeCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Code indicating the environmental program and/or jurisdictional authority under which an environmental permit was issued to the facility, or under which an application has been filed for which a permit has not yet been issued. This data element is applicable to TSD facilities only.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="EnvironmentalPermitOwnerName" type="RC:EnvironmentalPermitOwnerNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates the agency that defines the other permit type.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="EnvironmentalPermitDescriptionDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="20"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="EnvironmentalPermitIDDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="13"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="EnvironmentalPermitTypeCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="EnvironmentalPermitOwnerNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

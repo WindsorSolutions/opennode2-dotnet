@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- edited with XMLSPY v2004 rel. 4 U (http://www.xmlspy.com) by Douglas Timms (enfoTech & Consulting, Inc.) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wqx="http://www.exchangenetwork.net/schema/wqx/1" targetNamespace="http://www.exchangenetwork.net/schema/wqx/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:include schemaLocation="WQX_MonitoringLocationIdentity_v1.0.xsd"/>
+	<xsd:include schemaLocation="WQX_MonitoringLocationGeospatial_v1.0.xsd"/>
+	<xsd:include schemaLocation="WQX_AttachedBinaryObject_v1.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+  	        Schema Name  : WQX_MonitoringLocation_v1.0.xsd
+  	        Current Version Available At :  
+  	        Description   : An identifiable location where an environmental sample, onsite measurement, and/or observation is determined.
+  	        Developed by  : EPA Office of Water
+  	        Point of Contact : Dwane Young
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="MonitoringLocationDataType">
+		<xsd:sequence>
+			<xsd:element ref="wqx:MonitoringLocationIdentity"/>
+			<xsd:element ref="wqx:MonitoringLocationGeospatial"/>
+			<xsd:element ref="wqx:AttachedBinaryObject" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="MonitoringLocation" type="wqx:MonitoringLocationDataType">
+		<xsd:annotation>
+			<xsd:documentation>An identifiable location where an environmental sample, onsite measurement, and/or observation is determined.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

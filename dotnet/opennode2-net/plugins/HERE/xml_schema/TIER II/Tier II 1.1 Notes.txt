@@ -1,0 +1,5 @@
+SCHEMA NAME:	TIER II
+VERSION:	1.1
+ARCHIVED BY:	TK Conrad
+DATE:		12/2/2009
+NOTES: 		This version adds two new optional fields to the Tier II schema that are needed for the HERE Exchange. FireDistrictNameText was added to TierII_Facility_v1.1.xsd, and EHSIndicator was added to TierII_ChemicalInventory_v1.1.xsd.

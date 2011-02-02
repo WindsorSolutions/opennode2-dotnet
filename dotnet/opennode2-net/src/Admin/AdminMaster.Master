@@ -1,0 +1,76 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="AdminMaster.master.cs" Inherits="Windsor.Node2008.Admin.AdminMaster" %>
+
+<%@ Register TagPrefix="spring" Namespace="Spring.Web.UI.Controls" Assembly="Spring.Web" %>
+<%@ Register Src="Controls/Footer.ascx" TagName="Footer" TagPrefix="uc1" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>
+        <%=Page.Title%>
+    </title>
+    <link rel="stylesheet" type="text/css" href="~/Styles/admin.css" />
+</head>
+<body>
+    <form id="form1" runat="server">
+    <asp:ScriptManager ID="ScriptManager1" runat="server" />
+    <div id="titleArea">
+        <div id="title">
+            <%=Page.Title%>
+        </div>
+        <div id="tabs">
+            <ul>
+                <li title="Title test" class='<%=GetTabClass("Dashboard")%>'><a href="../Secure/Dashboard.aspx"><span>
+                    <img alt="" src="../Images/page_dynamic.gif" />Dashboard</span></a></li>
+                <li class='<%=GetTabClass("Config")%>'><a href="../Secure/ConfigArgs.aspx"><span>
+                    <img alt="" src="../Images/page_settings.gif" />Configuration</span></a></li>
+                <li class='<%=GetTabClass("Security")%>'><a href="../Secure/SecurityUser.aspx"><span>
+                    <img alt="" src="../Images/page_security.gif" />Security</span></a></li>
+                <li class='<%=GetTabClass("Flow")%>'><a href="../Secure/Flow.aspx"><span>
+                    <img alt="" src="../Images/page_dynamic.gif" />Exchange</span></a></li>
+                <li class='<%=GetTabClass("Schedule")%>'><a href="../Secure/Schedule.aspx"><span>
+                    <img alt="" src="../Images/date.gif" />Schedules</span></a></li>
+                <li class='<%=GetTabClass("Activity")%>'><a href="../Secure/ActivitySearchCriteria.aspx"><span>
+                    <img alt="" src="../Images/page_tick.gif" />Activity</span></a></li>
+                <li class='<%=GetTabClass("Profile")%>'><a href="../Secure/Profile.aspx"><span>
+                    <img alt="" src="../Images/page_user.gif" />Profile</span></a></li>
+            </ul>
+        </div>
+        <div style="clear: both">
+        </div>
+    </div>
+    <!--  for the white background  -->
+    <div class="body">
+        <div class="userInfo">
+            <%=GetUserInfo()%>&nbsp;|&nbsp;<a href="../Login.aspx?a=out">Sign&nbsp;out</a></div>
+        <br class="layoutSpacerTop" />
+        <table id="contentTable">
+            <tr>
+                <td id="sidebarPane" align="left" valign="top">
+                    <asp:Panel ID="menuPanel" runat="server">
+                        <div id="menu">
+                            <ul>
+                                <asp:Repeater ID="menuItems" runat="server">
+                                    <ItemTemplate>
+                                        <li>
+                                            <asp:HyperLink runat="server" ID="linkButton" Text='<%# Eval("Text") %>' NavigateUrl='<%# Eval("Url") %>'></asp:HyperLink></li>
+                                    </ItemTemplate>
+                                </asp:Repeater>
+                            </ul>
+                        </div>
+                    </asp:Panel>
+                </td>
+                <td>
+                    <asp:ContentPlaceHolder ID="SecureContentHolder" runat="server">
+                    </asp:ContentPlaceHolder>
+                </td>
+            </tr>
+        </table>
+        <div class="layoutSpacerBottom">
+        </div>
+        <!-- for the white background -->
+    </div>
+    <uc1:Footer ID="Footer1" runat="server">
+    </uc1:Footer>
+    </form>
+</body>
+</html>

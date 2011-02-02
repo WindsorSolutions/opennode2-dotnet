@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:RC="http://www.exchangenetwork.net/schema/RCRA/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/RCRA/5" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="5.1">
+	<xsd:include schemaLocation="./RCRA_Shared_v5.1.xsd"/>
+	<xsd:include schemaLocation="./RCRA_HandlerWasteCodeDetails_v5.1.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name : 	RCRA_HazardousSecondaryMaterialActivity_v5.1
+		Description : 	Hazardous Secondary Material activity of the Handler
+		Developed by : 	U.S. EPA
+	</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="HazardousSecondaryMaterialActivity" type="RC:HazardousSecondaryMaterialActivityDataType">
+		<xsd:annotation>
+			<xsd:documentation>Hazardous Secondary Material activity of the Handler</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="HazardousSecondaryMaterialActivityDataType">
+		<xsd:annotation>
+			<xsd:documentation>Hazardous Secondary Material activity of the Handler</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="RC:TransactionCode" minOccurs="0"/>
+			<xsd:element ref="RC:HSMSequenceNumber"/>
+			<xsd:element ref="RC:FacilityCodeOwnerName" minOccurs="0"/>
+			<xsd:element ref="RC:FacilityTypeCode" minOccurs="0"/>
+			<xsd:element ref="RC:EstimatedShortTonsQuantity" minOccurs="0"/>
+			<xsd:element ref="RC:ActualShortTonsQuantity" minOccurs="0"/>
+			<xsd:element ref="RC:LandBasedUnitIndicator" minOccurs="0"/>
+			<xsd:element ref="RC:HandlerWasteCodeDetails" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+</xsd:schema>

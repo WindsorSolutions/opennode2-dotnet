@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bch:BeachDataSubmission xmlns:bch="http://www.exchangenetwork.net/schema/BEACHES/2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.exchangenetwork.net/schema/BEACHES/2 http://www.exchangenetwork.net/schema/BEACHES/2/index.xsd">
+	<bch:BeachDetail>
+		<bch:BeachIdentifier>MI000286</bch:BeachIdentifier>
+		<bch:BeachNameDetail>
+			<bch:ProgramInterestName>Thompson Park</bch:ProgramInterestName>
+			<bch:ProgramInterestDescriptionText>Thunder Bay</bch:ProgramInterestDescriptionText>
+			<bch:ProgramInterestStateCode>MI</bch:ProgramInterestStateCode>
+			<bch:ProgramInterestFIPSCountyCode>32001</bch:ProgramInterestFIPSCountyCode>
+			<bch:WaterBodyNameCode>LAKE_HURON</bch:WaterBodyNameCode>
+			<bch:WaterBodyTypeCode>OPEN_COAST</bch:WaterBodyTypeCode>
+			<bch:BeachAccessibilityDetail>
+				<bch:BeachAccessibilityType>PUB_PUB_ACC</bch:BeachAccessibilityType>
+			</bch:BeachAccessibilityDetail>
+		</bch:BeachNameDetail>
+		<bch:BeachActivityDetail>
+			<bch:ActivityTypeCode>CLOSURE</bch:ActivityTypeCode>
+			<bch:ActivityName>Beach Closure</bch:ActivityName>
+			<bch:ActivityActualStartDate>2009-06-10T00:00:00.0Z</bch:ActivityActualStartDate>
+			<bch:ActivityActualStopDate>2009-06-11T00:00:00.0Z</bch:ActivityActualStopDate>
+			<bch:ActivityReasonDetail>
+				<bch:ActivityReasonType>ELEV_BACT</bch:ActivityReasonType>
+			</bch:ActivityReasonDetail>
+			<bch:ActivitySourceDetail>
+				<bch:ActivitySourceType>RUNOFF</bch:ActivitySourceType>
+			</bch:ActivitySourceDetail>
+			<bch:ActivityIndicatorDetail>
+				<bch:ActivityIndicatorType>ECOLI</bch:ActivityIndicatorType>
+			</bch:ActivityIndicatorDetail>
+		</bch:BeachActivityDetail>
+	</bch:BeachDetail>
+	<bch:BeachDetail>
+		<bch:BeachIdentifier>MI000999</bch:BeachIdentifier>
+		<bch:BeachNameDetail>
+			<bch:ProgramInterestName>My New Beach</bch:ProgramInterestName>
+			<bch:ProgramInterestDescriptionText>This beach is defined in the Submit example XML file</bch:ProgramInterestDescriptionText>
+			<bch:ProgramInterestStateCode>MI</bch:ProgramInterestStateCode>
+			<bch:ProgramInterestFIPSCountyCode>32003</bch:ProgramInterestFIPSCountyCode>
+			<bch:WaterBodyNameCode>LAKE_HURON</bch:WaterBodyNameCode>
+			<bch:WaterBodyTypeCode>OPEN_COAST</bch:WaterBodyTypeCode>
+			<bch:BeachAccessibilityDetail>
+				<bch:BeachAccessibilityType>PUB_PUB_ACC</bch:BeachAccessibilityType>
+			</bch:BeachAccessibilityDetail>
+		</bch:BeachNameDetail>
+		<bch:BeachActivityDetail>
+			<bch:ActivityTypeCode>CLOSURE</bch:ActivityTypeCode>
+			<bch:ActivityName>Beach Closure</bch:ActivityName>
+			<bch:ActivityActualStartDate>2009-07-01T00:00:00.0Z</bch:ActivityActualStartDate>
+			<bch:ActivityActualStopDate>2009-07-03T00:00:00.0Z</bch:ActivityActualStopDate>
+			<bch:ActivityReasonDetail>
+				<bch:ActivityReasonType>ELEV_BACT</bch:ActivityReasonType>
+			</bch:ActivityReasonDetail>
+			<bch:ActivitySourceDetail>
+				<bch:ActivitySourceType>SEPTIC</bch:ActivitySourceType>
+			</bch:ActivitySourceDetail>
+			<bch:ActivityIndicatorDetail>
+				<bch:ActivityIndicatorType>ECOLI</bch:ActivityIndicatorType>
+			</bch:ActivityIndicatorDetail>
+		</bch:BeachActivityDetail>
+	</bch:BeachDetail>
+</bch:BeachDataSubmission>

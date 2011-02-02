@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:tanks="http://www.exchangenetwork.net/schema/tanks/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/tanks/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:annotation>
+		<xsd:documentation>
+			Schema Name  : Tanks_TankContents_v1.0.xsd
+			Current Version Available At :
+			Description  : Storage tank contents attributes.
+			Developed by  : Windsor Solutions, Inc.
+			Point of Contact : Bret Smith
+			Last Date Modified: February, 2009
+		</xsd:documentation>
+	</xsd:annotation>
+	<!-- INCLUDES -->
+	<xsd:include schemaLocation="Tanks_Shared_v1.0.xsd"/>
+	<xsd:include schemaLocation="SC_ChemicalSubstanceIdentity_v2.0.xsd"/>
+	<!-- COMPLEX TYPE -->
+	<xsd:complexType name="TankContentsDataType">
+		<xsd:sequence>
+			<xsd:element ref="tanks:TankContentIsMixtureIndicator" minOccurs="0"/>
+			<xsd:element ref="tanks:TankContentIsConfidentialIndicator" minOccurs="0"/>
+			<xsd:element ref="tanks:ChemicalSubstanceIdentity" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- COMPONENT ELEMENT -->
+	<xsd:element name="TankContents" type="tanks:TankContentsDataType">
+		<xsd:annotation>
+			<xsd:documentation>Storage tank schema containing tank chemical/substance contents.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

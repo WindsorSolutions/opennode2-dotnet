@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema 
+targetNamespace="http://www.exchangenetwork.net/schema/icis/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1" xmlns:icis="http://www.exchangenetwork.net/schema/icis/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<!-- INCLUDE STATEMENTS -->
+	<xsd:include schemaLocation="ICIS_Contact_v1.5.xsd"/>
+	<!-- SCHEMA HEADER -->
+	<xsd:annotation>
+		<xsd:documentation>Schema Name: ICIS_Address_v1.5.xsd</xsd:documentation>
+		<xsd:documentation>Current Version Available: http://www.exchangenetwork.net/schema/draft/icis/SchemasVersion1.5</xsd:documentation>
+		<xsd:documentation>Description: ICIS-NPDES address data input format for global use</xsd:documentation>
+		<xsd:documentation>Application: ICIS-NPDES</xsd:documentation>
+		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
+		<xsd:documentation>Point of Contact: EPA/Alison Kittle</xsd:documentation>
+		<xsd:documentation>Data Written: July 2006</xsd:documentation>
+		<xsd:documentation>Last Date Modified:3-7-2008</xsd:documentation>
+	</xsd:annotation>
+	<!-- GLOBAL ELEMENT DECLARATIONS -->
+	<xsd:element name="ContactAddress" type="icis:ContactAddress"/>
+	<xsd:element name="CountyName" type="icis:StringMin1Max35Type"/>
+	<xsd:element name="DivisionName" type="icis:StringMin1Max50Type"/>
+	<xsd:element name="EffluentTradePartnerAddress" type="icis:EffluentTradePartnerAddress"/>
+	<xsd:element name="EffluentTradePartnerTelephone" type="icis:Telephone"/>
+	<xsd:element name="EndDateOfAddressAssociation" type="icis:DateType"/>
+	<xsd:element name="FacilityLocation" type="icis:FacilityLocation"/>
+	<xsd:element name="LocalityName" type="icis:StringMin1Max60TypeBase"/>
+	<xsd:element name="LocationAddress" type="icis:LocationAddress"/>
+	<xsd:element name="LocationAddressText" type="icis:StringMin1Max50TypeBase"/>
+	<xsd:element name="LocationCountryCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="LocationName" type="icis:StringMin1Max60Type"/>
+	<xsd:element name="LocationProvince" type="icis:StringMin1Max35Type"/>
+	<xsd:element name="LocationStateCode" type="icis:String2FixedType"/>
+	<xsd:element name="LocationZipCode" type="icis:StringMin1Max14TypeBase"/>
+	<xsd:element name="MailingAddressCityName" type="icis:StringMin1Max30Type"/>
+	<xsd:element name="MailingAddressCountryCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="MailingAddressStateCode" type="icis:String2FixedType"/>
+	<xsd:element name="MailingAddressText" type="icis:StringMin1Max50Type"/>
+	<xsd:element name="MailingAddressZipCode" type="icis:StringMin1Max14Type"/>
+	<xsd:element name="StartDateOfAddressAssociation" type="icis:DateType"/>
+	<xsd:element name="SupplementalAddressText" type="icis:StringMin1Max50Type"/>
+	<xsd:element name="SupplementalLocationText" type="icis:StringMin1Max50Type"/>
+	<!-- COMPLEX TYPE DEFINITIONS -->
+	<xsd:complexType name="ContactAddress">
+		<xsd:sequence>
+			<xsd:element ref="icis:AffiliationTypeText"/>
+			<xsd:element ref="icis:OrganizationFormalName"/>
+			<xsd:element ref="icis:OrganizationDUNSNumber" minOccurs="0"/>
+			<xsd:element ref="icis:MailingAddressText" minOccurs="0"/>
+			<xsd:element ref="icis:SupplementalAddressText" minOccurs="0"/>
+			<xsd:element ref="icis:MailingAddressCityName"/>
+			<xsd:element ref="icis:MailingAddressStateCode"/>
+			<xsd:element ref="icis:MailingAddressZipCode"/>
+			<xsd:element ref="icis:CountyName" minOccurs="0"/>
+			<xsd:element ref="icis:MailingAddressCountryCode" minOccurs="0"/>
+			<xsd:element ref="icis:DivisionName" minOccurs="0"/>
+			<xsd:element ref="icis:LocationProvince" minOccurs="0"/>
+			<xsd:element ref="icis:Telephone" minOccurs="0" maxOccurs="3"/>
+			<xsd:element ref="icis:ElectronicAddressText" minOccurs="0"/>
+			<xsd:element ref="icis:StartDateOfAddressAssociation" minOccurs="0"/>
+			<xsd:element ref="icis:EndDateOfAddressAssociation" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="EffluentTradePartnerAddress">
+		<xsd:sequence>
+			<xsd:element ref="icis:OrganizationFormalName"/>
+			<xsd:element ref="icis:OrganizationDUNSNumber" minOccurs="0"/>
+			<xsd:element ref="icis:LocationName"/>
+			<xsd:element ref="icis:MailingAddressText"/>
+			<xsd:element ref="icis:SupplementalAddressText" minOccurs="0"/>
+			<xsd:element ref="icis:MailingAddressCityName"/>
+			<xsd:element ref="icis:MailingAddressCountryCode" minOccurs="0"/>
+			<xsd:element ref="icis:LocationProvince" minOccurs="0"/>
+			<xsd:element ref="icis:MailingAddressStateCode"/>
+			<xsd:element ref="icis:MailingAddressZipCode"/>
+			<xsd:element ref="icis:CountyName" minOccurs="0"/>
+			<xsd:element ref="icis:DivisionName" minOccurs="0"/>
+			<xsd:element ref="icis:EffluentTradePartnerTelephone" minOccurs="0" maxOccurs="3"/>
+			<xsd:element ref="icis:ElectronicAddressText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="FacilityLocation">
+		<xsd:sequence>
+			<xsd:element ref="icis:FacilitySiteName"/>
+			<xsd:element ref="icis:LocationAddressText"/>
+			<xsd:element ref="icis:SupplementalLocationText" minOccurs="0"/>
+			<xsd:element ref="icis:LocalityName"/>
+			<xsd:element ref="icis:LocationStateCode"/>
+			<xsd:element ref="icis:LocationZipCode"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="FacilityLocationAddressGroup">
+		<xsd:sequence>
+			<xsd:element ref="icis:FacilitySiteName" minOccurs="0"/>
+			<xsd:element ref="icis:LocationAddressText" minOccurs="0"/>
+			<xsd:element ref="icis:SupplementalLocationText" minOccurs="0"/>
+			<xsd:element ref="icis:LocalityName" minOccurs="0"/>
+			<xsd:element ref="icis:LocationStateCode" minOccurs="0"/>
+			<xsd:element ref="icis:LocationZipCode" minOccurs="0"/>
+			<xsd:element ref="icis:LocationCountryCode" minOccurs="0"/>
+			<xsd:element ref="icis:OrganizationDUNSNumber" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="LocationAddress">
+		<xsd:complexContent>
+			<xsd:extension base="icis:FacilityLocation">
+				<xsd:sequence>
+					<xsd:element ref="icis:LocationCountryCode" minOccurs="0"/>
+					<xsd:element ref="icis:OrganizationDUNSNumber" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+</xsd:schema>

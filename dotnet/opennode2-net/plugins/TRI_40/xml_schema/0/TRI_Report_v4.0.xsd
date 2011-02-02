@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 sp1 (http://www.altova.com) by WDavid Ripley, III (COMPUTER SCIENCES CORP) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sc="urn:us:net:exchangenetwork:sc:1:0" xmlns:TRI="http://www.exchangenetwork.net/schema/TRI/4" targetNamespace="http://www.exchangenetwork.net/schema/TRI/4" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.0">
+	<xsd:import namespace="urn:us:net:exchangenetwork:sc:1:0" schemaLocation="SC_ElectronicAddress_v1.0.xsd"/>
+	<xsd:import namespace="urn:us:net:exchangenetwork:sc:1:0" schemaLocation="SC_IndividualIdentity_v1.0.xsd"/>
+	<xsd:import namespace="urn:us:net:exchangenetwork:sc:1:0" schemaLocation="SC_SimpleContent_v1.0.xsd"/>
+	<xsd:include schemaLocation="TRI_SharedTypes_v4.0.xsd"/>
+	<xsd:include schemaLocation="TRI_ReportType_v4.0.xsd"/>
+	<xsd:include schemaLocation="TRI_SourceReductionActivity_v4.0.xsd"/>
+	<xsd:include schemaLocation="TRI_SourceReductionQuantity_v4.0.xsd"/>
+	<xsd:include schemaLocation="TRI_OnsiteRecyclingProcesses_v4.0.xsd"/>
+	<xsd:include schemaLocation="TRI_OnsiteRecoveryProcesses_v4.0.xsd"/>
+	<xsd:include schemaLocation="TRI_WasteTreatmentDetails_v4.0.xsd"/>
+	<xsd:include schemaLocation="TRI_TransferLocation_v4.0.xsd"/>
+	<xsd:include schemaLocation="TRI_OnsiteReleaseQuantity_v4.0.xsd"/>
+	<xsd:include schemaLocation="TRI_ChemicalActivity_v4.0.xsd"/>
+	<xsd:include schemaLocation="TRI_ChemicalIdentification_v4.0.xsd"/>
+	<xsd:include schemaLocation="TRI_ReportMetaData_v4.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>		
+		Schema Name : 	TRI_ReportI_v4.0.xsd
+		Current Version Available At :
+		Description : 	Contains the data for a single Toxic Release Inventory Form A or Form R report, 
+			without facility identification data.
+		Aplication : Toxic Release Inventory
+		Developed by : 	 Environmental Protection Agency, Windsor Solutions, Inc.
+		Point of Contact : William Rensmith
+		Maintained by : Environmental Protection Agency, CSC
+		Point of Contact : WDavid Ripley III [dripley@csc.com]
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="Report" type="TRI:ReportDataType">
+		<xsd:annotation>
+			<xsd:documentation>A TRI Form R or Form A Report instance.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ReportDataType">
+		<xsd:sequence>
+			<xsd:element ref="TRI:ReportMetaData" minOccurs="0"/>
+			<xsd:element ref="sc:ReportIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="sc:ReplacedReportIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="TRI:ReportType" minOccurs="0"/>
+			<xsd:element ref="TRI:SubmissionReportingYear" minOccurs="0"/>
+			<xsd:element ref="sc:ReportDueDate" minOccurs="0"/>
+			<xsd:element ref="sc:RevisionIndicator" minOccurs="0"/>
+			<xsd:element ref="TRI:ChemicalTradeSecretIndicator" minOccurs="0"/>
+			<xsd:element ref="TRI:SubmissionSanitizedIndicator" minOccurs="0"/>
+			<xsd:element ref="TRI:CertifierName" minOccurs="0"/>
+			<xsd:element ref="TRI:CertifierTitleText" minOccurs="0"/>
+			<xsd:element ref="TRI:CertificationSignedDate" minOccurs="0"/>
+			<xsd:element ref="TRI:SubmissionEntireFacilityIndicator" minOccurs="0"/>
+			<xsd:element ref="TRI:SubmissionPartialFacilityIndicator" minOccurs="0"/>
+			<xsd:element ref="TRI:SubmissionFederalFacilityIndicator" minOccurs="0"/>
+			<xsd:element ref="TRI:SubmissionGOCOFacilityIndicator" minOccurs="0"/>
+			<xsd:element ref="TRI:TechnicalContactNameText" minOccurs="0"/>
+			<xsd:element ref="TRI:TechnicalContactPhoneText" minOccurs="0"/>
+			<xsd:element ref="TRI:TechnicalContactEmailAddressText" minOccurs="0"/>
+			<xsd:element ref="TRI:PublicContactNameText" minOccurs="0"/>
+			<xsd:element ref="TRI:PublicContactPhoneText" minOccurs="0"/>
+			<xsd:element ref="TRI:PublicContactEmailAddressText" minOccurs="0"/>
+			<xsd:element ref="TRI:ChemicalReportRevisionCode" minOccurs="0" maxOccurs="2"/>
+			<xsd:element ref="TRI:ChemicalReportWithdrawalCode" minOccurs="0" maxOccurs="2"/>
+			<xsd:element ref="TRI:ChemicalIdentification" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="TRI:ChemicalActivitiesAndUses" minOccurs="0"/>
+			<xsd:element ref="TRI:MaximumChemicalAmountCode" minOccurs="0"/>
+			<xsd:element ref="TRI:OnsiteReleaseQuantity" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="TRI:POTWWasteQuantity" minOccurs="0"/>
+			<xsd:element ref="TRI:TransferLocation" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:choice minOccurs="0">
+				<xsd:element ref="TRI:WasteTreatmentNAIndicator" minOccurs="0"/>
+				<xsd:element ref="TRI:WasteTreatmentDetails" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:choice>
+			<xsd:element ref="TRI:OnsiteRecoveryProcess" minOccurs="0"/>
+			<xsd:element ref="TRI:OnsiteRecyclingProcess" minOccurs="0"/>
+			<xsd:element ref="TRI:SourceReductionQuantity" minOccurs="0"/>
+			<xsd:choice minOccurs="0">
+				<xsd:element ref="TRI:SourceReductionNAIndicator" minOccurs="0"/>
+				<xsd:element ref="TRI:SourceReductionActivity" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:choice>
+			<xsd:element ref="TRI:SubmissionAdditionalDataIndicator" minOccurs="0"/>
+			<xsd:element ref="TRI:OptionalInformationText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="SubmissionAdditionalDataIndicator" type="TRI:ToxicReleaseBooleanType">
+		<xsd:annotation>
+			<xsd:documentation>For reporting years beginning in 1991, the indicator that shows whether additional optional information on source reduction, pollution control, or recycling activities implemented during the reporting year or prior years has been attached to the submission.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SubmissionRevisionIndicator" type="TRI:ToxicReleaseBooleanType">
+		<xsd:annotation>
+			<xsd:documentation>Indicator that shows whether the submission 'Revision' box on form R was checked by the submitter.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SubmissionReportingYear" type="TRI:ToxicReleaseStringType">
+		<xsd:annotation>
+			<xsd:documentation>The year for which the form was submitted.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SubmissionSanitizedIndicator" type="TRI:ToxicReleaseBooleanType">
+		<xsd:annotation>
+			<xsd:documentation>Indicator that shows whether the submission 'Sanitized Trade Secret' box was checked by the submitter. </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ChemicalTradeSecretIndicator" type="TRI:ToxicReleaseBooleanType">
+		<xsd:annotation>
+			<xsd:documentation>Indicator that shows whether the identity of the toxic chemical has been claimed a trade secret.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CertifierName" type="TRI:ToxicReleaseStringType">
+		<xsd:annotation>
+			<xsd:documentation>The name of the owner, operator, or senior management official who is certifying the submission.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CertifierTitleText" type="TRI:ToxicReleaseStringType">
+		<xsd:annotation>
+			<xsd:documentation>The title of the owner, operator, or senior management official who is certifying the submission.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CertificationSignedDate" type="TRI:ToxicReleaseDateType">
+		<xsd:annotation>
+			<xsd:documentation>The date that the senior management official signed the certification statement.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CertifierSignatureTypeCode" type="TRI:CertifierSignatureTypeCodeType">
+		<xsd:annotation>
+			<xsd:documentation>Values: O = 'Original', P = 'Photocopy', N = 'No'.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SubmissionPartialFacilityIndicator" type="TRI:ToxicReleaseBooleanType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates that the facility has chosen to report by establishment or groups of establishments.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SubmissionEntireFacilityIndicator" type="TRI:ToxicReleaseBooleanType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates that only one Form R was filed for this chemical for the entire facility.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SubmissionGOCOFacilityIndicator" type="TRI:ToxicReleaseBooleanType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates whether the 'GOCO' box was checked on the submission.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SubmissionFederalFacilityIndicator" type="sc:FederalFacilityIndicatorDataType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates whether the 'Federal' box was checked on the submission.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MaximumChemicalAmountCode" type="TRI:MaximumChemicalAmountCodeType">
+		<xsd:annotation>
+			<xsd:documentation>The two digit code indicating a range for the maximum amount of the chemical present at the facility at any one time during the calendar year.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TechnicalContactNameText" type="sc:IndividualIdentityDataType">
+		<xsd:annotation>
+			<xsd:documentation>The name of the technical contact for the TRI report.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TechnicalContactPhoneText" type="sc:TelephoneNumberTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>The phone number of the technical contact for the TRI report.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TechnicalContactEmailAddressText" type="sc:ElectronicAddressTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>The email address of the technical contact for the TRI report.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="PublicContactNameText" type="sc:IndividualIdentityDataType">
+		<xsd:annotation>
+			<xsd:documentation>The name of the public contact for the TRI report.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="PublicContactPhoneText" type="sc:TelephoneNumberTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>The phone number of the public contact for the TRI report.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="PublicContactEmailAddressText" type="sc:ElectronicAddressTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>The email address of the public contact for the TRI report.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="POTWWasteQuantity" type="TRI:POTWWasteQuantityDataType">
+		<xsd:annotation>
+			<xsd:documentation>Total quantity of waste transfered to POTWs and basis of quantity determination.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="WasteTreatmentNAIndicator" type="TRI:ToxicReleaseBooleanType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates that the NA box was checked on the Form R report stating that no on-site waste treatment was applied to any waste stream containing the toxic chemical.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SourceReductionNAIndicator" type="TRI:ToxicReleaseBooleanType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates that the NA box was checked on the Form R report stating that no source reduction activities took place during the reporting period.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OptionalInformationText" type="TRI:ToxicReleaseStringType">
+		<xsd:annotation>
+			<xsd:documentation>Narrative describing additional activities performed by the reporting facility. Added for RY2005.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ChemicalReportRevisionCode" type="TRI:AlphaNumericChar3Type">
+		<xsd:annotation>
+			<xsd:documentation>The three character code indicating revisions to the TRI report.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ChemicalReportWithdrawalCode" type="TRI:AlphaNumericChar3Type">
+		<xsd:annotation>
+			<xsd:documentation>The three character code indicating withdrawals from the TRI report.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!--Report data type-->
+	<xsd:simpleType name="CertifierSignatureTypeCodeType">
+		<xsd:annotation>
+			<xsd:documentation>O/P/N type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="O"/>
+			<xsd:enumeration value="P"/>
+			<xsd:enumeration value="N"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MaximumChemicalAmountCodeType">
+		<xsd:annotation>
+			<xsd:documentation>Enumeration of 11 codes type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="01"/>
+			<xsd:enumeration value="02"/>
+			<xsd:enumeration value="03"/>
+			<xsd:enumeration value="04"/>
+			<xsd:enumeration value="05"/>
+			<xsd:enumeration value="06"/>
+			<xsd:enumeration value="07"/>
+			<xsd:enumeration value="08"/>
+			<xsd:enumeration value="09"/>
+			<xsd:enumeration value="10"/>
+			<xsd:enumeration value="11"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

@@ -1,0 +1,5 @@
+SCHEMA NAME:	SDWIS
+VERSION:	2.0
+ARCHIVED BY:	TK Conrad
+DATE:		11/26/2008
+NOTES: 		Pulled from http://exchangenetwork.net/exchanges/water/sdwis.htm on 11/26/2008.

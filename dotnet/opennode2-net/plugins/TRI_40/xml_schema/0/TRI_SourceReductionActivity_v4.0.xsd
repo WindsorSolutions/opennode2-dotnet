@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 sp1 (http://www.altova.com) by WDavid Ripley, III (COMPUTER SCIENCES CORP) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:TRI="http://www.exchangenetwork.net/schema/TRI/4" targetNamespace="http://www.exchangenetwork.net/schema/TRI/4" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.0">
+	<xsd:include schemaLocation="TRI_SharedTypes_v4.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>		
+		Schema Name : 	TRI_SourceReductionActivity_v4.0.xsd
+		Current Version Available At :
+		Description : 	Activities which a facility has undertaken to reduce the quantity of a released material.
+		Application : Toxic Release Inventory
+		Developed by : 	 Environmental Protection Agency, Windsor Solutions, Inc.
+		Point of Contact : William Rensmith
+		Maintained by : Environmental Protection Agency, CSC
+		Point of Contact : WDavid Ripley III [dripley@csc.com]	
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="SourceReductionActivity" type="TRI:SourceReductionActivityDataType">
+		<xsd:annotation>
+			<xsd:documentation>The source reduction activities implemented at the facility on the chemical during the reporting year, and the methods used to identify the activities.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="SourceReductionActivityDataType">
+		<xsd:sequence>
+			<xsd:element ref="TRI:SourceReductionSequenceNumber" minOccurs="0"/>
+			<xsd:element ref="TRI:SourceReductionActivityCode" minOccurs="0"/>
+			<xsd:element ref="TRI:SourceReductionMethodCode" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="SourceReductionActivityCode" type="TRI:ToxicReleaseStringType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates the type of source reduction activity implemented at the facility during the reporting year.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SourceReductionMethodCode" type="TRI:SourceReductionMethodCodeType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates the method or methods used at the facility to identify the possibility for a source reduction activity implementation at the facility.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SourceReductionSequenceNumber" type="TRI:ToxicReleaseIntegerType">
+		<xsd:annotation>
+			<xsd:documentation>Sequence in which a source reduction method is reported on a submission.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!--Source reduction activity data type-->
+	<xsd:simpleType name="SourceReductionMethodCodeType">
+		<xsd:annotation>
+			<xsd:documentation>Enumeration of 11 codes type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="T01"/>
+			<xsd:enumeration value="T02"/>
+			<xsd:enumeration value="T03"/>
+			<xsd:enumeration value="T04"/>
+			<xsd:enumeration value="T05"/>
+			<xsd:enumeration value="T06"/>
+			<xsd:enumeration value="T07"/>
+			<xsd:enumeration value="T08"/>
+			<xsd:enumeration value="T09"/>
+			<xsd:enumeration value="T10"/>
+			<xsd:enumeration value="T11"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Terrie Sutch (Science Application International Corporation) -->
+<!-- edited with XML Spy v4.4 U (http://www.xmlspy.com) by Surjit De (Science Applications International Corp.) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="2.0">
+	<xsd:include schemaLocation=".\SDWA_SiteVisitDataTypes_v2.xsd"/>
+	<xsd:include schemaLocation=".\SDWA_WaterSystemDataTypes_v2.xsd"/>
+	<xsd:include schemaLocation=".\SDWA_AssignmentCriteria_v2.xsd"/>
+	<xsd:include schemaLocation=".\SDWA_MessageNotification_v2.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>Site Visit Business Object
+.</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="SiteVisits" type="SiteVisitsType"/>
+	<xsd:element name="SiteVisitDetails" type="SiteVisitDetailsType"/>
+	<xsd:complexType name="SiteVisitsType">
+		<xsd:sequence>
+			<xsd:element ref="SiteVisitDetails" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SiteVisitDetailsType">
+		<xsd:sequence>
+			<xsd:element ref="PWSIdentifier"/>
+			<xsd:element ref="VisitIdentifier"/>
+			<xsd:element ref="VisitDate"/>
+			<xsd:element ref="VisitReasonCode"/>
+			<xsd:element ref="VisitAgencyCode"/>
+			<xsd:element ref="VisitCategoryEvaluations"/>
+			<xsd:element ref="VisitReportingDate"/>
+			<xsd:element ref="VisitCommentText" minOccurs="0"/>
+			<xsd:element ref="SiteVisitAssignments" minOccurs="0"/>
+			<xsd:element ref="MessageStatus" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

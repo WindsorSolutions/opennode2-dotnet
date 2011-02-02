@@ -1,0 +1,30 @@
+// NOTES:
+//
+// Each line should contain the WQX Org Id followed by a comma-separated list
+// of NAAS usernames (emails) that are allowed to submit/query for that WQX Org Id
+//
+// Comments can be added by prefixing a line with //
+//
+// To allow all users to submit/query for an Org Id, use an asterisk instead
+// of a comma-separated list of NAAS usernames
+//
+
+BOGUS_EXAMPLE_ORGID, noderuntime@windsorsolutions.com, ted@windsorsolutions.com
+
+NWIFC_WQX,dummy@dummy.com,cdx
+Squaxin,*
+QIN_WQX,*
+JSKTRIBE_WQX,*
+ELWHA1_WQX,*
+LUMMINSN_WQX,*
+MAKAH_WQX,*
+NISQUALLY,*
+NOOKSACK_WQX,*
+PGSTNATR_WQX,*
+PUYALLUP_WQX,*
+QUILEUTE_WQX,*
+SKOKDATA_WQX,*
+WASIT,*
+SUQUAMIS_WQX,*
+TRTUL_WQX,*
+HOHTRIBE_WQX,*

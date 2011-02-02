@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by private (private) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sc="urn:us:net:exchangenetwork:sc:1:0" xmlns:TRI="urn:us:net:exchangenetwork:TRI:1:0" xmlns:TierII="http://www.exchangenetwork.net/schema/TierII/1/0" targetNamespace="http://www.exchangenetwork.net/schema/TierII/1/0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1">
+	<xsd:import namespace="urn:us:net:exchangenetwork:sc:1:0" schemaLocation="SC_SimpleContent_v1.0.xsd"/>
+	<xsd:import namespace="urn:us:net:exchangenetwork:sc:1:0" schemaLocation="SC_ReportIdentity_v1.0.xsd"/>
+	<xsd:include schemaLocation="TierII_Facility_v1.1.xsd"/>
+	<xsd:include schemaLocation="TierII_ChemicalInventory_v1.1.xsd"/>
+	<xsd:include schemaLocation="TierII_Attachment_v1.1.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>		
+		Schema Name : 	TierII_Report_v1.1.xsd
+		Current Version Available At :
+		Description : 	Contains the data for a single Tier II Emergency and Hazardous Chemical Inventory report
+		Aplication : 
+		Developed by : 	 enfoTech
+		Point of Contact : Sara Liu	
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="TierIIReport" type="TierII:TierIIReportDataType">
+		<xsd:annotation>
+			<xsd:documentation>a single Tier II Emergency and Hazardous Chemical Inventory report</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="TierIIReportDataType">
+		<xsd:sequence>
+			<xsd:element ref="sc:ReportIdentity" minOccurs="0"/>
+			<xsd:element ref="TierII:TierIIFacility" minOccurs="0"/>
+			<xsd:element ref="TierII:ChemicalInventory" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

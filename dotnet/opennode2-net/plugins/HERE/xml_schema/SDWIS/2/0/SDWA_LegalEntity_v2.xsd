@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Terrie Sutch (SAIC) -->
+<!-- edited with XML Spy v4.3 (http://www.xmlspy.com) by 4.0  Installed Multi Suite for 10 users (Science Applications International Corp.) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="2.0">
+	<xsd:include schemaLocation=".\SDWA_LegalEntityDataTypes_v2.xsd"/>
+	<xsd:include schemaLocation=".\SDWA_MessageNotification_v2.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>Legal Entity Business Object</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="LegalEntities" type="LegalEntitiesType"/>
+	<xsd:complexType name="LegalEntitiesType">
+		<xsd:sequence>
+			<xsd:element ref="LegalEntityDetails" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="LegalEntityDetails" type="LegalEntityDetailsType"/>
+	<xsd:complexType name="LegalEntityDetailsType">
+		<xsd:sequence>
+			<xsd:element ref="LegalEntityAddressIdentifier"/>
+			<xsd:element ref="OrganizationNameText" minOccurs="0"/>
+			<xsd:element ref="AddresseeNameText" minOccurs="0"/>
+			<xsd:element ref="PhoneFaxEmail" minOccurs="0"/>
+			<xsd:element ref="Address"/>
+			<xsd:element ref="MessageStatus" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

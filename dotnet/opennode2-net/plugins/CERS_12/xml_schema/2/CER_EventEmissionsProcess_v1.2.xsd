@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:cer="http://www.exchangenetwork.net/schema/cer/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/cer/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2">
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name  : CER_EventEmissionsProcess_v1.2.xsd
+        Current Version Available At : http://www.exchangenetwork.net/schema/cer/1/2/CER_EventEmissionsProcess_v1.2.xsd
+        Description   : Describes the fuels, fuel conditions, combustion characteristics and activity that produce emissions.  
+        Developed by  : 	Perrin Quarles Associates, Inc.
+        Point of Contact : Perrin Quarles Associates, Inc.	
+        </xsd:documentation>
+	</xsd:annotation>
+	<xsd:include schemaLocation="CER_SimpleContent_v1.2.xsd"/>
+	<xsd:include schemaLocation="CER_Emissions_v1.2.xsd"/>
+	<xsd:complexType name="EventEmissionsProcessDataType">
+		<xsd:sequence>
+			<xsd:element ref="cer:SourceClassificationCode"/>
+			<xsd:element ref="cer:FuelConfigurationCode" minOccurs="0"/>
+			<xsd:element ref="cer:FuelLoading" minOccurs="0"/>
+			<xsd:element ref="cer:FuelLoadingUnitofMeasureCode" minOccurs="0"/>
+			<xsd:element ref="cer:AmountofFuelConsumed" minOccurs="0"/>
+			<xsd:element ref="cer:AmountofFuelConsumedUnitofMeasureCode" minOccurs="0"/>
+			<xsd:element ref="cer:PercentTenHourFuelMoisture" minOccurs="0"/>
+			<xsd:element ref="cer:PercentOneThousandHourFuelMoisture" minOccurs="0"/>
+			<xsd:element ref="cer:PercentLiveFuelMoisture" minOccurs="0"/>
+			<xsd:element ref="cer:PercentDuffFuelMoisture" minOccurs="0"/>
+			<xsd:element ref="cer:HeatRelease" minOccurs="0"/>
+			<xsd:element ref="cer:HeatReleaseUnitofMeasureCode" minOccurs="0"/>
+			<xsd:element ref="cer:EmissionReductionTechniqueCode" minOccurs="0"/>
+			<xsd:element ref="cer:EventEmissionsProcessComment" minOccurs="0"/>
+			<xsd:element ref="cer:EventEmissionsProcessEmissions" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="EventEmissionsProcess" type="cer:EventEmissionsProcessDataType"/>
+</xsd:schema>

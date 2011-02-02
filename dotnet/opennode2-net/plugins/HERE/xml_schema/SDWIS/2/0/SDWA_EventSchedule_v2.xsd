@@ -1,0 +1,27 @@
+<!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Terrie Sutch (Science Application International Corporation) -->
+<!-- edited with XML Spy v4.3 U (http://www.xmlspy.com) by Terrie Sutch (Science Applications International Corp.) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="2.0">
+	<xsd:include schemaLocation=".\SDWA_WaterSystemDataTypes_v2.xsd"/>
+	<xsd:include schemaLocation=".\SDWA_EventScheduleDataTypes_v2.xsd"/>
+	<xsd:include schemaLocation=".\SDWA_MessageNotification_v2.xsd"/>
+	<xsd:element name="EventSchedules" type="EventSchedulesType"/>
+	<xsd:element name="EventScheduleDetails" type="EventScheduleDetailsType"/>
+	<xsd:complexType name="EventSchedulesType">
+		<xsd:sequence>
+			<xsd:element ref="EventScheduleDetails" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="EventScheduleDetailsType">
+		<xsd:sequence>
+			<xsd:element ref="PWSIdentifier"/>
+			<xsd:element ref="EventScheduleIdentifier"/>
+			<xsd:element ref="EventScheduleRegulatingAgencyText"/>
+			<xsd:element ref="EventScheduleRuleCode"/>
+			<xsd:element ref="EventScheduleEffectiveDate"/>
+			<xsd:element ref="EventScheduleCloseDate" minOccurs="0"/>
+			<xsd:element ref="EventScheduleStatusCode" minOccurs="0"/>
+			<xsd:element ref="EventScheduleReportingDate"/>
+			<xsd:element ref="MessageStatus" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

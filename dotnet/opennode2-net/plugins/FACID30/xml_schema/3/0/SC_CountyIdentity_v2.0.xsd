@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified" version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:include schemaLocation="SC_SimpleContent_v2.0.xsd" />
+    <xsd:annotation>
+        <xsd:documentation>
+        Schema Name  : SC_CountyIdentity_v2.0.xsd
+        Schema Identification : C.08
+        Current Version Available At :  http://www.exchangenetwork.net/schema/SC
+        Description   : 	A designator and associated metadata used to identify a U.S. county or county equivalent.
+        Application   :   Exchange Network Shared Schema Component
+        Developed by  : 	 Core Reference Model (CRM) Workgroup
+        Point of Contact :   Douglas Timms, enfoTech &amp; Consulting, Inc.
+        Last Modified by :   Ross &amp; Associates - April 17, 2006 (from SSCv1.1: targetNamespace declaration removed, to conform with Exchange Network namespace decision v1.11)
+</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType name="CountyIdentityDataType">
+        <xsd:sequence>
+            <xsd:element minOccurs="0" ref="CountyCode" />
+            <xsd:element minOccurs="0" ref="CountyCodeListIdentifier" />
+            <xsd:element minOccurs="0" ref="CountyName" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="CountyIdentity" type="CountyIdentityDataType">
+        <xsd:annotation>
+            <xsd:documentation>A designator and associated metadata used to identify a U.S. county or county equivalent.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+</xsd:schema>

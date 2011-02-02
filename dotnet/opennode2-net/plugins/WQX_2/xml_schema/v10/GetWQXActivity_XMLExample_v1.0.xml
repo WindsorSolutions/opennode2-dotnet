@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WQX xmlns="http://www.exchangenetwork.net/schema/wqx/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.exchangenetwork.net/schema/wqx/1
+C:\Denver\EngClients\LOCKHE~1\ITS-ESE\ESARPI~1\schema\10172006\0\WQX_WQX_v1.0.xsd">
+	<Organization>
+		<OrganizationDescription>
+			<OrganizationIdentifier>YBXNGQ</OrganizationIdentifier>
+			<OrganizationFormalName>BEST BUY CO.</OrganizationFormalName>
+			<OrganizationDescriptionText>corrupti enim laborum veniam. </OrganizationDescriptionText>
+			<TribalCode>S17</TribalCode>
+		</OrganizationDescription>
+		<Activity>
+			<ActivityDescription>
+				<ActivityIdentifier>1</ActivityIdentifier>
+				<ActivityTypeCode>Quality Control Sample-Other</ActivityTypeCode>
+				<ActivityMediaName>Sediment</ActivityMediaName>
+				<ActivityMediaSubdivisionName>Soil Gas</ActivityMediaSubdivisionName>
+				<ActivityStartDate>2006-02-17</ActivityStartDate>
+				<ActivityStartTime>
+					<Time>10:18:50</Time>
+					<TimeZoneCode>MST</TimeZoneCode>
+				</ActivityStartTime>
+				<ActivityEndTime>
+					<Time>12:42:50-07:00</Time>
+					<TimeZoneCode>MST</TimeZoneCode>
+				</ActivityEndTime>
+				<ActivityRelativeDepthName>Surface</ActivityRelativeDepthName>
+				<ActivityDepthHeightMeasure>
+					<MeasureValue>55</MeasureValue>
+					<MeasureUnitCode>ug/l</MeasureUnitCode>
+				</ActivityDepthHeightMeasure>
+				<ActivityTopDepthHeightMeasure>
+					<MeasureValue>36</MeasureValue>
+					<MeasureUnitCode>lumens</MeasureUnitCode>
+				</ActivityTopDepthHeightMeasure>
+				<ActivityBottomDepthHeightMeasure>
+					<MeasureValue>88</MeasureValue>
+					<MeasureUnitCode>ug/m3</MeasureUnitCode>
+				</ActivityBottomDepthHeightMeasure>
+				<ActivityDepthAltitudeReferencePointText>67</ActivityDepthAltitudeReferencePointText>
+				<ProjectIdentifier>RFZETH</ProjectIdentifier>
+				<ProjectIdentifier>ZQMNXW</ProjectIdentifier>
+				<ActivityConductingOrganizationText>BEST BUY CO.</ActivityConductingOrganizationText>
+				<ActivityCommentText>eligendi sunt sit voluptates est accusamus et. </ActivityCommentText>
+			</ActivityDescription>
+			<ActivityLocation>
+				<LatitudeMeasure>33.36</LatitudeMeasure>
+				<LongitudeMeasure>339.356</LongitudeMeasure>
+				<SourceMapScaleNumeric>733</SourceMapScaleNumeric>
+				<HorizontalCollectionMethodName>Public Land Survey-Quarter Section</HorizontalCollectionMethodName>
+				<HorizontalCoordinateReferenceSystemDatumName>GUAM</HorizontalCoordinateReferenceSystemDatumName>
+			</ActivityLocation>
+			<SampleDescription>
+				<SampleCollectionMethod>
+					<MethodIdentifier>Kerava</MethodIdentifier>
+					<MethodIdentifierContext>officia occaecat nobis ex nihil magna dolore. </MethodIdentifierContext>
+					<MethodName>qwe</MethodName>
+					<MethodQualifierTypeName/>
+					<MethodDescriptionText/>
+				</SampleCollectionMethod>
+				<SampleTissueTaxonomicName>Betta taeniata</SampleTissueTaxonomicName>
+				<SampleTissueAnatomyName>Pancreas</SampleTissueAnatomyName>
+				<SampleCollectionEquipmentName>Seine Net</SampleCollectionEquipmentName>
+				<SampleCollectionEquipmentCommentText>non enim proident molestias ut ut quod. </SampleCollectionEquipmentCommentText>
+				<SamplePreparation>
+					<SamplePreparationMethod>
+						<MethodIdentifier>w</MethodIdentifier>
+						<MethodIdentifierContext>d</MethodIdentifierContext>
+						<MethodName>d</MethodName>
+						<MethodQualifierTypeName/>
+						<MethodDescriptionText/>
+					</SamplePreparationMethod>
+					<SampleContainerTypeName>Polypropylene Bottle</SampleContainerTypeName>
+					<SampleContainerColorName>Black</SampleContainerColorName>
+					<ChemicalPreservativeUsedName>d</ChemicalPreservativeUsedName>
+					<ThermalPreservativeUsedName>Wet Ice (4 deg C)</ThermalPreservativeUsedName>
+					<SampleTransportStorageDescription>w</SampleTransportStorageDescription>
+				</SamplePreparation>
+			</SampleDescription>
+			<ResultCount>24</ResultCount>
+		</Activity>
+		<Activity>
+			<ActivityDescription>
+				<ActivityIdentifier>1</ActivityIdentifier>
+				<ActivityTypeCode>Quality Control Sample-Other</ActivityTypeCode>
+				<ActivityMediaName>Sediment</ActivityMediaName>
+				<ActivityMediaSubdivisionName>Soil Gas</ActivityMediaSubdivisionName>
+				<ActivityStartDate>2006-02-17</ActivityStartDate>
+				<ActivityStartTime>
+					<Time>10:18:50-07:00</Time>
+					<TimeZoneCode>MST</TimeZoneCode>
+				</ActivityStartTime>
+				<ActivityEndTime>
+					<Time>12:42:50-07:00</Time>
+					<TimeZoneCode>MST</TimeZoneCode>
+				</ActivityEndTime>
+				<ActivityRelativeDepthName>Surface</ActivityRelativeDepthName>
+				<ActivityDepthHeightMeasure>
+					<MeasureValue>55</MeasureValue>
+					<MeasureUnitCode>ug/l</MeasureUnitCode>
+				</ActivityDepthHeightMeasure>
+				<ActivityTopDepthHeightMeasure>
+					<MeasureValue>36</MeasureValue>
+					<MeasureUnitCode>lumens</MeasureUnitCode>
+				</ActivityTopDepthHeightMeasure>
+				<ActivityBottomDepthHeightMeasure>
+					<MeasureValue>88</MeasureValue>
+					<MeasureUnitCode>ug/m3</MeasureUnitCode>
+				</ActivityBottomDepthHeightMeasure>
+				<ActivityDepthAltitudeReferencePointText>67</ActivityDepthAltitudeReferencePointText>
+				<ProjectIdentifier>RFZETH</ProjectIdentifier>
+				<ProjectIdentifier>ZQMNXW</ProjectIdentifier>
+				<ActivityConductingOrganizationText>BEST BUY CO.</ActivityConductingOrganizationText>
+				<ActivityCommentText>eligendi sunt sit voluptates est accusamus et. </ActivityCommentText>
+			</ActivityDescription>
+			<ActivityLocation>
+				<LatitudeMeasure>33.36</LatitudeMeasure>
+				<LongitudeMeasure>339.356</LongitudeMeasure>
+				<SourceMapScaleNumeric>733</SourceMapScaleNumeric>
+				<HorizontalCollectionMethodName>Public Land Survey-Quarter Section</HorizontalCollectionMethodName>
+				<HorizontalCoordinateReferenceSystemDatumName>GUAM</HorizontalCoordinateReferenceSystemDatumName>
+			</ActivityLocation>
+			<SampleDescription>
+				<SampleCollectionMethod>
+					<MethodIdentifier>Kerava</MethodIdentifier>
+					<MethodIdentifierContext>officia occaecat nobis ex nihil magna dolore. </MethodIdentifierContext>
+					<MethodName>w</MethodName>
+					<MethodDescriptionText>d</MethodDescriptionText>
+				</SampleCollectionMethod>
+				<SampleTissueTaxonomicName>Betta taeniata</SampleTissueTaxonomicName>
+				<SampleTissueAnatomyName>Pancreas</SampleTissueAnatomyName>
+				<SampleCollectionEquipmentName>Seine Net</SampleCollectionEquipmentName>
+				<SampleCollectionEquipmentCommentText>non enim proident molestias ut ut quod. </SampleCollectionEquipmentCommentText>
+				<SamplePreparation>
+					<SamplePreparationMethod>
+						<MethodIdentifier>Kerava</MethodIdentifier>
+						<MethodIdentifierContext>officia occaecat nobis ex nihil magna dolore. </MethodIdentifierContext>
+						<MethodName>w</MethodName>
+						<MethodDescriptionText>d</MethodDescriptionText>
+					</SamplePreparationMethod>
+					<SampleContainerTypeName>Polypropylene Bottle</SampleContainerTypeName>
+					<SampleContainerColorName>Black</SampleContainerColorName>
+					<ChemicalPreservativeUsedName>d</ChemicalPreservativeUsedName>
+					<ThermalPreservativeUsedName>Wet Ice (4 deg C)</ThermalPreservativeUsedName>
+					<SampleTransportStorageDescription>d</SampleTransportStorageDescription>
+				</SamplePreparation>
+			</SampleDescription>
+			<ResultCount>24</ResultCount>
+		</Activity>
+	</Organization>
+</WQX>

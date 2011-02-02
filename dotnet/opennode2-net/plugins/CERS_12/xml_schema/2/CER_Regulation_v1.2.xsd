@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:cer="http://www.exchangenetwork.net/schema/cer/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/cer/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2">
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name  : CER_Regulation_v1.2.xsd
+        Current Version Available At : http://www.exchangenetwork.net/schema/cer/1/2/CER_Regulation_v1.2.xsd
+        Description   : Identifies regulatory programs that are applicable to an emissions unit activity or process.
+        Developed by  : 	 Perrin Quarles Associates, Inc.
+        Point of Contact : 	Perrin Quarles Associates, Inc.	
+        </xsd:documentation>
+	</xsd:annotation>
+	<xsd:include schemaLocation="CER_SimpleContent_v1.2.xsd"/>
+	<xsd:complexType name="RegulationDataType">
+		<xsd:sequence>
+			<xsd:element ref="cer:RegulatoryCode"/>
+			<xsd:element ref="cer:AgencyCodeText" minOccurs="0"/>
+			<xsd:element ref="cer:RegulatoryStartYear" minOccurs="0"/>
+			<xsd:element ref="cer:RegulatoryEndYear" minOccurs="0"/>
+			<xsd:element ref="cer:RegulationComment" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ProcessRegulation" type="cer:RegulationDataType"/>
+	<xsd:element name="UnitRegulation" type="cer:RegulationDataType"/>
+</xsd:schema>

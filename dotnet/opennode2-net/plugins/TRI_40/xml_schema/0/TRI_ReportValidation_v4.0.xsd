@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 sp1 (http://www.altova.com) by WDavid Ripley, III (COMPUTER SCIENCES CORP) -->
+<xsd:schema xmlns:TRI="http://www.exchangenetwork.net/schema/TRI/4" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/TRI/4" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.0">
+	<xsd:include schemaLocation="TRI_SharedTypes_v4.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>		
+		Schema Name : 	TRI_ReportValidation_v4.0.xsd
+		Current Version Available At :
+		Description : 	Errors, warnings and comments which resulted from validating the contents of the TRI report.
+		Application : Toxic Release Inventory
+		Developed by : 	 Environmental Protection Agency, Windsor Solutions, Inc.
+		Point of Contact : William Rensmith
+		Maintained by : Environmental Protection Agency, CSC
+		Point of Contact : WDavid Ripley III [dripley@csc.com]	
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="ReportValidation" type="TRI:ReportValidationDataType">
+		<xsd:annotation>
+			<xsd:documentation>Errors, warnings or comments which resulted from validating the contents of the TRI report.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ReportValidationDataType">
+		<xsd:sequence>
+			<xsd:element ref="TRI:ValidationEntityNameText" minOccurs="0"/>
+			<xsd:element ref="TRI:ValidationMessageCode" minOccurs="0"/>
+			<xsd:element ref="TRI:ValidationMessageText" minOccurs="0"/>
+			<xsd:element ref="TRI:EPAErrorSeverityCode" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ValidationEntityNameText" type="TRI:ToxicReleaseStringType">
+		<xsd:annotation>
+			<xsd:documentation>The name of the organization which created the validation error, warning or comment.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ValidationMessageCode" type="TRI:ToxicReleaseStringType">
+		<xsd:annotation>
+			<xsd:documentation>The code corresponding to a error, warning or comment.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="EPAErrorSeverityCode" type="TRI:EPAErrorSeverityCodeType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates whether the error has spawned a notice of technical error (NOTE) or notice of significant error (NOSE).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ValidationMessageText" type="TRI:ToxicReleaseStringType">
+		<xsd:annotation>
+			<xsd:documentation>The description of the error, warning or comment.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!--Report validation data type-->
+	<xsd:simpleType name="EPAErrorSeverityCodeType">
+		<xsd:annotation>
+			<xsd:documentation>Enumeration of 3 codes type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="NOSE"/>
+			<xsd:enumeration value="NOTE"/>
+			<xsd:enumeration value="NON"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

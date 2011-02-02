@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 sp1 (http://www.altova.com) by WDavid Ripley, III (COMPUTER SCIENCES CORP) -->
+<xsd:schema xmlns:TRI="http://www.exchangenetwork.net/schema/TRI/4" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sc="urn:us:net:exchangenetwork:sc:1:0" targetNamespace="http://www.exchangenetwork.net/schema/TRI/4" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.0">
+	<xsd:import namespace="urn:us:net:exchangenetwork:sc:1:0" schemaLocation="SC_SimpleContent_v1.0.xsd"/>
+	<xsd:import namespace="urn:us:net:exchangenetwork:sc:1:0" schemaLocation="SC_LocationAddress_v1.0.xsd"/>
+	<xsd:include schemaLocation="TRI_TransferQuantity_v4.0.xsd"/>
+	<xsd:include schemaLocation="TRI_Facility_v4.0.xsd"/>
+	<xsd:include schemaLocation="TRI_SharedTypes_v4.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>		
+		Schema Name : 	TRI_TransferLocation_v4.0.xsd
+		Current Version Available At :
+		Description : Identification of off-site locations including Publicly Owned Treatment Works (POTW) to which the chemical in wastes are transferred.		
+		Application : Toxic Release Inventory
+		Developed by : 	 Environmental Protection Agency, Windsor Solutions, Inc.
+		Point of Contact : William Rensmith
+		Maintained by : Environmental Protection Agency, CSC
+		Point of Contact : WDavid Ripley III [dripley@csc.com]	
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="TransferLocation" type="TRI:TransferLocationDataType">
+		<xsd:annotation>
+			<xsd:documentation>Identification of off-site locations including Publicly Owned Treatment Works (POTW) to which the chemical in wastes are transferred.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="TransferLocationDataType">
+		<xsd:sequence>
+			<xsd:element ref="TRI:TransferLocationSequenceNumber" minOccurs="0"/>
+			<xsd:element ref="TRI:POTWIndicator" minOccurs="0"/>
+			<xsd:element ref="sc:FacilitySiteName" minOccurs="0"/>
+			<xsd:element ref="sc:LocationAddress" minOccurs="0"/>
+			<xsd:element ref="TRI:ControlledLocationIndicator" minOccurs="0"/>
+			<xsd:element ref="TRI:RCRAIdentificationNumber" minOccurs="0"/>
+			<xsd:element ref="TRI:TransferQuantity" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ControlledLocationIndicator" type="TRI:ToxicReleaseBooleanType">
+		<xsd:annotation>
+			<xsd:documentation>Indicator that shows whether the off-site location to which toxic chemicals are transferred in wastes is owned or controlled by the facility.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TransferLocationSequenceNumber" type="TRI:ToxicReleaseIntegerType">
+		<xsd:annotation>
+			<xsd:documentation>The sequence in which an off-site transfer is reported on a Form R submission.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="POTWIndicator" type="TRI:ToxicReleaseBooleanType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates that the transfer site is a POTW.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>
