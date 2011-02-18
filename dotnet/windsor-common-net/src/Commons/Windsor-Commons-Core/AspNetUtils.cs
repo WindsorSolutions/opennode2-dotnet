@@ -48,6 +48,17 @@ namespace Windsor.Commons.Core
 {
     public static class AspNetUtils
     {
+        public static T FindControl<T>(Control parent) where T : class
+        {
+            foreach (Control control in parent.Controls)
+            {
+                if (control is T)
+                {
+                    return control as T;
+                }
+            }
+            return null;
+        }
         public static T FindDeepControl<T>(Control parent) where T : class
         {
             foreach (Control control in parent.Controls)
@@ -72,7 +83,7 @@ namespace Windsor.Commons.Core
         {
             foreach (Control control in parent.Controls)
             {
-                if (control.ID == id)
+                if ((control.ID == id) || (control.ClientID == id) || (control.UniqueID == id))
                 {
                     return control;
                 }
@@ -89,6 +100,53 @@ namespace Windsor.Commons.Core
             List<T> list = null;
             FindDeepControls(parent, id, ref list);
             return list;
+        }
+        public static Control GetPostBackControl(Page page)
+        {
+            Control postbackControlInstance = null;
+
+            string postbackControlName = page.Request.Params.Get("__EVENTTARGET");
+            if (!string.IsNullOrEmpty(postbackControlName))
+            {
+                postbackControlInstance = FindDeepControl(page, postbackControlName);
+            }
+            else
+            {
+                // handle the Button control postbacks
+                for (int i = page.Request.Form.Keys.Count - 1; i >= 0; --i)
+                {
+                    string key = page.Request.Form.Keys[i];
+                    if (!string.IsNullOrEmpty(key))
+                    {
+                        postbackControlInstance = FindDeepControl(page, key);
+                        if (postbackControlInstance is System.Web.UI.WebControls.Button)
+                        {
+                            return postbackControlInstance;
+                        }
+                    }
+                }
+            }
+            // handle the ImageButton postbacks
+            if (postbackControlInstance == null)
+            {
+                for (int i = page.Request.Form.Keys.Count - 1; i >= 0; --i)
+                {
+                    string key = page.Request.Form.Keys[i];
+                    if (!string.IsNullOrEmpty(key))
+                    {
+                        if ((key.EndsWith(".x")) || (key.EndsWith(".y")))
+                        {
+                            string controlId = key.Substring(0, page.Request.Form.Keys[i].Length - 2);
+                            postbackControlInstance = FindDeepControl(page, controlId);
+                            if (postbackControlInstance is System.Web.UI.WebControls.ImageButton)
+                            {
+                                return postbackControlInstance;
+                            }
+                        }
+                    }
+                }
+            }
+            return postbackControlInstance;
         }
         public static void SetFocus(System.Web.UI.Page page, Control control, bool selectAll)
         {

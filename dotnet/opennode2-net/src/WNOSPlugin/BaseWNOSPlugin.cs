@@ -63,6 +63,19 @@ namespace Windsor.Node2008.WNOSPlugin
 
     public delegate void WNOSPluginAuditLogginHandler(string message);
 
+    public class PipedParameter<T>
+    {
+        public PipedParameter()
+        {
+        }
+        public PipedParameter(T value)
+        {
+            Value = value;
+            WasSpecified = true;
+        }
+        public bool WasSpecified { get; private set; }
+        public T Value { get; private set; }
+    }
     /// <summary>
     /// All plugin implementations must descend from this class, then implement one or more of the 
     /// relevant Node method interfaces contained within the WNOSPlugin namespace: IExecuteProcessor, 
@@ -194,14 +207,7 @@ namespace Windsor.Node2008.WNOSPlugin
             }
             try
             {
-                if (typeof(T) == typeof(TimeSpan))
-                {
-                    value = (T)Convert.ChangeType(TimeSpan.Parse(valueStr), typeof(T));
-                }
-                else
-                {
-                    value = (T)Convert.ChangeType(valueStr, typeof(T));
-                }
+                value = ConvertValue<T>(valueStr);
                 return true;
             }
             catch (Exception e)
@@ -291,6 +297,38 @@ namespace Windsor.Node2008.WNOSPlugin
             }
             return false;
         }
+        protected static List<PipedParameter<T>> TryGetPipedParameters<T>(DataRequest dataRequest, string name, int index)
+        {
+            if ((dataRequest == null) || (dataRequest.Parameters == null) || (dataRequest.Parameters.Count == 0))
+            {
+                return null;
+            }
+            string stringValue = null;
+            if (!TryGetNonEmptyStringParameter(dataRequest, name, index, ref stringValue))
+            {
+                return null;
+            }
+
+            string[] values = stringValue.Split('|');
+            if (CollectionUtils.IsNullOrEmpty(values))
+            {
+                return null;
+            }
+            List<PipedParameter<T>> parameters = new List<PipedParameter<T>>(values.Length);
+            foreach (string value in values)
+            {
+                if (!string.IsNullOrEmpty(value))
+                {
+                    T typedValue = ConvertValue<T>(value);
+                    parameters.Add(new PipedParameter<T>(typedValue));
+                }
+                else
+                {
+                    parameters.Add(new PipedParameter<T>());
+                }
+            }
+            return parameters;
+        }
         protected static bool TryGetParameter<T>(DataRequest dataRequest, string name, int index, ref T value)
         {
             if ((dataRequest == null) || (dataRequest.Parameters == null) || (dataRequest.Parameters.Count == 0))
@@ -369,14 +407,7 @@ namespace Windsor.Node2008.WNOSPlugin
             }
             try
             {
-                if (typeof(T) == typeof(TimeSpan))
-                {
-                    value = (T)Convert.ChangeType(TimeSpan.Parse(valueStr), typeof(T));
-                }
-                else
-                {
-                    value = (T)Convert.ChangeType(valueStr, typeof(T));
-                }
+                value = ConvertValue<T>(valueStr);
                 return true;
             }
             catch (Exception e)
@@ -387,6 +418,22 @@ namespace Windsor.Node2008.WNOSPlugin
                                                               name, valueStr, typeof(T).Name), e);
                 }
                 return false;
+            }
+        }
+        protected static T ConvertValue<T>(string valueStr)
+        {
+            Type type = typeof(T);
+            if (type == typeof(string))
+            {
+                return (T)(object)valueStr;
+            } 
+            else if (typeof(T) == typeof(TimeSpan))
+            {
+                return (T)Convert.ChangeType(TimeSpan.Parse(valueStr), typeof(T));
+            }
+            else
+            {
+                return (T)Convert.ChangeType(valueStr, typeof(T));
             }
         }
         protected static void GetParameterByIndex<T>(DataRequest dataRequest, int index,
@@ -669,7 +716,7 @@ namespace Windsor.Node2008.WNOSPlugin
             {
                 try
                 {
-                    using (StreamWriter objReader = new StreamWriter(xmlString))
+                    using (StreamWriter objReader = new StreamWriter(rtnPath))
                     {
                         objReader.Write(xmlString);
                     }

@@ -281,6 +281,40 @@ namespace Windsor.Commons.NodeDomain
         {
             get { return false; }
         }
+        public virtual string GetKeyValuesString()
+        {
+            StringBuilder sb = new StringBuilder();
+            ICollection<KeyValuePair<string, T>> nameValuePairs = NameValuePairs;
+
+            if (IsByName)
+            {
+                sb.Append("parameters-by-name: ");
+            }
+            else
+            {
+                sb.Append("parameters-by-index: ");
+            }
+            if (CollectionUtils.IsNullOrEmpty(nameValuePairs))
+            {
+                sb.Append("None");
+            }
+            else
+            {
+                int index = 1;
+                foreach (KeyValuePair<string, T> pair in nameValuePairs)
+                {
+                    string key = IsByName ? pair.Key : index.ToString();
+                    ++index;
+                    string value = (pair.Value == null) ? string.Empty : pair.Value.ToString();
+                    if (index > 2)
+                    {
+                        sb.Append(", ");
+                    }
+                    sb.AppendFormat("{0} ({1})", key, value);
+                }
+            }
+            return sb.ToString();
+        }
         public override string ToString()
         {
             return ReflectionUtils.GetPublicPropertiesString(this);

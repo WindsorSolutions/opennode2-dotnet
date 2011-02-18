@@ -1265,8 +1265,12 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
         [System.Xml.Serialization.XmlElementAttribute("HabitName", Order = 2)]
         [System.ComponentModel.DescriptionAttribute("The position that the characteristic occupies in a food chain.")]
         //TSM:
-        //public string[] HabitName;
-        public string HabitName;
+        [Windsor.Commons.XsdOrm.DbIgnore]
+        public string[] HabitName;
+
+        //TSM:
+        [System.Xml.Serialization.XmlIgnore]
+        public string HabitNameDBValue;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
@@ -1296,8 +1300,12 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
         [System.ComponentModel.DescriptionAttribute("For entries representing taxa, a code representing the functional feeding group w" +
             "ith which the reported taxon is typically associated.")]
         //TSM:
-        //public string[] FunctionalFeedingGroupName;
-        public string FunctionalFeedingGroupName;
+        [Windsor.Commons.XsdOrm.DbIgnore]
+        public string[] FunctionalFeedingGroupName;
+
+        //TSM:
+        [System.Xml.Serialization.XmlIgnore]
+        public string FunctionalFeedingGroupNameDBValue;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 8)]

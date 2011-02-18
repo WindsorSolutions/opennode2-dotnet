@@ -76,6 +76,7 @@ namespace Windsor.Commons.Core
     public static class ReflectionUtils
     {
         public delegate bool ForEachProperty(PropertyInfo propertyInfo);
+        public delegate bool ForEachPropertyDescriptor(PropertyDescriptor propertyDescriptor);
 
         public static void ProcessPublicInstanceProperties(object obj, ForEachProperty forEach)
         {
@@ -85,16 +86,40 @@ namespace Windsor.Commons.Core
             }
             ProcessPublicInstanceProperties(obj.GetType(), forEach);
         }
+        public static void ProcessPublicInstancePropertyDescriptors(object obj, ForEachPropertyDescriptor forEach)
+        {
+            if (obj == null)
+            {
+                return;
+            }
+            ProcessPublicInstancePropertyDescriptors(obj.GetType(), forEach);
+        }
         public static void ProcessPublicInstanceProperties(Type type, ForEachProperty forEach)
+        {
+            ProcessPublicInstanceProperties(type, forEach, false);
+        }
+        public static void ProcessPublicInstancePropertyDescriptors(Type type, ForEachPropertyDescriptor forEach)
+        {
+            ProcessPublicInstancePropertyDescriptors(type, forEach, false);
+        }
+        public static void ProcessPublicInstanceProperties(Type type, ForEachProperty forEach, bool baseClassPropertiesFirst)
         {
             List<PropertyInfo> propertyList = new List<PropertyInfo>();
             Type curType = type;
             do
             {
                 PropertyInfo[] properties = curType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+                if (baseClassPropertiesFirst)
+                {
+                    CollectionUtils.Reverse(properties);
+                }
                 propertyList.AddRange(properties);
                 curType = curType.BaseType;
             } while (curType != null);
+            if (baseClassPropertiesFirst)
+            {
+                propertyList.Reverse();
+            }            
             foreach (PropertyInfo property in propertyList)
             {
                 if (!forEach(property))
@@ -102,19 +127,32 @@ namespace Windsor.Commons.Core
                     return;
                 }
             }
-            //PropertyInfo[] properties = type.GetProperties(BindingFlags.Instance | BindingFlags.Public);
-            //foreach (PropertyInfo property in properties)
-            //{
-            //    if (!forEach(property))
-            //    {
-            //        return;
-            //    }
-            //}
+        }
+        public static void ProcessPublicInstancePropertyDescriptors(Type type, ForEachPropertyDescriptor forEach, bool baseClassPropertiesFirst)
+        {
+            PropertyDescriptorCollection propertyDescriptors = TypeDescriptor.GetProperties(type);
+            foreach (PropertyDescriptor propertyDescriptor in propertyDescriptors)
+            {
+                if (!forEach(propertyDescriptor))
+                {
+                    return;
+                }
+            }
         }
 
         public delegate bool ForEachPropertyWithSingleAttribute<T>(PropertyInfo propertyInfo, T attribute) where T : Attribute;
+        public delegate bool ForEachPropertyDescriptorWithSingleAttribute<T>(PropertyDescriptor propertyDescriptor, T attribute) where T : Attribute;
 
         public static void ProcessPublicInstancePropertiesWithSingleAttribute<T>(Type type, ForEachPropertyWithSingleAttribute<T> forEach) where T : Attribute
+        {
+            ProcessPublicInstancePropertiesWithSingleAttribute<T>(type, forEach, false);
+        }
+        public static void ProcessPublicInstancePropertiesWithSingleAttribute<T>(Type type, ForEachPropertyDescriptorWithSingleAttribute<T> forEach) where T : Attribute
+        {
+            ProcessPublicInstancePropertyDescriptorsWithSingleAttribute<T>(type, forEach, false);
+        }
+        public static void ProcessPublicInstancePropertiesWithSingleAttribute<T>(Type type, ForEachPropertyWithSingleAttribute<T> forEach,
+                                                                                 bool baseClassPropertiesFirst) where T : Attribute
         {
             ProcessPublicInstanceProperties(type, delegate(PropertyInfo propertyInfo)
             {
@@ -137,7 +175,33 @@ namespace Windsor.Commons.Core
                     return forEach(propertyInfo, attribute);
                 }
                 return true;
-            });
+            }, baseClassPropertiesFirst);
+        }
+        public static void ProcessPublicInstancePropertyDescriptorsWithSingleAttribute<T>(Type type, ForEachPropertyDescriptorWithSingleAttribute<T> forEach,
+                                                                                          bool baseClassPropertiesFirst) where T : Attribute
+        {
+            ProcessPublicInstancePropertyDescriptors(type, delegate(PropertyDescriptor propertyDescriptor)
+            {
+                AttributeCollection attributes = propertyDescriptor.Attributes;
+                T attribute = null;
+                foreach (Attribute curAttribute in attributes)
+                {
+                    T assignAttribute = curAttribute as T;
+                    if (assignAttribute != null)
+                    {
+                        if (attribute != null)
+                        {
+                            return true; // More than one, don't call delegate for any!
+                        }
+                        attribute = assignAttribute;
+                    }
+                }
+                if (attribute != null)
+                {
+                    return forEach(propertyDescriptor, attribute);
+                }
+                return true;
+            }, baseClassPropertiesFirst);
         }
         /// <summary>
         /// This works around an issue in .NET where Type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | 

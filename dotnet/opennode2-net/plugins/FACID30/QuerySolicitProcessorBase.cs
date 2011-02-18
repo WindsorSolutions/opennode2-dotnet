@@ -251,7 +251,7 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
                 IHeaderDocumentHelper headerDocumentHelper;
                 GetServiceImplementation(out headerDocumentHelper);
                 headerDocumentHelper.Configure(_headerAuthor, _headerOrganization,
-                                                null, FACID30_FLOW_NAME, _headerContactInfo,
+                                                FACID30_FLOW_NAME, FACID30_FLOW_NAME, _headerContactInfo,
                                                 null);
 
                 string tempXmlFilePath = _settingsProvider.NewTempFilePath();

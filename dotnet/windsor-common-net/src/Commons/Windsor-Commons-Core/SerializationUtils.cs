@@ -439,6 +439,11 @@ namespace Windsor.Commons.Core
                 }
             }
         }
+        public T SerializeClone<T>(T objectToClone)
+        {
+            byte[] bytes = this.BinarySerialize(objectToClone);
+            return this.BinaryDeserialize<T>(bytes);
+        } 
         #endregion
     }
     public class NamespaceSpecifiedXmlTextReader : XmlTextReader

@@ -4,9 +4,34 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
     using System.Xml.Serialization;
     using System.Data;
     using System.IO;
+    using System.Text;
     using System.Collections.Generic;
     using Windsor.Commons.XsdOrm;
     using Windsor.Commons.Core;
+
+    public static class WQXDataHelper
+    {
+        private const string PIPE = "|";
+        private static readonly string[] PIPE_ARRAY = new string[] { PIPE };
+        public static string StringsToPipedString(string[] strings)
+        {
+            string rtnString = null;
+            if (!CollectionUtils.IsNullOrEmpty(strings))
+            {
+                rtnString = string.Join(PIPE, strings);
+            }
+            return rtnString;
+        }
+        public static string[] PipedStringToStrings(string value)
+        {
+            string[] rtnStrings = null;
+            if (!string.IsNullOrEmpty(value))
+            {
+                rtnStrings = value.Split(PIPE_ARRAY, StringSplitOptions.RemoveEmptyEntries);
+            }
+            return rtnStrings;
+        }
+    }
 
     // string[] ActivityDataType.ActivityMetricDataType.IndexIdentifier -> Maps to single column -> WQX_ACTIVITYMETRIC.METRICINDEXID
     // string[] ResultDataType.BiologicalResultDescriptionDataType.TaxonomicDetailsDataType.HabitName -> Maps to single column -> WQX_RESULT.TAXDETAILSHABITNAME
@@ -272,13 +297,13 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
     [AppliedAttribute(typeof(TaxonomicDetailsDataType), "CellFormName", typeof(ColumnAttribute), "TAXDETAILSCELLFORM", DbType.AnsiString, 11, true)]
     [AppliedAttribute(typeof(TaxonomicDetailsDataType), "CellShapeName", typeof(ColumnAttribute), "TAXDETAILSCELLSHAPE", DbType.AnsiString, 18, true)]
     //??** string[] HabitName
-    [AppliedAttribute(typeof(TaxonomicDetailsDataType), "HabitName", typeof(ColumnAttribute), "TAXDETAILSHABITNAME", DbType.AnsiString, 15, true)]
+    [AppliedAttribute(typeof(TaxonomicDetailsDataType), "HabitNameDBValue", typeof(ColumnAttribute), "TAXDETAILSHABITNAME", DbType.AnsiString, 15, true)]
     [AppliedAttribute(typeof(TaxonomicDetailsDataType), "VoltinismName", typeof(ColumnAttribute), "TAXDETAILSVOLTINISM", DbType.AnsiString, 25, true)]
     [AppliedAttribute(typeof(TaxonomicDetailsDataType), "TaxonomicPollutionTolerance", typeof(ColumnAttribute), "TAXDETAILSPOLLTOLERANCE", DbType.AnsiString, 4, true)]
     [AppliedAttribute(typeof(TaxonomicDetailsDataType), "TaxonomicPollutionToleranceScaleText", typeof(ColumnAttribute), "TAXDETAILSPOLLTOLERANCESCALE", DbType.AnsiString, 50, true)]
     [AppliedAttribute(typeof(TaxonomicDetailsDataType), "TrophicLevelName", typeof(ColumnAttribute), "TAXDETAILSTROPHICLEVEL", DbType.AnsiString, 4, true)]
     //??** string[] FunctionalFeedingGroupName
-    [AppliedAttribute(typeof(TaxonomicDetailsDataType), "FunctionalFeedingGroupName", typeof(ColumnAttribute), "TAXDETAILSFUNCFEEDINGGROUP", DbType.AnsiString, 6, true)]
+    [AppliedAttribute(typeof(TaxonomicDetailsDataType), "FunctionalFeedingGroupNameDBValue", typeof(ColumnAttribute), "TAXDETAILSFUNCFEEDINGGROUP", DbType.AnsiString, 6, true)]
     [AppliedPathAttribute("TaxonomicDetailsCitation.ResourceTitleName", typeof(ColumnAttribute), "CITATIONRESOURCETITLE", DbType.AnsiString, 120, true)]
     [AppliedPathAttribute("TaxonomicDetailsCitation.ResourceCreatorName", typeof(ColumnAttribute), "CITATIONRESOURCECREATOR", DbType.AnsiString, 120, true)]
     [AppliedPathAttribute("TaxonomicDetailsCitation.ResourceSubjectText", typeof(ColumnAttribute), "CITATIONRESOURCESUBJECT", DbType.AnsiString, 500, true)]
@@ -876,6 +901,15 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
         public void BeforeSaveToDatabase(Dictionary<string, string> projectIdentifierToPkMap)
         {
+            CollectionUtils.ForEach(Result, delegate(ResultDataType result)
+            {
+                if ( (result.BiologicalResultDescription != null) && (result.BiologicalResultDescription.TaxonomicDetails != null) ) {
+                    result.BiologicalResultDescription.TaxonomicDetails.HabitNameDBValue =
+                        WQXDataHelper.StringsToPipedString(result.BiologicalResultDescription.TaxonomicDetails.HabitName);
+                    result.BiologicalResultDescription.TaxonomicDetails.FunctionalFeedingGroupNameDBValue =
+                        WQXDataHelper.StringsToPipedString(result.BiologicalResultDescription.TaxonomicDetails.FunctionalFeedingGroupName);
+                }
+            });
             if (ActivityDescription == null)
             {
                 return;
@@ -912,6 +946,16 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
         }
         public void AfterLoadFromDatabase(Dictionary<string, string> projectPkToIdentifierMap)
         {
+            CollectionUtils.ForEach(Result, delegate(ResultDataType result)
+            {
+                if ((result.BiologicalResultDescription != null) && (result.BiologicalResultDescription.TaxonomicDetails != null))
+                {
+                    result.BiologicalResultDescription.TaxonomicDetails.HabitName =
+                        WQXDataHelper.PipedStringToStrings(result.BiologicalResultDescription.TaxonomicDetails.HabitNameDBValue);
+                    result.BiologicalResultDescription.TaxonomicDetails.FunctionalFeedingGroupName =
+                        WQXDataHelper.PipedStringToStrings(result.BiologicalResultDescription.TaxonomicDetails.FunctionalFeedingGroupNameDBValue);
+                }
+            });
             List<string> projectIds = null;
             CollectionUtils.ForEach(ProjectActivity, delegate(ProjectActivityDataType projectActivity)
             {

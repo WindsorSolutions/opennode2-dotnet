@@ -124,6 +124,7 @@ namespace Windsor.Commons.NodeClient
         public string Authenticate(string userID, string c)
         {
 			string authResp = _requestor.Authenticate(userID, c);
+            _cachedSecurityToken = authResp;
 			return authResp;
 		}
         /// <summary>

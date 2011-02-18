@@ -101,7 +101,8 @@ namespace Windsor.Node2008.Admin.Secure
                             if ((scheduledItemExecuteInfo != null) &&
                                 !string.IsNullOrEmpty(scheduledItemExecuteInfo.Summary))
                             {
-                                text = StringUtils.BreakUpText(scheduledItemExecuteInfo.Summary, 80, "<br/>");
+                                string details = HttpUtility.HtmlEncode(scheduledItemExecuteInfo.Summary);
+                                text = StringUtils.BreakUpText(details, 80, "<br/>");
                                 text = text.Replace("\r\n", "<br/><br/>");
                             }
                         }

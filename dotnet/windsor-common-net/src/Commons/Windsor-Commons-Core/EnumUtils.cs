@@ -75,6 +75,23 @@ namespace Windsor.Commons.Core
             }
             return list;
         }
+        public static IList<T> GetAllEnumValuesBetween<T>(T minValue, T maxValue) where T : struct, IComparable
+        {
+            if (!typeof(T).IsEnum)
+            {
+                throw new ArgumentException(typeof(T).ToString() + " is not an Enum");
+            }
+            T[] values = (T[])Enum.GetValues(typeof(T));
+            List<T> rtnValues = new List<T>();
+            CollectionUtils.ForEach(values, delegate(T value)
+            {
+                if ((minValue.CompareTo(value) <= 0) && (maxValue.CompareTo(value) >= 0))
+                {
+                    rtnValues.Add(value);
+                }
+            });
+            return rtnValues;
+        }
         public static IList<T> GetAllEnumValues<T>() where T : struct
         {
             if (!typeof(T).IsEnum)
@@ -87,32 +104,39 @@ namespace Windsor.Commons.Core
         {
             return ParseEnum<T>(value, true);
         }
+        private static Dictionary<Type, Dictionary<string, ValueType>> s_StringToEnumMap =
+            new Dictionary<Type, Dictionary<string, ValueType>>();
         public static T ParseEnum<T>(string value, bool ignoreCase) where T : struct, IConvertible
         {
-            if (!typeof(T).IsEnum)
+            Type enumType = typeof(T);
+            if (!enumType.IsEnum)
             {
-                throw new ArgumentException(typeof(T).ToString() + " is not an Enum.", "T", null);
+                throw new ArgumentException(enumType.ToString() + " is not an Enum.", "T", null);
             }
-
-            T result;
-
-            if (!string.IsNullOrEmpty(value))
+            // TSM: Enum.Parse() is horribly slow, so create a cache here instead
+            lock (s_StringToEnumMap)
             {
-                try
+                Dictionary<string, ValueType> enumMap;
+                if (!s_StringToEnumMap.TryGetValue(enumType, out enumMap))
                 {
-                    result = (T)Enum.Parse(typeof(T), value, ignoreCase);
+                    Array enumValues = Enum.GetValues(enumType);
+                    enumMap = new Dictionary<string, ValueType>(enumValues.Length);
+                    foreach (ValueType enumValueTmp in enumValues)
+                    {
+                        enumMap[enumValueTmp.ToString().ToUpper()] = enumValueTmp;
+                    }
+                    s_StringToEnumMap[enumType] = enumMap;
                 }
-                catch (Exception)
+                ValueType enumValue;
+                if (enumMap.TryGetValue(value.ToUpper(), out enumValue))
                 {
-                    result = default(T);
+                    return (T)enumValue;
+                }
+                else
+                {
+                    return default(T);
                 }
             }
-            else
-            {
-                result = default(T);
-            }
-
-            return result;
         }
         /// <summary>
         /// Return the [Description] attribute value for an enum value, if specified.
@@ -293,6 +317,14 @@ namespace Windsor.Commons.Core
                 throw new InvalidOperationException("T must be an enum");
             }
             return ((((IConvertible)currentFlags).ToInt32(null) & ((IConvertible)flagToCheck).ToInt32(null)) != 0);
+        }
+        public static bool IsBetween<T>(T value, T min, T max) where T : struct, IComparable
+        {
+            if (!typeof(T).IsEnum)
+            {
+                throw new InvalidOperationException("T must be an enum");
+            }
+            return (value.CompareTo(min) >= 0) && (value.CompareTo(max) <= 0);
         }
         public static int GetLargestEnumStringSize(Type enumType)
         {

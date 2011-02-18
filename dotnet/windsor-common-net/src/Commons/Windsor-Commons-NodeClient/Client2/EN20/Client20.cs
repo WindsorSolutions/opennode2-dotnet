@@ -141,6 +141,7 @@ namespace Windsor.Commons.NodeClient
             Authenticate authRequest = NewAuthenticateObject(userID, credential);
 
             AuthenticateResponse authResp = _requestor.Authenticate(authRequest);
+            _cachedSecurityToken = authResp.securityToken;
             return authResp.securityToken;
         }
 

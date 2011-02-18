@@ -422,6 +422,15 @@ namespace Windsor.Commons.Core
                 dict.Remove(key);
             });
         }
+        public static void Reverse<T>(IList<T> list)
+        {
+            for (int low = 0, high = list.Count - 1; low < high; ++low, --high)
+            {
+                T temp = list[low];
+                list[low] = list[high];
+                list[high] = temp;
+            }
+        }
         public static bool KeysMatch<K, V1, V2>(IDictionary<K, V1> dictA, IDictionary<K, V2> dictB)
         {
             if (IsNullOrEmpty(dictA) && IsNullOrEmpty(dictB))

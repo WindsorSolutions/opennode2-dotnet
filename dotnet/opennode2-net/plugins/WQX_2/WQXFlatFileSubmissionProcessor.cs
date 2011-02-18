@@ -62,16 +62,44 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
     public class WQXFlatFileSubmissionProcessor : WQXSubmissionProcessor
     {
         #region fields
+        protected const string DATA_SOURCE_STORED_PROC = "Postprocessing Stored Procedure Database";
         protected const string CONFIG_ORG_ID = "WQX Organization Id";
         protected const string CONFIG_ORG_NAME = "WQX Organization Name";
+        protected const string CONFIG_STORED_PROC_NAME = "Postprocessing Stored Procedure Name";
+        protected const string CONFIG_STORED_PROC_TIMEOUT = "Postprocessing Stored Procedure Execute Timeout (in seconds)";
+        protected const string CONFIG_LOOKUP_TABLES_FILE_PATH = "Lookup Tables File Path";
         private string _organizationId;
         private string _organizationName;
+        private string _storedProcName;
+        private int _storedProcTimeout = 300;
+        private SpringBaseDao _storedProcBaseDao;
+        protected Dictionary<string, LookupValues> _sampleCollectionMethodLookups;
+        protected Dictionary<string, LookupValues> _resultAnalyticalMethodLookups;
         #endregion
+
+        protected class LookupValues
+        {
+            public LookupValues(string context, string name, string description)
+            {
+                Context = context;
+                Name = name;
+                Description = description;
+            }
+            public string Context;
+            public string Name;
+            public string Description;
+        }
 
         public WQXFlatFileSubmissionProcessor()
         {
             ConfigurationArguments.Add(CONFIG_ORG_ID, null);
             ConfigurationArguments.Add(CONFIG_ORG_NAME, null);
+            ConfigurationArguments.Add(CONFIG_STORED_PROC_NAME, null);
+            ConfigurationArguments.Add(CONFIG_STORED_PROC_TIMEOUT, null);
+            ConfigurationArguments.Add(CONFIG_LOOKUP_TABLES_FILE_PATH, null);
+
+            DataProviders.Add(DATA_SOURCE_STORED_PROC, null);
+            
             _deleteExistingDataBeforeInsert = false;
         }
         protected override void LazyInit()
@@ -80,7 +108,86 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
 
             _organizationId = ValidateNonEmptyConfigParameter(CONFIG_ORG_ID);
             _organizationName = ValidateNonEmptyConfigParameter(CONFIG_ORG_NAME);
+            TryGetConfigParameter(CONFIG_STORED_PROC_NAME, ref _storedProcName);
+            TryGetConfigParameter(CONFIG_STORED_PROC_TIMEOUT, ref _storedProcTimeout);
+
+            string lookupTableFilePath = null;
+            TryGetConfigParameter(CONFIG_LOOKUP_TABLES_FILE_PATH, ref lookupTableFilePath);
+            if (!string.IsNullOrEmpty(lookupTableFilePath))
+            {
+                GetLookups(lookupTableFilePath);
+            }
+            else
+            {
+                AppendAuditLogEvent("No lookup tables file specified.");
+            }
+
+            if (!string.IsNullOrEmpty(_storedProcName))
+            {
+                _storedProcBaseDao = ValidateDBProvider(DATA_SOURCE_STORED_PROC, typeof(NamedNullMappingDataReader));
+            }
+
+            AppendAuditLogEvent("Config parameters: {0} ({1}), {2} ({3}), {4} ({5})", CONFIG_ORG_ID, _organizationId,
+                                CONFIG_ORG_NAME, _organizationName, CONFIG_STORED_PROC_NAME, _storedProcName ?? "None");
         }
+        protected override void ProcessSubmitDocument(string transactionId, string docId)
+        {
+            base.ProcessSubmitDocument(transactionId, docId);
+
+            if (_storedProcBaseDao != null)
+            {
+                CallPostProcessingStoredProc();
+            }
+        }
+        protected virtual void GetLookups(string lookupTableFilePath)
+        {
+            if (!File.Exists(lookupTableFilePath))
+            {
+                //throw new FileNotFoundException(string.Format("The lookup tables file \"{0}\" could not be found", lookupTableFilePath));
+            }
+            try {
+                using (CommaSeparatedFileParser parser = new CommaSeparatedFileParser(lookupTableFilePath))
+                {
+                    while (parser.NextLine())
+                    {
+                        string context = parser["CONTEXT"];
+                        string type = parser["TYPE"];
+                        string id = parser["ID"].ToUpper();
+                        string name, description;
+                        parser.GetValue("NAME", out name);
+                        parser.GetValue("DESCRIPTION", out description);
+                        if (!string.IsNullOrEmpty(name) || !string.IsNullOrEmpty(description))
+                        {
+                            switch (type.ToUpper())
+                            {
+                                case "SAMPLECOLLECTIONMETHOD":
+                                    CollectionUtils.Add(id, new LookupValues(context, name, description), 
+                                                        ref _sampleCollectionMethodLookups);
+                                    break;
+                                case "RESULTANALYTICALMETHOD":
+                                    CollectionUtils.Add(id + context.ToUpper(), new LookupValues(context, name, description), 
+                                                        ref _resultAnalyticalMethodLookups);
+                                    break;
+                                default:
+                                    throw new ArgumentException(string.Format("Invalid TYPE found in lookup tables file: {0}",
+                                                                              type.ToString()));
+                            }
+                        }
+                    }
+                    AppendAuditLogEvent("Found {0} SampleCollectionMethod lookup(s) and {1} ResultAnalyticalMethod lookup(s) in the lookup tables file \"{2}\".",
+                                        CollectionUtils.Count(_sampleCollectionMethodLookups).ToString(),
+                                        CollectionUtils.Count(_resultAnalyticalMethodLookups).ToString(),
+                                        lookupTableFilePath);
+                }
+            }
+            catch(Exception e)
+            {
+                AppendAuditLogEvent("Failed to parse the lookup tables file \"{0}\" with error: {1}",
+                                    lookupTableFilePath, ExceptionUtils.GetDeepExceptionMessage(e));
+                throw;
+            }
+        }
+
         protected override WQXDataType GetWQXData(string transactionId, string docId,
                                                   out Windsor.Node2008.WNOSPlugin.WQX1XsdOrm.WQXDataType data1)
         {
@@ -140,6 +247,48 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                 FileUtils.SafeDeleteDirectory(tempFolderPath);
             }
             return data;
+        }
+        protected virtual void CallPostProcessingStoredProc()
+        {
+            AppendAuditLogEvent("Executing stored procedure \"{0}\" with ORGID of \"{1}\" and timeout of {2} seconds ...",
+                                _storedProcName, _organizationId, _storedProcTimeout.ToString());
+
+            try
+            {
+                IDbParameters parameters = _storedProcBaseDao.AdoTemplate.CreateDbParameters();
+                parameters.AddWithValue("ORGID", _organizationId);
+
+                _storedProcBaseDao.AdoTemplate.Execute<int>(delegate(DbCommand command)
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = _storedProcName;
+                    Spring.Data.Support.ParameterUtils.CopyParameters(command, parameters);
+
+                    try
+                    {
+                        SpringBaseDao.ExecuteCommandWithTimeout(command, _storedProcTimeout, 
+                            delegate(DbCommand commandToExecute)
+                            {
+                                commandToExecute.ExecuteNonQuery();
+                            });
+                    }
+                    catch (Exception ex2)
+                    {
+                        AppendAuditLogEvent("Error returned from stored procedure: {0}", ExceptionUtils.GetDeepExceptionMessage(ex2));
+                        throw;
+                    }
+
+                    return 0;
+                });
+
+                AppendAuditLogEvent("Successfully executed stored procedure \"{0}\"", _storedProcName);
+            }
+            catch (Exception e)
+            {
+                AppendAuditLogEvent("Failed to execute stored procedure \"{0}\" with error: {1}",
+                                    _storedProcName, ExceptionUtils.GetDeepExceptionMessage(e));
+                throw;
+            }
         }
         protected void SaveDataFileToTransaction(string transactionId, WQXDataType data)
         {
@@ -417,7 +566,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                 activity.ActivityDescription.ActivityDepthHeightMeasure = GetResultMeasureCompact(parser, "Activity Depth/Height Measure", "Activity Depth/Height Unit");
                 activity.ActivityDescription.MonitoringLocationIdentifier = monitoringId;
                 activity.SampleDescription = GetResultSample(parser, "Sample Collection Method ID", "Sample Collection Equipment Name",
-                                                             "Sample Collection Equipment Comment");
+                                                             "Sample Collection Equipment Comment", _sampleCollectionMethodLookups);
 
                 ActivityDataType activity2;
                 if (activites.TryGetValue(activityId, out activity2))
@@ -447,7 +596,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                 result.ResultDescription.StatisticalBaseCode = GetResultString(parser, "Statistical Base Code");
                 result.ResultDescription.ResultValueTypeName = GetResultString(parser, "Result Value Type");
                 result.ResultDescription.ResultCommentText = GetResultString(parser, "Result Comment");
-                result.ResultAnalyticalMethod = GetResultAnalyticalMethod(parser, "Result Analytical Method ID", "Result Analytical Method Context");
+                result.ResultAnalyticalMethod = GetResultAnalyticalMethod(parser, "Result Analytical Method ID", "Result Analytical Method Context",
+                                                                          _resultAnalyticalMethodLookups);
                 result.ResultLabInformation = new ResultLabInformationDataType();
                 result.ResultLabInformation.AnalysisStartDate = GetResultDate(parser, "Analysis Start Date", out result.ResultLabInformation.AnalysisStartDateSpecified);
                 result.ResultLabInformation.ResultDetectionQuantitationLimit = GetDetectionQuantitationLimit(parser, "Result Detection/Quantitation Limit Type",
@@ -563,7 +713,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                 }
 
                 activity.SampleDescription = GetResultSample(parser, "Sample Collection Method ID", "Sample Collection Equipment Name",
-                                                             "Sample Collection Equipment Comment");
+                                                             "Sample Collection Equipment Comment", _sampleCollectionMethodLookups);
 
                 ActivityDataType activity2;
                 if (activites.TryGetValue(activityId, out activity2))
@@ -633,21 +783,23 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                 result.BiologicalResultDescription.TaxonomicDetails = new TaxonomicDetailsDataType();
                 result.BiologicalResultDescription.TaxonomicDetails.CellFormName = GetResultString(parser, "Taxon Cell Form");
                 result.BiologicalResultDescription.TaxonomicDetails.CellShapeName = GetResultString(parser, "Taxon Cell Shape");
-                result.BiologicalResultDescription.TaxonomicDetails.HabitName = GetResultString(parser, "Taxon Habit");
+                result.BiologicalResultDescription.TaxonomicDetails.HabitName =
+                    WQXDataHelper.PipedStringToStrings(GetResultString(parser, "Taxon Habit"));
                 result.BiologicalResultDescription.TaxonomicDetails.VoltinismName = GetResultString(parser, "Taxon Voltinism");
                 result.BiologicalResultDescription.TaxonomicDetails.TaxonomicPollutionTolerance = GetResultString(parser, "Taxon Pollution Tolerance");
                 result.BiologicalResultDescription.TaxonomicDetails.TaxonomicPollutionToleranceScaleText = GetResultString(parser, "Taxon Pollution Tolerance Scale");
                 result.BiologicalResultDescription.TaxonomicDetails.TrophicLevelName = GetResultString(parser, "Taxon Trophic Level");
-                result.BiologicalResultDescription.TaxonomicDetails.FunctionalFeedingGroupName = GetResultString(parser, "Taxon Functional Feeding Group");
+                result.BiologicalResultDescription.TaxonomicDetails.FunctionalFeedingGroupName =
+                    WQXDataHelper.PipedStringToStrings(GetResultString(parser, "Taxon Functional Feeding Group"));
                 if (string.IsNullOrEmpty(result.BiologicalResultDescription.TaxonomicDetails.CellFormName) &&
                      string.IsNullOrEmpty(result.BiologicalResultDescription.TaxonomicDetails.CellShapeName) &&
-                     string.IsNullOrEmpty(result.BiologicalResultDescription.TaxonomicDetails.HabitName) &&
+                     CollectionUtils.IsNullOrEmpty(result.BiologicalResultDescription.TaxonomicDetails.HabitName) &&
                      string.IsNullOrEmpty(result.BiologicalResultDescription.TaxonomicDetails.VoltinismName) &&
 
                      string.IsNullOrEmpty(result.BiologicalResultDescription.TaxonomicDetails.TaxonomicPollutionTolerance) &&
                      string.IsNullOrEmpty(result.BiologicalResultDescription.TaxonomicDetails.TaxonomicPollutionToleranceScaleText) &&
                      string.IsNullOrEmpty(result.BiologicalResultDescription.TaxonomicDetails.TrophicLevelName) &&
-                     string.IsNullOrEmpty(result.BiologicalResultDescription.TaxonomicDetails.FunctionalFeedingGroupName))
+                     CollectionUtils.IsNullOrEmpty(result.BiologicalResultDescription.TaxonomicDetails.FunctionalFeedingGroupName))
                 {
                     result.BiologicalResultDescription.TaxonomicDetails = null;
                 }
@@ -771,7 +923,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                 }
 
                 activity.SampleDescription = GetResultSample(parser, "Sample Collection Method Identifier", "Sample Collection Equipment Name",
-                                                             "Sample Collection Equipment Comment Text");
+                                                             "Sample Collection Equipment Comment Text", _sampleCollectionMethodLookups);
 
                 ActivityDataType activity2;
                 if (activites.TryGetValue(activityId, out activity2))
@@ -992,9 +1144,11 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
             return GetMeasureCompact(cResultTypeName, parser, measureColumnName, codeColumnName);
         }
         protected static SampleDescriptionDataType GetResultSample(TabSeparatedFileParser parser, string methodIdColumnName,
-                                                                   string equipmentNameColumnName, string equipmentCommentColumnName)
+                                                                   string equipmentNameColumnName, string equipmentCommentColumnName,
+                                                                   Dictionary<string, LookupValues> sampleCollectionMethodLookups)
         {
-            return GetSample(cResultTypeName, parser, methodIdColumnName, equipmentNameColumnName, equipmentCommentColumnName);
+            return GetSample(cResultTypeName, parser, methodIdColumnName, equipmentNameColumnName, equipmentCommentColumnName,
+                             sampleCollectionMethodLookups);
         }
         protected static string GetNonEmptyProjectString(TabSeparatedFileParser parser, string columnName)
         {
@@ -1189,7 +1343,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
             return valueRtn;
         }
         protected static SampleDescriptionDataType GetSample(string fileType, TabSeparatedFileParser parser, string methodIdColumnName,
-                                                             string equipmentNameColumnName, string equipmentCommentColumnName)
+                                                             string equipmentNameColumnName, string equipmentCommentColumnName,
+                                                             Dictionary<string, LookupValues> sampleCollectionMethodLookups)
         {
             string methodId = parser[methodIdColumnName];
             if (string.IsNullOrEmpty(methodId))
@@ -1199,17 +1354,25 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
             SampleDescriptionDataType valueRtn = new SampleDescriptionDataType();
             valueRtn.SampleCollectionMethod = new ReferenceMethodDataType();
             valueRtn.SampleCollectionMethod.MethodIdentifier = methodId;
-            // The following two fields are NOT specified in the flat file, but they are required by the schema, what
-            // should they be set to???
-            valueRtn.SampleCollectionMethod.MethodIdentifierContext = methodId;
-            valueRtn.SampleCollectionMethod.MethodName = methodId;
+
+            LookupValues lookupValues;
+            if ((sampleCollectionMethodLookups == null) ||
+                !sampleCollectionMethodLookups.TryGetValue(methodId.ToUpper(), out lookupValues))
+            {
+                throw new ArgumentException(string.Format("The SampleCollectionMethod.MethodIdentifier \"{0}\" was not found in the lookup tables file",
+                                                          methodId));
+            }
+            valueRtn.SampleCollectionMethod.MethodName = lookupValues.Name;
+            valueRtn.SampleCollectionMethod.MethodDescriptionText = lookupValues.Description;
+            valueRtn.SampleCollectionMethod.MethodIdentifierContext = lookupValues.Context;
 
             valueRtn.SampleCollectionEquipmentName = GetNonEmptyString(fileType, parser, equipmentNameColumnName);
             valueRtn.SampleCollectionEquipmentCommentText = GetString(fileType, parser, equipmentCommentColumnName);
             return valueRtn;
         }
         protected static ResultAnalyticalMethodDataType GetResultAnalyticalMethod(TabSeparatedFileParser parser, string idColumnName,
-                                                                                  string contextColumnName)
+                                                                                  string contextColumnName,
+                                                                                  Dictionary<string, LookupValues> resultAnalyticalMethodLookups)
         {
             string id = parser[idColumnName];
             if (string.IsNullOrEmpty(id))
@@ -1219,6 +1382,18 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
             ResultAnalyticalMethodDataType valueRtn = new ResultAnalyticalMethodDataType();
             valueRtn.MethodIdentifier = id;
             valueRtn.MethodIdentifierContext = GetNonEmptyString(cResultTypeName, parser, contextColumnName);
+            
+            if (resultAnalyticalMethodLookups != null)
+            {
+                LookupValues lookupValues;
+                resultAnalyticalMethodLookups.TryGetValue(id.ToUpper() + valueRtn.MethodIdentifierContext.ToUpper(), 
+                                                          out lookupValues);
+                if (lookupValues != null)
+                {
+                    valueRtn.MethodDescriptionText = lookupValues.Description;
+                    valueRtn.MethodName = lookupValues.Name;
+                }
+            }
             return valueRtn;
         }
         protected static DetectionQuantitationLimitDataType[] GetDetectionQuantitationLimit(TabSeparatedFileParser parser, string typeColumnName,

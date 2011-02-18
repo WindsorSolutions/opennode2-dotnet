@@ -157,6 +157,12 @@ namespace Windsor.Commons.Core
                                                                    paramName));
             }
         }
+        public static T Get<T>(string format, params object[] args) where T : Exception
+        {
+            DebugUtils.CheckDebuggerBreak();
+            T exception = (T)global::System.Activator.CreateInstance(typeof(T), string.Format(format, args));
+            return exception;
+        }
         public static void Throw<T>(string format, params object[] args) where T : Exception
         {
             DebugUtils.CheckDebuggerBreak();

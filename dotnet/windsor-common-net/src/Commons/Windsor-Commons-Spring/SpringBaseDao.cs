@@ -180,6 +180,36 @@ namespace Windsor.Commons.Spring
             return AdoTemplate.DbProvider.CreateParameterName(name);
         }
 
+        public void DoJDBCQueryWithCancelableRowCallbackDelegate(string sql, IList<object> parValues,
+                                                                 CancelableRowCallbackDelegate rowCallbackDelegate)
+        {
+            IDbParameters parameters;
+            string selectSql = LoadGenericParametersFromValueList(sql, out parameters, parValues);
+
+            AdoTemplate.ClassicAdoTemplate.QueryWithResultSetExtractor(CommandType.Text, selectSql,
+                                                                       new CancelableRowCallbackResultSetExtractor(rowCallbackDelegate),
+                                                                       parameters);
+        }
+        public void DoJDBCQueryWithCancelableRowCallbackDelegate(string sql, CancelableRowCallbackDelegate rowCallbackDelegate,
+                                                                 params object[] parValues)
+        {
+            IDbParameters parameters;
+            string selectSql = LoadGenericParameters(sql, out parameters, parValues);
+
+            AdoTemplate.ClassicAdoTemplate.QueryWithResultSetExtractor(CommandType.Text, selectSql,
+                                                                       new CancelableRowCallbackResultSetExtractor(rowCallbackDelegate),
+                                                                       parameters);
+        }
+
+        public void DoJDBCQueryWithRowCallbackDelegate(string sql, IList<object> parValues,
+                                                       RowCallbackDelegate rowCallbackDelegate)
+        {
+            IDbParameters parameters;
+            string selectSql = LoadGenericParametersFromValueList(sql, out parameters, parValues);
+
+            AdoTemplate.QueryWithRowCallbackDelegate(CommandType.Text, selectSql, rowCallbackDelegate, parameters);
+        }
+
         public void DoJDBCQueryWithRowCallbackDelegate(string sql, RowCallbackDelegate rowCallbackDelegate,
                                                        params object[] parValues)
         {

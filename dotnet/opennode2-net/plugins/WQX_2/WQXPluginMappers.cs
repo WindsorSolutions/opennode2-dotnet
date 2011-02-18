@@ -247,7 +247,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                 result.BiologicalResultDescription.TaxonomicDetails.CellShapeName = readerEx.GetNullString("TAXDETAILSCELLSHAPE");
                 if (!readerEx.IsDBNull("TAXDETAILSHABITNAME"))
                 {
-                    result.BiologicalResultDescription.TaxonomicDetails.HabitName = readerEx.GetString("TAXDETAILSHABITNAME");
+                    result.BiologicalResultDescription.TaxonomicDetails.HabitName =
+                        WQXDataHelper.PipedStringToStrings(readerEx.GetString("TAXDETAILSHABITNAME"));
                 }
                 result.BiologicalResultDescription.TaxonomicDetails.VoltinismName = readerEx.GetNullString("TAXDETAILSVOLTINISM");
                 result.BiologicalResultDescription.TaxonomicDetails.TaxonomicPollutionTolerance = readerEx.GetNullString("TAXDETAILSPOLLTOLERANCE");
@@ -255,7 +256,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                 result.BiologicalResultDescription.TaxonomicDetails.TrophicLevelName = readerEx.GetNullString("TAXDETAILSTROPHICLEVEL");
                 if (!readerEx.IsDBNull("TAXDETAILSFUNCFEEDINGGROUP"))
                 {
-                    result.BiologicalResultDescription.TaxonomicDetails.FunctionalFeedingGroupName = readerEx.GetString("TAXDETAILSFUNCFEEDINGGROUP");
+                    result.BiologicalResultDescription.TaxonomicDetails.FunctionalFeedingGroupName =
+                        WQXDataHelper.PipedStringToStrings(readerEx.GetString("TAXDETAILSFUNCFEEDINGGROUP"));
                 }
                 if (!readerEx.IsDBNull("CITATIONRESOURCETITLE") || !readerEx.IsDBNull("CITATIONRESOURCEID"))
                 {
