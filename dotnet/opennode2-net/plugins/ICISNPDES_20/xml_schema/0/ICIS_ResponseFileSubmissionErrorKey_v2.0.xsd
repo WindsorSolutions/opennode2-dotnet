@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<xsd:schema xmlns:icis="http://www.exchangenetwork.net/schema/icis/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/icis/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2">
+	<xsd:annotation>
+		<xsd:documentation>
+            Schema Name : ICIS_ResponseFileSubmissionErrorKey_v2.0.xsd
+            Description : Component SubmissionErrorKey provides the options for uniquely identifying the part of the submission that caused the error. 
+    		Developed by : ICIS Full Batch IPT
+    		Point of Contact : Won Lee, U.S. EPA
+        </xsd:documentation>
+	</xsd:annotation>
+	<xsd:include schemaLocation="ICIS_ResponseFileShared_v2.0.xsd"/>
+	<xsd:element name="SubmissionErrorKey" type="icis:SubmissionErrorKeyDataType">
+		<xsd:annotation>
+			<xsd:documentation>Provides the keys that uniquely identify the part of a submission that caused an error.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="SubmissionErrorKeyDataType">
+		<xsd:sequence>
+			<xsd:choice>
+				<xsd:element ref="icis:PermitRecordIdentifier"/>
+				<xsd:element ref="icis:PermitTrackingEventIdentifier"/>
+				<xsd:element ref="icis:PermittedFeatureRecordIdentifier"/>
+				<xsd:element ref="icis:NarrativeConditionScheduleIdentifier"/>
+				<xsd:element ref="icis:LimitSetIdentifier"/>
+				<xsd:element ref="icis:LimitSegmentIdentifier"/>
+				<xsd:element ref="icis:ParameterLimitIdentifier"/>
+				<xsd:element ref="icis:DischargeMonitoringReportIdentifier"/>
+				<xsd:element ref="icis:DMRParameterIdentifier"/> 
+			</xsd:choice>
+			<xsd:element ref="icis:SubmissionTransactionTypeCode"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

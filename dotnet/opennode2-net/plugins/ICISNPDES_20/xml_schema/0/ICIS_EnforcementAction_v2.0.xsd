@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:icis="http://www.exchangenetwork.net/schema/icis/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/icis/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2">
+	
+	<xsd:include schemaLocation="ICIS_Common_v2.0.xsd"/>
+	
+	<xsd:annotation>
+		<xsd:documentation>Schema Name: ICIS_EnforcementAction_v2.0.xsd</xsd:documentation>
+		<xsd:documentation>Current Version Available: http://www.exchangenetwork.net/schema/icis/2</xsd:documentation>
+		<xsd:documentation>Description: ICIS-NPDES enforcement action shared data input format</xsd:documentation>
+		<xsd:documentation>Application: ICIS-NPDES</xsd:documentation>
+		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
+		<xsd:documentation>Point of Contact: EPA/Alison Kittle</xsd:documentation>
+		<xsd:documentation>Data Written: July 2006</xsd:documentation>
+		<xsd:documentation>Last Date Modified: 2011-02-02</xsd:documentation>
+	</xsd:annotation>
+	
+	<xsd:element name="AgencyLeadIndicator" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="EnforcementActionName" type="icis:StringMin1Max100Type"/>
+	<xsd:element name="EnforcementActionTypeCode" type="icis:StringMin1Max7TypeBase"/>
+	<xsd:element name="EnforcementAgencyName" type="icis:StringMin1Max100Type"/>
+	<xsd:element name="EnforcementAgencyTypeCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="EnforcementAgency" type="icis:EnforcementAgency"/>
+	
+	<xsd:complexType name="EnforcementAgency">
+		<xsd:sequence>
+			<xsd:element ref="icis:EnforcementAgencyTypeCode"/>
+			<xsd:element ref="icis:AgencyLeadIndicator"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

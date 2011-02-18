@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:icis="http://www.exchangenetwork.net/schema/icis/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/icis/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2">
+	<xsd:include schemaLocation="ICIS_GeographicCoordinates_v2.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>Schema Name: ICIS_CSO_v2.0.xsd</xsd:documentation>
+		<xsd:documentation>Current Version Available: http://www.exchangenetwork.net/schema/icis/2</xsd:documentation>
+		<xsd:documentation>Description: CSO overflow event data input format</xsd:documentation>
+		<xsd:documentation>Application: ICIS-NPDES</xsd:documentation>
+		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
+		<xsd:documentation>Point of Contact: EPA/Alison Kittle</xsd:documentation>
+		<xsd:documentation>Data Written: July 2006</xsd:documentation>
+		<xsd:documentation>Last Date Modified: 2011-02-02</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="CorrectiveActionTakenDescriptionText" type="icis:StringMin1Max4000Type"/>
+	<xsd:element name="CSOOverflowLocationStreet" type="icis:StringMin1Max4000Type"/>
+	<xsd:element name="DischargeVolumeTreated" type="icis:NonNegativeIntegerMin1Max10Type"/>
+	<xsd:element name="DischargeVolumeUntreated" type="icis:NonNegativeIntegerMin1Max10Type"/>
+	<xsd:element name="DryOrWetWeatherIndicator" type="icis:WetDryType"/>
+	<xsd:element name="DurationCSOOverflowEvent" type="icis:DecimalRange0To9999.99Type"/>
+	<xsd:element name="InchesPrecipitation" type="icis:NonNegativeIntegerMin1Max5Type"/>
+	<xsd:group name="CSOOverflowEventGroup">
+		<xsd:sequence>
+			<xsd:element ref="icis:DryOrWetWeatherIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:PermittedFeatureIdentifier" minOccurs="0"/>
+			<xsd:group ref="icis:LatitudeLongitudeCoordinates" minOccurs="0"/>
+			<xsd:element ref="icis:CSOOverflowLocationStreet" minOccurs="0"/>
+			<xsd:element ref="icis:DurationCSOOverflowEvent" minOccurs="0"/>
+			<xsd:element ref="icis:DischargeVolumeTreated" minOccurs="0"/>
+			<xsd:element ref="icis:DischargeVolumeUntreated" minOccurs="0"/>
+			<xsd:element ref="icis:CorrectiveActionTakenDescriptionText" minOccurs="0"/>
+			<xsd:element ref="icis:InchesPrecipitation" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+</xsd:schema>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:icis="http://www.exchangenetwork.net/schema/icis/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/icis/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2">
+	
+	<xsd:include schemaLocation="ICIS_KeyElements_v2.0.xsd"/>
+	<xsd:include schemaLocation="ICIS_BiosolidsProgramReport_v2.0.xsd"/>
+	<xsd:include schemaLocation="ICIS_PretreatmentProgramSummaryReport_v2.0.xsd"/>
+	<xsd:include schemaLocation="ICIS_SWEventReport_v2.0.xsd"/>
+	<xsd:include schemaLocation="ICIS_SWMS4ProgramReport_v2.0.xsd"/>	
+	
+	<xsd:annotation>
+		<xsd:documentation>Schema Name: ICIS_ComplianceMonitoringLinkage_v2.0.xsd</xsd:documentation>
+		<xsd:documentation>Current Version Available: http://www.exchangenetwork.net/schema/icis/2</xsd:documentation>
+		<xsd:documentation>Description: enforcement action and inspection linkages data input format</xsd:documentation>
+		<xsd:documentation>Application: ICIS-NPDES</xsd:documentation>
+		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
+		<xsd:documentation>Point of Contact: EPA/Alison Kittle</xsd:documentation>
+		<xsd:documentation>Data Written: July 2006</xsd:documentation>
+		<xsd:documentation>Last Date Modified: 2011-02-02</xsd:documentation>
+	</xsd:annotation>
+	
+	<xsd:element name="ComplianceMonitoringLinkage" type="icis:ComplianceMonitoringLinkage"/>
+	<xsd:element name="LinkageBiosolidsReport" type="icis:LinkageBiosolidsReport"/>
+	<xsd:element name="LinkageCAFOAnnualReport" type="icis:LinkageCAFOAnnualReport"/>
+	<xsd:element name="LinkageCSOEventReport" type="icis:LinkageCSOEventReport"/>
+	<xsd:element name="LinkageEnforcementAction" type="icis:LinkageEnforcementAction"/>
+	<xsd:element name="LinkageLocalLimitsReport" type="icis:LinkageLocalLimitsReport"/>
+	<xsd:element name="LinkageOtherInspection" type="icis:LinkageOtherInspection"/>
+	<xsd:element name="LinkagePretreatmentPerformanceReport" type="icis:LinkagePretreatmentPerformanceReport"/>
+	<xsd:element name="LinkageSingleEvent" type="icis:LinkageSingleEvent"/>
+	<xsd:element name="LinkageSSOAnnualReport" type="icis:LinkageSSOAnnualReport"/>
+	<xsd:element name="LinkageSSOEventReport" type="icis:LinkageSSOEventReport"/>
+	<xsd:element name="LinkageSSOMonthlyEventReport" type="icis:LinkageSSOMonthlyEventReport"/>
+	<xsd:element name="LinkageSWEventReport" type="icis:LinkageSWEventReport"/>
+	<xsd:element name="LinkageSWMS4Report" type="icis:LinkageSWMS4Report"/>
+	
+	<xsd:complexType name="ComplianceMonitoringLinkageData">
+		<xsd:sequence>
+			<xsd:element ref="icis:TransactionHeader"/>
+			<xsd:element ref="icis:ComplianceMonitoringLinkage"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ComplianceMonitoringLinkage">
+		<xsd:complexContent>
+			<xsd:extension base="icis:ProgramInspectionKeyElements">
+				<xsd:sequence>
+					<xsd:element ref="icis:LinkageSingleEvent" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="icis:LinkageEnforcementAction" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="icis:LinkageBiosolidsReport" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="icis:LinkageCAFOAnnualReport" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="icis:LinkageCSOEventReport" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="icis:LinkageLocalLimitsReport" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="icis:LinkagePretreatmentPerformanceReport" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="icis:LinkageSSOEventReport" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="icis:LinkageSSOMonthlyEventReport" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="icis:LinkageSSOAnnualReport" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="icis:LinkageSWEventReport" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="icis:LinkageSWMS4Report" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="icis:LinkageOtherInspection" minOccurs="0" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="LinkageSingleEvent">
+		<xsd:sequence>
+			<xsd:element ref="icis:SingleEventViolationCode"/>
+			<xsd:element ref="icis:SingleEventViolationDate"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="LinkageEnforcementAction">
+		<xsd:sequence>
+			<xsd:element ref="icis:EnforcementActionIdentifier"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="LinkageBiosolidsReport">
+		<xsd:sequence>
+			<xsd:element ref="icis:ReportCoverageEndDate"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="LinkageCAFOAnnualReport">
+		<xsd:sequence>
+			<xsd:element ref="icis:PermittingAuthorityReportReceivedDate"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="LinkageCSOEventReport">
+		<xsd:sequence>
+			<xsd:element ref="icis:CSOEventDate"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="LinkageLocalLimitsReport">
+		<xsd:sequence>
+			<xsd:element ref="icis:PermittingAuthorityReportReceivedDate"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="LinkagePretreatmentPerformanceReport">
+		<xsd:sequence>
+			<xsd:element ref="icis:PretreatmentPerformanceSummaryEndDate"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="LinkageSSOEventReport">
+		<xsd:sequence>
+			<xsd:element ref="icis:SSOEventDate"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="LinkageSSOMonthlyEventReport">
+		<xsd:sequence>
+			<xsd:element ref="icis:SSOMonthlyReportReceivedDate"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="LinkageSSOAnnualReport">
+		<xsd:sequence>
+			<xsd:element ref="icis:SSOAnnualReportReceivedDate"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="LinkageSWEventReport">
+		<xsd:sequence>
+			<xsd:element ref="icis:DateStormEventSampled"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="LinkageSWMS4Report">
+		<xsd:sequence>
+			<xsd:element ref="icis:StormWaterMS4ReportReceivedDate"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="LinkageOtherInspection">
+		<xsd:complexContent>
+			<xsd:extension base="icis:ComplianceMonitoringKeyElements"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+</xsd:schema>
