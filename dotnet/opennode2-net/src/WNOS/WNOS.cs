@@ -77,13 +77,6 @@ namespace Windsor.Node2008.WNOS
             try
             {
                 _serviceName = serviceName;
-#if DEBUG
-                //IDbProvider dbProvider = DbProviderFactory.GetDbProvider("OracleClient-2.0");
-                //dbProvider.ConnectionString = "Data Source=ORA1;User Id=NODE_2008;Password=memorial;";
-                //SpringBaseDao springBaseDao = new SpringBaseDao(dbProvider);
-
-                //springBaseDao.RowExists("NAccount", "*", "Id", "0000-0000-0000-0000-0000");
-#endif // DEBUG
 
                 LOG = LogManagerEx.GetLogger(typeof(WNOSController));
                 CreateApplicationEventLog();

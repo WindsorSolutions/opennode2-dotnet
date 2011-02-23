@@ -171,6 +171,16 @@ namespace CopyPlugins
             string pluginsSrcFolder = Path.Combine(trunkFolder, pluginsFolderName);
             string[] pluginPaths = Directory.GetFiles(pluginsSrcFolder, "Windsor.Node2008.WNOSPlugin.*.dll",
                                                       SearchOption.AllDirectories);
+            string pluginsSrcFolder2 = Path.Combine(trunkFolder, "Private");
+            if (Directory.Exists(pluginsSrcFolder2))
+            {
+                string[] pluginPaths2 = Directory.GetFiles(pluginsSrcFolder2, "Windsor.Node2008.WNOSPlugin.*.dll",
+                                                           SearchOption.AllDirectories);
+                List<string> tempPaths = new List<string>(pluginPaths2);
+                tempPaths.AddRange(pluginPaths);
+                pluginPaths = tempPaths.ToArray();
+            }
+
             string wnosPluginFolder = Path.Combine(BuildFolderPath, pluginsFolderName);
             FileUtils.SafeDeleteDirectory(wnosPluginFolder);
             Directory.CreateDirectory(wnosPluginFolder);
