@@ -68,21 +68,40 @@ namespace Windsor.Node2008.Endpoint2
         protected void Application_BeginRequest(Object sender, EventArgs e)
         {
             LOG.Info("Application_BeginRequest");
+
+            CleanupWSEBugs();
+        }
+        private void CleanupWSEBugs()
+        {
             HttpContext context = HttpContext.Current;
+            const string multipartRelated = "multipart/related";
+            int index;
+            // WSE does case-sensitive compare, when in fact it should do a case-insensitive compare, so
+            // fix up MTOM ContentType header to make it lowercase.
+            if (!context.Request.ContentType.Contains(multipartRelated))
+            {
+                index = context.Request.ContentType.IndexOf(multipartRelated, StringComparison.OrdinalIgnoreCase);
+                if (index >= 0)
+                {
+                    context.Request.ContentType = context.Request.ContentType.Remove(index, multipartRelated.Length);
+                    context.Request.ContentType = context.Request.ContentType.Insert(index, multipartRelated);
+                }
+            }
+            // WSE expects "start-info=", not "startinfo="
+            const string startinfo = "startinfo=";
+            index = context.Request.ContentType.IndexOf(startinfo, StringComparison.OrdinalIgnoreCase);
+            if (index >= 0)
+            {
+                context.Request.ContentType = context.Request.ContentType.Remove(index, startinfo.Length);
+                context.Request.ContentType = context.Request.ContentType.Insert(index, "start-info=");
+            }
+            // WSE always expects "action=", even if it is empty
             if (!context.Request.ContentType.Contains("action="))
             {
                 // Don't ask.  This is a complete hack fix to get WSE to play nice with incoming requests that don't include 
                 // an action.  This is the only decent workaround I could come up with after lots of searching.
                 context.Request.ContentType = context.Request.ContentType + "; action=\"\"";
             }
-            //const string SoapActionName = "SOAPAction";
-            //if (context.Request.Headers[SoapActionName] != null)
-            //{
-            //    // Again, don't ask.  Workaround for clients that include an empty "SOAPAction" header.
-            //    ReflectionUtils.SetFieldOrProperty(context.Request.Headers, "IsReadOnly", false);
-            //    ReflectionUtils.CallMethodNonVirtual<NameValueCollection>(context.Request.Headers, "Set", SoapActionName, null);
-            //    ReflectionUtils.SetFieldOrProperty(context.Request.Headers, "IsReadOnly", true);
-            //}
         }
     }
 }

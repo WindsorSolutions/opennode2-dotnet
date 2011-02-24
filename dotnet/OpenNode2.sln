@@ -1,26 +1,26 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "opennode2-net\src\Plugins", "{5B2CD84C-073E-4489-8744-E0F37E1C1994}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{5B2CD84C-073E-4489-8744-E0F37E1C1994}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Config", "opennode2-net\src\Config", "{0D5B21F7-53D7-466C-9D16-8029CB7B9C73}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Config", "Config", "{0D5B21F7-53D7-466C-9D16-8029CB7B9C73}"
 	ProjectSection(SolutionItems) = preProject
-		config\AdminExportedServices.config = config\AdminExportedServices.config
-		config\Aop.config = config\Aop.config
-		config\Data.config = config\Data.config
-		config\Deployment.config = config\Deployment.config
-		config\log4net.config = config\log4net.config
-		config\Logic.config = config\Logic.config
-		config\NAAS.config = config\NAAS.config
-		config\Other.config = config\Other.config
-		config\PluginServices.config = config\PluginServices.config
-		config\Remoting.config = config\Remoting.config
-		config\Server.config = config\Server.config
-		config\Service.config = config\Service.config
-		config\Utilities.config = config\Utilities.config
-		config\WebProxy.config = config\WebProxy.config
-		config\WebServiceExportedServices.config = config\WebServiceExportedServices.config
-		config\WNOS.config = config\WNOS.config
+		opennode2-net\config\AdminExportedServices.config = opennode2-net\config\AdminExportedServices.config
+		opennode2-net\config\Aop.config = opennode2-net\config\Aop.config
+		opennode2-net\config\Data.config = opennode2-net\config\Data.config
+		opennode2-net\config\Deployment.config = opennode2-net\config\Deployment.config
+		opennode2-net\config\log4net.config = opennode2-net\config\log4net.config
+		opennode2-net\config\Logic.config = opennode2-net\config\Logic.config
+		opennode2-net\config\NAAS.config = opennode2-net\config\NAAS.config
+		opennode2-net\config\Other.config = opennode2-net\config\Other.config
+		opennode2-net\config\PluginServices.config = opennode2-net\config\PluginServices.config
+		opennode2-net\config\Remoting.config = opennode2-net\config\Remoting.config
+		opennode2-net\config\Server.config = opennode2-net\config\Server.config
+		opennode2-net\config\Service.config = opennode2-net\config\Service.config
+		opennode2-net\config\Utilities.config = opennode2-net\config\Utilities.config
+		opennode2-net\config\WebProxy.config = opennode2-net\config\WebProxy.config
+		opennode2-net\config\WebServiceExportedServices.config = opennode2-net\config\WebServiceExportedServices.config
+		opennode2-net\config\WNOS.config = opennode2-net\config\WNOS.config
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Endpoint2", "opennode2-net\src\Endpoint2\Endpoint2.csproj", "{C20D5EA0-99D8-4D99-85F6-3CD814219307}"

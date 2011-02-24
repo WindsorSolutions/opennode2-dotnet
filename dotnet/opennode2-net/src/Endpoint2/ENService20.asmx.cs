@@ -207,11 +207,6 @@ namespace Windsor.Node2008.Endpoint2
                 throw _service20Provider.FaultProvider.GetFault(EndpointVersionType.EN20, ENExceptionCodeType.E_InvalidParameter,
                     "NULL or 0 Documents argument");
             }
-            if (!CollectionUtils.IsNullOrEmpty(submitArg.recipient))
-            {
-                throw _service20Provider.FaultProvider.GetFault(EndpointVersionType.EN20, ENExceptionCodeType.E_RecipientNotSupported,
-                    "Recipients are not supported for the Submit operation for this version of the node.");
-            }
             #endregion
 
             try
