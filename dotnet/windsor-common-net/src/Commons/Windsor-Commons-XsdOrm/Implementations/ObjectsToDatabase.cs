@@ -62,6 +62,30 @@ namespace Windsor.Commons.XsdOrm.Implementations
         {
             base.Init();
         }
+        public virtual void BuildDatabaseForAllBaseDataTypes(Type referenceType)
+        {
+            BuildDatabaseForAllBaseDataTypes(referenceType, CheckBaseDao());
+        }
+        public virtual void BuildDatabaseForAllBaseDataTypes(Type referenceType, SpringBaseDao baseDao)
+        {
+            Type[] types = referenceType.Assembly.GetExportedTypes();
+            List<Type> typesToBuild = new List<Type>();
+            Type baseDataType = typeof(BaseDataType);
+            Type baseChildDataType = typeof(BaseChildDataType);
+            string namespacePrefix = referenceType.Namespace;
+            foreach (Type type in types)
+            {
+                if (type.IsClass && !type.IsAbstract && type.Namespace.StartsWith(namespacePrefix) &&
+                    baseDataType.IsAssignableFrom(type) && !baseChildDataType.IsAssignableFrom(type))
+                {
+                    typesToBuild.Add(type);
+                }
+            }
+            foreach (Type typeToBuild in typesToBuild)
+            {
+                BuildDatabase(typeToBuild, baseDao);
+            }
+        }
         public virtual void BuildDatabase(Type objectToSaveType)
         {
             BuildDatabase(objectToSaveType, CheckBaseDao());

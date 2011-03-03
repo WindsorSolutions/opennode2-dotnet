@@ -887,6 +887,49 @@ namespace Windsor.Commons.XsdOrm
         }
     }
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
+    public class DbMaxColumnSizeAttribute : MappingAttribute
+    {
+        public DbMaxColumnSizeAttribute(int size)
+        {
+            Size = size;
+        }
+        public override string GetShortDescription()
+        {
+            return "MaxColumnSize";
+        }
+        public int Size { get; set; }
+    }
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
+    public class DbFixedColumnSizeAttribute : MappingAttribute
+    {
+        public DbFixedColumnSizeAttribute(int size)
+        {
+            Size = size;
+        }
+        public override string GetShortDescription()
+        {
+            return "FixedColumnSize";
+        }
+        public int Size { get; set; }
+    }
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
+    public class DbColumnTypeAttribute : MappingAttribute
+    {
+        public DbColumnTypeAttribute(string type)
+        {
+            Type = EnumUtils.ParseEnum<DbType>(type);
+        }
+        public DbColumnTypeAttribute(DbType type)
+        {
+            Type = type;
+        }
+        public override string GetShortDescription()
+        {
+            return "ColumnType";
+        }
+        public DbType Type { get; set; }
+    }
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
     public class DbIndexableAttribute : MappingAttribute
     {
         public override string GetShortDescription()

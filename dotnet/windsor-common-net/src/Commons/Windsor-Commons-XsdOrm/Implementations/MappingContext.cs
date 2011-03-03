@@ -258,6 +258,9 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 DbNotNullAttribute dbNotNullAttribute = null;
                 DbIndexableAttribute dbIndexableAttribute = null;
                 DbNoLoadAttribute dbNoLoadAttribute = null;
+                DbMaxColumnSizeAttribute dbMaxColumnSizeAttribute = null;
+                DbFixedColumnSizeAttribute dbFixedColumnSizeAttribute = null;
+                DbColumnTypeAttribute dbColumnTypeAttribute = null;
                 Column newColumn = null;
                 Relation newRelation = null;
                 SameTableElementInfo newSameTableElementInfo = null;
@@ -683,6 +686,24 @@ namespace Windsor.Commons.XsdOrm.Implementations
                         dbNotNullAttribute = notNullAttribute;
                         continue;
                     }
+                    DbMaxColumnSizeAttribute maxColumnSizeAttribute = mappingAttribute as DbMaxColumnSizeAttribute;
+                    if (maxColumnSizeAttribute != null)
+                    {
+                        dbMaxColumnSizeAttribute = maxColumnSizeAttribute;
+                        continue;
+                    }
+                    DbFixedColumnSizeAttribute fixedColumnSizeAttribute = mappingAttribute as DbFixedColumnSizeAttribute;
+                    if (fixedColumnSizeAttribute != null)
+                    {
+                        dbFixedColumnSizeAttribute = fixedColumnSizeAttribute;
+                        continue;
+                    }
+                    DbColumnTypeAttribute columnTypeAttribute = mappingAttribute as DbColumnTypeAttribute;
+                    if (columnTypeAttribute != null)
+                    {
+                        dbColumnTypeAttribute = columnTypeAttribute;
+                        continue;
+                    }
                     DbIndexableAttribute indexableAttribute = mappingAttribute as DbIndexableAttribute;
                     if (indexableAttribute != null)
                     {
@@ -718,6 +739,35 @@ namespace Windsor.Commons.XsdOrm.Implementations
                         {
                             newColumn.IsNullable = false;
                         }
+                    }
+                }
+                if (dbMaxColumnSizeAttribute != null)
+                {
+                    if (newColumn != null)
+                    {
+                        newColumn.ColumnSize = dbMaxColumnSizeAttribute.Size;
+                        if (newColumn.MemberType == typeof(string))
+                        {
+                            newColumn.ColumnType = DbType.AnsiString;
+                        }
+                    }
+                }
+                if (dbFixedColumnSizeAttribute != null)
+                {
+                    if (newColumn != null)
+                    {
+                        newColumn.ColumnSize = dbFixedColumnSizeAttribute.Size;
+                        if (newColumn.MemberType == typeof(string))
+                        {
+                            newColumn.ColumnType = DbType.AnsiStringFixedLength;
+                        }
+                    }
+                }
+                if (dbColumnTypeAttribute != null)
+                {
+                    if (newColumn != null)
+                    {
+                        newColumn.ColumnType = dbColumnTypeAttribute.Type;
                     }
                 }
                 if (dbIndexableAttribute != null)
@@ -1760,9 +1810,15 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 return "FLOAT(53)";
             }
         }
-        protected static A GetGlobalAttribute<A>(Type rootType) where A : class
+        protected static A GetGlobalAttribute<A>(Type rootType) where A : Attribute
         {
             object[] attributes = rootType.GetCustomAttributes(typeof(A), false);
+            if (attributes.Length == 1)
+            {
+                return ((A)attributes[0]);
+            }
+            // Check for static GlobalAttributes class
+            attributes = GetStaticClassGlobalAttributes<A>(rootType);
             if (attributes.Length == 1)
             {
                 return ((A)attributes[0]);
@@ -1771,6 +1827,16 @@ namespace Windsor.Commons.XsdOrm.Implementations
             if (attributes.Length == 1)
             {
                 return ((A)attributes[0]);
+            }
+            return null;
+        }
+        protected static object[] GetStaticClassGlobalAttributes<A>(Type rootType) where A : Attribute
+        {
+            string fullTypeName = rootType.Namespace + ".GlobalAttributes";
+            Type globalAttributesType = rootType.Assembly.GetType(fullTypeName);
+            if (globalAttributesType != null)
+            {
+                return globalAttributesType.GetCustomAttributes(typeof(A), false);
             }
             return null;
         }
@@ -1793,6 +1859,8 @@ namespace Windsor.Commons.XsdOrm.Implementations
             Dictionary<Type, Dictionary<string, List<MappingAttribute>>> appliedAttributes = null;
             ConstructAppliedAttributes(rootType.Assembly.GetCustomAttributes(typeof(AppliedAttribute), false),
                                        ref appliedAttributes);
+            ConstructAppliedAttributes(GetStaticClassGlobalAttributes<AppliedAttribute>(rootType),
+                                       ref appliedAttributes);
             // Root attributes override asssembly-level attributes
             ConstructAppliedAttributes(rootType.GetCustomAttributes(typeof(AppliedAttribute), false),
                                        ref appliedAttributes);
@@ -1804,6 +1872,8 @@ namespace Windsor.Commons.XsdOrm.Implementations
             List<AppliedPathAttributeInfo> appliedPathAttributes = null;
             ConstructAppliedPathAttributes(rootType.Assembly.GetCustomAttributes(typeof(AppliedPathAttribute), false),
                                            ref appliedPathAttributes);
+            ConstructAppliedPathAttributes(GetStaticClassGlobalAttributes<AppliedPathAttribute>(rootType),
+                                           ref appliedPathAttributes);
             // Root attributes override asssembly-level attributes
             ConstructAppliedPathAttributes(rootType.GetCustomAttributes(typeof(AppliedPathAttribute), false),
                                            ref appliedPathAttributes);
@@ -1813,6 +1883,8 @@ namespace Windsor.Commons.XsdOrm.Implementations
         {
             Dictionary<string, MappingAttribute> namePostfixAppliedAttributes = null;
             ConstructNamePostfixAppliedAttributes(rootType.Assembly.GetCustomAttributes(typeof(NamePostfixAppliedAttribute), false),
+                                                  ref namePostfixAppliedAttributes);
+            ConstructNamePostfixAppliedAttributes(GetStaticClassGlobalAttributes<NamePostfixAppliedAttribute>(rootType),
                                                   ref namePostfixAppliedAttributes);
             // Root attributes override asssembly-level attributes
             ConstructNamePostfixAppliedAttributes(rootType.GetCustomAttributes(typeof(NamePostfixAppliedAttribute), false),

@@ -57,6 +57,7 @@ namespace Windsor.Node2008.WNOSProviders
         T Deserialize<T>(XmlElement element);
         T Deserialize<T>(XmlReader reader);
         object Deserialize(XmlElement element, Type elementType);
+        object Deserialize(string sourceFile, Type type);
 
         void Serialize(object obj, string targetPath);
         void SerializeWithLineBreaks(object obj, string targetPath);

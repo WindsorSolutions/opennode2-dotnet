@@ -33,6 +33,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Spring.Data.Common;
 using Windsor.Commons.Spring;
 
@@ -43,6 +44,10 @@ namespace Windsor.Commons.XsdOrm
         void BuildDatabase(Type objectToSaveType, SpringBaseDao baseDao);
 
         void BuildDatabase(Type objectToSaveType);
+
+        void BuildDatabaseForAllBaseDataTypes(Type referenceType);
+
+        void BuildDatabaseForAllBaseDataTypes(Type referenceType, SpringBaseDao baseDao);
 
         /// <summary>
         /// Save the input object to the database.  Returns a list of table names and 
