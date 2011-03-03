@@ -1830,6 +1830,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
             }
             return null;
         }
+        private static readonly object[] s_EmptyObjectArray = new object[0];
         protected static object[] GetStaticClassGlobalAttributes<A>(Type rootType) where A : Attribute
         {
             string fullTypeName = rootType.Namespace + ".GlobalAttributes";
@@ -1838,7 +1839,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
             {
                 return globalAttributesType.GetCustomAttributes(typeof(A), false);
             }
-            return null;
+            return s_EmptyObjectArray;
         }
         protected int GetElementDefaultStringLength(string elementName)
         {
