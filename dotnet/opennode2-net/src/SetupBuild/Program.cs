@@ -262,6 +262,16 @@ namespace CopyPlugins
                 string dstPath = Path.Combine(wnosConfigFolder, Path.GetFileName(configPath));
                 File.Copy(configPath, dstPath, true);
             }
+            string privateDeploymentPath = Path.Combine(wnosConfigFolder, "Deployment_private.config");
+            if (File.Exists(privateDeploymentPath))
+            {
+                string deploymentPath = Path.Combine(wnosConfigFolder, "Deployment.config");
+                string deploymentGenericPath = Path.Combine(wnosConfigFolder, "Deployment_Generic.config");
+                FileUtils.SafeDeleteFile(deploymentGenericPath);
+                File.Move(deploymentPath, deploymentGenericPath);
+                FileUtils.SafeDeleteFile(deploymentPath);
+                File.Move(privateDeploymentPath, deploymentPath);
+            }
         }
         static void BuildDeployPackage()
         {

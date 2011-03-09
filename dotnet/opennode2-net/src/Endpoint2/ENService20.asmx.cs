@@ -827,7 +827,7 @@ namespace Windsor.Node2008.Endpoint2
             {
                 NodePingResponse response = new NodePingResponse();
                 response.nodeStatus = NodeStatusCode.Ready;
-                response.statusDetail = "The service is up and running.";
+                response.statusDetail = VersionInfo.NodeVersionString;
                 return response;
             }
             catch (Exception ex)

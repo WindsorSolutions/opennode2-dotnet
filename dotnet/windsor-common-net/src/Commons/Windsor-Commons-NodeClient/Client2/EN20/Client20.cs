@@ -247,9 +247,19 @@ namespace Windsor.Commons.NodeClient
         /// <returns></returns>
         public string NodePing()
         {
+            string pingDetail;
+            return NodePing(out pingDetail);
+        }
+        /// <summary>
+        /// NodePing
+        /// </summary>
+        /// <returns></returns>
+        public string NodePing(out string pingDetail)
+        {
             NodePing ping = new NodePing();
             ping.hello = string.Empty;
             NodePingResponse pingResp = _requestor.NodePing(ping);
+            pingDetail = pingResp.statusDetail ?? string.Empty;
             return pingResp.nodeStatus.ToString();
         }
 

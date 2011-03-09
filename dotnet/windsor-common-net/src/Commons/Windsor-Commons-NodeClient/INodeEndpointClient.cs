@@ -166,6 +166,13 @@ namespace Windsor.Commons.NodeClient
         /// if the node is not accessible.
         /// </summary>
         /// <returns>Ready string returned by node.</returns>
+        string NodePing(out string pingDetail);
+
+        /// <summary>
+        /// Ping the node to ensure that it is accessible.  This method will raise an exception
+        /// if the node is not accessible.
+        /// </summary>
+        /// <returns>Ready string returned by node.</returns>
         string NodePing();
 
         /// <summary>

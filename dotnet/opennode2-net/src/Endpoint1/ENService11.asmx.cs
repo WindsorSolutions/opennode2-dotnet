@@ -626,7 +626,7 @@ namespace Windsor.Node2008.Endpoint1
         string INetworkNodeBinding.NodePing(string Hello)
         {
             Init();
-            return _service11Provider.DefaultPingResponse;
+            return VersionInfo.NodeVersionString;
         }
 
         /// <summary>

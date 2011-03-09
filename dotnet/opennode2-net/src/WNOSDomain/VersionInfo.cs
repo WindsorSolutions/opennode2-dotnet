@@ -35,6 +35,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics;
+using System.Reflection;
 
 using Windsor.Node2008.WNOSUtility;
 
@@ -188,6 +189,22 @@ namespace Windsor.Node2008.WNOSDomain
         {
             if (Object.ReferenceEquals(a, null)) return true;
             return (a.CompareTo(b) <= 0);
+        }
+        public static string NodeVersionString
+        {
+            get
+            {
+                string versionString = string.Empty;
+                try
+                {
+                    versionString = string.Format("{0} .NET v{1}", Windsor.Node2008.WNOS.AssemblyInfo.AssemblyInfo.cAssemblyProduct,
+                                                  Windsor.Node2008.WNOS.AssemblyInfo.AssemblyInfo.cAssemblyVersion);
+                }
+                catch (Exception)
+                {
+                }
+                return versionString;
+            }
         }
     }
 }

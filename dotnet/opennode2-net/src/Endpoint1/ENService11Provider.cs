@@ -50,7 +50,6 @@ namespace Windsor.Node2008.Endpoint1
         private ITransactionService _transactionService;
         private IFaultProvider _faultProvider;
         private IVisitProvider _visitProvider;
-        private string _defaultPingResponse = "Ready";
         private string[] getServicesResult = { "See 2.0 specification implementation for the list of flows currently supported by this Node" };
         #endregion
 
@@ -87,12 +86,6 @@ namespace Windsor.Node2008.Endpoint1
 
 
         #region Properties
-
-        public string DefaultPingResponse
-        {
-            get { return _defaultPingResponse; }
-            set { _defaultPingResponse = value; }
-        }
 
         public IVisitProvider VisitProvider
         {

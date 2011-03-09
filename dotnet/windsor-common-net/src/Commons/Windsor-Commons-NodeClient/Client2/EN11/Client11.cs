@@ -278,8 +278,23 @@ namespace Windsor.Commons.NodeClient
             return doc;
         }
 
+        /// <summary>
+        /// NodePing
+        /// </summary>
+        /// <returns></returns>
         public string NodePing()
         {
+            string pingDetail;
+            return NodePing(out pingDetail);
+        }
+
+        /// <summary>
+        /// NodePing
+        /// </summary>
+        /// <returns></returns>
+        public string NodePing(out string pingDetail)
+        {
+            pingDetail = string.Empty;
             string pingResp = _requestor.Ping(string.Empty);
             return pingResp;
         }
