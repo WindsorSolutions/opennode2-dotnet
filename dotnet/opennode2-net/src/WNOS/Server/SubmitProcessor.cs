@@ -136,22 +136,36 @@ namespace Windsor.Node2008.WNOS.Server
                     }
                     else
                     {
-                        ISubmitProcessor plugin;
-                        using (IPluginDisposer disposer = PluginLoader.LoadSubmitProcessor(submitService, out plugin))
+                        CommonTransactionStatusCode submitTransactionStatus = CommonTransactionStatusCode.Processed;
+                        string submitTransactionStatusDetail = "Finished processing submit transaction";
+                        ISubmitProcessor submitProcessor;
+                        using (IPluginDisposer disposer = PluginLoader.LoadSubmitProcessor(submitService, out submitProcessor))
                         {
                             TransactionManager.SetTransactionStatus(transactionId, CommonTransactionStatusCode.Processing,
                                                                     "Processing submit transaction", true);
                             activity.Append("Set transaction status to Processing");
                             activity.AppendFormat("Processing Submit transaction for flow \"{0}\" and operation \"{1}\" using plugin \"{2}\"",
-                                                  flowName, operation, plugin.GetType().FullName);
+                                                  flowName, operation, submitProcessor.GetType().FullName);
 
                             try
                             {
-                                plugin.ProcessSubmit(transactionId);
+                                ISubmitProcessorEx submitProcessorEx = submitProcessor as ISubmitProcessorEx;
+                                if (submitProcessorEx != null)
+                                {
+                                    submitTransactionStatus = 
+                                        submitProcessorEx.ProcessSubmitAndReturnStatus(transactionId,
+                                                                                       out submitTransactionStatusDetail);
+                                    activity.AppendFormat("Submit processing plugin returned status of \"{0}\"", 
+                                                          submitTransactionStatus.ToString());
+                                }
+                                else
+                                {
+                                    submitProcessor.ProcessSubmit(transactionId);
+                                }
                             }
                             finally
                             {
-                                activity.Append(plugin.GetAuditLogEvents());
+                                activity.Append(submitProcessor.GetAuditLogEvents());
                             }
 
                             TimeSpan processLength = DateTime.Now - startTime;
@@ -159,8 +173,8 @@ namespace Windsor.Node2008.WNOS.Server
                         }
                         activity.Append("Finished processing submit transaction");
                         TransactionStatus transactionStatus =
-                           TransactionManager.SetTransactionStatusIfNotStatus(transactionId, CommonTransactionStatusCode.Processed,
-                                                                              "Finished processing submit transaction",
+                           TransactionManager.SetTransactionStatusIfNotStatus(transactionId, submitTransactionStatus,
+                                                                              submitTransactionStatusDetail,
                                                                               CommonTransactionStatusCode.Received |
                                                                               CommonTransactionStatusCode.Completed |
                                                                               CommonTransactionStatusCode.Failed, true);

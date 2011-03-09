@@ -78,6 +78,7 @@
     <Compile Include="IQueryProcessor.cs" />
     <Compile Include="ISolicitProcessor.cs" />
     <Compile Include="ISubmitProcessor.cs" />
+    <Compile Include="ISubmitProcessorEx.cs" />
     <Compile Include="ITaskProcessor.cs" />
     <Compile Include="ITaskProcessorEx.cs" />
     <Compile Include="PluginDefaultFlowAttribute.cs" />
