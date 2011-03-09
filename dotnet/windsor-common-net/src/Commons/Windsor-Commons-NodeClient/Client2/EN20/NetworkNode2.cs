@@ -83,13 +83,6 @@ namespace Windsor.Commons.NodeClient
             this.SetPolicy(policy);
         }
 
-        private bool _disableMTOM;
-        public bool DisableMTOM
-        {
-            get { return _disableMTOM; }
-            set { _disableMTOM = value; }
-        }
-
         private static bool IsWCFSoapActionException(SoapException e)
         {
             return e.Message.Contains("The message with Action") && e.Message.Contains("due to a ContractFilter mismatch at the EndpointDispatcher");
@@ -119,7 +112,7 @@ namespace Windsor.Commons.NodeClient
         [return: System.Xml.Serialization.XmlElementAttribute("AuthenticateResponse", Namespace = "http://www.exchangenetwork.net/schema/node/2")]
         public AuthenticateResponse AuthenticateHeader([System.Xml.Serialization.XmlElementAttribute("Authenticate", Namespace = "http://www.exchangenetwork.net/schema/node/2")] Authenticate Authenticate1)
         {
-            this.RequireMtom = false;
+            this.RequireMtom = true;
             object[] results;
             try
             {
@@ -127,7 +120,7 @@ namespace Windsor.Commons.NodeClient
             }
             catch (InvalidOperationException)
             {
-                this.RequireMtom = true;
+                this.RequireMtom = !this.RequireMtom;
                 results = this.Invoke("AuthenticateHeader", new object[] { Authenticate1 });
             }
             return ((AuthenticateResponse)(results[0]));
@@ -137,8 +130,17 @@ namespace Windsor.Commons.NodeClient
         [return: System.Xml.Serialization.XmlElementAttribute("AuthenticateResponse", Namespace = "http://www.exchangenetwork.net/schema/node/2")]
         public AuthenticateResponse AuthenticateNoHeader([System.Xml.Serialization.XmlElementAttribute("Authenticate", Namespace = "http://www.exchangenetwork.net/schema/node/2")] Authenticate Authenticate1)
         {
-            this.RequireMtom = false;
-            object[] results = this.Invoke("AuthenticateNoHeader", new object[] { Authenticate1 });
+            this.RequireMtom = true;
+            object[] results;
+            try
+            {
+                results = this.Invoke("AuthenticateNoHeader", new object[] { Authenticate1 });
+            }
+            catch (InvalidOperationException)
+            {
+                this.RequireMtom = !this.RequireMtom;
+                results = this.Invoke("AuthenticateNoHeader", new object[] { Authenticate1 });
+            }
             return ((AuthenticateResponse)(results[0]));
         }
 
@@ -165,7 +167,7 @@ namespace Windsor.Commons.NodeClient
         [return: System.Xml.Serialization.XmlElementAttribute("SubmitResponse", Namespace = "http://www.exchangenetwork.net/schema/node/2")]
         public StatusResponseType SubmitHeader([System.Xml.Serialization.XmlElementAttribute("Submit", Namespace = "http://www.exchangenetwork.net/schema/node/2")] Submit Submit1)
         {
-            this.RequireMtom = !DisableMTOM;
+            this.RequireMtom = true;
             object[] results = this.Invoke("SubmitHeader", new object[] {
                         Submit1});
             return ((StatusResponseType)(results[0]));
@@ -175,7 +177,7 @@ namespace Windsor.Commons.NodeClient
         [return: System.Xml.Serialization.XmlElementAttribute("SubmitResponse", Namespace = "http://www.exchangenetwork.net/schema/node/2")]
         public StatusResponseType SubmitNoHeader([System.Xml.Serialization.XmlElementAttribute("Submit", Namespace = "http://www.exchangenetwork.net/schema/node/2")] Submit Submit1)
         {
-            this.RequireMtom = !DisableMTOM;
+            this.RequireMtom = true;
             object[] results = this.Invoke("SubmitNoHeader", new object[] {
                         Submit1});
             return ((StatusResponseType)(results[0]));
@@ -204,7 +206,7 @@ namespace Windsor.Commons.NodeClient
         [return: System.Xml.Serialization.XmlElementAttribute("GetStatusResponse", Namespace = "http://www.exchangenetwork.net/schema/node/2")]
         public StatusResponseType GetStatusHeader([System.Xml.Serialization.XmlElementAttribute("GetStatus", Namespace = "http://www.exchangenetwork.net/schema/node/2")] GetStatus GetStatus1)
         {
-            this.RequireMtom = false;
+            this.RequireMtom = true;
             object[] results;
             try
             {
@@ -212,7 +214,7 @@ namespace Windsor.Commons.NodeClient
             }
             catch (InvalidOperationException)
             {
-                this.RequireMtom = true;
+                this.RequireMtom = !this.RequireMtom;
                 results = this.Invoke("GetStatusHeader", new object[] { GetStatus1 });
             }
             return ((StatusResponseType)(results[0]));
@@ -222,8 +224,17 @@ namespace Windsor.Commons.NodeClient
         [return: System.Xml.Serialization.XmlElementAttribute("GetStatusResponse", Namespace = "http://www.exchangenetwork.net/schema/node/2")]
         public StatusResponseType GetStatusNoHeader([System.Xml.Serialization.XmlElementAttribute("GetStatus", Namespace = "http://www.exchangenetwork.net/schema/node/2")] GetStatus GetStatus1)
         {
-            this.RequireMtom = false;
-            object[] results = this.Invoke("GetStatusNoHeader", new object[] { GetStatus1 });
+            this.RequireMtom = true;
+            object[] results;
+            try
+            {
+                results = this.Invoke("GetStatusNoHeader", new object[] { GetStatus1 });
+            }
+            catch (InvalidOperationException)
+            {
+                this.RequireMtom = !this.RequireMtom;
+                results = this.Invoke("GetStatusNoHeader", new object[] { GetStatus1 });
+            }
             return ((StatusResponseType)(results[0]));
         }
 
@@ -250,7 +261,7 @@ namespace Windsor.Commons.NodeClient
         [return: System.Xml.Serialization.XmlElementAttribute("NotifyResponse", Namespace = "http://www.exchangenetwork.net/schema/node/2")]
         public StatusResponseType NotifyHeader([System.Xml.Serialization.XmlElementAttribute("Notify", Namespace = "http://www.exchangenetwork.net/schema/node/2")] Notify Notify1)
         {
-            this.RequireMtom = false;
+            this.RequireMtom = true;
             object[] results;
             try
             {
@@ -258,7 +269,7 @@ namespace Windsor.Commons.NodeClient
             }
             catch (InvalidOperationException)
             {
-                this.RequireMtom = true;
+                this.RequireMtom = !this.RequireMtom;
                 results = this.Invoke("NotifyHeader", new object[] { Notify1 });
             }
             return ((StatusResponseType)(results[0]));
@@ -268,8 +279,17 @@ namespace Windsor.Commons.NodeClient
         [return: System.Xml.Serialization.XmlElementAttribute("NotifyResponse", Namespace = "http://www.exchangenetwork.net/schema/node/2")]
         public StatusResponseType NotifyNoHeader([System.Xml.Serialization.XmlElementAttribute("Notify", Namespace = "http://www.exchangenetwork.net/schema/node/2")] Notify Notify1)
         {
-            this.RequireMtom = false;
-            object[] results = this.Invoke("NotifyNoHeader", new object[] { Notify1 });
+            this.RequireMtom = true;
+            object[] results;
+            try
+            {
+                results = this.Invoke("NotifyNoHeader", new object[] { Notify1 });
+            }
+            catch (InvalidOperationException)
+            {
+                this.RequireMtom = !this.RequireMtom;
+                results = this.Invoke("NotifyNoHeader", new object[] { Notify1 });
+            }
             return ((StatusResponseType)(results[0]));
         }
 
@@ -297,7 +317,7 @@ namespace Windsor.Commons.NodeClient
         [return: System.Xml.Serialization.XmlArrayItemAttribute("documents", IsNullable = false)]
         public NodeDocumentType[] DownloadHeader([System.Xml.Serialization.XmlElementAttribute("Download", Namespace = "http://www.exchangenetwork.net/schema/node/2")] Download Download1)
         {
-            this.RequireMtom = !DisableMTOM;
+            this.RequireMtom = true;
             object[] results = this.Invoke("DownloadHeader", new object[] {
                         Download1});
             return ((NodeDocumentType[])(results[0]));
@@ -308,7 +328,7 @@ namespace Windsor.Commons.NodeClient
         [return: System.Xml.Serialization.XmlArrayItemAttribute("documents", IsNullable = false)]
         public NodeDocumentType[] DownloadNoHeader([System.Xml.Serialization.XmlElementAttribute("Download", Namespace = "http://www.exchangenetwork.net/schema/node/2")] Download Download1)
         {
-            this.RequireMtom = !DisableMTOM;
+            this.RequireMtom = true;
             object[] results = this.Invoke("DownloadNoHeader", new object[] {
                         Download1});
             return ((NodeDocumentType[])(results[0]));
@@ -337,7 +357,7 @@ namespace Windsor.Commons.NodeClient
         [return: System.Xml.Serialization.XmlElementAttribute("QueryResponse", Namespace = "http://www.exchangenetwork.net/schema/node/2")]
         public ResultSetType QueryHeader([System.Xml.Serialization.XmlElementAttribute("Query", Namespace = "http://www.exchangenetwork.net/schema/node/2")] Query Query1)
         {
-            this.RequireMtom = false;
+            this.RequireMtom = true;
             object[] results;
             try
             {
@@ -345,7 +365,7 @@ namespace Windsor.Commons.NodeClient
             }
             catch (InvalidOperationException)
             {
-                this.RequireMtom = true;
+                this.RequireMtom = !this.RequireMtom;
                 results = this.Invoke("QueryHeader", new object[] { Query1 });
             }
             return ((ResultSetType)(results[0]));
@@ -355,8 +375,17 @@ namespace Windsor.Commons.NodeClient
         [return: System.Xml.Serialization.XmlElementAttribute("QueryResponse", Namespace = "http://www.exchangenetwork.net/schema/node/2")]
         public ResultSetType QueryNoHeader([System.Xml.Serialization.XmlElementAttribute("Query", Namespace = "http://www.exchangenetwork.net/schema/node/2")] Query Query1)
         {
-            this.RequireMtom = false;
-            object[] results = this.Invoke("QueryNoHeader", new object[] { Query1 });
+            this.RequireMtom = true;
+            object[] results;
+            try
+            {
+                results = this.Invoke("QueryNoHeader", new object[] { Query1 });
+            }
+            catch (InvalidOperationException)
+            {
+                this.RequireMtom = !this.RequireMtom;
+                results = this.Invoke("QueryNoHeader", new object[] { Query1 });
+            }
             return ((ResultSetType)(results[0]));
         }
 
@@ -383,7 +412,7 @@ namespace Windsor.Commons.NodeClient
         [return: System.Xml.Serialization.XmlElementAttribute("SolicitResponse", Namespace = "http://www.exchangenetwork.net/schema/node/2")]
         public StatusResponseType SolicitHeader([System.Xml.Serialization.XmlElementAttribute("Solicit", Namespace = "http://www.exchangenetwork.net/schema/node/2")] Solicit Solicit1)
         {
-            this.RequireMtom = false;
+            this.RequireMtom = true;
             object[] results;
             try
             {
@@ -391,7 +420,7 @@ namespace Windsor.Commons.NodeClient
             }
             catch (InvalidOperationException)
             {
-                this.RequireMtom = true;
+                this.RequireMtom = !this.RequireMtom;
                 results = this.Invoke("SolicitHeader", new object[] { Solicit1 });
             }
             return ((StatusResponseType)(results[0]));
@@ -401,8 +430,17 @@ namespace Windsor.Commons.NodeClient
         [return: System.Xml.Serialization.XmlElementAttribute("SolicitResponse", Namespace = "http://www.exchangenetwork.net/schema/node/2")]
         public StatusResponseType SolicitNoHeader([System.Xml.Serialization.XmlElementAttribute("Solicit", Namespace = "http://www.exchangenetwork.net/schema/node/2")] Solicit Solicit1)
         {
-            this.RequireMtom = false;
-            object[] results = this.Invoke("SolicitNoHeader", new object[] { Solicit1 });
+            this.RequireMtom = true;
+            object[] results;
+            try
+            {
+                results = this.Invoke("SolicitNoHeader", new object[] { Solicit1 });
+            }
+            catch (InvalidOperationException)
+            {
+                this.RequireMtom = !this.RequireMtom;
+                results = this.Invoke("SolicitNoHeader", new object[] { Solicit1 });
+            }
             return ((StatusResponseType)(results[0]));
         }
 
@@ -429,7 +467,7 @@ namespace Windsor.Commons.NodeClient
         [return: System.Xml.Serialization.XmlElementAttribute("ExecuteResponse", Namespace = "http://www.exchangenetwork.net/schema/node/2")]
         public ExecuteResponse ExecuteHeader([System.Xml.Serialization.XmlElementAttribute("Execute", Namespace = "http://www.exchangenetwork.net/schema/node/2")] Execute Execute1)
         {
-            this.RequireMtom = false;
+            this.RequireMtom = true;
             object[] results;
             try
             {
@@ -437,7 +475,7 @@ namespace Windsor.Commons.NodeClient
             }
             catch (InvalidOperationException)
             {
-                this.RequireMtom = true;
+                this.RequireMtom = !this.RequireMtom;
                 results = this.Invoke("ExecuteHeader", new object[] { Execute1 });
             }
             return ((ExecuteResponse)(results[0]));
@@ -447,8 +485,17 @@ namespace Windsor.Commons.NodeClient
         [return: System.Xml.Serialization.XmlElementAttribute("ExecuteResponse", Namespace = "http://www.exchangenetwork.net/schema/node/2")]
         public ExecuteResponse ExecuteNoHeader([System.Xml.Serialization.XmlElementAttribute("Execute", Namespace = "http://www.exchangenetwork.net/schema/node/2")] Execute Execute1)
         {
-            this.RequireMtom = false;
-            object[] results = this.Invoke("ExecuteNoHeader", new object[] { Execute1 });
+            this.RequireMtom = true;
+            object[] results;
+            try
+            {
+                results = this.Invoke("ExecuteNoHeader", new object[] { Execute1 });
+            }
+            catch (InvalidOperationException)
+            {
+                this.RequireMtom = !this.RequireMtom;
+                results = this.Invoke("ExecuteNoHeader", new object[] { Execute1 });
+            }
             return ((ExecuteResponse)(results[0]));
         }
 
@@ -475,7 +522,7 @@ namespace Windsor.Commons.NodeClient
         [return: System.Xml.Serialization.XmlElementAttribute("NodePingResponse", Namespace = "http://www.exchangenetwork.net/schema/node/2")]
         public NodePingResponse NodePingHeader([System.Xml.Serialization.XmlElementAttribute("NodePing", Namespace = "http://www.exchangenetwork.net/schema/node/2")] NodePing NodePing1)
         {
-            this.RequireMtom = false;
+            this.RequireMtom = true;
             object[] results;
             try
             {
@@ -483,7 +530,7 @@ namespace Windsor.Commons.NodeClient
             }
             catch (InvalidOperationException)
             {
-                this.RequireMtom = true;
+                this.RequireMtom = !this.RequireMtom;
                 results = this.Invoke("NodePingHeader", new object[] { NodePing1 });
             }
             return ((NodePingResponse)(results[0]));
@@ -493,8 +540,17 @@ namespace Windsor.Commons.NodeClient
         [return: System.Xml.Serialization.XmlElementAttribute("NodePingResponse", Namespace = "http://www.exchangenetwork.net/schema/node/2")]
         public NodePingResponse NodePingNoHeader([System.Xml.Serialization.XmlElementAttribute("NodePing", Namespace = "http://www.exchangenetwork.net/schema/node/2")] NodePing NodePing1)
         {
-            this.RequireMtom = false;
-            object[] results = this.Invoke("NodePingNoHeader", new object[] { NodePing1 });
+            this.RequireMtom = true;
+            object[] results;
+            try
+            {
+                results = this.Invoke("NodePingNoHeader", new object[] { NodePing1 });
+            }
+            catch (InvalidOperationException)
+            {
+                this.RequireMtom = !this.RequireMtom;
+                results = this.Invoke("NodePingNoHeader", new object[] { NodePing1 });
+            }
             return ((NodePingResponse)(results[0]));
         }
 
@@ -521,7 +577,7 @@ namespace Windsor.Commons.NodeClient
         [return: System.Xml.Serialization.XmlElementAttribute("GetServicesResponse", Namespace = "http://www.exchangenetwork.net/schema/node/2")]
         public GenericXmlType GetServicesHeader([System.Xml.Serialization.XmlElementAttribute("GetServices", Namespace = "http://www.exchangenetwork.net/schema/node/2")] GetServices GetServices1)
         {
-            this.RequireMtom = false;
+            this.RequireMtom = true;
             object[] results;
             try
             {
@@ -529,7 +585,7 @@ namespace Windsor.Commons.NodeClient
             }
             catch (InvalidOperationException)
             {
-                this.RequireMtom = true;
+                this.RequireMtom = !this.RequireMtom;
                 results = this.Invoke("GetServicesHeader", new object[] { GetServices1 });
             }
             return ((GenericXmlType)(results[0]));
@@ -539,8 +595,17 @@ namespace Windsor.Commons.NodeClient
         [return: System.Xml.Serialization.XmlElementAttribute("GetServicesResponse", Namespace = "http://www.exchangenetwork.net/schema/node/2")]
         public GenericXmlType GetServicesNoHeader([System.Xml.Serialization.XmlElementAttribute("GetServices", Namespace = "http://www.exchangenetwork.net/schema/node/2")] GetServices GetServices1)
         {
-            this.RequireMtom = false;
-            object[] results = this.Invoke("GetServicesNoHeader", new object[] { GetServices1 });
+            this.RequireMtom = true;
+            object[] results;
+            try
+            {
+                results = this.Invoke("GetServicesNoHeader", new object[] { GetServices1 });
+            }
+            catch (InvalidOperationException)
+            {
+                this.RequireMtom = !this.RequireMtom;
+                results = this.Invoke("GetServicesNoHeader", new object[] { GetServices1 });
+            }
             return ((GenericXmlType)(results[0]));
         }
     }

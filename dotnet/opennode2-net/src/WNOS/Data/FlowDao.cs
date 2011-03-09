@@ -164,6 +164,39 @@ namespace Windsor.Node2008.WNOS.Data
                 });
             return dataFlows;
         }
+        /// <summary>
+        /// Key is the flow name, value is the flow id.
+        /// </summary>
+        public IDictionary<string, string> GetAllFlowsIdToNameMap()
+        {
+            Dictionary<string, string> dataFlows = new Dictionary<string, string>();
+            DoSimpleQueryWithRowCallbackDelegate(
+                TABLE_NAME, null, null, null, "Id;Code",
+                delegate(IDataReader reader)
+                {
+                    dataFlows.Add(reader.GetString(0), reader.GetString(1));
+                });
+            return dataFlows;
+        }
+        /// <summary>
+        /// Key is the flow name, value is the flow id.
+        /// </summary>
+        public IDictionary<string, string> GetFlowsIdToNameMap(IEnumerable<string> flowNames)
+        {
+            Dictionary<string, string> dataFlows = new Dictionary<string, string>();
+            if ( CollectionUtils.IsNullOrEmpty(flowNames))
+            {
+                return dataFlows;
+            }
+            string whereClause = "UPPER(Code) IN (UPPER('" + StringUtils.Join("'),UPPER('", flowNames) + "'))";
+            DoSimpleQueryWithRowCallbackDelegate(
+                TABLE_NAME, whereClause, null, null, "Id;Code",
+                delegate(IDataReader reader)
+                {
+                    dataFlows.Add(reader.GetString(0), reader.GetString(1));
+                });
+            return dataFlows;
+        }
 
         public IList<string> GetProtectedFlowNamesForUser(string username)
         {
@@ -336,9 +369,9 @@ namespace Windsor.Node2008.WNOS.Data
         /// <summary>
         /// Return all flow names as a dictionary of key/value pairs.
         /// </summary>
-        public ICollection<string> GetAllDataFlowNames()
+        public IList<string> GetAllDataFlowNames()
         {
-            ICollection<string> flowNames = new List<string>();
+            List<string> flowNames = new List<string>();
             DoSimpleQueryWithRowCallbackDelegate(
                 TABLE_NAME, null, null, "Code",
                 "DISTINCT Code",

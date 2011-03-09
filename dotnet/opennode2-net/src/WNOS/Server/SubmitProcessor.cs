@@ -47,38 +47,47 @@ using Windsor.Node2008.WNOS.Utilities;
 using Windsor.Commons.Core;
 using Windsor.Commons.NodeDomain;
 
-namespace Windsor.Node2008.WNOS.Server {
+namespace Windsor.Node2008.WNOS.Server
+{
     public class SubmitProcessor : BaseTransactionProcessor
     {
-		#region Init
+        #region Init
 
-		new public void Init() {
-			base.Init();
-		}
+        new public void Init()
+        {
+            base.Init();
+        }
 
-		#endregion
+        #endregion
 
-		public SubmitProcessor() {
-		}
+        public SubmitProcessor()
+        {
+        }
 
-		protected override IList<string> GetAllUnprocessedTransactionIds() {
-			return TransactionManager.GetAllUnprocessedSubmitTransactionIds();
-		}
-		protected override IBlockingQueueServerWorker GetWorkerForTransaction(string inTransactionId) {
-			return new SubmitTransactionWorker(inTransactionId, this);
-		}
-		protected override string MutexPrefix {
-			get { return "SubmitProcessor_"; }
-		}
-		protected void ProcessSubmitTransaction(string transactionId) {
+        protected override IList<string> GetAllUnprocessedTransactionIds()
+        {
+            return TransactionManager.GetAllUnprocessedSubmitTransactionIds();
+        }
+        protected override IBlockingQueueServerWorker GetWorkerForTransaction(string inTransactionId)
+        {
+            return new SubmitTransactionWorker(inTransactionId, this);
+        }
+        protected override string MutexPrefix
+        {
+            get { return "SubmitProcessor_"; }
+        }
+        protected void ProcessSubmitTransaction(string transactionId)
+        {
 
-			using (INodeProcessorMutex mutex = GetMutex(transactionId)) {
+            using (INodeProcessorMutex mutex = GetMutex(transactionId))
+            {
 
-				if (!mutex.IsAcquired) {
+                if (!mutex.IsAcquired)
+                {
                     LOG.Debug("Exiting ProcessTransactionRequest(), could not acquire mutex for transaction {0}",
                               transactionId);
-					return;	// Another thread is already working on this transaction, get out of here
-				}
+                    return;	// Another thread is already working on this transaction, get out of here
+                }
                 // Make sure the transaction has not been processed yet
                 string transactionModifiedBy;
                 if (!TransactionManager.IsUnprocessed(transactionId, out transactionModifiedBy))
@@ -88,18 +97,19 @@ namespace Windsor.Node2008.WNOS.Server {
                     return;
                 }
                 DateTime startTime = DateTime.Now;
-                Activity activity = 
+                Activity activity =
                     new Activity(NodeMethod.Submit, null, null, ActivityType.Info, transactionId, NetworkUtils.GetLocalIp(),
                                  "Start processing submit transaction: \"{0}\"", transactionId);
                 activity.ModifiedById = transactionModifiedBy;
 
-				try {
+                try
+                {
                     TransactionManager.SetTransactionStatus(transactionId, CommonTransactionStatusCode.Pending,
                                                             "Processing submit transaction", false);
                     // Get the document processing service
                     string flowName, operation;
-					DataService submitService =
-                        TransactionManager.GetSubmitDocumentServiceForTransaction(transactionId, out flowName, 
+                    DataService submitService =
+                        TransactionManager.GetSubmitDocumentServiceForTransaction(transactionId, out flowName,
                                                                                   out operation);
                     if (submitService == null)
                     {
@@ -151,14 +161,15 @@ namespace Windsor.Node2008.WNOS.Server {
                         TransactionStatus transactionStatus =
                            TransactionManager.SetTransactionStatusIfNotStatus(transactionId, CommonTransactionStatusCode.Processed,
                                                                               "Finished processing submit transaction",
-                                                                              CommonTransactionStatusCode.Received | 
+                                                                              CommonTransactionStatusCode.Received |
                                                                               CommonTransactionStatusCode.Completed |
                                                                               CommonTransactionStatusCode.Failed, true);
                         activity.AppendFormat("Transaction status set to \"{0}\"", transactionStatus.Status.ToString());
                         activity.AppendFormat(TransactionManager.DoTransactionNotifications(transactionId));
                     }
                 }
-				catch (Exception e) {
+                catch (Exception e)
+                {
                     LOG.Error("ProcessSubmitTransaction() threw an exception.", e);
                     TransactionStatus transactionStatus =
                         TransactionManager.SetTransactionStatusIfNotStatus(transactionId, CommonTransactionStatusCode.Failed,
@@ -166,33 +177,37 @@ namespace Windsor.Node2008.WNOS.Server {
 
                     activity.AppendFormat("Transaction status set to \"{0}\"", transactionStatus.Status.ToString());
                     activity.Append(ExceptionUtils.ToShortString(e));
-					activity.Type = ActivityType.Error;
+                    activity.Type = ActivityType.Error;
                     activity.AppendFormat(TransactionManager.DoTransactionNotifications(transactionId));
-				}
-				finally {
-					ActivityManager.Log(activity);
-				}
-			}
-		}
-		private class SubmitTransactionWorker : IBlockingQueueServerWorker
-		{
+                }
+                finally
+                {
+                    ActivityManager.Log(activity);
+                }
+            }
+        }
+        private class SubmitTransactionWorker : IBlockingQueueServerWorker
+        {
 
-			private string _transactionId;
-			private SubmitProcessor _documentProcessor;
+            private string _transactionId;
+            private SubmitProcessor _documentProcessor;
 
-			public SubmitTransactionWorker(string transactionId, SubmitProcessor documentProcessor)
-			{
-				_transactionId = transactionId;
-				_documentProcessor = documentProcessor;
-			}
-			public bool IsHighPriority {
-				get {
-					return false;
-				}
-			}
-			public void DoWork() {
-				_documentProcessor.ProcessSubmitTransaction(_transactionId);
-			}
-		}
-	}
+            public SubmitTransactionWorker(string transactionId, SubmitProcessor documentProcessor)
+            {
+                _transactionId = transactionId;
+                _documentProcessor = documentProcessor;
+            }
+            public bool IsHighPriority
+            {
+                get
+                {
+                    return false;
+                }
+            }
+            public void DoWork()
+            {
+                _documentProcessor.ProcessSubmitTransaction(_transactionId);
+            }
+        }
+    }
 }

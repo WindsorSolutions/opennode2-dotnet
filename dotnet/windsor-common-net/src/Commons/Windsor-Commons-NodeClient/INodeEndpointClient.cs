@@ -66,7 +66,6 @@ namespace Windsor.Commons.NodeClient
         int Timeout { get; set; }
 
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-        bool DisableMTOM { get; set; }
 
         event NodeStatusMessageEventHandler StatusMessageEvent;
 

@@ -45,7 +45,7 @@ namespace Windsor.Node2008.WNOS.Data
         /// <summary>
         /// Get a list of all data flow names.
         /// </summary>
-        ICollection<string> GetAllDataFlowNames();
+        IList<string> GetAllDataFlowNames();
 
         /// <summary>
         /// Get a list of all data flows.  If loadDataServices is true, all data services associated with each flow
@@ -168,6 +168,16 @@ namespace Windsor.Node2008.WNOS.Data
         /// Key is the flow name, value is the flow id.
         /// </summary>
         IDictionary<string, string> GetAllFlowsNameToIdMap();
+
+        /// <summary>
+        /// Key is the flow id, value is the flow name.
+        /// </summary>
+        IDictionary<string, string> GetAllFlowsIdToNameMap();
+
+        /// <summary>
+        /// Key is the flow id, value is the flow name, only return flows specified by flowNames.
+        /// </summary>
+        IDictionary<string, string> GetFlowsIdToNameMap(IEnumerable<string> flowNames);
 
         IList<string> GetProtectedFlowNamesForUser(string username);
     }

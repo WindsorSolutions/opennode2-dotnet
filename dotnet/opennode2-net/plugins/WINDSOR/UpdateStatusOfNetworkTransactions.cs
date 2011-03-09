@@ -57,14 +57,18 @@ namespace Windsor.Node2008.WNOSPlugin.Windsor
     [Serializable]
     public class UpdateStatusOfNetworkTransactions : BaseWNOSPlugin, ITaskProcessor
     {
-        private const string CHECK_NEWER_THAN_DAYS_KEY = "Check transactions newer than (days)";
-        private readonly CommonTransactionStatusCode[] _validTransactionStatusFinishedCodes = 
-            new CommonTransactionStatusCode[] { CommonTransactionStatusCode.Failed, CommonTransactionStatusCode.Processed,
+        protected const string CHECK_NEWER_THAN_DAYS_KEY = "Check transactions newer than (days)";
+        protected const string CHECK_FLOW_NAMES = "Check flow names (semicolon-separated)";
+        
+        protected readonly CommonTransactionStatusCode[] _validTransactionStatusFinishedCodes = 
+            new CommonTransactionStatusCode[] { CommonTransactionStatusCode.Failed, 
+                                                CommonTransactionStatusCode.Processed,
                                                 CommonTransactionStatusCode.Completed };
 
         public UpdateStatusOfNetworkTransactions()
         {
             ConfigurationArguments.Add(CHECK_NEWER_THAN_DAYS_KEY, "7");
+            ConfigurationArguments.Add(CHECK_FLOW_NAMES, "");
         }
 
         /// <summary>
@@ -87,22 +91,39 @@ namespace Windsor.Node2008.WNOSPlugin.Windsor
             }
             DateTime newerThan = DateTime.Now - TimeSpan.FromDays(newerThanDays);
 
+            string checkFlowNamesString = null;
+            TryGetConfigParameter(CHECK_FLOW_NAMES, ref checkFlowNamesString);
+            List<string> checkFlowNames = null;
+            if (!string.IsNullOrEmpty(checkFlowNamesString))
+            {
+                checkFlowNames = StringUtils.SplitAndReallyRemoveEmptyEntries(checkFlowNamesString, ';');
+            }
+
             GetServiceImplementation(out requestManager);
             GetServiceImplementation(out transactionManager);
             GetServiceImplementation(out nodeEndpointClientFactory);
 
-            AppendAuditLogEvent("Checking status of all transactions newer than {0} days (newer than {1})",
-                                newerThanDays, newerThan);
+            if (CollectionUtils.IsNullOrEmpty(checkFlowNames))
+            {
+                AppendAuditLogEvent("Checking status of all transactions newer than {0} days (newer than {1})",
+                                    newerThanDays.ToString(), newerThan.ToString());
+            }
+            else
+            {
+                string joinText = StringUtils.JoinCommaEnglish(checkFlowNames);
+                AppendAuditLogEvent("Checking status of transactions newer than {0} days (newer than {1}) for flows {2}",
+                                    newerThanDays.ToString(), newerThan.ToString(), joinText);
+            }
 
             DataRequest dataRequest = requestManager.GetDataRequest(requestId);
 
-            IList<NodeTransaction> transactions = 
-                transactionManager.GetOutstandingNetworkTransactions(newerThan, _validTransactionStatusFinishedCodes);
+            IList<NodeTransaction> transactions =
+                transactionManager.GetOutstandingNetworkTransactions(newerThan, checkFlowNames, _validTransactionStatusFinishedCodes);
 
             if (CollectionUtils.IsNullOrEmpty(transactions))
             {
                 AppendAuditLogEvent("Did not find any transactions that need updating that are newer than {0} days (newer than {1})",
-                                    newerThanDays, newerThan);
+                                    newerThanDays.ToString(), newerThan.ToString());
                 return;
             }
 
@@ -113,8 +134,8 @@ namespace Windsor.Node2008.WNOSPlugin.Windsor
                 UpdateStatusOfTransaction(transaction, transactionManager, nodeEndpointClientFactory);
             }
         }
-        private void UpdateStatusOfTransaction(NodeTransaction transaction, ITransactionManager transactionManager,
-                                               INodeEndpointClientFactory nodeEndpointClientFactory)
+        protected virtual void UpdateStatusOfTransaction(NodeTransaction transaction, ITransactionManager transactionManager,
+                                                         INodeEndpointClientFactory nodeEndpointClientFactory)
         {
             try
             {
@@ -127,19 +148,27 @@ namespace Windsor.Node2008.WNOSPlugin.Windsor
                     nodeEndpointClientFactory.Make(transaction.NetworkEndpointUrl, transaction.NetworkEndpointVersion))
                 {
                     statusCode = endpointClient.GetStatus(transaction.NetworkId);
-                }
-                AppendAuditLogEvent("Successfully got an endpoint transaction status of \"{0}\"", statusCode.ToString());
-                if (statusCode != transaction.NetworkEndpointStatus)
-                {
-                    AppendAuditLogEvent("Updating status of transaction from \"{0}\" to \"{1}\"",
-                                        transaction.NetworkEndpointStatus, statusCode);
-                    transactionManager.SetNetworkIdStatus(transaction.Id, statusCode);
+                    AppendAuditLogEvent("Successfully got an endpoint transaction status of \"{0}\"", statusCode.ToString());
+                    if (statusCode != transaction.NetworkEndpointStatus)
+                    {
+                        if (OnTransactionStatusChanged(transaction, endpointClient, statusCode))
+                        {
+                            AppendAuditLogEvent("Updating status of local transaction id \"{0}\" from \"{1}\" to \"{2}\"",
+                                                transaction.Id, transaction.NetworkEndpointStatus, statusCode);
+                            transactionManager.SetNetworkIdStatus(transaction.Id, statusCode);
+                        }
+                    }
                 }
             }
             catch (Exception e)
             {
                 AppendAuditLogEvent("Failed to get status of transaction: {0}", ExceptionUtils.GetDeepExceptionMessage(e));
             }
+        }
+        protected virtual bool OnTransactionStatusChanged(NodeTransaction transaction, INodeEndpointClient endpointClient,
+                                                          CommonTransactionStatusCode newStatusCode)
+        {
+            return true;
         }
     }
 }

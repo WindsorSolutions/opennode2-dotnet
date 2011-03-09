@@ -100,7 +100,8 @@ namespace Windsor.Node2008.WNOS.Data
         IList<StatusActivityEntry> GetRealtimeTransactionDetails(string transactionId);
         void ClearRealtimeTransactionDetails(string transactionId);
         EndpointVersionType GetTransactionEndpointVersionType(string transactionId);
-        IList<NodeTransaction> GetOutstandingNetworkTransactions(DateTime newerThan, IEnumerable<CommonTransactionStatusCode> notOutstandingCodes);
+        IList<NodeTransaction> GetOutstandingNetworkTransactions(DateTime newerThan, IEnumerable<string> getFlowNames,
+                                                                 IEnumerable<CommonTransactionStatusCode> notOutstandingCodes);
         string GetNetworkTransactionStatus(string localTransactionId, out CommonTransactionStatusCode status,
                                            out EndpointVersionType endpointVersion, out string endpointUrl);
         string GetNetworkTransactionStatusFromNetworkId(string networkTransactionId, out CommonTransactionStatusCode status,

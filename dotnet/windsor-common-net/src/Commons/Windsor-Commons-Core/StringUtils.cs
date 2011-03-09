@@ -43,27 +43,32 @@ using System.Threading;
 
 namespace Windsor.Commons.Core
 {
-	/// <summary>
-	/// Basic helper functions for dealing with strings.
-	/// </summary>
-	public static class StringUtils {
+    /// <summary>
+    /// Basic helper functions for dealing with strings.
+    /// </summary>
+    public static class StringUtils
+    {
 
         // Encoder that does not output byte marker (BOM) at start of encoding
         public static readonly UTF8Encoding UTF8 = new UTF8Encoding(false, true);
-		
+
         /// <summary>
         /// Join the input string values using the separator and return the resulting string.
         /// </summary>
-		public static string Join<T>(string separator, IEnumerable<T> values) {
-			if ( values == null ) {
-				return string.Empty;
-			}
-			StringBuilder sb = new StringBuilder();
-			bool addedFirst = false;
-			foreach(T value in values) {
-				if ( addedFirst ) {
-					sb.Append(separator);
-				}
+        public static string Join<T>(string separator, IEnumerable<T> values)
+        {
+            if (values == null)
+            {
+                return string.Empty;
+            }
+            StringBuilder sb = new StringBuilder();
+            bool addedFirst = false;
+            foreach (T value in values)
+            {
+                if (addedFirst)
+                {
+                    sb.Append(separator);
+                }
                 if (value != null)
                 {
                     sb.Append(value.ToString());
@@ -72,10 +77,51 @@ namespace Windsor.Commons.Core
                 {
                     sb.Append(string.Empty);
                 }
-				addedFirst = true;
-			}
-			return sb.ToString();
-		}
+                addedFirst = true;
+            }
+            return sb.ToString();
+        }
+        /// <summary>
+        /// Join the input string values using a comma separator and English grammar.
+        /// </summary>
+        public static string JoinCommaEnglish<T>(IEnumerable<T> values)
+        {
+            if (values == null)
+            {
+                return string.Empty;
+            }
+            int numValues = CollectionUtils.Count(values);
+            StringBuilder sb = new StringBuilder();
+            int currentIndex = 0;
+            foreach (T value in values)
+            {
+                if (currentIndex > 0)
+                {
+                    if (numValues == 2)
+                    {
+                        sb.Append(" and ");
+                    }
+                    else if (currentIndex == (numValues - 1))
+                    {
+                        sb.Append(", and ");
+                    }
+                    else
+                    {
+                        sb.Append(", ");
+                    }
+                }
+                if (value != null)
+                {
+                    sb.Append(value.ToString());
+                }
+                else
+                {
+                    sb.Append(string.Empty);
+                }
+                ++currentIndex;
+            }
+            return sb.ToString();
+        }
         /// <summary>
         /// Return the character index of findChar within text, starting from the end of text
         /// and working backwards until the n-th occurance is found (specified by 1-based lastNthCount).
@@ -87,7 +133,8 @@ namespace Windsor.Commons.Core
                 throw new ArgumentException("lastNthCount must be greater than 0");
             }
             int index = text.Length - 1;
-            while ( index > 0 ) {
+            while (index > 0)
+            {
                 index = text.LastIndexOf(findChar, index - 1);
                 if (index >= 0)
                 {
@@ -170,7 +217,7 @@ namespace Windsor.Commons.Core
             }
             return -1;
         }
-        public static int IndexOf(string checkString, IEnumerable strings, 
+        public static int IndexOf(string checkString, IEnumerable strings,
                                   StringComparison comparison)
         {
             if (strings != null)
@@ -255,7 +302,7 @@ namespace Windsor.Commons.Core
             {
                 return string.Empty;
             }
-            if ( string.IsNullOrEmpty(replaceString))
+            if (string.IsNullOrEmpty(replaceString))
             {
                 throw new ArgumentException("replaceString cannot be empty");
             }
@@ -401,7 +448,8 @@ namespace Windsor.Commons.Core
                 {
                     currentNonWhitepaceCount = 0;
                 }
-                else {
+                else
+                {
                     if (++currentNonWhitepaceCount > numBreakChars)
                     {
                         if (sb == null)
@@ -454,7 +502,7 @@ namespace Windsor.Commons.Core
             {
                 return new List<string>();
             }
-            List<string> list = 
+            List<string> list =
                 new List<string>(stringToSplit.Split(separators, StringSplitOptions.RemoveEmptyEntries));
 
             TrimAndRemoveEmptyEntries(list);
@@ -498,7 +546,7 @@ namespace Windsor.Commons.Core
             {
                 return false;
             }
-            if ( minRepetitiveCount < 2 )
+            if (minRepetitiveCount < 2)
             {
                 return true;
             }
@@ -539,7 +587,7 @@ namespace Windsor.Commons.Core
             return guid.ToString();
         }
 
-        private static System.Security.Cryptography.SHA256 s_Hasher = new System.Security.Cryptography.SHA256Managed(); 
+        private static System.Security.Cryptography.SHA256 s_Hasher = new System.Security.Cryptography.SHA256Managed();
         public static Int64 HashCode64(string text)
         {
             Int64 hashCode = 0;

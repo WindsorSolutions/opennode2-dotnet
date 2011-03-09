@@ -115,11 +115,6 @@ namespace Windsor.Commons.NodeClient
             get { return _requestor.Timeout; }
             set { _requestor.Timeout = value; }
         }
-        public bool DisableMTOM
-        {
-            get { return false; }
-            set { /* no op */ }
-        }
 
         public string Authenticate(string userID, string c)
         {

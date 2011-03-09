@@ -184,9 +184,10 @@ namespace Windsor.Node2008.WNOS.Logic
             {
             }
         }
-        public IList<NodeTransaction> GetOutstandingNetworkTransactions(DateTime newerThan, IEnumerable<CommonTransactionStatusCode> notOutstandingCodes)
+        public IList<NodeTransaction> GetOutstandingNetworkTransactions(DateTime newerThan, IEnumerable<string> getFlowNames,
+                                                                        IEnumerable<CommonTransactionStatusCode> notOutstandingCodes)
         {
-            return _transactionDao.GetOutstandingNetworkTransactions(newerThan, notOutstandingCodes);
+            return _transactionDao.GetOutstandingNetworkTransactions(newerThan, getFlowNames, notOutstandingCodes);
         }
         public TransactionListType1 DoTransactionTrackingQuery(ICollection<KeyValuePair<TransactionTrackingQueryParameter, object>> queryParameters)
         {

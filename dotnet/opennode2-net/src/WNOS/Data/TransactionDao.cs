@@ -56,14 +56,16 @@ using Windsor.Commons.Spring;
 using Windsor.Commons.NodeDomain;
 using Windsor.Node2008.WNOSDomain.TransactionTracking;
 
-namespace Windsor.Node2008.WNOS.Data {
-	/// <summary>
-	/// Should be implementing interface but for now just use the raw object
-	/// </summary>
-	public class TransactionDao : BaseDao, ITransactionDao {
-		public const string TABLE_NAME = "NTransaction";
-		public const string NOTIFICATION_TABLE_NAME = "NTransactionNotification";
-		public const string RECIPIENT_TABLE_NAME = "NTransactionRecipient";
+namespace Windsor.Node2008.WNOS.Data
+{
+    /// <summary>
+    /// Should be implementing interface but for now just use the raw object
+    /// </summary>
+    public class TransactionDao : BaseDao, ITransactionDao
+    {
+        public const string TABLE_NAME = "NTransaction";
+        public const string NOTIFICATION_TABLE_NAME = "NTransactionNotification";
+        public const string RECIPIENT_TABLE_NAME = "NTransactionRecipient";
         public const string REALTIME_DETAILS_TABLE_NAME = "NTransactionRealtimeDetails";
         private IFlowDao _flowDao;
         private IAccountDao _accountDao;
@@ -74,12 +76,12 @@ namespace Windsor.Node2008.WNOS.Data {
         private ITransactionStatusChangeNotifier _transactionStatusChangeNotifier;
         private const int MAX_DETAIL_CHARS = 4000;
 
-		private const CommonTransactionStatusCode UNPROCESSED_STATUS = CommonTransactionStatusCode.Received |
-																	   CommonTransactionStatusCode.Pending |
-																	   CommonTransactionStatusCode.Processing;
+        private const CommonTransactionStatusCode UNPROCESSED_STATUS = CommonTransactionStatusCode.Received |
+                                                                       CommonTransactionStatusCode.Pending |
+                                                                       CommonTransactionStatusCode.Processing;
 
         private const string MAP_TRANSACTION_COLUMNS = "Id;FlowId;NetworkId;Status;ModifiedBy;ModifiedOn;StatusDetail;Operation;WebMethod;EndpointVersion;NetworkEndpointVersion;NetworkEndpointUrl;NetworkEndpointStatus;NetworkEndpointStatusDetail";
-        
+
         private NodeTransaction MapTransaction(IDataReader reader)
         {
             NodeTransaction transaction = new NodeTransaction();
@@ -108,42 +110,50 @@ namespace Windsor.Node2008.WNOS.Data {
         }
         public ITransactionStatusChangeNotifier TransactionStatusChangeNotifier
         {
-			get {
-				return _transactionStatusChangeNotifier;
-			}
-			set {
-				_transactionStatusChangeNotifier = value;
-			}
-		}
+            get
+            {
+                return _transactionStatusChangeNotifier;
+            }
+            set
+            {
+                _transactionStatusChangeNotifier = value;
+            }
+        }
         public IDocumentManagerEx DocumentManager
         {
-			get {
-				return _documentManager;
-			}
-			set {
+            get
+            {
+                return _documentManager;
+            }
+            set
+            {
                 _documentManager = value;
-			}
-		}
+            }
+        }
 
         public IFlowDao FlowDao
         {
-			get {
-				return _flowDao;
-			}
-			set {
-				_flowDao = value;
-			}
-		}
+            get
+            {
+                return _flowDao;
+            }
+            set
+            {
+                _flowDao = value;
+            }
+        }
 
         public IRequestDao RequestDao
         {
-			get {
-				return _requestDao;
-			}
-			set {
-				_requestDao = value;
-			}
-		}
+            get
+            {
+                return _requestDao;
+            }
+            set
+            {
+                _requestDao = value;
+            }
+        }
         public INodeNotificationDao NodeNotificationDao
         {
             get { return _nodeNotificationDao; }
@@ -161,101 +171,115 @@ namespace Windsor.Node2008.WNOS.Data {
         }
         #region Init
 
-		new public void Init() {
-			base.Init();
+        new public void Init()
+        {
+            base.Init();
 
-			FieldNotInitializedException.ThrowIfNull(this, ref _flowDao);
+            FieldNotInitializedException.ThrowIfNull(this, ref _flowDao);
             FieldNotInitializedException.ThrowIfNull(this, ref _documentManager);
-			FieldNotInitializedException.ThrowIfNull(this, ref _requestDao);
-			FieldNotInitializedException.ThrowIfNull(this, ref _transactionStatusChangeNotifier);
+            FieldNotInitializedException.ThrowIfNull(this, ref _requestDao);
+            FieldNotInitializedException.ThrowIfNull(this, ref _transactionStatusChangeNotifier);
             FieldNotInitializedException.ThrowIfNull(this, ref _nodeNotificationDao);
             FieldNotInitializedException.ThrowIfNull(this, ref _accountDao);
             FieldNotInitializedException.ThrowIfNull(this, ref _activityDao);
         }
 
-		#endregion
+        #endregion
 
-		#region Methods
+        #region Methods
 
-		/// <summary>
-		/// Set the status of the specified transaction and return current status.
-		/// </summary>
-		public TransactionStatus SetTransactionStatus(string transactionId, CommonTransactionStatusCode statusCode,
-													  string statusDetail, bool sendStatusChangeNotifications) {
-			DoSimpleUpdateOne(TABLE_NAME, "Id", transactionId,
-						"Id;Status;ModifiedOn;StatusDetail",
-						transactionId, statusCode.ToString(), DateTime.Now,
+        /// <summary>
+        /// Set the status of the specified transaction and return current status.
+        /// </summary>
+        public TransactionStatus SetTransactionStatus(string transactionId, CommonTransactionStatusCode statusCode,
+                                                      string statusDetail, bool sendStatusChangeNotifications)
+        {
+            DoSimpleUpdateOne(TABLE_NAME, "Id", transactionId,
+                        "Id;Status;ModifiedOn;StatusDetail",
+                        transactionId, statusCode.ToString(), DateTime.Now,
                         LimitDbText(statusDetail, MAX_DETAIL_CHARS));
-			TransactionStatus status = new TransactionStatus(transactionId, statusCode, statusDetail);
+            TransactionStatus status = new TransactionStatus(transactionId, statusCode, statusDetail);
 
-			if (sendStatusChangeNotifications) {
-				SendStatusChangeNotifications(status);
-			}
-			return status;
-		}
+            if (sendStatusChangeNotifications)
+            {
+                SendStatusChangeNotifications(status);
+            }
+            return status;
+        }
 
-		/// <summary>
-		/// Set the status of the specified transaction and return current status.
-		/// </summary>
-		public TransactionStatus SetTransactionStatus(string transactionId, string userCreatorId,
-													  CommonTransactionStatusCode statusCode,
-													  string statusDetail, bool sendStatusChangeNotifications) {
-			DoSimpleUpdateOne(TABLE_NAME, "Id", transactionId,
-						"Id;Status;ModifiedBy;ModifiedOn;StatusDetail",
-						transactionId, statusCode.ToString(), userCreatorId, DateTime.Now,
+        /// <summary>
+        /// Set the status of the specified transaction and return current status.
+        /// </summary>
+        public TransactionStatus SetTransactionStatus(string transactionId, string userCreatorId,
+                                                      CommonTransactionStatusCode statusCode,
+                                                      string statusDetail, bool sendStatusChangeNotifications)
+        {
+            DoSimpleUpdateOne(TABLE_NAME, "Id", transactionId,
+                        "Id;Status;ModifiedBy;ModifiedOn;StatusDetail",
+                        transactionId, statusCode.ToString(), userCreatorId, DateTime.Now,
                         LimitDbText(statusDetail, MAX_DETAIL_CHARS));
-			TransactionStatus status = new TransactionStatus(transactionId, statusCode, statusDetail);
-			if (sendStatusChangeNotifications) {
-				SendStatusChangeNotifications(status);
-			}
-			return status;
-		}
+            TransactionStatus status = new TransactionStatus(transactionId, statusCode, statusDetail);
+            if (sendStatusChangeNotifications)
+            {
+                SendStatusChangeNotifications(status);
+            }
+            return status;
+        }
 
-		/// <summary>
-		/// Set the status of the specified transaction (iff the current transaction status is not setIfNotStatusCodes),
-		/// and return current status.
-		/// </summary>
-		public TransactionStatus SetTransactionStatusIfNotStatus(string transactionId, CommonTransactionStatusCode statusCodeToSet,
-																 string statusDetail, CommonTransactionStatusCode setIfNotStatusCodes,
-																 bool sendStatusChangeNotifications) {
-			int count = DoSimpleUpdateAny(TABLE_NAME, "Id;NOT " + GetDbInGroupFromFlagsEnum("Status", setIfNotStatusCodes),
-								new object[] { transactionId },
-								"Id;Status;ModifiedOn;StatusDetail",
-								transactionId, statusCodeToSet.ToString(), DateTime.Now,
+        /// <summary>
+        /// Set the status of the specified transaction (iff the current transaction status is not setIfNotStatusCodes),
+        /// and return current status.
+        /// </summary>
+        public TransactionStatus SetTransactionStatusIfNotStatus(string transactionId, CommonTransactionStatusCode statusCodeToSet,
+                                                                 string statusDetail, CommonTransactionStatusCode setIfNotStatusCodes,
+                                                                 bool sendStatusChangeNotifications)
+        {
+            int count = DoSimpleUpdateAny(TABLE_NAME, "Id;NOT " + GetDbInGroupFromFlagsEnum("Status", setIfNotStatusCodes),
+                                new object[] { transactionId },
+                                "Id;Status;ModifiedOn;StatusDetail",
+                                transactionId, statusCodeToSet.ToString(), DateTime.Now,
                                 LimitDbText(statusDetail, MAX_DETAIL_CHARS));
-			if (count == 1) {
-				TransactionStatus status = new TransactionStatus(transactionId, statusCodeToSet, statusDetail);
-				if (sendStatusChangeNotifications) {
-					SendStatusChangeNotifications(status);
-				}
-				return status;
-			} else {
+            if (count == 1)
+            {
+                TransactionStatus status = new TransactionStatus(transactionId, statusCodeToSet, statusDetail);
+                if (sendStatusChangeNotifications)
+                {
+                    SendStatusChangeNotifications(status);
+                }
+                return status;
+            }
+            else
+            {
                 DebugUtils.AssertDebuggerBreak(count == 0);
-				return GetTransactionStatus(transactionId);
-			}
-		}
+                return GetTransactionStatus(transactionId);
+            }
+        }
 
-		/// <summary>
-		/// Return the status of the transaction with the input transaction id, or null
-		/// if the id is not found.
-		/// </summary>
-		public TransactionStatus GetTransactionStatus(string transactionId) {
-			try {
-				TransactionStatus transactionStatus =
-					DoSimpleQueryForObjectDelegate<TransactionStatus>(
-						TABLE_NAME, "Id", transactionId, "Status;StatusDetail",
-						delegate(IDataReader reader, int rowNum) {
-							TransactionStatus status = new TransactionStatus(transactionId);
-							status.Status = EnumUtils.ParseEnum<CommonTransactionStatusCode>(reader.GetString(0));
-							status.Description = reader.GetString(1);
-							return status;
-						});
-				return transactionStatus;
-			}
-			catch (Spring.Dao.IncorrectResultSizeDataAccessException) {
-				return null; // Not found
-			}
-		}
+        /// <summary>
+        /// Return the status of the transaction with the input transaction id, or null
+        /// if the id is not found.
+        /// </summary>
+        public TransactionStatus GetTransactionStatus(string transactionId)
+        {
+            try
+            {
+                TransactionStatus transactionStatus =
+                    DoSimpleQueryForObjectDelegate<TransactionStatus>(
+                        TABLE_NAME, "Id", transactionId, "Status;StatusDetail",
+                        delegate(IDataReader reader, int rowNum)
+                        {
+                            TransactionStatus status = new TransactionStatus(transactionId);
+                            status.Status = EnumUtils.ParseEnum<CommonTransactionStatusCode>(reader.GetString(0));
+                            status.Description = reader.GetString(1);
+                            return status;
+                        });
+                return transactionStatus;
+            }
+            catch (Spring.Dao.IncorrectResultSizeDataAccessException)
+            {
+                return null; // Not found
+            }
+        }
         /// <summary>
         /// Return true if the input transaction has an unprocessed status (see GetAllUnprocessedTransactionIds()).
         /// </summary>
@@ -327,15 +351,17 @@ namespace Windsor.Node2008.WNOS.Data {
             return transactionId;
         }
         /// <summary>
-		/// Return the flow id associated with this transaction.
-		/// </summary>
-		public string GetTransactionFlowId(string transactionId) {
-			return DoSimpleQueryForObjectDelegate<string>(
-					TABLE_NAME, "Id", transactionId, "FlowId",
-					delegate(IDataReader reader, int rowNum) {
-						return reader.GetString(0);
-					});
-		}
+        /// Return the flow id associated with this transaction.
+        /// </summary>
+        public string GetTransactionFlowId(string transactionId)
+        {
+            return DoSimpleQueryForObjectDelegate<string>(
+                    TABLE_NAME, "Id", transactionId, "FlowId",
+                    delegate(IDataReader reader, int rowNum)
+                    {
+                        return reader.GetString(0);
+                    });
+        }
         /// <summary>
         /// Return the username associated with this transaction.
         /// </summary>
@@ -375,13 +401,14 @@ namespace Windsor.Node2008.WNOS.Data {
             return flowId;
         }
         /// <summary>
-		/// Return the flow id and operation associated with this transaction.
-		/// </summary>
-		public string GetTransactionFlowId(string transactionId, out string flowName,
-                                           out string operation) {
+        /// Return the flow id and operation associated with this transaction.
+        /// </summary>
+        public string GetTransactionFlowId(string transactionId, out string flowName,
+                                           out string operation)
+        {
             bool isProtected;
             return GetTransactionFlowId(transactionId, out flowName, out operation, out isProtected);
-		}
+        }
         /// <summary>
         /// Return the flow id and operation associated with this transaction.
         /// </summary>
@@ -425,47 +452,52 @@ namespace Windsor.Node2008.WNOS.Data {
             return flowId;
         }
         /// <summary>
-		/// Get the document associated with the transaction, or return null if
-		/// the document cannot be found.
-		/// </summary>
-		public Document GetTransactionDocument(string transactionID, string dbDocId) {
+        /// Get the document associated with the transaction, or return null if
+        /// the document cannot be found.
+        /// </summary>
+        public Document GetTransactionDocument(string transactionID, string dbDocId)
+        {
             return _documentManager.GetDocument(transactionID, dbDocId, false);
-		}
+        }
 
-		/// <summary>
-		/// Return the status of the transaction with the input transaction id, or null
-		/// if the id is not found, and return the flow associated with the transaction
-		/// in flowId.
-		/// </summary>
-		public TransactionStatus GetTransactionStatus(string transactionId, out string flowId,
-													  out string operation, out NodeMethod webMethod) {
-			try {
-				string flowIdPriv = string.Empty;
-				string operationPriv = string.Empty;
-				NodeMethod webMethodPriv = NodeMethod.None;
-				TransactionStatus transactionStatus =
-					DoSimpleQueryForObjectDelegate<TransactionStatus>(
-						TABLE_NAME, "Id", transactionId, "FlowId;Status;StatusDetail;Operation;WebMethod",
-						delegate(IDataReader reader, int rowNum) {
-							TransactionStatus status = new TransactionStatus(transactionId);
-							flowIdPriv = reader.GetString(0);
-							status.Status = EnumUtils.ParseEnum<CommonTransactionStatusCode>(reader.GetString(1));
-							status.Description = reader.GetString(2);
-							operationPriv = reader.GetString(3);
-							webMethodPriv = EnumUtils.ParseEnum<NodeMethod>(reader.GetString(4));
-							return status;
-						});
-				flowId = flowIdPriv;
-				operation = operationPriv;
-				webMethod = webMethodPriv;
-				return transactionStatus;
-			}
-			catch (Spring.Dao.IncorrectResultSizeDataAccessException) {
-				flowId = operation = string.Empty;
-				webMethod = NodeMethod.None;
-				return null; // Not found
-			}
-		}
+        /// <summary>
+        /// Return the status of the transaction with the input transaction id, or null
+        /// if the id is not found, and return the flow associated with the transaction
+        /// in flowId.
+        /// </summary>
+        public TransactionStatus GetTransactionStatus(string transactionId, out string flowId,
+                                                      out string operation, out NodeMethod webMethod)
+        {
+            try
+            {
+                string flowIdPriv = string.Empty;
+                string operationPriv = string.Empty;
+                NodeMethod webMethodPriv = NodeMethod.None;
+                TransactionStatus transactionStatus =
+                    DoSimpleQueryForObjectDelegate<TransactionStatus>(
+                        TABLE_NAME, "Id", transactionId, "FlowId;Status;StatusDetail;Operation;WebMethod",
+                        delegate(IDataReader reader, int rowNum)
+                        {
+                            TransactionStatus status = new TransactionStatus(transactionId);
+                            flowIdPriv = reader.GetString(0);
+                            status.Status = EnumUtils.ParseEnum<CommonTransactionStatusCode>(reader.GetString(1));
+                            status.Description = reader.GetString(2);
+                            operationPriv = reader.GetString(3);
+                            webMethodPriv = EnumUtils.ParseEnum<NodeMethod>(reader.GetString(4));
+                            return status;
+                        });
+                flowId = flowIdPriv;
+                operation = operationPriv;
+                webMethod = webMethodPriv;
+                return transactionStatus;
+            }
+            catch (Spring.Dao.IncorrectResultSizeDataAccessException)
+            {
+                flowId = operation = string.Empty;
+                webMethod = NodeMethod.None;
+                return null; // Not found
+            }
+        }
 
         /// <summary>
         /// Return the status of the transaction with the input transaction id, or null
@@ -536,7 +568,7 @@ namespace Windsor.Node2008.WNOS.Data {
         }
         public EndpointVersionType GetTransactionEndpointVersionType(string transactionId)
         {
-            EndpointVersionType version = 
+            EndpointVersionType version =
                 DoSimpleQueryForObjectDelegate<EndpointVersionType>(TABLE_NAME, "Id", transactionId, "EndpointVersion",
                     delegate(IDataReader reader, int rowNum)
                     {
@@ -547,7 +579,8 @@ namespace Windsor.Node2008.WNOS.Data {
 
         public TransactionStatus GetTransactionStatusAndFlowName(string transactionId, out string flowName,
                                                                  out string operation, out NodeMethod webMethod,
-                                                                 out EndpointVersionType endpointVersion) {
+                                                                 out EndpointVersionType endpointVersion)
+        {
             NodeMethod webMethodPriv = NodeMethod.None;
             string operationPriv = string.Empty;
             EndpointVersionType endpointVersionPriv = EndpointVersionType.Undefined;
@@ -576,13 +609,14 @@ namespace Windsor.Node2008.WNOS.Data {
         }
 
         /// <summary>
-		/// Get the transaction object for the transaction with the specified transaction id, 
-		/// or null if the id is not found.  If doReturnDocuments is true, return a list of 
-		/// documents associated with the transaction.
-		/// </summary>
-		public NodeTransaction GetTransaction(string transactionId, CommonTransactionStatusCode returnDocsWithStatus) {
+        /// Get the transaction object for the transaction with the specified transaction id, 
+        /// or null if the id is not found.  If doReturnDocuments is true, return a list of 
+        /// documents associated with the transaction.
+        /// </summary>
+        public NodeTransaction GetTransaction(string transactionId, CommonTransactionStatusCode returnDocsWithStatus)
+        {
             return GetTransaction(transactionId, new CommonTransactionStatusCode?(returnDocsWithStatus));
-		}
+        }
         public NodeTransaction GetTransaction(string transactionId)
         {
             return GetTransaction(transactionId, null);
@@ -622,31 +656,34 @@ namespace Windsor.Node2008.WNOS.Data {
                 return null; // Not found
             }
         }
-		/// <summary>
-		/// Create a new transaction according to the input parameters and return the
-		/// transaction id.
-		/// </summary>
+        /// <summary>
+        /// Create a new transaction according to the input parameters and return the
+        /// transaction id.
+        /// </summary>
         public string CreateTransaction(NodeMethod webMethod, EndpointVersionType endpointVersion,
                                         string flowId, string operation, string userCreatorId,
-										CommonTransactionStatusCode statusCode, string statusDetail,
-										IDictionary<string, TransactionNotificationType> notifications,
-										IList<string> recipients, bool sendStatusChangeNotifications) {
-			string transactionId = IdProvider.Get();
-			TransactionTemplate.Execute(delegate {
-				DoInsert(TABLE_NAME,
+                                        CommonTransactionStatusCode statusCode, string statusDetail,
+                                        IDictionary<string, TransactionNotificationType> notifications,
+                                        IList<string> recipients, bool sendStatusChangeNotifications)
+        {
+            string transactionId = IdProvider.Get();
+            TransactionTemplate.Execute(delegate
+            {
+                DoInsert(TABLE_NAME,
                          "Id;FlowId;NetworkId;Status;ModifiedBy;ModifiedOn;StatusDetail;Operation;WebMethod;EndpointVersion",
                          transactionId, flowId, transactionId, statusCode.ToString(),
                          userCreatorId, DateTime.Now, LimitDbText(statusDetail, MAX_DETAIL_CHARS), operation ?? string.Empty,
                          webMethod.ToString(), endpointVersion.ToString());
-				AddNotifications(transactionId, notifications);
-				AddRecipients(transactionId, recipients);
-				return null;
-			});
-			if (sendStatusChangeNotifications) {
-				SendStatusChangeNotifications(transactionId);
-			}
-			return transactionId;
-		}
+                AddNotifications(transactionId, notifications);
+                AddRecipients(transactionId, recipients);
+                return null;
+            });
+            if (sendStatusChangeNotifications)
+            {
+                SendStatusChangeNotifications(transactionId);
+            }
+            return transactionId;
+        }
         /// <summary>
         /// Set the network id for the specified transaction.
         /// </summary>
@@ -678,7 +715,7 @@ namespace Windsor.Node2008.WNOS.Data {
         public void SetNetworkId(string transactionId, string networkId, EndpointVersionType networkEndpointVersion,
                                  string networkEndpointUrl, string networkFlowName, string networkFlowOperation)
         {
-            object version = 
+            object version =
                 (networkEndpointVersion == EndpointVersionType.Undefined) ? (object)null : (object)networkEndpointVersion.ToString();
             DoSimpleUpdateOne(TABLE_NAME, "Id", transactionId,
                               "NetworkId;NetworkEndpointVersion;NetworkEndpointUrl;NetworkEndpointStatusDetail", networkId,
@@ -764,33 +801,44 @@ namespace Windsor.Node2008.WNOS.Data {
             }
         }
         /// <summary>
-		/// Return a list of ids for all unprocessed Submit transactions.
-		/// </summary>
-		public IList<string> GetAllUnprocessedSubmitTransactionIds() {
+        /// Return a list of ids for all unprocessed Submit transactions.
+        /// </summary>
+        public IList<string> GetAllUnprocessedSubmitTransactionIds()
+        {
             return GetAllUnprocessedTransactionIds(NodeMethod.Submit);
-		}
-        public IList<NodeTransaction> GetOutstandingNetworkTransactions(DateTime newerThan, IEnumerable<CommonTransactionStatusCode> notOutstandingCodes)
+        }
+        public IList<NodeTransaction> GetOutstandingNetworkTransactions(DateTime newerThan, IEnumerable<string> getFlowNames,
+                                                                        IEnumerable<CommonTransactionStatusCode> notOutstandingCodes)
         {
             if (CollectionUtils.IsNullOrEmpty(notOutstandingCodes))
             {
                 notOutstandingCodes = new CommonTransactionStatusCode[] { CommonTransactionStatusCode.Failed, CommonTransactionStatusCode.Processed,
                                                                           CommonTransactionStatusCode.Completed };
             }
+
+            string tableNames = TABLE_NAME + " t";
+            string mapColumns = "t." + MAP_TRANSACTION_COLUMNS.Replace(";", ";t.");
             string queryColumns =
-                string.Format("ModifiedOn >;UPPER(Id) <> UPPER(NetworkId);NetworkEndpointVersion IS NOT NULL;NetworkEndpointUrl IS NOT NULL;((NetworkEndpointStatus IS NULL) OR (NetworkEndpointStatus NOT {0}))",
+                string.Format("t.ModifiedOn >;t.FlowId = f.Id;UPPER(t.Id) <> UPPER(t.NetworkId);t.NetworkEndpointVersion IS NOT NULL;t.NetworkEndpointUrl IS NOT NULL;((t.NetworkEndpointStatus IS NULL) OR (t.NetworkEndpointStatus NOT {0}))",
                               SpringBaseDao.MakeWhereInClause(notOutstandingCodes));
+            if (!CollectionUtils.IsNullOrEmpty(getFlowNames))
+            {
+                string whereClause = "UPPER(f.Code) IN (UPPER('" + StringUtils.Join("'),UPPER('", getFlowNames) + "'))";
+                queryColumns += ";" + whereClause;
+                tableNames += ";" + FlowDao.TableName + " f";
+            }
             List<NodeTransaction> transactions = null;
-			DoSimpleQueryWithRowCallbackDelegate(TABLE_NAME, queryColumns,
-                new object[] { newerThan }, null, MAP_TRANSACTION_COLUMNS,
-				delegate(IDataReader reader)
-				{
-					if (transactions == null)
-					{
+            DoSimpleQueryWithRowCallbackDelegate(tableNames, queryColumns,
+                new object[] { newerThan }, null, mapColumns,
+                delegate(IDataReader reader)
+                {
+                    if (transactions == null)
+                    {
                         transactions = new List<NodeTransaction>();
-					}
+                    }
                     transactions.Add(MapTransaction(reader));
-				});
-			return transactions;
+                });
+            return transactions;
         }
         public string GetNetworkTransactionStatus(string localTransactionId, out CommonTransactionStatusCode status,
                                                   out EndpointVersionType endpointVersion, out string endpointUrl)
@@ -837,7 +885,7 @@ namespace Windsor.Node2008.WNOS.Data {
                 string endpointUrlPriv = null;
                 string transactionId =
                     DoSimpleQueryForObjectDelegate<string>(
-                        TABLE_NAME, "NetworkId;UPPER(Id) <> UPPER(NetworkId);NetworkEndpointUrl IS NOT NULL", networkTransactionId, 
+                        TABLE_NAME, "NetworkId;UPPER(Id) <> UPPER(NetworkId);NetworkEndpointUrl IS NOT NULL", networkTransactionId,
                         "Id;NetworkEndpointVersion;NetworkEndpointUrl;NetworkEndpointStatus",
                         delegate(IDataReader reader, int rowNum)
                         {
@@ -897,12 +945,12 @@ namespace Windsor.Node2008.WNOS.Data {
             return webMethodNames;
         }
         /// <summary>
-		/// Return a list of ids for all unprocessed Notify transactions.
-		/// </summary>
+        /// Return a list of ids for all unprocessed Notify transactions.
+        /// </summary>
         public IList<string> GetAllUnprocessedNotifyTransactionIds()
-		{
+        {
             return GetAllUnprocessedTransactionIds(NodeMethod.Notify);
-		}
+        }
         /// <summary>
         /// Return a list of ids for all unprocessed Solicit transactions.
         /// </summary>
@@ -925,40 +973,40 @@ namespace Windsor.Node2008.WNOS.Data {
             return GetAllUnprocessedTransactionIds(NodeMethod.Execute);
         }
         /// <summary>
-		/// Return a list of ids for all unprocessed transactions.
-		/// </summary>
+        /// Return a list of ids for all unprocessed transactions.
+        /// </summary>
         protected IList<string> GetAllUnprocessedTransactionIds(NodeMethod inWebMethod)
-		{
-			List<string> transactions = null;
-			string validTransactionStatusGroup = GetDbInGroupFromFlagsEnum("Status", UNPROCESSED_STATUS);
-			DoSimpleQueryWithRowCallbackDelegate(TABLE_NAME,
-				string.Format("WebMethod = '{0}';{1}",
-							  inWebMethod.ToString(), validTransactionStatusGroup),
-				null, null, "Id",
-				delegate(IDataReader reader)
-				{
-					if (transactions == null)
-					{
-						transactions = new List<string>();
-					}
-					transactions.Add(reader.GetString(0));
-				});
-			return transactions;
-		}
-		/// <summary>
-		/// Return a list of ids for all unprocessed documents that are associated with the specified transaction.
-		/// </summary>
-        public IList<string> GetAllUnprocessedDocumentDbIds(string transactionId)
-		{
-			return GetAllUnprocessedDocumentIds(transactionId, NodeMethod.Any);
-		}
+        {
+            List<string> transactions = null;
+            string validTransactionStatusGroup = GetDbInGroupFromFlagsEnum("Status", UNPROCESSED_STATUS);
+            DoSimpleQueryWithRowCallbackDelegate(TABLE_NAME,
+                string.Format("WebMethod = '{0}';{1}",
+                              inWebMethod.ToString(), validTransactionStatusGroup),
+                null, null, "Id",
+                delegate(IDataReader reader)
+                {
+                    if (transactions == null)
+                    {
+                        transactions = new List<string>();
+                    }
+                    transactions.Add(reader.GetString(0));
+                });
+            return transactions;
+        }
         /// <summary>
-		/// Return a list of ids for all unprocessed documents that are associated with the specified transaction.
-		/// </summary>
-		protected IList<string> GetAllUnprocessedDocumentIds(string transactionId, NodeMethod inWebMethod)
-		{
-			List<string> ids = null;
-			string validDocumentStatusGroup = GetDbInGroupFromFlagsEnum("d.Status", UNPROCESSED_STATUS);
+        /// Return a list of ids for all unprocessed documents that are associated with the specified transaction.
+        /// </summary>
+        public IList<string> GetAllUnprocessedDocumentDbIds(string transactionId)
+        {
+            return GetAllUnprocessedDocumentIds(transactionId, NodeMethod.Any);
+        }
+        /// <summary>
+        /// Return a list of ids for all unprocessed documents that are associated with the specified transaction.
+        /// </summary>
+        protected IList<string> GetAllUnprocessedDocumentIds(string transactionId, NodeMethod inWebMethod)
+        {
+            List<string> ids = null;
+            string validDocumentStatusGroup = GetDbInGroupFromFlagsEnum("d.Status", UNPROCESSED_STATUS);
             string whereColumnNames;
             if (inWebMethod == NodeMethod.Any)
             {
@@ -970,53 +1018,54 @@ namespace Windsor.Node2008.WNOS.Data {
                 whereColumnNames = string.Format("t.Id;t.WebMethod = '{0}';t.Id = d.TransactionId;{1}",
                                                  inWebMethod.ToString(), validDocumentStatusGroup);
             }
-			DoSimpleQueryWithRowCallbackDelegate(
+            DoSimpleQueryWithRowCallbackDelegate(
                 string.Format("{0} t;{1} d", TABLE_NAME, Windsor.Node2008.WNOS.Data.DocumentDao.TABLE_NAME),
                 whereColumnNames,
-				new object[] { transactionId }, null, "d.Id",
-				delegate(IDataReader reader)
-				{
-					if (ids == null)
-					{
-						ids = new List<string>();
-					}
-					ids.Add(reader.GetString(0));
-				});
-			return ids;
-		}
+                new object[] { transactionId }, null, "d.Id",
+                delegate(IDataReader reader)
+                {
+                    if (ids == null)
+                    {
+                        ids = new List<string>();
+                    }
+                    ids.Add(reader.GetString(0));
+                });
+            return ids;
+        }
         public DataService GetSubmitDocumentServiceForTransaction(string transactionId, out string flowName,
                                                                   out string operation)
-		{
-			string flowId = GetTransactionFlowId(transactionId, out flowName, out operation);
-			if (flowId == null) {
-				throw new ArgumentException(string.Format("Could not find a valid flow for the transaction \"{0}\"",
-														  transactionId));
-			}
-			return FlowDao.GetSubmitDocumentServiceForFlow(flowId, operation);
-		}
-		public DataService GetNotifyDocumentServiceForTransaction(string transactionId, out string flowName,
+        {
+            string flowId = GetTransactionFlowId(transactionId, out flowName, out operation);
+            if (flowId == null)
+            {
+                throw new ArgumentException(string.Format("Could not find a valid flow for the transaction \"{0}\"",
+                                                          transactionId));
+            }
+            return FlowDao.GetSubmitDocumentServiceForFlow(flowId, operation);
+        }
+        public DataService GetNotifyDocumentServiceForTransaction(string transactionId, out string flowName,
                                                                   out string operation)
-		{
-			string flowId = GetTransactionFlowId(transactionId, out flowName, out operation);
-			if (flowId == null)
-			{
-				throw new ArgumentException(string.Format("Could not find a valid flow for the transaction \"{0}\"",
-														  transactionId));
-			}
-			return FlowDao.GetNotifyDocumentServiceForFlow(flowId, operation);
-		}
-		public DataService GetQueryServiceForTransaction(string transactionId, out string flowName,
+        {
+            string flowId = GetTransactionFlowId(transactionId, out flowName, out operation);
+            if (flowId == null)
+            {
+                throw new ArgumentException(string.Format("Could not find a valid flow for the transaction \"{0}\"",
+                                                          transactionId));
+            }
+            return FlowDao.GetNotifyDocumentServiceForFlow(flowId, operation);
+        }
+        public DataService GetQueryServiceForTransaction(string transactionId, out string flowName,
                                                          out string operation, out string requestId)
-		{
-			return GetDataServiceForTransaction(transactionId, ServiceType.Query, out flowName, out operation,
+        {
+            return GetDataServiceForTransaction(transactionId, ServiceType.Query, out flowName, out operation,
                                                 out requestId);
-		}
-		public DataService GetSolicitServiceForTransaction(string transactionId, out string flowName,
+        }
+        public DataService GetSolicitServiceForTransaction(string transactionId, out string flowName,
                                                            out string operation, out string requestId)
-		{
-			return GetDataServiceForTransaction(transactionId, ServiceType.Solicit, out flowName, 
+        {
+            return GetDataServiceForTransaction(transactionId, ServiceType.Solicit, out flowName,
                                                 out operation, out requestId);
-		}
+        }
         public DataService GetTaskServiceForTransaction(string transactionId, out string flowName,
                                                         out string operation, out string requestId)
         {
@@ -1030,94 +1079,116 @@ namespace Windsor.Node2008.WNOS.Data {
                                                 out operation, out requestId);
         }
         private DataService GetDataServiceForTransaction(string transactionId, ServiceType serviceType,
-														 out string flowName, out string operation, 
+                                                         out string flowName, out string operation,
                                                          out string requestId)
-		{
-			requestId = RequestDao.GetRequestIdFromTransaction(transactionId);
-			if (requestId == null) {
-				throw new ArgumentException(string.Format("Could not find a valid request for the transaction \"{0}\"",
-														  transactionId));
-			}
-			string flowId = GetTransactionFlowId(transactionId, out flowName, out operation);
-			if (flowId == null) {
-				throw new ArgumentException(string.Format("Could not find a valid flow for the transaction \"{0}\"",
-														  transactionId));
-			}
-			return FlowDao.GetServiceForFlow(flowId, operation, serviceType);
-		}
+        {
+            requestId = RequestDao.GetRequestIdFromTransaction(transactionId);
+            if (requestId == null)
+            {
+                throw new ArgumentException(string.Format("Could not find a valid request for the transaction \"{0}\"",
+                                                          transactionId));
+            }
+            string flowId = GetTransactionFlowId(transactionId, out flowName, out operation);
+            if (flowId == null)
+            {
+                throw new ArgumentException(string.Format("Could not find a valid flow for the transaction \"{0}\"",
+                                                          transactionId));
+            }
+            return FlowDao.GetServiceForFlow(flowId, operation, serviceType);
+        }
         public void AddNotifications(string transactionId, IDictionary<string, TransactionNotificationType> notifications)
-		{
-			if (!CollectionUtils.IsNullOrEmpty(notifications)) {
-				foreach (KeyValuePair<string, TransactionNotificationType> pair in notifications) {
-					if (RowExists(NOTIFICATION_TABLE_NAME, "Id", "TransactionId;Uri",
-								   transactionId, pair.Key)) {
-						DoSimpleUpdateOne(NOTIFICATION_TABLE_NAME, "TransactionId;Uri",
-										  new object[] { transactionId, pair.Key },
-										  "Type", pair.Value.ToString());
-					} else {
-						DoInsert(NOTIFICATION_TABLE_NAME, "Id;TransactionId;Uri;Type",
-								 IdProvider.Get(), transactionId, pair.Key, pair.Value.ToString());
-					}
-				}
-			}
-		}
-		public void AddRecipients(string transactionId, IList<string> recipients) {
-			if (!CollectionUtils.IsNullOrEmpty(recipients)) {
-				foreach (string recipient in recipients) {
-					if (RowExists(RECIPIENT_TABLE_NAME, "Id", "TransactionId;Uri",
-								   transactionId, recipient)) {
-						// Don't do anything, already there
-					} else {
-						DoInsert(RECIPIENT_TABLE_NAME, "Id;TransactionId;Uri",
-								 IdProvider.Get(), transactionId, recipient);
-					}
-				}
-			}
-		}
-		public IDictionary<string, TransactionNotificationType> GetNotifications(string transactionId) {
-			IDictionary<string, TransactionNotificationType> notifications = null;
-			DoSimpleQueryWithRowCallbackDelegate(
-				NOTIFICATION_TABLE_NAME, "TransactionId", transactionId,
-				null, "Uri;Type",
-				delegate(IDataReader reader) {
-					if (notifications == null) {
-						notifications = new Dictionary<string, TransactionNotificationType>();
-					}
-					notifications.Add(reader.GetString(0),
-									  EnumUtils.ParseEnum<TransactionNotificationType>(reader.GetString(1)));
-				});
-			return notifications;
-		}
-		public IList<string> GetRecipients(string transactionId) {
-			List<string> recipients = null;
-			DoSimpleQueryWithRowCallbackDelegate(
-				RECIPIENT_TABLE_NAME, "TransactionId", transactionId,
-				null, "Uri",
-				delegate(IDataReader reader) {
-					if (recipients == null) {
-						recipients = new List<string>();
-					}
-					recipients.Add(reader.GetString(0));
-				});
-			return recipients;
-		}
-		public void SendStatusChangeNotifications(string transactionId) {
-			TransactionStatus status = this.GetTransactionStatus(transactionId);
-			SendStatusChangeNotifications(status);
-		}
-		public void SendStatusChangeNotifications(TransactionStatus status) {
-			IDictionary<string, TransactionNotificationType> notifications = GetNotifications(status.Id);
-			SendStatusChangeNotifications(status, notifications);
-		}
-		public void SendStatusChangeNotifications(TransactionStatus status,
-												  IDictionary<string, TransactionNotificationType> notifications) {
-			TransactionStatusChangeNotifier.Notify(status, notifications);
-		}
-		#endregion
+        {
+            if (!CollectionUtils.IsNullOrEmpty(notifications))
+            {
+                foreach (KeyValuePair<string, TransactionNotificationType> pair in notifications)
+                {
+                    if (RowExists(NOTIFICATION_TABLE_NAME, "Id", "TransactionId;Uri",
+                                   transactionId, pair.Key))
+                    {
+                        DoSimpleUpdateOne(NOTIFICATION_TABLE_NAME, "TransactionId;Uri",
+                                          new object[] { transactionId, pair.Key },
+                                          "Type", pair.Value.ToString());
+                    }
+                    else
+                    {
+                        DoInsert(NOTIFICATION_TABLE_NAME, "Id;TransactionId;Uri;Type",
+                                 IdProvider.Get(), transactionId, pair.Key, pair.Value.ToString());
+                    }
+                }
+            }
+        }
+        public void AddRecipients(string transactionId, IList<string> recipients)
+        {
+            if (!CollectionUtils.IsNullOrEmpty(recipients))
+            {
+                foreach (string recipient in recipients)
+                {
+                    if (RowExists(RECIPIENT_TABLE_NAME, "Id", "TransactionId;Uri",
+                                   transactionId, recipient))
+                    {
+                        // Don't do anything, already there
+                    }
+                    else
+                    {
+                        DoInsert(RECIPIENT_TABLE_NAME, "Id;TransactionId;Uri",
+                                 IdProvider.Get(), transactionId, recipient);
+                    }
+                }
+            }
+        }
+        public IDictionary<string, TransactionNotificationType> GetNotifications(string transactionId)
+        {
+            IDictionary<string, TransactionNotificationType> notifications = null;
+            DoSimpleQueryWithRowCallbackDelegate(
+                NOTIFICATION_TABLE_NAME, "TransactionId", transactionId,
+                null, "Uri;Type",
+                delegate(IDataReader reader)
+                {
+                    if (notifications == null)
+                    {
+                        notifications = new Dictionary<string, TransactionNotificationType>();
+                    }
+                    notifications.Add(reader.GetString(0),
+                                      EnumUtils.ParseEnum<TransactionNotificationType>(reader.GetString(1)));
+                });
+            return notifications;
+        }
+        public IList<string> GetRecipients(string transactionId)
+        {
+            List<string> recipients = null;
+            DoSimpleQueryWithRowCallbackDelegate(
+                RECIPIENT_TABLE_NAME, "TransactionId", transactionId,
+                null, "Uri",
+                delegate(IDataReader reader)
+                {
+                    if (recipients == null)
+                    {
+                        recipients = new List<string>();
+                    }
+                    recipients.Add(reader.GetString(0));
+                });
+            return recipients;
+        }
+        public void SendStatusChangeNotifications(string transactionId)
+        {
+            TransactionStatus status = this.GetTransactionStatus(transactionId);
+            SendStatusChangeNotifications(status);
+        }
+        public void SendStatusChangeNotifications(TransactionStatus status)
+        {
+            IDictionary<string, TransactionNotificationType> notifications = GetNotifications(status.Id);
+            SendStatusChangeNotifications(status, notifications);
+        }
+        public void SendStatusChangeNotifications(TransactionStatus status,
+                                                  IDictionary<string, TransactionNotificationType> notifications)
+        {
+            TransactionStatusChangeNotifier.Notify(status, notifications);
+        }
+        #endregion
 
-		#region Properties
+        #region Properties
 
-		#endregion
+        #endregion
 
         #region ITransactionDao Members
 
@@ -1166,9 +1237,9 @@ namespace Windsor.Node2008.WNOS.Data {
         /// <summary>
         /// Return all distinct operation names.
         /// </summary>
-        private const string MAP_TRANSACTION_TRACKING_COLUMNS = 
+        private const string MAP_TRANSACTION_TRACKING_COLUMNS =
             "t.Id;t.FlowId;t.Status;t.ModifiedBy;t.ModifiedOn;t.WebMethod";
-        private TransactionType MapTransactionTracking(IDataReader reader, 
+        private TransactionType MapTransactionTracking(IDataReader reader,
                                                        IDictionary<string, string> flowIdToNameMap,
                                                        IDictionary<string, string> userIdToNameMap)
         {
@@ -1193,7 +1264,7 @@ namespace Windsor.Node2008.WNOS.Data {
             transaction.TransactionType1 = StringUtils.GetStringOrNull(reader.GetString(index++));
             return transaction;
         }
-        public TransactionListType1 
+        public TransactionListType1
             DoTransactionTrackingQuery(ICollection<KeyValuePair<TransactionTrackingQueryParameter, object>> queryParameters)
         {
             List<object> whereValues;
@@ -1202,8 +1273,9 @@ namespace Windsor.Node2008.WNOS.Data {
                 ConstructTransactionTrackingWhereValues(queryParameters, out whereValues, out tableNames);
             List<TransactionType> list = null;
 
-            if ( !string.IsNullOrEmpty(whereColumns) ) {
-                IDictionary<string, string> flowIdToNameMap =_flowDao.GetAllFlowDisplayNames();
+            if (!string.IsNullOrEmpty(whereColumns))
+            {
+                IDictionary<string, string> flowIdToNameMap = _flowDao.GetAllFlowDisplayNames();
                 IDictionary<string, string> userIdToNameMap = _accountDao.GetUserIdToNameMap(true, string.Empty);
                 DoSimpleQueryWithRowCallbackDelegate(
                     tableNames, whereColumns.ToString(), whereValues, "t.ModifiedOn DESC",
@@ -1222,7 +1294,7 @@ namespace Windsor.Node2008.WNOS.Data {
             rtnList.Transaction = (list == null) ? null : list.ToArray();
             return rtnList;
         }
-        public TransactionCount 
+        public TransactionCount
             GetTransactionTrackingQueryCount(ICollection<KeyValuePair<TransactionTrackingQueryParameter, object>> queryParameters)
         {
             List<object> whereValues;
@@ -1238,7 +1310,7 @@ namespace Windsor.Node2008.WNOS.Data {
         }
         public TransactionDetailType DoTransactionTrackingDetail(string transactionId)
         {
-            KeyValuePair<TransactionTrackingQueryParameter, object>[] queryParameters = 
+            KeyValuePair<TransactionTrackingQueryParameter, object>[] queryParameters =
                 new KeyValuePair<TransactionTrackingQueryParameter, object>[] 
                 {
                     new KeyValuePair<TransactionTrackingQueryParameter, object>(TransactionTrackingQueryParameter.TransactionId,
@@ -1263,7 +1335,7 @@ namespace Windsor.Node2008.WNOS.Data {
             detail.DocumentList = GetTransactionTrackingDocuments(transactionId);
             return detail;
         }
-        protected Windsor.Node2008.WNOSDomain.TransactionTracking.ActivityType[] 
+        protected Windsor.Node2008.WNOSDomain.TransactionTracking.ActivityType[]
             GetTransactionTrackingActivities(string transactionId)
         {
             ICollection<Activity> activities = _activityDao.GetActivitiesForTransaction(transactionId, true);
@@ -1271,14 +1343,14 @@ namespace Windsor.Node2008.WNOS.Data {
             {
                 return null;
             }
-            List<Windsor.Node2008.WNOSDomain.TransactionTracking.ActivityType> activityTypes = 
+            List<Windsor.Node2008.WNOSDomain.TransactionTracking.ActivityType> activityTypes =
                 new List<Windsor.Node2008.WNOSDomain.TransactionTracking.ActivityType>(20);
             foreach (Activity activity in activities)
             {
                 string activityName = GetTransactionTrackingActivityName(activity);
                 foreach (ActivityEntry activityEntry in activity.Entries)
                 {
-                    Windsor.Node2008.WNOSDomain.TransactionTracking.ActivityType activityType = 
+                    Windsor.Node2008.WNOSDomain.TransactionTracking.ActivityType activityType =
                         new Windsor.Node2008.WNOSDomain.TransactionTracking.ActivityType();
                     activityType.ActivityName = activityName;
                     activityType.Message = activityEntry.Message;

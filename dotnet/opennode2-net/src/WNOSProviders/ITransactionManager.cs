@@ -143,7 +143,8 @@ namespace Windsor.Node2008.WNOSProviders
 
         EndpointVersionType GetTransactionEndpointVersionType(string transactionId);
 
-        IList<NodeTransaction> GetOutstandingNetworkTransactions(DateTime newerThan, IEnumerable<CommonTransactionStatusCode> notOutstandingCodes);
+        IList<NodeTransaction> GetOutstandingNetworkTransactions(DateTime newerThan, IEnumerable<string> getFlowNames,
+                                                                 IEnumerable<CommonTransactionStatusCode> notOutstandingCodes);
 
         string GetNetworkTransactionStatus(string localTransactionId, out CommonTransactionStatusCode status,
                                            out EndpointVersionType endpointVersion, out string endpointUrl);
