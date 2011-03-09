@@ -2,7 +2,7 @@
 <div id="footerTable">
     <div id="footerAlignment">
         <div style="float: left; width: 75%">
-            Node Admin by <a href="http://www.ecos.org/" target="_new">Environmental Council of the States</a>&nbsp;2009-2010©<%=VersionString%></div>
+            Node Admin by <a href="http://www.ecos.org/" target="_new">Environmental Council of the States</a>&nbsp;2009-2011©<%=VersionString%></div>
         <div style="float: right; width: 25%; text-align: right;">Support:&nbsp;<a href="mailto:<%=NodeAdminEmail%>">Node Administrator</a></div>
     </div>
 </div>

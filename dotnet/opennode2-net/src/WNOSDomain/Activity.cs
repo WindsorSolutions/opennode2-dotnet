@@ -100,7 +100,18 @@ namespace Windsor.Node2008.WNOSDomain
         public void AppendFormat(string message, params object[] args)
         {
             if (_entries == null) _entries = new List<ActivityEntry>();
-            _entries.Add(new ActivityEntry(string.Format(message, args)));
+            string formattedMessage = message;
+            if (!CollectionUtils.IsNullOrEmpty(args))
+            {
+                try
+                {
+                    formattedMessage = string.Format(message, args);
+                }
+                catch (Exception)
+                {
+                }
+            }
+            _entries.Add(new ActivityEntry(formattedMessage));
         }
 
         /// <summary>
