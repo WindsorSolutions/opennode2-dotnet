@@ -74,10 +74,10 @@ namespace Windsor.Node2008.WNOS.Logic
 
         new public void Init()
         {
-			base.Init();
-			
-			FieldNotInitializedException.ThrowIfNull(this, ref _transactionDao);
-			FieldNotInitializedException.ThrowIfNull(this, ref _documentManager);
+            base.Init();
+
+            FieldNotInitializedException.ThrowIfNull(this, ref _transactionDao);
+            FieldNotInitializedException.ThrowIfNull(this, ref _documentManager);
             FieldNotInitializedException.ThrowIfNull(this, ref _nodeEndpointClientFactory);
             FieldNotInitializedException.ThrowIfNull(this, ref _settingsProvider);
             FieldNotInitializedException.ThrowIfNull(this, ref _compressionHelper);
@@ -100,28 +100,30 @@ namespace Windsor.Node2008.WNOS.Logic
         }
 
         public TransactionStatus SetTransactionStatus(string transactionId, string userCreatorId,
-													  CommonTransactionStatusCode statusCode, 
-													  string statusDetail, bool sendStatusChangeNotifications)
+                                                      CommonTransactionStatusCode statusCode,
+                                                      string statusDetail, bool sendStatusChangeNotifications)
         {
-			return _transactionDao.SetTransactionStatus(transactionId, userCreatorId, statusCode, 
-														statusDetail, sendStatusChangeNotifications);
+            return _transactionDao.SetTransactionStatus(transactionId, userCreatorId, statusCode,
+                                                        statusDetail, sendStatusChangeNotifications);
         }
-        public TransactionStatus SetTransactionStatus(string transactionId, CommonTransactionStatusCode statusCode, 
-													  string statusDetail, bool sendStatusChangeNotifications)
+        public TransactionStatus SetTransactionStatus(string transactionId, CommonTransactionStatusCode statusCode,
+                                                      string statusDetail, bool sendStatusChangeNotifications)
         {
-			return _transactionDao.SetTransactionStatus(transactionId, statusCode, statusDetail,
-														sendStatusChangeNotifications);
+            return _transactionDao.SetTransactionStatus(transactionId, statusCode, statusDetail,
+                                                        sendStatusChangeNotifications);
         }
-        public TransactionStatus SetTransactionStatusNoThrow(string transactionId, CommonTransactionStatusCode statusCode, 
-															 string statusDetail, bool sendStatusChangeNotifications)
+        public TransactionStatus SetTransactionStatusNoThrow(string transactionId, CommonTransactionStatusCode statusCode,
+                                                             string statusDetail, bool sendStatusChangeNotifications)
         {
-			try {
-				return SetTransactionStatus(transactionId, statusCode, statusDetail, 
-											sendStatusChangeNotifications);
-			}
-			catch(Exception) {
-			}
-			return null;
+            try
+            {
+                return SetTransactionStatus(transactionId, statusCode, statusDetail,
+                                            sendStatusChangeNotifications);
+            }
+            catch (Exception)
+            {
+            }
+            return null;
         }
         public void SetNetworkIdStatus(string transactionId, CommonTransactionStatusCode statusCode)
         {
@@ -144,8 +146,10 @@ namespace Windsor.Node2008.WNOS.Logic
         }
         public TransactionStatus RefreshNetworkStatus(string transactionID, AdminVisit visit)
         {
+            ValidateByRole(visit, SystemRoleType.Program);
+
             NodeTransaction nodeTransaction;
-            using (INodeEndpointClient client = GetNetworkTransactionNodeClient(transactionID, visit,
+            using (INodeEndpointClient client = GetNetworkTransactionNodeClient(transactionID,
                                                                                 out nodeTransaction))
             {
                 return RefreshNetworkStatus(client, nodeTransaction);
@@ -155,10 +159,8 @@ namespace Windsor.Node2008.WNOS.Logic
         {
             return "NetworkDocuments" + transactionID;
         }
-        protected byte[] GetCachedNetworkTransactionDocuments(string transactionID, AdminVisit visit)
+        protected byte[] GetCachedNetworkTransactionDocuments(string transactionID)
         {
-            ValidateByRole(visit, SystemRoleType.Program);
-
             byte[] content = null;
             try
             {
@@ -201,9 +203,36 @@ namespace Windsor.Node2008.WNOS.Logic
         {
             return _transactionDao.DoTransactionTrackingDetail(transactionId);
         }
+        public IList<string> DownloadNetworkDocumentsAndAddToTransaction(string transactionID,
+                                                                         out CommonTransactionStatusCode outEndpointStatus)
+        {
+            // Download the documents, or pull them from the cache
+            byte[] content = DownloadNetworkDocumentsAsZipFile(transactionID);
+
+            outEndpointStatus = GetNetworkTransactionStatus(transactionID);
+
+            if (content == null)
+            {
+                return null;
+            }
+
+            IList<string> networkDocumentNames = _compressionHelper.GetFileNames(content);
+
+            IList<string> localDocumentNames = _documentManager.GetAllDocumentNames(transactionID);
+
+
+
+            return null;
+        }
         public byte[] DownloadNetworkDocumentsAsZipFile(string transactionID, AdminVisit visit)
         {
-            byte[] content = GetCachedNetworkTransactionDocuments(transactionID, visit);
+            ValidateByRole(visit, SystemRoleType.Program);
+
+            return DownloadNetworkDocumentsAsZipFile(transactionID);
+        }
+        public byte[] DownloadNetworkDocumentsAsZipFile(string transactionID)
+        {
+            byte[] content = GetCachedNetworkTransactionDocuments(transactionID);
             if (content != null)
             {
                 return content;
@@ -211,7 +240,8 @@ namespace Windsor.Node2008.WNOS.Logic
             NodeTransaction nodeTransaction;
             string[] documents;
             TransactionStatus status;
-            using (INodeEndpointClient client = GetNetworkTransactionNodeClient(transactionID, visit, 
+
+            using (INodeEndpointClient client = GetNetworkTransactionNodeClient(transactionID,
                                                                                 out nodeTransaction))
             {
                 status = RefreshNetworkStatus(client, nodeTransaction);
@@ -238,10 +268,10 @@ namespace Windsor.Node2008.WNOS.Logic
             }
             return content;
         }
-        protected INodeEndpointClient GetNetworkTransactionNodeClient(string transactionID, AdminVisit visit,
+        protected INodeEndpointClient GetNetworkTransactionNodeClient(string transactionID,
                                                                       out NodeTransaction nodeTransaction)
         {
-            nodeTransaction = Get(transactionID, visit);
+            nodeTransaction = Get(transactionID);
 
             if (nodeTransaction == null)
             {
@@ -254,21 +284,21 @@ namespace Windsor.Node2008.WNOS.Logic
 
             return _nodeEndpointClientFactory.Make(nodeTransaction.NetworkEndpointUrl, nodeTransaction.NetworkEndpointVersion);
         }
-        public TransactionStatus SetTransactionStatusIfNotStatus(string transactionId, CommonTransactionStatusCode statusCodeToSet, 
-																 string statusDetail, CommonTransactionStatusCode setIfNotStatusCodes,
-																 bool sendStatusChangeNotifications)
+        public TransactionStatus SetTransactionStatusIfNotStatus(string transactionId, CommonTransactionStatusCode statusCodeToSet,
+                                                                 string statusDetail, CommonTransactionStatusCode setIfNotStatusCodes,
+                                                                 bool sendStatusChangeNotifications)
         {
-			return _transactionDao.SetTransactionStatusIfNotStatus(transactionId, statusCodeToSet, statusDetail,
-																   setIfNotStatusCodes, sendStatusChangeNotifications);
+            return _transactionDao.SetTransactionStatusIfNotStatus(transactionId, statusCodeToSet, statusDetail,
+                                                                   setIfNotStatusCodes, sendStatusChangeNotifications);
         }
         public TransactionStatus GetTransactionStatus(string transactionID)
         {
-			return _transactionDao.GetTransactionStatus(transactionID);
+            return _transactionDao.GetTransactionStatus(transactionID);
         }
         public TransactionStatus GetTransactionStatus(string transactionId, out string flowId,
-													  out string operation, out NodeMethod webMethod)
+                                                      out string operation, out NodeMethod webMethod)
         {
-			return _transactionDao.GetTransactionStatus(transactionId, out flowId, out operation, out webMethod);
+            return _transactionDao.GetTransactionStatus(transactionId, out flowId, out operation, out webMethod);
         }
         public TransactionStatus GetTransactionStatusByNetworkId(string networkId, out string flowId,
                                                       out string operation, out NodeMethod webMethod)
@@ -276,16 +306,16 @@ namespace Windsor.Node2008.WNOS.Logic
             return _transactionDao.GetTransactionStatusByNetworkId(networkId, out flowId, out operation, out webMethod);
         }
         public TransactionStatus GetTransactionStatusAndFlowName(string transactionId, out string flowName,
-													             out string operation, out NodeMethod webMethod,
+                                                                 out string operation, out NodeMethod webMethod,
                                                                  out EndpointVersionType endpointVersion)
         {
-			return _transactionDao.GetTransactionStatusAndFlowName(transactionId, out flowName, out operation, 
+            return _transactionDao.GetTransactionStatusAndFlowName(transactionId, out flowName, out operation,
                                                                    out webMethod, out endpointVersion);
         }
-		public NodeTransaction GetTransaction(string transactionId, CommonTransactionStatusCode returnDocsWithStatus)
-		{
-			return _transactionDao.GetTransaction(transactionId, returnDocsWithStatus);
-		}
+        public NodeTransaction GetTransaction(string transactionId, CommonTransactionStatusCode returnDocsWithStatus)
+        {
+            return _transactionDao.GetTransaction(transactionId, returnDocsWithStatus);
+        }
         public EndpointVersionType GetTransactionEndpointVersionType(string transactionId)
         {
             return _transactionDao.GetTransactionEndpointVersionType(transactionId);
@@ -294,15 +324,16 @@ namespace Windsor.Node2008.WNOS.Logic
         {
             return _transactionDao.GetTransaction(transactionId);
         }
-        public string CreateTransaction(NodeMethod webMethod, EndpointVersionType endpointVersion, string flowId, 
+        public string CreateTransaction(NodeMethod webMethod, EndpointVersionType endpointVersion, string flowId,
                                         string operation, string userCreatorId,
-										CommonTransactionStatusCode statusCode, string statusDetail,
-										IDictionary<string, TransactionNotificationType> notifications, 
-                                        IList<string> recipients, bool sendStatusChangeNotifications) {
+                                        CommonTransactionStatusCode statusCode, string statusDetail,
+                                        IDictionary<string, TransactionNotificationType> notifications,
+                                        IList<string> recipients, bool sendStatusChangeNotifications)
+        {
             return _transactionDao.CreateTransaction(webMethod, endpointVersion, flowId, operation, userCreatorId,
-													 statusCode, statusDetail, notifications, recipients,
-													 sendStatusChangeNotifications);
-		}
+                                                     statusCode, statusDetail, notifications, recipients,
+                                                     sendStatusChangeNotifications);
+        }
         public string QueueTask(string flowName, string serviceName, string taskCreatorId,
                                 ByIndexOrNameDictionary<string> taskParameters)
         {
@@ -338,16 +369,20 @@ namespace Windsor.Node2008.WNOS.Logic
         }
         public IList<string> GetAllUnprocessedSubmitTransactionIds()
         {
-			return _transactionDao.GetAllUnprocessedSubmitTransactionIds();
-		}
+            return _transactionDao.GetAllUnprocessedSubmitTransactionIds();
+        }
         public IList<string> GetAllUnprocessedDocumentDbIds(string transactionId)
         {
             return _transactionDao.GetAllUnprocessedDocumentDbIds(transactionId);
-		}
-		public IList<string> GetAllUnprocessedNotifyTransactionIds()
-		{
-			return _transactionDao.GetAllUnprocessedNotifyTransactionIds();
-		}
+        }
+        public IList<string> GetAllDocumentNames(string transactionId)
+        {
+            return _transactionDao.GetAllUnprocessedDocumentDbIds(transactionId);
+        }
+        public IList<string> GetAllUnprocessedNotifyTransactionIds()
+        {
+            return _transactionDao.GetAllUnprocessedNotifyTransactionIds();
+        }
         public DataService GetSubmitDocumentServiceForTransaction(string transactionId, out string flowName,
                                                                   out string operation)
         {
@@ -356,22 +391,22 @@ namespace Windsor.Node2008.WNOS.Logic
         }
         public DataService GetNotifyDocumentServiceForTransaction(string transactionId, out string flowName,
                                                                   out string operation)
-		{
+        {
             return _transactionDao.GetNotifyDocumentServiceForTransaction(transactionId, out flowName,
                                                                           out operation);
-		}
+        }
         public DataService GetQueryServiceForTransaction(string transactionId, out string flowName,
                                                          out string operation, out string requestId)
-		{
-			return _transactionDao.GetQueryServiceForTransaction(transactionId, out flowName,
+        {
+            return _transactionDao.GetQueryServiceForTransaction(transactionId, out flowName,
                                                                  out operation, out requestId);
-		}
-		public DataService GetSolicitServiceForTransaction(string transactionId, out string flowName,
+        }
+        public DataService GetSolicitServiceForTransaction(string transactionId, out string flowName,
                                                            out string operation, out string requestId)
-		{
-			return _transactionDao.GetSolicitServiceForTransaction(transactionId, out flowName,
+        {
+            return _transactionDao.GetSolicitServiceForTransaction(transactionId, out flowName,
                                                                    out operation, out requestId);
-		}
+        }
         public DataService GetTaskServiceForTransaction(string transactionId, out string flowName,
                                                         out string operation, out string requestId)
         {
@@ -387,7 +422,7 @@ namespace Windsor.Node2008.WNOS.Logic
         public IList<string> GetAllUnprocessedSolicitTransactionIds()
         {
             return _transactionDao.GetAllUnprocessedSolicitTransactionIds();
-		}
+        }
         public IList<string> GetAllUnprocessedTaskTransactionIds()
         {
             return _transactionDao.GetAllUnprocessedTaskTransactionIds();
@@ -397,17 +432,20 @@ namespace Windsor.Node2008.WNOS.Logic
             return _transactionDao.GetAllUnprocessedExecuteTransactionIds();
         }
         public void AddNotifications(string transactionId, IDictionary<string, TransactionNotificationType> notifications)
-		{
-			_transactionDao.AddNotifications(transactionId, notifications);
+        {
+            _transactionDao.AddNotifications(transactionId, notifications);
         }
-        public void AddRecipients(string transactionId, IList<string> recipients) {
-			_transactionDao.AddRecipients(transactionId, recipients);
+        public void AddRecipients(string transactionId, IList<string> recipients)
+        {
+            _transactionDao.AddRecipients(transactionId, recipients);
         }
-        public IDictionary<string, TransactionNotificationType> GetNotifications(string transactionId) {
-			return _transactionDao.GetNotifications(transactionId);
+        public IDictionary<string, TransactionNotificationType> GetNotifications(string transactionId)
+        {
+            return _transactionDao.GetNotifications(transactionId);
         }
-        public IList<string> GetRecipients(string transactionId) {
-			return _transactionDao.GetRecipients(transactionId);
+        public IList<string> GetRecipients(string transactionId)
+        {
+            return _transactionDao.GetRecipients(transactionId);
         }
         public string GetTransactionUsername(string transactionId)
         {
@@ -559,10 +597,11 @@ namespace Windsor.Node2008.WNOS.Logic
         }
         protected string DoTransactionNotificationSubmit(NodeMethod nodeMethod, string filePath, TransactionStatus transactionStatus,
                                                    string flowName, string flowOperation,
-                                                   string notificationAddress, 
+                                                   string notificationAddress,
                                                    EndpointVersionType endpointVersion)
         {
-            if ( string.IsNullOrEmpty(notificationAddress) ) {
+            if (string.IsNullOrEmpty(notificationAddress))
+            {
                 return string.Format("Got empty recipient address for transaction \"{0}\"",
                                      transactionStatus.Id);
             }
@@ -621,7 +660,7 @@ namespace Windsor.Node2008.WNOS.Logic
         {
             try
             {
-                _notificationManager.DoRemoteTransactionStatusNotifications(nodeMethod, filePath, transactionStatus, 
+                _notificationManager.DoRemoteTransactionStatusNotifications(nodeMethod, filePath, transactionStatus,
                                                                             flowName, flowOperation,
                                                                             recipientAddress);
                 return string.Format("Attempted to email transaction \"{0}\" status to address \"{1}\"",
@@ -654,7 +693,7 @@ namespace Windsor.Node2008.WNOS.Logic
                     }
                 }
                 return string.Format("Sent notification status for transaction \"{0}\" of \"{1}\" to url \"{2}\" (\"{3}\") for flow \"{4}.\"",
-                                     status.Id.ToString(), status.Status.ToString(), recipientAddress, endpointVersion.ToString(), 
+                                     status.Id.ToString(), status.Status.ToString(), recipientAddress, endpointVersion.ToString(),
                                      flowName);
             }
             catch (Exception e)
@@ -723,6 +762,10 @@ namespace Windsor.Node2008.WNOS.Logic
         {
             ValidateByRole(visit, SystemRoleType.Program);
 
+            return Get(transactionID);
+        }
+        public NodeTransaction Get(string transactionID)
+        {
             if ((transactionID == null) || string.IsNullOrEmpty(transactionID) ||
                 string.IsNullOrEmpty(transactionID))
             {
@@ -763,25 +806,34 @@ namespace Windsor.Node2008.WNOS.Logic
         {
             return _transactionDao.GetNetworkTransactionStatus(localTransactionId, out status, out endpointVersion, out endpointUrl);
         }
+        public CommonTransactionStatusCode GetNetworkTransactionStatus(string localTransactionId)
+        {
+            return _transactionDao.GetNetworkTransactionStatus(localTransactionId);
+        }
         #region Properties
-		public IDocumentManagerEx DocumentManager {
-			get {
-				return _documentManager;
-			}
-			set {
-				_documentManager = value;
-			}
-		}
+        public IDocumentManagerEx DocumentManager
+        {
+            get
+            {
+                return _documentManager;
+            }
+            set
+            {
+                _documentManager = value;
+            }
+        }
 
         public ITransactionDao TransactionDao
         {
-			get {
-				return _transactionDao;
-			}
-			set {
-				_transactionDao = value;
-			}
-		}
+            get
+            {
+                return _transactionDao;
+            }
+            set
+            {
+                _transactionDao = value;
+            }
+        }
         public IScheduleDao ScheduleDao
         {
             get

@@ -40,13 +40,15 @@ using Ionic.Zip;
 
 namespace Windsor.Commons.Compression
 {
-	public class DotNetZipHelper {
-		#region ICompressionHelper Members
+    public class DotNetZipHelper
+    {
+        #region ICompressionHelper Members
 
-		public void UncompressDirectory(string sourceFilePath, string targetDirPath) {
+        public void UncompressDirectory(string sourceFilePath, string targetDirPath)
+        {
 
             UncompressDirectory(sourceFilePath, targetDirPath, null);
-		}
+        }
 
         public void UncompressDirectory(string sourceFilePath, string targetDirPath,
                                         string password)
@@ -103,19 +105,21 @@ namespace Windsor.Commons.Compression
 
         public void UncompressDirectory(byte[] content, string targetDirPath)
         {
-			if (targetDirPath == null) {
-				throw new ApplicationException("Invalid input parameter. Source directory does not exist.");
-			}
+            if (targetDirPath == null)
+            {
+                throw new ApplicationException("Invalid input parameter. Source directory does not exist.");
+            }
 
-			if (!Directory.Exists(targetDirPath)) {
-				Directory.CreateDirectory(targetDirPath);
-			}
+            if (!Directory.Exists(targetDirPath))
+            {
+                Directory.CreateDirectory(targetDirPath);
+            }
 
             using (ZipFile zip = ZipFile.Read(content))
             {
-				zip.ExtractAll(targetDirPath);
-			}
-		}
+                zip.ExtractAll(targetDirPath);
+            }
+        }
         public bool IsCompressed(string filePath)
         {
             try
@@ -170,9 +174,12 @@ namespace Windsor.Commons.Compression
         }
         public byte[] UncompressWithPassword(byte[] content, string password)
         {
-			using (ZipFile zip = ZipFile.Read(content)) {
-				foreach (ZipEntry e in zip) {
-					using (MemoryStream memStreamOut = new MemoryStream()) {
+            using (ZipFile zip = ZipFile.Read(content))
+            {
+                foreach (ZipEntry e in zip)
+                {
+                    using (MemoryStream memStreamOut = new MemoryStream())
+                    {
                         if (password == null)
                         {
                             e.Extract(memStreamOut);
@@ -182,14 +189,14 @@ namespace Windsor.Commons.Compression
                             ValidateIsPasswordProtected(e);
                             e.ExtractWithPassword(memStreamOut, password);
                         }
-						memStreamOut.Flush();
-						memStreamOut.Close();
-						return memStreamOut.ToArray();	// Only return the first file
-					}
-				}
-				throw new ArgumentException("Input zip file does not contain any files.");
-			}
-		}
+                        memStreamOut.Flush();
+                        memStreamOut.Close();
+                        return memStreamOut.ToArray();	// Only return the first file
+                    }
+                }
+                throw new ArgumentException("Input zip file does not contain any files.");
+            }
+        }
         private void ValidateIsPasswordProtected(ZipEntry e)
         {
             if (!e.UsesEncryption)
@@ -197,9 +204,10 @@ namespace Windsor.Commons.Compression
                 throw new InvalidDataException("Input zip stream is not encrypted");
             }
         }
-		public void Uncompress(byte[] content, string targetFilePath) {
+        public void Uncompress(byte[] content, string targetFilePath)
+        {
             UncompressWithPassword(content, targetFilePath, null);
-		}
+        }
         public void Uncompress(string zipFilePath, string contentFilePath)
         {
             UncompressWithPassword(zipFilePath, contentFilePath, null);
@@ -300,7 +308,7 @@ namespace Windsor.Commons.Compression
         public void CompressDirectory(string targetFilePath, string sourceDirPath)
         {
             CompressDirectory(targetFilePath, sourceDirPath, string.Empty);
-		}
+        }
         public void CompressDirectory(string targetFilePath, string sourceDirPath, string directoryPathInArchive)
         {
             using (ZipFile zip = new ZipFile(targetFilePath))
@@ -310,27 +318,53 @@ namespace Windsor.Commons.Compression
             }
         }
 
-		public byte[] Compress(string nameOfFile, byte[] content) {
-			using (MemoryStream memStreamOut = new MemoryStream()) {
-				using (MemoryStream memStreamIn = new MemoryStream(content, false)) {
-					using (ZipFile zip = new ZipFile(memStreamOut)) {
-						zip.AddFileStream(nameOfFile, string.Empty, memStreamIn);
-						zip.Save();
-					}
-				}
-				memStreamOut.Flush();
-				return memStreamOut.ToArray();	// Only return the first file
-			}
-		}
-		public void Compress(string nameOfFile, byte[] content, string targetFilePath) {
-			using (MemoryStream memStreamIn = new MemoryStream(content, false)) {
-				using (ZipFile zip = new ZipFile(targetFilePath)) {
-					zip.AddFileStream(nameOfFile, string.Empty, memStreamIn);
-					zip.Save();
-				}
-			}
-		}
+        public byte[] Compress(string nameOfFile, byte[] content)
+        {
+            using (MemoryStream memStreamOut = new MemoryStream())
+            {
+                using (MemoryStream memStreamIn = new MemoryStream(content, false))
+                {
+                    using (ZipFile zip = new ZipFile(memStreamOut))
+                    {
+                        zip.AddFileStream(nameOfFile, string.Empty, memStreamIn);
+                        zip.Save();
+                    }
+                }
+                memStreamOut.Flush();
+                return memStreamOut.ToArray();	// Only return the first file
+            }
+        }
+        public void Compress(string nameOfFile, byte[] content, string targetFilePath)
+        {
+            using (MemoryStream memStreamIn = new MemoryStream(content, false))
+            {
+                using (ZipFile zip = new ZipFile(targetFilePath))
+                {
+                    zip.AddFileStream(nameOfFile, string.Empty, memStreamIn);
+                    zip.Save();
+                }
+            }
+        }
+        public IList<string> GetFileNames(byte[] content)
+        {
+            using (MemoryStream memStreamIn = new MemoryStream(content))
+            {
+                using (ZipFile zip = new ZipFile(memStreamIn))
+                {
+                    List<string> fileNames = new List<string>(zip.EntryFileNames);
+                    return fileNames;
+                }
+            }
+        }
+        public IList<string> GetFileNames(string filePath)
+        {
+            using (ZipFile zip = new ZipFile(filePath))
+            {
+                List<string> fileNames = new List<string>(zip.EntryFileNames);
+                return fileNames;
+            }
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

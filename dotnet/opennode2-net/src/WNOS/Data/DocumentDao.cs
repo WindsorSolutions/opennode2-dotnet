@@ -65,36 +65,38 @@ namespace Windsor.Node2008.WNOS.Data
         new public void Init()
         {
             base.Init();
-		}
+        }
 
         #endregion
 
         #region Methods
 
-		/// <summary>
-		/// Create the input list of documents in the DB as a transaction.
-		/// </summary>
+        /// <summary>
+        /// Create the input list of documents in the DB as a transaction.
+        /// </summary>
         public void CreateDocuments(string transactionId, IList<Document> documents)
         {
-			TransactionTemplate.Execute(delegate {
-				for (int i = 0; i < documents.Count; ++i) {
-					CreateDocument(transactionId, documents[i]);
-				}
-				return null;
-			});
+            TransactionTemplate.Execute(delegate
+            {
+                for (int i = 0; i < documents.Count; ++i)
+                {
+                    CreateDocument(transactionId, documents[i]);
+                }
+                return null;
+            });
         }
 
-		public void CreateDocument(string transactionId, CommonTransactionStatusCode documentStatus,
-								   string documentStatusDetail, Document document)
+        public void CreateDocument(string transactionId, CommonTransactionStatusCode documentStatus,
+                                   string documentStatusDetail, Document document)
         {
 
             CreateDocument(transactionId, document.Id, document.Type, document.DocumentName,
                            document.DocumentId, documentStatus, documentStatusDetail);
         }
-		public void CreateDocument(string transactionId, string id, CommonContentType documentType,
-								   string documentName, string documentId, CommonTransactionStatusCode documentStatus,
-								   string documentStatusDetail)
-		{
+        public void CreateDocument(string transactionId, string id, CommonContentType documentType,
+                                   string documentName, string documentId, CommonTransactionStatusCode documentStatus,
+                                   string documentStatusDetail)
+        {
             try
             {
                 if (string.IsNullOrEmpty(id))
@@ -112,98 +114,128 @@ namespace Windsor.Node2008.WNOS.Data
                 throw new ArgumentException(string.Format("The document \"{0}\" already exists for the transaction \"{1}\"",
                                                           documentName ?? string.Empty, transactionId), e);
             }
-		}
-		public void CreateDocument(string transactionId, Document document)
+        }
+        public void CreateDocument(string transactionId, Document document)
         {
-			CreateDocument(transactionId, CommonTransactionStatusCode.Received,
-						   string.Empty, document);
+            CreateDocument(transactionId, CommonTransactionStatusCode.Received,
+                           string.Empty, document);
         }
         public void DeleteDocuments(string transactionId, IList<string> ids)
         {
-			DoDeleteWhereIn(TABLE_NAME, "Id", ids);
+            DoDeleteWhereIn(TABLE_NAME, "Id", ids);
         }
         public void DeleteAllDocuments(string transactionId)
         {
             DoDeleteWhereIn(TABLE_NAME, "TransactionId", new object[] { transactionId });
         }
         public void DeleteDocument(string transactionId, string id)
-		{
-			DeleteDocuments(transactionId, new string[] { id });
-		}
+        {
+            DeleteDocuments(transactionId, new string[] { id });
+        }
         public IList<Document> GetDocuments(string transactionId, IList<Document> requestedDocs)
         {
 
-			if ( CollectionUtils.IsNullOrEmpty(requestedDocs) ) {
-				return GetAllDocuments(transactionId);
-			}
-			List<Document> rtnDocuments = new List<Document>();
-			foreach (Document document in requestedDocs) {
-				Document rtnDoc;
-				if ( !string.IsNullOrEmpty(document.DocumentId) ) {
-					rtnDoc = GetDocumentByDocumentId(transactionId, document.DocumentId);
-					if ( rtnDoc == null ) {
-						throw new FileNotFoundException(string.Format("The document was not found with the id \"{0}\" for the transaction \"{1}\"",
+            if (CollectionUtils.IsNullOrEmpty(requestedDocs))
+            {
+                return GetAllDocuments(transactionId);
+            }
+            List<Document> rtnDocuments = new List<Document>();
+            foreach (Document document in requestedDocs)
+            {
+                Document rtnDoc;
+                if (!string.IsNullOrEmpty(document.DocumentId))
+                {
+                    rtnDoc = GetDocumentByDocumentId(transactionId, document.DocumentId);
+                    if (rtnDoc == null)
+                    {
+                        throw new FileNotFoundException(string.Format("The document was not found with the id \"{0}\" for the transaction \"{1}\"",
                                                                       document.DocumentId, transactionId), document.DocumentId);
-					}
-				} else if ( !string.IsNullOrEmpty(document.DocumentName) ) {
-					rtnDoc = GetDocumentByDocumentName(transactionId, document.DocumentName);
-					if ( rtnDoc == null ) {
-						throw new FileNotFoundException(string.Format("The document was not found with the name \"{0}\" for the transaction \"{1}\"",
+                    }
+                }
+                else if (!string.IsNullOrEmpty(document.DocumentName))
+                {
+                    rtnDoc = GetDocumentByDocumentName(transactionId, document.DocumentName);
+                    if (rtnDoc == null)
+                    {
+                        throw new FileNotFoundException(string.Format("The document was not found with the name \"{0}\" for the transaction \"{1}\"",
                                                                       document.DocumentName, transactionId), document.DocumentName);
-					}
-				} else {
-					throw new ArgumentException(string.Format("Input document does not have a valid id or name: {0}", document));
-				}
-				rtnDocuments.Add(rtnDoc);
-			}
-			return rtnDocuments;
+                    }
+                }
+                else
+                {
+                    throw new ArgumentException(string.Format("Input document does not have a valid id or name: {0}", document));
+                }
+                rtnDocuments.Add(rtnDoc);
+            }
+            return rtnDocuments;
         }
-        public IList<Document> GetAllDocuments(string transactionId) {
-			List<Document> documents = null;
-			DoSimpleQueryWithRowCallbackDelegate(
-				TABLE_NAME, "TransactionId", transactionId,
-				null, MAP_DOCUMENT_COLUMNS,
-				delegate(IDataReader reader) 
-				{
-					Document document = MapDocument(reader);
-					if ( documents == null ) {
-						documents = new List<Document>();
-					}
-					documents.Add(document);
-				});
-			return documents;
+        public IList<Document> GetAllDocuments(string transactionId)
+        {
+            List<Document> documents = null;
+            DoSimpleQueryWithRowCallbackDelegate(
+                TABLE_NAME, "TransactionId", transactionId,
+                null, MAP_DOCUMENT_COLUMNS,
+                delegate(IDataReader reader)
+                {
+                    Document document = MapDocument(reader);
+                    if (documents == null)
+                    {
+                        documents = new List<Document>();
+                    }
+                    documents.Add(document);
+                });
+            return documents;
         }
-        public Document GetDocumentByDocumentId(string transactionId, string documentId) {
-			try {
-				Document document = 
-					DoSimpleQueryForObjectDelegate<Document>(
-						TABLE_NAME, "TransactionId;DocumentId",
-						new object[] { transactionId, documentId }, MAP_DOCUMENT_COLUMNS,
-						delegate(IDataReader reader, int rowNum) 
-						{
-							return MapDocument(reader);
-						});
-				return document;
-			}
-			catch(Spring.Dao.IncorrectResultSizeDataAccessException) {
-				return null; // Not found
-			}
+        public IList<string> GetAllDocumentNames(string transactionId)
+        {
+            List<string> names = null;
+            DoSimpleQueryWithRowCallbackDelegate(
+                TABLE_NAME, "TransactionId",
+                new object[] { transactionId },
+                null, "DocumentName",
+                delegate(IDataReader reader)
+                {
+                    CollectionUtils.Add(reader.GetString(0), ref names);
+                });
+            return names;
         }
-        public Document GetDocumentByDocumentName(string transactionId, string documentName) {
-			try {
-				Document document = 
-					DoSimpleQueryForObjectDelegate<Document>(
-						TABLE_NAME, "TransactionId;DocumentName",
-						new object[] { transactionId, documentName }, MAP_DOCUMENT_COLUMNS,
-						delegate(IDataReader reader, int rowNum) 
-						{
-							return MapDocument(reader);
-						});
-				return document;
-			}
-			catch(Spring.Dao.IncorrectResultSizeDataAccessException) {
-				return null; // Not found
-			}
+        public Document GetDocumentByDocumentId(string transactionId, string documentId)
+        {
+            try
+            {
+                Document document =
+                    DoSimpleQueryForObjectDelegate<Document>(
+                        TABLE_NAME, "TransactionId;DocumentId",
+                        new object[] { transactionId, documentId }, MAP_DOCUMENT_COLUMNS,
+                        delegate(IDataReader reader, int rowNum)
+                        {
+                            return MapDocument(reader);
+                        });
+                return document;
+            }
+            catch (Spring.Dao.IncorrectResultSizeDataAccessException)
+            {
+                return null; // Not found
+            }
+        }
+        public Document GetDocumentByDocumentName(string transactionId, string documentName)
+        {
+            try
+            {
+                Document document =
+                    DoSimpleQueryForObjectDelegate<Document>(
+                        TABLE_NAME, "TransactionId;DocumentName",
+                        new object[] { transactionId, documentName }, MAP_DOCUMENT_COLUMNS,
+                        delegate(IDataReader reader, int rowNum)
+                        {
+                            return MapDocument(reader);
+                        });
+                return document;
+            }
+            catch (Spring.Dao.IncorrectResultSizeDataAccessException)
+            {
+                return null; // Not found
+            }
         }
         public IList<string> GetDocumentIds(string transactionId)
         {
@@ -224,20 +256,22 @@ namespace Windsor.Node2008.WNOS.Data
         }
         public Document GetDocumentByDbId(string transactionId, string id)
         {
-			try {
-				Document document = 
-					DoSimpleQueryForObjectDelegate<Document>(
-						TABLE_NAME, "TransactionId;Id",
-						new object[] { transactionId, id }, MAP_DOCUMENT_COLUMNS,
-						delegate(IDataReader reader, int rowNum) 
-						{
-							return MapDocument(reader);
-						});
-				return document;
-			}
-			catch(Spring.Dao.IncorrectResultSizeDataAccessException) {
-				return null; // Not found
-			}
+            try
+            {
+                Document document =
+                    DoSimpleQueryForObjectDelegate<Document>(
+                        TABLE_NAME, "TransactionId;Id",
+                        new object[] { transactionId, id }, MAP_DOCUMENT_COLUMNS,
+                        delegate(IDataReader reader, int rowNum)
+                        {
+                            return MapDocument(reader);
+                        });
+                return document;
+            }
+            catch (Spring.Dao.IncorrectResultSizeDataAccessException)
+            {
+                return null; // Not found
+            }
         }
         public CommonTransactionStatusCode GetDocumentStatus(string transactionId, string id,
                                                              out string statusDetail)
@@ -256,42 +290,44 @@ namespace Windsor.Node2008.WNOS.Data
             statusDetail = statusDetailPriv;
             return statusPriv;
         }
-        public void SetDocumentStatus(string transactionID, string id, CommonTransactionStatusCode status, 
+        public void SetDocumentStatus(string transactionID, string id, CommonTransactionStatusCode status,
                                       string statusDetail)
         {
             DoSimpleUpdateOne(TABLE_NAME, "TransactionId;Id", new object[] { transactionID, id },
                         "Status;StatusDetail",
                         status.ToString(), statusDetail ?? string.Empty);
         }
-        public IList<Document> GetDocumentsByStatus(string transactionId, CommonTransactionStatusCode returnDocsWithStatus) {
-            
-			List<Document> documents = null;
+        public IList<Document> GetDocumentsByStatus(string transactionId, CommonTransactionStatusCode returnDocsWithStatus)
+        {
+
+            List<Document> documents = null;
             string whereColumns = "TransactionId;" + GetDbInGroupFromFlagsEnum("Status", returnDocsWithStatus);
-			DoSimpleQueryWithRowCallbackDelegate(
-                TABLE_NAME, whereColumns, 
-				new object[] { transactionId },
-				null, MAP_DOCUMENT_COLUMNS,
-				delegate(IDataReader reader) 
-				{
-					Document document = MapDocument(reader);
-					if ( documents == null ) {
-						documents = new List<Document>();
-					}
-					documents.Add(document);
-				});
-			return documents;
+            DoSimpleQueryWithRowCallbackDelegate(
+                TABLE_NAME, whereColumns,
+                new object[] { transactionId },
+                null, MAP_DOCUMENT_COLUMNS,
+                delegate(IDataReader reader)
+                {
+                    Document document = MapDocument(reader);
+                    if (documents == null)
+                    {
+                        documents = new List<Document>();
+                    }
+                    documents.Add(document);
+                });
+            return documents;
         }
 
         private const string MAP_DOCUMENT_COLUMNS = "Id;DocumentName;Type;DocumentId";
-		private Document MapDocument(IDataReader reader)
-		{
-			Document document = new Document();
+        private Document MapDocument(IDataReader reader)
+        {
+            Document document = new Document();
             document.Id = reader.GetString(0);
-			document.DocumentName = reader.GetString(1);
-			document.Type = EnumUtils.ParseEnum<CommonContentType>(reader.GetString(2));
-			document.DocumentId = reader.GetString(3);
-			return document;
-		}
+            document.DocumentName = reader.GetString(1);
+            document.Type = EnumUtils.ParseEnum<CommonContentType>(reader.GetString(2));
+            document.DocumentId = reader.GetString(3);
+            return document;
+        }
         #endregion
 
         #region Properties

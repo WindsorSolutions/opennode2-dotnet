@@ -71,6 +71,7 @@
     <Compile Include="..\AssemblyInfo\AssemblyInfo.cs">
       <Link>AssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="BaseSubmitProxyPlugin.cs" />
     <Compile Include="IAppendAuditLogEvent.cs" />
     <Compile Include="IAuditLogEventGenerator.cs" />
     <Compile Include="IExecuteProcessor.cs" />

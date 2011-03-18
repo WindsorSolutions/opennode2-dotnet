@@ -48,6 +48,22 @@ namespace Windsor.Commons.NodeClient
     [Microsoft.Web.Services3.Messaging.SoapActor("*")]
     public partial class ENClient20 : Microsoft.Web.Services3.WebServicesClientProtocol
     {
+        protected override WebRequest GetWebRequest(Uri uri)
+        {
+            WebRequest webRequest = base.GetWebRequest(uri);
+            return webRequest;
+        }
+        protected override WebResponse GetWebResponse(WebRequest request)
+        {
+            WebResponse webResponse = base.GetWebResponse(request);
+            return webResponse;
+        }
+
+        protected override XmlWriter GetWriterForMessage(SoapClientMessage message, int bufferSize)
+        {
+            return base.GetWriterForMessage(message, bufferSize);
+        }
+
         protected override XmlReader GetReaderForMessage(SoapClientMessage message, int bufferSize)
         {
             // This is a bug fix for Java-based web services that respond with non-MTOM encoded responses
@@ -87,6 +103,15 @@ namespace Windsor.Commons.NodeClient
         {
             return e.Message.Contains("The message with Action") && e.Message.Contains("due to a ContractFilter mismatch at the EndpointDispatcher");
         }
+        private static bool IsToggleMTOMException(Exception e)
+        {
+            if ((e is InvalidOperationException) ||
+                e.Message.Contains("System.Web.Services.Protocols.SoapHeaderException"))
+            {
+                return true;
+            }
+            return false;
+        }
 
         public AuthenticateResponse Authenticate(Authenticate Authenticate1)
         {
@@ -118,10 +143,17 @@ namespace Windsor.Commons.NodeClient
             {
                 results = this.Invoke("AuthenticateHeader", new object[] { Authenticate1 });
             }
-            catch (InvalidOperationException)
+            catch (Exception e)
             {
-                this.RequireMtom = !this.RequireMtom;
-                results = this.Invoke("AuthenticateHeader", new object[] { Authenticate1 });
+                if (IsToggleMTOMException(e))
+                {
+                    this.RequireMtom = !this.RequireMtom;
+                    results = this.Invoke("AuthenticateHeader", new object[] { Authenticate1 });
+                }
+                else
+                {
+                    throw;
+                }
             }
             return ((AuthenticateResponse)(results[0]));
         }
@@ -136,10 +168,17 @@ namespace Windsor.Commons.NodeClient
             {
                 results = this.Invoke("AuthenticateNoHeader", new object[] { Authenticate1 });
             }
-            catch (InvalidOperationException)
+            catch (Exception e)
             {
-                this.RequireMtom = !this.RequireMtom;
-                results = this.Invoke("AuthenticateNoHeader", new object[] { Authenticate1 });
+                if (IsToggleMTOMException(e))
+                {
+                    this.RequireMtom = !this.RequireMtom;
+                    results = this.Invoke("AuthenticateNoHeader", new object[] { Authenticate1 });
+                }
+                else
+                {
+                    throw;
+                }
             }
             return ((AuthenticateResponse)(results[0]));
         }
@@ -212,10 +251,17 @@ namespace Windsor.Commons.NodeClient
             {
                 results = this.Invoke("GetStatusHeader", new object[] { GetStatus1 });
             }
-            catch (InvalidOperationException)
+            catch (Exception e)
             {
-                this.RequireMtom = !this.RequireMtom;
-                results = this.Invoke("GetStatusHeader", new object[] { GetStatus1 });
+                if (IsToggleMTOMException(e))
+                {
+                    this.RequireMtom = !this.RequireMtom;
+                    results = this.Invoke("GetStatusHeader", new object[] { GetStatus1 });
+                }
+                else
+                {
+                    throw;
+                }
             }
             return ((StatusResponseType)(results[0]));
         }
@@ -230,10 +276,17 @@ namespace Windsor.Commons.NodeClient
             {
                 results = this.Invoke("GetStatusNoHeader", new object[] { GetStatus1 });
             }
-            catch (InvalidOperationException)
+            catch (Exception e)
             {
-                this.RequireMtom = !this.RequireMtom;
-                results = this.Invoke("GetStatusNoHeader", new object[] { GetStatus1 });
+                if (IsToggleMTOMException(e))
+                {
+                    this.RequireMtom = !this.RequireMtom;
+                    results = this.Invoke("GetStatusNoHeader", new object[] { GetStatus1 });
+                }
+                else
+                {
+                    throw;
+                }
             }
             return ((StatusResponseType)(results[0]));
         }
@@ -267,10 +320,17 @@ namespace Windsor.Commons.NodeClient
             {
                 results = this.Invoke("NotifyHeader", new object[] { Notify1 });
             }
-            catch (InvalidOperationException)
+            catch (Exception e)
             {
-                this.RequireMtom = !this.RequireMtom;
-                results = this.Invoke("NotifyHeader", new object[] { Notify1 });
+                if (IsToggleMTOMException(e))
+                {
+                    this.RequireMtom = !this.RequireMtom;
+                    results = this.Invoke("NotifyHeader", new object[] { Notify1 });
+                }
+                else
+                {
+                    throw;
+                }
             }
             return ((StatusResponseType)(results[0]));
         }
@@ -285,10 +345,17 @@ namespace Windsor.Commons.NodeClient
             {
                 results = this.Invoke("NotifyNoHeader", new object[] { Notify1 });
             }
-            catch (InvalidOperationException)
+            catch (Exception e)
             {
-                this.RequireMtom = !this.RequireMtom;
-                results = this.Invoke("NotifyNoHeader", new object[] { Notify1 });
+                if (IsToggleMTOMException(e))
+                {
+                    this.RequireMtom = !this.RequireMtom;
+                    results = this.Invoke("NotifyNoHeader", new object[] { Notify1 });
+                }
+                else
+                {
+                    throw;
+                }
             }
             return ((StatusResponseType)(results[0]));
         }
@@ -363,10 +430,17 @@ namespace Windsor.Commons.NodeClient
             {
                 results = this.Invoke("QueryHeader", new object[] { Query1 });
             }
-            catch (InvalidOperationException)
+            catch (Exception e)
             {
-                this.RequireMtom = !this.RequireMtom;
-                results = this.Invoke("QueryHeader", new object[] { Query1 });
+                if (IsToggleMTOMException(e))
+                {
+                    this.RequireMtom = !this.RequireMtom;
+                    results = this.Invoke("QueryHeader", new object[] { Query1 });
+                }
+                else
+                {
+                    throw;
+                }
             }
             return ((ResultSetType)(results[0]));
         }
@@ -381,10 +455,17 @@ namespace Windsor.Commons.NodeClient
             {
                 results = this.Invoke("QueryNoHeader", new object[] { Query1 });
             }
-            catch (InvalidOperationException)
+            catch (Exception e)
             {
-                this.RequireMtom = !this.RequireMtom;
-                results = this.Invoke("QueryNoHeader", new object[] { Query1 });
+                if (IsToggleMTOMException(e))
+                {
+                    this.RequireMtom = !this.RequireMtom;
+                    results = this.Invoke("QueryNoHeader", new object[] { Query1 });
+                }
+                else
+                {
+                    throw;
+                }
             }
             return ((ResultSetType)(results[0]));
         }
@@ -418,10 +499,17 @@ namespace Windsor.Commons.NodeClient
             {
                 results = this.Invoke("SolicitHeader", new object[] { Solicit1 });
             }
-            catch (InvalidOperationException)
+            catch (Exception e)
             {
-                this.RequireMtom = !this.RequireMtom;
-                results = this.Invoke("SolicitHeader", new object[] { Solicit1 });
+                if (IsToggleMTOMException(e))
+                {
+                    this.RequireMtom = !this.RequireMtom;
+                    results = this.Invoke("SolicitHeader", new object[] { Solicit1 });
+                }
+                else
+                {
+                    throw;
+                }
             }
             return ((StatusResponseType)(results[0]));
         }
@@ -436,10 +524,17 @@ namespace Windsor.Commons.NodeClient
             {
                 results = this.Invoke("SolicitNoHeader", new object[] { Solicit1 });
             }
-            catch (InvalidOperationException)
+            catch (Exception e)
             {
-                this.RequireMtom = !this.RequireMtom;
-                results = this.Invoke("SolicitNoHeader", new object[] { Solicit1 });
+                if (IsToggleMTOMException(e))
+                {
+                    this.RequireMtom = !this.RequireMtom;
+                    results = this.Invoke("SolicitNoHeader", new object[] { Solicit1 });
+                }
+                else
+                {
+                    throw;
+                }
             }
             return ((StatusResponseType)(results[0]));
         }
@@ -473,10 +568,17 @@ namespace Windsor.Commons.NodeClient
             {
                 results = this.Invoke("ExecuteHeader", new object[] { Execute1 });
             }
-            catch (InvalidOperationException)
+            catch (Exception e)
             {
-                this.RequireMtom = !this.RequireMtom;
-                results = this.Invoke("ExecuteHeader", new object[] { Execute1 });
+                if (IsToggleMTOMException(e))
+                {
+                    this.RequireMtom = !this.RequireMtom;
+                    results = this.Invoke("ExecuteHeader", new object[] { Execute1 });
+                }
+                else
+                {
+                    throw;
+                }
             }
             return ((ExecuteResponse)(results[0]));
         }
@@ -491,10 +593,17 @@ namespace Windsor.Commons.NodeClient
             {
                 results = this.Invoke("ExecuteNoHeader", new object[] { Execute1 });
             }
-            catch (InvalidOperationException)
+            catch (Exception e)
             {
-                this.RequireMtom = !this.RequireMtom;
-                results = this.Invoke("ExecuteNoHeader", new object[] { Execute1 });
+                if (IsToggleMTOMException(e))
+                {
+                    this.RequireMtom = !this.RequireMtom;
+                    results = this.Invoke("ExecuteNoHeader", new object[] { Execute1 });
+                }
+                else
+                {
+                    throw;
+                }
             }
             return ((ExecuteResponse)(results[0]));
         }
@@ -528,10 +637,17 @@ namespace Windsor.Commons.NodeClient
             {
                 results = this.Invoke("NodePingHeader", new object[] { NodePing1 });
             }
-            catch (InvalidOperationException)
+            catch (Exception e)
             {
-                this.RequireMtom = !this.RequireMtom;
-                results = this.Invoke("NodePingHeader", new object[] { NodePing1 });
+                if (IsToggleMTOMException(e))
+                {
+                    this.RequireMtom = !this.RequireMtom;
+                    results = this.Invoke("NodePingHeader", new object[] { NodePing1 });
+                }
+                else
+                {
+                    throw;
+                }
             }
             return ((NodePingResponse)(results[0]));
         }
@@ -546,10 +662,17 @@ namespace Windsor.Commons.NodeClient
             {
                 results = this.Invoke("NodePingNoHeader", new object[] { NodePing1 });
             }
-            catch (InvalidOperationException)
+            catch (Exception e)
             {
-                this.RequireMtom = !this.RequireMtom;
-                results = this.Invoke("NodePingNoHeader", new object[] { NodePing1 });
+                if (IsToggleMTOMException(e))
+                {
+                    this.RequireMtom = !this.RequireMtom;
+                    results = this.Invoke("NodePingNoHeader", new object[] { NodePing1 });
+                }
+                else
+                {
+                    throw;
+                }
             }
             return ((NodePingResponse)(results[0]));
         }
@@ -583,10 +706,17 @@ namespace Windsor.Commons.NodeClient
             {
                 results = this.Invoke("GetServicesHeader", new object[] { GetServices1 });
             }
-            catch (InvalidOperationException)
+            catch (Exception e)
             {
-                this.RequireMtom = !this.RequireMtom;
-                results = this.Invoke("GetServicesHeader", new object[] { GetServices1 });
+                if (IsToggleMTOMException(e))
+                {
+                    this.RequireMtom = !this.RequireMtom;
+                    results = this.Invoke("GetServicesHeader", new object[] { GetServices1 });
+                }
+                else
+                {
+                    throw;
+                }
             }
             return ((GenericXmlType)(results[0]));
         }
@@ -601,10 +731,17 @@ namespace Windsor.Commons.NodeClient
             {
                 results = this.Invoke("GetServicesNoHeader", new object[] { GetServices1 });
             }
-            catch (InvalidOperationException)
+            catch (Exception e)
             {
-                this.RequireMtom = !this.RequireMtom;
-                results = this.Invoke("GetServicesNoHeader", new object[] { GetServices1 });
+                if (IsToggleMTOMException(e))
+                {
+                    this.RequireMtom = !this.RequireMtom;
+                    results = this.Invoke("GetServicesNoHeader", new object[] { GetServices1 });
+                }
+                else
+                {
+                    throw;
+                }
             }
             return ((GenericXmlType)(results[0]));
         }
@@ -2421,7 +2558,6 @@ namespace Windsor.Commons.NodeClient
         {
             // Remove all WS-Addressing and WS-Security header info
             envelope.Header.RemoveAll();
-
             return Microsoft.Web.Services3.SoapFilterResult.Continue;
         }
     }

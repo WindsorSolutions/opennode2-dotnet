@@ -57,5 +57,6 @@ namespace Windsor.Node2008.WNOS.Data
         IList<Document> GetDocumentsByStatus(string transactionId, CommonTransactionStatusCode returnDocsWithStatus);
         CommonTransactionStatusCode GetDocumentStatus(string transactionId, string id, out string statusDetail);
         void SetDocumentStatus(string transactionID, string id, CommonTransactionStatusCode status, string statusDetail);
+        IList<string> GetAllDocumentNames(string transactionId);
     }
 }

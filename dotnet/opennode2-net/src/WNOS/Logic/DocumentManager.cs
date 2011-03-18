@@ -175,6 +175,10 @@ namespace Windsor.Node2008.WNOS.Logic
             }
 			return documents;
 		}
+        public IList<string> GetAllDocumentNames(string transactionId)
+        {
+            return _documentDao.GetAllDocumentNames(transactionId);
+        }
         public IList<Document> GetDocumentsByStatus(string transactionId,
                                                     CommonTransactionStatusCode returnDocsWithStatus)
         {

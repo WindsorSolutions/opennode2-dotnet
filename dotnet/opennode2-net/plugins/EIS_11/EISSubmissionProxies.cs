@@ -233,6 +233,39 @@ namespace Windsor.Node2008.WNOSPlugin.EIS_11
         }
     }
     [Serializable]
+    public class EISSubmitFacilityInventory : EISSubmissionProxy
+    {
+        protected override DataCategory DataCategory
+        {
+            get
+            {
+                return DataCategory.FacilityInventory;
+            }
+        }
+    }
+    [Serializable]
+    public class EISSubmitPointEmissions : EISSubmissionProxy
+    {
+        protected override DataCategory DataCategory
+        {
+            get
+            {
+                return DataCategory.Point;
+            }
+        }
+    }
+    [Serializable]
+    public class EISSubmitEventEmissions : EISSubmissionProxy
+    {
+        protected override DataCategory DataCategory
+        {
+            get
+            {
+                return DataCategory.Event;
+            }
+        }
+    }
+    [Serializable]
     public class EISSubmitNonPointEmissions : EISSubmissionProxy
     {
         protected override DataCategory DataCategory

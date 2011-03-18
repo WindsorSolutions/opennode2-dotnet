@@ -33,23 +33,38 @@ POSSIBILITY OF SUCH DAMAGE.
 
 using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Text;
+using System.Xml;
+using System.IO;
+using System.Data;
+using System.Data.Common;
+using System.Data.ProviderBase;
+using Windsor.Node2008.WNOSPlugin;
+using System.Diagnostics;
+using System.Reflection;
+using Windsor.Node2008.WNOSUtility;
+using Windsor.Node2008.WNOSDomain;
+using Windsor.Node2008.WNOSProviders;
+using Spring.Data.Common;
+using Spring.Transaction.Support;
+using Spring.Data.Core;
+using System.Runtime.InteropServices;
+using System.ComponentModel;
+using Windsor.Commons.Core;
+using Windsor.Commons.Logging;
+using Windsor.Commons.Spring;
+using Windsor.Commons.XsdOrm;
 using Windsor.Commons.NodeDomain;
 
-namespace Windsor.Node2008.WNOSPlugin
+namespace Windsor.Node2008.WNOSPlugin.RCRA_51
 {
-    /// <summary>
-    /// Descend your custom plugin implementation from this interface (and the BaseWNOSPlugin
-    /// class) to implement Submit operations for the Node.  See the BaseWNOSPlugin class
-    /// for a quick summary of implementing a custom plugin.
-    /// </summary>
-    public interface ISubmitProcessorEx : ISubmitProcessor
+    [Serializable]
+    public class RCRASubmitProxy : SubmitProxyPluginEx
     {
-        /// <summary>
-        /// ProcessSubmitAndReturnStatus method called at runtime to handle Submit operations for the node and
-        /// return processing status for the Submit transaction.  Must return CommonTransactionStatusCode.Received,
-        /// CommonTransactionStatusCode.Pending, or CommonTransactionStatusCode.Processing to continue processing.
-        /// </summary>
-        CommonTransactionStatusCode ProcessSubmitAndReturnStatus(string transactionId, out string statusDetail);
+        public RCRASubmitProxy()
+        {
+
+        }
     }
 }

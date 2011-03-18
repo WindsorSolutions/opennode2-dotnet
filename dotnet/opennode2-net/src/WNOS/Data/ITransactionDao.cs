@@ -46,6 +46,7 @@ namespace Windsor.Node2008.WNOS.Data
         void AddRecipients(string transactionId, IList<string> recipients);
         string CreateNotifyTransaction(string flowId, string operation, string userCreatorId, CommonTransactionStatusCode statusCode, string statusDetail, ComplexNotification notification, EndpointVersionType endpointVersion, bool sendStatusChangeNotifications);
         string CreateTransaction(NodeMethod webMethod, EndpointVersionType endpointVersion, string flowId, string operation, string userCreatorId, CommonTransactionStatusCode statusCode, string statusDetail, IDictionary<string, TransactionNotificationType> notifications, IList<string> recipients, bool sendStatusChangeNotifications);
+        IList<string> GetAllDocumentNames(string transactionId);
         IList<string> GetAllUnprocessedDocumentDbIds(string transactionId);
         IList<string> GetAllUnprocessedExecuteTransactionIds();
         IList<string> GetAllUnprocessedNotifyTransactionIds();
@@ -111,5 +112,6 @@ namespace Windsor.Node2008.WNOS.Data
         TransactionListType1 DoTransactionTrackingQuery(ICollection<KeyValuePair<TransactionTrackingQueryParameter, object>> queryParameters);
         TransactionCount GetTransactionTrackingQueryCount(ICollection<KeyValuePair<TransactionTrackingQueryParameter, object>> queryParameters);
         TransactionDetailType DoTransactionTrackingDetail(string transactionId);
+        CommonTransactionStatusCode GetNetworkTransactionStatus(string localTransactionId);
     }
 }

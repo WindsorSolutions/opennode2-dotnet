@@ -101,15 +101,16 @@ namespace Windsor.Node2008.WNOS.Data
 				EnumUtils.ParseEnum<ServiceRequestAuthorizationType>(reader.GetString(index++));
 			service.ModifiedById = reader.GetString(index++);
 			service.ModifiedOn = reader.GetDateTime(index++);
-            if (!reader.IsDBNull(index))
-            {
-                service.PublishFlags =
-                    EnumUtils.ParseEnum<DataServicePublishFlags>(reader.GetString(index++));
-            }
-            else
-            {
-                service.PublishFlags = DataServicePublishFlags.PublishToEndpointVersion11And20;
-            }
+            service.PublishFlags = DataServicePublishFlags.PublishToEndpointVersion11And20;
+            //if (!reader.IsDBNull(index))
+            //{
+            //    service.PublishFlags =
+            //        EnumUtils.ParseEnum<DataServicePublishFlags>(reader.GetString(index++));
+            //}
+            //else
+            //{
+            //    service.PublishFlags = DataServicePublishFlags.PublishToEndpointVersion11And20;
+            //}
 			return service;
 		}
 
@@ -436,7 +437,7 @@ namespace Windsor.Node2008.WNOS.Data
                         DoInsert(TABLE_NAME, "Id;Name;FlowId;IsActive;ServiceType;Implementor;AuthLevel;ModifiedBy;ModifiedOn;PublishFlags",
                                  id, item.Name, item.FlowId, DbUtils.ToDbBool(item.IsActive),
                                  item.Type.ToString(), implementerString, item.MinAuthLevel.ToString(),
-                                 item.ModifiedById, now, item.PublishFlags);
+                                 item.ModifiedById, now, item.PublishFlags.ToString());
                         item.Id = id;
                     }
                     else
@@ -445,7 +446,7 @@ namespace Windsor.Node2008.WNOS.Data
                                           "Name;FlowId;IsActive;ServiceType;Implementor;AuthLevel;ModifiedBy;ModifiedOn;PublishFlags",
                                           item.Name, item.FlowId, DbUtils.ToDbBool(item.IsActive),
                                           item.Type.ToString(), implementerString, item.MinAuthLevel.ToString(),
-                                          item.ModifiedById, now, item.PublishFlags);
+                                          item.ModifiedById, now, item.PublishFlags.ToString());
                     }
                     SaveServiceArgs(item);
                     SaveServiceDataSources(item);

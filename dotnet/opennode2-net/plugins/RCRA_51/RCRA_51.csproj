@@ -82,6 +82,7 @@
     <Compile Include="RCRAGetHazardousWasteCorrectiveActionData.cs" />
     <Compile Include="RCRAGetHazardousWasteHandlerData.cs" />
     <Compile Include="RCRAGetHazardousWastePermitData.cs" />
+    <Compile Include="RCRASubmitProxy.cs" />
     <Compile Include="xml_schema\RCRA_v5_1.cs" />
     <Compile Include="xml_schema\RCRA_v5_1_2.cs" />
   </ItemGroup>

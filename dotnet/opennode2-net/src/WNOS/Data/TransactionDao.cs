@@ -362,6 +362,10 @@ namespace Windsor.Node2008.WNOS.Data
                         return reader.GetString(0);
                     });
         }
+        public IList<string> GetAllDocumentNames(string transactionId)
+        {
+            return _documentManager.GetAllDocumentNames(transactionId);
+        }
         /// <summary>
         /// Return the username associated with this transaction.
         /// </summary>
@@ -839,6 +843,14 @@ namespace Windsor.Node2008.WNOS.Data
                     transactions.Add(MapTransaction(reader));
                 });
             return transactions;
+        }
+        public CommonTransactionStatusCode GetNetworkTransactionStatus(string localTransactionId)
+        {
+            CommonTransactionStatusCode status;
+            EndpointVersionType endpointVersion;
+            string endpointUrl;
+            GetNetworkTransactionStatus(localTransactionId, out status, out endpointVersion, out endpointUrl);
+            return status;
         }
         public string GetNetworkTransactionStatus(string localTransactionId, out CommonTransactionStatusCode status,
                                                   out EndpointVersionType endpointVersion, out string endpointUrl)

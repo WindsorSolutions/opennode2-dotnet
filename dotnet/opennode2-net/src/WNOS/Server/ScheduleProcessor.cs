@@ -675,7 +675,17 @@ namespace Windsor.Node2008.WNOS.Server
                 LogActivity(activity, "Calling ProcessSubmit()");
                 try
                 {
-                    submitPlugin.ProcessSubmit(transactionStatus.Id);
+                    ISubmitProcessorEx submitPluginEx = submitPlugin as ISubmitProcessorEx;
+                    if (submitPluginEx != null)
+                    {
+                        string submitTransactionStatusDetail;
+                        submitPluginEx.ProcessSubmitAndReturnStatus(transactionStatus.Id,
+                                                                    out submitTransactionStatusDetail);
+                    }
+                    else
+                    {
+                        submitPlugin.ProcessSubmit(transactionStatus.Id);
+                    }
                 }
                 finally
                 {

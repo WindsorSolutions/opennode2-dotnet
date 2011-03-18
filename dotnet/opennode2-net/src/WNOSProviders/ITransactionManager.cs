@@ -75,6 +75,8 @@ namespace Windsor.Node2008.WNOSProviders
 		/// Return the current status of a transaction.
 		/// </summary>
 		TransactionStatus GetTransactionStatus(string transactionID);
+
+        CommonTransactionStatusCode GetNetworkTransactionStatus(string localTransactionId);
         
         /// <summary>
         /// Return the current status of a transaction, along with other relevant information.
@@ -154,5 +156,15 @@ namespace Windsor.Node2008.WNOSProviders
         TransactionListType1 DoTransactionTrackingQuery(ICollection<KeyValuePair<TransactionTrackingQueryParameter, object>> queryParameters);
         TransactionCount GetTransactionTrackingQueryCount(ICollection<KeyValuePair<TransactionTrackingQueryParameter, object>> queryParameters);
         TransactionDetailType DoTransactionTrackingDetail(string transactionId);
+
+        byte[] DownloadNetworkDocumentsAsZipFile(string transactionID);
+        /// <summary>
+        /// Downloads and adds any network transaction documents to the local transaction, and 
+        /// returns a list of the document names added, if any.
+        /// </summary>
+        IList<string> DownloadNetworkDocumentsAndAddToTransaction(string transactionID,
+                                                                  out CommonTransactionStatusCode outEndpointStatus);
+
+        IList<string> GetAllDocumentNames(string transactionId);
     }
 }

@@ -164,5 +164,7 @@ namespace Windsor.Node2008.WNOSProviders
 		/// for the given transaction.
         /// </summary>
 		void RollbackDocument(string transactionId, string id);
+
+        IList<string> GetAllDocumentNames(string transactionId);
     }
 }

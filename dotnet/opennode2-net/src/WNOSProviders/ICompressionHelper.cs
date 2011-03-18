@@ -124,5 +124,12 @@ namespace Windsor.Node2008.WNOSProviders
         /// and save the zip file to targetFilePath.
         /// </summary>
         void Compress(string nameOfFile, byte[] content, string targetFilePath);
+
+        /// <summary>
+        /// Return a list of file names within the zip archive.
+        /// </summary>
+        IList<string> GetFileNames(byte[] content);
+
+        IList<string> GetFileNames(string filePath);
     }
 }
