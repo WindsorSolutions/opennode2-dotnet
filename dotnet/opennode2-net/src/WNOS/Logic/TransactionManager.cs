@@ -206,7 +206,10 @@ namespace Windsor.Node2008.WNOS.Logic
         public IList<string> DownloadNetworkDocumentsAndAddToTransaction(string transactionID,
                                                                          out CommonTransactionStatusCode outEndpointStatus)
         {
+            List<string> addedDocumentIds = null;
+
             // Download the documents, or pull them from the cache
+            // TODO: Get file types
             byte[] content = DownloadNetworkDocumentsAsZipFile(transactionID);
 
             outEndpointStatus = GetNetworkTransactionStatus(transactionID);
@@ -220,9 +223,25 @@ namespace Windsor.Node2008.WNOS.Logic
 
             IList<string> localDocumentNames = _documentManager.GetAllDocumentNames(transactionID);
 
+            foreach (string networkFileName in networkDocumentNames)
+            {
+                if (!CollectionUtils.Contains(localDocumentNames, networkFileName,
+                                              StringComparison.OrdinalIgnoreCase))
+                {
+                    byte[] networkFileContent = 
+                        _compressionHelper.UncompressFile(content, networkFileName);
+                    CommonContentType contentType =
+                        CommonContentAndFormatProvider.GetFileTypeFromName(networkFileName);
+                    Document document = 
+                        new Document(networkFileName, contentType, networkFileContent);
+                    string documentId = 
+                        _documentManager.AddDocument(transactionID, CommonTransactionStatusCode.Completed,
+                                                     null, document);
+                    CollectionUtils.Add(documentId, ref addedDocumentIds);
+               }
+            }
 
-
-            return null;
+            return addedDocumentIds;
         }
         public byte[] DownloadNetworkDocumentsAsZipFile(string transactionID, AdminVisit visit)
         {

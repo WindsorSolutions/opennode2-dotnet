@@ -30,6 +30,7 @@ ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 */
 #endregion
+#define BYPASS_LOGIN
 
 using System;
 using System.Data;
@@ -41,6 +42,9 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
+using System.Collections.Generic;
+using System.Threading;
+using System.Diagnostics;
 
 using Common.Logging;
 
@@ -80,6 +84,10 @@ namespace Windsor.Node2008.Admin
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (CheckToBypassLogin())
+            {
+                return;
+            }
             if (!Page.IsPostBack)
             {
                 if (Request.QueryString["a"] != null)
@@ -101,6 +109,41 @@ namespace Windsor.Node2008.Admin
             }
         }
 
+        protected bool CheckToBypassLogin()
+        {
+#if BYPASS_LOGIN
+            if (Debugger.IsAttached)
+            {
+                UserAccount userAccount = null;
+                long endTicks = DateTime.Now.Ticks + TimeSpan.FromSeconds(30).Ticks;
+                Exception ex = null;
+                do
+                {
+                    try
+                    {
+                        userAccount = _accountService.Get("cdx", null);
+                        break;
+                    }
+                    catch (Exception e)
+                    {
+                        ex = e;
+                        Thread.Sleep(250);
+                    }
+                } while (endTicks > DateTime.Now.Ticks);
+                if (userAccount == null)
+                {
+                    throw ex;
+                }
+                AdminVisit visit = new AdminVisit(userAccount, _visitProvider.GetRequestorIP());
+
+                Session[Constants.AUTH_SESSION_NAME] = visit;
+
+                FormsAuthentication.RedirectFromLoginPage(userAccount.NaasAccount, false);
+                return true;
+            }
+#endif // BYPASS_LOGIN
+            return false;
+        }
         protected void DoLogin(object sender, EventArgs e)
         {
             try

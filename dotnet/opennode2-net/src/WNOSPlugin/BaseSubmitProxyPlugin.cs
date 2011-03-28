@@ -171,14 +171,23 @@ namespace Windsor.Node2008.WNOSPlugin
 
             if (_didSubmit)
             {
-                CommonTransactionStatusCode networkTransactionStatus;
-
-                AddPartnerTransactionDocumentsToTransaction(transactionId, out networkTransactionStatus);
-
-                if ((networkTransactionStatus == CommonTransactionStatusCode.Failed) ||
-                    (networkTransactionStatus == CommonTransactionStatusCode.Completed))
+                try
                 {
-                    return networkTransactionStatus;
+                    CommonTransactionStatusCode networkTransactionStatus;
+
+                    AddPartnerTransactionDocumentsToTransaction(transactionId, out networkTransactionStatus);
+
+                    if ((networkTransactionStatus == CommonTransactionStatusCode.Failed) ||
+                        (networkTransactionStatus == CommonTransactionStatusCode.Completed))
+                    {
+                        return networkTransactionStatus;
+                    }
+                }
+                catch (Exception)
+                {
+                    // Will try again on next submit call
+                    // TODO: Need to check for network exception and try again
+                    throw;
                 }
             }
             else

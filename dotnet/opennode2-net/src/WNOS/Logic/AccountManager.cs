@@ -464,7 +464,10 @@ namespace Windsor.Node2008.WNOS.Logic
         {
             try
             {
-                ValidateByRole(visit, SystemRoleType.Program);
+                if (visit != null)
+                {
+                    ValidateByRole(visit, SystemRoleType.Program);
+                }
 
                 UserAccount account = _accountDao.GetByName(username);
                 if (account == null)
@@ -472,13 +475,13 @@ namespace Windsor.Node2008.WNOS.Logic
                     throw new ArgumentException(string.Format("The user \"{0}\" was not found in the database", username));
                 }
                 ActivityManager.LogAudit(NodeMethod.None, null, visit, "{0} got user account: {1}.",
-                                         visit.Account.NaasAccount, account.ToString());
+                                         (visit != null) ? visit.Account.NaasAccount : null, account.ToString());
                 return account;
             }
             catch (Exception e)
             {
                 ActivityManager.LogError(NodeMethod.None, null, e, visit, "{0} failed to get user account: {1}.",
-                                         visit.Account.NaasAccount, username);
+                                         (visit != null) ? visit.Account.NaasAccount : null, username);
                 throw;
             }
         }

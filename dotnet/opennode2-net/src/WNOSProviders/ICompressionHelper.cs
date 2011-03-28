@@ -78,6 +78,11 @@ namespace Windsor.Node2008.WNOSProviders
         void Uncompress(byte[] content, string targetFilePath);
 
         /// <summary>
+        /// Uncompress a single file's byte content.
+        /// </summary>
+        byte[] UncompressFile(byte[] content, string fileName);
+
+        /// <summary>
         /// Same as Uncompress(), but continues to uncompress until a non zip
         /// entry is reached (zip within zip).
         /// </summary>

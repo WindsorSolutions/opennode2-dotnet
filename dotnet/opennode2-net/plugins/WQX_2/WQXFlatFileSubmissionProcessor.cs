@@ -816,15 +816,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                 }
 
                 // What is this: Taxon Citation ID?
-                result.ResultAnalyticalMethod = new ResultAnalyticalMethodDataType();
-                result.ResultAnalyticalMethod.MethodIdentifier = GetResultString(parser, "Result Analytical Method ID");
-                result.ResultAnalyticalMethod.MethodIdentifierContext = GetResultString(parser, "Result Analytical Method Context");
-                if (string.IsNullOrEmpty(result.ResultAnalyticalMethod.MethodIdentifier) &&
-                     string.IsNullOrEmpty(result.ResultAnalyticalMethod.MethodIdentifierContext))
-                {
-                    result.ResultAnalyticalMethod = null;
-                }
-
+                result.ResultAnalyticalMethod = GetResultAnalyticalMethod(parser, "Result Analytical Method ID", "Result Analytical Method Context",
+                                                                          _resultAnalyticalMethodLookups);
                 result.ResultLabInformation = new ResultLabInformationDataType();
                 result.ResultLabInformation.AnalysisStartDate = GetResultDate(parser, "Analysis Start Date", out result.ResultLabInformation.AnalysisStartDateSpecified);
                 result.ResultLabInformation.ResultDetectionQuantitationLimit = GetDetectionQuantitationLimit(parser, "Result Detection/Quantitation Limit Type",
@@ -951,15 +944,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                 result.ResultDescription.StatisticalBaseCode = GetResultString(parser, "Result Statistical Base Code");
                 result.ResultDescription.ResultValueTypeName = GetResultString(parser, "Result Value Type Name");
 
-                result.ResultAnalyticalMethod = new ResultAnalyticalMethodDataType();
-                result.ResultAnalyticalMethod.MethodIdentifier = GetResultString(parser, "Result Analytical Method Identifier");
-                result.ResultAnalyticalMethod.MethodIdentifierContext = GetResultString(parser, "Result Analytical Method Identifier Context");
-                if (string.IsNullOrEmpty(result.ResultAnalyticalMethod.MethodIdentifier) &&
-                     string.IsNullOrEmpty(result.ResultAnalyticalMethod.MethodIdentifierContext))
-                {
-                    result.ResultAnalyticalMethod = null;
-                }
-
+                result.ResultAnalyticalMethod = GetResultAnalyticalMethod(parser, "Result Analytical Method Identifier", "Result Analytical Method Identifier Context",
+                                                                          _resultAnalyticalMethodLookups);
                 result.ResultLabInformation = new ResultLabInformationDataType();
                 result.ResultLabInformation.AnalysisStartDate = GetResultDate(parser, "Analysis Start Date", out result.ResultLabInformation.AnalysisStartDateSpecified);
                 result.ResultLabInformation.ResultDetectionQuantitationLimit = GetDetectionQuantitationLimit(parser, "Detection Quantitation Limit Type Name",

@@ -174,21 +174,37 @@ namespace Windsor.Commons.Compression
         }
         public byte[] UncompressWithPassword(byte[] content, string password)
         {
+            return UncompressToBytesWithPassword(content, password, null);
+        }
+        public byte[] UncompressToBytesWithPassword(byte[] content, string password, string fileName)
+        {
             using (ZipFile zip = ZipFile.Read(content))
             {
-                foreach (ZipEntry e in zip)
+                using (MemoryStream memStreamOut = new MemoryStream())
                 {
-                    using (MemoryStream memStreamOut = new MemoryStream())
+                    if (!string.IsNullOrEmpty(fileName))
                     {
-                        if (password == null)
+                        zip.Password = password;
+                        zip.Extract(fileName, memStreamOut);
+                    }
+                    else
+                    {
+                        foreach (ZipEntry e in zip)
                         {
-                            e.Extract(memStreamOut);
+                            if (password == null)
+                            {
+                                e.Extract(memStreamOut);
+                            }
+                            else
+                            {
+                                ValidateIsPasswordProtected(e);
+                                e.ExtractWithPassword(memStreamOut, password);
+                            }
+                            break; // Only return the first file
                         }
-                        else
-                        {
-                            ValidateIsPasswordProtected(e);
-                            e.ExtractWithPassword(memStreamOut, password);
-                        }
+                    }
+                    if (memStreamOut.Length > 0)
+                    {
                         memStreamOut.Flush();
                         memStreamOut.Close();
                         return memStreamOut.ToArray();	// Only return the first file
@@ -207,6 +223,10 @@ namespace Windsor.Commons.Compression
         public void Uncompress(byte[] content, string targetFilePath)
         {
             UncompressWithPassword(content, targetFilePath, null);
+        }
+        public byte[] UncompressFile(byte[] content, string fileName)
+        {
+            return UncompressToBytesWithPassword(content, null, fileName);
         }
         public void Uncompress(string zipFilePath, string contentFilePath)
         {
@@ -347,18 +367,15 @@ namespace Windsor.Commons.Compression
         }
         public IList<string> GetFileNames(byte[] content)
         {
-            using (MemoryStream memStreamIn = new MemoryStream(content))
+            using (ZipFile zip = ZipFile.Read(content))
             {
-                using (ZipFile zip = new ZipFile(memStreamIn))
-                {
-                    List<string> fileNames = new List<string>(zip.EntryFileNames);
-                    return fileNames;
-                }
+                List<string> fileNames = new List<string>(zip.EntryFileNames);
+                return fileNames;
             }
         }
         public IList<string> GetFileNames(string filePath)
         {
-            using (ZipFile zip = new ZipFile(filePath))
+            using (ZipFile zip = ZipFile.Read(filePath))
             {
                 List<string> fileNames = new List<string>(zip.EntryFileNames);
                 return fileNames;
