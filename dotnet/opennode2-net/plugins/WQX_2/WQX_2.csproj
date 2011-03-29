@@ -100,6 +100,7 @@
     <Compile Include="WQXProcessInsertUpdateSolicit.cs" />
     <Compile Include="WQXQuerySolicitProcessor.cs" />
     <Compile Include="WQXSubmissionProcessor.cs" />
+    <Compile Include="WQXSubmitProxy.cs" />
     <Compile Include="WQXTestPullPushProcessor.cs" />
     <Compile Include="WQXTestSubmitAcceptor.cs" />
     <Compile Include="xml_schema\WQX_v1_0.cs" />
