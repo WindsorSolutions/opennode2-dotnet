@@ -69,8 +69,6 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
 
         protected const string SOURCE_PROVIDER_KEY = "Data Source";
 
-        protected const string PARAM_ADD_HEADER_KEY = "AddHeader";
-
         protected static readonly ILogEx LOG = LogManagerEx.GetLogger(MethodBase.GetCurrentMethod());
 
         protected IRequestManager _requestManager;

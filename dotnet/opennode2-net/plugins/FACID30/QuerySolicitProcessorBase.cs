@@ -143,7 +143,8 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
         protected string _headerAuthor;
         protected string _headerOrganization;
         protected string _headerContactInfo;
-        protected bool _addHeader = false;
+        protected bool _addHeader;
+        protected bool _validateXml;
 
         protected IList<decimal> _nBoundingLatitudes;
         protected IList<decimal> _sBoundingLatitudes;
@@ -156,6 +157,8 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
 
         private const string CACHE_STRING_SEP = "|||";
 
+        protected const string CONFIG_VALIDATE_XML = "ValidateXml (true or false)";
+
         public QuerySolicitProcessorBase()
         {
             ConfigurationArguments.Add(CONFIG_ADD_HEADER, null);
@@ -163,6 +166,7 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
             ConfigurationArguments.Add(CONFIG_ORGANIZATION, null);
             ConfigurationArguments.Add(CONFIG_CONTACT_INFO, null);
             ConfigurationArguments.Add(CONFIG_RESULT_CACHE_DURATION, null);
+            ConfigurationArguments.Add(CONFIG_VALIDATE_XML, null);
         }
 
         protected override void LazyInit()
@@ -172,6 +176,7 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
             GetServiceImplementation(out _objectsFromDatabase);
 
             TryGetConfigParameter(CONFIG_ADD_HEADER, ref _addHeader);
+            TryGetConfigParameter(CONFIG_VALIDATE_XML, ref _validateXml);
             if (_addHeader)
             {
                 _headerAuthor = ValidateNonEmptyConfigParameter(CONFIG_AUTHOR);
@@ -246,6 +251,8 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
         }
         protected virtual byte[] SaveHeaderDocument(object objectToSerialize)
         {
+            string tempXmlFilePath = _settingsProvider.NewTempFilePath();
+
             if (_addHeader)
             {
                 IHeaderDocumentHelper headerDocumentHelper;
@@ -254,12 +261,15 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
                                                 FACID30_FLOW_NAME, FACID30_FLOW_NAME, _headerContactInfo,
                                                 null);
 
-                string tempXmlFilePath = _settingsProvider.NewTempFilePath();
-
                 try
                 {
                     _serializationHelper.Serialize(objectToSerialize, tempXmlFilePath);
 
+                    if (_validateXml)
+                    {
+                        ValidateXmlFileAndAttachErrorsAndFileToTransaction(tempXmlFilePath, "xml_schema.xml_schema.zip",
+                                                                           null, _dataRequest.TransactionId);
+                    }
                     XmlDocument doc = new XmlDocument();
                     doc.Load(tempXmlFilePath);
 
@@ -274,7 +284,26 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
             }
             else
             {
-                return _serializationHelper.Serialize(objectToSerialize);
+                if (_validateXml)
+                {
+                    try
+                    {
+                        _serializationHelper.Serialize(objectToSerialize, tempXmlFilePath);
+
+                        ValidateXmlFileAndAttachErrorsAndFileToTransaction(tempXmlFilePath, "xml_schema.xml_schema.zip",
+                                                                           null, _dataRequest.TransactionId);
+
+                        return File.ReadAllBytes(tempXmlFilePath);
+                    }
+                    finally
+                    {
+                        FileUtils.SafeDeleteFile(tempXmlFilePath);
+                    }
+                }
+                else
+                {
+                    return _serializationHelper.Serialize(objectToSerialize);
+                }
             }
         }
         protected byte[] GetCachedDataAndSaveToTransaction(string queryHashString, bool doUncompressData)
