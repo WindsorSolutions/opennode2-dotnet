@@ -157,7 +157,7 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
 
         private const string CACHE_STRING_SEP = "|||";
 
-        protected const string CONFIG_VALIDATE_XML = "ValidateXml (true or false)";
+        protected const string PARAM_VALIDATE_XML_KEY = "ValidateXml";
 
         public QuerySolicitProcessorBase()
         {
@@ -166,7 +166,6 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
             ConfigurationArguments.Add(CONFIG_ORGANIZATION, null);
             ConfigurationArguments.Add(CONFIG_CONTACT_INFO, null);
             ConfigurationArguments.Add(CONFIG_RESULT_CACHE_DURATION, null);
-            ConfigurationArguments.Add(CONFIG_VALIDATE_XML, null);
         }
 
         protected override void LazyInit()
@@ -176,7 +175,6 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
             GetServiceImplementation(out _objectsFromDatabase);
 
             TryGetConfigParameter(CONFIG_ADD_HEADER, ref _addHeader);
-            TryGetConfigParameter(CONFIG_VALIDATE_XML, ref _validateXml);
             if (_addHeader)
             {
                 _headerAuthor = ValidateNonEmptyConfigParameter(CONFIG_AUTHOR);
@@ -192,6 +190,11 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
         protected override void ValidateRequest(string requestId)
         {
             base.ValidateRequest(requestId);
+
+            if (!CollectionUtils.IsNullOrEmpty(_dataRequest.Parameters))
+            {
+                TryGetParameter(_dataRequest, PARAM_VALIDATE_XML_KEY, _dataRequest.Parameters.Count - 1, ref _validateXml);
+            }
         }
         protected virtual void SaveHeaderDocument(object objectToSerialize, string filePath)
         {
@@ -656,14 +659,17 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
                         case "GETFACILITYINTEREST_V3.0":
                             foreach (KeyValuePair<string, string> pair in _dataRequest.Parameters.NameValuePairs)
                             {
-                                QueryParameter paramEnum;
-                                if (!EnumUtils.FromDescription(pair.Key, out paramEnum))
+                                if (!string.Equals(pair.Key, PARAM_VALIDATE_XML_KEY, StringComparison.OrdinalIgnoreCase))
                                 {
-                                    throw new ArgumentException(string.Format("Unrecognized query parameter name specified: {0}", pair.Key));
-                                }
-                                if (!string.IsNullOrEmpty(pair.Value))
-                                {
-                                    rtnMap.Add(paramEnum, pair.Value);
+                                    QueryParameter paramEnum;
+                                    if (!EnumUtils.FromDescription(pair.Key, out paramEnum))
+                                    {
+                                        throw new ArgumentException(string.Format("Unrecognized query parameter name specified: {0}", pair.Key));
+                                    }
+                                    if (!string.IsNullOrEmpty(pair.Value))
+                                    {
+                                        rtnMap.Add(paramEnum, pair.Value);
+                                    }
                                 }
                             }
                             break;
