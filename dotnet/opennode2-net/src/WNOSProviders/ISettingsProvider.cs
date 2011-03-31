@@ -64,6 +64,10 @@ namespace Windsor.Node2008.WNOSProviders
         /// </summary>
         string NewTempFolderPath();
         /// <summary>
+        /// Return a file path to a temporary WNOS file
+        /// </summary>
+        string CreateNewTempFolderPath();
+        /// <summary>
         /// Return the external url to the node admin url
         /// </summary>
         string AdminUrl { get; }

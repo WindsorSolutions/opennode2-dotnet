@@ -168,5 +168,11 @@ namespace Windsor.Node2008.WNOS.Utilities
         {
             return Path.Combine(TempFolderPath, Guid.NewGuid().ToString());
         }
+        public string CreateNewTempFolderPath()
+        {
+            string newTempFolderPath = NewTempFolderPath();
+            Directory.CreateDirectory(newTempFolderPath);
+            return newTempFolderPath;
+        }
     }
 }

@@ -172,7 +172,7 @@ namespace Windsor.Node2008.WNOS.Server
 
                     transactionId =
                         _transactionManager.CreateTransaction(NodeMethod.Schedule, EndpointVersionType.Undefined,
-                                                              scheduledItem.FlowId, string.Empty, userAccount.Id,
+                                                              scheduledItem.FlowId, scheduledItem.Name, userAccount.Id,
                                                               CommonTransactionStatusCode.Processing,
                                                               null, null, null, false);
                     activity.TransactionId = transactionId;
@@ -244,6 +244,7 @@ namespace Windsor.Node2008.WNOS.Server
                 }
                 catch (Exception e)
                 {
+                    activity.Type = ActivityType.Error;
                     TransactionStatus transactionStatus = null;
                     if (transactionId != null)
                     {
@@ -254,7 +255,6 @@ namespace Windsor.Node2008.WNOS.Server
                                               transactionStatus.Status.ToString());
                     }
                     LogActivityError(activity, ExceptionUtils.ToShortString(e));
-                    activity.Type = ActivityType.Error;
                     LOG.Error("ProcessTransactionRequest() threw an exception.", e);
                     if (transactionId != null)
                     {
@@ -532,7 +532,7 @@ namespace Windsor.Node2008.WNOS.Server
                                                           scheduledItem.TargetId, scheduledItem.Name));
             }
 
-            string filePath = GetZippedTransactionDocumentsAsTempFile(transactionStatus, scheduledItem);
+            string filePath = GetZippedTransactionDocumentsAsTempFile(transactionStatus);
             if (filePath != null)
             {
                 string transactionId;
@@ -583,7 +583,7 @@ namespace Windsor.Node2008.WNOS.Server
                                                        ScheduledItem scheduledItem,
                                                        Activity activity)
         {
-            string filePath = GetZippedTransactionDocumentsAsTempFile(transactionStatus, scheduledItem);
+            string filePath = GetZippedTransactionDocumentsAsTempFile(transactionStatus);
             if (filePath != null)
             {
                 string flowCode = _flowManager.GetDataFlowNameById(scheduledItem.FlowId);
@@ -624,7 +624,7 @@ namespace Windsor.Node2008.WNOS.Server
             string emailAddresses = scheduledItem.TargetId;
             if (!string.IsNullOrEmpty(emailAddresses))
             {
-                string pathName = _transactionManager.GetZippedTransactionDocumentsAsTempFile(transactionStatus.Id);
+                string pathName = GetZippedTransactionDocumentsAsTempFile(transactionStatus);
                 if (!string.IsNullOrEmpty(pathName))
                 {
                     try
@@ -709,18 +709,10 @@ namespace Windsor.Node2008.WNOS.Server
             fileName = FileUtils.ReplaceInvalidFilenameChars(fileName, '_');
             return fileName;
         }
-        protected virtual string GetZippedTransactionDocumentsAsTempFile(TransactionStatus transactionStatus,
-                                                                         ScheduledItem scheduledItem)
+        protected virtual string GetZippedTransactionDocumentsAsTempFile(TransactionStatus transactionStatus)
         {
-            string filePath = Path.Combine(SettingsProvider.TempFolderPath, GetResultFileName(scheduledItem));
-            if (_transactionManager.GetZippedTransactionDocumentsAsFile(transactionStatus.Id, filePath))
-            {
-                return filePath;
-            }
-            else
-            {
-                return null;
-            }
+            string filePath = _transactionManager.GetZippedTransactionDocumentsAsTempFile(transactionStatus.Id);
+            return filePath;
         }
         private class ScheduledItemProcessor : IBlockingQueueServerWorker
         {

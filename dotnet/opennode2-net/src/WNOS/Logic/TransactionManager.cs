@@ -234,10 +234,11 @@ namespace Windsor.Node2008.WNOS.Logic
                         CommonContentAndFormatProvider.GetFileTypeFromName(networkFileName);
                     Document document = 
                         new Document(networkFileName, contentType, networkFileContent);
+                    document.DontAutoCompress = true;
                     string documentId = 
                         _documentManager.AddDocument(transactionID, CommonTransactionStatusCode.Completed,
                                                      null, document);
-                    CollectionUtils.Add(documentId, ref addedDocumentIds);
+                    CollectionUtils.Add(document.DocumentName, ref addedDocumentIds);
                }
             }
 
@@ -529,6 +530,20 @@ namespace Windsor.Node2008.WNOS.Logic
             string filePath = _settingsProvider.NewTempFilePath(".zip");
             if (GetZippedTransactionDocuments(transactionId, filePath))
             {
+                IList<string> fileNames = CompressionHelper.GetFileNames(filePath);
+                if (CollectionUtils.Count(fileNames) == 1 ) {
+                    string folderPath = SettingsProvider.CreateNewTempFolderPath();
+                    string singleFileName = fileNames[0];
+                    if (CommonContentAndFormatProvider.GetFileTypeFromName(singleFileName) == CommonContentType.ZIP)
+                    {
+                        CompressionHelper.UncompressDirectory(filePath, folderPath);
+                    }
+                    else
+                    {
+                        FileUtils.MoveFileToFolder(filePath, folderPath, singleFileName + ".zip");
+                    }
+                    return Directory.GetFiles(folderPath)[0];
+                }
                 return filePath;
             }
             else

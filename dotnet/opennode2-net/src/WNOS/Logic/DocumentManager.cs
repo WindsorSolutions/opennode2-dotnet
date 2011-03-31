@@ -332,8 +332,12 @@ namespace Windsor.Node2008.WNOS.Logic
                             return false;
                         }
                     }
+                    else
+                    {
+                        ioDocument.DocumentName = Guid.NewGuid().ToString();
+                    }
                     string originalDocumentName = ioDocument.DocumentName;
-                    ioDocument.DocumentName = Path.ChangeExtension(ioDocument.DocumentName, ".zip");
+                    ioDocument.DocumentName += ".zip";
                     ioDocument.Type = CommonContentType.ZIP;
                     if (!CollectionUtils.IsNullOrEmpty(ioDocument.Content))
                     {

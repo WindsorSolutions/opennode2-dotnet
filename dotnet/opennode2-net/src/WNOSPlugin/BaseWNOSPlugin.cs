@@ -1495,6 +1495,56 @@ namespace Windsor.Node2008.WNOSPlugin
 
             return submitTransactionId;
         }
+        protected virtual string SubmitDocumentToPartner(string transactionId, PartnerIdentity partner, string flowName, string operationName,
+                                                         Document document)
+        {
+            string submitTransactionId;
+            EndpointVersionType endpointVersion;
+            string endpointUrl;
+
+            ITransactionManager transactionManager;
+            GetServiceImplementation(out transactionManager);
+
+            string networkFlowName = null, networkFlowOperation = null;
+            EndpointDocument endpointDocument = new EndpointDocument(document.Content, document.DocumentName, document.Type);
+            EndpointDocument[] endpointDocuments = new EndpointDocument[] { endpointDocument };
+
+            using (INodeEndpointClient client = GetNodeClient(partner))
+            {
+                try
+                {
+                    if (client.Version == EndpointVersionType.EN11)
+                    {
+                        AppendAuditLogEvent("Attempting to submit target documents to partner \"{0}\" for flow \"{1}\"",
+                                            partner.Name, flowName);
+                        submitTransactionId = client.Submit(flowName, string.Empty, endpointDocuments);
+                        networkFlowName = flowName;
+                    }
+                    else
+                    {
+                        AppendAuditLogEvent("Attempting to submit target documents to partner \"{0}\" for flow \"{1}\" and operation \"{2}\"",
+                                            partner.Name, flowName, operationName ?? string.Empty);
+                        submitTransactionId = client.Submit(flowName, operationName, string.Empty, endpointDocuments);
+                        networkFlowName = flowName;
+                        networkFlowOperation = operationName;
+                    }
+                }
+                catch (Exception e)
+                {
+                    AppendAuditLogEvent("Error returned from node endpoint: \"{0}\"", ExceptionUtils.GetDeepExceptionMessage(e));
+                    throw;
+                }
+                endpointVersion = client.Version;
+                endpointUrl = client.Url;
+            }
+            AppendAuditLogEvent("Submitted target documents to partner \"{0}\" at url \"{1}\" for flow \"{2}\" with returned transaction id \"{3}\"",
+                                partner.Name, partner.Url, flowName, submitTransactionId);
+
+            transactionManager.SetNetworkId(transactionId, submitTransactionId, endpointVersion, endpointUrl,
+                                            networkFlowName, networkFlowOperation);
+
+            return submitTransactionId;
+        }
         protected virtual INodeEndpointClient GetNodeClient(PartnerIdentity partner)
         {
             INodeEndpointClientFactory nodeEndpointClientFactory;
@@ -1504,34 +1554,33 @@ namespace Windsor.Node2008.WNOSPlugin
                                 partner.Url, nodeEndpointClientFactory.DefaultAuthenticationCredentials.UserName);
             return nodeEndpointClientFactory.Make(partner.Url, partner.Version);
         }
-        protected virtual string SubmitTransactionDocumentsToPartner(string transactionId, PartnerIdentity partner,
+        protected virtual string SubmitTransactionDocumentToPartner(string transactionId, PartnerIdentity partner,
                                                                      string flowName, string flowOperation)
         {
             IDocumentManager documentManager;
             GetServiceImplementation(out documentManager);
             ITransactionManager transactionManager;
             GetServiceImplementation(out transactionManager);
+            ISettingsProvider settingsProvider;
+            GetServiceImplementation(out settingsProvider);
 
             IList<string> docIds = documentManager.GetDocumentIds(transactionId);
             if (CollectionUtils.IsNullOrEmpty(docIds))
             {
-                throw new ArgumentException(string.Format("No documents were found to submit that were attached to the transcation \"{0}\".",
+                throw new ArgumentException(string.Format("No documents were found to submit that were attached to the transaction \"{0}\".",
                                                           transactionId));
             }
-            AppendAuditLogEvent("Submitting {0} to partner \"{1}\" at url \"{2}\" using flow name \"{3}\" and flow operation \"{4}\"",
-                                docIds.Count == 1 ? "1 document" : docIds.Count.ToString() + " documents", partner.Name, partner.Url,
-                                flowName, flowOperation ?? string.Empty);
+            else if (docIds.Count > 1)
+            {
+                throw new ArgumentException(string.Format("More than one document was found to submit attached to the transaction \"{0}\".",
+                                                          transactionId));
+            }
+            AppendAuditLogEvent("Submitting one document to partner \"{0}\" at url \"{1}\" using flow name \"{2}\" and flow operation \"{3}\"",
+                                partner.Name, partner.Url, flowName, flowOperation ?? string.Empty);
 
-            string submissionZipFile = transactionManager.GetZippedTransactionDocumentsAsTempFile(transactionId);
-            string networkTransactionId;
-            try
-            {
-                networkTransactionId = SubmitFileToPartner(transactionId, partner, flowName, flowOperation, submissionZipFile);
-            }
-            finally
-            {
-                FileUtils.SafeDeleteFile(submissionZipFile);
-            }
+            Document document = documentManager.GetDocument(transactionId, docIds[0], true);
+
+            string networkTransactionId = SubmitDocumentToPartner(transactionId, partner, flowName, flowOperation, document);
             return networkTransactionId;
         }
         protected virtual IList<string> AddPartnerTransactionDocumentsToTransaction(string transactionId,
@@ -1540,7 +1589,23 @@ namespace Windsor.Node2008.WNOSPlugin
             ITransactionManager transactionManager;
             GetServiceImplementation(out transactionManager);
 
-            return transactionManager.DownloadNetworkDocumentsAndAddToTransaction(transactionId, out outEndpointStatus);
+            AppendAuditLogEvent("Attempting to retrieve endpoint status and add new network documents to local transaction ...");
+
+            IList<string> documentNames = transactionManager.DownloadNetworkDocumentsAndAddToTransaction(transactionId, out outEndpointStatus);
+
+            AppendAuditLogEvent("Retrieved endpoint status of \"{0}\"", outEndpointStatus.ToString());
+            
+            if (CollectionUtils.IsNullOrEmpty(documentNames))
+            {
+                AppendAuditLogEvent("Did not download any new network documents");
+            }
+            else
+            {
+                AppendAuditLogEvent("Downloaded and added the following network documents to local transaction: {0}",
+                                    StringUtils.Join(",", documentNames));
+            }
+
+            return documentNames;
         }
     }
 }

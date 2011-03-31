@@ -90,7 +90,15 @@ namespace Windsor.Commons.Core
         /// </summary>
         public static string MoveFileToFolder(string originalFilePath, string moveToFolderPath)
         {
-            string newFilePath = Path.Combine(moveToFolderPath, Path.GetFileName(originalFilePath));
+            return MoveFileToFolder(originalFilePath, moveToFolderPath, null);
+        }
+        /// <summary>
+        /// Move the input file to a new folder, keeping the same file name within the new folder.
+        /// </summary>
+        public static string MoveFileToFolder(string originalFilePath, string moveToFolderPath, string newFileName)
+        {
+            string newFilePath = Path.Combine(moveToFolderPath, string.IsNullOrEmpty(newFileName) ? 
+                                                                Path.GetFileName(originalFilePath) : newFileName);
             try
             {
                 File.Move(originalFilePath, newFilePath);

@@ -152,7 +152,7 @@ namespace Windsor.Node2008.WNOSPlugin
         {
             Init(transactionId);
 
-            SubmitTransactionDocumentsToPartner(transactionId, _submitPartner, _submitFlowName, _submitOperationName);
+            SubmitTransactionDocumentToPartner(transactionId, _submitPartner, _submitFlowName, _submitOperationName);
         }
     }
     public abstract class SubmitProxyPluginEx : SubmitProxyPlugin, ISubmitProcessorEx
@@ -192,7 +192,7 @@ namespace Windsor.Node2008.WNOSPlugin
             }
             else
             {
-                SubmitTransactionDocumentsToPartner(transactionId, _submitPartner, _submitFlowName, 
+                SubmitTransactionDocumentToPartner(transactionId, _submitPartner, _submitFlowName, 
                                                     _submitOperationName);
             }
             return CommonTransactionStatusCode.Pending;
