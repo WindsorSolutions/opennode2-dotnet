@@ -130,7 +130,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapForceBridge", "opennode2
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Windsor.Commons.Velocity", "windsor-common-net\src\Commons\Windsor.Commons.Velocity\Windsor.Commons.Velocity.csproj", "{DBD36E4A-83B9-4179-8881-CDEC85576320}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EIS_11", "opennode2-net\plugins\EIS_11\EIS_11.csproj", "{BFF2A107-4B4B-4B8B-8E98-8F66618F1D6A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EIS_12", "opennode2-net\plugins\EIS_12\EIS_12.csproj", "{BFF2A107-4B4B-4B8B-8E98-8F66618F1D6A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TRI_40", "opennode2-net\plugins\TRI_40\TRI_40.csproj", "{2C9034A7-ED44-4BA1-BFFC-A835CB2E5689}"
 EndProject

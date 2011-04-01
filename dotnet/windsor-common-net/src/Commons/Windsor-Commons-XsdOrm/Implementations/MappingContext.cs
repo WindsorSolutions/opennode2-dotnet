@@ -1201,7 +1201,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
                     CollectionUtils.Add(mappingAttribute.ShallowCopy(), ref attributes);
                 }
             }
-            if (m_InheritAppliedAttributes && (type.BaseType != typeof(object)))
+            if (m_InheritAppliedAttributes && (type.BaseType != null) && (type.BaseType != typeof(object)))
             {
                 AppendAppliedAttributes(type.BaseType, memberName, ref attributes);
             }
@@ -1709,7 +1709,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
                     {
                         attr.Abbreviations = new Dictionary<string, string>();
                     }
-                    attr.Abbreviations.Add(pair.Key, pair.Value);
+                    attr.Abbreviations[pair.Key] = pair.Value;
                 }
             }
             return attr.Abbreviations;
