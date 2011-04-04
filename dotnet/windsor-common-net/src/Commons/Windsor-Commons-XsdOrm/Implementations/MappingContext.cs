@@ -1337,9 +1337,6 @@ namespace Windsor.Commons.XsdOrm.Implementations
                             ++startIndex;
                         }
                     }
-                    if (memberPath  == "Windsor.Node2008.WNOSPlugin.TRI_40.TRIDataType.Submission.Facility.GeographicLocationDescription.CoordinateDataSource.CoordinateDataSourceCodeListIdentifier.Value")
-                    {
-                    } //??
                     string memberPrefix =
                         Utils.ShortenDatabaseTableName(Utils.CamelCaseToDatabaseName(memberPath.Substring(startIndex, endIndex - startIndex)),
                                                        m_ShortenNamesByRemovingVowelsFirst, m_FixShortenNameBreakBug, m_Abbreviations);

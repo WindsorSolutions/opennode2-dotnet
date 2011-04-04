@@ -378,4 +378,17 @@ namespace Windsor.Commons.XsdOrm.Implementations
         private Column m_ForeignColumn;
         private DeleteRule m_DeleteRule;
     }
+    public class AdditionalForeignKeyColumn : ForeignKeyColumn
+    {
+        public AdditionalForeignKeyColumn(Table table, MemberInfo member, string memberPath,
+                                          AdditionalForeignKeyAttribute columnAttribute) :
+            base(table, member, memberPath, columnAttribute)
+        {
+        }
+        public AdditionalForeignKeyColumn(Table table, string memberPath, Type memberType,
+                                          AdditionalForeignKeyAttribute columnAttribute) :
+            base(table, memberPath, memberType, columnAttribute)
+        {
+        }
+    }
 }

@@ -892,6 +892,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                 activity.ActivityDescription.ActivityMediaName = GetNonEmptyResultString(parser, "Activity Media Name");
                 activity.ActivityDescription.ActivityStartDate = GetResultDate(parser, "Activity Start Date");
                 activity.ActivityDescription.ActivityStartTime = GetResultTime(parser, "Activity Start Time", "Activity Start Time Zone Code");
+                activity.ActivityDescription.MonitoringLocationIdentifier = monitoringId;
 
                 activity.BiologicalActivityDescription = new BiologicalActivityDescriptionDataType();
                 activity.BiologicalActivityDescription.BiologicalHabitatCollectionInformation = new BiologicalHabitatCollectionInformationDataType();

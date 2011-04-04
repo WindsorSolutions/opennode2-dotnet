@@ -600,6 +600,37 @@ namespace Windsor.Commons.XsdOrm
         private string m_ForeignColumnName;
         private DeleteRule m_DeleteRule = DeleteRule.Cascade;
     }
+    /// <summary>
+    /// Additional foreign key attribute.  Indicates that this column or field is a foreign key 
+    /// to another table.
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
+    public class AdditionalForeignKeyAttribute : ForeignKeyAttribute
+    {
+        public AdditionalForeignKeyAttribute()
+        {
+            DeleteRule = DeleteRule.SetNull;
+        }
+        public AdditionalForeignKeyAttribute(string columnName, DbType columnType, int columnSize,
+                                             DeleteRule deleteRule) :
+            base(columnName, columnType, columnSize, deleteRule)
+        {
+        }
+        public AdditionalForeignKeyAttribute(string columnName, DbType columnType, int columnSize) :
+            base(columnName, columnType, columnSize)
+        {
+        }
+        public AdditionalForeignKeyAttribute(string columnName, DbType columnType, int columnSize,
+                                   bool isNullable) :
+            base(columnName, columnType, columnSize, isNullable)
+        {
+        }
+        public AdditionalForeignKeyAttribute(string columnName, DbType columnType, int columnSize,
+                                   bool isNullable, DeleteRule deleteRule) :
+            base(columnName, columnType, columnSize, isNullable, deleteRule)
+        {
+        }
+    }
 
     /// <summary>
     /// Guid foreign key attribute.  Indicates that this column or field is a foreign key 
@@ -642,6 +673,54 @@ namespace Windsor.Commons.XsdOrm
         {
         }
         public GuidForeignKeyAttribute(string columnName, DbType columnType, int columnSize,
+                                       bool isNullable, DeleteRule deleteRule) :
+            base(columnName, columnType, columnSize, isNullable, deleteRule)
+        {
+        }
+    }
+
+    /// <summary>
+    /// Additional guid foreign key attribute.  Indicates that this column or field is a foreign key 
+    /// to another table.
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
+    public class AdditionalGuidForeignKeyAttribute : AdditionalForeignKeyAttribute
+    {
+        public AdditionalGuidForeignKeyAttribute()
+            : base()
+        {
+        }
+        public AdditionalGuidForeignKeyAttribute(string columnName, bool isNullable) :
+            base(columnName, DbType.AnsiString, 40, isNullable)
+        {
+        }
+        public AdditionalGuidForeignKeyAttribute(string columnName) :
+            base(columnName, DbType.AnsiString, 40)
+        {
+        }
+        public AdditionalGuidForeignKeyAttribute(string columnName, DbType columnType, int columnSize) :
+            base(columnName, columnType, columnSize)
+        {
+        }
+        public AdditionalGuidForeignKeyAttribute(string columnName, int columnSize) :
+            base(columnName, DbType.AnsiString, columnSize)
+        {
+        }
+        public AdditionalGuidForeignKeyAttribute(string columnName, DbType columnType, int columnSize,
+                                       bool isNullable) :
+            base(columnName, columnType, columnSize, isNullable)
+        {
+        }
+        public AdditionalGuidForeignKeyAttribute(string columnName, bool isNullable, DeleteRule deleteRule) :
+            base(columnName, DbType.AnsiString, 40, isNullable, deleteRule)
+        {
+        }
+        public AdditionalGuidForeignKeyAttribute(string columnName, DbType columnType, int columnSize,
+                                       DeleteRule deleteRule) :
+            base(columnName, columnType, columnSize, deleteRule)
+        {
+        }
+        public AdditionalGuidForeignKeyAttribute(string columnName, DbType columnType, int columnSize,
                                        bool isNullable, DeleteRule deleteRule) :
             base(columnName, columnType, columnSize, isNullable, deleteRule)
         {
