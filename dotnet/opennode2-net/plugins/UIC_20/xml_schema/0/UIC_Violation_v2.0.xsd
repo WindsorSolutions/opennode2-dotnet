@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:uic="http://www.exchangenetwork.net/schema/uic/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/uic/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+	<xsd:include schemaLocation="UIC_Response_v2.0.xsd"/>
+	<xsd:include schemaLocation="UIC_SimpleContent_v2.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>UIC violation file (Table 9): UIC_Violation_v2.0.xsd
+		Current Version Available At :
+		Description : Schema for the data identifying non-compliance with UIC regulation reported for regulated wells.
+		Application : UIC data submission 
+		Developed by : Environmental Protection Agency, Lockheed Martin, CGI Federal
+		Point of Contact : Carl Reeverts, Trang Le (EPA/UIC), Lauren Hall (CGI Federal)	
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:annotation>
+		<xsd:documentation>Violation complex components</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="FacilityViolationDetail" type="uic:FacilityViolationDetailType">
+		<xsd:annotation>
+			<xsd:documentation>Container for Facility Violation information.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="WellViolationDetail" type="uic:WellViolationDetailType">
+		<xsd:annotation>
+			<xsd:documentation>Container for Well Violation information.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:annotation>
+		<xsd:documentation>Violation omplex types</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="FacilityViolationDetailType">
+		<xsd:annotation>
+			<xsd:documentation>Container for Facility Violation information type definition.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="uic:ViolationIdentifier"/>
+			<xsd:element ref="uic:ViolationContaminationCode" minOccurs="0"/>
+			<xsd:element ref="uic:ViolationEndangeringCode" minOccurs="0"/>
+			<xsd:element ref="uic:ViolationReturnComplianceDate" minOccurs="0"/>
+			<xsd:element ref="uic:ViolationSignificantCode" minOccurs="0"/>
+			<xsd:element ref="uic:ViolationDeterminedDate"/>
+			<xsd:element ref="uic:ViolationTypeCode"/>
+			<xsd:element ref="uic:ViolationFacilityIdentifier"/>
+			<xsd:element ref="uic:FacilityResponseDetail" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="WellViolationDetailType">
+		<xsd:annotation>
+			<xsd:documentation>Container for Well Violation information type definition.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="uic:ViolationIdentifier"/>
+			<xsd:element ref="uic:ViolationContaminationCode" minOccurs="0"/>
+			<xsd:element ref="uic:ViolationEndangeringCode" minOccurs="0"/>
+			<xsd:element ref="uic:ViolationReturnComplianceDate" minOccurs="0"/>
+			<xsd:element ref="uic:ViolationSignificantCode" minOccurs="0"/>
+			<xsd:element ref="uic:ViolationDeterminedDate"/>
+			<xsd:element ref="uic:ViolationTypeCode"/>
+			<xsd:element ref="uic:ViolationWellIdentifier"/>
+			<xsd:element ref="uic:WellResponseDetail" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:annotation>
+		<xsd:documentation>Violation data elements</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="ViolationIdentifier" type="uic:UICIdentifierType">
+		<xsd:annotation>
+			<xsd:documentation>Unique identification of Violation table - The first four characters are the primacy agency code (appendix D).  The rest is DI program or State’s choice (letters and numbers only) identifying unique  violation (e.g. 08DI000366, …).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ViolationContaminationCode" type="uic:UICGenericStringType">
+		<xsd:annotation>
+			<xsd:documentation>Well in noncompliance has allegedly contaminated an underground source of drinking water (USDW) this year to date.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ViolationEndangeringCode" type="uic:UICGenericStringType">
+		<xsd:annotation>
+			<xsd:documentation>A violation that results in the well potentially or actually endangering the USDW.  The endangering fluid contaminant from the well is in violation of RCRA or SDWA or applicable regulations.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ViolationReturnComplianceDate" type="uic:UICGenericStringType">
+		<xsd:annotation>
+			<xsd:documentation>The calendar date, determined by the Responsible Authority, on which the regulated entity actually returned to compliance with respect to the legal obligation that is the subject of the violation determined date.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ViolationSignificantCode" type="uic:UICGenericStringType">
+		<xsd:annotation>
+			<xsd:documentation>The indication whether or not the violation is in Significant Non-Compliance (SNC).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ViolationDeterminedDate" type="uic:EPADateType">
+		<xsd:annotation>
+			<xsd:documentation>The calendar date the Responsible Authority determines that a regulated entity is in violation of a legally enforceable obligation.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ViolationTypeCode" type="uic:ViolationTypeCodeType">
+		<xsd:annotation>
+			<xsd:documentation>The type of violation that is the subject of the Violation Date.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ViolationWellIdentifier" type="uic:UICIdentifierType">
+		<xsd:annotation>
+			<xsd:documentation>Unique identification of Well table.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ViolationFacilityIdentifier" type="uic:UICIdentifierType">
+		<xsd:annotation>
+			<xsd:documentation>Unique identification of Facility table-  This field ONLY applies for Class V violations at FACILITY.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:annotation>
+		<xsd:documentation>Violation data type</xsd:documentation>
+	</xsd:annotation>
+	<xsd:simpleType name="ViolationTypeCodeType">
+		<xsd:annotation>
+			<xsd:documentation>Enumeration of 12 codes type definition.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="UI"/>
+			<xsd:enumeration value="MI"/>
+			<xsd:enumeration value="IP"/>
+			<xsd:enumeration value="PA"/>
+			<xsd:enumeration value="FO"/>
+			<xsd:enumeration value="FA"/>
+			<xsd:enumeration value="MR"/>
+			<xsd:enumeration value="FI"/>
+			<xsd:enumeration value="OM"/>
+			<xsd:enumeration value="OT"/>
+			<xsd:enumeration value="FR"/>
+			<xsd:enumeration value="MO"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

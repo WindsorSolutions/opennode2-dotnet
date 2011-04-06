@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:uic="http://www.exchangenetwork.net/schema/uic/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/uic/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+	<xsd:annotation>
+		<xsd:documentation>UIC simple content file: UIC_SimpleContent_v2.0.xsd
+		Current Version Available At :
+		Description : Schema for UIC data element and data type components
+		Application : Underground Injection Control data submission 
+		Developed by : Environmental Protection Agency, Lockheed Martin, CGI Federal
+		Point of Contact : Carl Reeverts, Trang Le (EPA/UIC), Lauren Hall (CGI Federal)	
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:annotation>
+		<xsd:documentation>UIC generic data types</xsd:documentation>
+	</xsd:annotation>
+	<xsd:simpleType name="Char4Type">
+		<xsd:annotation>
+			<xsd:documentation>4 character string type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[0-9A-Z]{4}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="EPADateType">
+		<xsd:annotation>
+			<xsd:documentation>YYYYMMDD type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:length value="8"/>
+			<xsd:pattern value="[1-2]{1}[0-9]{3}[0-1]{1}[0-9]{1}[0-3]{1}[0-9]{1}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NormalizedString4Type">
+		<xsd:annotation>
+			<xsd:documentation>1 to 4 normalized characters type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="4"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NormalizedString50Type">
+		<xsd:annotation>
+			<xsd:documentation>1 to 50 normalized characters type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NormalizedString70Type">
+		<xsd:annotation>
+			<xsd:documentation>1 to 70 normalized characters type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="70"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NormalizedString80Type">
+		<xsd:annotation>
+			<xsd:documentation>1 to 80 normalized characters type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="80"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="String150Type">
+		<xsd:annotation>
+			<xsd:documentation>1 to 150 characters type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="150"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="UICGenericStringType">
+		<xsd:annotation>
+			<xsd:documentation>Unbounded minimum length 1 character string type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="UICIdentifierType">
+		<xsd:annotation>
+			<xsd:documentation>5 to 20 character UIC ID type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[0-9A-Z]{5,20}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ZipCodeType">
+		<xsd:annotation>
+			<xsd:documentation> 5 to 14 character string type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="5"/>
+			<xsd:maxLength value="14"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:uic="http://www.exchangenetwork.net/schema/uic/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/uic/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+	<xsd:include schemaLocation="UIC_SimpleContent_v2.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>UIC enforcement file (Table 11): UIC_Enforcement_v2.0.xsd
+		Current Version Available At :
+		Description : Schema for the data identifying state and EPA enforcement actions in response to violation / non-compliance.
+		Application : UIC data submission 
+		Developed by : Environmental Protection Agency, Lockheed Martin, CGI Federal
+		Point of Contact : Carl Reeverts, Trang Le (EPA/UIC), Lauren Hall (CGI Federal)	
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:annotation>
+		<xsd:documentation>Enforcement complex component</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="EnforcementDetail" type="uic:EnforcementDetailType">
+		<xsd:annotation>
+			<xsd:documentation>Container for Enforcement information.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:annotation>
+		<xsd:documentation>Enforcement complex type</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="EnforcementDetailType">
+		<xsd:annotation>
+			<xsd:documentation>Container for Enforcement information type definition.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="uic:EnforcementIdentifier"/>
+			<xsd:element ref="uic:EnforcementActionDate"/>
+			<xsd:element ref="uic:EnforcementActionType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:annotation>
+		<xsd:documentation>Enforcement data elements</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="EnforcementIdentifier" type="uic:UICIdentifierType">
+		<xsd:annotation>
+			<xsd:documentation>Unique identification of Enforcement table - The first four characters are the primacy agency code (Appendix D). The rest is DI program or State’s choice (letters and numbers only) identifying unique  enforcement action (e.g. 08DI000566, …).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="EnforcementActionDate" type="uic:EPADateType">
+		<xsd:annotation>
+			<xsd:documentation>The calendar date the enforcement action was issued or filed.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="EnforcementActionType" type="uic:EnforcementActionTypeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The type of enforcement action taken by the EPA or states.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:annotation>
+		<xsd:documentation>Enforcement data type</xsd:documentation>
+	</xsd:annotation>
+	<xsd:simpleType name="EnforcementActionTypeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Enumeration of 10 codes type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:length value="3"/>
+			<xsd:enumeration value="FAO"/>
+			<xsd:enumeration value="NOV"/>
+			<xsd:enumeration value="CGT"/>
+			<xsd:enumeration value="DAO"/>
+			<xsd:enumeration value="CIR"/>
+			<xsd:enumeration value="CRR"/>
+			<xsd:enumeration value="SHT"/>
+			<xsd:enumeration value="PSE"/>
+			<xsd:enumeration value="TOA"/>
+			<xsd:enumeration value="OTR"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:uic="http://www.exchangenetwork.net/schema/uic/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/uic/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+	<xsd:include schemaLocation="UIC_SimpleContent_v2.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>UIC constituent (Table 18): UIC_Constituent_v2.0.xsd
+		Current Version Available At :
+		Description : Schema for information on corrective actions taken to address deficiencies observed during the inspection.
+		Application : UIC data submission 
+		Developed by : Environmental Protection Agency, Lockheed Martin, CGI Federal
+		Point of Contact : Carl Reeverts, Trang Le (EPA/UIC), Lauren Hall (CGI Federal)	
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:annotation>
+		<xsd:documentation>Constituen complex component</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="ConstituentDetail" type="uic:ConstituentDetailType">
+		<xsd:annotation>
+			<xsd:documentation>Container for Constituent information.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:annotation>
+		<xsd:documentation>Constituent complex type</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="ConstituentDetailType">
+		<xsd:annotation>
+			<xsd:documentation>Container for Constituent information type definition.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="uic:ConstituentIdentifier"/>
+			<xsd:element ref="uic:MeasureValue" minOccurs="0"/>
+			<xsd:element ref="uic:MeasureUnitCode" minOccurs="0"/>
+			<xsd:element ref="uic:ConstituentNameText" minOccurs="0"/>
+			<xsd:element ref="uic:ConstituentWasteIdentifier"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:annotation>
+		<xsd:documentation>Constituent data elements</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="ConstituentIdentifier" type="uic:UICIdentifierType">
+		<xsd:annotation>
+			<xsd:documentation>Unique identification of Constituent  table - The first four characters are the primacy agency code (appendix D). The rest is DI program or State’s choice (letters and numbers only) identifying constituent information (e.g. WYEQ0000000000 000389, …).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MeasureValue" type="uic:UICGenericStringType">
+		<xsd:annotation>
+			<xsd:documentation>The concentration of the individual waste constituent as reported by EPA Regional staff and/or state agency staff (measured in mg/l or pCi/l).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MeasureUnitCode" type="uic:UICGenericStringType">
+		<xsd:annotation>
+			<xsd:documentation>Unit of measuring concentration (mg/l or pCi/l).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ConstituentNameText" type="uic:UICGenericStringType">
+		<xsd:annotation>
+			<xsd:documentation>The chemical name or a description of the waste, in accordance with EPA Chemical/Biological Internal Tracking Name (http://www.epa.gov/srs/).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ConstituentWasteIdentifier" type="uic:UICIdentifierType">
+		<xsd:annotation>
+			<xsd:documentation>Unique identification for waste records.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

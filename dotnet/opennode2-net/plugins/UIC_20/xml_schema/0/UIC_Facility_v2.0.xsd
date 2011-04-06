@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:uic="http://www.exchangenetwork.net/schema/uic/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/uic/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+	<xsd:include schemaLocation="UIC_Well_v2.0.xsd"/>
+	<xsd:include schemaLocation="UIC_Violation_v2.0.xsd"/>
+	<xsd:include schemaLocation="UIC_Inspection_v2.0.xsd"/>
+	<xsd:include schemaLocation="UIC_SimpleContent_v2.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>UIC facility (Table 1): UIC_Facility_v2.0.xsd
+		Current Version Available At :
+		Description : Schema for basic identification information for a regulated UIC facility (e.g. well field, etc.).
+		Application : UIC data submission 
+		Developed by : Environmental Protection Agency, Lockheed Martin, CGI Federal
+		Point of Contact : Carl Reeverts, Trang Le (EPA/UIC), Lauren Hall (CGI Federal)	
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:annotation>
+		<xsd:documentation>Facility complex components</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="FacilityList" type="uic:FacilityListType">
+		<xsd:annotation>
+			<xsd:documentation>Container for multiple Facility information submissions.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="FacilityDetail" type="uic:FacilityDetailType">
+		<xsd:annotation>
+			<xsd:documentation>Container for Facility information.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:annotation>
+		<xsd:documentation>Facility complex types</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="FacilityListType">
+		<xsd:annotation>
+			<xsd:documentation>Container for multiple Facility information submissions type definition.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="uic:FacilityDetail"/>
+			<xsd:element ref="uic:WellDetail" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="FacilityDetailType">
+		<xsd:annotation>
+			<xsd:documentation>Container for Facility information type definition.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="uic:FacilityIdentifier"/>
+			<xsd:element ref="uic:LocalityName" minOccurs="0"/>
+			<xsd:element ref="uic:FacilitySiteName"/>
+			<xsd:element ref="uic:FacilityPetitionStatusCode" minOccurs="0"/>
+			<xsd:element ref="uic:LocationAddressStateCode" minOccurs="0"/>
+			<xsd:element ref="uic:FacilityStateIdentifier"/>
+			<xsd:element ref="uic:LocationAddressText"/>
+			<xsd:element ref="uic:FacilitySiteTypeCode" minOccurs="0"/>
+			<xsd:element ref="uic:NAICSCode" minOccurs="0"/>
+			<xsd:element ref="uic:SICCode" minOccurs="0"/>
+			<xsd:element ref="uic:LocationAddressPostalCode"/>
+			<xsd:element ref="uic:FacilityInspectionDetail" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="uic:FacilityViolationDetail" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:annotation>
+		<xsd:documentation>Facility data elements</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="PrimacyAgencyCode" type="uic:Char4Type">
+		<xsd:annotation>
+			<xsd:documentation>4 character code of the Primacy Agency making the submission.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="FacilityIdentifier" type="uic:UICIdentifierType">
+		<xsd:annotation>
+			<xsd:documentation>Unique identification of Facility table - The first four characters are the primacy agency code (appendix D).  The rest is DI program or State’s choice (letters and numbers only) identifying unique facility (e.g. DENR0000197590, …).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="LocalityName" type="uic:UICGenericStringType">
+		<xsd:annotation>
+			<xsd:documentation>The name of the city, town, or village where the facility is located.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="FacilitySiteName" type="uic:NormalizedString80Type">
+		<xsd:annotation>
+			<xsd:documentation>The public or commercial name of a facility site (i.e., the full name that commonly appears on invoices, signs, or other business documents, or as assigned by the state when the name is ambiguous).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="FacilityPetitionStatusCode" type="uic:UICGenericStringType">
+		<xsd:annotation>
+			<xsd:documentation>Status of review of no-migration petition (this is a technical demonstration required before Class I hazardous waste injection facilities may begin operating).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="LocationAddressStateCode" type="uic:UICGenericStringType">
+		<xsd:annotation>
+			<xsd:documentation>The U.S. Postal Service abbreviation that represents the state.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="FacilityStateIdentifier" type="uic:NormalizedString50Type">
+		<xsd:annotation>
+			<xsd:documentation>Facility identification assigned by DI program or primacy state.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="LocationAddressText" type="uic:String150Type">
+		<xsd:annotation>
+			<xsd:documentation>The address that describes the physical (geographic) location of the main entrance of a facility site, including urban-style street address or rural address, well field entrance, etc.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="FacilitySiteTypeCode" type="uic:UICGenericStringType">
+		<xsd:annotation>
+			<xsd:documentation>Class I well waste is disposed in either of two types of facilities: (1) Commercial- where the waste is generated offsite but transported to the disposal facility, or (2) Non-commercial-where the waste is generated onsite and disposed there also.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="NAICSCode" type="uic:UICGenericStringType">
+		<xsd:annotation>
+			<xsd:documentation>The NAICS code that represents a subdivision of an industry that accommodates user needs in the United States (6-digits)--(Only primary code).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SICCode" type="uic:UICGenericStringType">
+		<xsd:annotation>
+			<xsd:documentation>The code that represents the economic activity of a company (4-digits)--(only the primary code).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="LocationAddressPostalCode" type="uic:ZipCodeType">
+		<xsd:annotation>
+			<xsd:documentation>The combination of the 5-digit Zone Improvement Plan (ZIP) code and the four-digit extension code (if available) that represents the geographic segment that is a subunit of the ZIP Code, assigned by the U.S. Postal Service to a geographic location.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>
