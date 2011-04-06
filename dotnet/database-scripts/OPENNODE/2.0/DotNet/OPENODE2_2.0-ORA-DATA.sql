@@ -444,12 +444,12 @@ GO
 --Add EPA Endpoints to NParnter
 INSERT INTO NPartner (Id,Name,Url,ModifiedBy,ModifiedOn,Version) VALUES ('_18195f91-7841-43ba-9ea4-b6d4ff3c32c2','EPA v1.1 (Prod)','https://cdxnode.epa.gov/cdx/services/NetworkNodePortType_V10','0000-0000-0000-0000-0000', SYSDATE, 'EN11');
 INSERT INTO NPartner (Id,Name,Url,ModifiedBy,ModifiedOn,Version) VALUES ('_20eab800-9a68-4cb5-885b-7355424d277b','EPA NGN v1.1 (Prod)','https://cdxnodengn.epa.gov/cdx-enws10/services/NetworkNodePortType_V10','0000-0000-0000-0000-0000', SYSDATE, 'EN11');
-INSERT INTO NPartner (Id,Name,Url,ModifiedBy,ModifiedOn,Version) VALUES ('_34554579-cb76-44ce-8302-c1c834c4b63c','EPA v2.0 (Test)','https://test.epacdxnode.net/cdx-enws20/services/NetworkNode2?wsdl','0000-0000-0000-0000-0000', SYSDATE, 'EN20');
+INSERT INTO NPartner (Id,Name,Url,ModifiedBy,ModifiedOn,Version) VALUES ('_34554579-cb76-44ce-8302-c1c834c4b63c','EPA v2.0 (Test)','https://test.epacdxnode.net/cdx-enws20/services/NetworkNode2','0000-0000-0000-0000-0000', SYSDATE, 'EN20');
 INSERT INTO NPartner (Id,Name,Url,ModifiedBy,ModifiedOn,Version) VALUES ('_397b7cff-cf13-48a5-8e7b-cf3bec89dd81','EPA NGN v1.1 (Test)','https://testngn.epacdxnode.net/cdx-enws10/services/NetworkNodePortType_V10','0000-0000-0000-0000-0000', SYSDATE, 'EN11');
 INSERT INTO NPartner (Id,Name,Url,ModifiedBy,ModifiedOn,Version) VALUES ('_6cbbaa52-2b78-4a26-9c03-c1098afc5ffd','EPA v1.1 (Test)','https://test.epacdxnode.net/cdx/services/NetworkNodePortType_V10','0000-0000-0000-0000-0000', SYSDATE, 'EN11');
 INSERT INTO NPartner (Id,Name,Url,ModifiedBy,ModifiedOn,Version) VALUES ('_778e3dc9-1259-4c86-b41d-086aaa01bb9d','EPA .NET Node v2.0 (Prod)','https://node2.epa.gov/Node2WS.svc','0000-0000-0000-0000-0000', SYSDATE, 'EN20');
 INSERT INTO NPartner (Id,Name,Url,ModifiedBy,ModifiedOn,Version) VALUES ('_b8c859d1-0c62-48ff-8c49-9fe25cdf4333','EPA NGN v2.0 (Prod)','https://cdxnodengn.epa.gov/ngn-enws20/services/NetworkNode2Service','0000-0000-0000-0000-0000', SYSDATE, 'EN20');
-INSERT INTO NPartner (Id,Name,Url,ModifiedBy,ModifiedOn,Version) VALUES ('_e6aa4fb4-97f3-46f8-b0b6-8dfcd79dff9e','EPA v2.0 (Prod)','https://cdxnode.epa.gov/cdx-enws20/services/NetworkNode2?wsdl','0000-0000-0000-0000-0000', SYSDATE, 'EN20');
+INSERT INTO NPartner (Id,Name,Url,ModifiedBy,ModifiedOn,Version) VALUES ('_e6aa4fb4-97f3-46f8-b0b6-8dfcd79dff9e','EPA v2.0 (Prod)','https://cdxnode.epa.gov/cdx-enws20/services/NetworkNode2','0000-0000-0000-0000-0000', SYSDATE, 'EN20');
 INSERT INTO NPartner (Id,Name,Url,ModifiedBy,ModifiedOn,Version) VALUES ('_ef1a8c6b-1738-41e6-b534-1356d4361829','EPA NGN v2.0 (Test)','https://testngn.epacdxnode.net/ngn-enws20/services/NetworkNode2Service','0000-0000-0000-0000-0000', SYSDATE, 'EN20');
      
 commit;
