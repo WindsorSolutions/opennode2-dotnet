@@ -1002,6 +1002,80 @@ namespace Windsor.Node2008.WNOSPlugin
             }
             return UpdateStatusOfNetworkTransaction(transactionId, endpointNetworkId, endpointUrl, endpointVersion);
         }
+        protected IList<string> DownloadNetworkTransactionDocuments(string endpointNetworkId, params string[] documentNames)
+        {
+            EndpointVersionType endpointVersion;
+            string endpointUrl, transactionId, endpointFlowName;
+            try
+            {
+                ITransactionManager transactionManager;
+                GetServiceImplementation(out transactionManager);
+
+                CommonTransactionStatusCode status;
+                transactionId =
+                    transactionManager.GetNetworkTransactionStatusFromNetworkId(endpointNetworkId, out status, out endpointVersion,
+                                                                                out endpointUrl);
+                if (string.IsNullOrEmpty(transactionId))
+                {
+                    AppendAuditLogEvent("Could not find network transaction id \"{0}\" in database", endpointNetworkId);
+                    return null;
+                }
+
+                NodeTransaction nodeTransaction = transactionManager.GetTransaction(transactionId);
+                if ( nodeTransaction == null )
+                {
+                    AppendAuditLogEvent("Failed to retrieve transaction with id \"{0}\" from database", transactionId);
+                    return null;
+                }
+                if ( string.IsNullOrEmpty(nodeTransaction.NetworkFlowName) )
+                {
+                    AppendAuditLogEvent("Failed to retrieve network flow name for transaction with id \"{0}\" from database", transactionId);
+                    return null;
+                }
+                endpointFlowName = nodeTransaction.NetworkFlowName;
+            }
+            catch (Exception e)
+            {
+                AppendAuditLogEvent("Could not query network transaction id \"{0}\" in database.  Error: {1}",
+                                    endpointNetworkId, ExceptionUtils.GetDeepExceptionMessage(e));
+                return null;
+            }
+            try
+            {
+                INodeEndpointClientFactory nodeEndpointClientFactory;
+                GetServiceImplementation(out nodeEndpointClientFactory);
+
+                string[] downloadedFiles;
+                using (INodeEndpointClient endpointClient = nodeEndpointClientFactory.Make(endpointUrl, endpointVersion))
+                {
+                    if (documentNames.Length == 0)
+                    {
+                        downloadedFiles = endpointClient.Download(endpointFlowName, endpointNetworkId);
+                    }
+                    else
+                    {
+                        downloadedFiles = endpointClient.DownloadByName(endpointFlowName, endpointNetworkId, documentNames);
+                    }
+                }
+                if (CollectionUtils.IsNullOrEmpty(downloadedFiles))
+                {
+                    AppendAuditLogEvent("No documents downloaded from network url \"{0}\" for network transaction id \"{1}.\"",
+                                        endpointUrl, endpointNetworkId);
+                }
+                else
+                {
+                    AppendAuditLogEvent("Successfully downloaded {0} document(s) from network url \"{1}\" for network transaction id \"{2}.\"",
+                                        downloadedFiles.Length.ToString(), endpointUrl, endpointNetworkId);
+                }
+                return downloadedFiles;
+            }
+            catch (Exception e)
+            {
+                AppendAuditLogEvent("Failed to download documents from network url \"{0}\" for network transaction id \"{1}.\"  Error: {2}",
+                                    endpointUrl, endpointNetworkId, ExceptionUtils.GetDeepExceptionMessage(e));
+                return null;
+            }
+        }
         protected virtual IList<string> GetPendingSubmissionTransactionIds(SpringBaseDao baseDao)
         {
             List<string> pendingSubmissions = null;

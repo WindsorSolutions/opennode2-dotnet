@@ -30,7 +30,7 @@ ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 */
 #endregion
-#define BYPASS_LOGIN
+//#define BYPASS_LOGIN
 
 using System;
 using System.Data;
@@ -148,7 +148,7 @@ namespace Windsor.Node2008.Admin
         {
             try
             {
-                AdminVisit visit = _securityService.Authenticate(
+                AdminVisit visit = _securityService.AuthenticateAdmin(
                     new AuthenticationCredentials(username.Value, password.Value),
                     _visitProvider.GetRequestorIP());
 

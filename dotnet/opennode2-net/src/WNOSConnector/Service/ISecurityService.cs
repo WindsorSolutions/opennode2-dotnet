@@ -51,6 +51,6 @@ namespace Windsor.Node2008.WNOSConnector.Service
         /// Authenticate
         /// </summary>
         /// <returns></returns>
-        AdminVisit Authenticate(AuthenticationCredentials credentials, string requestedFromIp);
+        AdminVisit AuthenticateAdmin(AuthenticationCredentials credentials, string requestedFromIp);
     }
 }

@@ -121,7 +121,7 @@ namespace Windsor.Node2008.WNOS.Service
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public AdminVisit Authenticate(AuthenticationCredentials credentials, string requestedFromIp)
+        public AdminVisit AuthenticateAdmin(AuthenticationCredentials credentials, string requestedFromIp)
         {
             try
             {
@@ -142,6 +142,15 @@ namespace Windsor.Node2008.WNOS.Service
                 UserAccount account = AccountManager.GetOrCreate(credentials.UserName, false,
                                                                  out wasCreated);
 
+                if (!account.IsActive)
+                {
+                    throw new UnauthorizedAccessException("The user does not have an active account on the node.");
+                }
+                if ((account.Role != SystemRoleType.Admin) && (account.Role != SystemRoleType.Program))
+                {
+                    throw new UnauthorizedAccessException("The user does not have sufficient permissions to access the node.");
+                }
+
                 AdminVisit visit = new AdminVisit(account, requestedFromIp);
 
                 ActivityManager.LogAdminAuth(NodeMethod.None, null, visit, "Login success for user: \"{0}\"", credentials.UserName);
@@ -150,7 +159,8 @@ namespace Windsor.Node2008.WNOS.Service
             }
             catch (Exception e)
             {
-                ActivityManager.LogError(NodeMethod.None, null, e, null, "Login failure for user: \"{0}\"", credentials.UserName);
+                ActivityManager.LogError(NodeMethod.None, null, e, null, "Login failure for user \"{0}\": {1}", 
+                                         credentials.UserName, e.Message);
                 throw;
             }
         }
