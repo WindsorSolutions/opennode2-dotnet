@@ -82,6 +82,10 @@ namespace Windsor.Node2008.WNOSPlugin
         }
     }
     [AttributeUsage(AttributeTargets.Assembly)]
+    public class StandardPluginAttribute : Attribute
+    {
+    }
+    [AttributeUsage(AttributeTargets.Assembly)]
     public class PluginSqlDdlFilePaths : Attribute
     {
         private List<string> _filePaths;

@@ -69,3 +69,4 @@ using Windsor.Node2008.WNOSPlugin;
 [assembly: AssemblyVersion(AssemblyInfo.cAssemblyVersion)]
 [assembly: AssemblyFileVersion(AssemblyInfo.cAssemblyFileVersion)]
 [assembly: PluginDefaultFlowAttribute("ENDS_v20")]
+[assembly: StandardPluginAttribute()]

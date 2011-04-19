@@ -71,7 +71,8 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>"$(TargetPath)"
+    <PostBuildEvent>REM "$(TargetPath)" /CreatePackages
+"$(TargetPath)" /CreatePackages
 IF EXIST "$(ProjectDir)..\..\Config\Deployment_private.config" copy /Y "$(ProjectDir)..\..\Config\Deployment_private.config" "$(ProjectDir)..\..\BUILD\Config\Deployment.config"
 </PostBuildEvent>
     <PreBuildEvent>

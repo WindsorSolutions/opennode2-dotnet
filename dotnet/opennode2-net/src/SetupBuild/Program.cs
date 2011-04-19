@@ -30,7 +30,6 @@ ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 */
 #endregion
-//#define CREATE_PACKAGES
 
 using System;
 using System.Collections.Generic;
@@ -130,6 +129,7 @@ namespace CopyPlugins
                 if (File.Exists(zipFilePath)) File.Delete(zipFilePath);
                 string versionMinusSvnVersion = fileVersion.Substring(0, fileVersion.LastIndexOf('.'));
                 string packageFileName = string.Format("DotNET {0} Plugin v{1}.zip", packageName, versionMinusSvnVersion);
+                packageFileName = AdjustDeploymentName(packageFileName);
                 string packageFilePath = Path.Combine(PackagesFolderPath, packageFileName);
                 if (File.Exists(packageFilePath)) File.Delete(packageFilePath);
                 try
@@ -273,6 +273,10 @@ namespace CopyPlugins
                 File.Move(privateDeploymentPath, deploymentPath);
             }
         }
+        static string AdjustDeploymentName(string name)
+        {
+            return name.Replace(' ', '_');
+        }
         static void BuildDeployPackage()
         {
             string versionMinusSvnVersion = 
@@ -280,6 +284,7 @@ namespace CopyPlugins
                 Windsor.Node2008.WNOS.AssemblyInfo.AssemblyInfo.cAssemblyVersion.LastIndexOf('.'));
             string zipFile = Path.Combine(PackagesFolderPath, "DotNET OpenNode2 v" +
                 versionMinusSvnVersion + ".zip");
+            zipFile = AdjustDeploymentName(zipFile);
             FileUtils.SafeDeleteFile(zipFile);
             DotNetZipHelper zipHelper = new DotNetZipHelper();
             zipHelper.CompressDirectory(zipFile, Path.Combine(BuildFolderPath, "Config"), "Config");
@@ -295,8 +300,8 @@ namespace CopyPlugins
             CollectionUtils.ForEach(pluginFilePaths, delegate(string pluginFilePath)
             {
                 Assembly loadedAssembly = Assembly.LoadFile(pluginFilePath);
-                Attribute[] customAttributes = Attribute.GetCustomAttributes(loadedAssembly, typeof(PluginPackageNameAttribute));
-                if (CollectionUtils.IsNullOrEmpty(customAttributes))
+                Attribute[] customAttributes = Attribute.GetCustomAttributes(loadedAssembly, typeof(StandardPluginAttribute));
+                if (!CollectionUtils.IsNullOrEmpty(customAttributes))
                 {
                     // This is a standard plugin that is included with the default deployment package
                     string includeFolder = Path.GetDirectoryName(pluginFilePath);
