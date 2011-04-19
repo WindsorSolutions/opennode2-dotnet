@@ -162,6 +162,10 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 {
                     continue;   // Ignore, already taken care of on root element only
                 }
+                if (mappingAttribute is UseExactElementNameForColumnNameAttribute)
+                {
+                    continue;   // Ignore, already taken care of on root element only
+                }
                 CollectionUtils.Add(mappingAttribute, ref unrecognizedAttributes);
             }
             if (unrecognizedAttributes != null)
@@ -282,53 +286,60 @@ namespace Windsor.Commons.XsdOrm.Implementations
                         }
                         if (string.IsNullOrEmpty(columnAttribute.ColumnName))
                         {
-                            string columnName = member.Name;
-                            if (primaryKeyAttribute != null)
+                            if (m_UseExactElementNameForColumnName)
                             {
-                                if (columnName == "_PK")
+                                columnAttribute.ColumnName = member.Name;
+                            }
+                            else
+                            {
+                                string columnName = member.Name;
+                                if (primaryKeyAttribute != null)
                                 {
-                                    if (m_UseTableNameForDefaultPrimaryKeys)
+                                    if (columnName == "_PK")
                                     {
-                                        columnAttribute.ColumnName = classTableAttribute.TableName + "_ID";
-                                        if (!string.IsNullOrEmpty(m_DefaultTableNamePrefix))
+                                        if (m_UseTableNameForDefaultPrimaryKeys)
                                         {
-                                            if (columnAttribute.ColumnName.IndexOf(m_DefaultTableNamePrefix, 0, 
-                                                StringComparison.InvariantCultureIgnoreCase) == 0)
+                                            columnAttribute.ColumnName = classTableAttribute.TableName + "_ID";
+                                            if (!string.IsNullOrEmpty(m_DefaultTableNamePrefix))
                                             {
-                                                columnAttribute.ColumnName = columnAttribute.ColumnName.Substring(m_DefaultTableNamePrefix.Length);
+                                                if (columnAttribute.ColumnName.IndexOf(m_DefaultTableNamePrefix, 0,
+                                                    StringComparison.InvariantCultureIgnoreCase) == 0)
+                                                {
+                                                    columnAttribute.ColumnName = columnAttribute.ColumnName.Substring(m_DefaultTableNamePrefix.Length);
+                                                }
                                             }
+                                        }
+                                        else
+                                        {
+                                            columnName = objType.Name;
+                                            if (columnName.EndsWith("DataType"))
+                                            {
+                                                columnName = columnName.Substring(0, columnName.Length - "DataType".Length);
+                                            }
+                                            columnName += "Id";
+                                            columnAttribute.ColumnName =
+                                               Utils.ShortenDatabaseColumnName(Utils.CamelCaseToDatabaseName(columnName),
+                                                                               m_ShortenNamesByRemovingVowelsFirst,
+                                                                               m_FixShortenNameBreakBug,
+                                                                               m_Abbreviations);
                                         }
                                     }
                                     else
                                     {
-                                        columnName = objType.Name;
-                                        if (columnName.EndsWith("DataType"))
-                                        {
-                                            columnName = columnName.Substring(0, columnName.Length - "DataType".Length);
-                                        }
-                                        columnName += "Id";
                                         columnAttribute.ColumnName =
-                                           Utils.ShortenDatabaseColumnName(Utils.CamelCaseToDatabaseName(columnName),
-                                                                           m_ShortenNamesByRemovingVowelsFirst,
-                                                                           m_FixShortenNameBreakBug,
-                                                                           m_Abbreviations);
+                                            Utils.ShortenDatabaseColumnName(Utils.CamelCaseToDatabaseName(columnName),
+                                                                            m_ShortenNamesByRemovingVowelsFirst,
+                                                                            m_FixShortenNameBreakBug,
+                                                                            m_Abbreviations);
                                     }
                                 }
                                 else
                                 {
                                     columnAttribute.ColumnName =
                                         Utils.ShortenDatabaseColumnName(Utils.CamelCaseToDatabaseName(columnName),
-                                                                        m_ShortenNamesByRemovingVowelsFirst,
-                                                                        m_FixShortenNameBreakBug,
+                                                                        m_ShortenNamesByRemovingVowelsFirst, m_FixShortenNameBreakBug,
                                                                         m_Abbreviations);
                                 }
-                            }
-                            else
-                            {
-                                columnAttribute.ColumnName =
-                                    Utils.ShortenDatabaseColumnName(Utils.CamelCaseToDatabaseName(columnName),
-                                                                    m_ShortenNamesByRemovingVowelsFirst, m_FixShortenNameBreakBug,
-                                                                    m_Abbreviations);
                             }
                         }
                         if ((foreignKeyAttribute != null) && (columnAttribute.ColumnType == null) && (columnAttribute.ColumnSize == 0))
@@ -409,7 +420,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
                                                        member.Name, objType.FullName, columnAttribute.ColumnName,
                                                        Utils.MAX_COLUMN_NAME_CHARS);
                         }
-                        if (StringUtils.ContainsLowercaseChars(columnAttribute.ColumnName))
+                        if (!m_UseExactElementNameForColumnName && StringUtils.ContainsLowercaseChars(columnAttribute.ColumnName))
                         {
                             throw new MappingException("The member \"{0}\" of the class \"{1}\" has a ColumnAttribute applied to it (\"{2}\") that contains lowercase characters.  Column names cannot contain lowercase characters.",
                                                       member.Name, objType.FullName, columnAttribute.ColumnName);
@@ -1428,6 +1439,8 @@ namespace Windsor.Commons.XsdOrm.Implementations
             m_FixShortenNameBreakBug = GetFixShortenNameBreakBugAttribute(rootType);
             m_UseTableNameForDefaultPrimaryKeys =
                 GetUseTableNameForDefaultPrimaryKeysAttribute(rootType);
+            m_UseExactElementNameForColumnName =
+                GetUseElementNameForColumnNameAttribute(rootType);
 
             if (!string.IsNullOrEmpty(m_DefaultTableNamePrefix))
             {
@@ -1766,6 +1779,12 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 GetGlobalAttribute<UseTableNameForDefaultPrimaryKeysAttribute>(rootType);
             return (attr != null);
         }
+        protected virtual bool GetUseElementNameForColumnNameAttribute(Type rootType)
+        {
+            UseExactElementNameForColumnNameAttribute attr =
+                GetGlobalAttribute<UseExactElementNameForColumnNameAttribute>(rootType);
+            return (attr != null);
+        }
         protected virtual bool GetFixShortenNameBreakBugAttribute(Type rootType)
         {
             FixShortenNameBreakBugAttribute attr = GetGlobalAttribute<FixShortenNameBreakBugAttribute>(rootType);
@@ -2053,6 +2072,14 @@ namespace Windsor.Commons.XsdOrm.Implementations
             {
                 mappingAttribute = new OneToOneAttribute();
             }
+            else if (appliedAttribute.MappedAttributeType == typeof(GuidPrimaryKeyAttribute))
+            {
+                mappingAttribute = new GuidPrimaryKeyAttribute();
+            }
+            else if (appliedAttribute.MappedAttributeType == typeof(GuidForeignKeyAttribute))
+            {
+                mappingAttribute = new GuidForeignKeyAttribute();
+            }
             else
             {
                 throw new NotImplementedException(string.Format("attribute.MappedAttributeType arg is not implemented: {0}",
@@ -2103,6 +2130,20 @@ namespace Windsor.Commons.XsdOrm.Implementations
         private bool m_FixShortenNameBreakBug;
         private bool m_InheritAppliedAttributes;
         private bool m_UseTableNameForDefaultPrimaryKeys;
+        private bool m_UseExactElementNameForColumnName;
+        private bool m_UseExactElementNameForTableName;
+
+        public bool UseExactElementNameForTableName
+        {
+            get { return m_UseExactElementNameForTableName; }
+            set { m_UseExactElementNameForTableName = value; }
+        }
+
+        public bool UseExactElementNameForColumnName
+        {
+            get { return m_UseExactElementNameForColumnName; }
+            set { m_UseExactElementNameForColumnName = value; }
+        }
 
         public bool UseTableNameForDefaultPrimaryKeys
         {

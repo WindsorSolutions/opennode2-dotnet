@@ -147,6 +147,28 @@ namespace Windsor.Commons.Core
             }
             return -1;
         }
+        public static string FirstWord(string text)
+        {
+            if (text == null)
+            {
+                return null;
+            }
+            text = text.Trim();
+            int curIndex = 0;
+            foreach(char curChar in text)
+            {
+                if (char.IsWhiteSpace(curChar) || char.IsPunctuation(curChar))
+                {
+                    break;
+                }
+                ++curIndex;
+            }
+            if (curIndex == 0)
+            {
+                return null;
+            }
+            return text.Substring(0, curIndex);
+        }
         /// <summary>
         /// Return the character index of findChar within text, starting from the beginning of text
         /// and working forwards until the n-th occurance is found (specified by 1-based nthCount).

@@ -77,23 +77,12 @@ namespace Windsor.Commons.XsdOrm.Implementations
                     }
                     if (columnNames.Count > 0)
                     {
-                        string columnNameStr = baseDao.IsOracleDatabase ? 
-                            StringUtils.Join(",", columnNames) : StringUtils.Join("\",\"", columnNames);
+                        string columnNameStr = StringUtils.Join(",", columnNames);
                         string columnParamNamesStr = StringUtils.Join(",", columnParamNames);
-                        if (baseDao.IsOracleDatabase)
-                        {
-                            objectPath.InsertSql = string.Format("INSERT INTO {0} ({1}) VALUES ({2})",
-                                                                tableInfo.TableName, columnNameStr,
-                                                                columnParamNamesStr);
-                            objectPath.SelectSql = string.Format("SELECT {0} FROM {1}", columnNameStr, tableInfo.TableName);
-                        }
-                        else
-                        {
-                            objectPath.InsertSql = string.Format("INSERT INTO \"{0}\" (\"{1}\") VALUES ({2})",
-                                                                tableInfo.TableName, columnNameStr,
-                                                                columnParamNamesStr);
-                            objectPath.SelectSql = string.Format("SELECT \"{0}\" FROM \"{1}\"", columnNameStr, tableInfo.TableName);
-                        }
+                        objectPath.InsertSql = string.Format("INSERT INTO {0} ({1}) VALUES ({2})",
+                                                            tableInfo.TableName, columnNameStr,
+                                                            columnParamNamesStr);
+                        objectPath.SelectSql = string.Format("SELECT {0} FROM {1}", columnNameStr, tableInfo.TableName);
                     }
                     else
                     {

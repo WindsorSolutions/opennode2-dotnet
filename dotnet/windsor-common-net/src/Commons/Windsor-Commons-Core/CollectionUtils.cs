@@ -546,6 +546,16 @@ namespace Windsor.Commons.Core
             }
             list.Add(obj);
         }
+        public static T[] Add<T>(T obj, T[] list)
+        {
+            T[] rtnArray = new T[CollectionUtils.Count(list) + 1];
+            if (list != null)
+            {
+                list.CopyTo(rtnArray, 0);
+            }
+            rtnArray[rtnArray.Length - 1] = obj;
+            return rtnArray;
+        }
         public static void Add<T>(IEnumerable<T> objectsToAdd, ref List<T> list)
         {
             if (IsNullOrEmpty(objectsToAdd))

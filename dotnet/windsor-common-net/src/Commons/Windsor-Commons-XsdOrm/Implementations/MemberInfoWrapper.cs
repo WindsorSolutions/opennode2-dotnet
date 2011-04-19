@@ -297,6 +297,33 @@ namespace Windsor.Commons.XsdOrm.Implementations
                                                                          valueType.FullName, m_MemberType.FullName, m_MemberInfoPath));
                         }
                     }
+                    else if (m_MemberType == typeof(DateTime))
+                    {
+                        if (valueType == typeof(string))
+                        {
+                            try
+                            {
+                                if (string.IsNullOrEmpty((string)value))
+                                {
+                                    value = null;
+                                }
+                                else
+                                {
+                                    value = DateTime.Parse((string)value);
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                throw new ArgumentException(string.Format("Failed to convert value \"{0}\" to DateTime for member \"{1}\"",
+                                                                          value, m_MemberInfoPath), e);
+                            }
+                        }
+                        else
+                        {
+                            throw new InvalidCastException(string.Format("Type \"{0}\" cannot be cast to type \"{1}\" for member \"{2}\"",
+                                                                         valueType.FullName, m_MemberType.FullName, m_MemberInfoPath));
+                        }
+                    }
                     else
                     {
                         ICollection collection = value as ICollection;
@@ -320,7 +347,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 }
                 if (m_IsSpecifiedMemberInfo != null)
                 {
-                    ReflectionUtils.SetFieldOrPropertyValue(setInstance, m_IsSpecifiedMemberInfo, true);
+                    ReflectionUtils.SetFieldOrPropertyValue(setInstance, m_IsSpecifiedMemberInfo, (value != null));
                 }
             }
             else if (m_IsSpecifiedMemberInfo != null)

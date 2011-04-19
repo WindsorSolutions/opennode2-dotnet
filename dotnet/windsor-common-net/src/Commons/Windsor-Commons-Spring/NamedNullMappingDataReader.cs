@@ -125,6 +125,12 @@ namespace Windsor.Commons.Spring
                 return true;
             }
         }
+        public virtual DateTime GetNullDateTime(string name, out bool isSpecified)
+        {
+            int ordinal = GetOrdinal(name);
+            isSpecified = !base.IsDBNull(ordinal);
+            return isSpecified ? base.GetDateTime(ordinal) : default(DateTime);
+        }
         public virtual int GetInt32(string name)
         {
             return base.GetInt32(GetOrdinal(name));

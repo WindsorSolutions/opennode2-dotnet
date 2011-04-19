@@ -1049,6 +1049,14 @@ namespace Windsor.Commons.XsdOrm
         }
     }
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Assembly)]
+    public class UseExactElementNameForColumnNameAttribute : MappingAttribute
+    {
+        public override string GetShortDescription()
+        {
+            return "UseElementNameForColumnName";
+        }
+    }
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Assembly)]
     public class InheritAppliedAttributesAttribute : MappingAttribute
     {
         public override string GetShortDescription()
