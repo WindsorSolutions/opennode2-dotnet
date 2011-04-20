@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:emts="http://www.exchangenetwork.net/schema/emts/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/emts/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name  : EMTS_OriginatingSourceDetail_v1.0.xsd
+        Description   : Identifies the user defined information regarding supporting document identifiers for a transaction.
+        Developed by  : 	 Perrin Quarles Associates, Inc.
+        Point of Contact : 	Perrin Quarles Associates, Inc.	
+        </xsd:documentation>
+	</xsd:annotation>
+	<xsd:include schemaLocation="EMTS_SimpleContent_v1.0.xsd"/>
+	<xsd:complexType name="OriginatingSourceDetailDataType">
+		<xsd:sequence>
+			<xsd:element ref="emts:GenerateOrganizationIdentifier" minOccurs="0"/>
+			<xsd:element ref="emts:GenerateFacilityIdentifier" minOccurs="0"/>
+			<xsd:element ref="emts:BatchNumberText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="SellOriginatingSourceDetail" type="emts:OriginatingSourceDetailDataType"/>
+	<xsd:element name="BuyOriginatingSourceDetail" type="emts:OriginatingSourceDetailDataType"/>
+	<xsd:element name="SeparateOriginatingSourceDetail" type="emts:OriginatingSourceDetailDataType"/>
+	<xsd:element name="RetireOriginatingSourceDetail" type="emts:OriginatingSourceDetailDataType"/>
+	<xsd:element name="GenerateOriginatingSourceDetail" type="emts:OriginatingSourceDetailDataType"/>
+</xsd:schema>

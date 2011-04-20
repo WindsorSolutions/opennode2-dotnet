@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2009 sp1 (http://www.altova.com) by Perrin Quarles Associates (Perrin Quarles Associates) -->
+<xsd:schema xmlns:emts="http://www.exchangenetwork.net/schema/emts/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/emts/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name  : EMTS_EMTS_v1.0.xsd
+        Current Version Available At : 
+        Description   : 
+        Developed by  : 	Perrin Quarles Associates, Inc.
+        Point of Contact : Perrin Quarles Associates, Inc.	
+        </xsd:documentation>
+	</xsd:annotation>
+	<xsd:include schemaLocation="EMTS_SimpleContent_v1.0.xsd"/>
+	<xsd:include schemaLocation="EMTS_GenerateTransactionDetail_v1.0.xsd"/>
+	<xsd:include schemaLocation="EMTS_SeparateTransactionDetail_v1.0.xsd"/>
+	<xsd:include schemaLocation="EMTS_SellTransactionDetail_v1.0.xsd"/>
+	<xsd:include schemaLocation="EMTS_BuyTransactionDetail_v1.0.xsd"/>
+	<xsd:include schemaLocation="EMTS_RetireTransactionDetail_v1.0.xsd"/>
+	<xsd:complexType name="EMTSDataType">
+		<xsd:sequence>
+			<xsd:element ref="emts:UserLoginText"/>
+			<xsd:element ref="emts:SubmittalCreationDate"/>
+			<xsd:element ref="emts:OrganizationIdentifier"/>
+			<xsd:element ref="emts:SubmittalCommentText" minOccurs="0"/>
+			<xsd:element ref="emts:GenerateTransactionDetail" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="emts:SeparateTransactionDetail" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="emts:SellTransactionDetail" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="emts:BuyTransactionDetail" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="emts:RetireTransactionDetail" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="EMTS" type="emts:EMTSDataType"/>
+</xsd:schema>

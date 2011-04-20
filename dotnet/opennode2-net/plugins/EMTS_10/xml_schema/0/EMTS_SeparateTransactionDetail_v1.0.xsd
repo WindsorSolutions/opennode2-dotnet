@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:emts="http://www.exchangenetwork.net/schema/emts/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/emts/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name  : SeparateTransactionDetail_v1.0.xsd
+        Description   : Information on the RINs being separated.
+        Developed by  : 	 Perrin Quarles Associates, Inc.
+        Point of Contact : 	Perrin Quarles Associates, Inc.	
+        </xsd:documentation>
+	</xsd:annotation>
+	<xsd:include schemaLocation="EMTS_SimpleContent_v1.0.xsd"/>
+	<xsd:include schemaLocation="EMTS_SupportingDocumentDetail_v1.0.xsd"/>
+	<xsd:include schemaLocation="EMTS_OriginatingSourceDetail_v1.0.xsd"/>
+	<xsd:complexType name="SeparateTransactionDetailDataType">
+		<xsd:sequence>
+			<xsd:element ref="emts:RINQuantity"/>
+			<xsd:element ref="emts:BatchVolume"/>
+			<xsd:element ref="emts:FuelCode"/>
+			<xsd:element ref="emts:SeparateReasonCode"/>
+			<xsd:element ref="emts:RINYear"/>
+			<xsd:element ref="emts:BlenderOrganizationIdentifier" minOccurs="0" maxOccurs="1"/>
+			<xsd:element ref="emts:BlenderOrganizationName" minOccurs="0" maxOccurs="1"/>
+			<xsd:element ref="emts:TransactionDetailCommentText" minOccurs="0"/>
+			<xsd:element ref="emts:SeparateSupportingDocumentDetail" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="emts:SeparateOriginatingSourceDetail" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="SeparateTransactionDetail" type="emts:SeparateTransactionDetailDataType"/>
+</xsd:schema>

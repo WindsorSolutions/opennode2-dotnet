@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2009 sp1 (http://www.altova.com) by Perrin Quarles Associates (Perrin Quarles Associates) -->
+<xsd:schema xmlns:emts="http://www.exchangenetwork.net/schema/emts/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/emts/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:annotation>
+		<xsd:documentation>
+        Schema Name  : EMTS_SimpleContent_v1.0.xsd
+        Current Version Available At : 
+        Description   : 	Simple Content file for the EPA Moderated Transaction System common simple types and data elements.
+        Developed by  : Perrin Quarles Associates, Inc.
+        Point of Contact :Perrin Quarles Associates Inc.
+</xsd:documentation>
+	</xsd:annotation>
+	<xsd:simpleType name="AssignmentCodeDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="BatchNumberDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="20"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="BatchVolumeDataType">
+		<xsd:restriction base="xsd:nonNegativeInteger">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="99999999"/>
+			<xsd:totalDigits value="8"/>
+			<xsd:fractionDigits value="0"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="BuyReasonCodeDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="CommentDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="400"/>
+			<xsd:minLength value="0"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ComplianceYearDataType">
+		<xsd:restriction base="xsd:gYear"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="CoProductCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="3"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="DateDataType">
+		<xsd:restriction base="xsd:date"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="EquivalenceValueDataType">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:minInclusive value="1"/>
+			<xsd:maxInclusive value="2.5"/>
+			<xsd:fractionDigits value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="FeedstockCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="3"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="FuelCodeDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="FuelCategoryCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="3"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="FacilityIdentifierDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="12"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="IndicatorDataType">
+		<xsd:restriction base="xsd:boolean"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeasureCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="3"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="OrganizationIdentifierDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="12"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ComplianceLevelCodeDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="OrganizationRINPinDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="100"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="OrganizationNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="125"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="PricePerRINDataType">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:fractionDigits value="2"/>
+			<xsd:totalDigits value="5"/>
+			<xsd:minExclusive value="0"/>
+			<xsd:maxExclusive value="1000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="PricePerGallonDataType">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:totalDigits value="5"/>
+			<xsd:fractionDigits value="2"/>
+			<xsd:minExclusive value="0"/>
+			<xsd:maxExclusive value="1000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ProcessCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="3"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="PTDNumberDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="100"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RINQuantityDataType">
+		<xsd:restriction base="xsd:nonNegativeInteger">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="99999999" fixed="true"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RINYearDataType">
+		<xsd:restriction base="xsd:gYear"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="RetireReasonCodeDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="SellReasonCodeDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="SeparateReasonCodeDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="SubmittalCreationDateDataType">
+		<xsd:restriction base="xsd:date"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="SupportingDocumentTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="100"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SupportingDocumentNumberDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="100"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TransactionCodeDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="UserLoginDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="100"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="VolumeDataType">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:fractionDigits value="1"/>
+			<xsd:totalDigits value="10"/>
+			<xsd:maxInclusive value="99999999"/>
+			<xsd:minInclusive value=".1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="AssignmentCode" type="emts:AssignmentCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>A code that indicates whether the RIN is transacting as an assigned RIN or a separated RIN.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="BatchVolume">
+		<xsd:annotation>
+			<xsd:documentation>The volume, in gallons, of renewable fuel associated with a batch number designated by the producing facility.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="emts:BatchVolumeDataType">
+				<xsd:totalDigits value="8"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="BatchNumberText" type="emts:BatchNumberDataType">
+		<xsd:annotation>
+			<xsd:documentation>The batch number for the renewable fuel as designated by the producing facility.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="BlenderOrganizationIdentifier" type="emts:OrganizationIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>The public organization identifer of the small Blender.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="BlenderOrganizationName" type="emts:OrganizationNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>The name of the small blender that is blending the fuel. </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="BuyReasonCode" type="emts:BuyReasonCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>This code identifies the reason for a buy transaction.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ComplianceYear" type="emts:ComplianceYearDataType">
+		<xsd:annotation>
+			<xsd:documentation>The compliance year for which the transaction is applied.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ComplianceFacilityIdentifier" type="emts:FacilityIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>The The facility identifier, as registered in OTAQReg, for the facility that has a compliance obligation.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ComplianceLevelCode" type="emts:ComplianceLevelCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The compliance basis for the submitting organization: Facility, Aggregated Importer, Aggregated Refiner, Aggregated Exporter, Non-Obligated Party.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CoProductCode" type="emts:CoProductCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>A code that identifies the co-product created fro the renewable fuel process.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CoProductDetailCommentText" type="emts:CommentDataType">
+		<xsd:annotation>
+			<xsd:documentation>Comment provided by the user on the CoProduct.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DenaturantVolume">
+		<xsd:annotation>
+			<xsd:documentation>The volume of non-renewable fuel added to a volume of ethanol to create the BatchVolume for a given BatchNumber of renewable fuel.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="emts:BatchVolumeDataType">
+				<xsd:minInclusive value="1"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="EquivalenceValue" type="emts:EquivalenceValueDataType">
+		<xsd:annotation>
+			<xsd:documentation>A multiplier applied to BatchVolume to determine the number of RINs that will be generated per gallon of renewable fuel produced.  The EquivalenceValue is directly related to FuelCode as defined in Section 80.1415.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="FeedstockCode" type="emts:FeedstockCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>AA code that identifies the feedstock used to produce the renewable fuel associated with the batch number.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="FeedstockDetailCommentText" type="emts:CommentDataType">
+		<xsd:annotation>
+			<xsd:documentation>Comment provided by the user on the Feedstock.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="FeedstockVolume" type="emts:VolumeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Total volume of feedstock used in the production of the fuel.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="FeedstockMeasureCode" type="emts:MeasureCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The unit of measure associated with the volume of feedstock used in the production of renewable fuel.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="FuelCode" type="emts:FuelCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The renewable fuel code for the batch as defined in Part M Section 80.1426.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="FuelCategoryCode" type="emts:FuelCategoryCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The renewable fuel typeas described in section 80.1426.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ImportFacilityIdentifier" type="emts:FacilityIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>The public facility identifier of the plant where the fuel was imported.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="GenerateFacilityIdentifier" type="emts:FacilityIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>The facility identifier, as registered in OTAQReg, for the facility that produced the fuel.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="GenerateOrganizationIdentifier" type="emts:OrganizationIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>The OTAQREg identifier for the organization that generated the fuel.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OrganizationIdentifier" type="emts:OrganizationIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>The public identification number for the organization as designated by OTAQReg.  This must be reported if a OrganizationRINPin is not supplied.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OrganizationRINPinIdentifier" type="emts:OrganizationRINPinDataType">
+		<xsd:annotation>
+			<xsd:documentation>The alias defined by OTAQReg for an organization that wishes to mask its identity for EMTS transactions.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="RINPriceAmount" type="emts:PricePerRINDataType">
+		<xsd:annotation>
+			<xsd:documentation>Price paid per RIN.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="GallonPriceAmount" type="emts:PricePerGallonDataType">
+		<xsd:annotation>
+			<xsd:documentation>Price paid per gallon of renewable fuel.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ProcessCode" type="emts:ProcessCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>A code that identifies the process used for producing the renewable fuel.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ProductionDate" type="emts:DateDataType">
+		<xsd:annotation>
+			<xsd:documentation>The date the renewable fuel was produced as designated by the producing facility.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="PTDNumber" type="emts:PTDNumberDataType">
+		<xsd:annotation>
+			<xsd:documentation>The PTD number associated with the transaction.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="RetireReasonCode" type="emts:RetireReasonCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>This code identifies the reason for a retire transaction.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="RenewableBiomassIndicator" type="emts:IndicatorDataType">
+		<xsd:annotation>
+			<xsd:documentation>An indicator whether the feedstock used qualifies as renewable biomass.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="RINBatchCommentText" type="emts:CommentDataType">
+		<xsd:annotation>
+			<xsd:documentation>Comment provided by the user on the RIN batch.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="RINQuantity" type="emts:RINQuantityDataType">
+		<xsd:annotation>
+			<xsd:documentation>The total number of RINs specified in the transaction.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="RINYear" type="emts:RINYearDataType">
+		<xsd:annotation>
+			<xsd:documentation>The RINYear is the year in which the fuel is produced.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SellReasonCode" type="emts:SellReasonCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>This code identifies the reason for a sell transaction.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SeparateReasonCode" type="emts:SeparateReasonCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>This code identifies the reason for a separate transaction.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SubmittalCommentText" type="emts:CommentDataType">
+		<xsd:annotation>
+			<xsd:documentation>Comment provided by the user on submission file.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SubmittalCreationDate" type="emts:SubmittalCreationDateDataType">
+		<xsd:annotation>
+			<xsd:documentation>The date that the submission file was created.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SupportingDocumentText" type="emts:SupportingDocumentTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>The type of document to which the document number applies.  </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SupportingDocumentNumberText" type="emts:SupportingDocumentNumberDataType">
+		<xsd:annotation>
+			<xsd:documentation>The identification number for the supporting document.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TransactionDate" type="emts:DateDataType">
+		<xsd:annotation>
+			<xsd:documentation>The date of the RIN transaction.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TransactionDetailCommentText" type="emts:CommentDataType">
+		<xsd:annotation>
+			<xsd:documentation>Comment provided by the user on the transaction.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TransactionPartnerOrganizationIdentifier" type="emts:OrganizationIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>This identifies the buyer organization for a sell transaction or the selling organization for the buy transaction using either the OrganizationIdentifier designated by OTAQReg.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TransactionPartnerOrganizationName" type="emts:OrganizationNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>The name of the organization trading partner.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TransactionCode" type="emts:TransactionCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation> The code that identifies the type of transaction in the report</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="UserLoginText" type="emts:UserLoginDataType">
+		<xsd:annotation>
+			<xsd:documentation>The CDX user login of the party responsible for preparing the submission file.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

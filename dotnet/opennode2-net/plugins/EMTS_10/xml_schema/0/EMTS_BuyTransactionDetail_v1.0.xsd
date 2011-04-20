@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:emts="http://www.exchangenetwork.net/schema/emts/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/emts/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name  : EMTS_BuyTransactionDetail_v1.0.xsd
+        Description   : Information on the RINS being bought.
+        Developed by  : 	 Perrin Quarles Associates, Inc.
+        Point of Contact : 	Perrin Quarles Associates, Inc.	
+        </xsd:documentation>
+	</xsd:annotation>
+	<xsd:include schemaLocation="EMTS_SimpleContent_v1.0.xsd"/>
+	<xsd:include schemaLocation="EMTS_SupportingDocumentDetail_v1.0.xsd"/>
+	<xsd:include schemaLocation="EMTS_OriginatingSourceDetail_v1.0.xsd"/>
+	<xsd:complexType name="BuyTransactionDetailDataType">
+		<xsd:sequence>
+			<xsd:element ref="emts:TransactionPartnerOrganizationIdentifier"/>
+			<xsd:element ref="emts:TransactionPartnerOrganizationName"/>
+			<xsd:element ref="emts:RINQuantity"/>
+			<xsd:element ref="emts:BatchVolume" minOccurs="0"/>
+			<xsd:element ref="emts:FuelCode"/>
+			<xsd:element ref="emts:AssignmentCode"/>
+			<xsd:element ref="emts:RINYear"/>
+			<xsd:element ref="emts:BuyReasonCode"/>
+			<xsd:element ref="emts:RINPriceAmount" minOccurs="0"/>
+			<xsd:element ref="emts:GallonPriceAmount" minOccurs="0"/>
+			<xsd:element ref="emts:TransactionDate"/>
+			<xsd:element ref="emts:PTDNumber" minOccurs="0"/>
+			<xsd:element ref="emts:TransactionDetailCommentText" minOccurs="0"/>
+			<xsd:element ref="emts:BuySupportingDocumentDetail" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="emts:BuyOriginatingSourceDetail" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="BuyTransactionDetail" type="emts:BuyTransactionDetailDataType"/>
+</xsd:schema>
