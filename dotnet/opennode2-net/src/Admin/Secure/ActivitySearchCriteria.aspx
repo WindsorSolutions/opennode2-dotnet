@@ -18,6 +18,7 @@
     <div runat="server" id="divPageError" visible="false" class="error" enableviewstate="false">
     </div>
     <asp:HiddenField ID="idCtrl" runat="server" />
+<asp:Panel ID="pnl1" runat="server" DefaultButton="searchBtn">
     <table id="formTable" width="100%" cellpadding="2" cellspacing="0">
         <tr>
             <td class="label" nowrap="nowrap" style="width: 120px">
@@ -110,6 +111,7 @@
             </td>
         </tr>
     </table>
+</asp:Panel>
     <div runat="server" id="noItemsDiv" visible="false" class="error" enableviewstate="false" style="text-align: center; padding: 8px">
         No Items Found
     </div>

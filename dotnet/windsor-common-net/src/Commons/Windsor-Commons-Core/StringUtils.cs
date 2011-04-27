@@ -431,6 +431,12 @@ namespace Windsor.Commons.Core
             return IndexOfAny(testString, anyOf, 0, (testString == null) ? 0 : testString.Length,
                               comparisonType, out anyOfIndex);
         }
+        public static int IndexOfAny(string testString, string[] anyOf, int startIndex,
+                                     StringComparison comparisonType, out int anyOfIndex)
+        {
+            return IndexOfAny(testString, anyOf, startIndex, (testString == null) ? 0 : testString.Length - startIndex,
+                              comparisonType, out anyOfIndex);
+        }
         public static int IndexOfAny(string testString, string[] anyOf, int startIndex, int count,
                                      StringComparison comparisonType, out int anyOfIndex)
         {

@@ -424,8 +424,93 @@ namespace Windsor.Node2008.WNOS.Data
                     }
                     entries.Add(MapActivityDetail(reader));
                 });
+
+            ObfuscateActivityEntries(entries);
+
             return entries;
         }
+        protected void ObfuscateActivityEntries(IList<ActivityEntry> entries)
+        {
+            CollectionUtils.ForEach(entries, delegate(ActivityEntry entry)
+            {
+                entry.Message = ObfuscateActivityMessage(entry.Message);
+            });
+        }
+        private readonly string[] _obfuscateFieldNames = new string[] 
+        {
+            "Uid", "Pwd", "UserId", "Password", "User Id"
+        };
+        protected string ObfuscateActivityMessage(string message)
+        {
+            if (string.IsNullOrEmpty(message))
+            {
+                return message;
+            }
+            int fieldNameIndex;
+            int index = StringUtils.IndexOfAny(message, _obfuscateFieldNames, StringComparison.OrdinalIgnoreCase,
+                                               out fieldNameIndex);
+
+            if (index >= 0)
+            {
+                StringBuilder sb = new StringBuilder(message);
+                do
+                {
+                    string fieldName = _obfuscateFieldNames[fieldNameIndex];
+                    int nextStartIndex = -1;
+                    int i = index + fieldName.Length;
+                    bool foundEquals = false;
+                    // Find and skip '=' character
+                    for (; i < message.Length; ++i)
+                    {
+                        char curChar = message[i];
+                        if (curChar == ' ')
+                        {
+                            // Skip
+                        }
+                        else
+                        {
+                            if (curChar == '=')
+                            {
+                                foundEquals = true;
+                                ++i;
+                            }
+                            break;
+                        }
+                    }
+                    if (foundEquals)
+                    {
+                        for (; i < message.Length; ++i)
+                        {
+                            char curChar = message[i];
+                            if ((curChar == ' ') || (curChar == ';') || (curChar == '"'))
+                            {
+                                break;
+                            }
+                            else
+                            {
+                                sb[i] = '*'; // obfuscate
+                            }
+                        }
+                    }
+
+                    nextStartIndex = (i < message.Length) ? i : -1;
+
+                    if (nextStartIndex > 0)
+                    {
+                        index = StringUtils.IndexOfAny(message, _obfuscateFieldNames, nextStartIndex, StringComparison.OrdinalIgnoreCase,
+                                                       out fieldNameIndex);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                while (index > 0);
+                return sb.ToString();
+            }
+            return message;
+        }
+
         public void Save(Activity item)
         {
             if (item == null)
