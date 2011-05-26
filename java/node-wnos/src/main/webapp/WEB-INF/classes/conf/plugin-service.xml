@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+                http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+               
+
+    <!-- PLUGIN -->
+    <bean id="pluginService" class="com.windsor.node.service.admin.PluginServiceImpl" parent="baseService">
+        <property name="flowDao" ref="flowDao" />
+        <property name="pluginHelper" ref="pluginHelper" />
+        <property name="connectionDao" ref="connectionDao" />
+    </bean>
+
+
+    <bean id="pluginHelper" class="com.windsor.node.plugin.WnosPluginHelper">
+        <property name="nosConfig" ref="nosConfig" />
+        <property name="classLoader" ref="classLoader" />
+        <property name="compressionHelper" ref="compressionHelper" />
+        <property name="configDao" ref="configDao" />
+        <property name="pluginDao" ref="pluginDao" />
+        <property name="serviceFactory" ref="serviceFactory" />
+        <property name="nodeClientFactory" ref="nodeClientFactory" />
+        <property name="partnerProvider" ref="partnerDao" />
+    </bean>
+
+    <bean id="classLoader" class="com.windsor.node.plugin.PluginClassLoader" />
+        
+    <bean id="serviceFactory" class="com.windsor.node.plugin.PluginServiceProvider">
+        <property name="configLocations">
+            <list>
+                <value>classpath*:pluginServiceProvider.xml</value>
+                <value>classpath*:conf/pluginServiceProvider.xml</value>
+                <value>classpath*:/conf/pluginServiceProvider.xml</value>
+            </list>
+        </property>
+    </bean>
+
+</beans>

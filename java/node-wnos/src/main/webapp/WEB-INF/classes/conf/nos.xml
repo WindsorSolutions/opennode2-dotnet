@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+                http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<description>
+		Node Orchestration Service (NOS) Configuration File
+	</description>
+
+	<!-- Properties -->
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>file:/var/opennode2_home/conf/nos.properties</value>
+                <value>file:/var/opennode2_home/conf/naas.properties</value>
+                <value>file:/var/opennode2_home/conf/jdbc.properties</value>
+				<value>classpath:velocity.properties</value>
+                <value>classpath:worker.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- Helpers -->
+	<import resource="dao.xml" />
+	<import resource="naas.xml" />
+	<import resource="mail.xml" />
+	<import resource="utility.xml" />
+	<import resource="schematron.xml" />
+
+	<!--  Services  -->
+	<import resource="activity-service.xml" />
+	<import resource="plugin-service.xml" />
+	<import resource="account-service.xml" />
+	<import resource="flow-service.xml" />
+	<import resource="notification-service.xml" />
+	<import resource="config-service.xml" />
+	<import resource="partner-service.xml" />
+	<import resource="schedule-service.xml" />
+	<import resource="transaction-service.xml" />
+	<import resource="node-service.xml" />
+	<import resource="node-client.xml" />
+    <import resource="flow-security-service.xml" />
+
+	<!-- Worker -->
+	<import resource="worker.xml" />
+	<import resource="worker-tasks.xml" />
+
+	<!-- NOS CONF -->
+	<bean id="nosConfig" class="com.windsor.node.conf.NOSConfig">
+		<property name="webServiceEndpoint1"
+			value="${url.node.endpoint1}" />
+		<property name="webServiceEndpoint2"
+			value="${url.node.endpoint2}" />
+		<property name="adminUrl" value="${url.node.admin}" />
+		<property name="nodeAdminEmail" value="${smtp.from.email}" />
+		<property name="adminWhiteList">
+			<list>
+				<value>127.0.0.1</value>
+                <value>${ip.whitelist.subnet}</value>
+                <!-- windsorsolutions.biz -->
+				<value>70.102.94.202</value>
+                <!-- Windsor employee vpn -->
+                <value>172.16.0.*</value>
+			</list>
+		</property>
+		<property name="pluginDir" value="${path.plugin.dir}" />
+		<property name="tempDir" value="${path.temp.dir}" />
+		<property name="skipNaas" value="false" />
+        <property name="nodeName" value="${node.name}" />
+        <property name="orgIdentifier" value="${organization.identifier}" />
+        <property name="deploymentType" value="${node.deployment.type}" />
+        <property name="publicV2endpointUrl" value="${public.v2.endpoint.url}" />
+        <property name="boundingCoordinateEast" value="${bounding.coordinate.east}" />
+        <property name="boundingCoordinateNorth" value="${bounding.coordinate.north}" />
+        <property name="boundingCoordinateSouth" value="${bounding.coordinate.south}" />
+        <property name="boundingCoordinateWest" value="${bounding.coordinate.west}" />
+	</bean>
+
+
+	<!-- NOS BASE -->
+	<bean id="baseService"
+		class="com.windsor.node.service.BaseService">
+		<property name="activityDao" ref="activityDao" />
+		<property name="accountDao" ref="accountDao" />
+		<property name="naasConfig" ref="naasConfig" />
+		<property name="nosConfig" ref="nosConfig" />
+	</bean>
+
+
+</beans>

@@ -1,0 +1,12 @@
+<h3>Node Transaction Status Update</h3>
+
+<p>The status of the following transaction has changed:</p>
+<p><strong>Transaction Id:</strong> $TRANID<br />
+<strong>Data Flow:</strong> $FLOWID<br />
+<strong>Status:</strong> $STATUS<br /></p>
+
+<hr noshade size="1" color="#dcdcdc" />
+
+<font size="-1">The recipients of this message are derived based on 
+configuration values defined in the Node Administration Utility. 
+Please contact Node administrator to stop, add and/or modify these messages.</font>

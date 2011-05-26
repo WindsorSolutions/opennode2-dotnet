@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+                http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+
+	<description>Email Services Description</description>
+	
+	<!-- EMAIL SERVICE PROCESSOR -->
+	<bean id="emailDataProcessor" class="com.windsor.node.worker.schedule.processor.EmailDataProcessor">
+		<property name="compressionService" ref="compressionHelper" />
+		<property name="notificationHelper" ref="mailHelper" />
+		<property name="transactionDao" ref="transactionDao" />
+		<property name="nosConfig" ref="nosConfig" />
+		<property name="idGenerator" ref="idGenerator" />
+	</bean>
+
+	<!-- helper -->
+	<bean id="mailHelper" class="com.windsor.node.service.helper.email.EmailNotificationHelper">
+		<property name="sender" ref="mailSender" />
+		<property name="newLocalUserPreparator" ref="newLocalUserPreparator" />
+		<property name="newNAASUserPreparator" ref="newNAASUserPreparator" />
+		<property name="notifPreparator" ref="notifPreparator" />
+		<property name="queryPreparator" ref="queryPreparator" />
+		<property name="schedulePreparator" ref="schedulePreparator" />
+		<property name="solicitPreparator" ref="solicitPreparator" />
+		<property name="submitPreparator" ref="submitPreparator" />
+		<property name="transactionStatusPreparator" ref="transactionStatusPreparator" />
+		<property name="processedSolicitPreparator" ref="processedSolicitPreparator" />
+		<property name="processedSubmitPreparator" ref="processedSubmitPreparator" />
+		<property name="scheduleResultPreparator" ref="scheduleResultPreparator" />
+		<property name="newPasswordPreparator" ref="newPasswordPreparator" />
+		<property name="naasConfig" ref="naasConfig" />
+		<property name="nosConfig" ref="nosConfig" />
+		<property name="notificationDao" ref="notificationDao" />
+	</bean>
+
+	<!-- Email Templtates -->
+	<bean id="transactionStatusPreparator"
+		class="com.windsor.node.service.helper.email.EmailMessagePreparator">
+		<property name="from" value="${smtp.from.email}" />
+		<property name="subject" value="Node Transaction Status Notification" />
+		<property name="velocityEngine" ref="velocityEngine" />
+		<property name="template" value="template/TransactionStatus.vm" />
+	</bean>
+	
+	<bean id="newPasswordPreparator"
+		class="com.windsor.node.service.helper.email.EmailMessagePreparator">
+		<property name="from" value="${smtp.from.email}" />
+		<property name="subject" value="New Node Account Credential" />
+		<property name="velocityEngine" ref="velocityEngine" />
+		<property name="template" value="template/PasswordReset.vm" />
+	</bean>
+
+	<bean id="newLocalUserPreparator"
+		class="com.windsor.node.service.helper.email.EmailMessagePreparator">
+		<property name="from" value="${smtp.from.email}" />
+		<property name="subject" value="Node Account Notification" />
+		<property name="velocityEngine" ref="velocityEngine" />
+		<property name="template" value="template/NewUserLocal.vm" />
+	</bean>
+
+	<bean id="newNAASUserPreparator"
+		class="com.windsor.node.service.helper.email.EmailMessagePreparator">
+		<property name="from" value="${smtp.from.email}" />
+		<property name="subject" value="Node Account Notification" />
+		<property name="velocityEngine" ref="velocityEngine" />
+		<property name="template" value="template/NewUserNAAS.vm" />
+	</bean>
+
+	<bean id="notifPreparator"
+		class="com.windsor.node.service.helper.email.EmailMessagePreparator">
+		<property name="from" value="${smtp.from.email}" />
+		<property name="subject" value="Node Notify Notification" />
+		<property name="velocityEngine" ref="velocityEngine" />
+		<property name="template" value="template/Notify.vm" />
+	</bean>
+
+	<bean id="queryPreparator"
+		class="com.windsor.node.service.helper.email.EmailMessagePreparator">
+		<property name="from" value="${smtp.from.email}" />
+		<property name="subject" value="Node Query Notification" />
+		<property name="velocityEngine" ref="velocityEngine" />
+		<property name="template" value="template/Query.vm" />
+	</bean>
+
+	<bean id="schedulePreparator"
+		class="com.windsor.node.service.helper.email.EmailMessagePreparator">
+		<property name="from" value="${smtp.from.email}" />
+		<property name="subject" value="Node Schedule Notification" />
+		<property name="velocityEngine" ref="velocityEngine" />
+		<property name="template" value="template/Schedule.vm" />
+	</bean>
+
+	<bean id="scheduleResultPreparator"
+		class="com.windsor.node.service.helper.email.EmailMessagePreparator">
+		<property name="from" value="${smtp.from.email}" />
+		<property name="subject"
+			value="Node Result Schedule Notification" />
+		<property name="velocityEngine" ref="velocityEngine" />
+		<property name="template" value="template/ScheduleResult.vm" />
+	</bean>
+
+	<bean id="solicitPreparator"
+		class="com.windsor.node.service.helper.email.EmailMessagePreparator">
+		<property name="from" value="${smtp.from.email}" />
+		<property name="subject" value="Node Solicit Notification" />
+		<property name="velocityEngine" ref="velocityEngine" />
+		<property name="template" value="template/Solicit.vm" />
+	</bean>
+
+	<bean id="processedSolicitPreparator"
+		class="com.windsor.node.service.helper.email.EmailMessagePreparator">
+		<property name="from" value="${smtp.from.email}" />
+		<property name="subject"
+			value="Node Solicit Processing Notification" />
+		<property name="velocityEngine" ref="velocityEngine" />
+		<property name="template"
+			value="template/ProcessedSolicit.vm" />
+	</bean>
+
+	<bean id="submitPreparator"
+		class="com.windsor.node.service.helper.email.EmailMessagePreparator">
+		<property name="from" value="${smtp.from.email}" />
+		<property name="subject" value="Node Submission Notification" />
+		<property name="velocityEngine" ref="velocityEngine" />
+		<property name="template" value="template/Submit.vm" />
+	</bean>
+
+	<bean id="processedSubmitPreparator"
+		class="com.windsor.node.service.helper.email.EmailMessagePreparator">
+		<property name="from" value="${smtp.from.email}" />
+		<property name="subject"
+			value="Node Submission Processing Notification" />
+		<property name="velocityEngine" ref="velocityEngine" />
+		<property name="template" value="template/ProcessedSubmit.vm" />
+	</bean>
+
+
+
+	<!-- email -->
+	<bean id="mailSender"
+		class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="${smtp.gateway}" />
+        <property name="port" value="${smtp.gateway.port}" />
+        <!-- Parameters for SMTP AUTH -->
+        <property name="username" value="${smtp.username}" />
+        <property name="password" value="${smtp.password}" />
+        <property name="javaMailProperties">
+        <props>
+            <prop key="mail.smtp.auth">${smtp.auth}</prop>
+            <!-- used by gmail smtp server -->
+            <prop key="mail.smtp.starttls.enable">${smtp.starttls.enable}</prop>
+            <prop key="mail.smtp.starttls.required">${smtp.starttls.required}</prop>
+        </props>
+        </property> 
+	</bean>
+
+	<!-- Velocity -->
+	<bean id="velocityEngine"
+		class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+		<property name="velocityProperties">
+			<props>
+				<prop key="resource.loader">class</prop>
+				<prop key="class.resource.loader.class">
+					org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+				</prop>
+				<prop key="velocimacro.library"></prop>
+			</props>
+		</property>
+	</bean>
+
+</beans>
