@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema targetNamespace="http://www.epa.gov/xml" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:facid="http://www.epa.gov/xml" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="2.3">
+	<xsd:include schemaLocation="./FACID_OrganizationDataType_v2.3.xsd"/>
+	<xsd:include schemaLocation="./FACID_MailingAddressDataType_v2.3.xsd"/>
+	<xsd:include schemaLocation="./FACID_PhoneFaxEmailDataType_v2.3.xsd"/>
+	<xsd:include schemaLocation="./FACID_AffiliationDataType_v2.3.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name : 	FACID_OrganizationDetails_v2.3 
+		Current Version Available At :
+		Description : 	Organization schema for Data transfer.Date format is YYYY-MM-DD.
+		Application : 
+		Developed by : 	 Environmental Protection Agency, SAIC
+		Point of Contact : Meena Masti	
+	</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="OrganizationDetails">
+		<xsd:sequence>
+			<xsd:element ref="facid:InformationSystemAcronymName" minOccurs="0"/>
+			<xsd:element ref="facid:InformationSystemIdentifier" minOccurs="0"/>
+			<xsd:element ref="facid:EnvironmentalInterestTypeText" minOccurs="0"/>
+			<xsd:element ref="facid:Affiliation" minOccurs="0"/>
+			<xsd:element ref="facid:PhoneFaxEmail" minOccurs="0"/>
+			<xsd:element ref="facid:Organization" minOccurs="0"/>
+			<xsd:element ref="facid:MailingAddress" minOccurs="0"/>
+			<xsd:element ref="facid:DataSourceName" minOccurs="0"/>
+			<xsd:element ref="facid:LastReportedDate" minOccurs="0"/>
+			<xsd:element ref="facid:StateFacilitySystemAcronymName"/>
+			<xsd:element ref="facid:StateFacilityIdentifier"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="InformationSystemAcronymName" type="xsd:string"/>
+	<xsd:element name="InformationSystemIdentifier" type="xsd:string"/>
+	<xsd:element name="EnvironmentalInterestTypeText" type="xsd:string"/>
+	<xsd:element name="Affiliation" type="facid:AffiliationDataType"/>
+	<xsd:element name="PhoneFaxEmail" type="facid:PhoneFaxEmailDataType"/>
+	<xsd:element name="Organization" type="facid:OrganizationDataType"/>
+	<xsd:element name="MailingAddress" type="facid:MailingAddressDataType"/>
+	<xsd:element name="DataSourceName" type="xsd:string"/>
+	<xsd:element name="LastReportedDate" type="xsd:date"/>
+	<xsd:element name="StateFacilitySystemAcronymName" type="xsd:string"/>
+	<xsd:element name="StateFacilityIdentifier" type="xsd:string"/>
+</xsd:schema>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:cer="http://www.exchangenetwork.net/schema/cer/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/cer/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2">
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name  : CER_FacilitySite_v1.2.xsd
+        Current Version Available At :  http://www.exchangenetwork.net/schema/cer/1/2/CER_FacilitySite_v1.2.xsd
+        Description   : Information on the facility site, including the facility category code, company name, NAICS code, and operating status.
+        Developed by  : 	Perrin Quarles Associates, Inc.
+        Point of Contact : Perrin Quarles Associates, Inc.	
+        </xsd:documentation>
+	</xsd:annotation>
+	<xsd:include schemaLocation="CER_SimpleContent_v1.2.xsd"/>
+	<xsd:include schemaLocation="CER_FacilityIdentification_v1.2.xsd"/>
+	<xsd:include schemaLocation="CER_AlternativeFacilityName_v1.2.xsd"/>
+	<xsd:include schemaLocation="CER_EmissionsUnit_v1.2.xsd"/>
+	<xsd:include schemaLocation="CER_ReleasePoint_v1.2.xsd"/>
+	<xsd:include schemaLocation="CER_QualityIdentification_v1.2.xsd"/>
+	<xsd:include schemaLocation="CER_Affiliation_v1.2.xsd"/>
+	<xsd:include schemaLocation="CER_Address_v1.2.xsd"/>
+	<xsd:include schemaLocation="CER_GeographicCoordinates_v1.2.xsd"/>
+	<xsd:include schemaLocation="CER_AttachedFile_v1.2.xsd"/>
+	<xsd:include schemaLocation="CER_FacilityNAICS_v1.2.xsd"/>
+	<xsd:complexType name="FacilitySiteDataType">
+		<xsd:sequence>
+			<xsd:element ref="cer:FacilityCategoryCode" minOccurs="0"/>
+			<xsd:element ref="cer:FacilitySiteName" minOccurs="0"/>
+			<xsd:element ref="cer:FacilitySiteDescription" minOccurs="0"/>
+			<xsd:element ref="cer:FacilitySiteStatusCode" minOccurs="0"/>
+			<xsd:element ref="cer:FacilitySiteStatusCodeYear" minOccurs="0"/>
+			<xsd:element ref="cer:SectorTypeCode" minOccurs="0"/>
+			<xsd:element ref="cer:AgencyName" minOccurs="0"/>
+			<xsd:element ref="cer:FacilitySiteComment" minOccurs="0"/>
+			<xsd:element ref="cer:FacilityNAICS" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="cer:FacilityIdentification" maxOccurs="unbounded"/>
+			<xsd:element ref="cer:AlternativeFacilityName" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="cer:FacilitySiteAddress" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="cer:FacilitySiteGeographicCoordinates" minOccurs="0"/>
+			<xsd:element ref="cer:FacilitySiteQualityIdentification" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="cer:FacilitySiteAttachedFile" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="cer:FacilitySiteAffiliation" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="cer:EmissionsUnit" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="cer:ReleasePoint" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="FacilitySite" type="cer:FacilitySiteDataType"/>
+</xsd:schema>

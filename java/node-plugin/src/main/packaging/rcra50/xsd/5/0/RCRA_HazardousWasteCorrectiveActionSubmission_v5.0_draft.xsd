@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:RC="http://www.exchangenetwork.net/schema/RCRA/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/RCRA/5" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.0">
+	<xsd:annotation>
+		<xsd:documentation>		
+		Schema Name: RCRA_HazardousWasteCorrectiveActionSubmission_v5.0.xsd
+		Description : 	Corrective Action schema for RCRA submissions
+		Developed by : 	U.S. EPA
+		</xsd:documentation>
+	</xsd:annotation>	
+	<xsd:include schemaLocation="RCRA_Shared_v5.0_draft.xsd"/>
+	<xsd:include schemaLocation="RCRA_CorrectiveActionArea_v5.0_draft.xsd"/>
+	<xsd:include schemaLocation="RCRA_CorrectiveActionAuthority_v5.0_draft.xsd"/>
+	<xsd:include schemaLocation="RCRA_CorrectiveActionEvent_v5.0_draft.xsd"/>
+	<xsd:element name="HazardousWasteCorrectiveActionSubmission" type="RC:HazardousWasteCorrectiveActionDataType">
+		<xsd:annotation>
+			<xsd:documentation>
+	This is the root element for this flow XML Schema.
+	</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	
+	<xsd:element name="CorrectiveActionFacilitySubmission" type="RC:CorrectiveActionFacilitySubmissionDataType">
+		<xsd:annotation>
+			<xsd:documentation>Supplies all of the relevant Corrective Action Data for a given Handler</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	
+	<xsd:complexType name="CorrectiveActionFacilitySubmissionDataType">
+		<xsd:annotation>
+			<xsd:documentation>Facility corrective action submission.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="RC:HandlerID"/>
+			<xsd:element ref="RC:CorrectiveActionArea" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="RC:CorrectiveActionAuthority" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="RC:CorrectiveActionEvent" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="HazardousWasteCorrectiveActionDataType">
+		<xsd:annotation>
+			<xsd:documentation>used to submit data for corrective action areas, events, and authorities</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="RC:CorrectiveActionFacilitySubmission" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+</xsd:schema>

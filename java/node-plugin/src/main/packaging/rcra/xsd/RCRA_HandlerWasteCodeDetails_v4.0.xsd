@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:RC="http://www.exchangenetwork.net/schema/RCRA/4" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/RCRA/4" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="4.0">
+	<xsd:include schemaLocation="./RCRA_Shared_v4.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name : 	RCRA_HandlerWasteCodeDetails_v4.0
+		Description : 	Hazardous waste codes describing the handler's hazardous waste streams.
+		Developed by : 	 Windsor Solutions, Inc.
+	</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="HandlerWasteCodeDetails" type="RC:HandlerWasteCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Hazardous waste codes describing the handler's hazardous waste streams.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="HandlerWasteCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Hazardous waste codes describing the handler's hazardous waste streams.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="RC:TransactionCode" minOccurs="0"/>
+			<xsd:element ref="RC:WasteCodeOwnerName" minOccurs="0"/>
+			<xsd:element ref="RC:WasteCode" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

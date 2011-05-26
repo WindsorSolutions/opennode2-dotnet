@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:facid="http://www.epa.gov/xml" xmlns:ed="http://www.incident.com/EDXLDist/1.0" xmlns:ei="http://www.exchangenetwork.net/schema/EnvironmentalIncident/1/0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sc="urn:us:net:exchangenetwork:sc:1:0" targetNamespace="http://www.exchangenetwork.net/schema/EnvironmentalIncident/1/0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:include schemaLocation="EI_Comment_v1.0.xsd"/>
+	<xsd:include schemaLocation="EI_IncidentContact_v1.0.xsd"/>
+	<xsd:import namespace="urn:us:net:exchangenetwork:sc:1:0" schemaLocation="SC_OrganizationIdentity_v1.0.xsd"/>
+	<xsd:import namespace="http://www.incident.com/EDXLDist/1.0" schemaLocation="EDXLDistSchema200505.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>		
+		Schema Name : 	EI_AlertNotification_v1.0.xsd
+		Current Version Available At :
+		Description : 	Schema files to describe emergency alert notification. 
+		Aplication : 
+		Developed by : 	 enfoTech
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="AlertNotification" type="ei:AlertNotificationDataType"/>
+	<xsd:complexType name="AlertNotificationDataType">
+		<xsd:sequence>
+			<xsd:element ref="ei:NotificationIdentifier" minOccurs="0"/>
+			<xsd:element ref="ei:NotificationContent" minOccurs="0"/>
+			<xsd:element ref="ei:NotificationSentMethod" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="ei:NotificationStatus" minOccurs="0"/>
+			<xsd:element ref="ei:NotificationEffectiveDate" minOccurs="0"/>
+			<xsd:element ref="ei:NotificationExpirationDate" minOccurs="0"/>
+			<xsd:element ref="ei:NotificationRecipients" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="ei:NotificationType" minOccurs="0"/>
+			<xsd:element ref="ei:NotificationReference" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="ei:NotificationSentDateTime" minOccurs="0"/>
+			<xsd:element ref="ed:EDXLDist" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation/>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="ei:Comment" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="NotificationType" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation>a unique ID assigned to each status change.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="NotificationContent" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="NotificationSentDateTime" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="NotificationRecipients" type="ei:NotificationRecipientsDataType"/>
+	<xsd:annotation>
+		<xsd:documentation/>
+	</xsd:annotation>
+	<xsd:complexType name="NotificationRecipientsDataType">
+		<xsd:complexContent>
+			<xsd:extension base="ei:IncidentContactDataType">
+				<xsd:sequence>
+					<xsd:element ref="sc:OrganizationIdentity" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="NotificationSentMethod" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="NotificationEffectiveDate" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="NotificationExpirationDate" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="NotificationIdentifier" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="NotificationStatus" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="NotificationReference" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation/>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

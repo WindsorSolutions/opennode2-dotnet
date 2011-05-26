@@ -1,0 +1,12 @@
+<GetAuthorizedUsersResponse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.exchangenetwork.net/schema/SECURITY/1">
+	<AuthorizedUserList>
+		<AuthorizedUser>
+			<NAASUserName>jefferyc@nezperce.org</NAASUserName>
+			<AuthorizedFlowList>
+				<AuthorizedFlow>
+					<FlowName>BEACHDEMO</FlowName>
+				</AuthorizedFlow>
+			</AuthorizedFlowList>
+		</AuthorizedUser>
+	</AuthorizedUserList>
+</GetAuthorizedUsersResponse>

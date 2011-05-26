@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:uic="http://www.exchangenetwork.net/schema/uic/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/uic/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:include schemaLocation="UIC_SimpleContent_v1.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+        Schema Name  : UIC_Inspection_v1.0.xsd
+        Description   : information about on site inspections conducted by primary states and EPA Regions .
+        Developed by  : 	 Lockheed Martin
+        Point of Contact :   Lockheed Martin
+</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="InspectionDetailType">
+		<xsd:annotation>
+			<xsd:documentation>Defines the Inspection information structure.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="uic:InspectionIdentifier"/>
+			<xsd:element ref="uic:InspectionAssistanceCode" minOccurs="0"/>
+			<xsd:element ref="uic:InspectionDeficiencyCode" minOccurs="0"/>
+			<xsd:element ref="uic:InspectionActionDate"/>
+			<xsd:element ref="uic:InspectionICISComplianceMonitoringReasonCode" minOccurs="0"/>
+			<xsd:element ref="uic:InspectionICISComplianceMonitoringTypeCode" minOccurs="0"/>
+			<xsd:element ref="uic:InspectionICISComplianceActivityTypeCode" minOccurs="0"/>
+			<xsd:element ref="uic:InspectionICISMOAName" minOccurs="0"/>
+			<xsd:element ref="uic:InspectionICISRegionalPriorityName" minOccurs="0"/>
+			<xsd:element ref="uic:InspectionTypeActionCode"/>
+			<xsd:element ref="uic:InspectionWellIdentifier" minOccurs="0"/>
+			<xsd:element ref="uic:InspectionFacilityIdentifier" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="InspectionDetail" type="uic:InspectionDetailType"/>
+</xsd:schema>

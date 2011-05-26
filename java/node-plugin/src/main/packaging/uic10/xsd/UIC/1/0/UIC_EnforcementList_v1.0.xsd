@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:uic="http://www.exchangenetwork.net/schema/uic/1" targetNamespace="http://www.exchangenetwork.net/schema/uic/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:include schemaLocation="UIC_Enforcement_v1.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+  	        Schema Name  : UIC_EnforcementList_v1.0.xsd
+  	        Current Version Available At :  
+  	        Description   : List of Enforcement records.
+  	        Developed by  : Lockheed Martin
+  	        Point of Contact :    Lockheed Martin
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="EnforcementListType">
+		<xsd:sequence>
+			<xsd:element ref="uic:EnforcementDetail" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="EnforcementList" type="uic:EnforcementListType"/>
+</xsd:schema>

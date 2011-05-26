@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdr:Document xmlns:hdr="http://www.exchangenetwork.net/schema/v1.0/ExchangeNetworkDocument.xsd" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.exchangenetwork.net/schema/v1.0/ExchangeNetworkDocument.xsd http://www.exchangenetwork.net/schema/v1.0/ExchangeNetworkDocument.xsd" Id="ID123456">
+	<hdr:Header>
+		<hdr:Author>Dwane Young</hdr:Author>
+		<hdr:Organization>US Environmental Protection Agency</hdr:Organization>
+		<hdr:Title>Handler-Example-Submission</hdr:Title>
+		<hdr:CreationTime>2009-12-11T17:37:58</hdr:CreationTime>
+		<hdr:Comment>RCRA submission</hdr:Comment>
+		<hdr:DataService>CorrectiveActionSubmission</hdr:DataService>
+		<hdr:ContactInfo>young.dwane@epa.gov</hdr:ContactInfo>
+		<hdr:Notification>young.dwane@epa.gov</hdr:Notification>
+		<hdr:Sensitivity>Unclassified</hdr:Sensitivity>
+		<hdr:Property>
+			<hdr:name>RCRAInfoUserID</hdr:name>
+			<hdr:value>YDB</hdr:value>
+		</hdr:Property>
+		<hdr:Property>
+			<hdr:name>RCRAInfoStateCode</hdr:name>
+			<hdr:value>KS</hdr:value>
+		</hdr:Property>
+		<hdr:Property>
+			<hdr:name>notificationURI</hdr:name>
+			<hdr:value>young.dwane@epa.gov</hdr:value>
+		</hdr:Property>
+	</hdr:Header>
+	<hdr:Payload Operation="RCRA-Transactional|CA">
+<RC:HazardousWasteCorrectiveActionSubmission xmlns:RC="http://www.exchangenetwork.net/schema/RCRA/5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.exchangenetwork.net/schema/RCRA/5 http://www.exchangenetwork.net/schema/RCRA/5/0/RCRA_HazardousWasteCorrectiveActionSubmission_v5.0_draft.xsd">
+	<RC:CorrectiveActionFacilitySubmission>
+		<RC:HandlerID>KSR00054DEMO</RC:HandlerID>
+		<RC:CorrectiveActionArea>
+			<RC:TransactionCode>A</RC:TransactionCode>
+			<RC:AreaSequenceNumber>1</RC:AreaSequenceNumber>
+			<RC:FacilityWideIndicator>Y</RC:FacilityWideIndicator>
+			<RC:AreaName>Johnson Landfill</RC:AreaName>
+			<RC:SurfaceWaterReleaseIndicator>Y</RC:SurfaceWaterReleaseIndicator>
+			<RC:RegulatedUnitIndicator>Y</RC:RegulatedUnitIndicator>			
+			<RC:EPAResponsiblePersonDataOwnerCode>07</RC:EPAResponsiblePersonDataOwnerCode>
+			<RC:EPAResponsiblePersonID>R7GLH</RC:EPAResponsiblePersonID>
+			<RC:StateResponsiblePersonDataOwnerCode>KS</RC:StateResponsiblePersonDataOwnerCode>
+			<RC:StateResponsiblePersonID>KSDAD</RC:StateResponsiblePersonID>
+			<RC:CorrectiveActionRelatedEvent>
+				<RC:TransactionCode>A</RC:TransactionCode>
+				<RC:ActivityLocationCode>KS</RC:ActivityLocationCode>
+				<RC:CorrectiveActionEventDataOwnerCode>HQ</RC:CorrectiveActionEventDataOwnerCode>
+				<RC:CorrectiveActionEventCode>CA725YE</RC:CorrectiveActionEventCode>
+				<RC:EventAgencyCode>S</RC:EventAgencyCode>
+				<RC:EventSequenceNumber>1</RC:EventSequenceNumber>
+			</RC:CorrectiveActionRelatedEvent>
+			<RC:CorrectiveActionRelatedEvent>
+				<RC:TransactionCode>A</RC:TransactionCode>
+				<RC:ActivityLocationCode>KS</RC:ActivityLocationCode>
+				<RC:CorrectiveActionEventDataOwnerCode>HQ</RC:CorrectiveActionEventDataOwnerCode>
+				<RC:CorrectiveActionEventCode>CA750NO</RC:CorrectiveActionEventCode>
+				<RC:EventAgencyCode>S</RC:EventAgencyCode>
+				<RC:EventSequenceNumber>2</RC:EventSequenceNumber>
+			</RC:CorrectiveActionRelatedEvent>
+			<RC:CorrectiveActionRelatedPermitUnit>
+				<RC:TransactionCode>A</RC:TransactionCode>
+				<RC:PermitUnitSequenceNumber>1</RC:PermitUnitSequenceNumber>
+			</RC:CorrectiveActionRelatedPermitUnit>
+		</RC:CorrectiveActionArea>
+		<RC:CorrectiveActionAuthority>
+			<RC:TransactionCode>A</RC:TransactionCode>
+			<RC:ActivityLocationCode>KS</RC:ActivityLocationCode>
+			<RC:AuthorityDataOwnerCode>HQ</RC:AuthorityDataOwnerCode>
+			<RC:AuthorityTypeCode>A</RC:AuthorityTypeCode>
+			<RC:AuthorityAgencyCode>S</RC:AuthorityAgencyCode>
+			<RC:AuthorityEffectiveDate>2000-12-15</RC:AuthorityEffectiveDate>
+			<RC:IssueDate>2000-12-15</RC:IssueDate>
+			<RC:ResponsibleLeadProgramIdentifier>C</RC:ResponsibleLeadProgramIdentifier>
+			<RC:AuthoritySuborganizationDataOwnerCode>07</RC:AuthoritySuborganizationDataOwnerCode>
+			<RC:AuthoritySuborganizationCode>RCAP</RC:AuthoritySuborganizationCode>
+			<RC:ResponsiblePersonDataOwnerCode>KS</RC:ResponsiblePersonDataOwnerCode>
+			<RC:ResponsiblePersonID>KSDAD</RC:ResponsiblePersonID>
+			<RC:SupplementalInformationText>An example of using comments</RC:SupplementalInformationText>
+			<RC:CorrectiveActionStatutoryCitation>
+				<RC:TransactionCode>A</RC:TransactionCode>
+				<RC:StatutoryCitationDataOwnerCode>HQ</RC:StatutoryCitationDataOwnerCode>
+				<RC:StatutoryCitationIdentifier>U</RC:StatutoryCitationIdentifier>
+			</RC:CorrectiveActionStatutoryCitation>
+			<RC:CorrectiveActionRelatedEvent>
+				<RC:TransactionCode>A</RC:TransactionCode>
+				<RC:ActivityLocationCode>KS</RC:ActivityLocationCode>
+				<RC:CorrectiveActionEventDataOwnerCode>HQ</RC:CorrectiveActionEventDataOwnerCode>
+				<RC:CorrectiveActionEventCode>CA725YE</RC:CorrectiveActionEventCode>
+				<RC:EventAgencyCode>S</RC:EventAgencyCode>
+				<RC:EventSequenceNumber>1</RC:EventSequenceNumber>
+			</RC:CorrectiveActionRelatedEvent>
+			<RC:CorrectiveActionRelatedEvent>
+				<RC:TransactionCode>A</RC:TransactionCode>
+				<RC:ActivityLocationCode>KS</RC:ActivityLocationCode>
+				<RC:CorrectiveActionEventDataOwnerCode>HQ</RC:CorrectiveActionEventDataOwnerCode>
+				<RC:CorrectiveActionEventCode>CA750NO</RC:CorrectiveActionEventCode>
+				<RC:EventAgencyCode>S</RC:EventAgencyCode>
+				<RC:EventSequenceNumber>2</RC:EventSequenceNumber>
+			</RC:CorrectiveActionRelatedEvent>
+		</RC:CorrectiveActionAuthority>
+		<RC:CorrectiveActionEvent>
+			<RC:TransactionCode>A</RC:TransactionCode>
+			<RC:ActivityLocationCode>KS</RC:ActivityLocationCode>
+			<RC:CorrectiveActionEventDataOwnerCode>HQ</RC:CorrectiveActionEventDataOwnerCode>
+			<RC:CorrectiveActionEventCode>CA725YE</RC:CorrectiveActionEventCode>
+			<RC:EventAgencyCode>S</RC:EventAgencyCode>
+			<RC:EventSequenceNumber>1</RC:EventSequenceNumber>
+		</RC:CorrectiveActionEvent>
+		<RC:CorrectiveActionEvent>
+			<RC:TransactionCode>A</RC:TransactionCode>
+			<RC:ActivityLocationCode>KS</RC:ActivityLocationCode>
+			<RC:CorrectiveActionEventDataOwnerCode>HQ</RC:CorrectiveActionEventDataOwnerCode>
+			<RC:CorrectiveActionEventCode>CA750NO</RC:CorrectiveActionEventCode>
+			<RC:EventAgencyCode>S</RC:EventAgencyCode>
+			<RC:EventSequenceNumber>2</RC:EventSequenceNumber>
+		</RC:CorrectiveActionEvent>
+	</RC:CorrectiveActionFacilitySubmission>
+</RC:HazardousWasteCorrectiveActionSubmission>
+</hdr:Payload>
+</hdr:Document>

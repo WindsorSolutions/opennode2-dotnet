@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>#set($totalRecCount = 0)$helper.startStopWatch()
+<GetAuthorizedUsersResponse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://www.exchangenetwork.net/schema/SECURITY/1">
+#if($authorizedUserList)
+    <AuthorizedUserList>
+#foreach($user in $authorizedUserList)
+#set($totalRecCount = $velocityCount)        <AuthorizedUser>
+            <NAASUserName>$user.getNAASUserName()</NAASUserName>
+            <AuthorizedFlowList>
+#foreach($flowName in $user.getAuthorizedFlowNames())
+                <AuthorizedFlow>
+                    <FlowName>$flowName</FlowName>
+                </AuthorizedFlow>
+#end##foreach($flowName in $user.getAuthorizedFlowNames())
+            </AuthorizedFlowList>
+        </AuthorizedUser>
+#end##foreach($user in $authorizedUserList)
+    </AuthorizedUserList>
+#end##if($authorizedUserList)
+</GetAuthorizedUsersResponse>
+$helper.print("Total Authorized Users: $totalRecCount")
+$helper.print("Total Time:")
+$helper.printElapsedTime()

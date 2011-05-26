@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:wqx="http://www.exchangenetwork.net/schema/wqx/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/wqx/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+	<xsd:include schemaLocation="./WQX_MeasureCompact_v2.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+        Schema Name  : WQX_HorizontalAccuracyMeasure_v2.0.xsd
+        Description   : 	The horizontal measure of the relative accuracy of the latitude and longitude coordinates.
+        Developed by  : 	 EPA Office of Water
+        Point of Contact :   Dwane Young
+            </xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="HorizontalAccuracyMeasure" type="wqx:MeasureCompactDataType">
+		<xsd:annotation>
+			<xsd:documentation>The horizontal measure of the relative accuracy of the latitude and longitude coordinates.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

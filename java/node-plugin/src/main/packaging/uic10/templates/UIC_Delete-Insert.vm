@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="UTF-8"?>$helper.startStopWatch()
+#set($uicOrg = $helper.getObject("select * from uic_org where org_id = ? ", $orgId))
+#if($makeHeader)#if($makeHeader == "true" || $makeHeader == "TRUE")
+<Document Id="$docId" 
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.exchangenetwork.net/schema/v1.0/ExchangeNetworkDocument.xsd">
+    <Header xmlns="http://www.exchangenetwork.net/schema/v1.0/ExchangeNetworkDocument.xsd">
+        <Author>$author</Author>
+        <Organization>$orgId#if($uicOrg.org_name) - $uicOrg.org_name#end</Organization>
+        <Title>UIC</Title>
+        <CreationTime>$helper.getCurrentDateTime()</CreationTime>
+        <Comment>Created by OpenNode2</Comment>
+        <ContactInfo>$contactInfo</ContactInfo>
+    </Header>
+<Payload Operation="Delete-Insert">
+#end#end##if($makeHeader)
+<uic:UIC xmlns:uic="http://www.exchangenetwork.net/schema/uic/1" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://www.exchangenetwork.net/schema/uic/1 http://www.exchangenetwork.net/schema/uic/1/0/UIC_UIC_v1.0.xsd">
+	<uic:FacilityList>
+#foreach($facility in $helper.getData("select facility_id, org_id, facility_ident, locality_name, facility_site_name, facility_petition_status_cd, loc_address_state_cd, facility_state_ident, loc_address_txt, facility_site_type_cd, naics_cd, sic_cd, loc_address_postal_cd from uic_facility where org_id = ? ", $orgId))
+		<uic:FacilityDetail>
+			<uic:FacilityIdentifier>$facility.facility_ident</uic:FacilityIdentifier>
+#if($facility.locality_name)
+			<uic:LocalityName>$facility.locality_name</uic:LocalityName>
+#end
+			<uic:FacilitySiteName>$facility.facility_site_name</uic:FacilitySiteName>
+#if($facility.facility_petition_status_cd)
+			<uic:FacilityPetitionStatusCode>$facility.facility_petition_status_cd</uic:FacilityPetitionStatusCode>
+#end
+#if($facility.loc_address_state_cd)
+            <uic:LocationAddressStateCode>$facility.loc_address_state_cd</uic:LocationAddressStateCode>
+#end
+			<uic:FacilityStateIdentifier>$facility.facility_state_ident</uic:FacilityStateIdentifier>
+			<uic:LocationAddressText>$facility.loc_address_txt</uic:LocationAddressText>
+#if($facility.facility_site_type_cd)
+            <uic:FacilitySiteTypeCode>$facility.facility_site_type_cd</uic:FacilitySiteTypeCode>
+#end
+#if($facility.naics_cd)
+            <uic:NAICSCode>$facility.naics_cd</uic:NAICSCode>
+#end
+#if($facility.sic_cd)
+            <uic:SICCode>$facility.sic_cd</uic:SICCode>
+#end
+			<uic:LocationAddressPostalCode>$facility.loc_address_postal_cd</uic:LocationAddressPostalCode>
+		</uic:FacilityDetail>
+#set($facilityCount = $velocityCount)#end$helper.print("$facilityCount facilities")##foreach($facility
+	</uic:FacilityList>
+#set($contacts = $helper.getData("select contact_id, org_id, contact_ident, telephone_number_txt, individual_full_name, contact_city_name, contact_address_state_cd, contact_address_txt, contact_address_postal_cd from uic_contact where org_id = ? ", $orgId))#if($contacts.hasNext())
+	<uic:ContactList>
+#foreach($contact in $contacts)
+		<uic:ContactDetail>
+			<uic:ContactIdentifier>$contact.contact_ident</uic:ContactIdentifier>
+#if($contact.telephone_number_txt)
+			<uic:TelephoneNumberText>$contact.telephone_number_txt</uic:TelephoneNumberText>
+#end
+			<uic:IndividualFullName>$contact.individual_full_name</uic:IndividualFullName>
+#if($contact.contact_city_name)
+            <uic:ContactCityName>$contact.contact_city_name</uic:ContactCityName>
+#end
+#if($contact.contact_address_state_cd)
+            <uic:ContactAddressStateCode>$contact.contact_address_state_cd</uic:ContactAddressStateCode>
+#end
+			<uic:ContactAddressText>$contact.contact_address_txt</uic:ContactAddressText>
+			<uic:ContactAddressPostalCode>$contact.contact_address_postal_cd</uic:ContactAddressPostalCode>
+		</uic:ContactDetail>
+#set($contactCount = $velocityCount)#end$helper.print("$contactCount contacts")##foreach($contact
+	</uic:ContactList>
+#end##if($contacts)
+#set($permits = $helper.getData("select permit_id, org_id, permit_ident, permit_aor_well_number_num, permit_authorized_status_cd, permit_ownership_type_cd, permit_authorized_ident from uic_permit where org_id = ? ", $orgId))#if($permits.hasNext())
+	<uic:PermitList>
+#foreach($permit in $permits)
+		<uic:PermitDetail>
+			<uic:PermitIdentifier>$permit.permit_ident</uic:PermitIdentifier>
+#if($permit.permit_aor_well_number_num)
+			<uic:PermitAORWellNumberNumeric>$permit.permit_aor_well_number_num</uic:PermitAORWellNumberNumeric>
+#end
+			<uic:PermitAuthorizedStatusCode>$permit.permit_authorized_status_cd</uic:PermitAuthorizedStatusCode>
+#if($permit.permit_ownership_type_cd)
+            <uic:PermitOwnershipTypeCode>$permit.permit_ownership_type_cd</uic:PermitOwnershipTypeCode>
+#end
+			<uic:PermitAuthorizedIdentifier>$permit.permit_authorized_ident</uic:PermitAuthorizedIdentifier>
+		</uic:PermitDetail>
+#set($permitCount = $velocityCount)#end$helper.print("$permitCount permits")##foreach($permit
+	</uic:PermitList>
+#end##if($permits
+#set($permitActivities = $helper.getData("select permit_act_id, org_id, permit_act_ident, permit_act_act_type_cd, permit_act_date, permit_act_permit_ident from uic_permit_activity where org_id = ? ", $orgId))#if($permitActivities.hasNext())
+    <uic:PermityActivityList>
+#foreach($permitActivity in $permitActivities)
+		<uic:PermitActivityDetail>
+			<uic:PermitActivityIdentifier>$permitActivity.permit_act_ident</uic:PermitActivityIdentifier>
+			<uic:PermitActivityActionTypeCode>$permitActivity.permit_act_act_type_cd</uic:PermitActivityActionTypeCode>
+			<uic:PermitActivityDate>$permitActivity.permit_act_date</uic:PermitActivityDate>
+			<uic:PermitActivityPermitIdentifier>$permitActivity.permit_act_permit_ident</uic:PermitActivityPermitIdentifier>
+		</uic:PermitActivityDetail>
+#set($permitActivityCount = $velocityCount)#end$helper.print("$permitActivityCount permitActivities")##foreach($permitActivity
+	</uic:PermityActivityList>
+#end##if($permitActivities
+#set($wells = $helper.getData("select well_id, org_id, well_ident, well_aquif_exempt_inj_cd, well_total_depth_num, well_hi_pri_designation_cd, well_contact_ident, well_facility_ident, well_geo_ident, well_site_area_name_txt, well_permit_ident, well_state_ident, well_state_tribal_cd, well_in_src_water_area_loc_txt, well_name from uic_well where org_id = ? ", $orgId))#if($wells.hasNext())
+    <uic:WellList>
+#foreach($well in $wells)
+		<uic:WellDetail>
+			<uic:WellIdentifier>$well.well_ident</uic:WellIdentifier>
+#if($well.well_aquif_exempt_inj_cd)
+			<uic:WellAquiferExemptionInjectionCode>$well.well_aquif_exempt_inj_cd</uic:WellAquiferExemptionInjectionCode>
+#end
+#if($well.well_total_depth_num)
+            <uic:WellTotalDepthNumeric>$well.well_total_depth_num</uic:WellTotalDepthNumeric>
+#end
+#if($well.well_hi_pri_designation_cd)
+			<uic:WellHighPriorityDesignationCode>$well.well_hi_pri_designation_cd</uic:WellHighPriorityDesignationCode>
+#end
+            <uic:WellContactIdentifier>$well.well_contact_ident</uic:WellContactIdentifier>
+			<uic:WellFacilityIdentifier>$well.well_facility_ident</uic:WellFacilityIdentifier>
+#if($well.well_geo_ident)
+			<uic:WellGeologyIdentifier>$well.well_geo_ident</uic:WellGeologyIdentifier>
+#end
+#if($well.well_site_area_name_txt)
+			<uic:WellSiteAreaNameText>$well.well_site_area_name_txt</uic:WellSiteAreaNameText>
+#end
+			<uic:WellPermitIdentifier>$well.well_permit_ident</uic:WellPermitIdentifier>
+			<uic:WellStateIdentifier>$well.well_state_ident</uic:WellStateIdentifier>
+#if($well.well_state_tribal_cd)
+			<uic:WellStateTribalCode>$well.well_state_tribal_cd</uic:WellStateTribalCode>
+#end
+#if($well.well_in_src_water_area_loc_txt)
+			<uic:WellInSourceWaterAreaLocationText>$well.well_in_src_water_area_loc_txt</uic:WellInSourceWaterAreaLocationText>
+#end
+#if($well.well_name)
+			<uic:WellName>$well.well_name</uic:WellName>
+#end
+		</uic:WellDetail>
+#set($wellCount = $velocityCount)#end$helper.print("$wellCount wells")##foreach($well
+	</uic:WellList>
+#end##if($wells
+#set($wellStatusList = $helper.getData("select well_status_id, org_id, well_status_ident, well_status_date, well_status_oper_status_cd, well_status_well_ident from uic_well_status where org_id = ? ", $orgId))#if($wellStatusList.hasNext())
+	<uic:WellStatusList>
+#foreach($wellStatus in $wellStatusList)
+		<uic:WellStatusDetail>
+			<uic:WellStatusIdentifier>$wellStatus.well_status_ident</uic:WellStatusIdentifier>
+            <uic:WellStatusDate>$wellStatus.well_status_date</uic:WellStatusDate>
+			<uic:WellStatusOperatingStatusCode>$wellStatus.well_status_oper_status_cd</uic:WellStatusOperatingStatusCode>
+			<uic:WellStatusWellIdentifier>$wellStatus.well_status_well_ident</uic:WellStatusWellIdentifier>
+		</uic:WellStatusDetail>
+#set($wellStatusCount = $velocityCount)#end$helper.print("$wellStatusCount wellStatuses")##foreach($wellStatus
+	</uic:WellStatusList>
+#end##if($wellStatus
+#set($wellTypes = $helper.getData("select well_type_id, org_id, well_type_ident, well_type_cd, well_type_date, well_type_well_ident from uic_well_type where org_id = ? ", $orgId))#if($wellTypes.hasNext())
+	<uic:WellTypeList>
+#foreach($wellType in $wellTypes)
+		<uic:WellTypeDetail>
+			<uic:WellTypeIdentifier>$wellType.well_type_ident</uic:WellTypeIdentifier>
+			<uic:WellTypeCode>$wellType.well_type_cd</uic:WellTypeCode>
+#if($wellType.well_type_date)
+			<uic:WellTypeDate>$wellType.well_type_date</uic:WellTypeDate>
+#end
+			<uic:WellTypeWellIdentifier>$wellType.well_type_well_ident</uic:WellTypeWellIdentifier>
+		</uic:WellTypeDetail>
+#set($wellTypeCount = $velocityCount)#end$helper.print("$wellTypeCount wellTypes")##foreach($wellType
+	</uic:WellTypeList>
+#end##if($wellTypes
+#set($locations = $helper.getData("select loc_id, org_id, loc_ident, loc_address_county, loc_accuracy_value_measure, geo_ref_pt_cd, horz_coord_ref_sys_datum_cd, horz_collection_method_cd, loc_pt_line_area_cd, src_map_scale_num, loc_well_ident, latitude_measure, longitude_measure from uic_location where org_id = ? ", $orgId))#if($locations.hasNext())
+	<uic:LocationList>
+#foreach($location in $locations)
+		<uic:LocationDetail>
+			<uic:LocationIdentifier>$location.loc_ident</uic:LocationIdentifier>
+#if($location.loc_address_county)
+			<uic:LocationAddressCounty>$location.loc_address_county</uic:LocationAddressCounty>
+#end
+#if($location.loc_accuracy_value_measure)
+			<uic:LocationAccuracyValueMeasure>$location.loc_accuracy_value_measure</uic:LocationAccuracyValueMeasure>
+#end
+#if($location.geo_ref_pt_cd)
+			<uic:GeographicReferencePointCode>$location.geo_ref_pt_cd</uic:GeographicReferencePointCode>
+#end
+#if($location.horz_coord_ref_sys_datum_cd)
+			<uic:HorizontalCoordinateReferenceSystemDatumCode>$location.horz_coord_ref_sys_datum_cd</uic:HorizontalCoordinateReferenceSystemDatumCode>
+#end
+#if($location.horz_collection_method_cd)
+			<uic:HorizontalCollectionMethodCode>$location.horz_collection_method_cd</uic:HorizontalCollectionMethodCode>
+#end
+#if($location.loc_pt_line_area_cd)
+			<uic:LocationPointLineAreaCode>$location.loc_pt_line_area_cd</uic:LocationPointLineAreaCode>
+#end
+#if($location.src_map_scale_num)
+			<uic:SourceMapScaleNumeric>$location.src_map_scale_num</uic:SourceMapScaleNumeric>
+#end
+			<uic:LocationWellIdentifier>$location.loc_well_ident</uic:LocationWellIdentifier>
+#if($location.latitude_measure)
+			<uic:LatitudeMeasure>$location.latitude_measure</uic:LatitudeMeasure>
+#end
+#if($location.longitude_measure)
+			<uic:LongitudeMeasure>$location.longitude_measure</uic:LongitudeMeasure>
+#end
+		</uic:LocationDetail>
+#set($locationCount = $velocityCount)#end$helper.print("$locationCount locations")##foreach($location
+	</uic:LocationList>
+#end##if($locations.
+#set($violations = $helper.getData("select violation_id, org_id, violation_ident, violation_contamination_cd, violation_endangering_cd, violation_rtn_compl_date, violation_significant_cd, violation_determined_date, violation_type_cd, violation_well_ident, violation_facility_ident from uic_violation where org_id = ? ", $orgId))#if($violations.hasNext())
+	<uic:ViolationList>
+#foreach($violation in $violations)
+		<uic:ViolationDetail>
+			<uic:ViolationIdentifier>$violation.violation_ident</uic:ViolationIdentifier>
+#if($violation.violation_contamination_cd)
+			<uic:ViolationContaminationCode>$violation.violation_contamination_cd</uic:ViolationContaminationCode>
+#end
+#if($violation.violation_endangering_cd)
+			<uic:ViolationEndangeringCode>$violation.violation_endangering_cd</uic:ViolationEndangeringCode>
+#end
+#if($violation.violation_rtn_compl_date)
+			<uic:ViolationReturnComplianceDate>$violation.violation_rtn_compl_date</uic:ViolationReturnComplianceDate>
+#end
+#if($violation.violation_significant_cd)
+			<uic:ViolationSignificantCode>$violation.violation_significant_cd</uic:ViolationSignificantCode>
+#end
+			<uic:ViolationDeterminedDate>$violation.violation_determined_date</uic:ViolationDeterminedDate>
+			<uic:ViolationTypeCode>$violation.violation_type_cd</uic:ViolationTypeCode>
+#if($violation.violation_well_ident)
+			<uic:ViolationWellIdentifier>$violation.violation_well_ident</uic:ViolationWellIdentifier>
+#end
+#if($violation.violation_facility_ident)
+            <uic:ViolationFacilityIdentifier>$violation.violation_facility_ident</uic:ViolationFacilityIdentifier>
+#end
+		</uic:ViolationDetail>
+#set($violationCount = $velocityCount)#end$helper.print("$violationCount violations")##foreach($violation
+	</uic:ViolationList>
+#end##if($violations
+#set($responses = $helper.getData("select response_id, org_id, response_enforcement_ident, response_violation_ident from uic_response where org_id = ? ", $orgId))#if($repsonses.hasNext())
+	<uic:ResponseList>
+#foreach($response in $responses)
+		<uic:ResponseDetail>
+			<uic:ResponseEnforcementIdentifier>$response.response_enforcement_ident</uic:ResponseEnforcementIdentifier>
+			<uic:ResponseViolationIdentifier>$response.response_violation_ident</uic:ResponseViolationIdentifier>
+		</uic:ResponseDetail>
+#set($responseCount = $velocityCount)#end$helper.print("$responseCount responses")##foreach($response
+	</uic:ResponseList>
+#end##if($responses
+#set($enforcementList = $helper.getData("select enforcement_id, org_id, enforcement_ident, enforcement_act_date, enforcement_act_type from uic_enforcement where org_id = ? ", $orgId))#if($enforcementList.hasNext())
+	<uic:EnforcementList>
+#foreach($enforcement in $enforcementList)
+		<uic:EnforcementDetail>
+			<uic:EnforcementIdentifier>$enforcement.enforcement_ident</uic:EnforcementIdentifier>
+			<uic:EnforcementActionDate>$enforcement.enforcement_act_date</uic:EnforcementActionDate>
+			<uic:EnforcementActionType>$enforcement.enforcement_act_type</uic:EnforcementActionType>
+		</uic:EnforcementDetail>
+#set($enforcementCount = $velocityCount)#end$helper.print("$enforcementCount enforcement datails")##foreach($enforcement
+	</uic:EnforcementList>
+#end##if($enforcementList
+#set($inspections = $helper.getData("select insp_id, org_id, insp_ident, insp_assistance_cd, insp_deficiency_cd, insp_act_date, insp_icis_compl_montr_rsn_cd, insp_icis_compl_montr_type_cd, insp_icis_compl_act_type_cd, insp_icis_moa_name, insp_icis_rgn_pri_name, insp_type_act_cd, insp_well_ident, insp_facility_ident from uic_inspection where org_id = ? ", $orgId))#if($inspections.hasNext())
+	<uic:InspectionList>
+#foreach($inspection in $inspections)
+        <uic:InspectionDetail>
+			<uic:InspectionIdentifier>$inspection.insp_ident</uic:InspectionIdentifier>
+#if($inspection.insp_assistance_cd)
+			<uic:InspectionAssistanceCode>$inspection.insp_assistance_cd</uic:InspectionAssistanceCode>
+#end
+#if($inspection.insp_deficiency_cd)
+			<uic:InspectionDeficiencyCode>$inspection.insp_deficiency_cd</uic:InspectionDeficiencyCode>
+#end
+			<uic:InspectionActionDate>$inspection.insp_act_date</uic:InspectionActionDate>
+#if($inspection.insp_icis_compl_montr_rsn_cd)
+			<uic:InspectionICISComplianceMonitoringReasonCode>$inspection.insp_icis_compl_montr_rsn_cd</uic:InspectionICISComplianceMonitoringReasonCode>
+#end
+#if($inspection.insp_icis_compl_montr_type_cd)
+			<uic:InspectionICISComplianceMonitoringTypeCode>$inspection.insp_icis_compl_montr_type_cd</uic:InspectionICISComplianceMonitoringTypeCode>
+#end
+#if($inspection.insp_icis_compl_act_type_cd)
+			<uic:InspectionICISComplianceActivityTypeCode>$inspection.insp_icis_compl_act_type_cd</uic:InspectionICISComplianceActivityTypeCode>
+#end
+#if($inspection.insp_icis_moa_name)
+			<uic:InspectionICISMOAName>$inspection.insp_icis_moa_name</uic:InspectionICISMOAName>
+#end
+#if($inspection.insp_icis_rgn_pri_name)
+			<uic:InspectionICISRegionalPriorityName>$inspection.insp_icis_rgn_pri_name</uic:InspectionICISRegionalPriorityName>
+#end
+			<uic:InspectionTypeActionCode>$inspection.insp_type_act_cd</uic:InspectionTypeActionCode>
+#if($inspection.insp_well_ident)
+			<uic:InspectionWellIdentifier>$inspection.insp_well_ident</uic:InspectionWellIdentifier>
+#end
+#if($inspection.insp_facility_ident)
+            <uic:InspectionFacilityIdentifier>$inspection.insp_facility_ident</uic:InspectionFacilityIdentifier>
+#end
+		</uic:InspectionDetail>
+#set($inspectionCount = $velocityCount)#end$helper.print("$inspectionCount inspections")##foreach($inspection
+	</uic:InspectionList>
+#end##if($inspections
+#set($corrections = $helper.getData("select correction_id, org_id, correction_ident, correction_act_type_cd, correction_comment_txt, correction_insp_ident from uic_correction where org_id = ? ", $orgId))#if($corrections.hasNext())
+	<uic:CorrectionList>
+#foreach($correction in $corrections)
+		<uic:CorrectionDetail>
+			<uic:CorrectionIdentifier>$correction.correction_ident</uic:CorrectionIdentifier>
+#if($correction.correction_act_type_cd)
+			<uic:CorrectionActionTypeCode>$correction.correction_act_type_cd</uic:CorrectionActionTypeCode>
+#end
+#if($correction.correction_comment_txt)
+			<uic:CorrectionCommentText>$correction.correction_comment_txt</uic:CorrectionCommentText>
+#end
+			<uic:CorrectionInspectionIdentifier>$correction.correction_insp_ident</uic:CorrectionInspectionIdentifier>
+		</uic:CorrectionDetail>
+#set($correctionCount = $velocityCount)#end$helper.print("$correctionCount corrections")##foreach($correction
+	</uic:CorrectionList>
+#end##if($corrections
+#set($mitests = $helper.getData("select mi_tst_id, org_id, mech_integ_tst_ident, mech_integ_tst_completed_date, mech_integ_tst_result_cd, mech_integ_tst_type_cd, mech_integ_tst_rem_act_date, mech_integ_tst_rem_act_type_cd, mech_integ_tst_well_ident from uic_mi_test where org_id = ? ", $orgId))#if($mitests.hasNext())
+	<uic:MiTestList>
+#foreach($mitest in $mitests)
+		<uic:MITestDetail>
+			<uic:MechanicalIntegrityTestIdentifier>$mitest.mech_integ_tst_ident</uic:MechanicalIntegrityTestIdentifier>
+			<uic:MechanicalIntegrityTestCompletedDate>$mitest.mech_integ_tst_completed_date</uic:MechanicalIntegrityTestCompletedDate>
+			<uic:MechanicalIntegrityTestResultCode>$mitest.mech_integ_tst_result_cd</uic:MechanicalIntegrityTestResultCode>
+			<uic:MechanicalIntegrityTestTypeCode>$mitest.mech_integ_tst_type_cd</uic:MechanicalIntegrityTestTypeCode>
+#if($mitest.mech_integ_tst_rem_act_date)
+			<uic:MechanicalIntegrityTestRemedialActionDate>$mitest.mech_integ_tst_rem_act_date</uic:MechanicalIntegrityTestRemedialActionDate>
+#end
+#if($mitest.mech_integ_tst_rem_act_type_cd)
+			<uic:MechanicalIntegrityTestRemedialActionTypeCode>$mitest.mech_integ_tst_rem_act_type_cd</uic:MechanicalIntegrityTestRemedialActionTypeCode>
+#end
+			<uic:MechanicalIntegrityTestWellIdentifier>$mitest.mech_integ_tst_well_ident</uic:MechanicalIntegrityTestWellIdentifier>
+		</uic:MITestDetail>
+#set($mitestCount = $velocityCount)#end$helper.print("$mitestCount mechanical integrity tests")##foreach($mitest
+	</uic:MiTestList>
+#end##if($mitest
+#set($engList = $helper.getData("select engr_id, org_id, engr_ident, engr_max_flow_rate_num, engr_perm_onsite_inj_vol_num, engr_perm_offsite_inj_vol_num, engr_well_ident from uic_engineering where org_id = ? ", $orgId))#if($engList.hasNext())
+	<uic:EngineeringList>
+#foreach($engDetail in $engList)
+		<uic:EngineeringDetail>
+			<uic:EngineeringIdentifier>$engDetail.engr_ident</uic:EngineeringIdentifier>
+#if($engDetail.engr_max_flow_rate_num)
+            <uic:EngineeringMaximumFlowRateNumeric>$engDetail.engr_max_flow_rate_num</uic:EngineeringMaximumFlowRateNumeric>
+#end
+#if($engDetail.engr_perm_onsite_inj_vol_num)
+			<uic:EngineeringPermittedOnsiteInjectionVolumeNumeric>$engDetail.engr_perm_onsite_inj_vol_num</uic:EngineeringPermittedOnsiteInjectionVolumeNumeric>
+#end
+#if($engDetail.engr_perm_offsite_inj_vol_num)
+			<uic:EngineeringPermittedOffsiteInjectionVolumeNumeric>$engDetail.engr_perm_offsite_inj_vol_num</uic:EngineeringPermittedOffsiteInjectionVolumeNumeric>
+#end
+			<uic:EngineeringWellIdentifier>$engDetail.engr_well_ident</uic:EngineeringWellIdentifier>
+		</uic:EngineeringDetail>
+#set($engDetailCount = $velocityCount)#end$helper.print("$engDetailCount engineering details")##foreach($engDetail
+	</uic:EngineeringList>
+#end##if(engList
+#set($geoList = $helper.getData("select geo_id, org_id, geo_ident, geo_conf_zn_name, geo_conf_zn_top_num, geo_conf_zn_bot_num, geo_lith_conf_zn_txt, geo_inj_zn_formation_name, geo_bot_inj_zn_num, geo_lith_inj_zn_txt, geo_top_inj_interval_num, geo_bot_inj_interval_num, geo_inj_zn_perm_rate_num, geo_inj_zn_por_pcnt_num, geo_usdw_depth_num from uic_geology where org_id = ? ", $orgId))#if($geoList.hasNext())
+	<uic:GeologyList>
+#foreach($geoDetail in $geoList)
+		<uic:GeologyDetail>
+			<uic:GeologyIdentifier>$geoDetail.geo_ident</uic:GeologyIdentifier>
+#if($geoDetail.geo_conf_zn_name)
+			<uic:GeologyConfiningZoneName>$geoDetail.geo_conf_zn_name</uic:GeologyConfiningZoneName>
+#end
+#if($geoDetail.geo_conf_zn_top_num)
+			<uic:GeologyConfiningZoneTopNumeric>$geoDetail.geo_conf_zn_top_num</uic:GeologyConfiningZoneTopNumeric>
+#end
+#if($geoDetail.geo_conf_zn_bot_num)
+			<uic:GeologyConfiningZoneBottomNumeric>$geoDetail.geo_conf_zn_bot_num</uic:GeologyConfiningZoneBottomNumeric>
+#end
+#if($geoDetail.geo_lith_conf_zn_txt)
+			<uic:GeologyLithologicConfiningZoneText>$geoDetail.geo_lith_conf_zn_txt</uic:GeologyLithologicConfiningZoneText>
+#end
+#if($geoDetail.geo_inj_zn_formation_name)
+			<uic:GeologyInjectionZoneFormationName>$geoDetail.geo_inj_zn_formation_name</uic:GeologyInjectionZoneFormationName>
+#end
+#if($geoDetail.geo_bot_inj_zn_num)
+			<uic:GeologyBottomInjectionZoneNumeric>$geoDetail.geo_bot_inj_zn_num</uic:GeologyBottomInjectionZoneNumeric>
+#end
+#if($geoDetail.geo_lith_inj_zn_txt)
+			<uic:GeologyLithologicInjectionZoneText>$geoDetail.geo_lith_inj_zn_txt</uic:GeologyLithologicInjectionZoneText>
+#end
+#if($geoDetail.geo_top_inj_interval_num)
+			<uic:GeologyTopInjectionIntervalNumeric>$geoDetail.geo_top_inj_interval_num</uic:GeologyTopInjectionIntervalNumeric>
+#end
+#if($geoDetail.geo_bot_inj_interval_num)
+			<uic:GeologyBottomInjectionIntervalNumeric>$geoDetail.geo_bot_inj_interval_num</uic:GeologyBottomInjectionIntervalNumeric>
+#end
+#if($geoDetail.geo_inj_zn_perm_rate_num)
+			<uic:GeologyInjectioneZonePermeabilityRateNumeric>$geoDetail.geo_inj_zn_perm_rate_num</uic:GeologyInjectioneZonePermeabilityRateNumeric>
+#end
+#if($geoDetail.geo_inj_zn_por_pcnt_num)
+			<uic:GeologyInjectionZonePorosityPercentNumeric>$geoDetail.geo_inj_zn_por_pcnt_num</uic:GeologyInjectionZonePorosityPercentNumeric>
+#end
+#if($geoDetail.geo_usdw_depth_num)
+			<uic:GeologyUSDWDepthNumeric>$geoDetail.geo_usdw_depth_num</uic:GeologyUSDWDepthNumeric>
+#end
+		</uic:GeologyDetail>
+#set($geoCount = $velocityCount)#end$helper.print("$geoCount geology details")##foreach$geoDeatil
+	</uic:GeologyList>
+#end##if($geoList
+#set($wasteList = $helper.getData("select waste_id, org_id, waste_ident, waste_cd, waste_stream_classification_cd, waste_well_ident from uic_waste where org_id = ? ", $orgId))#if($wasteList.hasNext())
+	<uic:WasteList>
+#foreach($waste in $wasteList)
+		<uic:WasteDetail>
+			<uic:WasteIdentifier>$waste.waste_ident</uic:WasteIdentifier>
+#if($waste.waste_cd)
+            <uic:WasteCode>$waste.waste_cd</uic:WasteCode>
+#end
+#if($waste.waste_stream_classification_cd)
+			<uic:WasteStreamClassificationCode>$waste.waste_stream_classification_cd</uic:WasteStreamClassificationCode>
+#end
+			<uic:WasteWellIdentifier>$waste.waste_well_ident</uic:WasteWellIdentifier>
+		</uic:WasteDetail>
+#set($wasteCount = $velocityCount)#end$helper.print("$wasteCount waste details")##foreach($waste
+	</uic:WasteList>
+#end##if($wasteList
+#set($constList = $helper.getData("select constituent_id, org_id, constituent_ident, measure_value, measure_unit_cd, constituent_name_txt, constituent_waste_ident from uic_constituent where org_id = ? ", $orgId))#if($constList.hasNext())
+	<uic:ConstituentList>
+#foreach($const in $constList)
+		<uic:ConstituentDetail>
+			<uic:ConstituentIdentifier>$const.constituent_ident</uic:ConstituentIdentifier>
+#if($const.measure_value)
+			<uic:MeasureValue>$const.measure_value</uic:MeasureValue>
+#end
+#if($const.measure_unit_cd)
+			<uic:MeasureUnitCode>$const.measure_unit_cd</uic:MeasureUnitCode>
+#end
+#if($const.constituent_name_txt)
+			<uic:ConstituentNameText>$const.constituent_name_txt</uic:ConstituentNameText>
+#end
+			<uic:ConstituentWasteIdentifier>$const.constituent_waste_ident</uic:ConstituentWasteIdentifier>
+		</uic:ConstituentDetail>
+#set($constCount = $velocityCount)#end$helper.print("$constCount constituents")##foreach($const
+	</uic:ConstituentList>
+#end##foreach($const
+</uic:UIC>
+#if($makeHeader)#if($makeHeader == "true" || $makeHeader == "TRUE")
+</Payload>
+</Document>
+#end#end##if($makeHeader)
+$helper.print("Template merge complete! Total elapsed time:")
+$helper.printElapsedTime()
+#if($facilityCount)#set($totalRecCount = $facilityCount)#end
+#if($contactCount)#set($totalRecCount = $totalRecCount + $contactCount)#end
+#if($permitCount)#set($totalRecCount = $totalRecCount + $permitCount)#end
+#if($permitActivityCount)#set($totalRecCount = $totalRecCount + $permitActivityCount)#end
+#if($wellCount)#set($totalRecCount = $totalRecCount + $wellCount)#end
+#if($wellStatusCount)#set($totalRecCount = $totalRecCount + $wellStatusCount)#end
+#if($wellTypeCount)#set($totalRecCount = $totalRecCount + $wellTypeCount)#end
+#if($locationCount)#set($totalRecCount = $totalRecCount + $locationCount)#end
+#if($violationCount)#set($totalRecCount = $totalRecCount + $violationCount)#end
+#if($responseCount)#set($totalRecCount = $totalRecCount + $responseCount)#end
+#if($enforcementCount)#set($totalRecCount = $totalRecCount + $enforcementCount)#end
+#if($inspectionCount)#set($totalRecCount = $totalRecCount + $inspectionCount)#end
+#if($correctionCount)#set($totalRecCount = $totalRecCount + $correctionCount)#end
+#if($mitestCount)#set($totalRecCount = $totalRecCount + $mitestCount)#end
+#if($engDetailCount)#set($totalRecCount = $totalRecCount + $engDetailCount)#end
+#if($geoCount)#set($totalRecCount = $totalRecCount + $geoCount)#end
+#if($wasteCount)#set($totalRecCount = $totalRecCount + $wasteCount)#end
+#if($constCount)#set($totalRecCount = $totalRecCount + $constCount)#end
+$helper.setResultingRecordCount($totalRecCount)$helper.print("Total record count: $totalRecCount")

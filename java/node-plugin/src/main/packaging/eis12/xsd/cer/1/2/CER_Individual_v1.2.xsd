@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:cer="http://www.exchangenetwork.net/schema/cer/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/cer/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2">
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name  : CER_Individual_v1.2.xsd
+        Current Version Available At :  http://www.exchangenetwork.net/schema/cer/1/2/CER_Individual_v1.2.xsd
+        Description   : Information representing the person who can be contacted concerning the data submitted or the facility site.
+        Developed by  : 	Perrin Quarles Associates, Inc.
+        Point of Contact : Perrin Quarles Associates, Inc.	
+        </xsd:documentation>
+	</xsd:annotation>
+	<xsd:include schemaLocation="CER_SimpleContent_v1.2.xsd"/>
+	<xsd:include schemaLocation="CER_Identification_v1.2.xsd"/>
+	<xsd:include schemaLocation="CER_Address_v1.2.xsd"/>
+	<xsd:include schemaLocation="CER_Communication_v1.2.xsd"/>
+	<xsd:complexType name="IndividualDataType">
+		<xsd:sequence>
+			<xsd:element ref="cer:IndividualTitleText" minOccurs="0"/>
+			<xsd:element ref="cer:NamePrefixText" minOccurs="0"/>
+			<xsd:element ref="cer:FirstName" minOccurs="0"/>
+			<xsd:element ref="cer:MiddleName" minOccurs="0"/>
+			<xsd:element ref="cer:LastName" minOccurs="0"/>
+			<xsd:element ref="cer:NameSuffixText" minOccurs="0"/>
+			<xsd:element ref="cer:IndividualIdentification" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="cer:IndividualAddress" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="cer:IndividualCommunication" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="AffiliationIndividual" type="cer:IndividualDataType"/>
+	<xsd:element name="OrganizationIndividual" type="cer:IndividualDataType"/>
+</xsd:schema>

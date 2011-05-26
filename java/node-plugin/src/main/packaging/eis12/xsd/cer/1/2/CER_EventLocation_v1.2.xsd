@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:cer="http://www.exchangenetwork.net/schema/cer/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/cer/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2">
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name  : CER_EventLocation_v1.2.xsd
+        Current Version Available At :  http://www.exchangenetwork.net/schema/cer/1/2/CER_EventLocation_v1.2.xsd
+        Description   : Identifies the location where the event occurred.
+        Developed by  : 	 Perrin Quarles Associates, Inc.
+        Point of Contact : Perrin Quarles Associates, Inc.
+        </xsd:documentation>
+	</xsd:annotation>
+	<xsd:include schemaLocation="CER_SimpleContent_v1.2.xsd"/>
+	<xsd:include schemaLocation="CER_GeographicCoordinates_v1.2.xsd"/>
+	<xsd:include schemaLocation="CER_GeospatialParameters_v1.2.xsd"/>
+	<xsd:include schemaLocation="CER_EventEmissionsProcess_v1.2.xsd"/>
+	<xsd:complexType name="EventLocationDataType">
+		<xsd:sequence>
+			<xsd:element ref="cer:StateAndCountyFIPSCode" minOccurs="0"/>
+			<xsd:element ref="cer:TribalCode" minOccurs="0"/>
+			<xsd:element ref="cer:StateAndCountryFIPSCode" minOccurs="0"/>
+			<xsd:element ref="cer:EventGeographicCoordinates" minOccurs="0"/>
+			<xsd:element ref="cer:GeospatialParameters" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="cer:EventEmissionsProcess" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="EventLocation" type="cer:EventLocationDataType"/>
+</xsd:schema>

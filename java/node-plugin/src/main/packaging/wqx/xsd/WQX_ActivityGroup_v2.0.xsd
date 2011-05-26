@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:wqx="http://www.exchangenetwork.net/schema/wqx/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/wqx/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+	<xsd:include schemaLocation="./WQX_SimpleContent_v2.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+        Schema Name  : WQX_ActivityGroup_v2.0.xsd
+        Description   : Allows for the grouping of activities.	
+        Developed by  : EPA Office of Water	 
+        Point of Contact :   Dwane Young
+</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="ActivityGroupDataType">
+		<xsd:sequence>
+			<xsd:element ref="wqx:ActivityGroupIdentifier"/>
+			<xsd:element ref="wqx:ActivityGroupName" minOccurs="0"/>
+			<xsd:element ref="wqx:ActivityGroupTypeCode"/>
+			<xsd:element ref="wqx:ActivityIdentifier" minOccurs="2" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ActivityGroup" type="wqx:ActivityGroupDataType">
+		<xsd:annotation>
+			<xsd:documentation>Allows for the grouping of activities.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

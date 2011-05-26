@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:wqx="http://www.exchangenetwork.net/schema/wqx/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/wqx/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+	<xsd:include schemaLocation="./WQX_SimpleContent_v2.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+        Schema Name  : WQX_OrganizationAddress_v2.0.xsd
+        Description   : 	The physical location of an individual or organization.
+        Developed by  : 	 EPA Office of Water
+        Point of Contact :       Dwane Young
+</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="OrganizationAddressDataType">
+		<xsd:sequence>
+			<xsd:element ref="wqx:AddressTypeName" minOccurs="0"/>
+			<xsd:element ref="wqx:AddressText" minOccurs="0"/>
+			<xsd:element ref="wqx:SupplementalAddressText" minOccurs="0"/>
+			<xsd:element ref="wqx:LocalityName" minOccurs="0"/>
+			<xsd:element ref="wqx:StateCode" minOccurs="0"/>
+			<xsd:element ref="wqx:PostalCode" minOccurs="0"/>
+			<xsd:element ref="wqx:CountryCode" minOccurs="0"/>
+			<xsd:element ref="wqx:CountyCode" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="OrganizationAddress" type="wqx:OrganizationAddressDataType">
+		<xsd:annotation>
+			<xsd:documentation>The physical address of an organization.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>
