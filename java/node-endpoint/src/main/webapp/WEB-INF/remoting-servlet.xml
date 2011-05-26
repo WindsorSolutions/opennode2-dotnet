@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd" >
+<beans>
+
+	<import resource="classes/endpoint.xml" />
+	
+	<bean name="/NodeClient11"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service" ref="client11" />
+		<property name="serviceInterface" value="com.windsor.node.common.util.NodeClientService" />
+	</bean>
+
+
+</beans>

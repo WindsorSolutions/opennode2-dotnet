@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd" >
+<beans>
+
+    <description>Node Endpoint 1.1 Configuration File</description>
+
+    <!-- Properties -->
+    <bean id="propertyConfigurer"
+        class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>file:/var/opennode2_home/conf/nos.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- Clients -->
+    <bean name="client11" class="com.windsor.node.ws1.client.NetworkNode11Client" lazy-init="true" />
+
+    <bean id="httpClient" class="org.springframework.remoting.httpinvoker.CommonsHttpInvokerRequestExecutor"  lazy-init="true" />
+
+    <!-- Remoted -->
+    <bean id="contentService"
+        class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean"
+         lazy-init="true">
+        <property name="serviceUrl"
+            value="${wnos.endpoint.host}/remoting/WinNodeContentService" />
+        <property name="serviceInterface"
+            value="com.windsor.node.common.service.cmf.ContentService" />
+        <property name="httpInvokerRequestExecutor" ref="httpClient"  />
+    </bean>
+
+    <bean id="securityService"
+        class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean"
+         lazy-init="true">
+        <property name="serviceUrl"
+            value="${wnos.endpoint.host}/remoting/WinNodeSecurityService" />
+        <property name="serviceInterface"
+            value="com.windsor.node.common.service.cmf.SecurityService" />
+        <property name="httpInvokerRequestExecutor" ref="httpClient" />
+    </bean>
+
+    <bean id="transactionService"
+        class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean"
+         lazy-init="true">
+        <property name="serviceUrl"
+            value="${wnos.endpoint.host}/remoting/WinNodeTransactionService" />
+        <property name="serviceInterface"
+            value="com.windsor.node.common.service.cmf.TransactionService" />
+        <property name="httpInvokerRequestExecutor" ref="httpClient" />
+    </bean>
+
+    <!-- name of HTTP Request Header where the requestor's IP address is stored -->
+    <bean id="requestIPHeaderProperty" class="java.lang.String">
+        <constructor-arg value="${request.ip.header.name}" />
+    </bean>
+    <bean id="nodePingReadyMessage" class="java.lang.String">
+        <constructor-arg value="OpenNode2 Java v${node.version}" />
+    </bean>
+
+</beans>
