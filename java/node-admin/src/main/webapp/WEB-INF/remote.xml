@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+                http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<description>
+		Node Admin Remoted Interfaces Description File
+	</description>
+
+
+	<bean id="httpClient" class="org.apache.commons.httpclient.HttpClient" />
+
+	<bean id="httpInvoker" class="org.springframework.remoting.httpinvoker.CommonsHttpInvokerRequestExecutor">
+		<property name="readTimeout" value="0" />
+		<property name="httpClient" ref="httpClient" />
+	</bean>
+
+	<!-- Remoted -->
+	<bean id="accountService"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceUrl" value="${wnos.endpoint.host}/remoting/WinAccountService" />
+		<property name="serviceInterface" value="com.windsor.node.common.service.admin.AccountService" />
+		<property name="httpInvokerRequestExecutor" ref="httpInvoker" />
+	</bean>
+
+	<bean id="activityService"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceUrl" value="${wnos.endpoint.host}/remoting/WinActivityService" />
+		<property name="serviceInterface" value="com.windsor.node.common.service.admin.ActivityService" />
+		<property name="httpInvokerRequestExecutor" ref="httpInvoker" />
+	</bean>
+
+	<bean id="configService"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceUrl" value="${wnos.endpoint.host}/remoting/WinConfigService" />
+		<property name="serviceInterface" value="com.windsor.node.common.service.admin.ConfigService" />
+		<property name="httpInvokerRequestExecutor" ref="httpInvoker" />
+	</bean>
+
+	<bean id="flowService"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceUrl" value="${wnos.endpoint.host}/remoting/WinFlowService" />
+		<property name="serviceInterface" value="com.windsor.node.common.service.admin.FlowService" />
+		<property name="httpInvokerRequestExecutor" ref="httpInvoker" />
+	</bean>
+
+	<bean id="notificationService"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceUrl" value="${wnos.endpoint.host}/remoting/WinNotificationService" />
+		<property name="serviceInterface" value="com.windsor.node.common.service.admin.NotificationService" />
+		<property name="httpInvokerRequestExecutor" ref="httpInvoker" />
+	</bean>
+
+	<bean id="partnerService"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceUrl" value="${wnos.endpoint.host}/remoting/WinPartnerService" />
+		<property name="serviceInterface" value="com.windsor.node.common.service.admin.PartnerService" />
+		<property name="httpInvokerRequestExecutor" ref="httpInvoker" />
+	</bean>
+
+	<bean id="pluginAdminService"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceUrl" value="${wnos.endpoint.host}/remoting/WinPluginService" />
+		<property name="serviceInterface" value="com.windsor.node.common.service.admin.PluginAdminService" />
+		<property name="httpInvokerRequestExecutor" ref="httpInvoker" />
+	</bean>
+
+	<bean id="scheduleService"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceUrl" value="${wnos.endpoint.host}/remoting/WinScheduleService" />
+		<property name="serviceInterface" value="com.windsor.node.common.service.admin.ScheduleService" />
+		<property name="httpInvokerRequestExecutor" ref="httpInvoker" />
+	</bean>
+
+	<bean id="transactionService"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceUrl" value="${wnos.endpoint.host}/remoting/WinTransactionService" />
+		<property name="serviceInterface" value="com.windsor.node.common.service.admin.TransactionService" />
+		<property name="httpInvokerRequestExecutor" ref="httpInvoker" />
+	</bean>
+
+    <bean id="flowSecurityService"
+        class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+        <property name="serviceUrl" value="${wnos.endpoint.host}/remoting/WinFlowSecurityService" />
+        <property name="serviceInterface" value="com.windsor.node.common.service.admin.FlowSecurityService" />
+        <property name="httpInvokerRequestExecutor" ref="httpInvoker" />
+    </bean>
+
+
+
+</beans>

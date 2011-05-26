@@ -1,0 +1,627 @@
+body, html {
+	margin: 0;
+	padding: 0;
+	font: 11px/ 17px Verdana;
+	background: #f3efe4;
+}
+.body{
+	width: 100%;
+	min-width: 800px;
+	background: white;	
+}
+div, li, td, textarea{
+	font-size: 11px;
+	font-weight: normal;
+	font-family: Verdana, Helvetica, Arial, sans-serif;
+}
+.note
+{
+	color:#99CC33;
+	font-family:Verdana, Helvetica, Arial, sans-serif;
+	font-size:12px;
+	font-weight:bold;
+}
+
+pre
+{
+    white-space: pre-wrap;                 /* CSS3 browsers  */
+    white-space: -moz-pre-wrap !important; /* 1999+ Mozilla  */
+    white-space: -pre-wrap;                /* Opera 4 thru 6 */
+    white-space: -o-pre-wrap;              /* Opera 7 and up */
+    word-wrap: break-word;                 /* IE 5.5+ and up */
+    /* overflow-x: auto; */                /* Firefox 2 only */
+    width: 99%;              /* only if needed */
+}
+
+/* LINKS */
+a {
+	color: #3366CC;
+	text-decoration: none;
+}
+
+/* END LINKS */
+
+.black
+
+select {
+	color: #000;
+	font-size: 11px;
+	font-weight: normal;
+	font-family: Verdana, Helvetica, Arial, sans-serif;
+	width: 95%;
+	border: solid 1px #666;
+	vertical-align: middle;
+}
+
+select[disabled] {
+	color: #000;
+	width: 95%;
+	background-color: #dcdcdc;
+	border: solid 1px #dcdcdc;
+	vertical-align: middle;
+}
+
+#titleArea {
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	/*background: #E3ECF3;*/
+	border-bottom: 1px solid #DCDCDC;
+}
+
+#title {
+	font: bold 28px Verdana, Arial, Helvetica, sans-serif;
+	color: #999;
+	padding: 10px 10px 10px 15px;
+	width: 800px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/* blacktext & whitetext used for <a> elements behaving like a label */ 
+.blacktext {
+	color: #000000
+	}
+	
+.whitetext {
+	color: #FFFFFF
+	}
+
+.userInfo {
+	width: 800px;
+	text-align: right;
+	padding: 5px 10px 0 0;
+	margin: 0 auto 0 auto;
+	font: 9px Verdana, Arial, Helvetica, sans-serif;
+	color: #666;
+}
+
+.layoutSpacerTop {
+	clear: both;
+	margin-top: 20px;
+}
+.layoutSpacerBottom {
+	clear: both;
+	height: 100px;
+}
+
+#contentTable {
+	width: 800px;
+	padding: 0;
+	margin: 0;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+}
+
+#footerTable {
+	width: 100%;
+	border-top: 1px solid #DCDCDC;
+	padding: 10px 0 10px 0;
+}
+
+#footerAlignment{
+	width: 800px;
+	margin: 0 auto 0 auto;
+	display: block;
+	font: 9px Verdana, Arial, Helvetica, sans-serif;
+	color: #666;
+}
+
+#footerTable .lineDark {
+	width: 100%;
+	color: #666;
+	padding: 0;
+	margin: 0;
+	height: 1px;
+}
+
+#titleTable {
+	margin: 0;
+	padding: 0;
+}
+
+#sidebarPane {
+	vertical-align: top;
+	padding: 0;
+	margin: 0;
+}
+
+#contentPane {
+	vertical-align: top;
+	padding: 10px 0 0 10px;
+}
+
+#flowHeader td {
+
+	font: bold 10px Verdana, Arial, Helvetica, sans-serif;
+	color: #000;
+}
+
+.introText {
+	line-height: 140%; 
+	font: 11px Verdana, Arial, Helvetica, sans-serif;
+	color: #333;
+	margin: 0px;
+	clear: both;
+}
+
+.sectionHead {
+	font: bold 13px Verdana, Arial, Helvetica, sans-serif;
+	color: #666;
+	clear: both;
+	padding: 2px;
+	background-color: #f3efe4;
+}
+
+#pageTitle {
+	color: #99CC33;
+	font-size: 22px;
+	font-weight: bold;
+	font-family: Verdana, Helvetica, Arial, sans-serif;
+	padding: 0 0 5px 0;
+}
+
+img {
+	border: none;
+}
+
+table td .error {
+	font: 12px Verdana, Arial, Helvetica, sans-serif;
+	color: red;
+	clear: both;
+}
+
+#tabsUnderline {
+	height: 1px;
+	background-color: #dcdcdc;
+}
+
+/*- START TABS --------------------------- */
+#tabs {
+	width: 800px;
+	margin: 0 auto 0 auto;
+	/*background: #E3ECF3;*/
+	font-size: 11px;
+	line-height: normal;
+	vertical-align: bottom;
+	padding: 0;
+}
+
+#tabs ul {
+	margin: 0;
+	padding: 10px 10px 0 10px;
+	list-style: none;
+}
+
+#tabs li {
+	display: inline;
+	margin: 0;
+	padding: 0;
+}
+
+#tabs ul li a {
+	float: left;
+	background: url( "../../img/tabLeft.gif" ) no-repeat left top;
+	margin: 0;
+	padding: 0 0 0 4px;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+#tabs ul li a span {
+	float: left;
+	display: block;
+	background: url( "../../img/tabRight.gif" ) no-repeat right top;
+	padding: 5px 15px 4px 6px;
+	color: #FFF;
+	margin: 0;
+}
+
+#tabs ul li a:hover span {
+	color: #FFF;
+	margin: 0;
+}
+
+#tabs ul li a:hover {
+	background-position: 0% -42px;
+	margin: 0;
+}
+
+#tabs ul li a:hover span {
+	background-position: 100% -42px;
+	margin: 0;
+}
+
+#tabs .current a {
+	background-position: 0% -42px;
+	margin: 0;
+}
+
+#tabs .current a span {
+	background-position: 100% -42px;
+	margin: 0;
+}
+
+#tabs a span img {
+	border: 0;
+	padding-right: 5px;
+	vertical-align: bottom;
+}
+
+/*- END TABS --------------------------- */
+	/*- MENU START ------------------------- */
+#menu {
+	width: 200px;
+	margin: 10px;
+	font-size: 11px;
+	font-weight: normal;
+	font-family: Verdana, Helvetica, Arial, sans-serif;
+}
+
+#menu ul {
+	text-decoration: none;
+	list-style-position: inside;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+#menu li a {
+	height: 32px;
+	voice-family: "\"}\"";
+	voice-family: inherit;
+	height: 24px;
+	text-decoration: none;
+}
+
+#menu li a:link, #menu li a:visited {
+	color: #FFF;
+	display: block;
+	background: url(../../img/menu.gif);
+	padding: 8px 0 0 30px;
+}
+
+#menu li a:hover, #menu li a.current:link, #menu li a.current:visited {
+	color: #FFF;
+	background: url(../../img/menu.gif) 0 -32px;
+	padding: 8px 0 0 30px;
+}
+
+/*- MENU END ------------------------- */
+
+
+/* form */
+#formTable .rowEven {
+	background-color: #dcdcdc;
+	padding: 0px;
+	margin: 0;
+}
+
+#formTable .rowOdd {
+	background-color: #E3ECF3;
+	padding: 0px;
+	margin: 0;
+}
+
+#formTable {
+	background-color: #E3ECF3;
+	padding: 0px;
+	border: solid 1px #dcdcdc;
+}
+
+#formTable2 {
+	background-color: #E3ECF3;
+	padding: 0px;
+	border: solid 1px #dcdcdc;
+}
+
+#formTable2 .rowEven {
+	background-color: #dcdcdc;
+	padding: 0px;
+	margin: 0;
+}
+
+#formTable2 .rowOdd {
+	background-color: #E3ECF3;
+	padding: 0px;
+	margin: 0;
+}
+
+/* GRID */
+.formGrid {
+	background-color: #E3ECF3;
+	padding: 0;
+	margin: 0;
+	border: solid 0px #fff;
+}
+
+.formGrid .rowEven {
+	background-color: #dcdcdc;
+}
+
+.formGrid .rowOdd {
+	background-color: #E3ECF3;
+}
+
+.formGrid .td {
+	padding: 3px;
+	border: 0;
+}
+
+/* END GRID */
+input[readonly] {
+	border: 0;
+	background-color: #fff;
+	background-image: none;
+}
+input{
+	font-size: 12px;
+	font-weight: normal;
+	font-family: Verdana, Helvetica, Arial, sans-serif;
+	margin-left: 0px;
+}
+
+#formTable th {
+	border-bottom: solid 1px #999;
+	font-size: 12px;
+}
+
+#formTable .label {
+	color: #666;
+	font-size: 11px;
+	font-weight: bold;
+	font-family: Verdana, Helvetica, Arial, sans-serif;
+	text-align: right;
+	vertical-align: middle;
+	padding: 5px;
+	white-space: nowrap;
+}
+td.label{
+	width: 20%;	
+}
+
+.listlabel 
+{
+	color: #444444;
+}
+
+#formTable .labelLog {
+	color: #666;
+	font-size: 11px;
+	font-weight: bold;
+	font-family: Verdana, Helvetica, Arial, sans-serif;
+	padding: 0px;
+	padding-left: 10px;
+	padding-top: 5px;
+	white-space: nowrap;
+}
+
+.basicTable {
+	font-size: 11px;
+	font-family: Verdana, Helvetica, Arial, sans-serif;
+}
+
+#formTable .stackListName {
+	color: #666;
+	font-size: 11px;
+	font-weight: bold;
+	font-family: Verdana, Helvetica, Arial, sans-serif;
+	text-align: left;
+	vertical-align: middle;
+	padding: 5px;
+	white-space: nowrap;
+}
+
+#formTable .infoLog {
+	color: #666;
+	font-size: 11px;
+	font-family: Verdana, Helvetica, Arial, sans-serif;
+	padding: 0px;
+	padding-left: 10px;
+}
+
+#formTable .activityDetail {
+	color: #000;
+	font-size: 11px;
+	font-family: Verdana, Helvetica, Arial, sans-serif;
+	padding: 0px;
+	padding-left: 15px;
+	padding-bottom: 10px;
+}
+
+#formTable .cellEmph {
+	color: #666;
+	font-weight: bold;
+	font-size: 13px;
+	font-family: Verdana, Helvetica, Arial, sans-serif;
+}
+
+#formTable .ctrl {
+	color: #333333;
+	font-size: 11px;
+	font-weight: normal;
+	font-family: Verdana, Helvetica, Arial, sans-serif;
+	vertical-align: middle;
+	padding: 5px;
+}
+
+#formTable .error {
+	color: red;
+	font-size: 11px;
+	font-weight: normal;
+	font-family: Verdana, Helvetica, Arial, sans-serif;
+	padding: 5px;
+	margin-bottom: 10px;
+}
+
+#formTable .nonErrorMessage {
+	font-size: 11px;
+	font-weight: normal;
+	font-family: Verdana, Helvetica, Arial, sans-serif;
+	padding: 5px;
+}
+
+#formTable .textbox {
+	color: #000;
+	font-size: 12px;
+	font-weight: normal;
+	font-family: Verdana, Helvetica, Arial, sans-serif;
+	width: 95%;
+	border: solid 1px #666;
+	vertical-align: middle;
+	display: block;
+}
+
+#formTable .textbox[readonly] {
+	color: #666;
+	font-size: 12px;
+	font-weight: normal;
+	font-family: Verdana, Helvetica, Arial, sans-serif;
+	width: 95%;
+	background-color: #E3ECF3;
+	border: 0px;
+	vertical-align: middle;
+}
+
+.button {
+	width: auto;
+	border: 3px double #999999;
+	border-top-color: #CCCCCC;
+	border-left-color: #CCCCCC;
+	padding: 3px;
+	background-color: #9EC630;
+	background-repeat: repeat-x;
+	color: #FFF;
+	font-size: 10px;
+	font-weight: bold;
+	font-family: Verdana, Helvetica, Arial, sans-serif;
+	margin: 5px;
+}
+
+.button[disabled] {
+	width: auto;
+	border: 3px double #999999;
+	border-top-color: #CCCCCC;
+	border-left-color: #CCCCCC;
+	padding: 3px;
+	background-color: #dcdcdc;
+	background-repeat: repeat-x;
+	color: #FFF;
+	font-size: 10px;
+	font-weight: bold;
+	font-family: Verdana, Helvetica, Arial, sans-serif;
+	margin: 5px;
+}
+
+.disabledInput
+{
+    background-color: #dcdcdc;
+}
+
+/* END FORM */ /* NEWS */
+.newsTitle {
+	padding-top: 10px;
+	font-weight: bold;
+	color: #666;
+}
+
+.newsTitle img {
+	padding-right: 5px;
+}
+
+.newsTime {
+	font-size: 10px;
+	font-style: italic;
+}
+
+.newsDescr {
+	padding-left: 20px;
+	line-height: 130%;
+}
+/* END NEWS */
+
+
+
+
+/* start calendar */
+
+#okbutton 
+{
+	font-size: 8px;
+	font-weight: bold;
+    padding: 2px 2px 2px 2px;
+    margin: 0px;
+    border: solid 1px #666;
+    background-color: #99CC33;
+}
+
+.formtext 
+{
+	background-color: #fff; 
+}
+
+.topselection 
+{
+	font-size: 8px;
+    padding: 2px 2px 2px 2px;
+    margin: 0px;
+    border: solid 1px #666;
+    background-color: #fff;	
+    height: 18px;
+}
+
+.topbutton 
+{ 
+	font-size: 8px;
+	font-weight: bold;
+    padding: 2px 2px 2px 2px;
+    margin: 2px;
+    border: solid 0px #E3ECF3;
+    background-color: #E3ECF3;
+}
+
+.days 
+{
+	font-size: 8px;
+	color: #fff;
+	font-weight: bold;
+	background-color: #999;
+	width: 15%;
+}
+
+.calButton 
+{
+	width: 100%;
+	height: 100%;
+	font-size: 8px;
+	font-weight: bold;
+	color: #000;
+	background-color: #dcdcdc; 
+	padding: 0px 0px 0px 0px;
+    margin: 0px;
+    border: solid 0 #dcdcdc;
+	
+}
+/* end calendar */
+

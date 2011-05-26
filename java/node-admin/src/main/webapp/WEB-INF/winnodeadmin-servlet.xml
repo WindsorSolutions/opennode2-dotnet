@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+                http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+    <description>Node Admin Configuration File</description>
+
+    <!-- Properties -->
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:messages.properties</value>
+                <value>file:/var/opennode2_home/conf/nos.properties</value>
+                <value>file:/var/opennode2_home/conf/naas.properties</value>
+                <value>file:/var/opennode2_home/conf/jdbc.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- control the display of the "Manage User Requests" sidebar in the Security tab -->
+    <bean id="showManageUserRequests" class="java.lang.Boolean">
+        <constructor-arg type="java.lang.String" value="${manage.user.requests}" />
+    </bean>
+
+    <!-- Imports -->
+    <import resource="remote.xml" />
+    <import resource="ajax.xml" />
+    <import resource="config-section.xml" />
+    <import resource="security-section.xml" />
+    <import resource="flow-section.xml" />
+    <import resource="schedule-section.xml" />
+
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename">
+            <value>messages</value>
+        </property>
+    </bean>
+
+    <!-- View -->
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView">
+        </property>
+        <property name="prefix" value="/WEB-INF/jsp/"></property>
+        <property name="suffix" value=".jsp"></property>
+    </bean>
+
+
+    <bean id="exceptionResolver" class="com.windsor.node.admin.util.AdminExceptionResolver">
+        <property name="exceptionMappings">
+            <props>
+                <!-- route all unhandled Exceptions to error.jsp  -->
+                <prop key="java.lang.Exception">
+                    error
+                </prop>
+            </props>
+        </property>
+    </bean>
+
+
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize">
+            <value>1000000</value>
+        </property>
+    </bean>
+
+    <!-- Jsp -->
+    <bean name="/auth.htm" class="com.windsor.node.admin.AuthController">
+        <property name="accountService" ref="accountService" />
+        <property name="validator">
+            <bean class="com.windsor.node.admin.valid.AdminCredentialValidator" />
+        </property>
+        <property name="formView" value="auth" />
+        <property name="successView" value="dashboard.htm" />
+        <!--  <property name="headerIpKey" value="X-Forward-For" />  -->
+    </bean>
+
+    <bean name="/profile.htm" class="com.windsor.node.admin.ProfileController">
+        <property name="accountService" ref="accountService" />
+        <property name="flowService" ref="flowService" />
+        <property name="notificationService" ref="notificationService" />
+    </bean>
+
+
+    <bean name="/activity.htm" class="com.windsor.node.admin.ActivitySearchController">
+        <property name="activityService" ref="activityService" />
+        <property name="accountService" ref="accountService" />
+        <property name="flowService" ref="flowService" />
+        <property name="formView" value="activity-search" />
+        <property name="resultView" value="activity-search-results" />
+    </bean>
+
+    <bean name="/data.htm" class="com.windsor.node.admin.DataQueryController">
+        <property name="activityService" ref="activityService" />
+    </bean>
+
+    <bean name="/tran.htm" class="com.windsor.node.admin.NodeTransactionController">
+        <property name="transactionService" ref="transactionService" />
+    </bean>
+
+    <bean name="/doc.htm" class="com.windsor.node.admin.DocController">
+        <property name="transactionService" ref="transactionService" />
+    </bean>
+
+    <!-- These need to be updated to latest feeds, no other configuration is necessary. -->
+    <bean name="/dashboard.htm" class="com.windsor.node.admin.DashboardController">
+        <property name="activityService" ref="activityService" />
+        <property name="feedReaders">
+            <map>
+                <entry key="nodeNews">
+                    <bean class="com.windsor.node.admin.rss.RemoteRssFeedReader">
+                        <property name="uri" value="${node.news.url}" />
+                        <property name="maxItems" value="${node.news.max.items}" />
+                    </bean>
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+    <bean name="/exit.htm" class="com.windsor.node.admin.ExitController">
+    </bean>
+
+    <!-- this mapping is to validate the exceptionResolver defined above -->
+    <!-- un-comment only when building with "make.test.jar" or "make.test.deploy" -->
+    <!-- <bean name="/_errorTest.htm"
+       class="com.windsor.node.admin.ExceptionMapperTestController" >
+    </bean> -->
+
+</beans>
