@@ -1,0 +1,22 @@
+# service skeleton, interfaces, resources, -t apparently ignored
+# mkdir Service
+# cd Service
+wsdl2java.sh -p com.windsor.node.ws2.service -s -ss -sd -u -ssi -S src -R resources -uri node_v20.wsdl
+
+# client & interfaces in client dir, -R apparently ignored
+# mkdir Client
+# cd Client
+wsdl2java.sh -p com.windsor.node.ws2.client -s -t -u -ssi -S src -uri node_v20.wsdl
+
+
+# Create Eclipse workspace w/current dir as root
+
+# create Service Java project
+## set ./build/classes as output folder to harmonize with Axis-generated build.xml
+## add Axis & JUnit libraries to build path
+
+# create Client Java project
+## set ./build/classes as output folder to harmonize with Axis-generated build.xml
+## add Service project, Axis (user lib) & JUnit (Eclipse builtin lib)libraries to build path
+
+# copy generated build.xml into each project root
