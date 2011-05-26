@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema targetNamespace="http://www.exchangenetwork.net/schema/CAFO/1_0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:cafo="http://www.exchangenetwork.net/schema/CAFO/1_0" elementFormDefault="qualified" attributeFormDefault="unqualified">
-	<xsd:include schemaLocation="CAFO_CAFO_v1.0.xsd"/>
-</xsd:schema>
