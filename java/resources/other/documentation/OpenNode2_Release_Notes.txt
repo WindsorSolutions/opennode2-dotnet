@@ -20,6 +20,9 @@ contain XML comments with the most common Maven commands needed to use them.
 The configuration for the Java Node is now greatly simplified, if upgrading please
 refer to the Install Guide for details.
 
+Additionally the Node Admin application can now test endpoints and database connections
+as they are added.
+
 ================================================================================
 OpenNode2 v1.24 for Java - Release Notes                             2010-03-21
 ================================================================================

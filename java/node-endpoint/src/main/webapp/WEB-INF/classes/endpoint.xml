@@ -55,7 +55,7 @@
         <constructor-arg value="${request.ip.header.name}" />
     </bean>
     <bean id="nodePingReadyMessage" class="java.lang.String">
-        <constructor-arg value="OpenNode2 Java v${node.version}" />
+        <constructor-arg value="Ready" />
     </bean>
 
 </beans>
