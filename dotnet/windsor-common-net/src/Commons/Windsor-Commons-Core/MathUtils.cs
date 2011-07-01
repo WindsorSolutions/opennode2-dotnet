@@ -67,6 +67,10 @@ namespace Windsor.Commons.Core
         {
             return ((value >= min) && (value <= max));
         }
+        public static bool IsBetween(decimal value, decimal min, decimal max)
+        {
+            return ((value >= min) && (value <= max));
+        }
         public static bool IsBetween(float value, float min, float max)
         {
             return ((value >= min) && (value <= max));
@@ -93,7 +97,11 @@ namespace Windsor.Commons.Core
         }
         public static float PinToMinMax(float value, float min, float max)
         {
-            return Math.Max(Math.Min(value, max), min);
+            return (value > max) ? max : (value < min) ? min : value;
+        }
+        public static double PinToMinMax(double value, double min, double max)
+        {
+            return (value > max) ? max : (value < min) ? min : value;
         }
         public static bool GetMinMax(IList<double> list, int startIndex, int length,
                                      out double min, out double max)

@@ -546,6 +546,14 @@ namespace Windsor.Commons.Core
             }
             list.Add(obj);
         }
+        public static void AddRange<T>(IEnumerable<T> collection, ref List<T> list)
+        {
+            if (list == null)
+            {
+                list = new List<T>();
+            }
+            list.AddRange(collection);
+        }
         public static T[] Add<T>(T obj, T[] list)
         {
             T[] rtnArray = new T[CollectionUtils.Count(list) + 1];

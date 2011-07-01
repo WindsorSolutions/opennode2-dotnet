@@ -43,7 +43,7 @@ namespace Windsor.Commons.Core
 {
     /// <summary>
     /// Same as a generic Dictionary, except that iterating over keys/values/elements returns
-    /// them in the order they were added to the Dictionary, instead of an undefined order.
+    /// them in the sortable order defined by TValue, instead of an undefined order.
     /// </summary>
 
     [Serializable]

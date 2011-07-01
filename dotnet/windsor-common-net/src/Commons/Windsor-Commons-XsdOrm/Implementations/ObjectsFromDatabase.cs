@@ -235,6 +235,12 @@ namespace Windsor.Commons.XsdOrm.Implementations
                                                                              reader.FieldCount.ToString(), i.ToString(),
                                                                              objectPath, objectPathInstance.SelectSql));
                         }
+                        if (pk == null)
+                        {
+                            // Object does not have a primary key, auto generate one here.  This use case is only valid when
+                            // loading a single table of objects
+                            pk = StringUtils.CreateSequentialGuid();
+                        }
                         if (fk == null)
                         {
                             // Object does not have fk, so set fk to pk

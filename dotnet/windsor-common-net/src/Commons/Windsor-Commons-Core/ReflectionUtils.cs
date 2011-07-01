@@ -288,6 +288,11 @@ namespace Windsor.Commons.Core
             }
             throw new ArgumentException("memberInfo must be either a PropertyInfo or FieldInfo instance");
         }
+        public static Type GetFieldOrPropertyValueTypeByName<T>(string memberName)
+        {
+            MemberInfo memberInfo = GetInstanceMember<T>(memberName);
+            return GetFieldOrPropertyValueType(memberInfo);
+        }
         public static Type GetFieldOrPropertyValueType(MemberInfo memberInfo)
         {
             PropertyInfo propertyInfo = (memberInfo as PropertyInfo);
@@ -304,30 +309,38 @@ namespace Windsor.Commons.Core
         }
         public static T GetFieldOrPropertyValue<T>(object obj, MemberInfo memberInfo)
         {
+            return (T)GetFieldOrPropertyValueObject(obj, memberInfo);
+        }
+        public static object GetFieldOrPropertyValueObject(object obj, MemberInfo memberInfo)
+        {
             PropertyInfo propertyInfo = (memberInfo as PropertyInfo);
             if (propertyInfo != null)
             {
-                return (T)propertyInfo.GetValue(obj, null);
+                return propertyInfo.GetValue(obj, null);
             }
             FieldInfo fieldInfo = (memberInfo as FieldInfo);
             if (fieldInfo != null)
             {
-                return (T)fieldInfo.GetValue(obj);
+                return fieldInfo.GetValue(obj);
             }
             throw new ArgumentException("memberInfo must be either a PropertyInfo or FieldInfo instance");
         }
         public static T GetFieldOrPropertyValueByName<T>(object obj, string memberName)
         {
+            return (T)GetFieldOrPropertyValueObjectByName(obj, memberName);
+        }
+        public static object GetFieldOrPropertyValueObjectByName(object obj, string memberName)
+        {
             Type objectType = obj.GetType();
             PropertyInfo propertyInfo = objectType.GetProperty(memberName);
             if (propertyInfo != null)
             {
-                return (T)propertyInfo.GetValue(obj, null);
+                return propertyInfo.GetValue(obj, null);
             }
             FieldInfo fieldInfo = objectType.GetField(memberName);
             if (fieldInfo != null)
             {
-                return (T)fieldInfo.GetValue(obj);
+                return fieldInfo.GetValue(obj);
             }
             throw new ArgumentException(string.Format("The object {0} does not contain a property or field with the name {1}",
                                                       objectType.FullName, memberName));

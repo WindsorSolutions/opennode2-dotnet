@@ -52,15 +52,28 @@ namespace Windsor.Commons.XsdOrm.Implementations
 {
     public class ObjectsToDatabase : ObjectsDatabaseBase, IObjectsToDatabase
     {
+
+        //        ALTER TABLE table_name 
+        //ADD CONSTRAINT  constraint_name 
+        //UNIQUE  (column [ ASC | DESC ] [ ,...n ] )
+
+
         private const int CREATE_DATABASE_WAIT_SECONDS = 20;
+        private const string SQL_SERVER_NOT_EXISTS_PK_FORMAT_STRING =
+            "IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE CONSTRAINT_TYPE = 'PRIMARY KEY' AND TABLE_NAME = '{0}') {1}";
         private const string SQL_SERVER_NOT_EXISTS_FK_FORMAT_STRING =
-            "IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[{0}]') AND parent_object_id = OBJECT_ID(N'[{1}]')) {2}";
+            "IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE CONSTRAINT_TYPE = 'FOREIGN KEY' AND CONSTRAINT_NAME = '{0}' AND TABLE_NAME = '{1}') {2}";
+        private const string SQL_SERVER_NOT_EXISTS_INDEX_FORMAT_STRING =
+            "IF NOT EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'[{1}]') AND name = N'{0}') {2}";
+
+        private const string ORA_SERVER_NOT_EXISTS_PK_FORMAT_STRING =
+            "DECLARE l_exists INTEGER; " +
+            "BEGIN SELECT COUNT(*) INTO l_exists FROM USER_CONSTRAINTS WHERE CONSTRAINT_TYPE = 'P' AND TABLE_NAME = '{0}' AND ROWNUM = 1 ; " +
+            "IF l_exists = 0 THEN EXECUTE IMMEDIATE '{1}' ; END IF ; END ;";
         private const string ORA_SERVER_NOT_EXISTS_FK_FORMAT_STRING =
             "DECLARE l_exists INTEGER; " +
             "BEGIN SELECT COUNT(*) INTO l_exists FROM USER_CONSTRAINTS WHERE TABLE_NAME = '{1}' AND CONSTRAINT_NAME = '{0}' AND ROWNUM = 1 ; " +
             "IF l_exists = 0 THEN EXECUTE IMMEDIATE '{2}' ; END IF ; END ;";
-        private const string SQL_SERVER_NOT_EXISTS_INDEX_FORMAT_STRING =
-            "IF NOT EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'[{1}]') AND name = N'{0}') {2}";
         private const string ORA_SERVER_NOT_EXISTS_INDEX_FORMAT_STRING =
             "DECLARE l_exists INTEGER; " +
             "BEGIN SELECT COUNT(*) INTO l_exists FROM USER_INDEXES WHERE TABLE_NAME = '{1}' AND INDEX_NAME = '{0}' AND ROWNUM = 1 ; " +
@@ -127,6 +140,12 @@ namespace Windsor.Commons.XsdOrm.Implementations
 
             return mappingContext.GetPrimaryKeyNameForType(objectType);
         }
+        public object GetPrimaryKeyValueForObject(object obj)
+        {
+            MappingContext mappingContext = MappingContext.GetMappingContext(obj.GetType());
+
+            return mappingContext.GetPrimaryKeyValueForObject(obj);
+        }
         public virtual int DeleteAllFromDatabase(Type objectType)
         {
             return DeleteAllFromDatabase(objectType, CheckBaseDao());
@@ -169,13 +188,12 @@ namespace Windsor.Commons.XsdOrm.Implementations
             });
             return insertRowCounts;
         }
-        public virtual Dictionary<string, int> SaveToDatabase<T>(IEnumerable<T> objectsToSave, 
-                                                                 bool deleteExistingBeforeSave)
+        public virtual Dictionary<string, int> SaveToDatabase<T>(IEnumerable<T> objectsToSave, bool deleteAllBeforeSave)
         {
-            return SaveToDatabase(objectsToSave, CheckBaseDao(), deleteExistingBeforeSave);
+            return SaveToDatabase<T>(objectsToSave, CheckBaseDao(), deleteAllBeforeSave);
         }
         public virtual Dictionary<string, int> SaveToDatabase<T>(IEnumerable<T> objectsToSave, SpringBaseDao baseDao,
-                                                                 bool deleteExistingBeforeSave)
+                                                                 bool deleteAllBeforeSave)
         {
             Type objectToSaveType = typeof(T);
             MappingContext mappingContext = MappingContext.GetMappingContext(objectToSaveType);
@@ -188,24 +206,36 @@ namespace Windsor.Commons.XsdOrm.Implementations
             {
                 baseDao.AdoTemplate.ClassicAdoTemplate.Execute(delegate(IDbCommand command)
                 {
-                    if (deleteExistingBeforeSave)
+                    if (deleteAllBeforeSave)
                     {
                         DeleteAllFromDatabase(objectToSaveType, baseDao);
                     }
                     CollectionUtils.ForEach(objectsToSave, delegate(T objectToSave)
                     {
-                        IBeforeSaveToDatabase beforeSaveToDatabase = objectToSave as IBeforeSaveToDatabase;
-                        if (beforeSaveToDatabase != null)
+                        bool doSave = true;
+                        ICanSaveToDatabase checkToSaveToDatabase = objectToSave as ICanSaveToDatabase;
+                        if (checkToSaveToDatabase != null)
                         {
-                            beforeSaveToDatabase.BeforeSaveToDatabase();
+                            if (!checkToSaveToDatabase.CanSaveToDatabase(this, baseDao))
+                            {
+                                doSave = false;
+                            }
                         }
+                        if (doSave)
+                        {
+                            IBeforeSaveToDatabase beforeSaveToDatabase = objectToSave as IBeforeSaveToDatabase;
+                            if (beforeSaveToDatabase != null)
+                            {
+                                beforeSaveToDatabase.BeforeSaveToDatabase();
+                            }
 
-                        string objectPath = objectToSaveType.FullName;
+                            string objectPath = objectToSaveType.FullName;
 
-                        Dictionary<string, object> previousInsertColumnValues = new Dictionary<string, object>();
-                        SaveToDatabase(objectToSave, objectPath, mappingContext,
-                                       previousInsertColumnValues, insertRowCounts,
-                                       command);
+                            Dictionary<string, object> previousInsertColumnValues = new Dictionary<string, object>();
+                            SaveToDatabase(objectToSave, objectPath, mappingContext,
+                                           previousInsertColumnValues, insertRowCounts,
+                                           command);
+                        }
                     });
                     return null;
                 });
@@ -213,7 +243,6 @@ namespace Windsor.Commons.XsdOrm.Implementations
             });
             return insertRowCounts;
         }
-
         protected virtual Dictionary<string, DataTable>
             GetCurrentDatabaseTableSchemas(Dictionary<string, Table> tables, SpringBaseDao baseDao)
         {
@@ -382,19 +411,33 @@ namespace Windsor.Commons.XsdOrm.Implementations
                     }
                 }
             }
+            string pkFormat = baseDao.IsOracleDatabase ? ORA_SERVER_NOT_EXISTS_PK_FORMAT_STRING : SQL_SERVER_NOT_EXISTS_PK_FORMAT_STRING;
             string fkFormat = baseDao.IsOracleDatabase ? ORA_SERVER_NOT_EXISTS_FK_FORMAT_STRING : SQL_SERVER_NOT_EXISTS_FK_FORMAT_STRING;
             string idxFormat = baseDao.IsOracleDatabase ? ORA_SERVER_NOT_EXISTS_INDEX_FORMAT_STRING : SQL_SERVER_NOT_EXISTS_INDEX_FORMAT_STRING;
+            CollectionUtils.ForEach(mappingContext.AdditionalCreatePrimaryKeyAttributes,
+                delegate(AdditionalCreatePrimaryKeyAttribute pkAttribute)
+                {
+                    string pkName = string.Format("PK_{0}", Utils.RemoveTableNamePrefix(pkAttribute.ParentTable, mappingContext.DefaultTableNamePrefix));
+                    pkName = Utils.ShortenDatabaseName(pkName, Utils.MAX_CONSTRAINT_NAME_CHARS, mappingContext.ShortenNamesByRemovingVowelsFirst,
+                                                       mappingContext.FixShortenNameBreakBug, null);
+                    pkName = CheckDatabaseNameDoesNotExist(pkName, indexNames);
+                    string cmd = string.Format("ALTER TABLE {0} ADD CONSTRAINT {1} PRIMARY KEY ({2})",
+                                               pkAttribute.ParentTable, pkName, pkAttribute.ColumnName);
+                    cmd = string.Format(pkFormat, pkAttribute.ParentTable, cmd);
+                    postCommands.Add(cmd);
+                });
             CollectionUtils.ForEach(mappingContext.AdditionalCreateForeignKeyAttributes,
                 delegate(AdditionalCreateForeignKeyAttribute fkAttribute)
                 {
                     string fkName =
                         string.Format("FK_{0}_{1}", Utils.RemoveTableNamePrefix(fkAttribute.ParentTable, mappingContext.DefaultTableNamePrefix),
-                                                    Utils.RemoveTableNamePrefix(fkAttribute.ParentTable, mappingContext.DefaultTableNamePrefix));
+                                                    Utils.RemoveTableNamePrefix(fkAttribute.ReferencedTable, mappingContext.DefaultTableNamePrefix));
+                    string indexColumnName = StringUtils.RemoveAllWhitespace(fkAttribute.ColumnName.Replace(",", "_"));
                     string idxName =
                         string.Format("IX_{0}_{1}", Utils.RemoveTableNamePrefix(fkAttribute.ParentTable, mappingContext.DefaultTableNamePrefix),
-                                                    fkAttribute.ColumnName);
+                                                    indexColumnName);
 
-                    fkName = Utils.ShortenDatabaseName(fkName, 18, mappingContext.ShortenNamesByRemovingVowelsFirst,
+                    fkName = Utils.ShortenDatabaseName(fkName, Utils.MAX_CONSTRAINT_NAME_CHARS, mappingContext.ShortenNamesByRemovingVowelsFirst,
                                                        mappingContext.FixShortenNameBreakBug, null);
                     fkName = CheckDatabaseNameDoesNotExist(fkName, indexNames);
                     string cmd = string.Format("ALTER TABLE {0} ADD CONSTRAINT {1} FOREIGN KEY ({2}) REFERENCES {3}({4})",
@@ -402,17 +445,46 @@ namespace Windsor.Commons.XsdOrm.Implementations
                                                 fkAttribute.ReferencedTable, fkAttribute.ReferencedColumn);
                     if (fkAttribute.DeleteRule != DeleteRule.None)
                     {
-                        cmd += " ON DELETE CASCADE";
+                        cmd += (fkAttribute.DeleteRule == DeleteRule.Cascade) ? " ON DELETE CASCADE" : " ON DELETE SET NULL";
+                    }
+                    if (fkAttribute.UpdateRule != UpdateRule.None)
+                    {
+                        if (baseDao.IsSqlServerDatabase)
+                        {
+                            // UPDATE only supported on Sql Server
+                            cmd += (fkAttribute.UpdateRule == UpdateRule.Cascade) ? " ON UPDATE CASCADE" : " ON UPDATE SET NULL";
+                        }
                     }
                     cmd = string.Format(fkFormat, fkName, fkAttribute.ParentTable, cmd);
 
                     postCommands.Add(cmd);
-                    idxName = Utils.ShortenDatabaseName(idxName, 18, mappingContext.ShortenNamesByRemovingVowelsFirst,
+                    Table parentTable = mappingContext.Tables[fkAttribute.ParentTable];
+                    PrimaryKeyColumn pkColumn = CollectionUtils.FirstItem(parentTable.PrimaryKeys);
+                    if ((pkColumn == null) || (pkColumn.ColumnName != fkAttribute.ColumnName))
+                    {
+                        idxName = Utils.ShortenDatabaseName(idxName, Utils.MAX_INDEX_NAME_CHARS, mappingContext.ShortenNamesByRemovingVowelsFirst,
+                                                            mappingContext.FixShortenNameBreakBug, null);
+                        idxName = CheckDatabaseNameDoesNotExist(idxName, indexNames);
+                        cmd = string.Format("CREATE INDEX {0} ON {1}({2})", idxName, fkAttribute.ParentTable,
+                                            fkAttribute.ColumnName);
+                        cmd = string.Format(idxFormat, idxName, fkAttribute.ParentTable, cmd);
+                        postCommands.Add(cmd);
+                    }
+                });
+            CollectionUtils.ForEach(mappingContext.AdditionalCreateIndexAttributes,
+                delegate(AdditionalCreateIndexAttribute indexAttribute)
+                {
+                    string indexColumnName = StringUtils.RemoveAllWhitespace(indexAttribute.ColumnName.Replace(",", "_"));
+                    string idxName =
+                        string.Format("IX_{0}_{1}", Utils.RemoveTableNamePrefix(indexAttribute.ParentTable, mappingContext.DefaultTableNamePrefix),
+                                                    indexColumnName);
+                    idxName = Utils.ShortenDatabaseName(idxName, Utils.MAX_INDEX_NAME_CHARS, mappingContext.ShortenNamesByRemovingVowelsFirst,
                                                         mappingContext.FixShortenNameBreakBug, null);
                     idxName = CheckDatabaseNameDoesNotExist(idxName, indexNames);
-                    cmd = string.Format("CREATE INDEX {0} ON {1}({2})", idxName, fkAttribute.ParentTable,
-                                        fkAttribute.ColumnName);
-                    cmd = string.Format(idxFormat, idxName, fkAttribute.ParentTable, cmd);
+                    string cmd = string.Format("CREATE {0} INDEX {1} ON {2}({3})", indexAttribute.IsUnique ? "UNIQUE" : "",
+                                               idxName, indexAttribute.ParentTable,
+                                               indexAttribute.ColumnName);
+                    cmd = string.Format(idxFormat, idxName, indexAttribute.ParentTable, cmd);
                     postCommands.Add(cmd);
                 });
 
@@ -544,7 +616,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
             int count = 2;
             while (dbNames.Contains(dbName))
             {
-                dbName = dbName.Remove(dbName.Length - 2) + count.ToString("00");
+                dbName = dbName.Remove(dbName.Length - 3) + count.ToString("000");
                 ++count;
             }
             dbNames.Add(dbName);
@@ -580,7 +652,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
                                            foreignKeyColumn.ForeignTable.TableName, foreignKeyColumn.ForeignColumnName);
                 if (foreignKeyColumn.DeleteRule != DeleteRule.None)
                 {
-                    cmd += " ON DELETE CASCADE";
+                    cmd += (foreignKeyColumn.DeleteRule == DeleteRule.Cascade) ? " ON DELETE CASCADE" : " ON DELETE SET NULL";
                 }
 
                 postCommands.Add(cmd);

@@ -48,6 +48,13 @@ namespace Windsor.Commons.XsdOrm
         SetNull = 2,
         SetDefault = 3,
     }
+    public enum UpdateRule
+    {
+        None = 0,
+        Cascade = 1,
+        SetNull = 2,
+        SetDefault = 3,
+    }
     public abstract class MappingAttribute : Attribute
     {
         public MappingAttribute() { }
@@ -77,6 +84,16 @@ namespace Windsor.Commons.XsdOrm
             m_ReferencedTable = referencedTable;
             m_ReferencedColumn = referencedColumn;
             m_DeleteRule = deleteRule;
+        }
+        public AdditionalCreateForeignKeyAttribute(string parentTable, string columnName,
+                                                   string referencedTable, string referencedColumn,
+                                                   UpdateRule updateRule)
+        {
+            m_ParentTable = parentTable;
+            m_ColumnName = columnName;
+            m_ReferencedTable = referencedTable;
+            m_ReferencedColumn = referencedColumn;
+            m_UpdateRule = updateRule;
         }
         public override string GetShortDescription()
         {
@@ -126,6 +143,126 @@ namespace Windsor.Commons.XsdOrm
             get
             {
                 return m_DeleteRule;
+            }
+        }
+        private UpdateRule m_UpdateRule;
+
+        public UpdateRule UpdateRule
+        {
+            get
+            {
+                return m_UpdateRule;
+            }
+            set
+            {
+                m_UpdateRule = value;
+            }
+        }
+    }
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Assembly, AllowMultiple = true)]
+    public class AdditionalCreatePrimaryKeyAttribute : MappingAttribute
+    {
+        public AdditionalCreatePrimaryKeyAttribute(string parentTable, string columnName)
+        {
+            m_ParentTable = parentTable;
+            m_ColumnName = columnName;
+        }
+        public override string GetShortDescription()
+        {
+            return string.Format("{0}.{1}", m_ParentTable, m_ColumnName);
+        }
+        private string m_ParentTable;
+
+        public string ParentTable
+        {
+            get
+            {
+                return m_ParentTable;
+            }
+        }
+        private string m_ColumnName;
+
+        public string ColumnName
+        {
+            get
+            {
+                return m_ColumnName;
+            }
+        }
+    }
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Assembly, AllowMultiple = true)]
+    public class AdditionalCreateIndexAttribute : MappingAttribute
+    {
+        public AdditionalCreateIndexAttribute(string parentTable, string columnName)
+        {
+            m_ParentTable = parentTable;
+            m_ColumnName = columnName;
+        }
+        public AdditionalCreateIndexAttribute(string parentTable, string columnName, bool isUnique) :
+            this(parentTable, columnName)
+        {
+            m_IsUnique = isUnique;
+        }
+        public override string GetShortDescription()
+        {
+            return string.Format("{0}.{1} ({2})", m_ParentTable, m_ColumnName, m_IsUnique);
+        }
+        private string m_ParentTable;
+
+        public string ParentTable
+        {
+            get
+            {
+                return m_ParentTable;
+            }
+        }
+        private string m_ColumnName;
+
+        public string ColumnName
+        {
+            get
+            {
+                return m_ColumnName;
+            }
+        }
+        private bool m_IsUnique;
+
+        public bool IsUnique
+        {
+            get
+            {
+                return m_IsUnique;
+            }
+        }
+    }
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Assembly, AllowMultiple = true)]
+    public class AdditionalCreateUniqueConstraintAttribute : MappingAttribute
+    {
+        public AdditionalCreateUniqueConstraintAttribute(string parentTable, string columnName)
+        {
+            m_ParentTable = parentTable;
+            m_ColumnName = columnName;
+        }
+        public override string GetShortDescription()
+        {
+            return string.Format("{0}.{1}", m_ParentTable, m_ColumnName);
+        }
+        private string m_ParentTable;
+
+        public string ParentTable
+        {
+            get
+            {
+                return m_ParentTable;
+            }
+        }
+        private string m_ColumnName;
+
+        public string ColumnName
+        {
+            get
+            {
+                return m_ColumnName;
             }
         }
     }

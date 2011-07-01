@@ -171,6 +171,21 @@ namespace Windsor.Commons.XsdOrm.Implementations
                     m_AdditionalCreateForeignKeyAttributes.Add((AdditionalCreateForeignKeyAttribute)mappingAttribute);
                     continue;   // Ignore, already taken care of on root element only
                 }
+                if (mappingAttribute is AdditionalCreatePrimaryKeyAttribute)
+                {
+                    m_AdditionalCreatePrimaryKeyAttributes.Add((AdditionalCreatePrimaryKeyAttribute)mappingAttribute);
+                    continue;   // Ignore, already taken care of on root element only
+                }
+                if (mappingAttribute is AdditionalCreateIndexAttribute)
+                {
+                    m_AdditionalCreateIndexAttributes.Add((AdditionalCreateIndexAttribute)mappingAttribute);
+                    continue;   // Ignore, already taken care of on root element only
+                }
+                if (mappingAttribute is AdditionalCreateUniqueConstraintAttribute)
+                {
+                    m_AdditionalCreateUniqueContraintAttributes.Add((AdditionalCreateUniqueConstraintAttribute)mappingAttribute);
+                    continue;   // Ignore, already taken care of on root element only
+                }
                 CollectionUtils.Add(mappingAttribute, ref unrecognizedAttributes);
             }
             if (unrecognizedAttributes != null)
@@ -1032,7 +1047,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 }
                 if (CollectionUtils.IsNullOrEmpty(table.PrimaryKeys) || (table.PrimaryKeys.Count != 1))
                 {
-                    throw new MappingException("table.PrimaryKeys.Count is not equal to 1 for table: {0}", table.TableName);
+                    //throw new MappingException("table.PrimaryKeys.Count is not equal to 1 for table: {0}", table.TableName);
                 }
                 table.ValidateUniqueColumnNames();
                 foreach (Column column in table.Columns)
@@ -2122,6 +2137,20 @@ namespace Windsor.Commons.XsdOrm.Implementations
             Table table = GetTableForType(objectType);
             return table.TableName;
         }
+        public object GetPrimaryKeyValueForObject(object obj)
+        {
+            Table table = GetTableForType(obj.GetType());
+            if (CollectionUtils.IsNullOrEmpty(table.PrimaryKeys))
+            {
+                throw new MappingException("The object type does not have a primary key associated with its table.");
+            }
+            if (table.PrimaryKeys.Count > 1)
+            {
+                throw new MappingException("The object type has more than one primary key associated with its table.");
+            }
+            PrimaryKeyColumn pkColumn = CollectionUtils.FirstItem(table.PrimaryKeys);
+            return pkColumn.GetMemberValue<object>(obj);
+        }
         public string GetPrimaryKeyNameForType(Type objectType)
         {
             Table table = GetTableForType(objectType);
@@ -2163,7 +2192,33 @@ namespace Windsor.Commons.XsdOrm.Implementations
         private bool m_UseExactElementNameForColumnName;
         private bool m_UseExactElementNameForTableName;
         private List<AdditionalCreateForeignKeyAttribute> m_AdditionalCreateForeignKeyAttributes = new List<AdditionalCreateForeignKeyAttribute>();
+        private List<AdditionalCreatePrimaryKeyAttribute> m_AdditionalCreatePrimaryKeyAttributes = new List<AdditionalCreatePrimaryKeyAttribute>();
+        private List<AdditionalCreateIndexAttribute> m_AdditionalCreateIndexAttributes = new List<AdditionalCreateIndexAttribute>();
+        private List<AdditionalCreateUniqueConstraintAttribute> m_AdditionalCreateUniqueContraintAttributes = new List<AdditionalCreateUniqueConstraintAttribute>();
 
+        public List<AdditionalCreateUniqueConstraintAttribute> AdditionalCreateUniqueContraintAttributes
+        {
+            get
+            {
+                return m_AdditionalCreateUniqueContraintAttributes;
+            }
+        }
+
+        public List<AdditionalCreateIndexAttribute> AdditionalCreateIndexAttributes
+        {
+            get
+            {
+                return m_AdditionalCreateIndexAttributes;
+            }
+        }
+
+        public List<AdditionalCreatePrimaryKeyAttribute> AdditionalCreatePrimaryKeyAttributes
+        {
+            get
+            {
+                return m_AdditionalCreatePrimaryKeyAttributes;
+            }
+        }
         public IList<AdditionalCreateForeignKeyAttribute> AdditionalCreateForeignKeyAttributes
         {
             get

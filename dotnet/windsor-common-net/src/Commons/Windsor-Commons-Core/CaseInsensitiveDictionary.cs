@@ -32,53 +32,35 @@ POSSIBILITY OF SUCH DAMAGE.
 #endregion
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Reflection;
-using Spring.Data.Common;
-using Windsor.Commons.Spring;
+using System.Runtime.InteropServices;
+using System.Runtime.Serialization;
 
-namespace Windsor.Commons.XsdOrm
+namespace Windsor.Commons.Core
 {
-    public interface IObjectsToDatabase
+    /// <summary>
+    /// Same as a generic Dictionary, except that iterating over keys/values/elements returns
+    /// them in the order they were added to the Dictionary, instead of an undefined order.
+    /// </summary>
+
+    [Serializable]
+    [DebuggerDisplay("Count = {Count}")]
+    public class CaseInsensitiveDictionary<TValue> : Dictionary<string, TValue>
     {
-        void BuildDatabase(Type objectToSaveType, SpringBaseDao baseDao);
-
-        void BuildDatabase(Type objectToSaveType);
-
-        void BuildDatabaseForAllBaseDataTypes(Type referenceType);
-
-        void BuildDatabaseForAllBaseDataTypes(Type referenceType, SpringBaseDao baseDao);
-
-        /// <summary>
-        /// Save the input object to the database.  Returns a list of table names and 
-        /// insert row counts for each table.
-        /// </summary>
-        Dictionary<string, int> SaveToDatabase(object objectToSave, SpringBaseDao baseDao);
-
-        Dictionary<string, int> SaveToDatabase(object objectToSave);
-
-        Dictionary<string, int> SaveToDatabase<T>(IEnumerable<T> objectsToSave, bool deleteAllBeforeSave);
-
-        Dictionary<string, int> SaveToDatabase<T>(IEnumerable<T> objectsToSave, SpringBaseDao baseDao,
-                                                  bool deleteAllBeforeSave);
-
-        int DeleteAllFromDatabase(Type objectType, SpringBaseDao baseDao);
-
-        int DeleteAllFromDatabase(Type objectType);
-
-        string GetTableNameForType(Type objectType);
-
-        string GetPrimaryKeyNameForType(Type objectType);
-
-        object GetPrimaryKeyValueForObject(object obj);
-    }
-
-    public interface IBeforeSaveToDatabase
-    {
-        void BeforeSaveToDatabase();
-    }
-    public interface ICanSaveToDatabase
-    {
-        bool CanSaveToDatabase(IObjectsToDatabase objectsToDatabase, SpringBaseDao baseDao);
+        public CaseInsensitiveDictionary()
+            : base(StringComparer.OrdinalIgnoreCase)
+        {
+        }
+        public CaseInsensitiveDictionary(IDictionary<string, TValue> dictionary)
+            : base(dictionary, StringComparer.OrdinalIgnoreCase)
+        {
+        }
+        public CaseInsensitiveDictionary(int capacity)
+            : base(capacity, StringComparer.OrdinalIgnoreCase)
+        {
+        }
     }
 }

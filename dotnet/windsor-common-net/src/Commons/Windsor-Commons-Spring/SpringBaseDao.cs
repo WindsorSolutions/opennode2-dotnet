@@ -114,6 +114,21 @@ namespace Windsor.Commons.Spring
             FieldNotInitializedException.ThrowIfNull(this, ref _adoDaoSupport);
             SQL_CONCAT_STRING = IsOracleDatabase ? "||" : "+";
         }
+        public Exception CheckConnection()
+        {
+            try
+            {
+                using (System.Data.IDbConnection connection = this.DbProvider.CreateConnection())
+                {
+                    connection.Open();
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                return e;
+            }
+        }
 
         #endregion
 
@@ -827,18 +842,20 @@ namespace Windsor.Commons.Spring
         {
             DoSimpleUpdate(tableName, semicolonSeparatedWhereColumns, null, whereValues, semicolonSeparatedColumnNames, 1, values);
         }
-        public void DoSimpleInsertOrUpdateOne(string tableName, string semicolonSeparatedWhereColumns,
-                                                 IList<object> whereValues, string semicolonSeparatedColumnNames,
-                                                 params object[] values)
+        public bool DoSimpleInsertOrUpdateOne(string tableName, string semicolonSeparatedWhereColumns,
+                                              IList<object> whereValues, string semicolonSeparatedColumnNames,
+                                              params object[] values)
         {
             try
             {
                 DoInsert(tableName, semicolonSeparatedColumnNames, values);
+                return true;
             }
             catch (DataIntegrityViolationException)
             {
                 DoSimpleUpdateOne(tableName, semicolonSeparatedWhereColumns, whereValues,
                                   semicolonSeparatedColumnNames, values);
+                return false;
             }
         }
         public int DoSimpleUpdateAny(string tableName, string semicolonSeparatedWhereColumns, IList<object> whereValues,
@@ -859,16 +876,18 @@ namespace Windsor.Commons.Spring
         {
             DoSimpleUpdate(tableName, whereColumn, whereValue, null, semicolonSeparatedColumnNames, 1, values);
         }
-        public void DoSimpleInsertOrUpdateOne(string tableName, string whereColumn, object whereValue,
-                                                 string semicolonSeparatedColumnNames, params object[] values)
+        public bool DoSimpleInsertOrUpdateOne(string tableName, string whereColumn, object whereValue,
+                                              string semicolonSeparatedColumnNames, params object[] values)
         {
             try
             {
                 DoInsert(tableName, semicolonSeparatedColumnNames, values);
+                return true;
             }
             catch (DataIntegrityViolationException)
             {
                 DoSimpleUpdateOne(tableName, whereColumn, whereValue, semicolonSeparatedColumnNames, values);
+                return false;
             }
         }
         public int DoSimpleUpdateAny(string tableName, string whereColumn, object whereValue,

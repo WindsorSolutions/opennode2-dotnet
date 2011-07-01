@@ -46,6 +46,11 @@ namespace Windsor.Commons.XsdOrm.Implementations
 {
     public static class Utils
     {
+        public const int MAX_COLUMN_NAME_CHARS = 30;
+        public const int MAX_TABLE_NAME_CHARS = 30;
+        public const int MAX_CONSTRAINT_NAME_CHARS = 30;
+        public const int MAX_INDEX_NAME_CHARS = 30;
+
         public static string ColumnPath(string tableName, string columnName)
         {
             return string.Format("{0}.{1}", tableName, columnName);
@@ -225,7 +230,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
             {
                 return ShortenDatabaseName("FK_" + RemoveTableNamePrefix(foreignKeyColumn.Table.TableName, defaultTableNamePrefix) +
                                            "_" + RemoveTableNamePrefix(foreignKeyColumn.ForeignTable.TableName, defaultTableNamePrefix),
-                                           18, shortenNamesByRemovingVowelsFirst, fixBreakBug, null);
+                                           MAX_CONSTRAINT_NAME_CHARS, shortenNamesByRemovingVowelsFirst, fixBreakBug, null);
             }
         }
         public static string GetPrimaryKeyConstraintName(PrimaryKeyColumn primaryKeyColumn, bool shortenNamesByRemovingVowelsFirst,
@@ -238,7 +243,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
             else
             {
                 return ShortenDatabaseName("PK_" + RemoveTableNamePrefix(primaryKeyColumn.Table.TableName, defaultTableNamePrefix),
-                                           18, shortenNamesByRemovingVowelsFirst, fixBreakBug, null);
+                                           MAX_CONSTRAINT_NAME_CHARS, shortenNamesByRemovingVowelsFirst, fixBreakBug, null);
             }
         }
         public static string GetIndexName(Column column, bool shortenNamesByRemovingVowelsFirst,
@@ -251,44 +256,8 @@ namespace Windsor.Commons.XsdOrm.Implementations
             else
             {
                 return ShortenDatabaseName("IX_" + RemoveTableNamePrefix(column.Table.TableName, defaultTableNamePrefix) +
-                                           "_" + column.ColumnName, 18, shortenNamesByRemovingVowelsFirst, fixBreakBug, null);
+                                           "_" + column.ColumnName, MAX_INDEX_NAME_CHARS, shortenNamesByRemovingVowelsFirst, fixBreakBug, null);
             }
-        }
-
-        private static string GetForeignKeyName(ForeignKeyColumn foreignKeyColumn, string prefix)
-        {
-            int MIN_SUBNAME_CHARS = (MAX_CONSTRAINT_NAME_CHARS - prefix.Length - 3) / 4;
-            string tableName = foreignKeyColumn.Table.TableName;
-            string columnName = foreignKeyColumn.ColumnName;
-            string foreignTableName = foreignKeyColumn.ForeignTable.TableName;
-            string foreignColumnName = foreignKeyColumn.ForeignColumnName;
-            int charsLeft = MAX_CONSTRAINT_NAME_CHARS - (6 + tableName.Length + columnName.Length +
-                                                         foreignTableName.Length + foreignColumnName.Length);
-            while (charsLeft > 0)
-            {
-                if (foreignColumnName.Length > MIN_SUBNAME_CHARS)
-                {
-                    foreignColumnName = foreignColumnName.Substring(0, foreignColumnName.Length - 1);
-                    if (--charsLeft == 0) break;
-                }
-                if (foreignTableName.Length > MIN_SUBNAME_CHARS)
-                {
-                    foreignTableName = foreignTableName.Substring(0, foreignTableName.Length - 1);
-                    if (--charsLeft == 0) break;
-                }
-                if (columnName.Length > MIN_SUBNAME_CHARS)
-                {
-                    columnName = columnName.Substring(0, columnName.Length - 1);
-                    if (--charsLeft == 0) break;
-                }
-                if (tableName.Length > MIN_SUBNAME_CHARS)
-                {
-                    tableName = tableName.Substring(0, tableName.Length - 1);
-                    if (--charsLeft == 0) break;
-                }
-            }
-            return string.Format("{0}{1}_{2}_{3}_{4}", prefix, tableName, columnName,
-                                 foreignTableName, foreignColumnName);
         }
         /// <summary>
         /// Return true if the input type can be assigned directly to a column value.
@@ -457,8 +426,5 @@ namespace Windsor.Commons.XsdOrm.Implementations
             members.AddRange(fields);
             return members;
         }
-        public const int MAX_COLUMN_NAME_CHARS = 30;
-        public const int MAX_TABLE_NAME_CHARS = 30;
-        public const int MAX_CONSTRAINT_NAME_CHARS = 30;
     }
 }

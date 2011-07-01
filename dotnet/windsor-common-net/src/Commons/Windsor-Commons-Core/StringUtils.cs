@@ -632,5 +632,39 @@ namespace Windsor.Commons.Core
             }
             return (hashCode);
         }
+        public static string RemoveAllWhitespace(string text)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                return text;
+            }
+            StringBuilder sb = null;
+            for (int i = text.Length - 1; i >= 0; --i)
+            {
+                if (char.IsWhiteSpace(text[i]))
+                {
+                    if (sb == null)
+                    {
+                        sb = new StringBuilder(text);
+                    }
+                    sb.Remove(i, 1);
+                }
+            }
+            return (sb == null) ? text : sb.ToString();
+        }
+        public static bool IsAny(char testChar, IEnumerable<char> testChars)
+        {
+            if (testChars != null)
+            {
+                foreach (char curTestChar in testChars)
+                {
+                    if (testChar == curTestChar)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
     }
 }
