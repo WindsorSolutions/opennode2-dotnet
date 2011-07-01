@@ -65,6 +65,70 @@ namespace Windsor.Commons.XsdOrm
         }
     }
 
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Assembly, AllowMultiple = true)]
+    public class AdditionalCreateForeignKeyAttribute : MappingAttribute
+    {
+        public AdditionalCreateForeignKeyAttribute(string parentTable, string columnName,
+                                                   string referencedTable, string referencedColumn,
+                                                   DeleteRule deleteRule)
+        {
+            m_ParentTable = parentTable;
+            m_ColumnName = columnName;
+            m_ReferencedTable = referencedTable;
+            m_ReferencedColumn = referencedColumn;
+            m_DeleteRule = deleteRule;
+        }
+        public override string GetShortDescription()
+        {
+            return string.Format("{0}.{1} references {2}.{3} {4}", m_ParentTable, m_ColumnName,
+                                 m_ReferencedTable, m_ReferencedColumn, m_DeleteRule.ToString());
+        }
+        private string m_ParentTable;
+
+        public string ParentTable
+        {
+            get
+            {
+                return m_ParentTable;
+            }
+        }
+        private string m_ColumnName;
+
+        public string ColumnName
+        {
+            get
+            {
+                return m_ColumnName;
+            }
+        }
+        private string m_ReferencedTable;
+
+        public string ReferencedTable
+        {
+            get
+            {
+                return m_ReferencedTable;
+            }
+        }
+        private string m_ReferencedColumn;
+
+        public string ReferencedColumn
+        {
+            get
+            {
+                return m_ReferencedColumn;
+            }
+        }
+        private DeleteRule m_DeleteRule;
+
+        public DeleteRule DeleteRule
+        {
+            get
+            {
+                return m_DeleteRule;
+            }
+        }
+    }
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Assembly)]
     public class AbbreviationsAttribute : MappingAttribute
     {
@@ -354,31 +418,31 @@ namespace Windsor.Commons.XsdOrm
         public const bool NotNull = false;
 
         public ColumnAttribute() :
-            this(null, null, 0, true)
+            this(null, 0, true)
         {
         }
         public ColumnAttribute(bool isNullable) :
-            this(null, null, 0, isNullable)
+            this(null, 0, isNullable)
         {
         }
         public ColumnAttribute(string columnName) :
-            this(columnName, null, 0, true)
+            this(columnName, 0, true)
         {
         }
         public ColumnAttribute(int columnSize) :
-            this(null, null, columnSize, true)
+            this(null, columnSize, true)
         {
         }
         public ColumnAttribute(int columnSize, bool isNullable) :
-            this(null, null, columnSize, isNullable)
+            this(null, columnSize, isNullable)
         {
         }
         public ColumnAttribute(string columnName, int columnSize) :
-            this(columnName, null, columnSize, true)
+            this(columnName, columnSize, true)
         {
         }
         public ColumnAttribute(string columnName, bool isNullable) :
-            this(columnName, null, 0, isNullable)
+            this(columnName, 0, isNullable)
         {
         }
         public ColumnAttribute(DbType columnType) :
@@ -401,7 +465,14 @@ namespace Windsor.Commons.XsdOrm
             this(null, columnType, 0, isNullable)
         {
         }
-        public ColumnAttribute(string columnName, DbType? columnType, int columnSize,
+        public ColumnAttribute(string columnName, int columnSize, bool isNullable)
+        {
+            m_ColumnName = columnName;
+            m_ColumnType = null;
+            m_ColumnSize = columnSize;
+            m_IsNullable = isNullable;
+        }
+        public ColumnAttribute(string columnName, DbType columnType, int columnSize,
                                bool isNullable)
         {
             m_ColumnName = columnName;
@@ -477,6 +548,9 @@ namespace Windsor.Commons.XsdOrm
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
     public abstract class PrimaryKeyAttribute : ColumnAttribute
     {
+        internal PrimaryKeyAttribute()
+        {
+        }
         public PrimaryKeyAttribute(string columnName, DbType columnType, int columnSize) :
             base(columnName, columnType, columnSize, false)
         {
@@ -531,6 +605,10 @@ namespace Windsor.Commons.XsdOrm
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
     public class UserPrimaryKeyAttribute : PrimaryKeyAttribute
     {
+        internal UserPrimaryKeyAttribute()
+        {
+            m_IsNullable = false;
+        }
         public UserPrimaryKeyAttribute(DbType columnType, int columnSize) :
             base(null, columnType, columnSize)
         {
@@ -549,7 +627,7 @@ namespace Windsor.Commons.XsdOrm
     public class ForeignKeyAttribute : ColumnAttribute
     {
         public ForeignKeyAttribute() :
-            base(null, null, 0, false)
+            base(null, 0, false)
         {
         }
         public ForeignKeyAttribute(string columnName, DbType columnType, int columnSize,
@@ -859,6 +937,33 @@ namespace Windsor.Commons.XsdOrm
         private string m_ChildForeignKeyColumnName;
     }
 
+    /// <summary>
+    /// Used to specify the order that children are inserted into the database
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
+    public class DatabaseInsertOrderAttribute : MappingAttribute
+    {
+        public DatabaseInsertOrderAttribute(int insertOrder)
+        {
+            m_InsertOrder = insertOrder;
+        }
+        public override string GetShortDescription()
+        {
+            return string.Format("{0}: InsertOrder = {1}", m_InsertOrder.ToString());
+        }
+        public int InsertOrder
+        {
+            get
+            {
+                return m_InsertOrder;
+            }
+            set
+            {
+                m_InsertOrder = value;
+            }
+        }
+        private int m_InsertOrder;
+    }
     /// <summary>
     /// One-to-many mapping relationship.  The property or field MUST implement
     /// ICollection (or subclass).  If a parentColumnName is not specified, this

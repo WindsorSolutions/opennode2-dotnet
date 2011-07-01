@@ -92,6 +92,20 @@ namespace Windsor.Commons.Core
         {
             _list = new List<KeyValuePair<TKey, TValue>>(dictionary.Count);
         }
+        public int IndexOfKey(TKey key)
+        {
+            int index = 0;
+            foreach (KeyValuePair<TKey, TValue> pair in _list)
+            {
+                if (object.Equals(pair.Key, key))
+                {
+                    return index;
+                }
+                ++index;
+            }
+
+            return -1;
+        }
         public new TValue this[TKey key]
         {
             get
@@ -123,6 +137,13 @@ namespace Windsor.Commons.Core
             base.Add(key, value);
             KeyValuePair<TKey, TValue> pair = new KeyValuePair<TKey, TValue>(key, value);
             _list.Add(pair);
+        }
+        public void AddRange(IEnumerable<KeyValuePair<TKey, TValue>> collection)
+        {
+            CollectionUtils.ForEach(collection, delegate(KeyValuePair<TKey, TValue> pair)
+            {
+                Add(pair.Key, pair.Value);
+            });
         }
         public void Insert(int index, TKey key, TValue value)
         {

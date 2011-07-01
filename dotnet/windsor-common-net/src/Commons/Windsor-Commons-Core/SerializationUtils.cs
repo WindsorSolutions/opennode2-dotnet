@@ -428,14 +428,43 @@ namespace Windsor.Commons.Core
         }
         public string ToLiteXml(object obj)
         {
+            return ToLiteXml(obj, false);
+        }
+        public string ToLiteXmlWithLineBreaks(object obj)
+        {
+            return ToLiteXml(obj, true);
+        }
+        public string ToLiteXml(object obj, bool includeLineBreaks)
+        {
             using (StringWriter stringWriter = new StringWriter())
             {
+                _omitXmlDeclarationWriterSettings.Indent = includeLineBreaks;
                 using (XmlWriter xmlWriter = XmlWriter.Create(stringWriter, _omitXmlDeclarationWriterSettings))
                 {
                     XmlSerializer serializer = new XmlSerializer(obj.GetType());
                     serializer.Serialize(xmlWriter, obj, _unqualifiedNamespace);
                     string xmlText = stringWriter.ToString();
                     return xmlText;
+                }
+            }
+        }
+        public void ToLiteXml(object obj, string targetPath)
+        {
+            ToLiteXml(obj, targetPath, false);
+        }
+        public void ToLiteXmlWithLineBreaks(object obj, string targetPath)
+        {
+            ToLiteXml(obj, targetPath, true);
+        }
+        public void ToLiteXml(object obj, string targetPath, bool includeLineBreaks)
+        {
+            using (StringWriter stringWriter = new StringWriter())
+            {
+                _omitXmlDeclarationWriterSettings.Indent = includeLineBreaks;
+                using (XmlWriter xmlWriter = XmlWriter.Create(targetPath, _omitXmlDeclarationWriterSettings))
+                {
+                    XmlSerializer serializer = new XmlSerializer(obj.GetType());
+                    serializer.Serialize(xmlWriter, obj, _unqualifiedNamespace);
                 }
             }
         }

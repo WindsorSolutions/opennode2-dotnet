@@ -44,6 +44,7 @@ using Windsor.Commons.XsdOrm;
 using Windsor.Commons.Core;
 using Windsor.Commons.Spring;
 using Spring.Data;
+using Spring.Transaction;
 using Spring.Data.Support;
 using Spring.Dao;
 
@@ -51,6 +52,20 @@ namespace Windsor.Commons.XsdOrm.Implementations
 {
     public class ObjectsToDatabase : ObjectsDatabaseBase, IObjectsToDatabase
     {
+        private const int CREATE_DATABASE_WAIT_SECONDS = 20;
+        private const string SQL_SERVER_NOT_EXISTS_FK_FORMAT_STRING =
+            "IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[{0}]') AND parent_object_id = OBJECT_ID(N'[{1}]')) {2}";
+        private const string ORA_SERVER_NOT_EXISTS_FK_FORMAT_STRING =
+            "DECLARE l_exists INTEGER; " +
+            "BEGIN SELECT COUNT(*) INTO l_exists FROM USER_CONSTRAINTS WHERE TABLE_NAME = '{1}' AND CONSTRAINT_NAME = '{0}' AND ROWNUM = 1 ; " +
+            "IF l_exists = 0 THEN EXECUTE IMMEDIATE '{2}' ; END IF ; END ;";
+        private const string SQL_SERVER_NOT_EXISTS_INDEX_FORMAT_STRING =
+            "IF NOT EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'[{1}]') AND name = N'{0}') {2}";
+        private const string ORA_SERVER_NOT_EXISTS_INDEX_FORMAT_STRING =
+            "DECLARE l_exists INTEGER; " +
+            "BEGIN SELECT COUNT(*) INTO l_exists FROM USER_INDEXES WHERE TABLE_NAME = '{1}' AND INDEX_NAME = '{0}' AND ROWNUM = 1 ; " +
+            "IF l_exists = 0 THEN EXECUTE IMMEDIATE '{2}' ; END IF ; END ;";
+
         public ObjectsToDatabase()
         {
         }
@@ -94,9 +109,11 @@ namespace Windsor.Commons.XsdOrm.Implementations
         {
             MappingContext mappingContext = MappingContext.GetMappingContext(objectToSaveType);
 
-            Dictionary<string, DataTable> tableSchemas = BuildDatabase(mappingContext.Tables, baseDao);
+            bool createdDatabase;
+            Dictionary<string, DataTable> tableSchemas =
+                BuildDatabase(mappingContext.Tables, baseDao, out createdDatabase);
 
-            BuildTables(tableSchemas, mappingContext, baseDao);
+            BuildTables(tableSchemas, mappingContext, baseDao, createdDatabase);
         }
         public string GetTableNameForType(Type objectType)
         {
@@ -152,6 +169,50 @@ namespace Windsor.Commons.XsdOrm.Implementations
             });
             return insertRowCounts;
         }
+        public virtual Dictionary<string, int> SaveToDatabase<T>(IEnumerable<T> objectsToSave, 
+                                                                 bool deleteExistingBeforeSave)
+        {
+            return SaveToDatabase(objectsToSave, CheckBaseDao(), deleteExistingBeforeSave);
+        }
+        public virtual Dictionary<string, int> SaveToDatabase<T>(IEnumerable<T> objectsToSave, SpringBaseDao baseDao,
+                                                                 bool deleteExistingBeforeSave)
+        {
+            Type objectToSaveType = typeof(T);
+            MappingContext mappingContext = MappingContext.GetMappingContext(objectToSaveType);
+
+            BuildObjectSql(mappingContext.ObjectPaths, baseDao);
+
+            Dictionary<string, int> insertRowCounts = new Dictionary<string, int>();
+
+            baseDao.TransactionTemplate.Execute(delegate
+            {
+                baseDao.AdoTemplate.ClassicAdoTemplate.Execute(delegate(IDbCommand command)
+                {
+                    if (deleteExistingBeforeSave)
+                    {
+                        DeleteAllFromDatabase(objectToSaveType, baseDao);
+                    }
+                    CollectionUtils.ForEach(objectsToSave, delegate(T objectToSave)
+                    {
+                        IBeforeSaveToDatabase beforeSaveToDatabase = objectToSave as IBeforeSaveToDatabase;
+                        if (beforeSaveToDatabase != null)
+                        {
+                            beforeSaveToDatabase.BeforeSaveToDatabase();
+                        }
+
+                        string objectPath = objectToSaveType.FullName;
+
+                        Dictionary<string, object> previousInsertColumnValues = new Dictionary<string, object>();
+                        SaveToDatabase(objectToSave, objectPath, mappingContext,
+                                       previousInsertColumnValues, insertRowCounts,
+                                       command);
+                    });
+                    return null;
+                });
+                return null;
+            });
+            return insertRowCounts;
+        }
 
         protected virtual Dictionary<string, DataTable>
             GetCurrentDatabaseTableSchemas(Dictionary<string, Table> tables, SpringBaseDao baseDao)
@@ -179,8 +240,9 @@ namespace Windsor.Commons.XsdOrm.Implementations
             return rtnTables;
         }
         protected virtual Dictionary<string, DataTable> BuildDatabase(Dictionary<string, Table> tables,
-                                                                      SpringBaseDao baseDao)
+                                                                      SpringBaseDao baseDao, out bool createdDatabase)
         {
+            createdDatabase = false;
             ConnectionTxPair connectionTxPairToUse = null;
             try
             {
@@ -216,6 +278,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 connectionTxPairToUse = ConnectionUtils.GetConnectionTxPair(baseDao.DbProvider);
                 string sql = string.Format("CREATE DATABASE {0}", databaseName);
                 baseDao.AdoTemplate.ExecuteNonQuery(CommandType.Text, sql);
+                createdDatabase = true;
             }
             finally
             {
@@ -227,14 +290,14 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 baseDao.DbProvider.ConnectionString = saveConnectionString;
             }
             // Wait for database to be fully created
-            long timeoutTicks = DateTime.Now.Ticks + TimeSpan.FromSeconds(20).Ticks;
+            long timeoutTicks = DateTime.Now.Ticks + TimeSpan.FromSeconds(CREATE_DATABASE_WAIT_SECONDS).Ticks;
             do
             {
                 try
                 {
                     return GetCurrentDatabaseTableSchemas(tables, baseDao);
                 }
-                catch (CannotGetAdoConnectionException)
+                catch (DataAccessException)
                 {
                 }
                 Thread.Sleep(300);
@@ -267,14 +330,14 @@ namespace Windsor.Commons.XsdOrm.Implementations
         }
         protected virtual void BuildTables(Dictionary<string, DataTable> existingTableSchemas,
                                            MappingContext mappingContext,
-                                           SpringBaseDao baseDao)
+                                           SpringBaseDao baseDao, bool createdDatabase)
         {
             Dictionary<string, Table> tables = mappingContext.Tables;
             if (CollectionUtils.IsNullOrEmpty(tables))
             {
                 return;
             }
-            string commandSeparator = baseDao.IsOracleDatabase ? ";" : ";";
+            string commandSeparator = "!!!";
             List<Column> descriptionColumns = new List<Column>();
             StringBuilder sqlString = new StringBuilder();
             List<string> postCommands = new List<string>();
@@ -319,30 +382,93 @@ namespace Windsor.Commons.XsdOrm.Implementations
                     }
                 }
             }
+            string fkFormat = baseDao.IsOracleDatabase ? ORA_SERVER_NOT_EXISTS_FK_FORMAT_STRING : SQL_SERVER_NOT_EXISTS_FK_FORMAT_STRING;
+            string idxFormat = baseDao.IsOracleDatabase ? ORA_SERVER_NOT_EXISTS_INDEX_FORMAT_STRING : SQL_SERVER_NOT_EXISTS_INDEX_FORMAT_STRING;
+            CollectionUtils.ForEach(mappingContext.AdditionalCreateForeignKeyAttributes,
+                delegate(AdditionalCreateForeignKeyAttribute fkAttribute)
+                {
+                    string fkName =
+                        string.Format("FK_{0}_{1}", Utils.RemoveTableNamePrefix(fkAttribute.ParentTable, mappingContext.DefaultTableNamePrefix),
+                                                    Utils.RemoveTableNamePrefix(fkAttribute.ParentTable, mappingContext.DefaultTableNamePrefix));
+                    string idxName =
+                        string.Format("IX_{0}_{1}", Utils.RemoveTableNamePrefix(fkAttribute.ParentTable, mappingContext.DefaultTableNamePrefix),
+                                                    fkAttribute.ColumnName);
+
+                    fkName = Utils.ShortenDatabaseName(fkName, 18, mappingContext.ShortenNamesByRemovingVowelsFirst,
+                                                       mappingContext.FixShortenNameBreakBug, null);
+                    fkName = CheckDatabaseNameDoesNotExist(fkName, indexNames);
+                    string cmd = string.Format("ALTER TABLE {0} ADD CONSTRAINT {1} FOREIGN KEY ({2}) REFERENCES {3}({4})",
+                                                fkAttribute.ParentTable, fkName, fkAttribute.ColumnName,
+                                                fkAttribute.ReferencedTable, fkAttribute.ReferencedColumn);
+                    if (fkAttribute.DeleteRule != DeleteRule.None)
+                    {
+                        cmd += " ON DELETE CASCADE";
+                    }
+                    cmd = string.Format(fkFormat, fkName, fkAttribute.ParentTable, cmd);
+
+                    postCommands.Add(cmd);
+                    idxName = Utils.ShortenDatabaseName(idxName, 18, mappingContext.ShortenNamesByRemovingVowelsFirst,
+                                                        mappingContext.FixShortenNameBreakBug, null);
+                    idxName = CheckDatabaseNameDoesNotExist(idxName, indexNames);
+                    cmd = string.Format("CREATE INDEX {0} ON {1}({2})", idxName, fkAttribute.ParentTable,
+                                        fkAttribute.ColumnName);
+                    cmd = string.Format(idxFormat, idxName, fkAttribute.ParentTable, cmd);
+                    postCommands.Add(cmd);
+                });
+
             if (postCommands.Count > 0)
             {
                 sqlString.Append(StringUtils.Join(string.Format(" {0} ", commandSeparator), postCommands));
             }
-
             if (sqlString.Length > 0)
             {
                 string[] commands = sqlString.ToString().Split(new string[] { commandSeparator }, StringSplitOptions.RemoveEmptyEntries);
-                baseDao.TransactionTemplate.Execute(delegate
+                long timeoutTicks = DateTime.Now.Ticks + TimeSpan.FromSeconds(CREATE_DATABASE_WAIT_SECONDS).Ticks;
+                bool isFirstCommand = true;
+                // Database still may not be ready to create tables if we just created the database, 
+                // so give it some time
+                for (; ; )
                 {
-                    baseDao.AdoTemplate.ClassicAdoTemplate.Execute(delegate(IDbCommand dbCommand)
+                    try
                     {
-                        dbCommand.CommandType = CommandType.Text;
-                        foreach (string command in commands)
+                        baseDao.TransactionTemplate.Execute(delegate
                         {
-                            dbCommand.CommandText = command;
-                            dbCommand.ExecuteNonQuery();
+                            baseDao.AdoTemplate.ClassicAdoTemplate.Execute(delegate(IDbCommand dbCommand)
+                            {
+                                dbCommand.CommandType = CommandType.Text;
+                                foreach (string command in commands)
+                                {
+                                    dbCommand.CommandText = command;
+                                    dbCommand.ExecuteNonQuery();
+                                    if (isFirstCommand)
+                                    {
+                                        isFirstCommand = false;
+                                    }
+                                }
+                                return null;
+                            });
+                            AddTableDescriptions(descriptionTables, baseDao);
+                            AddColumnDescriptions(descriptionColumns, mappingContext, baseDao);
+                            return null;
+                        });
+                        break;
+                    }
+                    catch (DataAccessException)
+                    {
+                        if (!isFirstCommand || (timeoutTicks < DateTime.Now.Ticks))
+                        {
+                            throw;
                         }
-                        return null;
-                    });
-                    AddTableDescriptions(descriptionTables, baseDao);
-                    AddColumnDescriptions(descriptionColumns, mappingContext, baseDao);
-                    return null;
-                });
+                    }
+                    catch (TransactionException)
+                    {
+                        if (!isFirstCommand || (timeoutTicks < DateTime.Now.Ticks))
+                        {
+                            throw;
+                        }
+                    }
+                    Thread.Sleep(300);
+                }
             }
         }
         protected virtual void AddTableDescriptions(IEnumerable<Table> tables, SpringBaseDao baseDao)

@@ -57,6 +57,12 @@ namespace Windsor.Commons.XsdOrm
 
         Dictionary<string, int> SaveToDatabase(object objectToSave);
 
+        Dictionary<string, int> SaveToDatabase<T>(IEnumerable<T> objectsToSave, bool deleteExistingBeforeSave);
+
+        Dictionary<string, int> SaveToDatabase<T>(IEnumerable<T> objectsToSave, SpringBaseDao baseDao,
+                                                  bool deleteExistingBeforeSave);
+
+
         int DeleteAllFromDatabase(Type objectType, SpringBaseDao baseDao);
 
         int DeleteAllFromDatabase(Type objectType);

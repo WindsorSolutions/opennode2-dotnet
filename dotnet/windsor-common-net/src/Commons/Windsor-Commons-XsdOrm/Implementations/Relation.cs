@@ -97,6 +97,17 @@ namespace Windsor.Commons.XsdOrm.Implementations
             get { return m_MemberValueType; }
             set { m_MemberValueType = value; }
         }
+        public int DatabaseInsertOrder
+        {
+            get
+            {
+                return m_DatabaseInsertOrder;
+            }
+            set
+            {
+                m_DatabaseInsertOrder = value;
+            }
+        }
         private Table m_ParentTable;
         private Table m_ChildTable;
         private string m_ParentColumnName;
@@ -104,6 +115,8 @@ namespace Windsor.Commons.XsdOrm.Implementations
         private Type m_MemberValueType;
         private ForeignKeyColumn m_ChildForeignKeyColumn;
         private Column m_ParentColumn;
+        private int m_DatabaseInsertOrder = InvalidDatabaseInsertOrder;
+        public const int InvalidDatabaseInsertOrder = int.MaxValue;
     }
 
     public class OneToManyRelation : Relation

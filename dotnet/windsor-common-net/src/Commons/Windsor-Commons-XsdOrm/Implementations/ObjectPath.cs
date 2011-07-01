@@ -102,6 +102,29 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 m_Relations.Add(relation.MemberInfoPath, relation);
             }
         }
+        public void OrderRelationsByInsertOrder()
+        {
+            bool needToSort = false;
+            CollectionUtils.ForEachBreak(m_Relations.Values, delegate(Relation relation)
+            {
+                if (relation.DatabaseInsertOrder != Relation.InvalidDatabaseInsertOrder)
+                {
+                    needToSort = true;
+                    return false;
+                }
+                return true;
+            });
+            if (needToSort)
+            {
+                List<KeyValuePair<string, Relation>> sortList = new List<KeyValuePair<string, Relation>>(m_Relations);
+                sortList.Sort(delegate(KeyValuePair<string, Relation> relation1, KeyValuePair<string, Relation> relation2)
+                {
+                    return relation1.Value.DatabaseInsertOrder - relation2.Value.DatabaseInsertOrder;
+                });
+                m_Relations.Clear();
+                m_Relations.AddRange(sortList);
+            }
+        }
         public override string ToString()
         {
             return ReflectionUtils.GetPublicPropertiesString(this);
@@ -110,6 +133,6 @@ namespace Windsor.Commons.XsdOrm.Implementations
         private string m_InsertSql;
         private string m_SelectSql;
         private ObjectTableInfo m_TableInfo = null;
-        private Dictionary<string, Relation> m_Relations = new Dictionary<string, Relation>();
+        private LinkedDictionary<string, Relation> m_Relations = new LinkedDictionary<string, Relation>();
     }
 }

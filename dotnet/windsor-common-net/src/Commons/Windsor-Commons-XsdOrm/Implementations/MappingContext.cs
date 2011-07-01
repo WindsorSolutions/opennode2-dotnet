@@ -166,6 +166,11 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 {
                     continue;   // Ignore, already taken care of on root element only
                 }
+                if (mappingAttribute is AdditionalCreateForeignKeyAttribute)
+                {
+                    m_AdditionalCreateForeignKeyAttributes.Add((AdditionalCreateForeignKeyAttribute)mappingAttribute);
+                    continue;   // Ignore, already taken care of on root element only
+                }
                 CollectionUtils.Add(mappingAttribute, ref unrecognizedAttributes);
             }
             if (unrecognizedAttributes != null)
@@ -185,11 +190,6 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 throw new MappingException("The class \"{0}\" has a TableAttribute applied to it (\"{1}\") that exceeds the maximum table name length of {2} characters",
                                            objType.FullName, classTableAttribute.TableName,
                                            Utils.MAX_TABLE_NAME_CHARS);
-            }
-            if (StringUtils.ContainsLowercaseChars(classTableAttribute.TableName))
-            {
-                throw new MappingException("The class \"{0}\" has a TableAttribute applied to it (\"{1}\") that contains lowercase characters.  Table names cannot contain lowercase characters.",
-                                           objType.FullName, classTableAttribute.TableName);
             }
 
             List<MemberInfo> members = Utils.GetPublicMembersForType(objType);
@@ -268,6 +268,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 Column newColumn = null;
                 Relation newRelation = null;
                 SameTableElementInfo newSameTableElementInfo = null;
+                DatabaseInsertOrderAttribute databaseInsertOrderAttribute = null;
                 foreach (MappingAttribute mappingAttribute in attributes)
                 {
                     ColumnAttribute columnAttribute = mappingAttribute as ColumnAttribute;
@@ -697,6 +698,12 @@ namespace Windsor.Commons.XsdOrm.Implementations
                         dbNotNullAttribute = notNullAttribute;
                         continue;
                     }
+                    DatabaseInsertOrderAttribute insertOrderAttribute = mappingAttribute as DatabaseInsertOrderAttribute;
+                    if (insertOrderAttribute != null)
+                    {
+                        databaseInsertOrderAttribute = insertOrderAttribute;
+                        continue;
+                    }
                     DbMaxColumnSizeAttribute maxColumnSizeAttribute = mappingAttribute as DbMaxColumnSizeAttribute;
                     if (maxColumnSizeAttribute != null)
                     {
@@ -750,6 +757,13 @@ namespace Windsor.Commons.XsdOrm.Implementations
                         {
                             newColumn.IsNullable = false;
                         }
+                    }
+                }
+                if (databaseInsertOrderAttribute != null)
+                {
+                    if (newRelation != null)
+                    {
+                        newRelation.DatabaseInsertOrder = databaseInsertOrderAttribute.InsertOrder;
                     }
                 }
                 if (dbMaxColumnSizeAttribute != null)
@@ -1296,6 +1310,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
                                                    relation.ToString());
                     }
                 }
+                objectPath.OrderRelationsByInsertOrder();
             }
             return objectPaths;
         }
@@ -2028,9 +2043,11 @@ namespace Windsor.Commons.XsdOrm.Implementations
                     }
                 }
             }
-            else if (appliedAttribute.MappedAttributeType == typeof(ColumnAttribute))
+            else if ((appliedAttribute.MappedAttributeType == typeof(ColumnAttribute)) ||
+                     (appliedAttribute.MappedAttributeType == typeof(UserPrimaryKeyAttribute)))
             {
-                ColumnAttribute columnAttribute = new ColumnAttribute();
+                ColumnAttribute columnAttribute = (appliedAttribute.MappedAttributeType == typeof(ColumnAttribute)) ?
+                    new ColumnAttribute() : new UserPrimaryKeyAttribute();
                 mappingAttribute = columnAttribute;
                 if (!CollectionUtils.IsNullOrEmpty(appliedAttribute.Args))
                 {
@@ -2067,6 +2084,19 @@ namespace Windsor.Commons.XsdOrm.Implementations
                         }
                     }
                 }
+            }
+            else if (appliedAttribute.MappedAttributeType == typeof(DatabaseInsertOrderAttribute))
+            {
+                if ((CollectionUtils.Count(appliedAttribute.Args) != 1) || (appliedAttribute.Args[0] == null))
+                {
+                    throw new ArgumentException("Missing DatabaseInsertOrderAttribute insert order integer argument");
+                }
+                int order;
+                if (!int.TryParse(appliedAttribute.Args[0].ToString(), out order))
+                {
+                    throw new ArgumentException("Invalid DatabaseInsertOrderAttribute insert order integer argument");
+                }
+                mappingAttribute = new DatabaseInsertOrderAttribute(order);
             }
             else if (appliedAttribute.MappedAttributeType == typeof(OneToOneAttribute))
             {
@@ -2132,6 +2162,15 @@ namespace Windsor.Commons.XsdOrm.Implementations
         private bool m_UseTableNameForDefaultPrimaryKeys;
         private bool m_UseExactElementNameForColumnName;
         private bool m_UseExactElementNameForTableName;
+        private List<AdditionalCreateForeignKeyAttribute> m_AdditionalCreateForeignKeyAttributes = new List<AdditionalCreateForeignKeyAttribute>();
+
+        public IList<AdditionalCreateForeignKeyAttribute> AdditionalCreateForeignKeyAttributes
+        {
+            get
+            {
+                return m_AdditionalCreateForeignKeyAttributes;
+            }
+        }
 
         public bool UseExactElementNameForTableName
         {

@@ -231,7 +231,19 @@ namespace Windsor.Node2008.WNOSPlugin.AQSWS
             XmlDocument doc = ProcessServiceRequest(request);
 
             string path = _settingsProvider.NewTempFilePath(".xml");
-            doc.Save(path);
+
+            DebugAndAudit("Loading and saving content");
+
+            using (StringWriter sw = new StringWriter())
+            {
+                using (XmlTextWriter xw = new XmlTextWriter(sw))
+                {
+                    doc.WriteTo(xw);
+                    UTF8Encoding encoding = new UTF8Encoding(false, true);
+                    byte[] content = encoding.GetBytes(sw.ToString());
+                    File.WriteAllBytes(path, content);
+                }
+            }
 
             DebugAndAudit("Compressing file...");
             string compressedFilePath = _compressionHelper.CompressFile(path);

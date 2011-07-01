@@ -242,11 +242,17 @@ namespace Windsor.Commons.XsdOrm.Implementations
     {
         public PrimaryKeyColumn(Table table, MemberInfo member, string memberPath,
                                 PrimaryKeyAttribute columnAttribute) :
-            base(table, member, memberPath, null, columnAttribute) { }
+            base(table, member, memberPath, null, columnAttribute)
+        {
+            m_IsNullable = false;
+        }
         // Virtual column member:
         public PrimaryKeyColumn(Table table, string memberPath, Type memberType,
                                 ColumnAttribute columnAttribute) :
-            base(table, memberPath, memberType, columnAttribute) { }
+            base(table, memberPath, memberType, columnAttribute)
+        {
+            m_IsNullable = false;
+        }
 
         public override bool IsPrimaryKey
         {
