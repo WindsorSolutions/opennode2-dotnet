@@ -250,7 +250,7 @@ namespace Windsor.Commons.Spring
         /// <param name="parValues">Array of parameter values corresponding to the SQL params</param>
         /// <example>SELCT * FROM table WHERE column = ?</example>
         /// <returns>Parsed SQL</returns>
-        public string LoadGenericParameters(string sql, out ICollection<IDataParameter> pars, params object[] parValues)
+        public string LoadGenericParametersFromList(string sql, out ICollection<IDataParameter> pars, IList<object> parValues)
         {
             IDbParameters parameters;
             string rtnVal = LoadGenericParametersFromValueList(sql, out parameters, parValues);
@@ -269,6 +269,18 @@ namespace Windsor.Commons.Spring
                 pars = null;
             }
             return rtnVal;
+        }
+        /// <summary>
+        /// Parses standard JDBC SQL and populates with all the provider specific params and loads them with values
+        /// </summary>
+        /// <param name="sql">JDBC-compatable SQL</param>
+        /// <param name="pars">Collection of IDataParameter created in this method</param>
+        /// <param name="parValues">Array of parameter values corresponding to the SQL params</param>
+        /// <example>SELCT * FROM table WHERE column = ?</example>
+        /// <returns>Parsed SQL</returns>
+        public string LoadGenericParameters(string sql, out ICollection<IDataParameter> pars, params object[] parValues)
+        {
+            return LoadGenericParametersFromList(sql, out pars, parValues);
         }
         public string LoadGenericParameters(string sql, out IDbParameters pars, params object[] parValues)
         {
