@@ -360,7 +360,7 @@ SET ANSI_PADDING ON
 GO
 CREATE TABLE [NService](
 	[Id] [varchar](50) NOT NULL,
-	[Name] [varchar](50) NOT NULL,
+	[Name] [varchar](255) NOT NULL,
 	[FlowId] [varchar](50) NOT NULL,
 	[IsActive] [char](1) NOT NULL,
 	[ServiceType] [varchar](128) NOT NULL,
