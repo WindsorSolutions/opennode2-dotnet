@@ -63,4 +63,17 @@ namespace Windsor.Commons.Core
         {
         }
     }
+    [Serializable]
+    [DebuggerDisplay("Count = {Count}")]
+    public class CaseInsensitiveSortedDictionary<TValue> : SortedDictionary<string, TValue>
+    {
+        public CaseInsensitiveSortedDictionary()
+            : base(StringComparer.OrdinalIgnoreCase)
+        {
+        }
+        public CaseInsensitiveSortedDictionary(IDictionary<string, TValue> dictionary)
+            : base(dictionary, StringComparer.OrdinalIgnoreCase)
+        {
+        }
+    }
 }
