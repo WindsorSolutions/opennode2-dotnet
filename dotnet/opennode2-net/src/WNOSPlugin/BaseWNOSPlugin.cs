@@ -283,6 +283,10 @@ namespace Windsor.Node2008.WNOSPlugin
         {
             return ValidateDBProvider(key, null);
         }
+        protected bool HasDBProvider(string key)
+        {
+            return DataProviders.ContainsKey(key);
+        }
         protected SpringBaseDao ValidateDBProvider(string key, Type dbProviderType)
         {
             IDbProvider dbProvider;
@@ -740,15 +744,40 @@ namespace Windsor.Node2008.WNOSPlugin
                                                           IDocumentManager documentManager,
                                                           string transactionId)
         {
-            string rtnPath = settingsProvider.NewTempFilePath(".xml");
+            return SaveStringAndAddToTransaction(xmlString, ".xml", settingsProvider, compressionHelper, documentManager, transactionId);
+        }
+        protected string SaveTxtStringAndAddToTransaction(string txtString, ISettingsProvider settingsProvider,
+                                                          ICompressionHelper compressionHelper,
+                                                          IDocumentManager documentManager,
+                                                          string transactionId)
+        {
+            return SaveStringAndAddToTransaction(txtString, ".txt", settingsProvider, compressionHelper, documentManager, transactionId);
+        }
+        protected string SaveStringAndAddToTransaction(string xmlString, string fileName, ISettingsProvider settingsProvider,
+                                                       ICompressionHelper compressionHelper,
+                                                       IDocumentManager documentManager,
+                                                       string transactionId)
+        {
+            string fileExtension = Path.GetExtension(fileName);
+            string fileNamePart = Path.GetFileNameWithoutExtension(fileName);
+            string rtnPath;
+
+            if (string.IsNullOrEmpty(fileNamePart))
+            {
+                rtnPath = settingsProvider.NewTempFilePath(fileExtension);
+            }
+            else
+            {
+                rtnPath = Path.Combine(settingsProvider.CreateNewTempFolderPath(), fileName);
+            }
 
             try
             {
                 try
                 {
-                    using (StreamWriter objReader = new StreamWriter(rtnPath))
+                    using (StreamWriter strWriter = new StreamWriter(rtnPath))
                     {
-                        objReader.Write(xmlString);
+                        strWriter.Write(xmlString);
                     }
                 }
                 catch (Exception e)
@@ -796,6 +825,17 @@ namespace Windsor.Node2008.WNOSPlugin
 
             return rtnPath;
         }
+        protected object GetHeaderDocumentContent(Type objectType, string transactionId, string documentId,
+                                                  ISettingsProvider settingsProvider,
+                                                  ISerializationHelper serializationHelper,
+                                                  ICompressionHelper compressionHelper,
+                                                  IDocumentManager documentManager,
+                                                  out string operation)
+        {
+            Document document = documentManager.GetDocument(transactionId, documentId, true);
+            return GetHeaderDocumentContent(objectType, document, settingsProvider, serializationHelper,
+                                            compressionHelper, out operation);
+        }
         protected T GetHeaderDocumentContent<T>(string transactionId, string documentId,
                                                 ISettingsProvider settingsProvider,
                                                 ISerializationHelper serializationHelper,
@@ -803,15 +843,23 @@ namespace Windsor.Node2008.WNOSPlugin
                                                 IDocumentManager documentManager,
                                                 out string operation)
         {
-            Document document = documentManager.GetDocument(transactionId, documentId, true);
-            return GetHeaderDocumentContent<T>(document, settingsProvider, serializationHelper,
-                                               compressionHelper, out operation);
+            return (T) GetHeaderDocumentContent(typeof(T), transactionId, documentId, settingsProvider, serializationHelper,
+                                                compressionHelper, documentManager, out operation);
         }
         protected T GetHeaderDocumentContent<T>(Document document,
                                                 ISettingsProvider settingsProvider,
                                                 ISerializationHelper serializationHelper,
                                                 ICompressionHelper compressionHelper,
                                                 out string operation)
+        {
+            return (T) GetHeaderDocumentContent(typeof(T), document, settingsProvider, serializationHelper,
+                                                compressionHelper, out operation);
+        }
+        protected object GetHeaderDocumentContent(Type objectType, Document document,
+                                                  ISettingsProvider settingsProvider,
+                                                  ISerializationHelper serializationHelper,
+                                                  ICompressionHelper compressionHelper,
+                                                  out string operation)
         {
             string tempXmlFilePath = settingsProvider.NewTempFilePath();
             try
@@ -830,7 +878,7 @@ namespace Windsor.Node2008.WNOSPlugin
 
                 bool didLoadHeader = headerDocumentHelper.TryLoad(tempXmlFilePath);
                 operation = null;
-                T data;
+                object data;
                 if (didLoadHeader)
                 {
                     XmlElement xmlPayload = headerDocumentHelper.GetFirstPayload(out operation);
@@ -838,20 +886,36 @@ namespace Windsor.Node2008.WNOSPlugin
                     {
                         throw new ArgumentException("Submission document is missing a payload.");
                     }
-                    data = serializationHelper.Deserialize<T>(xmlPayload);
+                    data = serializationHelper.Deserialize(xmlPayload, objectType);
                 }
                 else
                 {
                     AppendAuditLogEvent("Submission document does not contain an exchange header, attempting to deserialize directly ...");
-                    data = serializationHelper.Deserialize<T>(tempXmlFilePath);
+                    data = serializationHelper.Deserialize(tempXmlFilePath, objectType);
                 }
 
+                if (document.DocumentName != document.Id)
+                {
+                    AppendAuditLogEvent("Successfully loaded document with name \"{0}\" and id \"{1}.\"", document.DocumentName, document.Id);
+                }
+                else
+                {
+                    AppendAuditLogEvent("Successfully loaded document with id \"{0}.\"", document.Id);
+                }
                 return data;
             }
             catch (Exception e)
             {
-                AppendAuditLogEvent("Failed to process document with id \"{0}.\"  EXCEPTION: {1}",
-                                    document.Id.ToString(), ExceptionUtils.ToShortString(e));
+                if (document.DocumentName != document.Id)
+                {
+                    AppendAuditLogEvent("Failed to load document with name \"{0}\" and id \"{1}.\"  EXCEPTION: {2}",
+                                        document.DocumentName, document.Id, ExceptionUtils.ToShortString(e));
+                }
+                else
+                {
+                    AppendAuditLogEvent("Failed to load document with id \"{0}.\"  EXCEPTION: {1}",
+                                        document.Id, ExceptionUtils.ToShortString(e));
+                }
                 throw;
             }
             finally
