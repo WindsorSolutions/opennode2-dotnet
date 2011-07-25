@@ -400,7 +400,7 @@ namespace Windsor.Commons.NodeClient
         {
             Query query = NewQueryObject(flow, request, arguments, startRow, pageSize);
             ResultSetType resultSet = _requestor.Query(query);
-            File.WriteAllBytes(targetPath, GetUncompressedBytes(resultSet.results));
+            File.WriteAllBytes(targetPath, GetRawBytes(resultSet.results));
             return GetContentType(resultSet.results.format);
         }
 
@@ -553,7 +553,7 @@ namespace Windsor.Commons.NodeClient
         {
             Execute execute = NewExecuteObject(interfaceName, methodName, arguments);
             ExecuteResponse response = _requestor.Execute(execute);
-            File.WriteAllBytes(targetPath, GetUncompressedBytes(response.results));
+            File.WriteAllBytes(targetPath, GetRawBytes(response.results));
             return response.transactionId.ToString();
         }
         #endregion
