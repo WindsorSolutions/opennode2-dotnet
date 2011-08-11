@@ -695,7 +695,7 @@ namespace Windsor.Node2008.Admin.Secure
             }
         }
 
-        protected string StartTimeBinder
+        protected DateTime StartTimeBinder
         {
             get
             {
@@ -707,19 +707,20 @@ namespace Windsor.Node2008.Admin.Secure
                         DataItem.StartOn =
                             new DateTime(startTime.Year, startTime.Month, startTime.Day,
                                          DataItem.StartOn.Hour, DataItem.StartOn.Minute, 0);
+                        return startTime;
                     }
                     catch (Exception)
                     {
                     }
                 }
-                return null;
+                return DateTime.MinValue;
             }
             set
             {
                 startDateCalendarExtender.SelectedDate = DataItem.StartOn;
             }
         }
-        protected string EndTimeBinder
+        protected DateTime EndTimeBinder
         {
             get
             {
@@ -731,19 +732,20 @@ namespace Windsor.Node2008.Admin.Secure
                         DataItem.EndOn =
                             new DateTime(endTime.Year, endTime.Month, endTime.Day,
                                          0, 0, 0);
+                        return endTime;
                     }
                     catch (Exception)
                     {
                     }
                 }
-                return null;
+                return DateTime.MinValue;
             }
             set
             {
                 endDateCalendarExtender.SelectedDate = DataItem.EndOn;
             }
         }
-        protected string RunTimeBinder
+        protected DateTime RunTimeBinder
         {
             get
             {
@@ -755,12 +757,13 @@ namespace Windsor.Node2008.Admin.Secure
                         DataItem.StartOn = 
                             new DateTime(DataItem.StartOn.Year, DataItem.StartOn.Month, DataItem.StartOn.Day,
                                          runTime.Hour, runTime.Minute, 0);
+                        return runTime;
                     }
                     catch (Exception)
                     {
                     }
                 }
-                return null;
+                return DateTime.MinValue;
             }
             set
             {
