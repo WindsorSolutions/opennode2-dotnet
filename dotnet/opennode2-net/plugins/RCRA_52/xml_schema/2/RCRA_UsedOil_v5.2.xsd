@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:RC="http://www.exchangenetwork.net/schema/RCRA/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/RCRA/5" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="5.2">
+	<xsd:include schemaLocation="./RCRA_Shared_v5.2.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name : 	RCRA_UsedOil_v5.2
+		Description : 	Information about Used oil codes.
+		Developed by : 	U.S. EPA
+	</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="UsedOil" type="RC:UsedOilDataType">
+		<xsd:annotation>
+			<xsd:documentation>Used Oil codes.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="UsedOilDataType">
+		<xsd:sequence>
+			<xsd:element ref="RC:FuelBurnerCode" minOccurs="0"/>
+			<xsd:element ref="RC:ProcessorCode" minOccurs="0"/>
+			<xsd:element ref="RC:RefinerCode" minOccurs="0"/>
+			<xsd:element ref="RC:MarketBurnerCode" minOccurs="0"/>
+			<xsd:element ref="RC:SpecificationMarketerCode" minOccurs="0"/>
+			<xsd:element ref="RC:TransferFacilityCode" minOccurs="0"/>
+			<xsd:element ref="RC:TransporterCode" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

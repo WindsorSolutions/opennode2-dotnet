@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:RC="http://www.exchangenetwork.net/schema/RCRA/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/RCRA/5" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="5.2">
+	<xsd:include schemaLocation="./RCRA_Shared_v5.2.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name : 	RCRA_LaboratoryHazarodousWaste_v5.2
+		Description : 	Data Group used to indicate whether or not the Handler is in CFR 262 SubPart K (Lab Rule).
+		Developed by : 	U.S. EPA
+	</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="LaboratoryHazardousWaste" type="RC:LaboratoryHazardousWasteDataType">
+		<xsd:annotation>
+			<xsd:documentation>Types of Laboratory Waste that the Handler has opted to manage under SubPart K</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="LaboratoryHazardousWasteDataType">
+		<xsd:annotation>
+			<xsd:documentation>Types of Laboratory Waste that the Handler has opted to manage under SubPart K.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="RC:CollegeIndicator"/>
+			<xsd:element ref="RC:HospitalIndicator"/>
+			<xsd:element ref="RC:NonProfitIndicator"/>
+			<xsd:element ref="RC:WithdrawalIndicator"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+</xsd:schema>

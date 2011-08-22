@@ -33,32 +33,47 @@ POSSIBILITY OF SUCH DAMAGE.
 
 using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Text;
+using System.Xml;
+using System.IO;
+using System.Data;
+using System.Data.Common;
+using System.Data.ProviderBase;
+using Windsor.Node2008.WNOSPlugin;
+using System.Diagnostics;
+using System.Reflection;
+using Windsor.Node2008.WNOSUtility;
+using Windsor.Node2008.WNOSDomain;
+using Windsor.Node2008.WNOSProviders;
+using Spring.Data.Common;
+using Spring.Transaction.Support;
+using Spring.Data.Core;
+using System.Runtime.InteropServices;
+using System.ComponentModel;
+using Windsor.Commons.Core;
+using Windsor.Commons.Logging;
+using Windsor.Commons.Spring;
+using Windsor.Commons.XsdOrm;
 
-namespace Windsor.Commons.AssemblyInfo
+namespace Windsor.Node2008.WNOSPlugin.RCRA_52
 {
-	/// <summary>
-	/// Include a reference to this assembly in your project, then use the 
-	/// constants defined in this file within the AssemblyInfo.cs file for your project.
-	/// </summary>
-    internal static class AssemblyInfo
-	{
-		// [assembly: AssemblyVersion(AssemblyInfoServer.cAssemblyVersion)]
-        public const string cAssemblyVersion = "1.0.1.315";
-		
-		// [assembly: AssemblyFileVersion(AssemblyInfoServer.cAssemblyFileVersion)]
-		public const string cAssemblyFileVersion = "1.0.1.315";
+    [Serializable]
+    public class ClearPendingRCRASubmissions : BaseRCRASubmissionPlugin
+    {
+        #region fields
+        #endregion
 
-		// [assembly: AssemblyCompany(AssemblyInfoServer.cAssemblyCompany)]
-		public const string cAssemblyCompany = "Windsor Solutions, Inc."; 
+        public ClearPendingRCRASubmissions()
+        {
+            _useSubmissionHistoryTable = true; // By default
+        }
 
-		// [assembly: AssemblyProduct(AssemblyInfoServer.cAssemblyProduct)]
-        public const string cAssemblyProduct = "Windsor Commons"; 
+        public override void ProcessTask(string requestId)
+        {
+            base.ProcessTask(requestId);
 
-		// [assembly: AssemblyCopyright(AssemblyInfoServer.cAssemblyCopyright)]
-        public const string cAssemblyCopyright = "© 2008-2011 Windsor Solutions. All Rights Reserved."; 
-		
-		// [assembly: AssemblyTrademark(AssemblyInfoServer.cAssemblyTrademark)]
-		public const string cAssemblyTrademark = "";
-	}
+            ClearAllPendingSubmissions(_baseDao);
+        }
+    }
 }
