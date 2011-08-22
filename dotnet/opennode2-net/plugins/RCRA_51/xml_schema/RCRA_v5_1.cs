@@ -1,4 +1,4 @@
-namespace Windsor.Node2008.WNOSPlugin.RCRA_51
+namespace Windsor.Node2008.WNOSPlugin.RCRA_52
 {
 
 

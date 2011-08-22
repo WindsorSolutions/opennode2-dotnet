@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using Windsor.Commons.XsdOrm;
 using Windsor.Commons.Core;
 
-namespace Windsor.Node2008.WNOSPlugin.RCRA_51
+namespace Windsor.Node2008.WNOSPlugin.RCRA_52
 {
     [DefaultTableNamePrefixAttribute("RCRA")]
     [DefaultStringDbValues(DbType.AnsiString, 255)]
