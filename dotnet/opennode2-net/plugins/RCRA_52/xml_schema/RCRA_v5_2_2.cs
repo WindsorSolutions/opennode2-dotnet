@@ -8,6 +8,11 @@ using Windsor.Commons.Core;
 
 namespace Windsor.Node2008.WNOSPlugin.RCRA_52
 {
+    internal static class RCRAHelper
+    {
+        public const string NAString = "N/A";
+    }
+
     [DefaultTableNamePrefixAttribute("RCRA")]
     [DefaultStringDbValues(DbType.AnsiString, 255)]
     [DefaultDecimalPrecision(14, 6)]
@@ -373,8 +378,25 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
     [AppliedAttribute(typeof(HazardousSecondaryMaterialActivityDataType), "FacilityTypeText", typeof(DbIgnoreAttribute))]
 
     [Table("RCRA_HD_SUBM")]
-    public partial class HazardousWasteHandlerSubmissionDataType : BaseDataType
+    public partial class HazardousWasteHandlerSubmissionDataType : BaseDataType, IBeforeSaveToDatabase
     {
+        public virtual void BeforeSaveToDatabase()
+        {
+            CollectionUtils.ForEach(FacilitySubmission, delegate(FacilitySubmissionDataType facility)
+            {
+                CollectionUtils.ForEach(facility.Handler, delegate(HandlerDataType handler)
+                {
+                    CollectionUtils.ForEach(handler.EnvironmentalPermit, delegate(EnvironmentalPermitDataType environmentalPermit)
+                    {
+                        if (string.IsNullOrEmpty(environmentalPermit.EnvironmentalPermitDescription))
+                        {
+                            environmentalPermit.EnvironmentalPermitDescription = RCRAHelper.NAString;
+                        }
+                    });
+                    
+                });
+            });
+        }
     }
 
     [Table("RCRA_HD_HBASIC")]
