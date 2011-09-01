@@ -108,6 +108,6 @@
   </Target>
   -->
   <PropertyGroup>
-    <PreBuildEvent>IF NOT $(ConfigurationName) == "NoSVNStamp" SubWCRev.exe "$(ProjectDir)\..\\..\\..\\" "$(ProjectDir)_AssemblyInfo.cs" "$(ProjectDir)AssemblyInfo.cs"</PreBuildEvent>
+    <PreBuildEvent>IF NOT "$(ConfigurationName)" == "NoSVNStamp" SubWCRev.exe "$(ProjectDir)\..\\..\\..\\" "$(ProjectDir)_AssemblyInfo.cs" "$(ProjectDir)AssemblyInfo.cs"</PreBuildEvent>
   </PropertyGroup>
 </Project>
