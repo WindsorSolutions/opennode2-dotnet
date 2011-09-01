@@ -53,6 +53,23 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'NoSVNStamp|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\NoSVNStamp\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\Windsor.Node2008.WNOSUtility.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="antlr.runtime, Version=2.7.6.2, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -145,7 +162,6 @@
   </Target>
   -->
   <PropertyGroup>
-    <PreBuildEvent>REM Stamp SVN revision # into assembly version #
-IF EXIST "$(ProjectDir).svn\entries" SubWCRev.exe "$(ProjectDir)\..\\..\\" "$(ProjectDir)\..\\AssemblyInfo\\_AssemblyInfo.cs" "$(ProjectDir)\..\\AssemblyInfo\\AssemblyInfo.cs"</PreBuildEvent>
+    <PreBuildEvent>IF NOT $(ConfigurationName) == "NoSVNStamp" SubWCRev.exe "$(ProjectDir)\..\\..\\" "$(ProjectDir)\..\\AssemblyInfo\\_AssemblyInfo.cs" "$(ProjectDir)\..\\AssemblyInfo\\AssemblyInfo.cs"</PreBuildEvent>
   </PropertyGroup>
 </Project>
