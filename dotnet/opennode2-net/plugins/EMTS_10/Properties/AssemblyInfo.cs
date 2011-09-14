@@ -68,5 +68,4 @@ using Windsor.Node2008.WNOSPlugin;
 // by using the '*' as shown below:
 [assembly: AssemblyVersion(AssemblyInfo.cAssemblyVersion)]
 [assembly: AssemblyFileVersion(AssemblyInfo.cAssemblyFileVersion)]
-[assembly: PluginPackageNameAttribute("EMTS 1.0")]
-[assembly: PluginSqlDdlFilePaths(@"EMTS\1.0\staging_schema_ddl\EMTS_1.0-SQL-DDL.sql,EMTS\1.0\staging_schema_ddl\EMTS_1.0-ORA-DDL.sql")]
+[assembly: PluginDefaultFlowAttribute("EMTS")]
