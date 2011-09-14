@@ -87,6 +87,25 @@ namespace Windsor.Node2008.WNOSProviders.Implementation
             string senderContact,
             string applicationUserIdentifier)
         {
+            Configure(authorName,
+                         organizationName,
+                         documentTitle,
+                         dataFlowName,
+                         dataServiceName,
+                         senderContact,
+                         null, null);
+        }
+
+        public void Configure(
+            string authorName,
+            string organizationName,
+            string documentTitle,
+            string dataFlowName,
+            string dataServiceName,
+            string senderContact,
+            string applicationUserIdentifier,
+            string keywords)
+        {
             _hd.id = _idProvider.Get();
 
             _hd.Header = new DocumentHeaderType();
@@ -98,6 +117,7 @@ namespace Windsor.Node2008.WNOSProviders.Implementation
             _hd.Header.DataServiceName = dataServiceName;
             _hd.Header.SenderContact = senderContact;
             _hd.Header.ApplicationUserIdentifier = applicationUserIdentifier;
+            _hd.Header.Keywords = keywords;
         }
 
 

@@ -15,6 +15,14 @@ namespace Windsor.Node2008.WNOSProviders
         void AddPayload(string operation, System.Xml.XmlElement payloadContent);
         void AddPropery(string key, string value);
         string GetHeaderPropery(string key);
+        void Configure(string authorName,
+            string organizationName,
+            string documentTitle,
+            string dataFlowName,
+            string dataServiceName,
+            string senderContact,
+            string applicationUserIdentifier,
+            string keywords);
         void Configure(string authorName, 
             string organizationName, 
             string documentTitle, 
