@@ -144,10 +144,14 @@ namespace Windsor.Node2008.WNOS.Logic
             _transactionDao.SetNetworkIdStatus(nodeTransaction.Id, status);
             return new TransactionStatus(nodeTransaction.NetworkId, status, null);
         }
-        public TransactionStatus RefreshNetworkStatus(string transactionID, AdminVisit visit)
+        public TransactionStatus RefreshNetworkStatus(string transactionID, NodeVisit visit)
         {
             ValidateByRole(visit, SystemRoleType.Program);
 
+            return RefreshNetworkStatus(transactionID);
+        }
+        public TransactionStatus RefreshNetworkStatus(string transactionID)
+        {
             NodeTransaction nodeTransaction;
             using (INodeEndpointClient client = GetNetworkTransactionNodeClient(transactionID,
                                                                                 out nodeTransaction))

@@ -166,5 +166,7 @@ namespace Windsor.Node2008.WNOSProviders
                                                                   out CommonTransactionStatusCode outEndpointStatus);
 
         IList<string> GetAllDocumentNames(string transactionId);
+
+        TransactionStatus RefreshNetworkStatus(string transactionID);
     }
 }
