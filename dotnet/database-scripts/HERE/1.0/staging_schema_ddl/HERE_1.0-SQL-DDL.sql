@@ -2900,9 +2900,6 @@ IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Load_
 DROP PROCEDURE [dbo].[Load_HERE_Manifest]
 GO
 
-USE [HERE_FLOW_FACID]
-GO
-
 /****** Object:  StoredProcedure [dbo].[Load_HERE_Manifest]    Script Date: 09/22/2011 18:42:21 ******/
 SET ANSI_NULLS ON
 GO
