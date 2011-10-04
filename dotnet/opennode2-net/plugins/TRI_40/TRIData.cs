@@ -72,7 +72,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI4
         private DbConnection _connection;
         private Database _db;
         private Dictionary<TRIDBTableType, DbCommand> _dbCommands;
-        private string _uniqueSubExceptionPatern = "IX_TRI_SUB";
+        private string _uniqueSubExceptionPatern = "unique constraint";
 
         #region IInitializingObject Members
 
@@ -417,9 +417,12 @@ namespace Windsor.Node2008.WNOSPlugin.TRI4
 
                             LOG.Error(ex.Message, ex);
 
-                            if (ex.Message.Contains(_uniqueSubExceptionPatern))
+                            if (ex.Message.IndexOf(_uniqueSubExceptionPatern, 0, StringComparison.OrdinalIgnoreCase) >= 0)
                             {
-                                throw new ApplicationException("Duplicate Submission Id (TRI_SUB_ID)!", ex);
+                                //TSM: Don't throw exception here, just exit the method, the data is already in the database
+                                //throw new ApplicationException("Duplicate Submission Id (TRI_SUB_ID)!", ex);
+                                LOG.Warn(string.Format("Duplicate Submission Id (TRI_SUB_ID) found in database, exiting Load() routine: {0}!", subIdentifier), ex);
+                                continue;
                             }
                             else
                             {

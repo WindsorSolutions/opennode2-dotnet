@@ -414,7 +414,7 @@ namespace Windsor.Node2008.WNOS.Data
         {
             List<ActivityEntry> entries = null;
             DoSimpleQueryWithRowCallbackDelegate(
-                DETAIL_TABLE_NAME, "ActivityId", activityId, "ModifiedOn;OrderIndex",
+                DETAIL_TABLE_NAME, "ActivityId = ", activityId, "ModifiedOn;OrderIndex",
                 MAP_ACTIVITY_DETAIL_COLUMNS,
                 delegate(IDataReader reader)
                 {
