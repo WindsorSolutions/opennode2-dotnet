@@ -196,6 +196,7 @@ public class JdbcTemplateHelper extends TemplateHelper {
      *            the String to convert
      * @return for Oracle, a String in dd-MMM-yy format; for all others, a
      *         String in yyyy-MM-dd format (i.e., XML Date)
+     * @deprecated use covertToDbDate(String dateString) instead
      */
     public String toDbDateString(String dateString) {
 
@@ -229,6 +230,54 @@ public class JdbcTemplateHelper extends TemplateHelper {
         String output = sdf.format(date);
         logger.debug("toDbDateString output: " + output);
 
+        return output;
+    }
+
+    /**
+     * Converts a String representation of a date into the database specific String representing the function
+     * that will convert the String value into an actual Date type in the query.  If the DB type is unknown the
+     * formatted String itself will be returned.  This method is mostly useful for the WQX plugin as its template
+     * was written differently, in the future we'll want to parse and return actual java.util.Date objects.
+     * @param dateString
+     * @return
+     */
+    public String covertToDbDate(String dateString)
+    {
+        logger.debug("covertToDbDate: " + dateString);
+        Date date;
+        try
+        {
+            date = makeSqlDate(dateString);
+        }
+        catch(ParseException pe)
+        {
+            throw new IllegalArgumentException("Not a recognized date format, root exception: " + pe);
+        }
+
+        SimpleDateFormat sdf = new SimpleDateFormat(XML_DATE_FORMAT);
+        String output = sdf.format(date);
+        if(getDbType().equals(DbType.Oracle))
+        {
+            output = " to_date('" + output + "', 'YYYY-MM-DD') ";
+        }
+        else if(getDbType().equals(DbType.MSSQL))
+        {
+            output = " CONVERT(DATETIME,'" + output + " 00:00:00 AM',20) ";
+        }
+        else if(getDbType().equals(DbType.MySQL))
+        {
+            output = " STR_TO_DATE('" + output + "', '%Y-%m-%d') ";
+        }
+        else if(getDbType().equals(DbType.DB2))
+        {
+            output = " TO_DATE('" + output + "', 'YYYY-MM-DD') ";
+        }
+        else
+        {
+            //there's really nothing to do if the DB type is unknown, compare to a VARCHAR and hope for the best
+            output = " '" + output + "'";
+        }
+        logger.debug("covertToDbDate output: " + output);
         return output;
     }
 
