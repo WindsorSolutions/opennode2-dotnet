@@ -77,6 +77,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
         protected const string CONFIG_RCRA_INFO_STATE_CODE = "RCRAInfoStateCode";
         protected const string CONFIG_NAAS_USER_MAPPING_FILE_PATH = "NAAS User Mapping File Path";
         protected const string CONFIG_SUBMISSION_PARTNER_NAME = "Submission Partner Name";
+        protected const string CONFIG_VALIDATE_XML = "Validate Xml (True or False)";
         protected const string RCRA_FLOW_NAME = "RCRA";
 
         protected const string PARAM_NAAS_SUBMIT_USERNAME = "SubmitUsername";
@@ -109,8 +110,10 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
         protected string _rcraInfoUserId;
         protected string _rcraInfoStateCode;
         protected string _submitUsername;
+        protected bool _validateXml;
         protected PartnerIdentity _submitPartnerNode;
         protected Dictionary<string, UserSubmitInfo> _naasUsernameToPasswordMap;
+        protected DataRequest _dataRequest;
         #endregion
 
         public RCRABaseSolicitProcessor()
@@ -126,6 +129,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
             ConfigurationArguments.Add(CONFIG_RCRA_INFO_STATE_CODE, null);
             ConfigurationArguments.Add(CONFIG_NAAS_USER_MAPPING_FILE_PATH, null);
             ConfigurationArguments.Add(CONFIG_SUBMISSION_PARTNER_NAME, null);
+            ConfigurationArguments.Add(CONFIG_VALIDATE_XML, null);
 
             //Load Data Sources
             foreach (string arg in Enum.GetNames(typeof(DataProviderParameterType)))
@@ -187,6 +191,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
                                                               CONFIG_NAAS_USER_MAPPING_FILE_PATH, CONFIG_SUBMISSION_PARTNER_NAME));
                 }
             }
+            TryGetConfigParameter(CONFIG_VALIDATE_XML, ref _validateXml);
         }
 
         protected abstract object GetObjectFromRequest(DataRequest request);
@@ -197,9 +202,9 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
 
             LazyInit();
 
-            DataRequest request = _requestManager.GetDataRequest(requestId);
+            _dataRequest = _requestManager.GetDataRequest(requestId);
 
-            if (TryGetParameter(request, PARAM_NAAS_SUBMIT_USERNAME, 0, ref _submitUsername))
+            if (TryGetParameter(_dataRequest, PARAM_NAAS_SUBMIT_USERNAME, 0, ref _submitUsername))
             {
                 if (_naasUsernameToPasswordMap == null)
                 {
@@ -215,7 +220,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
                 _rcraInfoUserId = userSubmitInfo.RCRAInfoUserID;
             }
 
-            object returnData = GetObjectFromRequest(request);
+            object returnData = GetObjectFromRequest(_dataRequest);
 
             string serializedFilePath = null;
             if (_addHeader)
@@ -242,14 +247,14 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
 
             LOG.Debug("Adding document...");
             AppendAuditLogEvent("Adding document...");
-            _documentManager.AddDocument(request.TransactionId,
+            _documentManager.AddDocument(_dataRequest.TransactionId,
                                          CommonTransactionStatusCode.Processed,
-                                         "Request Processed: " + request.ToString(),
+                                         "Request Processed: " + _dataRequest.ToString(),
                                          compressedFilePath);
 
             if (_submitUsername != null)
             {
-                SubmitFile(compressedFilePath, request.TransactionId);
+                SubmitFile(compressedFilePath, _dataRequest.TransactionId);
             }
             LOG.Debug("OK");
             AppendAuditLogEvent("ProcessQuery: OK");
@@ -279,6 +284,12 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
             if (!File.Exists(tempXmlFilePath))
             {
                 throw new IOException("Temp file does not exist: " + tempXmlFilePath);
+            }
+
+            if (_validateXml)
+            {
+                ValidateXmlFileAndAttachErrorsAndFileToTransaction(tempXmlFilePath, "xml_schema.xml_schema.zip",
+                                                                   null, _dataRequest.TransactionId);
             }
 
             XmlDocument doc = new XmlDocument();
