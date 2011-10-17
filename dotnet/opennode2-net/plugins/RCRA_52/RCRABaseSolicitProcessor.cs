@@ -154,14 +154,17 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
                                           typeof(NamedNullMappingDataReader));
 
             GetConfigParameter(CONFIG_ADD_HEADER, true, out _addHeader);
-            _author = ValidateNonEmptyConfigParameter(CONFIG_AUTHOR);
-            _organization = ValidateNonEmptyConfigParameter(CONFIG_ORGANIZATION);
-            _contactInfo = ValidateNonEmptyConfigParameter(CONFIG_CONTACT_INFO);
-            _payloadOperation = ValidateNonEmptyConfigParameter(CONFIG_PAYLOAD_OPERATION);
-            _title = ValidateNonEmptyConfigParameter(CONFIG_TITLE);
-            TryGetConfigParameter(CONFIG_NOTIFICATIONS, ref _notifications);
-            _rcraInfoUserId = ValidateNonEmptyConfigParameter(CONFIG_RCRA_INFO_USER_ID);
-            _rcraInfoStateCode = ValidateNonEmptyConfigParameter(CONFIG_RCRA_INFO_STATE_CODE);
+            if (_addHeader)
+            {
+                _author = ValidateNonEmptyConfigParameter(CONFIG_AUTHOR);
+                _organization = ValidateNonEmptyConfigParameter(CONFIG_ORGANIZATION);
+                _contactInfo = ValidateNonEmptyConfigParameter(CONFIG_CONTACT_INFO);
+                _payloadOperation = ValidateNonEmptyConfigParameter(CONFIG_PAYLOAD_OPERATION);
+                _title = ValidateNonEmptyConfigParameter(CONFIG_TITLE);
+                TryGetConfigParameter(CONFIG_NOTIFICATIONS, ref _notifications);
+                _rcraInfoUserId = ValidateNonEmptyConfigParameter(CONFIG_RCRA_INFO_USER_ID);
+                _rcraInfoStateCode = ValidateNonEmptyConfigParameter(CONFIG_RCRA_INFO_STATE_CODE);
+            }
             
             ParseNaasUserMappingFile();
 
@@ -234,6 +237,11 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
                 LOG.Debug("Serializing results to file...");
                 AppendAuditLogEvent("Serializing results to file...");
                 serializedFilePath = _serializationHelper.SerializeToTempFile(returnData);
+                if (_validateXml)
+                {
+                    ValidateXmlFileAndAttachErrorsAndFileToTransaction(serializedFilePath, "xml_schema.xml_schema.zip",
+                                                                       null, _dataRequest.TransactionId);
+                }
             }
 
             LOG.Debug("Serialized file path: " + serializedFilePath);
