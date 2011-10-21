@@ -274,9 +274,13 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
 
             // Configure the submission header helper
             _headerDocumentHelper.Configure(_author, _organization, _title, null, _contactInfo, null);
-            _headerDocumentHelper.AddNotifications(_notifications);
             _headerDocumentHelper.AddPropery("RCRAInfoStateCode", _rcraInfoStateCode);
             _headerDocumentHelper.AddPropery("RCRAInfoUserID", _rcraInfoUserId);
+            if (!string.IsNullOrEmpty(_notifications))
+            {
+                _headerDocumentHelper.AddPropery("NotificationURI", _notifications);
+                _headerDocumentHelper.AddNotifications(_notifications);
+            }
 
             string tempXmlFilePath = _settingsProvider.NewTempFilePath();
             tempXmlFilePath = Path.ChangeExtension(tempXmlFilePath, ".xml");

@@ -97,6 +97,7 @@
     </Compile>
     <Compile Include="INodeEndpointClient.cs" />
     <Compile Include="INodeEndpointClientFactory.cs" />
+    <Compile Include="NodeClientException.cs" />
     <Compile Include="NodeEndpointClientFactory.cs" />
     <Compile Include="NodeEndpointClientProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

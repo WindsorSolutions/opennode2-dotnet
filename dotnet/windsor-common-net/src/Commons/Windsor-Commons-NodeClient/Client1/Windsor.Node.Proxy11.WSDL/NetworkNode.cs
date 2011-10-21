@@ -41,8 +41,10 @@ namespace Windsor.Node.Proxy11.WSDL
     using System.Web.Services;
     using System.Web.Services.Protocols;
     using System.Xml.Serialization;
+    using Windsor.Commons.NodeClient;
+    using Windsor.Commons.NodeDomain;
 
-    [SoapInclude(typeof(NodeDocument)), DebuggerStepThrough, WebServiceBinding(Name="NetworkNodeBinding", Namespace="http://www.ExchangeNetwork.net/schema/v1.0/node.wsdl"), DesignerCategory("code")]
+    [SoapInclude(typeof(NodeDocument)), DebuggerStepThrough, WebServiceBinding(Name = "NetworkNodeBinding", Namespace = "http://www.ExchangeNetwork.net/schema/v1.0/node.wsdl"), DesignerCategory("code")]
     public class NetworkNode : WebServicesClientProtocol
     {
         public NetworkNode()
@@ -51,10 +53,17 @@ namespace Windsor.Node.Proxy11.WSDL
         }
 
         [return: SoapElement("return")]
-        [SoapRpcMethod("", RequestNamespace="http://www.ExchangeNetwork.net/schema/v1.0/node.xsd", ResponseNamespace="http://www.ExchangeNetwork.net/schema/v1.0/node.xsd")]
+        [SoapRpcMethod("", RequestNamespace = "http://www.ExchangeNetwork.net/schema/v1.0/node.xsd", ResponseNamespace = "http://www.ExchangeNetwork.net/schema/v1.0/node.xsd")]
         public string Authenticate(string userId, string credential, string authenticationMethod)
         {
-            return (string) base.Invoke("Authenticate", new object[] { userId, credential, authenticationMethod })[0];
+            try
+            {
+                return (string)base.Invoke("Authenticate", new object[] { userId, credential, authenticationMethod })[0];
+            }
+            catch (SoapException soapException)
+            {
+                throw GetNodeClientException("Authenticate", soapException);
+            }
         }
 
         public IAsyncResult BeginAuthenticate(string userId, string credential, string authenticationMethod, AsyncCallback callback, object asyncState)
@@ -107,47 +116,54 @@ namespace Windsor.Node.Proxy11.WSDL
             return base.BeginInvoke("Submit", new object[] { securityToken, transactionId, dataflow, documents }, callback, asyncState);
         }
 
-        [SoapRpcMethod("", RequestNamespace="http://www.ExchangeNetwork.net/schema/v1.0/node.xsd", ResponseNamespace="http://www.ExchangeNetwork.net/schema/v1.0/node.xsd")]
+        [SoapRpcMethod("", RequestNamespace = "http://www.ExchangeNetwork.net/schema/v1.0/node.xsd", ResponseNamespace = "http://www.ExchangeNetwork.net/schema/v1.0/node.xsd")]
         public void Download(string securityToken, string transactionId, string dataflow, ref NodeDocument[] documents)
         {
-            object[] objArray = base.Invoke("Download", new object[] { securityToken, transactionId, dataflow, documents });
-            documents = (NodeDocument[]) objArray[0];
+            try
+            {
+                object[] objArray = base.Invoke("Download", new object[] { securityToken, transactionId, dataflow, documents });
+                documents = (NodeDocument[])objArray[0];
+            }
+            catch (SoapException soapException)
+            {
+                throw GetNodeClientException("Download", soapException);
+            }
         }
 
         public string EndAuthenticate(IAsyncResult asyncResult)
         {
-            return (string) base.EndInvoke(asyncResult)[0];
+            return (string)base.EndInvoke(asyncResult)[0];
         }
 
         public void EndDownload(IAsyncResult asyncResult, out NodeDocument[] documents)
         {
             object[] objArray = base.EndInvoke(asyncResult);
-            documents = (NodeDocument[]) objArray[0];
+            documents = (NodeDocument[])objArray[0];
         }
 
         public string EndExecute(IAsyncResult asyncResult)
         {
-            return (string) base.EndInvoke(asyncResult)[0];
+            return (string)base.EndInvoke(asyncResult)[0];
         }
 
         public string[] EndGetServices(IAsyncResult asyncResult)
         {
-            return (string[]) base.EndInvoke(asyncResult)[0];
+            return (string[])base.EndInvoke(asyncResult)[0];
         }
 
         public string EndGetStatus(IAsyncResult asyncResult)
         {
-            return (string) base.EndInvoke(asyncResult)[0];
+            return (string)base.EndInvoke(asyncResult)[0];
         }
 
         public string EndNodePing(IAsyncResult asyncResult)
         {
-            return (string) base.EndInvoke(asyncResult)[0];
+            return (string)base.EndInvoke(asyncResult)[0];
         }
 
         public string EndNotify(IAsyncResult asyncResult)
         {
-            return (string) base.EndInvoke(asyncResult)[0];
+            return (string)base.EndInvoke(asyncResult)[0];
         }
 
         public object EndQuery(IAsyncResult asyncResult)
@@ -157,68 +173,128 @@ namespace Windsor.Node.Proxy11.WSDL
 
         public string EndSolicit(IAsyncResult asyncResult)
         {
-            return (string) base.EndInvoke(asyncResult)[0];
+            return (string)base.EndInvoke(asyncResult)[0];
         }
 
         public string EndSubmit(IAsyncResult asyncResult)
         {
-            return (string) base.EndInvoke(asyncResult)[0];
+            return (string)base.EndInvoke(asyncResult)[0];
         }
 
         [return: SoapElement("return")]
-        [SoapRpcMethod("", RequestNamespace="http://www.ExchangeNetwork.net/schema/v1.0/node.xsd", ResponseNamespace="http://www.ExchangeNetwork.net/schema/v1.0/node.xsd")]
+        [SoapRpcMethod("", RequestNamespace = "http://www.ExchangeNetwork.net/schema/v1.0/node.xsd", ResponseNamespace = "http://www.ExchangeNetwork.net/schema/v1.0/node.xsd")]
         public string Execute(string securityToken, string request, string[] parameters)
         {
-            return (string) base.Invoke("Execute", new object[] { securityToken, request, parameters })[0];
+            try
+            {
+                return (string)base.Invoke("Execute", new object[] { securityToken, request, parameters })[0];
+            }
+            catch (SoapException soapException)
+            {
+                throw GetNodeClientException("Execute", soapException);
+            }
         }
 
         [return: SoapElement("return")]
-        [SoapRpcMethod("", RequestNamespace="http://www.ExchangeNetwork.net/schema/v1.0/node.xsd", ResponseNamespace="http://www.ExchangeNetwork.net/schema/v1.0/node.xsd")]
+        [SoapRpcMethod("", RequestNamespace = "http://www.ExchangeNetwork.net/schema/v1.0/node.xsd", ResponseNamespace = "http://www.ExchangeNetwork.net/schema/v1.0/node.xsd")]
         public string[] GetServices(string securityToken, string serviceType)
         {
-            return (string[]) base.Invoke("GetServices", new object[] { securityToken, serviceType })[0];
+            try
+            {
+                return (string[])base.Invoke("GetServices", new object[] { securityToken, serviceType })[0];
+            }
+            catch (SoapException soapException)
+            {
+                throw GetNodeClientException("GetServices", soapException);
+            }
         }
 
         [return: SoapElement("return")]
-        [SoapRpcMethod("", RequestNamespace="http://www.ExchangeNetwork.net/schema/v1.0/node.xsd", ResponseNamespace="http://www.ExchangeNetwork.net/schema/v1.0/node.xsd")]
+        [SoapRpcMethod("", RequestNamespace = "http://www.ExchangeNetwork.net/schema/v1.0/node.xsd", ResponseNamespace = "http://www.ExchangeNetwork.net/schema/v1.0/node.xsd")]
         public string GetStatus(string securityToken, string transactionId)
         {
-            return (string) base.Invoke("GetStatus", new object[] { securityToken, transactionId })[0];
+            try
+            {
+                return (string)base.Invoke("GetStatus", new object[] { securityToken, transactionId })[0];
+            }
+            catch (SoapException soapException)
+            {
+                throw GetNodeClientException("GetStatus", soapException);
+            }
         }
 
         [return: SoapElement("return")]
-        [SoapRpcMethod("", RequestNamespace="http://www.ExchangeNetwork.net/schema/v1.0/node.xsd", ResponseNamespace="http://www.ExchangeNetwork.net/schema/v1.0/node.xsd")]
+        [SoapRpcMethod("", RequestNamespace = "http://www.ExchangeNetwork.net/schema/v1.0/node.xsd", ResponseNamespace = "http://www.ExchangeNetwork.net/schema/v1.0/node.xsd")]
         public string NodePing(string Hello)
         {
-            return (string) base.Invoke("NodePing", new object[] { Hello })[0];
+            try
+            {
+                return (string)base.Invoke("NodePing", new object[] { Hello })[0];
+            }
+            catch (SoapException soapException)
+            {
+                throw GetNodeClientException("NodePing", soapException);
+            }
         }
 
         [return: SoapElement("return")]
-        [SoapRpcMethod("", RequestNamespace="http://www.ExchangeNetwork.net/schema/v1.0/node.xsd", ResponseNamespace="http://www.ExchangeNetwork.net/schema/v1.0/node.xsd")]
+        [SoapRpcMethod("", RequestNamespace = "http://www.ExchangeNetwork.net/schema/v1.0/node.xsd", ResponseNamespace = "http://www.ExchangeNetwork.net/schema/v1.0/node.xsd")]
         public string Notify(string securityToken, string nodeAddress, string dataflow, NodeDocument[] documents)
         {
-            return (string) base.Invoke("Notify", new object[] { securityToken, nodeAddress, dataflow, documents })[0];
+            try
+            {
+                return (string)base.Invoke("Notify", new object[] { securityToken, nodeAddress, dataflow, documents })[0];
+            }
+            catch (SoapException soapException)
+            {
+                throw GetNodeClientException("Notify", soapException);
+            }
         }
 
         [return: SoapElement("return")]
-        [SoapRpcMethod("", RequestNamespace="http://www.ExchangeNetwork.net/schema/v1.0/node.xsd", ResponseNamespace="http://www.ExchangeNetwork.net/schema/v1.0/node.xsd")]
-        public object Query(string securityToken, string request, [SoapElement(DataType="integer")] string rowId, [SoapElement(DataType="integer")] string maxRows, string[] parameters)
+        [SoapRpcMethod("", RequestNamespace = "http://www.ExchangeNetwork.net/schema/v1.0/node.xsd", ResponseNamespace = "http://www.ExchangeNetwork.net/schema/v1.0/node.xsd")]
+        public object Query(string securityToken, string request, [SoapElement(DataType = "integer")] string rowId, [SoapElement(DataType = "integer")] string maxRows, string[] parameters)
         {
-            return base.Invoke("Query", new object[] { securityToken, request, rowId, maxRows, parameters })[0];
+            try
+            {
+                return base.Invoke("Query", new object[] { securityToken, request, rowId, maxRows, parameters })[0];
+            }
+            catch (SoapException soapException)
+            {
+                throw GetNodeClientException("Query", soapException);
+            }
         }
 
         [return: SoapElement("return")]
-        [SoapRpcMethod("", RequestNamespace="http://www.ExchangeNetwork.net/schema/v1.0/node.xsd", ResponseNamespace="http://www.ExchangeNetwork.net/schema/v1.0/node.xsd")]
+        [SoapRpcMethod("", RequestNamespace = "http://www.ExchangeNetwork.net/schema/v1.0/node.xsd", ResponseNamespace = "http://www.ExchangeNetwork.net/schema/v1.0/node.xsd")]
         public string Solicit(string securityToken, string returnURL, string request, string[] parameters)
         {
-            return (string) base.Invoke("Solicit", new object[] { securityToken, returnURL, request, parameters })[0];
+            try
+            {
+                return (string)base.Invoke("Solicit", new object[] { securityToken, returnURL, request, parameters })[0];
+            }
+            catch (SoapException soapException)
+            {
+                throw GetNodeClientException("Solicit", soapException);
+            }
         }
 
         [return: SoapElement("return")]
-        [SoapRpcMethod("", RequestNamespace="http://www.ExchangeNetwork.net/schema/v1.0/node.xsd", ResponseNamespace="http://www.ExchangeNetwork.net/schema/v1.0/node.xsd")]
+        [SoapRpcMethod("", RequestNamespace = "http://www.ExchangeNetwork.net/schema/v1.0/node.xsd", ResponseNamespace = "http://www.ExchangeNetwork.net/schema/v1.0/node.xsd")]
         public string Submit(string securityToken, string transactionId, string dataflow, NodeDocument[] documents)
         {
-            return (string) base.Invoke("Submit", new object[] { securityToken, transactionId, dataflow, documents })[0];
+            try
+            {
+                return (string)base.Invoke("Submit", new object[] { securityToken, transactionId, dataflow, documents })[0];
+            }
+            catch (SoapException soapException)
+            {
+                throw GetNodeClientException("Submit", soapException);
+            }
+        }
+        protected virtual SoapException GetNodeClientException(string endpointMethod, SoapException soapException)
+        {
+            return new NodeClientException(this.Url, EndpointVersionType.EN11, endpointMethod, soapException);
         }
     }
 }

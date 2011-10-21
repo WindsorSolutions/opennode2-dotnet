@@ -31,7 +31,7 @@ POSSIBILITY OF SUCH DAMAGE.
 */
 #endregion
 
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using System.Web.Services;
 using System.ComponentModel;
 using System.Web.Services.Protocols;
@@ -41,6 +41,7 @@ using System.Net;
 using System.Xml.Serialization;
 using Windsor.Node.Proxy11;
 using Windsor.Commons.Core;
+using Windsor.Commons.NodeDomain;
 
 namespace Windsor.Commons.NodeClient
 {
@@ -48,6 +49,8 @@ namespace Windsor.Commons.NodeClient
     [Microsoft.Web.Services3.Messaging.SoapActor("*")]
     public partial class ENClient20 : Microsoft.Web.Services3.WebServicesClientProtocol
     {
+        protected bool _compatibilityMode;
+
         protected override WebRequest GetWebRequest(Uri uri)
         {
             WebRequest webRequest = base.GetWebRequest(uri);
@@ -87,16 +90,24 @@ namespace Windsor.Commons.NodeClient
             }
         }
 
-        public ENClient20(string url)
+        public ENClient20(string url, bool compatibilityMode)
         {
             this.SoapVersion = System.Web.Services.Protocols.SoapProtocolVersion.Soap12;
             this.Url = url;
+            this._compatibilityMode = compatibilityMode;
             ServicePointManager.ServerCertificateValidationCallback = CertificatePolicy.RemoteCertificateValidationProc;
-            
-            // Gets rid of soap wsa headers
-            Microsoft.Web.Services3.Design.Policy policy = new Microsoft.Web.Services3.Design.Policy();
-            policy.Assertions.Add(new MyAssertion());
-            this.SetPolicy(policy);
+
+            if (!compatibilityMode)
+            {
+                // Gets rid of soap wsa headers
+                Microsoft.Web.Services3.Design.Policy policy = new Microsoft.Web.Services3.Design.Policy();
+                policy.Assertions.Add(new MyAssertion());
+                this.SetPolicy(policy);
+            }
+        }
+        public ENClient20(string url)
+            : this(url, false)
+        {
         }
 
         private static bool IsWCFSoapActionException(SoapException e)
@@ -117,19 +128,31 @@ namespace Windsor.Commons.NodeClient
         {
             try
             {
-                return AuthenticateHeader(Authenticate1);
+                try
+                {
+                    return AuthenticateHeader(Authenticate1);
+                }
+                catch (SoapException e)
+                {
+                    if (IsWCFSoapActionException(e))
+                    {
+                        return AuthenticateNoHeader(Authenticate1);
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
             }
-            catch (SoapException e)
+            catch (SoapException soapException)
             {
-                if (IsWCFSoapActionException(e))
-                {
-                    return AuthenticateNoHeader(Authenticate1);
-                }
-                else
-                {
-                    throw;
-                }
+                throw GetNodeClientException("Authenticate", soapException);
             }
+        }
+
+        protected virtual SoapException GetNodeClientException(string endpointMethod, SoapException soapException)
+        {
+            return new NodeClientException(this.Url, EndpointVersionType.EN20, endpointMethod, soapException);
         }
 
         /// <remarks/>
@@ -187,18 +210,25 @@ namespace Windsor.Commons.NodeClient
         {
             try
             {
-                return SubmitHeader(Submit1);
+                try
+                {
+                    return SubmitHeader(Submit1);
+                }
+                catch (SoapException e)
+                {
+                    if (IsWCFSoapActionException(e))
+                    {
+                        return SubmitNoHeader(Submit1);
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
             }
-            catch (SoapException e)
+            catch (SoapException soapException)
             {
-                if (IsWCFSoapActionException(e))
-                {
-                    return SubmitNoHeader(Submit1);
-                }
-                else
-                {
-                    throw;
-                }
+                throw GetNodeClientException("Submit", soapException);
             }
         }
         /// <remarks/>
@@ -226,18 +256,25 @@ namespace Windsor.Commons.NodeClient
         {
             try
             {
-                return GetStatusHeader(GetStatus1);
+                try
+                {
+                    return GetStatusHeader(GetStatus1);
+                }
+                catch (SoapException e)
+                {
+                    if (IsWCFSoapActionException(e))
+                    {
+                        return GetStatusNoHeader(GetStatus1);
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
             }
-            catch (SoapException e)
+            catch (SoapException soapException)
             {
-                if (IsWCFSoapActionException(e))
-                {
-                    return GetStatusNoHeader(GetStatus1);
-                }
-                else
-                {
-                    throw;
-                }
+                throw GetNodeClientException("GetStatus", soapException);
             }
         }
         /// <remarks/>
@@ -295,18 +332,25 @@ namespace Windsor.Commons.NodeClient
         {
             try
             {
-                return NotifyHeader(Notify1);
+                try
+                {
+                    return NotifyHeader(Notify1);
+                }
+                catch (SoapException e)
+                {
+                    if (IsWCFSoapActionException(e))
+                    {
+                        return NotifyNoHeader(Notify1);
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
             }
-            catch (SoapException e)
+            catch (SoapException soapException)
             {
-                if (IsWCFSoapActionException(e))
-                {
-                    return NotifyNoHeader(Notify1);
-                }
-                else
-                {
-                    throw;
-                }
+                throw GetNodeClientException("Notify", soapException);
             }
         }
         /// <remarks/>
@@ -364,18 +408,25 @@ namespace Windsor.Commons.NodeClient
         {
             try
             {
-                return DownloadHeader(Download1);
+                try
+                {
+                    return DownloadHeader(Download1);
+                }
+                catch (SoapException e)
+                {
+                    if (IsWCFSoapActionException(e))
+                    {
+                        return DownloadNoHeader(Download1);
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
             }
-            catch (SoapException e)
+            catch (SoapException soapException)
             {
-                if (IsWCFSoapActionException(e))
-                {
-                    return DownloadNoHeader(Download1);
-                }
-                else
-                {
-                    throw;
-                }
+                throw GetNodeClientException("Download", soapException);
             }
         }
         /// <remarks/>
@@ -405,18 +456,25 @@ namespace Windsor.Commons.NodeClient
         {
             try
             {
-                return QueryHeader(Query1);
+                try
+                {
+                    return QueryHeader(Query1);
+                }
+                catch (SoapException e)
+                {
+                    if (IsWCFSoapActionException(e))
+                    {
+                        return QueryNoHeader(Query1);
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
             }
-            catch (SoapException e)
+            catch (SoapException soapException)
             {
-                if (IsWCFSoapActionException(e))
-                {
-                    return QueryNoHeader(Query1);
-                }
-                else
-                {
-                    throw;
-                }
+                throw GetNodeClientException("Query", soapException);
             }
         }
         /// <remarks/>
@@ -474,18 +532,25 @@ namespace Windsor.Commons.NodeClient
         {
             try
             {
-                return SolicitHeader(Solicit1);
+                try
+                {
+                    return SolicitHeader(Solicit1);
+                }
+                catch (SoapException e)
+                {
+                    if (IsWCFSoapActionException(e))
+                    {
+                        return SolicitNoHeader(Solicit1);
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
             }
-            catch (SoapException e)
+            catch (SoapException soapException)
             {
-                if (IsWCFSoapActionException(e))
-                {
-                    return SolicitNoHeader(Solicit1);
-                }
-                else
-                {
-                    throw;
-                }
+                throw GetNodeClientException("Solicit", soapException);
             }
         }
         /// <remarks/>
@@ -543,18 +608,25 @@ namespace Windsor.Commons.NodeClient
         {
             try
             {
-                return ExecuteHeader(Execute1);
+                try
+                {
+                    return ExecuteHeader(Execute1);
+                }
+                catch (SoapException e)
+                {
+                    if (IsWCFSoapActionException(e))
+                    {
+                        return ExecuteNoHeader(Execute1);
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
             }
-            catch (SoapException e)
+            catch (SoapException soapException)
             {
-                if (IsWCFSoapActionException(e))
-                {
-                    return ExecuteNoHeader(Execute1);
-                }
-                else
-                {
-                    throw;
-                }
+                throw GetNodeClientException("Execute", soapException);
             }
         }
         /// <remarks/>
@@ -612,18 +684,25 @@ namespace Windsor.Commons.NodeClient
         {
             try
             {
-                return NodePingHeader(NodePing1);
+                try
+                {
+                    return NodePingHeader(NodePing1);
+                }
+                catch (SoapException e)
+                {
+                    if (IsWCFSoapActionException(e))
+                    {
+                        return NodePingNoHeader(NodePing1);
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
             }
-            catch (SoapException e)
+            catch (SoapException soapException)
             {
-                if (IsWCFSoapActionException(e))
-                {
-                    return NodePingNoHeader(NodePing1);
-                }
-                else
-                {
-                    throw;
-                }
+                throw GetNodeClientException("NodePing", soapException);
             }
         }
         /// <remarks/>
@@ -681,18 +760,25 @@ namespace Windsor.Commons.NodeClient
         {
             try
             {
-                return GetServicesHeader(GetServices1);
+                try
+                {
+                    return GetServicesHeader(GetServices1);
+                }
+                catch (SoapException e)
+                {
+                    if (IsWCFSoapActionException(e))
+                    {
+                        return GetServicesNoHeader(GetServices1);
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
             }
-            catch (SoapException e)
+            catch (SoapException soapException)
             {
-                if (IsWCFSoapActionException(e))
-                {
-                    return GetServicesNoHeader(GetServices1);
-                }
-                else
-                {
-                    throw;
-                }
+                throw GetNodeClientException("GetServices", soapException);
             }
         }
         /// <remarks/>
