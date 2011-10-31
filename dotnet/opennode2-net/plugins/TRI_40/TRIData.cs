@@ -23,7 +23,9 @@ namespace Windsor.Node2008.WNOSPlugin.TRI4
 
     public enum TRIDataProviderType
     {
-        Undefined, SQL, ORA
+        Undefined,
+        SQL,
+        ORA
     }
 
     internal enum TRIDBTableType
@@ -72,15 +74,15 @@ namespace Windsor.Node2008.WNOSPlugin.TRI4
         private DbConnection _connection;
         private Database _db;
         private Dictionary<TRIDBTableType, DbCommand> _dbCommands;
-        private string _uniqueSubExceptionPatern = "unique constraint";
+        private string[] _uniqueSubExceptionPaterns = new string[] { "unique constraint", "UNIQUE KEY constraint" };
 
         #region IInitializingObject Members
 
         public void Init(SpringBaseDao baseDao)
         {
             string connectionString = baseDao.DbProvider.ConnectionString;
-            _db = baseDao.IsSqlServerDatabase ? 
-                (Database) new SqlDatabase(connectionString) : (Database) new OracleDatabase(connectionString);
+            _db = baseDao.IsSqlServerDatabase ?
+                (Database)new SqlDatabase(connectionString) : (Database)new OracleDatabase(connectionString);
 
             if (_db == null)
             {
@@ -414,10 +416,18 @@ namespace Windsor.Node2008.WNOSPlugin.TRI4
                         }
                         catch (Exception ex)
                         {
-
                             LOG.Error(ex.Message, ex);
+                            bool isUniqueContraintException = false;
+                            foreach (string checkString in _uniqueSubExceptionPaterns)
+                            {
+                                if (ex.Message.IndexOf(checkString, 0, StringComparison.OrdinalIgnoreCase) >= 0)
+                                {
+                                    isUniqueContraintException = true;
+                                    break;
+                                }
+                            }
 
-                            if (ex.Message.IndexOf(_uniqueSubExceptionPatern, 0, StringComparison.OrdinalIgnoreCase) >= 0)
+                            if (isUniqueContraintException)
                             {
                                 //TSM: Don't throw exception here, just exit the method, the data is already in the database
                                 //throw new ApplicationException("Duplicate Submission Id (TRI_SUB_ID)!", ex);
@@ -428,7 +438,6 @@ namespace Windsor.Node2008.WNOSPlugin.TRI4
                             {
                                 throw;
                             }
-
                         }
 
 
@@ -1604,12 +1613,6 @@ namespace Windsor.Node2008.WNOSPlugin.TRI4
             {
                 Dispose();
             }
-        }
-
-        public string UniqueSubExceptionPatern
-        {
-            get { return _uniqueSubExceptionPatern; }
-            set { _uniqueSubExceptionPatern = value; }
         }
     }
 }
