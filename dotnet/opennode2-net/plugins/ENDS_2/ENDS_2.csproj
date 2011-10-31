@@ -132,7 +132,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="docs\ENDS_FCD_v2_0.pdf" />
     <None Include="xml_schema\GetServices_v2.0.xsd" />
   </ItemGroup>
   <ItemGroup>
