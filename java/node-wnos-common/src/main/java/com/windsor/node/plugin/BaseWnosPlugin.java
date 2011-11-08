@@ -54,6 +54,7 @@ import com.windsor.node.common.domain.PartnerIdentity;
 import com.windsor.node.common.domain.ProcessContentResult;
 import com.windsor.node.common.domain.ServiceType;
 import com.windsor.node.common.util.NodeClientService;
+import com.windsor.node.data.dao.ParameterSpecifiedPlugin;
 import com.windsor.node.service.helper.NodePartnerProvider;
 import com.windsor.node.service.helper.ServiceFactory;
 import com.windsor.node.service.helper.client.DualEndpointNodeClientFactory;
@@ -68,7 +69,7 @@ import com.windsor.node.service.helper.client.DualEndpointNodeClientFactory;
  * </p>
  * 
  */
-public abstract class BaseWnosPlugin implements InitializingBean {
+public abstract class BaseWnosPlugin implements InitializingBean, ParameterSpecifiedPlugin {
 
     public static final String ARG_ADD_HEADER = "Add Header";
 

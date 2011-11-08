@@ -33,56 +33,75 @@ package com.windsor.node.admin.valid;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-
+import java.util.List;
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.Errors;
-
 import com.windsor.node.common.domain.DataFlow;
+import com.windsor.node.common.service.admin.FlowService;
 
-public class FlowValidator extends AbstractValidator {
-
+public class FlowValidator extends AbstractValidator
+{
     public static final String INFO_URL = "infoUrl";
+    private FlowService flowService;
 
-    public FlowValidator() {
+    public FlowValidator()
+    {
         logger = LoggerFactory.getLogger(FlowValidator.class);
     }
 
-    public boolean supports(Class obj) {
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    public boolean supports(Class obj)
+    {
         return obj.isAssignableFrom(DataFlow.class);
     }
 
-    public void validate(Object obj, Errors errors) {
-
+    public void validate(Object obj, Errors errors)
+    {
         logger.debug(VALIDATE + this.getClass());
-
-        DataFlow item = (DataFlow) obj;
-
+        DataFlow item = (DataFlow)obj;
         logger.debug(VALIDATING_WITH + item);
 
-        if (item == null) {
+        if(item == null)
+        {
             throw new IllegalArgumentException("Object null");
-        } else {
-
-            if (item.getContactUserId() == null
-                    || StringUtils.isBlank(item.getContactUserId())) {
-                errors.rejectValue("contactUserId", REQUIRED_ERR_CODE,
-                        REQUIRED_MSG);
+        }
+        else
+        {
+            if(item.getContactUserId() == null || StringUtils.isBlank(item.getContactUserId()))
+            {
+                errors.rejectValue("contactUserId", REQUIRED_ERR_CODE, REQUIRED_MSG);
+            }
+            //getDataFlowNames
+            List<String> names = getFlowService().getDataFlowNames();
+            if(names != null && item.getName() != null && names.contains(item.getName().trim()) && StringUtils.isBlank(item.getId()))
+            {
+                errors.rejectValue("name", DUPLICATE_ERR_CODE, "Name must be unique.");
             }
 
-            if (StringUtils.isBlank(item.getInfoUrl())) {
-                errors.rejectValue(INFO_URL, REQUIRED_ERR_CODE, REQUIRED_MSG);
-            }
-
-            try {
-                URL testUrl = new URL(item.getInfoUrl());
-                item.setInfoUrl(testUrl.toString());
-            } catch (MalformedURLException ex) {
-                errors.rejectValue(INFO_URL, FORMAT_ERR_CODE, "Invalid format");
+            // infoUrl is no longer required
+            if(StringUtils.isNotBlank(item.getInfoUrl()))
+            {
+                try
+                {
+                    URL testUrl = new URL(item.getInfoUrl());
+                    item.setInfoUrl(testUrl.toString());
+                }
+                catch(MalformedURLException ex)
+                {
+                    errors.rejectValue(INFO_URL, FORMAT_ERR_CODE, "Invalid format");
+                }
             }
         }
-
     }
 
+    public FlowService getFlowService()
+    {
+        return flowService;
+    }
+
+    public void setFlowService(FlowService flowService)
+    {
+        this.flowService = flowService;
+    }
 }

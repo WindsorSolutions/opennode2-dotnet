@@ -31,7 +31,7 @@
 
 			<tr>
 				<td class="label" width="50" style="text-align: right; vertical-align: top;"><img alt=""
-					src="img/page_user_dark.gif"
+					src="img/user.png"
 					style="border: 0; vertical-align: middle; padding-right: 3px;" />Email:</td>
 				<td class="ctrl"><spring:bind
 					path="command.naasUserName">

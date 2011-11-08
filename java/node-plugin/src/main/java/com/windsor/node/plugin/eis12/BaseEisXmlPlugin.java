@@ -50,6 +50,7 @@ import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.PaginationIndicator;
 import com.windsor.node.common.domain.ProcessContentResult;
 import com.windsor.node.common.domain.ServiceType;
+import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
 import com.windsor.node.plugin.BaseWnosPlugin;
 import com.windsor.node.plugin.common.velocity.VelocityHelper;
 import com.windsor.node.plugin.common.velocity.jdbc.JdbcVelocityHelper;
@@ -123,6 +124,36 @@ public abstract class BaseEisXmlPlugin extends BaseWnosPlugin {
 
     private static final String NOT_SET = " not set";
 
+    public static final PluginServiceParameterDescriptor AUTHOR_NAME = new PluginServiceParameterDescriptor(
+                    "Author Name",
+                    PluginServiceParameterDescriptor.TYPE_STRING,
+                    Boolean.TRUE,
+                    "Used to provide the originator of the document, typically the individual responsible for preparing the NEI for the organization. This value is inserted into the submission's  XML header \"AuthorName\" element.");
+    public static final PluginServiceParameterDescriptor ORGANIZATION_NAME = new PluginServiceParameterDescriptor(
+                    "Organization Name",
+                    PluginServiceParameterDescriptor.TYPE_STRING,
+                    Boolean.TRUE,
+                    "The organization to which the author belongs. This value is inserted into the submission’s XML header \"OrganizationName\" element.");
+    public static final PluginServiceParameterDescriptor ATTACHMENT_FOLDER_PATH = new PluginServiceParameterDescriptor(
+                    "Attachment Folder Path",
+                    PluginServiceParameterDescriptor.TYPE_STRING,
+                    Boolean.FALSE,
+                    "The relative file path to the location of attachments for onroad/nonroad NCD files and supporting files for event emissions.");
+    public static final PluginServiceParameterDescriptor SENDER_CONTACT_INFO = new PluginServiceParameterDescriptor(
+                    "Sender Contact Info",
+                    PluginServiceParameterDescriptor.TYPE_STRING,
+                    Boolean.FALSE,
+                    "The sender’s additional contact information, typically an  email address. This value is inserted into the submission’s XML header \"SenderContact\" element.");
+    public static final PluginServiceParameterDescriptor EMISSIONS_YEAR = new PluginServiceParameterDescriptor(
+                    "Emissions Year",
+                    PluginServiceParameterDescriptor.TYPE_STRING,
+                    Boolean.TRUE,
+                    "Used to provide the year for which the emissions data is being submitted. Format YYYY. This will be used, along with the relevant data category for the data service, to filter data to be extracted from the staging database.");
+    public static final PluginServiceParameterDescriptor SUBMISSION_TYPE = new PluginServiceParameterDescriptor(
+                    "Submission Type",
+                    PluginServiceParameterDescriptor.TYPE_STRING,
+                    Boolean.TRUE,
+                    "Allows the user to specify whether the XML file resulting from the data service execution should be submitted to the EIS Production or Quality Assurance environment. Accepted values: Production or QA.");
     /*
      * Helpers
      */
@@ -666,6 +697,15 @@ public abstract class BaseEisXmlPlugin extends BaseWnosPlugin {
 
     public String getMakeHeader() {
         return makeHeader;
+    }
+
+    @Override
+    public List<PluginServiceParameterDescriptor> getParamters()
+    {
+        List<PluginServiceParameterDescriptor> params = new ArrayList<PluginServiceParameterDescriptor>();
+        params.add(EMISSIONS_YEAR);
+        params.add(SUBMISSION_TYPE);
+        return params;
     }
 
 }

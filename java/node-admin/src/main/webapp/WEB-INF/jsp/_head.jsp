@@ -35,7 +35,7 @@
 				<c:otherwise>
 					<li <c:if test="${model.tab == null || model.tab == 0}">class="current"</c:if> >
 					   <a href="dashboard.htm">
-						  <span><img alt="" src="img/page_dynamic.gif" />Dashboard</span>
+						  <span><img alt="" src="img/chart_pie.png" />Dashboard</span>
 					   </a>
 					</li>
                 </c:otherwise>
@@ -45,34 +45,34 @@
 					
 					<li <c:if test="${model.tab != null && model.tab == 1}">class="current"</c:if> >
 					   <a href="config.htm">
-					       <span><img alt="" src="img/page_settings.gif" />Configuration</span>
+					       <span><img alt="" src="img/wrench.png" />Configuration</span>
 					   </a>
 				    </li>
 					<li <c:if test="${model.tab != null && model.tab == 2}">class="current"</c:if> >
 					   <a href="security.htm">
-					       <span><img alt="" src="img/page_security.gif" />Security</span>
+					       <span><img alt="" src="img/shield.png" />Security</span>
 				       </a>
 			        </li>
 				    <li <c:if test="${model.tab != null && model.tab == 3}">class="current"</c:if> >
 	       		       <a href="flow.htm">
-			     	        <span><img alt="" src="img/page_dynamic.gif" />Exchange</span>
+			     	        <span><img alt="" src="img/globe-network.png" />Exchange</span>
     		           </a>
 			        </li>
 		        </c:if>
                 <c:if test="${model.visit != null}">
 					<li <c:if test="${model.tab != null && model.tab == 4}">class="current"</c:if> >
 					   <a href="schedule.htm">
-					       <span><img alt="" src="img/date.gif" />Schedules</span>
+					       <span><img alt="" src="img/time.png" />Schedules</span>
 				       </a>
 			       </li>
 				    <li <c:if test="${model.tab != null && model.tab == 5}">class="current"</c:if> >
 				        <a href="activity.htm">
-				            <span><img alt="" src="img/page_tick.gif" />Activity</span>
+				            <span><img alt="" src="img/script.png" />Activity</span>
 			            </a>
 		            </li>
 					<li <c:if test="${model.tab != null && model.tab == 6}">class="current"</c:if> >
 						<a href="profile.htm">
-						   <span><img alt="" src="img/page_user.gif" />Profile</span>
+						   <span><img alt="" src="img/user_suit.png" />Profile</span>
 					    </a>
 			         </li>
                 </c:if>

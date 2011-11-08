@@ -1,7 +1,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
                                 <select id="sourceServiceList" name="serviceList" 
-                                    onchange="$('#sourceCommonId').val(this.options[selectedIndex].value)"  
+                                    onchange="$('#sourceCommonId').val(this.options[selectedIndex].value); loadArgList();"  
                                     style="width:96%;">
                                         <option value=""></option>
                                     <c:forEach var="service" items="${model.services}">

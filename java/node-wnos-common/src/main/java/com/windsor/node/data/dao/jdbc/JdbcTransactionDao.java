@@ -31,33 +31,37 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.windsor.node.data.dao.jdbc;
 
+import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.List;
-
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.jdbc.core.RowMapper;
-
 import com.windsor.node.common.domain.CommonContentType;
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
 import com.windsor.node.common.domain.Document;
+import com.windsor.node.common.domain.EndpointVersionType;
 import com.windsor.node.common.domain.NodeMethodType;
 import com.windsor.node.common.domain.NodeTransaction;
+import com.windsor.node.common.domain.PartnerIdentity;
+import com.windsor.node.common.domain.ScheduledItem;
+import com.windsor.node.common.domain.ScheduledItemTargetType;
 import com.windsor.node.common.domain.TransactionStatus;
 import com.windsor.node.common.util.CommonTransactionStatusCodeConverter;
 import com.windsor.node.data.dao.AccountDao;
 import com.windsor.node.data.dao.FlowDao;
+import com.windsor.node.data.dao.PartnerDao;
 import com.windsor.node.data.dao.TransactionDao;
 import com.windsor.node.service.helper.id.UUIDGenerator;
 import com.windsor.node.util.DateUtil;
 
-public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao,
-        InitializingBean {
+public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao
+{
 
     private static final String SQL_SELECT = "SELECT Id, FlowId, NetworkId, "
-            + "Status, ModifiedBy, ModifiedOn, StatusDetail, Operation, WebMethod  FROM NTransaction ";
+                    + "Status, ModifiedBy, ModifiedOn, StatusDetail, Operation, WebMethod, "
+                    + "EndpointVersion, NetworkEndpointVersion, NetworkEndpointUrl, NetworkEndpointStatus, NetworkEndpointStatusDetail FROM NTransaction ";
 
     private static final String SQL_SELECT_ALL = SQL_SELECT
             + " ORDER BY ModifiedOn DESC ";
@@ -80,15 +84,21 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao,
      * SQL INSERT statement for this table
      */
     private static final String SQL_INSERT = "INSERT INTO NTransaction ( Id, FlowId, "
-            + "NetworkId, Status, ModifiedBy, ModifiedOn, StatusDetail, Operation, WebMethod ) "
-            + "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ? )";
+                    + "NetworkId, Status, ModifiedBy, ModifiedOn, StatusDetail, Operation, "
+                    + "WebMethod, EndpointVersion, NetworkEndpointVersion, NetworkEndpointUrl, NetworkEndpointStatus, NetworkEndpointStatusDetail ) "
+                    + "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
+
+    private static final String SQL_UPDATE = "UPDATE NTransaction SET FlowId = ?, "
+                    + " NetworkId = ?, Status = ?, ModifiedBy = ?, ModifiedOn = ?, StatusDetail = ?, Operation = ?, "
+                    + " WebMethod = ?, EndpointVersion = ?, NetworkEndpointVersion = ?, NetworkEndpointUrl = ?, NetworkEndpointStatus = ?, NetworkEndpointStatusDetail = ? "
+                    + " WHERE Id = ?";
 
     private static final String SQL_UPDATE_STATUS_TRAN = "UPDATE NTransaction SET Status = ? WHERE Id = ? AND Status = ?";
 
     /**
      * SQL UPDATE statement for this table
      */
-    private static final String SQL_UPDATE = "UPDATE NTransaction SET Status = ? WHERE Id = ?";
+    private static final String SQL_UPDATE_STATUS = "UPDATE NTransaction SET Status = ? WHERE Id = ?";
 
     /**
      * SQL UPDATE statement for this table
@@ -122,6 +132,8 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao,
             + "FROM NDocument WHERE TransactionId IN (SELECT Id FROM NTransaction "
             + "WHERE UPPER(NetworkId) = ? ) ";
 
+    private static final String SQL_ID_EXISTS = "select count(*) from NTransaction where id = ?";
+
     /**
      * SQL INSERT statement for this table
      */
@@ -135,6 +147,7 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao,
 
     private FlowDao flowDao;
     private AccountDao accountDao;
+    private PartnerDao partnerDao;
 
     /**
      * checkDaoConfig
@@ -142,12 +155,19 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao,
     protected void checkDaoConfig() {
         super.checkDaoConfig();
 
-        if (flowDao == null) {
+        if(flowDao == null)
+        {
             throw new RuntimeException("flowDao not set");
         }
 
-        if (accountDao == null) {
+        if(accountDao == null)
+        {
             throw new RuntimeException("accountDao not set");
+        }
+
+        if(partnerDao == null)
+        {
+            throw new RuntimeException("partnerDao not set");
         }
     }
 
@@ -232,12 +252,13 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao,
     /**
      * get
      */
-    public List get(CommonTransactionStatusCode status, NodeMethodType method) {
+    @SuppressWarnings("unchecked")
+    public List<NodeTransaction> get(CommonTransactionStatusCode status, NodeMethodType method) {
 
         validateObjectArg(status, "CommonTransactionStatusCode");
         validateObjectArg(method, "NodeMethodType");
 
-        return getJdbcTemplate().query(SQL_SELECT_STATUS_N_METHOD,
+        return (List<NodeTransaction>)getJdbcTemplate().query(SQL_SELECT_STATUS_N_METHOD,
                 new Object[] { status.name(), method.getName() },
                 new TransactionMapper());
     }
@@ -245,17 +266,18 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao,
     /**
      * getByMethodType
      */
-    public List get(NodeMethodType method) {
+    @SuppressWarnings("unchecked")
+    public List<NodeTransaction> get(NodeMethodType method) {
 
         validateObjectArg(method, "NodeMethodType");
 
-        return getJdbcTemplate().query(SQL_SELECT_N_METHOD,
+        return (List<NodeTransaction>)getJdbcTemplate().query(SQL_SELECT_N_METHOD,
                 new Object[] { method.getName() }, new TransactionMapper());
     }
 
     public NodeTransaction getNextReceived(NodeMethodType method) {
 
-        List transactions = get(CommonTransactionStatusCode.Received, method);
+        List<NodeTransaction> transactions = get(CommonTransactionStatusCode.Received, method);
 
         logger.debug("Transactions found: " + transactions.size());
 
@@ -288,9 +310,10 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao,
     /**
      * getSubmittedDocumentTransactions
      */
-    public List getSubmittedDocumentTransactions() {
+    @SuppressWarnings("unchecked")
+    public List<NodeTransaction> getSubmittedDocumentTransactions() {
 
-        return getJdbcTemplate().query(SQL_SELECT_STATUS_DOCS,
+        return (List<NodeTransaction>)getJdbcTemplate().query(SQL_SELECT_STATUS_DOCS,
                 new Object[] { CommonTransactionStatusCode.Received.name() },
                 new TransactionMapper());
     }
@@ -298,6 +321,7 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao,
     /**
      * getDocuments
      */
+    @SuppressWarnings("unchecked")
     public List<Document> getDocuments(String transactionId,
             boolean useNetworkId, boolean loadDocContent) {
 
@@ -356,6 +380,7 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao,
 
     /**
      * make
+     * @deprecated
      */
     public NodeTransaction make(String flowId, String createdById,
             NodeMethodType method, CommonTransactionStatusCode status) {
@@ -390,6 +415,45 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao,
 
     }
 
+    public NodeTransaction make(ScheduledItem schedule, NodeMethodType method, CommonTransactionStatusCode status)
+    {
+        if(schedule == null)
+        {
+            throw new IllegalArgumentException("Null schedule");
+        }
+        if(StringUtils.isBlank(schedule.getFlowId()))
+        {
+            throw new IllegalArgumentException("Null flowId");
+        }
+        if(StringUtils.isBlank(schedule.getModifiedById()))
+        {
+            throw new IllegalArgumentException("Null modifiedById");
+        }
+        if(method == null)
+        {
+            throw new IllegalArgumentException("Null method");
+        }
+        if(status == null)
+        {
+            throw new IllegalArgumentException("Null status");
+        }
+
+        NodeTransaction tran = new NodeTransaction();
+        tran.setId(UUIDGenerator.makeId());
+        tran.setFlow(flowDao.get(schedule.getFlowId()));
+        tran.setNetworkId(tran.getId());
+        tran.setStatus(new TransactionStatus(tran.getNetworkId(), status, "Transaction Created"));
+        tran.setModifiedById(schedule.getModifiedById());
+        tran.setWebMethod(method);
+        //TODO set EndpointVersion, no use yet as no functionality that would set it makes use of the updated function, will fix the function to work for non schedules
+        if(schedule.getTargetType().equals(ScheduledItemTargetType.Partner) && StringUtils.isNotBlank(schedule.getTargetId()))
+        {
+            PartnerIdentity partner = getPartnerDao().get(schedule.getTargetId());
+            tran.updateWithPartnerDetails(partner);
+        }
+        return save(tran);
+    }
+
     /**
      * save
      */
@@ -397,12 +461,92 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao,
 
         validateObjectArg(instance, "NodeTransaction");
 
+        if(StringUtils.isBlank(instance.getId()) || !currentDatabaseRecord(instance))
+        {
+            instance = insert(instance);
+        }
+        else
+        {
+            instance = update(instance);
+        }
+        return instance;
+    }
+
+    private boolean currentDatabaseRecord(NodeTransaction instance)
+    {
+        if(instance != null && StringUtils.isNotBlank(instance.getId()))
+        {
+            int count = getJdbcTemplate().queryForInt(SQL_ID_EXISTS, new Object[] {instance.getId()}, new int[]{Types.VARCHAR});
+            if(count > 0)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private NodeTransaction update(NodeTransaction instance)
+    {
+        // FlowId, NetworkId, Status, ModifiedBy, ModifiedOn, StatusDetail,
+        // Operation, WebMethod WHERE Id
+        Object[] args = new Object[14];
+
+        args[0] = instance.getFlow().getId();
+        args[1] = instance.getNetworkId();
+        args[2] = instance.getStatus().getStatus().name();
+        args[3] = instance.getModifiedById();
+        args[4] = DateUtil.getTimestamp();
+        args[5] = instance.getStatus().getDescription();
+        args[6] = instance.getOperation();
+        args[7] = instance.getWebMethod().getName();
+
+        //new as of version 2.01
+        //EndpointVersion, NetworkEndpointVersion, NetworkEndpointUrl, NetworkEndpointStatus, NetworkEndpointStatusDetail
+        if(instance.getEndpointVersion() != null)
+        {
+            args[8] = instance.getEndpointVersion().toString();
+        }
+        else
+        {
+            args[8] = "";
+        }
+        if(instance.getNetworkEndpointVersion() != null)
+        {
+            args[9] = instance.getNetworkEndpointVersion().toString();
+        }
+        else
+        {
+            args[9] = "";
+        }
+        if(instance.getNetworkEndpointUrl() != null)
+        {
+            args[10] = instance.getNetworkEndpointUrl().toString();
+        }
+        else
+        {
+            args[10] = "";
+        }    
+        args[11] = instance.getNetworkEndpointStatus();
+        args[12] = instance.getNetworkEndpointStatusDetail();
+
+        args[13] = instance.getId();
+
+        getJdbcTemplate().update(SQL_UPDATE,
+                                 args,
+                                 new int[]{Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.TIMESTAMP, Types.VARCHAR,
+                                                 Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,
+                                                 Types.VARCHAR, Types.VARCHAR});
+
+        return instance;
+    }
+
+    private NodeTransaction insert(NodeTransaction instance)
+    {
         instance.setId(UUIDGenerator.makeId());
 
         // Id, FlowId, NetworkId, Status, ModifiedBy, ModifiedOn, StatusDetail,
         // Operation, WebMethod
-
-        Object[] args = new Object[9];
+        Object[] args = new Object[14];
 
         args[0] = instance.getId();
         args[1] = instance.getFlow().getId();
@@ -413,6 +557,35 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao,
         args[6] = instance.getStatus().getDescription();
         args[7] = instance.getOperation();
         args[8] = instance.getWebMethod().getName();
+
+        //new as of version 2.01
+        //EndpointVersion, NetworkEndpointVersion, NetworkEndpointUrl, NetworkEndpointStatus, NetworkEndpointStatusDetail
+        if(instance.getEndpointVersion() != null)
+        {
+            args[9] = instance.getEndpointVersion().toString();
+        }
+        else
+        {
+            args[9] = "";
+        }
+        if(instance.getNetworkEndpointVersion() != null)
+        {
+            args[10] = instance.getNetworkEndpointVersion().toString();
+        }
+        else
+        {
+            args[10] = "";
+        }
+        if(instance.getNetworkEndpointUrl() != null)
+        {
+            args[11] = instance.getNetworkEndpointUrl().toString();
+        }
+        else
+        {
+            args[11] = "";
+        }    
+        args[12] = instance.getNetworkEndpointStatus();
+        args[13] = instance.getNetworkEndpointStatusDetail();
 
         getJdbcTemplate().update(SQL_INSERT, args);
 
@@ -436,7 +609,7 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao,
         args[0] = status.name();
         args[1] = transactionId;
 
-        getJdbcTemplate().update(SQL_UPDATE, args);
+        getJdbcTemplate().update(SQL_UPDATE_STATUS, args);
 
     }
 
@@ -478,8 +651,9 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao,
     /**
      * get
      */
-    public List get() {
-        return getJdbcTemplate().query(SQL_SELECT_ALL, new TransactionMapper());
+    @SuppressWarnings("unchecked")
+    public List<NodeTransaction> get() {
+        return (List<NodeTransaction>)getJdbcTemplate().query(SQL_SELECT_ALL, new TransactionMapper());
     }
 
     /**
@@ -492,23 +666,44 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao,
 
         public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-            NodeTransaction obj = new NodeTransaction();
+            NodeTransaction transaction = new NodeTransaction();
 
             // Id, FlowId, NetworkId, Status, ModifiedBy, ModifiedOn,
             // StatusDetail, Operation, WebMethod
+            //new in 2.01
+            //NetworkEndpointVersion, NetworkEndpointUrl, NetworkEndpointStatus, NetworkEndpointStatusDetail
 
-            obj.setId(rs.getString("Id"));
-            obj.setFlow(flowDao.get(rs.getString("FlowId")));
-            obj.setNetworkId(rs.getString("NetworkId"));
-            obj.setStatus(new TransactionStatus(rs.getString("Id"), rs
+            transaction.setId(rs.getString("Id"));
+            transaction.setFlow(flowDao.get(rs.getString("FlowId")));
+            transaction.setNetworkId(rs.getString("NetworkId"));
+            transaction.setStatus(new TransactionStatus(rs.getString("Id"), rs
                     .getString("Status"), rs.getString("StatusDetail")));
-            obj.setModifiedById(rs.getString("ModifiedBy"));
-            obj.setModifiedOn(rs.getTimestamp("ModifiedOn"));
-            obj.setOperation(rs.getString("Operation"));
-            obj.setWebMethod((NodeMethodType) NodeMethodType.getEnumMap().get(
+            transaction.setModifiedById(rs.getString("ModifiedBy"));
+            transaction.setModifiedOn(rs.getTimestamp("ModifiedOn"));
+            transaction.setOperation(rs.getString("Operation"));
+            transaction.setWebMethod((NodeMethodType) NodeMethodType.getEnumMap().get(
                     rs.getString("WebMethod")));
 
-            return obj;
+            transaction.setEndpointVersion(EndpointVersionType.fromString(rs.getString("EndpointVersion")));
+            transaction.setNetworkEndpointVersion(EndpointVersionType.fromString(rs.getString("NetworkEndpointVersion")));
+            String url = rs.getString("NetworkEndpointUrl");
+            try
+            {
+                if(StringUtils.isNotBlank(url))
+                {
+                    transaction.setNetworkEndpointUrl(new URL(url));
+                }
+            }
+            catch (Exception e)
+            {
+                //recover but warn
+                logger.warn("Url of \"" + url + "\" was provided but could not be parsed, will not use in this NodeTransaction instance, id:  " 
+                            + transaction.getId() + ".");
+            }
+            transaction.setNetworkEndpointStatus(rs.getString("NetworkEndpointStatus"));
+            transaction.setNetworkEndpointStatusDetail(rs.getString("NetworkEndpointStatusDetail"));
+
+            return transaction;
 
         }
     }
@@ -547,12 +742,34 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao,
 
     }
 
-    public void setFlowDao(FlowDao flowDao) {
+    public void setFlowDao(FlowDao flowDao)
+    {
         this.flowDao = flowDao;
     }
 
-    public void setAccountDao(AccountDao accountDao) {
+    public void setAccountDao(AccountDao accountDao)
+    {
         this.accountDao = accountDao;
+    }
+
+    public PartnerDao getPartnerDao()
+    {
+        return partnerDao;
+    }
+
+    public void setPartnerDao(PartnerDao partnerDao)
+    {
+        this.partnerDao = partnerDao;
+    }
+
+    public FlowDao getFlowDao()
+    {
+        return flowDao;
+    }
+
+    public AccountDao getAccountDao()
+    {
+        return accountDao;
     }
 
 }

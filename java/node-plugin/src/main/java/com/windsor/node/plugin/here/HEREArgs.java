@@ -41,7 +41,7 @@ import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
 import com.windsor.node.common.domain.DomainStringStyle;
 import com.windsor.node.common.domain.NodeTransaction;

@@ -33,10 +33,10 @@ package com.windsor.node.common.service.admin;
 
 import java.util.List;
 import java.util.Map;
-
 import com.windsor.node.common.domain.DataFlow;
 import com.windsor.node.common.domain.DataService;
 import com.windsor.node.common.domain.NodeVisit;
+import com.windsor.node.common.domain.ScheduleArgument;
 
 public interface FlowService {
 
@@ -126,4 +126,11 @@ public interface FlowService {
      */
     List<String> getDataFlowNames();
 
+    /**
+     * Get a List of PluginParameterDescriptors
+     * @param flow
+     * @param dataService
+     * @return
+     */
+    List<?> getPluginParameterDescriptors(DataFlow flow, DataService dataService);
 }

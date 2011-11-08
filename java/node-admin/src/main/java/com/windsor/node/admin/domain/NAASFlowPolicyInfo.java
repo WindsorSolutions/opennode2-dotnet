@@ -31,7 +31,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.windsor.node.admin.domain;
 
-import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
 import com.windsor.node.common.domain.DomainStringStyle;
 

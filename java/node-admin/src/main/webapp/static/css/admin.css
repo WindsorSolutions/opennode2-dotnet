@@ -625,3 +625,15 @@ td.label{
 }
 /* end calendar */
 
+.readyToRun{
+   width:16px;
+   height:16px;
+   background: url("../../img/arrow_rotate_clockwise.png") center no-repeat transparent;
+   cursor:hand;
+   cursor:pointer;
+}
+.running{
+   width:16px;
+   height:16px;
+   background: url("../../img/ajax-loader.gif") center no-repeat transparent;
+}

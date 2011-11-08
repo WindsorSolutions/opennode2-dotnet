@@ -41,6 +41,8 @@ public abstract class AbstractValidator implements Validator {
 
     public static final String REQUIRED_ERR_CODE = "REQUIRED";
 
+    public static final String DUPLICATE_ERR_CODE = "DUPLICATE";
+
     public static final String REQUIRED_MSG = "required";
 
     public static final String OUT_OF_RANGE_ERR_CODE = "REQUIRED";

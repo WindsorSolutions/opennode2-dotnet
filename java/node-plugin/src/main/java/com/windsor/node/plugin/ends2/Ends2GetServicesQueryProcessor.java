@@ -59,6 +59,7 @@ import com.windsor.node.common.domain.SimpleContent;
 import com.windsor.node.conf.NAASConfig;
 import com.windsor.node.conf.NOSConfig;
 import com.windsor.node.data.dao.FlowDao;
+import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
 import com.windsor.node.data.dao.ServiceDao;
 import com.windsor.node.data.dao.jdbc.JdbcFlowDao;
 import com.windsor.node.data.dao.jdbc.JdbcServiceDao;
@@ -508,5 +509,11 @@ public class Ends2GetServicesQueryProcessor extends BaseWnosPlugin implements
 
     public void setTempFileName(String tempFileName) {
         this.tempFileName = tempFileName;
+    }
+
+    @Override
+    public List<PluginServiceParameterDescriptor> getParamters()
+    {
+        return new ArrayList<PluginServiceParameterDescriptor>();
     }
 }

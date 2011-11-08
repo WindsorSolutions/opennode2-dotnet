@@ -19,7 +19,7 @@
         </c:if>
 
         <form method="post" action="schedule-edit.htm">
-        
+
             <spring:bind path="command.id">
                 <input type="hidden" 
                        name="<c:out value="${status.expression}" />" 
@@ -27,7 +27,7 @@
             </spring:bind>
 
         <table id="formTable" width="100%" cellpadding="2" cellspacing="0">     
-        
+
             <tr>
                 <td class="label" width="5%" style="text-align: right; vertical-align: top;">Name:</td>
                 <td class="ctrl" width="95%">
@@ -35,11 +35,11 @@
                     <input type="text"
                            name="<c:out value="${status.expression}" />" 
                            value="<c:out value="${status.value}" />" class="textbox" maxlength="50" />
-                           <span class="error" <c:if test="${status.errorMessage == \"\"}">style="display:none;"</c:if> ><c:out value="${status.errorMessage}" /></span>
+                           <span class="error" <c:if test="${status.errorMessage == ''}">style="display:none;"</c:if> ><c:out value="${status.errorMessage}" /></span>
                 </spring:bind>
                 </td>
             </tr>
-            
+
             <tr>
                 <td class="label" width="5%" style="text-align: right; vertical-align: top;"><label for="active">Active:</label></td>
                 <td class="ctrl" width="95%">
@@ -51,11 +51,11 @@
 	                       <c:if test="${status.value}">checked</c:if>
 	                       onClick="flipSaveAndRunNow()"
 	                     />
-	                     <span class="error" <c:if test="${status.errorMessage == \"\"}">style="display:none;"</c:if> ><c:out value="${status.errorMessage}" /></span>
+	                     <span class="error" <c:if test="${status.errorMessage == ''}">style="display:none;"</c:if> ><c:out value="${status.errorMessage}" /></span>
 	                </spring:bind>                    
                 </td>
             </tr>
-            
+
             <!-- FLOW -->
             <tr>
                 <td class="label" width="5%" style="text-align: right; vertical-align: top;">Exchange:</td>
@@ -72,7 +72,7 @@
                             ><c:out value="${flow.name}" /></option>
                         </c:forEach>
                     </select>
-                    <span class="error" <c:if test="${status.errorMessage == \"\"}">style="display:none;"</c:if> ><c:out value="error=${status.errorMessage}" /></span>
+                    <span class="error" <c:if test="${status.errorMessage == ''}">style="display:none;"</c:if> ><c:out value="error=${status.errorMessage}" /></span>
                 </spring:bind></td>
             </tr>
             
@@ -80,7 +80,7 @@
             <tr>
                 <td class="label" width="5%" style="text-align: right; vertical-align: top;">Availability:</td>
                 <td class="ctrl" width="95%">
-                
+
                     <table cellpadding="2" cellspacing="1">
                         <tr>
                             <td>Starts&nbsp;On</td>
@@ -99,7 +99,7 @@
                                        class="cal" 
                                        style="width:130px;" 
                                        readonly  />
-                                <span class="error" <c:if test="${status.errorMessage == \"\"}">style="display:none;"</c:if> ><c:out value="${status.errorMessage}" /></span>
+                                <span class="error" <c:if test="${status.errorMessage == ''}">style="display:none;"</c:if> ><c:out value="${status.errorMessage}" /></span>
                             </spring:bind>
                             </td>
                             <td></td>
@@ -109,7 +109,7 @@
                                     size="20" maxlength="20"
                                 value="<c:out value="${status.value}" />" class="cal" 
                                     style="width:130px;" readonly  />
-                                <span class="error" <c:if test="${status.errorMessage == \"\"}">style="display:none;"</c:if> ><c:out value="${status.errorMessage}" /></span>
+                                <span class="error" <c:if test="${status.errorMessage == ''}">style="display:none;"</c:if> ><c:out value="${status.errorMessage}" /></span>
                             </spring:bind>
                             </td>
                             
@@ -118,8 +118,7 @@
                     
                 </td>
             </tr>
-            
-            
+
             <!-- FREQUENCY -->
             <tr>
                 <td class="label" width="5%" style="text-align: right; vertical-align: top;">Frequency:</td>
@@ -138,7 +137,7 @@
                                            class="textbox" 
                                            size="4" 
                                            maxlength="3" />
-                                    <span class="error" <c:if test="${status.errorMessage == \"\"}">style="display:none;"</c:if> ><c:out value="${status.errorMessage}" /></span>
+                                    <span class="error" <c:if test="${status.errorMessage == ''}">style="display:none;"</c:if> ><c:out value="${status.errorMessage}" /></span>
                                 </spring:bind>
                                 </td>
                                 <td valign="top">
@@ -151,7 +150,7 @@
                                         <c:out value="${freq}" /></option>
                                         </c:forEach>
                                     </select>
-                                    <span class="error" <c:if test="${status.errorMessage == \"\"}">style="display:none;"</c:if> ><c:out value="${status.errorMessage}" /></span>
+                                    <span class="error" <c:if test="${status.errorMessage == ''}">style="display:none;"</c:if> ><c:out value="${status.errorMessage}" /></span>
                                 </spring:bind>
                                 </td>
                             </tr>
@@ -216,7 +215,7 @@
                                             File system resource (network path)</label>
                                         </td></tr>
                                     </table>
-                                    <span class="error" <c:if test="${status.errorMessage == \"\"}">style="display:none;"</c:if> ><c:out value="${status.errorMessage}" /></span>
+                                    <span class="error" <c:if test="${status.errorMessage == ''}">style="display:none;"</c:if> ><c:out value="${status.errorMessage}" /></span>
                                 </spring:bind>
                                 
                                 <c:choose>
@@ -265,7 +264,7 @@
                                     <input id="sourceCommonId" type="text" name="<c:out value="${status.expression}" />" 
                                     value="<c:out value="${status.value}" />" class="textbox" 
                                     style="width:95%;" />
-                                    <c:if test="${status.errorMessage != \"\" && status.errorMessage != null}">
+                                    <c:if test="${status.errorMessage != '' && status.errorMessage != null}">
                                        <c:set var="sourceErrorMessage" value="${status.errorMessage}" />
                                     </c:if>
                                 </spring:bind>
@@ -274,7 +273,7 @@
                                 <!-- SERVICE DROP-DOWN -->
                                 <div id="sourceTypeS" style="display:<c:out value="${sourceTypeS}"/>;" > 
                                 <select id="sourceServiceList" name="serviceList" 
-                                    onchange="$('#sourceCommonId').val(this.options[selectedIndex].value)"  
+                                    onchange="$('#sourceCommonId').val(this.options[selectedIndex].value); loadArgList();"  
                                     style="width:96%;">
                                     <c:choose>
                                         <c:when test="${command.flowId == null || command.flowId ==''}">
@@ -307,7 +306,7 @@
                                 </div>
                                 
                                 <!-- display sourceId error message regardless of what source type is selected -->
-                                <c:if test="${sourceErrorMessage != \"\" || sourceErrorMessage != null}">
+                                <c:if test="${sourceErrorMessage != '' || sourceErrorMessage != null}">
                                     <div id="sourceIdErrorDisplay" style="display:block;">
                                         <span class="error"><c:out value="${sourceErrorMessage}" /></span>
                                     </div>
@@ -315,26 +314,19 @@
                                 
                                 
                             <!-- PARTNER OPERATION -->
-                            <div id="sourceOperationLabel" 
-                                 style="display:<c:out value="${sourceTypeO}"/>;">Operation name:</div>
+                                <div id="sourceOperationLabel" 
+                                     style="display:<c:out value="${sourceTypeO}"/>;">Operation name:</div>
 
                                 <spring:bind path="command.sourceOperation">
                                 <input id="sourceOperation" type="text" name="<c:out value="${status.expression}" />" 
                                     value="<c:out value="${status.value}" />" class="textbox" 
                                     style="width:95%; display:<c:out value="${sourceTypeO}"/>;" />
-                                    <span class="error" <c:if test="${status.errorMessage == \"\"}">style="display:none;"</c:if> ><c:out value="${status.errorMessage}" /></span>
+                                    <span class="error" <c:if test="${status.errorMessage == ''}">style="display:none;"</c:if> ><c:out value="${status.errorMessage}" /></span>
                                 </spring:bind>
                         
                                 <!-- SERVICE ARGUMENTS -->
-                            <div id="sourceArgsLabel" 
-                                 style="display:<c:out value="${sourceTypeA}"/>;">Arguments:</div>
-
-                                <spring:bind path="command.sourceArgs">
-                                    <textarea id="sourceArgs" name="<c:out value="${status.expression}" />" rows="4" cols="20" 
-                                    class="textbox" style="display:<c:out value="${sourceTypeA}"/>; width:95%;"><c:out value="${status.value}" /></textarea>
-                                    <span class="error" <c:if test="${status.errorMessage == \"\"}">style="display:none;"</c:if> ><c:out value="${status.errorMessage}" /></span>
-                                </spring:bind>
-                                
+                                <div id="sourceTypeArgs" >
+                                </div>
                             
                             </td>
                         </tr>
@@ -413,7 +405,7 @@
                                             </td>
                                         </tr>
                                     </table>
-                                    <span class="error" <c:if test="${status.errorMessage == \"\"}">style="display:none;"</c:if> ><c:out value="${status.errorMessage}" /></span>
+                                    <span class="error" <c:if test="${status.errorMessage == ''}">style="display:none;"</c:if> ><c:out value="${status.errorMessage}" /></span>
                                 </spring:bind>
                                 
                             </td>
@@ -436,7 +428,7 @@
                                      </c:when>
                                      <c:otherwise>none</c:otherwise>
                                     </c:choose>;" />
-                                    <span class="error" <c:if test="${status.errorMessage == \"\"}">style="display:none;"</c:if> ><c:out value="${status.errorMessage}" /></span>
+                                    <span class="error" <c:if test="${status.errorMessage == ''}">style="display:none;"</c:if> ><c:out value="${status.errorMessage}" /></span>
                                 </spring:bind>
                                 
                                 <select id="targetPartnerList" name="partnerList" 
@@ -485,14 +477,14 @@
                            value="Save" class="button" />
                            
                     <input type="submit" name="delete" value="Delete"
-                        <c:if test="${command.id == null || command.id == \"\" }">
+                        <c:if test="${command.id == null || command.id == '' }">
                           <c:out value='disabled="true"' />
                         </c:if>
                         onclick="return confirm('Are you sure you want to delete this schedule?');"
                         class="button" />
 
                     <input id="saveAndRunNow" type="submit" name="now" 
-                        <c:if test="${command.active == null || command.active == \"\" }">
+                        <c:if test="${command.active == null || command.active == '' }">
                             <c:out value='disabled="true"' />
                         </c:if>
                         onclick="return setRunNowAndSave()" 
@@ -518,7 +510,26 @@
 	$(document).ready(function()
 	{
 		setFrequencyLogic();
+		loadArgList();
+		<c:if test="${command.id != null && command.id != '' }">
+        //existing ScheduledItem, disable some features
+        $("#flowId").attr('disabled', 'disabled');
+        </c:if>
 	});
+
+    function loadArgList()
+    {
+    	$("#sourceTypeArgs").html("");
+    	var flowId = $("#flowId option:selected").val();
+    	var serviceId = $("#sourceServiceList option:selected").val();
+    	var scheduleId = "<c:out value='${command.id}' />";
+        $("#sourceTypeArgs").load("arg-list.htm?flowId=" + flowId + "&serviceId=" + serviceId + "&scheduleId=" + scheduleId);
+    }
+
+    function clearArgList()
+    {
+    	$("#sourceTypeArgs").html("");
+    }
 
 	function flipSaveAndRunNow() {
 
@@ -529,6 +540,7 @@
 
     function setServiceList(flowId){ 
         $("#sourceTypeS").load("service-list.htm?flowId=" + flowId, [], function(){$("#sourceTypeS").show()});
+        clearArgList();
     }
 
     function setRunNowAndSave(){

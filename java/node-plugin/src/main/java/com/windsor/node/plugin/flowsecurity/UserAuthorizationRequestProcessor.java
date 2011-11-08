@@ -52,6 +52,7 @@ import com.windsor.node.conf.NAASConfig;
 import com.windsor.node.data.dao.AccountDao;
 import com.windsor.node.data.dao.FlowDao;
 import com.windsor.node.data.dao.FlowSecurityDao;
+import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
 import com.windsor.node.data.dao.jdbc.JdbcAccountDao;
 import com.windsor.node.data.dao.jdbc.JdbcFlowDao;
 import com.windsor.node.data.dao.jdbc.JdbcFlowSecurityDao;
@@ -394,5 +395,11 @@ public class UserAuthorizationRequestProcessor extends BaseWnosPlugin {
         }
 
         return b;
+    }
+
+    @Override
+    public List<PluginServiceParameterDescriptor> getParamters()
+    {
+        return new ArrayList<PluginServiceParameterDescriptor>();
     }
 }

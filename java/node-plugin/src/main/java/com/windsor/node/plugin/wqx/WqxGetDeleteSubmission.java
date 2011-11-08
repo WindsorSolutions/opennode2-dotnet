@@ -37,12 +37,33 @@ import java.util.List;
 import com.windsor.node.common.domain.DataServiceRequestParameter;
 import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.ProcessContentResult;
+import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
 
 public class WqxGetDeleteSubmission extends BaseWqxXmlPlugin {
 
     public static final String SERVICE_NAME = "WQXGetDeleteSubmission";
     private static final String TEMPLATE_NAME = "WQX_Delete.vm";
     private static final String OUTFILE_BASE_NAME = "WQX_2_Delete";
+
+    public static final PluginServiceParameterDescriptor ORG_ID = new PluginServiceParameterDescriptor("Org ID",
+                    PluginServiceParameterDescriptor.TYPE_STRING, Boolean.TRUE,
+                    "The Org ID to be used in the submission Header. Also governs SELECT logic on WQX_ORGANIZATION table.");
+    /*public static final PluginServiceParameterDescriptor ADD_HEADER = new PluginServiceParameterDescriptor("Add Header?",
+                    PluginServiceParameterDescriptor.TYPE_BOOLEAN, Boolean.FALSE,
+                    "Indicates whether or not to add a Header to the submission.  Defaults to true if not supplied.");
+    public static final PluginServiceParameterDescriptor USE_SUBMISSION_HISTORY = new PluginServiceParameterDescriptor(
+                    "Use Submission History?", PluginServiceParameterDescriptor.TYPE_BOOLEAN, Boolean.FALSE,
+                    "Indicates whether the submission will be recorded in the Submission History table.  Defaults to true if not supplied.");
+    public static final PluginServiceParameterDescriptor START_DATE = new PluginServiceParameterDescriptor(
+                    "Start Date",
+                    PluginServiceParameterDescriptor.TYPE_DATE,
+                    Boolean.FALSE,
+                    "Applies a date filter on the WQXUPDATEDATE field greater than or equal to the date supplied. Used to send only a subset of activity data.");
+    public static final PluginServiceParameterDescriptor END_DATE = new PluginServiceParameterDescriptor(
+                    "End Date",
+                    PluginServiceParameterDescriptor.TYPE_DATE,
+                    Boolean.FALSE,
+                    "Applies a date filter on the WQXUPDATEDATE field less than to the date supplied. Used to send only a subset of activity data.");*/
 
     public WqxGetDeleteSubmission() {
 
@@ -80,5 +101,17 @@ public class WqxGetDeleteSubmission extends BaseWqxXmlPlugin {
         }
 
         return list;
+    }
+
+    @Override
+    public List<PluginServiceParameterDescriptor> getParamters()
+    {
+        List<PluginServiceParameterDescriptor> params = new ArrayList<PluginServiceParameterDescriptor>();
+        params.add(ORG_ID);
+        /*params.add(ADD_HEADER);
+        params.add(USE_SUBMISSION_HISTORY);
+        params.add(START_DATE);
+        params.add(END_DATE);*/
+        return params;
     }
 }

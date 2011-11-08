@@ -98,6 +98,16 @@
         <property name="transactionService" ref="transactionService" />
     </bean>
 
+    <bean name="/download.htm" class="com.windsor.node.admin.transaction.TransactionDownloadController">
+        <property name="transactionService" ref="transactionService" />
+        <property name="nodeClientFactory" ref="nodeClientFactory" />
+    </bean>
+
+    <bean name="/getStatus.htm" class="com.windsor.node.admin.transaction.TransactionGetStatusController">
+        <property name="transactionService" ref="transactionService" />
+        <property name="nodeClientFactory" ref="nodeClientFactory" />
+    </bean>
+
     <bean name="/doc.htm" class="com.windsor.node.admin.DocController">
         <property name="transactionService" ref="transactionService" />
     </bean>

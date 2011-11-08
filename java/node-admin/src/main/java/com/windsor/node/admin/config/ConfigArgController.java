@@ -39,7 +39,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.beans.factory.InitializingBean;
@@ -137,6 +136,7 @@ public class ConfigArgController extends BaseSimpleFormController implements
 
     }
 
+    @SuppressWarnings({"rawtypes", "unchecked"})
     protected Map getReferenceData(HttpServletRequest request, NodeVisit visit) {
 
         Map model = new HashMap();
@@ -153,6 +153,7 @@ public class ConfigArgController extends BaseSimpleFormController implements
 
     }
 
+    @SuppressWarnings({"rawtypes", "unchecked"})
     protected Map referenceData(HttpServletRequest request) throws Exception {
 
         NodeVisit visit = VisitUtils.getVisit(request);

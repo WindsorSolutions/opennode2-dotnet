@@ -33,9 +33,9 @@ package com.windsor.node.common.domain.flowsecurity;
 
 import java.util.Random;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import com.windsor.node.common.domain.AuditableIdentity;
 import com.windsor.node.common.domain.DomainStringStyle;

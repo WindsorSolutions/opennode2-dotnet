@@ -35,21 +35,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.sql.Types;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.jdbc.core.RowMapper;
-
+import com.windsor.node.common.domain.ScheduleArgument;
 import com.windsor.node.common.domain.ScheduleExecuteStatus;
 import com.windsor.node.common.domain.ScheduleFrequencyType;
 import com.windsor.node.common.domain.ScheduledItem;
 import com.windsor.node.common.domain.ScheduledItemSourceType;
 import com.windsor.node.common.domain.ScheduledItemTargetType;
-import com.windsor.node.common.util.ByIndexOrNameMap;
 import com.windsor.node.data.dao.ScheduleDao;
 import com.windsor.node.util.DateUtil;
 import com.windsor.node.util.FormatUtil;
@@ -59,7 +53,7 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
     /**
      * SQL SELECT statement for this table
      */
-    protected static final String SQL_SELECT_ARG = "SELECT ArgKey, ArgValue FROM NScheduleSourceArg "
+    protected static final String SQL_SELECT_ARG = "SELECT Id, ArgKey, ArgValue FROM NScheduleSourceArg "
             + "WHERE ScheduleId = ? ORDER BY ArgKey ";
 
     /**
@@ -226,7 +220,8 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
 
         getJdbcTemplate().update(sql, args, types);
 
-        saveSourceArgs(instance.getSourceArgs(), instance.getId());
+        //saveSourceArgs(instance.getSourceArgs(), instance.getId());
+        saveScheduleArguments(instance);
 
         return get(instance.getId());
 
@@ -331,7 +326,7 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
         return types;
     }
 
-    private void saveSourceArgs(ByIndexOrNameMap sourceArgs, String scheduleId) {
+    /*private void saveSourceArgs(ByIndexOrNameMap sourceArgs, String scheduleId) {
 
         validateObjectArg(sourceArgs, "ByIndexOrNameMap");
 
@@ -350,6 +345,30 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
             args[3] = ((String) sourceArgs.get(name)).trim();
 
             getJdbcTemplate().update(SQL_INSERT_ARG, args, types);
+        }
+    }*/
+    private void saveScheduleArguments(ScheduledItem instance)
+    {
+        if(instance == null || instance.getScheduleArguments() == null)
+        {
+            //maybe an error?
+            return;
+        }
+        int[] types = new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,
+                        Types.VARCHAR };
+        Object[] args = new Object[types.length];
+        
+        for(int i = 0; i < instance.getScheduleArguments().size(); i++)
+        {
+            ScheduleArgument current = instance.getScheduleArguments().get(i);
+            if(current != null && StringUtils.isNotBlank(current.getArgumentValue()))
+            {
+                args[0] = idGenerator.createId();
+                args[1] = instance.getId();
+                args[2] = current.getArgumentKey();
+                args[3] = current.getArgumentValue();
+                getJdbcTemplate().update(SQL_INSERT_ARG, args, types);
+            }
         }
     }
 
@@ -435,69 +454,108 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
 
         public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-            ScheduledItem obj = new ScheduledItem();
+            ScheduledItem item = new ScheduledItem();
 
             // Id
-            obj.setId(rs.getString("Id"));
+            item.setId(rs.getString("Id"));
             // FlowId
-            obj.setFlowId(rs.getString("FlowId"));
+            item.setFlowId(rs.getString("FlowId"));
             // Name
-            obj.setName(rs.getString("Name"));
+            item.setName(rs.getString("Name"));
             // StartOn
-            obj.setStartOn(rs.getTimestamp("StartOn"));
+            item.setStartOn(rs.getTimestamp("StartOn"));
             // EndOn
-            obj.setEndOn(rs.getTimestamp("EndOn"));
+            item.setEndOn(rs.getTimestamp("EndOn"));
 
             // SourceType
-            obj.setSourceType((ScheduledItemSourceType) ScheduledItemSourceType
+            item.setSourceType((ScheduledItemSourceType) ScheduledItemSourceType
                     .valueOf(rs.getString("SourceType")));
 
             // SourceId
-            obj.setSourceId(rs.getString("SourceId"));
+            item.setSourceId(rs.getString("SourceId"));
             // SourceOperation
-            obj.setSourceOperation(rs.getString("SourceOperation"));
+            item.setSourceOperation(rs.getString("SourceOperation"));
 
-            // SourceArgs
-            Map<String, String> map = getMap(SQL_SELECT_ARG,
-                    rs.getString("Id"), false);
-            if (MapUtils.isNotEmpty(map)) {
-                ByIndexOrNameMap sourceArgs = new ByIndexOrNameMap(map);
-                obj.setSourceArgs(sourceArgs);
+            // SourceArgs, changed this to be an actual object, this was very hard to work with beforehand.
+            @SuppressWarnings("unchecked")
+            List<ScheduleArgument> args = (List<ScheduleArgument>)getList(SQL_SELECT_ARG, rs.getString("Id"), new RowMapper(){
+                public Object mapRow(ResultSet rs, int rowNum) throws SQLException
+                {
+                    ScheduleArgument arg = new ScheduleArgument();
+                    arg.setId(rs.getString("Id"));
+                    arg.setArgumentKey(rs.getString("ArgKey"));
+                    arg.setArgumentValue(rs.getString("ArgValue"));
+                    return arg;
+                }
+            });
+            if(args != null)
+            {
+                //handle missing arg keys
+                for(int i = 0, y = 0; i < args.size(); i++, y++)
+                {
+                    while(y != Integer.parseInt(args.get(i).getArgumentKey()))
+                    {
+                        ScheduleArgument newArg = new ScheduleArgument();
+                        String newKey = "" + (y);
+                        while(newKey.length() < 3)
+                        {
+                            newKey = "0" + newKey;
+                        }
+                        newArg.setArgumentKey(newKey);
+                        item.getScheduleArguments().add(newArg);
+                        y++;
+                    }
+                    item.getScheduleArguments().add(args.get(i));
+                }
             }
+            //add N more blank ones, hopefully this won't cause a problem, a bit bigger as the AQS plugin is beyond the pale
+            //moved to EditScheduleController as a test
+            /*int initialSize = item.getScheduleArguments().size();
+            for(int i = initialSize; i < initialSize+30; i++)
+            {
+                ScheduleArgument newArg = new ScheduleArgument();
+                String newKey = "" + (i);
+                while(newKey.length() < 3)
+                {
+                    newKey = "0" + newKey;
+                }
+                newArg.setArgumentKey(newKey);
+                item.getScheduleArguments().add(newArg);
+            }*/
 
             // TargetType
-            obj.setTargetType((ScheduledItemTargetType) ScheduledItemTargetType
+            item.setTargetType((ScheduledItemTargetType) ScheduledItemTargetType
                     .valueOf(rs.getString("TargetType")));
 
             // TargetId
-            obj.setTargetId(rs.getString("TargetId"));
+            item.setTargetId(rs.getString("TargetId"));
             // LastExecutionInfo
-            obj.setLastExecutionInfo(rs.getString("LastExecutionInfo"));
+            item.setLastExecutionInfo(rs.getString("LastExecutionInfo"));
             // LastExecutedOn
-            obj.setLastExecutedOn(rs.getTimestamp("LastExecutedOn"));
+            item.setLastExecutedOn(rs.getTimestamp("LastExecutedOn"));
             // NextRun
-            obj.setNextRunOn(rs.getTimestamp("NextRun"));
+            item.setNextRunOn(rs.getTimestamp("NextRun"));
 
             // FrequencyType
-            obj.setFrequencyType((ScheduleFrequencyType) ScheduleFrequencyType
+            item.setFrequencyType((ScheduleFrequencyType) ScheduleFrequencyType
                     .valueOf(rs.getString("FrequencyType")));
 
             // Frequency
-            obj.setFrequency(rs.getInt("Frequency"));
+            item.setFrequency(rs.getInt("Frequency"));
             // ModifiedBy
-            obj.setModifiedById(rs.getString("ModifiedBy"));
+            item.setModifiedById(rs.getString("ModifiedBy"));
             // ModifiedOn
-            obj.setModifiedOn(rs.getTimestamp("ModifiedOn"));
+            item.setModifiedOn(rs.getTimestamp("ModifiedOn"));
             // IsActive
-            obj.setActive(FormatUtil.toBooleanFromYN(rs.getString("IsActive")));
+            item.setActive(FormatUtil.toBooleanFromYN(rs.getString("IsActive")));
             // IsRunNow
-            obj.setRunNow(FormatUtil.toBooleanFromYN(rs.getString("IsRunNow")));
+            item.setRunNow(FormatUtil.toBooleanFromYN(rs.getString("IsRunNow")));
 
             // ExecuteStatus
-            obj.setExecuteStatus((ScheduleExecuteStatus) ScheduleExecuteStatus
+            item.setExecuteStatus((ScheduleExecuteStatus) ScheduleExecuteStatus
                     .valueOf(rs.getString("ExecuteStatus")));
 
-            return obj;
+            return item;
 
         }
 

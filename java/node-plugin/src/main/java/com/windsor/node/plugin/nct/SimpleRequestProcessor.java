@@ -54,6 +54,7 @@ import com.windsor.node.common.domain.PaginationIndicator;
 import com.windsor.node.common.domain.ProcessContentResult;
 import com.windsor.node.common.domain.RequestType;
 import com.windsor.node.common.domain.ServiceType;
+import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
 import com.windsor.node.plugin.BaseWnosPlugin;
 import com.windsor.node.service.helper.CompressionService;
 import com.windsor.node.service.helper.IdGenerator;
@@ -109,28 +110,28 @@ public class SimpleRequestProcessor extends BaseWnosPlugin {
      * will be called by the plugin executor after properties are set. an
      * opportunity to validate all settings
      */
-    public void afterPropertiesSet() {
+    public void afterPropertiesSet()
+    {
         super.afterPropertiesSet();
 
-        settingService = (SettingServiceProvider) getServiceFactory()
-                .makeService(SettingServiceProvider.class);
+        settingService = (SettingServiceProvider)getServiceFactory().makeService(SettingServiceProvider.class);
 
-        if (settingService == null) {
-            throw new RuntimeException(
-                    "Unable to obtain SettingServiceProvider");
+        if(settingService == null)
+        {
+            throw new RuntimeException("Unable to obtain SettingServiceProvider");
         }
 
-        idGenerator = (IdGenerator) getServiceFactory().makeService(
-                IdGenerator.class);
+        idGenerator = (IdGenerator)getServiceFactory().makeService(IdGenerator.class);
 
-        if (idGenerator == null) {
+        if(idGenerator == null)
+        {
             throw new RuntimeException("Unable to obtain IdGenerator");
         }
 
-        compressionService = (CompressionService) getServiceFactory()
-                .makeService(CompressionService.class);
+        compressionService = (CompressionService)getServiceFactory().makeService(CompressionService.class);
 
-        if (compressionService == null) {
+        if(compressionService == null)
+        {
             throw new RuntimeException("Unable to obtain CompressionService");
         }
 
@@ -143,70 +144,57 @@ public class SimpleRequestProcessor extends BaseWnosPlugin {
     /**
      * process
      */
-    public ProcessContentResult process(NodeTransaction transaction) {
-
+    public ProcessContentResult process(NodeTransaction transaction)
+    {
         debug("Processing transaction...");
 
         ProcessContentResult result = new ProcessContentResult();
         result.setSuccess(false);
         result.setStatus(CommonTransactionStatusCode.Failed);
 
-        try {
-
-            result.getAuditEntries()
-                    .add(makeEntry("Validating transaction..."));
+        try
+        {
+            result.getAuditEntries().add(makeEntry("Validating transaction..."));
             validateTransaction(transaction);
 
-            result.getAuditEntries().add(
-                    makeEntry("Parsing test from: "
-                            + transaction.getWebMethod().getName()));
+            result.getAuditEntries().add(makeEntry("Parsing test from: " + transaction.getWebMethod().getName()));
 
-            if (transaction.getWebMethod().equals(NodeMethodType.QUERY)) {
-
+            if(transaction.getWebMethod().equals(NodeMethodType.QUERY))
+            {
                 result.setDocuments(processRequest(transaction.getRequest()));
-
-            } else if (transaction.getWebMethod()
-                    .equals(NodeMethodType.SOLICIT)
-                    || transaction.getWebMethod().equals(
-                            NodeMethodType.SCHEDULE)) {
-
+            }
+            else if(transaction.getWebMethod().equals(NodeMethodType.SOLICIT)
+                            || transaction.getWebMethod().equals(NodeMethodType.SCHEDULE))
+            {
                 result.setDocuments(processRequest(transaction.getRequest()));
-
             }
 
             /*
-             * calculate maxRows and whether this is the last doc of a
-             * hypothetical paginated set
+             * calculate maxRows and whether this is the last doc of a hypothetical paginated set
              */
-
             int startRow = transaction.getRequest().getPaging().getStart();
             int rowCount = transaction.getRequest().getPaging().getCount();
 
             boolean isLast = isLastPage(startRow, rowCount);
 
-            result.setPaginatedContentIndicator(new PaginationIndicator(
-                    startRow, getMaxRowsFromPaging(transaction.getRequest()
-                            .getPaging()), isLast));
+            result.setPaginatedContentIndicator(new PaginationIndicator(startRow, getMaxRowsFromPaging(transaction
+                            .getRequest().getPaging()), isLast));
 
             result.setSuccess(true);
             result.setStatus(CommonTransactionStatusCode.Processed);
             result.getAuditEntries().add(makeEntry("Done: OK"));
 
-        } catch (Exception ex) {
-
+        }
+        catch(Exception ex)
+        {
             error(ex);
             ex.printStackTrace();
 
             result.setSuccess(false);
             result.setStatus(CommonTransactionStatusCode.Failed);
 
-            result.getAuditEntries().add(
-                    makeEntry("Error while executing: "
-                            + this.getClass().getName() + "Message: "
-                            + ex.getMessage()));
-
+            result.getAuditEntries().add(makeEntry("Error while executing: " + this.getClass().getName() + "Message: " + ex.getMessage()));
         }
-
         return result;
     }
 
@@ -215,36 +203,31 @@ public class SimpleRequestProcessor extends BaseWnosPlugin {
      * Utilities
      */
 
-    private List<Document> processRequest(DataRequest req) {
+    private List<Document> processRequest(DataRequest req)
+    {
 
-        if (req == null) {
+        if(req == null)
+        {
             throw new RuntimeException("Null request");
         }
-
         List<Document> resultDocs = new ArrayList<Document>();
-
-        try {
-
+        try
+        {
             Document doc = new Document();
-
             StringBuffer sb = new StringBuffer();
-
             sb.append(QUERY_XML_HEADER);
 
             int startRow = req.getPaging().getStart();
-
             int maxRows = getMaxRowsFromPaging(req.getPaging());
 
-            for (int i = startRow; i < maxRows; i++) {
+            for(int i = startRow; i < maxRows; i++)
+            {
                 sb.append("\n<row>Row " + i + " text</row>");
             }
 
             sb.append(QUERY_XML_FOOTER);
-
             logger.debug("Buffered doc content");
-
-            String resultFilePath = FilenameUtils.concat(resultFilePathBase,
-                    "NCT-" + req.getService().getName() + "-"
+            String resultFilePath = FilenameUtils.concat(resultFilePathBase, "NCT-" + req.getService().getName() + "-"
                             + idGenerator.createId() + ".xml");
 
             File resultFile = new File(resultFilePath);
@@ -253,49 +236,47 @@ public class SimpleRequestProcessor extends BaseWnosPlugin {
 
             logger.debug("Wrote buffer to " + resultFilePath);
 
-            if (req.getType().equals(RequestType.SOLICIT)) {
-
+            if(req.getType().equals(RequestType.SOLICIT))
+            {
                 resultFile = compressionService.zip(resultFile);
 
                 doc.setDocumentName("NCT-SolicitResults.zip");
                 doc.setType(CommonContentType.ZIP);
 
                 logger.debug("SOLICIT request, set content type to ZIP");
-
-            } else if (req.getType().equals(RequestType.QUERY)) {
-
+            }
+            else if(req.getType().equals(RequestType.QUERY))
+            {
                 logger.debug("QUERY request");
 
                 String zipSetting = null;
-
-                if (req.getParameters().containsKey(STRING_PARAM)) {
-
-                    zipSetting = (String) req.getParameters().get(STRING_PARAM);
-
-                } else if (req.getParameters().containsKey(XML_PARAM)) {
-
-                    zipSetting = (String) req.getParameters().get(XML_PARAM);
-
+                if(req.getParameters().containsKey(STRING_PARAM))
+                {
+                    zipSetting = (String)req.getParameters().get(STRING_PARAM);
+                }
+                else if(req.getParameters().containsKey(XML_PARAM))
+                {
+                    zipSetting = (String)req.getParameters().get(XML_PARAM);
                 }
 
                 logger.debug("zipSetting = " + zipSetting);
 
-                if (StringUtils.isNotBlank(zipSetting)
-                        && StringUtils.containsIgnoreCase(zipSetting, UNZIPPED)) {
-
+                if(StringUtils.isNotBlank(zipSetting) && StringUtils.containsIgnoreCase(zipSetting, UNZIPPED))
+                {
                     doc.setDocumentName("NCT-QueryResults.xml");
                     doc.setType(CommonContentType.XML);
-
-                } else if (StringUtils.isNotBlank(zipSetting)
-                        && StringUtils.containsIgnoreCase(zipSetting, ZIPPED)) {
-
+                }
+                else if(StringUtils.isNotBlank(zipSetting) && StringUtils.containsIgnoreCase(zipSetting, ZIPPED))
+                {
                     resultFile = compressionService.zip(resultFile);
 
                     doc.setDocumentName("NCT-QueryResults.zip");
                     doc.setType(CommonContentType.ZIP);
                 }
 
-            } else {
+            }
+            else
+            {
                 doc.setDocumentName("NCT-QueryResults.xml");
                 doc.setType(CommonContentType.XML);
             }
@@ -307,34 +288,34 @@ public class SimpleRequestProcessor extends BaseWnosPlugin {
 
             return resultDocs;
 
-        } catch (Exception ex) {
-
+        }
+        catch(Exception ex)
+        {
             throw new RuntimeException(ex);
-
-        } finally {
+        }
+        finally
+        {
 
             /*
-             * create the audit report that the "DownloadAuditReport" test looks
-             * for
+             * create the audit report that the "DownloadAuditReport" test looks for
              */
-            String auditFilePath = FilenameUtils.concat(resultFilePathBase,
-                    AUDIT_REPORT_NAME);
+            String auditFilePath = FilenameUtils.concat(resultFilePathBase, AUDIT_REPORT_NAME);
             File auditFile = new File(auditFilePath);
 
-            try {
+            try
+            {
 
-                FileUtils
-                        .writeStringToFile(
-                                auditFile,
-                                "Windsor Node 2.0 Audit Report\n\nIs anyone checking this?",
-                                "UTF-8");
+                FileUtils.writeStringToFile(auditFile, "Windsor Node 2.0 Audit Report\n\nIs anyone checking this?",
+                                            "UTF-8");
 
                 Document auditDoc = new Document();
                 auditDoc.setDocumentName(AUDIT_REPORT_NAME);
                 auditDoc.setContent(FileUtils.readFileToByteArray(auditFile));
                 resultDocs.add(auditDoc);
 
-            } catch (IOException ioe) {
+            }
+            catch(IOException ioe)
+            {
 
                 throw new RuntimeException(ioe);
             }
@@ -342,36 +323,33 @@ public class SimpleRequestProcessor extends BaseWnosPlugin {
 
     }
 
-    private int getMaxRowsFromPaging(PaginationIndicator paging) {
-
-        if (paging.getCount() == -1 || paging.getCount() > MAX_ROWS) {
-
+    private int getMaxRowsFromPaging(PaginationIndicator paging)
+    {
+        if(paging.getCount() == -1 || paging.getCount() > MAX_ROWS)
+        {
             return MAX_ROWS;
-
-        } else {
-
+        }
+        else
+        {
             return paging.getCount();
         }
     }
 
-    private boolean isLastPage(int start, int count) {
-
+    private boolean isLastPage(int start, int count)
+    {
         boolean b = false;
-
-        if (start == 0 && count == -1) {
-
+        if(start == 0 && count == -1)
+        {
             b = true;
-
-        } else if (start > 0 && count == -1) {
-
-            b = false;
-
-        } else if (count - start >= MAX_ROWS) {
-
-            b = true;
-
         }
-
+        else if(start > 0 && count == -1)
+        {
+            b = false;
+        }
+        else if(count - start >= MAX_ROWS)
+        {
+            b = true;
+        }
         return b;
     }
 
@@ -379,5 +357,11 @@ public class SimpleRequestProcessor extends BaseWnosPlugin {
     public List<DataServiceRequestParameter> getServiceRequestParamSpecs(
             String serviceName) {
         return null;
+    }
+
+    @Override
+    public List<PluginServiceParameterDescriptor> getParamters()
+    {
+        return new ArrayList<PluginServiceParameterDescriptor>();
     }
 }

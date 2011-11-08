@@ -73,6 +73,7 @@ public class ConfigController extends AbstractController implements
 
     }
 
+    @SuppressWarnings({"rawtypes", "unchecked"})
     protected ModelAndView handleRequestInternal(HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 

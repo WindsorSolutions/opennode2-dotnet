@@ -114,7 +114,8 @@ public class ConfigConnController extends BaseSimpleFormController implements Co
                 catch(Exception e)
                 {
                     //on any error consider it a failure
-                    logger.info("Connection creation failed during the check JDBC connection test.", e);
+                    logger.info("Connection creation failed during the check JDBC connection test for \"" 
+                                + ((conn != null ) ? conn.getConnectionString(): "") + "\".", e);
                     //success is already false
                 }
                 finally

@@ -34,7 +34,7 @@ package com.windsor.node.common.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
 /**
  * A DataService is a discrete operation that can be invoked via SOAP or

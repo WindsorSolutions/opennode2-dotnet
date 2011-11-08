@@ -34,8 +34,8 @@ package com.windsor.node.plugin.rcra50;
 import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.ProcessContentResult;
 
-public class HazardousWasteCMESubmission extends BaseRcra50XmlPlugin {
-
+public class HazardousWasteCMESubmission extends BaseRcra50XmlPlugin
+{
     public static final String SERVICE_NAME = "RCRA-GetCMEData";
 
     /** Velocity template name. */
@@ -43,26 +43,24 @@ public class HazardousWasteCMESubmission extends BaseRcra50XmlPlugin {
 
     private static final String OUTFILEBASE_NAME = "RCRA50-GetCMEData";
 
-    public HazardousWasteCMESubmission() {
+    public HazardousWasteCMESubmission()
+    {
         super();
-
         debug("HazardousWasteCMESubmission instantiated.");
-
     }
 
     /**
-     * Will be called by the plugin executor after properties are set; an
-     * opportunity to validate all settings.
+     * Will be called by the plugin executor after properties are set; an opportunity to validate all settings.
      */
-    public void afterPropertiesSet() {
+    public void afterPropertiesSet()
+    {
         super.afterPropertiesSet();
         setErrorOnEmptySubmissions(true);
         setSubmissionCountSql("SELECT COUNT(epa_hdlr_id) FROM RCRA_CME_FAC_SUBM");
     }
 
-    public ProcessContentResult process(NodeTransaction transaction) {
-
+    public ProcessContentResult process(NodeTransaction transaction)
+    {
         return generateAndSubmitFile(transaction, TEMPLATE_NAME, OUTFILEBASE_NAME);
     }
-
 }

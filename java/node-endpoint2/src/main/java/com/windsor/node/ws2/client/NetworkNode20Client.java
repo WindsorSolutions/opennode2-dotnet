@@ -319,7 +319,8 @@ public class NetworkNode20Client implements NodeClientService {
 
                 // Content
                 FileInputStream decodedStream = new FileInputStream(targetFile);
-                doc.setContent(new BASE64Decoder().decodeBuffer(decodedStream));
+                doc.setContent(FileUtils.readFileToByteArray(targetFile));
+                //doc.setContent(new BASE64Decoder().decodeBuffer(decodedStream));
                 decodedStream.close();
 
                 if (nodeDoc.getDocumentId() != null

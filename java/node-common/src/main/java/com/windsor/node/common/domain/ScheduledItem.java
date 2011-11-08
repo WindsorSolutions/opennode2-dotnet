@@ -32,13 +32,13 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.windsor.node.common.domain;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
-
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ToStringBuilder;
-
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import com.windsor.node.common.util.ByIndexOrNameMap;
 
 public class ScheduledItem extends AuditableIdentity {
@@ -51,7 +51,7 @@ public class ScheduledItem extends AuditableIdentity {
     private ScheduledItemSourceType sourceType = ScheduledItemSourceType.None;
     private String sourceId;
     private String sourceOperation;
-    private ByIndexOrNameMap sourceArgs = new ByIndexOrNameMap();
+    private List<ScheduleArgument> scheduleArguments;
     private ScheduledItemTargetType targetType = ScheduledItemTargetType.None;
     private String targetId;
     private String lastExecutionInfo;
@@ -77,6 +77,7 @@ public class ScheduledItem extends AuditableIdentity {
         long now = System.currentTimeMillis();
         startOn = new Timestamp(now);
         endOn = new Timestamp(now);
+        this.scheduleArguments = new ArrayList<ScheduleArgument>();
     }
 
     public String getName() {
@@ -135,12 +136,26 @@ public class ScheduledItem extends AuditableIdentity {
         this.sourceOperation = sourceOperation;
     }
 
+    //FIXME get rid of this entirely, currently simply converts the actual domain object to this kludgey ByIndexOrNameMap object
     public ByIndexOrNameMap getSourceArgs() {
-        return sourceArgs;
+        ByIndexOrNameMap notAnActualMap = new ByIndexOrNameMap();
+        for(int i = 0; i < getScheduleArguments().size(); i++)
+        {
+            ScheduleArgument currentArg = getScheduleArguments().get(i);
+            if(currentArg.getArgumentValue() == null)
+            {
+                notAnActualMap.put(currentArg.getArgumentKey(), "");
+            }
+            else
+            {
+                notAnActualMap.put(currentArg.getArgumentKey(), currentArg.getArgumentValue());
+            }
+        }
+        return notAnActualMap;
     }
 
     public void setSourceArgs(ByIndexOrNameMap sourceArgs) {
-        this.sourceArgs = sourceArgs;
+        //do nothing, midway through removal of this kludge
     }
 
     public ScheduledItemTargetType getTargetType() {
@@ -229,7 +244,7 @@ public class ScheduledItem extends AuditableIdentity {
                 .append("startOn", startOn).append("endOn", endOn).append(
                         "sourceType", sourceType).append("sourceId", sourceId)
                 .append("sourceOperation", sourceOperation).append(
-                        "sourceArgs", sourceArgs).append("targetType",
+                        "serviceArguments", scheduleArguments).append("targetType",
                         targetType).append("targetId", targetId).append(
                         "lastExecutionInfo", lastExecutionInfo).append(
                         "lastExecutedOn", lastExecutedOn).append("nextRunOn",
@@ -248,7 +263,7 @@ public class ScheduledItem extends AuditableIdentity {
         return new HashCodeBuilder(n, n + 2).appendSuper(super.hashCode())
                 .append(name).append(flowId).append(startOn).append(endOn)
                 .append(sourceType).append(sourceId).append(sourceOperation)
-                .append(sourceArgs).append(targetType).append(targetId).append(
+                .append(scheduleArguments).append(targetType).append(targetId).append(
                         lastExecutionInfo).append(lastExecutedOn).append(
                         nextRunOn).append(frequencyType).append(frequency)
                 .append(active).append(runNow).append(executeStatus)
@@ -270,8 +285,8 @@ public class ScheduledItem extends AuditableIdentity {
                 item.name).append(flowId, item.flowId).append(startOn,
                 item.startOn).append(endOn, item.endOn).append(sourceType,
                 item.sourceType).append(sourceId, item.sourceId).append(
-                sourceOperation, item.sourceOperation).append(sourceArgs,
-                item.sourceArgs).append(targetType, item.targetType).append(
+                sourceOperation, item.sourceOperation).append(scheduleArguments,
+                item.scheduleArguments).append(targetType, item.targetType).append(
                 targetId, item.targetId).append(lastExecutionInfo,
                 item.lastExecutionInfo).append(lastExecutedOn,
                 item.lastExecutedOn).append(nextRunOn, item.nextRunOn).append(
@@ -287,5 +302,15 @@ public class ScheduledItem extends AuditableIdentity {
 
     public void setServices(Map<String, String> services) {
         this.services = services;
+    }
+
+    public List<ScheduleArgument> getScheduleArguments()
+    {
+        return scheduleArguments;
+    }
+
+    public void setScheduleArguments(List<ScheduleArgument> scheduleArguments)
+    {
+        this.scheduleArguments = scheduleArguments;
     }
 }

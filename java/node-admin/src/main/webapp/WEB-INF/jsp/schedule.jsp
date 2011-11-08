@@ -1,5 +1,65 @@
 <%@ include file="/WEB-INF/jsp/_head.jsp"%>
+<script type="text/javascript">
+$(document).ready(function()
+{
+   checkRunningProcesses();
+});
+function checkRunningProcesses()
+{
+    $(".readyToRun").each(function()
+        {
+            var elementId = $(this).attr("id");
+            runScheduleNow(elementId, true);
+        });
+}
 
+function runScheduleNow(elementId, checkOnly)
+{
+    var callUrl = "schedule-run.htm?id=" + elementId;
+    if(!checkOnly)
+    {
+    	if($("#" + elementId).hasClass("running"))
+        {
+            //already running, just return
+            return;
+        }
+        $("#" + elementId).removeClass("readyToRun");
+        $("#" + elementId).addClass("running");
+        callUrl = callUrl + "&run=true";
+    }
+
+    var data = $.ajax({url: callUrl, cache:false, dataType: "json",
+        success: function(json, textStatus)
+        {
+            var result = json.status;
+            var lastExecutedOn = json.lastExecutedOn;
+            var lastRunInfo = json.lastRunInfo;
+            if(result == "Running")
+            {
+                $("#" + elementId).removeClass("readyToRun");
+                $("#" + elementId).addClass("running");
+            }
+            else
+            {
+                $("#" + elementId).addClass("readyToRun");
+                $("#" + elementId).removeClass("running");
+                $("#" + elementId + "LastExecutedOn").html(lastExecutedOn);
+                $("#" + elementId + "LastExecutionInfo").html(lastRunInfo);
+                if(result == "Failure")
+                {
+                	$("#" + elementId + "LastExecutionInfoStyleTag").addClass("error");
+                    $("#" + elementId + "FlagTag").html('<img title="ERROR" src="img/flag_red.gif" alt="ERROR" align="middle" style="border-width: 0px;"  />');
+                }
+                if(result == "Success")
+                {
+                	$("#" + elementId + "LastExecutionInfoStyleTag").removeClass("error");
+                	$("#" + elementId + "FlagTag").html('<img title="OK" src="img/flag_green.gif" alt="OK" align="middle" style="border-width: 0px;" />');
+                }
+            }
+       }
+     });
+}
+</script>
 <table id="contentTable">
     <tr>
         <td id="sidebarPane" align="left"><%@ include
@@ -24,14 +84,14 @@
         <c:forEach var="flow" items="${model.flows}" varStatus="flowStatus">
         <table id="formTable" width="100%" cellpadding="2" cellspacing="0">
             <tr style="background-color: #83ACCA; color:#FFF;">
-                <td width="2%" align="right">
+                <td width="5%" align="right">
 	                <img alt="" src="img/flow2.gif" style="border: 0; vertical-align: middle; padding-right: 3px;" />
 	            </td>
-	            <td width="93%">
+	            <td >
 	                <strong><c:out value="${flow.name}" /></strong>
 	                <c:if test="${flow.secured == true}">&nbsp;(Protected)</c:if>
 	            </td>
-	            <td width="5%" align="right">&nbsp;</td>
+	            <td width="15%" align="right">&nbsp;</td>
             </tr>
             <c:forEach var="schedule" items="${model.schedules}" varStatus="status">
                 <c:choose>
@@ -46,7 +106,7 @@
                 <c:if test="${flow.id eq schedule.flowId}">
                 <tr class="<c:out value="${row}"/>">
 
-                    <td width="5%" align="center">
+                    <td id="<c:out value="${schedule.id}" />FlagTag" align="center">
 	                    <c:choose>
 	                        <c:when test="${schedule.executeStatus == 'Success'}">
 	                            <img title="OK" src="img/flag_green.gif" alt="OK" align="middle" style="border-width: 0px;" />
@@ -60,49 +120,45 @@
 	                    </c:choose>
                     </td>
 
-                    <td width="90%" nowrap="nowrap">
+                    <td nowrap="nowrap">
                         <strong>
                             <a href="schedule-edit.htm?id=<c:out value="${schedule.id}" />" class="blacktext">
                                 <c:out value="${schedule.name}" />
-                                <c:if test="${schedule.active == null || schedule.active == \"\" }">
+                                <c:if test="${schedule.active == null || schedule.active == '' }">
                                     <c:out value="[Inactive]" />
                                 </c:if>
                             </a>
                         </strong>
                     </td>
 
-                    <td width="5%" align="right">
+                    <td>
                         <input type="image" title="Edit"
-                        src="img/action_go.gif" alt="Edit" align="middle"
-                        style="border-width: 0px;"
-                        onclick="location.href='schedule-edit.htm?id=<c:out value="${schedule.id}" />'" />
+                            src="img/action_go.gif" alt="Edit"
+                            style="border-width: 0px; float:right"
+                            onclick="location.href='schedule-edit.htm?id=<c:out value="${schedule.id}" />'" />
+                        <span id="<c:out value="${schedule.id}" />" class="readyToRun" onclick="runScheduleNow('<c:out value="${schedule.id}" />');" style="float:right;" alt="Run Schedule Now" title="Run Schedule Now"></span>
                     </td>
                 </tr>
-                
+
                 <c:choose>
                         <c:when test="${schedule.executeStatus == 'Running' }">
 
-<tr    class="<c:out value="${row}"/>">
-
+                <tr class="<c:out value="${row}"/>">
                     <td>&nbsp;</td>
                     <td colspan="2" class="ctrl">Running...</td>
-
                 </tr>
                         </c:when>
                         <c:otherwise>
-                
-                
-                    
-                        
-                <tr    class="<c:out value="${row}"/>">
+
+                <tr class="<c:out value="${row}"/>">
 
                     <td>&nbsp;</td>
                     <td colspan="2" class="ctrl">Last Executed:&nbsp;<c:choose>
                         <c:when test="${schedule.lastExecutedOn == null}">
-                            Never
+                            <span id="<c:out value="${schedule.id}"/>LastExecutedOn">Never</span>
                         </c:when>
                         <c:otherwise>
-                            <c:out value="${schedule.lastExecutedOn}" />
+                            <span id="<c:out value="${schedule.id}"/>LastExecutedOn"><c:out value="${schedule.lastExecutedOn}" /></span>
                         </c:otherwise>
                     </c:choose>&nbsp;&nbsp; Next Run:&nbsp;<c:choose>
                         <c:when test="${schedule.nextRunOn == null}">
@@ -115,7 +171,6 @@
                             <c:out value="${schedule.nextRunOn}" />
                         </c:otherwise>
                     </c:choose>
-                    
                     </td>
 
                 </tr>
@@ -131,16 +186,16 @@
                 
                 <tr class="<c:out value="${row}"/>">
                     <td>&nbsp;</td>
-                    <td colspan="2" class="<c:out value="${hasError}"/>">
+                    <td id="<c:out value="${schedule.id}" />LastExecutionInfoStyleTag" colspan="2" class="<c:out value="${hasError}"/>">
                         <div style="text-decoration:underline; cursor: pointer" onClick="showInfo('info<c:out value="${status.index}" />')">Last Run Info:</div>
                         
                         <div style="font: 1.0em Courier; display:none;" id="info<c:out value="${status.index}" />">
-                            <pre><c:out value="${schedule.lastExecutionInfo}" escapeXml="false" />
+                            <pre id="<c:out value="${schedule.id}" />LastExecutionInfo"><c:out value="${schedule.lastExecutionInfo}" escapeXml="false" />
                         </pre></div>
-                        
+
                     </td>
                 </tr>                
-                
+
                         </c:otherwise>
                     </c:choose>
                 </c:if>
@@ -153,9 +208,7 @@
 </table>
 
 <script type="text/javascript">  
-    
 function showInfo(id) {
-    //alert(id);
     $("#" + id).slideToggle();
 }
 

@@ -56,6 +56,7 @@ import com.windsor.node.common.domain.PaginationIndicator;
 import com.windsor.node.common.domain.ProcessContentResult;
 import com.windsor.node.common.domain.RequestType;
 import com.windsor.node.common.domain.ServiceType;
+import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
 import com.windsor.node.plugin.BaseWnosPlugin;
 import com.windsor.node.service.helper.CompressionService;
 import com.windsor.node.service.helper.HeaderDocumentHelper;
@@ -368,5 +369,11 @@ public class FrsQueryProcessor extends BaseWnosPlugin {
         }
 
         return list;
+    }
+
+    @Override
+    public List<PluginServiceParameterDescriptor> getParamters()
+    {
+        return new ArrayList<PluginServiceParameterDescriptor>();
     }
 }

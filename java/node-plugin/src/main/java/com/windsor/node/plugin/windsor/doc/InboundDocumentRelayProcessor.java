@@ -34,6 +34,7 @@ POSSIBILITY OF SUCH DAMAGE.
  */
 package com.windsor.node.plugin.windsor.doc;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -44,6 +45,7 @@ import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.ProcessContentResult;
 import com.windsor.node.common.domain.ServiceType;
 import com.windsor.node.common.util.NodeClientService;
+import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
 import com.windsor.node.data.dao.TransactionDao;
 import com.windsor.node.plugin.BaseWnosPlugin;
 import com.windsor.node.service.helper.settings.SettingServiceProvider;
@@ -215,6 +217,12 @@ public class InboundDocumentRelayProcessor extends BaseWnosPlugin {
     public List<DataServiceRequestParameter> getServiceRequestParamSpecs(
             String serviceName) {
         return null;
+    }
+
+    @Override
+    public List<PluginServiceParameterDescriptor> getParamters()
+    {
+        return new ArrayList<PluginServiceParameterDescriptor>();
     }
 
 }

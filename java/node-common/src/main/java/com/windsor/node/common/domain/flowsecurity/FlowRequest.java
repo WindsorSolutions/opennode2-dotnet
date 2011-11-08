@@ -32,7 +32,7 @@ package com.windsor.node.common.domain.flowsecurity;
 
 import java.io.Serializable;
 
-import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
 import com.windsor.node.common.domain.DomainStringStyle;
 

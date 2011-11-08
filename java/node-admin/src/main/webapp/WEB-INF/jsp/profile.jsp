@@ -40,7 +40,7 @@
 
 						<tr>
 							<td class="label" style="width: 20%;" nowrap="nowrap"><img alt=""
-								src="img/page_user_dark.gif"
+								src="img/user.png"
 								style="border: 0; vertical-align: middle; padding-right: 3px;" /></td>
 							<td class="ctrl"><c:out value="${usr.naasUserName}" /></td>
 						</tr>
@@ -104,7 +104,7 @@
 					<table id="formTable" width="400" cellpadding="0" cellspacing="0">
 
 						<tr>
-							<td class="label"><img alt="" src="img/page_user_dark.gif"
+							<td class="label"><img alt="" src="img/user.png"
 								style="border: 0; vertical-align: middle; padding-right: 3px;" /></td>
 							<td class="ctrl"><c:out value="${usr.naasUserName}" /></td>
 						</tr>

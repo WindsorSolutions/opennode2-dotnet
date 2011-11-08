@@ -6,6 +6,9 @@ CREATE TABLE NAccount (
     IsActive    char(1) NOT NULL,
     SystemRole  varchar(50) NOT NULL,
 	Affiliation varchar(50) NOT NULL,
+	IsDeleted varchar(1) NULL, -- added in 2.02
+	IsDemoUser varchar(1) NULL, -- added in 2.02
+	PasswordHash varchar(50) NULL, -- added in 2.02
     ModifiedBy  varchar(50) NOT NULL,
     ModifiedOn  datetime NOT NULL 
     ) ENGINE=InnoDB;
@@ -25,6 +28,9 @@ CREATE TABLE NActivity (
     ActivityType    varchar(128) NOT NULL,
     TransactionId   varchar(50) NULL,
     IP              varchar(64) NULL,
+    WebMethod varchar(50) NULL, -- added in 2.02
+    FlowName varchar(255) NULL, -- added in 2.02
+    Operation varchar(255) NULL, -- added in 2.02
     ModifiedBy      varchar(50) NOT NULL,
     ModifiedOn      datetime NOT NULL 
     ) ENGINE=InnoDB;
@@ -33,13 +39,14 @@ CREATE TABLE NActivityDetail (
     Id          varchar(50) NOT NULL,
     ActivityId  varchar(50) NOT NULL,
     Detail      text NOT NULL,
+    OrderIndex  int NULL, -- added in 2.02
     ModifiedOn  datetime NOT NULL 
     ) ENGINE=InnoDB;
 
 CREATE TABLE NConfig ( 
     Id          varchar(255) NOT NULL,
     ConfigValue varchar(8192) NOT NULL,
-    Description varchar(500) NOT NULL,
+    Description varchar(500) NULL, -- changed in 2.02 to be nullable
     ModifiedBy  varchar(50) NOT NULL,
     ModifiedOn  datetime NOT NULL,
     IsEditable  char(1) NOT NULL 
@@ -67,7 +74,7 @@ CREATE TABLE NDocument (
 
 CREATE TABLE NFlow ( 
     Id          varchar(50) NOT NULL,
-    InfoUrl     varchar(500) NOT NULL,
+    InfoUrl     varchar(500) NULL, -- changed in 2.02 to be nullable
     Contact     varchar(255) NOT NULL,
     IsProtected char(1) NOT NULL,
     ModifiedBy  varchar(50) NOT NULL,
@@ -583,3 +590,50 @@ ALTER TABLE NAccountAuthRequestFlow
     ON UPDATE CASCADE ;
     
 -- END additions for HERE AuthorizationRequest feature
+
+-- Additions for 2.02
+CREATE TABLE NNodeNotification (
+    Id            varchar(50) NOT NULL,
+    TransactionId varchar(50) NOT NULL,
+    NotifyData    varchar(4000) NOT NULL,
+    ) ENGINE=InnoDB;
+ALTER TABLE NNodeNotification
+    ADD CONSTRAINT PK_NNodeNotification
+    PRIMARY KEY (Id);
+ALTER TABLE NNodeNotification  
+    ADD CONSTRAINT FK_NNodeNotification_Transaction 
+    FOREIGN KEY(TransactionId)
+    REFERENCES NTransaction(Id)
+    ON DELETE CASCADE 
+    ON UPDATE CASCADE ;
+
+CREATE TABLE NObjectCache (
+    Name        varchar(50) NOT NULL,
+    Data        longblob NOT NULL,
+    Expiration  datetime NOT NULL,
+    ModifiedBy  varchar(50) NOT NULL,
+    ModifiedOn  datetime NOT NULL 
+    ) ENGINE=InnoDB;
+ALTER TABLE NObjectCache
+    ADD CONSTRAINT PK_NObjectCache
+    PRIMARY KEY (Name);
+
+CREATE TABLE NTransactionRealtimeDetails (
+    Id            varchar(50) NOT NULL,
+    StatusType    varchar(50) NOT NULL,
+    TransactionId varchar(50) NOT NULL,
+    Detail        varchar(4000) NOT NULL,
+    OrderIndex    int NOT NULL,
+    ModifiedBy    varchar(50) NOT NULL,
+    ModifiedOn    datetime NOT NULL 
+    ) ENGINE=InnoDB;
+ALTER TABLE NTransactionRealtimeDetails
+    ADD CONSTRAINT PK_NTransactionRealtimeDetails
+    PRIMARY KEY (Id);
+ALTER TABLE NNodeNotification  
+    ADD CONSTRAINT FK_NTransactionRealtimeDetails_Transaction 
+    FOREIGN KEY(TransactionId)
+    REFERENCES NTransaction(Id)
+    ON DELETE CASCADE 
+    ON UPDATE CASCADE ;
+-- End Additions for 2.02

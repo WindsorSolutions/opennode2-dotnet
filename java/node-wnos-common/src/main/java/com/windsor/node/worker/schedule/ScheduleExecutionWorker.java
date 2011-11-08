@@ -57,9 +57,8 @@ import com.windsor.node.worker.schedule.processor.PartnerDataProcessor;
 import com.windsor.node.worker.schedule.processor.SchematronDataProcessor;
 import com.windsor.node.worker.util.ScheduleUtil;
 
-public class ScheduleExecutionWorker extends NodeWorker implements
-        InitializingBean {
-
+public class ScheduleExecutionWorker extends NodeWorker implements ScheduleItemExecutionService, InitializingBean
+{
     private static final String NL = "\n";
 
     private ScheduleDao scheduleDao;
@@ -159,12 +158,36 @@ public class ScheduleExecutionWorker extends NodeWorker implements
         } // end if shouldWeRunHere
     }
 
+    public void run(ScheduledItem schedule)
+    {
+        if(schedule == null)
+        {
+            throw new IllegalArgumentException("ScheduleExecutionWorker run method's parameter ScheduledItem schedule cannot be null.");
+        }
+        if(!ScheduleExecutionHelper.shouldWeRunHere(getMachineId(), getExecutionMachineName()))
+        {
+            logger.debug("Configured executionMachineName does not match machineId, schedule will not run.");
+            return;
+        }
+        if(ScheduleExecuteStatus.Running.equals(schedule.getExecuteStatus()))
+        {
+            logger.info("ScheduledItem.id " + schedule.getId() + " and ScheduledItem.name " + schedule.getName() + " is currently in " 
+                        + ScheduleExecuteStatus.Running.name() + " status and will not be run.");
+            return;
+        }
+        logger.debug("Processing ScheduledItem.id " + schedule.getId());
+        processSchedule(schedule);
+
+        //should not need a next run set as this is an "ad hoc" run
+    }
+
+    @SuppressWarnings("unchecked")
     private void processSchedule(ScheduledItem schedule) {
 
         logger.debug("processing: " + schedule);
 
         if (schedule == null) {
-            throw new RuntimeException("Schedule object not set");
+            throw new IllegalArgumentException("Schedule object not set");
         }
 
         NodeTransaction tran = null;
@@ -182,8 +205,7 @@ public class ScheduleExecutionWorker extends NodeWorker implements
             // TRAN
             logger.debug("Getting transaction for: " + schedule.getFlowId());
 
-            tran = transactionDao.make(schedule.getFlowId(), schedule
-                    .getModifiedById(), NodeMethodType.SCHEDULE,
+            tran = transactionDao.make(schedule, NodeMethodType.SCHEDULE,
                     CommonTransactionStatusCode.Processing);
 
             tran.setCreator(accountDao.get(schedule.getModifiedById()));
@@ -197,31 +219,31 @@ public class ScheduleExecutionWorker extends NodeWorker implements
             logger.debug("Parsing schedule type: " + schedule.getSourceType());
 
             // Check if this is request or generate
-            if (schedule.getSourceType().equals(
-                    ScheduledItemSourceType.WebServiceQuery)
-                    || schedule.getSourceType().equals(
-                            ScheduledItemSourceType.WebServiceSolicit)) {
+            if(schedule.getSourceType().equals(ScheduledItemSourceType.WebServiceQuery)
+                            || schedule.getSourceType().equals(ScheduledItemSourceType.WebServiceSolicit))
+            {
                 // WEBSERVICE
-                logEntry.addEntryAll(partnerDataProcessor.getAndSaveData(tran
-                        .getId(), schedule.getSourceId(), schedule
-                        .getSourceOperation(), schedule.getSourceType(),
-                        schedule.getSourceArgs(), tran.getFlow().getName()));
+                logEntry.addEntryAll(partnerDataProcessor.getAndSaveData(tran.getId(), schedule.getSourceId(), schedule
+                                .getSourceOperation(), schedule.getSourceType(), schedule.getSourceArgs(), tran
+                                .getFlow().getName()));
 
-            } else if (schedule.getSourceType().equals(
-                    ScheduledItemSourceType.File)) {
+            }
+            else if(schedule.getSourceType().equals(ScheduledItemSourceType.File))
+            {
                 // FILE
-                logEntry.addEntryAll(fileSystemDataProcessor.getAndSaveData(
-                        tran.getId(), schedule.getSourceId()));
+                logEntry.addEntryAll(fileSystemDataProcessor.getAndSaveData(tran.getId(), schedule.getSourceId()));
 
-            } else if (schedule.getSourceType().equals(
-                    ScheduledItemSourceType.LocalService)) {
+            }
+            else if(schedule.getSourceType().equals(ScheduledItemSourceType.LocalService))
+            {
                 // LOCALSERVICE
-                logEntry.addEntryAll(localServiceDataProcessor.getAndSaveData(
-                        tran, schedule.getSourceId(), schedule
-                                .getModifiedById(), schedule.getSourceArgs()));
-            } else {
-                throw new RuntimeException("Invalid data source: "
-                        + schedule.getSourceType());
+                logEntry.addEntryAll(localServiceDataProcessor.getAndSaveData(tran, schedule.getSourceId(),
+                                                                              schedule.getModifiedById(),
+                                                                              schedule.getSourceArgs()));
+            }
+            else
+            {
+                throw new RuntimeException("Invalid data source: " + schedule.getSourceType());
             }
 
             /*
@@ -229,30 +251,32 @@ public class ScheduleExecutionWorker extends NodeWorker implements
              * 
              * Target
              */
-            if (schedule.getTargetType()
-                    .equals(ScheduledItemTargetType.Partner)) {
+            if(schedule.getTargetType().equals(ScheduledItemTargetType.Partner))
+            {
                 // PARTNER
-                logEntry.addEntryAll(partnerDataProcessor.getAndSendData(tran,
-                        schedule.getTargetId(), tran.getFlow().getName()));
+                logEntry.addEntryAll(partnerDataProcessor.getAndSendData(tran, schedule.getTargetId(), tran.getFlow()
+                                .getName()));
 
-            } else if (schedule.getTargetType().equals(
-                    ScheduledItemTargetType.Schematron)) {
+            }
+            else if(schedule.getTargetType().equals(ScheduledItemTargetType.Schematron))
+            {
                 // SCHEMATRON
-                logEntry.addEntryAll(schematronDataProcessor
-                        .getAndSendData(tran));
+                logEntry.addEntryAll(schematronDataProcessor.getAndSendData(tran));
 
-            } else if (schedule.getTargetType().equals(
-                    ScheduledItemTargetType.Email)) {
+            }
+            else if(schedule.getTargetType().equals(ScheduledItemTargetType.Email))
+            {
                 // EMAIL
-                logEntry.addEntryAll(emailDataProcessor.getAndSendData(tran
-                        .getId(), schedule));
+                logEntry.addEntryAll(emailDataProcessor.getAndSendData(tran.getId(), schedule));
 
-            } else if (schedule.getTargetType().equals(
-                    ScheduledItemTargetType.File)) {
-                logEntry.addEntryAll(fileSystemDataProcessor.getAndSendData(
-                        tran.getId(), schedule.getTargetId()));
+            }
+            else if(schedule.getTargetType().equals(ScheduledItemTargetType.File))
+            {
+                logEntry.addEntryAll(fileSystemDataProcessor.getAndSendData(tran.getId(), schedule.getTargetId()));
 
-            } else {
+            }
+            else
+            {
                 logEntry.addEntry("No target defined");
             }
 
@@ -403,5 +427,4 @@ public class ScheduleExecutionWorker extends NodeWorker implements
     public void setExecutionMachineName(String executionMachineName) {
         this.executionMachineName = executionMachineName;
     }
-
 }

@@ -92,5 +92,9 @@
         <property name="serviceInterface" value="com.windsor.node.common.service.admin.FlowSecurityService" />
     </bean>
 
-
+    <bean name="/WinScheduleExecutionService"
+        class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+        <property name="service" ref="scheduleWorker" />
+        <property name="serviceInterface" value="com.windsor.node.worker.schedule.ScheduleItemExecutionService" />
+    </bean>
 </beans>

@@ -6,6 +6,7 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -24,6 +25,7 @@ import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.PaginationIndicator;
 import com.windsor.node.common.domain.ProcessContentResult;
 import com.windsor.node.common.domain.ServiceType;
+import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
 import com.windsor.node.data.dao.TransactionDao;
 import com.windsor.node.data.dao.jdbc.JdbcTransactionDao;
 import com.windsor.node.plugin.BaseWnosPlugin;
@@ -56,6 +58,22 @@ public class DmrSubmissionGenerator extends BaseWnosPlugin implements
     protected static final int PARAM_INDEX_USE_HISTORY = 2;
     protected static final int PARAM_INDEX_IGNORE_PREVIOUS = 3;
 
+    public static final PluginServiceParameterDescriptor USER_ID = new PluginServiceParameterDescriptor(
+                    "UserId",
+                    PluginServiceParameterDescriptor.TYPE_STRING,
+                    Boolean.TRUE,
+                    "The UserId is the ICIS-NPDES User ID for which the submission will be made. This parameter triggers the plugin to filter the data in the staging tables for a single ICIS-NPDES user. This filter targets the ID field in the ICIS_DOCUMENT table. It is recommended that one permanent record be created in the ICIS_ DOCUMENT table for each ICIS user and that one Schedule be created for each user.");
+    public static final PluginServiceParameterDescriptor LAST_PAYLOAD_UPDATE_DATE = new PluginServiceParameterDescriptor(
+                    "LastPayloadUpdateDate",
+                    PluginServiceParameterDescriptor.TYPE_DATE,
+                    Boolean.FALSE,
+                    "If supplied, the Schedule will filter the query performed against the ICIS-NPDES staging database to retrieve records that were loaded to the staging environment after this date. The filter targets the LAST_PAYLOAD_UPDATE_DATE in the ICIS_PAYLOAD_DATA table. The LAST_PAYLOAD_UPDATE_DATE should always be the date stamp of the time when the data was loaded to the staging database. If supplied, this parameter must be in YYYY-MM-DD format.");
+    public static final PluginServiceParameterDescriptor USE_SUBMISSION_HISTORY_TABLE = new PluginServiceParameterDescriptor(
+                    "UseSubmissionHistoryTable",
+                    PluginServiceParameterDescriptor.TYPE_BOOLEAN,
+                    Boolean.FALSE,
+                    "If this parameter is not set or set to “true”, the plugin will always create a record to the submission history table when a submission is performed. If set to “false”, no record of the submission will be logged in this table. Regardless of this setting, OpenNode2 will still log that the transaction occurred and it can still be found using the OpenNode2 Admin Activity search screen.");
+
     private static final String FALSE = "false";
     private static final String TRUE = "true";
 
@@ -86,6 +104,16 @@ public class DmrSubmissionGenerator extends BaseWnosPlugin implements
         getSupportedPluginTypes().add(ServiceType.TASK);
 
         velocityHelper = new JdbcVelocityHelper();
+    }
+
+    @Override
+    public List<PluginServiceParameterDescriptor> getParamters()
+    {
+        List<PluginServiceParameterDescriptor> params = new ArrayList<PluginServiceParameterDescriptor>();
+        params.add(USER_ID);
+        params.add(LAST_PAYLOAD_UPDATE_DATE);
+        params.add(USE_SUBMISSION_HISTORY_TABLE);
+        return params;
     }
 
     @Override

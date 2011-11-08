@@ -136,7 +136,7 @@ public class DrDasServiceHelper {
             if (StringUtils.isBlank(valStr)) {
                 return null;
             } else {
-                return StringUtils.clean(valStr);
+                return StringUtils.trimToEmpty(valStr);
             }
         }
     }

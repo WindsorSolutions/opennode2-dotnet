@@ -31,15 +31,15 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.windsor.node.plugin.wqx;
 
+import java.util.ArrayList;
 import java.util.List;
-
 import javax.sql.DataSource;
-
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
 import com.windsor.node.common.domain.DataServiceRequestParameter;
 import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.ProcessContentResult;
 import com.windsor.node.common.domain.ServiceType;
+import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
 import com.windsor.node.plugin.wqx.dao.WqxStatusDao;
 
 /**
@@ -135,5 +135,11 @@ public class WqxStatusResetter extends BaseWqxPlugin {
     public List<DataServiceRequestParameter> getServiceRequestParamSpecs(
             String serviceName) {
         return null;
+    }
+
+    @Override
+    public List<PluginServiceParameterDescriptor> getParamters()
+    {
+        return new ArrayList<PluginServiceParameterDescriptor>();
     }
 }

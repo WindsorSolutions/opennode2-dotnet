@@ -33,7 +33,7 @@ package com.windsor.node.common.domain;
 
 import java.io.Serializable;
 
-import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
 public class ChartItem implements Serializable {
 

@@ -34,12 +34,9 @@ package com.windsor.node.service.admin;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
 import javax.sql.DataSource;
-
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
-
 import com.windsor.node.common.domain.Activity;
 import com.windsor.node.common.domain.ActivityType;
 import com.windsor.node.common.domain.DataFlow;
@@ -47,11 +44,14 @@ import com.windsor.node.common.domain.DataProviderInfo;
 import com.windsor.node.common.domain.DataService;
 import com.windsor.node.common.domain.NamedSystemConfigItem;
 import com.windsor.node.common.domain.NodeVisit;
+import com.windsor.node.common.domain.ScheduleArgument;
 import com.windsor.node.common.domain.ServiceType;
 import com.windsor.node.common.domain.SystemRoleType;
 import com.windsor.node.common.exception.WinNodeException;
 import com.windsor.node.common.service.admin.FlowService;
 import com.windsor.node.data.dao.FlowDao;
+import com.windsor.node.data.dao.ParameterSpecifiedPlugin;
+import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
 import com.windsor.node.data.dao.ServiceDao;
 import com.windsor.node.plugin.BaseWnosPlugin;
 import com.windsor.node.plugin.PluginHelper;
@@ -309,6 +309,22 @@ public class FlowServiceImpl extends BaseService implements FlowService,
         }
 
         return dataService;
+    }
+
+    public List<PluginServiceParameterDescriptor> getPluginParameterDescriptors(DataFlow flow, DataService dataService)
+    {
+        if(dataService == null)
+        {
+            return null;
+        }
+        BaseWnosPlugin implementor = pluginHelper.getWnosPlugin(flow, dataService.getImplementingClassName());
+        List<PluginServiceParameterDescriptor> params = null;
+        if(implementor instanceof ParameterSpecifiedPlugin)
+        {
+            ParameterSpecifiedPlugin plugin = (ParameterSpecifiedPlugin)implementor;
+            params = plugin.getParamters();
+        }
+        return params;
     }
 
     /**

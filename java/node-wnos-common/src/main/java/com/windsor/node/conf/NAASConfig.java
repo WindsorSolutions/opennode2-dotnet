@@ -34,7 +34,7 @@ package com.windsor.node.conf;
 import java.net.URL;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.springframework.beans.factory.InitializingBean;
 
 import com.windsor.node.common.domain.DomainStringStyle;

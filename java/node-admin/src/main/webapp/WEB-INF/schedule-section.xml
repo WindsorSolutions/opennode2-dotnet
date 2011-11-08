@@ -9,6 +9,11 @@
         <property name="flowService" ref="flowService" />
     </bean>
 
+    <bean name="/schedule-run.htm" class="com.windsor.node.admin.schedule.RunScheduleController">
+        <property name="scheduleService" ref="scheduleService" />
+        <property name="executionService" ref="scheduleExecutionService" />
+    </bean>
+
     <bean name="/schedule-edit.htm" class="com.windsor.node.admin.schedule.EditScheduleController">
         <property name="flowService" ref="flowService" />
         <property name="scheduleService" ref="scheduleService" />
@@ -22,6 +27,11 @@
 
     <bean name="/service-list.htm" class="com.windsor.node.admin.schedule.ServicesByFlowController">
         <property name="flowService" ref="flowService" />
+    </bean>
+
+    <bean name="/arg-list.htm" class="com.windsor.node.admin.schedule.ArgumentsByServiceController">
+        <property name="flowService" ref="flowService" />
+        <property name="scheduleService" ref="scheduleService" />
     </bean>
 
 </beans>

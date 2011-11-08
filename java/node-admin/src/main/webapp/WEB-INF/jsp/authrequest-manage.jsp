@@ -29,7 +29,7 @@
 		            <table id="wrapperTable" width="100%" cellpadding="2" cellspacing="0">
 	                    <tr style="background-color: #83ACCA; color:#FFF;">
 	                        <td width="4%" align="right">
-	                            <img alt="" src="img/page_user_dark.gif" style="border: 0; vertical-align: middle; padding-right: 3px;" />
+	                            <img alt="" src="img/user.png" style="border: 0; vertical-align: middle; padding-right: 3px;" />
 	                        </td>
 	                        <td width="32%" nowrap="nowrap" >
 	                            <input type="hidden" name="id" value="<c:out value="${authRequest.id}" />" />

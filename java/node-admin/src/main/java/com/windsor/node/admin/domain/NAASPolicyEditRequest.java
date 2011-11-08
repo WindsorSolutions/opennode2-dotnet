@@ -34,7 +34,7 @@ package com.windsor.node.admin.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
 import com.windsor.node.common.domain.DomainStringStyle;
 import com.windsor.node.common.domain.UserAccount;

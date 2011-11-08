@@ -24,7 +24,7 @@
 
 			<tr>
 				<td class="label" width="5%" nowrap="nowrap"><img alt=""
-					src="img/page_user_dark.gif"
+					src="img/user.png"
 					style="border: 0; vertical-align: middle; padding-right: 3px;" /></td>
 				<td class="ctrl" width="95%">
 					<spring:bind path="command.account.naasUserName">

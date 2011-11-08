@@ -15,7 +15,9 @@
 		<property name="accountService" ref="accountService" />
 		<property name="flowService" ref="flowService" />
 		<property name="validator">
-			<bean class="com.windsor.node.admin.valid.FlowValidator" />
+			<bean class="com.windsor.node.admin.valid.FlowValidator">
+                <property name="flowService" ref="flowService" />
+            </bean>
 		</property>
 		<property name="successView" value="flow.htm" />
 	</bean>

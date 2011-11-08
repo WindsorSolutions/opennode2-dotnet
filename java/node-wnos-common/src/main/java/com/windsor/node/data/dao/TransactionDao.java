@@ -32,11 +32,11 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.windsor.node.data.dao;
 
 import java.util.List;
-
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
 import com.windsor.node.common.domain.Document;
 import com.windsor.node.common.domain.NodeMethodType;
 import com.windsor.node.common.domain.NodeTransaction;
+import com.windsor.node.common.domain.ScheduledItem;
 
 public interface TransactionDao extends DeletableDao, ListableDao {
 
@@ -52,9 +52,19 @@ public interface TransactionDao extends DeletableDao, ListableDao {
      * @param method
      * @param status
      * @return
+     * @deprecated
      */
     NodeTransaction make(String flowId, String createdById,
             NodeMethodType method, CommonTransactionStatusCode status);
+
+    /**
+     * 
+     * @param schedule
+     * @param method
+     * @param status
+     * @return
+     */
+    NodeTransaction make(ScheduledItem schedule, NodeMethodType method, CommonTransactionStatusCode status);
 
     /**
      * @param id

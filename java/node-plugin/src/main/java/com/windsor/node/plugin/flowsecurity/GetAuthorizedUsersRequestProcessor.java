@@ -32,6 +32,7 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.windsor.node.plugin.flowsecurity;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
@@ -48,6 +49,7 @@ import com.windsor.node.common.domain.ServiceType;
 import com.windsor.node.conf.NAASConfig;
 import com.windsor.node.data.dao.AccountDao;
 import com.windsor.node.data.dao.FlowDao;
+import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
 import com.windsor.node.data.dao.jdbc.JdbcAccountDao;
 import com.windsor.node.data.dao.jdbc.JdbcFlowDao;
 import com.windsor.node.plugin.BaseWnosPlugin;
@@ -236,4 +238,9 @@ public class GetAuthorizedUsersRequestProcessor extends BaseWnosPlugin {
         return null;
     }
 
+    @Override
+    public List<PluginServiceParameterDescriptor> getParamters()
+    {
+        return new ArrayList<PluginServiceParameterDescriptor>();
+    }
 }

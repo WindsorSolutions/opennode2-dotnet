@@ -59,6 +59,7 @@
 		<property name="idGenerator" ref="idGenerator" />
 		<property name="flowDao" ref="flowDao" />
 		<property name="accountDao" ref="accountDao" />
+        <property name="partnerDao" ref="partnerDao" />
 	</bean>
 
 	<bean id="requestDao" class="com.windsor.node.data.dao.jdbc.JdbcRequestDao">

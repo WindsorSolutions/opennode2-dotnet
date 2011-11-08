@@ -92,7 +92,8 @@ public class WqxStatusDao extends BaseJdbcDao {
             + SQL_SELECT_ORG_PK_BY_ORG_ID + R_PAREN;
 
     private static final String SQL_INSERT = INSERT + TABLE_NAME
-            + " VALUES( ?, ?, ?, ?, ?, ?, ? )";
+            + " (RECORDID, PARENTID, SCHEDULERUNDATE, WQXUPDATEDATE, SUBMISSIONTYPE, LOCALTRANSACTIONID, CDXPROCESSINGSTATUS, ORGID) " 
+            + " VALUES( ?, ?, ?, ?, ?, ?, ?, '' )";
 
     private static final String SQL_UPDATE_STATUS = UPDATE + TABLE_NAME + SET
             + STATUS + EQUALS_PARAM + WHERE + TRAN_ID + EQUALS_PARAM;

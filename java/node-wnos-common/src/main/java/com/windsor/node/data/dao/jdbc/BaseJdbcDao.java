@@ -267,6 +267,20 @@ public class BaseJdbcDao extends JdbcDaoSupport {
     }
 
     /**
+     * 
+     * @param sql
+     * @param id
+     * @param rowMapper
+     * @return
+     */
+    protected List<?> getList(String sql, String id, RowMapper rowMapper)
+    {
+        validateStringArg(sql);
+        validateStringArg(id);
+        return getJdbcTemplate().query(sql, new Object[] {id}, rowMapper);
+    }
+
+    /**
      * getArray
      * 
      * @param sql

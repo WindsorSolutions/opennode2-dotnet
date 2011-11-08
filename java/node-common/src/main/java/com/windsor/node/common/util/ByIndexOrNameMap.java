@@ -40,8 +40,8 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import org.apache.commons.collections.MapUtils;
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * Simplification of the ByIndexOrNameMap from .NET Uses a simple internal Map

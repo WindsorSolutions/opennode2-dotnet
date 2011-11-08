@@ -53,22 +53,22 @@ public interface TransactionService {
     /**
      * downloadContent
      * 
-     * @param transactionID
+     * @param transactionId
      * @param documentID
      * @param visit
      * @return
      */
-    byte[] downloadContent(String transactionID, String documentID,
+    byte[] downloadContent(String transactionId, String documentID,
             NodeVisit visit);
 
     /**
      * get
      * 
-     * @param transactionID
+     * @param transactionId
      * @param visit
      * @return
      */
-    NodeTransaction get(String transactionID, NodeVisit visit);
+    NodeTransaction get(String transactionId, NodeVisit visit);
 
     /**
      * @param type

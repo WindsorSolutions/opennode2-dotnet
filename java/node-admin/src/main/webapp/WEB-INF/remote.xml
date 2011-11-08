@@ -88,6 +88,11 @@
         <property name="httpInvokerRequestExecutor" ref="httpInvoker" />
     </bean>
 
-
+    <bean id="scheduleExecutionService"
+        class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+        <property name="serviceUrl" value="${wnos.endpoint.host}/remoting/WinScheduleExecutionService" />
+        <property name="serviceInterface" value="com.windsor.node.worker.schedule.ScheduleItemExecutionService" />
+        <property name="httpInvokerRequestExecutor" ref="httpInvoker" />
+    </bean>
 
 </beans>

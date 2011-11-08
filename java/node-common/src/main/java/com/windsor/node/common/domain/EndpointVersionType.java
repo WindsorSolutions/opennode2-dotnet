@@ -56,20 +56,19 @@ public enum EndpointVersionType {
         return this.type;
     }
 
-    public static EndpointVersionType fromString(String s) {
-
+    public static EndpointVersionType fromString(String s)
+    {
         EndpointVersionType version;
-
-        if (s.equalsIgnoreCase(EN11.toString())) {
-
+        if(EN11.toString().equalsIgnoreCase(s))
+        {
             version = EN11;
-
-        } else if (s.equalsIgnoreCase(EN20.toString())) {
-
+        }
+        else if(EN20.toString().equalsIgnoreCase(s))
+        {
             version = EN20;
-
-        } else {
-
+        }
+        else
+        {
             version = UNDEFINED;
         }
 

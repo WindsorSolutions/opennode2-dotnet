@@ -41,4 +41,17 @@
             <source>../node-wnos/target/wnos.war</source>
         </file>
     </files>
+    <!-- <moduleSets>
+        <moduleSet>
+            <binaries>
+                <outputDirectory>applications</outputDirectory>
+                <includes>
+                   <include>com.windsor.node:node-admin</include> 
+                   <include>com.windsor.node:node-endpoint</include>
+                   <include>com.windsor.node:node-endpoint2</include>
+                   <include>com.windsor.node:node-wnos</include>
+                </includes>
+            </binaries>
+        </moduleSet>
+    </moduleSets> -->
 </assembly>

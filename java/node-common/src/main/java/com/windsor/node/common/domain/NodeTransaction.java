@@ -31,10 +31,10 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.windsor.node.common.domain;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
 public class NodeTransaction extends AuditableIdentity {
 
@@ -47,10 +47,29 @@ public class NodeTransaction extends AuditableIdentity {
     private String operation;
     private NodeMethodType webMethod;
     private UserAccount creator;
+    private EndpointVersionType endpointVersion;
+    private EndpointVersionType networkEndpointVersion;
+    private URL networkEndpointUrl;
+    private String networkEndpointStatus;
+    private String networkEndpointStatusDetail;
 
     public NodeTransaction() {
         status = new TransactionStatus(CommonTransactionStatusCode.Unknown);
         this.documents = new ArrayList<Document>();
+    }
+
+    /**
+     * Adds all implemented partner details to a transaction object.  
+     * Interim refactoring method, these details do not all get set and will be implemented over time.
+     * @param partner
+     */
+    public void updateWithPartnerDetails(PartnerIdentity partner)
+    {
+        setNetworkEndpointVersion(partner.getVersion());
+        setNetworkEndpointUrl(partner.getUrl());
+        //TODO what do I do with the status and status detail?
+        //tran.setNetworkEndpointStatus(networkEndpointVersion);
+        //tran.setNetworkEndpointStatusDetail(networkEndpointVersion);
     }
 
     public DataFlow getFlow() {
@@ -138,6 +157,16 @@ public class NodeTransaction extends AuditableIdentity {
         result = prime * result + ((status == null) ? 0 : status.hashCode());
         result = prime * result
                 + ((webMethod == null) ? 0 : webMethod.hashCode());
+        result = prime * result
+                + ((endpointVersion == null) ? 0 : endpointVersion.hashCode());
+        result = prime * result
+                + ((networkEndpointVersion == null) ? 0 : networkEndpointVersion.hashCode());
+        result = prime * result
+                + ((networkEndpointUrl == null) ? 0 : networkEndpointUrl.hashCode());
+        result = prime * result
+                + ((networkEndpointStatus == null) ? 0 : networkEndpointStatus.hashCode());
+        result = prime * result
+                + ((networkEndpointStatusDetail == null) ? 0 : networkEndpointStatusDetail.hashCode());
         return result;
     }
 
@@ -192,6 +221,31 @@ public class NodeTransaction extends AuditableIdentity {
                 return false;
         } else if (!webMethod.equals(other.webMethod))
             return false;
+        if (endpointVersion == null) {
+            if (other.endpointVersion != null)
+                return false;
+        } else if (!endpointVersion.equals(other.endpointVersion))
+            return false;
+        if (networkEndpointVersion == null) {
+            if (other.networkEndpointVersion != null)
+                return false;
+        } else if (!networkEndpointVersion.equals(other.networkEndpointVersion))
+            return false;
+        if (networkEndpointUrl == null) {
+            if (other.networkEndpointUrl != null)
+                return false;
+        } else if (!networkEndpointUrl.equals(other.networkEndpointUrl))
+            return false;
+        if (networkEndpointStatus == null) {
+            if (other.networkEndpointStatus != null)
+                return false;
+        } else if (!networkEndpointStatus.equals(other.networkEndpointStatus))
+            return false;
+        if (networkEndpointStatusDetail == null) {
+            if (other.networkEndpointStatusDetail != null)
+                return false;
+        } else if (!networkEndpointStatusDetail.equals(other.networkEndpointStatusDetail))
+            return false;
         return true;
     }
 
@@ -205,4 +259,53 @@ public class NodeTransaction extends AuditableIdentity {
         return rtsb.toString();
     }
 
+    public EndpointVersionType getNetworkEndpointVersion()
+    {
+        return networkEndpointVersion;
+    }
+
+    public void setNetworkEndpointVersion(EndpointVersionType networkEndpointVersion)
+    {
+        this.networkEndpointVersion = networkEndpointVersion;
+    }
+
+    public String getNetworkEndpointStatus()
+    {
+        return networkEndpointStatus;
+    }
+
+    public void setNetworkEndpointStatus(String networkEndpointStatus)
+    {
+        this.networkEndpointStatus = networkEndpointStatus;
+    }
+
+    public String getNetworkEndpointStatusDetail()
+    {
+        return networkEndpointStatusDetail;
+    }
+
+    public void setNetworkEndpointStatusDetail(String networkEndpointStatusDetail)
+    {
+        this.networkEndpointStatusDetail = networkEndpointStatusDetail;
+    }
+
+    public URL getNetworkEndpointUrl()
+    {
+        return networkEndpointUrl;
+    }
+
+    public void setNetworkEndpointUrl(URL networkEndpointUrl)
+    {
+        this.networkEndpointUrl = networkEndpointUrl;
+    }
+
+    public EndpointVersionType getEndpointVersion()
+    {
+        return endpointVersion;
+    }
+
+    public void setEndpointVersion(EndpointVersionType endpointVersion)
+    {
+        this.endpointVersion = endpointVersion;
+    }
 }

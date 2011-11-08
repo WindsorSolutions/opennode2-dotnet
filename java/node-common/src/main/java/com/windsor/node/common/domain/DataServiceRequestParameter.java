@@ -30,7 +30,7 @@ POSSIBILITY OF SUCH DAMAGE.
  */
 package com.windsor.node.common.domain;
 
-import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
 /**
  * Represents a RequestParameterType used by the Exchange Network Discovery

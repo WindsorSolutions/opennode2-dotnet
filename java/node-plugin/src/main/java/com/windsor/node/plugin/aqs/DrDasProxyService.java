@@ -48,6 +48,7 @@ import com.windsor.node.common.domain.PaginationIndicator;
 import com.windsor.node.common.domain.ProcessContentResult;
 import com.windsor.node.common.domain.RequestType;
 import com.windsor.node.common.domain.ServiceType;
+import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
 import com.windsor.node.plugin.BaseWnosPlugin;
 import com.windsor.node.service.helper.CompressionService;
 import com.windsor.node.service.helper.HeaderDocumentHelper;
@@ -66,6 +67,102 @@ public class DrDasProxyService extends BaseWnosPlugin {
     public static final String ARG_ENDPOINT_URL = "Reporter Url";
     public static final String ARG_HD_SCHEMA_VERSION = "Schema Version";
 
+    public static final PluginServiceParameterDescriptor FILE_GENERATION_PURPOSE_CODE = new PluginServiceParameterDescriptor(
+                    "FileGenerationPurposeCode", PluginServiceParameterDescriptor.TYPE_STRING, Boolean.TRUE,
+                    "Reason for request. Must be either \"AQS\", \"AIRNOW\", or \"OTHER\".");
+    public static final PluginServiceParameterDescriptor BEGIN_DATE = new PluginServiceParameterDescriptor("BeginDate",
+                    PluginServiceParameterDescriptor.TYPE_STRING, Boolean.TRUE,
+                    "Used to indicate the starting date for which data collection activities should be retrieved. This will be in the YYYYMMDD format.");
+    public static final PluginServiceParameterDescriptor BEGIN_TIME = new PluginServiceParameterDescriptor(
+                    "BeginTime",
+                    PluginServiceParameterDescriptor.TYPE_STRING,
+                    Boolean.FALSE,
+                    "Used to indicate the starting time (for the supplied Start Date) for which data collection activities should be retrieved. This will be in the HH:MM format. Defaults to midnight (time 00:00, the beginning of the day) if left blank.");
+    public static final PluginServiceParameterDescriptor END_DATE = new PluginServiceParameterDescriptor("EndDate",
+                    PluginServiceParameterDescriptor.TYPE_STRING, Boolean.TRUE,
+                    "Used to indicate the ending date for which data collection activities should be retrieved.  This will be in the YYYYMMDD format.");
+    public static final PluginServiceParameterDescriptor END_TIME = new PluginServiceParameterDescriptor(
+                    "EndTime",
+                    PluginServiceParameterDescriptor.TYPE_STRING,
+                    Boolean.FALSE,
+                    "Used to indicate the ending time (for the supplied End Date) for which data collection activities should be retrieved. This will be in the HH:MM format. Defaults to the end of the day (time 23:59) if left blank.");
+    public static final PluginServiceParameterDescriptor TIME_TYPE = new PluginServiceParameterDescriptor(
+                    "TimeType",
+                    PluginServiceParameterDescriptor.TYPE_STRING,
+                    Boolean.FALSE,
+                    "Specifies that both query and return times will be either in \"Local\" (to the monitor) or \"GMT\" time.  Defaults to Local if null.  (This is not included in the AQDE flow)");
+    public static final PluginServiceParameterDescriptor SAMPLE_DURATION = new PluginServiceParameterDescriptor("SampleDuration",
+                    PluginServiceParameterDescriptor.TYPE_STRING, Boolean.FALSE,
+                    "Must be either \"HOURLY\" or \"MINUTE\". DEC will provide only 60 minute readings so will always be set to HOURLY.");
+    public static final PluginServiceParameterDescriptor SUBSTANCE_NAME = new PluginServiceParameterDescriptor(
+                    "SubstanceName",
+                    PluginServiceParameterDescriptor.TYPE_STRING,
+                    Boolean.FALSE,
+                    "Comma separated listing of substances (including air quality or meteorological). If left blank, then requesting all parameters.  This data exchange will use parameter codes that have already been defined by AQS.");
+    public static final PluginServiceParameterDescriptor MONITOR_TYPE = new PluginServiceParameterDescriptor(
+                    "MonitorType",
+                    PluginServiceParameterDescriptor.TYPE_STRING,
+                    Boolean.FALSE,
+                    "This parameter designates the monitoring network from which to retrieve data.  Examples are SLAMS and NAMS.  (Null returns data from all networks).");
+    public static final PluginServiceParameterDescriptor DATA_VALIDITY_CODE = new PluginServiceParameterDescriptor(
+                    "DataValidityCode",
+                    PluginServiceParameterDescriptor.TYPE_STRING,
+                    Boolean.FALSE,
+                    "Indicator used to filter out only data that is considered Valid based on the data provider's assessment of the air quality data.  If left blank, return assumes \"A\".  Possible values include: V: returns only valid data, A: Returns all data");
+    public static final PluginServiceParameterDescriptor DATA_APPROVAL_INDICATOR = new PluginServiceParameterDescriptor(
+                    "DataApprovalIndicator",
+                    PluginServiceParameterDescriptor.TYPE_STRING,
+                    Boolean.FALSE,
+                    "Indicates (Y/N) whether the state has approved this raw data result for regulatory purposes or data analysis, usually as a result of additional quality control review procedures. If left blank, assumes \"N\". Y: Only return data that has been approved by the state to be used for regulatory review, N: Includes both data that has been approved and not approved");
+    public static final PluginServiceParameterDescriptor STATE_NAME = new PluginServiceParameterDescriptor(
+                    "StateName",
+                    PluginServiceParameterDescriptor.TYPE_STRING,
+                    Boolean.FALSE,
+                    "State code defined by AQS. If SiteIdentifer is provided, State is required (SiteIdentifer is only unique within a county, and CountyCode is only unique within a state).");
+    public static final PluginServiceParameterDescriptor COUNTY_NAME = new PluginServiceParameterDescriptor("CountyName",
+                    PluginServiceParameterDescriptor.TYPE_STRING, Boolean.FALSE,
+                    "County code defined by AQS. If SiteIdentifer is provided, CountyCode is required (SiteIdentifer is only unique within a county).");
+    public static final PluginServiceParameterDescriptor CITY_NAME = new PluginServiceParameterDescriptor("CityName",
+                    PluginServiceParameterDescriptor.TYPE_STRING, Boolean.FALSE,
+                    "City name.  If included, the array must also include the state.");
+    public static final PluginServiceParameterDescriptor TRIBE_NAME = new PluginServiceParameterDescriptor("TribeName",
+                    PluginServiceParameterDescriptor.TYPE_STRING, Boolean.FALSE, "Tribe Name.");
+    public static final PluginServiceParameterDescriptor FACILITY_SITE_IDENTIFIER = new PluginServiceParameterDescriptor(
+                    "FacilitySiteIdentifier", PluginServiceParameterDescriptor.TYPE_STRING, Boolean.FALSE,
+                    "Comma separated listing of desired Site identifiers, as defined by AQS. If blank, return all for the state.");
+    public static final PluginServiceParameterDescriptor MIN_LATITUDE_MEASURE = new PluginServiceParameterDescriptor("MinLatitudeMeasure",
+                    PluginServiceParameterDescriptor.TYPE_STRING, Boolean.FALSE,
+                    "Minimum latitude measure, in decimal degrees, from which to return raw data. If blank, return all for the state");
+    public static final PluginServiceParameterDescriptor MAX_LATITUDE_MEASURE = new PluginServiceParameterDescriptor("MaxLatitudeMeasure",
+                    PluginServiceParameterDescriptor.TYPE_STRING, Boolean.FALSE,
+                    "Maximum latitude measure, in decimal degrees, from which to return raw data. If blank, return all for the state");
+    public static final PluginServiceParameterDescriptor MIN_LONGITUDE_MEASURE = new PluginServiceParameterDescriptor(
+                    "MinLongitudeMeasure",
+                    PluginServiceParameterDescriptor.TYPE_STRING,
+                    Boolean.FALSE,
+                    "Minimum longitude measure (i.e. Western border), in decimal degrees, from which to return raw data. If blank, return all for the state.  The standard will be to include negative values.");
+    public static final PluginServiceParameterDescriptor MAX_LONGITUDE_MEASURE = new PluginServiceParameterDescriptor(
+                    "MaxLongitudeMeasure",
+                    PluginServiceParameterDescriptor.TYPE_STRING,
+                    Boolean.FALSE,
+                    "Maximum longitude measure (i.e. Eastern border), in decimal degrees, from which to return raw data. If blank, return all for the state.  The standard will be to include negative values.");
+    public static final PluginServiceParameterDescriptor LAST_UPDATE_DATE = new PluginServiceParameterDescriptor("LastUpdatedDate",
+                    PluginServiceParameterDescriptor.TYPE_STRING, Boolean.FALSE,
+                    "Returns all data that has been updated since the supplied date. If blank, return all data over the date range supplied above.");
+    public static final PluginServiceParameterDescriptor INCLUDE_MONITOR_DETAILS = new PluginServiceParameterDescriptor(
+                    "IncludeMonitorDetails",
+                    PluginServiceParameterDescriptor.TYPE_STRING,
+                    Boolean.FALSE,
+                    "If set to \"Y\", the state will be requested to retrieve additional metadata about the site and monitor. If set to \"N\", state should only supply site and monitor ID information. If blank, assume \"Y\"");
+    public static final PluginServiceParameterDescriptor INCLUDE_EVENT_DATA = new PluginServiceParameterDescriptor(
+                    "IncludeEventData",
+                    PluginServiceParameterDescriptor.TYPE_STRING,
+                    Boolean.FALSE,
+                    "Valid values \"TRUE\" and \"FALSE\".  If TRUE, then the output file will include measurements effected by an \"exceptional event\" such as a volcano or forest fire.  Defaults to FALSE.");
+    public static final PluginServiceParameterDescriptor SCHEMA_VERSION = new PluginServiceParameterDescriptor("SchemaVersion",
+                    PluginServiceParameterDescriptor.TYPE_STRING, Boolean.TRUE,
+                    "The version of the schema to be used to organize the returned data.  Used internally to DEC only and set by the Plug In.");
+
     public DrDasProxyService() {
 
         super();
@@ -81,6 +178,37 @@ public class DrDasProxyService extends BaseWnosPlugin {
 
         debug("Plugin initialized");
 
+    }
+
+    @Override
+    public List<PluginServiceParameterDescriptor> getParamters()
+    {
+        List<PluginServiceParameterDescriptor> params = new ArrayList<PluginServiceParameterDescriptor>();
+        params.add(FILE_GENERATION_PURPOSE_CODE);
+        params.add(BEGIN_DATE);
+        params.add(BEGIN_TIME);
+        params.add(END_DATE);
+        params.add(END_TIME);
+        params.add(TIME_TYPE);
+        params.add(SAMPLE_DURATION);
+        params.add(SUBSTANCE_NAME);
+        params.add(MONITOR_TYPE);
+        params.add(DATA_VALIDITY_CODE);
+        params.add(DATA_APPROVAL_INDICATOR);
+        params.add(STATE_NAME);
+        params.add(COUNTY_NAME);
+        params.add(CITY_NAME);
+        params.add(TRIBE_NAME);
+        params.add(FACILITY_SITE_IDENTIFIER);
+        params.add(MIN_LATITUDE_MEASURE);
+        params.add(MAX_LATITUDE_MEASURE);
+        params.add(MIN_LONGITUDE_MEASURE);
+        params.add(MAX_LONGITUDE_MEASURE);
+        params.add(LAST_UPDATE_DATE);
+        params.add(INCLUDE_MONITOR_DETAILS);
+        params.add(INCLUDE_EVENT_DATA);
+        params.add(SCHEMA_VERSION);
+        return params;
     }
 
     /**
@@ -156,7 +284,7 @@ public class DrDasProxyService extends BaseWnosPlugin {
             String reporterServiceUrl = getRequiredConfigValueAsString(ARG_ENDPOINT_URL);
             String reporterSchemaVersion = getRequiredConfigValueAsString(ARG_HD_SCHEMA_VERSION);
 
-            Map properties = new HashMap();
+            Map<String, Object> properties = new HashMap<String, Object>();
             properties.put("schemaVersion", reporterSchemaVersion);
 
             result.getAuditEntries().add(
@@ -318,5 +446,4 @@ public class DrDasProxyService extends BaseWnosPlugin {
 
         return list;
     }
-
 }

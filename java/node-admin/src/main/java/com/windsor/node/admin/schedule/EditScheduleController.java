@@ -56,6 +56,7 @@ import com.windsor.node.admin.util.SideBarUtils;
 import com.windsor.node.admin.util.SiteTabUtils;
 import com.windsor.node.admin.util.VisitUtils;
 import com.windsor.node.common.domain.NodeVisit;
+import com.windsor.node.common.domain.ScheduleArgument;
 import com.windsor.node.common.domain.ScheduleFrequencyType;
 import com.windsor.node.common.domain.ScheduledItem;
 import com.windsor.node.common.domain.ScheduledItemSourceType;
@@ -285,10 +286,36 @@ public class EditScheduleController extends BaseSimpleFormController implements
 
         if (schedule == null) {
             schedule = new ScheduledItem();
+            //add some empty args to bind to
+            /*for(int i = 0; i < 30; i++)
+            {
+                ScheduleArgument newArg = new ScheduleArgument();
+                String newKey = "" + (i);
+                while(newKey.length() < 3)
+                {
+                    newKey = "0" + newKey;
+                }
+                newArg.setArgumentKey(newKey);
+                schedule.getScheduleArguments().add(newArg);
+            }*/
         } else {
             Map<String, String> services = flowService
                     .getActiveServiceMapByFlowId(schedule.getFlowId());
             schedule.setServices(services);
+        }
+
+        //testing putting empty bind args here, should solve some issues elsewhere
+        int initialSize = schedule.getScheduleArguments().size();
+        for(int i = initialSize; i < initialSize+30; i++)
+        {
+            ScheduleArgument newArg = new ScheduleArgument();
+            String newKey = "" + (i);
+            while(newKey.length() < 3)
+            {
+                newKey = "0" + newKey;
+            }
+            newArg.setArgumentKey(newKey);
+            schedule.getScheduleArguments().add(newArg);
         }
 
         return schedule;
@@ -309,5 +336,4 @@ public class EditScheduleController extends BaseSimpleFormController implements
     public void setAccountService(AccountService accountService) {
         this.accountService = accountService;
     }
-
 }

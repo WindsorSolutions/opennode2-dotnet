@@ -34,6 +34,7 @@ POSSIBILITY OF SUCH DAMAGE.
  */
 package com.windsor.node.plugin.sdwis;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
 import com.windsor.node.common.domain.DataServiceRequestParameter;
@@ -42,6 +43,7 @@ import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.ProcessContentResult;
 import com.windsor.node.common.domain.ServiceType;
 import com.windsor.node.common.util.NodeClientService;
+import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
 import com.windsor.node.data.dao.jdbc.JdbcPartnerDao;
 import com.windsor.node.plugin.BaseWnosPlugin;
 import com.windsor.node.plugin.sdwis.dao.JdbcSdwisPartnerDao;
@@ -90,6 +92,12 @@ public class SimpleSdwisRequestProcessor extends BaseWnosPlugin {
 
         debug("Plugin validated");
 
+    }
+
+    @Override
+    public List<PluginServiceParameterDescriptor> getParamters()
+    {
+        return new ArrayList<PluginServiceParameterDescriptor>();
     }
 
     /**

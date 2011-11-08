@@ -31,6 +31,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.windsor.node.plugin.rcra50;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -40,6 +41,7 @@ import org.apache.commons.lang.StringUtils;
 import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.PartnerIdentity;
 import com.windsor.node.common.util.NodeClientService;
+import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
 import com.windsor.node.data.dao.jdbc.JdbcPartnerDao;
 import com.windsor.node.data.dao.jdbc.JdbcTransactionDao;
 import com.windsor.node.plugin.BaseWnosPlugin;
@@ -157,6 +159,12 @@ public abstract class BaseRcra50Plugin extends BaseWnosPlugin {
             throw new RuntimeException(ARG_PARTNER_NAME + NOT_SET);
         }
 
+    }
+
+    @Override
+    public List<PluginServiceParameterDescriptor> getParamters()
+    {
+        return new ArrayList<PluginServiceParameterDescriptor>();
     }
 
     /**

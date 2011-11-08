@@ -241,7 +241,7 @@ public class JdbcTemplateHelper extends TemplateHelper {
      * @param dateString
      * @return
      */
-    public String covertToDbDate(String dateString)
+    public Date covertToDbDate(String dateString)
     {
         logger.debug("covertToDbDate: " + dateString);
         Date date;
@@ -254,7 +254,7 @@ public class JdbcTemplateHelper extends TemplateHelper {
             throw new IllegalArgumentException("Not a recognized date format, root exception: " + pe);
         }
 
-        SimpleDateFormat sdf = new SimpleDateFormat(XML_DATE_FORMAT);
+      /* SimpleDateFormat sdf = new SimpleDateFormat(XML_DATE_FORMAT) ;
         String output = sdf.format(date);
         if(getDbType().equals(DbType.Oracle))
         {
@@ -266,19 +266,20 @@ public class JdbcTemplateHelper extends TemplateHelper {
         }
         else if(getDbType().equals(DbType.MySQL))
         {
-            output = " STR_TO_DATE('" + output + "', '%Y-%m-%d') ";
+            output = "#[[ STR_TO_DATE('" + output + "', '%Y-%m-%d') ]]#";
         }
         else if(getDbType().equals(DbType.DB2))
         {
-            output = " TO_DATE('" + output + "', 'YYYY-MM-DD') ";
+            output = " #[[TO_DATE('" + output + "', 'YYYY-MM-DD') ]]#";
         }
         else
         {
             //there's really nothing to do if the DB type is unknown, compare to a VARCHAR and hope for the best
             output = " '" + output + "'";
-        }
-        logger.debug("covertToDbDate output: " + output);
-        return output;
+        }*/
+        SimpleDateFormat sdf = new SimpleDateFormat(XML_DATE_FORMAT);
+        logger.debug("covertToDbDate output: " + sdf.format(date));
+        return date;
     }
 
     /**

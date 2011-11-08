@@ -49,7 +49,7 @@ function goto(searchValue){
 						<tr>
 
 							<td class="label" width="5%" nowrap="nowrap"><img
-								alt="" src="img/page_user_dark.gif"
+								alt="" src="img/user.png"
 								style="border: 0; vertical-align: middle; padding-right: 3px; float: right;" /></td>
 							<td class="ctrl" width="95%">
 								<select name="listUsers" style="vertical-align: middle; width: 100%;"
@@ -103,7 +103,7 @@ function goto(searchValue){
                                     <a href="account-edit.htm?id=<c:out value="${user.id}" />">
 	                                    <c:choose>
 											<c:when test="${user.active}">
-												<img alt="User" src="img/page_user_dark.gif"
+												<img alt="User" src="img/user.png"
 													style="border: 0; vertical-align: middle; padding-right: 3px;" />
 											</c:when>
 											<c:otherwise>

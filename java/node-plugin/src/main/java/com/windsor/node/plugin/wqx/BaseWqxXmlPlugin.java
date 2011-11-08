@@ -135,36 +135,34 @@ public abstract class BaseWqxXmlPlugin extends BaseWqxPlugin implements
     }
 
     /**
-     * Will be called by the plugin executor after properties are set; an
-     * opportunity to validate all settings.
+     * Will be called by the plugin executor after properties are set; an opportunity to validate all settings.
      */
-    public void afterPropertiesSet() {
+    public void afterPropertiesSet()
+    {
         super.afterPropertiesSet();
 
         authorName = getRequiredConfigValueAsString(ARG_HEADER_AUTHOR);
         debug("authorName: " + authorName);
-
-        if (StringUtils.isBlank(authorName)) {
+        if(StringUtils.isBlank(authorName))
+        {
             throw new RuntimeException("blank authorName");
         }
 
         authorOrg = getRequiredConfigValueAsString(ARG_HEADER_ORG_NAME);
         debug("authorOrg: " + authorOrg);
-
-        if (StringUtils.isBlank(authorOrg)) {
+        if(StringUtils.isBlank(authorOrg))
+        {
             throw new RuntimeException("blank authorOrg");
         }
 
         contactInfo = getRequiredConfigValueAsString(ARG_HEADER_CONTACT_INFO);
         debug("contactInfo: " + contactInfo);
-
-        if (StringUtils.isBlank(contactInfo)) {
+        if(StringUtils.isBlank(contactInfo))
+        {
             throw new RuntimeException("blank contactInfo");
         }
 
-        velocityHelper.configure((DataSource) getDataSources().get(
-                ARG_DS_SOURCE), getPluginSourceDir().getAbsolutePath());
-
+        velocityHelper.configure((DataSource)getDataSources().get(ARG_DS_SOURCE), getPluginSourceDir().getAbsolutePath());
     }
 
     protected ProcessContentResult generateAndSubmitFile(NodeTransaction aTran,
@@ -232,6 +230,10 @@ public abstract class BaseWqxXmlPlugin extends BaseWqxPlugin implements
 
             NodeClientService client = makeNodeClient(partner);
 
+            /*These types of plugins create their own client and mess up the workflow, so update the partner stuff in the transaction and save it
+              after the functionality is completed*/
+            transaction.updateWithPartnerDetails(partner);
+
             result.getAuditEntries().add(
                     makeEntry("submitting to partner URL " + partner.getUrl()));
 
@@ -239,8 +241,11 @@ public abstract class BaseWqxXmlPlugin extends BaseWqxPlugin implements
             debug("submission returned with network transaction id "
                     + transaction.getNetworkId());
 
-            getTransactionDao().updateNetworkId(transaction.getId(),
-                    transaction.getNetworkId());
+            /*getTransactionDao().updateNetworkId(transaction.getId(),
+                    transaction.getNetworkId());*/
+            
+            //use the new save function here, removed the update network transaction id one as this function handles that as well
+            getTransactionDao().save(transaction);
 
             result.getAuditEntries().add(
                     makeEntry("resultTran.getId(): " + transaction.getId()));
@@ -280,67 +285,68 @@ public abstract class BaseWqxXmlPlugin extends BaseWqxPlugin implements
      * @param transaction
      * @throws ParseException
      */
-    private void setOptionsFromTransactionParams(NodeTransaction transaction)
-            throws ParseException {
-
+    private void setOptionsFromTransactionParams(NodeTransaction transaction) throws ParseException
+    {
         /*
-         * orgId is required - validateTransaction() will have already thrown an
-         * exception if it's missing
+         * orgId is required - validateTransaction() will have already thrown an exception if it's missing
          */
         orgId = getOrgIdFromTransaction(transaction);
         debug("orgId = " + orgId);
 
         int argCount = transaction.getRequest().getParameters().size();
 
-        if (argCount >= 2) {
-            String addHeader = getOptionalValueFromTransactionArgs(transaction,
-                    PARAM_INDEX_ADD_HEADER);
+        if(argCount >= 2)
+        {
+            String addHeader = getOptionalValueFromTransactionArgs(transaction, PARAM_INDEX_ADD_HEADER);
 
             /* makeHeader defaults to true */
-            if (StringUtils.isNotBlank(addHeader)) {
+            if(StringUtils.isNotBlank(addHeader))
+            {
                 makeHeader = Boolean.parseBoolean(addHeader);
                 debug("makeHeader = " + makeHeader);
             }
         }
 
-        if (argCount >= 3) {
+        if(argCount >= 3)
+        {
             /* useSubmissionHistory defaults to true */
-            String useHistory = getOptionalValueFromTransactionArgs(
-                    transaction, PARAM_INDEX_USE_HISTORY);
+            String useHistory = getOptionalValueFromTransactionArgs(transaction, PARAM_INDEX_USE_HISTORY);
 
-            if (StringUtils.isNotBlank(useHistory)) {
+            if(StringUtils.isNotBlank(useHistory))
+            {
                 useSubmissionHistory = Boolean.parseBoolean(useHistory);
                 debug("useSubmissionHistory = " + useSubmissionHistory);
             }
         }
 
-        if (argCount >= 4) {
+        if(argCount >= 4)
+        {
             /* both start & end dates are optional. */
-            String startString = getOptionalValueFromTransactionArgs(
-                    transaction, PARAM_INDEX_START_DATE);
+            String startString = getOptionalValueFromTransactionArgs(transaction, PARAM_INDEX_START_DATE);
             debug("startString = " + startString);
 
             String endString = null;
 
-            if (argCount >= 5) {
-                endString = getOptionalValueFromTransactionArgs(transaction,
-                        PARAM_INDEX_END_DATE);
+            if(argCount >= 5)
+            {
+                endString = getOptionalValueFromTransactionArgs(transaction, PARAM_INDEX_END_DATE);
                 debug("endString = " + endString);
             }
 
             /* if start is empty, ignore end. */
-            if (StringUtils.isNotBlank(startString)) {
+            if(StringUtils.isNotBlank(startString))
+            {
 
                 startDate = makeTimestamp(startString);
                 debug("startDate = " + startDate);
 
                 /* if start not empty but end is, set end to now */
-                if (StringUtils.isNotBlank(endString)) {
-
+                if(StringUtils.isNotBlank(endString))
+                {
                     endDate = makeTimestamp(endString);
-
-                } else {
-
+                }
+                else
+                {
                     endDate = new Timestamp(System.currentTimeMillis());
                 }
                 debug("endDate = " + endDate);

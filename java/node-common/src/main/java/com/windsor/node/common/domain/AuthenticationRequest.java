@@ -34,7 +34,7 @@ package com.windsor.node.common.domain;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class AuthenticationRequest implements Serializable {
 

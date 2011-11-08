@@ -36,6 +36,7 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.windsor.node.plugin.frs23;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -51,6 +52,7 @@ import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.PaginationIndicator;
 import com.windsor.node.common.domain.ProcessContentResult;
 import com.windsor.node.common.domain.ServiceType;
+import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
 import com.windsor.node.plugin.BaseWnosPlugin;
 import com.windsor.node.service.helper.CompressionService;
 import com.windsor.node.service.helper.IdGenerator;
@@ -280,5 +282,11 @@ public class NewFacilityDateResetProcessor extends BaseWnosPlugin {
     public List<DataServiceRequestParameter> getServiceRequestParamSpecs(
             String serviceName) {
         return null;
+    }
+
+    @Override
+    public List<PluginServiceParameterDescriptor> getParamters()
+    {
+        return new ArrayList<PluginServiceParameterDescriptor>();
     }
 }

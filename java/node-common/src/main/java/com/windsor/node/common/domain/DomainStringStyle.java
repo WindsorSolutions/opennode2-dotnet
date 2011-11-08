@@ -31,7 +31,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.windsor.node.common.domain;
 
-import org.apache.commons.lang.builder.ToStringStyle;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 public class DomainStringStyle extends ToStringStyle {
 

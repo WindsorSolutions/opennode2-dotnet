@@ -384,47 +384,49 @@ public abstract class BaseRcra50XmlPlugin extends BaseRcra50Plugin {
      * @param transaction
      * @param result
      */
-    private void submitTransaction(NodeTransaction transaction,
-            ProcessContentResult result) {
+    private void submitTransaction(NodeTransaction transaction, ProcessContentResult result)
+    {
 
         debug("pre-submit transaction.getId(): " + transaction.getId());
-        debug("pre-submit transaction.getNetworkId(): "
-                + transaction.getNetworkId());
+        debug("pre-submit transaction.getNetworkId(): " + transaction.getNetworkId());
 
         PartnerIdentity partner = makePartner();
-
         NodeClientService client = makeNodeClient(partner);
 
-        result.getAuditEntries().add(
-                makeEntry("submitting to partner URL " + partner.getUrl()));
+        /*
+         * These types of plugins create their own client and mess up the workflow, so update the partner stuff in the
+         * transaction and save it after the functionality is completed
+         */
+        transaction.updateWithPartnerDetails(partner);
+
+        result.getAuditEntries().add(makeEntry("submitting to partner URL " + partner.getUrl()));
 
         transaction = client.submit(transaction);
-        debug("submission returned with network transaction id "
-                + transaction.getNetworkId());
+        debug("submission returned with network transaction id " + transaction.getNetworkId());
 
-        getTransactionDao().updateNetworkId(transaction.getId(),
-                transaction.getNetworkId());
+        /*
+         * getTransactionDao().updateNetworkId(transaction.getId(), transaction.getNetworkId());
+         */
 
-        result.getAuditEntries().add(
-                makeEntry("resultTran.getId(): " + transaction.getId()));
-        result.getAuditEntries().add(
-                makeEntry("resultTran.getNetworkId(): "
-                        + transaction.getNetworkId()));
+        // use the new save function here, removed the update network transaction id one as this function handles that
+        // as well
+        getTransactionDao().save(transaction);
+
+        result.getAuditEntries().add(makeEntry("resultTran.getId(): " + transaction.getId()));
+        result.getAuditEntries().add(makeEntry("resultTran.getNetworkId(): " + transaction.getNetworkId()));
     }
 
     /**
      * @param opType
      */
-    private void checkForPendingSubmissions(RcraOperationType opType) {
-
+    private void checkForPendingSubmissions(RcraOperationType opType)
+    {
         logger.debug("Checking for pending submissions...");
-
-        if (getStatusDao().getPendingTransactionId(opType) != null) {
-            throw new UnsupportedOperationException("Can't submit when a \""
-                    + operationType.toString()
-                    + "\" transaction is Pending or Processing");
+        if(getStatusDao().getPendingTransactionId(opType) != null)
+        {
+            throw new UnsupportedOperationException("Can't submit when a \"" + operationType.toString()
+                            + "\" transaction is Pending or Processing");
         }
-
     }
 
     private void setOptionsFromTransactionParams(NodeTransaction transaction)

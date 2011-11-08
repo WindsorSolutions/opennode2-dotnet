@@ -33,8 +33,8 @@ package com.windsor.node.data.dao;
 
 import java.util.List;
 import java.util.Map;
-
 import com.windsor.node.common.domain.DataService;
+import com.windsor.node.common.domain.ScheduleArgument;
 
 /**
  * Defines operations for saving and retrieving
@@ -123,5 +123,4 @@ public interface ServiceDao extends DeletableDao {
      * @return
      */
     List<DataService> getActiveByImplementor(String implementorName);
-
 }

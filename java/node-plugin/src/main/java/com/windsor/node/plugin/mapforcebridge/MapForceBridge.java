@@ -53,6 +53,7 @@ import com.windsor.node.common.domain.PaginationIndicator;
 import com.windsor.node.common.domain.ProcessContentResult;
 import com.windsor.node.common.domain.RequestType;
 import com.windsor.node.common.domain.ServiceType;
+import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
 import com.windsor.node.plugin.BaseWnosPlugin;
 import com.windsor.node.service.helper.CompressionService;
 import com.windsor.node.service.helper.IdGenerator;
@@ -340,5 +341,18 @@ public class MapForceBridge extends BaseWnosPlugin implements InitializingBean {
     public List<DataServiceRequestParameter> getServiceRequestParamSpecs(
             String serviceName) {
         return null;
+    }
+
+    @Override
+    public List<PluginServiceParameterDescriptor> getParamters()
+    {
+        List<PluginServiceParameterDescriptor> params = new ArrayList<PluginServiceParameterDescriptor>();
+        //This one is a bit different in implementation, just add 20 generic params for the mapforce plugins to use
+        for(int i = 0; i < 20; i++)
+        {
+            params.add(new PluginServiceParameterDescriptor("Mapforce Bridge Param " + i, PluginServiceParameterDescriptor.TYPE_STRING,
+                            Boolean.FALSE, "Generic Mapforce Bridge parameter."));
+        }
+        return params;
     }
 }

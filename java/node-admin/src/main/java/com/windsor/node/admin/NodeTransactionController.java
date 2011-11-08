@@ -84,7 +84,7 @@ public class NodeTransactionController extends AbstractController implements
             throw new IllegalArgumentException("Invalid transaction Id");
         }
 
-        Map model = new HashMap();
+        Map<String, Object> model = new HashMap<String, Object>();
         model.put(AdminConstants.VISIT_KEY, visit);
 
         // Set the selected tab

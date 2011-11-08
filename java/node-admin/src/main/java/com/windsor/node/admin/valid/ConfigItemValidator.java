@@ -32,60 +32,66 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.windsor.node.admin.valid;
 
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.Errors;
-
 import com.windsor.node.common.domain.ConfigItem;
 
-public class ConfigItemValidator extends AbstractValidator {
+public class ConfigItemValidator extends AbstractValidator
+{
 
     public static final int MAX_ID_LENGTH = 50;
 
     public static final String ID = "id";
 
-    public ConfigItemValidator() {
+    public ConfigItemValidator()
+    {
         logger = LoggerFactory.getLogger(ConfigItemValidator.class);
     }
 
-    public boolean supports(Class obj) {
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public boolean supports(Class obj)
+    {
         return obj.isAssignableFrom(ConfigItem.class);
     }
 
-    public void validate(Object obj, Errors errors) {
+    public void validate(Object obj, Errors errors)
+    {
 
         logger.debug(VALIDATE + this.getClass());
 
-        ConfigItem item = (ConfigItem) obj;
+        ConfigItem item = (ConfigItem)obj;
 
         logger.debug(VALIDATING_WITH + item);
 
-        if (item == null) {
+        if(item == null)
+        {
             throw new IllegalArgumentException("Object null");
-        } else {
+        }
+        else
+        {
 
-            if (StringUtils.isBlank(item.getId())) {
+            if(StringUtils.isBlank(item.getId()))
+            {
                 errors.rejectValue(ID, REQUIRED_ERR_CODE, REQUIRED_MSG);
-            } else {
-                if (item.getId().length() > MAX_ID_LENGTH) {
+            }
+            else
+            {
+                if(item.getId().length() > MAX_ID_LENGTH)
+                {
                     errors.rejectValue(ID, "LENGTH", "Too long");
                 }
-                if (StringUtils.contains(item.getId(), ' ')) {
-                    errors.rejectValue(ID, "CONTAINS_SPACES",
-                            "Cannot contain blank space");
+                if(StringUtils.contains(item.getId(), ' '))
+                {
+                    errors.rejectValue(ID, "CONTAINS_SPACES", "Cannot contain blank space");
                 }
             }
 
-            if (StringUtils.isBlank(item.getValue())) {
+            if(StringUtils.isBlank(item.getValue()))
+            {
                 errors.rejectValue("value", REQUIRED_ERR_CODE, REQUIRED_MSG);
             }
 
-            if (StringUtils.isBlank(item.getDescription())) {
-                errors.rejectValue("description", REQUIRED_ERR_CODE,
-                        REQUIRED_MSG);
-            }
+            // description is no longer required
         }
-
     }
-
 }

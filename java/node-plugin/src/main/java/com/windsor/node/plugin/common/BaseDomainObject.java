@@ -33,7 +33,7 @@ package com.windsor.node.plugin.common;
 
 import java.text.DecimalFormat;
 
-import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
 import com.windsor.node.common.domain.DomainStringStyle;
 

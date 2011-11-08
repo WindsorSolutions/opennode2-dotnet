@@ -65,6 +65,7 @@ import com.windsor.node.common.domain.ProcessContentResult;
 import com.windsor.node.common.domain.ServiceType;
 import com.windsor.node.common.util.NodeClientService;
 import com.windsor.node.conf.NAASConfig;
+import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
 import com.windsor.node.plugin.BaseWnosPlugin;
 import com.windsor.node.plugin.sdwis.dao.HereDao;
 import com.windsor.node.service.helper.IdGenerator;
@@ -142,6 +143,12 @@ public class SdwisSubmissionRelayProcessor extends BaseWnosPlugin {
 
         debug("Plugin validated");
 
+    }
+
+    @Override
+    public List<PluginServiceParameterDescriptor> getParamters()
+    {
+        return new ArrayList<PluginServiceParameterDescriptor>();
     }
 
     public ProcessContentResult process(NodeTransaction transaction) {
