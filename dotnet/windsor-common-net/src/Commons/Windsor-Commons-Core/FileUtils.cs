@@ -361,6 +361,23 @@ namespace Windsor.Commons.Core
             }
             return isEmpty;
         }
+        /// <summary>
+        /// Return true if the input directory contains any files.
+        /// </summary>
+        public static bool DirectoryContainsFiles(string directoryPath)
+        {
+            bool isEmpty = true;
+            using (FileSystemEnumerator enumerator = new FileSystemEnumerator(directoryPath, "*", true,
+                                                                              FileSystemEnumerator.EReturnTypes.eReturnFiles))
+            {
+                foreach (string filePath in enumerator)
+                {
+                    isEmpty = false;
+                    break;
+                }
+            }
+            return !isEmpty;
+        }
         public static void DeleteAllFilesInFolder(string directoryPath)
         {
             using (FileSystemEnumerator enumerator = new FileSystemEnumerator(directoryPath, "*", false,

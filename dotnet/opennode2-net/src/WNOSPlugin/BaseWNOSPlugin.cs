@@ -1467,7 +1467,7 @@ namespace Windsor.Node2008.WNOSPlugin
 
             using (Mutex mutex = AcquireMutex(folderName, 60))
             {
-                if (Directory.Exists(folderPath) && !FileUtils.IsDirectoryEmpty(folderPath))
+                if (Directory.Exists(folderPath) && FileUtils.DirectoryContainsFiles(folderPath))
                 {
                     return folderPath;
                 }
