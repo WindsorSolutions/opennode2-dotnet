@@ -138,7 +138,7 @@ public class WqxStatusResetter extends BaseWqxPlugin {
     }
 
     @Override
-    public List<PluginServiceParameterDescriptor> getParamters()
+    public List<PluginServiceParameterDescriptor> getParameters()
     {
         return new ArrayList<PluginServiceParameterDescriptor>();
     }

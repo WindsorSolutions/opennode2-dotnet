@@ -104,7 +104,7 @@ public class WqxGetDeleteSubmission extends BaseWqxXmlPlugin {
     }
 
     @Override
-    public List<PluginServiceParameterDescriptor> getParamters()
+    public List<PluginServiceParameterDescriptor> getParameters()
     {
         List<PluginServiceParameterDescriptor> params = new ArrayList<PluginServiceParameterDescriptor>();
         params.add(ORG_ID);

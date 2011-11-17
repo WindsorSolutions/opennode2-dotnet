@@ -700,7 +700,7 @@ public abstract class BaseEisXmlPlugin extends BaseWnosPlugin {
     }
 
     @Override
-    public List<PluginServiceParameterDescriptor> getParamters()
+    public List<PluginServiceParameterDescriptor> getParameters()
     {
         List<PluginServiceParameterDescriptor> params = new ArrayList<PluginServiceParameterDescriptor>();
         params.add(EMISSIONS_YEAR);

@@ -344,7 +344,7 @@ public class MapForceBridge extends BaseWnosPlugin implements InitializingBean {
     }
 
     @Override
-    public List<PluginServiceParameterDescriptor> getParamters()
+    public List<PluginServiceParameterDescriptor> getParameters()
     {
         List<PluginServiceParameterDescriptor> params = new ArrayList<PluginServiceParameterDescriptor>();
         //This one is a bit different in implementation, just add 20 generic params for the mapforce plugins to use

@@ -135,7 +135,7 @@ public class WqxGetStatus extends BaseWqxPlugin {
     }
 
     @Override
-    public List<PluginServiceParameterDescriptor> getParamters()
+    public List<PluginServiceParameterDescriptor> getParameters()
     {
         List<PluginServiceParameterDescriptor> params = new ArrayList<PluginServiceParameterDescriptor>();
         params.add(ORG_ID);

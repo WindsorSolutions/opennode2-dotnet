@@ -181,7 +181,7 @@ public class DrDasProxyService extends BaseWnosPlugin {
     }
 
     @Override
-    public List<PluginServiceParameterDescriptor> getParamters()
+    public List<PluginServiceParameterDescriptor> getParameters()
     {
         List<PluginServiceParameterDescriptor> params = new ArrayList<PluginServiceParameterDescriptor>();
         params.add(FILE_GENERATION_PURPOSE_CODE);

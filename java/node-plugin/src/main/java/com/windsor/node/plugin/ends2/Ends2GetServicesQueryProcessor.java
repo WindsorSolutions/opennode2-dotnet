@@ -512,7 +512,7 @@ public class Ends2GetServicesQueryProcessor extends BaseWnosPlugin implements
     }
 
     @Override
-    public List<PluginServiceParameterDescriptor> getParamters()
+    public List<PluginServiceParameterDescriptor> getParameters()
     {
         return new ArrayList<PluginServiceParameterDescriptor>();
     }

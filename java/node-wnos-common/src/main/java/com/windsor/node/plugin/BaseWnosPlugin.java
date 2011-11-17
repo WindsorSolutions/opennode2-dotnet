@@ -55,6 +55,7 @@ import com.windsor.node.common.domain.ProcessContentResult;
 import com.windsor.node.common.domain.ServiceType;
 import com.windsor.node.common.util.NodeClientService;
 import com.windsor.node.data.dao.ParameterSpecifiedPlugin;
+import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
 import com.windsor.node.service.helper.NodePartnerProvider;
 import com.windsor.node.service.helper.ServiceFactory;
 import com.windsor.node.service.helper.client.DualEndpointNodeClientFactory;
@@ -115,6 +116,8 @@ public abstract class BaseWnosPlugin implements InitializingBean, ParameterSpeci
         supportedPluginTypes = new ArrayList<ServiceType>();
 
     }
+
+    public abstract List<PluginServiceParameterDescriptor> getParameters();
 
     /**
      * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()

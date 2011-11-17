@@ -322,7 +322,7 @@ public class FlowServiceImpl extends BaseService implements FlowService,
         if(implementor instanceof ParameterSpecifiedPlugin)
         {
             ParameterSpecifiedPlugin plugin = (ParameterSpecifiedPlugin)implementor;
-            params = plugin.getParamters();
+            params = plugin.getParameters();
         }
         return params;
     }

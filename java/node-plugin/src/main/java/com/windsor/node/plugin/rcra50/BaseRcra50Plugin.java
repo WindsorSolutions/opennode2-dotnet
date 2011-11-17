@@ -162,7 +162,7 @@ public abstract class BaseRcra50Plugin extends BaseWnosPlugin {
     }
 
     @Override
-    public List<PluginServiceParameterDescriptor> getParamters()
+    public List<PluginServiceParameterDescriptor> getParameters()
     {
         return new ArrayList<PluginServiceParameterDescriptor>();
     }

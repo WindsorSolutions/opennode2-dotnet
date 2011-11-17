@@ -177,7 +177,7 @@ public class NonQuerySqlRequestProcessor extends BaseWnosPlugin {
     }
 
     @Override
-    public List<PluginServiceParameterDescriptor> getParamters()
+    public List<PluginServiceParameterDescriptor> getParameters()
     {
         return new ArrayList<PluginServiceParameterDescriptor>();
     }

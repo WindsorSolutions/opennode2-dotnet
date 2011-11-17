@@ -94,7 +94,7 @@ public class DmrStatusChecker extends BaseWnosPlugin implements
     }
 
     @Override
-    public List<PluginServiceParameterDescriptor> getParamters()
+    public List<PluginServiceParameterDescriptor> getParameters()
     {
         List<PluginServiceParameterDescriptor> params = new ArrayList<PluginServiceParameterDescriptor>();
         params.add(USER_ID);

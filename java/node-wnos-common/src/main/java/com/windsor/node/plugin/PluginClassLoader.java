@@ -229,7 +229,8 @@ public class PluginClassLoader implements WnosClassLoader {
             Enumeration<? extends ZipEntry> e = null;
             java.util.zip.ZipFile zf = null;
 
-            urls[0] = new File(jarFilePath).toURL();
+            //quick fix that avoids issues with illegal characters, java.io.File class' toURL() was deprecated anyway
+            urls[0] = new File(jarFilePath).toURI().toURL();
             zf = new java.util.zip.ZipFile(jarFilePath);
             e = zf.entries();
 

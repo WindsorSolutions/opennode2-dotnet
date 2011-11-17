@@ -6,6 +6,9 @@ CREATE TABLE NAccount (
 	IsActive   	char(1) NOT NULL,
 	SystemRole 	varchar2(50) NOT NULL,
 	Affiliation varchar2(50) NOT NULL,
+	IsDeleted    VARCHAR2(1) NULL,
+    IsDemoUser   VARCHAR2(1) NULL,
+    PasswordHash VARCHAR2(50) NULL,
 	ModifiedBy 	varchar2(50) NOT NULL,
 	ModifiedOn 	date NOT NULL 
 	)
@@ -27,6 +30,9 @@ CREATE TABLE NActivity (
 	ActivityType 	varchar2(128) NOT NULL,
 	TransactionId	varchar2(50) NULL,
 	IP           	varchar2(64) NULL,
+	WebMethod       VARCHAR2(50) NULL,
+    FlowName        VARCHAR2(255) NULL,
+    Operation       VARCHAR2(255) NULL,
 	ModifiedBy   	varchar2(50) NOT NULL,
 	ModifiedOn   	date NOT NULL 
 	)
@@ -36,6 +42,7 @@ CREATE TABLE NActivityDetail (
 	Id        	varchar2(50) NOT NULL,
 	ActivityId	varchar2(50) NOT NULL,
 	Detail    	varchar2(4000) NOT NULL,
+	OrderIndex  NUMBER NULL,
 	ModifiedOn	date NOT NULL 
 	)
 ;
@@ -43,7 +50,7 @@ CREATE TABLE NActivityDetail (
 CREATE TABLE NConfig ( 
 	Id         	varchar2(255) NOT NULL,
 	ConfigValue	varchar2(4000) NOT NULL,
-	Description	varchar2(500) NOT NULL,
+	Description	varchar2(500) NULL,
 	ModifiedBy 	varchar2(50) NOT NULL,
 	ModifiedOn 	date NOT NULL,
 	IsEditable 	char(1) NOT NULL 
@@ -74,7 +81,7 @@ CREATE TABLE NDocument (
 
 CREATE TABLE NFlow ( 
 	Id         	varchar2(50) NOT NULL,
-	InfoUrl    	varchar2(500) NOT NULL,
+	InfoUrl    	varchar2(500) NULL,
 	Contact    	varchar2(255) NOT NULL,
 	IsProtected	char(1) NOT NULL,
 	ModifiedBy 	varchar2(50) NOT NULL,
@@ -94,7 +101,9 @@ CREATE TABLE NNotification (
 	OnNotify  	char(1) NOT NULL,
 	OnSchedule	char(1) NOT NULL,
 	OnDownload	char(1) NOT NULL,
-	OnExecute 	char(1) NOT NULL 
+	OnExecute 	char(1) NOT NULL,
+	ModifiedBy  VARCHAR2(50) NULL,
+    ModifiedOn  DATE NULL
 	)
 ;
 
@@ -113,7 +122,8 @@ CREATE TABLE NPlugin (
 	FlowId       	varchar2(50) NOT NULL,
 	ModifiedBy   	varchar2(50) NOT NULL,
 	ModifiedOn   	date NOT NULL,
-	PluginContent	blob NOT NULL 
+	PluginContent	blob NOT NULL,
+	BinaryVersion   VARCHAR2(40) NULL
 	)
 ;
 
@@ -124,6 +134,7 @@ CREATE TABLE NRequest (
 	RowIndex     	number NOT NULL,
 	MaxRowCount  	number NOT NULL,
 	RequestType  	varchar2(50) NOT NULL,
+	ParamsByName    VARCHAR2(1) NULL,
 	ModifiedBy   	varchar2(50) NOT NULL,
 	ModifiedOn   	date NOT NULL 
 	)
@@ -157,7 +168,11 @@ CREATE TABLE NSchedule (
 	ModifiedOn       	date NOT NULL,
 	IsActive         	varchar2(1) NOT NULL,
 	IsRunNow         	varchar2(1) NOT NULL,
-	ExecuteStatus    	varchar2(50) NOT NULL 
+	ExecuteStatus    	varchar2(50) NOT NULL,
+	SourceFlow          VARCHAR2(255) NULL,
+    TargetFlow          VARCHAR2(255) NULL, 
+    TargetOperation     VARCHAR2(255) NULL,
+    LastExecuteActivityId  VARCHAR2(50) NULL
 	)
 ;
 
@@ -177,6 +192,7 @@ CREATE TABLE NService (
 	ServiceType	varchar2(128) NOT NULL,
 	Implementor	varchar2(500) NOT NULL,
 	AuthLevel  	varchar2(50) NOT NULL,
+	PublishFlags VARCHAR2(50) NULL,
 	ModifiedBy 	varchar2(50) NOT NULL,
 	ModifiedOn 	date NOT NULL 
 	)
@@ -207,7 +223,12 @@ CREATE TABLE NTransaction (
 	ModifiedOn  	date NOT NULL,
 	StatusDetail	varchar2(4000) NULL,
 	Operation   	varchar2(255) NULL,
-	WebMethod   	varchar2(50) NOT NULL 
+	WebMethod   	varchar2(50) NOT NULL,
+	EndpointVersion             VARCHAR2(50) NULL,
+    NetworkEndpointVersion      VARCHAR2(50) NULL, 
+    NetworkEndpointUrl          VARCHAR2(500) NULL,
+    NetworkEndpointStatus       VARCHAR2(50) NULL,
+    NetworkEndpointStatusDetail VARCHAR2(4000) NULL
 	)
 ;
 
@@ -632,4 +653,47 @@ ALTER TABLE NAccountAuthRequestFlow
     ON DELETE CASCADE
 ;
 
+CREATE TABLE NNodeNotification 
+   (ID            VARCHAR2(50)   NOT NULL
+   ,TransactionId VARCHAR2(50)   NOT NULL
+   ,NotifyData    VARCHAR2(4000) NOT NULL) ;
     
+ALTER TABLE NNodeNotification
+    ADD CONSTRAINT PK_NNodeNotification
+    PRIMARY KEY (ID);
+    
+ALTER TABLE NNodeNotification  
+    ADD CONSTRAINT FK_NNodeNotif_Trans 
+    FOREIGN KEY(TransactionId)
+    REFERENCES NTransaction(ID)
+    ON DELETE CASCADE; 
+
+CREATE TABLE NObjectCache
+   (NAME        VARCHAR2(50) NOT NULL
+   ,DATA        BLOB         NOT NULL
+   ,Expiration  DATE         NOT NULL
+   ,ModifiedBy  VARCHAR2(50) NOT NULL
+   ,ModifiedOn  DATE         NOT NULL);
+    
+ALTER TABLE NObjectCache
+    ADD CONSTRAINT PK_NObjectCache
+    PRIMARY KEY (NAME);
+
+CREATE TABLE NTransactionRealtimeDetails
+   (ID            VARCHAR2(50)   NOT NULL
+   ,StatusType    VARCHAR2(50)   NOT NULL
+   ,TransactionId VARCHAR2(50)   NOT NULL
+   ,Detail        VARCHAR2(4000) NOT NULL
+   ,OrderIndex    NUMBER         NOT NULL
+   ,ModifiedBy    VARCHAR2(50)   NOT NULL
+   ,ModifiedOn    DATE           NOT NULL);
+   
+ALTER TABLE NTransactionRealtimeDetails
+    ADD CONSTRAINT PK_NTransactionRealtimeDetails
+    PRIMARY KEY (ID);
+
+ALTER TABLE NNodeNotification  
+    ADD CONSTRAINT FK_NTransRealtimeDtl_Trans 
+    FOREIGN KEY(TransactionId)
+    REFERENCES NTransaction(ID)
+    ON DELETE CASCADE ;

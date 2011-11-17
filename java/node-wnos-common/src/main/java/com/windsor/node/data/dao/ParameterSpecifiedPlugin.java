@@ -8,5 +8,5 @@ public interface ParameterSpecifiedPlugin
      * Returns a List of parameters, empty List, not null, for if there are none
      * @return
      */
-    List<PluginServiceParameterDescriptor> getParamters();
+    List<PluginServiceParameterDescriptor> getParameters();
 }
