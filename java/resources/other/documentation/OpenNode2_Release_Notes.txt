@@ -1,4 +1,27 @@
 ================================================================================
+OpenNode2 v2.02 for Java - Release Notes                             2011-11-17
+================================================================================
+Release 2.02 enhances usability of the Java Node.
+  
+The Schedule Manager now prompts for implementer specific arguments when called 
+for by a Plugin. Refer to individual Plugin Guides for definitions of plugin 
+implementers and corresponding service and schedule parameters.
+  
+The Schedule Manager has added the ability to run a saved schedule from the 
+schedule list screen.  This 'Run Now' button allows the user to run the schedule
+without having to edit the schedule. 
+
+'Get Status' and 'Download' functions are now available on the Node Transaction
+Detail of the Activity Viewer.  "Get Status" will update the status of the 
+transaction while the request is processing.  The "Download" button is an 
+additional method to download the submitted document with the ability to save
+locally.
+
+When upgrading to version 2.02 it will be necessary to run an SQL update script.
+Please refer to the Installation Guide for details.  In addition, OpenNode2 v2.02
+contains numerous additional minor usability improvements and bug fixes.
+
+================================================================================
 OpenNode2 v2.00 for Java - Release Notes                             2011-05-2
 ================================================================================
 This release complies with the new Endpoint 2.1 specification, accordingly the
