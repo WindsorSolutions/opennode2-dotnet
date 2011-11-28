@@ -2,15 +2,22 @@
 <script type="text/javascript">
 $(document).ready(function()
 {
-   checkRunningProcesses();
+	markRunningSchedules();
 });
-function checkRunningProcesses()
+
+function markRunningSchedules()
 {
-    $(".readyToRun").each(function()
+	var callUrl = "schedule-check.htm";
+	var data = $.ajax({url: callUrl, cache:false, dataType: "json",
+        success: function(json, textStatus)
         {
-            var elementId = $(this).attr("id");
-            runScheduleNow(elementId, true);
-        });
+        	$.each(data, function(key, elementId)
+            {
+        		$("#" + elementId).removeClass("readyToRun");
+                $("#" + elementId).addClass("running");
+    	    });
+       }
+     });
 }
 
 function runScheduleNow(elementId, checkOnly)
