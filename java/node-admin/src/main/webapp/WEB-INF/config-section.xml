@@ -39,13 +39,11 @@
     <bean id="httpInvoker1" class="org.springframework.remoting.httpinvoker.CommonsHttpInvokerRequestExecutor"
         lazy-init="true">
         <property name="readTimeout" value="0" />
-        <property name="httpClient" ref="httpClient" />
     </bean>
 
     <bean id="httpInvoker2" class="org.springframework.remoting.httpinvoker.CommonsHttpInvokerRequestExecutor"
         lazy-init="true">
         <property name="readTimeout" value="0" />
-        <property name="httpClient" ref="httpClient" />
     </bean>
 
 

@@ -14,6 +14,11 @@
         <property name="executionService" ref="scheduleExecutionService" />
     </bean>
 
+    <bean name="/schedule-check.htm" class="com.windsor.node.admin.schedule.CheckRunningScheduleController">
+        <property name="scheduleService" ref="scheduleService" />
+        <property name="executionService" ref="scheduleExecutionService" />
+    </bean>
+
     <bean name="/schedule-edit.htm" class="com.windsor.node.admin.schedule.EditScheduleController">
         <property name="flowService" ref="flowService" />
         <property name="scheduleService" ref="scheduleService" />

@@ -38,7 +38,7 @@
         <!-- mvn -Pnct clean package install -->
         <maven.test.skip>true</maven.test.skip>
         <plugin.name>**</plugin.name>
-        <plugin.subbuild.number>01</plugin.subbuild.number>
+        <plugin.subbuild.number>00</plugin.subbuild.number>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <build>
@@ -135,6 +135,7 @@
             <id>beachnotif21</id>
             <properties>
                 <plugin.name>beachnotif21</plugin.name>
+                <plugin.subbuild.number>01</plugin.subbuild.number>
             </properties>
             <build>
                 <finalName>${plugin.name}</finalName>
