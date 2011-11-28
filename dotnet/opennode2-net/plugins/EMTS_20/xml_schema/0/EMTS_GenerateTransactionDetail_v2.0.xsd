@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:emts="http://www.exchangenetwork.net/schema/emts/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/emts/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name: EMTS_GenerateTransactionDetail_v2.0.xsd
+        Description: Information on the RINs being generated.
+        Developed by: SRA International, Inc.
+        Point of Contact: Jeff Heatwole
+        </xsd:documentation>
+	</xsd:annotation>
+	<xsd:include schemaLocation="EMTS_SimpleContent_v2.0.xsd"/>
+    <xsd:include schemaLocation="EMTS_SupportingDocumentDetail_v2.0.xsd"/>
+	<xsd:include schemaLocation="EMTS_FeedstockDetail_v2.0.xsd"/>
+	<xsd:include schemaLocation="EMTS_CoProductDetail_v2.0.xsd"/>
+	<xsd:include schemaLocation="EMTS_OriginatingSourceDetail_v2.0.xsd"/>
+	<xsd:complexType name="GenerateTransactionDetailDataType">
+		<xsd:sequence>
+			<xsd:element ref="emts:RINQuantity"/>
+            <xsd:element ref="emts:BatchVolume"/>
+            <xsd:element ref="emts:FuelCode"/>
+            <xsd:element ref="emts:FuelCategoryCode"/>
+            <xsd:element ref="emts:ProductionDate"/>
+			<xsd:element ref="emts:ProcessCode"/>
+			<xsd:element ref="emts:DenaturantVolume" minOccurs="0"/>
+			<xsd:element ref="emts:EquivalenceValue" minOccurs="0"/>
+			<xsd:element ref="emts:ImportFacilityIdentifier" minOccurs="0"/>
+			<xsd:element ref="emts:TransactionDetailCommentText" minOccurs="0"/>
+            <xsd:element ref="emts:GenerateSupportingDocumentDetail" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="emts:GenerateOriginatingSourceDetail"/>
+			<xsd:element ref="emts:FeedstockDetail" maxOccurs="unbounded"/>
+			<xsd:element ref="emts:CoProductDetail" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="GenerateTransactionDetail" type="emts:GenerateTransactionDetailDataType"/>
+</xsd:schema>

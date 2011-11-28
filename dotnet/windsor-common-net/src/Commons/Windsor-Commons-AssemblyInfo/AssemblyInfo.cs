@@ -44,10 +44,10 @@ namespace Windsor.Commons.AssemblyInfo
     internal static class AssemblyInfo
 	{
 		// [assembly: AssemblyVersion(AssemblyInfoServer.cAssemblyVersion)]
-        public const string cAssemblyVersion = "1.0.1.340";
+        public const string cAssemblyVersion = "1.0.1.343";
 		
 		// [assembly: AssemblyFileVersion(AssemblyInfoServer.cAssemblyFileVersion)]
-		public const string cAssemblyFileVersion = "1.0.1.340";
+		public const string cAssemblyFileVersion = "1.0.1.343";
 
 		// [assembly: AssemblyCompany(AssemblyInfoServer.cAssemblyCompany)]
 		public const string cAssemblyCompany = "Windsor Solutions, Inc."; 
