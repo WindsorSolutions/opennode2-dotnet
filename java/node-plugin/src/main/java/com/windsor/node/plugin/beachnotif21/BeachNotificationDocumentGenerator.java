@@ -34,13 +34,10 @@ package com.windsor.node.plugin.beachnotif21;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.sql.DataSource;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.InitializingBean;
-
 import com.windsor.node.common.domain.CommonContentType;
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
 import com.windsor.node.common.domain.DataServiceRequestParameter;
@@ -52,6 +49,7 @@ import com.windsor.node.common.domain.ServiceType;
 import com.windsor.node.conf.NAASConfig;
 import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
 import com.windsor.node.plugin.BaseWnosPlugin;
+import com.windsor.node.plugin.beachnotif21.dao.BeachNotificationDao;
 import com.windsor.node.plugin.common.velocity.VelocityHelper;
 import com.windsor.node.plugin.common.velocity.jdbc.JdbcVelocityHelper;
 import com.windsor.node.service.helper.IdGenerator;
@@ -68,6 +66,7 @@ public class BeachNotificationDocumentGenerator extends BaseWnosPlugin
     private SettingServiceProvider settingService;
     private IdGenerator idGenerator;
     private VelocityHelper velocityHelper = new JdbcVelocityHelper();
+    private BeachNotificationDao beachNotificationDao;
 
     public BeachNotificationDocumentGenerator() {
         super();
@@ -103,6 +102,12 @@ public class BeachNotificationDocumentGenerator extends BaseWnosPlugin
         if (settingService == null) {
             throw new RuntimeException(
                     "Unable to obtain SettingServiceProvider");
+        }
+
+        beachNotificationDao = new BeachNotificationDao((DataSource) getDataSources().get(ARG_DS_SOURCE));
+        if(beachNotificationDao == null)
+        {
+            throw new RuntimeException("Unable to obtain BeachNotificationDao");
         }
 
     }
@@ -169,6 +174,8 @@ public class BeachNotificationDocumentGenerator extends BaseWnosPlugin
             result.setSuccess(true);
             result.setStatus(CommonTransactionStatusCode.Completed);
             result.getAuditEntries().add(makeEntry("Done: OK"));
+            
+            beachNotificationDao.updateSentToEPAFlag();
 
         } catch (Exception ex) {
 
