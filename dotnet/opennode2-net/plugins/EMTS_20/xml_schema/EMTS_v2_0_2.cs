@@ -26,6 +26,15 @@ namespace Windsor.Node2008.WNOSPlugin.EMTS_20
                                       "PUBLIC", "PUB"
     )]
 
+    [AppliedAttribute(typeof(FeedstockDetailDataType), "FeedstockQuantity", typeof(ColumnAttribute), 10, 1)]
+
+    [AppliedAttribute(typeof(GenerateTransactionDetailDataType), "EquivalenceValue", typeof(ColumnAttribute), 2, 1)]
+
+    [AppliedAttribute(typeof(SellTransactionDetailDataType), "RINPriceAmount", typeof(ColumnAttribute), 5, 2)]
+    [AppliedAttribute(typeof(SellTransactionDetailDataType), "GallonPriceAmount", typeof(ColumnAttribute), 5, 2)]
+
+    [AppliedAttribute(typeof(BuyTransactionDetailDataType), "RINPriceAmount", typeof(ColumnAttribute), 5, 2)]
+    [AppliedAttribute(typeof(BuyTransactionDetailDataType), "GallonPriceAmount", typeof(ColumnAttribute), 5, 2)]
 
     public partial class EMTSDataType
     {
