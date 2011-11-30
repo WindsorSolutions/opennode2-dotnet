@@ -67,17 +67,17 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
 import java.net.UnknownHostException;
-
 import javax.net.SocketFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
-
 import org.apache.commons.httpclient.ConnectTimeoutException;
 import org.apache.commons.httpclient.HttpClientError;
 import org.apache.commons.httpclient.params.HttpConnectionParams;
 import org.apache.commons.httpclient.protocol.SecureProtocolSocketFactory;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.windsor.node.common.util.StaticConfig;
 
 /**
  * <p>
@@ -151,7 +151,12 @@ public class WindsorSSLProtocolSocketFactory implements
     private static SSLContext createEasySSLContext() {
         LOG.debug("WindsorSSLProtocolSocketFactory.createEasySSLContext()");
         try {
-            SSLContext context = SSLContext.getInstance("SSL");
+            String sslConfig = "SSL";
+            if(StringUtils.isNotBlank(StaticConfig.SSL_CONFIG))
+            {
+                sslConfig = StaticConfig.SSL_CONFIG;
+            }
+            SSLContext context = SSLContext.getInstance(sslConfig);
             context.init(null,
                     new TrustManager[] { new WindsorX509TrustManager(null) },
                     null);

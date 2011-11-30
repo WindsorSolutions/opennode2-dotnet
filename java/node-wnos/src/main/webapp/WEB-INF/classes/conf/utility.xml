@@ -25,4 +25,8 @@
 		<property name="transactionDao" ref="transactionDao" />
 	</bean>
 
+    <bean id="staticConfig" class="com.windsor.node.common.util.StaticConfig">
+        <property name="sslConfig" value="${ssl.config}" />
+    </bean>
+
 </beans>

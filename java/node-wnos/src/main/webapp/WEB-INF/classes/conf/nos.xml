@@ -21,6 +21,11 @@
                 <value>classpath:worker.properties</value>
 			</list>
 		</property>
+        <property name="properties">
+            <props>
+                <prop key="ssl.config">SSL</prop>
+            </props>
+        </property>
 	</bean>
 
 	<!-- Helpers -->

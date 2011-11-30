@@ -17,6 +17,11 @@
                 <value>file:/var/opennode2_home/conf/nos.properties</value>
             </list>
         </property>
+        <property name="properties">
+            <props>
+                <prop key="ssl.config">SSL</prop>
+            </props>
+        </property>
     </bean>
     <!--<bean id="proxySetter" class="com.windsor.node.common.util.HttpProxySetter">
         <property name="useProxyConfig" value="true" />
@@ -25,6 +30,10 @@
         <property name="httpsHostName" value="127.0.0.1" />
         <property name="httpsPortNumber" value="8008" />
     </bean>-->
+
+    <bean id="staticConfig" class="com.windsor.node.common.util.StaticConfig">
+        <property name="sslConfig" value="${ssl.config}" />
+    </bean>
 
     <!-- Service -->
     <bean name="service20" class="com.windsor.node.ws2.service.Endpoint2ServiceImpl">

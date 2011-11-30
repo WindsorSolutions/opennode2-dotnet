@@ -12,6 +12,15 @@
                 <value>file:/var/opennode2_home/conf/nos.properties</value>
             </list>
         </property>
+        <property name="properties">
+            <props>
+                <prop key="ssl.config">SSL</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="staticConfig" class="com.windsor.node.common.util.StaticConfig">
+        <property name="sslConfig" value="${ssl.config}" />
     </bean>
 
     <!-- Clients -->

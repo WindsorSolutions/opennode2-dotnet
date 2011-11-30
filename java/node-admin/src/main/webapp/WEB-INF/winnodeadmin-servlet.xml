@@ -16,6 +16,11 @@
                 <value>file:/var/opennode2_home/conf/jdbc.properties</value>
             </list>
         </property>
+        <property name="properties">
+            <props>
+                <prop key="ssl.config">SSL</prop>
+            </props>
+        </property>
     </bean>
 
     <!-- control the display of the "Manage User Requests" sidebar in the Security tab -->
@@ -30,6 +35,10 @@
     <import resource="security-section.xml" />
     <import resource="flow-section.xml" />
     <import resource="schedule-section.xml" />
+
+    <bean id="staticConfig" class="com.windsor.node.common.util.StaticConfig">
+        <property name="sslConfig" value="${ssl.config}" />
+    </bean>
 
     <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
         <property name="basename">
