@@ -54,7 +54,7 @@ import com.windsor.node.service.helper.settings.SettingServiceProvider;
 public class SimpleHeaderDocumentHelper implements HeaderDocumentHelper,
         InitializingBean {
 
-    private static final Logger logger = LoggerFactory
+    private final Logger logger = LoggerFactory
             .getLogger(SimpleHeaderDocumentHelper.class);
 
     private static final Format formatter = new SimpleDateFormat(

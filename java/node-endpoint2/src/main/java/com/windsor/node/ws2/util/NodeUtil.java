@@ -65,7 +65,7 @@ import com.windsor.node.ws2.Endpoint2FaultMessage;
 
 public class NodeUtil {
 
-    private static final Logger logger = LoggerFactory.getLogger(NodeUtil.class);
+    //private static final Logger LOGGER = LoggerFactory.getLogger(NodeUtil.class);
 
     public static Document getDocumentFromNodeDocumentType(
             NodeDocumentType wsdlDoc) {
@@ -160,8 +160,8 @@ public class NodeUtil {
      */
     public static GenericXmlType getGenericXmlType(CommonContentType type,
             byte[] content) {
-
-        logger.error("[getGenericXmlType]: type: " + type);
+        Logger LOGGER = LoggerFactory.getLogger(NodeUtil.class);
+        LOGGER.error("[getGenericXmlType]: type: " + type);
 
         try {
             GenericXmlType gxt = new GenericXmlType();
@@ -190,15 +190,15 @@ public class NodeUtil {
             return gxt;
 
         } catch (Exception ex) {
-            logger.error("[getGenericXmlType]: ERROR: " + ex.getMessage());
+            LOGGER.error("[getGenericXmlType]: ERROR: " + ex.getMessage());
             throw new RuntimeException(ex);
         }
 
     }
 
     public static Document getBytesFromGenericXmlType(GenericXmlType content) {
-
-        logger.debug("[getBytesFromGenericXmlType]:");
+        Logger LOGGER = LoggerFactory.getLogger(NodeUtil.class);
+        LOGGER.debug("[getBytesFromGenericXmlType]:");
 
         try {
 
@@ -223,7 +223,7 @@ public class NodeUtil {
             return resultDoc;
 
         } catch (Exception ex) {
-            logger.error("[getBytesFromGenericXmlType]: ERROR: "
+            LOGGER.error("[getBytesFromGenericXmlType]: ERROR: "
                     + ex.getMessage());
             throw new RuntimeException(ex);
         }
@@ -231,8 +231,8 @@ public class NodeUtil {
     }
 
     public static NodeDocumentType getNodeDocumentFromWnosDoc(Document wnosDoc) {
-
-        logger.debug("Creating attachment from WNOS Doc: " + wnosDoc);
+        Logger LOGGER = LoggerFactory.getLogger(NodeUtil.class);
+        LOGGER.debug("Creating attachment from WNOS Doc: " + wnosDoc);
 
         try {
 
@@ -240,14 +240,14 @@ public class NodeUtil {
             AttachmentType attachment = new AttachmentType();
 
             // Document attributes
-            logger.debug("setting documentFormat to "
+            LOGGER.debug("setting documentFormat to "
                     + wnosDoc.getType().getName());
             newDoc.setDocumentFormat(DocumentFormatType.Factory
                     .fromValue(wnosDoc.getType().getName()));
 
-            logger.debug("setting documentId to " + wnosDoc.getDocumentId());
+            LOGGER.debug("setting documentId to " + wnosDoc.getDocumentId());
             newDoc.setDocumentId(new Id(wnosDoc.getDocumentId()));
-            logger
+            LOGGER
                     .debug("setting documentName to "
                             + wnosDoc.getDocumentName());
             newDoc.setDocumentName(wnosDoc.getDocumentName());
@@ -259,25 +259,25 @@ public class NodeUtil {
             } else {
                 contentType.setContentType_type0("application/octet-stream");
             }
-            logger.error("Set contentType to "
+            LOGGER.error("Set contentType to "
                     + contentType.getContentType_type0());
 
             // Actual attachment
-            logger.error("Creating datasource for the attachment...");
+            LOGGER.error("Creating datasource for the attachment...");
             ByteArrayDataSource bads = new ByteArrayDataSource(wnosDoc
                     .getContent());
-            logger.error("Creating data handler...");
+            LOGGER.error("Creating data handler...");
             attachment.setBase64Binary(new DataHandler(bads));
 
             // Final assembly of object
             attachment.setContentType(contentType);
             newDoc.setDocumentContent(attachment);
 
-            logger.debug("Attachment ready to go,");
+            LOGGER.debug("Attachment ready to go,");
             return newDoc;
 
         } catch (Exception ex) {
-            logger.error("[getNodeDocumentFromWnosDoc]: ERROR: "
+            LOGGER.error("[getNodeDocumentFromWnosDoc]: ERROR: "
                     + ex.getMessage());
             throw new RuntimeException(ex);
         }

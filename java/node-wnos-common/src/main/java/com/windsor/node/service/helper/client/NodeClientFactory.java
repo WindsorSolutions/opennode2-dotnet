@@ -45,7 +45,7 @@ import com.windsor.node.conf.NOSConfig;
 public class NodeClientFactory implements InitializingBean,
         DualEndpointNodeClientFactory {
 
-    private static final Logger logger = LoggerFactory
+    private final Logger logger = LoggerFactory
             .getLogger(NodeClientFactory.class.getName());
 
     private NAASConfig naasConfig;

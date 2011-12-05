@@ -100,7 +100,7 @@ public final class NodeFault {
             "E_INVALIDFILETYPE", "E_INVALIDDATAFLOW", "E_INTERNALERROR",
             "E_AUTHMETHOD" };
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(NodeFault.class);
+    //private static final Logger LOGGER = LoggerFactory.getLogger(NodeFault.class);
 
 
     private NodeFault() {
@@ -114,7 +114,7 @@ public final class NodeFault {
      */
     public static void throwFault(int faultCodeID, String faultDetail)
             throws RemoteException {
-
+        Logger LOGGER = LoggerFactory.getLogger(NodeFault.class);
         AxisFault fault = new AxisFault();
 
         String falutDetails = "faultdetail";

@@ -66,7 +66,7 @@ import com.windsor.node.ws1.wsdl.NodeDocument;
  */
 public class NetworkNode11Client implements NodeClientService {
 
-    private static final Logger logger = LoggerFactory
+    private final Logger logger = LoggerFactory
             .getLogger(NetworkNode11Client.class);
 
     private URL partnerEndpointUrl;

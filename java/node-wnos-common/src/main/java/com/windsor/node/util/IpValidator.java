@@ -52,7 +52,7 @@ public final class IpValidator {
 
     private static final String STAR = "*";
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(IpValidator.class);
+    //private static final Logger LOGGER = LoggerFactory.getLogger(IpValidator.class);
 
     private static final char DOT = '.';
 
@@ -60,7 +60,7 @@ public final class IpValidator {
     }
 
     public static boolean contains(List aList, String ip) {
-
+        Logger LOGGER = LoggerFactory.getLogger(IpValidator.class);
         boolean bool = false;
 
         List ipList = cleanupList(aList);
@@ -100,7 +100,7 @@ public final class IpValidator {
     }
 
     protected static boolean matchIpToMask(String ip, String item) {
-
+        Logger LOGGER = LoggerFactory.getLogger(IpValidator.class);
         boolean bool = false;
 
         LOGGER.debug("Matching ip address " + ip + " to pattern " + item);
@@ -146,7 +146,7 @@ public final class IpValidator {
     }
 
     protected static boolean validateIpString(String ip) {
-
+        Logger LOGGER = LoggerFactory.getLogger(IpValidator.class);
         boolean bool = false;
         String[] ipParts = StringUtils.split(ip, DOT);
 

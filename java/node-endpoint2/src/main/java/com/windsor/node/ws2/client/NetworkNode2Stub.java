@@ -107,7 +107,7 @@ public class NetworkNode2Stub extends Stub {
 
     protected org.apache.axis2.description.AxisOperation[] operations;
 
-    private static final Logger logger = LoggerFactory.getLogger(NetworkNode2Stub.class.getName());
+    private final Logger logger = LoggerFactory.getLogger(NetworkNode2Stub.class.getName());
     private static final long soTimeout = 30 * 60 * 1000; // 30 minutes
 
     private static int counter = 0;

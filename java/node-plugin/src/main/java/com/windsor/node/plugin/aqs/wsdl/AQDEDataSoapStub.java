@@ -47,14 +47,12 @@ import org.slf4j.LoggerFactory;
 public class AQDEDataSoapStub extends org.apache.axis.client.Stub implements
         AQDEDataSoap {
 
-    private static final Logger logger = LoggerFactory
+    private final Logger logger = LoggerFactory
             .getLogger(AQDEDataSoapStub.class);
 
     static org.apache.axis.description.OperationDesc[] _operations;
 
     static {
-
-        logger.debug("AQDEDataSoapStub.static");
 
         try {
 
@@ -499,7 +497,6 @@ public class AQDEDataSoapStub extends org.apache.axis.client.Stub implements
             _operations[2] = oper;
 
         } catch (Throwable thr) {
-            logger.error(thr.getMessage(), thr);
             throw new RuntimeException(
                     "Error while static initializing AQDEDataSoapStub: "
                             + thr.getMessage(), thr);

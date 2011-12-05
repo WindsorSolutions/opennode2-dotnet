@@ -48,7 +48,7 @@ import com.windsor.node.util.IOUtil;
 public class IODocumentHelper implements DocumentHelper, InitializingBean {
 
     /** Logger for this class and subclasses */
-    private static final Logger logger = LoggerFactory
+    private final Logger logger = LoggerFactory
             .getLogger(IODocumentHelper.class);
 
     private String ioRepositoryPath;

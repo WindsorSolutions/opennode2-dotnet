@@ -98,7 +98,7 @@ public class NetworkNode20Client implements NodeClientService {
 
     private static final String NULL_TRANSACTION = "Null transaction";
 
-    private static final Logger logger = LoggerFactory
+    private final Logger logger = LoggerFactory
             .getLogger(NetworkNode20Client.class.getName());
 
     private URL partnerEndpointUrl;

@@ -148,7 +148,7 @@ public class JdbcConfigDao extends BaseJdbcDao implements ConfigDao {
                 new String[] { id }, new ConfigItemMapper());
     }
 
-    public Map getKeyValueMap(boolean upperKey) {
+    public Map<String, String> getKeyValueMap(boolean upperKey) {
 
         return getMap(SQL_SELECT_MAP, upperKey);
 

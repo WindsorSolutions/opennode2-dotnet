@@ -60,7 +60,7 @@ public class EmailNotificationHelper implements InitializingBean,
         NotificationHelper, SimpleEmailService {
 
     /** Logger for this class and subclasses */
-    private static final Logger logger = LoggerFactory
+    private final Logger logger = LoggerFactory
             .getLogger(EmailNotificationHelper.class);
 
     private static String ARG_STATUS = "STATUS";

@@ -43,6 +43,6 @@ public interface ConfigDao extends DeletableDao, ListableDao {
 
     void update(ConfigItem instance);
 
-    public Map getKeyValueMap(boolean upperKey);
+    public Map<String, String> getKeyValueMap(boolean upperKey);
 
 }

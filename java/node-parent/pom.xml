@@ -50,7 +50,7 @@
     </modules>
     <properties>
         <maven.test.skip>true</maven.test.skip>
-        <springframework.version>2.5.5</springframework.version>
+        <springframework.version>2.5.6.SEC03</springframework.version>
         <commons.beanutils.version>1.8.0</commons.beanutils.version>
         <specification.vendor>Environmental Council of the States (ECOS)</specification.vendor>
         <specification.vendor.url>http://www.ecos.org/</specification.vendor.url>
@@ -196,7 +196,8 @@
             <dependency>
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
-                <version>0.9.30</version>
+                <!-- <version>0.9.30</version> -->
+                <version>1.0.0</version>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>

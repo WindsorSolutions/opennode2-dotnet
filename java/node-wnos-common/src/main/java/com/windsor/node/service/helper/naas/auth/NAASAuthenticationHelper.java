@@ -44,7 +44,7 @@ public class NAASAuthenticationHelper implements AuthenticationHelper,
         InitializingBean {
 
     private NetworkSecurityBindingStub proxy = null;
-    private static final Logger logger = LoggerFactory
+    private final Logger logger = LoggerFactory
             .getLogger(NAASAuthenticationHelper.class);
 
     private NAASConfig naasConfig;

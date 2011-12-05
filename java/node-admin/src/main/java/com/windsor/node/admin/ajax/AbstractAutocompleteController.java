@@ -60,7 +60,7 @@ public abstract class AbstractAutocompleteController extends AbstractController 
 
     private static final int DEFAULT_MAX = 10;
 
-    private static final Logger LOGGER = LoggerFactory
+    private final Logger LOGGER = LoggerFactory
             .getLogger(AbstractAutocompleteController.class);
     private SearchService search;
     private String parameter;

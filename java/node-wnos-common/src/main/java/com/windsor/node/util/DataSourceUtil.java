@@ -42,7 +42,7 @@ import com.windsor.node.common.domain.DataProviderInfo;
 
 public final class DataSourceUtil {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DataSourceUtil.class);
+    //private static final Logger LOGGER = LoggerFactory.getLogger(DataSourceUtil.class);
 
     private static final String PROVIDER_NOT_SET = "Provider is not set";
 
@@ -50,7 +50,7 @@ public final class DataSourceUtil {
     }
 
     public static DataSource makeBasicDataSource(DataProviderInfo sourceInfo) {
-
+        Logger LOGGER = LoggerFactory.getLogger(DataSourceUtil.class);
         if (sourceInfo == null) {
             throw new RuntimeException("Source info is not set");
         }

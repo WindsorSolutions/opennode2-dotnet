@@ -51,7 +51,7 @@ import com.windsor.node.service.helper.ServiceFactory;
 public class PluginServiceProvider implements ServiceFactory, InitializingBean {
 
     /** Logger for this class and subclasses */
-    private static final Logger logger = LoggerFactory
+    private final Logger logger = LoggerFactory
             .getLogger(PluginServiceProvider.class);
 
     /** The Spring ApplicationContext created by this class. */

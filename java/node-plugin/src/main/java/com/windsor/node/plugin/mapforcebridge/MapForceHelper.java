@@ -141,10 +141,6 @@ public class MapForceHelper {
 
         for (String fileName : files) {
 
-        }
-
-        for (String fileName : files) {
-
             logger.trace("examining jar file: " + fileName);
 
             if (!fileName.equals(MAPFORCE_PLUGIN_JAR_NAME)) {
@@ -179,7 +175,8 @@ public class MapForceHelper {
 
         try {
 
-            url = new File(jarFilePath).toURL();
+            //quick fix that avoids issues with illegal characters, java.io.File class' toURL() was deprecated anyway
+            url = new File(jarFilePath).toURI().toURL();
             zf = new ZipFile(jarFilePath);
             enu = zf.entries();
             URLClassLoader ucl = new URLClassLoader(new URL[] { url },

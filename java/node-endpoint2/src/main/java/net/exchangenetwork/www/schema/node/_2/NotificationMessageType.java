@@ -48,7 +48,7 @@ import org.slf4j.LoggerFactory;
 public class NotificationMessageType implements
 		org.apache.axis2.databinding.ADBBean {
 
-	private static final Logger logger = LoggerFactory
+	private final Logger logger = LoggerFactory
 			.getLogger(NotificationMessageType.class);
 
 	/*
@@ -636,12 +636,12 @@ public class NotificationMessageType implements
 	 */
 	public static class Factory {
 
-		private static final Logger logger = LoggerFactory
-				.getLogger(NotificationMessageType.class);
+		/*private static final Logger LOGGER = LoggerFactory
+				.getLogger(NotificationMessageType.class);*/
 
 		public static NotificationMessageType parse(
 				javax.xml.stream.XMLStreamReader reader) throws Exception {
-
+		    Logger LOGGER = LoggerFactory.getLogger(NotificationMessageType.class);
 			NotificationMessageType object = new NotificationMessageType();
 
 			try {
@@ -683,7 +683,7 @@ public class NotificationMessageType implements
 				// from anyAttributes.
 				java.util.Vector handledAttributes = new java.util.Vector();
 
-				logger.debug("Looking for objectId...");
+				LOGGER.debug("Looking for objectId...");
 
 				// handle attribute "objectId"
 				String tempAttribObjectId = reader.getAttributeValue(null,
@@ -705,7 +705,7 @@ public class NotificationMessageType implements
 					reader.next();
 				}
 
-				logger.debug("Looking for messageCategory...");
+				LOGGER.debug("Looking for messageCategory...");
 
 				if (reader.isStartElement()
 						&& new javax.xml.namespace.QName(
@@ -724,7 +724,7 @@ public class NotificationMessageType implements
 					reader.next();
 				}
 
-				logger.debug("Looking for messageName...");
+				LOGGER.debug("Looking for messageName...");
 
 				if (reader.isStartElement()
 						&& new javax.xml.namespace.QName(
@@ -745,7 +745,7 @@ public class NotificationMessageType implements
 					reader.next();
 				}
 
-				logger.debug("Looking for status...");
+				LOGGER.debug("Looking for status...");
 
 				if (reader.isStartElement()
 						&& new javax.xml.namespace.QName(
@@ -764,7 +764,7 @@ public class NotificationMessageType implements
 					reader.next();
 				}
 
-				logger.debug("Looking for statusDetail...");
+				LOGGER.debug("Looking for statusDetail...");
 
 				if (reader.isStartElement()
 						&& new javax.xml.namespace.QName(

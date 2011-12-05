@@ -86,7 +86,7 @@ public class WindsorX509TrustManager implements X509TrustManager {
     private X509TrustManager standardTrustManager = null;
 
     /** Log object for this class. */
-    private static final Logger logger = LoggerFactory
+    private final Logger logger = LoggerFactory
         .getLogger(WindsorX509TrustManager.class);
 
     /**

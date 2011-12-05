@@ -47,7 +47,7 @@ public class SettingServiceProvider implements SettingsService,
         InitializingBean {
 
     /** Logger for this class and subclasses */
-    private static final Logger logger = LoggerFactory
+    private final Logger logger = LoggerFactory
             .getLogger(EmailNotificationHelper.class);
 
     private IdGenerator idGenerator;

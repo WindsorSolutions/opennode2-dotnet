@@ -62,13 +62,14 @@ public final class NodeDocumentContentConverter {
 
     private static final int MAX_CACHED_BYTES = 10240;
 
-    private static final Logger LOGGER = LoggerFactory
-            .getLogger(com.windsor.node.ws1.wsdl.NodeDocumentContentConverter.class);
+    /*private static final Logger LOGGER = LoggerFactory
+            .getLogger(com.windsor.node.ws1.wsdl.NodeDocumentContentConverter.class);*/
 
     private NodeDocumentContentConverter() {
     }
 
     public static byte[] convertToBytes(NodeDocument doc) {
+        Logger LOGGER = LoggerFactory.getLogger(com.windsor.node.ws1.wsdl.NodeDocumentContentConverter.class);
         Object content = null;
         byte[] dataOut = null;
 
@@ -108,6 +109,7 @@ public final class NodeDocumentContentConverter {
     }
 
     public static byte[] getBytesFromStream(DataHandler data) {
+        Logger LOGGER = LoggerFactory.getLogger(com.windsor.node.ws1.wsdl.NodeDocumentContentConverter.class);
         LOGGER.debug("getBytesFromStream: in");
         InputStream in = null;
         byte[] out = null;
@@ -133,6 +135,7 @@ public final class NodeDocumentContentConverter {
     }
 
     public static DataHandler convertToAttachment(byte[] dataIN, String dataType) {
+        Logger LOGGER = LoggerFactory.getLogger(com.windsor.node.ws1.wsdl.NodeDocumentContentConverter.class);
         LOGGER.debug("[convertToAttachment]");
         DataHandler dataOUT = null;
         ByteArrayInputStream byteStream = null;
@@ -150,6 +153,7 @@ public final class NodeDocumentContentConverter {
     }
 
     private static String getDataTypeName(String dataType) {
+        Logger LOGGER = LoggerFactory.getLogger(com.windsor.node.ws1.wsdl.NodeDocumentContentConverter.class);
         LOGGER.debug("getDataTypeName()");
         String out = ATTACHMENT_TYPE_OTHER_NAME;
         if (dataType.equalsIgnoreCase("flat")) {

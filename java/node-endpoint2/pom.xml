@@ -120,9 +120,9 @@
             </exclusions>
         </dependency>
         <dependency>
-        	<groupId>org.apache.axis2</groupId>
-        	<artifactId>axis2-spring</artifactId>
-        	<version>1.5.1</version>
+            <groupId>org.apache.axis2</groupId>
+            <artifactId>axis2-spring</artifactId>
+            <version>1.5.1</version>
             <exclusions>
                 <exclusion>
                     <groupId>javax.servlet</groupId>
@@ -141,205 +141,245 @@
                     <artifactId>commons-fileupload</artifactId>
                 </exclusion>
                 <exclusion>
-                	<artifactId>axiom-api</artifactId>
-                	<groupId>org.apache.ws.commons.axiom</groupId>
+                    <artifactId>axiom-api</artifactId>
+                    <groupId>org.apache.ws.commons.axiom</groupId>
                 </exclusion>
                 <exclusion>
-                	<artifactId>axiom-impl</artifactId>
-                	<groupId>org.apache.ws.commons.axiom</groupId>
+                    <artifactId>axiom-impl</artifactId>
+                    <groupId>org.apache.ws.commons.axiom</groupId>
                 </exclusion>
                 <exclusion>
-                	<artifactId>ant</artifactId>
-                	<groupId>org.apache.ant</groupId>
+                    <artifactId>ant</artifactId>
+                    <groupId>org.apache.ant</groupId>
                 </exclusion>
                 <exclusion>
-                	<artifactId>spring-beans</artifactId>
-                	<groupId>org.springframework</groupId>
+                    <artifactId>spring-beans</artifactId>
+                    <groupId>org.springframework</groupId>
                 </exclusion>
                 <exclusion>
-                	<artifactId>xmlParserAPIs</artifactId>
-                	<groupId>xerces</groupId>
+                    <artifactId>xmlParserAPIs</artifactId>
+                    <groupId>xerces</groupId>
                 </exclusion>
                 <exclusion>
-                	<artifactId>geronimo-javamail_1.4_spec</artifactId>
-                	<groupId>org.apache.geronimo.specs</groupId>
+                    <artifactId>geronimo-javamail_1.4_spec</artifactId>
+                    <groupId>org.apache.geronimo.specs</groupId>
                 </exclusion>
                 <exclusion>
-                	<artifactId>geronimo-jta_1.1_spec</artifactId>
-                	<groupId>org.apache.geronimo.specs</groupId>
+                    <artifactId>geronimo-jta_1.1_spec</artifactId>
+                    <groupId>org.apache.geronimo.specs</groupId>
                 </exclusion>
             </exclusions>
         </dependency>
         <dependency>
-        	<groupId>annogen</groupId>
-        	<artifactId>annogen</artifactId>
-        	<version>0.1.0</version>
+            <groupId>annogen</groupId>
+            <artifactId>annogen</artifactId>
+            <version>0.1.0</version>
         </dependency>
         <dependency>
-        	<groupId>org.apache.ws.commons.axiom</groupId>
-        	<artifactId>axiom-impl</artifactId>
-        	<version>1.2.8</version>
-        	<exclusions>
-        		<exclusion>
-        			<artifactId>commons-logging</artifactId>
-        			<groupId>commons-logging</groupId>
-        		</exclusion>
-        		<exclusion>
-        			<artifactId>geronimo-javamail_1.4_spec</artifactId>
-        			<groupId>org.apache.geronimo.specs</groupId>
-        		</exclusion>
-        	</exclusions>
+            <groupId>org.apache.ws.commons.axiom</groupId>
+            <artifactId>axiom-impl</artifactId>
+            <version>1.2.8</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>commons-logging</artifactId>
+                    <groupId>commons-logging</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>geronimo-javamail_1.4_spec</artifactId>
+                    <groupId>org.apache.geronimo.specs</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
-        	<groupId>org.apache.axis2</groupId>
-        	<artifactId>axis2-adb-codegen</artifactId>
-        	<version>1.5.1</version>
+            <groupId>org.apache.axis2</groupId>
+            <artifactId>axis2-adb-codegen</artifactId>
+            <version>1.5.1</version>
         </dependency>
         <dependency>
-        	<groupId>org.apache.axis2</groupId>
-        	<artifactId>axis2-ant-plugin</artifactId>
-        	<version>1.5.1</version>
-        	<type>maven-plugin</type>
-        	<exclusions>
-        		<exclusion>
-        			<artifactId>commons-logging</artifactId>
-        			<groupId>commons-logging</groupId>
-        		</exclusion>
-        		<exclusion>
-        			<artifactId>geronimo-javamail_1.4_spec</artifactId>
-        			<groupId>org.apache.geronimo.specs</groupId>
-        		</exclusion>
-        	</exclusions>
+            <groupId>org.apache.axis2</groupId>
+            <artifactId>axis2-ant-plugin</artifactId>
+            <version>1.5.1</version>
+            <type>maven-plugin</type>
+            <exclusions>
+                <exclusion>
+                    <artifactId>commons-logging</artifactId>
+                    <groupId>commons-logging</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>geronimo-javamail_1.4_spec</artifactId>
+                    <groupId>org.apache.geronimo.specs</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
-        	<groupId>org.apache.axis2</groupId>
-        	<artifactId>axis2-clustering</artifactId>
-        	<version>1.5.1</version>
-        	<exclusions>
-        		<exclusion>
-        			<artifactId>tribes</artifactId>
-        			<groupId>org.apache.tomcat</groupId>
-        		</exclusion>
-        		<exclusion>
-        			<artifactId>juli</artifactId>
-        			<groupId>org.apache.tomcat</groupId>
-        		</exclusion>
-        	</exclusions>
+            <groupId>org.apache.axis2</groupId>
+            <artifactId>axis2-clustering</artifactId>
+            <version>1.5.1</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>tribes</artifactId>
+                    <groupId>org.apache.tomcat</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>juli</artifactId>
+                    <groupId>org.apache.tomcat</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
-        	<groupId>org.apache.axis2</groupId>
-        	<artifactId>axis2-corba</artifactId>
-        	<version>1.5.1</version>
-        	<exclusions>
-        		<exclusion>
-        			<artifactId>commons-logging</artifactId>
-        			<groupId>commons-logging</groupId>
-        		</exclusion>
-        		<exclusion>
-        			<artifactId>log4j</artifactId>
-        			<groupId>log4j</groupId>
-        		</exclusion>
-        	</exclusions>
+            <groupId>org.apache.axis2</groupId>
+            <artifactId>axis2-corba</artifactId>
+            <version>1.5.1</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>commons-logging</artifactId>
+                    <groupId>commons-logging</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>log4j</artifactId>
+                    <groupId>log4j</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
-        	<groupId>org.apache.axis2</groupId>
-        	<artifactId>axis2-fastinfoset</artifactId>
-        	<version>1.5.1</version>
-        	<exclusions>
-        		<exclusion>
-        			<artifactId>commons-logging</artifactId>
-        			<groupId>commons-logging</groupId>
-        		</exclusion>
-        	</exclusions>
+            <groupId>org.apache.axis2</groupId>
+            <artifactId>axis2-fastinfoset</artifactId>
+            <version>1.5.1</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>commons-logging</artifactId>
+                    <groupId>commons-logging</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
-        	<groupId>org.apache.axis2</groupId>
-        	<artifactId>axis2-jaxbri</artifactId>
-        	<version>1.5.1</version>
-        	<exclusions>
-        		<exclusion>
-        			<artifactId>commons-logging</artifactId>
-        			<groupId>commons-logging</groupId>
-        		</exclusion>
-        	</exclusions>
+            <groupId>org.apache.axis2</groupId>
+            <artifactId>axis2-jaxbri</artifactId>
+            <version>1.5.1</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>commons-logging</artifactId>
+                    <groupId>commons-logging</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
-        	<groupId>org.apache.axis2</groupId>
-        	<artifactId>axis2-jaxws</artifactId>
-        	<version>1.5.1</version>
-        	<exclusions>
-        		<exclusion>
-        			<artifactId>xom</artifactId>
-        			<groupId>xom</groupId>
-        		</exclusion>
-        		<exclusion>
-        			<artifactId>jdom</artifactId>
-        			<groupId>jdom</groupId>
-        		</exclusion>
-        	</exclusions>
+            <groupId>org.apache.axis2</groupId>
+            <artifactId>axis2-jaxws</artifactId>
+            <version>1.5.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>xom</groupId>
+                    <artifactId>xom</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>jdom</groupId>
+                    <artifactId>jdom</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-beans</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-context</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-context</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-web</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
-        	<groupId>org.apache.axis2</groupId>
-        	<artifactId>axis2-jibx</artifactId>
-        	<version>1.5.1</version>
-        	<exclusions>
-        		<exclusion>
-        			<artifactId>bcel</artifactId>
-        			<groupId>bcel</groupId>
-        		</exclusion>
-        	</exclusions>
+            <groupId>org.apache.axis2</groupId>
+            <artifactId>axis2-jibx</artifactId>
+            <version>1.5.1</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>bcel</artifactId>
+                    <groupId>bcel</groupId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-beans</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-context</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-context</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-web</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
-        	<groupId>org.apache.axis2</groupId>
-        	<artifactId>axis2-json</artifactId>
-        	<version>1.5.1</version>
+            <groupId>org.apache.axis2</groupId>
+            <artifactId>axis2-json</artifactId>
+            <version>1.5.1</version>
         </dependency>
         <dependency>
-        	<groupId>org.apache.bcel</groupId>
-        	<artifactId>bcel</artifactId>
-        	<version>5.2</version>
+            <groupId>org.apache.bcel</groupId>
+            <artifactId>bcel</artifactId>
+            <version>5.2</version>
         </dependency>
         <dependency>
-        	<groupId>jalopy</groupId>
-        	<artifactId>jalopy</artifactId>
-        	<version>1.5rc3</version>
-        	<exclusions>
-        		<exclusion>
-        			<artifactId>log4j</artifactId>
-        			<groupId>log4j</groupId>
-        		</exclusion>
-        	</exclusions>
+            <groupId>jalopy</groupId>
+            <artifactId>jalopy</artifactId>
+            <version>1.5rc3</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>log4j</artifactId>
+                    <groupId>log4j</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
-        	<groupId>jivesoftware</groupId>
-        	<artifactId>smack</artifactId>
-        	<version>3.0.4</version>
+            <groupId>jivesoftware</groupId>
+            <artifactId>smack</artifactId>
+            <version>3.0.4</version>
         </dependency>
         <dependency>
-        	<groupId>jivesoftware</groupId>
-        	<artifactId>smackx</artifactId>
-        	<version>3.0.4</version>
+            <groupId>jivesoftware</groupId>
+            <artifactId>smackx</artifactId>
+            <version>3.0.4</version>
         </dependency>
         <dependency>
-        	<groupId>org.apache.axis2</groupId>
-        	<artifactId>soapmonitor</artifactId>
-        	<version>1.5.1</version>
-        	<type>mar</type>
+            <groupId>org.apache.axis2</groupId>
+            <artifactId>soapmonitor</artifactId>
+            <version>1.5.1</version>
+            <type>mar</type>
         </dependency>
         <dependency>
-        	<groupId>org.apache.axis2</groupId>
-        	<artifactId>axis2-mtompolicy</artifactId>
-        	<version>1.5.1</version>
+            <groupId>org.apache.axis2</groupId>
+            <artifactId>axis2-mtompolicy</artifactId>
+            <version>1.5.1</version>
         </dependency>
         <dependency>
-        	<groupId>org.apache.axis2</groupId>
-        	<artifactId>axis2-xmlbeans</artifactId>
-        	<version>1.5.1</version>
+            <groupId>org.apache.axis2</groupId>
+            <artifactId>axis2-xmlbeans</artifactId>
+            <version>1.5.1</version>
         </dependency>
         <!-- <dependency>
-        	<groupId>org.apache.axis2</groupId>
-        	<artifactId>axis2-soapmonitor-servlet</artifactId>
-        	<version>1.5.4</version>
+            <groupId>org.apache.axis2</groupId>
+            <artifactId>axis2-soapmonitor-servlet</artifactId>
+            <version>1.5.4</version>
         </dependency> -->
     </dependencies>
 </project>

@@ -62,7 +62,7 @@ import com.windsor.node.util.DataSourceUtil;
 public class WnosPluginHelper implements PluginHelper, InitializingBean {
 
     /** Logger for this class and subclasses */
-    private static final Logger logger = LoggerFactory
+    private final Logger logger = LoggerFactory
             .getLogger(WnosPluginHelper.class);
 
     private NOSConfig nosConfig;
@@ -276,7 +276,7 @@ public class WnosPluginHelper implements PluginHelper, InitializingBean {
 
         // Get list of all args
         logger.debug("Getting all sys config args");
-        Map globalSystemArgs = configDao.getKeyValueMap(true);
+        Map<String, String> globalSystemArgs = configDao.getKeyValueMap(true);
         logger.debug("Global Args: " + globalSystemArgs);
 
         // Args

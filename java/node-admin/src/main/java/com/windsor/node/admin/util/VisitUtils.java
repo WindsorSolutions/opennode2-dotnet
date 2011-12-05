@@ -44,7 +44,7 @@ import com.windsor.node.common.domain.NodeVisit;
 
 public final class VisitUtils {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(VisitUtils.class);
+    //private static final Logger LOGGER = LoggerFactory.getLogger(VisitUtils.class);
     private static final String VISIT_SESSION_NAME = "WINNODE";
     private static final String VISIT_EXISTS = "visit exists in session";
 
@@ -59,7 +59,7 @@ public final class VisitUtils {
      * @return SystemVisitIdentity or null
      */
     public static NodeVisit getVisit(HttpServletRequest request) {
-
+        Logger LOGGER = LoggerFactory.getLogger(VisitUtils.class);
         LOGGER.debug("getting system visit");
 
         NodeVisit visit = null;
@@ -82,7 +82,7 @@ public final class VisitUtils {
     }
 
     public static ModelAndView getUnauthedView(HttpServletRequest request) {
-
+        Logger LOGGER = LoggerFactory.getLogger(VisitUtils.class);
         String requestedUri = request.getRequestURI();
         LOGGER.debug("requestedUri: " + requestedUri);
 
@@ -107,7 +107,7 @@ public final class VisitUtils {
      * @param request
      */
     public static void clearVisit(HttpServletRequest request) {
-
+        Logger LOGGER = LoggerFactory.getLogger(VisitUtils.class);
         LOGGER.debug("clearing system visit");
 
         HttpSession session = request.getSession(false);
@@ -135,7 +135,7 @@ public final class VisitUtils {
      * @param visit
      */
     public static void setVisit(HttpServletRequest request, NodeVisit visit) {
-
+        Logger LOGGER = LoggerFactory.getLogger(VisitUtils.class);
         LOGGER.debug("setting system visit");
 
         HttpSession session = request.getSession(false);

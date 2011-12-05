@@ -44,8 +44,7 @@ import com.windsor.node.ws2.Endpoint2FaultMessage;
 
 public final class FaultUtil {
 
-    private static final Logger logger = LoggerFactory.getLogger(FaultUtil.class
-            .getName());
+    /*private static final Logger LOGGER = LoggerFactory.getLogger(FaultUtil.class);*/
 
     private FaultUtil() {
     }
@@ -57,8 +56,8 @@ public final class FaultUtil {
      * @return
      */
     public static Endpoint2FaultMessage parseNodeFault(Exception ex) {
-
-        logger.error("Parsing Exception: " + ex);
+        Logger LOGGER = LoggerFactory.getLogger(FaultUtil.class);
+        LOGGER.error("Parsing Exception: " + ex);
 
         Endpoint2FaultMessage result = null;
 
@@ -69,7 +68,7 @@ public final class FaultUtil {
         if (ex instanceof AxisFault) {
 
             AxisFault fault = (AxisFault) ex;
-            logger.error("Fault: " + fault);
+            LOGGER.error("Fault: " + fault);
 
             if (fault.getCause() == null) {
                 result = new Endpoint2FaultMessage(
@@ -82,12 +81,12 @@ public final class FaultUtil {
                 OMElement faultElt = fault.getDetail();
 
                 if (null != faultElt) {
-                    logger.debug("Fault Detail: " + faultElt);
+                    LOGGER.debug("Fault Detail: " + faultElt);
 
                     NodeFaultDetailType faultDetail = NodeFaultDetailType.Factory
                             .parse(faultElt.getXMLStreamReader());
 
-                    logger.debug("Fault Detail Description: "
+                    LOGGER.debug("Fault Detail Description: "
                             + faultDetail.getDescription());
 
                     if (StringUtils.isNotBlank(ex.getMessage())) {
@@ -95,7 +94,7 @@ public final class FaultUtil {
                                 + faultDetail.getErrorCode() + " - "
                                 + faultDetail.getDescription() + ")");
 
-                        logger.debug("updated Fault Detail Description: "
+                        LOGGER.debug("updated Fault Detail Description: "
                                 + faultDetail.getDescription());
                     }
 
@@ -105,16 +104,16 @@ public final class FaultUtil {
 
                 String exMessage = "Error while parsing fault:"
                         + innerEx.getMessage();
-                logger.error(exMessage, innerEx);
+                LOGGER.error(exMessage, innerEx);
                 result = new Endpoint2FaultMessage(exMessage, innerEx);
             }
 
         } else {
-            logger.error(ex.getMessage(), ex);
+            LOGGER.error(ex.getMessage(), ex);
             result = new Endpoint2FaultMessage(ex.getMessage(), ex);
         }
 
-        logger.error(result.getMessage(), result);
+        LOGGER.error(result.getMessage(), result);
         return result;
 
     }

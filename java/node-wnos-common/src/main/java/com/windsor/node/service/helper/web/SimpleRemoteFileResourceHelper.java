@@ -46,7 +46,7 @@ import com.windsor.node.service.helper.settings.SettingServiceProvider;
 public class SimpleRemoteFileResourceHelper implements
         RemoteFileResourceHelper, InitializingBean {
 
-    private static final Logger logger = LoggerFactory
+    private final Logger logger = LoggerFactory
             .getLogger(SimpleRemoteFileResourceHelper.class);
 
     private SettingServiceProvider settingProvider;

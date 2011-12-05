@@ -55,7 +55,7 @@ public class NAASUserManagerHelper implements UserManagerHelper,
      */
     private static final int USER_LIST_CHUNK_SIZE = 1500;
 
-    private static final Logger logger = LoggerFactory
+    private final Logger logger = LoggerFactory
             .getLogger(NAASUserManagerHelper.class);
 
     private UserMgrBindingStub proxy = null;

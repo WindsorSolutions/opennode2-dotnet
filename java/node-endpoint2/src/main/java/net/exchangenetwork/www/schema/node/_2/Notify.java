@@ -542,12 +542,12 @@ public class Notify implements org.apache.axis2.databinding.ADBBean {
 	 */
 	public static class Factory {
 
-		private static final Logger logger = LoggerFactory.getLogger(Factory.class);
+		//private static final Logger LOGGER = LoggerFactory.getLogger(Factory.class);
 
 		public static Notify parse(javax.xml.stream.XMLStreamReader reader)
 				throws Exception {
-
-			logger.debug("Initializing notifty message parsing...");
+		    Logger LOGGER = LoggerFactory.getLogger(Factory.class);
+			LOGGER.debug("Initializing notifty message parsing...");
 
 			Notify object = new Notify();
 
@@ -560,7 +560,7 @@ public class Notify implements org.apache.axis2.databinding.ADBBean {
 				if (reader.getAttributeValue(
 						"http://www.w3.org/2001/XMLSchema-instance", "type") != null) {
 
-					logger.debug("Using type");
+					LOGGER.debug("Using type");
 
 					String fullTypeName = reader
 							.getAttributeValue(
@@ -603,7 +603,7 @@ public class Notify implements org.apache.axis2.databinding.ADBBean {
 					reader.next();
 				}
 
-				logger.debug("Looking for securityToken...");
+				LOGGER.debug("Looking for securityToken...");
 
 				if (reader.isStartElement()
 						&& new javax.xml.namespace.QName(
@@ -611,7 +611,7 @@ public class Notify implements org.apache.axis2.databinding.ADBBean {
 								"securityToken").equals(reader.getName())) {
 
 					String content = reader.getElementText();
-					logger.debug("securityToken: " + content);
+					LOGGER.debug("securityToken: " + content);
 
 					object
 							.setSecurityToken(org.apache.axis2.databinding.utils.ConverterUtil
@@ -625,7 +625,7 @@ public class Notify implements org.apache.axis2.databinding.ADBBean {
 					reader.next();
 				}
 
-				logger.debug("Looking for nodeAddress...");
+				LOGGER.debug("Looking for nodeAddress...");
 
 				if (reader.isStartElement()
 						&& new javax.xml.namespace.QName(
@@ -633,7 +633,7 @@ public class Notify implements org.apache.axis2.databinding.ADBBean {
 								"nodeAddress").equals(reader.getName())) {
 
 					String content = reader.getElementText();
-					logger.debug("nodeAddress: " + content);
+					LOGGER.debug("nodeAddress: " + content);
 
 					object
 							.setNodeAddress(org.apache.axis2.databinding.utils.ConverterUtil
@@ -647,7 +647,7 @@ public class Notify implements org.apache.axis2.databinding.ADBBean {
 					reader.next();
 				}
 
-				logger.debug("Looking for dataflow...");
+				LOGGER.debug("Looking for dataflow...");
 
 				if (reader.isStartElement()
 						&& new javax.xml.namespace.QName(
@@ -655,7 +655,7 @@ public class Notify implements org.apache.axis2.databinding.ADBBean {
 								"dataflow").equals(reader.getName())) {
 
 					String content = reader.getElementText();
-					logger.debug("dataflow: " + content);
+					LOGGER.debug("dataflow: " + content);
 
 					object
 							.setDataflow(org.apache.axis2.databinding.utils.ConverterUtil
@@ -669,7 +669,7 @@ public class Notify implements org.apache.axis2.databinding.ADBBean {
 					reader.next();
 				}
 
-				logger.debug("Looking for messages...");
+				LOGGER.debug("Looking for messages...");
 
 				if (reader.isStartElement()
 						&& new javax.xml.namespace.QName(
@@ -724,7 +724,7 @@ public class Notify implements org.apache.axis2.databinding.ADBBean {
 				}
 
 			} catch (Exception ex) {
-				logger.error(ex.getMessage(), ex);
+				LOGGER.error(ex.getMessage(), ex);
 				throw new RuntimeException("Error while parsing Notify: "
 						+ ex.getMessage(), ex);
 			}
