@@ -417,7 +417,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
             CollectionUtils.ForEach(mappingContext.AdditionalCreatePrimaryKeyAttributes,
                 delegate(AdditionalCreatePrimaryKeyAttribute pkAttribute)
                 {
-                    string pkName = string.Format("PK_{0}", Utils.RemoveTableNamePrefix(pkAttribute.ParentTable, mappingContext.DefaultTableNamePrefix));
+                    string pkName = string.Format("PK_{0}", Utils.RemoveTableNamePrefix(pkAttribute.ParentTable, pkAttribute.ParentTablePrefix, mappingContext.DefaultTableNamePrefix));
                     pkName = Utils.ShortenDatabaseName(pkName, Utils.MAX_CONSTRAINT_NAME_CHARS, mappingContext.ShortenNamesByRemovingVowelsFirst,
                                                        mappingContext.FixShortenNameBreakBug, null);
                     pkName = CheckDatabaseNameDoesNotExist(pkName, indexNames);
@@ -430,11 +430,11 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 delegate(AdditionalCreateForeignKeyAttribute fkAttribute)
                 {
                     string fkName =
-                        string.Format("FK_{0}_{1}", Utils.RemoveTableNamePrefix(fkAttribute.ParentTable, mappingContext.DefaultTableNamePrefix),
-                                                    Utils.RemoveTableNamePrefix(fkAttribute.ReferencedTable, mappingContext.DefaultTableNamePrefix));
+                        string.Format("FK_{0}_{1}", Utils.RemoveTableNamePrefix(fkAttribute.ParentTable, fkAttribute.ParentTablePrefix, mappingContext.DefaultTableNamePrefix),
+                                                    Utils.RemoveTableNamePrefix(fkAttribute.ReferencedTable, fkAttribute.ReferencedTablePrefix, mappingContext.DefaultTableNamePrefix));
                     string indexColumnName = StringUtils.RemoveAllWhitespace(fkAttribute.ColumnName.Replace(",", "_"));
                     string idxName =
-                        string.Format("IX_{0}_{1}", Utils.RemoveTableNamePrefix(fkAttribute.ParentTable, mappingContext.DefaultTableNamePrefix),
+                        string.Format("IX_{0}_{1}", Utils.RemoveTableNamePrefix(fkAttribute.ParentTable, fkAttribute.ParentTablePrefix, mappingContext.DefaultTableNamePrefix),
                                                     indexColumnName);
 
                     fkName = Utils.ShortenDatabaseName(fkName, Utils.MAX_CONSTRAINT_NAME_CHARS, mappingContext.ShortenNamesByRemovingVowelsFirst,
@@ -476,7 +476,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 {
                     string indexColumnName = StringUtils.RemoveAllWhitespace(indexAttribute.ColumnName.Replace(",", "_"));
                     string idxName =
-                        string.Format("IX_{0}_{1}", Utils.RemoveTableNamePrefix(indexAttribute.ParentTable, mappingContext.DefaultTableNamePrefix),
+                        string.Format("IX_{0}_{1}", Utils.RemoveTableNamePrefix(indexAttribute.ParentTable, indexAttribute.ParentTablePrefix, mappingContext.DefaultTableNamePrefix),
                                                     indexColumnName);
                     idxName = Utils.ShortenDatabaseName(idxName, Utils.MAX_INDEX_NAME_CHARS, mappingContext.ShortenNamesByRemovingVowelsFirst,
                                                         mappingContext.FixShortenNameBreakBug, null);

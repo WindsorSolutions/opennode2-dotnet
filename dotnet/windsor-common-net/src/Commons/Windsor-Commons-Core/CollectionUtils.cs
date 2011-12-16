@@ -58,9 +58,24 @@ namespace Windsor.Commons.Core
             Dictionary<T, T> dictionary = new Dictionary<T, T>();
             for (int i = 0; i < pairs.Length; i += 2)
             {
-                dictionary.Add(pairs[i], pairs[i + 1]);
+                T key = pairs[i];
+                dictionary.Add(key, pairs[i + 1]);
             }
             return dictionary;
+        }
+        public static List<KeyValuePair<T, T>> CreateListFromPairs<T>(params T[] pairs)
+        {
+            if (MathUtils.IsOdd(pairs.Length))
+            {
+                throw new ArgumentException("pairs.Length is odd");
+            }
+            List<KeyValuePair<T, T>> list = new List<KeyValuePair<T, T>>();
+            for (int i = 0; i < pairs.Length; i += 2)
+            {
+                T key = pairs[i];
+                list.Add(new KeyValuePair<T, T>(key, pairs[i + 1]));
+            }
+            return list;
         }
         public static bool IsNullOrEmpty(IEnumerable inArray)
         {
@@ -766,6 +781,14 @@ namespace Windsor.Commons.Core
             }
             collection.Insert(0, itemToAdd);
             return collection;
+        }
+        public static string[] CloneArray(ICollection<string> list)
+        {
+            if (list == null)
+            {
+                return null;
+            }
+            return new List<string>(list).ToArray();
         }
         public static List<string> CloneList(ICollection<string> list)
         {

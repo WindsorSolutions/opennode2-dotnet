@@ -76,168 +76,204 @@ namespace Windsor.Commons.XsdOrm.Implementations
                                               string defaultColumnDescription,
                                               bool canSetColumnsNotNull)
         {
-            List<MappingAttribute> attributes = GetMappingAttributesForType(objType, objTypePath);
-            List<MappingAttribute> unrecognizedAttributes = null;
-            if (objParentTypePath == null)
-            {
-                objParentTypePath = objTypePath;
-            }
+            string saveDefaultTableNamePrefix = m_DefaultTableNamePrefix;
 
-            // Parse each mapping attribute associated with the class
-            foreach (MappingAttribute mappingAttribute in attributes)
+            try
             {
-                TableAttribute curTableAttribute = mappingAttribute as TableAttribute;
-                if (curTableAttribute != null)
+                List<MappingAttribute> attributes = GetMappingAttributesForType(objType, objTypePath);
+                List<MappingAttribute> unrecognizedAttributes = null;
+                if (objParentTypePath == null)
                 {
-                    if (classTableAttribute != null)
+                    objParentTypePath = objTypePath;
+                }
+                string tableNameAdditionPrefix = null;
+
+                // Parse each mapping attribute associated with the class
+                foreach (MappingAttribute mappingAttribute in attributes)
+                {
+                    TableAttribute curTableAttribute = mappingAttribute as TableAttribute;
+                    if (curTableAttribute != null)
                     {
-                        throw new MappingException("The class \"{0}\" has more than one TableAttribute applied to it (\"{1}\" and \"{2}\").  Each class can only have one TableAttribute applied to it.",
-                                                   objType.FullName, classTableAttribute.TableName,
-                                                   curTableAttribute.TableName);
-                    }
-                    if (string.IsNullOrEmpty(curTableAttribute.TableName))
-                    {
-                        curTableAttribute.TableName = GetDefaultTableName(objType);
-                    }
-                    classTableAttribute = curTableAttribute;
-                    continue;
-                }
-                if (mappingAttribute is AbbreviationsAttribute)
-                {
-                    continue;   // Ignore, already taken care of on root element only
-                }
-                if (mappingAttribute is AdditionalAbbreviationsAttribute)
-                {
-                    continue;   // Ignore, already taken care of on root element only
-                }
-                if (mappingAttribute is DefaultStringDbValuesAttribute)
-                {
-                    continue;   // Ignore, already taken care of on root element only
-                }
-                if (mappingAttribute is DefaultElementNamePostfixLengthsAttribute)
-                {
-                    continue;   // Ignore, already taken care of on root element only
-                }
-                if (mappingAttribute is DefaultTableNamePrefixAttribute)
-                {
-                    continue;   // Ignore, already taken care of on root element only
-                }
-                if (mappingAttribute is AppliedAttribute)
-                {
-                    continue;   // Ignore, already taken care of on root element only
-                }
-                if (mappingAttribute is AppliedPathAttribute)
-                {
-                    continue;   // Ignore, already taken care of on root element only
-                }
-                if (mappingAttribute is NamePostfixAppliedAttribute)
-                {
-                    continue;   // Ignore, already taken care of on root element only
-                }
-                if (mappingAttribute is DefaultDecimalPrecision)
-                {
-                    continue;   // Ignore, already taken care of on root element only
-                }
-                if (mappingAttribute is DefaultFloatPrecisionAttribute)
-                {
-                    continue;   // Ignore, already taken care of on root element only
-                }
-                if (mappingAttribute is DefaultDoublePrecisionAttribute)
-                {
-                    continue;   // Ignore, already taken care of on root element only
-                }
-                if (mappingAttribute is ShortenNamesByRemovingVowelsFirstAttribute)
-                {
-                    continue;   // Ignore, already taken care of on root element only
-                }
-                if (mappingAttribute is FixShortenNameBreakBugAttribute)
-                {
-                    continue;   // Ignore, already taken care of on root element only
-                }
-                if (mappingAttribute is InheritAppliedAttributesAttribute)
-                {
-                    continue;
-                }
-                if (mappingAttribute is UseTableNameForDefaultPrimaryKeysAttribute)
-                {
-                    continue;   // Ignore, already taken care of on root element only
-                }
-                if (mappingAttribute is UseExactElementNameForColumnNameAttribute)
-                {
-                    continue;   // Ignore, already taken care of on root element only
-                }
-                if (mappingAttribute is AdditionalCreateForeignKeyAttribute)
-                {
-                    m_AdditionalCreateForeignKeyAttributes.Add((AdditionalCreateForeignKeyAttribute)mappingAttribute);
-                    continue;   // Ignore, already taken care of on root element only
-                }
-                if (mappingAttribute is AdditionalCreatePrimaryKeyAttribute)
-                {
-                    m_AdditionalCreatePrimaryKeyAttributes.Add((AdditionalCreatePrimaryKeyAttribute)mappingAttribute);
-                    continue;   // Ignore, already taken care of on root element only
-                }
-                if (mappingAttribute is AdditionalCreateIndexAttribute)
-                {
-                    m_AdditionalCreateIndexAttributes.Add((AdditionalCreateIndexAttribute)mappingAttribute);
-                    continue;   // Ignore, already taken care of on root element only
-                }
-                if (mappingAttribute is AdditionalCreateUniqueConstraintAttribute)
-                {
-                    m_AdditionalCreateUniqueContraintAttributes.Add((AdditionalCreateUniqueConstraintAttribute)mappingAttribute);
-                    continue;   // Ignore, already taken care of on root element only
-                }
-                CollectionUtils.Add(mappingAttribute, ref unrecognizedAttributes);
-            }
-            if (unrecognizedAttributes != null)
-            {
-                throw new MappingException(Utils.GetShortDescriptionList(unrecognizedAttributes),
-                                           "The class \"{0}\" has unrecognized mapping attribute(s).  Please correct the following attributes:",
-                                           objType.FullName);
-            }
-            if (classTableAttribute == null)
-            {
-                // Defaults to class name if not specified
-                string tableName = GetDefaultTableName(objType);
-                classTableAttribute = new TableAttribute(tableName);
-            }
-            if (classTableAttribute.TableName.Length > Utils.MAX_TABLE_NAME_CHARS)
-            {
-                throw new MappingException("The class \"{0}\" has a TableAttribute applied to it (\"{1}\") that exceeds the maximum table name length of {2} characters",
-                                           objType.FullName, classTableAttribute.TableName,
-                                           Utils.MAX_TABLE_NAME_CHARS);
-            }
-
-            List<MemberInfo> members = Utils.GetPublicMembersForType(objType);
-            List<RelationInfo> relationMembers = null;
-            List<SameTableElementInfo> sameTableAttributes = null;
-            List<MemberInfo> staticParentToMemberChain = null;
-            for (int memberIndex = 0; memberIndex < members.Count; ++memberIndex)
-            {
-                MemberInfo member = members[memberIndex];
-                if (member == null)
-                {
-                    continue;
-                }
-                PropertyInfo propertyInfo = (member as PropertyInfo);
-                FieldInfo fieldInfo = (member as FieldInfo);
-                string valueTypePath = Utils.CombineTypePath(objTypePath, member.Name);
-                Type valueType = (propertyInfo != null) ? propertyInfo.PropertyType : fieldInfo.FieldType;
-                attributes = GetMappingAttributesForMember(member, valueTypePath);
-                RelationAttribute lastRelationAttribute = null;
-
-                if (GetAttributeByType<DbIgnoreAttribute>(attributes) != null)
-                {
-                    members[memberIndex] = null;
-                    continue;
-                }
-
-                if (Utils.IsValidColumnType(valueType))
-                {
-                    if (valueType == typeof(bool))
-                    {
-                        if (member.Name.EndsWith(m_SpecifiedFieldPostfixName))
+                        if (classTableAttribute != null)
                         {
-                            // Ignore
+                            throw new MappingException("The class \"{0}\" has more than one TableAttribute applied to it (\"{1}\" and \"{2}\").  Each class can only have one TableAttribute applied to it.",
+                                                       objType.FullName, classTableAttribute.TableName,
+                                                       curTableAttribute.TableName);
+                        }
+                        if (string.IsNullOrEmpty(curTableAttribute.TableName))
+                        {
+                            curTableAttribute.TableName = GetDefaultTableName(objType);
+                        }
+                        classTableAttribute = curTableAttribute;
+                        continue;
+                    }
+                    if (mappingAttribute is AbbreviationsAttribute)
+                    {
+                        continue;   // Ignore, already taken care of on root element only
+                    }
+                    if (mappingAttribute is AdditionalAbbreviationsAttribute)
+                    {
+                        continue;   // Ignore, already taken care of on root element only
+                    }
+                    if (mappingAttribute is NameReplacementsAttribute)
+                    {
+                        continue;   // Ignore, already taken care of on root element only
+                    }
+                    if (mappingAttribute is DefaultStringDbValuesAttribute)
+                    {
+                        continue;   // Ignore, already taken care of on root element only
+                    }
+                    if (mappingAttribute is DefaultElementNamePostfixLengthsAttribute)
+                    {
+                        continue;   // Ignore, already taken care of on root element only
+                    }
+                    if (mappingAttribute is DefaultTableNamePrefixAttribute)
+                    {
+                        continue;   // Ignore, already taken care of on root element only
+                    }
+                    if (mappingAttribute is DefaultTableNameAdditionPrefixAttribute)
+                    {
+                        tableNameAdditionPrefix = ((DefaultTableNameAdditionPrefixAttribute)mappingAttribute).Prefix;
+                        continue;   // Ignore, already taken care of on root element only
+                    }
+                    if (mappingAttribute is AppliedAttribute)
+                    {
+                        continue;   // Ignore, already taken care of on root element only
+                    }
+                    if (mappingAttribute is AppliedPathAttribute)
+                    {
+                        continue;   // Ignore, already taken care of on root element only
+                    }
+                    if (mappingAttribute is NamePostfixAppliedAttribute)
+                    {
+                        continue;   // Ignore, already taken care of on root element only
+                    }
+                    if (mappingAttribute is DefaultDecimalPrecision)
+                    {
+                        continue;   // Ignore, already taken care of on root element only
+                    }
+                    if (mappingAttribute is DefaultFloatPrecisionAttribute)
+                    {
+                        continue;   // Ignore, already taken care of on root element only
+                    }
+                    if (mappingAttribute is DefaultDoublePrecisionAttribute)
+                    {
+                        continue;   // Ignore, already taken care of on root element only
+                    }
+                    if (mappingAttribute is ShortenNamesByRemovingVowelsFirstAttribute)
+                    {
+                        continue;   // Ignore, already taken care of on root element only
+                    }
+                    if (mappingAttribute is FixShortenNameBreakBugAttribute)
+                    {
+                        continue;   // Ignore, already taken care of on root element only
+                    }
+                    if (mappingAttribute is InheritAppliedAttributesAttribute)
+                    {
+                        continue;
+                    }
+                    if (mappingAttribute is UseTableNameForDefaultPrimaryKeysAttribute)
+                    {
+                        continue;   // Ignore, already taken care of on root element only
+                    }
+                    if (mappingAttribute is NewSameColumnNameResolutionAttribute)
+                    {
+                        continue;   // Ignore, already taken care of on root element only
+                    }
+                    if (mappingAttribute is AdditionalCreateForeignKeyAttribute)
+                    {
+                        m_AdditionalCreateForeignKeyAttributes.Add((AdditionalCreateForeignKeyAttribute)mappingAttribute);
+                        continue;   // Ignore, already taken care of on root element only
+                    }
+                    if (mappingAttribute is AdditionalCreatePrimaryKeyAttribute)
+                    {
+                        m_AdditionalCreatePrimaryKeyAttributes.Add((AdditionalCreatePrimaryKeyAttribute)mappingAttribute);
+                        continue;   // Ignore, already taken care of on root element only
+                    }
+                    if (mappingAttribute is AdditionalCreateIndexAttribute)
+                    {
+                        m_AdditionalCreateIndexAttributes.Add((AdditionalCreateIndexAttribute)mappingAttribute);
+                        continue;   // Ignore, already taken care of on root element only
+                    }
+                    if (mappingAttribute is AdditionalCreateUniqueConstraintAttribute)
+                    {
+                        m_AdditionalCreateUniqueContraintAttributes.Add((AdditionalCreateUniqueConstraintAttribute)mappingAttribute);
+                        continue;   // Ignore, already taken care of on root element only
+                    }
+                    if (mappingAttribute is RemovePostfixNamesFromTableAndColumnNamesAttribute)
+                    {
+                        continue;   // Ignore, already taken care of on root element only
+                    }
+                    CollectionUtils.Add(mappingAttribute, ref unrecognizedAttributes);
+                }
+                if (unrecognizedAttributes != null)
+                {
+                    throw new MappingException(Utils.GetShortDescriptionList(unrecognizedAttributes),
+                                               "The class \"{0}\" has unrecognized mapping attribute(s).  Please correct the following attributes:",
+                                               objType.FullName);
+                }
+                if (!string.IsNullOrEmpty(tableNameAdditionPrefix))
+                {
+                    m_DefaultTableNamePrefix += tableNameAdditionPrefix + "_";
+                }
+                if (classTableAttribute == null)
+                {
+                    // Defaults to class name if not specified
+                    string tableName = GetDefaultTableName(objType);
+                    classTableAttribute = new TableAttribute(tableName);
+                }
+                if (classTableAttribute.TableName.Length > Utils.MAX_TABLE_NAME_CHARS)
+                {
+                    throw new MappingException("The class \"{0}\" has a TableAttribute applied to it (\"{1}\") that exceeds the maximum table name length of {2} characters",
+                                               objType.FullName, classTableAttribute.TableName,
+                                               Utils.MAX_TABLE_NAME_CHARS);
+                }
+
+                List<MemberInfo> members = Utils.GetPublicMembersForType(objType);
+                List<RelationInfo> relationMembers = null;
+                List<SameTableElementInfo> sameTableAttributes = null;
+                List<MemberInfo> staticParentToMemberChain = null;
+                for (int memberIndex = 0; memberIndex < members.Count; ++memberIndex)
+                {
+                    MemberInfo member = members[memberIndex];
+                    if (member == null)
+                    {
+                        continue;
+                    }
+                    PropertyInfo propertyInfo = (member as PropertyInfo);
+                    FieldInfo fieldInfo = (member as FieldInfo);
+                    string valueTypePath = Utils.CombineTypePath(objTypePath, member.Name);
+                    Type valueType = (propertyInfo != null) ? propertyInfo.PropertyType : fieldInfo.FieldType;
+                    //bool isNullableType = false;
+                    if (valueType == typeof(DateTime?))
+                    {
+                        //isNullableType = true;
+                        valueType = typeof(DateTime);
+                    }
+                    attributes = GetMappingAttributesForMember(member, valueTypePath);
+                    RelationAttribute lastRelationAttribute = null;
+
+                    if (GetAttributeByType<DbIgnoreAttribute>(attributes) != null)
+                    {
+                        members[memberIndex] = null;
+                        continue;
+                    }
+
+                    if (Utils.IsValidColumnType(valueType))
+                    {
+                        if (valueType == typeof(bool))
+                        {
+                            if (member.Name.EndsWith(m_SpecifiedFieldPostfixName))
+                            {
+                                // Ignore
+                            }
+                            else
+                            {
+                                if (GetAttributeByType<ColumnAttribute>(attributes) == null)
+                                {
+                                    attributes.Add(new ColumnAttribute());
+                                }
+                            }
                         }
                         else
                         {
@@ -249,64 +285,51 @@ namespace Windsor.Commons.XsdOrm.Implementations
                     }
                     else
                     {
-                        if (GetAttributeByType<ColumnAttribute>(attributes) == null)
+                        if ((GetAttributeByType<RelationAttribute>(attributes) == null) &&
+                            (GetAttributeByType<SameTableAttribute>(attributes) == null))
                         {
-                            attributes.Add(new ColumnAttribute());
-                        }
-                    }
-                }
-                else
-                {
-                    if ((GetAttributeByType<RelationAttribute>(attributes) == null) &&
-                        (GetAttributeByType<SameTableAttribute>(attributes) == null))
-                    {
-                        if (CollectionUtils.GetCollectionElementType(valueType) == null)
-                        {
-                            // Assume SameTableAttribute if no mapping provided and member is not an array
-                            attributes.Add(new SameTableAttribute());
-                        }
-                        else
-                        {
-                            // Assume OneToMany
-                            attributes.Add(new OneToManyAttribute());
-                        }
-                    }
-                }
-
-                // Parse each mapping attribute associated with this class member
-                DbNotNullAttribute dbNotNullAttribute = null;
-                DbIndexableAttribute dbIndexableAttribute = null;
-                DbNoLoadAttribute dbNoLoadAttribute = null;
-                DbMaxColumnSizeAttribute dbMaxColumnSizeAttribute = null;
-                DbFixedColumnSizeAttribute dbFixedColumnSizeAttribute = null;
-                DbColumnTypeAttribute dbColumnTypeAttribute = null;
-                Column newColumn = null;
-                Relation newRelation = null;
-                SameTableElementInfo newSameTableElementInfo = null;
-                DatabaseInsertOrderAttribute databaseInsertOrderAttribute = null;
-                foreach (MappingAttribute mappingAttribute in attributes)
-                {
-                    ColumnAttribute columnAttribute = mappingAttribute as ColumnAttribute;
-                    if (columnAttribute != null)
-                    {
-                        ForeignKeyAttribute foreignKeyAttribute = mappingAttribute as ForeignKeyAttribute;
-                        PrimaryKeyAttribute primaryKeyAttribute = mappingAttribute as PrimaryKeyAttribute;
-                        if (string.IsNullOrEmpty(columnAttribute.TableName))
-                        {
-                            columnAttribute.TableName = classTableAttribute.TableName;
-                        }
-                        else if (columnAttribute.TableName != classTableAttribute.TableName)
-                        {
-                            throw new MappingException("The class \"{0}\" has more than one table mapped to it (\"{1}\" and \"{2}\").  This is not allowed in this version.",
-                                                       objType.FullName, columnAttribute.TableName, classTableAttribute.TableName);
-                        }
-                        if (string.IsNullOrEmpty(columnAttribute.ColumnName))
-                        {
-                            if (m_UseExactElementNameForColumnName)
+                            if (CollectionUtils.GetCollectionElementType(valueType) == null)
                             {
-                                columnAttribute.ColumnName = member.Name;
+                                // Assume SameTableAttribute if no mapping provided and member is not an array
+                                attributes.Add(new SameTableAttribute());
                             }
                             else
+                            {
+                                // Assume OneToMany
+                                attributes.Add(new OneToManyAttribute());
+                            }
+                        }
+                    }
+
+                    // Parse each mapping attribute associated with this class member
+                    DbNotNullAttribute dbNotNullAttribute = null;
+                    DbNullAttribute dbNullAttribute = null;
+                    DbIndexableAttribute dbIndexableAttribute = null;
+                    DbNoLoadAttribute dbNoLoadAttribute = null;
+                    DbMaxColumnSizeAttribute dbMaxColumnSizeAttribute = null;
+                    DbFixedColumnSizeAttribute dbFixedColumnSizeAttribute = null;
+                    DbColumnTypeAttribute dbColumnTypeAttribute = null;
+                    Column newColumn = null;
+                    Relation newRelation = null;
+                    SameTableElementInfo newSameTableElementInfo = null;
+                    DatabaseInsertOrderAttribute databaseInsertOrderAttribute = null;
+                    foreach (MappingAttribute mappingAttribute in attributes)
+                    {
+                        ColumnAttribute columnAttribute = mappingAttribute as ColumnAttribute;
+                        if (columnAttribute != null)
+                        {
+                            ForeignKeyAttribute foreignKeyAttribute = mappingAttribute as ForeignKeyAttribute;
+                            PrimaryKeyAttribute primaryKeyAttribute = mappingAttribute as PrimaryKeyAttribute;
+                            if (string.IsNullOrEmpty(columnAttribute.TableName))
+                            {
+                                columnAttribute.TableName = classTableAttribute.TableName;
+                            }
+                            else if (columnAttribute.TableName != classTableAttribute.TableName)
+                            {
+                                throw new MappingException("The class \"{0}\" has more than one table mapped to it (\"{1}\" and \"{2}\").  This is not allowed in this version.",
+                                                           objType.FullName, columnAttribute.TableName, classTableAttribute.TableName);
+                            }
+                            if (string.IsNullOrEmpty(columnAttribute.ColumnName))
                             {
                                 string columnName = member.Name;
                                 if (primaryKeyAttribute != null)
@@ -328,13 +351,10 @@ namespace Windsor.Commons.XsdOrm.Implementations
                                         else
                                         {
                                             columnName = objType.Name;
-                                            if (columnName.EndsWith("DataType"))
-                                            {
-                                                columnName = columnName.Substring(0, columnName.Length - "DataType".Length);
-                                            }
+                                            columnName = RemoveAnyPostfixNames(columnName);
                                             columnName += "Id";
                                             columnAttribute.ColumnName =
-                                               Utils.ShortenDatabaseColumnName(Utils.CamelCaseToDatabaseName(columnName),
+                                               Utils.ShortenDatabaseColumnName(Utils.CamelCaseToDatabaseName(columnName, m_NameReplacements),
                                                                                m_ShortenNamesByRemovingVowelsFirst,
                                                                                m_FixShortenNameBreakBug,
                                                                                m_Abbreviations);
@@ -343,7 +363,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
                                     else
                                     {
                                         columnAttribute.ColumnName =
-                                            Utils.ShortenDatabaseColumnName(Utils.CamelCaseToDatabaseName(columnName),
+                                            Utils.ShortenDatabaseColumnName(Utils.CamelCaseToDatabaseName(columnName, m_NameReplacements),
                                                                             m_ShortenNamesByRemovingVowelsFirst,
                                                                             m_FixShortenNameBreakBug,
                                                                             m_Abbreviations);
@@ -352,528 +372,544 @@ namespace Windsor.Commons.XsdOrm.Implementations
                                 else
                                 {
                                     columnAttribute.ColumnName =
-                                        Utils.ShortenDatabaseColumnName(Utils.CamelCaseToDatabaseName(columnName),
+                                        Utils.ShortenDatabaseColumnName(Utils.CamelCaseToDatabaseName(columnName, m_NameReplacements),
                                                                         m_ShortenNamesByRemovingVowelsFirst, m_FixShortenNameBreakBug,
                                                                         m_Abbreviations);
                                 }
                             }
-                        }
-                        if ((foreignKeyAttribute != null) && (columnAttribute.ColumnType == null) && (columnAttribute.ColumnSize == 0))
-                        {
-                            // These values will be assigned in ValidateTables() to the type and size of the column that this
-                            // foreign key references
-                        }
-                        else
-                        {
-                            if (columnAttribute.ColumnType == null)
-                            {
-                                if ((valueType == typeof(string)) || (valueType == typeof(bool)) || valueType.IsEnum)
-                                {
-                                    columnAttribute.ColumnType = m_DefaultStringDbValues.DefaultDbType;
-                                }
-                                else if (valueType == typeof(DateTime))
-                                {
-                                    columnAttribute.ColumnType = DbType.DateTime;
-                                }
-                                else if (valueType == typeof(decimal))
-                                {
-                                    columnAttribute.ColumnType = DbType.Decimal;
-                                }
-                                else if (valueType == typeof(float))
-                                {
-                                    columnAttribute.ColumnType = DbType.Single;
-                                }
-                                else if (valueType == typeof(int))
-                                {
-                                    columnAttribute.ColumnType = DbType.Int32;
-                                }
-                                else if (valueType == typeof(byte[]))
-                                {
-                                    columnAttribute.ColumnType = DbType.Binary;
-                                }
-                                else
-                                {
-                                    throw new MappingException("The member \"{0}\" of the class \"{1}\" has a ColumnAttribute without a ColumnType specified.",
-                                                               member.Name, objType.FullName);
-                                }
-                            }
-                            if ((columnAttribute.ColumnSize == 0) &&
-                                ((columnAttribute.ColumnType != DbType.DateTime) && (columnAttribute.ColumnType != DbType.Decimal) &&
-                                 (columnAttribute.ColumnType != DbType.Int32)))
-                            {
-                                if (valueType == typeof(string))
-                                {
-                                    columnAttribute.ColumnSize = GetElementDefaultStringLength(member.Name);
-                                    if (columnAttribute.ColumnSize == 0)
-                                    {
-                                        columnAttribute.ColumnSize = m_DefaultStringDbValues.DefaultDbSize;
-                                    }
-                                }
-                                else if (valueType == typeof(bool))
-                                {
-                                    columnAttribute.ColumnSize = 1;
-                                }
-                                else if (valueType.IsEnum)
-                                {
-                                    columnAttribute.ColumnSize = EnumUtils.GetLargestEnumStringSize(valueType);
-                                }
-                            }
-                            if (!Utils.IsValidColumnSize(columnAttribute.ColumnType.Value, columnAttribute.ColumnSize, columnAttribute.ColumnScale))
-                            {
-                                throw new MappingException("The member \"{0}\" of the class \"{1}\" has a ColumnAttribute applied to it, but the database column size, \"{2},\" is not valid for the database column type \"{3}\".",
-                                                           member.Name, objType.FullName, columnAttribute.ColumnSize.ToString(),
-                                                           columnAttribute.ColumnType.ToString());
-                            }
-                            if (!Utils.IsValidColumnType(valueType))
-                            {
-                                throw new MappingException("The member \"{0}\" of the class \"{1}\" has a ColumnAttribute applied to it, but the member is not a valid data type for a column.",
-                                                           member.Name, objType.FullName);
-                            }
-                        }
-                        if (columnAttribute.ColumnName.Length > Utils.MAX_COLUMN_NAME_CHARS)
-                        {
-                            throw new MappingException("The member \"{0}\" of the class \"{1}\" has a ColumnAttribute applied to it (\"{2}\") that exceeds the maximum column name length of {3} characters",
-                                                       member.Name, objType.FullName, columnAttribute.ColumnName,
-                                                       Utils.MAX_COLUMN_NAME_CHARS);
-                        }
-                        if (!m_UseExactElementNameForColumnName && StringUtils.ContainsLowercaseChars(columnAttribute.ColumnName))
-                        {
-                            throw new MappingException("The member \"{0}\" of the class \"{1}\" has a ColumnAttribute applied to it (\"{2}\") that contains lowercase characters.  Column names cannot contain lowercase characters.",
-                                                      member.Name, objType.FullName, columnAttribute.ColumnName);
-                        }
-                        if (foreignKeyAttribute != null)
-                        {
-                            if (!string.IsNullOrEmpty(foreignKeyAttribute.ForeignTableName))
-                            {
-                                if (string.IsNullOrEmpty(foreignKeyAttribute.ForeignTableName))
-                                {
-                                    throw new MappingException("The member \"{0}\" of the class \"{1}\" has a ForeignKeyAttribute applied to it that does not have a ForeignTableName specified.  If a ForeignKeyAttribute is applied to a class member, it must have a ForeignTableName specified.",
-                                                               member.Name, objType.FullName);
-                                }
-                                if (foreignKeyAttribute.ForeignTableName.Length > Utils.MAX_TABLE_NAME_CHARS)
-                                {
-                                    throw new MappingException("The member \"{0}\" of the class \"{1}\" has a ForeignKeyAttribute applied to it (\"{1}\") that exceeds the maximum table name length of {2} characters",
-                                                               member.Name, objType.FullName, foreignKeyAttribute.ForeignTableName,
-                                                               Utils.MAX_TABLE_NAME_CHARS);
-                                }
-                                if (StringUtils.ContainsLowercaseChars(foreignKeyAttribute.ForeignTableName))
-                                {
-                                    throw new MappingException("The member \"{0}\" of the class \"{1}\" has a ForeignKeyAttribute applied to it (\"{1}\") that contains lowercase characters.  Table names cannot contain lowercase characters.",
-                                                               member.Name, objType.FullName, foreignKeyAttribute.ForeignTableName);
-                                }
-                            }
-                            if (!string.IsNullOrEmpty(foreignKeyAttribute.ForeignColumnName))
-                            {
-                                if (foreignKeyAttribute.ForeignColumnName.Length > Utils.MAX_COLUMN_NAME_CHARS)
-                                {
-                                    throw new MappingException("The member \"{0}\" of the class \"{1}\" has a ForeignKeyAttribute applied to it (\"{2}\") that exceeds the maximum column name length of {3} characters",
-                                                               member.Name, objType.FullName, foreignKeyAttribute.ForeignColumnName,
-                                                               Utils.MAX_COLUMN_NAME_CHARS);
-                                }
-                                if (StringUtils.ContainsLowercaseChars(foreignKeyAttribute.ForeignColumnName))
-                                {
-                                    throw new MappingException("The member \"{0}\" of the class \"{1}\" has a ForeignKeyAttribute applied to it (\"{2}\") that contains lowercase characters.  Column names cannot contain lowercase characters.",
-                                                              member.Name, objType.FullName, foreignKeyAttribute.ForeignColumnName);
-                                }
-                            }
-                            if ((foreignKeyAttribute.ColumnType == null) && (foreignKeyAttribute.ColumnSize == 0))
+                            if ((foreignKeyAttribute != null) && (columnAttribute.ColumnType == null) && (columnAttribute.ColumnSize == 0))
                             {
                                 // These values will be assigned in ValidateTables() to the type and size of the column that this
                                 // foreign key references
                             }
                             else
                             {
-                                if (foreignKeyAttribute.ColumnType == null)
+                                if (columnAttribute.ColumnType == null)
                                 {
-                                    throw new MappingException("foreignKeyAttribute.ColumnType is null for element \"{0}\"", valueTypePath);
+                                    if ((valueType == typeof(string)) || (valueType == typeof(bool)) || valueType.IsEnum)
+                                    {
+                                        columnAttribute.ColumnType = m_DefaultStringDbValues.DefaultDbType;
+                                    }
+                                    else if (valueType == typeof(DateTime))
+                                    {
+                                        columnAttribute.ColumnType = DbType.DateTime;
+                                    }
+                                    else if (valueType == typeof(decimal))
+                                    {
+                                        columnAttribute.ColumnType = DbType.Decimal;
+                                    }
+                                    else if (valueType == typeof(float))
+                                    {
+                                        columnAttribute.ColumnType = DbType.Single;
+                                    }
+                                    else if (valueType == typeof(int))
+                                    {
+                                        columnAttribute.ColumnType = DbType.Int32;
+                                    }
+                                    else if (valueType == typeof(byte[]))
+                                    {
+                                        columnAttribute.ColumnType = DbType.Binary;
+                                    }
+                                    else
+                                    {
+                                        throw new MappingException("The member \"{0}\" of the class \"{1}\" has a ColumnAttribute without a ColumnType specified.",
+                                                                   member.Name, objType.FullName);
+                                    }
                                 }
-                                if (!Utils.IsValidForeignKeyColumnType(foreignKeyAttribute.ColumnType.Value))
+                                if ((columnAttribute.ColumnSize == 0) &&
+                                    ((columnAttribute.ColumnType != DbType.DateTime) && (columnAttribute.ColumnType != DbType.Decimal) &&
+                                     (columnAttribute.ColumnType != DbType.Int32)))
                                 {
-                                    throw new MappingException("The member \"{0}\" of the class \"{1}\" has a ForeignKeyAttribute applied to it, but the database column type, \"{2},\" is not valid for a foreign key.",
-                                                               member.Name, objType.FullName, foreignKeyAttribute.ColumnType.ToString());
+                                    if (valueType == typeof(string))
+                                    {
+                                        columnAttribute.ColumnSize = GetElementDefaultStringLength(member.Name);
+                                        if (columnAttribute.ColumnSize == 0)
+                                        {
+                                            columnAttribute.ColumnSize = m_DefaultStringDbValues.DefaultDbSize;
+                                        }
+                                    }
+                                    else if (valueType == typeof(bool))
+                                    {
+                                        columnAttribute.ColumnSize = 1;
+                                    }
+                                    else if (valueType.IsEnum)
+                                    {
+                                        columnAttribute.ColumnSize = EnumUtils.GetLargestEnumStringSize(valueType);
+                                    }
                                 }
-                                if (!Utils.IsValidForeignKeyColumnSize(foreignKeyAttribute.ColumnType.Value, foreignKeyAttribute.ColumnSize))
+                                if (!Utils.IsValidColumnSize(columnAttribute.ColumnType.Value, columnAttribute.ColumnSize, columnAttribute.ColumnScale))
                                 {
-                                    throw new MappingException("The member \"{0}\" of the class \"{1}\" has a ForeignKeyAttribute applied to it, but the database column size, \"{2},\" is not valid for this foreign key.",
-                                                               member.Name, objType.FullName, foreignKeyAttribute.ColumnSize.ToString());
+                                    throw new MappingException("The member \"{0}\" of the class \"{1}\" has a ColumnAttribute applied to it, but the database column size, \"{2},\" is not valid for the database column type \"{3}\".",
+                                                               member.Name, objType.FullName, columnAttribute.ColumnSize.ToString(),
+                                                               columnAttribute.ColumnType.ToString());
+                                }
+                                if (!Utils.IsValidColumnType(valueType))
+                                {
+                                    throw new MappingException("The member \"{0}\" of the class \"{1}\" has a ColumnAttribute applied to it, but the member is not a valid data type for a column.",
+                                                               member.Name, objType.FullName);
                                 }
                             }
+                            if (columnAttribute.ColumnName.Length > Utils.MAX_COLUMN_NAME_CHARS)
+                            {
+                                throw new MappingException("The member \"{0}\" of the class \"{1}\" has a ColumnAttribute applied to it (\"{2}\") that exceeds the maximum column name length of {3} characters",
+                                                           member.Name, objType.FullName, columnAttribute.ColumnName,
+                                                           Utils.MAX_COLUMN_NAME_CHARS);
+                            }
+                            if (foreignKeyAttribute != null)
+                            {
+                                if (!string.IsNullOrEmpty(foreignKeyAttribute.ForeignTableName))
+                                {
+                                    if (string.IsNullOrEmpty(foreignKeyAttribute.ForeignTableName))
+                                    {
+                                        throw new MappingException("The member \"{0}\" of the class \"{1}\" has a ForeignKeyAttribute applied to it that does not have a ForeignTableName specified.  If a ForeignKeyAttribute is applied to a class member, it must have a ForeignTableName specified.",
+                                                                   member.Name, objType.FullName);
+                                    }
+                                    if (foreignKeyAttribute.ForeignTableName.Length > Utils.MAX_TABLE_NAME_CHARS)
+                                    {
+                                        throw new MappingException("The member \"{0}\" of the class \"{1}\" has a ForeignKeyAttribute applied to it (\"{1}\") that exceeds the maximum table name length of {2} characters",
+                                                                   member.Name, objType.FullName, foreignKeyAttribute.ForeignTableName,
+                                                                   Utils.MAX_TABLE_NAME_CHARS);
+                                    }
+                                    if (StringUtils.ContainsLowercaseChars(foreignKeyAttribute.ForeignTableName))
+                                    {
+                                        throw new MappingException("The member \"{0}\" of the class \"{1}\" has a ForeignKeyAttribute applied to it (\"{1}\") that contains lowercase characters.  Table names cannot contain lowercase characters.",
+                                                                   member.Name, objType.FullName, foreignKeyAttribute.ForeignTableName);
+                                    }
+                                }
+                                if (!string.IsNullOrEmpty(foreignKeyAttribute.ForeignColumnName))
+                                {
+                                    if (foreignKeyAttribute.ForeignColumnName.Length > Utils.MAX_COLUMN_NAME_CHARS)
+                                    {
+                                        throw new MappingException("The member \"{0}\" of the class \"{1}\" has a ForeignKeyAttribute applied to it (\"{2}\") that exceeds the maximum column name length of {3} characters",
+                                                                   member.Name, objType.FullName, foreignKeyAttribute.ForeignColumnName,
+                                                                   Utils.MAX_COLUMN_NAME_CHARS);
+                                    }
+                                    if (StringUtils.ContainsLowercaseChars(foreignKeyAttribute.ForeignColumnName))
+                                    {
+                                        throw new MappingException("The member \"{0}\" of the class \"{1}\" has a ForeignKeyAttribute applied to it (\"{2}\") that contains lowercase characters.  Column names cannot contain lowercase characters.",
+                                                                  member.Name, objType.FullName, foreignKeyAttribute.ForeignColumnName);
+                                    }
+                                }
+                                if ((foreignKeyAttribute.ColumnType == null) && (foreignKeyAttribute.ColumnSize == 0))
+                                {
+                                    // These values will be assigned in ValidateTables() to the type and size of the column that this
+                                    // foreign key references
+                                }
+                                else
+                                {
+                                    if (foreignKeyAttribute.ColumnType == null)
+                                    {
+                                        throw new MappingException("foreignKeyAttribute.ColumnType is null for element \"{0}\"", valueTypePath);
+                                    }
+                                    if (!Utils.IsValidForeignKeyColumnType(foreignKeyAttribute.ColumnType.Value))
+                                    {
+                                        throw new MappingException("The member \"{0}\" of the class \"{1}\" has a ForeignKeyAttribute applied to it, but the database column type, \"{2},\" is not valid for a foreign key.",
+                                                                   member.Name, objType.FullName, foreignKeyAttribute.ColumnType.ToString());
+                                    }
+                                    if (!Utils.IsValidForeignKeyColumnSize(foreignKeyAttribute.ColumnType.Value, foreignKeyAttribute.ColumnSize))
+                                    {
+                                        throw new MappingException("The member \"{0}\" of the class \"{1}\" has a ForeignKeyAttribute applied to it, but the database column size, \"{2},\" is not valid for this foreign key.",
+                                                                   member.Name, objType.FullName, foreignKeyAttribute.ColumnSize.ToString());
+                                    }
+                                }
+                            }
+                            else if (primaryKeyAttribute != null)
+                            {
+                                if (primaryKeyAttribute.ColumnType == null)
+                                {
+                                    throw new MappingException("primaryKeyAttribute.ColumnType is null for element \"{0}\"", valueTypePath);
+                                }
+                                if (!Utils.IsValidPrimaryKeyColumnType(primaryKeyAttribute.ColumnType.Value))
+                                {
+                                    throw new MappingException("The member \"{0}\" of the class \"{1}\" has a PrimaryKeyAttribute applied to it, but the database column type, \"{2},\" is not valid for a primary key.",
+                                                               member.Name, objType.FullName, primaryKeyAttribute.ColumnType.ToString());
+                                }
+                                if (!Utils.IsValidPrimaryKeyColumnSize(primaryKeyAttribute.ColumnType.Value, primaryKeyAttribute.ColumnSize))
+                                {
+                                    throw new MappingException("The member \"{0}\" of the class \"{1}\" has a PrimaryKeyAttribute applied to it, but the database column size, \"{2},\" is not valid for this primary key.",
+                                                               member.Name, objType.FullName, primaryKeyAttribute.ColumnSize.ToString());
+                                }
+                            }
+                            MemberInfo isSpecifiedMember = null;
+                            int isSpecifiedMemberIndex = -1;
+                            if (columnAttribute.IsNullable)
+                            {
+                                if (!string.IsNullOrEmpty(columnAttribute.IsSpecifiedMemberName))
+                                {
+                                    isSpecifiedMember = Utils.FindMemberByName(members, columnAttribute.IsSpecifiedMemberName, out isSpecifiedMemberIndex);
+                                    if (isSpecifiedMember == null)
+                                    {
+                                        throw new MappingException("The member \"{0}\" of the class \"{1}\" has a ColumnAttribute with a IsSpecifiedMemberName value applied, but the property or field \"{2}\" is not a member of the class.",
+                                                                   member.Name, objType.FullName, columnAttribute.IsSpecifiedMemberName);
+                                    }
+                                    if (ReflectionUtils.GetFieldOrPropertyValueType(isSpecifiedMember) != typeof(bool))
+                                    {
+                                        throw new MappingException("The member \"{0}\" of the class \"{1}\" has a ColumnAttribute with a IsSpecifiedMemberName value applied, but the property or field \"{2}\" is not a bool.",
+                                                                   member.Name, objType.FullName, columnAttribute.IsSpecifiedMemberName);
+                                    }
+                                }
+                                else
+                                {
+                                    string isSpecifiedName = member.Name + m_SpecifiedFieldPostfixName;
+                                    isSpecifiedMember = Utils.FindMemberByName(members, isSpecifiedName, out isSpecifiedMemberIndex);
+                                    if (isSpecifiedMember != null)
+                                    {
+                                        if (ReflectionUtils.GetFieldOrPropertyValueType(isSpecifiedMember) != typeof(bool))
+                                        {
+                                            isSpecifiedMember = null;
+                                        }
+                                    }
+                                }
+                            }
+                            if ((isSpecifiedMember != null) &&
+                                ((foreignKeyAttribute != null) || (primaryKeyAttribute != null)))
+                            {
+                                throw new MappingException("The member \"{0}\" of the class \"{1}\" has a ForeignKeyAttribute or PrimaryKeyAttribute with a Specified member \"{3}.\"  ForeignKeyAttribute and PrimaryKeyAttribute cannot be applied to members that have associated Specified members.",
+                                                          member.Name, objType.FullName, columnAttribute.IsSpecifiedMemberName);
+                            }
+                            newColumn = CreateColumn(columnAttribute, member, valueTypePath, isSpecifiedMember, objType, tables);
+                            members[memberIndex] = null;
+                            if (isSpecifiedMember != null)
+                            {
+                                members[isSpecifiedMemberIndex] = null;
+                            }
+                            newColumn.ColumnDescription = GetColumnDescription(member, defaultColumnDescription);
+                            if (!newColumn.IsForeignKey && !newColumn.IsPrimaryKey)
+                            {
+                                newColumn.ParentToMemberChain =
+                                    GetStaticParentToMemberChain(parentToMemberChain, ref staticParentToMemberChain);
+                                if (!CollectionUtils.IsNullOrEmpty(newColumn.ParentToMemberChain))
+                                {
+                                    if (string.IsNullOrEmpty(objParentTypePath))
+                                    {
+                                        throw new MappingException("objParentTypePath == null");
+                                    }
+                                    newColumn.ParentInfoPath = objParentTypePath;
+                                }
+                            }
+                            continue;
                         }
-                        else if (primaryKeyAttribute != null)
+                        SameTableAttribute sameTableAttribute = mappingAttribute as SameTableAttribute;
+                        if (sameTableAttribute != null)
                         {
-                            if (primaryKeyAttribute.ColumnType == null)
+                            if (Utils.IsValidColumnType(valueType))
                             {
-                                throw new MappingException("primaryKeyAttribute.ColumnType is null for element \"{0}\"", valueTypePath);
+                                throw new MappingException("The member \"{0}\" of the class \"{1}\" has a SameTableAttribute applied to it, but the member is a primitive type.  SameTableAttributes can only be applied to non-primitive types.",
+                                                           member.Name, objType.FullName);
                             }
-                            if (!Utils.IsValidPrimaryKeyColumnType(primaryKeyAttribute.ColumnType.Value))
-                            {
-                                throw new MappingException("The member \"{0}\" of the class \"{1}\" has a PrimaryKeyAttribute applied to it, but the database column type, \"{2},\" is not valid for a primary key.",
-                                                           member.Name, objType.FullName, primaryKeyAttribute.ColumnType.ToString());
-                            }
-                            if (!Utils.IsValidPrimaryKeyColumnSize(primaryKeyAttribute.ColumnType.Value, primaryKeyAttribute.ColumnSize))
-                            {
-                                throw new MappingException("The member \"{0}\" of the class \"{1}\" has a PrimaryKeyAttribute applied to it, but the database column size, \"{2},\" is not valid for this primary key.",
-                                                           member.Name, objType.FullName, primaryKeyAttribute.ColumnSize.ToString());
-                            }
+                            newSameTableElementInfo = new SameTableElementInfo(valueTypePath, valueType, member, sameTableAttribute);
+                            CollectionUtils.Add(newSameTableElementInfo, ref sameTableAttributes);
+                            members[memberIndex] = null;
+                            continue;
                         }
-                        MemberInfo isSpecifiedMember = null;
-                        int isSpecifiedMemberIndex = -1;
-                        if (columnAttribute.IsNullable)
+                        RelationAttribute relationAttribute = mappingAttribute as RelationAttribute;
+                        if (relationAttribute != null)
                         {
-                            if (!string.IsNullOrEmpty(columnAttribute.IsSpecifiedMemberName))
+                            if (lastRelationAttribute != null)
                             {
-                                isSpecifiedMember = Utils.FindMemberByName(members, columnAttribute.IsSpecifiedMemberName, out isSpecifiedMemberIndex);
-                                if (isSpecifiedMember == null)
+                                throw new MappingException("The member \"{0}\" of the class \"{1}\" has more than one relation attribute applied to it: \"{2}\" and \"{3}\"",
+                                                           member.Name, objType.FullName, lastRelationAttribute.GetType().Name,
+                                                           relationAttribute.GetType().Name);
+                            }
+                            if (string.IsNullOrEmpty(relationAttribute.ParentTableName))
+                            {
+                                relationAttribute.ParentTableName = classTableAttribute.TableName;
+                            }
+                            if (relationAttribute.ParentTableName.Length > Utils.MAX_TABLE_NAME_CHARS)
+                            {
+                                throw new MappingException("The member \"{0}\" of the class \"{1}\" has a {2} applied to it (\"{3}\") that exceeds the maximum parent table name length of {4} characters",
+                                                           member.Name, objType.FullName, relationAttribute.GetType().Name,
+                                                           relationAttribute.ParentTableName, Utils.MAX_TABLE_NAME_CHARS);
+                            }
+                            if (StringUtils.ContainsLowercaseChars(relationAttribute.ParentTableName))
+                            {
+                                throw new MappingException("The member \"{0}\" of the class \"{1}\" has a {2} applied to it (\"{3}\") that contains lowercase characters in the parent table name.  Table names cannot contain lowercase characters.",
+                                                           member.Name, objType.FullName, relationAttribute.GetType().Name,
+                                                           relationAttribute.ParentTableName);
+                            }
+                            if (!string.IsNullOrEmpty(relationAttribute.ChildTableName))
+                            {
+                                if (relationAttribute.ChildTableName.Length > Utils.MAX_TABLE_NAME_CHARS)
                                 {
-                                    throw new MappingException("The member \"{0}\" of the class \"{1}\" has a ColumnAttribute with a IsSpecifiedMemberName value applied, but the property or field \"{2}\" is not a member of the class.",
-                                                               member.Name, objType.FullName, columnAttribute.IsSpecifiedMemberName);
+                                    throw new MappingException("The member \"{0}\" of the class \"{1}\" has a {2} applied to it (\"{3}\") that exceeds the maximum parent table name length of {4} characters",
+                                                               member.Name, objType.FullName, relationAttribute.GetType().Name,
+                                                               relationAttribute.ChildTableName, Utils.MAX_TABLE_NAME_CHARS);
                                 }
-                                if (ReflectionUtils.GetFieldOrPropertyValueType(isSpecifiedMember) != typeof(bool))
+                                if (StringUtils.ContainsLowercaseChars(relationAttribute.ChildTableName))
                                 {
-                                    throw new MappingException("The member \"{0}\" of the class \"{1}\" has a ColumnAttribute with a IsSpecifiedMemberName value applied, but the property or field \"{2}\" is not a bool.",
-                                                               member.Name, objType.FullName, columnAttribute.IsSpecifiedMemberName);
+                                    throw new MappingException("The member \"{0}\" of the class \"{1}\" has a {2} applied to it (\"{3}\") that contains lowercase characters in the parent table name.  Table names cannot contain lowercase characters.",
+                                                               member.Name, objType.FullName, relationAttribute.GetType().Name,
+                                                               relationAttribute.ChildTableName);
+                                }
+                                if (!string.IsNullOrEmpty(relationAttribute.ChildForeignKeyColumnName))
+                                {
+                                    if (relationAttribute.ChildForeignKeyColumnName.Length > Utils.MAX_COLUMN_NAME_CHARS)
+                                    {
+                                        throw new MappingException("The member \"{0}\" of the class \"{1}\" has a {2} applied to it (\"{3}\") that exceeds the maximum column name length of {4} characters",
+                                                                   member.Name, objType.FullName, relationAttribute.GetType().Name,
+                                                                   relationAttribute.ChildForeignKeyColumnName,
+                                                                   Utils.MAX_COLUMN_NAME_CHARS);
+                                    }
+                                    if (StringUtils.ContainsLowercaseChars(relationAttribute.ChildForeignKeyColumnName))
+                                    {
+                                        throw new MappingException("The member \"{0}\" of the class \"{1}\" has a {2} applied to it (\"{2}\") that contains lowercase characters.  Column names cannot contain lowercase characters.",
+                                                                  member.Name, objType.FullName, relationAttribute.GetType().Name,
+                                                                  relationAttribute.ChildForeignKeyColumnName);
+                                    }
                                 }
                             }
                             else
                             {
-                                string isSpecifiedName = member.Name + m_SpecifiedFieldPostfixName;
-                                isSpecifiedMember = Utils.FindMemberByName(members, isSpecifiedName, out isSpecifiedMemberIndex);
-                                if (isSpecifiedMember != null)
+                                if (!string.IsNullOrEmpty(relationAttribute.ChildForeignKeyColumnName))
                                 {
-                                    if (ReflectionUtils.GetFieldOrPropertyValueType(isSpecifiedMember) != typeof(bool))
-                                    {
-                                        isSpecifiedMember = null;
-                                    }
+                                    throw new MappingException("If ChildTableName is null, ChildForeignKeyColumnName must also be null");
                                 }
                             }
-                        }
-                        if ((isSpecifiedMember != null) &&
-                            ((foreignKeyAttribute != null) || (primaryKeyAttribute != null)))
-                        {
-                            throw new MappingException("The member \"{0}\" of the class \"{1}\" has a ForeignKeyAttribute or PrimaryKeyAttribute with a Specified member \"{3}.\"  ForeignKeyAttribute and PrimaryKeyAttribute cannot be applied to members that have associated Specified members.",
-                                                      member.Name, objType.FullName, columnAttribute.IsSpecifiedMemberName);
-                        }
-                        newColumn = CreateColumn(columnAttribute, member, valueTypePath, isSpecifiedMember, objType, tables);
-                        members[memberIndex] = null;
-                        if (isSpecifiedMember != null)
-                        {
-                            members[isSpecifiedMemberIndex] = null;
-                        }
-                        newColumn.ColumnDescription = GetColumnDescription(member, defaultColumnDescription);
-                        if (!newColumn.IsForeignKey && !newColumn.IsPrimaryKey)
-                        {
-                            newColumn.ParentToMemberChain =
-                                GetStaticParentToMemberChain(parentToMemberChain, ref staticParentToMemberChain);
-                            if (!CollectionUtils.IsNullOrEmpty(newColumn.ParentToMemberChain))
+                            if (!string.IsNullOrEmpty(relationAttribute.ParentColumnName))
+                            {
+                                if (relationAttribute.ParentColumnName.Length > Utils.MAX_COLUMN_NAME_CHARS)
+                                {
+                                    throw new MappingException("The member \"{0}\" of the class \"{1}\" has a {2} applied to it (\"{3}\") that exceeds the maximum column name length of {4} characters",
+                                                               member.Name, objType.FullName, relationAttribute.GetType().Name,
+                                                               relationAttribute.ParentColumnName,
+                                                               Utils.MAX_COLUMN_NAME_CHARS);
+                                }
+                                if (StringUtils.ContainsLowercaseChars(relationAttribute.ParentColumnName))
+                                {
+                                    throw new MappingException("The member \"{0}\" of the class \"{1}\" has a {2} applied to it (\"{2}\") that contains lowercase characters.  Column names cannot contain lowercase characters.",
+                                                              member.Name, objType.FullName, relationAttribute.GetType().Name,
+                                                              relationAttribute.ParentColumnName);
+                                }
+                            }
+                            Type assignType = null;
+                            if (relationAttribute is OneToManyAttribute)
+                            {
+                                assignType = CollectionUtils.GetCollectionElementType(valueType);
+                                if (assignType == null)
+                                {
+                                    throw new MappingException("The member \"{0}\" of the class \"{1}\" has a OneToManyAttribute applied to it, but the member does not implement ICollection.  If a OneToManyAttribute is applied to a class member, it must implement ICollection.",
+                                                               member.Name, objType.FullName, relationAttribute.GetShortDescription(),
+                                                               relationAttribute.GetShortDescription());
+                                }
+                            }
+                            else if (relationAttribute is OneToOneAttribute)
+                            {
+                                if (Utils.IsValidColumnType(valueType) || !valueType.IsClass)
+                                {
+                                    throw new MappingException("The member \"{0}\" of the class \"{1}\" has a OneToOneAttribute applied to it, but the member is not a valid class type.",
+                                                               member.Name, objType.FullName);
+                                }
+                                assignType = valueType;
+                            }
+                            else if (Utils.IsValidColumnType(valueType))
+                            {
+                                assignType = valueType;
+                            }
+                            newRelation = CreateRelation(relationAttribute, member, valueTypePath, assignType, tables);
+                            newRelation.ParentToMemberChain = GetStaticParentToMemberChain(parentToMemberChain, ref staticParentToMemberChain);
+                            if (!CollectionUtils.IsNullOrEmpty(newRelation.ParentToMemberChain))
                             {
                                 if (string.IsNullOrEmpty(objParentTypePath))
                                 {
                                     throw new MappingException("objParentTypePath == null");
                                 }
-                                newColumn.ParentInfoPath = objParentTypePath;
+                                newRelation.ParentInfoPath = objParentTypePath;
                             }
+                            string description = ReflectionUtils.GetDescription(member);
+                            CollectionUtils.Add(new RelationInfo(valueTypePath, assignType, description), ref relationMembers);
+                            lastRelationAttribute = relationAttribute;
+                            members[memberIndex] = null;
+                            continue;
                         }
-                        continue;
+                        DbNotNullAttribute notNullAttribute = mappingAttribute as DbNotNullAttribute;
+                        if (notNullAttribute != null)
+                        {
+                            dbNotNullAttribute = notNullAttribute;
+                            continue;
+                        }
+                        DbNullAttribute nullAttribute = mappingAttribute as DbNullAttribute;
+                        if (nullAttribute != null)
+                        {
+                            dbNullAttribute = nullAttribute;
+                            continue;
+                        }
+                        DatabaseInsertOrderAttribute insertOrderAttribute = mappingAttribute as DatabaseInsertOrderAttribute;
+                        if (insertOrderAttribute != null)
+                        {
+                            databaseInsertOrderAttribute = insertOrderAttribute;
+                            continue;
+                        }
+                        DbMaxColumnSizeAttribute maxColumnSizeAttribute = mappingAttribute as DbMaxColumnSizeAttribute;
+                        if (maxColumnSizeAttribute != null)
+                        {
+                            dbMaxColumnSizeAttribute = maxColumnSizeAttribute;
+                            continue;
+                        }
+                        DbFixedColumnSizeAttribute fixedColumnSizeAttribute = mappingAttribute as DbFixedColumnSizeAttribute;
+                        if (fixedColumnSizeAttribute != null)
+                        {
+                            dbFixedColumnSizeAttribute = fixedColumnSizeAttribute;
+                            continue;
+                        }
+                        DbColumnTypeAttribute columnTypeAttribute = mappingAttribute as DbColumnTypeAttribute;
+                        if (columnTypeAttribute != null)
+                        {
+                            dbColumnTypeAttribute = columnTypeAttribute;
+                            continue;
+                        }
+                        DbIndexableAttribute indexableAttribute = mappingAttribute as DbIndexableAttribute;
+                        if (indexableAttribute != null)
+                        {
+                            dbIndexableAttribute = indexableAttribute;
+                            continue;
+                        }
+                        DbNoLoadAttribute noLoadAttribute = mappingAttribute as DbNoLoadAttribute;
+                        if (noLoadAttribute != null)
+                        {
+                            dbNoLoadAttribute = noLoadAttribute;
+                            continue;
+                        }
+                        CollectionUtils.Add(mappingAttribute, ref unrecognizedAttributes);
                     }
-                    SameTableAttribute sameTableAttribute = mappingAttribute as SameTableAttribute;
-                    if (sameTableAttribute != null)
+                    if (unrecognizedAttributes != null)
                     {
-                        if (Utils.IsValidColumnType(valueType))
-                        {
-                            throw new MappingException("The member \"{0}\" of the class \"{1}\" has a SameTableAttribute applied to it, but the member is a primitive type.  SameTableAttributes can only be applied to non-primitive types.",
-                                                       member.Name, objType.FullName);
-                        }
-                        newSameTableElementInfo = new SameTableElementInfo(valueTypePath, valueType, member, sameTableAttribute);
-                        CollectionUtils.Add(newSameTableElementInfo, ref sameTableAttributes);
-                        members[memberIndex] = null;
-                        continue;
+                        throw new MappingException(Utils.GetShortDescriptionList(unrecognizedAttributes),
+                                                   "The member \"{0}\" of the class \"{1}\" has unrecognized mapping attribute(s).  Please correct the following attributes:",
+                                                   member.Name, objType.FullName);
                     }
-                    RelationAttribute relationAttribute = mappingAttribute as RelationAttribute;
-                    if (relationAttribute != null)
+                    if (dbNotNullAttribute != null)
                     {
-                        if (lastRelationAttribute != null)
+                        if (newSameTableElementInfo != null)
                         {
-                            throw new MappingException("The member \"{0}\" of the class \"{1}\" has more than one relation attribute applied to it: \"{2}\" and \"{3}\"",
-                                                       member.Name, objType.FullName, lastRelationAttribute.GetType().Name,
-                                                       relationAttribute.GetType().Name);
-                        }
-                        if (string.IsNullOrEmpty(relationAttribute.ParentTableName))
-                        {
-                            relationAttribute.ParentTableName = classTableAttribute.TableName;
-                        }
-                        if (relationAttribute.ParentTableName.Length > Utils.MAX_TABLE_NAME_CHARS)
-                        {
-                            throw new MappingException("The member \"{0}\" of the class \"{1}\" has a {2} applied to it (\"{3}\") that exceeds the maximum parent table name length of {4} characters",
-                                                       member.Name, objType.FullName, relationAttribute.GetType().Name,
-                                                       relationAttribute.ParentTableName, Utils.MAX_TABLE_NAME_CHARS);
-                        }
-                        if (StringUtils.ContainsLowercaseChars(relationAttribute.ParentTableName))
-                        {
-                            throw new MappingException("The member \"{0}\" of the class \"{1}\" has a {2} applied to it (\"{3}\") that contains lowercase characters in the parent table name.  Table names cannot contain lowercase characters.",
-                                                       member.Name, objType.FullName, relationAttribute.GetType().Name,
-                                                       relationAttribute.ParentTableName);
-                        }
-                        if (!string.IsNullOrEmpty(relationAttribute.ChildTableName))
-                        {
-                            if (relationAttribute.ChildTableName.Length > Utils.MAX_TABLE_NAME_CHARS)
+                            if (canSetColumnsNotNull)
                             {
-                                throw new MappingException("The member \"{0}\" of the class \"{1}\" has a {2} applied to it (\"{3}\") that exceeds the maximum parent table name length of {4} characters",
-                                                           member.Name, objType.FullName, relationAttribute.GetType().Name,
-                                                           relationAttribute.ChildTableName, Utils.MAX_TABLE_NAME_CHARS);
+                                newSameTableElementInfo.NotNull = true;
                             }
-                            if (StringUtils.ContainsLowercaseChars(relationAttribute.ChildTableName))
+                        }
+                        if (newColumn != null)
+                        {
+                            if (canSetColumnsNotNull)
                             {
-                                throw new MappingException("The member \"{0}\" of the class \"{1}\" has a {2} applied to it (\"{3}\") that contains lowercase characters in the parent table name.  Table names cannot contain lowercase characters.",
-                                                           member.Name, objType.FullName, relationAttribute.GetType().Name,
-                                                           relationAttribute.ChildTableName);
+                                newColumn.IsNullable = false;
                             }
-                            if (!string.IsNullOrEmpty(relationAttribute.ChildForeignKeyColumnName))
+                        }
+                    }
+                    if (dbNullAttribute != null)
+                    {
+                        if (newSameTableElementInfo != null)
+                        {
+                            newSameTableElementInfo.NotNull = false;
+                        }
+                        if (newColumn != null)
+                        {
+                            newColumn.IsNullable = true;
+                        }
+                    }
+                    if (databaseInsertOrderAttribute != null)
+                    {
+                        if (newRelation != null)
+                        {
+                            newRelation.DatabaseInsertOrder = databaseInsertOrderAttribute.InsertOrder;
+                        }
+                    }
+                    if (dbMaxColumnSizeAttribute != null)
+                    {
+                        if (newColumn != null)
+                        {
+                            newColumn.ColumnSize = dbMaxColumnSizeAttribute.Size;
+                            if (newColumn.MemberType == typeof(string))
                             {
-                                if (relationAttribute.ChildForeignKeyColumnName.Length > Utils.MAX_COLUMN_NAME_CHARS)
-                                {
-                                    throw new MappingException("The member \"{0}\" of the class \"{1}\" has a {2} applied to it (\"{3}\") that exceeds the maximum column name length of {4} characters",
-                                                               member.Name, objType.FullName, relationAttribute.GetType().Name,
-                                                               relationAttribute.ChildForeignKeyColumnName,
-                                                               Utils.MAX_COLUMN_NAME_CHARS);
-                                }
-                                if (StringUtils.ContainsLowercaseChars(relationAttribute.ChildForeignKeyColumnName))
-                                {
-                                    throw new MappingException("The member \"{0}\" of the class \"{1}\" has a {2} applied to it (\"{2}\") that contains lowercase characters.  Column names cannot contain lowercase characters.",
-                                                              member.Name, objType.FullName, relationAttribute.GetType().Name,
-                                                              relationAttribute.ChildForeignKeyColumnName);
-                                }
+                                newColumn.ColumnType = DbType.AnsiString;
                             }
+                        }
+                    }
+                    if (dbFixedColumnSizeAttribute != null)
+                    {
+                        if (newColumn != null)
+                        {
+                            newColumn.ColumnSize = dbFixedColumnSizeAttribute.Size;
+                            if (newColumn.MemberType == typeof(string))
+                            {
+                                newColumn.ColumnType = DbType.AnsiStringFixedLength;
+                            }
+                        }
+                    }
+                    if (dbColumnTypeAttribute != null)
+                    {
+                        if (newColumn != null)
+                        {
+                            newColumn.ColumnType = dbColumnTypeAttribute.Type;
+                        }
+                    }
+                    if (dbIndexableAttribute != null)
+                    {
+                        if (newColumn != null)
+                        {
+                            newColumn.IsIndexable = true;
                         }
                         else
                         {
-                            if (!string.IsNullOrEmpty(relationAttribute.ChildForeignKeyColumnName))
-                            {
-                                throw new MappingException("If ChildTableName is null, ChildForeignKeyColumnName must also be null");
-                            }
-                        }
-                        if (!string.IsNullOrEmpty(relationAttribute.ParentColumnName))
-                        {
-                            if (relationAttribute.ParentColumnName.Length > Utils.MAX_COLUMN_NAME_CHARS)
-                            {
-                                throw new MappingException("The member \"{0}\" of the class \"{1}\" has a {2} applied to it (\"{3}\") that exceeds the maximum column name length of {4} characters",
-                                                           member.Name, objType.FullName, relationAttribute.GetType().Name,
-                                                           relationAttribute.ParentColumnName,
-                                                           Utils.MAX_COLUMN_NAME_CHARS);
-                            }
-                            if (StringUtils.ContainsLowercaseChars(relationAttribute.ParentColumnName))
-                            {
-                                throw new MappingException("The member \"{0}\" of the class \"{1}\" has a {2} applied to it (\"{2}\") that contains lowercase characters.  Column names cannot contain lowercase characters.",
-                                                          member.Name, objType.FullName, relationAttribute.GetType().Name,
-                                                          relationAttribute.ParentColumnName);
-                            }
-                        }
-                        Type assignType = null;
-                        if (relationAttribute is OneToManyAttribute)
-                        {
-                            assignType = CollectionUtils.GetCollectionElementType(valueType);
-                            if (assignType == null)
-                            {
-                                throw new MappingException("The member \"{0}\" of the class \"{1}\" has a OneToManyAttribute applied to it, but the member does not implement ICollection.  If a OneToManyAttribute is applied to a class member, it must implement ICollection.",
-                                                           member.Name, objType.FullName, relationAttribute.GetShortDescription(),
-                                                           relationAttribute.GetShortDescription());
-                            }
-                        }
-                        else if (relationAttribute is OneToOneAttribute)
-                        {
-                            if (Utils.IsValidColumnType(valueType) || !valueType.IsClass)
-                            {
-                                throw new MappingException("The member \"{0}\" of the class \"{1}\" has a OneToOneAttribute applied to it, but the member is not a valid class type.",
-                                                           member.Name, objType.FullName);
-                            }
-                            assignType = valueType;
-                        }
-                        else if (Utils.IsValidColumnType(valueType))
-                        {
-                            assignType = valueType;
-                        }
-                        newRelation = CreateRelation(relationAttribute, member, valueTypePath, assignType, tables);
-                        newRelation.ParentToMemberChain = GetStaticParentToMemberChain(parentToMemberChain, ref staticParentToMemberChain);
-                        if (!CollectionUtils.IsNullOrEmpty(newRelation.ParentToMemberChain))
-                        {
-                            if (string.IsNullOrEmpty(objParentTypePath))
-                            {
-                                throw new MappingException("objParentTypePath == null");
-                            }
-                            newRelation.ParentInfoPath = objParentTypePath;
-                        }
-                        string description = ReflectionUtils.GetDescription(member);
-                        CollectionUtils.Add(new RelationInfo(valueTypePath, assignType, description), ref relationMembers);
-                        lastRelationAttribute = relationAttribute;
-                        members[memberIndex] = null;
-                        continue;
-                    }
-                    DbNotNullAttribute notNullAttribute = mappingAttribute as DbNotNullAttribute;
-                    if (notNullAttribute != null)
-                    {
-                        dbNotNullAttribute = notNullAttribute;
-                        continue;
-                    }
-                    DatabaseInsertOrderAttribute insertOrderAttribute = mappingAttribute as DatabaseInsertOrderAttribute;
-                    if (insertOrderAttribute != null)
-                    {
-                        databaseInsertOrderAttribute = insertOrderAttribute;
-                        continue;
-                    }
-                    DbMaxColumnSizeAttribute maxColumnSizeAttribute = mappingAttribute as DbMaxColumnSizeAttribute;
-                    if (maxColumnSizeAttribute != null)
-                    {
-                        dbMaxColumnSizeAttribute = maxColumnSizeAttribute;
-                        continue;
-                    }
-                    DbFixedColumnSizeAttribute fixedColumnSizeAttribute = mappingAttribute as DbFixedColumnSizeAttribute;
-                    if (fixedColumnSizeAttribute != null)
-                    {
-                        dbFixedColumnSizeAttribute = fixedColumnSizeAttribute;
-                        continue;
-                    }
-                    DbColumnTypeAttribute columnTypeAttribute = mappingAttribute as DbColumnTypeAttribute;
-                    if (columnTypeAttribute != null)
-                    {
-                        dbColumnTypeAttribute = columnTypeAttribute;
-                        continue;
-                    }
-                    DbIndexableAttribute indexableAttribute = mappingAttribute as DbIndexableAttribute;
-                    if (indexableAttribute != null)
-                    {
-                        dbIndexableAttribute = indexableAttribute;
-                        continue;
-                    }
-                    DbNoLoadAttribute noLoadAttribute = mappingAttribute as DbNoLoadAttribute;
-                    if (noLoadAttribute != null)
-                    {
-                        dbNoLoadAttribute = noLoadAttribute;
-                        continue;
-                    }
-                    CollectionUtils.Add(mappingAttribute, ref unrecognizedAttributes);
-                }
-                if (unrecognizedAttributes != null)
-                {
-                    throw new MappingException(Utils.GetShortDescriptionList(unrecognizedAttributes),
-                                               "The member \"{0}\" of the class \"{1}\" has unrecognized mapping attribute(s).  Please correct the following attributes:",
-                                               member.Name, objType.FullName);
-                }
-                if (dbNotNullAttribute != null)
-                {
-                    if (newSameTableElementInfo != null)
-                    {
-                        if (canSetColumnsNotNull)
-                        {
-                            newSameTableElementInfo.NotNull = true;
+                            throw new MappingException("The member \"{0}\" of the class \"{1}\" has a DbIndexableAttribute attribute applied to it, but it is not a database column.",
+                                                       member.Name, objType.FullName);
                         }
                     }
-                    if (newColumn != null)
+                    if (dbNoLoadAttribute != null)
                     {
-                        if (canSetColumnsNotNull)
+                        if (newColumn != null)
                         {
-                            newColumn.IsNullable = false;
+                            newColumn.NoLoad = true;
+                        }
+                        else
+                        {
+                            throw new MappingException("The member \"{0}\" of the class \"{1}\" has a DbNoLoadAttribute attribute applied to it, but it is not a database column.",
+                                                       member.Name, objType.FullName);
                         }
                     }
                 }
-                if (databaseInsertOrderAttribute != null)
+                for (int memberIndex = 0; memberIndex < members.Count; ++memberIndex)
                 {
-                    if (newRelation != null)
+                    MemberInfo nullMember = members[memberIndex];
+                    if (nullMember != null)
                     {
-                        newRelation.DatabaseInsertOrder = databaseInsertOrderAttribute.InsertOrder;
-                    }
-                }
-                if (dbMaxColumnSizeAttribute != null)
-                {
-                    if (newColumn != null)
-                    {
-                        newColumn.ColumnSize = dbMaxColumnSizeAttribute.Size;
-                        if (newColumn.MemberType == typeof(string))
+                        if (nullMember.ReflectedType != null)
                         {
-                            newColumn.ColumnType = DbType.AnsiString;
+                            throw new MappingException("The member \"{0}.{1}\" was not mapped", nullMember.ReflectedType.Name, nullMember.Name);
+                        }
+                        else
+                        {
+                            throw new MappingException("The member \"{0}\" was not mapped", nullMember.Name);
                         }
                     }
                 }
-                if (dbFixedColumnSizeAttribute != null)
+                if (sameTableAttributes != null)
                 {
-                    if (newColumn != null)
+                    foreach (SameTableElementInfo sameTableElementInfo in sameTableAttributes)
                     {
-                        newColumn.ColumnSize = dbFixedColumnSizeAttribute.Size;
-                        if (newColumn.MemberType == typeof(string))
+                        string description = ReflectionUtils.GetDescription(sameTableElementInfo.Member);
+                        if (string.IsNullOrEmpty(description))
                         {
-                            newColumn.ColumnType = DbType.AnsiStringFixedLength;
+                            description = defaultColumnDescription;
                         }
+                        CollectionUtils.Add(sameTableElementInfo.Member, ref parentToMemberChain);
+                        ConstructTableMappings(sameTableElementInfo.ValueType, sameTableElementInfo.ValueTypePath,
+                                               classTableAttribute, objParentTypePath, parentToMemberChain,
+                                               tables, description, sameTableElementInfo.NotNull);
+                        parentToMemberChain.RemoveAt(parentToMemberChain.Count - 1);
                     }
                 }
-                if (dbColumnTypeAttribute != null)
+                if (relationMembers != null)
                 {
-                    if (newColumn != null)
+                    foreach (RelationInfo relationInfo in relationMembers)
                     {
-                        newColumn.ColumnType = dbColumnTypeAttribute.Type;
-                    }
-                }
-                if (dbIndexableAttribute != null)
-                {
-                    if (newColumn != null)
-                    {
-                        newColumn.IsIndexable = true;
-                    }
-                    else
-                    {
-                        throw new MappingException("The member \"{0}\" of the class \"{1}\" has a DbIndexableAttribute attribute applied to it, but it is not a database column.",
-                                                   member.Name, objType.FullName);
-                    }
-                }
-                if (dbNoLoadAttribute != null)
-                {
-                    if (newColumn != null)
-                    {
-                        newColumn.NoLoad = true;
-                    }
-                    else
-                    {
-                        throw new MappingException("The member \"{0}\" of the class \"{1}\" has a DbNoLoadAttribute attribute applied to it, but it is not a database column.",
-                                                   member.Name, objType.FullName);
+                        string description = relationInfo.Description ?? defaultColumnDescription;
+                        ConstructTableMappings(relationInfo.ValueType, relationInfo.ValueTypePath,
+                                               null, null, null, tables, description, true);
                     }
                 }
             }
-            for (int memberIndex = 0; memberIndex < members.Count; ++memberIndex)
+            finally
             {
-                MemberInfo nullMember = members[memberIndex];
-                if (nullMember != null)
-                {
-                    if (nullMember.ReflectedType != null)
-                    {
-                        throw new MappingException("The member \"{0}.{1}\" was not mapped", nullMember.ReflectedType.Name, nullMember.Name);
-                    }
-                    else
-                    {
-                        throw new MappingException("The member \"{0}\" was not mapped", nullMember.Name);
-                    }
-                }
-            }
-            if (sameTableAttributes != null)
-            {
-                foreach (SameTableElementInfo sameTableElementInfo in sameTableAttributes)
-                {
-                    string description = ReflectionUtils.GetDescription(sameTableElementInfo.Member);
-                    if (string.IsNullOrEmpty(description))
-                    {
-                        description = defaultColumnDescription;
-                    }
-                    CollectionUtils.Add(sameTableElementInfo.Member, ref parentToMemberChain);
-                    ConstructTableMappings(sameTableElementInfo.ValueType, sameTableElementInfo.ValueTypePath,
-                                           classTableAttribute, objParentTypePath, parentToMemberChain,
-                                           tables, description, sameTableElementInfo.NotNull);
-                    parentToMemberChain.RemoveAt(parentToMemberChain.Count - 1);
-                }
-            }
-            if (relationMembers != null)
-            {
-                foreach (RelationInfo relationInfo in relationMembers)
-                {
-                    string description = relationInfo.Description ?? defaultColumnDescription;
-                    ConstructTableMappings(relationInfo.ValueType, relationInfo.ValueTypePath,
-                                           null, null, null, tables, description, true);
-                }
+                m_DefaultTableNamePrefix = saveDefaultTableNamePrefix;
             }
         }
         protected T GetAttributeByType<T>(List<MappingAttribute> attributes) where T : MappingAttribute
@@ -904,21 +940,38 @@ namespace Windsor.Commons.XsdOrm.Implementations
             }
             return string.Format("{0} ({1})", description, member.Name);
         }
+        protected string RemoveAnyPostfixNames(string name)
+        {
+            if (name.EndsWith(DATA_TYPE_STR))
+            {
+                name = name.Substring(0, name.Length - DATA_TYPE_STR.Length);
+            }
+            else
+            {
+                CollectionUtils.ForEachBreak(m_RemovePostfixNamesFromTableAndColumnNames, delegate(string postfixName)
+                {
+                    if (name.EndsWith(postfixName))
+                    {
+                        name = name.Substring(0, name.Length - postfixName.Length);
+                        return false;
+                    }
+                    return true;
+                });
+            }
+            return name;
+        }
         protected string GetDefaultTableName(Type objType)
         {
             // Defaults to class name if not specified
             string baseTableName = objType.Name;
-            if (baseTableName.EndsWith("DataType"))
-            {
-                baseTableName = baseTableName.Substring(0, baseTableName.Length - "DataType".Length);
-            }
+            baseTableName = RemoveAnyPostfixNames(baseTableName);
             int maxChars = Utils.MAX_TABLE_NAME_CHARS;
             if (!string.IsNullOrEmpty(m_DefaultTableNamePrefix))
             {
                 maxChars -= m_DefaultTableNamePrefix.Length;
             }
             string tableName =
-                Utils.ShortenDatabaseTableName(Utils.CamelCaseToDatabaseName(baseTableName), maxChars,
+                Utils.ShortenDatabaseTableName(Utils.CamelCaseToDatabaseName(baseTableName, m_NameReplacements), maxChars,
                                                m_ShortenNamesByRemovingVowelsFirst, m_FixShortenNameBreakBug,
                                                m_Abbreviations);
             if (!string.IsNullOrEmpty(m_DefaultTableNamePrefix))
@@ -1049,7 +1102,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 {
                     //throw new MappingException("table.PrimaryKeys.Count is not equal to 1 for table: {0}", table.TableName);
                 }
-                table.ValidateUniqueColumnNames();
+                RenameColumnsWithSameNames(table);
                 foreach (Column column in table.Columns)
                 {
                     if (column.Table != table)
@@ -1219,6 +1272,140 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 }
             }
         }
+        protected void RenameColumnsWithSameNames(Table table)
+        {
+            if (m_NewSameColumnNameResolutionAttribute && !CollectionUtils.IsNullOrEmpty(table.DataColumns))
+            {
+                for (int curColumnIndex = 0; curColumnIndex < table.DataColumns.Count; ++curColumnIndex)
+                {
+                    Column curCheckColumn = table.DataColumns[curColumnIndex];
+                    List<Column> sameNamedColumns = null;
+                    for (int j = curColumnIndex + 1; j < table.DataColumns.Count; ++j)
+                    {
+                        Column curCheckColumn2 = table.DataColumns[j];
+                        if (curCheckColumn.ColumnName == curCheckColumn2.ColumnName)
+                        {
+                            if (sameNamedColumns == null)
+                            {
+                                sameNamedColumns = new List<Column>();
+                                sameNamedColumns.Add(curCheckColumn);
+                            }
+                            sameNamedColumns.Add(curCheckColumn2);
+                        }
+                    }
+                    if (sameNamedColumns != null)
+                    {
+                        List<string[]> sameNamedColumnParts = new List<string[]>(sameNamedColumns.Count);
+                        foreach (Column curColumn in sameNamedColumns)
+                        {
+                            sameNamedColumnParts.Add(curColumn.MemberInfoPath.Split('.'));
+                        }
+                        // All last parts should be the same
+                        for (int i = 0; i < sameNamedColumnParts.Count - 1; ++i)
+                        {
+                            string[] checkParts1 = sameNamedColumnParts[i];
+                            string[] checkParts2 = sameNamedColumnParts[i + 1];
+                            if (checkParts1[checkParts1.Length - 1] != checkParts2[checkParts2.Length - 1])
+                            {
+                                throw new MappingException("Found columns with the same name that do not have the same member names");
+                            }
+                        }
+                        // Determine where the unique path part starts
+                        int startUniquePartIndex = -1;
+                        bool doContinue = true;
+                        do
+                        {
+                            ++startUniquePartIndex;
+                            for (int i = 0; i < sameNamedColumnParts.Count - 1; ++i)
+                            {
+                                string[] checkParts1 = sameNamedColumnParts[i];
+                                string[] checkParts2 = sameNamedColumnParts[i + 1];
+                            if ((startUniquePartIndex == checkParts1.Length) || (startUniquePartIndex == checkParts2.Length))
+                            {
+                                throw new MappingException("Could not determine startUniquePartIndex for columns with the same name");
+                            }
+                                if ((startUniquePartIndex == (checkParts1.Length - 1)) || (startUniquePartIndex == (checkParts2.Length - 1)))
+                                {
+                                    //throw new MappingException("Could not determine startUniquePartIndex for columns with the same name");
+                                }
+                                if (checkParts1[startUniquePartIndex] != checkParts2[startUniquePartIndex])
+                                {
+                                    doContinue = false;
+                                    break;
+                                }
+                            }
+                        } while (doContinue);
+                        for (int i = 0; i < sameNamedColumnParts.Count; ++i)
+                        {
+                            string[] checkParts = sameNamedColumnParts[i];
+                            string[] newCheckParts = new string[checkParts.Length - startUniquePartIndex];
+                            Array.Copy(checkParts, startUniquePartIndex, newCheckParts, 0, newCheckParts.Length);
+                            sameNamedColumnParts[i] = newCheckParts;
+                        }
+                        // Remove any similar parts in the middle
+                        int endPartOffset = 1;
+                        doContinue = true;
+                        do
+                        {
+                            ++endPartOffset;
+                            for (int i = 0; i < sameNamedColumnParts.Count - 1; ++i)
+                            {
+                                string[] checkParts1 = sameNamedColumnParts[i];
+                                string[] checkParts2 = sameNamedColumnParts[i + 1];
+                                int index1 = checkParts1.Length - endPartOffset;
+                                int index2 = checkParts2.Length - endPartOffset;
+                                if ((index1 < 1) || (index2 < 1) || (checkParts1[index1] != checkParts2[index2]))
+                                {
+                                    doContinue = false;
+                                    break;
+                                }
+                            }
+                            if (doContinue)
+                            {
+                                // null-out similar middle parts
+                                for (int i = 0; i < sameNamedColumnParts.Count; ++i)
+                                {
+                                    string[] checkParts = sameNamedColumnParts[i];
+                                    int index = checkParts.Length - endPartOffset;
+                                    checkParts[index] = null;
+                                }
+                            }
+                        } while (doContinue);
+                        // Finally, construct the new, unique column names
+                        for (int i = 0; i < sameNamedColumns.Count; ++i)
+                        {
+                            Column column = sameNamedColumns[i];
+                            string[] checkParts = sameNamedColumnParts[i];
+                            if (checkParts[0] == null)
+                            {
+                                throw new MappingException("Same-named columns first part should not be null");
+                            }
+                            string columnName;
+                            if (checkParts.Length == 1)
+                            {
+                                columnName = checkParts[0];
+                            }
+                            else
+                            {
+                                columnName = checkParts[0] + checkParts[checkParts.Length - 1];
+                            }
+
+                            //for (int j = 1; j < checkParts.Length; ++j)
+                            //{
+                            //    if (checkParts[j] != null)
+                            //    {
+                            //        columnName += checkParts[j];
+                            //    }
+                            //}
+                            column.ColumnName = Utils.ShortenDatabaseColumnName(Utils.CamelCaseToDatabaseName(columnName, m_NameReplacements),
+                                                                                m_ShortenNamesByRemovingVowelsFirst,
+                                                                                m_FixShortenNameBreakBug,
+                                                                                m_Abbreviations);
+                        }
+                    }
+                }
+            }
+        }
         protected List<MappingAttribute> GetMappingAttributesForType(Type type, string typePath)
         {
             return AppendAppliedAttributes(type, string.Empty, typePath,
@@ -1339,6 +1526,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
             if (!tables.TryGetValue(columnAttribute.TableName, out table))
             {
                 table = new Table(columnAttribute.TableName, tableRootType);
+                table.TableNamePrefix = m_DefaultTableNamePrefix;
                 tables.Add(columnAttribute.TableName, table);
             }
             else
@@ -1347,55 +1535,58 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 {
                     table.TableRootType = tableRootType;
                 }
-                if (table.TryGetColumn(columnAttribute.ColumnName, out sameNameColumn))
+                if (!m_NewSameColumnNameResolutionAttribute)
                 {
-                    if (sameNameColumn.IsForeignKey || sameNameColumn.IsPrimaryKey)
+                    if (table.TryGetColumn(columnAttribute.ColumnName, out sameNameColumn))
                     {
-                        //??
-                        //throw new MappingException("The table \"{0}\" has more than one column named \"{1}\"",
-                        //                           table.TableName, columnAttribute.ColumnName);
-                    }
-                    string sameNameMemberPath = sameNameColumn.MemberInfoPath;
-                    int startIndex = 0;
-                    while (memberPath[startIndex] == sameNameMemberPath[startIndex])
-                    {
-                        ++startIndex;
-                    }
-                    int endIndex = memberPath.IndexOf('.', startIndex + 1);
-                    if (endIndex < 0)
-                    {
-                        endIndex = memberPath.Length - 1;
-                    }
-                    if (memberPath[startIndex] != '.')
-                    {
-                        startIndex = memberPath.LastIndexOf('.', startIndex);
-                        if (startIndex < 0)
+                        if (sameNameColumn.IsForeignKey || sameNameColumn.IsPrimaryKey)
                         {
-                            startIndex = 0;
+                            //??
+                            //throw new MappingException("The table \"{0}\" has more than one column named \"{1}\"",
+                            //                           table.TableName, columnAttribute.ColumnName);
                         }
-                        else
+                        string sameNameMemberPath = sameNameColumn.MemberInfoPath;
+                        int startIndex = 0;
+                        while (memberPath[startIndex] == sameNameMemberPath[startIndex])
                         {
                             ++startIndex;
                         }
-                    }
-                    string memberPrefix =
-                        Utils.ShortenDatabaseTableName(Utils.CamelCaseToDatabaseName(memberPath.Substring(startIndex, endIndex - startIndex)),
-                                                       m_ShortenNamesByRemovingVowelsFirst, m_FixShortenNameBreakBug, m_Abbreviations);
-                    if (memberPrefix != null)
-                    {
-                        columnAttribute.ColumnName = Utils.ShortenDatabaseTableName(memberPrefix + '_' + columnAttribute.ColumnName,
-                                                                                    m_ShortenNamesByRemovingVowelsFirst, m_FixShortenNameBreakBug,
-                                                                                    null);
-                    }
-                    while (table.TryGetColumn(columnAttribute.ColumnName, out sameNameColumn))
-                    {
-                        columnAttribute.ColumnName = Utils.ShortenDatabaseName(columnAttribute.ColumnName, columnAttribute.ColumnName.Length - 1,
-                                                                               m_ShortenNamesByRemovingVowelsFirst, m_FixShortenNameBreakBug,
-                                                                               null);
+                        int endIndex = memberPath.IndexOf('.', startIndex + 1);
+                        if (endIndex < 0)
+                        {
+                            endIndex = memberPath.Length - 1;
+                        }
+                        if (memberPath[startIndex] != '.')
+                        {
+                            startIndex = memberPath.LastIndexOf('.', startIndex);
+                            if (startIndex < 0)
+                            {
+                                startIndex = 0;
+                            }
+                            else
+                            {
+                                ++startIndex;
+                            }
+                        }
+                        string memberPrefix =
+                            Utils.ShortenDatabaseTableName(Utils.CamelCaseToDatabaseName(memberPath.Substring(startIndex, endIndex - startIndex), m_NameReplacements),
+                                                           m_ShortenNamesByRemovingVowelsFirst, m_FixShortenNameBreakBug, m_Abbreviations);
+                        if (memberPrefix != null)
+                        {
+                            columnAttribute.ColumnName = Utils.ShortenDatabaseTableName(memberPrefix + '_' + columnAttribute.ColumnName,
+                                                                                        m_ShortenNamesByRemovingVowelsFirst, m_FixShortenNameBreakBug,
+                                                                                        null);
+                        }
+                        while (table.TryGetColumn(columnAttribute.ColumnName, out sameNameColumn))
+                        {
+                            columnAttribute.ColumnName = Utils.ShortenDatabaseName(columnAttribute.ColumnName, columnAttribute.ColumnName.Length - 1,
+                                                                                   m_ShortenNamesByRemovingVowelsFirst, m_FixShortenNameBreakBug,
+                                                                                   null);
+                        }
                     }
                 }
             }
-            return table.AddColumn(member, memberPath, isSpecifiedMember, columnAttribute);
+            return table.AddColumn(member, memberPath, isSpecifiedMember, columnAttribute, !m_NewSameColumnNameResolutionAttribute);
         }
         protected virtual Relation CreateRelation(RelationAttribute relationAttribute,
                                                   MemberInfo member, string memberPath,
@@ -1421,11 +1612,17 @@ namespace Windsor.Commons.XsdOrm.Implementations
         }
         public Dictionary<string, Table> Tables
         {
-            get { return m_Tables; }
+            get
+            {
+                return m_Tables;
+            }
         }
         public Dictionary<string, ObjectPath> ObjectPaths
         {
-            get { return m_ObjectPaths; }
+            get
+            {
+                return m_ObjectPaths;
+            }
         }
         public override string ToString()
         {
@@ -1433,29 +1630,54 @@ namespace Windsor.Commons.XsdOrm.Implementations
         }
         public string DefaultDecimalCreateString
         {
-            get { return m_DefaultDecimalCreateString; }
-            set { m_DefaultDecimalCreateString = value; }
+            get
+            {
+                return m_DefaultDecimalCreateString;
+            }
+            set
+            {
+                m_DefaultDecimalCreateString = value;
+            }
         }
         public string DefaultFloatCreateString
         {
-            get { return m_DefaultFloatCreateString; }
-            set { m_DefaultFloatCreateString = value; }
+            get
+            {
+                return m_DefaultFloatCreateString;
+            }
+            set
+            {
+                m_DefaultFloatCreateString = value;
+            }
         }
         public string DefaultDoubleCreateString
         {
-            get { return m_DefaultDoubleCreateString; }
-            set { m_DefaultDoubleCreateString = value; }
+            get
+            {
+                return m_DefaultDoubleCreateString;
+            }
+            set
+            {
+                m_DefaultDoubleCreateString = value;
+            }
         }
         public string DefaultTableNamePrefix
         {
-            get { return m_DefaultTableNamePrefix; }
-            set { m_DefaultTableNamePrefix = value; }
+            get
+            {
+                return m_DefaultTableNamePrefix;
+            }
+            set
+            {
+                m_DefaultTableNamePrefix = value;
+            }
         }
 
         protected virtual void ConstructTableMappings(Type rootType)
         {
             m_InheritAppliedAttributes = GetInheritAppliedAttributes(rootType);
             m_Abbreviations = ConstructAbbreviations(rootType);
+            m_NameReplacements = ConstructNameReplacements(rootType);
             m_DefaultStringDbValues = GetDefaultDbStringValues(rootType);
             m_ElementNamePostfixToLength = GetElementNamePostfixToLength(rootType);
             m_DefaultTableNamePrefix = GetDefaultTableNamePrefix(rootType);
@@ -1469,8 +1691,9 @@ namespace Windsor.Commons.XsdOrm.Implementations
             m_FixShortenNameBreakBug = GetFixShortenNameBreakBugAttribute(rootType);
             m_UseTableNameForDefaultPrimaryKeys =
                 GetUseTableNameForDefaultPrimaryKeysAttribute(rootType);
-            m_UseExactElementNameForColumnName =
-                GetUseElementNameForColumnNameAttribute(rootType);
+            m_NewSameColumnNameResolutionAttribute =
+                GetNewSameColumnNameResolutionAttribute(rootType);
+            m_RemovePostfixNamesFromTableAndColumnNames = GetRemovePostfixNamesFromTableAndColumnNamesAttribute(rootType);
 
             if (!string.IsNullOrEmpty(m_DefaultTableNamePrefix))
             {
@@ -1483,6 +1706,15 @@ namespace Windsor.Commons.XsdOrm.Implementations
             ConstructTableMappings(rootType, rootType.FullName, null, null, null, m_Tables, null, true);
             ValidateTables(m_Tables);
             m_ObjectPaths = ConstructObjectPaths(m_Tables);
+        }
+        protected virtual List<KeyValuePair<string, string>> ConstructNameReplacements(Type rootType)
+        {
+            NameReplacementsAttribute attr = GetGlobalAttribute<NameReplacementsAttribute>(rootType);
+            if (attr != null)
+            {
+                return attr.Replacements;
+            }
+            return null;
         }
         protected virtual Dictionary<string, string> ConstructAbbreviations(Type rootType)
         {
@@ -1791,7 +2023,6 @@ namespace Windsor.Commons.XsdOrm.Implementations
         {
             DefaultTableNamePrefixAttribute attr = GetGlobalAttribute<DefaultTableNamePrefixAttribute>(rootType);
             return (attr == null) ? null : attr.Prefix;
-
         }
         protected virtual bool GetShortenNamesByRemovingVowelsFirst(Type rootType)
         {
@@ -1805,20 +2036,29 @@ namespace Windsor.Commons.XsdOrm.Implementations
         }
         protected virtual bool GetUseTableNameForDefaultPrimaryKeysAttribute(Type rootType)
         {
-            UseTableNameForDefaultPrimaryKeysAttribute attr = 
+            UseTableNameForDefaultPrimaryKeysAttribute attr =
                 GetGlobalAttribute<UseTableNameForDefaultPrimaryKeysAttribute>(rootType);
             return (attr != null);
         }
-        protected virtual bool GetUseElementNameForColumnNameAttribute(Type rootType)
+        protected virtual bool GetNewSameColumnNameResolutionAttribute(Type rootType)
         {
-            UseExactElementNameForColumnNameAttribute attr =
-                GetGlobalAttribute<UseExactElementNameForColumnNameAttribute>(rootType);
+            NewSameColumnNameResolutionAttribute attr =
+                GetGlobalAttribute<NewSameColumnNameResolutionAttribute>(rootType);
             return (attr != null);
         }
         protected virtual bool GetFixShortenNameBreakBugAttribute(Type rootType)
         {
             FixShortenNameBreakBugAttribute attr = GetGlobalAttribute<FixShortenNameBreakBugAttribute>(rootType);
             return (attr != null);
+        }
+        protected virtual IList<string> GetRemovePostfixNamesFromTableAndColumnNamesAttribute(Type rootType)
+        {
+            RemovePostfixNamesFromTableAndColumnNamesAttribute attr = GetGlobalAttribute<RemovePostfixNamesFromTableAndColumnNamesAttribute>(rootType);
+            if ((attr != null) && !CollectionUtils.IsNullOrEmpty(attr.PostfixNames))
+            {
+                return new List<string>(attr.PostfixNames);
+            }
+            return null;
         }
         protected virtual string GetDefaultDecimalPrecision(Type rootType)
         {
@@ -2038,6 +2278,10 @@ namespace Windsor.Commons.XsdOrm.Implementations
             {
                 mappingAttribute = new DbIndexableAttribute();
             }
+            else if (appliedAttribute.MappedAttributeType == typeof(DbNullAttribute))
+            {
+                mappingAttribute = new DbNullAttribute();
+            }
             else if (appliedAttribute.MappedAttributeType == typeof(TableAttribute))
             {
                 TableAttribute tableAttribute = new TableAttribute();
@@ -2125,6 +2369,14 @@ namespace Windsor.Commons.XsdOrm.Implementations
             {
                 mappingAttribute = new GuidForeignKeyAttribute();
             }
+            else if (appliedAttribute.MappedAttributeType == typeof(DefaultTableNameAdditionPrefixAttribute))
+            {
+                if ((CollectionUtils.Count(appliedAttribute.Args) != 1) || (appliedAttribute.Args[0] == null))
+                {
+                    throw new ArgumentException("Missing DefaultTableNameAdditionPrefixAttribute name argument");
+                }
+                mappingAttribute = new DefaultTableNameAdditionPrefixAttribute(appliedAttribute.Args[0].ToString());
+            }
             else
             {
                 throw new NotImplementedException(string.Format("attribute.MappedAttributeType arg is not implemented: {0}",
@@ -2171,9 +2423,11 @@ namespace Windsor.Commons.XsdOrm.Implementations
             }
             throw new MappingException("Could not find table for type \"{0}\"", objectType.FullName);
         }
+        private const string DATA_TYPE_STR = "DataType";
         private Dictionary<string, Table> m_Tables = new Dictionary<string, Table>();
         private Dictionary<string, ObjectPath> m_ObjectPaths = new Dictionary<string, ObjectPath>();
         private Dictionary<string, string> m_Abbreviations = null;
+        private List<KeyValuePair<string, string>> m_NameReplacements = null;
         private static Dictionary<Type, MappingContext> s_MappingContexts = new Dictionary<Type, MappingContext>();
         private DefaultStringDbValuesAttribute m_DefaultStringDbValues;
         private List<KeyValuePair<string, int>> m_ElementNamePostfixToLength;
@@ -2189,8 +2443,9 @@ namespace Windsor.Commons.XsdOrm.Implementations
         private bool m_FixShortenNameBreakBug;
         private bool m_InheritAppliedAttributes;
         private bool m_UseTableNameForDefaultPrimaryKeys;
-        private bool m_UseExactElementNameForColumnName;
+        private bool m_NewSameColumnNameResolutionAttribute;
         private bool m_UseExactElementNameForTableName;
+        private IList<string> m_RemovePostfixNamesFromTableAndColumnNames;
         private List<AdditionalCreateForeignKeyAttribute> m_AdditionalCreateForeignKeyAttributes = new List<AdditionalCreateForeignKeyAttribute>();
         private List<AdditionalCreatePrimaryKeyAttribute> m_AdditionalCreatePrimaryKeyAttributes = new List<AdditionalCreatePrimaryKeyAttribute>();
         private List<AdditionalCreateIndexAttribute> m_AdditionalCreateIndexAttributes = new List<AdditionalCreateIndexAttribute>();
@@ -2227,34 +2482,63 @@ namespace Windsor.Commons.XsdOrm.Implementations
             }
         }
 
+        public IList<string> RemovePostfixNamesFromTableAndColumnNames
+        {
+            get
+            {
+                return m_RemovePostfixNamesFromTableAndColumnNames;
+            }
+            set
+            {
+                m_RemovePostfixNamesFromTableAndColumnNames = value;
+            }
+        }
         public bool UseExactElementNameForTableName
         {
-            get { return m_UseExactElementNameForTableName; }
-            set { m_UseExactElementNameForTableName = value; }
-        }
-
-        public bool UseExactElementNameForColumnName
-        {
-            get { return m_UseExactElementNameForColumnName; }
-            set { m_UseExactElementNameForColumnName = value; }
+            get
+            {
+                return m_UseExactElementNameForTableName;
+            }
+            set
+            {
+                m_UseExactElementNameForTableName = value;
+            }
         }
 
         public bool UseTableNameForDefaultPrimaryKeys
         {
-            get { return m_UseTableNameForDefaultPrimaryKeys; }
-            set { m_UseTableNameForDefaultPrimaryKeys = value; }
+            get
+            {
+                return m_UseTableNameForDefaultPrimaryKeys;
+            }
+            set
+            {
+                m_UseTableNameForDefaultPrimaryKeys = value;
+            }
         }
 
         public bool FixShortenNameBreakBug
         {
-            get { return m_FixShortenNameBreakBug; }
-            set { m_FixShortenNameBreakBug = value; }
+            get
+            {
+                return m_FixShortenNameBreakBug;
+            }
+            set
+            {
+                m_FixShortenNameBreakBug = value;
+            }
         }
 
         public bool ShortenNamesByRemovingVowelsFirst
         {
-            get { return m_ShortenNamesByRemovingVowelsFirst; }
-            set { m_ShortenNamesByRemovingVowelsFirst = value; }
+            get
+            {
+                return m_ShortenNamesByRemovingVowelsFirst;
+            }
+            set
+            {
+                m_ShortenNamesByRemovingVowelsFirst = value;
+            }
         }
 
         private class SameTableElementInfo

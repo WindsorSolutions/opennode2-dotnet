@@ -39,7 +39,7 @@ using System.Xml.Serialization;
 using System.ComponentModel;
 using Windsor.Commons.Core;
 
-namespace Windsor.Commons.XsdOrm.Implementations 
+namespace Windsor.Commons.XsdOrm.Implementations
 {
     public class Table
     {
@@ -55,48 +55,79 @@ namespace Windsor.Commons.XsdOrm.Implementations
         }
         public string TableName
         {
-            get { return m_TableName; }
-            set { m_TableName = value; }
+            get
+            {
+                return m_TableName;
+            }
+            set
+            {
+                m_TableName = value;
+            }
+        }
+        public string TableNamePrefix
+        {
+            get
+            {
+                return m_TableNamePrefix;
+            }
+            set
+            {
+                m_TableNamePrefix = value;
+            }
         }
         public Type TableRootType
         {
-            get { return m_TableRootType; }
-            set { m_TableRootType = value; }
+            get
+            {
+                return m_TableRootType;
+            }
+            set
+            {
+                m_TableRootType = value;
+            }
         }
         public ICollection<Column> Columns
         {
-            get {
+            get
+            {
                 List<Column> rtnList = new List<Column>(m_PrimaryKeyColumns.Count +
                                                         m_ForeignKeyColumns.Count +
                                                         m_OtherColumns.Count);
-                foreach (Column column in m_PrimaryKeyColumns) rtnList.Add(column);
-                foreach (Column column in m_ForeignKeyColumns) rtnList.Add(column);
-                foreach (Column column in m_OtherColumns) rtnList.Add(column);
+                foreach (Column column in m_PrimaryKeyColumns)
+                    rtnList.Add(column);
+                foreach (Column column in m_ForeignKeyColumns)
+                    rtnList.Add(column);
+                foreach (Column column in m_OtherColumns)
+                    rtnList.Add(column);
                 return rtnList;
             }
         }
         public ICollection<PrimaryKeyColumn> PrimaryKeys
         {
-            get { return m_PrimaryKeyColumns; }
+            get
+            {
+                return m_PrimaryKeyColumns;
+            }
         }
         public ICollection<ForeignKeyColumn> ForeignKeys
         {
-            get { return m_ForeignKeyColumns; }
+            get
+            {
+                return m_ForeignKeyColumns;
+            }
+        }
+        public IList<Column> DataColumns
+        {
+            get
+            {
+                return m_OtherColumns;
+            }
         }
         public ICollection<Relation> Relations
         {
-            get { return m_AllRelations; }
-        }
-        public void ValidateUniqueColumnNames()
-        {
-            for (int i = 0; i < m_OtherColumns.Count; ++i)
+            get
             {
-                for (int j = i + 1; j < m_OtherColumns.Count; ++j)
-                {
-                    if (m_OtherColumns[i].ColumnName == m_OtherColumns[j].ColumnName)
-                    {
-                    }
-                }
+                return m_AllRelations;
             }
         }
         public PrimaryKeyColumn GetSinglePrimaryKey()
@@ -113,9 +144,10 @@ namespace Windsor.Commons.XsdOrm.Implementations
         }
         public Column AddColumn(MemberInfo member, string memberPath,
                                 MemberInfo isSpecifiedMember,
-                                ColumnAttribute columnAttribute)
+                                ColumnAttribute columnAttribute, 
+                                bool validateUniqueColumnName)
         {
-            if (ContainsColumn(columnAttribute.ColumnName))
+            if (validateUniqueColumnName && ContainsColumn(columnAttribute.ColumnName))
             {
                 throw new MappingException("This table already contains a column with the same name: \"{0}\"",
                                            columnAttribute.ColumnName);
@@ -144,8 +176,8 @@ namespace Windsor.Commons.XsdOrm.Implementations
             }
             else if (columnAttribute is ForeignKeyAttribute)
             {
-                ForeignKeyColumn foreignKeyColumn = 
-                    new ForeignKeyColumn(this, member, memberPath, (ForeignKeyAttribute) columnAttribute);
+                ForeignKeyColumn foreignKeyColumn =
+                    new ForeignKeyColumn(this, member, memberPath, (ForeignKeyAttribute)columnAttribute);
                 CollectionUtils.Add(foreignKeyColumn, ref m_ForeignKeyColumns);
                 column = foreignKeyColumn;
             }
@@ -272,7 +304,9 @@ namespace Windsor.Commons.XsdOrm.Implementations
                                            (ManyToManyAttribute)relationAttribute);
                 CollectionUtils.Add(manyToManyRelation, ref m_ManyToManyRelations);
                 relation = manyToManyRelation;
-            } else {
+            }
+            else
+            {
                 throw new ArgumentException(string.Format("Unreconized RelationAttribute: {0}", relationAttribute.ToString()));
             }
             CollectionUtils.Add(relation, ref m_AllRelations);
@@ -297,6 +331,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
             return false;
         }
         private string m_TableName;
+        private string m_TableNamePrefix;
         private Type m_TableRootType;
         private List<PrimaryKeyColumn> m_PrimaryKeyColumns = new List<PrimaryKeyColumn>();
         private List<ForeignKeyColumn> m_ForeignKeyColumns = new List<ForeignKeyColumn>();
@@ -305,6 +340,6 @@ namespace Windsor.Commons.XsdOrm.Implementations
         private List<OneToManyRelation> m_OneToManyRelations = new List<OneToManyRelation>();
         private List<OneToOneRelation> m_OneToOneRelations = new List<OneToOneRelation>();
         private List<ManyToManyRelation> m_ManyToManyRelations = new List<ManyToManyRelation>();
-        private Dictionary<int, KeyValuePair<int, object>> m_Cache = new Dictionary<int,KeyValuePair<int,object>>();
+        private Dictionary<int, KeyValuePair<int, object>> m_Cache = new Dictionary<int, KeyValuePair<int, object>>();
     }
 }

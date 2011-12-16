@@ -55,8 +55,15 @@ namespace Windsor.Commons.XsdOrm.Implementations
         {
             return string.Format("{0}.{1}", tableName, columnName);
         }
-        public static string CamelCaseToDatabaseName(string name)
+        public static string CamelCaseToDatabaseName(string name, List<KeyValuePair<string, string>> nameReplacements)
         {
+            if (!CollectionUtils.IsNullOrEmpty(nameReplacements))
+            {
+                foreach (KeyValuePair<string, string> pair in nameReplacements)
+                {
+                    name = name.Replace(pair.Key, pair.Value);
+                }
+            }
             return StringUtils.SplitCamelCaseName(name, '_').ToUpper();
         }
         public static string ShortenDatabaseColumnName(string name, bool shortenNamesByRemovingVowelsFirst,
@@ -108,6 +115,9 @@ namespace Windsor.Commons.XsdOrm.Implementations
             //    overList.Clear();
             //}
             value = ShortenDatabaseName(value, maxChars, shortenNamesByRemovingVowelsFirst, fixBreakBug);
+            if (value == "ANAL_RSLT_MEAS_VL")
+            {
+            }
             return value;
         }
         public static string ShortenDatabaseName(string name, int maxChars, bool shortenNamesByRemovingVowelsFirst,
@@ -203,8 +213,12 @@ namespace Windsor.Commons.XsdOrm.Implementations
             }
             return name;
         }
-        public static string RemoveTableNamePrefix(string tableName, string defaultTableNamePrefix)
+        public static string RemoveTableNamePrefix(string tableName, string tableNamePrefix, string defaultTableNamePrefix)
         {
+            if (!string.IsNullOrEmpty(tableNamePrefix))
+            {
+                defaultTableNamePrefix = tableNamePrefix;
+            }
             if (string.IsNullOrEmpty(defaultTableNamePrefix))
             {
                 return tableName;
@@ -228,8 +242,8 @@ namespace Windsor.Commons.XsdOrm.Implementations
             }
             else
             {
-                return ShortenDatabaseName("FK_" + RemoveTableNamePrefix(foreignKeyColumn.Table.TableName, defaultTableNamePrefix) +
-                                           "_" + RemoveTableNamePrefix(foreignKeyColumn.ForeignTable.TableName, defaultTableNamePrefix),
+                return ShortenDatabaseName("FK_" + RemoveTableNamePrefix(foreignKeyColumn.Table.TableName, foreignKeyColumn.Table.TableNamePrefix, defaultTableNamePrefix) +
+                                           "_" + RemoveTableNamePrefix(foreignKeyColumn.ForeignTable.TableName, foreignKeyColumn.ForeignTable.TableNamePrefix, defaultTableNamePrefix),
                                            MAX_CONSTRAINT_NAME_CHARS, shortenNamesByRemovingVowelsFirst, fixBreakBug, null);
             }
         }
@@ -242,7 +256,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
             }
             else
             {
-                return ShortenDatabaseName("PK_" + RemoveTableNamePrefix(primaryKeyColumn.Table.TableName, defaultTableNamePrefix),
+                return ShortenDatabaseName("PK_" + RemoveTableNamePrefix(primaryKeyColumn.Table.TableName, primaryKeyColumn.Table.TableNamePrefix, defaultTableNamePrefix),
                                            MAX_CONSTRAINT_NAME_CHARS, shortenNamesByRemovingVowelsFirst, fixBreakBug, null);
             }
         }
@@ -255,7 +269,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
             }
             else
             {
-                return ShortenDatabaseName("IX_" + RemoveTableNamePrefix(column.Table.TableName, defaultTableNamePrefix) +
+                return ShortenDatabaseName("IX_" + RemoveTableNamePrefix(column.Table.TableName, column.Table.TableNamePrefix, defaultTableNamePrefix) +
                                            "_" + column.ColumnName, MAX_INDEX_NAME_CHARS, shortenNamesByRemovingVowelsFirst, fixBreakBug, null);
             }
         }
@@ -264,8 +278,8 @@ namespace Windsor.Commons.XsdOrm.Implementations
         /// </summary>
         public static bool IsValidColumnType(Type dataType)
         {
-            return (dataType.IsPrimitive || dataType.IsEnum || (dataType == typeof(string)) || 
-                   (dataType == typeof(decimal)) || (dataType == typeof(DateTime)) || 
+            return (dataType.IsPrimitive || dataType.IsEnum || (dataType == typeof(string)) ||
+                   (dataType == typeof(decimal)) || (dataType == typeof(DateTime)) ||
                    (dataType == typeof(byte[])));
         }
         public static bool IsValidForeignKeyColumnType(DbType dbType)
@@ -377,7 +391,8 @@ namespace Windsor.Commons.XsdOrm.Implementations
         public static MemberInfo FindMemberByName(IList<MemberInfo> members, string memberName,
                                                   out int memberIndex)
         {
-            for (memberIndex = 0; memberIndex < members.Count; ++memberIndex) {
+            for (memberIndex = 0; memberIndex < members.Count; ++memberIndex)
+            {
                 MemberInfo member = members[memberIndex];
                 if (member == null)
                 {
@@ -405,25 +420,41 @@ namespace Windsor.Commons.XsdOrm.Implementations
         }
         public static List<MemberInfo> GetPublicMembersForType(Type type)
         {
-            PropertyInfo[] properties = type.GetProperties(BindingFlags.Instance | BindingFlags.Public);
-            for (int i = 0; i < properties.Length; ++i)
+            // Always return inherited members first
+            Type curType = type;
+            List<MemberInfo> members = new List<MemberInfo>();
+            do
             {
-                if (!properties[i].CanRead || !properties[i].CanWrite)
+                PropertyInfo[] properties = curType.GetProperties(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Public);
+                int count = properties.Length;
+                for (int i = 0; i < properties.Length; ++i)
                 {
-                    properties[i] = null;
+                    if (!properties[i].CanRead || !properties[i].CanWrite)
+                    {
+                        --count;
+                        properties[i] = null;
+                    }
                 }
-            }
-            FieldInfo[] fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public);
-            int count = properties.Length + fields.Length;
-            List<MemberInfo> members = new List<MemberInfo>(count);
-            for (int i = 0; i < properties.Length; ++i)
-            {
-                if (properties[i] != null)
+                Array.Reverse(properties);
+                FieldInfo[] fields = curType.GetFields(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Public);
+                Array.Reverse(fields);
+                count += fields.Length;
+                if (count > 0)
                 {
-                    members.Add(properties[i]);
+                    members.Capacity = members.Count + count;
+                    for (int i = 0; i < properties.Length; ++i)
+                    {
+                        if (properties[i] != null)
+                        {
+                            members.Add(properties[i]);
+                        }
+                    }
+                    members.AddRange(fields);
                 }
-            }
-            members.AddRange(fields);
+                curType = curType.BaseType;
+            } 
+            while (curType != null);
+            members.Reverse();
             return members;
         }
     }

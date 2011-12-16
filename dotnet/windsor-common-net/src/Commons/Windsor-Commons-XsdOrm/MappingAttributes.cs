@@ -57,7 +57,9 @@ namespace Windsor.Commons.XsdOrm
     }
     public abstract class MappingAttribute : Attribute
     {
-        public MappingAttribute() { }
+        public MappingAttribute()
+        {
+        }
 
         public abstract string GetShortDescription();
 
@@ -109,6 +111,19 @@ namespace Windsor.Commons.XsdOrm
                 return m_ParentTable;
             }
         }
+        private string m_ParentTablePrefix;
+
+        public string ParentTablePrefix
+        {
+            get
+            {
+                return m_ParentTablePrefix;
+            }
+            set
+            {
+                m_ParentTablePrefix = value;
+            }
+        }
         private string m_ColumnName;
 
         public string ColumnName
@@ -116,6 +131,19 @@ namespace Windsor.Commons.XsdOrm
             get
             {
                 return m_ColumnName;
+            }
+        }
+        private string m_ReferencedTablePrefix;
+
+        public string ReferencedTablePrefix
+        {
+            get
+            {
+                return m_ReferencedTablePrefix;
+            }
+            set
+            {
+                m_ReferencedTablePrefix = value;
             }
         }
         private string m_ReferencedTable;
@@ -163,8 +191,13 @@ namespace Windsor.Commons.XsdOrm
     public class AdditionalCreatePrimaryKeyAttribute : MappingAttribute
     {
         public AdditionalCreatePrimaryKeyAttribute(string parentTable, string columnName)
+            : this(parentTable, null, columnName)
+        {
+        }
+        public AdditionalCreatePrimaryKeyAttribute(string parentTable, string parentTablePrefix, string columnName)
         {
             m_ParentTable = parentTable;
+            m_ParentTablePrefix = parentTablePrefix;
             m_ColumnName = columnName;
         }
         public override string GetShortDescription()
@@ -178,6 +211,15 @@ namespace Windsor.Commons.XsdOrm
             get
             {
                 return m_ParentTable;
+            }
+        }
+        private string m_ParentTablePrefix;
+
+        public string ParentTablePrefix
+        {
+            get
+            {
+                return m_ParentTablePrefix;
             }
         }
         private string m_ColumnName;
@@ -194,13 +236,18 @@ namespace Windsor.Commons.XsdOrm
     public class AdditionalCreateIndexAttribute : MappingAttribute
     {
         public AdditionalCreateIndexAttribute(string parentTable, string columnName)
+            : this(parentTable, columnName, false)
+        {
+        }
+        public AdditionalCreateIndexAttribute(string parentTable, string columnName, bool isUnique)
+            : this(parentTable, null, columnName, false)
+        {
+        }
+        public AdditionalCreateIndexAttribute(string parentTable, string parentTablePrefix, string columnName, bool isUnique)
         {
             m_ParentTable = parentTable;
+            m_ParentTablePrefix = parentTablePrefix;
             m_ColumnName = columnName;
-        }
-        public AdditionalCreateIndexAttribute(string parentTable, string columnName, bool isUnique) :
-            this(parentTable, columnName)
-        {
             m_IsUnique = isUnique;
         }
         public override string GetShortDescription()
@@ -214,6 +261,15 @@ namespace Windsor.Commons.XsdOrm
             get
             {
                 return m_ParentTable;
+            }
+        }
+        private string m_ParentTablePrefix;
+
+        public string ParentTablePrefix
+        {
+            get
+            {
+                return m_ParentTablePrefix;
             }
         }
         private string m_ColumnName;
@@ -275,8 +331,14 @@ namespace Windsor.Commons.XsdOrm
         }
         public Dictionary<string, string> Abbreviations
         {
-            get { return m_Abbreviations; }
-            set { m_Abbreviations = value; }
+            get
+            {
+                return m_Abbreviations;
+            }
+            set
+            {
+                m_Abbreviations = value;
+            }
         }
         public override string GetShortDescription()
         {
@@ -293,14 +355,44 @@ namespace Windsor.Commons.XsdOrm
         }
         public Dictionary<string, string> Abbreviations
         {
-            get { return m_Abbreviations; }
-            set { m_Abbreviations = value; }
+            get
+            {
+                return m_Abbreviations;
+            }
+            set
+            {
+                m_Abbreviations = value;
+            }
         }
         public override string GetShortDescription()
         {
             return string.Format("{0} additional abbreviation(s)", m_Abbreviations.Count.ToString());
         }
         private Dictionary<string, string> m_Abbreviations;
+    }
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Assembly)]
+    public class NameReplacementsAttribute : MappingAttribute
+    {
+        public NameReplacementsAttribute(params string[] abbreviationPairs)
+        {
+            m_Replacements = CollectionUtils.CreateListFromPairs(abbreviationPairs);
+        }
+        public List<KeyValuePair<string, string>> Replacements
+        {
+            get
+            {
+                return m_Replacements;
+            }
+            set
+            {
+                m_Replacements = value;
+            }
+        }
+        public override string GetShortDescription()
+        {
+            return string.Format("{0} replacements(s)", m_Replacements.Count.ToString());
+        }
+        private List<KeyValuePair<string, string>> m_Replacements;
     }
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Assembly)]
@@ -317,13 +409,25 @@ namespace Windsor.Commons.XsdOrm
         }
         public int Scale
         {
-            get { return m_Scale; }
-            set { m_Scale = value; }
+            get
+            {
+                return m_Scale;
+            }
+            set
+            {
+                m_Scale = value;
+            }
         }
         public int Precision
         {
-            get { return m_Precision; }
-            set { m_Precision = value; }
+            get
+            {
+                return m_Precision;
+            }
+            set
+            {
+                m_Precision = value;
+            }
         }
         private int m_Precision;
         private int m_Scale;
@@ -342,13 +446,25 @@ namespace Windsor.Commons.XsdOrm
         }
         public int Scale
         {
-            get { return m_Scale; }
-            set { m_Scale = value; }
+            get
+            {
+                return m_Scale;
+            }
+            set
+            {
+                m_Scale = value;
+            }
         }
         public int Precision
         {
-            get { return m_Precision; }
-            set { m_Precision = value; }
+            get
+            {
+                return m_Precision;
+            }
+            set
+            {
+                m_Precision = value;
+            }
         }
         private int m_Precision;
         private int m_Scale;
@@ -367,13 +483,25 @@ namespace Windsor.Commons.XsdOrm
         }
         public int Scale
         {
-            get { return m_Scale; }
-            set { m_Scale = value; }
+            get
+            {
+                return m_Scale;
+            }
+            set
+            {
+                m_Scale = value;
+            }
         }
         public int Precision
         {
-            get { return m_Precision; }
-            set { m_Precision = value; }
+            get
+            {
+                return m_Precision;
+            }
+            set
+            {
+                m_Precision = value;
+            }
         }
         private int m_Precision;
         private int m_Scale;
@@ -389,13 +517,25 @@ namespace Windsor.Commons.XsdOrm
         }
         public int DefaultDbSize
         {
-            get { return m_DefaultDbSize; }
-            set { m_DefaultDbSize = value; }
+            get
+            {
+                return m_DefaultDbSize;
+            }
+            set
+            {
+                m_DefaultDbSize = value;
+            }
         }
         public DbType DefaultDbType
         {
-            get { return m_DefaultDbType; }
-            set { m_DefaultDbType = value; }
+            get
+            {
+                return m_DefaultDbType;
+            }
+            set
+            {
+                m_DefaultDbType = value;
+            }
         }
         public override string GetShortDescription()
         {
@@ -418,8 +558,8 @@ namespace Windsor.Commons.XsdOrm
             m_ElementNamePostfixToLength = new List<KeyValuePair<string, int>>(abbreviationPairs.Length);
             for (int i = 0; i < abbreviationPairs.Length; i += 2)
             {
-                KeyValuePair<string, int> pair = 
-                    new KeyValuePair<string,int>(abbreviationPairs[i], int.Parse(abbreviationPairs[i + 1]));
+                KeyValuePair<string, int> pair =
+                    new KeyValuePair<string, int>(abbreviationPairs[i], int.Parse(abbreviationPairs[i + 1]));
                 m_ElementNamePostfixToLength.Add(pair);
             }
             m_ElementNamePostfixToLength.Sort(delegate(KeyValuePair<string, int> a, KeyValuePair<string, int> b)
@@ -430,8 +570,14 @@ namespace Windsor.Commons.XsdOrm
         }
         public List<KeyValuePair<string, int>> ElementNamePostfixToLength
         {
-            get { return m_ElementNamePostfixToLength; }
-            set { m_ElementNamePostfixToLength = value; }
+            get
+            {
+                return m_ElementNamePostfixToLength;
+            }
+            set
+            {
+                m_ElementNamePostfixToLength = value;
+            }
         }
         public override string GetShortDescription()
         {
@@ -449,8 +595,38 @@ namespace Windsor.Commons.XsdOrm
         }
         public string Prefix
         {
-            get { return m_Prefix; }
-            set { m_Prefix = value; }
+            get
+            {
+                return m_Prefix;
+            }
+            set
+            {
+                m_Prefix = value;
+            }
+        }
+        public override string GetShortDescription()
+        {
+            return m_Prefix;
+        }
+        private string m_Prefix;
+    }
+    [AttributeUsage(AttributeTargets.Class)]
+    public class DefaultTableNameAdditionPrefixAttribute : MappingAttribute
+    {
+        public DefaultTableNameAdditionPrefixAttribute(string prefix)
+        {
+            m_Prefix = prefix;
+        }
+        public string Prefix
+        {
+            get
+            {
+                return m_Prefix;
+            }
+            set
+            {
+                m_Prefix = value;
+            }
         }
         public override string GetShortDescription()
         {
@@ -467,13 +643,25 @@ namespace Windsor.Commons.XsdOrm
         }
         public Type MappedAttributeType
         {
-            get { return m_MappedAttributeType; }
-            set { m_MappedAttributeType = value; }
+            get
+            {
+                return m_MappedAttributeType;
+            }
+            set
+            {
+                m_MappedAttributeType = value;
+            }
         }
         public object[] Args
         {
-            get { return m_Args; }
-            set { m_Args = value; }
+            get
+            {
+                return m_Args;
+            }
+            set
+            {
+                m_Args = value;
+            }
         }
         private Type m_MappedAttributeType;
         private object[] m_Args;
@@ -482,7 +670,8 @@ namespace Windsor.Commons.XsdOrm
     public class AppliedAttribute : BaseAppliedAttribute
     {
         public AppliedAttribute(Type appliedToType, string appliedToMemberName, Type mappedAttributeType,
-                                params object[] args) : base(mappedAttributeType, args)
+                                params object[] args)
+            : base(mappedAttributeType, args)
         {
             m_AppliedToType = appliedToType;
             m_AppliedToMemberName = appliedToMemberName;
@@ -494,13 +683,25 @@ namespace Windsor.Commons.XsdOrm
         }
         public Type AppliedToType
         {
-            get { return m_AppliedToType; }
-            set { m_AppliedToType = value; }
+            get
+            {
+                return m_AppliedToType;
+            }
+            set
+            {
+                m_AppliedToType = value;
+            }
         }
         public string AppliedToMemberName
         {
-            get { return m_AppliedToMemberName; }
-            set { m_AppliedToMemberName = value; }
+            get
+            {
+                return m_AppliedToMemberName;
+            }
+            set
+            {
+                m_AppliedToMemberName = value;
+            }
         }
         private Type m_AppliedToType;
         private string m_AppliedToMemberName;
@@ -510,7 +711,8 @@ namespace Windsor.Commons.XsdOrm
     public class AppliedPathAttribute : BaseAppliedAttribute
     {
         public AppliedPathAttribute(string objectPath, Type mappedAttributeType,
-                                    params object[] args) : base(mappedAttributeType, args)
+                                    params object[] args)
+            : base(mappedAttributeType, args)
         {
             m_ObjectPath = objectPath;
         }
@@ -520,8 +722,14 @@ namespace Windsor.Commons.XsdOrm
         }
         public string ObjectPath
         {
-            get { return m_ObjectPath; }
-            set { m_ObjectPath = value; }
+            get
+            {
+                return m_ObjectPath;
+            }
+            set
+            {
+                m_ObjectPath = value;
+            }
         }
         private string m_ObjectPath;
     }
@@ -539,8 +747,14 @@ namespace Windsor.Commons.XsdOrm
 
         public string TableName
         {
-            get { return m_TableName; }
-            set { m_TableName = value; }
+            get
+            {
+                return m_TableName;
+            }
+            set
+            {
+                m_TableName = value;
+            }
         }
         public override string GetShortDescription()
         {
@@ -619,48 +833,102 @@ namespace Windsor.Commons.XsdOrm
         }
         public string TableName
         {
-            get { return m_TableName; }
-            set { m_TableName = value; }
+            get
+            {
+                return m_TableName;
+            }
+            set
+            {
+                m_TableName = value;
+            }
         }
         public string ColumnName
         {
-            get { return m_ColumnName; }
-            set { m_ColumnName = value; }
+            get
+            {
+                return m_ColumnName;
+            }
+            set
+            {
+                m_ColumnName = value;
+            }
         }
         public DbType? ColumnType
         {
-            get { return m_ColumnType; }
-            set { m_ColumnType = value; }
+            get
+            {
+                return m_ColumnType;
+            }
+            set
+            {
+                m_ColumnType = value;
+            }
         }
         public int ColumnSize
         {
-            get { return m_ColumnSize; }
-            set { m_ColumnSize = value; }
+            get
+            {
+                return m_ColumnSize;
+            }
+            set
+            {
+                m_ColumnSize = value;
+            }
         }
         public int ColumnScale
         {
-            get { return m_ColumnScale; }
-            set { m_ColumnScale = value; }
+            get
+            {
+                return m_ColumnScale;
+            }
+            set
+            {
+                m_ColumnScale = value;
+            }
         }
         public virtual bool IsNullable
         {
-            get { return m_IsNullable; }
-            set { m_IsNullable = value; }
+            get
+            {
+                return m_IsNullable;
+            }
+            set
+            {
+                m_IsNullable = value;
+            }
         }
         public bool IsIndexable
         {
-            get { return m_IsIndexable; }
-            set { m_IsIndexable = value; }
+            get
+            {
+                return m_IsIndexable;
+            }
+            set
+            {
+                m_IsIndexable = value;
+            }
         }
         public string IndexName
         {
-            get { return m_IndexName; }
-            set { m_IndexName = value; }
+            get
+            {
+                return m_IndexName;
+            }
+            set
+            {
+                m_IndexName = value;
+            }
         }
         public string IsSpecifiedMemberName
         {
-            get { return m_IsSpecifiedMemberName; }
-            set { m_IsSpecifiedMemberName = value; }
+            get
+            {
+                return m_IsSpecifiedMemberName;
+            }
+            set
+            {
+                m_IsSpecifiedMemberName = value;
+            }
         }
         public override string GetShortDescription()
         {
@@ -698,7 +966,10 @@ namespace Windsor.Commons.XsdOrm
         }
         public override bool IsNullable
         {
-            get { return m_IsNullable; }
+            get
+            {
+                return m_IsNullable;
+            }
             set
             {
                 if (value == true)
@@ -791,18 +1062,36 @@ namespace Windsor.Commons.XsdOrm
 
         public string ForeignTableName
         {
-            get { return m_ForeignTableName; }
-            set { m_ForeignTableName = value; }
+            get
+            {
+                return m_ForeignTableName;
+            }
+            set
+            {
+                m_ForeignTableName = value;
+            }
         }
         public string ForeignColumnName
         {
-            get { return m_ForeignColumnName; }
-            set { m_ForeignColumnName = value; }
+            get
+            {
+                return m_ForeignColumnName;
+            }
+            set
+            {
+                m_ForeignColumnName = value;
+            }
         }
         public DeleteRule DeleteRule
         {
-            get { return m_DeleteRule; }
-            set { m_DeleteRule = value; }
+            get
+            {
+                return m_DeleteRule;
+            }
+            set
+            {
+                m_DeleteRule = value;
+            }
         }
 
         public override string GetShortDescription()
@@ -854,7 +1143,8 @@ namespace Windsor.Commons.XsdOrm
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
     public class GuidForeignKeyAttribute : ForeignKeyAttribute
     {
-        public GuidForeignKeyAttribute() : base()
+        public GuidForeignKeyAttribute()
+            : base()
         {
         }
         public GuidForeignKeyAttribute(string columnName, bool isNullable) :
@@ -949,7 +1239,8 @@ namespace Windsor.Commons.XsdOrm
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
     public class UserForeignKeyAttribute : ForeignKeyAttribute
     {
-        public UserForeignKeyAttribute() : base()
+        public UserForeignKeyAttribute()
+            : base()
         {
         }
         public UserForeignKeyAttribute(string columnName, DbType columnType, int columnSize) :
@@ -1000,8 +1291,14 @@ namespace Windsor.Commons.XsdOrm
 
         public string ColumnNamePrefix
         {
-            get { return m_ColumnNamePrefix; }
-            set { m_ColumnNamePrefix = value; }
+            get
+            {
+                return m_ColumnNamePrefix;
+            }
+            set
+            {
+                m_ColumnNamePrefix = value;
+            }
         }
 
         public override string GetShortDescription()
@@ -1044,23 +1341,47 @@ namespace Windsor.Commons.XsdOrm
         }
         public string ParentTableName
         {
-            get { return m_ParentTableName; }
-            set { m_ParentTableName = value; }
+            get
+            {
+                return m_ParentTableName;
+            }
+            set
+            {
+                m_ParentTableName = value;
+            }
         }
         public string ParentColumnName
         {
-            get { return m_ParentColumnName; }
-            set { m_ParentColumnName = value; }
+            get
+            {
+                return m_ParentColumnName;
+            }
+            set
+            {
+                m_ParentColumnName = value;
+            }
         }
         public string ChildTableName
         {
-            get { return m_ChildTableName; }
-            set { m_ChildTableName = value; }
+            get
+            {
+                return m_ChildTableName;
+            }
+            set
+            {
+                m_ChildTableName = value;
+            }
         }
         public string ChildForeignKeyColumnName
         {
-            get { return m_ChildForeignKeyColumnName; }
-            set { m_ChildForeignKeyColumnName = value; }
+            get
+            {
+                return m_ChildForeignKeyColumnName;
+            }
+            set
+            {
+                m_ChildForeignKeyColumnName = value;
+            }
         }
         public override string GetShortDescription()
         {
@@ -1208,6 +1529,14 @@ namespace Windsor.Commons.XsdOrm
         }
     }
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
+    public class DbNullAttribute : MappingAttribute
+    {
+        public override string GetShortDescription()
+        {
+            return "Null";
+        }
+    }
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
     public class DbMaxColumnSizeAttribute : MappingAttribute
     {
         public DbMaxColumnSizeAttribute(int size)
@@ -1218,7 +1547,11 @@ namespace Windsor.Commons.XsdOrm
         {
             return "MaxColumnSize";
         }
-        public int Size { get; set; }
+        public int Size
+        {
+            get;
+            set;
+        }
     }
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
     public class DbFixedColumnSizeAttribute : MappingAttribute
@@ -1231,7 +1564,11 @@ namespace Windsor.Commons.XsdOrm
         {
             return "FixedColumnSize";
         }
-        public int Size { get; set; }
+        public int Size
+        {
+            get;
+            set;
+        }
     }
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
     public class DbColumnTypeAttribute : MappingAttribute
@@ -1248,7 +1585,11 @@ namespace Windsor.Commons.XsdOrm
         {
             return "ColumnType";
         }
-        public DbType Type { get; set; }
+        public DbType Type
+        {
+            get;
+            set;
+        }
     }
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
     public class DbIndexableAttribute : MappingAttribute
@@ -1283,19 +1624,32 @@ namespace Windsor.Commons.XsdOrm
         }
     }
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Assembly)]
+    public class RemovePostfixNamesFromTableAndColumnNamesAttribute : MappingAttribute
+    {
+        public RemovePostfixNamesFromTableAndColumnNamesAttribute(params string[] postfixNames)
+        {
+            m_PostfixNames = postfixNames;
+        }
+        public override string GetShortDescription()
+        {
+            return "RemoveDataPostfixFromTableAndColumnNamesAttribute";
+        }
+        private IList<string> m_PostfixNames;
+
+        public IList<string> PostfixNames
+        {
+            get
+            {
+                return m_PostfixNames;
+            }
+        }
+    }
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Assembly)]
     public class UseTableNameForDefaultPrimaryKeysAttribute : MappingAttribute
     {
         public override string GetShortDescription()
         {
             return "UseTableNameForDefaultPrimaryKeys";
-        }
-    }
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Assembly)]
-    public class UseExactElementNameForColumnNameAttribute : MappingAttribute
-    {
-        public override string GetShortDescription()
-        {
-            return "UseElementNameForColumnName";
         }
     }
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Assembly)]
@@ -1322,9 +1676,23 @@ namespace Windsor.Commons.XsdOrm
         }
         public string AppliedToMemberNameThatEndsWith
         {
-            get { return m_AppliedToMemberNameThatEndsWith; }
-            set { m_AppliedToMemberNameThatEndsWith = value; }
+            get
+            {
+                return m_AppliedToMemberNameThatEndsWith;
+            }
+            set
+            {
+                m_AppliedToMemberNameThatEndsWith = value;
+            }
         }
         private string m_AppliedToMemberNameThatEndsWith;
+    }
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Assembly)]
+    public class NewSameColumnNameResolutionAttribute : MappingAttribute
+    {
+        public override string GetShortDescription()
+        {
+            return "NewSameColumnNameResolutionAttribute";
+        }
     }
 }

@@ -276,6 +276,11 @@ namespace Windsor.Node2008.WNOS.Logic
                 {
                     networkFlowName = nodeTransaction.Flow.FlowName;
                 }
+                //if ((client.Version == EndpointVersionType.EN11) && !string.IsNullOrEmpty(nodeTransaction.NetworkOperationName))
+                //{
+                //    // In this case, the operation is the flow name
+                //    networkFlowName = nodeTransaction.NetworkOperationName;
+                //}
                 documents = client.Download(networkFlowName, nodeTransaction.NetworkId);
             }
             if (CollectionUtils.IsNullOrEmpty(documents))

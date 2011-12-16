@@ -758,17 +758,26 @@ namespace Windsor.Node2008.WNOSPlugin
                                                        IDocumentManager documentManager,
                                                        string transactionId)
         {
+            return SaveStringAndAddToTransaction(xmlString, fileName, settingsProvider, compressionHelper,
+                                                 documentManager, transactionId, false);
+        }
+        protected string SaveStringAndAddToTransaction(string xmlString, string fileName, ISettingsProvider settingsProvider,
+                                                       ICompressionHelper compressionHelper,
+                                                       IDocumentManager documentManager,
+                                                       string transactionId, bool dontAutoCompress)
+        {
             string fileExtension = Path.GetExtension(fileName);
             string fileNamePart = Path.GetFileNameWithoutExtension(fileName);
-            string rtnPath;
+            string rtnPath = settingsProvider.NewTempFilePath(fileExtension);
+            string saveFileName;
 
             if (string.IsNullOrEmpty(fileNamePart))
             {
-                rtnPath = settingsProvider.NewTempFilePath(fileExtension);
+                saveFileName = Path.GetFileName(rtnPath);
             }
             else
             {
-                rtnPath = Path.Combine(settingsProvider.CreateNewTempFolderPath(), fileName);
+                saveFileName = fileName;
             }
 
             try
@@ -789,6 +798,7 @@ namespace Windsor.Node2008.WNOSPlugin
                 if (compressionHelper != null)
                 {
                     string zipPath = settingsProvider.NewTempFilePath(".zip");
+                    saveFileName += ".zip";
                     try
                     {
                         compressionHelper.CompressFile(rtnPath, zipPath);
@@ -807,8 +817,11 @@ namespace Windsor.Node2008.WNOSPlugin
                 }
                 try
                 {
+                    Document document = new Document(saveFileName, CommonContentAndFormatProvider.GetFileTypeFromName(saveFileName),
+                                                     File.ReadAllBytes(rtnPath));
+                    document.DontAutoCompress = dontAutoCompress;
                     documentManager.AddDocument(transactionId, CommonTransactionStatusCode.Completed,
-                                                null, rtnPath);
+                                                null, document);
                 }
                 catch (Exception e)
                 {
