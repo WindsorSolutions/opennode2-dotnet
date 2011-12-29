@@ -73,7 +73,7 @@ namespace Windsor.Node2008.WNOSPlugin.HERE
         protected ISerializationHelper _serializationHelper;
         protected ICompressionHelper _compressionHelper;
         protected IDocumentManager _documentManager;
-        private ISettingsProvider _settingsProvider;
+        protected ISettingsProvider _settingsProvider;
         protected string _flowCode;
         protected DateTime _argDate;
         protected int _numOfDays;
@@ -163,10 +163,18 @@ namespace Windsor.Node2008.WNOSPlugin.HERE
         }
         protected void SaveResults(int numOfDays)
         {
+            string sourceSystemName = null;
+            TryGetConfigParameter(HERERunTimeArgs.SourceSystemName.ToString(), ref sourceSystemName);
+            if (string.IsNullOrEmpty(sourceSystemName))
+            {
+                AppendAuditLogEvent("A {0} config parameter was not specified, so no manifest entry will be created.", HERERunTimeArgs.SourceSystemName.ToString());
+                return;
+            }
+            
             HERE10.HEREData data = new HERE10.HEREData(ValidateDBProvider(DataSourceParameterType.TargetDatabaseDataSource.ToString()));
 
-            string endpointUrl = ValidateNonEmptyConfigParameter(HERERunTimeArgs.EndpointUri.ToString());
-            string sourceSystemName = ValidateNonEmptyConfigParameter(HERERunTimeArgs.SourceSystemName.ToString());
+            string endpointUrl = _settingsProvider.Endpoint20Url;   // Default
+            TryGetConfigParameter(HERERunTimeArgs.EndpointUri.ToString(), ref endpointUrl);
 
             bool isFullReplace = (numOfDays > 365);
             bool isFacilitySource = false;
