@@ -158,7 +158,7 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
     [AppliedAttribute(typeof(FacilityInterestDataType), "schemaVersion", typeof(DbIgnoreAttribute))]
     [AppliedAttribute(typeof(DirectPositionType), "Text", typeof(DbIgnoreAttribute))]
     [AppliedAttribute(typeof(DirectPositionListType), "Text", typeof(DbIgnoreAttribute))]
-    [AppliedAttribute(typeof(PointType), "id", typeof(DbIgnoreAttribute))]
+    [AppliedAttribute(typeof(AbstractGMLType), "id", typeof(DbIgnoreAttribute))]
     [AppliedAttribute(typeof(DirectPositionType), "srsName", typeof(DbIgnoreAttribute))]
     [AppliedAttribute(typeof(DirectPositionType), "srsDimension", typeof(DbIgnoreAttribute))]
     [AppliedAttribute(typeof(FacilityDataType), "FacilityPrimaryGeographicLocationDescription", typeof(OneToOneAttribute))]

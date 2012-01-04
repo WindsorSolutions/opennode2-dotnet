@@ -115,9 +115,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
             //    overList.Clear();
             //}
             value = ShortenDatabaseName(value, maxChars, shortenNamesByRemovingVowelsFirst, fixBreakBug);
-            if (value == "ANAL_RSLT_MEAS_VL")
-            {
-            }
+
             return value;
         }
         public static string ShortenDatabaseName(string name, int maxChars, bool shortenNamesByRemovingVowelsFirst,
