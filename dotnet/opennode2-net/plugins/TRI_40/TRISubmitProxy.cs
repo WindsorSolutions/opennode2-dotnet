@@ -32,33 +32,15 @@ POSSIBILITY OF SUCH DAMAGE.
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Windsor.Node2008.WNOS.AssemblyInfo
+namespace Windsor.Node2008.WNOSPlugin.TRI4
 {
-	/// <summary>
-	/// Include a reference to this assembly in your project, then use the 
-	/// constants defined in this file within the AssemblyInfo.cs file for your project.
-	/// </summary>
-    internal static class AssemblyInfo
-	{
-		// [assembly: AssemblyVersion(AssemblyInfoServer.cAssemblyVersion)]
-        public const string cAssemblyVersion = "1.2.2.361";
-		
-		// [assembly: AssemblyFileVersion(AssemblyInfoServer.cAssemblyFileVersion)]
-		public const string cAssemblyFileVersion = "1.2.2.361";
+    [Serializable]
+    public class TRISubmitProxy : SubmitProxyPluginEx
+    {
+        public TRISubmitProxy()
+        {
 
-		// [assembly: AssemblyCompany(AssemblyInfoServer.cAssemblyCompany)]
-		public const string cAssemblyCompany = "Windsor Solutions, Inc."; 
-
-		// [assembly: AssemblyProduct(AssemblyInfoServer.cAssemblyProduct)]
-        public const string cAssemblyProduct = "OpenNode2"; 
-
-		// [assembly: AssemblyCopyright(AssemblyInfoServer.cAssemblyCopyright)]
-        public const string cAssemblyCopyright = "© 2008-2011 Windsor Solutions. All Rights Reserved."; 
-		
-		// [assembly: AssemblyTrademark(AssemblyInfoServer.cAssemblyTrademark)]
-		public const string cAssemblyTrademark = "";
-	}
+        }
+    }
 }

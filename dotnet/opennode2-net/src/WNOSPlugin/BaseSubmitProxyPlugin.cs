@@ -79,6 +79,7 @@ namespace Windsor.Node2008.WNOSPlugin
 
         protected ITransactionManager _transactionManager;
         protected ISettingsProvider _settingsProvider;
+        protected NodeTransaction _transaction;
 
         protected BaseSubmitProxyPlugin()
         {
@@ -97,18 +98,18 @@ namespace Windsor.Node2008.WNOSPlugin
             GetServiceImplementation(out _transactionManager);
             GetServiceImplementation(out _settingsProvider);
 
-            NodeTransaction transaction = _transactionManager.GetTransaction(transactionId);
-            if (transaction == null)
+            _transaction = _transactionManager.GetTransaction(transactionId);
+            if (_transaction == null)
             {
                 throw new ArgumentException(string.Format("Could not locate local transaction \"{0}\"", 
                                                           transactionId));
             }
 
-            _didSubmit = !string.IsNullOrEmpty(transaction.NetworkEndpointUrl);
+            _didSubmit = !string.IsNullOrEmpty(_transaction.NetworkEndpointUrl);
 
-            _submitFlowName = transaction.Flow.FlowName;
+            _submitFlowName = _transaction.Flow.FlowName;
 
-            if (transaction.EndpointVersion == EndpointVersionType.EN11)
+            if (_transaction.EndpointVersion == EndpointVersionType.EN11)
             {
                 _submitPartner = GetConfigNetworkPartner(EnumUtils.ToDescription(ConfigParams.PartnerName11));
                 if (_submitPartner.Version != EndpointVersionType.EN11)
@@ -129,7 +130,7 @@ namespace Windsor.Node2008.WNOSPlugin
                                                               _submitPartner.Name, 
                                                               EnumUtils.ToDescription(_submitPartner.Version)));
                 }
-                _submitOperationName = transaction.Operation;
+                _submitOperationName = _transaction.Operation;
                 if (string.Equals(_submitPartner.Url, _settingsProvider.Endpoint11Url, 
                                   StringComparison.OrdinalIgnoreCase) ||
                     string.Equals(_submitPartner.Url, _settingsProvider.Endpoint20Url,
@@ -158,9 +159,41 @@ namespace Windsor.Node2008.WNOSPlugin
     public abstract class SubmitProxyPluginEx : SubmitProxyPlugin, ISubmitProcessorEx
     {
         private static readonly ILogEx LOG = LogManagerEx.GetLogger(MethodBase.GetCurrentMethod());
+        private static int _checkStatusForNumDays = 2;
+        private static int _checkStatusIntervalInMinutes = 5;
+
+        protected const string CONFIG_CHECK_STATUS_NUM_DAYS = "Check Status Num Days (default: 2)";
+        protected const string CONFIG_CHECK_STATUS_INTERVAL = "Check Status Interval (in minutes, default: 5)";
+
+        protected const string SUBMISSION_CHECK_STATUS_INFO_FILE_NAME = "CheckStatusInfo.xml";
+
+        protected IDocumentManager _documentManager;
+        protected ISerializationHelper _serializationHelper;
 
         protected SubmitProxyPluginEx()
         {
+            ConfigurationArguments.Add(CONFIG_CHECK_STATUS_NUM_DAYS, null);
+            ConfigurationArguments.Add(CONFIG_CHECK_STATUS_INTERVAL, null);
+        }
+        protected override void LazyInit(string transactionId)
+        {
+            base.LazyInit(transactionId);
+
+            GetServiceImplementation(out _documentManager);
+            GetServiceImplementation(out _serializationHelper);
+
+            TryGetConfigParameter(CONFIG_CHECK_STATUS_NUM_DAYS, ref _checkStatusForNumDays);
+            if (_checkStatusForNumDays < 0)
+            {
+                throw new ArgumentException(string.Format("Invalid \"{0}\" config parameter specified: {1}",
+                                                          CONFIG_CHECK_STATUS_NUM_DAYS, _checkStatusForNumDays.ToString()));
+            }
+            TryGetConfigParameter(CONFIG_CHECK_STATUS_INTERVAL, ref _checkStatusIntervalInMinutes);
+            if (_checkStatusIntervalInMinutes < 1)
+            {
+                throw new ArgumentException(string.Format("Invalid \"{0}\" config parameter specified: {1}",
+                                                          CONFIG_CHECK_STATUS_INTERVAL, _checkStatusIntervalInMinutes.ToString()));
+            }
         }
         public virtual CommonTransactionStatusCode ProcessSubmitAndReturnStatus(string transactionId, 
                                                                                 out string statusDetail)
@@ -171,31 +204,113 @@ namespace Windsor.Node2008.WNOSPlugin
 
             if (_didSubmit)
             {
-                try
+                CheckStatusInfo checkStatusInfo = ValidateCheckStatusInfo();
+
+                if (checkStatusInfo != null)
                 {
-                    CommonTransactionStatusCode networkTransactionStatus;
-
-                    AddPartnerTransactionDocumentsToTransaction(transactionId, out networkTransactionStatus);
-
-                    if ((networkTransactionStatus == CommonTransactionStatusCode.Failed) ||
-                        (networkTransactionStatus == CommonTransactionStatusCode.Completed))
+                    try
                     {
-                        return networkTransactionStatus;
+                        CommonTransactionStatusCode networkTransactionStatus;
+
+                        AddPartnerTransactionDocumentsToTransaction(transactionId, out networkTransactionStatus);
+
+                        checkStatusInfo.LastCheckStatusTime = DateTime.Now;
+                        SaveCheckStatusInfo(checkStatusInfo);
+
+                        if ((networkTransactionStatus == CommonTransactionStatusCode.Failed) ||
+                            (networkTransactionStatus == CommonTransactionStatusCode.Completed))
+                        {
+                            return networkTransactionStatus;
+                        }
                     }
-                }
-                catch (Exception)
-                {
-                    // Will try again on next submit call
-                    // TODO: Need to check for network exception and try again
-                    throw;
+                    catch (Exception)
+                    {
+                        // Will try again on next submit call
+                        // TODO: Need to check for network exception and try again
+                        throw;
+                    }
                 }
             }
             else
             {
                 SubmitTransactionDocumentToPartner(transactionId, _submitPartner, _submitFlowName, 
-                                                    _submitOperationName);
+                                                   _submitOperationName);
+                
+                SaveCheckStatusInfo();
+                
+                if (_checkStatusForNumDays == 0)
+                {
+                    // This means don't check status at all
+                    return CommonTransactionStatusCode.Completed;
+                }
             }
             return CommonTransactionStatusCode.Pending;
         }
+        protected virtual void SaveCheckStatusInfo()
+        {
+            SaveCheckStatusInfo(new CheckStatusInfo(DateTime.Now));
+        }
+        protected virtual void SaveCheckStatusInfo(CheckStatusInfo info)
+        {
+            byte[] content = _serializationHelper.SerializeWithLineBreaks(info);
+            Document doc = new Document(SUBMISSION_CHECK_STATUS_INFO_FILE_NAME, CommonContentType.XML, content);
+            doc.DontAutoCompress = true;
+            Document existingDoc = null;
+            try
+            {
+                existingDoc = _documentManager.GetDocumentByName(_transaction.Id, SUBMISSION_CHECK_STATUS_INFO_FILE_NAME, false);
+            }
+            catch (FileNotFoundException)
+            {
+            }
+            if (existingDoc != null)
+            {
+                _documentManager.DeleteDocument(_transaction.Id, existingDoc.Id);
+            }
+            _documentManager.AddDocument(_transaction.Id, CommonTransactionStatusCode.Completed, string.Empty, doc);
+        }
+        protected virtual CheckStatusInfo ValidateCheckStatusInfo()
+        {
+            Document existingDoc;
+            try
+            {
+                existingDoc = _documentManager.GetDocumentByName(_transaction.Id, SUBMISSION_CHECK_STATUS_INFO_FILE_NAME, true);
+            }
+            catch (FileNotFoundException)
+            {
+                throw new FileNotFoundException(string.Format("The transaction is missing the required \"{0}\" attached document",
+                                                              SUBMISSION_CHECK_STATUS_INFO_FILE_NAME));
+            }
+            CheckStatusInfo info = _serializationHelper.Deserialize<CheckStatusInfo>(existingDoc.Content);
+            DateTime now = DateTime.Now;
+
+            DateTime earliestSubmitTime = now.AddDays(-_checkStatusForNumDays);
+            if (info.SubmitTime < earliestSubmitTime)
+            {
+                // Exceeded number of check days
+                throw new ArgumentException("The remote transaction has not completed in the required amount of time.");
+            }
+
+            DateTime nextCheckTime = info.LastCheckStatusTime.AddMinutes(_checkStatusIntervalInMinutes);
+            if (nextCheckTime > now)
+            {
+                // Not ready to check again yet
+                return null;
+            }
+            return info;
+        }
+    }
+    [Serializable]
+    public class CheckStatusInfo
+    {
+        public CheckStatusInfo()
+        {
+        }
+        public CheckStatusInfo(DateTime submitTime)
+        {
+            SubmitTime = LastCheckStatusTime = submitTime;
+        }
+        public DateTime SubmitTime;
+        public DateTime LastCheckStatusTime;
     }
 }

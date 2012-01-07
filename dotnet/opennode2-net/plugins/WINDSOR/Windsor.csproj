@@ -83,6 +83,7 @@
     <Compile Include="ExecuteSql.cs" />
     <Compile Include="ProcessDBImportCSVFiles.cs" />
     <Compile Include="ProcessDBImportCSVFilesPlugin.cs" />
+    <Compile Include="SubmissionProxy.cs" />
     <Compile Include="UpdateStatusOfNetworkTransactions.cs" />
     <Compile Include="WindsorPlugins.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

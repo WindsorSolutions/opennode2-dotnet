@@ -100,6 +100,7 @@
     <Compile Include="TRICopySubmissionXml.cs" />
     <Compile Include="TRIData.cs" />
     <Compile Include="TRISubmissionProcessor.cs" />
+    <Compile Include="TRISubmitProxy.cs" />
     <Compile Include="XmlUtill.cs" />
     <Compile Include="xml_schema\TRIManifest.cs" />
     <Compile Include="xml_schema\TRI_20.cs" />
