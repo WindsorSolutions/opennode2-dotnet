@@ -198,8 +198,9 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
         }
         protected virtual void SaveHeaderDocument(object objectToSerialize, string filePath)
         {
-            byte[] content = SaveHeaderDocument(objectToSerialize);
-            File.WriteAllBytes(filePath, content);
+            string filePathXml = SaveHeaderDocument(objectToSerialize);
+            FileUtils.SafeDeleteFile(filePath);
+            File.Move(filePathXml, filePath);
         }
         protected byte[] GetCachedData(string queryHashString, bool doUncompressData)
         {
@@ -237,24 +238,31 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
             }
             return null;
         }
-        protected virtual byte[] SaveHeaderDocumentToTransaction(object objectToSerialize, string queryHashString,
+        protected virtual byte[] SaveHeaderDocumentToTransactionAndReturnBytes(object objectToSerialize, string queryHashString,
+                                                                               string auditLog)
+        {
+            string filePath = SaveHeaderDocumentToTransaction(objectToSerialize, queryHashString, auditLog);
+            return File.ReadAllBytes(filePath);
+        }
+        protected virtual string SaveHeaderDocumentToTransaction(object objectToSerialize, string queryHashString,
                                                                  string auditLog)
         {
-            byte[] content = SaveHeaderDocument(objectToSerialize);
+            string filePath = SaveHeaderDocument(objectToSerialize);
             string docId =
                     _documentManager.AddDocument(_dataRequest.TransactionId, CommonTransactionStatusCode.Completed,
-                                                 null, new Document(null, CommonContentType.XML, content));
+                                                 null, filePath);
             if ((_dataCache != null) && _dataCache.IsExpired(queryHashString))
             {
                 string cacheValue = string.Format("{0}{1}{2}{3}{4}", _dataRequest.TransactionId, CACHE_STRING_SEP,
                                                   docId, CACHE_STRING_SEP, auditLog);
                 _dataCache.CacheString(cacheValue, queryHashString, _resultCacheDuration);
             }
-            return content;
+            return filePath;
         }
-        protected virtual byte[] SaveHeaderDocument(object objectToSerialize)
+        protected virtual string SaveHeaderDocument(object objectToSerialize)
         {
-            string tempXmlFilePath = _settingsProvider.NewTempFilePath();
+            string tempXmlFilePath = _settingsProvider.NewTempFilePath(".xml");
+            string tempXmlFilePathHeader = _settingsProvider.NewTempFilePath(".xml");
 
             if (_addHeader)
             {
@@ -278,7 +286,8 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
 
                     headerDocumentHelper.AddPayload("Original", doc.DocumentElement);
 
-                    return headerDocumentHelper.Serialize();
+                    headerDocumentHelper.Serialize(tempXmlFilePathHeader);
+                    return tempXmlFilePathHeader;
                 }
                 finally
                 {
@@ -296,7 +305,7 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
                         ValidateXmlFileAndAttachErrorsAndFileToTransaction(tempXmlFilePath, "xml_schema.xml_schema.zip",
                                                                            null, _dataRequest.TransactionId);
 
-                        return File.ReadAllBytes(tempXmlFilePath);
+                        return tempXmlFilePath;
                     }
                     finally
                     {
@@ -305,7 +314,8 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
                 }
                 else
                 {
-                    return _serializationHelper.Serialize(objectToSerialize);
+                    _serializationHelper.Serialize(objectToSerialize, tempXmlFilePath);
+                    return tempXmlFilePath;
                 }
             }
         }
@@ -384,7 +394,7 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
                                              data.FacilitySummaryList.Length.ToString());
                 }
                 AppendAuditLogEvent(auditLog);
-                byteData = SaveHeaderDocumentToTransaction(data, queryHashString, auditLog);
+                byteData = SaveHeaderDocumentToTransactionAndReturnBytes(data, queryHashString, auditLog);
             }
             return byteData;
         }
@@ -435,7 +445,7 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
                                              data.FacilityList.Length.ToString(), affiliateCount.ToString());
                 }
                 AppendAuditLogEvent(auditLog);
-                byteData = SaveHeaderDocumentToTransaction(data, queryHashString, auditLog);
+                byteData = SaveHeaderDocumentToTransactionAndReturnBytes(data, queryHashString, auditLog);
             }
             return byteData;
         }
@@ -485,7 +495,7 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
                                              data.FacilityInterestSummaryList.Length.ToString());
                 }
                 AppendAuditLogEvent(auditLog);
-                byteData = SaveHeaderDocumentToTransaction(data, queryHashString, auditLog);
+                byteData = SaveHeaderDocumentToTransactionAndReturnBytes(data, queryHashString, auditLog);
             }
             return byteData;
         }
@@ -559,7 +569,7 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
                                              count.ToString());
                 }
                 AppendAuditLogEvent(auditLog);
-                byteData = SaveHeaderDocumentToTransaction(data, queryHashString, auditLog);
+                byteData = SaveHeaderDocumentToTransactionAndReturnBytes(data, queryHashString, auditLog);
             }
             return byteData;
         }
@@ -642,9 +652,15 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
             }
             return null;
         }
+        protected virtual string GetServiceNameFromDataRequest()
+        {
+            int index = _dataRequest.Service.PluginInfo.ImplementingClassName.LastIndexOf('.');
+            string className = _dataRequest.Service.PluginInfo.ImplementingClassName.Substring(index + 1);
+            return className.ToUpper() + "_V3.0";
+        }
         protected MultiDictionary<QueryParameter, object> GetNormalizedQueryParameters(out string queryHashString)
         {
-            string serviceNameUpper = _dataRequest.Service.Name.ToUpper();
+            string serviceNameUpper = GetServiceNameFromDataRequest();
             MultiDictionary<QueryParameter, object> rtnMap = null;
             if (!CollectionUtils.IsNullOrEmpty(_dataRequest.Parameters))
             {
