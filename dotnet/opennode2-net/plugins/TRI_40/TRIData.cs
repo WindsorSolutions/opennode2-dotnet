@@ -393,8 +393,6 @@ namespace Windsor.Node2008.WNOSPlugin.TRI4
                         //Submissions
                         submit.PK = Guid.NewGuid().ToString();
 
-                        subList.Add(subIdentifier, submit.PK);
-
                         LOG.Info(LINE);
                         LOG.Info("Sub Id: " + subIdentifier);
                         LOG.Info("Fac Pk: " + submit.PK);
@@ -440,7 +438,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI4
                             }
                         }
 
-
+                        subList.Add(subIdentifier, submit.PK);
 
                         #region Facility
 
