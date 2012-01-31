@@ -466,27 +466,32 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                     }
                     if (componentName == WQXDeleteDataType.DELETE_PROJECT_COMP_NAME)
                     {
-                        if (projectIds == null) projectIds = new List<string>();
+                        if (projectIds == null)
+                            projectIds = new List<string>();
                         projectIds.Add(componentId);
                     }
                     else if (componentName == WQXDeleteDataType.DELETE_ACTIVITY_COMP_NAME)
                     {
-                        if (activityIds == null) activityIds = new List<string>();
+                        if (activityIds == null)
+                            activityIds = new List<string>();
                         activityIds.Add(componentId);
                     }
                     else if (componentName == WQXDeleteDataType.DELETE_MONITORING_LOC_COMP_NAME)
                     {
-                        if (monitoringLocIds == null) monitoringLocIds = new List<string>();
+                        if (monitoringLocIds == null)
+                            monitoringLocIds = new List<string>();
                         monitoringLocIds.Add(componentId);
                     }
                     else if (componentName == WQXDeleteDataType.DELETE_ACTIVITY_GROUP_COMP_NAME)
                     {
-                        if (activityGroupIds == null) activityGroupIds = new List<string>();
+                        if (activityGroupIds == null)
+                            activityGroupIds = new List<string>();
                         activityGroupIds.Add(componentId);
                     }
                     else if (componentName == WQXDeleteDataType.DELETE_BIOLOGICAL_HABITAT_INDEX_COMP_NAME)
                     {
-                        if (biologicalHabitatIds == null) biologicalHabitatIds = new List<string>();
+                        if (biologicalHabitatIds == null)
+                            biologicalHabitatIds = new List<string>();
                         biologicalHabitatIds.Add(componentId);
                     }
                     else
@@ -523,12 +528,29 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
             {
                 sb.Append("didn't find any deleted monitoring locations to submit");
             }
+            if (!CollectionUtils.IsNullOrEmpty(activityGroupIds))
+            {
+                sb.AppendFormat("found {0} deleted activity groups to submit",
+                                activityGroupIds.Count.ToString());
+            }
+            else
+            {
+                sb.Append("didn't find any deleted activity groups to submit");
+            }
+            if (!CollectionUtils.IsNullOrEmpty(biologicalHabitatIds))
+            {
+                sb.AppendFormat("found {0} deleted biological habitats to submit",
+                                biologicalHabitatIds.Count.ToString());
+            }
+            else
+            {
+                sb.Append("didn't find any deleted biological habitats to submit");
+            }
             AppendAuditLogEvent(sb.ToString());
             data.OrganizationDelete.ProjectIdentifier = WQXPluginMapper.ToArray(projectIds);
             data.OrganizationDelete.ActivityIdentifier = WQXPluginMapper.ToArray(activityIds);
             data.OrganizationDelete.MonitoringLocationIdentifier = WQXPluginMapper.ToArray(monitoringLocIds);
-            data.OrganizationDelete.ActivityGroupIdentifier = WQXPluginMapper.ToArray(monitoringLocIds);
-            data.OrganizationDelete.MonitoringLocationIdentifier = WQXPluginMapper.ToArray(activityGroupIds);
+            data.OrganizationDelete.ActivityGroupIdentifier = WQXPluginMapper.ToArray(activityGroupIds);
             data.OrganizationDelete.IndexIdentifier = WQXPluginMapper.ToArray(biologicalHabitatIds);
             return data;
         }
