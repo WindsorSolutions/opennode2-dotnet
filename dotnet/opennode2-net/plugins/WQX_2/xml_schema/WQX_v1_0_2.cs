@@ -175,6 +175,10 @@ namespace Windsor.Node2008.WNOSPlugin.WQX1XsdOrm
     //?? string[] ActivityIdentifier
     [AppliedAttribute(typeof(ActivityGroupDataType), "ActivityIdentifier", typeof(DbIgnoreAttribute))]
 
+    // AttachedBinaryObjectDataType
+    [AppliedAttribute(typeof(AttachedBinaryObjectDataType), "BinaryObjectFileName", typeof(ColumnAttribute), "BINARYOBJECTFILE", DbType.AnsiString, 255, false)]
+    [AppliedAttribute(typeof(AttachedBinaryObjectDataType), "BinaryObjectFileTypeCode", typeof(ColumnAttribute), "BINARYOBJECTFILETYPECODE", DbType.AnsiString, 6, false)]
+
     // ProjectAttachedBinaryObjectDataType
     [AppliedAttribute(typeof(ProjectAttachedBinaryObjectDataType), "BinaryObjectFileName", typeof(ColumnAttribute), "BINARYOBJECTFILE", DbType.AnsiString, 255, false)]
     [AppliedAttribute(typeof(ProjectAttachedBinaryObjectDataType), "BinaryObjectFileTypeCode", typeof(ColumnAttribute), "BINARYOBJECTFILETYPECODE", DbType.AnsiString, 6, false)]

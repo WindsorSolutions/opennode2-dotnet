@@ -169,7 +169,6 @@ namespace Windsor.Node2008.WNOS.Service
 
                 foreach (Document document in content.Documents)
                 {
-                    document.DontAutoCompress = true;
                     activity.AppendFormat("Adding submit document to transaction: {0}.", document);
                 }
                 // Add the documents to repository and DB
