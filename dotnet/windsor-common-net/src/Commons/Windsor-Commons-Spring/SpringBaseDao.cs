@@ -643,20 +643,24 @@ namespace Windsor.Commons.Spring
             }
             return sb.ToString();
         }
-        public void DoInsert(string tableName, string semicolonSeparatedColumnNames,
-                             params object[] values)
+        public void DoInsert(string tableName, string semicolonSeparatedColumnNames, params object[] values)
+        {
+            DoInsertWithValues(tableName, semicolonSeparatedColumnNames, values);
+        }
+        public void DoInsertWithValues(string tableName, string semicolonSeparatedColumnNames,
+                                       IList<object> values)
         {
             string[] columnNames;
             string insertText = CreateInsertSqlParamText(tableName, semicolonSeparatedColumnNames,
                                                          out columnNames);
 
-            if (CollectionUtils.IsNullOrEmpty(values) || (values.Length != columnNames.Length))
+            if (CollectionUtils.IsNullOrEmpty(values) || (values.Count != columnNames.Length))
             {
                 throw new ArgumentException("Invalid values specified.");
             }
 
             IDbParameters parameters = AdoTemplate.CreateDbParameters();
-            for (int i = 0; i < values.Length; ++i)
+            for (int i = 0; i < values.Count; ++i)
             {
                 if (values[i] == null)
                 {
@@ -664,7 +668,25 @@ namespace Windsor.Commons.Spring
                 }
                 else
                 {
-                    parameters.AddWithValue(columnNames[i], values[i]);
+                    byte[] byteArray = values[i] as byte[];
+                    if (byteArray != null)
+                    {
+                        // Fix bug in spring for null byte[]
+                        IDbDataParameter param;
+                        if (byteArray.Length == 0)
+                        {
+                            param = parameters.AddWithValue(columnNames[i], DBNull.Value);
+                        }
+                        else
+                        {
+                            param = parameters.AddWithValue(columnNames[i], values[i]);
+                        }
+                        param.DbType = DbType.Binary;
+                    }
+                    else
+                    {
+                        parameters.AddWithValue(columnNames[i], values[i]);
+                    }
                 }
             }
 
@@ -672,7 +694,7 @@ namespace Windsor.Commons.Spring
 
             int result = AdoTemplate.ExecuteNonQuery(CommandType.Text, insertText, parameters);
 
-            if (result != 1)
+            if (result < 1)
             {
                 throw new UncategorizedAdoException(string.Format("Failed to insert: \"{0}\".",
                                                                   insertText));

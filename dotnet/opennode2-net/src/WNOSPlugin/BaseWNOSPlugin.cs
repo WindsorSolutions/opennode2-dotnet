@@ -1012,6 +1012,60 @@ namespace Windsor.Node2008.WNOSPlugin
         {
             return _auditLogEvents;
         }
+        protected virtual void GenerateExecutionLogAndAttachToTransaction(string transactionId, Exception error)
+        {
+            try
+            {
+                ICollection<ActivityEntry> auditLogs = GetAuditLogEvents();
+                StringBuilder sb = new StringBuilder();
+                if (CollectionUtils.IsNullOrEmpty(auditLogs))
+                {
+                    if (error == null)
+                    {
+                        sb.Append("No logs were recorded.");
+                    }
+                }
+                else
+                {
+                    foreach (ActivityEntry entry in auditLogs)
+                    {
+                        if (sb.Length > 0)
+                        {
+                            sb.AppendLine();
+                            sb.AppendLine();
+                        }
+                        sb.AppendFormat("{0}:   {1}", entry.TimeStamp.ToString("HH:mm:ss.fff"), StringUtils.ObfuscateActivityMessage(entry.Message));
+                    }
+                }
+                if (error != null)
+                {
+                    sb.AppendLine();
+                    sb.AppendLine();
+                    sb.AppendFormat("Execution error: {0}.", ExceptionUtils.GetDeepExceptionMessage(error));
+                }
+
+                ISettingsProvider settingsProvider = GetServiceImplementation<ISettingsProvider>();
+                string tempFile = settingsProvider.NewTempFilePath();
+                try
+                {
+                    File.WriteAllText(tempFile, sb.ToString());
+                    byte[] content = File.ReadAllBytes(tempFile);
+                    IDocumentManager documentManager = GetServiceImplementation<IDocumentManager>();
+                    Document doc = new Document("ExecutionLog.txt", CommonContentType.Flat, content);
+                    doc.DontAutoCompress = true;
+                    documentManager.AddDocument(transactionId, CommonTransactionStatusCode.Completed, null, doc);
+                }
+                finally
+                {
+                    FileUtils.SafeDeleteFile(tempFile);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                AppendAuditLogEvent("Failed to generate summary results and attach to transaction: {0}", ExceptionUtils.GetDeepExceptionMessage(ex));
+            }
+        }
         /// <summary>
         /// Return the Query, Solicit, or Execute data service parameters for specified data service.
         /// This method should NOT call GetServiceImplementation().

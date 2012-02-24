@@ -40,6 +40,7 @@ using System.IO;
 using System.Reflection;
 using System.Diagnostics;
 using System.Threading;
+using System.Security;
 
 namespace Windsor.Commons.Core
 {
@@ -537,6 +538,35 @@ namespace Windsor.Commons.Core
 
             return list;
         }
+        public static List<string> SplitAndReallyRemoveEmptyEntries(string stringToSplit, string separator, StringComparison stringComparison)
+        {
+            stringToSplit = stringToSplit.Trim();
+            List<string> rtnList = new List<string>();
+            if (string.IsNullOrEmpty(stringToSplit))
+            {
+                return rtnList;
+            }
+            int currentIndex = 0;
+            while(currentIndex < stringToSplit.Length)
+            {
+                int index = stringToSplit.IndexOf(separator, currentIndex, stringComparison);
+                int length;
+                if (index < 0)
+                {
+                    length = stringToSplit.Length - currentIndex;
+                }
+                else
+                {
+                    length = index - currentIndex;
+                }
+                rtnList.Add(stringToSplit.Substring(currentIndex, length));
+                currentIndex += length + separator.Length;
+            }
+
+            TrimAndRemoveEmptyEntries(rtnList);
+
+            return rtnList;
+        }
         /// <summary>
         /// Trim all strings in the list and remove any strings that are null or empty.
         /// </summary>
@@ -614,6 +644,10 @@ namespace Windsor.Commons.Core
             }
             return guid.ToString();
         }
+        public static string XmlEncode(string text)
+        {
+            return SecurityElement.Escape(text);
+        }
 
         private static System.Security.Cryptography.SHA256 s_Hasher = new System.Security.Cryptography.SHA256Managed();
         public static Int64 HashCode64(string text)
@@ -665,6 +699,80 @@ namespace Windsor.Commons.Core
                 }
             }
             return false;
+        }
+        private static readonly string[] _obfuscateFieldNames = new string[] 
+        {
+            "Uid", "Pwd", "UserId", "Password", "User Id"
+        };
+        public static string ObfuscateActivityMessage(string message)
+        {
+            if (string.IsNullOrEmpty(message))
+            {
+                return message;
+            }
+            int fieldNameIndex;
+            int index = StringUtils.IndexOfAny(message, _obfuscateFieldNames, StringComparison.OrdinalIgnoreCase,
+                                               out fieldNameIndex);
+
+            if (index >= 0)
+            {
+                StringBuilder sb = new StringBuilder(message);
+                do
+                {
+                    string fieldName = _obfuscateFieldNames[fieldNameIndex];
+                    int nextStartIndex = -1;
+                    int i = index + fieldName.Length;
+                    bool foundEquals = false;
+                    // Find and skip '=' character
+                    for (; i < message.Length; ++i)
+                    {
+                        char curChar = message[i];
+                        if (curChar == ' ')
+                        {
+                            // Skip
+                        }
+                        else
+                        {
+                            if (curChar == '=')
+                            {
+                                foundEquals = true;
+                                ++i;
+                            }
+                            break;
+                        }
+                    }
+                    if (foundEquals)
+                    {
+                        for (; i < message.Length; ++i)
+                        {
+                            char curChar = message[i];
+                            if ((curChar == ' ') || (curChar == ';') || (curChar == '"'))
+                            {
+                                break;
+                            }
+                            else
+                            {
+                                sb[i] = '*'; // obfuscate
+                            }
+                        }
+                    }
+
+                    nextStartIndex = (i < message.Length) ? i : -1;
+
+                    if (nextStartIndex > 0)
+                    {
+                        index = StringUtils.IndexOfAny(message, _obfuscateFieldNames, nextStartIndex, StringComparison.OrdinalIgnoreCase,
+                                                       out fieldNameIndex);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                while (index > 0);
+                return sb.ToString();
+            }
+            return message;
         }
     }
 }

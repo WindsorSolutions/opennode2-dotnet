@@ -1,9 +1,22 @@
---  Created this script based on the WY deployment.  Was used to move objects from a schema called
---    NODE_FLOW_FACID into NodeFlow.
---  I also alter this script to rename the primary key for the FACID_AFFIL table.  The CERS schema 
---  and the FACID schema were both using an identical primary key name fo their affiliation tables.
---  Without this modification the schemas would be incompatible in the same database.
-
+/*  
+ ****************************************************************************************************************************   
+ *
+ *  Script Name:  FACID_3.0-SQL-DDL.sql
+ *
+ *  Purpose:  This script will build the required objects to support the FACID data flow.
+ *         
+ *  Maintenance:
+ *  
+ *    Analyst         Date            Comment 
+ *    ----------      ----------      --------------------------------------------
+ *    KJames          01/28/2010      Created
+ *    TK	      01/31/2010      The script was updated to rename the primary key for the FACID_AFFIL table.  The CERS schema 
+ * 				      and the FACID schema were both using an identical primary key name fo their affiliation tables.
+ *				      Without this modification the schemas would be incompatible in the same database.
+ *    KJames          02/21/2012      Made FAC_SITE_IDEN_VAL not nullable.
+ *
+ ****************************************************************************************************************************   
+ */
 
 
 
@@ -607,7 +620,7 @@ CREATE TABLE [dbo].[FACID_FAC](
 	[FAC_SITE_NAME] [varchar](128) NULL,
 	[FED_FAC_INDI] [varchar](4) NULL,
 	[FAC_SITE_IDEN_CONT] [varchar](255) NULL,
-	[FAC_SITE_IDEN_VAL] [varchar](50) NULL,
+	[FAC_SITE_IDEN_VAL] [varchar](50) NOT NULL,
 	[FAC_SITE_TYPE_CODE] [varchar](50) NULL,
 	[FAC_SITE_TYPE_NAME] [varchar](128) NULL,
 	[CODE_LIST_VERS_IDEN] [varchar](50) NULL,
