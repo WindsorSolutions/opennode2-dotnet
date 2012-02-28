@@ -204,25 +204,30 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
     //?? string[] ActivityIdentifier
     [AppliedAttribute(typeof(ActivityGroupDataType), "ActivityIdentifier", typeof(DbIgnoreAttribute))]
 
+    // AttachedBinaryObjectDataType
+    [AppliedAttribute(typeof(AttachedBinaryObjectDataType), "BinaryObjectFileName", typeof(ColumnAttribute), "BINARYOBJECTFILE", DbType.AnsiString, 255, false)]
+    [AppliedAttribute(typeof(AttachedBinaryObjectDataType), "BinaryObjectFileTypeCode", typeof(ColumnAttribute), "BINARYOBJECTFILETYPECODE", DbType.AnsiString, 6, false)]
+    [AppliedAttribute(typeof(AttachedBinaryObjectDataType), "BinaryContent", typeof(ColumnAttribute), "BINARYOBJECTCONTENT", DbType.Binary)]
+
     // ProjectAttachedBinaryObjectDataType
     [AppliedAttribute(typeof(ProjectAttachedBinaryObjectDataType), "BinaryObjectFileName", typeof(ColumnAttribute), "BINARYOBJECTFILE", DbType.AnsiString, 255, false)]
     [AppliedAttribute(typeof(ProjectAttachedBinaryObjectDataType), "BinaryObjectFileTypeCode", typeof(ColumnAttribute), "BINARYOBJECTFILETYPECODE", DbType.AnsiString, 6, false)]
-    [AppliedAttribute(typeof(ProjectAttachedBinaryObjectDataType), "BinaryContent", typeof(ColumnAttribute), "BINARYOBJECTCONTENT")]
+    [AppliedAttribute(typeof(ProjectAttachedBinaryObjectDataType), "BinaryContent", typeof(ColumnAttribute), "BINARYOBJECTCONTENT", DbType.Binary)]
 
     // MonitoringLocationAttachedBinaryObjectDataType
     [AppliedAttribute(typeof(MonitoringLocationAttachedBinaryObjectDataType), "BinaryObjectFileName", typeof(ColumnAttribute), "BINARYOBJECTFILE", DbType.AnsiString, 255, false)]
     [AppliedAttribute(typeof(MonitoringLocationAttachedBinaryObjectDataType), "BinaryObjectFileTypeCode", typeof(ColumnAttribute), "BINARYOBJECTFILETYPECODE", DbType.AnsiString, 6, false)]
-    [AppliedAttribute(typeof(MonitoringLocationAttachedBinaryObjectDataType), "BinaryContent", typeof(ColumnAttribute), "BINARYOBJECTCONTENT")]
+    [AppliedAttribute(typeof(MonitoringLocationAttachedBinaryObjectDataType), "BinaryContent", typeof(ColumnAttribute), "BINARYOBJECTCONTENT", DbType.Binary)]
 
     // ActivityAttachedBinaryObjectDataType
     [AppliedAttribute(typeof(ActivityAttachedBinaryObjectDataType), "BinaryObjectFileName", typeof(ColumnAttribute), "BINARYOBJECTFILE", DbType.AnsiString, 255, false)]
     [AppliedAttribute(typeof(ActivityAttachedBinaryObjectDataType), "BinaryObjectFileTypeCode", typeof(ColumnAttribute), "BINARYOBJECTFILETYPECODE", DbType.AnsiString, 6, false)]
-    [AppliedAttribute(typeof(ActivityAttachedBinaryObjectDataType), "BinaryContent", typeof(ColumnAttribute), "BINARYOBJECTCONTENT")]
+    [AppliedAttribute(typeof(ActivityAttachedBinaryObjectDataType), "BinaryContent", typeof(ColumnAttribute), "BINARYOBJECTCONTENT", DbType.Binary)]
 
     // ResultAttachedBinaryObjectDataType
     [AppliedAttribute(typeof(ResultAttachedBinaryObjectDataType), "BinaryObjectFileName", typeof(ColumnAttribute), "BINARYOBJECTFILE", DbType.AnsiString, 255, false)]
     [AppliedAttribute(typeof(ResultAttachedBinaryObjectDataType), "BinaryObjectFileTypeCode", typeof(ColumnAttribute), "BINARYOBJECTFILETYPECODE", DbType.AnsiString, 6, false)]
-    [AppliedAttribute(typeof(ResultAttachedBinaryObjectDataType), "BinaryContent", typeof(ColumnAttribute), "BINARYOBJECTCONTENT")]
+    [AppliedAttribute(typeof(ResultAttachedBinaryObjectDataType), "BinaryContent", typeof(ColumnAttribute), "BINARYOBJECTCONTENT", DbType.Binary)]
 
     // ProjectMonitoringLocationWeightingDataType
     [AppliedAttribute(typeof(ProjectMonitoringLocationWeightingDataType), "MonitoringLocationIdentifier", typeof(ColumnAttribute), "MONLOCID", DbType.AnsiString, 35, false)]
