@@ -137,7 +137,7 @@ public interface VelocityHelper {
     int merge(String template, Writer writer);
 
     /**
-     * Merge a VTL template.
+     * Merge a VTL template, will always be in replace mode.
      * 
      * @param template
      *            the template file name, relative to the templateDirectory used
@@ -147,6 +147,20 @@ public interface VelocityHelper {
      * @return implementation-specific number (e.g., status code, result count)
      */
     int merge(String template, String targetFilePath);
+
+    /**
+     * Merge a VTL template, choose whether to append of replace.
+     * 
+     * @param template
+     *            the template file name, relative to the templateDirectory used
+     *            in configuring this VelocityHelper
+     * @param targetFilePath
+     *            fully qualified file name for the merged output
+     * @param append
+     *            true will append on existing file, false will replace it.
+     * @return implementation-specific number (e.g., status code, result count)
+     */
+    int merge(String template, String targetFilePath, boolean append);
 
     int getResultingRecordCount();
 

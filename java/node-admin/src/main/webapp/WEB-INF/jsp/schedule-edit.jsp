@@ -217,7 +217,7 @@
                                     </table>
                                     <span class="error" <c:if test="${status.errorMessage == ''}">style="display:none;"</c:if> ><c:out value="${status.errorMessage}" /></span>
                                 </spring:bind>
-                                
+
                                 <c:choose>
                                     <c:when test="${sourceTypeName == 'File'}">
                                         <c:set var="sourceTypeF" value="block"/>
@@ -256,9 +256,9 @@
                                         <c:set var="sourceTypeO" value="none"/>
                                     </c:otherwise>
                                 </c:choose>
-                            
+
                             <div id="fromLabel" style="display:<c:out value="${sourceTypeL}"/>;" ><c:out value="${sourceTypeLV}" /></div>
-                                                        
+
                                 <div id="sourceTypeF" style="display:<c:out value="${sourceTypeF}"/>;" >                    
                                 <spring:bind path="command.sourceId">
                                     <input id="sourceCommonId" type="text" name="<c:out value="${status.expression}" />" 
@@ -269,7 +269,7 @@
                                     </c:if>
                                 </spring:bind>
                                 </div>
-                                
+
                                 <!-- SERVICE DROP-DOWN -->
                                 <div id="sourceTypeS" style="display:<c:out value="${sourceTypeS}"/>;" > 
                                 <select id="sourceServiceList" name="serviceList" 
@@ -290,7 +290,7 @@
                                     </c:choose>
                                 </select>
                                 </div>
-                                
+
                                 <!-- PARTNER DROP-DOWN -->
                                 <div id="sourceTypeP" style="display:<c:out value="${sourceTypeP}"/>;" >    
                                 <select id="sourcePartnerList" name="partnerList" 
@@ -304,15 +304,15 @@
                                     </c:forEach>
                                 </select>
                                 </div>
-                                
+
                                 <!-- display sourceId error message regardless of what source type is selected -->
                                 <c:if test="${sourceErrorMessage != '' || sourceErrorMessage != null}">
                                     <div id="sourceIdErrorDisplay" style="display:block;">
                                         <span class="error"><c:out value="${sourceErrorMessage}" /></span>
                                     </div>
                                 </c:if>
-                                
-                                
+
+
                             <!-- PARTNER OPERATION -->
                                 <div id="sourceOperationLabel" 
                                      style="display:<c:out value="${sourceTypeO}"/>;">Operation name:</div>
@@ -323,11 +323,11 @@
                                     style="width:95%; display:<c:out value="${sourceTypeO}"/>;" />
                                     <span class="error" <c:if test="${status.errorMessage == ''}">style="display:none;"</c:if> ><c:out value="${status.errorMessage}" /></span>
                                 </spring:bind>
-                        
+
                                 <!-- SERVICE ARGUMENTS -->
                                 <div id="sourceTypeArgs" >
                                 </div>
-                            
+
                             </td>
                         </tr>
                     </table>

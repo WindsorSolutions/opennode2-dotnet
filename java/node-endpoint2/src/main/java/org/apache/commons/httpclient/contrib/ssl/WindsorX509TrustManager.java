@@ -126,7 +126,7 @@ public class WindsorX509TrustManager implements X509TrustManager {
                 logger.debug("X509Certificate[" + i + "]=" + certificates[i]);
             }
         }
-        if ((certificates != null) && (certificates.length == 1)) {
+        if ((certificates != null) && (certificates.length >= 1)) {
             /*
              * Windsor commented this validity check from the original
              * EasyX509TrustManager

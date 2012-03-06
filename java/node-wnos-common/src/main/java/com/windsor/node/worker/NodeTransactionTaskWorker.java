@@ -124,7 +124,7 @@ public class NodeTransactionTaskWorker extends NodeWorker implements
                 logEntry.setType(ActivityType.Info);
                 logEntry.addEntry("Machine Id: " + getMachineId());
                 logEntry.setTransactionId(transaction.getId());
-                logEntry.addEntry("EN Id: " + transaction.getNetworkId());
+                logEntry.addEntry("Transaction Id: " + transaction.getNetworkId());
                 logEntry
                         .addEntry("No processors defined for this type of transaction/flow.");
                 logEntry.addEntry("Transaction marked Processed.");
@@ -207,7 +207,7 @@ public class NodeTransactionTaskWorker extends NodeWorker implements
         logEntry.setType(ActivityType.Info);
         logEntry.setTransactionId(transaction.getId());
         logEntry.addEntry("Machine Id: " + getMachineId());
-        logEntry.addEntry("EN Id: " + transaction.getNetworkId());
+        logEntry.addEntry("Transaction Id: " + transaction.getNetworkId());
 
         try {
 

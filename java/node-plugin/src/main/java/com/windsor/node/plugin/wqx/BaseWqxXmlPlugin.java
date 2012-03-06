@@ -228,18 +228,25 @@ public abstract class BaseWqxXmlPlugin extends BaseWqxPlugin implements
 
             PartnerIdentity partner = makePartner();
 
-            NodeClientService client = makeNodeClient(partner);
-
-            /*These types of plugins create their own client and mess up the workflow, so update the partner stuff in the transaction and save it
-              after the functionality is completed*/
-            transaction.updateWithPartnerDetails(partner);
-
-            result.getAuditEntries().add(
-                    makeEntry("submitting to partner URL " + partner.getUrl()));
-
-            transaction = client.submit(transaction);
-            debug("submission returned with network transaction id "
-                    + transaction.getNetworkId());
+            if(partner != null)
+            {
+                NodeClientService client = makeNodeClient(partner);
+    
+                /*These types of plugins create their own client and mess up the workflow, so update the partner stuff in the transaction and save it
+                  after the functionality is completed*/
+                transaction.updateWithPartnerDetails(partner);
+    
+                result.getAuditEntries().add(
+                        makeEntry("submitting to partner URL " + partner.getUrl()));
+    
+                transaction = client.submit(transaction);
+                debug("submission returned with network transaction id "
+                        + transaction.getNetworkId());
+            }
+            else
+            {
+                result.getAuditEntries().add(makeEntry("No partner configured, no submission will be made."));
+            }
 
             /*getTransactionDao().updateNetworkId(transaction.getId(),
                     transaction.getNetworkId());*/
@@ -247,17 +254,17 @@ public abstract class BaseWqxXmlPlugin extends BaseWqxPlugin implements
             //use the new save function here, removed the update network transaction id one as this function handles that as well
             getTransactionDao().save(transaction);
 
-            result.getAuditEntries().add(
-                    makeEntry("resultTran.getId(): " + transaction.getId()));
-            result.getAuditEntries().add(
-                    makeEntry("resultTran.getNetworkId(): "
-                            + transaction.getNetworkId()));
+            result.getAuditEntries().add(makeEntry("resultTran.getId(): " + transaction.getId()));
+            if(partner != null)
+            {
+                result.getAuditEntries().add(makeEntry("resultTran.getNetworkId(): " + transaction.getNetworkId()));
+            }
 
             /* SAVE RESULTS */
-            if (useSubmissionHistory) {
+            if(useSubmissionHistory)
+            {
                 saveSubmissionHistory(transaction, operationType);
-                result.getAuditEntries().add(
-                        makeEntry("Recorded document submission."));
+                result.getAuditEntries().add(makeEntry("Recorded document submission."));
             }
 
             result.setSuccess(true);

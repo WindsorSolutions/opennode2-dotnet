@@ -61,10 +61,11 @@ import com.windsor.node.util.DateUtil;
 
 public class NewFacilityDateResetProcessor extends BaseWnosPlugin {
 
+    public static final PluginServiceParameterDescriptor EXECUTE_DATE = new PluginServiceParameterDescriptor("Execute Date",
+                    PluginServiceParameterDescriptor.TYPE_DATE, Boolean.FALSE, "Execute Date.");
     /**
      * runtime argument names
      */
-
     public NewFacilityDateResetProcessor() {
         super();
         setPublishForEN11(false);
@@ -79,6 +80,14 @@ public class NewFacilityDateResetProcessor extends BaseWnosPlugin {
         getSupportedPluginTypes().add(ServiceType.SOLICIT);
 
         debug("Plugin initiated");
+    }
+
+    @Override
+    public List<PluginServiceParameterDescriptor> getParameters()
+    {
+        List<PluginServiceParameterDescriptor> params = new ArrayList<PluginServiceParameterDescriptor>();
+        params.add(EXECUTE_DATE);
+        return params;
     }
 
     /**
@@ -282,11 +291,5 @@ public class NewFacilityDateResetProcessor extends BaseWnosPlugin {
     public List<DataServiceRequestParameter> getServiceRequestParamSpecs(
             String serviceName) {
         return null;
-    }
-
-    @Override
-    public List<PluginServiceParameterDescriptor> getParameters()
-    {
-        return new ArrayList<PluginServiceParameterDescriptor>();
     }
 }

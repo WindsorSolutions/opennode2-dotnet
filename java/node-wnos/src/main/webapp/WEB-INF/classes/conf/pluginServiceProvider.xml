@@ -19,9 +19,9 @@
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
-				<value>file:/var/opennode2_home/conf/nos.properties</value>
-                <value>file:/var/opennode2_home/conf/naas.properties</value>
-                <value>file:/var/opennode2_home/conf/jdbc.properties</value>
+				<value>file:${node.home}/conf/nos.properties</value>
+                <value>file:${node.home}/conf/naas.properties</value>
+                <value>file:${node.home}/conf/jdbc.properties</value>
 			</list>
 		</property>
 	</bean>

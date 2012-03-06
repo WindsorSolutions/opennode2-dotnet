@@ -98,6 +98,15 @@ public class ActivitySearchController extends BaseSimpleFormController
         }
     }
 
+    protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception
+    {
+        if("reset".equalsIgnoreCase(request.getParameter("reset")))//if they ask for a reset blank out the criteria object
+        {
+            request.getSession().removeAttribute(SESSION_LAST_SEARCH_CRITERIA);
+        }
+        return super.handleRequestInternal(request, response);
+    }
+
     protected void initBinder(HttpServletRequest request,
             ServletRequestDataBinder binder) throws Exception {
 

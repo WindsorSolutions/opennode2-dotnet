@@ -234,12 +234,10 @@ public class JdbcTemplateHelper extends TemplateHelper {
     }
 
     /**
-     * Converts a String representation of a date into the database specific String representing the function
-     * that will convert the String value into an actual Date type in the query.  If the DB type is unknown the
-     * formatted String itself will be returned.  This method is mostly useful for the WQX plugin as its template
-     * was written differently, in the future we'll want to parse and return actual java.util.Date objects.
+     * Converts a String representation of a date into an actual Date that can be used in a
+     * prepared statement.
      * @param dateString
-     * @return
+     * @return java.sql.Date
      */
     public Date covertToDbDate(String dateString)
     {

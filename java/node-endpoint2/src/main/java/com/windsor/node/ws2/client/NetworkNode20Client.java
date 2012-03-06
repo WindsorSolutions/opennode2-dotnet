@@ -505,7 +505,14 @@ public class NetworkNode20Client implements NodeClientService {
             logger.debug("Invoking Query with DataRequest: " + request);
 
             Query queryReq = new Query();
-            queryReq.setDataflow(new NCName(request.getFlowName()));
+            if(request.getFlowName() != null)
+            {
+                queryReq.setDataflow(new NCName(request.getFlowName().trim()));
+            }
+            else
+            {
+                queryReq.setDataflow(new NCName(request.getFlowName()));
+            }
             queryReq.setSecurityToken(authenticate());
             queryReq.setRowId(BigInteger
                     .valueOf(request.getPaging().getStart()));

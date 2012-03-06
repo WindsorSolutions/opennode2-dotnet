@@ -204,7 +204,7 @@ CREATE TABLE NTransaction (
 	ModifiedOn  	datetime NOT NULL,
 	StatusDetail	varchar(4096) NULL,
 	Operation   	varchar(255) NULL,
-	WebMethod   	varchar(50) NOT NULL
+	WebMethod   	varchar(50) NOT NULL,
 	EndpointVersion              VARCHAR(50) NULL,
     NetworkEndpointVersion       VARCHAR(50) NULL,
     NetworkEndpointUrl           VARCHAR(500) NULL,
@@ -641,7 +641,7 @@ ALTER TABLE NTransactionRealtimeDetails
    ADD CONSTRAINT PK_NTransactionRealtimeDetails
    PRIMARY KEY (Id);
 
-ALTER TABLE NNodeNotification  
+ALTER TABLE NTransactionRealtimeDetails  
    ADD CONSTRAINT FK_NTransactionRealtimeDetails_Transaction 
    FOREIGN KEY(TransactionId)
    REFERENCES NTransaction(Id)

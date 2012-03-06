@@ -97,7 +97,7 @@
 					</spring:bind>
 				</td>
 				
-                <td class="label" style="width: 100px">Transaction&nbsp;Id:</td>
+                <td class="label" style="width: 100px">Network&nbsp;Id:</td>
                 <td class="ctrl" style="width: 300px">
 	                <spring:bind path="command.transactionId">
 	                    <input type="text" id="transactionList"
@@ -137,7 +137,7 @@
 			
 				<td class="command" align="right" colspan="2">
 					<input type="submit" name="cmdSearch" value="Search" id="cmdSearch" class="button" />
-					<input type="Reset" name="cmdReset" value="Reset" class="button" />
+					<input type="button" name="cmdReset" value="Reset" class="button" onclick="window.location.href='activity.htm?reset=reset'" />
 				</td>
 			</tr>
 		</table>

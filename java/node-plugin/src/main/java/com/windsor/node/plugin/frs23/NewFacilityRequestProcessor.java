@@ -61,6 +61,11 @@ import com.windsor.node.service.helper.settings.SettingServiceProvider;
 
 public class NewFacilityRequestProcessor extends BaseWnosPlugin {
 
+    public static final PluginServiceParameterDescriptor UNUSED_PARAM = new PluginServiceParameterDescriptor("Unused Param",
+                    PluginServiceParameterDescriptor.TYPE_STRING, Boolean.FALSE, "This parameter is unused.");
+    public static final PluginServiceParameterDescriptor EXECUTE_DATE = new PluginServiceParameterDescriptor("Execute Date",
+                    PluginServiceParameterDescriptor.TYPE_DATE, Boolean.FALSE, "Execute Date.");
+
     public NewFacilityRequestProcessor() {
         super();
         setPublishForEN11(false);
@@ -75,6 +80,15 @@ public class NewFacilityRequestProcessor extends BaseWnosPlugin {
         getSupportedPluginTypes().add(ServiceType.SOLICIT);
 
         debug("Plugin initiated");
+    }
+
+    @Override
+    public List<PluginServiceParameterDescriptor> getParameters()
+    {
+        List<PluginServiceParameterDescriptor> params = new ArrayList<PluginServiceParameterDescriptor>();
+        params.add(UNUSED_PARAM);
+        params.add(EXECUTE_DATE);
+        return params;
     }
 
     /**
@@ -275,11 +289,5 @@ public class NewFacilityRequestProcessor extends BaseWnosPlugin {
     public List<DataServiceRequestParameter> getServiceRequestParamSpecs(
             String serviceName) {
         return null;
-    }
-
-    @Override
-    public List<PluginServiceParameterDescriptor> getParameters()
-    {
-        return new ArrayList<PluginServiceParameterDescriptor>();
     }
 }

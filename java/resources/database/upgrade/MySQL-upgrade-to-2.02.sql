@@ -70,7 +70,7 @@ CREATE TABLE NTransactionRealtimeDetails (
 ALTER TABLE NTransactionRealtimeDetails
     ADD CONSTRAINT PK_NTransactionRealtimeDetails
     PRIMARY KEY (Id);
-ALTER TABLE NNodeNotification  
+ALTER TABLE NTransactionRealtimeDetails  
     ADD CONSTRAINT FK_NTransactionRealtimeDetails_Transaction 
     FOREIGN KEY(TransactionId)
     REFERENCES NTransaction(Id)

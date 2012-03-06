@@ -187,7 +187,7 @@ public class NetworkNode11Client implements NodeClientService {
                 logger.debug("File: " + tempFile);
                 Document doc = new Document();
 
-                doc.setContent(FileUtils.readFileToByteArray(tempFile));
+                doc.setContent(FileUtils.readFileToByteArray(new File(targetDir, tempFile.getName())));
                 doc.setDocumentName(tempFile.getName());
                 doc.setDocumentStatus(CommonTransactionStatusCode.Received);
                 doc.setDocumentStatusDetail("Document downloaded");

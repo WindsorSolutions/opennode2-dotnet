@@ -16,18 +16,20 @@
             <input type="button" id="downloadButton" value="Download" class="button" style="width:120px" 
                 onclick="window.location.href='download.htm?transactionId=<c:out value="${model.tran.id}" />'" />
         </c:if>
-        <c:if test="${model.tran.status.status != 'Processed' and model.tran.status.status != 'Failed'}">
+        <c:if test="${model.tran.networkEndpointUrl != null}">
             <input type="button" id="getStatusButton" value="Get Status" class="button"  style="width:120px" 
                 onclick="window.location.href='getStatus.htm?transactionId=<c:out value="${model.tran.id}" />'" />
         </c:if>
-            <input type="button" name="cmdBack" value="Back" class="button" onclick="history.back()" style="width:120px"  />
+            <form method="post" action="activity.htm" style="display:inline">
+                <input type="submit" value="Back" class="button" style="width:120px"  />
+            </form>
         </div>
 
         <c:choose>
             <c:when test="${model.tran != null}">
 
                 <table id="formTable" width="750" cellpadding="2" cellspacing="0">
-                
+
                             <tr style="background-color: #83ACCA; color:#FFF;">
                 <td colspan="2"><strong>Transaction Details</strong></td>
             </tr>

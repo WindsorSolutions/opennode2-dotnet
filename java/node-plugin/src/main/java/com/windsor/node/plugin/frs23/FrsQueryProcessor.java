@@ -69,6 +69,12 @@ import com.windsor.node.service.helper.settings.SettingServiceProvider;
  */
 public class FrsQueryProcessor extends BaseWnosPlugin {
 
+    public static final PluginServiceParameterDescriptor STATE = new PluginServiceParameterDescriptor(
+                    "State", PluginServiceParameterDescriptor.TYPE_STRING, Boolean.FALSE,
+                    "State.");
+    public static final PluginServiceParameterDescriptor EXECUTE_DATE_OR_NAME = new PluginServiceParameterDescriptor("Execute Date or Name",
+                    PluginServiceParameterDescriptor.TYPE_STRING, Boolean.FALSE,
+                    "Execute Date or Name.");
     public static final String SERVICE_CHANGEDATE_PARAM_NAME = "FacilityChangeDate";
     public static final String SERVICE_DELETED_PARAM_NAME = "FacilityDeletedDate";
     public static final String SERVICE_NAME_PARAM_NAME = "StateFacilityIdentifier";
@@ -374,6 +380,9 @@ public class FrsQueryProcessor extends BaseWnosPlugin {
     @Override
     public List<PluginServiceParameterDescriptor> getParameters()
     {
-        return new ArrayList<PluginServiceParameterDescriptor>();
+        List<PluginServiceParameterDescriptor> params = new ArrayList<PluginServiceParameterDescriptor>();
+        params.add(STATE);
+        params.add(EXECUTE_DATE_OR_NAME);
+        return params;
     }
 }

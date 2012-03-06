@@ -198,13 +198,23 @@ public class VelocityHelperImpl implements VelocityHelper {
      * @see com.windsor.node.velocity.VelocityHelper#merge(java.lang.String,
      *      java.lang.String)
      */
-    public int merge(String template, String targetFilePath) {
+    public int merge(String template, String targetFilePath)
+    {
+        return merge(template, targetFilePath, false);
+    }
+
+    /**
+     * 
+     * @see com.windsor.node.velocity.VelocityHelper#merge(java.lang.String,
+     *      java.lang.String)
+     */
+    public int merge(String template, String targetFilePath, boolean append) {
 
         OutputStreamWriter out = null;
 
         try {
             out = new OutputStreamWriter(new BufferedOutputStream(
-                    new FileOutputStream(targetFilePath), BUFFER_SIZE),
+                    new FileOutputStream(targetFilePath, append), BUFFER_SIZE),
                     TEXT_ENCODING);
 
             return merge(template, out);

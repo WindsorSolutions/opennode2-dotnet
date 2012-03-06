@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:facid="http://www.exchangenetwork.net/schema/facilityid/3" targetNamespace="http://www.exchangenetwork.net/schema/facilityid/3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="3.0">
+	<xsd:include schemaLocation="FACID_AlternativeIdentification_v3.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+			Schema Name : 	FACID_AlternativeIdentificationList_v3.0
+			Current Version Available At : http://www.exchangenetwork.net/
+			Description : 	A container for one or more alternative identifiers.
+			Application : 
+			Developed by : 	Environmental Protection Agency, Windsor Solutions, Inc.
+			Point of Contact : Kevin Lyons
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="AlternativeIdentificationList" type="facid:AlternativeIdentificationListDataType">
+		<xsd:annotation>
+			<xsd:documentation>A container for one or more alternative identifiers.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="AlternativeIdentificationListDataType">
+		<xsd:sequence>
+			<xsd:element ref="facid:AlternativeIdentification" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

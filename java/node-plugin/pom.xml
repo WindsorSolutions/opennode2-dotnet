@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.windsor.node</groupId>
     <artifactId>node-plugin</artifactId>
-    <version>2.02</version>
+    <version>2.04</version>
     <packaging>jar</packaging>
     <name>Node Plugin Project</name>
     <url>http://maven.apache.org</url>
@@ -39,6 +39,7 @@
         <maven.test.skip>true</maven.test.skip>
         <plugin.name>**</plugin.name>
         <plugin.subbuild.number>00</plugin.subbuild.number>
+        <node.wnos.version>2.04</node.wnos.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <build>
@@ -135,7 +136,7 @@
             <id>beachnotif21</id>
             <properties>
                 <plugin.name>beachnotif21</plugin.name>
-                <plugin.subbuild.number>01</plugin.subbuild.number>
+                <plugin.subbuild.number>00</plugin.subbuild.number>
             </properties>
             <build>
                 <finalName>${plugin.name}</finalName>
@@ -160,6 +161,16 @@
             </build>
         </profile>
         <profile>
+            <id>facid3</id>
+            <properties>
+                <plugin.name>facid3</plugin.name>
+                <plugin.subbuild.number>00</plugin.subbuild.number>
+            </properties>
+            <build>
+                <finalName>${plugin.name}</finalName>
+            </build>
+        </profile>
+        <profile>
             <id>flowsecurity</id>
             <properties>
                 <plugin.name>flowsecurity</plugin.name>
@@ -172,6 +183,7 @@
             <id>frs23</id>
             <properties>
                 <plugin.name>frs23</plugin.name>
+                <plugin.subbuild.number>00</plugin.subbuild.number>
             </properties>
             <build>
                 <finalName>${plugin.name}</finalName>
@@ -235,6 +247,7 @@
             <id>windsor</id>
             <properties>
                 <plugin.name>windsor</plugin.name>
+                <plugin.subbuild.number>00</plugin.subbuild.number>
             </properties>
             <build>
                 <finalName>${plugin.name}</finalName>
@@ -266,12 +279,11 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>node-wnos-common</artifactId>
-            <version>${project.version}</version>
+            <version>${node.wnos.version}</version>
         </dependency>
         <dependency>
         	<groupId>org.slf4j</groupId>
         	<artifactId>slf4j-log4j12</artifactId>
-        	<!-- <version>1.5.11</version> -->
             <version>1.6.4</version>
         </dependency>
     </dependencies>

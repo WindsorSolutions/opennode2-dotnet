@@ -45,6 +45,7 @@ import com.windsor.node.common.domain.DataServiceRequestParameter;
 import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.PaginationIndicator;
 import com.windsor.node.common.domain.ProcessContentResult;
+import com.windsor.node.common.domain.ServiceType;
 import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
 import com.windsor.node.plugin.BaseWnosPlugin;
 
@@ -56,7 +57,7 @@ public class NonQuerySqlRequestProcessor extends BaseWnosPlugin {
     /**
      * runtime argument names
      */
-    public static final String ARG_SQL = "Source system name";
+    public static final String ARG_SQL = "Sql Query";
 
     public NonQuerySqlRequestProcessor() {
         super();
@@ -69,6 +70,8 @@ public class NonQuerySqlRequestProcessor extends BaseWnosPlugin {
 
         debug("Setting internal data source list");
         getDataSources().put(ARG_DS_SOURCE, (DataSource) null);
+
+        getSupportedPluginTypes().add(ServiceType.TASK);
 
         debug("Plugin initialized");
     }
@@ -135,7 +138,7 @@ public class NonQuerySqlRequestProcessor extends BaseWnosPlugin {
 
             String sql = getRequiredConfigValueAsString(ARG_SQL);
             result.getAuditEntries().add(
-                    makeEntry("Source System Name: " + sql));
+                    makeEntry("Sql Query: " + sql));
 
             /*
              * 

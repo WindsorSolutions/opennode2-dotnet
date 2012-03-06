@@ -142,10 +142,10 @@ public abstract class BaseWqxPlugin extends BaseWnosPlugin implements
             }
         }
 
-        if (null == partner) {
+        /*if (null == partner) {
             throw new RuntimeException("No partner named " + partnerName
                     + " exists in partner configuration.");
-        }
+        }*/
 
         return partner;
 

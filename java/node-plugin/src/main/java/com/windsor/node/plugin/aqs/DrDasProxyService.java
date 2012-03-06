@@ -300,10 +300,7 @@ public class DrDasProxyService extends BaseWnosPlugin {
 
             String methodName = transaction.getRequest().getService().getName();
 
-            result.getAuditEntries()
-                    .add(
-                            makeEntry("Parsing execution strategy from: "
-                                    + methodName));
+            result.getAuditEntries().add(makeEntry("Parsing execution strategy from: " + methodName));
 
             byte[] resultsBytes = null;
 
@@ -332,8 +329,7 @@ public class DrDasProxyService extends BaseWnosPlugin {
 
                 resultsBytes = webHelper.getBytesFromURL(resultFile);
 
-                String tempXml = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
-                tempXml += new String(resultsBytes);
+                String tempXml = new String(resultsBytes);
                 resultsBytes = tempXml.getBytes("UTF-8");
 
             } else {

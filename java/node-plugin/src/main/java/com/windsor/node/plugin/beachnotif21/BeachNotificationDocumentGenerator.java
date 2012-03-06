@@ -214,5 +214,4 @@ public class BeachNotificationDocumentGenerator extends BaseWnosPlugin
     {
         return new ArrayList<PluginServiceParameterDescriptor>();
     }
-
 }
