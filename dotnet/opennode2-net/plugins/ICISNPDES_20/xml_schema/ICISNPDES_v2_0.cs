@@ -5309,8 +5309,10 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_20
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         public string LimitSetDesignator;
 
+        //TSM:
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 2)]
+        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         public System.DateTime MonitoringPeriodEndDate;
 
         /// <remarks/>
@@ -5539,9 +5541,15 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_20
         [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         public NumericReportTextType NumericReportCode;
 
+        //TSM:
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
-        public string NumericReportReceivedDate;
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 1)]
+        public System.DateTime NumericReportReceivedDate;
+
+        //TSM:
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool NumericReportReceivedDateSpecified;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
