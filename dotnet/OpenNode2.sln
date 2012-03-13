@@ -157,6 +157,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EIS_Bridge_12", "opennode2-
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICISNPDES_31", "opennode2-net\plugins\ICISNPDES_31\ICISNPDES_31.csproj", "{B14F9671-9ADF-4A87-A034-E6F7EFEA9005}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Windsor.Commons.XsdOrm2", "windsor-common-net\src\Commons\Windsor-Commons-XsdOrm2\Windsor.Commons.XsdOrm2.csproj", "{DA9F525D-A2D8-469C-B7D7-1CD14173DD57}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -343,6 +345,10 @@ Global
 		{B14F9671-9ADF-4A87-A034-E6F7EFEA9005}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B14F9671-9ADF-4A87-A034-E6F7EFEA9005}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B14F9671-9ADF-4A87-A034-E6F7EFEA9005}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA9F525D-A2D8-469C-B7D7-1CD14173DD57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA9F525D-A2D8-469C-B7D7-1CD14173DD57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA9F525D-A2D8-469C-B7D7-1CD14173DD57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA9F525D-A2D8-469C-B7D7-1CD14173DD57}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
