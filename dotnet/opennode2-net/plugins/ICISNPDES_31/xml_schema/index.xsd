@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:icis="http://www.exchangenetwork.net/schema/icis/3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/icis/3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="3">
+	<xsd:include schemaLocation="1/ICIS_v3.1.xsd"/>
+</xsd:schema>

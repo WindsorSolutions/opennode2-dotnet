@@ -78,6 +78,20 @@ namespace Windsor.Commons.Spring
         }
         public SpringBaseDao(IDbProvider dbProvider, Type dataReaderWrapperType)
         {
+            Init(dbProvider, dataReaderWrapperType);
+        }
+        public SpringBaseDao(string providerType, string connectionString)
+        {
+            global::Spring.Data.Common.IDbProvider dbProvider =
+                global::Spring.Data.Common.DbProviderFactory.GetDbProvider(providerType);
+            dbProvider.ConnectionString = connectionString;
+            Init(dbProvider, null);
+        }
+        public SpringBaseDao()
+        {
+        }
+        protected void Init(IDbProvider dbProvider, Type dataReaderWrapperType)
+        {
             if (dbProvider == null)
             {
                 throw new ArgumentNullException("dbProvider");
@@ -102,9 +116,6 @@ namespace Windsor.Commons.Spring
             _transactionTemplate = transactionTemplate;
             SQL_CONCAT_STRING = IsOracleDatabase ? "||" : "+";
         }
-        public SpringBaseDao()
-        {
-        }
 
         #region Init
 
@@ -113,6 +124,20 @@ namespace Windsor.Commons.Spring
             FieldNotInitializedException.ThrowIfNull(this, ref _transactionTemplate);
             FieldNotInitializedException.ThrowIfNull(this, ref _adoDaoSupport);
             SQL_CONCAT_STRING = IsOracleDatabase ? "||" : "+";
+        }
+        public bool CheckIfDatabaseExists()
+        {
+            if (!IsSqlServerDatabase)
+            {
+                throw new NotImplementedException("This method has only been implemented for SQL Server");
+            }
+            string databaseName;
+            using (DirectDatabaseServerConnection connection = new DirectDatabaseServerConnection(this, out databaseName))
+            {
+                string sql = string.Format("SELECT COUNT(*) FROM sys.databases WHERE name = '{0}'", databaseName);
+                int count = ExecuteScalar(sql);
+                return (count > 0);
+            }
         }
         public Exception CheckConnection()
         {
@@ -128,6 +153,23 @@ namespace Windsor.Commons.Spring
             {
                 return e;
             }
+        }
+        public DataTable GetTableColumns(string tableName)
+        {
+            string cmdText = string.Format("SELECT * FROM {0} WHERE 1 = 0", tableName);
+            DataTable dataTable = new DataTable();
+            FillTable(dataTable, cmdText);
+            return dataTable;
+        }
+        public int ExecuteScalar(string commandText)
+        {
+            object countObj = AdoTemplate.ExecuteScalar(CommandType.Text, commandText);
+            int count = 0;
+            if ((countObj != null) && (countObj is int))
+            {
+                count = (int)countObj;
+            }
+            return count;
         }
 
         #endregion
@@ -242,6 +284,13 @@ namespace Windsor.Commons.Spring
             return AdoTemplate.ExecuteNonQuery(CommandType.Text, executeSql, parameters);
         }
 
+        public object DoJDBCExecuteScalar(string sql, params object[] parValues)
+        {
+            IDbParameters parameters;
+            string executeSql = LoadGenericParameters(sql, out parameters, parValues);
+
+            return AdoTemplate.ExecuteScalar(CommandType.Text, executeSql, parameters);
+        }
         /// <summary>
         /// Parses standard JDBC SQL and populates with all the provider specific params and loads them with values
         /// </summary>
@@ -288,25 +337,10 @@ namespace Windsor.Commons.Spring
         }
         public void ExecuteSqlWithoutDatabaseConnection(string sqlToExecute)
         {
-            string saveConnectionString = DbProvider.ConnectionString;
             string databaseName;
-            string newConnectionString =
-                SpringBaseDao.RemoveDatabaseFromConnectionString(DbProvider, out databaseName);
-            DbProvider.ConnectionString = newConnectionString;
-            ConnectionTxPair connectionTxPairToUse = null;
-            try
+            using (DirectDatabaseServerConnection connection = new DirectDatabaseServerConnection(this, out databaseName))
             {
-                connectionTxPairToUse = ConnectionUtils.GetConnectionTxPair(DbProvider);
                 AdoTemplate.ExecuteNonQuery(CommandType.Text, sqlToExecute);
-            }
-            finally
-            {
-                if (connectionTxPairToUse != null)
-                {
-                    ConnectionUtils.DisposeConnection(connectionTxPairToUse.Connection, DbProvider);
-                    connectionTxPairToUse = null;
-                }
-                DbProvider.ConnectionString = saveConnectionString;
             }
         }
         public string LoadGenericParametersFromValueList(string sql, out IDbParameters pars, IList<object> parValues)
@@ -487,7 +521,10 @@ namespace Windsor.Commons.Spring
             bool addedFirst = false;
             foreach (string columnName in columnNames)
             {
-                if (addedFirst) sb.Append(','); else addedFirst = true;
+                if (addedFirst)
+                    sb.Append(',');
+                else
+                    addedFirst = true;
                 sb.Append(ParseParamName(columnName));
             }
             sb.Append(")");
@@ -501,11 +538,17 @@ namespace Windsor.Commons.Spring
         }
         public bool IsOracleDatabase
         {
-            get { return IsOracleDatabaseProvider(DbProvider); }
+            get
+            {
+                return IsOracleDatabaseProvider(DbProvider);
+            }
         }
         public bool IsSqlServerDatabase
         {
-            get { return IsSqlServerDatabaseProvider(DbProvider); }
+            get
+            {
+                return IsSqlServerDatabaseProvider(DbProvider);
+            }
         }
         public static bool IsOracleDatabaseProvider(IDbProvider dbProvider)
         {
@@ -643,6 +686,7 @@ namespace Windsor.Commons.Spring
             }
             return sb.ToString();
         }
+
         public void DoInsert(string tableName, string semicolonSeparatedColumnNames, params object[] values)
         {
             DoInsertWithValues(tableName, semicolonSeparatedColumnNames, values);
@@ -743,7 +787,17 @@ namespace Windsor.Commons.Spring
                     }
                     command.Parameters.Clear();
                     ParameterUtils.CopyParameters(command, parameters);
-                    if (command.ExecuteNonQuery() != 1)
+
+                    int result;
+                    try
+                    {
+                        result = command.ExecuteNonQuery();
+                    }
+                    catch (Exception)
+                    {
+                        throw;
+                    }
+                    if (result < 1)
                     {
                         throw new EmptyResultDataAccessException("Failed to INSERT row into table " + tableName);
                     }
@@ -865,7 +919,10 @@ namespace Windsor.Commons.Spring
             bool addedFirst = false;
             foreach (string columnName in columnNames)
             {
-                if (addedFirst) sb.Append(','); else addedFirst = true;
+                if (addedFirst)
+                    sb.Append(',');
+                else
+                    addedFirst = true;
                 sb.AppendFormat("{0} = {1}", columnName, ParseParamName(columnName));
             }
             AppendWhereString(semicolonSeparatedWhereColumns, maxWhereParamCount, sb);
@@ -910,6 +967,11 @@ namespace Windsor.Commons.Spring
         {
             DoSimpleUpdate(tableName, whereColumn, whereValue, null, semicolonSeparatedColumnNames, 1, values);
         }
+        public void DoSimpleUpdateOneWithValues(string tableName, string whereColumn, object whereValue,
+                                                string semicolonSeparatedColumnNames, IList<object> values)
+        {
+            DoSimpleUpdateWithValues(tableName, whereColumn, whereValue, null, semicolonSeparatedColumnNames, 1, values);
+        }
         public bool DoSimpleInsertOrUpdateOne(string tableName, string whereColumn, object whereValue,
                                               string semicolonSeparatedColumnNames, params object[] values)
         {
@@ -941,17 +1003,24 @@ namespace Windsor.Commons.Spring
                                      IList<object> whereValues, string semicolonSeparatedColumnNames,
                                      int expectedUpdateCount, params object[] values)
         {
+            return DoSimpleUpdateWithValues(tableName, whereColumns, whereValue, whereValues, semicolonSeparatedColumnNames,
+                                            expectedUpdateCount, values);
+        }
+        public int DoSimpleUpdateWithValues(string tableName, string whereColumns, object whereValue,
+                                            IList<object> whereValues, string semicolonSeparatedColumnNames,
+                                            int expectedUpdateCount, IList<object> values)
+        {
             string[] columnNames;
             string updateText = CreateUpdateSqlParamText(tableName, whereColumns, (whereValues == null) ?
                                                          1 : whereValues.Count, semicolonSeparatedColumnNames,
                                                          out columnNames);
 
-            if (CollectionUtils.IsNullOrEmpty(values) || (values.Length != columnNames.Length))
+            if (CollectionUtils.IsNullOrEmpty(values) || (values.Count != columnNames.Length))
             {
                 throw new ArgumentException("Invalid values specified.");
             }
             IDbParameters parameters = AdoTemplate.CreateDbParameters();
-            for (int i = 0; i < values.Length; ++i)
+            for (int i = 0; i < values.Count; ++i)
             {
                 if (values[i] == null)
                 {
@@ -977,13 +1046,59 @@ namespace Windsor.Commons.Spring
 
             if (expectedUpdateCount >= 0)
             {
-                if (result != expectedUpdateCount)
+                if (result < expectedUpdateCount)
                 {
                     throw new UncategorizedAdoException(string.Format("Failed to update: \"{0}\".",
                                                                       updateText));
                 }
             }
             return result;
+        }
+        public void CreateDatabase()
+        {
+            const int CREATE_DATABASE_WAIT_SECONDS = 30;
+            string databaseName;
+            using (DirectDatabaseServerConnection connection = new DirectDatabaseServerConnection(this, out databaseName))
+            {
+                string sql = string.Format("CREATE DATABASE [{0}]", databaseName);
+                AdoTemplate.ExecuteNonQuery(CommandType.Text, sql);
+            }
+            // Wait for database to be fully created
+            long timeoutTicks = DateTime.Now.Ticks + TimeSpan.FromSeconds(CREATE_DATABASE_WAIT_SECONDS).Ticks;
+            do
+            {
+                Exception exception = CheckConnection();
+                if (exception == null)
+                {
+                    return;
+                }
+                Thread.Sleep(300);
+            }
+            while (timeoutTicks > DateTime.Now.Ticks);
+            throw new CannotGetAdoConnectionException();
+        }
+        public void DropDatabase()
+        {
+            const int DROP_DATABASE_WAIT_SECONDS = 30;
+            string databaseName;
+            using (DirectDatabaseServerConnection connection = new DirectDatabaseServerConnection(this, out databaseName))
+            {
+                string sql = string.Format("ALTER DATABASE [{0}] SET SINGLE_USER WITH ROLLBACK IMMEDIATE; DROP DATABASE [{0}]", databaseName);
+                AdoTemplate.ExecuteNonQuery(CommandType.Text, sql);
+            }
+            // Wait for database to be fully created
+            long timeoutTicks = DateTime.Now.Ticks + TimeSpan.FromSeconds(DROP_DATABASE_WAIT_SECONDS).Ticks;
+            do
+            {
+                bool exists = CheckIfDatabaseExists();
+                if (!exists)
+                {
+                    return;
+                }
+                Thread.Sleep(300);
+            }
+            while (timeoutTicks > DateTime.Now.Ticks);
+            throw new CannotGetAdoConnectionException();
         }
         protected string CreateSelectSqlParamText(string semicolonSeparatedTableNames,
                                                   string semicolonSeparatedWhereColumns, int maxWhereParamCount,
@@ -1431,7 +1546,10 @@ namespace Windsor.Commons.Spring
         }
         public string SqlConcatString
         {
-            get { return SQL_CONCAT_STRING; }
+            get
+            {
+                return SQL_CONCAT_STRING;
+            }
         }
 
         public Dictionary<string, T> MapArrayObjects<T>(string keyField, IEnumerable<string> listKeyFields,
@@ -1491,16 +1609,28 @@ namespace Windsor.Commons.Spring
         }
         public IDbProvider DbProvider
         {
-            get { return _adoDaoSupport.DbProvider; }
+            get
+            {
+                return _adoDaoSupport.DbProvider;
+            }
         }
         public AdoTemplate AdoTemplate
         {
-            get { return _adoDaoSupport.AdoTemplate; }
+            get
+            {
+                return _adoDaoSupport.AdoTemplate;
+            }
         }
         public AdoDaoSupport AdoDaoSupport
         {
-            get { return _adoDaoSupport; }
-            set { _adoDaoSupport = value; }
+            get
+            {
+                return _adoDaoSupport;
+            }
+            set
+            {
+                _adoDaoSupport = value;
+            }
         }
         protected string LimitDbText(string text, int maxChars)
         {
@@ -1513,6 +1643,51 @@ namespace Windsor.Commons.Spring
                 return text.Substring(0, maxChars - 1);
             }
             return text;
+        }
+    }
+    public class DirectDatabaseServerConnection : DisposableBase
+    {
+        private string _saveConnectionString;
+        private SpringBaseDao _baseDao;
+        private ConnectionTxPair _connectionTxPairToUse;
+
+        public DirectDatabaseServerConnection(SpringBaseDao baseDao, out string databaseName)
+        {
+            string newConnectionString =
+                SpringBaseDao.RemoveDatabaseFromConnectionString(baseDao.DbProvider, out databaseName);
+            if (string.IsNullOrEmpty(databaseName))
+            {
+                throw new ArgumentException(string.Format("Could not locate database name in connection string: \"{0}\"",
+                                                          baseDao.DbProvider.ConnectionString));
+            }
+            _baseDao = baseDao;
+            _saveConnectionString = baseDao.DbProvider.ConnectionString;
+            baseDao.DbProvider.ConnectionString = newConnectionString;
+            try
+            {
+                _connectionTxPairToUse = ConnectionUtils.GetConnectionTxPair(baseDao.DbProvider);
+            }
+            catch (Exception)
+            {
+                _baseDao.DbProvider.ConnectionString = _saveConnectionString;
+                _baseDao = null;
+                _saveConnectionString = null;
+                throw;
+            }
+        }
+        protected override void OnDispose(bool inIsDisposing)
+        {
+            if (_connectionTxPairToUse != null)
+            {
+                ConnectionUtils.DisposeConnection(_connectionTxPairToUse.Connection, _baseDao.DbProvider);
+                _connectionTxPairToUse = null;
+            }
+            if (_baseDao != null)
+            {
+                _baseDao.DbProvider.ConnectionString = _saveConnectionString;
+                _baseDao = null;
+                _saveConnectionString = null;
+            }
         }
     }
 }

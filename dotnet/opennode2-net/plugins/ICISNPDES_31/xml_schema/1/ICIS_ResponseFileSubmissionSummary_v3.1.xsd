@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:icis="http://www.exchangenetwork.net/schema/icis/3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/icis/3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="3">
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name : ICIS_ResponseFileSubmissionSummary_v3.1.xsd
+		Current Version Available: http://www.exchangenetwork.net/schema/icis/3
+		Description : Wraps a group of SubmissionSummary elements. 
+		Developed by : ICIS Full Batch IPT
+		Point of Contact : Won Lee, U.S. EPA
+		Last Date Modified: 2012-02-16
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:include schemaLocation="ICIS_ResponseFileShared_v3.1.xsd"/>
+	<xsd:element name="SubmissionSummary" type="icis:SubmissionSummaryDataType">
+		<xsd:annotation>
+			<xsd:documentation>A summary of transaction counts and percentage for the submission.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="SubmissionSummaryDataType">
+		<xsd:sequence>
+			<xsd:element ref="icis:TransactionTypeTotals" maxOccurs="5"/>
+			<xsd:element ref="icis:TotalTransactions"/>
+			<xsd:element ref="icis:PercentTransactionsAccepted"/>
+			<xsd:element ref="icis:TotalSubmissions"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

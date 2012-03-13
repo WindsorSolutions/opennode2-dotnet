@@ -621,7 +621,7 @@ namespace Windsor.Commons.Core
                     throw new ArgumentException(string.Format("The type of collection elements for elementsToCopy, \"{0},\" cannot be determined",
                                                               elementsToCopy.GetType().FullName));
                 }
-                if (elementsToCopyElementType != memberElementType)
+                if (!memberElementType.IsAssignableFrom(elementsToCopyElementType))
                 {
                     throw new ArgumentException(string.Format("ICollection element types do not match: \"{0}\" vs. \"{1}\"",
                                                               elementsToCopyElementType.ToString(), memberElementType.ToString()));

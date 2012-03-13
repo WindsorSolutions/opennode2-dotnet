@@ -116,6 +116,13 @@ namespace Windsor.Commons.Core
                 throw new InvalidOperationException(conditionName);
             }
         }
+        public static void ThrowIfTrue(bool condition, string conditionName)
+        {
+            if (condition)
+            {
+                throw new InvalidOperationException(conditionName);
+            }
+        }
         public static T ThrowIfNull<T>(T parameter, string paramName) where T : class
         {
             if (parameter == null)
@@ -129,6 +136,14 @@ namespace Windsor.Commons.Core
             if (string.IsNullOrEmpty(parameter))
             {
                 throw new NullReferenceException(paramName + " cannot be an empty string");
+            }
+            return parameter;
+        }
+        public static string ThrowIfNotEmptyString(string parameter, string paramName)
+        {
+            if (!string.IsNullOrEmpty(parameter))
+            {
+                throw new NullReferenceException(paramName + " must be an empty string");
             }
             return parameter;
         }

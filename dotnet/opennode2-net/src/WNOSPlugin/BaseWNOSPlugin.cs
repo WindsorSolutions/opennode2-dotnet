@@ -57,6 +57,8 @@ using System.Threading;
 using Windsor.Commons.NodeDomain;
 using System.ComponentModel;
 using Windsor.Commons.NodeClient;
+using System.Xml.XPath;
+using System.Xml.Xsl;
 
 namespace Windsor.Node2008.WNOSPlugin
 {
@@ -1107,19 +1109,24 @@ namespace Windsor.Node2008.WNOSPlugin
         }
         protected CommonTransactionStatusCode UpdateStatusOfNetworkTransaction(string endpointNetworkId)
         {
+            string localTransactionId;
+            return UpdateStatusOfNetworkTransaction(endpointNetworkId, out localTransactionId);
+        }
+        protected CommonTransactionStatusCode UpdateStatusOfNetworkTransaction(string endpointNetworkId, out string localTransactionId)
+        {
             EndpointVersionType endpointVersion;
             string endpointUrl;
-            string transactionId;
+            localTransactionId = null;
             try
             {
                 ITransactionManager transactionManager;
                 GetServiceImplementation(out transactionManager);
 
                 CommonTransactionStatusCode status;
-                transactionId =
+                localTransactionId =
                     transactionManager.GetNetworkTransactionStatusFromNetworkId(endpointNetworkId, out status, out endpointVersion,
                                                                                 out endpointUrl);
-                if (string.IsNullOrEmpty(transactionId))
+                if (string.IsNullOrEmpty(localTransactionId))
                 {
                     AppendAuditLogEvent("Could not find network transaction id \"{0}\" in database", endpointNetworkId);
                     return CommonTransactionStatusCode.Unknown;
@@ -1131,7 +1138,7 @@ namespace Windsor.Node2008.WNOSPlugin
                                     endpointNetworkId, ExceptionUtils.GetDeepExceptionMessage(e));
                 return CommonTransactionStatusCode.Unknown;
             }
-            return UpdateStatusOfNetworkTransaction(transactionId, endpointNetworkId, endpointUrl, endpointVersion);
+            return UpdateStatusOfNetworkTransaction(localTransactionId, endpointNetworkId, endpointUrl, endpointVersion);
         }
         protected IList<string> DownloadNetworkTransactionDocuments(string endpointNetworkId, params string[] documentNames)
         {
@@ -1514,6 +1521,51 @@ namespace Windsor.Node2008.WNOSPlugin
             catch (Exception)
             {
                 FileUtils.SafeDeleteFile(transactionId);
+                throw;
+            }
+        }
+        /// <summary>
+        /// Attempts to validate an xml file against an xml schema resource.  If the file is invalid,
+        /// the method returns false and attaches a text file containing the validation errors to the input
+        /// transaction.  If the file is valid, the method returns true.
+        /// </summary>
+        protected virtual string TransformXmlFile(string xmlFilePath, string xsltResourceName, string xsltRootFileName)
+        {
+            AppendAuditLogEvent("Verifying xslt transformation source files ...");
+            string xsltFolder = ExtractZippedResourceToTempFolder(xsltResourceName);
+
+            string xsltRootFilePath = Path.Combine(xsltFolder, xsltRootFileName);
+            if (!File.Exists(xsltRootFilePath))
+            {
+                FileUtils.SafeDeleteDirectory(xsltFolder);
+                throw new FileNotFoundException(string.Format("The root xslt file \"{0}\" was not found in the xslt resource \"{1}\"",
+                                                              xsltRootFileName, xsltResourceName));
+            }
+
+            string transformedFile = null;
+            try
+            {
+                AppendAuditLogEvent("Xslt transformation source files verified");
+
+                AppendAuditLogEvent("Transforming xml document using the xslt source files ...");
+
+                ISettingsProvider settingsProvider;
+                GetServiceImplementation(out settingsProvider);
+
+                transformedFile = settingsProvider.NewTempFilePath(".xml");
+
+                XsltUtils xsltUtils = new XsltUtils();
+                xsltUtils.Transform(xmlFilePath, xsltRootFilePath, transformedFile);
+
+                AppendAuditLogEvent("Successfully transformed the xml document using the xslt source files");
+
+                return transformedFile;
+            }
+            catch (Exception ex)
+            {
+                FileUtils.SafeDeleteDirectory(xsltFolder);
+                FileUtils.SafeDeleteFile(transformedFile);
+                AppendAuditLogEvent("Failed to transformed the xml document using the xslt source files: ", ExceptionUtils.GetDeepExceptionMessage(ex));
                 throw;
             }
         }

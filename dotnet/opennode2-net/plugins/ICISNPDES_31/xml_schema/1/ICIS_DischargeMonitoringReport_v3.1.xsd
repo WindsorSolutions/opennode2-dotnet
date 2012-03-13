@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:icis="http://www.exchangenetwork.net/schema/icis/3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/icis/3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="3">
+	<xsd:include schemaLocation="ICIS_KeyElements_v3.1.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>Schema Name: ICIS_DischargeMonitoringReport_v3.1.xsd</xsd:documentation>
+		<xsd:documentation>Current Version Available: http://www.exchangenetwork.net/schema/icis/3</xsd:documentation>
+		<xsd:documentation>Description: ICIS-NPDES discharge monitoring report element data input format</xsd:documentation>
+		<xsd:documentation>Application: ICIS-NPDES</xsd:documentation>
+		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
+		<xsd:documentation>Point of Contact: EPA/Alison Kittle</xsd:documentation>
+		<xsd:documentation>Data Written: July 2006</xsd:documentation>
+		<xsd:documentation>Last Date Modified: 2012-02-16</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="AgronomicDMTRateForField" type="icis:NonNegativeIntegerMin1Max5Type"/>
+	<xsd:element name="AgronomicGallonsRateForField" type="icis:NonNegativeIntegerMin1Max5Type"/>
+	<xsd:element name="BerylliumComplianceIndicator" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="CertifierFirstName" type="icis:StringMin1Max30Type"/>
+	<xsd:element name="CertifierLastName" type="icis:StringMin1Max30Type"/>
+	<xsd:element name="CertificationStatementIndicator" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="ClassAAlternativesText" type="icis:StringMin1Max4000Type"/>
+	<xsd:element name="ClassAAlternativeUsed" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="ClassBAlternativesText" type="icis:StringMin1Max4000Type"/>
+	<xsd:element name="ClassBAlternativeUsed" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="CoDisposalSite" type="icis:CoDisposalSite"/>
+	<xsd:element name="ConcentrationNumericReportUnitMeasureCode" type="icis:StringMin1Max2Type"/>
+	<xsd:element name="CropTypesHarvested" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="CropTypesPlanted" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="DischargeMonitoringReport" type="icis:DischargeMonitoringReport"/>
+	<xsd:element name="DMRNoDischargeIndicator" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="DMRNoDischargeReceivedDate" type="icis:DateType"/>
+	<xsd:element name="Incinerator" type="icis:Incinerator"/>
+	<xsd:element name="LandApplicationSite" type="icis:LandApplicationSite"/>
+	<xsd:element name="ManagementPracticesIndicator" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="MercuryComplianceIndicator" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="NumericConditionAdjustedQuantity" type="icis:Decimal8FloatingType"/>
+	<xsd:element name="NumericReport" type="icis:NumericReport"/>
+	<xsd:element name="NumericReportNoDischargeIndicator" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="NumericReportReceivedDate" type="icis:DateType"/>
+	<xsd:element name="PaintFilterTestResult" type="icis:PassFailIndicatorType"/>
+	<xsd:element name="Part258ComplianceIndicator" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="PathogenReductionIndicator" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="PollutantMetForLandApplication" type="icis:NonNegativeIntegerMin1Max10Type"/>
+	<xsd:element name="PrincipalExecutiveOfficerFirstName" type="icis:StringMin1Max30Type"/>
+	<xsd:element name="PrincipalExecutiveOfficerLastName" type="icis:StringMin1Max30Type"/>
+	<xsd:element name="PrincipalExecutiveOfficerTelephone" type="icis:StringMin7Max10Type"/>
+	<xsd:element name="PrincipalExecutiveOfficerTitle" type="icis:StringMin1Max40Type"/>
+	<xsd:element name="QuantityNumericReportUnitMeasureCode" type="icis:StringMin1Max2Type"/>
+	<xsd:element name="ReportCommentText" type="icis:StringMin1Max4000Type"/>
+	<xsd:element name="ReportingFrequencyCode" type="icis:StringMin1Max5Type"/>
+	<xsd:element name="ReportNumberOfExcursions" type="icis:NonNegativeIntegerMin1Max3Type"/>
+	<xsd:element name="ReportParameter" type="icis:ReportParameter"/>
+	<xsd:element name="ReportSampleTypeText" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="SignatoryFirstName" type="icis:StringMin1Max30Type"/>
+	<xsd:element name="SignatoryLastName" type="icis:StringMin1Max30Type"/>
+	<xsd:element name="SignatoryTelephone" type="icis:StringMin7Max10Type"/>
+	<xsd:element name="SignatureDate" type="icis:DateType"/>
+	<xsd:element name="SurfaceDisposalSite" type="icis:SurfaceDisposalSite"/>
+	<xsd:element name="TCLPTestResult" type="icis:PassFailIndicatorType"/>
+	<xsd:element name="VARAlternativesText" type="icis:StringMin1Max4000Type"/>
+	<xsd:element name="VARAlternativeUsed" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="VectorReductionIndicator" type="icis:YesNoIndicatorType"/>
+	<xsd:complexType name="DischargeMonitoringReportData">
+		<xsd:sequence>
+			<xsd:element ref="icis:TransactionHeader"/>
+			<xsd:element ref="icis:DischargeMonitoringReport"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DischargeMonitoringReport">
+		<xsd:complexContent>
+			<xsd:extension base="icis:DischargeMonitoringReportKeyElements">
+				<xsd:sequence>
+					<xsd:element ref="icis:SignatureDate" minOccurs="0"/>
+					<xsd:element ref="icis:PrincipalExecutiveOfficerFirstName" minOccurs="0"/>
+					<xsd:element ref="icis:PrincipalExecutiveOfficerLastName" minOccurs="0"/>
+					<xsd:element ref="icis:PrincipalExecutiveOfficerTitle" minOccurs="0"/>
+					<xsd:element ref="icis:PrincipalExecutiveOfficerTelephone" minOccurs="0"/>
+					<xsd:element ref="icis:SignatoryFirstName" minOccurs="0"/>
+					<xsd:element ref="icis:SignatoryLastName" minOccurs="0"/>
+					<xsd:element ref="icis:SignatoryTelephone" minOccurs="0"/>
+					<xsd:element ref="icis:ReportCommentText" minOccurs="0"/>
+					<xsd:choice>
+						<xsd:group ref="icis:FormNODIGroup" minOccurs="0"/>
+						<xsd:element ref="icis:ReportParameter" minOccurs="0" maxOccurs="unbounded"/>
+					</xsd:choice>
+					<xsd:element ref="icis:LandApplicationSite" minOccurs="0"/>
+					<xsd:element ref="icis:SurfaceDisposalSite" minOccurs="0"/>
+					<xsd:element ref="icis:Incinerator" minOccurs="0"/>
+					<xsd:element ref="icis:CoDisposalSite" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ReportParameter">
+		<xsd:complexContent>
+			<xsd:extension base="icis:ParameterKeyElements">
+				<xsd:sequence>
+					<xsd:element ref="icis:ReportSampleTypeText" minOccurs="0"/>
+					<xsd:element ref="icis:ReportingFrequencyCode" minOccurs="0"/>
+					<xsd:element ref="icis:ReportNumberOfExcursions" minOccurs="0"/>
+					<xsd:element ref="icis:ConcentrationNumericReportUnitMeasureCode" minOccurs="0"/>
+					<xsd:element ref="icis:QuantityNumericReportUnitMeasureCode" minOccurs="0"/>
+					<xsd:element ref="icis:NumericReport" minOccurs="0" maxOccurs="5"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="NumericReport">
+		<xsd:sequence>
+			<xsd:element ref="icis:NumericReportCode"/>
+			<xsd:element ref="icis:NumericReportReceivedDate" minOccurs="0"/>
+			<xsd:element ref="icis:NumericReportNoDischargeIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:NumericConditionQuantity" minOccurs="0"/>
+			<xsd:element ref="icis:NumericConditionAdjustedQuantity" minOccurs="0"/>
+			<xsd:element ref="icis:NumericConditionQualifier" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="LandApplicationSite">
+		<xsd:sequence>
+			<xsd:element ref="icis:PollutantMetForLandApplication" minOccurs="0"/>
+			<xsd:element ref="icis:PathogenReductionIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:VectorReductionIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:AgronomicGallonsRateForField" minOccurs="0"/>
+			<xsd:element ref="icis:AgronomicDMTRateForField" minOccurs="0"/>
+			<xsd:group ref="icis:ClassAAlternativesUsedGroup" minOccurs="0"/>
+			<xsd:group ref="icis:ClassBAlternativesUsedGroup" minOccurs="0"/>
+			<xsd:group ref="icis:VARAlternativesUsedGroup" minOccurs="0"/>
+			<xsd:element ref="icis:CropTypesPlanted" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="icis:CropTypesHarvested" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SurfaceDisposalSite">
+		<xsd:sequence>
+			<xsd:element ref="icis:PathogenReductionIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:VectorReductionIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:ManagementPracticesIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:CertificationStatementIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:CertifierFirstName" minOccurs="0"/>
+			<xsd:element ref="icis:CertifierLastName" minOccurs="0"/>
+			<xsd:group ref="icis:ClassAAlternativesUsedGroup" minOccurs="0"/>
+			<xsd:group ref="icis:ClassBAlternativesUsedGroup" minOccurs="0"/>
+			<xsd:group ref="icis:VARAlternativesUsedGroup" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="Incinerator">
+		<xsd:sequence>
+			<xsd:element ref="icis:BerylliumComplianceIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:MercuryComplianceIndicator" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CoDisposalSite">
+		<xsd:sequence>
+			<xsd:element ref="icis:Part258ComplianceIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:PaintFilterTestResult" minOccurs="0"/>
+			<xsd:element ref="icis:TCLPTestResult" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="FormNODIGroup">
+		<xsd:sequence>
+			<xsd:element ref="icis:DMRNoDischargeIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:DMRNoDischargeReceivedDate" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="ClassAAlternativesUsedGroup">
+		<xsd:sequence>
+			<xsd:element ref="icis:ClassAAlternativeUsed" minOccurs="0"/>
+			<xsd:element ref="icis:ClassAAlternativesText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="ClassBAlternativesUsedGroup">
+		<xsd:sequence>
+			<xsd:element ref="icis:ClassBAlternativeUsed" minOccurs="0"/>
+			<xsd:element ref="icis:ClassBAlternativesText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="VARAlternativesUsedGroup">
+		<xsd:sequence>
+			<xsd:element ref="icis:VARAlternativeUsed" minOccurs="0"/>
+			<xsd:element ref="icis:VARAlternativesText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+</xsd:schema>

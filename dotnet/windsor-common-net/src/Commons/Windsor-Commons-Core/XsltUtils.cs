@@ -217,7 +217,35 @@ namespace Windsor.Commons.Core
 
         }
 
+        public void Transform(string sourceXmlPath, string xsltPath, string targetXmlPath)
+        {
+            using (XmlTextReader xmlSource = new XmlTextReader(sourceXmlPath))
+            {
+                XPathDocument xpathDoc = new XPathDocument(xmlSource);
 
+                using (XmlTextWriter writer = new XmlTextWriter(targetXmlPath, _defaultEncoding))
+                {
+                    string startDirectory = Environment.CurrentDirectory;
+                    Environment.CurrentDirectory = Path.GetDirectoryName(xsltPath);
 
+                    try
+                    {
+                        using (XmlTextReader xslSource = new XmlTextReader(xsltPath))
+                        {
+                            XslCompiledTransform xsltDoc = new XslCompiledTransform();
+
+                            xsltDoc.Load(xslSource);
+
+                            xsltDoc.Transform(xpathDoc, null, writer);
+                            writer.Close();
+                        }
+                    }
+                    finally
+                    {
+                        Environment.CurrentDirectory = startDirectory;
+                    }
+                }
+            }
+        }
     }
 }

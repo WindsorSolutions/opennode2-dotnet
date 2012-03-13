@@ -247,6 +247,10 @@
       <Project>{2249EFD8-40F1-4C41-BCF0-AD29FEDFCBD0}</Project>
       <Name>Windsor.Commons.Spring</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\windsor-common-net\src\Commons\Windsor-Commons-XsdOrm2\Windsor.Commons.XsdOrm2.csproj">
+      <Project>{DA9F525D-A2D8-469C-B7D7-1CD14173DD57}</Project>
+      <Name>Windsor.Commons.XsdOrm2</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\windsor-common-net\src\Commons\Windsor-Commons-XsdOrm\Windsor.Commons.XsdOrm.csproj">
       <Project>{8A62B9FD-50DC-4712-9237-ADE3CDC0A3D4}</Project>
       <Name>Windsor.Commons.XsdOrm</Name>

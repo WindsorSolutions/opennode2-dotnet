@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:icis="http://www.exchangenetwork.net/schema/icis/3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/icis/3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="3">
+	<xsd:include schemaLocation="ICIS_Address_v3.1.xsd"/>
+	<xsd:include schemaLocation="ICIS_Contact_v3.1.xsd"/>
+	<xsd:include schemaLocation="ICIS_GeographicCoordinates_v3.1.xsd"/>
+	<xsd:include schemaLocation="ICIS_SICNAICS_v3.1.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>Schema Name: ICIS_Facility_v3.1.xsd</xsd:documentation>
+		<xsd:documentation>Current Version Available: http://www.exchangenetwork.net/schema/icis/3</xsd:documentation>
+		<xsd:documentation>Description: ICIS-NPDES facility data input format</xsd:documentation>
+		<xsd:documentation>Application: ICIS-NPDES</xsd:documentation>
+		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
+		<xsd:documentation>Point of Contact: EPA/Alison Kittle</xsd:documentation>
+		<xsd:documentation>Data Written: July 2006</xsd:documentation>
+		<xsd:documentation>Last Date Modified: 2012-02-16</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="ConstructionProjectLatitudeMeasure" type="icis:Decimal10FloatingType"/>
+	<xsd:element name="ConstructionProjectLongitudeMeasure" type="icis:Decimal11FloatingType"/>
+	<xsd:element name="ConstructionProjectName" type="icis:StringMin1Max50Type"/>
+	<xsd:element name="Facility" type="icis:Facility"/>
+	<xsd:element name="FacilityClassification" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="FacilityComments" type="icis:StringMin1Max4000Type"/>
+	<xsd:element name="FacilityCongressionalDistrictNumber" type="icis:Integer2FixedRange01To99Type"/>
+	<xsd:element name="FacilityTypeOfOwnershipCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="FacilityUserDefinedField1" type="icis:StringMin1Max30Type"/>
+	<xsd:element name="FacilityUserDefinedField2" type="icis:StringMin1Max30Type"/>
+	<xsd:element name="FacilityUserDefinedField3" type="icis:StringMin1Max30Type"/>
+	<xsd:element name="FacilityUserDefinedField4" type="icis:StringMin1Max30Type"/>
+	<xsd:element name="FacilityUserDefinedField5" type="icis:StringMin1Max30Type"/>
+	<xsd:element name="FederalAgencyCode" type="icis:StringMin1Max5Type"/>
+	<xsd:element name="FederalFacilityIdentificationNumber" type="icis:StringMin1Max12Type"/>
+	<xsd:element name="OriginatingProgramsCode" type="icis:StringMin1Max9Type"/>
+	<xsd:element name="PolicyCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="SectionTownshipRange" type="icis:StringMin1Max50Type"/>
+	<xsd:element name="TribalLandCode" type="icis:StringMin1Max4Type"/>
+	<xsd:group name="FacilityGroup">
+		<xsd:sequence>
+			<xsd:group ref="icis:FacilityLocationAddressGroup" minOccurs="0"/>
+			<xsd:element ref="icis:StateFacilityIdentifier" minOccurs="0"/>
+			<xsd:element ref="icis:StateRegionCode" minOccurs="0"/>
+			<xsd:element ref="icis:FacilityCongressionalDistrictNumber" minOccurs="0"/>
+			<xsd:element ref="icis:FacilityClassification" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="icis:PolicyCode" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="icis:OriginatingProgramsCode" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="icis:FacilityTypeOfOwnershipCode" minOccurs="0"/>
+			<xsd:element ref="icis:FederalFacilityIdentificationNumber" minOccurs="0"/>
+			<xsd:element ref="icis:FederalAgencyCode" minOccurs="0"/>
+			<xsd:element ref="icis:TribalLandCode" minOccurs="0"/>
+			<xsd:element ref="icis:ConstructionProjectName" minOccurs="0"/>
+			<xsd:element ref="icis:ConstructionProjectLatitudeMeasure" minOccurs="0"/>
+			<xsd:element ref="icis:ConstructionProjectLongitudeMeasure" minOccurs="0"/>
+			<xsd:element ref="icis:SICCodeDetails" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="icis:NAICSCodeDetails" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="icis:SectionTownshipRange" minOccurs="0"/>
+			<xsd:element ref="icis:FacilityComments" minOccurs="0"/>
+			<xsd:element ref="icis:FacilityUserDefinedField1" minOccurs="0"/>
+			<xsd:element ref="icis:FacilityUserDefinedField2" minOccurs="0"/>
+			<xsd:element ref="icis:FacilityUserDefinedField3" minOccurs="0"/>
+			<xsd:element ref="icis:FacilityUserDefinedField4" minOccurs="0"/>
+			<xsd:element ref="icis:FacilityUserDefinedField5" minOccurs="0"/>
+			<xsd:element ref="icis:FacilityContact" minOccurs="0"/>
+			<xsd:element ref="icis:FacilityAddress" minOccurs="0"/>
+			<xsd:element ref="icis:GeographicCoordinates" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="Facility">
+		<xsd:sequence>
+			<xsd:group ref="icis:FacilityGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

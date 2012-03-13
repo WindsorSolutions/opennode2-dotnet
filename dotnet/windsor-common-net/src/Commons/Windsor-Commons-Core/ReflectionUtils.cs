@@ -736,6 +736,10 @@ namespace Windsor.Commons.Core
             }
             return methodInfo;
         }
+        public static List<T> GetAttributesOfTypeForMember<T>(MemberInfo member) where T : Attribute
+        {
+            return CollectionUtils.ToList<T, object>(member.GetCustomAttributes(typeof(T), true));
+        }
 
         [ThreadStatic]
         private static List<object> s_CurGetPublicPropertiesStringObjects;

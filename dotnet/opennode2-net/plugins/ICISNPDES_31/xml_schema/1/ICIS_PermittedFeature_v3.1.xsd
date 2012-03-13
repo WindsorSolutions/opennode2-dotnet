@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:icis="http://www.exchangenetwork.net/schema/icis/3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/icis/3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="3">
+	<xsd:include schemaLocation="ICIS_KeyElements_v3.1.xsd"/>
+	<xsd:include schemaLocation="ICIS_Contact_v3.1.xsd"/>
+	<xsd:include schemaLocation="ICIS_GeographicCoordinates_v3.1.xsd"/>
+	<xsd:include schemaLocation="ICIS_Status_v3.1.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>Schema Name: ICIS_PermittedFeature_v3.1.xsd</xsd:documentation>
+		<xsd:documentation>Current Version Available: http://www.exchangenetwork.net/schema/icis/3</xsd:documentation>
+		<xsd:documentation>Description: ICIS-NPDES permitted feature data input format</xsd:documentation>
+		<xsd:documentation>Application: ICIS-NPDES</xsd:documentation>
+		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
+		<xsd:documentation>Point of Contact: EPA/Alison Kittle</xsd:documentation>
+		<xsd:documentation>Data Written: July 2006</xsd:documentation>
+		<xsd:documentation>Last Date Modified: 2012-02-16</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="PermittedFeature" type="icis:PermittedFeature"/>
+	<xsd:element name="DoesUnitHaveDailyCover" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="FieldSize" type="icis:NonNegativeIntegerMin1Max3Type"/>
+	<xsd:element name="IsRequiredNitrateGroundWater" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="IsSiteOwnByFacility" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="IsSystemLinedWithLeachate" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="PermittedFeatureActualAverageFlowNumber" type="icis:NonNegativeDecimal8FloatingType"/>
+	<xsd:element name="PermittedFeatureCharacteristics" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="PermittedFeatureDescription" type="icis:StringMin1Max100Type"/>
+	<xsd:element name="PermittedFeatureDesignFlowNumber" type="icis:NonNegativeDecimal8FloatingType"/>
+	<xsd:element name="PermittedFeatureStateWaterBodyCode" type="icis:StringMin1Max12Type"/>
+	<xsd:element name="PermittedFeatureStateWaterBodyName" type="icis:StringMin1Max50Type"/>
+	<xsd:element name="PermittedFeatureTreatmentTypeCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="PermittedFeatureTypeCode" type="icis:StringMin1Max3TypeBase"/>
+	<xsd:element name="PermittedFeatureUserDefinedDataElement1" type="icis:StringMin1Max30Type"/>
+	<xsd:element name="PermittedFeatureUserDefinedDataElement2" type="icis:StringMin1Max30Type"/>
+	<xsd:element name="PropertyBoundaryDistance" type="icis:NonNegativeIntegerMin1Max3Type"/>
+	<xsd:element name="SourcePermittedFeatureDetailText" type="icis:StringMin1Max200Type"/>
+	<xsd:element name="WellNumber" type="icis:NonNegativeIntegerMin1Max5Type"/>
+	<xsd:complexType name="PermittedFeatureData">
+		<xsd:sequence>
+			<xsd:element ref="icis:TransactionHeader"/>
+			<xsd:element ref="icis:PermittedFeature"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PermittedFeature">
+		<xsd:complexContent>
+			<xsd:extension base="icis:PermittedFeatureKeyElements">
+				<xsd:sequence>
+					<xsd:element ref="icis:PermittedFeatureTypeCode" minOccurs="0"/>
+					<xsd:element ref="icis:PermittedFeatureCharacteristics" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="icis:PermittedFeatureDescription" minOccurs="0"/>
+					<xsd:element ref="icis:PermittedFeatureTreatmentTypeCode" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="icis:PermittedFeatureDesignFlowNumber" minOccurs="0"/>
+					<xsd:element ref="icis:PermittedFeatureActualAverageFlowNumber" minOccurs="0"/>
+					<xsd:element ref="icis:PermittedFeatureStateWaterBodyCode" minOccurs="0"/>
+					<xsd:element ref="icis:PermittedFeatureStateWaterBodyName" minOccurs="0"/>
+					<xsd:element ref="icis:PermittedFeatureUserDefinedDataElement1" minOccurs="0"/>
+					<xsd:element ref="icis:PermittedFeatureUserDefinedDataElement2" minOccurs="0"/>
+					<xsd:element ref="icis:FieldSize" minOccurs="0"/>
+					<xsd:element ref="icis:IsSiteOwnByFacility" minOccurs="0"/>
+					<xsd:element ref="icis:IsSystemLinedWithLeachate" minOccurs="0"/>
+					<xsd:element ref="icis:DoesUnitHaveDailyCover" minOccurs="0"/>
+					<xsd:element ref="icis:PropertyBoundaryDistance" minOccurs="0"/>
+					<xsd:element ref="icis:IsRequiredNitrateGroundWater" minOccurs="0"/>
+					<xsd:element ref="icis:WellNumber" minOccurs="0"/>
+					<xsd:element ref="icis:GeographicCoordinates" minOccurs="0"/>
+					<xsd:element ref="icis:SourcePermittedFeatureDetailText" minOccurs="0"/>
+					<xsd:element ref="icis:SiteOwnerContact" minOccurs="0"/>
+					<xsd:element ref="icis:SiteOwnerAddress" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+</xsd:schema>
