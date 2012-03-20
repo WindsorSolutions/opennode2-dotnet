@@ -584,6 +584,10 @@
       <Project>{73AAC6A1-0028-4947-8B57-2DDE04D6D115}</Project>
       <Name>Windsor.Commons.GenericCollectionLibrary</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\windsor-common-net\src\Commons\Windsor-Commons-NodeClient\Windsor.Commons.NodeClient.csproj">
+      <Project>{E5B7FB63-FD4F-488F-A620-8E61849BB79A}</Project>
+      <Name>Windsor.Commons.NodeClient</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\windsor-common-net\src\Commons\Windsor-Commons-NodeDomain\Windsor.Commons.NodeDomain.csproj">
       <Project>{D5374478-B3C9-4920-93FB-0FA5C2AFA446}</Project>
       <Name>Windsor.Commons.NodeDomain</Name>

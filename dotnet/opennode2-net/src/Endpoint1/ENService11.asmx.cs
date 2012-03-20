@@ -61,6 +61,7 @@ using Windsor.Node2008.WNOSConnector.Provider;
 using Windsor.Node2008.WNOSDomain;
 using Windsor.Commons.Logging;
 using Windsor.Commons.NodeDomain;
+using Windsor.Commons.Core;
 
 namespace Windsor.Node2008.Endpoint1
 {
@@ -433,39 +434,40 @@ namespace Windsor.Node2008.Endpoint1
 
 
                 List<NodeDocument> wsdlDocList = new List<NodeDocument>();
-                Dictionary<string, string> docIdList = new Dictionary<string, string>();
 
-                LOG.Debug("Spooling documents");
-                foreach (Document wnosDoc in wnosDocs)
+                if (!CollectionUtils.IsNullOrEmpty(wnosDocs))
                 {
-                    NodeDocument doc = new NodeDocument();
 
-                    doc.content = wnosDoc.Content;
-                    doc.type = CommonContentAndFormatProvider.ConvertTo11Enum(wnosDoc.Type);
-                    doc.name = wnosDoc.DocumentName;
-                    LOG.Debug("   doc:" + doc);
+                    Dictionary<string, string> docIdList = new Dictionary<string, string>();
 
-                    DimeAttachment attachment = new DimeAttachment();
-                    attachment.Stream = new MemoryStream(doc.content);
-                    attachment.TypeFormat = TypeFormatEnum.MediaType;
-                    attachment.Type = "application/x-gzip";
-                    attachment.Id = Guid.NewGuid().ToString();
+                    LOG.Debug("Spooling documents");
+                    foreach (Document wnosDoc in wnosDocs)
+                    {
+                        NodeDocument doc = new NodeDocument();
 
-                    //Add to the the xref filter collection
-                    docIdList.Add(doc.name, attachment.Id);
+                        doc.content = wnosDoc.Content;
+                        doc.type = CommonContentAndFormatProvider.ConvertTo11Enum(wnosDoc.Type);
+                        doc.name = wnosDoc.DocumentName;
+                        LOG.Debug("   doc:" + doc);
 
-                    res.Attachments.Add(attachment);
-                    wsdlDocList.Add(doc);
+                        DimeAttachment attachment = new DimeAttachment();
+                        attachment.Stream = new MemoryStream(doc.content);
+                        attachment.TypeFormat = TypeFormatEnum.MediaType;
+                        attachment.Type = "application/x-gzip";
+                        attachment.Id = Guid.NewGuid().ToString();
 
+                        //Add to the the xref filter collection
+                        docIdList.Add(doc.name, attachment.Id);
+
+                        res.Attachments.Add(attachment);
+                        wsdlDocList.Add(doc);
+
+                    }
+                    //Output filter specific
+                    res.Add("hrefs", docIdList);
                 }
 
                 documents = wsdlDocList.ToArray();
-
-
-                //Output filter specific
-                res.Add("hrefs", docIdList);
-
-
             }
             catch (Exception ex)
             {

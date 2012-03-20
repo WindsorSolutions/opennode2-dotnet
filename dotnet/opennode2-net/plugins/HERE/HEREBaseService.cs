@@ -104,6 +104,7 @@ namespace Windsor.Node2008.WNOSPlugin.HERE
             {
                 throw new ApplicationException("Invalid Number of Days argument");
             }
+            AppendAuditLogEvent("Num days parameter: \"{0}\"", _numOfDays.ToString());
             _argDate = DateTime.Now.AddDays(-_numOfDays);
         }
 
