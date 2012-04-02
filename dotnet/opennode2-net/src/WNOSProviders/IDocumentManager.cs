@@ -72,6 +72,11 @@ namespace Windsor.Node2008.WNOSProviders
         Document GetDocumentByName(string transactionId, string documentName, bool loadContent);
 
         /// <summary>
+        /// Gets an instance of a document given the input transaction and document name.
+        /// </summary>
+        bool HasDocumentByName(string transactionId, string documentName);
+
+        /// <summary>
         /// Gets db ids for all documents in the transaction.
         /// </summary>
         /// <param name="transactionId">Transaction Id</param>

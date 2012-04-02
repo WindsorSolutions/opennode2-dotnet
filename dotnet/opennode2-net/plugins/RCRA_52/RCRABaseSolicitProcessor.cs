@@ -55,17 +55,6 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
     [Serializable]
     public abstract class RCRABaseSolicitProcessor : BaseWNOSPlugin, ISolicitProcessor
 	{
-        protected class UserSubmitInfo
-        {
-            public UserSubmitInfo() { }
-            public UserSubmitInfo(string password, string infoUserId)
-            {
-                Password = password;
-                RCRAInfoUserID = infoUserId;
-            }
-            public string Password;
-            public string RCRAInfoUserID;
-        }
         protected const string CONFIG_ADD_HEADER = "Add Header";
         protected const string CONFIG_AUTHOR = "Author";
         protected const string CONFIG_ORGANIZATION = "Organization";
@@ -78,7 +67,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
         protected const string CONFIG_NAAS_USER_MAPPING_FILE_PATH = "NAAS User Mapping File Path";
         protected const string CONFIG_SUBMISSION_PARTNER_NAME = "Submission Partner Name";
         protected const string CONFIG_VALIDATE_XML = "Validate Xml (True or False)";
-        protected const string RCRA_FLOW_NAME = "RCRA";
+        public const string RCRA_FLOW_NAME = "RCRA";
 
         protected const string PARAM_NAAS_SUBMIT_USERNAME = "SubmitUsername";
 
@@ -335,7 +324,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
             publishFlags = DataServicePublishFlags.PublishToEndpointVersion11And20;
             return null;
         }
-        protected string SubmitFile(string filePath, string localTransactionId)
+        public string SubmitFile(string filePath, string localTransactionId)
         {
             string transactionId;
             try
@@ -386,24 +375,25 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
             }
             return transactionId;
         }
-        protected void ParseNaasUserMappingFile()
+        public static Dictionary<string, UserSubmitInfo> ParseNaasUserMappingFile(string mappingFilePath, BaseWNOSPlugin plugin)
         {
-            string naasUserMappingFilePath = null;
-            if (TryGetConfigParameter(CONFIG_NAAS_USER_MAPPING_FILE_PATH, ref naasUserMappingFilePath))
+            Dictionary<string, UserSubmitInfo> naasUsernameToPasswordMap = null;
+
+            if (!string.IsNullOrEmpty(mappingFilePath))
             {
                 try
                 {
-                    AppendAuditLogEvent("Attempting to parse NAAS User Mapping File: \"{0}\"", naasUserMappingFilePath);
-                    if (!File.Exists(naasUserMappingFilePath))
+                    plugin.AppendAuditLogEvent("Attempting to parse NAAS User Mapping File: \"{0}\"", mappingFilePath);
+                    if (!File.Exists(mappingFilePath))
                     {
                         throw new ArgumentException(string.Format("The NAAS User Mapping File was not found: \"{0}\"",
-                                                                  naasUserMappingFilePath));
+                                                                  mappingFilePath));
                     }
-                    using (TextFieldParser parser = new TextFieldParser(naasUserMappingFilePath))
+                    using (TextFieldParser parser = new TextFieldParser(mappingFilePath))
                     {
                         parser.TextFieldType = FieldType.Delimited;
                         parser.Delimiters = new string[] { "," };
-                        _naasUsernameToPasswordMap = new Dictionary<string, UserSubmitInfo>();
+                        naasUsernameToPasswordMap = new Dictionary<string, UserSubmitInfo>();
                         for (; ; )
                         {
                             long lineNumber = parser.LineNumber;
@@ -441,22 +431,42 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
                                 {
                                     throw new ArgumentException(string.Format("Missing RCRAInfoUserID for username {0} on line: {1}", username, lineNumber));
                                 }
-                                _naasUsernameToPasswordMap.Add(username, new UserSubmitInfo(password, infoUserId));
+                                naasUsernameToPasswordMap.Add(username, new UserSubmitInfo(password, infoUserId));
                             }
                         }
-                        AppendAuditLogEvent("Found {0} usernames in NAAS User Mapping File", _naasUsernameToPasswordMap.Count);
+                        plugin.AppendAuditLogEvent("Found {0} usernames in NAAS User Mapping File", naasUsernameToPasswordMap.Count);
                     }
                 }
                 catch (Exception e)
                 {
-                    AppendAuditLogEvent("Failed to load NAAS User Mapping File: {0}", e.Message);
+                    plugin.AppendAuditLogEvent("Failed to load NAAS User Mapping File: {0}", e.Message);
                     throw;
                 }
             }
             else
             {
-                AppendAuditLogEvent("A NAAS User Mapping File was not specified.");
+                plugin.AppendAuditLogEvent("A NAAS User Mapping File was not specified.");
             }
+            return naasUsernameToPasswordMap;
         }
+        protected void ParseNaasUserMappingFile()
+        {
+            string naasUserMappingFilePath = null;
+            TryGetConfigParameter(CONFIG_NAAS_USER_MAPPING_FILE_PATH, ref naasUserMappingFilePath);
+            _naasUsernameToPasswordMap = ParseNaasUserMappingFile(naasUserMappingFilePath, this);
+        }
+    }
+    public class UserSubmitInfo
+    {
+        public UserSubmitInfo()
+        {
+        }
+        public UserSubmitInfo(string password, string infoUserId)
+        {
+            Password = password;
+            RCRAInfoUserID = infoUserId;
+        }
+        public string Password;
+        public string RCRAInfoUserID;
     }
 }

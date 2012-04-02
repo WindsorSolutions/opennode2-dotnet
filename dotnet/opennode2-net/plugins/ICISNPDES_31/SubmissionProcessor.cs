@@ -147,8 +147,12 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
                 }
 
                 AppendAuditLogEvent("Deserializing document data to ICIS data");
-                Windsor.Node2008.WNOSPlugin.ICISNPDES_31.Document data =
-                    _serializationHelper.Deserialize<Windsor.Node2008.WNOSPlugin.ICISNPDES_31.Document>(tempXmlFilePath);
+                XmlReader reader = new NamespaceSpecifiedXmlTextReader("http://www.exchangenetwork.net/schema/icis/3", tempXmlFilePath);
+                Windsor.Node2008.WNOSPlugin.ICISNPDES_31.Document data = 
+                    _serializationHelper.Deserialize<Windsor.Node2008.WNOSPlugin.ICISNPDES_31.Document>(reader);
+
+                //Windsor.Node2008.WNOSPlugin.ICISNPDES_31.Document data =
+                //    _serializationHelper.Deserialize<Windsor.Node2008.WNOSPlugin.ICISNPDES_31.Document>(tempXmlFilePath);
 
                 if (CollectionUtils.IsNullOrEmpty(data.Payload))
                 {

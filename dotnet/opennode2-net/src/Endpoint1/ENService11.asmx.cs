@@ -62,6 +62,7 @@ using Windsor.Node2008.WNOSDomain;
 using Windsor.Commons.Logging;
 using Windsor.Commons.NodeDomain;
 using Windsor.Commons.Core;
+using System.Xml;
 
 namespace Windsor.Node2008.Endpoint1
 {
@@ -184,13 +185,44 @@ namespace Windsor.Node2008.Endpoint1
                 context.Attachments == null ||
                 context.Attachments.Count == 0)
             {
-                // Check to see if the documents themselves contain the content
+                bool allContentNull = true;
+                bool anyContentMissing = false;
                 foreach (NodeDocument document in documents)
                 {
-                    if ((document.content == null) || (document.content.Length == 0))
+                    if (document.content == null)
                     {
+                        anyContentMissing = true;
+                    }
+                    else
+                    {
+                        allContentNull = false;
+                    }
+                }
+                if (anyContentMissing)
+                {
+                    if (!allContentNull)
+                    {
+                        // Some documents contain content, some don't, what the heck is this???
                         throw _service11Provider.FaultProvider.GetFault(EndpointVersionType.EN11, ENExceptionCodeType.E_InvalidParameter,
                                                                         "Some documents do not contain any content.");
+                    }
+                    // All document content is null, attempt to locate all <content> elements in the xml itself
+                    XmlNodeList nodeList = context.Envelope.Body.GetElementsByTagName("content");
+                    if ((nodeList == null) || (nodeList.Count != documents.Length))
+                    {
+                        throw _service11Provider.FaultProvider.GetFault(EndpointVersionType.EN11, ENExceptionCodeType.E_InvalidParameter,
+                                                                        "Could not locate the data content for the submitted documents.");
+                    }
+                    int index = 0;
+                    foreach (NodeDocument document in documents)
+                    {
+                        XmlNode contentContentNode = nodeList[index++];
+                        if (string.IsNullOrEmpty(contentContentNode.InnerXml))
+                        {
+                            throw _service11Provider.FaultProvider.GetFault(EndpointVersionType.EN11, ENExceptionCodeType.E_InvalidParameter,
+                                                                            "Some documents do not contain any content.");
+                        }
+                        document.content = System.Convert.FromBase64String(contentContentNode.InnerXml);
                     }
                 }
                 useDimeAttachments = false;

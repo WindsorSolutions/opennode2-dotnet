@@ -56,6 +56,7 @@ using Windsor.Commons.Logging;
 using Windsor.Commons.Spring;
 using Windsor.Commons.XsdOrm;
 using Windsor.Commons.NodeDomain;
+using Windsor.Commons.NodeClient;
 
 namespace Windsor.Node2008.WNOSPlugin.RCRA_52
 {
@@ -69,6 +70,10 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
         protected IDocumentManager _documentManager;
         protected IObjectsFromDatabase _objectsFromDatabase;
         protected IHeaderDocumentHelper _headerDocumentHelper;
+        protected IPartnerManager _partnerManager;
+        protected ISettingsProvider _settingsProvider;
+        protected INodeEndpointClientFactory _nodeEndpointClientFactory;
+        protected ITransactionManager _transactionManager;
 
         protected bool _addHeader;
         protected string _author;
@@ -79,6 +84,9 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
         protected string _title;
         protected string _rcraInfoUserId;
         protected string _rcraInfoStateCode;
+        protected PartnerIdentity _submitPartnerNode;
+        protected string _submitUsername;
+        protected Dictionary<string, UserSubmitInfo> _naasUsernameToPasswordMap;
 
         protected const string CONFIG_ADD_HEADER = "Add Header";
         protected const string CONFIG_AUTHOR = "Author";
@@ -89,6 +97,10 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
         protected const string CONFIG_TITLE = "Title";
         protected const string CONFIG_RCRA_INFO_USER_ID = "RCRAInfoUserID";
         protected const string CONFIG_RCRA_INFO_STATE_CODE = "RCRAInfoStateCode";
+        protected const string CONFIG_NAAS_USER_MAPPING_FILE_PATH = "NAAS User Mapping File Path";
+        protected const string CONFIG_SUBMISSION_PARTNER_NAME = "Submission Partner Name";
+
+        protected const string PARAM_NAAS_SUBMIT_USERNAME = "SubmitUsername";
         #endregion
 
         public BasePerformRCRASubmission()
@@ -104,6 +116,8 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
             ConfigurationArguments.Add(CONFIG_TITLE, null);
             ConfigurationArguments.Add(CONFIG_RCRA_INFO_USER_ID, null);
             ConfigurationArguments.Add(CONFIG_RCRA_INFO_STATE_CODE, null);
+            ConfigurationArguments.Add(CONFIG_NAAS_USER_MAPPING_FILE_PATH, null);
+            ConfigurationArguments.Add(CONFIG_SUBMISSION_PARTNER_NAME, null);
         }
 
         public override void ProcessTask(string requestId)
@@ -137,6 +151,10 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
             GetServiceImplementation(out _documentManager);
             GetServiceImplementation(out _objectsFromDatabase);
             GetServiceImplementation(out _headerDocumentHelper);
+            GetServiceImplementation(out _partnerManager);
+            GetServiceImplementation(out _settingsProvider);
+            GetServiceImplementation(out _nodeEndpointClientFactory);
+            GetServiceImplementation(out _transactionManager);
 
             GetConfigParameter(CONFIG_ADD_HEADER, true, out _addHeader);
             _author = ValidateNonEmptyConfigParameter(CONFIG_AUTHOR);
@@ -147,12 +165,69 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
             TryGetConfigParameter(CONFIG_NOTIFICATIONS, ref _notifications);
             _rcraInfoUserId = ValidateNonEmptyConfigParameter(CONFIG_RCRA_INFO_USER_ID);
             _rcraInfoStateCode = ValidateNonEmptyConfigParameter(CONFIG_RCRA_INFO_STATE_CODE);
+
+            ParseNaasUserMappingFile();
+
+            string submitPartnerName = null;
+            if (TryGetConfigParameter(CONFIG_SUBMISSION_PARTNER_NAME, ref submitPartnerName))
+            {
+                _submitPartnerNode = _partnerManager.GetByName(submitPartnerName);
+                if (_submitPartnerNode == null)
+                {
+                    throw new ArgumentException(string.Format("A submission partner with the name \"{0}\" specified for this service cannot be found",
+                                                              submitPartnerName));
+                }
+            }
+            if (_submitPartnerNode != null)
+            {
+                if (_naasUsernameToPasswordMap == null)
+                {
+                    throw new ArgumentException(string.Format("The service specifies a \"{0},\" but does not specify a \"{1}\"",
+                                                              CONFIG_SUBMISSION_PARTNER_NAME, CONFIG_NAAS_USER_MAPPING_FILE_PATH));
+                }
+            }
+            else if (_naasUsernameToPasswordMap != null)
+            {
+                if (_submitPartnerNode == null)
+                {
+                    throw new ArgumentException(string.Format("The service specifies a \"{0},\" but does not specify a \"{1}\"",
+                                                              CONFIG_NAAS_USER_MAPPING_FILE_PATH, CONFIG_SUBMISSION_PARTNER_NAME));
+                }
+            }
+        }
+        protected void ParseNaasUserMappingFile()
+        {
+            string naasUserMappingFilePath = null;
+            TryGetConfigParameter(CONFIG_NAAS_USER_MAPPING_FILE_PATH, ref naasUserMappingFilePath);
+            _naasUsernameToPasswordMap = RCRABaseSolicitProcessor.ParseNaasUserMappingFile(naasUserMappingFilePath, this);
         }
         protected override void ValidateRequest(string requestId)
         {
             base.ValidateRequest(requestId);
 
-            TryGetParameter(_dataRequest, PARAM_USE_SUBMISSION_HISTORY_TABLE_KEY, 1, ref _useSubmissionHistoryTable);
+            TryGetParameter(_dataRequest, PARAM_USE_SUBMISSION_HISTORY_TABLE_KEY, 0, ref _useSubmissionHistoryTable);
+
+            if (TryGetParameter(_dataRequest, PARAM_NAAS_SUBMIT_USERNAME, 1, ref _submitUsername))
+            {
+                if (_naasUsernameToPasswordMap == null)
+                {
+                    throw new ArgumentException(string.Format("A request parameter \"{0}\" = \"{1}\" was specified, but the service does not specify a \"{2}\" config parameter",
+                                                              PARAM_NAAS_SUBMIT_USERNAME, _submitUsername, CONFIG_NAAS_USER_MAPPING_FILE_PATH));
+                }
+                if (!_naasUsernameToPasswordMap.ContainsKey(_submitUsername.ToUpper()))
+                {
+                    throw new ArgumentException(string.Format("A request parameter \"{0}\" = \"{1}\" was specified, but the username was not found in the mapping file specified by the \"{2}\" config parameter",
+                                                              PARAM_NAAS_SUBMIT_USERNAME, _submitUsername, CONFIG_NAAS_USER_MAPPING_FILE_PATH));
+                }
+                UserSubmitInfo userSubmitInfo = _naasUsernameToPasswordMap[_submitUsername.ToUpper()];
+                _rcraInfoUserId = userSubmitInfo.RCRAInfoUserID;
+                AppendAuditLogEvent("{0}: {1}", PARAM_NAAS_SUBMIT_USERNAME, _submitUsername);
+            }
+            else
+            {
+                AppendAuditLogEvent("{0} was not specified", PARAM_NAAS_SUBMIT_USERNAME);
+            }
+
         }
         protected virtual string GenerateSubmissionFile(T data)
         {
@@ -218,22 +293,29 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
         protected virtual string GenerateSubmissionFileAndAddToTransaction(T data)
         {
             string submitFile = GenerateSubmissionFile(data);
+            string zippedFile = _settingsProvider.NewTempFilePath(".zip");
             try
             {
+                _compressionHelper.CompressFile(submitFile, zippedFile);
+
                 AppendAuditLogEvent("Attaching submission document to transaction \"{0}\"",
                                     _dataRequest.TransactionId);
                 _documentManager.AddDocument(_dataRequest.TransactionId,
                                              CommonTransactionStatusCode.Completed,
-                                             null, submitFile);
+                                             null, zippedFile);
             }
             catch (Exception e)
             {
                 AppendAuditLogEvent("Failed to attach submission document \"{0}\" to transaction \"{1}\" with exception: {2}",
                                     submitFile, _dataRequest.TransactionId, ExceptionUtils.ToShortString(e));
-                FileUtils.SafeDeleteFile(submitFile);
+                FileUtils.SafeDeleteFile(zippedFile);
                 throw;
             }
-            return submitFile;
+            finally
+            {
+                FileUtils.SafeDeleteFile(submitFile);
+            }
+            return zippedFile;
         }
         protected virtual void PerformSubmission()
         {
@@ -264,6 +346,61 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
         }
         protected virtual void ProcessSubmissionFile(string submissionFile)
         {
+            if (_submitUsername != null)
+            {
+                SubmitFile(submissionFile, _dataRequest.TransactionId);
+            }
+        }
+        public string SubmitFile(string filePath, string localTransactionId)
+        {
+            string transactionId;
+            try
+            {
+                UserSubmitInfo userSubmitInfo = _naasUsernameToPasswordMap[_submitUsername.ToUpper()];
+                AppendAuditLogEvent("Submitting results to endpoint \"{0}\" using NAAS account: \"{1}\"", _submitPartnerNode.Name,
+                                    _submitUsername);
+                string networkFlowName = RCRABaseSolicitProcessor.RCRA_FLOW_NAME, networkFlowOperation = null;
+                try
+                {
+                    using (INodeEndpointClient endpointClient = _nodeEndpointClientFactory.Make(_submitPartnerNode.Url, _submitPartnerNode.Version,
+                                                                                                new AuthenticationCredentials(_submitUsername, userSubmitInfo.Password)))
+                    {
+                        if (endpointClient.Version == EndpointVersionType.EN20)
+                        {
+                            transactionId =
+                                endpointClient.Submit(networkFlowName, "default",
+                                                      string.Empty, new string[] { filePath });
+                            networkFlowOperation = "default";
+                        }
+                        else
+                        {
+                            transactionId =
+                                endpointClient.Submit(networkFlowName, null, new string[] { filePath });
+                        }
+                    }
+                    AppendAuditLogEvent("Successfully submitted results to endpoint \"{0}\" with returned transaction id \"{1}\"",
+                                        _submitPartnerNode.Name, transactionId);
+                }
+                catch (Exception e)
+                {
+                    AppendAuditLogEvent("Failed to submit results to endpoint \"{0}\": {1}",
+                                        _submitPartnerNode.Name, ExceptionUtils.ToShortString(e));
+                    throw;
+                }
+                _transactionManager.SetNetworkId(localTransactionId, transactionId, _submitPartnerNode.Version,
+                                                 _submitPartnerNode.Url, networkFlowName, networkFlowOperation);
+            }
+            catch (Exception e)
+            {
+                AppendAuditLogEvent("Failed to submit results to endpoint \"{0}\" with exception: {1}",
+                                    _submitPartnerNode.Name, ExceptionUtils.ToShortString(e));
+                throw;
+            }
+            finally
+            {
+                FileUtils.SafeDeleteFile(filePath);
+            }
+            return transactionId;
         }
     }
 }

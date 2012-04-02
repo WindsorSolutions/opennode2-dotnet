@@ -129,12 +129,14 @@ namespace Windsor.Commons.XsdOrm2
         {
             try
             {
-                Value = (T)value;
+                Value = (T)Convert.ChangeType(value, typeof(T));
+                //Value = (T)value;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 DebugUtils.CheckDebuggerBreak();
-                throw;
+                throw new ArgException("Failed to convert the database value \"{0}\" to type \"{1}\" with exception: {2}",
+                                       value, typeof(T).Name, ExceptionUtils.GetDeepExceptionMessage(ex));
             }
         }
     }

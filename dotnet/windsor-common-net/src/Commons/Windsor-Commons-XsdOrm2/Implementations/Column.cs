@@ -342,7 +342,16 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                 if (value != null)
                 {
                     CustomXmlStringFormatTypeBase newValue = (CustomXmlStringFormatTypeBase) Activator.CreateInstance(m_MemberType);
-                    newValue.SetValue(value);
+                    try
+                    {
+                        newValue.SetValue(value);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new ArgException("Failed to convert the database value \"{0}\" of type \"{1}\" to type \"{2}\" for column \"{3}.{4}\" with exception: {5}",
+                                               value, value.GetType().Name, m_MemberType.Name, this.Table.TableName,
+                                               this.ColumnName, ExceptionUtils.GetDeepExceptionMessage(ex));
+                    }
                     value = newValue;
                 }
             }

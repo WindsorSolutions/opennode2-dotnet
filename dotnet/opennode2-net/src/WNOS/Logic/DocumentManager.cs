@@ -147,6 +147,11 @@ namespace Windsor.Node2008.WNOS.Logic
             }
 			return document;
         }
+        public bool HasDocumentByName(string transactionId, string documentName)
+        {
+
+            return (_documentDao.GetDocumentByDocumentName(transactionId, documentName) != null);
+        }
         public Document GetDocumentByName(string transactionId, string documentName, bool loadContent)
         {
 

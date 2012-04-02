@@ -123,8 +123,8 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_21
             {
                 IDbParameters parameters = baseDao.AdoTemplate.CreateDbParameters();
                 parameters.AddWithValue(p_effective_year, attributeEffectiveYear);
-                parameters.AddOut(p_runtime_txt, DbType.String, 2048);
-                parameters.AddOut(p_runtime, DbType.Date);
+                IDbDataParameter runtimeTextParameter = parameters.AddOut(p_runtime_txt, DbType.String, 2048);
+                IDbDataParameter runtimeParameter = parameters.AddOut(p_runtime, DbType.Date);
 
                 baseDao.AdoTemplate.Execute<int>(delegate(DbCommand command)
                 {
@@ -146,17 +146,17 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_21
                         throw;
                     }
 
-                    if (command.Parameters[p_runtime_txt].Value != DBNull.Value)
+                    if (command.Parameters[runtimeTextParameter.ParameterName].Value != DBNull.Value)
                     {
-                        string procMessage = command.Parameters[p_runtime_txt].Value.ToString();
+                        string procMessage = command.Parameters[runtimeTextParameter.ParameterName].Value.ToString();
                         procMessage = procMessage.Replace("\r\n", "\r");
                         procMessage = procMessage.Replace("\r", "\r\n");
                         plugin.AppendAuditLogEvent(procMessage);
                     }
 
-                    if (command.Parameters[p_runtime].Value != DBNull.Value)
+                    if (command.Parameters[runtimeParameter.ParameterName].Value != DBNull.Value)
                     {
-                        runtime = DateTime.Parse(command.Parameters[p_runtime].Value.ToString());
+                        runtime = DateTime.Parse(command.Parameters[runtimeParameter.ParameterName].Value.ToString());
                     }
                     
                     return 0;

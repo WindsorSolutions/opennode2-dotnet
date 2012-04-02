@@ -97,7 +97,6 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
                 IDbParameters parameters = etlDao.AdoTemplate.CreateDbParameters();
                 IDbDataParameter pkParameter = parameters.AddOut(p_pk_param_name, DbType.String, 50);
 
-
                 etlDao.AdoTemplate.Execute<int>(delegate(DbCommand command)
                 {
                     command.CommandType = CommandType.StoredProcedure;

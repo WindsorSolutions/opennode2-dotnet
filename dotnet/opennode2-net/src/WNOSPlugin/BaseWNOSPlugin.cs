@@ -845,11 +845,21 @@ namespace Windsor.Node2008.WNOSPlugin
                                                   ISerializationHelper serializationHelper,
                                                   ICompressionHelper compressionHelper,
                                                   IDocumentManager documentManager,
-                                                  out string operation)
+                                                  bool doValidate, out string operation)
         {
             Document document = documentManager.GetDocument(transactionId, documentId, true);
-            return GetHeaderDocumentContent(objectType, document, settingsProvider, serializationHelper,
-                                            compressionHelper, out operation);
+            return GetHeaderDocumentContent(objectType, transactionId, document, settingsProvider, serializationHelper,
+                                            compressionHelper, doValidate, out operation);
+        }
+        protected object GetHeaderDocumentContent(Type objectType, string transactionId, string documentId,
+                                                  ISettingsProvider settingsProvider,
+                                                  ISerializationHelper serializationHelper,
+                                                  ICompressionHelper compressionHelper,
+                                                  IDocumentManager documentManager,
+                                                  out string operation)
+        {
+            return GetHeaderDocumentContent(objectType, transactionId, documentId, settingsProvider, serializationHelper,
+                                            compressionHelper, documentManager, false, out operation);
         }
         protected T GetHeaderDocumentContent<T>(string transactionId, string documentId,
                                                 ISettingsProvider settingsProvider,
@@ -861,22 +871,25 @@ namespace Windsor.Node2008.WNOSPlugin
             return (T) GetHeaderDocumentContent(typeof(T), transactionId, documentId, settingsProvider, serializationHelper,
                                                 compressionHelper, documentManager, out operation);
         }
-        protected T GetHeaderDocumentContent<T>(Document document,
+        protected T GetHeaderDocumentContent<T>(Document document, string transactionId,
                                                 ISettingsProvider settingsProvider,
                                                 ISerializationHelper serializationHelper,
                                                 ICompressionHelper compressionHelper,
+                                                bool doValidate,
                                                 out string operation)
         {
-            return (T) GetHeaderDocumentContent(typeof(T), document, settingsProvider, serializationHelper,
-                                                compressionHelper, out operation);
+            return (T)GetHeaderDocumentContent(typeof(T), transactionId, document, settingsProvider, serializationHelper,
+                                                compressionHelper, doValidate, out operation);
         }
-        protected object GetHeaderDocumentContent(Type objectType, Document document,
+        protected object GetHeaderDocumentContent(Type objectType, string transactionId, Document document,
                                                   ISettingsProvider settingsProvider,
                                                   ISerializationHelper serializationHelper,
                                                   ICompressionHelper compressionHelper,
+                                                  bool doValidate,
                                                   out string operation)
         {
             string tempXmlFilePath = settingsProvider.NewTempFilePath();
+            string tempValidationXmlFilePath = settingsProvider.NewTempFilePath();
             try
             {
                 if (compressionHelper.IsCompressed(document.Content))
@@ -902,9 +915,20 @@ namespace Windsor.Node2008.WNOSPlugin
                         throw new ArgumentException("Submission document is missing a payload.");
                     }
                     data = serializationHelper.Deserialize(xmlPayload, objectType);
+                    if (doValidate)
+                    {
+                        serializationHelper.Serialize(data, tempValidationXmlFilePath);
+                        AppendAuditLogEvent("Validating xml document \"{0}\" against xml schema ...", document.DocumentName);
+                        ValidateXmlFileAndAttachErrorsToTransaction(tempValidationXmlFilePath, null, null, transactionId);
+                    }
                 }
                 else
                 {
+                    if (doValidate)
+                    {
+                        AppendAuditLogEvent("Validating xml document \"{0}\" against xml schema ...", document.DocumentName);
+                        ValidateXmlFileAndAttachErrorsToTransaction(tempXmlFilePath, null, null, transactionId);
+                    }
                     AppendAuditLogEvent("Submission document does not contain an exchange header, attempting to deserialize directly ...");
                     data = serializationHelper.Deserialize(tempXmlFilePath, objectType);
                 }
@@ -936,6 +960,7 @@ namespace Windsor.Node2008.WNOSPlugin
             finally
             {
                 FileUtils.SafeDeleteFile(tempXmlFilePath);
+                FileUtils.SafeDeleteFile(tempValidationXmlFilePath);
             }
         }
         protected void TrimListToRequestSize<T>(int rowIndex, int maxRowCount, List<T> list)
@@ -1410,6 +1435,11 @@ namespace Windsor.Node2008.WNOSPlugin
         protected virtual string ValidateXmlFile(string xmlFilePath, string xmlSchemaResourceName, 
                                                  string xmlSchemaRootFileName)
         {
+            if (string.IsNullOrEmpty(xmlSchemaResourceName))
+            {
+                xmlSchemaResourceName = "xml_schema.xml_schema.zip";
+            }
+
             AppendAuditLogEvent("Verifying xml schema validation source files ...");
             string xmlSchemaFolder = ExtractZippedResourceToTempFolder(xmlSchemaResourceName);
 
@@ -1506,8 +1536,10 @@ namespace Windsor.Node2008.WNOSPlugin
                 {
                     AppendAuditLogEvent("Attaching validation errors file \"{0}\" to transaction \"{1}\"",
                                         errorsFileName, transactionId);
+                    Document validationDoc = new Document(Path.GetFileName(validationErrorsFile), CommonContentType.Flat, File.ReadAllBytes(validationErrorsFile));
+                    validationDoc.DontAutoCompress = true;
                     documentManager.AddDocument(transactionId, CommonTransactionStatusCode.Completed,
-                                                null, validationErrorsFile);
+                                                null, validationDoc);
                 }
                 catch (Exception e)
                 {
