@@ -524,6 +524,26 @@ namespace Windsor.Commons.Core
                                                                    folderPath));
             }
         }
+        /// <summary>
+        /// Return the names of all files contained directly within the specified folder.
+        /// </summary>
+        /// <param name="folderPath"></param>
+        /// <returns></returns>
+        public static IList<string> GetFileNamesInFolder(string folderPath)
+        {
+            List<string> names = new List<string>(32);
+
+            using (FileSystemEnumerator enumerator = new FileSystemEnumerator(folderPath, "*", false,
+                                                                              FileSystemEnumerator.EReturnTypes.eReturnFiles))
+            {
+                foreach (string filePath in enumerator)
+                {
+                    names.Add(Path.GetFileName(filePath));
+                }
+            }
+
+            return names;
+        }
         public static void SetReadOnly(string filePath, bool isReadOnly)
         {
             FileAttributes attributes = File.GetAttributes(filePath);

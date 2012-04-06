@@ -782,6 +782,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
         Error,
         Information,
         Warning,
+        Accepted,
     }
 
     [Serializable]
