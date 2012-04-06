@@ -136,6 +136,9 @@
     <Compile Include="..\AssemblyInfo\AssemblyInfo.cs">
       <Link>AssemblyInfo.cs</Link>
     </Compile>
+    <None Include="..\AssemblyInfo\_AssemblyInfo.cs">
+      <Link>_AssemblyInfo.cs</Link>
+    </None>
     <Compile Include="Data\AccountAuthorizationRequestDao.cs" />
     <Compile Include="Data\ActivityDao.cs" />
     <Compile Include="Data\BaseDao.cs" />

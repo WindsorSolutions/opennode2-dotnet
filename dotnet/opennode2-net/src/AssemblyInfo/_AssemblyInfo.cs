@@ -44,10 +44,10 @@ namespace Windsor.Node2008.WNOS.AssemblyInfo
     internal static class AssemblyInfo
 	{
 		// [assembly: AssemblyVersion(AssemblyInfoServer.cAssemblyVersion)]
-        public const string cAssemblyVersion = "1.2.3.$WCREV$";
+        public const string cAssemblyVersion = "1.2.4.$WCREV$";
 		
 		// [assembly: AssemblyFileVersion(AssemblyInfoServer.cAssemblyFileVersion)]
-		public const string cAssemblyFileVersion = "1.2.3.$WCREV$";
+		public const string cAssemblyFileVersion = "1.2.4.$WCREV$";
 
 		// [assembly: AssemblyCompany(AssemblyInfoServer.cAssemblyCompany)]
 		public const string cAssemblyCompany = "Windsor Solutions, Inc."; 
