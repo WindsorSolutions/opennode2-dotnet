@@ -122,7 +122,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
             TryGetConfigParameter(CONFIG_PARAM_DELETE_EXISTING_DATA, ref _deleteExistingDataBeforeInsert);
             TryGetConfigParameter(CONFIG_PARAM_VALIDATE_XML, ref _validateXml);
         }
-        protected void ProcessSubmitDocument(string transactionId, string docId)
+        protected virtual void ProcessSubmitDocument(string transactionId, string docId)
         {
             string tempXmlFilePath = _settingsProvider.NewTempFilePath();
             try

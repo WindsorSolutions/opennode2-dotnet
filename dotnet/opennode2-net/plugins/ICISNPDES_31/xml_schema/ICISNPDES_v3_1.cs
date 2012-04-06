@@ -890,10 +890,18 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
         public decimal ConstructionProjectLatitudeMeasure;
 
         /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ConstructionProjectLatitudeMeasureSpecified;
+
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 20)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("10", "7")]
         public decimal ConstructionProjectLongitudeMeasure;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ConstructionProjectLongitudeMeasureSpecified;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("SICCodeDetails", Order = 21)]
@@ -1012,10 +1020,18 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
         public decimal LatitudeMeasure;
 
         /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool LatitudeMeasureSpecified;
+
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("10", "7")]
         public decimal LongitudeMeasure;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool LongitudeMeasureSpecified;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
@@ -1263,6 +1279,10 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("6", "1")]
         public decimal ProjectIsoerodentValue;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ProjectIsoerodentValueSpecified;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
@@ -2001,10 +2021,18 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
         public decimal TotalApplicationDesignFlowNumber;
 
         /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool TotalApplicationDesignFlowNumberSpecified;
+
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 23)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("15", "7")]
         public decimal TotalApplicationAverageFlowNumber;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool TotalApplicationAverageFlowNumberSpecified;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 24)]
@@ -2190,10 +2218,18 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
         public decimal ConstructionProjectLatitudeMeasure;
 
         /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ConstructionProjectLatitudeMeasureSpecified;
+
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 20)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("10", "7")]
         public decimal ConstructionProjectLongitudeMeasure;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ConstructionProjectLongitudeMeasureSpecified;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("SICCodeDetails", Order = 21)]
@@ -2898,10 +2934,18 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
         public decimal TotalApplicationDesignFlowNumber;
 
         /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool TotalApplicationDesignFlowNumberSpecified;
+
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 22)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("15", "7")]
         public decimal TotalApplicationAverageFlowNumber;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool TotalApplicationAverageFlowNumberSpecified;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 23)]
@@ -3078,10 +3122,18 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
         public decimal PermittedFeatureDesignFlowNumber;
 
         /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool PermittedFeatureDesignFlowNumberSpecified;
+
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("15", "7")]
         public decimal PermittedFeatureActualAverageFlowNumber;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool PermittedFeatureActualAverageFlowNumberSpecified;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
@@ -4200,10 +4252,18 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
         public decimal LatitudeMeasure;
 
         /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool LatitudeMeasureSpecified;
+
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("10", "7")]
         public decimal LongitudeMeasure;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool LongitudeMeasureSpecified;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
@@ -4215,6 +4275,10 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("9", "2")]
         public decimal DurationSSOOverflowEvent;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool DurationSSOOverflowEventSpecified;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
@@ -4733,10 +4797,18 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
         public decimal LatitudeMeasure;
 
         /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool LatitudeMeasureSpecified;
+
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("10", "7")]
         public decimal LongitudeMeasure;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool LongitudeMeasureSpecified;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
@@ -4748,6 +4820,10 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("9", "2")]
         public decimal DurationCSOOverflowEvent;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool DurationCSOOverflowEventSpecified;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
@@ -4769,6 +4845,10 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("8", "2")]
         public decimal InchesPrecipitation;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool InchesPrecipitationSpecified;
     }
 
     /// <remarks/>
@@ -4837,6 +4917,10 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("6", "1")]
         public decimal RainfallStormEventSampledNumber;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool RainfallStormEventSampledNumberSpecified;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
@@ -6285,10 +6369,18 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
         public decimal LatitudeMeasure;
 
         /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool LatitudeMeasureSpecified;
+
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("10", "7")]
         public decimal LongitudeMeasure;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool LongitudeMeasureSpecified;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
@@ -6300,6 +6392,10 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("9", "2")]
         public decimal DurationCSOOverflowEvent;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool DurationCSOOverflowEventSpecified;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
@@ -6535,6 +6631,10 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
         public decimal DollarAmountPenaltiesCollected;
 
         /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool DollarAmountPenaltiesCollectedSpecified;
+
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 32)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4)]
         public string IUsWhichPenaltiesHaveBeenCollected;
@@ -6590,10 +6690,18 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
         public decimal LatitudeMeasure;
 
         /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool LatitudeMeasureSpecified;
+
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("10", "7")]
         public decimal LongitudeMeasure;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool LongitudeMeasureSpecified;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
@@ -6605,6 +6713,10 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("9", "2")]
         public decimal DurationSSOOverflowEvent;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool DurationSSOOverflowEventSpecified;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
@@ -7247,6 +7359,10 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
         public decimal CashCivilPenaltyRequiredAmount;
 
         /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool CashCivilPenaltyRequiredAmountSpecified;
+
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4000)]
         public string OtherComments;
@@ -7390,6 +7506,10 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("17", "2")]
         public decimal ComplianceSchedulePenaltyAmount;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ComplianceSchedulePenaltyAmountSpecified;
     }
 
     /// <remarks/>

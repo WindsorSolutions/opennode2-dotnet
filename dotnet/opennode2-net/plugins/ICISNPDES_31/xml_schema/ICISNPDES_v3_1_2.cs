@@ -358,6 +358,27 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
                 }
             });
         }
+        public static IDictionary<string, DbAppendSelectWhereClause> GetDefaultSelectClauses(SpringBaseDao dao)
+        {
+            string[] transactionTypeTableNames = new string[]
+            {
+                "ICS_BASIC_PRMT", "ICS_BS_PRMT", "ICS_BS_PROG_REP", "ICS_CAFO_ANNUL_REP", "ICS_CAFO_PRMT", "ICS_CMPL_MON", "ICS_CMPL_MON_LNK",
+                "ICS_CMPL_SCHD", "ICS_CSO_EVT_REP", "ICS_CSO_PRMT", "ICS_DMR_PROG_REP_LNK", "ICS_DMR_VIOL", "ICS_DSCH_MON_REP",
+                "ICS_EFFLU_TRADE_PRTNER", "ICS_ENFRC_ACTN_MILESTONE", "ICS_ENFRC_ACTN_VIOL_LNK", "ICS_FINAL_ORDER_VIOL_LNK",
+                "ICS_FRML_ENFRC_ACTN", "ICS_GNRL_PRMT", "ICS_HIST_PRMT_SCHD_EVTS", "ICS_INFRML_ENFRC_ACTN", "ICS_LMT_SET", "ICS_LMTS",
+                "ICS_LOC_LMTS_PROG_REP", "ICS_MASTER_GNRL_PRMT", "ICS_NARR_COND_SCHD", "ICS_PARAM_LMTS", "ICS_POTW_PRMT", "ICS_PRETR_PERF_SUMM",
+                "ICS_PRETR_PRMT", "ICS_PRMT_FEATR", "ICS_PRMT_REISSU", "ICS_PRMT_TERM", "ICS_PRMT_TRACK_EVT", "ICS_SCHD_EVT_VIOL",
+                "ICS_SNGL_EVT_VIOL", "ICS_SSO_ANNUL_REP", "ICS_SSO_EVT_REP", "ICS_SSO_MONTHLY_EVT_REP", "ICS_SW_CNST_PRMT", "ICS_SW_EVT_REP",
+                "ICS_SW_INDST_PRMT", "ICS_SWMS_4_LARGE_PRMT", "ICS_SWMS_4_PROG_REP", "ICS_SWMS_4_SMALL_PRMT", "ICS_UNPRMT_FAC", 
+            };
+
+            Dictionary<string, DbAppendSelectWhereClause> selectClauses = new Dictionary<string, DbAppendSelectWhereClause>(60);
+            foreach (string tableName in transactionTypeTableNames)
+            {
+                selectClauses.Add(tableName, new DbAppendSelectWhereClause("TRANSACTION_TYPE IS NOT NULL", null));
+            }
+            return selectClauses;
+        }
     }
     public partial class DischargeMonitoringReportData : IAfterLoadFromDatabase, IBeforeSaveToDatabase
     {

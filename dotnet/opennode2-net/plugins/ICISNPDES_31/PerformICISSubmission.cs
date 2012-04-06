@@ -157,8 +157,9 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
         {
             submitFilePath = null;
             Type mappingAttributesType = typeof(Windsor.Node2008.WNOSPlugin.ICISNPDES_31.MappingAttributes);
+            IDictionary<string, DbAppendSelectWhereClause> selectClauses = Windsor.Node2008.WNOSPlugin.ICISNPDES_31.PayloadData.GetDefaultSelectClauses(_stagingDao);
             List<Windsor.Node2008.WNOSPlugin.ICISNPDES_31.PayloadData> payloads =
-                _objectsFromDatabase.LoadFromDatabase<Windsor.Node2008.WNOSPlugin.ICISNPDES_31.PayloadData>(_stagingDao, null, mappingAttributesType);
+                _objectsFromDatabase.LoadFromDatabase<Windsor.Node2008.WNOSPlugin.ICISNPDES_31.PayloadData>(_stagingDao, selectClauses, mappingAttributesType);
 
             // Remove payloads that don't contain any data
             if (payloads != null)
