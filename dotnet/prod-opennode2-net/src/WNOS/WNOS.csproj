@@ -1,0 +1,346 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{678199A5-4695-40A6-BEF2-C1E66361F080}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Windsor.Node2008.WNOS</RootNamespace>
+    <AssemblyName>Windsor.Node2008.WNOS</AssemblyName>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\BUILD\Server\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <NoWarn>0618</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\BUILD\Server\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Common.Logging, Version=1.2.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\common-windsor-net\lib\Common.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Common.Logging.Log4Net, Version=1.2.0.2, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\common-windsor-net\lib\Common.Logging.Log4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\common-windsor-net\lib\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\common-windsor-net\lib\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Data, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\common-windsor-net\lib\Microsoft.Practices.EnterpriseLibrary.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ObjectBuilder, Version=1.0.51205.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\common-windsor-net\lib\Microsoft.Practices.ObjectBuilder.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Microsoft.Web.Services, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\common-windsor-net\lib\Microsoft.Web.Services.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Services3, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\common-windsor-net\lib\Microsoft.Web.Services3.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Spring.Aop, Version=1.3.1.20711, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\common-windsor-net\lib\Spring.Aop.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Core, Version=1.3.1.20711, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\common-windsor-net\lib\Spring.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Data, Version=1.3.1.20711, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\common-windsor-net\lib\Spring.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Services, Version=1.3.1.20711, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\common-windsor-net\lib\Spring.Services.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Windsor.Drawing.Chart, Version=1.0.1620.18300, Culture=neutral">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\common-windsor-net\lib\Windsor.Drawing.Chart.dll</HintPath>
+    </Reference>
+    <Reference Include="Windsor.Node.Schematron, Version=1.0.2574.11821, Culture=neutral">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\common-windsor-net\lib\Windsor.Node.Schematron.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\plugins\Security\BulkAddUsersTaskProcessorConstants.cs">
+      <Link>PluginRef\BulkAddUsersTaskProcessorConstants.cs</Link>
+    </Compile>
+    <Compile Include="..\AssemblyInfo\AssemblyInfo.cs">
+      <Link>AssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="Data\AccountAuthorizationRequestDao.cs" />
+    <Compile Include="Data\ActivityDao.cs" />
+    <Compile Include="Data\BaseDao.cs" />
+    <Compile Include="Data\AccountDao.cs" />
+    <Compile Include="Data\ConfigDao.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Data\DataProviderDao.cs" />
+    <Compile Include="Data\DbUtils.cs" />
+    <Compile Include="Data\DocumentContentDao.cs" />
+    <Compile Include="Data\DocumentDao.cs" />
+    <Compile Include="Data\FlowDao.cs" />
+    <Compile Include="Data\IAccountAuthorizationRequestDao.cs" />
+    <Compile Include="Data\IAccountDao.cs" />
+    <Compile Include="Data\IActivityDao.cs" />
+    <Compile Include="Data\IBaseDao.cs" />
+    <Compile Include="Data\IConfigDao.cs" />
+    <Compile Include="Data\IDataProviderDao.cs" />
+    <Compile Include="Data\IDocumentContentDao.cs" />
+    <Compile Include="Data\IDocumentDao.cs" />
+    <Compile Include="Data\IFlowDao.cs" />
+    <Compile Include="Data\INodeNotificationDao.cs" />
+    <Compile Include="Data\INotificationDao.cs" />
+    <Compile Include="Data\IObjectCacheDao.cs" />
+    <Compile Include="Data\IPartnerDao.cs" />
+    <Compile Include="Data\IPluginDao.cs" />
+    <Compile Include="Data\IRequestDao.cs" />
+    <Compile Include="Data\IScheduleDao.cs" />
+    <Compile Include="Data\IServiceDao.cs" />
+    <Compile Include="Data\ITransactionDao.cs" />
+    <Compile Include="Data\NodeNotificationDao.cs" />
+    <Compile Include="Data\NotificationDao.cs" />
+    <Compile Include="Data\ObjectCacheDao.cs" />
+    <Compile Include="Data\PartnerDao.cs" />
+    <Compile Include="Data\PluginDao.cs" />
+    <Compile Include="Data\RequestDao.cs" />
+    <Compile Include="Data\ScheduleDao.cs" />
+    <Compile Include="Data\ServiceDao.cs" />
+    <Compile Include="Data\TransactionDao.cs" />
+    <Compile Include="Logic\AccountAuthorizationRequestManager.cs" />
+    <Compile Include="Logic\AccountManager.cs" />
+    <Compile Include="Logic\AccountPolicyManager.cs" />
+    <Compile Include="Logic\ConfigManager.cs" />
+    <Compile Include="Logic\DatabaseBasedContentManager.cs" />
+    <Compile Include="Logic\DataProviderManager.cs" />
+    <Compile Include="Logic\DocumentManager.cs" />
+    <Compile Include="Logic\FileBasedContentManager.cs" />
+    <Compile Include="Logic\ImportExportSettingsManager.cs" />
+    <Compile Include="Logic\LogicAuditBaseManager.cs" />
+    <Compile Include="Logic\NAASManager.cs" />
+    <Compile Include="Logic\PartnerManager.cs" />
+    <Compile Include="Logic\RequestManager.cs" />
+    <Compile Include="Logic\ScheduleManager.cs" />
+    <Compile Include="Logic\FlowManager.cs" />
+    <Compile Include="Logic\LogicBaseManager.cs" />
+    <Compile Include="Logic\ActivityManager.cs" />
+    <Compile Include="Logic\NotificationManager.cs" />
+    <Compile Include="Logic\ServiceManager.cs" />
+    <Compile Include="Logic\TransactionManager.cs" />
+    <Compile Include="Logic\TransactionStatusChangeNotifier.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Server\BaseNodeProcessor.cs" />
+    <Compile Include="Server\BaseTransactionProcessor.cs" />
+    <Compile Include="Server\CentralProcessor.cs" />
+    <Compile Include="Server\ExecuteProcessor.cs" />
+    <Compile Include="Server\NodeProcessorMutex.cs" />
+    <Compile Include="Server\NotifyProcessor.cs" />
+    <Compile Include="Server\ScheduleProcessor.cs" />
+    <Compile Include="Server\SolicitProcessor.cs" />
+    <Compile Include="Server\SubmitProcessor.cs" />
+    <Compile Include="Server\TaskProcessor.cs" />
+    <Compile Include="Service\BaseService.cs" />
+    <Compile Include="Service\BaseEndpointService.cs" />
+    <Compile Include="Service\ContentServiceProvider.cs" />
+    <Compile Include="Service\SecurityServiceProvider.cs" />
+    <Compile Include="Service\TransactionServiceProvider.cs" />
+    <Compile Include="Utilities\DbConnectionFactory.cs" />
+    <Compile Include="Utilities\PluginLoader.cs" />
+    <Compile Include="Utilities\SchematronHelper.cs" />
+    <Compile Include="Utilities\ServiceFactory.cs" />
+    <Compile Include="Utilities\SettingsProvider.cs" />
+    <Compile Include="WNOS.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\common-windsor-net\windsor-commons-core\Windsor.Commons.Core.csproj">
+      <Project>{FE8A985A-F050-4475-B3D6-4E95EE87CF40}</Project>
+      <Name>Windsor.Commons.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\common-windsor-net\windsor-commons-genericcollectionlibrary\Windsor.Commons.GenericCollectionLibrary.csproj">
+      <Project>{73AAC6A1-0028-4947-8B57-2DDE04D6D115}</Project>
+      <Name>Windsor.Commons.GenericCollectionLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\common-windsor-net\windsor-commons-logging\Windsor.Commons.Logging.csproj">
+      <Project>{C201FD80-438C-4252-9655-B3E26F75A5AA}</Project>
+      <Name>Windsor.Commons.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\common-windsor-net\windsor-commons-naasclient\Windsor.Commons.NAASClient.csproj">
+      <Project>{8FB61114-2953-4BF9-86AC-072FF5B401D7}</Project>
+      <Name>Windsor.Commons.NAASClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\common-windsor-net\windsor-commons-nodeclient\Windsor.Commons.NodeClient.csproj">
+      <Project>{E5B7FB63-FD4F-488F-A620-8E61849BB79A}</Project>
+      <Name>Windsor.Commons.NodeClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\common-windsor-net\windsor-commons-nodedomain\Windsor.Commons.NodeDomain.csproj">
+      <Project>{D5374478-B3C9-4920-93FB-0FA5C2AFA446}</Project>
+      <Name>Windsor.Commons.NodeDomain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\common-windsor-net\windsor-commons-spring\Windsor.Commons.Spring.csproj">
+      <Project>{2249EFD8-40F1-4C41-BCF0-AD29FEDFCBD0}</Project>
+      <Name>Windsor.Commons.Spring</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\common-windsor-net\windsor-commons-xsdorm2\Windsor.Commons.XsdOrm2.csproj">
+      <Project>{DA9F525D-A2D8-469C-B7D7-1CD14173DD57}</Project>
+      <Name>Windsor.Commons.XsdOrm2</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\common-windsor-net\windsor-commons-xsdorm\Windsor.Commons.XsdOrm.csproj">
+      <Project>{8A62B9FD-50DC-4712-9237-ADE3CDC0A3D4}</Project>
+      <Name>Windsor.Commons.XsdOrm</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WNOSConnector\WNOSConnector.csproj">
+      <Project>{6DFCA062-E70D-4CCE-BBBF-11CA09EF2FD0}</Project>
+      <Name>WNOSConnector</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WNOSDomain\WNOSDomain.csproj">
+      <Project>{0AD3D68F-4A02-4080-BFF2-8AD1BAB259AA}</Project>
+      <Name>WNOSDomain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WNOSPlugin\WNOSPlugin.csproj">
+      <Project>{FF0BCEE5-858F-4DC9-8B7B-51FFB2AA6B70}</Project>
+      <Name>WNOSPlugin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WNOSProviders\WNOSProviders.csproj">
+      <Project>{D95C862B-FFDC-4936-8835-B0D8DB421B20}</Project>
+      <Name>WNOSProviders</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WNOSUtility\WNOSUtility.csproj">
+      <Project>{94459097-5EAE-4482-B1E0-F419CEBCC8C7}</Project>
+      <Name>WNOSUtility</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\OnChangePasswordNotification.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\OnExecuteNotification.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\OnNewNaasUserNotification.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\OnNewNodeUserNotification.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\OnRemoteTransactionStatusNotification.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\OnScheduleNotification.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\OnDownloadNotification.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\OnNotifyNotification.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\OnQueryNotification.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\OnSolicitNotification.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\OnSubmitNotification.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Sql\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+</Project>

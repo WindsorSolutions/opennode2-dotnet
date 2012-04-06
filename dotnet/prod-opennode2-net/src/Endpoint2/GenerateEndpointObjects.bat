@@ -1,0 +1,1 @@
+wsdl /o:"_IENService20.cs" /l:CS /n:Windsor.Node2008.Endpoint2 /serverInterface http://www.exchangenetwork.net/schema/node/2/node_v20.wsdl

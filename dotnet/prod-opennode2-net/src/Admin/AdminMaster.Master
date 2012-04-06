@@ -1,0 +1,95 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="AdminMaster.master.cs" Inherits="Windsor.Node2008.Admin.AdminMaster" %>
+
+<%@ Register TagPrefix="spring" Namespace="Spring.Web.UI.Controls" Assembly="Spring.Web" %>
+<%@ Register Src="Controls/Footer.ascx" TagName="Footer" TagPrefix="uc1" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>
+        <%=Page.Title%>
+    </title>
+    <link rel="stylesheet" type="text/css" href="~/Styles/admin.css" />
+    <!--[if lt IE 7]> <style type="text/css">@import "../Styles/ie6.css";</style><![endif]-->
+
+    <script type="text/javascript" src="../Scripts/scrollsaver.min.js"></script>
+    <script type="text/javascript" src="../Scripts/admin.js"></script>
+
+    <style type="text/css">
+        fieldset
+        {
+            border-width: 0px;
+            border-style: solid;
+            border-color: #555555;
+        }
+        legend
+        {
+            color: #555555;
+        }
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div id="mainWrapperDiv">
+        <asp:ScriptManager ID="ScriptManager1" runat="server" AsyncPostBackTimeout="600" />
+        <div id="titleArea">
+            <div id="title">
+                <%=Page.Title%>
+            </div>
+            <div id="tabs">
+                <ul id="tabsList" runat="server">
+                    <li id="tabDashboard" runat="server"><a href="../Secure/Dashboard.aspx"><span>
+                        <img alt="" src="../Images/UI/chart_pie.png" />Dashboard</span></a></li>
+                    <li id="tabConfig" runat="server"><a href="../Secure/ConfigArgs.aspx"><span>
+                        <img alt="" src="../Images/UI/wrench.png" />Configuration</span></a></li>
+                    <li id="tabSecurity" runat="server"><a href="../Secure/SecurityUser.aspx"><span>
+                        <img alt="" src="../Images/UI/shield.png" />Security</span></a></li>
+                    <li id="tabFlow" runat="server"><a href="../Secure/Flow.aspx"><span>
+                        <img alt="" src="../Images/UI/globe-network.png" />Exchanges</span></a></li>
+                    <li id="tabSchedule" runat="server"><a href="../Secure/Schedule.aspx"><span>
+                        <img alt="" src="../Images/UI/time.png" />Schedules</span></a></li>
+                    <li id="tabActivity" runat="server"><a href="../Secure/ActivitySearchCriteria.aspx"><span>
+                        <img alt="" src="../Images/UI/script.png" />Activity</span></a></li>
+                    <li id="tabProfile" runat="server"><a href="../Secure/Profile.aspx"><span>
+                        <img alt="" src="../Images/UI/user_suit.png" />Profile</span></a></li>
+                </ul>
+            </div>
+            <div style="clear: both">
+            </div>
+        </div>
+        <!--  for the white background  -->
+        <div class="body">
+            <div class="userInfo">
+                <%=GetUserInfo()%>&nbsp;|&nbsp;<a href="../Login.aspx?a=out">Sign&nbsp;out</a></div>
+            <br class="layoutSpacerTop" />
+            <table id="contentTable">
+                <tr>
+                    <td id="sidebarPane" align="left" valign="top">
+                        <asp:Panel ID="menuPanel" runat="server">
+                            <div id="menu">
+                                <ul>
+                                    <asp:Repeater ID="menuItems" runat="server">
+                                        <ItemTemplate>
+                                            <li>
+                                                <asp:HyperLink runat="server" ID="linkButton" Text='<%# Eval("Text") %>' NavigateUrl='<%# Eval("Url") %>'></asp:HyperLink></li>
+                                        </ItemTemplate>
+                                    </asp:Repeater>
+                                </ul>
+                            </div>
+                        </asp:Panel>
+                    </td>
+                    <td>
+                        <asp:ContentPlaceHolder ID="SecureContentHolder" runat="server">
+                        </asp:ContentPlaceHolder>
+                    </td>
+                </tr>
+            </table>
+            <div class="layoutSpacerBottom">
+            </div>
+            <!-- for the white background -->
+        </div>
+        <uc1:Footer ID="Footer1" runat="server">
+        </uc1:Footer>
+    </div>
+    </form>
+</body>
+</html>

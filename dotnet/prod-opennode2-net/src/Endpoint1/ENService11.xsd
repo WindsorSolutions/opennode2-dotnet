@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.ExchangeNetwork.net/schema/v1.0/node.wsdl" xmlns:s0="http://www.ExchangeNetwork.net/schema/v1.0/node.xsd" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" targetNamespace="http://www.ExchangeNetwork.net/schema/v1.0/node.wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.ExchangeNetwork.net/schema/v1.0/node.xsd">
+      <s:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <s:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+      <s:complexType name="ArrayOfNodeDocument">
+        <s:complexContent mixed="false">
+          <s:restriction base="soapenc:Array">
+            <s:attribute wsdl:arrayType="s0:NodeDocument[]" ref="soapenc:arrayType" />
+          </s:restriction>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="NodeDocument">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="type" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.ExchangeNetwork.net/schema/v1.0/node.wsdl">
+      <s:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <s:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+      <s:complexType name="ArrayOfString">
+        <s:complexContent mixed="false">
+          <s:restriction base="soapenc:Array">
+            <s:attribute wsdl:arrayType="s:string[]" ref="soapenc:arrayType" />
+          </s:restriction>
+        </s:complexContent>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="AuthenticateSoapIn">
+    <wsdl:part name="userId" type="s:string" />
+    <wsdl:part name="credential" type="s:string" />
+    <wsdl:part name="authenticationMethod" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="AuthenticateSoapOut">
+    <wsdl:part name="return" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SubmitSoapIn">
+    <wsdl:part name="securityToken" type="s:string" />
+    <wsdl:part name="transactionId" type="s:string" />
+    <wsdl:part name="dataflow" type="s:string" />
+    <wsdl:part name="documents" type="s0:ArrayOfNodeDocument" />
+  </wsdl:message>
+  <wsdl:message name="SubmitSoapOut">
+    <wsdl:part name="return" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetStatusSoapIn">
+    <wsdl:part name="securityToken" type="s:string" />
+    <wsdl:part name="transactionId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetStatusSoapOut">
+    <wsdl:part name="return" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="NotifySoapIn">
+    <wsdl:part name="securityToken" type="s:string" />
+    <wsdl:part name="nodeAddress" type="s:string" />
+    <wsdl:part name="dataflow" type="s:string" />
+    <wsdl:part name="documents" type="s0:ArrayOfNodeDocument" />
+  </wsdl:message>
+  <wsdl:message name="NotifySoapOut">
+    <wsdl:part name="return" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DownloadSoapIn">
+    <wsdl:part name="securityToken" type="s:string" />
+    <wsdl:part name="transactionId" type="s:string" />
+    <wsdl:part name="dataflow" type="s:string" />
+    <wsdl:part name="documents" type="s0:ArrayOfNodeDocument" />
+  </wsdl:message>
+  <wsdl:message name="DownloadSoapOut">
+    <wsdl:part name="documents" type="s0:ArrayOfNodeDocument" />
+  </wsdl:message>
+  <wsdl:message name="QuerySoapIn">
+    <wsdl:part name="securityToken" type="s:string" />
+    <wsdl:part name="request" type="s:string" />
+    <wsdl:part name="rowId" type="s:integer" />
+    <wsdl:part name="maxRows" type="s:integer" />
+    <wsdl:part name="parameters" type="tns:ArrayOfString" />
+  </wsdl:message>
+  <wsdl:message name="QuerySoapOut">
+    <wsdl:part name="return" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SolicitSoapIn">
+    <wsdl:part name="securityToken" type="s:string" />
+    <wsdl:part name="returnURL" type="s:string" />
+    <wsdl:part name="request" type="s:string" />
+    <wsdl:part name="parameters" type="tns:ArrayOfString" />
+  </wsdl:message>
+  <wsdl:message name="SolicitSoapOut">
+    <wsdl:part name="return" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ExecuteSoapIn">
+    <wsdl:part name="securityToken" type="s:string" />
+    <wsdl:part name="request" type="s:string" />
+    <wsdl:part name="parameters" type="tns:ArrayOfString" />
+  </wsdl:message>
+  <wsdl:message name="ExecuteSoapOut">
+    <wsdl:part name="return" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="NodePingSoapIn">
+    <wsdl:part name="Hello" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="NodePingSoapOut">
+    <wsdl:part name="return" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetServicesSoapIn">
+    <wsdl:part name="securityToken" type="s:string" />
+    <wsdl:part name="serviceType" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetServicesSoapOut">
+    <wsdl:part name="return" type="tns:ArrayOfString" />
+  </wsdl:message>
+  <wsdl:portType name="NetworkNodeBinding">
+    <wsdl:operation name="Authenticate">
+      <wsdl:input message="tns:AuthenticateSoapIn" />
+      <wsdl:output message="tns:AuthenticateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Submit">
+      <wsdl:input message="tns:SubmitSoapIn" />
+      <wsdl:output message="tns:SubmitSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStatus">
+      <wsdl:input message="tns:GetStatusSoapIn" />
+      <wsdl:output message="tns:GetStatusSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Notify">
+      <wsdl:input message="tns:NotifySoapIn" />
+      <wsdl:output message="tns:NotifySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Download" parameterOrder="securityToken transactionId dataflow documents">
+      <wsdl:input message="tns:DownloadSoapIn" />
+      <wsdl:output message="tns:DownloadSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Query">
+      <wsdl:input message="tns:QuerySoapIn" />
+      <wsdl:output message="tns:QuerySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Solicit">
+      <wsdl:input message="tns:SolicitSoapIn" />
+      <wsdl:output message="tns:SolicitSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Execute">
+      <wsdl:input message="tns:ExecuteSoapIn" />
+      <wsdl:output message="tns:ExecuteSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="NodePing">
+      <wsdl:input message="tns:NodePingSoapIn" />
+      <wsdl:output message="tns:NodePingSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetServices">
+      <wsdl:input message="tns:GetServicesSoapIn" />
+      <wsdl:output message="tns:GetServicesSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetworkNodeBinding" type="tns:NetworkNodeBinding">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <wsdl:operation name="Authenticate">
+      <soap:operation soapAction="" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://www.ExchangeNetwork.net/schema/v1.0/node.xsd" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://www.ExchangeNetwork.net/schema/v1.0/node.xsd" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Submit">
+      <soap:operation soapAction="" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://www.ExchangeNetwork.net/schema/v1.0/node.xsd" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://www.ExchangeNetwork.net/schema/v1.0/node.xsd" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStatus">
+      <soap:operation soapAction="" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://www.ExchangeNetwork.net/schema/v1.0/node.xsd" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://www.ExchangeNetwork.net/schema/v1.0/node.xsd" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Notify">
+      <soap:operation soapAction="" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://www.ExchangeNetwork.net/schema/v1.0/node.xsd" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://www.ExchangeNetwork.net/schema/v1.0/node.xsd" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Download">
+      <soap:operation soapAction="" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://www.ExchangeNetwork.net/schema/v1.0/node.xsd" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://www.ExchangeNetwork.net/schema/v1.0/node.xsd" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Query">
+      <soap:operation soapAction="" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://www.ExchangeNetwork.net/schema/v1.0/node.xsd" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://www.ExchangeNetwork.net/schema/v1.0/node.xsd" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Solicit">
+      <soap:operation soapAction="" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://www.ExchangeNetwork.net/schema/v1.0/node.xsd" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://www.ExchangeNetwork.net/schema/v1.0/node.xsd" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Execute">
+      <soap:operation soapAction="" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://www.ExchangeNetwork.net/schema/v1.0/node.xsd" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://www.ExchangeNetwork.net/schema/v1.0/node.xsd" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NodePing">
+      <soap:operation soapAction="" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://www.ExchangeNetwork.net/schema/v1.0/node.xsd" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://www.ExchangeNetwork.net/schema/v1.0/node.xsd" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetServices">
+      <soap:operation soapAction="" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://www.ExchangeNetwork.net/schema/v1.0/node.xsd" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://www.ExchangeNetwork.net/schema/v1.0/node.xsd" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ENService11">
+    <wsdl:port name="NetworkNodeBinding" binding="tns:NetworkNodeBinding">
+      <soap:address location="https://www.windsorsolutions.biz/OpenNode2_dotNet/Endpoint1/ENService11.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

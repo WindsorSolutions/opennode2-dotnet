@@ -1,0 +1,10 @@
+#progressBackgroundFilter
+{
+    position:absolute;
+    height: expression(document.documentElement.scrollTop + document.documentElement.clientHeight + "px");
+    width: expression(document.body.clientWidth + "px");
+}
+#processMessage {
+    position:absolute;
+    top: expression(document.documentElement.scrollTop + (document.documentElement.clientHeight * .30) + "px")
+}

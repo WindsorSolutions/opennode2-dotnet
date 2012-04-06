@@ -1,0 +1,1 @@
+This folder should contain ONLY the reference binaries needed to compile the common-windsor-net projects!

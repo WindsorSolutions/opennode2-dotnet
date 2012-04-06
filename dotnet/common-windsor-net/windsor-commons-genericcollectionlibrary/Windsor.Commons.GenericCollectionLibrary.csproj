@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{73AAC6A1-0028-4947-8B57-2DDE04D6D115}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Windsor.Commons.GenericCollectionLibrary</RootNamespace>
+    <AssemblyName>Windsor.Commons.GenericCollectionLibrary</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Windsor-Commons-AssemblyInfo\AssemblyInfo.cs">
+      <Link>AssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="PowerCollections\Source\Algorithms.cs" />
+    <Compile Include="PowerCollections\Source\Bag.cs" />
+    <Compile Include="PowerCollections\Source\BigList.cs" />
+    <Compile Include="PowerCollections\Source\CollectionBase.cs" />
+    <Compile Include="PowerCollections\Source\Comparers.cs" />
+    <Compile Include="PowerCollections\Source\Deque.cs" />
+    <Compile Include="PowerCollections\Source\DictionaryBase.cs" />
+    <Compile Include="PowerCollections\Source\Hash.cs" />
+    <Compile Include="PowerCollections\Source\ListBase.cs" />
+    <Compile Include="PowerCollections\Source\MultiDictionary.cs" />
+    <Compile Include="PowerCollections\Source\MultiDictionaryBase.cs" />
+    <Compile Include="PowerCollections\Source\OrderedBag.cs" />
+    <Compile Include="PowerCollections\Source\OrderedDictionary.cs" />
+    <Compile Include="PowerCollections\Source\OrderedMultiDictionary.cs" />
+    <Compile Include="PowerCollections\Source\OrderedSet.cs" />
+    <Compile Include="PowerCollections\Source\Pair.cs" />
+    <Compile Include="PowerCollections\Source\ReadOnlyCollectionBase.cs" />
+    <Compile Include="PowerCollections\Source\ReadOnlyDictionaryBase.cs" />
+    <Compile Include="PowerCollections\Source\ReadOnlyListBase.cs" />
+    <Compile Include="PowerCollections\Source\ReadOnlyMultiDictionaryBase.cs" />
+    <Compile Include="PowerCollections\Source\RedBlack.cs" />
+    <Compile Include="PowerCollections\Source\Set.cs" />
+    <Compile Include="PowerCollections\Source\Strings.cs" />
+    <Compile Include="PowerCollections\Source\Triple.cs" />
+    <Compile Include="PowerCollections\Source\Util.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PowerCollections\Documentation\PowerCollections.chm" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

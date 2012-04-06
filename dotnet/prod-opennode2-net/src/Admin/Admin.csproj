@@ -1,0 +1,645 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F11899B7-F1BF-4B78-8876-DACE0EA3F286}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Windsor.Node2008.Admin</RootNamespace>
+    <AssemblyName>Windsor.Node2008.Admin</AssemblyName>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <CodeAnalysisRules>
+    </CodeAnalysisRules>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>Migrated rules for Admin.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Dev|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;BYPASS_LOGIN</DefineConstants>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRules>
+    </CodeAnalysisRules>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>Migrated rules for Admin.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AjaxControlToolkit, Version=1.0.20229.19282, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\common-windsor-net\lib\AjaxControlToolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging, Version=1.2.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\common-windsor-net\lib\Common.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Common.Logging.Log4Net, Version=1.2.0.2, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\common-windsor-net\lib\Common.Logging.Log4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\common-windsor-net\lib\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="RSS.NET, Version=0.86.2727.7964, Culture=neutral">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\common-windsor-net\lib\RSS.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Aop, Version=1.3.1.20711, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\common-windsor-net\lib\Spring.Aop.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Core, Version=1.3.1.20711, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\common-windsor-net\lib\Spring.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Services, Version=1.3.1.20711, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\common-windsor-net\lib\Spring.Services.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Web, Version=1.3.1.20711, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\common-windsor-net\lib\Spring.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Web.Extensions">
+      <HintPath>..\..\..\common-windsor-net\lib\Spring.Web.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Extensions.Design" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\UI\check.png" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\AssemblyInfo\AssemblyInfo.cs">
+      <Link>AssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="AdminMaster.Master.cs">
+      <DependentUpon>AdminMaster.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminMaster.Master.designer.cs">
+      <DependentUpon>AdminMaster.Master</DependentUpon>
+    </Compile>
+    <Compile Include="AnonMaster.Master.cs">
+      <DependentUpon>AnonMaster.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AnonMaster.Master.designer.cs">
+      <DependentUpon>AnonMaster.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Code\AnonPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Code\ChartConfig.cs" />
+    <Compile Include="Code\Constants.cs" />
+    <Compile Include="Code\PermissionsHelper.cs" />
+    <Compile Include="Code\SecureListPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Code\SecurePage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Code\SideTabItem.cs" />
+    <Compile Include="Code\SimpleListConfig.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Code\SimplePage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Code\UIUtility.cs" />
+    <Compile Include="Code\VisitHelper.cs" />
+    <Compile Include="Controls\BaseSecurePane.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\Footer.ascx.cs">
+      <DependentUpon>Footer.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\Footer.ascx.designer.cs">
+      <DependentUpon>Footer.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PasswordTextBox.cs" />
+    <Compile Include="Controls\SimpleCheckList.ascx.cs">
+      <DependentUpon>SimpleCheckList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\SimpleCheckList.ascx.designer.cs">
+      <DependentUpon>SimpleCheckList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SimpleList.ascx.cs">
+      <DependentUpon>SimpleList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\SimpleList.ascx.designer.cs">
+      <DependentUpon>SimpleList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SimpleStackList.ascx.cs">
+      <DependentUpon>SimpleStackList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\SimpleStackList.ascx.designer.cs">
+      <DependentUpon>SimpleStackList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\UpdateProgressCntl.ascx.cs">
+      <DependentUpon>UpdateProgressCntl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\UpdateProgressCntl.ascx.designer.cs">
+      <DependentUpon>UpdateProgressCntl.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Error.aspx.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Error.aspx.designer.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Secure\ActivityDetailView.ascx.cs">
+      <DependentUpon>ActivityDetailView.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Secure\ActivityDetailView.ascx.designer.cs">
+      <DependentUpon>ActivityDetailView.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Secure\ActivitySearchCriteria.aspx.cs">
+      <DependentUpon>ActivitySearchCriteria.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Secure\ActivitySearchCriteria.aspx.designer.cs">
+      <DependentUpon>ActivitySearchCriteria.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Secure\ConfigArgs.aspx.cs">
+      <DependentUpon>ConfigArgs.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Secure\ConfigArgs.aspx.designer.cs">
+      <DependentUpon>ConfigArgs.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Secure\ConfigArgsEdit.aspx.cs">
+      <DependentUpon>ConfigArgsEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Secure\ConfigArgsEdit.aspx.designer.cs">
+      <DependentUpon>ConfigArgsEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Secure\ConfigDs.aspx.cs">
+      <DependentUpon>ConfigDs.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Secure\ConfigDs.aspx.designer.cs">
+      <DependentUpon>ConfigDs.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Secure\ConfigDsEdit.aspx.cs">
+      <DependentUpon>ConfigDsEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Secure\ConfigDsEdit.aspx.designer.cs">
+      <DependentUpon>ConfigDsEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Secure\ConfigImportExportSettings.aspx.cs">
+      <DependentUpon>ConfigImportExportSettings.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Secure\ConfigImportExportSettings.aspx.designer.cs">
+      <DependentUpon>ConfigImportExportSettings.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Secure\ConfigPartner.aspx.cs">
+      <DependentUpon>ConfigPartner.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Secure\ConfigPartner.aspx.designer.cs">
+      <DependentUpon>ConfigPartner.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Secure\ConfigPartnerEdit.aspx.cs">
+      <DependentUpon>ConfigPartnerEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Secure\ConfigPartnerEdit.aspx.designer.cs">
+      <DependentUpon>ConfigPartnerEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Secure\FlowEdit.aspx.cs">
+      <DependentUpon>FlowEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Secure\FlowEdit.aspx.designer.cs">
+      <DependentUpon>FlowEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Secure\FlowServiceEdit.aspx.cs">
+      <DependentUpon>FlowServiceEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Secure\FlowServiceEdit.aspx.designer.cs">
+      <DependentUpon>FlowServiceEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Secure\FlowUploadPlugin.aspx.cs">
+      <DependentUpon>FlowUploadPlugin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Secure\FlowUploadPlugin.aspx.designer.cs">
+      <DependentUpon>FlowUploadPlugin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Secure\GChartControl.ascx.cs">
+      <DependentUpon>GChartControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Secure\GChartControl.ascx.designer.cs">
+      <DependentUpon>GChartControl.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Secure\ImageRequestHandler.ashx.cs">
+      <DependentUpon>ImageRequestHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Secure\NewsBar.ascx.cs">
+      <DependentUpon>NewsBar.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Secure\NewsBar.ascx.designer.cs">
+      <DependentUpon>NewsBar.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Secure\ProfileChangePassword.aspx.cs">
+      <DependentUpon>ProfileChangePassword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Secure\ProfileChangePassword.aspx.designer.cs">
+      <DependentUpon>ProfileChangePassword.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Secure\ProfileEditNotifications.aspx.cs">
+      <DependentUpon>ProfileEditNotifications.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Secure\ProfileEditNotifications.aspx.designer.cs">
+      <DependentUpon>ProfileEditNotifications.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Secure\ScheduleEdit.aspx.cs">
+      <DependentUpon>ScheduleEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Secure\ScheduleEdit.aspx.designer.cs">
+      <DependentUpon>ScheduleEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Secure\SecurityBulkAddUsers.aspx.cs">
+      <DependentUpon>SecurityBulkAddUsers.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Secure\SecurityBulkAddUsers.aspx.designer.cs">
+      <DependentUpon>SecurityBulkAddUsers.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Secure\SecurityManageUserRequests.aspx.cs">
+      <DependentUpon>SecurityManageUserRequests.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Secure\SecurityManageUserRequests.aspx.designer.cs">
+      <DependentUpon>SecurityManageUserRequests.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Secure\SecurityUser.aspx.cs">
+      <DependentUpon>SecurityUser.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Secure\SecurityUser.aspx.designer.cs">
+      <DependentUpon>SecurityUser.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Secure\Dashboard.aspx.cs">
+      <DependentUpon>Dashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Secure\Dashboard.aspx.designer.cs">
+      <DependentUpon>Dashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Secure\Flow.aspx.cs">
+      <DependentUpon>Flow.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Secure\Flow.aspx.designer.cs">
+      <DependentUpon>Flow.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Secure\Profile.aspx.cs">
+      <DependentUpon>Profile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Secure\Profile.aspx.designer.cs">
+      <DependentUpon>Profile.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Secure\Schedule.aspx.cs">
+      <DependentUpon>Schedule.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Secure\Schedule.aspx.designer.cs">
+      <DependentUpon>Schedule.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Secure\TaskDetails.aspx.cs">
+      <DependentUpon>TaskDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Secure\TaskDetails.aspx.designer.cs">
+      <DependentUpon>TaskDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Secure\Transaction.aspx.cs">
+      <DependentUpon>Transaction.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Secure\Transaction.aspx.designer.cs">
+      <DependentUpon>Transaction.aspx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AdminMaster.Master" />
+    <Content Include="Secure\ConfigArgs.aspx" />
+    <Content Include="Secure\Dashboard.aspx" />
+    <Content Include="Secure\Flow.aspx" />
+    <Content Include="Secure\Profile.aspx" />
+    <Content Include="Secure\Schedule.aspx" />
+    <Content Include="Styles\admin.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AnonMaster.Master" />
+    <Content Include="Controls\Footer.ascx" />
+    <Content Include="Error.aspx" />
+    <Content Include="Login.aspx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\common-windsor-net\windsor-commons-compression\Windsor.Commons.Compression.csproj">
+      <Project>{A5E08ED5-9650-4CDF-90C1-ACD0A3463BA3}</Project>
+      <Name>Windsor.Commons.Compression</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\common-windsor-net\windsor-commons-core\Windsor.Commons.Core.csproj">
+      <Project>{FE8A985A-F050-4475-B3D6-4E95EE87CF40}</Project>
+      <Name>Windsor.Commons.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\common-windsor-net\windsor-commons-genericcollectionlibrary\Windsor.Commons.GenericCollectionLibrary.csproj">
+      <Project>{73AAC6A1-0028-4947-8B57-2DDE04D6D115}</Project>
+      <Name>Windsor.Commons.GenericCollectionLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\common-windsor-net\windsor-commons-nodeclient\Windsor.Commons.NodeClient.csproj">
+      <Project>{E5B7FB63-FD4F-488F-A620-8E61849BB79A}</Project>
+      <Name>Windsor.Commons.NodeClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\common-windsor-net\windsor-commons-nodedomain\Windsor.Commons.NodeDomain.csproj">
+      <Project>{D5374478-B3C9-4920-93FB-0FA5C2AFA446}</Project>
+      <Name>Windsor.Commons.NodeDomain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\common-windsor-net\windsor-commons-spring\Windsor.Commons.Spring.csproj">
+      <Project>{2249EFD8-40F1-4C41-BCF0-AD29FEDFCBD0}</Project>
+      <Name>Windsor.Commons.Spring</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WNOSConnector\WNOSConnector.csproj">
+      <Project>{6DFCA062-E70D-4CCE-BBBF-11CA09EF2FD0}</Project>
+      <Name>WNOSConnector</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WNOSDomain\WNOSDomain.csproj">
+      <Project>{0AD3D68F-4A02-4080-BFF2-8AD1BAB259AA}</Project>
+      <Name>WNOSDomain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WNOSProviders\WNOSProviders.csproj">
+      <Project>{D95C862B-FFDC-4936-8835-B0D8DB421B20}</Project>
+      <Name>WNOSProviders</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WNOSUtility\WNOSUtility.csproj">
+      <Project>{94459097-5EAE-4482-B1E0-F419CEBCC8C7}</Project>
+      <Name>WNOSUtility</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Controls\SimpleList.ascx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Secure\ConfigArgsEdit.aspx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Config\ConfigSection.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Config\DashboardSection.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Config\FlowSection.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Config\ProfileSection.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Config\ScheduleSection.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Config\SecuritySection.config" />
+    <Content Include="Secure\ConfigDs.aspx" />
+    <Content Include="Secure\ConfigDsEdit.aspx" />
+    <Content Include="Secure\ConfigPartner.aspx" />
+    <Content Include="Secure\ConfigPartnerEdit.aspx" />
+    <Content Include="Secure\SecurityUser.aspx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Controls\SimpleCheckList.ascx" />
+    <Content Include="Controls\SimpleStackList.ascx" />
+    <Content Include="Global.asax" />
+    <Content Include="Secure\ScheduleEdit.aspx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Secure\ActivitySearchCriteria.aspx" />
+    <Content Include="Secure\FlowEdit.aspx" />
+    <Content Include="Secure\FlowServiceEdit.aspx" />
+    <Content Include="Secure\FlowUploadPlugin.aspx" />
+    <Content Include="Secure\ProfileChangePassword.aspx" />
+    <Content Include="Secure\ProfileEditNotifications.aspx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Config\ActivitySection.config" />
+    <Content Include="Secure\ActivityDetailView.ascx" />
+    <Content Include="Secure\GChartControl.ascx" />
+    <Content Include="Secure\NewsBar.ascx" />
+    <Content Include="Secure\Transaction.aspx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Controls\UpdateProgressCntl.ascx" />
+    <Content Include="Images\UI\accept.png" />
+    <Content Include="Images\UI\add.png" />
+    <Content Include="Images\UI\ajax-loader2.gif" />
+    <Content Include="Images\UI\ajax-loader2_even.gif" />
+    <Content Include="Images\UI\ajax-loader2_odd.gif" />
+    <Content Include="Images\UI\application-dock-180.png" />
+    <Content Include="Images\UI\application-dock.png" />
+    <Content Include="Images\UI\application_form_edit.png" />
+    <Content Include="Images\UI\application_form_magnify.png" />
+    <Content Include="Images\UI\application_view_columns.png" />
+    <Content Include="Images\UI\arrow-270.png" />
+    <Content Include="Images\UI\arrow-circle-double-135.png" />
+    <Content Include="Images\UI\arrow_double_left.gif" />
+    <Content Include="Images\UI\arrow_double_right.gif" />
+    <Content Include="Images\UI\arrow_down.gif" />
+    <Content Include="Images\UI\arrow_left.gif" />
+    <Content Include="Images\UI\arrow_refresh.png" />
+    <Content Include="Images\UI\arrow_right.gif" />
+    <Content Include="Images\UI\arrow_right.png" />
+    <Content Include="Images\UI\arrow_rotate_clockwise.png" />
+    <Content Include="Images\UI\arrow_up.gif" />
+    <Content Include="Images\UI\attach.png" />
+    <Content Include="Images\UI\balloon.png" />
+    <Content Include="Images\UI\block.png" />
+    <Content Include="Images\UI\brick.png" />
+    <Content Include="Images\UI\bricks.png" />
+    <Content Include="Images\UI\bullet_go.png" />
+    <Content Include="Images\UI\calendar-blue.png" />
+    <Content Include="Images\UI\calendar_view_week.png" />
+    <Content Include="Images\UI\cancel.png" />
+    <Content Include="Images\UI\chart_organisation.png" />
+    <Content Include="Images\UI\chart_pie.png" />
+    <Content Include="Images\UI\cog_go.png" />
+    <Content Include="Images\UI\connect.png" />
+    <Content Include="Images\UI\control-double-090-small.png" />
+    <Content Include="Images\UI\control-double-090.png" />
+    <Content Include="Images\UI\control-double-270-small.png" />
+    <Content Include="Images\UI\control-double-270.png" />
+    <Content Include="Images\UI\cross-circle-frame.png" />
+    <Content Include="Images\UI\cross-small.png" />
+    <Content Include="Images\UI\cross.png" />
+    <Content Include="Images\UI\database-network.png" />
+    <Content Include="Images\UI\database-network2.png" />
+    <Content Include="Images\UI\database.png" />
+    <Content Include="Images\UI\database2.png" />
+    <Content Include="Images\UI\database_connect.png" />
+    <Content Include="Images\UI\exclamation-red-frame.png" />
+    <Content Include="Images\UI\exclamation.png" />
+    <Content Include="Images\UI\exclamation_alert.png" />
+    <Content Include="Images\UI\flag_blue.png" />
+    <Content Include="Images\UI\flag_green.gif" />
+    <Content Include="Images\UI\flag_green.png" />
+    <Content Include="Images\UI\flag_orange.png" />
+    <Content Include="Images\UI\flag_red.png" />
+    <Content Include="Images\UI\flag_yellow.png" />
+    <Content Include="Images\UI\globe-network-ethernet.png" />
+    <Content Include="Images\UI\globe-network.png" />
+    <Content Include="Images\UI\group.png" />
+    <Content Include="Images\UI\information-frame.png" />
+    <Content Include="Images\UI\information.png" />
+    <Content Include="Images\UI\key.png" />
+    <Content Include="Images\UI\key_delete.png" />
+    <Content Include="Images\UI\key_go.png" />
+    <Content Include="Images\UI\layout_content.png" />
+    <Content Include="Images\UI\magnifier.png" />
+    <Content Include="Images\UI\magnifier2.png" />
+    <Content Include="Images\UI\menu.gif" />
+    <Content Include="Images\UI\network-ethernet.png" />
+    <Content Include="Images\UI\network.png" />
+    <Content Include="Images\UI\node-select-all.png" />
+    <Content Include="Images\UI\node.png" />
+    <Content Include="Images\UI\page_white_magnify.png" />
+    <Content Include="Images\UI\plug-connect.png" />
+    <Content Include="Images\UI\plugin.png" />
+    <Content Include="Images\UI\plus-small.png" />
+    <Content Include="Images\UI\plus.png" />
+    <Content Include="Images\UI\Progress_white.gif" />
+    <Content Include="Images\UI\puzzle.png" />
+    <Content Include="Images\UI\resultset_next.png" />
+    <Content Include="Images\UI\script.png" />
+    <Content Include="Images\UI\script_go.png" />
+    <Content Include="Images\UI\server-network.png" />
+    <Content Include="Images\UI\server_connect.png" />
+    <Content Include="Images\UI\server_delete.png" />
+    <Content Include="Images\UI\server_go.png" />
+    <Content Include="Images\UI\server_key.png" />
+    <Content Include="Images\UI\share.png" />
+    <Content Include="Images\UI\shield.png" />
+    <Content Include="Images\UI\sitemap-application-blue.png" />
+    <Content Include="Images\UI\sortascending.gif" />
+    <Content Include="Images\UI\sortdescending.gif" />
+    <Content Include="Images\UI\tabLeft.gif" />
+    <Content Include="Images\UI\tabRight.gif" />
+    <Content Include="Images\UI\tag-label-green.png" />
+    <Content Include="Images\UI\tag-label.png" />
+    <Content Include="Images\UI\tag_blue.png" />
+    <Content Include="Images\UI\tag_green.png" />
+    <Content Include="Images\UI\task_even.gif" />
+    <Content Include="Images\UI\task_odd.gif" />
+    <Content Include="Images\UI\tick-circle-frame.png" />
+    <Content Include="Images\UI\time.png" />
+    <Content Include="Images\UI\user.png" />
+    <Content Include="Images\UI\user_suit.png" />
+    <Content Include="Images\UI\wrench.png" />
+    <Content Include="Images\UI\zoom.png" />
+    <Content Include="Scripts\admin.js" />
+    <Content Include="Scripts\scrollsaver.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Secure\ConfigImportExportSettings.aspx" />
+    <Content Include="Secure\ImageRequestHandler.ashx" />
+    <Content Include="Secure\SecurityBulkAddUsers.aspx" />
+    <Content Include="Secure\SecurityManageUserRequests.aspx" />
+    <Content Include="Secure\TaskDetails.aspx" />
+    <Content Include="Styles\ie6.css" />
+    <Content Include="Test.aspx" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <SaveServerSettingsInUserFile>True</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>
