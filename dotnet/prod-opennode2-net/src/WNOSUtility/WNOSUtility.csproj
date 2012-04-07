@@ -136,9 +136,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <UsingTask TaskName="HgVersionFile" AssemblyFile="..\..\..\common-windsor-net\lib\MSBuildVersioning.dll" />
+  <UsingTask TaskName="SvnVersionFile" AssemblyFile="..\..\..\common-windsor-net\lib\MSBuildVersioning.dll" />
   <Target Name="BeforeBuild">
-    <HgVersionFile TemplateFile="..\AssemblyInfo\_AssemblyInfo.cs" DestinationFile="..\AssemblyInfo\AssemblyInfo.cs" />
+    <SvnVersionFile TemplateFile="..\AssemblyInfo\_AssemblyInfo.cs" DestinationFile="..\AssemblyInfo\AssemblyInfo.cs" />
   </Target>
   <Target Name="AfterBuild">
   </Target>
