@@ -77,7 +77,6 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [System.ComponentModel.DescriptionAttribute("The accessibility of the beach (ex: PUB_PUB_ACC, PRV_PUB_ACC)")]
-        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         public BeachAccessibilityDataType BeachAccessibilityType;
 
         /// <remarks/>
@@ -600,7 +599,6 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [System.ComponentModel.DescriptionAttribute("The number that represents the length of the swim season")]
-        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         // TSM:
         //public decimal SwimSeasonFrequencyMeasure;
         public string SwimSeasonFrequencyMeasure;
@@ -608,7 +606,6 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [System.ComponentModel.DescriptionAttribute("The number that represents the lenght of the off season")]
-        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         // TSM:
         //public decimal OffSeasonFrequencyMeasure;
         public string OffSeasonFrequencyMeasure;
@@ -839,7 +836,9 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [System.ComponentModel.DescriptionAttribute("The number that represents the criterion measure")]
-        public decimal MeasureValue;
+        // TSM:
+        //public decimal MeasureValue;
+        public string MeasureValue;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
@@ -1115,6 +1114,53 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/BEACHES/2")]
+    [System.Xml.Serialization.XmlRootAttribute("OrganizationStateContactDetail", Namespace = "http://www.exchangenetwork.net/schema/BEACHES/2", IsNullable = false)]
+    public partial class StateContactDetailDataType
+    {
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [System.ComponentModel.DescriptionAttribute("All the information associated with a contact\'s name.")]
+        public ContactNameDetailDataType ContactNameDetail;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        [System.ComponentModel.DescriptionAttribute("Details the name of the state contact\'s agency being described")]
+        public string ContactAgencyName;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
+        [System.ComponentModel.DescriptionAttribute("The state contact\'s telephone number being described (Must include \"-\".  ex: xxx-" +
+            "xxx-xxxx)")]
+        public string ContactTelephoneNumberText;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
+        [System.ComponentModel.DescriptionAttribute("The state contact\'s electronic address being described")]
+        public string ContactElectronicAddressText;
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/BEACHES/2")]
+    [System.Xml.Serialization.XmlRootAttribute("ContactNameDetail", Namespace = "http://www.exchangenetwork.net/schema/BEACHES/2", IsNullable = false)]
+    public partial class ContactNameDetailDataType
+    {
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [System.ComponentModel.DescriptionAttribute("The first name of the state contact")]
+        public string ContactFirstName;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        [System.ComponentModel.DescriptionAttribute("The last name of the state contact")]
+        public string ContactLastName;
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/BEACHES/2")]
     [System.Xml.Serialization.XmlRootAttribute("OrganizationDetail", Namespace = "http://www.exchangenetwork.net/schema/BEACHES/2", IsNullable = false)]
     public partial class OrganizationDetailDataType
     {
@@ -1171,13 +1217,11 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [System.ComponentModel.DescriptionAttribute("The name of the program interest")]
-        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         public string ProgramInterestName;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [System.ComponentModel.DescriptionAttribute("A short description of the program interest")]
-        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         public string ProgramInterestDescriptionText;
 
         /// <remarks/>
@@ -1188,13 +1232,11 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [System.ComponentModel.DescriptionAttribute("The two letter code fot the state the program interest is located in")]
-        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         public string ProgramInterestStateCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
         [System.ComponentModel.DescriptionAttribute("The FIPS county code for the program interest")]
-        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         public string ProgramInterestFIPSCountyCode;
 
         /// <remarks/>
@@ -1232,7 +1274,6 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [System.ComponentModel.DescriptionAttribute("The length of the object")]
-        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         // TSM:
         //public decimal ExtentLengthMeasure;
         public string ExtentLengthMeasure;
@@ -1240,7 +1281,6 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [System.ComponentModel.DescriptionAttribute("The unit of measurement")]
-        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         public DistanceUnitOfMeasureCodeDataType ExtentUnitOfMeasureCode;
     }
 

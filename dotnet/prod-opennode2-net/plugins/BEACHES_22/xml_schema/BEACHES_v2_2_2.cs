@@ -8,8 +8,8 @@ using Windsor.Node2008.WNOSPlugin.BEACHES_22;
 
 // NOTIF_ORGANIZATION
 [assembly: AppliedAttribute(typeof(OrganizationDetailDataType), "OrganizationIdentifier", typeof(ColumnAttribute), "ORGANIZATIONIDENTIFIER", 12, false)]
-[assembly: AppliedAttribute(typeof(OrganizationNameDetailDataType), "OrganizationTypeCode", typeof(ColumnAttribute), "ORGANIZATIONTYPECODE", 12)]
-[assembly: AppliedAttribute(typeof(OrganizationNameDetailDataType), "OrganizationName", typeof(ColumnAttribute), "ORGANIZATIONNAME", 60)]
+[assembly: AppliedAttribute(typeof(OrganizationNameDetailDataType), "OrganizationTypeCode", typeof(ColumnAttribute), "ORGANIZATIONTYPECODE", 12, false)]
+[assembly: AppliedAttribute(typeof(OrganizationNameDetailDataType), "OrganizationName", typeof(ColumnAttribute), "ORGANIZATIONNAME", 60, false)]
 [assembly: AppliedAttribute(typeof(OrganizationNameDetailDataType), "OrganizationDescriptionText", typeof(ColumnAttribute), "ORGANIZATIONDESCRIPTION", 255)]
 [assembly: AppliedAttribute(typeof(OrganizationNameDetailDataType), "OrganizationAbbreviationText", typeof(ColumnAttribute), "ORGANIZATIONABBREVIATION", 30)]
 
@@ -24,11 +24,26 @@ using Windsor.Node2008.WNOSPlugin.BEACHES_22;
 [assembly: AppliedAttribute(typeof(OrganizationMailingAddressDataType), "MailingAddressEffectiveDate", typeof(ColumnAttribute), "MAILINGADDREFFECTIVEDATE", 25, false, DbType.AnsiString)]
 [assembly: AppliedAttribute(typeof(OrganizationMailingAddressDataType), "MailingAddressStatusIndicator", typeof(ColumnAttribute), "MAILINGADDRSTATUS", 8, false)]
 
+[assembly: AppliedAttribute(typeof(MailingAddressDataType), "MailingAddressTypeCode", typeof(ColumnAttribute), "MAILINGADDRTYPECODE", 12, false)]
+[assembly: AppliedAttribute(typeof(MailingAddressDataType), "MailingAddressStreetLine1Text", typeof(ColumnAttribute), "MAILINGADDRLINE1", 100, false)]
+[assembly: AppliedAttribute(typeof(MailingAddressDataType), "MailingAddressStreetLine2Text", typeof(ColumnAttribute), "MAILINGADDRLINE2", 100)]
+[assembly: AppliedAttribute(typeof(MailingAddressDataType), "MailingAddressStreetLine3Text", typeof(ColumnAttribute), "MAILINGADDRLINE3", 100)]
+[assembly: AppliedAttribute(typeof(MailingAddressDataType), "MailingAddressCityName", typeof(ColumnAttribute), "MAILINGADDRCITY", 50, false)]
+[assembly: AppliedAttribute(typeof(MailingAddressDataType), "StateCode", typeof(ColumnAttribute), "STATECODE", 2, false, DbType.AnsiStringFixedLength)]
+[assembly: AppliedAttribute(typeof(MailingAddressDataType), "AddressPostalCode", typeof(ColumnAttribute), "ZIPCODE", 12, false)]
+[assembly: AppliedAttribute(typeof(MailingAddressDataType), "MailingAddressEffectiveDate", typeof(ColumnAttribute), "MAILINGADDREFFECTIVEDATE", 25, false, DbType.AnsiString)]
+[assembly: AppliedAttribute(typeof(MailingAddressDataType), "MailingAddressStatusIndicator", typeof(ColumnAttribute), "MAILINGADDRSTATUS", 8, false)]
+
 // NOTIF_ORGELECTRONICADDR
 [assembly: AppliedAttribute(typeof(OrganizationElectronicAddressType), "ElectronicAddressTypeCode", typeof(ColumnAttribute), "ELECTRONICADDRTYPECODE", 12, false)]
 [assembly: AppliedAttribute(typeof(OrganizationElectronicAddressType), "ElectronicAddressText", typeof(ColumnAttribute), "ELECTRONICADDR", 255, false)]
 [assembly: AppliedAttribute(typeof(OrganizationElectronicAddressType), "ElectronicAddressEffectiveDate", typeof(ColumnAttribute), "ELECTRONICADDREFFDATE", 25, false, DbType.AnsiString)]
 [assembly: AppliedAttribute(typeof(OrganizationElectronicAddressType), "ElectronicAddressStatusIndicator", typeof(ColumnAttribute), "ELECTRONICADDRSTATUS", 8, false)]
+
+[assembly: AppliedAttribute(typeof(ElectronicAddressType), "ElectronicAddressTypeCode", typeof(ColumnAttribute), "ELECTRONICADDRTYPECODE", 12, false)]
+[assembly: AppliedAttribute(typeof(ElectronicAddressType), "ElectronicAddressText", typeof(ColumnAttribute), "ELECTRONICADDR", 255, false)]
+[assembly: AppliedAttribute(typeof(ElectronicAddressType), "ElectronicAddressEffectiveDate", typeof(ColumnAttribute), "ELECTRONICADDREFFDATE", 25, false, DbType.AnsiString)]
+[assembly: AppliedAttribute(typeof(ElectronicAddressType), "ElectronicAddressStatusIndicator", typeof(ColumnAttribute), "ELECTRONICADDRSTATUS", 8, false)]
 
 // NOTIF_ORGANIZATIONTELEPHONE
 [assembly: AppliedAttribute(typeof(OrganizationTelephoneType), "TelephoneTypeCode", typeof(ColumnAttribute), "TELEPHONETYPECODE", 12, false)]
@@ -44,6 +59,13 @@ using Windsor.Node2008.WNOSPlugin.BEACHES_22;
 [assembly: AppliedAttribute(typeof(PersonNameDetailDataType), "PersonMiddleInitial", typeof(ColumnAttribute), "MIDDLEINITIAL", 2)]
 [assembly: AppliedAttribute(typeof(PersonNameDetailDataType), "NameSuffixText", typeof(ColumnAttribute), "SUFFIX", 5)]
 [assembly: AppliedAttribute(typeof(PersonNameDetailDataType), "NamePrefixText", typeof(ColumnAttribute), "TITLE", 60)]
+
+// NOTIF_STATECONTACT
+[assembly: AppliedAttribute(typeof(ContactNameDetailDataType), "ContactFirstName", typeof(ColumnAttribute), "FIRSTNAME", 50, false)]
+[assembly: AppliedAttribute(typeof(ContactNameDetailDataType), "ContactLastName", typeof(ColumnAttribute), "LASTNAME", 50, false)]
+[assembly: AppliedAttribute(typeof(StateContactDetailDataType), "ContactAgencyName", typeof(ColumnAttribute), "AGENCYNAME", 60, false)]
+[assembly: AppliedAttribute(typeof(StateContactDetailDataType), "ContactTelephoneNumberText", typeof(ColumnAttribute), "TELEPHONENUMBER", 12, false)]
+[assembly: AppliedAttribute(typeof(StateContactDetailDataType), "ContactElectronicAddressText", typeof(ColumnAttribute), "ELECTRONICADDR", 255, false)]
 
 // NOTIF_PERSONMAILINGADDRESS
 [assembly: AppliedAttribute(typeof(PersonMailingAddressDataType), "MailingAddressTypeCode", typeof(ColumnAttribute), "MAILINGADDRTYPECODE", 12, false)]
@@ -68,6 +90,11 @@ using Windsor.Node2008.WNOSPlugin.BEACHES_22;
 [assembly: AppliedAttribute(typeof(PersonTelephoneType), "TelephoneEffectiveDate", typeof(ColumnAttribute), "TELEPHONEEFFECTIVEDATE", 25, false, DbType.AnsiString)]
 [assembly: AppliedAttribute(typeof(PersonTelephoneType), "TelephoneStatusIndicator", typeof(ColumnAttribute), "TELEPHONESTATUS", 8, false)]
 
+[assembly: AppliedAttribute(typeof(TelephoneType), "TelephoneTypeCode", typeof(ColumnAttribute), "TELEPHONETYPECODE", 12, false)]
+[assembly: AppliedAttribute(typeof(TelephoneType), "TelephoneNumberText", typeof(ColumnAttribute), "TELEPHONENUMBER", 12, false)]
+[assembly: AppliedAttribute(typeof(TelephoneType), "TelephoneEffectiveDate", typeof(ColumnAttribute), "TELEPHONEEFFECTIVEDATE", 25, false, DbType.AnsiString)]
+[assembly: AppliedAttribute(typeof(TelephoneType), "TelephoneStatusIndicator", typeof(ColumnAttribute), "TELEPHONESTATUS", 8, false)]
+
 // NOTIF_BEACH
 [assembly: AppliedAttribute(typeof(BeachDetailDataType), "BeachIdentifier", typeof(ColumnAttribute), "BEACHIDENTIFIER", 8, false)]
 [assembly: AppliedAttribute(typeof(ProgramInterestDataType), "ProgramInterestName", typeof(ColumnAttribute), "BEACHNAME", 60)]
@@ -84,6 +111,8 @@ using Windsor.Node2008.WNOSPlugin.BEACHES_22;
 [assembly: AppliedAttribute(typeof(BeachSwimSeasonLengthDetailDataType), "SwimSeasonEndDate", typeof(ColumnAttribute), "SWIMSEASONENDDATE", 25, DbType.AnsiString)]
 [assembly: AppliedAttribute(typeof(BeachSwimSeasonLengthDetailDataType), "SwimSeasonLengthMeasure", typeof(ColumnAttribute), "SWIMSEASONLENGTH", DbType.Decimal)]
 [assembly: AppliedAttribute(typeof(BeachSwimSeasonLengthDetailDataType), "SwimSeasonUnitOfMeasureCode", typeof(ColumnAttribute), "SWIMSEASONUNITOFMEASURE", 12)]
+[assembly: AppliedAttribute(typeof(ReportingFrequencyDetailDataType), "ReportingFrequencyMeasure", typeof(ColumnAttribute), "REPORTINGFREQUENCYMEASURE", DbType.Decimal)]
+[assembly: AppliedAttribute(typeof(ReportingFrequencyDetailDataType), "ReportingFrequencyUnitOfMeasureCode", typeof(ColumnAttribute), "REPORTINGFREQUNITOFMEASURE", 255)]
 [assembly: AppliedAttribute(typeof(MonitoringFrequencyDetailDataType), "SwimSeasonFrequencyMeasure", typeof(ColumnAttribute), "SWIMSEASONFREQUENCYMEASURE", DbType.Decimal)]
 [assembly: AppliedAttribute(typeof(MonitoringFrequencyDetailDataType), "OffSeasonFrequencyMeasure", typeof(ColumnAttribute), "OFFSEASONFREQUENCYMEASURE", DbType.Decimal)]
 [assembly: AppliedAttribute(typeof(MonitoringFrequencyDetailDataType), "MonitoringFrequencyUnitOfMeasureCode", typeof(ColumnAttribute), "MONITORINGFREQUNITOFMEASURE", 255)]
@@ -91,6 +120,8 @@ using Windsor.Node2008.WNOSPlugin.BEACHES_22;
 [assembly: AppliedAttribute(typeof(MonitoringFrequencyDetailDataType), "MonitoredIrregularlyComment", typeof(ColumnAttribute), "MONITOREDIRREGULARLYCOMMENT", 255)]
 [assembly: AppliedAttribute(typeof(BeachAttributeDetailDataType), "BeachTierRanking", typeof(ColumnAttribute), "BEACHTIERRANKING", 1)]
 [assembly: AppliedAttribute(typeof(BeachAttributeDetailDataType), "BeachActBeachIndicator", typeof(ColumnAttribute), "BEACHACTBEACHINDICATOR", 5)]
+[assembly: AppliedAttribute(typeof(BeachAttributeDetailDataType), "BeachDormantIndicator", typeof(ColumnAttribute), "BEACHDORMANTINDICATOR", 5)]
+[assembly: AppliedAttribute(typeof(BeachAttributeDetailDataType), "BeachWebsite", typeof(ColumnAttribute), "BEACHWEBSITE", 255)]
 [assembly: AppliedAttribute(typeof(BeachPollutionSourceDetailDataType), "NoPollutionSourcesIndicator", typeof(ColumnAttribute), "NOPOLLUTIONSOURCES", 5)]
 [assembly: AppliedAttribute(typeof(BeachPollutionSourceDetailDataType), "PollutionSourcesUninvestigatedIndicator", typeof(ColumnAttribute), "POLLUTIONSOURCESUNINVESTIGATED", 5)]
 [assembly: AppliedAttribute(typeof(ProgramInterestDataType), "WaterBodyNameCode", typeof(ColumnAttribute), "WATERBODYNAMECODE", 25)]
@@ -115,13 +146,22 @@ using Windsor.Node2008.WNOSPlugin.BEACHES_22;
 [assembly: AppliedAttribute(typeof(ActivityDataType), "ActivityDescriptionText", typeof(ColumnAttribute), "ACTIVITYDESCRIPTION", 255)]
 [assembly: AppliedAttribute(typeof(ActivityDataType), "ActivityCommentText", typeof(ColumnAttribute), "ACTIVITYCOMMENT", 255)]
 [assembly: AppliedAttribute(typeof(ActivityDataType), "ActivityMonitoringStationIdentifier", typeof(DbIgnoreAttribute))]
-[assembly: AppliedAttribute(typeof(ActivityExtentDetailDataType), "ActivityExtentStartMeasure", typeof(ColumnAttribute), "EXTENTSTARTMEASURE", DbType.Decimal)]
-[assembly: AppliedAttribute(typeof(ActivityExtentDetailDataType), "ActivityExtentLengthMeasure", typeof(ColumnAttribute), "EXTENTLENGTHMEASURE", DbType.Decimal)]
+[assembly: AppliedAttribute(typeof(ActivityExtentDetailDataType), "ActivityExtentStartMeasure", typeof(ColumnAttribute), "EXTENTSTARTMEASURE", DbType.Int32)]
+[assembly: AppliedAttribute(typeof(ActivityExtentDetailDataType), "ActivityExtentLengthMeasure", typeof(ColumnAttribute), "EXTENTLENGTHMEASURE", DbType.Int32)]
 [assembly: AppliedAttribute(typeof(ActivityExtentDetailDataType), "ActivityExtentUnitOfMeasureCode", typeof(ColumnAttribute), "EXTENTUNITOFMEASURE", 255)]
 
 // NOTIF_BEACHPOLLUTION
 [assembly: AppliedAttribute(typeof(BeachPollutionSourceDataType), "BeachPollutionSourceCode", typeof(ColumnAttribute), "POLLUTIONSOURCECODE", 12, false)]
 [assembly: AppliedAttribute(typeof(BeachPollutionSourceDataType), "BeachPollutionSourceDescription", typeof(ColumnAttribute), "POLLUTIONSOURCEDESCRIPTION", 255)]
+
+// NOTIF_BEACHCRITERION
+[assembly: AppliedAttribute(typeof(BeachCriterionDetailDataType), "IndicatorName", typeof(ColumnAttribute), "INDICATORNAME", 12, false)]
+[assembly: AppliedAttribute(typeof(BeachCriterionDetailDataType), "WaterTypeName", typeof(ColumnAttribute), "WATERTYPENAME", 12, false)]
+[assembly: AppliedAttribute(typeof(BeachCriterionDetailDataType), "CriterionComment", typeof(ColumnAttribute), "CRITERIONCOMMENT", 255)]
+
+[assembly: AppliedAttribute(typeof(CriterionMeasureDataType), "MeasureTypeName", typeof(ColumnAttribute), "MEASURETYPENAME", 12, false)]
+[assembly: AppliedAttribute(typeof(CriterionMeasureDataType), "MeasureValue", typeof(ColumnAttribute), "MEASUREVALUE", DbType.Decimal, false)]
+[assembly: AppliedAttribute(typeof(CriterionMeasureDataType), "MeasureUnitCode", typeof(ColumnAttribute), "MEASUREUNITCODE", 12, false)]
 
 // NOTIF_ACTIVITYREASON
 [assembly: AppliedAttribute(typeof(ActivityReasonDetailDataType), "ActivityReasonType", typeof(ColumnAttribute), "REASONTYPE", 60, false)]
@@ -142,6 +182,12 @@ using Windsor.Node2008.WNOSPlugin.BEACHES_22;
 [assembly: AppliedAttribute(typeof(PersonRoleDetailDataType), "BeachRoleOrganizationIdentifier", typeof(DbIgnoreAttribute))]
 [assembly: AppliedAttribute(typeof(PersonRoleDetailDataType), "BeachRolePersonIdentifier", typeof(DbIgnoreAttribute))]
 
+[assembly: AppliedAttribute(typeof(RoleDetailDataType), "BeachRoleTypeCode", typeof(ColumnAttribute), "ROLETYPECODE", 12, false)]
+[assembly: AppliedAttribute(typeof(RoleDetailDataType), "BeachRoleEffectiveDate", typeof(ColumnAttribute), "ROLEEFFECTIVEDATE", 25, false, DbType.AnsiString)]
+[assembly: AppliedAttribute(typeof(RoleDetailDataType), "BeachRoleStatusIndicator", typeof(ColumnAttribute), "ROLESTATUS", 8, false)]
+[assembly: AppliedAttribute(typeof(RoleDetailDataType), "BeachRoleOrganizationIdentifier", typeof(DbIgnoreAttribute))]
+[assembly: AppliedAttribute(typeof(RoleDetailDataType), "BeachRolePersonIdentifier", typeof(DbIgnoreAttribute))]
+
 // NOTIF_ORGANIZATIONBEACHROLE
 [assembly: AppliedAttribute(typeof(OrganizationRoleDetailDataType), "BeachRoleTypeCode", typeof(ColumnAttribute), "ROLETYPECODE", 12, false)]
 [assembly: AppliedAttribute(typeof(OrganizationRoleDetailDataType), "BeachRoleEffectiveDate", typeof(ColumnAttribute), "ROLEEFFECTIVEDATE", 25, false, DbType.AnsiString)]
@@ -156,7 +202,7 @@ using Windsor.Node2008.WNOSPlugin.BEACHES_22;
 [assembly: AppliedAttribute(typeof(BeachProcedureDetailDataType), "ProcedureBeachIdentifier", typeof(DbIgnoreAttribute))]
 
 // NOTIF_YEARCOMPLETION
-[assembly: AppliedAttribute(typeof(YearCompletionIndicatorDataType), "CompletionYear", typeof(ColumnAttribute), "COMPLETIONYEAR", false, 4)]
+[assembly: AppliedAttribute(typeof(YearCompletionIndicatorDataType), "CompletionYear", typeof(ColumnAttribute), "COMPLETIONYEAR", false, DbType.Int32)]
 [assembly: AppliedAttribute(typeof(YearCompletionIndicatorDataType), "NotificiationDataCompleteIndicator", typeof(ColumnAttribute), "NOTIFICATIONDATACOMPLETIONIND", 5)]
 [assembly: AppliedAttribute(typeof(YearCompletionIndicatorDataType), "MonitoringDataCompleteIndicator", typeof(ColumnAttribute), "MONITORINGDATACOMPLETIONIND", 5)]
 [assembly: AppliedAttribute(typeof(YearCompletionIndicatorDataType), "LocationDataCompleteIndicator", typeof(ColumnAttribute), "LOCATIONDATACOMPLETIONIND", 5)]
@@ -165,23 +211,30 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
 {
     public partial class BeachDataSubmissionDataType : IBeforeSaveToDatabase, IAfterLoadFromDatabase
     {
+        protected static string MakeOrgPersonIdentifier(string organizationIdentifier, string personIdentifier)
+        {
+            return organizationIdentifier + "-" + personIdentifier;
+        }
         public void BeforeSaveToDatabase()
         {
             // Create GUIDs for all Organizations
             Dictionary<string, string> orgIdentifierToPrimaryKeyMap = new Dictionary<string, string>();
-            Dictionary<string, string> personIdentifierToPrimaryKeyMap = new Dictionary<string, string>();
+            Dictionary<string, string> orgPersonIdentifierToPrimaryKeyMap = new Dictionary<string, string>();
             CollectionUtils.ForEach(OrganizationDetail, delegate(OrganizationDetailDataType organizationDetail)
             {
                 organizationDetail.Id = StringUtils.CreateSequentialGuid();
                 orgIdentifierToPrimaryKeyMap.Add(organizationDetail.OrganizationIdentifier, organizationDetail.Id);
                 CollectionUtils.ForEach(organizationDetail.OrganizationPersonDetail, delegate(PersonDetailDataType personDetail)
                 {
+                    string orgPersonIdentifier = MakeOrgPersonIdentifier(organizationDetail.OrganizationIdentifier, personDetail.PersonIdentifier);
                     string personId;
-                    if (!personIdentifierToPrimaryKeyMap.TryGetValue(personDetail.PersonIdentifier, out personId))
+                    if (orgPersonIdentifierToPrimaryKeyMap.TryGetValue(orgPersonIdentifier, out personId))
                     {
-                        personId = StringUtils.CreateSequentialGuid();
-                        personIdentifierToPrimaryKeyMap.Add(personDetail.PersonIdentifier, personId);
+                        throw new ArgException("A person with the PersonIdentifier \"{0}\" was specified more than once for the OrganizationIdentifier \"{1}\"",
+                                               personDetail.PersonIdentifier, organizationDetail.OrganizationIdentifier);
                     }
+                    personId = StringUtils.CreateSequentialGuid();
+                    orgPersonIdentifierToPrimaryKeyMap.Add(orgPersonIdentifier, personId);
                     personDetail.Id = personId;
                 });
             });
@@ -211,11 +264,12 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
                     {
                         if (!personMap.ContainsKey(orgRoleDetail.BeachRolePersonIdentifier))
                         {
+                            string orgPersonIdentifier = MakeOrgPersonIdentifier(orgRoleDetail.BeachRoleOrganizationIdentifier, orgRoleDetail.BeachRolePersonIdentifier);
                             string personId;
-                            if (!personIdentifierToPrimaryKeyMap.TryGetValue(orgRoleDetail.BeachRolePersonIdentifier, out personId))
+                            if (!orgPersonIdentifierToPrimaryKeyMap.TryGetValue(orgPersonIdentifier, out personId))
                             {
-                                throw new ArgumentException(string.Format("A BeachRolePersonIdentifier references Person with Identifier \"{0}\" that cannot be found",
-                                                                          orgRoleDetail.BeachRolePersonIdentifier));
+                                throw new ArgumentException(string.Format("A BeachRolePersonIdentifier references PersonIdentifier \"{0}\" that cannot be found for OrganizationIdentifier \"{1}\"",
+                                                                          orgRoleDetail.BeachRolePersonIdentifier, orgRoleDetail.BeachRoleOrganizationIdentifier));
                             }
                             PersonRoleDetailDataType personRole = new PersonRoleDetailDataType(orgRoleDetail);
                             personMap[orgRoleDetail.BeachRolePersonIdentifier] = personRole;
@@ -400,6 +454,17 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
         [GuidForeignKey("ORGANIZATION_ID", IndexName = "FK_NOT_PER")]
         public string OrganizationId;
     }
+    [Table("NOTIF_STATECONTACT")]
+    public partial class StateContactDetailDataType
+    {
+        [System.Xml.Serialization.XmlIgnore]
+        [GuidPrimaryKey("ID", IndexName = "PK_NOT_STCNTCT")]
+        public string Id;
+
+        [System.Xml.Serialization.XmlIgnore]
+        [GuidForeignKey("ORGANIZATION_ID", IndexName = "FK_NOT_STCNTCT")]
+        public string OrganizationId;
+    }
     [Table("NOTIF_PERSONMAILINGADDRESS")]
     public partial class PersonMailingAddressDataType : MailingAddressDataType
     {
@@ -508,6 +573,17 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
         [GuidForeignKey("BEACH_ID", IndexName = "FK_NOT_BCH_POL")]
         public string BeachId;
     }
+    [Table("NOTIF_BEACHCRITERION")]
+    public partial class BeachCriterionDetailDataType
+    {
+        [System.Xml.Serialization.XmlIgnore]
+        [GuidPrimaryKey("ID", IndexName = "PK_NOT_BCH_CRI")]
+        public string Id;
+
+        [System.Xml.Serialization.XmlIgnore]
+        [GuidForeignKey("BEACH_ID", IndexName = "FK_NOT_BCH_CRI")]
+        public string BeachId;
+    }
     [Table("NOTIF_BEACHACTIVITYMONSTATION")]
     public class ActivityMonitoringStationIdentifierDataType
     {
@@ -603,7 +679,9 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
     [Table("NOTIF_PERSONBEACHROLE")]
     public partial class PersonRoleDetailDataType : RoleDetailDataType
     {
-        public PersonRoleDetailDataType() { }
+        public PersonRoleDetailDataType()
+        {
+        }
 
         public PersonRoleDetailDataType(OrganizationRoleDetailDataType orgRole)
         {
@@ -630,7 +708,9 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
     [Table("NOTIF_ORGANIZATIONBEACHROLE")]
     public partial class OrganizationRoleDetailDataType : RoleDetailDataType
     {
-        public OrganizationRoleDetailDataType() { }
+        public OrganizationRoleDetailDataType()
+        {
+        }
 
         public OrganizationRoleDetailDataType(PersonRoleDetailDataType personRoleDetail)
         {
