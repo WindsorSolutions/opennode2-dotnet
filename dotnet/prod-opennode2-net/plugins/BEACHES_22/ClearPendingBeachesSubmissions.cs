@@ -56,7 +56,7 @@ using Windsor.Commons.Logging;
 using Windsor.Commons.Spring;
 using Windsor.Commons.XsdOrm;
 
-namespace Windsor.Node2008.WNOSPlugin.BEACHES_21
+namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
 {
     [Serializable]
     public class ClearPendingBeachesSubmissions : BaseBeachesSubmissionPlugin

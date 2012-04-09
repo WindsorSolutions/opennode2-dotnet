@@ -58,7 +58,7 @@ using Windsor.Commons.XsdOrm;
 using Windsor.Commons.NodeDomain;
 using Windsor.Commons.NodeClient;
 
-namespace Windsor.Node2008.WNOSPlugin.BEACHES_21
+namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
 {
     [Serializable]
     public abstract class BaseBeachesSubmissionPlugin : BaseWNOSPlugin, ITaskProcessor

@@ -56,7 +56,7 @@ using Windsor.Commons.Logging;
 using Windsor.Commons.Spring;
 using Windsor.Commons.XsdOrm;
 
-namespace Windsor.Node2008.WNOSPlugin.BEACHES_21
+namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
 {
     [Serializable]
     public class SubmissionProcessor : BaseWNOSPlugin, ISubmitProcessor
@@ -138,8 +138,8 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_21
                 }
 
                 AppendAuditLogEvent("Deserializing document data to BEACHES data");
-                Windsor.Node2008.WNOSPlugin.BEACHES_21.BeachDataSubmissionDataType data =
-                    _serializationHelper.Deserialize<Windsor.Node2008.WNOSPlugin.BEACHES_21.BeachDataSubmissionDataType>(tempXmlFilePath);
+                Windsor.Node2008.WNOSPlugin.BEACHES_22.BeachDataSubmissionDataType data =
+                    _serializationHelper.Deserialize<Windsor.Node2008.WNOSPlugin.BEACHES_22.BeachDataSubmissionDataType>(tempXmlFilePath);
                 data.BeforeSaveToDatabase();
 
                 AppendAuditLogEvent("Storing BEACHES data into database");
@@ -161,17 +161,17 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_21
                     _baseDao.AdoTemplate.ExecuteNonQuery(CommandType.Text, "DELETE FROM NOTIF_BEACH");
                     _baseDao.AdoTemplate.ExecuteNonQuery(CommandType.Text, "DELETE FROM NOTIF_ORGANIZATION");
 
-                    CollectionUtils.ForEach(data.OrganizationDetail, delegate(Windsor.Node2008.WNOSPlugin.BEACHES_21.OrganizationDetailDataType organizationDetailDataType)
+                    CollectionUtils.ForEach(data.OrganizationDetail, delegate(Windsor.Node2008.WNOSPlugin.BEACHES_22.OrganizationDetailDataType organizationDetailDataType)
                     {
                         Dictionary<string, int> tableRowCountsTemp = _objectsToDatabase.SaveToDatabase(organizationDetailDataType, _baseDao);
                         tableRowCounts = AddTableRowCounts(tableRowCountsTemp, tableRowCounts);
                     });
-                    CollectionUtils.ForEach(data.BeachDetail, delegate(Windsor.Node2008.WNOSPlugin.BEACHES_21.BeachDetailDataType beachDetail)
+                    CollectionUtils.ForEach(data.BeachDetail, delegate(Windsor.Node2008.WNOSPlugin.BEACHES_22.BeachDetailDataType beachDetail)
                     {
                         Dictionary<string, int> tableRowCountsTemp = _objectsToDatabase.SaveToDatabase(beachDetail, _baseDao);
                         tableRowCounts = AddTableRowCounts(tableRowCountsTemp, tableRowCounts);
                     });
-                    CollectionUtils.ForEach(data.BeachProcedureDetail, delegate(Windsor.Node2008.WNOSPlugin.BEACHES_21.BeachProcedureDetailDataType beachProcedureDetail)
+                    CollectionUtils.ForEach(data.BeachProcedureDetail, delegate(Windsor.Node2008.WNOSPlugin.BEACHES_22.BeachProcedureDetailDataType beachProcedureDetail)
                     {
                         Dictionary<string, int> tableRowCountsTemp = _objectsToDatabase.SaveToDatabase(beachProcedureDetail, _baseDao);
                         tableRowCounts = AddTableRowCounts(tableRowCountsTemp, tableRowCounts);

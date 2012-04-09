@@ -55,7 +55,7 @@ using Windsor.Node2008.WNOSPlugin;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("452AD08E-D84D-4709-AA25-7A9AF7B865A7")]
+[assembly: Guid("155AA58E-AF22-4E5E-ACD1-6ADFDD627D4E")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -69,5 +69,5 @@ using Windsor.Node2008.WNOSPlugin;
 [assembly: AssemblyVersion(AssemblyInfo.cAssemblyVersion)]
 [assembly: AssemblyFileVersion(AssemblyInfo.cAssemblyFileVersion)]
 [assembly: PluginDefaultFlowAttribute("BEACHES")]
-[assembly: PluginPackageNameAttribute("BEACHES 2.1")]
-[assembly: PluginSqlDdlFilePaths(@"BEACHES\2.1\staging_schema_ddl\BEACHES_2.1_SQL-DDL.sql,BEACHES\2.1\staging_schema_ddl\BEACHES_2.1-ORA-DDL.sql")]
+[assembly: PluginPackageNameAttribute("BEACHES 2.2")]
+[assembly: PluginSqlDdlFilePaths(@"BEACHES\2.2\staging_schema_ddl\BEACHES_2.2_SQL-DDL.sql,BEACHES\2.2\staging_schema_ddl\BEACHES_2.2-ORA-DDL.sql")]

@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{4A55994D-2329-42BF-A2D6-5178FA9E21C1}</ProjectGuid>
+    <ProjectGuid>{0C5B2B99-3C65-4EDB-AC86-6944A458A024}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Windsor.Node2008.WNOSPlugin.BEACHES_21</RootNamespace>
-    <AssemblyName>Windsor.Node2008.WNOSPlugin.BEACHES_21</AssemblyName>
+    <RootNamespace>Windsor.Node2008.WNOSPlugin.BEACHES_22</RootNamespace>
+    <AssemblyName>Windsor.Node2008.WNOSPlugin.BEACHES_22</AssemblyName>
     <SccProjectName>
     </SccProjectName>
     <SccLocalPath>
@@ -96,8 +96,8 @@
     <Compile Include="PerformBeachesSubmission.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SubmissionProcessor.cs" />
-    <Compile Include="xml_schema\BEACHES_v2_1.cs" />
-    <Compile Include="xml_schema\BEACHES_v2_1_2.cs" />
+    <Compile Include="xml_schema\BEACHES_v2_2.cs" />
+    <Compile Include="xml_schema\BEACHES_v2_2_2.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
