@@ -660,44 +660,130 @@ namespace TestApp
                 }
             }
         }
+        //static void DoBEACHES()
+        //{
+        //    string tempFolderPath = @"C:\DOWNLOAD\TEST_XSD_ORM";
+        //    string rootSchemaFilePath = Path.GetFullPath(@"..\..\..\..\..\prod-opennode2-net\plugins\BEACHES_21\xml_schema\index.xsd");
+        //    string samplesFolderPath = Path.GetFullPath(@"..\..\..\..\..\prod-opennode2-net\plugins\BEACHES_21\docs");
+        //    string[] sampleNames = new string[]
+        //    {
+        //        "Beach_ExampleXMLFile_v2.1.xml",
+        //        "GetBeachesData_v2.1_NY_67361393-A449-4043-839A-329A047DC57F.xml",
+        //        "MI_Notification_20090122c.xml",
+        //        "OH_Notification_20090128.xml",
+        //        "682b3f25-688d-4529-928f-d7af966200d1.xml",
+        //    };
+
+        //    UnitTestSerialization<Windsor.Node2008.WNOSPlugin.BEACHES_21.BeachDataSubmissionDataType>(tempFolderPath, rootSchemaFilePath, null,
+        //                                                                                              samplesFolderPath, sampleNames);
+        //    IObjectsToDatabase objectsToDatabase = new ObjectsToDatabase();
+        //    IObjectsFromDatabase objectsFromDatabase = new ObjectsFromDatabase();
+
+        //    Spring.Data.Common.IDbProvider dbProvider =
+        //        Spring.Data.Common.DbProviderFactory.GetDbProvider("System.Data.SqlClient");
+        //    dbProvider.ConnectionString = @"server=.\sqlexpress;integrated security=true;database=NODE_FLOW_BEACHES_21";
+        //    //dbProvider =
+        //    //    Spring.Data.Common.DbProviderFactory.GetDbProvider("System.Data.OracleClient");
+        //    //Spring.Data.Common.DbProviderFactory.GetDbProvider("Oracle.DataAccess.Client");
+        //    //dbProvider.ConnectionString = @"Data Source=localhost/XE;User Id=NODE_FLOW_BEACHES_21;Password=memorial;";
+        //    SpringBaseDao springBaseDao = new SpringBaseDao(dbProvider);
+
+        //    objectsToDatabase.BuildDatabase(typeof(Windsor.Node2008.WNOSPlugin.BEACHES_21.OrganizationDetailDataType), springBaseDao);
+        //    objectsToDatabase.BuildDatabase(typeof(Windsor.Node2008.WNOSPlugin.BEACHES_21.BeachDetailDataType), springBaseDao);
+        //    objectsToDatabase.BuildDatabase(typeof(Windsor.Node2008.WNOSPlugin.BEACHES_21.BeachProcedureDetailDataType), springBaseDao);
+        //    objectsToDatabase.BuildDatabase(typeof(Windsor.Node2008.WNOSPlugin.BEACHES_21.YearCompletionIndicatorDataType), springBaseDao);
+
+        //    SerializationUtils serializationUtils = new SerializationUtils();
+        //    foreach (string fileName in sampleNames)
+        //    {
+        //        string xmlPath = Path.Combine(samplesFolderPath, fileName);
+        //        Windsor.Node2008.WNOSPlugin.BEACHES_21.BeachDataSubmissionDataType data =
+        //            serializationUtils.Deserialize<Windsor.Node2008.WNOSPlugin.BEACHES_21.BeachDataSubmissionDataType>(xmlPath);
+
+        //        springBaseDao.AdoTemplate.ExecuteNonQuery(CommandType.Text, "DELETE FROM NOTIF_YEARCOMPLETION");
+        //        springBaseDao.AdoTemplate.ExecuteNonQuery(CommandType.Text, "DELETE FROM NOTIF_PROCEDURE");
+        //        springBaseDao.AdoTemplate.ExecuteNonQuery(CommandType.Text, "DELETE FROM NOTIF_BEACH");
+        //        springBaseDao.AdoTemplate.ExecuteNonQuery(CommandType.Text, "DELETE FROM NOTIF_ORGANIZATION");
+
+        //        data.BeforeSaveToDatabase();
+        //        CollectionUtils.ForEach(data.OrganizationDetail, delegate(Windsor.Node2008.WNOSPlugin.BEACHES_21.OrganizationDetailDataType organizationDetailDataType)
+        //        {
+        //            objectsToDatabase.SaveToDatabase(organizationDetailDataType, springBaseDao);
+        //        });
+        //        CollectionUtils.ForEach(data.BeachDetail, delegate(Windsor.Node2008.WNOSPlugin.BEACHES_21.BeachDetailDataType beachDetail)
+        //        {
+        //            objectsToDatabase.SaveToDatabase(beachDetail, springBaseDao);
+        //        });
+        //        CollectionUtils.ForEach(data.BeachProcedureDetail, delegate(Windsor.Node2008.WNOSPlugin.BEACHES_21.BeachProcedureDetailDataType beachProcedureDetail)
+        //        {
+        //            objectsToDatabase.SaveToDatabase(beachProcedureDetail, springBaseDao);
+        //        });
+        //        if (data.YearCompletionIndicators != null)
+        //        {
+        //            objectsToDatabase.SaveToDatabase(data.YearCompletionIndicators, springBaseDao);
+        //        }
+
+        //        Windsor.Node2008.WNOSPlugin.BEACHES_21.BeachDataSubmissionDataType data2 = new Windsor.Node2008.WNOSPlugin.BEACHES_21.BeachDataSubmissionDataType();
+        //        List<Windsor.Node2008.WNOSPlugin.BEACHES_21.OrganizationDetailDataType> organizationDetails =
+        //            objectsFromDatabase.LoadFromDatabase<Windsor.Node2008.WNOSPlugin.BEACHES_21.OrganizationDetailDataType>(springBaseDao, null);
+        //        List<Windsor.Node2008.WNOSPlugin.BEACHES_21.BeachDetailDataType> beachDetails =
+        //            objectsFromDatabase.LoadFromDatabase<Windsor.Node2008.WNOSPlugin.BEACHES_21.BeachDetailDataType>(springBaseDao, null);
+        //        List<Windsor.Node2008.WNOSPlugin.BEACHES_21.BeachProcedureDetailDataType> beachProcedureDetails =
+        //            objectsFromDatabase.LoadFromDatabase<Windsor.Node2008.WNOSPlugin.BEACHES_21.BeachProcedureDetailDataType>(springBaseDao, null);
+        //        List<Windsor.Node2008.WNOSPlugin.BEACHES_21.YearCompletionIndicatorDataType> yearCompletionIndicators =
+        //            objectsFromDatabase.LoadFromDatabase<Windsor.Node2008.WNOSPlugin.BEACHES_21.YearCompletionIndicatorDataType>(springBaseDao, null);
+        //        data2.YearCompletionIndicators = CollectionUtils.IsNullOrEmpty(yearCompletionIndicators) ? null : yearCompletionIndicators[0];
+        //        data2.BeachDetail = CollectionUtils.IsNullOrEmpty(beachDetails) ? null : beachDetails.ToArray();
+        //        data2.BeachProcedureDetail = CollectionUtils.IsNullOrEmpty(beachProcedureDetails) ? null : beachProcedureDetails.ToArray();
+        //        data2.OrganizationDetail = CollectionUtils.IsNullOrEmpty(organizationDetails) ? null : organizationDetails.ToArray();
+        //        data2.AfterLoadFromDatabase();
+
+        //        string savePath = Path.Combine(tempFolderPath, Path.GetFileName(FileUtils.AppendToFileName(xmlPath, "_out")));
+        //        serializationUtils.Serialize(data2, savePath);
+
+        //        ValidateXml(savePath, rootSchemaFilePath);
+        //    }
+        //}
         static void DoBEACHES()
         {
             string tempFolderPath = @"C:\DOWNLOAD\TEST_XSD_ORM";
-            string rootSchemaFilePath = Path.GetFullPath(@"..\..\..\..\..\prod-opennode2-net\plugins\BEACHES_21\xml_schema\index.xsd");
-            string samplesFolderPath = Path.GetFullPath(@"..\..\..\..\..\prod-opennode2-net\plugins\BEACHES_21\docs");
+            string rootSchemaFilePath = Path.GetFullPath(@"..\..\..\..\..\prod-opennode2-net\plugins\BEACHES_22\xml_schema\index.xsd");
+            string samplesFolderPath = Path.GetFullPath(@"..\..\..\..\..\prod-opennode2-net\plugins\BEACHES_22\docs");
             string[] sampleNames = new string[]
             {
                 "Beach_ExampleXMLFile_v2.1.xml",
                 "GetBeachesData_v2.1_NY_67361393-A449-4043-839A-329A047DC57F.xml",
                 "MI_Notification_20090122c.xml",
                 "OH_Notification_20090128.xml",
+                "682b3f25-688d-4529-928f-d7af966200d1.xml",
+                "BeachNotification_ExampleXMLFile_v2.2.xml",
             };
 
-            UnitTestSerialization<Windsor.Node2008.WNOSPlugin.BEACHES_21.BeachDataSubmissionDataType>(tempFolderPath, rootSchemaFilePath, null,
+            UnitTestSerialization<Windsor.Node2008.WNOSPlugin.BEACHES_22.BeachDataSubmissionDataType>(tempFolderPath, rootSchemaFilePath, null,
                                                                                                       samplesFolderPath, sampleNames);
             IObjectsToDatabase objectsToDatabase = new ObjectsToDatabase();
             IObjectsFromDatabase objectsFromDatabase = new ObjectsFromDatabase();
 
             Spring.Data.Common.IDbProvider dbProvider =
                 Spring.Data.Common.DbProviderFactory.GetDbProvider("System.Data.SqlClient");
-            dbProvider.ConnectionString = @"server=.\sqlexpress;integrated security=true;database=NODE_FLOW_BEACHES_21";
+            dbProvider.ConnectionString = @"server=.\sqlexpress;integrated security=true;database=NODE_FLOW_BEACHES_22";
             //dbProvider =
             //    Spring.Data.Common.DbProviderFactory.GetDbProvider("System.Data.OracleClient");
             //Spring.Data.Common.DbProviderFactory.GetDbProvider("Oracle.DataAccess.Client");
             //dbProvider.ConnectionString = @"Data Source=localhost/XE;User Id=NODE_FLOW_BEACHES_21;Password=memorial;";
             SpringBaseDao springBaseDao = new SpringBaseDao(dbProvider);
 
-            objectsToDatabase.BuildDatabase(typeof(Windsor.Node2008.WNOSPlugin.BEACHES_21.OrganizationDetailDataType), springBaseDao);
-            objectsToDatabase.BuildDatabase(typeof(Windsor.Node2008.WNOSPlugin.BEACHES_21.BeachDetailDataType), springBaseDao);
-            objectsToDatabase.BuildDatabase(typeof(Windsor.Node2008.WNOSPlugin.BEACHES_21.BeachProcedureDetailDataType), springBaseDao);
-            objectsToDatabase.BuildDatabase(typeof(Windsor.Node2008.WNOSPlugin.BEACHES_21.YearCompletionIndicatorDataType), springBaseDao);
+            objectsToDatabase.BuildDatabase(typeof(Windsor.Node2008.WNOSPlugin.BEACHES_22.OrganizationDetailDataType), springBaseDao);
+            objectsToDatabase.BuildDatabase(typeof(Windsor.Node2008.WNOSPlugin.BEACHES_22.BeachDetailDataType), springBaseDao);
+            objectsToDatabase.BuildDatabase(typeof(Windsor.Node2008.WNOSPlugin.BEACHES_22.BeachProcedureDetailDataType), springBaseDao);
+            objectsToDatabase.BuildDatabase(typeof(Windsor.Node2008.WNOSPlugin.BEACHES_22.YearCompletionIndicatorDataType), springBaseDao);
 
             SerializationUtils serializationUtils = new SerializationUtils();
             foreach (string fileName in sampleNames)
             {
                 string xmlPath = Path.Combine(samplesFolderPath, fileName);
-                Windsor.Node2008.WNOSPlugin.BEACHES_21.BeachDataSubmissionDataType data =
-                    serializationUtils.Deserialize<Windsor.Node2008.WNOSPlugin.BEACHES_21.BeachDataSubmissionDataType>(xmlPath);
+                Windsor.Node2008.WNOSPlugin.BEACHES_22.BeachDataSubmissionDataType data =
+                    serializationUtils.Deserialize<Windsor.Node2008.WNOSPlugin.BEACHES_22.BeachDataSubmissionDataType>(xmlPath);
 
                 springBaseDao.AdoTemplate.ExecuteNonQuery(CommandType.Text, "DELETE FROM NOTIF_YEARCOMPLETION");
                 springBaseDao.AdoTemplate.ExecuteNonQuery(CommandType.Text, "DELETE FROM NOTIF_PROCEDURE");
@@ -705,15 +791,15 @@ namespace TestApp
                 springBaseDao.AdoTemplate.ExecuteNonQuery(CommandType.Text, "DELETE FROM NOTIF_ORGANIZATION");
 
                 data.BeforeSaveToDatabase();
-                CollectionUtils.ForEach(data.OrganizationDetail, delegate(Windsor.Node2008.WNOSPlugin.BEACHES_21.OrganizationDetailDataType organizationDetailDataType)
+                CollectionUtils.ForEach(data.OrganizationDetail, delegate(Windsor.Node2008.WNOSPlugin.BEACHES_22.OrganizationDetailDataType organizationDetailDataType)
                 {
                     objectsToDatabase.SaveToDatabase(organizationDetailDataType, springBaseDao);
                 });
-                CollectionUtils.ForEach(data.BeachDetail, delegate(Windsor.Node2008.WNOSPlugin.BEACHES_21.BeachDetailDataType beachDetail)
+                CollectionUtils.ForEach(data.BeachDetail, delegate(Windsor.Node2008.WNOSPlugin.BEACHES_22.BeachDetailDataType beachDetail)
                 {
                     objectsToDatabase.SaveToDatabase(beachDetail, springBaseDao);
                 });
-                CollectionUtils.ForEach(data.BeachProcedureDetail, delegate(Windsor.Node2008.WNOSPlugin.BEACHES_21.BeachProcedureDetailDataType beachProcedureDetail)
+                CollectionUtils.ForEach(data.BeachProcedureDetail, delegate(Windsor.Node2008.WNOSPlugin.BEACHES_22.BeachProcedureDetailDataType beachProcedureDetail)
                 {
                     objectsToDatabase.SaveToDatabase(beachProcedureDetail, springBaseDao);
                 });
@@ -722,23 +808,25 @@ namespace TestApp
                     objectsToDatabase.SaveToDatabase(data.YearCompletionIndicators, springBaseDao);
                 }
 
-                Windsor.Node2008.WNOSPlugin.BEACHES_21.BeachDataSubmissionDataType data2 = new Windsor.Node2008.WNOSPlugin.BEACHES_21.BeachDataSubmissionDataType();
-                List<Windsor.Node2008.WNOSPlugin.BEACHES_21.OrganizationDetailDataType> organizationDetails =
-                    objectsFromDatabase.LoadFromDatabase<Windsor.Node2008.WNOSPlugin.BEACHES_21.OrganizationDetailDataType>(springBaseDao, null);
-                List<Windsor.Node2008.WNOSPlugin.BEACHES_21.BeachDetailDataType> beachDetails =
-                    objectsFromDatabase.LoadFromDatabase<Windsor.Node2008.WNOSPlugin.BEACHES_21.BeachDetailDataType>(springBaseDao, null);
-                List<Windsor.Node2008.WNOSPlugin.BEACHES_21.BeachProcedureDetailDataType> beachProcedureDetails =
-                    objectsFromDatabase.LoadFromDatabase<Windsor.Node2008.WNOSPlugin.BEACHES_21.BeachProcedureDetailDataType>(springBaseDao, null);
-                List<Windsor.Node2008.WNOSPlugin.BEACHES_21.YearCompletionIndicatorDataType> yearCompletionIndicators =
-                    objectsFromDatabase.LoadFromDatabase<Windsor.Node2008.WNOSPlugin.BEACHES_21.YearCompletionIndicatorDataType>(springBaseDao, null);
+                Windsor.Node2008.WNOSPlugin.BEACHES_22.BeachDataSubmissionDataType data2 = new Windsor.Node2008.WNOSPlugin.BEACHES_22.BeachDataSubmissionDataType();
+                List<Windsor.Node2008.WNOSPlugin.BEACHES_22.OrganizationDetailDataType> organizationDetails =
+                    objectsFromDatabase.LoadFromDatabase<Windsor.Node2008.WNOSPlugin.BEACHES_22.OrganizationDetailDataType>(springBaseDao, null);
+                List<Windsor.Node2008.WNOSPlugin.BEACHES_22.BeachDetailDataType> beachDetails =
+                    objectsFromDatabase.LoadFromDatabase<Windsor.Node2008.WNOSPlugin.BEACHES_22.BeachDetailDataType>(springBaseDao, null);
+                List<Windsor.Node2008.WNOSPlugin.BEACHES_22.BeachProcedureDetailDataType> beachProcedureDetails =
+                    objectsFromDatabase.LoadFromDatabase<Windsor.Node2008.WNOSPlugin.BEACHES_22.BeachProcedureDetailDataType>(springBaseDao, null);
+                List<Windsor.Node2008.WNOSPlugin.BEACHES_22.YearCompletionIndicatorDataType> yearCompletionIndicators =
+                    objectsFromDatabase.LoadFromDatabase<Windsor.Node2008.WNOSPlugin.BEACHES_22.YearCompletionIndicatorDataType>(springBaseDao, null);
                 data2.YearCompletionIndicators = CollectionUtils.IsNullOrEmpty(yearCompletionIndicators) ? null : yearCompletionIndicators[0];
                 data2.BeachDetail = CollectionUtils.IsNullOrEmpty(beachDetails) ? null : beachDetails.ToArray();
                 data2.BeachProcedureDetail = CollectionUtils.IsNullOrEmpty(beachProcedureDetails) ? null : beachProcedureDetails.ToArray();
                 data2.OrganizationDetail = CollectionUtils.IsNullOrEmpty(organizationDetails) ? null : organizationDetails.ToArray();
                 data2.AfterLoadFromDatabase();
 
-                string savePath = FileUtils.AppendToFileName(xmlPath, "_out");
+                string savePath = Path.Combine(tempFolderPath, Path.GetFileName(FileUtils.AppendToFileName(xmlPath, "_out")));
                 serializationUtils.Serialize(data2, savePath);
+
+                ValidateXml(savePath, rootSchemaFilePath);
             }
         }
         static void DoEIS()
@@ -2055,7 +2143,7 @@ namespace TestApp
                 //@"C:\Projects\prod-opennode2-net\plugins\EMTS_20\xml_schema\index.xsd"
                 //@"C:\Projects\prod-opennode2-net\plugins\ICISNPDES_31\xml_schema\index.xsd"
                 //@"C:\Projects\prod-opennode2-net\plugins\SDWIS_Sampling_20\xml_schema\2\SDWIS_eDWR_v2.0.xsd"
-                @"C:\PROJECTS\prod-opennode2-net\plugins\BEACHES_22\xml_schema\index.xsd"
+                @"C:\PROJECTS\OpenNode2-google\prod-opennode2-net\plugins\BEACHES_22\xml_schema\index.xsd"
             };
 
             const string NAMESPACE = "Windsor.Node2008.WNOSPlugin.BEACHES_22";

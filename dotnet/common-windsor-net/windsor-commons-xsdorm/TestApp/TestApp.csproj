@@ -68,6 +68,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\..\prod-opennode2-net\plugins\BEACHES_22\xml_schema\BEACHES_v2_2.cs">
+      <Link>BEACHES_v2_2.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\prod-opennode2-net\plugins\BEACHES_22\xml_schema\BEACHES_v2_2_2.cs">
+      <Link>BEACHES_v2_2_2.cs</Link>
+    </Compile>
     <Compile Include="..\..\..\prod-opennode2-net\plugins\EMTS_10\xml_schema\EMTS_v1_0.cs">
       <Link>EMTS_v1_0.cs</Link>
     </Compile>
@@ -86,10 +92,10 @@
     <Compile Include="..\..\..\prod-opennode2-net\plugins\ICISNPDES_31\xml_schema\ICISNPDES_v3_1_2.cs">
       <Link>ICISNPDES_v3_1_2.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\prod-opennode2-net\plugins\NetDMR_10\xml_schema\NetDMR_v1_0.cs">
+    <Compile Include="..\..\..\prod-opennode2-net\private\NetDMR_10\xml_schema\NetDMR_v1_0.cs">
       <Link>NetDMR_v1_0.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\prod-opennode2-net\plugins\NetDMR_10\xml_schema\NetDMR_v1_0_2.cs">
+    <Compile Include="..\..\..\prod-opennode2-net\private\NetDMR_10\xml_schema\NetDMR_v1_0_2.cs">
       <Link>NetDMR_v1_0_2.cs</Link>
     </Compile>
     <Compile Include="..\..\..\prod-opennode2-net\plugins\RCRA_52\xml_schema\RCRA_v5_2.cs">
@@ -98,52 +104,46 @@
     <Compile Include="..\..\..\prod-opennode2-net\plugins\RCRA_52\xml_schema\RCRA_v5_2_2.cs">
       <Link>RCRA_v5_2_2.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\prod-opennode2-net\plugins\BEACHES_21\xml_schema\BEACHES_v2_1.cs">
-      <Link>BEACHES_v2_1.cs</Link>
-    </Compile>
-    <Compile Include="..\..\..\prod-opennode2-net\plugins\BEACHES_21\xml_schema\BEACHES_v2_1_2.cs">
-      <Link>BEACHES_v2_1_2.cs</Link>
-    </Compile>
     <Compile Include="..\..\..\prod-opennode2-net\plugins\CERS_12\xml_schema\CERS_v1_2.cs">
       <Link>CERS_v1_2.cs</Link>
     </Compile>
     <Compile Include="..\..\..\prod-opennode2-net\plugins\CERS_12\xml_schema\CERS_v1_2_2.cs">
       <Link>CERS_v1_2_2.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\prod-opennode2-net\plugins\ICISNPDES_20\xml_schema\ICISNPDES_v2_0.cs">
+    <Compile Include="..\..\..\prod-opennode2-net\private\ICISNPDES_20\xml_schema\ICISNPDES_v2_0.cs">
       <Link>ICISNPDES_v2_0.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\prod-opennode2-net\plugins\ICISNPDES_20\xml_schema\ICISNPDES_v2_0_2.cs">
+    <Compile Include="..\..\..\prod-opennode2-net\private\ICISNPDES_20\xml_schema\ICISNPDES_v2_0_2.cs">
       <Link>ICISNPDES_v2_0_2.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\prod-opennode2-net\plugins\JMX_10\xml_schema\JMX_APP_TYPES_v1_0.cs">
+    <Compile Include="..\..\..\prod-opennode2-net\private\JMX_10\xml_schema\JMX_APP_TYPES_v1_0.cs">
       <Link>JMX_APP_TYPES_v1_0.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\prod-opennode2-net\plugins\JMX_10\xml_schema\JMX_v1_0.cs">
+    <Compile Include="..\..\..\prod-opennode2-net\private\JMX_10\xml_schema\JMX_v1_0.cs">
       <Link>JMX_v1_0.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\prod-opennode2-net\plugins\JMX_10\xml_schema\JMX_v1_0_2.cs">
+    <Compile Include="..\..\..\prod-opennode2-net\private\JMX_10\xml_schema\JMX_v1_0_2.cs">
       <Link>JMX_v1_0_2.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\prod-opennode2-net\plugins\MPCA.ICIS\IcisProcessingReport.cs">
+    <Compile Include="..\..\..\prod-opennode2-net\private\MPCA.ICIS\IcisProcessingReport.cs">
       <Link>IcisProcessingReport.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\prod-opennode2-net\plugins\OWIR_ATT_20\xml_schema\OWIRATT_v2_0.cs">
+    <Compile Include="..\..\..\prod-opennode2-net\private\OWIR_ATT_20\xml_schema\OWIRATT_v2_0.cs">
       <Link>OWIRATT_v2_0.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\prod-opennode2-net\plugins\OWIR_ATT_20\xml_schema\OWIRATT_v2_0_2.cs">
+    <Compile Include="..\..\..\prod-opennode2-net\private\OWIR_ATT_20\xml_schema\OWIRATT_v2_0_2.cs">
       <Link>OWIRATT_v2_0_2.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\prod-opennode2-net\plugins\PCS_IDEF\xml_schema\PCS_IDEF_1_0.cs">
+    <Compile Include="..\..\..\prod-opennode2-net\private\PCS_IDEF\xml_schema\PCS_IDEF_1_0.cs">
       <Link>PCS_IDEF_1_0.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\prod-opennode2-net\plugins\PCS_IDEF\xml_schema\PCS_IDEF_1_0_2.cs">
+    <Compile Include="..\..\..\prod-opennode2-net\private\PCS_IDEF\xml_schema\PCS_IDEF_1_0_2.cs">
       <Link>PCS_IDEF_1_0_2.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\prod-opennode2-net\plugins\SDWIS_eDWR_20\xml_schema\SDWIS_eDWR_20.cs">
+    <Compile Include="..\..\..\prod-opennode2-net\private\SDWIS_eDWR_20\xml_schema\SDWIS_eDWR_20.cs">
       <Link>SDWIS_eDWR_20.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\prod-opennode2-net\plugins\SDWIS_eDWR_20\xml_schema\SDWIS_eDWR_20_2.cs">
+    <Compile Include="..\..\..\prod-opennode2-net\private\SDWIS_eDWR_20\xml_schema\SDWIS_eDWR_20_2.cs">
       <Link>SDWIS_eDWR_20_2.cs</Link>
     </Compile>
     <Compile Include="..\..\..\prod-opennode2-net\plugins\TRI_40\xml_schema\TRI_v4_0.cs">
@@ -158,10 +158,10 @@
     <Compile Include="..\..\..\prod-opennode2-net\plugins\UIC_20\xml_schema\UIC_v2_0_2.cs">
       <Link>UIC_v2_0_2.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\prod-opennode2-net\plugins\WOGCC\xml_schema\WOGCC_v1_0.cs">
+    <Compile Include="..\..\..\prod-opennode2-net\private\WOGCC\xml_schema\WOGCC_v1_0.cs">
       <Link>WOGCC_v1_0.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\prod-opennode2-net\plugins\WOGCC\xml_schema\WOGCC_v1_0_2.cs">
+    <Compile Include="..\..\..\prod-opennode2-net\private\WOGCC\xml_schema\WOGCC_v1_0_2.cs">
       <Link>WOGCC_v1_0_2.cs</Link>
     </Compile>
     <Compile Include="..\..\..\prod-opennode2-net\plugins\WQX_2\xml_schema\WQX_v1_0.cs">
@@ -188,10 +188,10 @@
     <Compile Include="..\..\..\prod-opennode2-net\plugins\HERE\TANKS10\TANKS10_2.cs">
       <Link>TANKS10_2.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\prod-opennode2-net\plugins\P2R\xml_schema\P2R_P2R_v1_0.cs">
+    <Compile Include="..\..\..\prod-opennode2-net\private\P2R\xml_schema\P2R_P2R_v1_0.cs">
       <Link>P2R_P2R_v1_0.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\prod-opennode2-net\plugins\P2R\xml_schema\P2R_P2R_v1_0_2.cs">
+    <Compile Include="..\..\..\prod-opennode2-net\private\P2R\xml_schema\P2R_P2R_v1_0_2.cs">
       <Link>P2R_P2R_v1_0_2.cs</Link>
     </Compile>
     <Compile Include="..\..\..\prod-opennode2-net\src\WNOSProviders\ICompressionHelper.cs">

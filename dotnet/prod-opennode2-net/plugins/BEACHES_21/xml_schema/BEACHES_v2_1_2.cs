@@ -191,23 +191,30 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_21
 {
     public partial class BeachDataSubmissionDataType : IBeforeSaveToDatabase, IAfterLoadFromDatabase
     {
+        protected static string MakeOrgPersonIdentifier(string organizationIdentifier, string personIdentifier)
+        {
+            return organizationIdentifier + "-" + personIdentifier;
+        }
         public void BeforeSaveToDatabase()
         {
             // Create GUIDs for all Organizations
             Dictionary<string, string> orgIdentifierToPrimaryKeyMap = new Dictionary<string, string>();
-            Dictionary<string, string> personIdentifierToPrimaryKeyMap = new Dictionary<string, string>();
+            Dictionary<string, string> orgPersonIdentifierToPrimaryKeyMap = new Dictionary<string, string>();
             CollectionUtils.ForEach(OrganizationDetail, delegate(OrganizationDetailDataType organizationDetail)
             {
                 organizationDetail.Id = StringUtils.CreateSequentialGuid();
                 orgIdentifierToPrimaryKeyMap.Add(organizationDetail.OrganizationIdentifier, organizationDetail.Id);
                 CollectionUtils.ForEach(organizationDetail.OrganizationPersonDetail, delegate(PersonDetailDataType personDetail)
                 {
+                    string orgPersonIdentifier = MakeOrgPersonIdentifier(organizationDetail.OrganizationIdentifier, personDetail.PersonIdentifier);
                     string personId;
-                    if (!personIdentifierToPrimaryKeyMap.TryGetValue(personDetail.PersonIdentifier, out personId))
+                    if (orgPersonIdentifierToPrimaryKeyMap.TryGetValue(orgPersonIdentifier, out personId))
                     {
-                        personId = StringUtils.CreateSequentialGuid();
-                        personIdentifierToPrimaryKeyMap.Add(personDetail.PersonIdentifier, personId);
+                        throw new ArgException("A person with the PersonIdentifier \"{0}\" was specified more than once for the OrganizationIdentifier \"{1}\"",
+                                               personDetail.PersonIdentifier, organizationDetail.OrganizationIdentifier);
                     }
+                    personId = StringUtils.CreateSequentialGuid();
+                    orgPersonIdentifierToPrimaryKeyMap.Add(orgPersonIdentifier, personId);
                     personDetail.Id = personId;
                 });
             });
@@ -237,11 +244,12 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_21
                     {
                         if (!personMap.ContainsKey(orgRoleDetail.BeachRolePersonIdentifier))
                         {
+                            string orgPersonIdentifier = MakeOrgPersonIdentifier(orgRoleDetail.BeachRoleOrganizationIdentifier, orgRoleDetail.BeachRolePersonIdentifier);
                             string personId;
-                            if (!personIdentifierToPrimaryKeyMap.TryGetValue(orgRoleDetail.BeachRolePersonIdentifier, out personId))
+                            if (!orgPersonIdentifierToPrimaryKeyMap.TryGetValue(orgPersonIdentifier, out personId))
                             {
-                                throw new ArgumentException(string.Format("A BeachRolePersonIdentifier references Person with Identifier \"{0}\" that cannot be found",
-                                                                          orgRoleDetail.BeachRolePersonIdentifier));
+                                throw new ArgumentException(string.Format("A BeachRolePersonIdentifier references PersonIdentifier \"{0}\" that cannot be found for OrganizationIdentifier \"{1}\"",
+                                                                          orgRoleDetail.BeachRolePersonIdentifier, orgRoleDetail.BeachRoleOrganizationIdentifier));
                             }
                             PersonRoleDetailDataType personRole = new PersonRoleDetailDataType(orgRoleDetail);
                             personMap[orgRoleDetail.BeachRolePersonIdentifier] = personRole;
