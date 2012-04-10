@@ -966,36 +966,36 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
     }
 
     /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/BEACHES/2")]
-    [System.Xml.Serialization.XmlRootAttribute("OrganizationElectronicAddressDetail", Namespace = "http://www.exchangenetwork.net/schema/BEACHES/2", IsNullable = false)]
-    public partial class ElectronicAddressType
-    {
+    //[System.SerializableAttribute()]
+    //[System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/BEACHES/2")]
+    //[System.Xml.Serialization.XmlRootAttribute("OrganizationElectronicAddressDetail", Namespace = "http://www.exchangenetwork.net/schema/BEACHES/2", IsNullable = false)]
+    //public partial class ElectronicAddressType
+    //{
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("The type of electronic address being described (ex: EMAIL, URL)")]
-        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
-        public string ElectronicAddressTypeCode;
+    //    /// <remarks/>
+    //    [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+    //    [System.ComponentModel.DescriptionAttribute("The type of electronic address being described (ex: EMAIL, URL)")]
+    //    [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
+    //    public string ElectronicAddressTypeCode;
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
-        [System.ComponentModel.DescriptionAttribute("The actual address being described")]
-        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
-        public string ElectronicAddressText;
+    //    /// <remarks/>
+    //    [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+    //    [System.ComponentModel.DescriptionAttribute("The actual address being described")]
+    //    [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
+    //    public string ElectronicAddressText;
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
-        [System.ComponentModel.DescriptionAttribute("The date the change becomes effective")]
-        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
-        public System.DateTime ElectronicAddressEffectiveDate;
+    //    /// <remarks/>
+    //    [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
+    //    [System.ComponentModel.DescriptionAttribute("The date the change becomes effective")]
+    //    [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
+    //    public System.DateTime ElectronicAddressEffectiveDate;
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
-        [System.ComponentModel.DescriptionAttribute("The status the address will be changed to")]
-        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
-        public StatusDataType ElectronicAddressStatusIndicator;
-    }
+    //    /// <remarks/>
+    //    [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
+    //    [System.ComponentModel.DescriptionAttribute("The status the address will be changed to")]
+    //    [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
+    //    public StatusDataType ElectronicAddressStatusIndicator;
+    //}
 
     /// <remarks/>
     [System.SerializableAttribute()]

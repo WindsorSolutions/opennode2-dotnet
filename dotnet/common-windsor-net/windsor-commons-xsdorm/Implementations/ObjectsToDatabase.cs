@@ -748,7 +748,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 case DbType.Boolean:
                     return baseDao.IsOracleDatabase ? "NUMBER(1)" : "BIT";
                 case DbType.Decimal:
-                    if ((column.ColumnSize > 0) && (column.ColumnScale > 0))
+                    if ((column.ColumnSize > 0) && (column.ColumnScale >= 0))
                     {
                         return string.Format("DECIMAL({0},{1})", column.ColumnSize.ToString(), column.ColumnScale.ToString());
                     }

@@ -40,11 +40,6 @@ using Windsor.Node2008.WNOSPlugin.BEACHES_22;
 [assembly: AppliedAttribute(typeof(OrganizationElectronicAddressType), "ElectronicAddressEffectiveDate", typeof(ColumnAttribute), "ELECTRONICADDREFFDATE", 25, false, DbType.AnsiString)]
 [assembly: AppliedAttribute(typeof(OrganizationElectronicAddressType), "ElectronicAddressStatusIndicator", typeof(ColumnAttribute), "ELECTRONICADDRSTATUS", 8, false)]
 
-[assembly: AppliedAttribute(typeof(ElectronicAddressType), "ElectronicAddressTypeCode", typeof(ColumnAttribute), "ELECTRONICADDRTYPECODE", 12, false)]
-[assembly: AppliedAttribute(typeof(ElectronicAddressType), "ElectronicAddressText", typeof(ColumnAttribute), "ELECTRONICADDR", 255, false)]
-[assembly: AppliedAttribute(typeof(ElectronicAddressType), "ElectronicAddressEffectiveDate", typeof(ColumnAttribute), "ELECTRONICADDREFFDATE", 25, false, DbType.AnsiString)]
-[assembly: AppliedAttribute(typeof(ElectronicAddressType), "ElectronicAddressStatusIndicator", typeof(ColumnAttribute), "ELECTRONICADDRSTATUS", 8, false)]
-
 // NOTIF_ORGANIZATIONTELEPHONE
 [assembly: AppliedAttribute(typeof(OrganizationTelephoneType), "TelephoneTypeCode", typeof(ColumnAttribute), "TELEPHONETYPECODE", 12, false)]
 [assembly: AppliedAttribute(typeof(OrganizationTelephoneType), "TelephoneNumberText", typeof(ColumnAttribute), "TELEPHONENUMBER", 12, false)]
@@ -112,7 +107,7 @@ using Windsor.Node2008.WNOSPlugin.BEACHES_22;
 [assembly: AppliedAttribute(typeof(BeachSwimSeasonLengthDetailDataType), "SwimSeasonLengthMeasure", typeof(ColumnAttribute), "SWIMSEASONLENGTH", DbType.Decimal)]
 [assembly: AppliedAttribute(typeof(BeachSwimSeasonLengthDetailDataType), "SwimSeasonUnitOfMeasureCode", typeof(ColumnAttribute), "SWIMSEASONUNITOFMEASURE", 12)]
 [assembly: AppliedAttribute(typeof(ReportingFrequencyDetailDataType), "ReportingFrequencyMeasure", typeof(ColumnAttribute), "REPORTINGFREQUENCYMEASURE", DbType.Decimal)]
-[assembly: AppliedAttribute(typeof(ReportingFrequencyDetailDataType), "ReportingFrequencyUnitOfMeasureCode", typeof(ColumnAttribute), "REPORTINGFREQUNITOFMEASURE", 255)]
+[assembly: AppliedAttribute(typeof(ReportingFrequencyDetailDataType), "ReportingFrequencyUnitOfMeasureCode", typeof(ColumnAttribute), "REPORTINGFREQUNITOFMEASURE", 9)]
 [assembly: AppliedAttribute(typeof(MonitoringFrequencyDetailDataType), "SwimSeasonFrequencyMeasure", typeof(ColumnAttribute), "SWIMSEASONFREQUENCYMEASURE", DbType.Decimal)]
 [assembly: AppliedAttribute(typeof(MonitoringFrequencyDetailDataType), "OffSeasonFrequencyMeasure", typeof(ColumnAttribute), "OFFSEASONFREQUENCYMEASURE", DbType.Decimal)]
 [assembly: AppliedAttribute(typeof(MonitoringFrequencyDetailDataType), "MonitoringFrequencyUnitOfMeasureCode", typeof(ColumnAttribute), "MONITORINGFREQUNITOFMEASURE", 255)]
@@ -146,8 +141,8 @@ using Windsor.Node2008.WNOSPlugin.BEACHES_22;
 [assembly: AppliedAttribute(typeof(ActivityDataType), "ActivityDescriptionText", typeof(ColumnAttribute), "ACTIVITYDESCRIPTION", 255)]
 [assembly: AppliedAttribute(typeof(ActivityDataType), "ActivityCommentText", typeof(ColumnAttribute), "ACTIVITYCOMMENT", 255)]
 [assembly: AppliedAttribute(typeof(ActivityDataType), "ActivityMonitoringStationIdentifier", typeof(DbIgnoreAttribute))]
-[assembly: AppliedAttribute(typeof(ActivityExtentDetailDataType), "ActivityExtentStartMeasure", typeof(ColumnAttribute), "EXTENTSTARTMEASURE", DbType.Int32)]
-[assembly: AppliedAttribute(typeof(ActivityExtentDetailDataType), "ActivityExtentLengthMeasure", typeof(ColumnAttribute), "EXTENTLENGTHMEASURE", DbType.Int32)]
+[assembly: AppliedAttribute(typeof(ActivityExtentDetailDataType), "ActivityExtentStartMeasure", typeof(ColumnAttribute), "EXTENTSTARTMEASURE", DbType.Decimal)]
+[assembly: AppliedAttribute(typeof(ActivityExtentDetailDataType), "ActivityExtentLengthMeasure", typeof(ColumnAttribute), "EXTENTLENGTHMEASURE", DbType.Decimal)]
 [assembly: AppliedAttribute(typeof(ActivityExtentDetailDataType), "ActivityExtentUnitOfMeasureCode", typeof(ColumnAttribute), "EXTENTUNITOFMEASURE", 255)]
 
 // NOTIF_BEACHPOLLUTION
@@ -155,11 +150,11 @@ using Windsor.Node2008.WNOSPlugin.BEACHES_22;
 [assembly: AppliedAttribute(typeof(BeachPollutionSourceDataType), "BeachPollutionSourceDescription", typeof(ColumnAttribute), "POLLUTIONSOURCEDESCRIPTION", 255)]
 
 // NOTIF_BEACHCRITERION
-[assembly: AppliedAttribute(typeof(BeachCriterionDetailDataType), "IndicatorName", typeof(ColumnAttribute), "INDICATORNAME", 12, false)]
-[assembly: AppliedAttribute(typeof(BeachCriterionDetailDataType), "WaterTypeName", typeof(ColumnAttribute), "WATERTYPENAME", 12, false)]
+[assembly: AppliedAttribute(typeof(BeachCriterionDetailDataType), "IndicatorName", typeof(ColumnAttribute), "INDICATORNAME", 11, false)]
+[assembly: AppliedAttribute(typeof(BeachCriterionDetailDataType), "WaterTypeName", typeof(ColumnAttribute), "WATERTYPENAME", 6, false)]
 [assembly: AppliedAttribute(typeof(BeachCriterionDetailDataType), "CriterionComment", typeof(ColumnAttribute), "CRITERIONCOMMENT", 255)]
 
-[assembly: AppliedAttribute(typeof(CriterionMeasureDataType), "MeasureTypeName", typeof(ColumnAttribute), "MEASURETYPENAME", 12, false)]
+[assembly: AppliedAttribute(typeof(CriterionMeasureDataType), "MeasureTypeName", typeof(ColumnAttribute), "MEASURETYPENAME", 4, false)]
 [assembly: AppliedAttribute(typeof(CriterionMeasureDataType), "MeasureValue", typeof(ColumnAttribute), "MEASUREVALUE", DbType.Decimal, false)]
 [assembly: AppliedAttribute(typeof(CriterionMeasureDataType), "MeasureUnitCode", typeof(ColumnAttribute), "MEASUREUNITCODE", 12, false)]
 
@@ -403,7 +398,7 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
     [DefaultTableNamePrefixAttribute("NOTIF")]
     [ShortenNamesByRemovingVowelsFirstAttribute]
     [FixShortenNameBreakBugAttribute]
-    [DefaultDecimalPrecision(19, 14)]
+    [DefaultDecimalPrecision(16, 6)]
     public partial class OrganizationDetailDataType
     {
         [System.Xml.Serialization.XmlIgnore]
@@ -422,7 +417,7 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
         public string OrganizationId;
     }
     [Table("NOTIF_ORGELECTRONICADDR")]
-    public partial class OrganizationElectronicAddressType : ElectronicAddressType
+    public partial class OrganizationElectronicAddressType
     {
         [System.Xml.Serialization.XmlIgnore]
         [GuidPrimaryKey("ID", IndexName = "PK_NOT_ORG_EA")]
@@ -431,6 +426,30 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
         [System.Xml.Serialization.XmlIgnore]
         [GuidForeignKey("ORGANIZATION_ID", IndexName = "FK_NOT_ORG_EA")]
         public string OrganizationId;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [System.ComponentModel.DescriptionAttribute("The type of electronic address being described (ex: EMAIL, URL)")]
+        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
+        public string ElectronicAddressTypeCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        [System.ComponentModel.DescriptionAttribute("The actual address being described")]
+        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
+        public string ElectronicAddressText;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
+        [System.ComponentModel.DescriptionAttribute("The date the change becomes effective")]
+        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
+        public System.DateTime ElectronicAddressEffectiveDate;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
+        [System.ComponentModel.DescriptionAttribute("The status the address will be changed to")]
+        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
+        public StatusDataType ElectronicAddressStatusIndicator;
     }
     [Table("NOTIF_ORGANIZATIONTELEPHONE")]
     public partial class OrganizationTelephoneType : TelephoneType
@@ -477,7 +496,7 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
         public string PersonId;
     }
     [Table("NOTIF_PERSONELECTRONICADDRESS")]
-    public partial class PersonElectronicAddressType : ElectronicAddressType
+    public partial class PersonElectronicAddressType
     {
         [System.Xml.Serialization.XmlIgnore]
         [GuidPrimaryKey("ID", IndexName = "PK_NOT_PER_EA")]
@@ -486,6 +505,30 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
         [System.Xml.Serialization.XmlIgnore]
         [GuidForeignKey("PERSON_ID", IndexName = "FK_NOT_PER_EA")]
         public string PersonId;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [System.ComponentModel.DescriptionAttribute("The type of electronic address being described (ex: EMAIL, URL)")]
+        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
+        public string ElectronicAddressTypeCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        [System.ComponentModel.DescriptionAttribute("The actual address being described")]
+        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
+        public string ElectronicAddressText;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
+        [System.ComponentModel.DescriptionAttribute("The date the change becomes effective")]
+        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
+        public System.DateTime ElectronicAddressEffectiveDate;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
+        [System.ComponentModel.DescriptionAttribute("The status the address will be changed to")]
+        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
+        public StatusDataType ElectronicAddressStatusIndicator;
     }
     [Table("NOTIF_PERSONTELEPHONE")]
     public partial class PersonTelephoneType : TelephoneType
@@ -502,7 +545,7 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
     [DefaultTableNamePrefixAttribute("NOTIF")]
     [ShortenNamesByRemovingVowelsFirstAttribute]
     [FixShortenNameBreakBugAttribute]
-    [DefaultDecimalPrecision(19, 14)]
+    [DefaultDecimalPrecision(16, 6)]
     public partial class BeachDetailDataType
     {
         [System.Xml.Serialization.XmlIgnore]
@@ -737,7 +780,7 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
     [DefaultTableNamePrefixAttribute("NOTIF")]
     [ShortenNamesByRemovingVowelsFirstAttribute]
     [FixShortenNameBreakBugAttribute]
-    [DefaultDecimalPrecision(19, 14)]
+    [DefaultDecimalPrecision(16, 6)]
     public partial class BeachProcedureDetailDataType
     {
         [System.Xml.Serialization.XmlIgnore]
@@ -767,7 +810,7 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
     [DefaultTableNamePrefixAttribute("NOTIF")]
     [ShortenNamesByRemovingVowelsFirstAttribute]
     [FixShortenNameBreakBugAttribute]
-    [DefaultDecimalPrecision(19, 14)]
+    [DefaultDecimalPrecision(16, 6)]
     public partial class YearCompletionIndicatorDataType
     {
         [System.Xml.Serialization.XmlIgnore]

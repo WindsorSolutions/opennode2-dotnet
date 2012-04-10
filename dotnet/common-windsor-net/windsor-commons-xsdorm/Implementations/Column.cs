@@ -85,6 +85,17 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 {
                     m_IsDecimalString = true;
                 }
+                else if (Utils.IsIntegerColumnType(m_ColumnType.Value) && (this.MemberType == typeof(string)))
+                {
+                    if ((m_ColumnType.Value == DbType.Int64) || (m_ColumnType.Value == DbType.UInt64))
+                    {
+                        m_IsInt64String = true;
+                    }
+                    else
+                    {
+                        m_IsInt32String = true;
+                    }
+                }
                 else if (Utils.IsStringColumnType(m_ColumnType.Value) && (m_ColumnSize == 10) && (this.MemberType == typeof(DateTime)))
                 {
                     m_IsTenDigitDateString = true;
@@ -199,6 +210,14 @@ namespace Windsor.Commons.XsdOrm.Implementations
                     value = new DateTime(1900, 1, 1, existingValue.Hour, existingValue.Minute, existingValue.Second);
                 }
             }
+            else if (m_IsInt64String)
+            {
+                value = long.Parse(value.ToString());
+            }
+            else if (m_IsInt32String)
+            {
+                value = int.Parse(value.ToString());
+            }
             return value;
         }
         public override void SetMemberValue<T>(T instance, object value)
@@ -271,6 +290,8 @@ namespace Windsor.Commons.XsdOrm.Implementations
         protected string m_ColumnDescription;
         protected bool m_IsDbBoolString;
         protected bool m_IsDecimalString;
+        protected bool m_IsInt32String;
+        protected bool m_IsInt64String;
         protected bool m_IsTenDigitDateString;
         protected bool m_IsTimeType;
         protected int m_ColumnScale;
