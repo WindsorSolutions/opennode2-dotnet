@@ -526,6 +526,8 @@ namespace Windsor.Node2008.Admin.Secure
 
         protected void textNaasUserFilter_TextChanged(object sender, EventArgs e)
         {
+            TextBox textBox = sender as TextBox;
+
             RefreshNaasUserListBox();
 
             ScriptManager.GetCurrent(this).SetFocus(textNaasUserFilter);

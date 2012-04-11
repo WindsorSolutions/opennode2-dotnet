@@ -42,11 +42,18 @@ function getDateTimeSettings(cal) {
 		    + ',scrollbars=no,location=no,directories=no,status=no,menubar=no,toolbar=no,resizable=yes';
 }
 
+function ON2PropertyExists(obj) {
+    return (typeof (obj) != 'undefined');
+}
 function ON2SetTextBoxPositionToEnd(testBox) {
     if (testBox.createTextRange) {
         var FieldRange = testBox.createTextRange();
         FieldRange.moveStart('character', testBox.value.length);
         FieldRange.collapse();
         FieldRange.select();
+    } else if ( testBox.setSelectionRange) {
+        var pos = (testBox.value.length > 0) ? testBox.value.length : 0;
+        testBox.setSelectionRange(pos, pos);
     }
+    return false;
 }
