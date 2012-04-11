@@ -25,7 +25,7 @@
             <table id="formTable" width="100%" cellpadding="2" cellspacing="0" style="border-style: none">
                 <asp:Repeater runat="server" ID="flowRepeaterList">
                     <ItemTemplate>
-                        <tr style="background-color: #83ACCA">
+                        <tr runat="server" style="background-color: #83ACCA">
                             <td style="width: 20px">
                                 <img alt="" src='../Images/UI/globe-network.png' style="border: 0; vertical-align: middle; padding-top: 2px; padding-bottom: 2px; padding-right: 3px; padding-left: 3px;" />
                             </td>
@@ -39,7 +39,7 @@
                         </tr>
                         <asp:Repeater runat="server" ID="repeaterList">
                             <ItemTemplate>
-                                <tr class="rowOdd" style='<%# Container.ItemIndex % 2 == 0 ? "background-color: #E3ECF3; color: #3366CC": "background-color: #DCDCDC; color: #3366CC"%>'>
+                                <tr runat="server" class="rowOdd" style='<%# Container.ItemIndex % 2 == 0 ? "background-color: #E3ECF3; color: #3366CC": "background-color: #DCDCDC; color: #3366CC"%>'>
                                     <td>
                                         <asp:Image ID="scheduleImage" runat="server" Style="padding-left: 4px; padding-right: 4px" ImageUrl="../Images/UI/time.png" />
                                         <asp:HiddenField ID="hiddenScheduleId" runat="server" Value='<%# Eval("Key") %>'/>
@@ -87,7 +87,7 @@
                             </ItemTemplate>
                         </asp:Repeater>
                         </tr>
-                        <tr style="background-color: White">
+                        <tr runat="server" style="background-color: White">
                             <td colspan="3">
                                 &nbsp;
                             </td>

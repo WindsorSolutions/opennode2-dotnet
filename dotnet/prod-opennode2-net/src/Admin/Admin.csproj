@@ -474,7 +474,9 @@
     <Content Include="Config\ProfileSection.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Config\ScheduleSection.config" />
+    <Content Include="Config\ScheduleSection.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Config\SecuritySection.config" />
