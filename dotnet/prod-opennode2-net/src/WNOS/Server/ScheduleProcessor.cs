@@ -546,15 +546,15 @@ namespace Windsor.Node2008.WNOS.Server
                     {
                         if (client.Version == EndpointVersionType.EN11)
                         {
-                            LogActivity(activity, "Attempting to submit target documents to partner \"{0}\" for flow \"{1}\"",
-                                         partner.Name, scheduledItem.TargetFlow);
+                            LogActivity(activity, "Attempting to submit target documents as \"{0}\" to partner \"{1}\" for flow \"{2}\"",
+                                        Path.GetFileName(filePath), partner.Name, scheduledItem.TargetFlow);
                             transactionId = client.Submit(scheduledItem.TargetFlow, string.Empty, new string[] { filePath });
                             networkFlowName = scheduledItem.TargetFlow;
                         }
                         else
                         {
-                            LogActivity(activity, "Attempting to submit target documents to partner \"{0}\" for flow \"{1}\" and operation \"{2}\"",
-                                        partner.Name, scheduledItem.TargetFlow, scheduledItem.TargetRequest);
+                            LogActivity(activity, "Attempting to submit target documents as \"{0}\" to partner \"{1}\" for flow \"{2}\" and operation \"{3}\"",
+                                        Path.GetFileName(filePath), partner.Name, scheduledItem.TargetFlow, scheduledItem.TargetRequest);
                             transactionId = client.Submit(scheduledItem.TargetFlow, scheduledItem.TargetRequest,
                                                           string.Empty, new string[] { filePath });
                             networkFlowName = scheduledItem.TargetFlow;

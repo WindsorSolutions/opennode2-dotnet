@@ -536,7 +536,24 @@ namespace Windsor.Node2008.WNOS.Logic
         }
         public string GetZippedTransactionDocumentsAsTempFile(string transactionId)
         {
-            string filePath = _settingsProvider.NewTempFilePath(".zip");
+            string zipExtension = CommonContentAndFormatProvider.GetFileExtension(CommonContentType.ZIP);
+            IList<Document> documents = _documentManager.GetAllDocuments(transactionId);
+            if (CollectionUtils.IsNullOrEmpty(documents))
+            {
+                return null;
+            }
+            if ((documents.Count == 1) && (documents[0].IsZipFile))
+            {
+                string folderPath = _settingsProvider.CreateNewTempFolderPath();
+                string rtnFilePath = Path.GetFileName(documents[0].DocumentName);
+                rtnFilePath = FileUtils.ReplaceInvalidFilenameChars(rtnFilePath, '_');
+                rtnFilePath = Path.ChangeExtension(rtnFilePath, zipExtension);
+                rtnFilePath = Path.Combine(folderPath, rtnFilePath);
+                byte[] content = _documentManager.GetContent(transactionId, documents[0].Id);
+                File.WriteAllBytes(rtnFilePath, content);
+                return rtnFilePath;
+            }
+            string filePath = _settingsProvider.NewTempFilePath(zipExtension);
             if (GetZippedTransactionDocuments(transactionId, filePath))
             {
                 IList<string> fileNames = CompressionHelper.GetFileNames(filePath);
@@ -549,7 +566,8 @@ namespace Windsor.Node2008.WNOS.Logic
                     }
                     else
                     {
-                        FileUtils.MoveFileToFolder(filePath, folderPath, singleFileName + ".zip");
+                        singleFileName = FileUtils.ReplaceInvalidFilenameChars(singleFileName, '_');
+                        FileUtils.MoveFileToFolder(filePath, folderPath, Path.ChangeExtension(singleFileName, zipExtension));
                     }
                     return Directory.GetFiles(folderPath)[0];
                 }
