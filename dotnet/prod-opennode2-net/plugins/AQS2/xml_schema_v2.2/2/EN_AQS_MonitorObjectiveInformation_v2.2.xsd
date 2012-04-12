@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:aqs="http://www.exchangenetwork.net/schema/AQS/Submission/2" targetNamespace="http://www.exchangenetwork.net/schema/AQS/Submission/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.1">
+    <xsd:annotation>
+        <xsd:documentation>Monitor Objective Information file
+		Current Version Available At :
+		Description : Schema for Monitor Objective Information, AQS Submission
+		Application : Air Quality System (AQS)
+		Developed by : Environmental Protection Agency, Computer Sciences Corporation
+		Point of Contact : Nick Mangus (EPA), WDavid Ripley, III (CSC)	
+		</xsd:documentation>
+    </xsd:annotation>
+    <!--Data element and data type include files-->
+    <xsd:include schemaLocation="AQS_ELEMENTS/EN_AQS_ActionCode_v2.2.xsd"/>
+    <xsd:include schemaLocation="AQS_ELEMENTS/EN_AQS_AreaRepresentedDataElements_v2.2.xsd"/>
+    <!--Monitor Objective Information schema components-->
+    <xsd:element name="MonitorObjectiveInformation" type="aqs:MonitorObjectiveInformationType">
+        <xsd:annotation>
+            <xsd:documentation>This is a complex element (element grouping) containing all of the elements related to the purpose of a monitor and the urban area(s) it represents.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <!--Monitor Objective Information complex data types-->
+    <xsd:complexType name="MonitorObjectiveInformationType">
+        <xsd:annotation>
+            <xsd:documentation>Monitoring objective information details complex type definition</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="aqs:ActionCode"/>
+            <xsd:element ref="aqs:MonitorObjectiveIdentifier"/>
+            <xsd:choice minOccurs="0">
+                <xsd:element ref="aqs:UrbanAreaRepresentedCode"/>
+                <xsd:element ref="aqs:MSARepresentedCode"/>
+                <xsd:element ref="aqs:CMSARepresentedCode"/>
+                <xsd:element ref="aqs:CBSARepresentedCode"/>
+                <xsd:element ref="aqs:CSARepresentedCode"/>
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+    <!--Monitor Objective Information data element-->
+    <xsd:element name="MonitorObjectiveIdentifier" type="aqs:MonitorObjectiveIdentifierType">
+        <xsd:annotation>
+            <xsd:documentation>Identification of the reason for measuring air quality by the monitor.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <!--Monitor Objective Information data type-->
+    <xsd:simpleType name="MonitorObjectiveIdentifierType">
+        <xsd:annotation>
+            <xsd:documentation>Enumeration of 12 codes type definition</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="EXTREME DOWNWIND"/>
+            <xsd:enumeration value="GENERAL/BACKGROUND"/>
+            <xsd:enumeration value="HIGHEST CONCENTRATION"/>
+            <xsd:enumeration value="INVALID CODE TEST"/>
+            <xsd:enumeration value="MAX OZONE CONCENTRATION"/>
+            <xsd:enumeration value="MAX PRECURSOR EMISSIONS IMPACT"/>
+            <xsd:enumeration value="OTHER"/>
+            <xsd:enumeration value="POPULATION EXPOSURE"/>
+            <xsd:enumeration value="REGIONAL TRANSPORT"/>
+            <xsd:enumeration value="SOURCE ORIENTED"/>
+            <xsd:enumeration value="UPWIND BACKGROUND"/>
+            <xsd:enumeration value="WELFARE RELATED IMPACTS"/>
+            <xsd:enumeration value="UNKNOWN"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+</xsd:schema>

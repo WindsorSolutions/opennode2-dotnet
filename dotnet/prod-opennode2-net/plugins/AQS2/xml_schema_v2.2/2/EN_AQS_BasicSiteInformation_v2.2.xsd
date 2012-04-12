@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:aqs="http://www.exchangenetwork.net/schema/AQS/Submission/2" targetNamespace="http://www.exchangenetwork.net/schema/AQS/Submission/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+    <xsd:annotation>
+        <xsd:documentation>Basic Site Information
+		Current Version Available At :
+		Description : Schema for Basic Site Information, AQS Submission
+		Application : Air Quality System (AQS)
+		Developed by : Environmental Protection Agency, Computer Sciences Corporation
+		Point of Contact : Nick Mangus (EPA), WDavid Ripley, III (CSC)	
+		</xsd:documentation>
+    </xsd:annotation>
+    <!--Data element and data type include files-->
+    <xsd:include schemaLocation="AQS_ELEMENTS/EN_AQS_ActionCode_v2.2.xsd"/>
+    <xsd:include schemaLocation="EN_AQS_FacilitySiteDetails_v2.2.xsd"/>
+    <xsd:include schemaLocation="EN_AQS_LocationDetails_v2.2.xsd"/>
+    <xsd:element name="BasicSiteInformation" type="aqs:BasicSiteInformationType">
+        <xsd:annotation>
+            <xsd:documentation>This is a complex element (element grouping) containing all of the elements related to physical description of an air quality site (facility).</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:complexType name="BasicSiteInformationType">
+        <xsd:annotation>
+            <xsd:documentation>Basic site information details complex type definition</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="aqs:ActionCode"/>
+            <xsd:element ref="aqs:FacilitySiteDetails" minOccurs="0"/>
+            <xsd:element ref="aqs:GeographicMonitoringLocation" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

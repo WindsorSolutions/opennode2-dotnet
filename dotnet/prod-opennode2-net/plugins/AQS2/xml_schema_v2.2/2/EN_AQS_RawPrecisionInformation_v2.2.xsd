@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:aqs="http://www.exchangenetwork.net/schema/AQS/Submission/2" targetNamespace="http://www.exchangenetwork.net/schema/AQS/Submission/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+    <xsd:annotation>
+        <xsd:documentation>Raw Precision Information file
+		Current Version Available At :
+		Description : Schema for Raw Precision Information
+		Application : Air Quality System (AQS)
+		Developed by : Environmental Protection Agency, Computer Sciences Corporation
+		Point of Contact : Nick Mangus (EPA), WDavid Ripley, III (CSC)	
+		</xsd:documentation>
+    </xsd:annotation>
+    <!--Data element and data type include files-->
+    <xsd:include schemaLocation="AQS_ELEMENTS/EN_AQS_ActionCode_v2.2.xsd"/>
+    <xsd:include schemaLocation="AQS_ELEMENTS/AQS_TYPES/EN_AQS_DateTimeDataTypes_v2.2.xsd"/>
+    <xsd:include schemaLocation="AQS_ELEMENTS/AQS_TYPES/EN_AQS_IntegerTwoDigitPositiveDataType_v2.2.xsd"/>
+    <xsd:include schemaLocation="AQS_ELEMENTS/AQS_TYPES/EN_AQS_DigitThreeStringDataType_v2.2.xsd"/>
+    <xsd:include schemaLocation="AQS_ELEMENTS/AQS_TYPES/EN_AQS_DecimalTenPointFiveDataType_v2.2.xsd"/>
+    <xsd:include schemaLocation="AQS_ELEMENTS/AQS_TYPES/EN_AQS_CharOneToTenStringDataType_v2.2.xsd"/>
+    <xsd:include schemaLocation="AQS_ELEMENTS/AQS_TYPES/EN_AQS_NormCharFortyTextDataType_v2.2.xsd"/>
+    <!--Raw Precision Information schema components-->
+    <xsd:element name="RawPrecisionInformation" type="aqs:RawPrecisionInformationType">
+        <xsd:annotation>
+            <xsd:documentation>This is a complex element (element grouping) containing all of the elements related to precision tests.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <!--Raw Precision Information complex data types-->
+    <xsd:complexType name="RawPrecisionInformationType">
+        <xsd:annotation>
+            <xsd:documentation>Precision data details complex type definition</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="aqs:ActionCode"/>
+            <xsd:element ref="aqs:PrecisionTypeIdentifier" minOccurs="0"/>
+            <xsd:element ref="aqs:PrecisionIDNumber"/>
+            <xsd:element ref="aqs:ActualMethodCode" minOccurs="0"/>
+            <xsd:element ref="aqs:PrecisionCheckDate"/>
+            <xsd:element ref="aqs:ActualValue" minOccurs="0"/>
+            <xsd:element ref="aqs:IndicatedMethodCode" minOccurs="0"/>
+            <xsd:element ref="aqs:IndicatedValue" minOccurs="0"/>
+            <xsd:element ref="aqs:CollocatedPocIDNumber" minOccurs="0"/>
+            <xsd:element ref="aqs:PrecisionSampleIdentifier" minOccurs="0"/>
+            <xsd:element ref="aqs:AuditAgencyCode" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <!--Raw Precision Information data elements-->
+    <xsd:element name="PrecisionTypeIdentifier" type="aqs:NormCharFortyTextType">
+        <xsd:annotation>
+            <xsd:documentation>Indicates the type of precision test run.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="PrecisionIDNumber" type="aqs:TwoDigitPositiveIntegerType">
+        <xsd:annotation>
+            <xsd:documentation>A sequentially assigned number used to identify (ID) a particular precision check from others, when multiple checks are performed on the same day.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ActualMethodCode" type="aqs:DigitThreeStringType">
+        <xsd:annotation>
+            <xsd:documentation>Identifies a particular method for collecting and analyzing samples of the monitor's parameter.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="PrecisionCheckDate" type="xsd:date">
+        <xsd:annotation>
+            <xsd:documentation>The calendar date for which the precision check is being reported.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ActualValue" type="aqs:TenPointFiveDecimalType">
+        <xsd:annotation>
+            <xsd:documentation>The true value of the parameter concentration with which the monitor was challenged. For a collocated data pair, the sample value from the primary sampler.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="IndicatedMethodCode" type="aqs:DigitThreeStringType">
+        <xsd:annotation>
+            <xsd:documentation>Identifies the particular method for collecting and analyzing the sample value from the duplicate sampler. Only applies to collocated data.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="IndicatedValue" type="aqs:TenPointFiveDecimalType">
+        <xsd:annotation>
+            <xsd:documentation>The observed value of the parameter concentration with which the monitor was challenged. For a collocated data pair, the sample value from the duplicate sampler.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="CollocatedPocIDNumber" type="aqs:TwoDigitPositiveIntegerType">
+        <xsd:annotation>
+            <xsd:documentation>The Parameter Occurrence Code (POC) of the duplicate sampler. Only applies to collocated data where the duplicate value is a recorded daily raw data point.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="PrecisionSampleIdentifier" type="aqs:CharOneToTenStringType">
+        <xsd:annotation>
+            <xsd:documentation>The unique identity (ID) number of the reference sample used to challenge the instrument.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="AuditAgencyCode" type="xsd:string">
+        <xsd:annotation>
+            <xsd:documentation>The agency submitting precision data resulting from a Federal Reference Method Code (FRM) audit of the manual method for PM-2.5 monitoring. This agency is commonly an EPA laboratory or independent laboratory.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+</xsd:schema>

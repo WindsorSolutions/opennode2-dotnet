@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:aqs="http://www.exchangenetwork.net/schema/AQS/Submission/2" targetNamespace="http://www.exchangenetwork.net/schema/AQS/Submission/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+    <xsd:annotation>
+        <xsd:documentation>Annual Summary Information file
+		Current Version Available At :
+		Description : Schema for Annual Summary Information 
+		Application : Air Quality System (AQS)
+		Developed by : Environmental Protection Agency, Computer Sciences Corporation
+		Point of Contact : Nick Mangus (EPA), WDavid Ripley, III (CSC)	
+		</xsd:documentation>
+    </xsd:annotation>
+    <!--Data element and data type include files-->
+    <!--NOTE: YearDateType is obtained from SummaryYear data element-->
+    <xsd:include schemaLocation="AQS_ELEMENTS/EN_AQS_ActionCode_v2.2.xsd"/>
+    <xsd:include schemaLocation="AQS_ELEMENTS/AQS_TYPES/EN_AQS_DateTimeDataTypes_v2.2.xsd"/>
+    <xsd:include schemaLocation="AQS_ELEMENTS/AQS_TYPES/EN_AQS_IntegerFiveDigitPositiveDataType_v2.2.xsd"/>
+    <xsd:include schemaLocation="AQS_ELEMENTS/AQS_TYPES/EN_AQS_IntegerFiveDigitNonNegativeDataType_v2.2.xsd"/>
+    <xsd:include schemaLocation="AQS_ELEMENTS/AQS_TYPES/EN_AQS_DecimalTenPointFourNonNegativeDataType_v2.2.xsd"/>
+    <xsd:include schemaLocation="AQS_ELEMENTS/EN_AQS_SummaryYearDataElement_v2.2.xsd"/>
+    <xsd:include schemaLocation="AQS_ELEMENTS/EN_AQS_ExceptionalDataTypeCodeDataElement_v2.2.xsd"/>
+    <xsd:include schemaLocation="AQS_ELEMENTS/EN_AQS_MeanStandardDevDataElements_v2.2.xsd"/>
+    <xsd:include schemaLocation="AQS_ELEMENTS/EN_AQS_StatisticalPercentileValueDataElements_v2.2.xsd"/>
+    <!--Annual Summary Information schema components-->
+    <xsd:element name="AnnualSummaryInformation" type="aqs:AnnualSummaryInformationType">
+        <xsd:annotation>
+            <xsd:documentation>This is a complex element (element grouping) containing all of the elements related to annual summary information.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <!--Annual Summary Information complex data types-->
+    <xsd:complexType name="AnnualSummaryInformationType">
+        <xsd:annotation>
+            <xsd:documentation>Annual summary data details complex type definition</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="aqs:ActionCode"/>
+            <xsd:element ref="aqs:SummaryYear"/>
+            <xsd:element ref="aqs:ExceptionalDataTypeCode"/>
+            <xsd:element ref="aqs:ObservationsCount" minOccurs="0"/>
+            <xsd:element ref="aqs:EventsCount" minOccurs="0"/>
+            <xsd:element ref="aqs:HighestSampleValue" minOccurs="0"/>
+            <xsd:element ref="aqs:HighestSampleDate" minOccurs="0"/>
+            <xsd:element ref="aqs:HighestSampleTime" minOccurs="0"/>
+            <xsd:element ref="aqs:SecondHighestSampleValue" minOccurs="0"/>
+            <xsd:element ref="aqs:SecondHighestSampleDate" minOccurs="0"/>
+            <xsd:element ref="aqs:SecondHighestSampleTime" minOccurs="0"/>
+            <xsd:element ref="aqs:ThirdHighestSampleValue" minOccurs="0"/>
+            <xsd:element ref="aqs:FourthHighestSampleValue" minOccurs="0"/>
+            <xsd:element ref="aqs:FifthHighestSampleValue" minOccurs="0"/>
+            <xsd:element ref="aqs:LowestSampleValue" minOccurs="0"/>
+            <xsd:element ref="aqs:ArithmeticMeanValue" minOccurs="0"/>
+            <xsd:element ref="aqs:ArithmeticStandardDevValue" minOccurs="0"/>
+            <xsd:element ref="aqs:GeometricMeanValue" minOccurs="0"/>
+            <xsd:element ref="aqs:GeometricStandardDevValue" minOccurs="0"/>
+            <xsd:element ref="aqs:TenthPercentileValue" minOccurs="0"/>
+            <xsd:element ref="aqs:TwentyFifthPercentileValue" minOccurs="0"/>
+            <xsd:element ref="aqs:FiftiethPercentileValue" minOccurs="0"/>
+            <xsd:element ref="aqs:SeventyFifthPercentileValue" minOccurs="0"/>
+            <xsd:element ref="aqs:NinetiethPercentileValue" minOccurs="0"/>
+            <xsd:element ref="aqs:NinetyFifthPercentileValue" minOccurs="0"/>
+            <xsd:element ref="aqs:NinetyEighthPercentileValue" minOccurs="0"/>
+            <xsd:element ref="aqs:NinetyNinthPercentileValue" minOccurs="0"/>
+            <xsd:element ref="aqs:ObservationPercentValue" minOccurs="0"/>
+            <xsd:element ref="aqs:BelowHalfMDLCount" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <!--Annual Summary Information data elements-->
+    <xsd:element name="ObservationsCount" type="aqs:FiveDigitPositiveIntegerType">
+        <xsd:annotation>
+            <xsd:documentation>The number of raw data values that are the basis for the summary values.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="EventsCount" type="aqs:FiveDigitNonNegativeIntegerType">
+        <xsd:annotation>
+            <xsd:documentation>The number of data points in the summarized data set that were qualified by exceptional events.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="HighestSampleValue" type="aqs:TenPointFiveDecimalType">
+        <xsd:annotation>
+            <xsd:documentation>The highest sample value in the yearly sample value set.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="HighestSampleDate" type="xsd:date">
+        <xsd:annotation>
+            <xsd:documentation>The earliest date on which the highest sample value in the yearly data set was reported.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="HighestSampleTime" type="xsd:time">
+        <xsd:annotation>
+            <xsd:documentation>The time of day at which the highest sample value in the yearly data set was reported.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="SecondHighestSampleValue" type="aqs:TenPointFiveNonNegativeDecimalType">
+        <xsd:annotation>
+            <xsd:documentation>The second highest sample value in the yearly sample value set.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="SecondHighestSampleDate" type="xsd:date">
+        <xsd:annotation>
+            <xsd:documentation>If the second highest value is less than the highest, this identifies the earliest date on which the second highest sample value in the yearly data set was reported; if the second highest is equal to the highest, this identifies the second earliest date on which the value was reported.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="SecondHighestSampleTime" type="xsd:time">
+        <xsd:annotation>
+            <xsd:documentation>The time of day on which the second highest sample value in the yearly data set was reported.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ThirdHighestSampleValue" type="aqs:TenPointFiveDecimalType">
+        <xsd:annotation>
+            <xsd:documentation>The third highest sample value in the yearly sample value set.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="FourthHighestSampleValue" type="aqs:TenPointFiveDecimalType">
+        <xsd:annotation>
+            <xsd:documentation>The fourth highest sample value in the yearly sample value set.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="FifthHighestSampleValue" type="aqs:TenPointFiveDecimalType">
+        <xsd:annotation>
+            <xsd:documentation>The fifth highest sample value in the yearly sample value set.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="LowestSampleValue" type="aqs:TenPointFiveDecimalType">
+        <xsd:annotation>
+            <xsd:documentation>The lowest sample value in the yearly sample value set.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ObservationPercentValue" type="aqs:TenPointFourNonNegativeDecimalType">
+        <xsd:annotation>
+            <xsd:documentation>The percent of actual data values that were reported compared to the number of data values that could have been reported for the year.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="BelowHalfMDLCount" type="aqs:FiveDigitNonNegativeIntegerType">
+        <xsd:annotation>
+            <xsd:documentation>Represents the number of substitutions of one-half the Method Code Detectable Limit value for the year.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+</xsd:schema>

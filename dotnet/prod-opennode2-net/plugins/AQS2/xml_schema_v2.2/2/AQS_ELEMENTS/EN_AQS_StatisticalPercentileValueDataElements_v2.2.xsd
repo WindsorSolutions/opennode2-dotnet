@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:aqs="http://www.exchangenetwork.net/schema/AQS/Submission/2" targetNamespace="http://www.exchangenetwork.net/schema/AQS/Submission/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+    <xsd:annotation>
+        <xsd:documentation>AQS Statistical Percentile data elements file
+		Current Version Available At :
+		Description : Schema for the Statistical Percentile data elements
+		Application : Air Quality System (AQS) reusable data elements
+		Developed by : Environmental Protection Agency, Computer Sciences Corporation
+		Point of Contact : Nick Mangus (EPA), WDavid Ripley, III (CSC)	
+		</xsd:documentation>
+    </xsd:annotation>
+    <!--Data type include file-->
+    <xsd:include schemaLocation="AQS_TYPES/EN_AQS_DecimalTenPointFiveDataType_v2.2.xsd"/>
+    <!--Statistical Percentile data elements-->
+    <xsd:element name="TenthPercentileValue" type="aqs:TenPointFiveDecimalType">
+        <xsd:annotation>
+            <xsd:documentation>The sample value occurring in the tenth percentile of the yearly data set when sorted from lowest to highest.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="TwentyFifthPercentileValue" type="aqs:TenPointFiveDecimalType">
+        <xsd:annotation>
+            <xsd:documentation>The sample value occurring in the twenty-fifth percentile of the yearly data set when sorted from lowest to highest.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="FiftiethPercentileValue" type="aqs:TenPointFiveDecimalType">
+        <xsd:annotation>
+            <xsd:documentation>The sample value occurring in the fiftieth percentile of the yearly data set when sorted from lowest to highest.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="SeventyFifthPercentileValue" type="aqs:TenPointFiveDecimalType">
+        <xsd:annotation>
+            <xsd:documentation>The sample value occurring in the seventy-fifth percentile of the yearly data set when sorted from lowest to highest.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="NinetiethPercentileValue" type="aqs:TenPointFiveDecimalType">
+        <xsd:annotation>
+            <xsd:documentation>The sample value occurring in the ninetieth percentile of the yearly data set when sorted from lowest to highest.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="NinetyFifthPercentileValue" type="aqs:TenPointFiveDecimalType">
+        <xsd:annotation>
+            <xsd:documentation>The sample value occurring in the ninety-fifth percentile of the yearly data set when sorted from lowest to highest.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="NinetyEighthPercentileValue" type="aqs:TenPointFiveDecimalType">
+        <xsd:annotation>
+            <xsd:documentation>The sample value occurring in the ninety-eighth percentile of the yearly data set when sorted from lowest to highest.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="NinetyNinthPercentileValue" type="aqs:TenPointFiveDecimalType">
+        <xsd:annotation>
+            <xsd:documentation>The sample value occurring in the ninety-ninth percentile of the yearly data set when sorted from lowest to highest.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+</xsd:schema>

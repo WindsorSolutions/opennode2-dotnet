@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:aqs="http://www.exchangenetwork.net/schema/AQS/Submission/2" targetNamespace="http://www.exchangenetwork.net/schema/AQS/Submission/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+	<xsd:annotation>
+		<xsd:documentation>AQS 5 digit non-negative integer data type file
+		Current Version Available At :
+		Description : Schema for the 5 digit non-negative integer data type
+		Application : Air Quality System (AQS) reusable data type
+		Developed by : Environmental Protection Agency, Computer Sciences Corporation
+		Point of Contact : Nick Mangus (EPA), WDavid Ripley, III (CSC)	
+		</xsd:documentation>
+	</xsd:annotation>
+	<!--5 digit non-negative integer data type-->
+	<xsd:simpleType name="FiveDigitNonNegativeIntegerType">
+		<xsd:annotation>
+			<xsd:documentation>Non-negative integer nn,nnn  type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:integer">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="99999"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:aqs="http://www.exchangenetwork.net/schema/AQS/Submission/2" targetNamespace="http://www.exchangenetwork.net/schema/AQS/Submission/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+    <xsd:annotation>
+        <xsd:documentation>AQS Exceptional Data Type Code data element file
+		Current Version Available At :
+		Description : Schema for the Exceptional Data Type Code data element
+		Application : Air Quality System (AQS) reusable data element
+		Developed by : Environmental Protection Agency, Computer Sciences Corporation
+		Point of Contact : Nick Mangus (EPA), WDavid Ripley, III (CSC)	
+		</xsd:documentation>
+    </xsd:annotation>
+    <!--Data type include file-->
+    <xsd:include schemaLocation="AQS_TYPES/EN_AQS_DigitOneStringDataType_v2.2.xsd"/>
+    <!--Exceptional Data Type Code data element-->
+    <xsd:element name="ExceptionalDataTypeCode" type="aqs:DigitOneStringType">
+        <xsd:annotation>
+            <xsd:documentation>Indication of whether exceptional data exists in the year being summarized, and whether such exceptional data is included in the reported summary values.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+</xsd:schema>

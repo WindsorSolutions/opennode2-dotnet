@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:aqs="http://www.exchangenetwork.net/schema/AQS/Submission/2" targetNamespace="http://www.exchangenetwork.net/schema/AQS/Submission/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+    <xsd:annotation>
+        <xsd:documentation>Raw Results file
+		Current Version Available At :
+		Description : Schema for Raw Results  
+		Application : Air Quality System (AQS)
+		Developed by : Environmental Protection Agency, Computer Sciences Corporation
+		Point of Contact : Nick Mangus (EPA), WDavid Ripley, III (CSC)	
+		</xsd:documentation>
+    </xsd:annotation>
+    <!--Data element and data type include files-->
+    <xsd:include schemaLocation="AQS_ELEMENTS/EN_AQS_ActionCode_v2.2.xsd"/>
+    <xsd:include schemaLocation="AQS_ELEMENTS/EN_AQS_ObservationDateDataElement_v2.2.xsd"/>
+    <xsd:include schemaLocation="AQS_ELEMENTS/EN_AQS_ObservationStartTimeDataElement_v2.2.xsd"/>
+    <xsd:include schemaLocation="EN_AQS_RawDataValueCodeDetails_v2.2.xsd"/>
+    <!--Raw Results schema components-->
+    <xsd:element name="RawResults" type="aqs:RawResultsType">
+        <xsd:annotation>
+            <xsd:documentation>This is a complex element (element grouping) containing all of the elements related to measured sample values and the time the represent.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <!--Raw Results complex data types-->
+    <xsd:complexType name="RawResultsType">
+        <xsd:annotation>
+            <xsd:documentation>Hourly, daily and sub hourly raw data details complex type definition</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="aqs:ActionCode"/>
+            <xsd:element ref="aqs:SampleCollectionStartDate"/>
+            <xsd:element ref="aqs:SampleCollectionStartTime"/>
+            <xsd:element ref="aqs:RawValueDetails" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

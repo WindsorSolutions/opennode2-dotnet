@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:aqs="http://www.exchangenetwork.net/schema/AQS/Submission/2" 
+     targetNamespace="http://www.exchangenetwork.net/schema/AQS/Submission/2" version="1.0">
+	<xsd:include schemaLocation="2/EN_AQS_AirQualitySubmission_v2.2.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name : 					Index.xsd
+		Current Version Available At :	
+		Description : 					This is the generic root schema for AQS reporting.
+		Application : 					
+		Developed by : 	 			Environmental Protection Agency, Computer Sciences Corporation
+		Point of Contact : 			Nick Mangus (EPA), WDavid Ripley, III (CSC)
+
+		</xsd:documentation>
+	</xsd:annotation>
+</xsd:schema>

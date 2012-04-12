@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:aqs="http://www.exchangenetwork.net/schema/AQS/Submission/2" targetNamespace="http://www.exchangenetwork.net/schema/AQS/Submission/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+    <xsd:annotation>
+        <xsd:documentation>AQS Monitor Type Code data element file
+		Current Version Available At :
+		Description : Schema for the Monitor Type Code data element
+		Application : Air Quality System (AQS) reusable data element
+		Developed by : Environmental Protection Agency, Computer Sciences Corporation
+		Point of Contact : Nick Mangus (EPA), WDavid Ripley, III (CSC)	
+		</xsd:documentation>
+    </xsd:annotation>
+    <!--Data type include file-->
+    <xsd:include schemaLocation="AQS_TYPES/EN_AQS_NormCharTwentyTextDataType_v2.2.xsd"/>
+    <!--Monitor Type data element-->
+    <xsd:element name="MonitorTypeCode" type="aqs:NormalizedString20CharType">
+        <xsd:annotation>
+            <xsd:documentation>An administrative classification for the monitor roughly indicating the monitoring network to which the monitor belongs.  A monitor may have more than one type, and there is usually only one space to indicate this information in reports, so a hierarchy is used to select the most prevalent type for inclusion.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+</xsd:schema>

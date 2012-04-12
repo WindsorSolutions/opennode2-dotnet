@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:aqs="http://www.exchangenetwork.net/schema/AQS/Submission/2" targetNamespace="http://www.exchangenetwork.net/schema/AQS/Submission/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+    <xsd:annotation>
+        <xsd:documentation>Monitor Protocol file
+		Current Version Available At :
+		Description : Schema for Monitor Protocol 
+		Application : Air Quality System (AQS)
+		Developed by : Environmental Protection Agency, Computer Sciences Corporation
+		Point of Contact : Nick Mangus (EPA), WDavid Ripley, III (CSC)	
+		</xsd:documentation>
+    </xsd:annotation>
+    <!--Data elemenet and data type include files-->
+    <xsd:include schemaLocation="AQS_ELEMENTS/EN_AQS_ActionCode_v2.2.xsd"/>
+    <xsd:include schemaLocation="AQS_ELEMENTS/AQS_TYPES/EN_AQS_IntegerFourDigitPositiveDataType_v2.2.xsd"/>
+    <xsd:include schemaLocation="./EN_AQS_TransactionProtocolDetails_v2.2.xsd"/>
+    <!--Monitor Protocol schema components-->
+    <xsd:element name="MonitorProtocol" type="aqs:MonitorProtocolType">
+        <xsd:annotation>
+            <xsd:documentation>This is a complex element (element grouping) containing all of the elements describing the protocol of a monitor: the sample duration, frequency, units of measure, method, and detection limit.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <!--Monitor Protocol complex data types-->
+    <xsd:complexType name="MonitorProtocolType">
+        <xsd:annotation>
+            <xsd:documentation>Monitor protocol details complex type definition</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="aqs:ActionCode"/>
+            <xsd:element ref="aqs:MPIDNumber"/>
+            <xsd:element ref="aqs:TransactionProtocolDetails" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <!--Monitor Protocol data element-->
+    <xsd:element name="MPIDNumber" type="aqs:FourDigitPositiveIntegerType">
+        <xsd:annotation>
+            <xsd:documentation>The sequential monitor protocol identification (MP ID) number used to distinguish combinations of sample duration, unit, method, collection frequency, composite type, and alternate method detectable limit (Alt-MDL) for a monitor.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+</xsd:schema>

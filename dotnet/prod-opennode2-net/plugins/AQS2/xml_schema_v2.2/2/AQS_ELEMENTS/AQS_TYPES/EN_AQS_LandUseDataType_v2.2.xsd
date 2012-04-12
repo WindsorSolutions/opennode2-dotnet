@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:aqs="http://www.exchangenetwork.net/schema/AQS/Submission/2" targetNamespace="http://www.exchangenetwork.net/schema/AQS/Submission/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+   <xsd:annotation>
+      <xsd:documentation>AQS Land Use data type file
+		Current Version Available At :
+		Description : Schema for the Land Use data type
+		Application : Air Quality System (AQS) reusable data type
+		Developed by : Environmental Protection Agency, Computer Sciences Corporation
+		Point of Contact : Nick Mangus (EPA), WDavid Ripley, III (CSC)	
+		</xsd:documentation>
+   </xsd:annotation>
+   <!--Land Use data type-->
+   <xsd:simpleType name="LandUseType">
+      <xsd:annotation>
+         <xsd:documentation>Enumeration of 10 identifiers type definition</xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:string">
+         <xsd:enumeration value="AGRICULTURAL"/>
+         <xsd:enumeration value="BLIGHTED AREAS"/>
+         <xsd:enumeration value="COMMERCIAL"/>
+         <xsd:enumeration value="DESERT"/>
+         <xsd:enumeration value="FOREST"/>
+         <xsd:enumeration value="INDUSTRIAL"/>
+         <xsd:enumeration value="MILITARY RESERVATION"/>
+         <xsd:enumeration value="MOBILE"/>
+         <xsd:enumeration value="RESIDENTIAL"/>
+         <xsd:enumeration value="UNKNOWN"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+</xsd:schema>

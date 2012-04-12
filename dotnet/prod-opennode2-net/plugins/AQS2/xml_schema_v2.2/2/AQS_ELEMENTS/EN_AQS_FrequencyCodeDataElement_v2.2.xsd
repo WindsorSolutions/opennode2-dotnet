@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:aqs="http://www.exchangenetwork.net/schema/AQS/Submission/2" targetNamespace="http://www.exchangenetwork.net/schema/AQS/Submission/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+    <xsd:annotation>
+        <xsd:documentation>AQS Frequency Code data element file
+		Current Version Available At :
+		Description : Schema for the Frequency Code data element
+		Application : Air Quality System (AQS) reusable data element
+		Developed by : Environmental Protection Agency, Computer Sciences Corporation
+		Point of Contact : Nick Mangus (EPA), WDavid Ripley, III (CSC)	
+		</xsd:documentation>
+    </xsd:annotation>
+    <!--Frequency Code data element-->
+    <xsd:element name="FrequencyCode" type="aqs:FrequencyCodeType">
+        <xsd:annotation>
+            <xsd:documentation>The required collection frequency (RCF) is mandatory for both Photochemical Assessment Monitoring System (PAMS) regulations for organic compounds and PM-2.5 or PM-10 monitors.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <!--Frequency Code data type-->
+    <xsd:simpleType name="FrequencyCodeType">
+        <xsd:annotation>
+            <xsd:documentation>1 or 2 characters type definition</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="1"/>
+            <xsd:maxLength value="2"/>
+            <xsd:pattern value="[0-9A-Z]{1,2}"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+</xsd:schema>

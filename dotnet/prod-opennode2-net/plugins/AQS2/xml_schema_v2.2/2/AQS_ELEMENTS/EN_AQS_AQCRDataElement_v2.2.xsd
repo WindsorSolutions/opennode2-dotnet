@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:aqs="http://www.exchangenetwork.net/schema/AQS/Submission/2" targetNamespace="http://www.exchangenetwork.net/schema/AQS/Submission/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+    <xsd:annotation>
+        <xsd:documentation>AQS Air Quality Control Region Code data element file
+		Current Version Available At :
+		Description : Schema for the AQCR Code data element
+		Application : Air Quality System (AQS) reusable data element
+		Developed by : Environmental Protection Agency, Computer Sciences Corporation
+		Point of Contact : Nick Mangus (EPA), WDavid Ripley, III (CSC)	
+		</xsd:documentation>
+    </xsd:annotation>
+    <!--Data type include file-->
+    <xsd:include schemaLocation="AQS_TYPES/EN_AQS_DigitThreeStringDataType_v2.2.xsd"/>
+    <!--AQCR Code data element-->
+    <xsd:element name="AQCRCode" type="aqs:DigitThreeStringType">
+        <xsd:annotation>
+            <xsd:documentation>Specifies in which of the 247 Air Quality Control Regions (AQCRs) the monitoring site is located.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+</xsd:schema>

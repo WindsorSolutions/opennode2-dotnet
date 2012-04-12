@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:aqs="http://www.exchangenetwork.net/schema/AQS/Submission/2" targetNamespace="http://www.exchangenetwork.net/schema/AQS/Submission/2">
+	<xsd:annotation>
+		<xsd:documentation>AQS Year data type (1957 to 2100) file
+		Current Version Available At :
+		Description : Schema for the Year data type (1957 to 2100)
+		Application : Air Quality System (AQS) reusable data type
+		Developed by : Environmental Protection Agency, Computer Sciences Corporation
+		Point of Contact : Nick Mangus (EPA), WDavid Ripley, III (CSC)	
+		</xsd:documentation>
+	</xsd:annotation>
+	<!--Year data type (1957 to 2100)-->
+	<xsd:simpleType name="YearType">
+		<xsd:annotation>
+			<xsd:documentation>YYYY type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:integer">
+			<xsd:totalDigits value="4"/>
+			<xsd:minInclusive value="1957"/>
+			<xsd:maxInclusive value="2100"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

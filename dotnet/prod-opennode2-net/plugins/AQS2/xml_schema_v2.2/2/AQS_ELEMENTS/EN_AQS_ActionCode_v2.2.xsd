@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:aqs="http://www.exchangenetwork.net/schema/AQS/Submission/2" targetNamespace="http://www.exchangenetwork.net/schema/AQS/Submission/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+    <xsd:annotation>
+        <xsd:documentation>AQS Action Code data element file
+		Current Version Available At :
+		Description : Schema for the Action Code data element
+		Application : Air Quality System (AQS) reusable data element
+		Developed by : Environmental Protection Agency, Lockheed Martin Information Technology
+		Point of Contact : Nick Mangus (EPA), John M. Hall (LMIT)	
+		</xsd:documentation>
+    </xsd:annotation>
+    <!--Action Code data element-->
+    <xsd:element name="ActionCode" type="aqs:ActionCodeType">
+        <xsd:annotation>
+            <xsd:documentation>An indication of the action to be taken on the transaction by AQS (insert, update, or delete).</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <!--Actionl Code data type-->
+    <xsd:simpleType name="ActionCodeType">
+        <xsd:annotation>
+            <xsd:documentation> type definition</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="D"/>
+            <xsd:enumeration value="I"/>
+            <xsd:enumeration value="U"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+</xsd:schema>

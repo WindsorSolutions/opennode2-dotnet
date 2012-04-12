@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:aqs="http://www.exchangenetwork.net/schema/AQS/Submission/2" targetNamespace="http://www.exchangenetwork.net/schema/AQS/Submission/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+    <xsd:annotation>
+        <xsd:documentation>AQS Mean and Standard Deviation data elements file
+		Current Version Available At :
+		Description : Schema for the Mean and Standard Deviation data elements
+		Application : Air Quality System (AQS) reusable data elements
+		Developed by : Environmental Protection Agency, Computer Sciences Corporation
+		Point of Contact : Nick Mangus (EPA), WDavid Ripley, III (CSC)	
+		</xsd:documentation>
+    </xsd:annotation>
+    <!--Data type include files-->
+    <xsd:include schemaLocation="AQS_TYPES/EN_AQS_DecimalTenPointFiveDataType_v2.2.xsd"/>
+    <xsd:include schemaLocation="AQS_TYPES/EN_AQS_DecimalTenPointFiveNonNegativeDataType_v2.2.xsd"/>
+    <!--Mean and Standard Deviation data elements-->
+    <xsd:element name="ArithmeticMeanValue" type="aqs:TenPointFiveDecimalType">
+        <xsd:annotation>
+            <xsd:documentation>The measure of central tendency obtained from the sum of the observed pollutant data values in the yearly data set divided by the number of values that comprise the sum for the yearly data set.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ArithmeticStandardDevValue" type="aqs:TenPointFiveNonNegativeDecimalType">
+        <xsd:annotation>
+            <xsd:documentation>The measure of the dispersion about the central tendency of a pollutant that is the square root of the arithmetic mean of the squares of the variation of each data value from the arithmetic mean of the data values of the yearly data set.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="GeometricMeanValue" type="aqs:TenPointFiveDecimalType">
+        <xsd:annotation>
+            <xsd:documentation>The measure of central tendency obtained from the sum of the logarithms of observed sample values in the yearly data set, divided by the number of values, with that result applied as an exponent to 10.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="GeometricStandardDevValue" type="aqs:TenPointFiveNonNegativeDecimalType">
+        <xsd:annotation>
+            <xsd:documentation>The measure of the dispersion about the central tendency of a pollutant that is based on the variation between the geometric mean of a sample of values and the logarithms of the values themselves.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+</xsd:schema>

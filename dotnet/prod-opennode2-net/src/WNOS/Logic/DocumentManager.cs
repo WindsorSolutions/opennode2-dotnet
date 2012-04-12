@@ -342,7 +342,8 @@ namespace Windsor.Node2008.WNOS.Logic
                         ioDocument.DocumentName = Guid.NewGuid().ToString();
                     }
                     string originalDocumentName = ioDocument.DocumentName;
-                    ioDocument.DocumentName += ".zip";
+                    string zipExtension = CommonContentAndFormatProvider.GetFileExtension(CommonContentType.ZIP);
+                    ioDocument.DocumentName = Path.ChangeExtension(ioDocument.DocumentName, zipExtension);
                     ioDocument.Type = CommonContentType.ZIP;
                     if (!CollectionUtils.IsNullOrEmpty(ioDocument.Content))
                     {

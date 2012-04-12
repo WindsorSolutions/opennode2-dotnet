@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:aqs="http://www.exchangenetwork.net/schema/AQS/Submission/2" targetNamespace="http://www.exchangenetwork.net/schema/AQS/Submission/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+    <xsd:annotation>
+        <xsd:documentation>Monitor Sampling Period file
+		Current Version Available At :
+		Description : Schema for Monitor Sampling Period
+		Application : Air Quality System (AQS)
+		Developed by : Environmental Protection Agency, Computer Sciences Corporation
+		Point of Contact : Nick Mangus (EPA), WDavid Ripley, III (CSC)	
+		</xsd:documentation>
+    </xsd:annotation>
+    <!--Data elem,ent and data type include files-->
+    <xsd:include schemaLocation="AQS_ELEMENTS/EN_AQS_ActionCode_v2.2.xsd"/>
+    <xsd:include schemaLocation="AQS_ELEMENTS/AQS_TYPES/EN_AQS_DateTimeDataTypes_v2.2.xsd"/>
+    <!--Monitor Sampling Period schema components-->
+    <xsd:element name="MonitorSamplingPeriod" type="aqs:MonitorSamplingPeriodType">
+        <xsd:annotation>
+            <xsd:documentation>This is a complex element (element grouping) containing all of the elements indicating when a monitor began and ended sampling operations.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <!--Monitor Sampling Period complex data types-->
+    <xsd:complexType name="MonitorSamplingPeriodType">
+        <xsd:annotation>
+            <xsd:documentation>Monitor sampling periods details complex type definition</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="aqs:ActionCode"/>
+            <xsd:element ref="aqs:SamplingBeginDate"/>
+            <xsd:element ref="aqs:SamplingEndDate" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <!--Monitor Sampling Period data elements-->
+    <xsd:element name="SamplingBeginDate" type="xsd:date">
+        <xsd:annotation>
+            <xsd:documentation>The date on which a distinct period of operations, i.e., collection of air quality samples, began for the monitor.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="SamplingEndDate" type="xsd:date">
+        <xsd:annotation>
+            <xsd:documentation>The date on which a distinct period of operations, i.e., collection of air quality samples, stopped for the monitor.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+</xsd:schema>

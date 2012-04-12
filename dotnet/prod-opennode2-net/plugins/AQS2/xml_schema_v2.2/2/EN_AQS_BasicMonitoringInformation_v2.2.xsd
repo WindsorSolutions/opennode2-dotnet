@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:aqs="http://www.exchangenetwork.net/schema/AQS/Submission/2" targetNamespace="http://www.exchangenetwork.net/schema/AQS/Submission/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+    <xsd:annotation>
+        <xsd:documentation>Basic Monitoring Information
+		Current Version Available At :
+		Description : Schema for Basic Monitoring Information, AQS Submission
+		Application : Air Quality System (AQS)
+		Developed by : Environmental Protection Agency, Computer Sciences Corporation
+		Point of Contact : Nick Mangus (EPA), WDavid Ripley, III (CSC)	
+		</xsd:documentation>
+    </xsd:annotation>
+    <!--Data element and data type include files-->
+    <xsd:include schemaLocation="http://www.exchangenetwork.net/schema/SC/SC_SimpleContent_v2.0.xsd"/>
+    <xsd:include schemaLocation="AQS_ELEMENTS/EN_AQS_ActionCode_v2.2.xsd"/>
+    <xsd:include schemaLocation="AQS_ELEMENTS/AQS_TYPES/EN_AQS_DecimalTenPointTwoPositiveDataType_v2.2.xsd"/>
+    <xsd:include schemaLocation="AQS_ELEMENTS/AQS_TYPES/EN_AQS_DigitOneToFourStringDataType_v2.2.xsd"/>
+    <xsd:include schemaLocation="AQS_ELEMENTS/AQS_TYPES/EN_AQS_CharOneToFiveStringDataType_v2.2.xsd"/>
+    <xsd:include schemaLocation="AQS_ELEMENTS/EN_AQS_OpenPathNumberDataElement_v2.2.xsd"/>
+    <xsd:include schemaLocation="AQS_ELEMENTS/AQS_TYPES/EN_AQS_DateTimeDataTypes_v2.2.xsd"/>
+    <xsd:include schemaLocation="AQS_ELEMENTS/AQS_TYPES/EN_AQS_YesNoIndicatorDataType_v2.2.xsd"/>
+    <!--Basic Monitoring Information schema components-->
+    <xsd:element name="BasicMonitoringInformation" type="aqs:BasicMonitoringInformationType">
+        <xsd:annotation>
+            <xsd:documentation>This is a complex element (element grouping) containing all of the elements related to physical description of an air quality sampler (monitor).</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <!--Basic Monitoring Information complex types-->
+    <xsd:complexType name="BasicMonitoringInformationType">
+        <xsd:annotation>
+            <xsd:documentation>Basic monitor information details complex type definition</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="aqs:ActionCode"/>
+            <xsd:element ref="aqs:ProjectClassCode" minOccurs="0"/>
+            <xsd:element ref="aqs:DominantSourceText" minOccurs="0"/>
+            <xsd:element ref="aqs:MeasurementScaleIdentifier" minOccurs="0"/>
+            <xsd:element ref="aqs:OpenPathIdentifier" minOccurs="0"/>
+            <xsd:element ref="aqs:ProbeLocationCode" minOccurs="0"/>
+            <xsd:element ref="aqs:ProbeHeightMeasure" minOccurs="0"/>
+            <xsd:element ref="aqs:HorizontalDistanceMeasure" minOccurs="0"/>
+            <xsd:element ref="aqs:VerticalDistanceMeasure" minOccurs="0"/>
+            <xsd:element ref="aqs:SurrogateIndicator" minOccurs="0"/>
+            <xsd:element ref="aqs:UnrestrictedAirFlowIndicator" minOccurs="0"/>
+            <xsd:element ref="aqs:SampleResidenceTime" minOccurs="0"/>
+            <xsd:element ref="aqs:WorstSiteTypeCode" minOccurs="0"/>
+            <xsd:element ref="aqs:ApplicableNAAQSIndicator" minOccurs="0"/>
+            <xsd:element ref="aqs:SpatialAverageIndicator" minOccurs="0"/>
+            <xsd:element ref="aqs:ScheduleExemptionIndicator" minOccurs="0"/>
+            <xsd:element ref="aqs:CommunityMonitoringZoneCode" minOccurs="0"/>
+            <xsd:element ref="aqs:PollutantAreaCode" minOccurs="0" maxOccurs="5"/>
+            <xsd:element ref="aqs:MonitorCloseDate" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <!--Basic Monitoring Information data elements-->
+    <xsd:element name="ProjectClassCode" type="xsd:string">
+        <xsd:annotation>
+            <xsd:documentation>The code for the type of sampling performed by the monitor.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="DominantSourceText" type="aqs:DominantSourceIdentifierType">
+        <xsd:annotation>
+            <xsd:documentation>The primary source of the pollutant being measured.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="MeasurementScaleIdentifier" type="aqs:MeasurementScaleIdentifierType">
+        <xsd:annotation>
+            <xsd:documentation>The geographic scope of the air quality measurements made by the monitor.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ProbeLocationCode" type="aqs:ProbeLocationCodeType">
+        <xsd:annotation>
+            <xsd:documentation>The location of the sampling probe.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ProbeHeightMeasure" type="aqs:MeasureValueDataType">
+        <xsd:annotation>
+            <xsd:documentation>The height of the sampling probe from the ground in meters.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="HorizontalDistanceMeasure" type="aqs:MeasureValueDataType">
+        <xsd:annotation>
+            <xsd:documentation>The horizontal distance, in meters, of the probe from its supports.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="VerticalDistanceMeasure" type="aqs:MeasureValueDataType">
+        <xsd:annotation>
+            <xsd:documentation>The vertical distance, in meters, of the probe from its supports.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="SurrogateIndicator" type="aqs:YesNoIndicatorDataType">
+        <xsd:annotation>
+            <xsd:documentation>Indicates whether a Total Suspended Particulate (TSP) monitor serves as a surrogate monitor for PM-10.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="UnrestrictedAirFlowIndicator" type="aqs:YesNoWaivedIndicatorType">
+        <xsd:annotation>
+            <xsd:documentation>Indication of whether the flow of air to the monitor is restricted.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="SampleResidenceTime" type="aqs:TenPointTwoPositiveDecimalType">
+        <xsd:annotation>
+            <xsd:documentation>Sample Residence Time is how long it takes for the air to move from the probe to the sampling device via conduits/tubing, in seconds.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="WorstSiteTypeCode" type="aqs:WorstSiteTypeCodeType">
+        <xsd:annotation>
+            <xsd:documentation>Within a particular monitoring area, those monitors with the highest PM-10 concentrations must have their worst site type set to &quot;1&quot;, and are expected to monitor at the recommended collection frequency. Other monitors must be classified as either: &quot;2&quot;, not worst site monitors; or &quot;3&quot;, monitoring on an accelerated schedule, but not at the recommended collection frequency.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ApplicableNAAQSIndicator" type="aqs:NAAQSInicatorType">
+        <xsd:annotation>
+            <xsd:documentation>The applicable NAAQS (National Ambient Air Quality Standards) indicator determines whether the data from a monitor in a monitor planning area should be compared to either the short-term or annual NAAQS, or both.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="SpatialAverageIndicator" type="aqs:YesNoIndicatorDataType">
+        <xsd:annotation>
+            <xsd:documentation>Indicates whether spatial averaging is to be performed for the individual annual weighted means for sites that are flagged and in the same community monitoring zone.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ScheduleExemptionIndicator" type="aqs:YesNoIndicatorDataType">
+        <xsd:annotation>
+            <xsd:documentation>Indicates whether the sampling schedule differs from that required by the standard by approval of the Regional Administrator</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="CommunityMonitoringZoneCode" type="aqs:DigitOneToFourStringType">
+        <xsd:annotation>
+            <xsd:documentation>A sequential number assigned to an optional averaging area with an established, defined boundary within a monitor planning area that has a relatively uniform concentration of annual PM-2.5. Community monitoring zones do not cross geographical lines.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="PollutantAreaCode" type="xsd:string">
+        <xsd:annotation>
+            <xsd:documentation>Designation of pollutant areas to which the monitor is assigned. Using these fields, up to five pollutant areas can be designated for an individual monitor. Pollutant areas are geographic areas defined by a program office in which a certain pollutant should be closely watched. Most are problem or non-attainment areas, but attainment areas requiring special attention may also be defined. Types of pollutant areas are status areas, monitoring areas, and monitor planning areas.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="MonitorCloseDate" type="xsd:date">
+        <xsd:annotation>
+            <xsd:documentation>The date that a monitor ceased to collect data.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <!--Transaction MA data types-->
+    <xsd:simpleType name="DominantSourceIdentifierType">
+        <xsd:annotation>
+            <xsd:documentation>Enumeration of 3 sources type definition</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="POINT"/>
+            <xsd:enumeration value="AREA"/>
+            <xsd:enumeration value="MOBILE"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="MeasurementScaleIdentifierType">
+        <xsd:annotation>
+            <xsd:documentation>Enumeration of 5 identifiers type definition</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="MICROSCALE"/>
+            <xsd:enumeration value="MIDDLE SCALE"/>
+            <xsd:enumeration value="NEIGHBORHOOD"/>
+            <xsd:enumeration value="URBAN SCALE"/>
+            <xsd:enumeration value="REGIONAL SCALE"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="ProbeLocationCodeType">
+        <xsd:annotation>
+            <xsd:documentation>Enumeration of 6 codes type definition</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="GROUND LEVEL SUPPORT"/>
+            <xsd:enumeration value="POLE"/>
+            <xsd:enumeration value="SIDE OF BUILDING"/>
+            <xsd:enumeration value="TOP OF BUILDING"/>
+            <xsd:enumeration value="TOWER"/>
+            <xsd:enumeration value="OTHER"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="YesNoWaivedIndicatorType">
+        <xsd:annotation>
+            <xsd:documentation>Enumeration of Y/N/W type definition</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="Y"/>
+            <xsd:enumeration value="N"/>
+            <xsd:enumeration value="W"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="WorstSiteTypeCodeType">
+        <xsd:annotation>
+            <xsd:documentation>Enumeration of 1/2/3 type definition</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:integer"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="NAAQSInicatorType">
+        <xsd:annotation>
+            <xsd:documentation>Enumeration of S/A/B type definition</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="S"/>
+            <xsd:enumeration value="A"/>
+            <xsd:enumeration value="B"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+</xsd:schema>

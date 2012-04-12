@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:aqs="http://www.exchangenetwork.net/schema/AQS/Submission/2" targetNamespace="http://www.exchangenetwork.net/schema/AQS/Submission/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+    <xsd:annotation>
+        <xsd:documentation>Raw Composite Information file
+		Current Version Available At :
+		Description : Schema for Raw Composite Information 
+		Application : Air Quality System (AQS)
+		Developed by : Environmental Protection Agency, Computer Sciences Corporation
+		Point of Contact : Nick Mangus (EPA), WDavid Ripley, III (CSC)	
+		</xsd:documentation>
+    </xsd:annotation>
+    <!--Data elements and data type include files-->
+    <xsd:include schemaLocation="http://www.exchangenetwork.net/schema/SC/SC_SimpleContent_v2.0.xsd"/>
+    <xsd:include schemaLocation="AQS_ELEMENTS/EN_AQS_ActionCode_v2.2.xsd"/>
+    <xsd:include schemaLocation="AQS_ELEMENTS/AQS_TYPES/EN_AQS_DecimalTenPointFiveDataType_v2.2.xsd"/>
+    <xsd:include schemaLocation="AQS_ELEMENTS/AQS_TYPES/EN_AQS_YearDataType_v2.2.xsd"/>
+    <xsd:include schemaLocation="AQS_ELEMENTS/EN_AQS_UncertaintyValueDataElement_v2.2.xsd"/>
+    <!--Raw Composite Information schema components-->
+    <xsd:element name="RawCompositeInformation" type="aqs:RawCompositeInformationType">
+        <xsd:annotation>
+            <xsd:documentation>This is a complex element (element grouping) containing all of the elements related to composite data reporting.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <!--Raw Composite Information complex data types-->
+    <xsd:complexType name="RawCompositeInformationType">
+        <xsd:annotation>
+            <xsd:documentation>Composite raw data details complex type definition</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="aqs:ActionCode"/>
+            <xsd:element ref="aqs:ObservationYear"/>
+            <xsd:element ref="aqs:CompositePeriodCode"/>
+            <xsd:element ref="aqs:SamplesCount" minOccurs="0"/>
+            <xsd:element ref="aqs:CompositeSampleValue" minOccurs="0"/>
+            <xsd:element ref="aqs:UncertaintyValue" minOccurs="0"/>
+            <xsd:element ref="aqs:ResultQualifierCode" minOccurs="0" maxOccurs="10"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <!--Raw Composite Information data elements-->
+    <xsd:element name="ObservationYear" type="aqs:YearType">
+        <xsd:annotation>
+            <xsd:documentation>The calendar year for which the observation was reported.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="CompositePeriodCode" type="aqs:CompositePeriodCodeType">
+        <xsd:annotation>
+            <xsd:documentation>Indicates the time period within the year to which the observation applies. It is expressed in units that may be inferred from composite type.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="SamplesCount" type="aqs:SamplesCountType">
+        <xsd:annotation>
+            <xsd:documentation>Indicates the number of samples that were combined to yield the composite sample value.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="CompositeSampleValue" type="aqs:TenPointFiveDecimalType">
+        <xsd:annotation>
+            <xsd:documentation>The value of a composite observation.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <!--Raw Composite Information data types-->
+    <xsd:simpleType name="CompositePeriodCodeType">
+        <xsd:annotation>
+            <xsd:documentation>Integer 1 to 53 type definition</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="1"/>
+            <xsd:maxInclusive value="53"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="SamplesCountType">
+        <xsd:annotation>
+            <xsd:documentation>Integer 1 to 366 type definition</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="1"/>
+            <xsd:maxInclusive value="366"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+</xsd:schema>

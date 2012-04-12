@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:aqs="http://www.exchangenetwork.net/schema/AQS/Submission/2" targetNamespace="http://www.exchangenetwork.net/schema/AQS/Submission/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+    <xsd:annotation>
+        <xsd:documentation>Open Path Monitoring file
+		Current Version Available At :
+		Description : Schema for Transaction AC, AQS Submission
+		Application : Air Quality System (AQS)
+		Developed by : Environmental Protection Agency, Computer Sciences Corporation
+		Point of Contact : Nick Mangus (EPA), WDavid Ripley, III (CSC)	
+		Revised: Doug Timms, enfoTech
+		</xsd:documentation>
+    </xsd:annotation>
+    <!--Data element and data type include files-->
+    <xsd:include schemaLocation="http://www.exchangenetwork.net/schema/SC/SC_SimpleContent_v2.0.xsd"/>
+    <xsd:include schemaLocation="AQS_ELEMENTS/EN_AQS_ActionCode_v2.2.xsd"/>
+    <xsd:include schemaLocation="AQS_ELEMENTS/AQS_TYPES/EN_AQS_CompassSectorCodeDataType_v2.2.xsd"/>
+    <xsd:include schemaLocation="AQS_ELEMENTS/AQS_TYPES/EN_AQS_LandUseDataType_v2.2.xsd"/>
+    <xsd:include schemaLocation="AQS_ELEMENTS/AQS_TYPES/EN_AQS_DecimalTenPointTwoPositiveDataType_v2.2.xsd"/>
+    <xsd:include schemaLocation="AQS_ELEMENTS/EN_AQS_OpenPathNumberDataElement_v2.2.xsd"/>
+    <!--Transaction AC schema components-->
+    <xsd:element name="OpenPathMonitoringLocation" type="aqs:OpenPathMonitoringLocationType">
+        <xsd:annotation>
+            <xsd:documentation>This is a complex element (element grouping) containing all of the elements describing any open path monitoring.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <!--Transaction AC complex data types-->
+    <xsd:complexType name="OpenPathMonitoringLocationType">
+        <xsd:annotation>
+            <xsd:documentation>Site open path details complex type definition</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="aqs:ActionCode"/>
+            <xsd:element ref="aqs:OpenPathIdentifier"/>
+            <xsd:element ref="aqs:DirectionToTransmitterCode" minOccurs="0"/>
+            <xsd:element ref="aqs:BeamLengthMeasure" minOccurs="0"/>
+            <xsd:element ref="aqs:TransmitterHeightMeasure" minOccurs="0"/>
+            <xsd:element ref="aqs:ReceiverHeightMeasure" minOccurs="0"/>
+            <xsd:element ref="aqs:BeamMinimumHeightMeasure" minOccurs="0"/>
+            <xsd:element ref="aqs:BeamMaximumHeightMeasure" minOccurs="0"/>
+            <xsd:element ref="aqs:OpenPathLocationLandUseText" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <!--Transaction AC data elements-->
+    <xsd:element name="DirectionToTransmitterCode" type="aqs:CompassSectorCodeType">
+        <xsd:annotation>
+            <xsd:documentation>The direction from the receiver to the transmitter at the site.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="BeamLengthMeasure" type="aqs:MeasureValueDataType">
+        <xsd:annotation>
+            <xsd:documentation>The length of the beam projected between the transmitter and the receiver at the site, in meters.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="TransmitterHeightMeasure" type="aqs:MeasureValueDataType">
+        <xsd:annotation>
+            <xsd:documentation>The height of the transmitter above the ground, in meters.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ReceiverHeightMeasure" type="aqs:MeasureValueDataType">
+        <xsd:annotation>
+            <xsd:documentation>The height of the receiver above the ground, in meters.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="BeamMinimumHeightMeasure" type="aqs:MeasureValueDataType">
+        <xsd:annotation>
+            <xsd:documentation>The height of the beam (at the lowest point from the ground) being projected between the receiver and transmitter at the site, in meters.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="BeamMaximumHeightMeasure" type="aqs:MeasureValueDataType">
+        <xsd:annotation>
+            <xsd:documentation>The height of the beam (at the highest point from the ground) being projected between the receiver and transmitter at the site, in meters</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="OpenPathLocationLandUseText" type="aqs:LandUseType">
+        <xsd:annotation>
+            <xsd:documentation>A description of how the area around (and under) and open path monitor is used.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+</xsd:schema>
