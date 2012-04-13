@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:att="http://www.exchangenetwork.net/schema/OWIR/ATT/2" targetNamespace="http://www.exchangenetwork.net/schema/OWIR/ATT/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+  <xsd:annotation>
+    <xsd:documentation>Schema Name: ATT_AssessmentMethods.xsd</xsd:documentation>
+    <xsd:documentation>Description: Component Schema for ATT (Water Assessment Data) AssessmentMethod types</xsd:documentation>
+    <xsd:documentation>Application: Integrated Reports (IR) for 305(b) and 303(d) systems</xsd:documentation>
+    <xsd:documentation>Developed by: Environmental Protection Agency, INDUS Corporation</xsd:documentation>
+    <xsd:documentation>Point of Contact: Shera Reems</xsd:documentation>
+  </xsd:annotation>
+  <xsd:include schemaLocation="./ATT_Shared_v2.0.xsd"/>
+  <xsd:include schemaLocation="./ATT_StateMethods_v2.0.xsd"/>
+  <xsd:complexType name="AssessmentMethodsDataType">
+    <xsd:sequence>
+      <xsd:element ref="att:AssessmentMethodDetails" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="AssessmentMethods" type="att:AssessmentMethodsDataType">
+    <xsd:unique name="AMPK">
+      <xsd:selector xpath="att:AssessmentMethodDetails"/>
+      <xsd:field xpath="att:AssessmentMethodIdentifierCode"/>
+    </xsd:unique>
+  </xsd:element>
+  <xsd:complexType name="AssessmentMethodDetailsDataType">
+    <xsd:sequence>
+      <xsd:element ref="att:AssessmentMethodIdentifierCode"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="AssessmentMethodDetails" type="att:AssessmentMethodDetailsDataType"/>
+</xsd:schema>

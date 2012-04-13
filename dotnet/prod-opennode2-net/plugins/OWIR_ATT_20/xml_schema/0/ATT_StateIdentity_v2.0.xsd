@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:att="http://www.exchangenetwork.net/schema/OWIR/ATT/2" targetNamespace="http://www.exchangenetwork.net/schema/OWIR/ATT/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+    <xsd:annotation>
+        <xsd:documentation>
+            Schema Name  : SC_StateIdentity_v2.0.xsd
+            Schema Identification : C.09
+            Current Version Available At :  http://www.exchangenetwork.net/schema/SC
+            Description   : 	A designator and associated metadata used to identify a principal administrative subdivision of the United States, Canada, or Mexico.
+            Application   :   Exchange Network Shared Schema Component
+            Developed by  : 	 Core Reference Model (CRM) Workgroup
+            Point of Contact :   Douglas Timms, enfoTech &amp; Consulting, Inc.
+            Last Modified by :   Ross &amp; Associates - April 17, 2006 (from SSCv1.1: targetNamespace declaration removed, to conform with Exchange Network namespace decision v1.11)
+        </xsd:documentation>
+    </xsd:annotation>
+    <xsd:simpleType name="StateCodeDataType">
+        <xsd:restriction base="xsd:string"/>
+    </xsd:simpleType>
+    <xsd:complexType name="StateCodeListIdentifierDataType">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string">
+                <xsd:attribute name="CodeListVersionIdentifier" type="xsd:string" use="optional"/>
+                <xsd:attribute name="CodeListVersionAgencyIdentifier" type="xsd:string" use="optional"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    <xsd:simpleType name="StateNameDataType">
+        <xsd:restriction base="xsd:string"/>
+    </xsd:simpleType>
+    <xsd:element name="StateCode" type="att:StateCodeDataType">
+        <xsd:annotation>
+            <xsd:documentation>A code designator used to identify a principal administrative subdivision of the United States, Canada, or Mexico.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="StateCodeListIdentifier" type="att:StateCodeListIdentifierDataType">
+        <xsd:annotation>
+            <xsd:documentation>A designator specifying the code set used to provide a state code. Can be used to identify the URL of a source that defines the set of currently approved permitted values.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="StateName" type="att:StateNameDataType">
+        <xsd:annotation>
+            <xsd:documentation>A name used to identify a principal administrative subdivision of the United States, Canada, or Mexico.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:complexType name="StateIdentityDataType">
+        <xsd:sequence>
+            <xsd:element minOccurs="0" ref="att:StateCode" />
+            <xsd:element minOccurs="0" ref="att:StateCodeListIdentifier" />
+            <xsd:element minOccurs="0" ref="att:StateName" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="StateIdentity" type="att:StateIdentityDataType">
+        <xsd:annotation>
+            <xsd:documentation>A designator and associated metadata used to identify a principal administrative subdivision of the United States, Canada, or Mexico.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+</xsd:schema>

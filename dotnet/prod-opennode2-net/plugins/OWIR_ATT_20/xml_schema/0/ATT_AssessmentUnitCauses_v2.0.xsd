@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:att="http://www.exchangenetwork.net/schema/OWIR/ATT/2" targetNamespace="http://www.exchangenetwork.net/schema/OWIR/ATT/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+	<xsd:annotation>
+		<xsd:documentation>Schema Name: ATT_AssessmentUnitCauses.xsd</xsd:documentation>
+		<xsd:documentation>Description: Component Schema for ATT (Water Assessment Data) AssessmentUnitCause types</xsd:documentation>
+		<xsd:documentation>Application: Integrated Reports (IR) for 305(b) and 303(d) systems</xsd:documentation>
+		<xsd:documentation>Developed by: Environmental Protection Agency, INDUS Corporation</xsd:documentation>
+		<xsd:documentation>Point of Contact: Shera Reems</xsd:documentation>
+	</xsd:annotation>
+	<xsd:include schemaLocation="./ATT_Shared_v2.0.xsd"/>
+	<xsd:include schemaLocation="./ATT_Causes_v2.0.xsd"/>
+	<xsd:complexType name="AssessmentUnitCausesDataType">
+		<xsd:sequence>
+			<xsd:element ref="att:AssessmentUnitCauseDetails" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AssessmentUnitCauseDetailsDataType">
+		<xsd:sequence>
+			<xsd:element ref="att:CauseName"/>
+			<xsd:element ref="att:CycleFirstListed" minOccurs="0"/>
+			<xsd:element ref="att:ExpectedToAttainDate" minOccurs="0"/>
+			<xsd:element ref="att:TMDLSchedule" minOccurs="0"/>
+			<xsd:element ref="att:TMDLPriority" minOccurs="0"/>
+			<xsd:element ref="att:TMDLCompletionDate" minOccurs="0"/>
+			<xsd:element ref="att:TMDLProjectStatus" minOccurs="0"/>
+			<xsd:element ref="att:TMDLProjectComment" minOccurs="0"/>
+			<xsd:element ref="att:ImplementationActions" minOccurs="0"/>
+			<xsd:element ref="att:ConsentDecreeCycle" minOccurs="0"/>
+			<xsd:element ref="att:PollutionSourceType" minOccurs="0"/>
+			<xsd:element ref="att:JustificationURL" minOccurs="0"/>
+			<xsd:element ref="att:OtherPointSourceID" minOccurs="0"/>
+			<xsd:element ref="att:TMDLs" minOccurs="0"/>
+			<xsd:element ref="att:NPDES" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ImplementationActionsDataType">
+		<xsd:sequence>
+			<xsd:element ref="att:ImplementationActionDetails" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ImplementationActionDetailsDataType">
+		<xsd:sequence>
+			<xsd:element ref="att:ActionDate"/>
+			<xsd:element ref="att:ImplementationActionText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="TMDLsDataType">
+		<xsd:sequence>
+			<xsd:element ref="att:TMDLsDetails" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="TMDLsDetailsDataType">
+		<xsd:sequence>
+			<xsd:element ref="att:TMDLID"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="NPDESDataType">
+		<xsd:sequence>
+			<xsd:element name="NPDESDetails" type="att:NPDESDetailsDataType" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="NPDESDetailsDataType">
+		<xsd:choice>
+			<xsd:element ref="att:NPDESID"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:element name="AssessmentUnitCauses" type="att:AssessmentUnitCausesDataType">
+		<xsd:unique name="AUCPK">
+			<xsd:selector xpath="att:AssessmentUnitCauseDetails"/>
+			<xsd:field xpath="att:CauseName"/>
+		</xsd:unique>
+	</xsd:element>
+	<xsd:element name="AssessmentUnitCauseDetails" type="att:AssessmentUnitCauseDetailsDataType">
+		<xsd:annotation>
+			<xsd:documentation/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CycleFirstListed" type="xsd:gYear">
+		<xsd:annotation>
+			<xsd:documentation/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ExpectedToAttainDate" type="xsd:date">
+		<xsd:annotation>
+			<xsd:documentation/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TMDLSchedule" type="xsd:gYear">
+		<xsd:annotation>
+			<xsd:documentation/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TMDLPriority" type="att:TMDLPriorityDataType">
+		<xsd:annotation>
+			<xsd:documentation/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TMDLCompletionDate" type="xsd:date">
+		<xsd:annotation>
+			<xsd:documentation/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TMDLProjectStatus" type="att:String255DataType">
+		<xsd:annotation>
+			<xsd:documentation/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TMDLProjectComment" type="att:String4000DataType">
+		<xsd:annotation>
+			<xsd:documentation/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ImplementationActions" type="att:ImplementationActionsDataType">
+		<xsd:annotation>
+			<xsd:documentation/>
+		</xsd:annotation>
+		<xsd:unique name="IAPK">
+			<xsd:selector xpath="att:ImplementationActionDetails"/>
+			<xsd:field xpath="att:ActionDate"/>
+		</xsd:unique>
+	</xsd:element>
+	<xsd:element name="ImplementationActionDetails" type="att:ImplementationActionDetailsDataType">
+		<xsd:annotation>
+			<xsd:documentation/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ActionDate" type="xsd:date">
+		<xsd:annotation>
+			<xsd:documentation/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ImplementationActionText" type="att:String255DataType">
+		<xsd:annotation>
+			<xsd:documentation/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ConsentDecreeCycle" type="xsd:gYear">
+		<xsd:annotation>
+			<xsd:documentation/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="PollutionSourceType" type="att:PollutionSourceTypeDataType">
+		<xsd:annotation>
+			<xsd:documentation/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="JustificationURL" type="att:String250DataType">
+		<xsd:annotation>
+			<xsd:documentation/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TMDLID" type="att:TMDLIDDataType"/>
+	<xsd:element name="TMDLs" type="att:TMDLsDataType"/>
+	<xsd:element name="NPDES" type="att:NPDESDataType"/>
+	<xsd:element name="NPDESID" type="att:String9DataType"/>
+	<xsd:element name="OtherPointSourceID" type="att:String4000DataType"/>
+	<xsd:element name="TMDLsDetails" type="att:TMDLsDetailsDataType"/>
+</xsd:schema>

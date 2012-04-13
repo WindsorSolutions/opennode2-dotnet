@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:att="http://www.exchangenetwork.net/schema/OWIR/ATT/2" targetNamespace="http://www.exchangenetwork.net/schema/OWIR/ATT/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+    <xsd:annotation>
+		<xsd:documentation>Schema Name: ATT_Shared.xsd</xsd:documentation>
+		<xsd:documentation>Description: Local Shared Schema for ATT (Water Assessment Data) generic data types</xsd:documentation>
+		<xsd:documentation>Application: Integrated Reports (IR) for 305(b) and 303(d) systems</xsd:documentation>
+		<xsd:documentation>Developed by: Environmental Protection Agency, INDUS Corporation</xsd:documentation>
+		<xsd:documentation>Point of Contact: Shera Reems</xsd:documentation>
+	</xsd:annotation>
+	<xsd:simpleType name="String10DataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="10"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="String10RequiredDataType">
+		<xsd:restriction base="att:String10DataType">
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="String15DataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="15"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="String20DataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="20"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="String20RequiredDataType">
+		<xsd:restriction base="att:String20DataType">
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="String25DataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="25"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="String25RequiredDataType">
+		<xsd:restriction base="att:String25DataType">
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="String40DataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="40"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="String40RequiredDataType">
+		<xsd:restriction base="att:String40DataType">
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="String50DataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="String50RequiredDataType">
+		<xsd:restriction base="att:String50DataType">
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="String60DataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="60"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="String60RequiredDataType">
+		<xsd:restriction base="att:String60DataType">
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="String75DataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="75"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="String75RequiredDataType">
+		<xsd:restriction base="att:String75DataType">
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="String90DataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="90"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="String9DataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="9"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="String100DataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="100"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="String100RequiredDataType">
+		<xsd:restriction base="att:String100DataType">
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="String240DataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="240"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="String250DataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="250"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="String255DataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="255"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="String255RequiredDataType">
+		<xsd:restriction base="att:String255DataType">
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="String4000DataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringYesNoDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Yes"/>
+			<xsd:enumeration value="No"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StateDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="AK"/>
+			<xsd:enumeration value="AL"/>
+			<xsd:enumeration value="AR"/>
+			<xsd:enumeration value="AS"/>
+			<xsd:enumeration value="AZ"/>
+			<xsd:enumeration value="CA"/>
+			<xsd:enumeration value="CO"/>
+			<xsd:enumeration value="CT"/>
+			<xsd:enumeration value="DC"/>
+			<xsd:enumeration value="DE"/>
+			<xsd:enumeration value="FL"/>
+			<xsd:enumeration value="GA"/>
+			<xsd:enumeration value="HI"/>
+			<xsd:enumeration value="IA"/>
+			<xsd:enumeration value="ID"/>
+			<xsd:enumeration value="IL"/>
+			<xsd:enumeration value="IN"/>
+			<xsd:enumeration value="KS"/>
+			<xsd:enumeration value="KY"/>
+			<xsd:enumeration value="LA"/>
+			<xsd:enumeration value="MA"/>
+			<xsd:enumeration value="MD"/>
+			<xsd:enumeration value="ME"/>
+			<xsd:enumeration value="MI"/>
+			<xsd:enumeration value="MN"/>
+			<xsd:enumeration value="MO"/>
+			<xsd:enumeration value="MS"/>
+			<xsd:enumeration value="MT"/>
+			<xsd:enumeration value="NC"/>
+			<xsd:enumeration value="ND"/>
+			<xsd:enumeration value="NE"/>
+			<xsd:enumeration value="NH"/>
+			<xsd:enumeration value="NJ"/>
+			<xsd:enumeration value="NM"/>
+			<xsd:enumeration value="NV"/>
+			<xsd:enumeration value="NY"/>
+			<xsd:enumeration value="OH"/>
+			<xsd:enumeration value="OK"/>
+			<xsd:enumeration value="OR"/>
+			<xsd:enumeration value="PA"/>
+			<xsd:enumeration value="RI"/>
+			<xsd:enumeration value="SC"/>
+			<xsd:enumeration value="SD"/>
+			<xsd:enumeration value="TN"/>
+			<xsd:enumeration value="TX"/>
+			<xsd:enumeration value="UT"/>
+			<xsd:enumeration value="VA"/>
+			<xsd:enumeration value="VI"/>
+			<xsd:enumeration value="VT"/>
+			<xsd:enumeration value="WI"/>
+			<xsd:enumeration value="WV"/>
+			<xsd:enumeration value="WY"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TerritoryDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="StateOrTerritoryDataType">
+		<xsd:union memberTypes="att:StateDataType att:TerritoryDataType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="NADataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="NA">
+				<xsd:annotation>
+					<xsd:documentation>Not Applicable or North America</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TMDLIDDataType">
+		<xsd:restriction base="xsd:unsignedInt"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="StateNADataType">
+		<xsd:union memberTypes="att:StateDataType att:NADataType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="TrophicStatusDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Dystrophic"/>
+			<xsd:enumeration value="Eutrophic"/>
+			<xsd:enumeration value="Hypereutrophic"/>
+			<xsd:enumeration value="Mesotrophic"/>
+			<xsd:enumeration value="Oligotrophic"/>
+			<xsd:enumeration value="Unknown"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TrendDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Degrading"/>
+			<xsd:enumeration value="Fluctuating"/>
+			<xsd:enumeration value="Improving"/>
+			<xsd:enumeration value="Stable"/>
+			<xsd:enumeration value="Unknown"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="WaterTypeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Great Lake - Open Water"/>
+			<xsd:enumeration value="Blackwater System"/>
+			<xsd:enumeration value="Coastal Waters"/>
+			<xsd:enumeration value="Estuary"/>
+			<xsd:enumeration value="Freshwater Lake"/>
+			<xsd:enumeration value="Freshwater Reservoir"/>
+			<xsd:enumeration value="Impoundment"/>
+			<xsd:enumeration value="Bay(s) and Harbor"/>
+			<xsd:enumeration value="Great Lakes Shoreline"/>
+			<xsd:enumeration value="Ocean"/>
+			<xsd:enumeration value="River, Intermittent"/>
+			<xsd:enumeration value="River, Perennial"/>
+			<xsd:enumeration value="Saline Lake"/>
+			<xsd:enumeration value="Spring"/>
+			<xsd:enumeration value="Wetland"/>
+			<xsd:enumeration value="Wetlands, Freshwater"/>
+			<xsd:enumeration value="Wetlands, Tidal"/>
+			<xsd:enumeration value="Creek"/>
+			<xsd:enumeration value="Pond"/>
+			<xsd:enumeration value="Reservoir"/>
+			<xsd:enumeration value="River"/>
+			<xsd:enumeration value="Stream"/>
+			<xsd:enumeration value="Ephemeral Stream"/>
+			<xsd:enumeration value="Tidal River"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TMDLPriorityDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Low"/>
+			<xsd:enumeration value="Medium"/>
+			<xsd:enumeration value="High"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="DelistingReasonDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="TMDL Alternative (4B)"/>
+			<xsd:enumeration value="Not caused by a pollutant (4C)"/>
+			<xsd:enumeration value="TMDL approved or established by EPA (4A)"/>
+			<xsd:enumeration value="Applicable WQS attained; due to restoration activities"/>
+			<xsd:enumeration value="Applicable WQS attained; due to change in WQS"/>
+			<xsd:enumeration value="Applicable WQS attained; according to new assessment method"/>
+			<xsd:enumeration value="Applicable WQS attained; threatened water no longer threatened"/>
+			<xsd:enumeration value="Applicable WQS attained; reason for recovery unspecified"/>
+			<xsd:enumeration value="Applicable WQS attained; original basis for listing was incorrect"/>
+			<xsd:enumeration value="Data and/or information lacking to determine water quality status; original basis for listing was incorrect (Category 3)"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="PurposeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Split"/>
+			<xsd:enumeration value="Rename"/>
+			<xsd:enumeration value="Join"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="AttainmentDescriptionDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Fully Supporting"/>
+			<xsd:enumeration value="Insufficient Information"/>
+			<xsd:enumeration value="Not Supporting"/>
+			<xsd:enumeration value="Not Assessed"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="AssessmentTypeTypeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Biological"/>
+			<xsd:enumeration value="Habitat"/>
+			<xsd:enumeration value="Physical/Chemical"/>
+			<xsd:enumeration value="Toxicological"/>
+			<xsd:enumeration value="Pathogen Indicators"/>
+			<xsd:enumeration value="Other Public Health Indicators"/>
+			<xsd:enumeration value="Other Aquatic Life Indicators"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="AssessmentConfidenceDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Low"/>
+			<xsd:enumeration value="Fair"/>
+			<xsd:enumeration value="Good"/>
+			<xsd:enumeration value="Excellent"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="EPACategoryDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="1"/>
+			<xsd:enumeration value="2"/>
+			<xsd:enumeration value="3"/>
+			<xsd:enumeration value="4a"/>
+			<xsd:enumeration value="4b"/>
+			<xsd:enumeration value="4c"/>
+			<xsd:enumeration value="5"/>
+			<xsd:enumeration value="5m"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="EPACauseCategoryDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="4a"/>
+			<xsd:enumeration value="4b"/>
+			<xsd:enumeration value="4c"/>
+			<xsd:enumeration value="5"/>
+			<xsd:enumeration value="5m"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="CategoryReportFlagDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Single Category"/>
+			<xsd:enumeration value="Use"/>
+			<xsd:enumeration value="Cause"/>
+			<xsd:enumeration value="Both"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringYNDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Y"/>
+			<xsd:enumeration value="N"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringYDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Y"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="PollutionSourceTypeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Point Source"/>
+			<xsd:enumeration value="Non-Point Source"/>
+			<xsd:enumeration value="Both"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ConfidenceDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="High"/>
+			<xsd:enumeration value="Medium"/>
+			<xsd:enumeration value="Low"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>
