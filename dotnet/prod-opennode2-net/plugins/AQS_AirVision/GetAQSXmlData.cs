@@ -48,10 +48,11 @@ using Windsor.Commons.Spring;
 using Windsor.Node2008.WNOSDomain;
 using Windsor.Node2008.WNOSProviders;
 using Windsor.Commons.NodeDomain;
+using Windsor.Node2008.WNOSPlugin.AQSCommon;
 
 namespace Windsor.Node2008.WNOSPlugin.AQSAirVision
 {
-    public class GetAQSXmlData : BaseWNOSPlugin, IQueryProcessor, ISolicitProcessor
+    public class GetAQSXmlData : AQSBaseHeaderPlugin, IQueryProcessor, ISolicitProcessor
     {
         // Config arguments:
         protected const string CONFIG_WEB_SERVICE_URL = "AirVision Web Service Url";
@@ -74,10 +75,6 @@ namespace Windsor.Node2008.WNOSPlugin.AQSAirVision
         protected const string PARAM_SEND_ONLY_QA_DATA = "SendOnlyQAData";
       
         protected IRequestManager _requestManager;
-        protected ISerializationHelper _serializationHelper;
-        protected ICompressionHelper _compressionHelper;
-        protected IDocumentManager _documentManager;
-        protected ISettingsProvider _settingsProvider;
 
         protected DataRequest _dataRequest;
         protected string _webServiceUrl = "http://173.10.212.9:9889/AirVision.Services.WebServices.AQSXml/AQSXmlService/";
@@ -94,9 +91,11 @@ namespace Windsor.Node2008.WNOSPlugin.AQSAirVision
         {
             Init(requestId);
 
-            byte[] bytes = GetDataAndAddToTransaction();
+            string zipFilePath = GetDataAndAddToTransaction();
 
-            PaginatedContentResult result = new PaginatedContentResult(0, 1, true, CommonContentType.ZIP, bytes);
+            PaginatedContentResult result = 
+                new PaginatedContentResult(0, 1, true, CommonContentType.ZIP, File.ReadAllBytes(zipFilePath));
+
             return result;
         }
         public virtual void ProcessSolicit(string requestId)
@@ -111,15 +110,11 @@ namespace Windsor.Node2008.WNOSPlugin.AQSAirVision
 
             ValidateRequest(requestId);
         }
-        protected virtual void LazyInit()
+        protected override void LazyInit()
         {
-            AppendAuditLogEvent("Initializing {0} plugin ...", this.GetType().Name);
+            base.LazyInit();
 
             GetServiceImplementation(out _requestManager);
-            GetServiceImplementation(out _serializationHelper);
-            GetServiceImplementation(out _compressionHelper);
-            GetServiceImplementation(out _documentManager);
-            GetServiceImplementation(out _settingsProvider);
 
             GetConfigParameter(CONFIG_WEB_SERVICE_URL, out _webServiceUrl);
             TryGetConfigParameter(CONFIG_WEB_SERVICE_TIMEOUT, ref _webServiceTimeoutInSeconds);
@@ -212,7 +207,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQSAirVision
 
             return arguments;
         }
-        protected virtual byte[] GetXmlData()
+        protected virtual string GetXmlData()
         {
             using (AQSXmlWebService webService = new AQSXmlWebService(_webServiceUrl))
             {
@@ -252,27 +247,27 @@ namespace Windsor.Node2008.WNOSPlugin.AQSAirVision
                     AppendAuditLogEvent("The GetAQSXmlData web method returned zipped xml data containing {0} bytes",
                                         data.ZipCompressedAQSXmlDocument.Length.ToString("N0"));
                 }
-                return data.ZipCompressedAQSXmlDocument;
+                string filePath;
+                if (_compressionHelper.IsCompressed(data.ZipCompressedAQSXmlDocument))
+                {
+                    filePath = _settingsProvider.NewTempFilePath(".zip");
+                }
+                else
+                {
+                    filePath = _settingsProvider.NewTempFilePath(".xml");
+                }
+                AppendAuditLogEvent("Saving returned file data to temp file \"{0}\"", filePath);
+                File.WriteAllBytes(filePath, data.ZipCompressedAQSXmlDocument);
+                return filePath;
             }
         }
-        public virtual byte[] GetDataAndAddToTransaction()
+        public virtual string GetDataAndAddToTransaction()
         {
-            byte[] data = GetXmlData();
+            string filePath = GetXmlData();
 
-            try
-            {
-                Document document = new Document("AQS.zip", CommonContentType.ZIP, data);
-                AppendAuditLogEvent("Adding zipped document data to transaction as \"{0}\"", document.DocumentName);
-                _documentManager.AddDocument(_dataRequest.TransactionId, CommonTransactionStatusCode.Completed,
-                                             null, document);
-            }
-            catch (Exception e)
-            {
-                AppendAuditLogEvent("Failed to add zipped document to transaction \"{0}\" with exception: {1}",
-                                    _dataRequest.TransactionId, ExceptionUtils.ToShortString(e));
-                throw;
-            }
-            return data;
+            string zipFilePath = AddExchangeDocumentHeader(filePath, true, _dataRequest.TransactionId);
+
+            return zipFilePath;
         }
     }
 }

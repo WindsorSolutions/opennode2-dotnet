@@ -257,5 +257,12 @@ namespace Windsor.Commons.Core
                 }
             }
         }
+        public static string ControlIdFromControlFilePath(string controlFilePath)
+        {
+            string fileName = Path.GetFileNameWithoutExtension(controlFilePath);
+            fileName = fileName.Replace(' ', '_');
+            fileName = fileName.Replace('.', '_');
+            return fileName + "_Id";
+        }
     }
 }

@@ -2,11 +2,9 @@
 /*
 Copyright (c) 2009, The Environmental Council of the States (ECOS)
 All rights reserved.
-
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions
 are met:
-
  * Redistributions of source code must retain the above copyright
    notice, this list of conditions and the following disclaimer.
  * Redistributions in binary form must reproduce the above copyright
@@ -15,7 +13,6 @@ are met:
  * Neither the name of the ECOS nor the names of its contributors may
    be used to endorse or promote products derived from this software
    without specific prior written permission.
-
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
@@ -30,26 +27,20 @@ ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 */
 #endregion
-
-using System.IO;
-using System.Xml;
-using System.Text;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 using System.Data;
-using Windsor.Node2008.WNOSPlugin;
-using Spring.Data.Core;
+using System.IO;
 using Windsor.Commons.Core;
-using Windsor.Commons.Logging;
+using Windsor.Commons.NodeDomain;
 using Windsor.Commons.Spring;
 using Windsor.Node2008.WNOSDomain;
 using Windsor.Node2008.WNOSProviders;
-using Microsoft.VisualBasic.FileIO;
-using Windsor.Commons.NodeDomain;
+using Windsor.Node2008.WNOSPlugin.AQSCommon;
 
 namespace Windsor.Node2008.WNOSPlugin.AQS2
 {
-    public abstract class AQSGetRawData : BaseWNOSPlugin
+    public abstract class AQSGetRawData : AQSBaseHeaderPlugin
     {
         protected const string CONFIG_PARAM_ACTION_CODES = "Acceptable Action Codes (comma-separated character list)";
 
@@ -60,13 +51,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
         protected const string PARAM_SITE_ID_KEY = "SiteID";
         protected const string PARAM_COUNTY_CODE_KEY = "CountyCode";
 
-        protected const string AQS_FLOW_NAME = "AQS";
-
         protected IRequestManager _requestManager;
-        protected ISerializationHelper _serializationHelper;
-        protected ICompressionHelper _compressionHelper;
-        protected IDocumentManager _documentManager;
-        protected ISettingsProvider _settingsProvider;
         protected ITransactionManager _transactionManager;
 
         protected SpringBaseDao _baseDao;
@@ -99,9 +84,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
 
             AppendAuditLogEvent("Generating submission file from results");
 
-            _dataFilePath =
-                SerializeDataAndAddToTransaction(data, _settingsProvider, _serializationHelper,
-                                                 null, _documentManager, _dataRequest.TransactionId);
+            _dataFilePath = AddExchangeDocumentHeader(data, true, _dataRequest.TransactionId);
         }
 
         public virtual PaginatedContentResult ProcessQuery(string requestId)
@@ -116,13 +99,11 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
 
             AppendAuditLogEvent("Generating serialized xml results for query");
 
-            _dataFilePath =
-                SerializeDataAndAddToTransaction(data, _settingsProvider, _serializationHelper,
-                                                 null, _documentManager, _dataRequest.TransactionId);
+            _dataFilePath = AddExchangeDocumentHeader(data, true, _dataRequest.TransactionId);
 
-            PaginatedContentResult result = new PaginatedContentResult();
-            result.Paging = new PaginationIndicator(_dataRequest.RowIndex, _dataRequest.MaxRowCount, true);
-            result.Content = new SimpleContent(CommonContentType.XML, _serializationHelper.Serialize(data));
+            PaginatedContentResult result =
+                new PaginatedContentResult(_dataRequest.RowIndex, _dataRequest.MaxRowCount, true, CommonContentType.ZIP,
+                                           File.ReadAllBytes(_dataFilePath));
 
             return result;
         }
@@ -130,9 +111,9 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
         {
         }
 
-        protected virtual void LazyInit()
+        protected override void LazyInit()
         {
-            AppendAuditLogEvent("Initializing {0} plugin ...", this.GetType().Name);
+            base.LazyInit();
 
             GetServiceImplementation(out _requestManager);
             GetServiceImplementation(out _serializationHelper);

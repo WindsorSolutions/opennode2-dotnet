@@ -49,6 +49,7 @@ using Windsor.Node2008.WNOSProviders;
 using Spring.Data.Common;
 using Windsor.Commons.Logging;
 using Windsor.Commons.NodeDomain;
+using Windsor.Node2008.WNOSPlugin.AQSCommon;
 
 namespace Windsor.Node2008.WNOSPlugin.AQSWS
 {
@@ -108,7 +109,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQSWS
 
 
     [Serializable]
-    public class DrDasProxyService : BaseWNOSPlugin, ISolicitProcessor, IQueryProcessor
+    public class DrDasProxyService : AQSBaseHeaderPlugin, ISolicitProcessor, IQueryProcessor
     {
 
         protected const string CONFIG_REPORTER_URL = "Reporter Url";
@@ -117,10 +118,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQSWS
         #region fields
         private static readonly ILogEx LOG = LogManagerEx.GetLogger(MethodBase.GetCurrentMethod());
         private IRequestManager _requestManager;
-        private ISerializationHelper _serializationHelper;
-        private ICompressionHelper _compressionHelper;
-        private IDocumentManager _documentManager;
-        private ISettingsProvider _settingsProvider;
+        private DataRequest _request;
 
         private string _reporterUrl;
         private string _schemaVersion;
@@ -135,16 +133,31 @@ namespace Windsor.Node2008.WNOSPlugin.AQSWS
             ConfigurationArguments.Add(CONFIG_SCHEMA_VERSION, null);
         }
 
-        protected void LazyInit()
+        protected override void LazyInit()
         {
+            base.LazyInit();
+
             GetServiceImplementation(out _requestManager);
-            GetServiceImplementation(out _serializationHelper);
-            GetServiceImplementation(out _compressionHelper);
-            GetServiceImplementation(out _documentManager);
-            GetServiceImplementation(out _settingsProvider);
 
             _reporterUrl = ValidateNonEmptyConfigParameter(CONFIG_REPORTER_URL);
             _schemaVersion = ValidateNonEmptyConfigParameter(CONFIG_SCHEMA_VERSION);
+        }
+        protected virtual void ValidateRequest(string requestId)
+        {
+            DebugAndAudit("Getting request: " + requestId);
+            _request = _requestManager.GetDataRequest(requestId);
+
+
+            if (_request == null)
+            {
+                throw new ApplicationException("Null request");
+            }
+
+            if (_request.Service == null)
+            {
+                throw new ApplicationException("Null service");
+            }
+
         }
         #region IQueryProcessor Interface Implementation
 
@@ -159,43 +172,17 @@ namespace Windsor.Node2008.WNOSPlugin.AQSWS
 
             LazyInit();
 
-            DebugAndAudit("Getting request: " + requestId);
-            DataRequest request = _requestManager.GetDataRequest(requestId);
+            ValidateRequest(requestId);
 
+            string xmlFilePath = GetXmlDocument();
 
-            if (request == null)
-            {
-                throw new ApplicationException("Null request");
-            }
-
-            if (request.Service == null)
-            {
-                throw new ApplicationException("Null service");
-            }
-
-            DebugAndAudit("Getting data for: " + request.Service.Name);
-
-            XmlDocument doc = ProcessServiceRequest(request);
+            string zipFilePath = AddExchangeDocumentHeader(xmlFilePath, true, _request.TransactionId);
 
             DebugAndAudit("Creating paginated content result");
-            PaginatedContentResult result = new PaginatedContentResult();
-            result.Paging = new PaginationIndicator(request.RowIndex, request.MaxRowCount, true);
+            PaginatedContentResult result =
+                new PaginatedContentResult(_request.RowIndex, _request.MaxRowCount, true, CommonContentType.ZIP, 
+                                           File.ReadAllBytes(zipFilePath));
 
-            DebugAndAudit("Loading content");
-            result.Content = new SimpleContent();
-            result.Content.Type = CommonContentType.XML;
-
-            using (StringWriter sw = new StringWriter())
-            {
-                using (XmlTextWriter xw = new XmlTextWriter(sw))
-                {
-                    doc.WriteTo(xw);
-                    UTF8Encoding encoding = new UTF8Encoding(false, true);
-                    result.Content.Content = encoding.GetBytes(sw.ToString());
-                }
-            }
-
-            DebugAndAudit("Result: OK");
             return result;
         }
 
@@ -214,21 +201,19 @@ namespace Windsor.Node2008.WNOSPlugin.AQSWS
 
             LazyInit();
 
-            DebugAndAudit("Getting request: " + requestId);
-            DataRequest request = _requestManager.GetDataRequest(requestId);
+            ValidateRequest(requestId);
 
-            if (request == null)
-            {
-                throw new ApplicationException("Null request");
-            }
+            string xmlFilePath = GetXmlDocument();
 
-            if (request.Service == null)
-            {
-                throw new ApplicationException("Null service");
-            }
+            string zipFilePath = AddExchangeDocumentHeader(xmlFilePath, true, _request.TransactionId);
+        }
 
-            DebugAndAudit("Getting data for: " + request.Service.Name);
-            XmlDocument doc = ProcessServiceRequest(request);
+        #endregion
+
+        protected string GetXmlDocument()
+        {
+            DebugAndAudit("Getting data for: " + _request.Service.Name);
+            XmlDocument doc = ProcessServiceRequest(_request);
 
             string path = _settingsProvider.NewTempFilePath(".xml");
 
@@ -244,25 +229,8 @@ namespace Windsor.Node2008.WNOSPlugin.AQSWS
                     File.WriteAllBytes(path, content);
                 }
             }
-
-            DebugAndAudit("Compressing file...");
-            string compressedFilePath = _compressionHelper.CompressFile(path);
-            DebugAndAudit("Compressed file path: " + compressedFilePath);
-
-            DebugAndAudit("Adding document...");
-            _documentManager.AddDocument(request.TransactionId,
-                                         CommonTransactionStatusCode.Processed,
-                                         "Request Processed: " + request.ToString(),
-                                         compressedFilePath);
-
-            DebugAndAudit("Result: OK");
-
-
+            return path;
         }
-
-        #endregion
-
-
         internal void DebugAndAudit(string message, params object[] args)
         {
             AppendAuditLogEvent(message, args);

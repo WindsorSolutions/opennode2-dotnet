@@ -76,6 +76,7 @@
       <Link>AQSCommonUtils.cs</Link>
     </Compile>
     <Compile Include="AQDEData.cs" />
+    <Compile Include="GetAQSStatusAndDownloadReports.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DrDasProxyService.cs" />
   </ItemGroup>

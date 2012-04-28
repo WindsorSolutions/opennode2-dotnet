@@ -62,6 +62,11 @@ namespace Windsor.Node2008.WNOSProviders
         bool IsCompressed(byte[] content);
 
         /// <summary>
+        /// Return true if the input file appears to be compressed.
+        /// </summary>
+        bool IsCompressed(string sourceFilePath);
+
+        /// <summary>
         /// Uncompress simple byte content returned from Compress().
         /// </summary>
         byte[] Uncompress(byte[] content);
@@ -81,6 +86,11 @@ namespace Windsor.Node2008.WNOSProviders
         /// Uncompress a single file's byte content.
         /// </summary>
         byte[] UncompressFile(byte[] content, string fileName);
+
+        /// <summary>
+        /// Uncompress a single file's byte content.
+        /// </summary>
+        void Uncompress(string zipFilePath, string contentFilePath);
 
         /// <summary>
         /// Same as Uncompress(), but continues to uncompress until a non zip

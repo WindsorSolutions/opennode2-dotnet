@@ -191,7 +191,7 @@ using Windsor.Node2008.WNOSPlugin.BEACHES_22;
 [assembly: AppliedAttribute(typeof(OrganizationRoleDetailDataType), "BeachRolePersonIdentifier", typeof(DbIgnoreAttribute))]
 
 // NOTIF_PROCEDURE
-[assembly: AppliedAttribute(typeof(BeachProcedureDetailDataType), "ProcedureIdentifier", typeof(ColumnAttribute), "PROCEDUREIDENTIFIER", 8, false)]
+[assembly: AppliedAttribute(typeof(BeachProcedureDetailDataType), "ProcedureIdentifier", typeof(ColumnAttribute), "PROCEDUREIDENTIFIER", 12, false)]
 [assembly: AppliedAttribute(typeof(BeachProcedureDetailDataType), "ProcedureTypeCode", typeof(ColumnAttribute), "PROCEDURETYPECODE", 12, false)]
 [assembly: AppliedAttribute(typeof(BeachProcedureDetailDataType), "ProcedureDescriptionText", typeof(ColumnAttribute), "PROCEDUREDESCRIPTION", 255, false)]
 [assembly: AppliedAttribute(typeof(BeachProcedureDetailDataType), "ProcedureBeachIdentifier", typeof(DbIgnoreAttribute))]

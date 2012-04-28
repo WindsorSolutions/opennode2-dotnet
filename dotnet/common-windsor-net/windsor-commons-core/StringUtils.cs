@@ -41,6 +41,7 @@ using System.Reflection;
 using System.Diagnostics;
 using System.Threading;
 using System.Security;
+using System.Runtime.InteropServices;
 
 namespace Windsor.Commons.Core
 {
@@ -774,5 +775,15 @@ namespace Windsor.Commons.Core
             }
             return message;
         }
+    }
+    public class NaturalSortComparer : IComparer<string>
+    {
+        public int Compare(string x, string y)
+        {
+            return StrCmpLogicalW(x, y);
+        }
+
+        [DllImport("shlwapi.dll", CharSet = CharSet.Unicode, ExactSpelling = true)]
+        public static extern int StrCmpLogicalW(string x, string y);
     }
 }

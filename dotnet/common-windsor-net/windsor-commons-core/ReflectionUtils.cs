@@ -675,6 +675,11 @@ namespace Windsor.Commons.Core
             MethodInfo methodInfo = GetInstanceMethod<T>(methodName);
             return methodInfo.Invoke(objInstance, parameters);
         }
+        public static object CallMethod(object objInstance, string methodName, params object[] parameters)
+        {
+            MethodInfo methodInfo = GetInstanceMethod(objInstance, methodName);
+            return methodInfo.Invoke(objInstance, parameters);
+        }
         /// <summary>
         /// Call a virtual method non-virtually - like Reflection's MethodInfo.Invoke, 
         /// but doesn't do virtual dispatch.
@@ -731,9 +736,19 @@ namespace Windsor.Commons.Core
         }
         public static MethodInfo GetInstanceMethod<T>(string methodName)
         {
-            ExceptionUtils.ThrowIfEmptyString(methodName, "methodName");
-
             Type type = typeof(T);
+
+            return GetInstanceMethod(type, methodName);
+        }
+        public static MethodInfo GetInstanceMethod(object objInstance, string methodName)
+        {
+            Type type = objInstance.GetType();
+
+            return GetInstanceMethod(type, methodName);
+        }
+        public static MethodInfo GetInstanceMethod(Type type, string methodName)
+        {
+            ExceptionUtils.ThrowIfEmptyString(methodName, "methodName");
 
             BindingFlags flags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
 

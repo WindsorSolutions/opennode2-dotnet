@@ -91,6 +91,7 @@
       <Link>xml_schema\AQS_v2_2.cs</Link>
     </Compile>
     <Compile Include="AQSXmlWebService.cs" />
+    <Compile Include="GetAQSStatusAndDownloadReports.cs" />
     <Compile Include="GetAQSXmlData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

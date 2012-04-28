@@ -79,8 +79,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
         {
             base.LazyInit();
 
-            _storedProcName = ValidateNonEmptyConfigParameter(CONFIG_EXTRACT_STORED_PROCEDURE_NAME);
-
+            TryGetConfigParameter(CONFIG_EXTRACT_STORED_PROCEDURE_NAME, ref _storedProcName);
             TryGetConfigParameter(CONFIG_EXTRACT_TIMEOUT, ref _commandTimeout);
         }
         protected override void ValidateRequest(string requestId)
@@ -93,6 +92,11 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
         }
         public void DoExtract()
         {
+            if (string.IsNullOrEmpty(_storedProcName))
+            {
+                AppendAuditLogEvent("An extract stored procedure was not specified.");
+                return;
+            }
             AppendAuditLogEvent("Executing stored procedure \"{0}\" with {1} ({2}), {3} ({4}), {5} ({6}), and {7} ({8}) ...",
                                 _storedProcName, PARAM_START_DATE_KEY, _startDate, PARAM_END_DATE_KEY, _endDate,
                                 PARAM_SITE_ID_KEY, _siteId, PARAM_COUNTY_CODE_KEY, _countyCode);
