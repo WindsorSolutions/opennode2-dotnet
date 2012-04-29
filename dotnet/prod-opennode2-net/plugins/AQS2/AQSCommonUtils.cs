@@ -44,7 +44,7 @@ using System.IO;
 namespace Windsor.Node2008.WNOSPlugin.AQSCommon
 {
     [Serializable]
-    public class AQSBaseHeaderPlugin : BaseWNOSPlugin
+    public abstract class AQSBaseHeaderPlugin : BaseWNOSPlugin
     {
         protected const string AQS_FLOW_NAME = "AQS";
         protected const char EMAIL_ADDRESS_SEPARATOR = ';';
@@ -241,11 +241,11 @@ namespace Windsor.Node2008.WNOSPlugin.AQSCommon
         }
     }
     [Serializable]
-    public class BaseGetAQSStatusAndDownloadReports : BaseWNOSPlugin, ITaskProcessor
+    public abstract class BaseGetAQSStatusAndDownloadReports : BaseWNOSPlugin, ITaskProcessor
     {
         protected const string CONFIG_MAX_CHECK_DAYS = "Max Check Status Days (default: 2 days)";
         protected const string CONFIG_PARAM_NOTIFY_EMAILS = "Notification Emails (semicolon separated)";
-        protected const string CONFIG_PARAM_ATTACH_DOCS_TO_NOTIFY_EMAILS = "Attach Documents to Notification Emails (true or false)";
+        protected const string CONFIG_PARAM_ATTACH_DOCS_TO_NOTIFY_EMAILS = "Attach Documents to Notification Emails (True or False)";
         protected const string CHECK_STATUS_COMPLETE_FILE_NAME = "CheckStatusComplete.xml";
 
         protected const int MAX_MAX_CHECK_DAYS = 14;
@@ -281,22 +281,11 @@ namespace Windsor.Node2008.WNOSPlugin.AQSCommon
 
             DateTime newerThan = DateTime.Now.AddDays(-_maxCheckDays);
             AppendAuditLogEvent("Querying for AQS submission transactions that are newer than {0} ...", newerThan.ToString());
-            IList<NodeTransaction> outstandingTransactions =
-                _transactionManager.GetOutstandingNetworkTransactions(newerThan, new string[] { _dataRequestFlowName }, null);
 
-            // Remove transactions that have not submitted data to an endpoint
-            if (!CollectionUtils.IsNullOrEmpty(outstandingTransactions))
-            {
-                for (int i = outstandingTransactions.Count - 1; i >= 0; --i)
-                {
-                    NodeTransaction nodeTransaction = outstandingTransactions[i];
-                    if (string.IsNullOrEmpty(nodeTransaction.NetworkEndpointUrl) ||
-                        string.IsNullOrEmpty(nodeTransaction.NetworkId))
-                    {
-                        outstandingTransactions.RemoveAt(i);
-                    }
-                }
-            }
+            CommonTransactionStatusCode[] dontGetStatusCodes =
+                new CommonTransactionStatusCode[] { CommonTransactionStatusCode.ReceivedUnprocessed };  // Get all
+            IList<NodeTransaction> outstandingTransactions =
+                _transactionManager.GetOutstandingNetworkTransactions(newerThan, new string[] { _dataRequestFlowName }, dontGetStatusCodes);
 
             if (CollectionUtils.IsNullOrEmpty(outstandingTransactions))
             {
@@ -373,8 +362,8 @@ namespace Windsor.Node2008.WNOSPlugin.AQSCommon
 
                     DoEmailNotifications(nodeTransaction);
 
-                    CheckStatusInfo checkStatusInfo = new CheckStatusInfo(DateTime.Now);
-                    SaveCheckStatusInfo(nodeTransaction.Id, checkStatusInfo);
+                    CheckStatusComplete checkStatusComplete = new CheckStatusComplete(DateTime.Now);
+                    SaveCheckStatusComplete(nodeTransaction.Id, checkStatusComplete);
                     return true;
                 }
                 else
@@ -394,10 +383,9 @@ namespace Windsor.Node2008.WNOSPlugin.AQSCommon
                 return false;
             }
         }
-        protected virtual void SaveCheckStatusInfo(string localTransactionId, CheckStatusInfo info)
+        protected virtual void SaveCheckStatusComplete(string localTransactionId, CheckStatusComplete info)
         {
-            Document existingDoc = _documentManager.GetDocumentByName(localTransactionId, CHECK_STATUS_COMPLETE_FILE_NAME, false);
-            if (existingDoc == null)
+            if (!_documentManager.HasDocumentByName(localTransactionId, CHECK_STATUS_COMPLETE_FILE_NAME))
             {
                 byte[] content = _serializationHelper.SerializeWithLineBreaks(info);
                 Document saveDoc = new Document(CHECK_STATUS_COMPLETE_FILE_NAME, CommonContentType.XML, content);
@@ -453,12 +441,25 @@ namespace Windsor.Node2008.WNOSPlugin.AQSCommon
         }
         protected virtual bool HasTransactionBeenProcessed(NodeTransaction nodeTransaction)
         {
-            if (nodeTransaction.NetworkEndpointStatus == CommonTransactionStatusCode.Completed)
+            if ((nodeTransaction.NetworkEndpointStatus == CommonTransactionStatusCode.Completed) ||
+                (nodeTransaction.NetworkEndpointStatus == CommonTransactionStatusCode.Failed))
             {
                 IList<string> docNames = _documentManager.GetAllDocumentNames(nodeTransaction.Id);
                 return (CollectionUtils.Contains(docNames, CHECK_STATUS_COMPLETE_FILE_NAME, StringComparison.OrdinalIgnoreCase));
             }
-            return false;
+             return false;
+        }
+        [Serializable]
+        public class CheckStatusComplete
+        {
+            public CheckStatusComplete()
+            {
+            }
+            public CheckStatusComplete(DateTime time)
+            {
+                CheckStatusCompleteTime = time;
+            }
+            public DateTime CheckStatusCompleteTime;
         }
     }
 }

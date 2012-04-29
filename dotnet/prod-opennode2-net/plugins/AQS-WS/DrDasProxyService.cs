@@ -111,9 +111,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQSWS
     [Serializable]
     public class DrDasProxyService : AQSBaseHeaderPlugin, ISolicitProcessor, IQueryProcessor
     {
-
         protected const string CONFIG_REPORTER_URL = "Reporter Url";
-        protected const string CONFIG_SCHEMA_VERSION = "Schema Version";
 
         #region fields
         private static readonly ILogEx LOG = LogManagerEx.GetLogger(MethodBase.GetCurrentMethod());
@@ -121,7 +119,6 @@ namespace Windsor.Node2008.WNOSPlugin.AQSWS
         private DataRequest _request;
 
         private string _reporterUrl;
-        private string _schemaVersion;
         #endregion
 
         /// <summary>
@@ -130,7 +127,6 @@ namespace Windsor.Node2008.WNOSPlugin.AQSWS
         public DrDasProxyService()
         {
             ConfigurationArguments.Add(CONFIG_REPORTER_URL, null);
-            ConfigurationArguments.Add(CONFIG_SCHEMA_VERSION, null);
         }
 
         protected override void LazyInit()
@@ -140,13 +136,16 @@ namespace Windsor.Node2008.WNOSPlugin.AQSWS
             GetServiceImplementation(out _requestManager);
 
             _reporterUrl = ValidateNonEmptyConfigParameter(CONFIG_REPORTER_URL);
-            _schemaVersion = ValidateNonEmptyConfigParameter(CONFIG_SCHEMA_VERSION);
+
+            if (!_addHeader)
+            {
+                _aqsSchemaVersion = ValidateNonEmptyConfigParameter(CONFIG_PARAM_AQS_SCHEMA_VERSION);
+            }
         }
         protected virtual void ValidateRequest(string requestId)
         {
             DebugAndAudit("Getting request: " + requestId);
             _request = _requestManager.GetDataRequest(requestId);
-
 
             if (_request == null)
             {
@@ -289,7 +288,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQSWS
 
             DebugAndAudit("Getting WS Proxy for: {0}", _reporterUrl);
 
-            DebugAndAudit("Parsed Schema Version: {0}", _schemaVersion);
+            DebugAndAudit("Parsed Schema Version: {0}", _aqsSchemaVersion);
 
             DebugAndAudit("Initializing DrDAS client...");
             AQDEData client = new AQDEData();
@@ -301,7 +300,6 @@ namespace Windsor.Node2008.WNOSPlugin.AQSWS
 
             DebugAndAudit("Parsing target service from: {0}...", request.Service.Name);
             AQSServiceType serviceType = (AQSServiceType)Enum.Parse(typeof(AQSServiceType), request.Service.Name, true);
-
 
             XmlDocument doc = new XmlDocument();
 
@@ -327,7 +325,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQSWS
                         parameters[(Int32)MonitorDataArgType.MinLongitudeMeasure],
                         parameters[(Int32)MonitorDataArgType.MaxLongitudeMeasure],
                         parameters[(Int32)MonitorDataArgType.LastUpdatedDate],
-                        _schemaVersion));
+                        _aqsSchemaVersion));
 
                     break;
 
@@ -361,7 +359,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQSWS
                         parameters[(Int32)RawDataArgType.LastUpdatedDate],
                         parameters[(Int32)RawDataArgType.IncludeMonitorDetails],
                         parameters[(Int32)RawDataArgType.IncludeEventData],
-                        _schemaVersion,
+                        _aqsSchemaVersion,
                         remoteRequestId,
                         Boolean.FalseString);
                     DebugAndAudit("Remote result url: {0}", resultUrl);
