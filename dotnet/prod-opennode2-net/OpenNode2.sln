@@ -25,9 +25,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Endpoint2", "src\Endpoint2\Endpoint2.csproj", "{C20D5EA0-99D8-4D99-85F6-3CD814219307}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WNOS", "src\WNOS\WNOS.csproj", "{678199A5-4695-40A6-BEF2-C1E66361F080}"
-	ProjectSection(ProjectDependencies) = postProject
-		{1C128B2C-50F0-493B-9D6B-1092A64FCB49} = {1C128B2C-50F0-493B-9D6B-1092A64FCB49}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WNOSConnector", "src\WNOSConnector\WNOSConnector.csproj", "{6DFCA062-E70D-4CCE-BBBF-11CA09EF2FD0}"
 EndProject
