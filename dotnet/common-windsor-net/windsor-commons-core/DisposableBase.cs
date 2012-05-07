@@ -105,7 +105,7 @@ namespace Windsor.Commons.Core
                 catch (Exception)
                 {
                 }
-                DebugUtils.CheckDebuggerBreak();
+                //DebugUtils.CheckDebuggerBreak();
             }
             #endif // DEBUG
 

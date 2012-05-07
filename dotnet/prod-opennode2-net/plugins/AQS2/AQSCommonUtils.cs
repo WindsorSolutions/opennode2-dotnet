@@ -326,7 +326,6 @@ namespace Windsor.Node2008.WNOSPlugin.AQSCommon
             AppendAuditLogEvent("Loading request with id \"{0}\"", requestId);
             _dataRequest = _requestManager.GetDataRequest(requestId);
 
-            AppendAuditLogEvent("Validating request: {0}", _dataRequest);
             _dataRequestFlowName = _flowManager.GetDataFlowNameById(_dataRequest.Service.FlowId);
         }
         protected virtual bool ProcessOutstandingTransaction(NodeTransaction nodeTransaction)

@@ -264,5 +264,36 @@ namespace Windsor.Commons.Core
             fileName = fileName.Replace('.', '_');
             return fileName + "_Id";
         }
+
+        public delegate void ForEachControlOfTypeDelegate<T>(T control) where T : Control;
+
+        public delegate void ForEachControlDelegate(Control control);
+
+        public static void ForEachChildControl(Control parent, ForEachControlDelegate forEachProc)
+        {
+            if (parent != null)
+            {
+                foreach (Control control in parent.Controls)
+                {
+                    forEachProc(control);
+                    ForEachChildControl(control, forEachProc);
+                }
+            }
+        }
+        public static void ForEachChildControlOfType<T>(Control parent, ForEachControlOfTypeDelegate<T> forEachProc) where T : Control
+        {
+            if (parent != null)
+            {
+                foreach (Control control in parent.Controls)
+                {
+                    T foundControl = control as T;
+                    if (foundControl != null)
+                    {
+                        forEachProc(foundControl);
+                    }
+                    ForEachChildControlOfType<T>(control, forEachProc);
+                }
+            }
+        }
     }
 }

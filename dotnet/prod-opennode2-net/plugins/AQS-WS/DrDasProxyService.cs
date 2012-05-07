@@ -50,6 +50,7 @@ using Spring.Data.Common;
 using Windsor.Commons.Logging;
 using Windsor.Commons.NodeDomain;
 using Windsor.Node2008.WNOSPlugin.AQSCommon;
+using Windsor.Commons.Core;
 
 namespace Windsor.Node2008.WNOSPlugin.AQSWS
 {
@@ -311,6 +312,10 @@ namespace Windsor.Node2008.WNOSPlugin.AQSWS
 
                     DebugAndAudit("Executing queryAQSMonitorData...");
 
+                    if (CollectionUtils.Count(parameters) < 13)
+                    {
+                        throw new ArgException("Invalid number of parameters passed to AQDEMonitorData service");
+                    }
                     doc.LoadXml(client.queryAQSMonitorData(
                         parameters[(Int32)MonitorDataArgType.FileGenerationPurposeCode],
                         parameters[(Int32)MonitorDataArgType.SubstanceName],
@@ -331,6 +336,10 @@ namespace Windsor.Node2008.WNOSPlugin.AQSWS
 
                 case AQSServiceType.AQDERawData:
 
+                    if (CollectionUtils.Count(parameters) < 23)
+                    {
+                        throw new ArgException("Invalid number of parameters passed to AQDERawData service");
+                    }
                     //Remote request Id
                     string remoteRequestId = Guid.NewGuid().ToString();
                     DebugAndAudit("Remote request Id: {0}", remoteRequestId);

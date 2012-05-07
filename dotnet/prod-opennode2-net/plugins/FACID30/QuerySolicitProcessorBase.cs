@@ -143,6 +143,7 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
         protected string _headerAuthor;
         protected string _headerOrganization;
         protected string _headerContactInfo;
+        protected string _payloadOperation;
         protected bool _addHeader;
         protected bool _validateXml;
 
@@ -165,6 +166,7 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
             ConfigurationArguments.Add(CONFIG_AUTHOR, null);
             ConfigurationArguments.Add(CONFIG_ORGANIZATION, null);
             ConfigurationArguments.Add(CONFIG_CONTACT_INFO, null);
+            ConfigurationArguments.Add(CONFIG_PAYLOAD_OPERATION, null);
             ConfigurationArguments.Add(CONFIG_RESULT_CACHE_DURATION, null);
         }
 
@@ -180,6 +182,7 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
                 _headerAuthor = ValidateNonEmptyConfigParameter(CONFIG_AUTHOR);
                 _headerOrganization = ValidateNonEmptyConfigParameter(CONFIG_ORGANIZATION);
                 _headerContactInfo = ValidateNonEmptyConfigParameter(CONFIG_CONTACT_INFO);
+                _payloadOperation = ValidateNonEmptyConfigParameter(CONFIG_PAYLOAD_OPERATION);
             }
             TryGetConfigParameter(CONFIG_RESULT_CACHE_DURATION, ref _resultCacheDuration);
             if (_resultCacheDuration.TotalSeconds > 0)
@@ -284,7 +287,7 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
                     XmlDocument doc = new XmlDocument();
                     doc.Load(tempXmlFilePath);
 
-                    headerDocumentHelper.AddPayload("Original", doc.DocumentElement);
+                    headerDocumentHelper.AddPayload(_payloadOperation, doc.DocumentElement);
 
                     headerDocumentHelper.Serialize(tempXmlFilePathHeader);
                     return tempXmlFilePathHeader;
@@ -534,6 +537,7 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
                     command.CommandType = CommandType.Text;
                     command.Parameters.Clear();
                     DbAppendSelectWhereClause facTableClause;
+                    object rtnVal;
                     if ((selectClauses != null) && selectClauses.TryGetValue("FACID_FAC", out facTableClause))
                     {
                         command.CommandText = string.Format("SELECT COUNT(*) FROM FACID_FAC WHERE {0}", facTableClause.SelectWhereQuery);
@@ -544,13 +548,15 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
                                 command.Parameters.Add(parameter);
                             }
                         }
-                        count = (int)command.ExecuteScalar();
+                        rtnVal = command.ExecuteScalar();
                     }
                     else
                     {
                         command.CommandText = "SELECT COUNT(*) FROM FACID_FAC";
-                        count = (int)command.ExecuteScalar();
+                        rtnVal = command.ExecuteScalar();
                     }
+                    int rtnValInt = (int)Convert.ChangeType(rtnVal, typeof(int));
+                    count = rtnValInt;
                     return null;
                 });
 

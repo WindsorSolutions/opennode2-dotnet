@@ -124,8 +124,6 @@ namespace Windsor.Node2008.WNOSPlugin.AQSAirVision
             AppendAuditLogEvent("Loading request with id \"{0}\"", requestId);
             _dataRequest = _requestManager.GetDataRequest(requestId);
 
-            AppendAuditLogEvent("Validating request: {0}", _dataRequest);
-
             AppendAuditLogEvent("Service was called with {0}", 
                                 _dataRequest.Parameters.GetKeyValuesString());
 

@@ -103,6 +103,7 @@
     <Compile Include="FileUtils.cs" />
     <Compile Include="IEnumerableExtensions.cs" />
     <Compile Include="IMessaging.cs" />
+    <Compile Include="IQueryableExtensions.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="ITemplateEngine.cs" />
     <Compile Include="ITemplateResolver.cs" />

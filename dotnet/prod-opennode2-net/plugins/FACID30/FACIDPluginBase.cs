@@ -65,6 +65,7 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
         protected const string CONFIG_AUTHOR = "Author";
         protected const string CONFIG_ORGANIZATION = "Organization";
         protected const string CONFIG_CONTACT_INFO = "Contact Info";
+        protected const string CONFIG_PAYLOAD_OPERATION = "Payload Operation";
         protected const string CONFIG_RESULT_CACHE_DURATION = "Result Cache Duration (d.hh:mm:ss)";
 
         protected const string SOURCE_PROVIDER_KEY = "Data Source";
