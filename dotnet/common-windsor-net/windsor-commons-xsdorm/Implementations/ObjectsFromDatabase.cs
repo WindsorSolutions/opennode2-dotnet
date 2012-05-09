@@ -305,8 +305,8 @@ namespace Windsor.Commons.XsdOrm.Implementations
                             {
                                 if (pair.Value.Count != 1)
                                 {
-                                    throw new InvalidOperationException(string.Format("Relation is One-To-One but got more than one element: {0}",
-                                                                                      relation.ToString()));
+                                    throw new InvalidOperationException(string.Format("Relation is One-To-One but got more than one element: {0} to {1}",
+                                                                                      relation.ChildTable.TableName, relation.ParentTable.TableName));
                                 }
                                 object itemToSet = CollectionUtils.FirstItem(pair.Value);
                                 object objectToSet = pkMap[pair.Key];

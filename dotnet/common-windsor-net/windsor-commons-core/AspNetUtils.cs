@@ -262,7 +262,7 @@ namespace Windsor.Commons.Core
             string fileName = Path.GetFileNameWithoutExtension(controlFilePath);
             fileName = fileName.Replace(' ', '_');
             fileName = fileName.Replace('.', '_');
-            return fileName + "_Id";
+            return fileName + "Id";
         }
 
         public delegate void ForEachControlOfTypeDelegate<T>(T control) where T : Control;
