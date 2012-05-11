@@ -1552,7 +1552,6 @@ namespace Windsor.Node2008.WNOSPlugin
             }
             catch (Exception)
             {
-                FileUtils.SafeDeleteFile(transactionId);
                 throw;
             }
         }

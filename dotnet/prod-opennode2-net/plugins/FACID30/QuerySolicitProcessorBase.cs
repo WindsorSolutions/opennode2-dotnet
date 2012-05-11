@@ -301,19 +301,12 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
             {
                 if (_validateXml)
                 {
-                    try
-                    {
-                        _serializationHelper.Serialize(objectToSerialize, tempXmlFilePath);
+                    _serializationHelper.Serialize(objectToSerialize, tempXmlFilePath);
 
-                        ValidateXmlFileAndAttachErrorsAndFileToTransaction(tempXmlFilePath, "xml_schema.xml_schema.zip",
-                                                                           null, _dataRequest.TransactionId);
+                    ValidateXmlFileAndAttachErrorsAndFileToTransaction(tempXmlFilePath, "xml_schema.xml_schema.zip",
+                                                                       null, _dataRequest.TransactionId);
 
-                        return tempXmlFilePath;
-                    }
-                    finally
-                    {
-                        FileUtils.SafeDeleteFile(tempXmlFilePath);
-                    }
+                    return tempXmlFilePath;
                 }
                 else
                 {

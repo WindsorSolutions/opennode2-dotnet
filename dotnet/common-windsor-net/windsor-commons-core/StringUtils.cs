@@ -631,6 +631,35 @@ namespace Windsor.Commons.Core
             return false;
         }
 
+        public static IList<string> ToUpper(IList<string> collection)
+        {
+            if (collection != null)
+            {
+                for (int i = 0; i < collection.Count; ++i)
+                {
+                    if (collection[i] != null)
+                    {
+                        collection[i] = collection[i].ToUpper();
+                    }
+                }
+            }
+            return collection;
+        }
+        public static IList<string> ToLower(IList<string> collection)
+        {
+            if (collection != null)
+            {
+                for (int i = 0; i < collection.Count; ++i)
+                {
+                    if (collection[i] != null)
+                    {
+                        collection[i] = collection[i].ToLower();
+                    }
+                }
+            }
+            return collection;
+        }
+
         [System.Runtime.InteropServices.DllImport("rpcrt4.dll", SetLastError = true)]
         static extern int UuidCreateSequential(out Guid guid);
 

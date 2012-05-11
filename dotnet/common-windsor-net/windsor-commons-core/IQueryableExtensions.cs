@@ -35,6 +35,16 @@ namespace Windsor.Commons.Core
             return dataItemType;
         }
 
+        public static IList GetList(this IQueryable Source)
+        {
+            Type dataSourceType = Source.GetType();
+            Type dataItemType = GetDataItemType(Source);
+
+            Type rowCounterType = typeof(IQueryableUtil<>).MakeGenericType(dataItemType);
+
+            return (IList)rowCounterType.GetMethod("ToList", new Type[] { dataSourceType })
+                            .Invoke(null, new object[] { Source });
+        }
         public static int GetTotalRowCount(this IQueryable Source)
         {
             Type dataSourceType = Source.GetType();
@@ -86,7 +96,11 @@ namespace Windsor.Commons.Core
 
         internal static class IQueryableUtil<T>
         {
-           
+
+            public static IList ToList(IQueryable Source)
+            {
+                return Source.OfType<T>().AsQueryable<T>().ToList<T>();
+            }
             public static int Count(IQueryable Source)
             {
                 return Source.OfType<T>().AsQueryable<T>().Count<T>();
