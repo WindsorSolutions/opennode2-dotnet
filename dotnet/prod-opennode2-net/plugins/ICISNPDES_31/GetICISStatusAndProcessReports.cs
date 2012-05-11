@@ -45,6 +45,7 @@ using Windsor.Commons.NodeClient;
 using System.IO;
 using Windsor.Commons.XsdOrm2;
 using Spring.Data.Common;
+using System.Runtime.Serialization;
 
 namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
 {
@@ -140,15 +141,21 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
 
                 DoEmailNotifications(zipResponseFile, localTransactionId);
             }
+            catch (WorkflowStatusFailedException workflowStatusFailedException)
+            {
+                if (_submissionTrackingDataTypePK != null)
+                {
+                    _submissionTrackingDataType.WorkflowStatus = TransactionStatusCode.Failed;
+                    _submissionTrackingDataType.WorkflowStatusMessage = 
+                        string.Format("An error occurred during processing: {0}", 
+                                      ExceptionUtils.GetDeepExceptionMessage(workflowStatusFailedException));
+                    SubmissionTrackingTableHelper.Update(_baseDao, _submissionTrackingDataTypePK, _submissionTrackingDataType);
+                }
+                throw;
+            }
             catch (Exception)
             {
                 // Continue on, do not set workflow status to failed, per Bill
-                //if (_submissionTrackingDataTypePK != null)
-                //{
-                //    _submissionTrackingDataType.WorkflowStatus = TransactionStatusCode.Failed;
-                //    _submissionTrackingDataType.WorkflowStatusMessage = string.Format("An error occurred during processing: {0}", ExceptionUtils.GetDeepExceptionMessage(ex));
-                //    SubmissionTrackingTableHelper.Update(_baseDao, _submissionTrackingDataTypePK, _submissionTrackingDataType);
-                //}
                 throw;
             }
         }
@@ -401,14 +408,14 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
                 {
                     if (responseFileName != null)
                     {
-                        throw new ArgException("More than one response document was found for the submission transaction");
+                        throw new WorkflowStatusFailedException("More than one response document was found for the submission transaction");
                     }
                     responseFileName = fileName;
                 }
             });
             if (responseFileName == null)
             {
-                throw new ArgException("A response document was not found for the submission transaction");
+                throw new WorkflowStatusFailedException("A response document was not found for the submission transaction");
             }
             return responseFileName;
         }
@@ -468,6 +475,28 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
                 sb.AppendFormat("{0} ({1})", pair.Key, pair.Value.ToString());
             }
             return sb.ToString();
+        }
+    }
+
+    /// <summary>
+    /// An exception that, if thrown, indicates the workflow status should be set to failed.
+    /// </summary>
+    [Serializable]
+    public class WorkflowStatusFailedException : ArgException
+    {
+        public WorkflowStatusFailedException(string format, params object[] args) :
+            base(string.Format(format, args))
+        {
+            DebugUtils.CheckDebuggerBreak();
+        }
+        public WorkflowStatusFailedException(Exception innerException, string format, params object[] args) :
+            base(string.Format(format, args), innerException)
+        {
+            DebugUtils.CheckDebuggerBreak();
+        }
+        protected WorkflowStatusFailedException(SerializationInfo info, StreamingContext context) :
+            base(info, context)
+        {
         }
     }
 }
