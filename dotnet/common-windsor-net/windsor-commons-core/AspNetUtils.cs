@@ -43,6 +43,7 @@ using System.IO;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
+using System.Web;
 
 // NOTE: This file requires System.Web, and so is not available in .NET 3.5 client profile
 
@@ -173,7 +174,8 @@ namespace Windsor.Commons.Core
             sb.Append("{\r\n");
 
             Control p = control.Parent;
-            while (!(p is System.Web.UI.HtmlControls.HtmlForm)) p = p.Parent;
+            while (!(p is System.Web.UI.HtmlControls.HtmlForm))
+                p = p.Parent;
 
             sb.Append("\tdocument.");
             sb.Append(p.ClientID);
@@ -303,6 +305,39 @@ namespace Windsor.Commons.Core
                     ForEachChildControlOfType<T>(control, forEachProc);
                 }
             }
+        }
+        public static string GetFullyQualifiedApplicationRootUrl()
+        {
+            return GetFullyQualifiedApplicationRootUrl(null);
+        }
+        public static string GetFullyQualifiedApplicationRootUrl(string relativePathPath)
+        {
+            //Getting the current context of HTTP request
+            HttpContext context = HttpContext.Current;
+
+            //Checking the current context content
+            if (context == null)
+            {
+                DebugUtils.CheckDebuggerBreak();
+                return string.Empty;
+            }
+            //Formatting the fully qualified website url/name
+            string appPath = string.Format("{0}://{1}{2}{3}",
+              context.Request.Url.Scheme,
+              context.Request.Url.Host,
+              context.Request.Url.Port == 80 ? string.Empty : ":" + context.Request.Url.Port,
+              context.Request.ApplicationPath);
+
+            if (!appPath.EndsWith("/"))
+            {
+                appPath += "/";
+            }
+
+            if (!string.IsNullOrEmpty(relativePathPath))
+            {
+                appPath += relativePathPath;
+            }
+            return appPath;
         }
     }
 }
