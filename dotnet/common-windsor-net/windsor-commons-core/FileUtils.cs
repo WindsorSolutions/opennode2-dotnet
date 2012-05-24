@@ -532,6 +532,18 @@ namespace Windsor.Commons.Core
                                                                    folderPath));
             }
         }
+        public static string GetTempFilePath()
+        {
+            return GetTempFilePath(null);
+        }
+        public static string GetTempFilePath(string extension)
+        {
+            if (extension == null)
+            {
+                extension = ".tmp";
+            }
+            return Path.ChangeExtension(Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString()), extension);
+        }
         /// <summary>
         /// Return the names of all files contained directly within the specified folder.
         /// </summary>

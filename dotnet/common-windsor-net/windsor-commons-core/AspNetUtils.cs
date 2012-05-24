@@ -85,7 +85,16 @@ namespace Windsor.Commons.Core
         {
             foreach (Control control in parent.Controls)
             {
-                if ((control.ID == id) || (control.ClientID == id) || (control.UniqueID == id))
+                bool didFindControl;
+                try
+                {
+                    didFindControl = string.Equals(control.ID, id) || string.Equals(control.ClientID, id) || string.Equals(control.UniqueID, id);
+                }
+                catch (Exception)
+                {
+                    didFindControl = false;
+                }
+                if (didFindControl)
                 {
                     return control;
                 }

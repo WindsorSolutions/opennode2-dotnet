@@ -49,6 +49,25 @@ namespace Windsor.Commons.Core
     /// </summary>
     public static class CollectionUtils
     {
+        public static Dictionary<T, K> Combine<T, K>(bool ignoreDuplicates, params Dictionary<T, K>[] dictionariesToCombine)
+        {
+            Dictionary<T, K> result = new Dictionary<T, K>();
+            foreach (Dictionary<T, K> dictionaryToCombine in dictionariesToCombine)
+            {
+                foreach (KeyValuePair<T, K> pairToCombine in dictionaryToCombine)
+                {
+                    if (ignoreDuplicates)
+                    {
+                        result[pairToCombine.Key] = pairToCombine.Value;
+                    }
+                    else
+                    {
+                        result.Add(pairToCombine.Key, pairToCombine.Value);
+                    }
+                }
+            }
+            return result;
+        }
         public static Dictionary<T, T> CreateDictionaryFromPairs<T>(params T[] pairs)
         {
             if (MathUtils.IsOdd(pairs.Length))

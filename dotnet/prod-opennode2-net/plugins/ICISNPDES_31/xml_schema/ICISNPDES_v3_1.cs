@@ -777,7 +777,9 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(9)]
+        // TSM: Fix for NV permit identifiers that are larger than 9 chars
+        //[Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(9)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(50)]
         public string PermitIdentifier;
     }
 
