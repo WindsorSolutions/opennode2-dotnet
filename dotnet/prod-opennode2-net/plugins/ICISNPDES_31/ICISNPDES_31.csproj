@@ -94,6 +94,7 @@
     <Compile Include="SubmissionTrackingTableHelper.cs" />
     <Compile Include="xml_schema\ICISNPDES_v3_1.cs" />
     <Compile Include="xml_schema\ICISNPDES_v3_1_2.cs" />
+    <Compile Include="xml_schema\NetDMR_Response_v1_0.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

@@ -55,6 +55,7 @@ using Windsor.Commons.Core;
 using Windsor.Commons.Logging;
 using Windsor.Commons.Spring;
 using Windsor.Commons.XsdOrm2;
+using Windsor.Commons.NodeDomain;
 
 namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
 {
@@ -194,11 +195,47 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
 
                     return null;
                 });
+
+                AttachSubmissionResponseToTransaction(transactionId);
             }
             catch (Exception e)
             {
                 AppendAuditLogEvent("Failed to process document with id \"{0}\" with error: {1}",
                                     docId.ToString(), ExceptionUtils.GetDeepExceptionMessage(e));
+                throw;
+            }
+            finally
+            {
+                FileUtils.SafeDeleteFile(tempXmlFilePath);
+            }
+        }
+        protected virtual void AttachSubmissionResponseToTransaction(string transactionId)
+        {
+            string tempXmlFilePath = _settingsProvider.NewTempFilePath();
+            string tempZipFilePath = _settingsProvider.NewTempFilePath();
+            try
+            {
+                Windsor.Node2008.WNOSPlugin.NetDMR_10.SubmissionResponseDataType response = 
+                    new NetDMR_10.SubmissionResponseDataType();
+                response.CreationDate = response.SubmissionDate = DateTime.Now;
+                response.TransactionIdentifier = transactionId;
+
+                _serializationHelper.Serialize(response, tempXmlFilePath);
+
+                string zipDocumentName = string.Format("{0}_Response.xml", transactionId);
+                string transactionDocumentName = Path.ChangeExtension(zipDocumentName, ".zip");
+
+                _compressionHelper.CompressFile(tempXmlFilePath, zipDocumentName, tempZipFilePath);
+
+                var document = 
+                    new Windsor.Node2008.WNOSDomain.Document(transactionDocumentName, CommonContentType.ZIP,
+                                                             File.ReadAllBytes(tempZipFilePath));
+                _documentManager.AddDocument(transactionId, CommonTransactionStatusCode.Completed, null, document);
+            }
+            catch (Exception e)
+            {
+                AppendAuditLogEvent("Failed to add response file to transaction \"{0}\" with error: {1}",
+                                    transactionId, ExceptionUtils.GetDeepExceptionMessage(e));
                 throw;
             }
             finally
