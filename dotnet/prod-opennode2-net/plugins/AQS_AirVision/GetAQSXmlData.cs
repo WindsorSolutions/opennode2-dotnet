@@ -199,7 +199,11 @@ namespace Windsor.Node2008.WNOSPlugin.AQSAirVision
             TryGetParameter(_dataRequest, PARAM_SEND_ONLY_QA_DATA, paramIndex++, ref arguments.SendOnlyQAData);
             arguments.CompressPayload = true;
 
-            //string argumentString = _serializationHelper.ToXml(arguments);
+            byte[] argumentBytes = _serializationHelper.SerializeWithLineBreaks(arguments);
+            Document doc = new Document("RequestArguments.xml", CommonContentType.XML, argumentBytes);
+            doc.DontAutoCompress = true;
+            _documentManager.AddDocument(_dataRequest.TransactionId, CommonTransactionStatusCode.Completed,
+                                         null, doc);
 
             //AppendAuditLogEvent("The GetAQSXmlData web method will be called with the following arguments: {0}", argumentString);
 

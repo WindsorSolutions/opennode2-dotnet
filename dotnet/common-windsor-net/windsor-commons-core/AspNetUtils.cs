@@ -62,6 +62,10 @@ namespace Windsor.Commons.Core
             }
             return null;
         }
+        public static bool HasControl<T>(Control parent) where T : class
+        {
+            return (FindControl<T>(parent) != null);
+        }
         public static T FindDeepControl<T>(Control parent) where T : class
         {
             foreach (Control control in parent.Controls)
