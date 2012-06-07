@@ -131,6 +131,14 @@ namespace Windsor.Commons.Core
             }
             return parameter;
         }
+        public static string ThrowIfEmptyString(string parameter)
+        {
+            if (string.IsNullOrEmpty(parameter))
+            {
+                throw new NullReferenceException("The parameter cannot be an empty string");
+            }
+            return parameter;
+        }
         public static string ThrowIfEmptyString(string parameter, string paramName)
         {
             if (string.IsNullOrEmpty(parameter))
