@@ -131,6 +131,14 @@ namespace Windsor.Commons.Core
             }
             return parameter;
         }
+        public static T ThrowIfNull<T>(T parameter) where T : class
+        {
+            if (parameter == null)
+            {
+                throw new NullReferenceException("The parameter cannot be null");
+            }
+            return parameter;
+        }
         public static string ThrowIfEmptyString(string parameter)
         {
             if (string.IsNullOrEmpty(parameter))
