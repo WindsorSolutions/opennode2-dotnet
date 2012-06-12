@@ -60,7 +60,7 @@ using Windsor.Commons.NodeDomain;
 namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
 {
     [Serializable]
-    public class SubmissionProcessor : BaseWNOSPlugin, ISubmitProcessor
+    public class SubmissionProcessor : BaseWNOSPlugin, ISubmitProcessorEx
     {
         protected const string DATA_PARAM_DESTINATION = "Data Destination";
 
@@ -90,21 +90,27 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
 
         public virtual void ProcessSubmit(string transactionId)
         {
+            string statusDetail;
+            ProcessSubmitAndReturnStatus(transactionId, out statusDetail);
+        }
+        public virtual CommonTransactionStatusCode ProcessSubmitAndReturnStatus(string transactionId, out string statusDetail)
+        {
             LazyInit();
 
             IList<string> documentIds = _documentManager.GetDocumentIds(transactionId);
 
             if (CollectionUtils.IsNullOrEmpty(documentIds))
             {
-                AppendAuditLogEvent("Didn't find any submit documents to process.");
-                return;
+                statusDetail = "Didn't find any submit documents to process";
+                AppendAuditLogEvent(statusDetail);
+                return CommonTransactionStatusCode.Completed;
             }
             else if (documentIds.Count > 1)
             {
                 throw new ArgException("More than one document was submitted to this service.  This service only supports one document submission at a time.");
             }
 
-            ProcessSubmitDocument(transactionId, documentIds[0]);
+            return ProcessSubmitDocument(transactionId, documentIds[0], out statusDetail);
         }
 
         protected virtual void LazyInit()
@@ -123,7 +129,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
             TryGetConfigParameter(CONFIG_PARAM_DELETE_EXISTING_DATA, ref _deleteExistingDataBeforeInsert);
             TryGetConfigParameter(CONFIG_PARAM_VALIDATE_XML, ref _validateXml);
         }
-        protected virtual void ProcessSubmitDocument(string transactionId, string docId)
+        protected virtual CommonTransactionStatusCode ProcessSubmitDocument(string transactionId, string docId, out string statusDetail)
         {
             string tempXmlFilePath = _settingsProvider.NewTempFilePath();
             try
@@ -157,8 +163,9 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
 
                 if (CollectionUtils.IsNullOrEmpty(data.Payload))
                 {
-                    AppendAuditLogEvent("Deserialized ICIS does not contain any payload elements, exiting plugin");
-                    return;
+                    statusDetail = "Deserialized ICIS does not contain any payload elements, exiting processing thread.";
+                    AppendAuditLogEvent(statusDetail);
+                    return CommonTransactionStatusCode.Completed;
                 }
                 AppendAuditLogEvent("ICIS data contains {0} payloads", data.Payload.Length.ToString());
 
@@ -197,6 +204,9 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
                 });
 
                 AttachSubmissionResponseToTransaction(transactionId);
+
+                statusDetail = "Successfully processed the submitted ICIS document.";
+                return CommonTransactionStatusCode.Completed;
             }
             catch (Exception e)
             {
