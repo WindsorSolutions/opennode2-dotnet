@@ -44,7 +44,7 @@ namespace Windsor.Node2008.WNOS.AssemblyInfo
     internal static class AssemblyInfo
 	{
 		// [assembly: AssemblyVersion(AssemblyInfoServer.cAssemblyVersion)]
-        public const string cAssemblyVersion = "2.5.0.$REVNUM$";
+        public const string cAssemblyVersion = "2.5.0.$WCREV$";
 		
 		// [assembly: AssemblyFileVersion(AssemblyInfoServer.cAssemblyFileVersion)]
         public const string cAssemblyFileVersion = cAssemblyVersion;
@@ -56,7 +56,7 @@ namespace Windsor.Node2008.WNOS.AssemblyInfo
         public const string cAssemblyProduct = "OpenNode2"; 
 
 		// [assembly: AssemblyCopyright(AssemblyInfoServer.cAssemblyCopyright)]
-        public const string cAssemblyCopyright = "(c) 2008-2011 Windsor Solutions. All Rights Reserved."; 
+        public const string cAssemblyCopyright = "(c) 2008-2012 Windsor Solutions. All Rights Reserved."; 
 		
 		// [assembly: AssemblyTrademark(AssemblyInfoServer.cAssemblyTrademark)]
 		public const string cAssemblyTrademark = "";

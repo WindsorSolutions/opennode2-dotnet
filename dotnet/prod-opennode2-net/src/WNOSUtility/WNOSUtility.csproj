@@ -136,10 +136,11 @@
     </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <UsingTask TaskName="SvnVersionFile" AssemblyFile="..\..\..\common-windsor-net\lib\MSBuildVersioning.dll" />
   <Target Name="BeforeBuild">
-    <SvnVersionFile TemplateFile="..\AssemblyInfo\_AssemblyInfo.cs" DestinationFile="..\AssemblyInfo\AssemblyInfo.cs" />
   </Target>
   <Target Name="AfterBuild">
   </Target>
+  <PropertyGroup>
+    <PreBuildEvent>IF EXIST $(ProjectDir)..\..\..\.svn SubWCRev $(ProjectDir)..\..\..\ $(ProjectDir)..\AssemblyInfo\_AssemblyInfo.cs $(ProjectDir)..\AssemblyInfo\AssemblyInfo.cs</PreBuildEvent>
+  </PropertyGroup>
 </Project>
