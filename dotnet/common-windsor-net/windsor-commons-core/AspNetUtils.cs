@@ -367,5 +367,23 @@ namespace Windsor.Commons.Core
             }
             return appPath;
         }
+        public static string GetPhysicalApplicationPath(string relativePath)
+        {
+            if (relativePath.StartsWith("~\\") || relativePath.StartsWith("~/"))
+            {
+                relativePath = (relativePath.Length == 2) ? string.Empty : relativePath.Substring(2);
+            }
+            string path = Path.Combine(PhysicalApplicationPath, relativePath);
+            path = Path.GetFullPath(path);
+            return path;
+        }
+        public static string PhysicalApplicationPath
+        {
+            //get { return HttpContext.Current.Request.PhysicalApplicationPath; }
+            get
+            {
+                return HttpRuntime.AppDomainAppPath;
+            }
+        }
     }
 }
