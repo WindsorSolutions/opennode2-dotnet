@@ -280,6 +280,8 @@ namespace Windsor.Commons.Core
             return fileName + "Id";
         }
 
+        public delegate bool ForEachControlOfTypeDelegateBreak<T>(T control) where T : Control;
+
         public delegate void ForEachControlOfTypeDelegate<T>(T control) where T : Control;
 
         public delegate void ForEachControlDelegate(Control control);
@@ -309,6 +311,28 @@ namespace Windsor.Commons.Core
                     ForEachChildControlOfType<T>(control, forEachProc);
                 }
             }
+        }
+        public static bool ForEachChildControlOfTypeBreak<T>(Control parent, ForEachControlOfTypeDelegateBreak<T> forEachProc) where T : Control
+        {
+            if (parent != null)
+            {
+                foreach (Control control in parent.Controls)
+                {
+                    T foundControl = control as T;
+                    if (foundControl != null)
+                    {
+                        if (!forEachProc(foundControl))
+                        {
+                            return false;
+                        }
+                    }
+                    if (!ForEachChildControlOfTypeBreak<T>(control, forEachProc))
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
         }
         public static string GetFullyQualifiedApplicationRootUrl()
         {
