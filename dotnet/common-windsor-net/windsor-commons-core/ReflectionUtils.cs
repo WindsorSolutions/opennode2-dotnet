@@ -764,6 +764,15 @@ namespace Windsor.Commons.Core
         {
             return CollectionUtils.ToList<T, object>(member.GetCustomAttributes(typeof(T), true));
         }
+        public static List<AttribType> GetAttributesOfTypeForMember<AttribType, ObjectType>(string memberName) where AttribType : Attribute
+        {
+            return GetAttributesOfTypeForMember<AttribType>(GetInstanceMember<ObjectType>(memberName));
+        }
+        public static AttribType GetFirstAttributeOfTypeForMember<AttribType, ObjectType>(string memberName) where AttribType : Attribute
+        {
+            List<AttribType> list = GetAttributesOfTypeForMember<AttribType, ObjectType>(memberName);
+            return CollectionUtils.IsNullOrEmpty(list) ? null : list[0];
+        }
 
         [ThreadStatic]
         private static List<object> s_CurGetPublicPropertiesStringObjects;
