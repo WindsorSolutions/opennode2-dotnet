@@ -66,6 +66,17 @@ namespace Windsor.Commons.Core
         {
             return (FindControl<T>(parent) != null);
         }
+        public static T FindDeepControlAlways<T>(Control parent) where T : class
+        {
+            var foundControl = FindDeepControl<T>(parent);
+
+            if (foundControl == null)
+            {
+                throw new ArgException("Could not find a child control of type \"{0}\" within the parent control with ID \"{1}\"",
+                                       typeof(T).Name, parent.ID);
+            }
+            return foundControl;
+        }
         public static T FindDeepControl<T>(Control parent) where T : class
         {
             foreach (Control control in parent.Controls)

@@ -109,12 +109,20 @@ namespace Windsor.Commons.Core
             }
             return nextException.Message;
         }
+        public static void ThrowIfFalse(bool condition)
+        {
+            ThrowIfFalse(condition, "The condition was false");
+        }
         public static void ThrowIfFalse(bool condition, string conditionName)
         {
             if (!condition)
             {
                 throw new InvalidOperationException(conditionName);
             }
+        }
+        public static void ThrowIfTrue(bool condition)
+        {
+            ThrowIfTrue(condition, "The condition was true");
         }
         public static void ThrowIfTrue(bool condition, string conditionName)
         {

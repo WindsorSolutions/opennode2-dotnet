@@ -57,34 +57,35 @@ namespace Windsor.Node2008.WNOS.Logic
 
         public void Init()
         {
-			FieldNotInitializedException.ThrowIfEmptyString(this, ref _repositoryDirectoryPath);
-			FieldNotInitializedException.ThrowIfEmptyString(this, ref _documentExtension);
+            FieldNotInitializedException.ThrowIfEmptyString(this, ref _repositoryDirectoryPath);
+            FieldNotInitializedException.ThrowIfEmptyString(this, ref _documentExtension);
 
             if (!Directory.Exists(_repositoryDirectoryPath))
             {
                 throw new DirectoryNotFoundException(string.Format("Repository directory does not exist: \"{0}\"",
-																   _repositoryDirectoryPath));
+                                                                   _repositoryDirectoryPath));
             }
 
+            string testFilePath = Path.Combine(_repositoryDirectoryPath, Guid.NewGuid().ToString());
             try
             {
-				LOG.Debug("Configuring DocumentContentManager with: " + _repositoryDirectoryPath);
-                string testFilePath = Path.Combine(_repositoryDirectoryPath, "accessTest");
+                LOG.Debug("Configuring DocumentContentManager with: " + _repositoryDirectoryPath);
 
                 LOG.Debug("Writing test file to assure the provider has necessary rights: " + testFilePath);
                 File.WriteAllText(testFilePath, DateTime.Now.ToString());
 
-                LOG.Debug("Deleting test file to assure the provider has necessary rights: " + testFilePath);
+                LOG.Debug("Deleting test file to ensure the provider has necessary rights: " + testFilePath);
                 File.Delete(testFilePath);
 
                 LOG.Debug("OK");
             }
             catch (Exception ex)
             {
+                FileUtils.SafeDeleteFile(testFilePath);
                 throw new UnauthorizedAccessException(string.Format("Repository directory is not writable: \"{0}\"",
-																	_repositoryDirectoryPath), ex);
+                                                                    _repositoryDirectoryPath), ex);
             }
-		}
+        }
 
 		#region IDocumentContentManager Members
 
