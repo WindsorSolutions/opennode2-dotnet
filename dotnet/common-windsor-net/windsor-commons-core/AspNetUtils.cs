@@ -257,11 +257,19 @@ namespace Windsor.Commons.Core
         }
         public static void RegisterScriptBlock(Control control, string clientScript)
         {
+            RegisterScriptBlockPriv(control.Page.Header, clientScript);
+        }
+        public static void RegisterBodyScriptBlock(Control control, string clientScript)
+        {
+            RegisterScriptBlockPriv(control.Page.Form, clientScript);
+        }
+        private static void RegisterScriptBlockPriv(Control parentControl, string clientScript)
+        {
             HtmlGenericControl script = new HtmlGenericControl("script");
             script.Attributes.Add("type", "text/javascript");
             script.Attributes.Add("language", "javascript");
             script.InnerHtml = clientScript;
-            control.Page.Header.Controls.Add(script);
+            parentControl.Controls.Add(script);
         }
         public static List<string> GetSelectedValues(ListBox listBox)
         {
