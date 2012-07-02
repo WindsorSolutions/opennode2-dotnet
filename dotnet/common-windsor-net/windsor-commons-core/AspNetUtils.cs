@@ -240,6 +240,13 @@ namespace Windsor.Commons.Core
             css.Attributes["type"] = "text/css";
             control.Page.Header.Controls.Add(css);
         }
+        public static void RegisterCssBlock(Control control, string cssScript)
+        {
+            HtmlGenericControl script = new HtmlGenericControl("style");
+            script.Attributes.Add("type", "text/css");
+            script.InnerHtml = cssScript;
+            control.Page.Header.Controls.Add(script);
+        }
 
         public static void RegisterScriptFile(Control control, string scriptFilePageRelativePath)
         {
