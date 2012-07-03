@@ -155,6 +155,21 @@ namespace Windsor.Commons.Core
             }
             return parameter;
         }
+        public static IEnumerable<T> ThrowIfNullOrEmpty<T>(IEnumerable<T> collection)
+        {
+            if (CollectionUtils.IsNullOrEmpty(collection))
+            {
+                throw new NullReferenceException("The parameter cannot be an empty collection");
+            }
+            return collection;
+        }
+        public static void ThrowIfDifferentLengths(params IEnumerable[] collections)
+        {
+            if (!CollectionUtils.HaveSameLengthsEx(collections))
+            {
+                throw new NullReferenceException("The collections have different lengths");
+            }
+        }
         public static string ThrowIfEmptyString(string parameter, string paramName)
         {
             if (string.IsNullOrEmpty(parameter))

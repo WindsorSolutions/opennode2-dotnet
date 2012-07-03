@@ -677,14 +677,14 @@ namespace Windsor.Commons.Core
                 }
             }
         }
-        public static bool HaveSameLengths<T>(params ICollection<T>[] collections)
+        public static bool HaveSameLengthsEx(params IEnumerable[] collections)
         {
             if (CollectionUtils.IsNullOrEmpty(collections))
             {
                 return true;
             }
             int length = -1;
-            foreach (ICollection<T> collection in collections)
+            foreach (IEnumerable collection in collections)
             {
                 if (collection == null)
                 {
@@ -701,15 +701,19 @@ namespace Windsor.Commons.Core
                 {
                     if (length == -1)
                     {
-                        length = collection.Count;
+                        length = CollectionUtils.Count(collection);
                     }
-                    else if (length != collection.Count)
+                    else if (length != CollectionUtils.Count(collection))
                     {
                         return false;
                     }
                 }
             }
             return true;
+        }
+        public static bool HaveSameLengths<T>(params ICollection<T>[] collections)
+        {
+            return HaveSameLengthsEx(collections);
         }
         public delegate void ForEachDelegate<T>(T obj);
         public delegate bool ForEachBreakDelegate<T>(T obj);
