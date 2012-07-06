@@ -581,7 +581,12 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
         public string ComplianceMonitoringCategoryCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 15)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 15)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
+        public string ComplianceMonitoringCategoryCode2;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 16)]
         public System.DateTime ComplianceMonitoringDate;
 
         /// <remarks/>
@@ -589,7 +594,15 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
         public bool ComplianceMonitoringDateSpecified;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 16)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 17)]
+        public System.DateTime ComplianceMonitoringDate2;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ComplianceMonitoringDate2Specified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 18)]
         public System.DateTime CSOEventDate;
 
         /// <remarks/>
@@ -597,7 +610,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
         public bool CSOEventDateSpecified;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 17)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 19)]
         public System.DateTime DateStormEventSampled;
 
         /// <remarks/>
@@ -605,7 +618,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
         public bool DateStormEventSampledSpecified;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 18)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 20)]
         public System.DateTime PermitIssueDate;
 
         /// <remarks/>
@@ -613,7 +626,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
         public bool PermitIssueDateSpecified;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 19)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 21)]
         public System.DateTime PermitEffectiveDate;
 
         /// <remarks/>
@@ -621,12 +634,12 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
         public bool PermitEffectiveDateSpecified;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 20)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 22)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
         public string PermitTrackingEventCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 21)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 23)]
         public System.DateTime PermitTrackingEventDate;
 
         /// <remarks/>
@@ -634,17 +647,17 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
         public bool PermitTrackingEventDateSpecified;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 22)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 24)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
         public string NarrativeConditionNumber;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 23)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 25)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(5)]
         public string ScheduleEventCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 24)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 26)]
         public System.DateTime ScheduleDate;
 
         /// <remarks/>
@@ -652,7 +665,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
         public bool ScheduleDateSpecified;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 25)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 27)]
         [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(2)]
         public NumericReportTextType NumericReportCode;
 
@@ -661,7 +674,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
         public bool NumericReportCodeSpecified;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 26)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 28)]
         [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
         public NumericReportViolationCodeType NumericReportViolationCode;
 
@@ -670,7 +683,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
         public bool NumericReportViolationCodeSpecified;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 27)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 29)]
         public System.DateTime PermittingAuthorityReportReceivedDate;
 
         /// <remarks/>
@@ -678,7 +691,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
         public bool PermittingAuthorityReportReceivedDateSpecified;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 28)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 30)]
         public System.DateTime PretreatmentPerformanceSummaryEndDate;
 
         /// <remarks/>
@@ -686,7 +699,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
         public bool PretreatmentPerformanceSummaryEndDateSpecified;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 29)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 31)]
         public System.DateTime ReportCoverageEndDate;
 
         /// <remarks/>
@@ -694,12 +707,12 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
         public bool ReportCoverageEndDateSpecified;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 30)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 32)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(5)]
         public string SingleEventViolationCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 31)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 33)]
         public System.DateTime SingleEventViolationDate;
 
         /// <remarks/>
@@ -707,7 +720,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
         public bool SingleEventViolationDateSpecified;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 32)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 34)]
         public System.DateTime SSOAnnualReportReceivedDate;
 
         /// <remarks/>
@@ -715,7 +728,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
         public bool SSOAnnualReportReceivedDateSpecified;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 33)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 35)]
         public System.DateTime SSOEventDate;
 
         /// <remarks/>
@@ -723,7 +736,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
         public bool SSOEventDateSpecified;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 34)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 36)]
         public System.DateTime SSOMonthlyReportReceivedDate;
 
         /// <remarks/>
@@ -731,7 +744,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
         public bool SSOMonthlyReportReceivedDateSpecified;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 35)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 37)]
         public System.DateTime StormWaterMS4ReportReceivedDate;
 
         /// <remarks/>
@@ -739,49 +752,49 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
         public bool StormWaterMS4ReportReceivedDateSpecified;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 36)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 38)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(20)]
         public string EnforcementActionIdentifier;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 37)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 39)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(20)]
         public string EnforcementActionIdentifier2;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 38)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 40)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
         public string FinalOrderIdentifier;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 39)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 41)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
         public string FinalOrderIdentifier2;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 40)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 42)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
         public string ComplianceScheduleNumber;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 41)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 43)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(5)]
         public string MilestoneTypeCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 42)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 44)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
         public string ScheduleViolationCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 43)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 45)]
         [System.ComponentModel.DescriptionAttribute("An Service Provider (e.g., ICIS-NPDES) specific error code that uniquely identifi" +
             "es a type of error, information or warning.")]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(6)]
         public string ResultCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 44)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 46)]
         [System.ComponentModel.DescriptionAttribute("The type of error, information or warning that is being returned.")]
         [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(11)]
         public ResultTypeCodeDataType ResultTypeCode;
@@ -791,20 +804,20 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
         public bool ResultTypeCodeSpecified;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 45)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 47)]
         [System.ComponentModel.DescriptionAttribute("A human readable description on an error, information or warning.")]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4000)]
         public string ResultDescription;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 46)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 48)]
         [System.ComponentModel.DescriptionAttribute("The transaction id of the submission.")]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(50)]
         public string SubmissionTransactionId;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "dateTime", Order = 47)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "dateTime", Order = 49)]
         [System.ComponentModel.DescriptionAttribute("The date and time when this row was created.")]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public System.DateTime CreatedDateTime;
