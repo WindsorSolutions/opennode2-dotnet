@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:icis="http://www.exchangenetwork.net/schema/icis/4" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/icis/4" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4">
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name : ICIS_SubmissionAccepted_v4.0e.xsd
+		Current Version Available: http://www.exchangenetwork.net/schema/icis/4
+		Description : The component schema for the SubmissionAccepted type. 
+		Developed by : ICIS Full Batch IPT
+		Point of Contact : Won Lee, U.S. EPA
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:include schemaLocation="ICIS_ResponseFileShared_v4.0e.xsd"/>
+	<xsd:include schemaLocation="ICIS_ResponseFileSubmissionAcceptedKey_v4.0e.xsd"/>
+	<xsd:element name="SubmissionAccepted" type="icis:SubmissionAcceptedDataType">
+		<xsd:annotation>
+			<xsd:documentation>One or more records that were accepted while processing a part of the submission.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="SubmissionAcceptedDataType">
+		<xsd:sequence>
+			<xsd:element ref="icis:SubmissionAcceptedKey" minOccurs="0"/>
+			<xsd:element ref="icis:AcceptedReport" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>
