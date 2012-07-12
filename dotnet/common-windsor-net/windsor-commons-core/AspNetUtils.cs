@@ -306,9 +306,9 @@ namespace Windsor.Commons.Core
             return fileName + "Id";
         }
 
-        public delegate bool ForEachControlOfTypeDelegateBreak<T>(T control) where T : Control;
+        public delegate bool ForEachControlOfTypeDelegateBreak<T>(T control);
 
-        public delegate void ForEachControlOfTypeDelegate<T>(T control) where T : Control;
+        public delegate void ForEachControlOfTypeDelegate<T>(T control);
 
         public delegate void ForEachControlDelegate(Control control);
 
@@ -323,30 +323,32 @@ namespace Windsor.Commons.Core
                 }
             }
         }
-        public static void ForEachChildControlOfType<T>(Control parent, ForEachControlOfTypeDelegate<T> forEachProc) where T : Control
+        public static void ForEachChildControlOfType<T>(Control parent, ForEachControlOfTypeDelegate<T> forEachProc)
         {
             if (parent != null)
             {
+                Type genericType = typeof(T);
                 foreach (Control control in parent.Controls)
                 {
-                    T foundControl = control as T;
-                    if (foundControl != null)
+                    if (genericType.IsAssignableFrom(control.GetType()))
                     {
+                        T foundControl = (T)(object)control;
                         forEachProc(foundControl);
                     }
                     ForEachChildControlOfType<T>(control, forEachProc);
                 }
             }
         }
-        public static bool ForEachChildControlOfTypeBreak<T>(Control parent, ForEachControlOfTypeDelegateBreak<T> forEachProc) where T : Control
+        public static bool ForEachChildControlOfTypeBreak<T>(Control parent, ForEachControlOfTypeDelegateBreak<T> forEachProc)
         {
             if (parent != null)
             {
+                Type genericType = typeof(T);
                 foreach (Control control in parent.Controls)
                 {
-                    T foundControl = control as T;
-                    if (foundControl != null)
+                    if (genericType.IsAssignableFrom(control.GetType()))
                     {
+                        T foundControl = (T)(object)control;
                         if (!forEachProc(foundControl))
                         {
                             return false;
