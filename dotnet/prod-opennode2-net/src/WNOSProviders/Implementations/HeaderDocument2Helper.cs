@@ -93,7 +93,7 @@ namespace Windsor.Node2008.WNOSProviders.Implementation
                          dataFlowName,
                          dataServiceName,
                          senderContact,
-                         null, null);
+                         applicationUserIdentifier, null);
         }
 
         public void Configure(

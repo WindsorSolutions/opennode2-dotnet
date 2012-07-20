@@ -179,7 +179,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQSCommon
                     XmlDocument doc = new XmlDocument();
                     doc.Load(inputFile);
 
-                    _headerDocumentHelper.Configure(_author, _organization, "AQS Data", AQS_FLOW_NAME, null, null, _aqsUserId);
+                    _headerDocumentHelper.Configure(_author, _organization, "AQS Data", AQS_FLOW_NAME, null, null, _aqsUserId, null);
                     if (!string.IsNullOrEmpty(_senderAddress))
                     {
                         List<string> emails = StringUtils.SplitAndReallyRemoveEmptyEntries(_senderAddress, EMAIL_ADDRESS_SEPARATOR);
