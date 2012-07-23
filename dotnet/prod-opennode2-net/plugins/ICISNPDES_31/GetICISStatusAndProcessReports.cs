@@ -177,14 +177,16 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
             string responseAcceptedFilePath = FindResponseAcceptedFilePath(responseFiles);
             string responseRejectedFilePath = FindResponseRejectedFilePath(responseFiles);
 
+            bool isV4 = IsVersion4ICISFile(responseAcceptedFilePath);
+
             AppendAuditLogEvent("Loading response document content ...");
 
             AppendAuditLogEvent("Transforming accepted response file ...");
-            string responseAcceptedTransformedFilePath = TransformResponseFile(responseAcceptedFilePath);
+            string responseAcceptedTransformedFilePath = isV4 ? TransformResponseFile40(responseAcceptedFilePath) : TransformResponseFile31(responseAcceptedFilePath);
             SubmissionResultList acceptedList = _serializationHelper.Deserialize<SubmissionResultList>(responseAcceptedTransformedFilePath);
 
             AppendAuditLogEvent("Transforming rejected response file ...");
-            string responseRejectedTransformedFilePath = TransformResponseFile(responseRejectedFilePath);
+            string responseRejectedTransformedFilePath = isV4 ? TransformResponseFile40(responseRejectedFilePath) : TransformResponseFile31(responseRejectedFilePath);
             SubmissionResultList rejectedList = _serializationHelper.Deserialize<SubmissionResultList>(responseRejectedTransformedFilePath);
 
             List<SubmissionResultsDataType> saveList = new List<SubmissionResultsDataType>(CollectionUtils.Count(acceptedList.SubmissionResult) +
@@ -229,9 +231,13 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
 
             return true;
         }
-        protected virtual string TransformResponseFile(string responseFilePath)
+        protected virtual string TransformResponseFile31(string responseFilePath)
         {
-            return TransformXmlFile(responseFilePath, "xml_schema.MappingMapToSubmissionResults.zip", "MappingMapToSubmissionResults.xslt");
+            return TransformXmlFile(responseFilePath, "xml_schema.MappingMapToSubmissionResults31.zip", "MappingMapToSubmissionResults.xslt");
+        }
+        protected virtual string TransformResponseFile40(string responseFilePath)
+        {
+            return TransformXmlFile(responseFilePath, "xml_schema.MappingMapToSubmissionResults40.zip", "MappingMapToSubmissionResults.xslt");
         }
         protected virtual void DoEmailNotifications(Windsor.Node2008.WNOSDomain.Document zipResponseDocument, string localTransactionId)
         {
@@ -458,6 +464,17 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
                 throw new ArgException("A rejected response document was not found for the submission transaction");
             }
             return responseFilePath;
+        }
+        protected virtual bool IsVersion4ICISFile(string filePath)
+        {
+            using (var stream = File.OpenRead(filePath))
+            {
+                int readCount = (int)Math.Min(stream.Length, 8192);
+                byte[] readBytes = new byte[readCount];
+                stream.Read(readBytes, 0, readCount);
+                var text = UTF8Encoding.UTF8.GetString(readBytes);
+                return text.Contains("schema/icis/4");
+            }
         }
         private string CreateTableRowCountsString(Dictionary<string, int> tableRowCounts)
         {
