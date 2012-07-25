@@ -169,7 +169,7 @@
     <EmbeddedResource Include="xml_schema\xml_schema.zip" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="xml_schema\MappingMapToSubmissionResults40.zip" />
+    <EmbeddedResource Include="xml_schema\MappingMapToSubmissionResults40.zip" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
