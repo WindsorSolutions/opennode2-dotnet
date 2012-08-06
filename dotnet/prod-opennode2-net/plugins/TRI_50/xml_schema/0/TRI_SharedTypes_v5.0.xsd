@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:TRI="http://www.exchangenetwork.net/schema/TRI/5" targetNamespace="http://www.exchangenetwork.net/schema/TRI/5" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.0">
+	<xsd:annotation>
+		<xsd:documentation>
+			Schema Name : TRI_SharedTypes_v5.0.xsd
+			Schema Identification :
+			Current Version Available At :
+			Description : File for TRI common data types.
+			Application : Toxics Release Inventory
+			Developed by : 	 Environmental Protection Agency, CGI
+			Point of Contact : Rajendra Bapat
+			Maintained by : Environmental Protection Agency, CGI
+			Point of Contact : Rajendra Bapat [rajendra.bapat@cgifederal.com]       
+		</xsd:documentation>
+	</xsd:annotation>
+	<!--Shared data types-->
+	<xsd:simpleType name="WasteQuantityRangeCodeType">
+		<xsd:annotation>
+			<xsd:documentation>Enumeration of 3 codes type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="A"/>
+			<xsd:enumeration value="B"/>
+			<xsd:enumeration value="C"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="QuantityBasisEstimationCodeType">
+		<xsd:annotation>
+			<xsd:documentation>Enumeration of 8 codes type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="C"/>
+			<xsd:enumeration value="M"/>
+			<xsd:enumeration value="M1"/>
+			<xsd:enumeration value="M2"/>
+			<xsd:enumeration value="E"/>
+			<xsd:enumeration value="E1"/>
+			<xsd:enumeration value="E2"/>
+			<xsd:enumeration value="O"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="AlphaNumericChar3Type">
+		<xsd:annotation>
+			<xsd:documentation>A three character code containing capital letters and numbers only</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="3"/>
+			<xsd:maxLength value="3"/>
+			<xsd:pattern value="[A-Z0-9]{3}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Decimal14Point7NonNegativeType">
+		<xsd:annotation>
+			<xsd:documentation>Decimal nn,nnn,nnn,nnn,nnn.nnnnnnn type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:decimal">
+			<xsd:minInclusive value="0.0000000"/>
+			<xsd:totalDigits value="21"/>
+			<xsd:fractionDigits value="7"/>
+			<xsd:maxInclusive value="99999999999999.9999999"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Decimal5Point2PercentType">
+		<xsd:annotation>
+			<xsd:documentation>Decimal nnn.nn percent type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:decimal">
+			<xsd:minInclusive value="0.00"/>
+			<xsd:totalDigits value="5"/>
+			<xsd:fractionDigits value="2"/>
+			<xsd:maxInclusive value="100.00"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NumericDigit2Type">
+		<xsd:annotation>
+			<xsd:documentation>A two digit code type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[0-9]{2}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ToxicReleaseDateType">
+		<xsd:annotation>
+			<xsd:documentation>Generic date type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:date"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="ToxicReleaseDecimalType">
+		<xsd:annotation>
+			<xsd:documentation>Generic decimal type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:decimal"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="ToxicReleaseIntegerType">
+		<xsd:annotation>
+			<xsd:documentation>Generic integer type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:int"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="ToxicReleaseInteger0To10Type">
+		<xsd:annotation>
+			<xsd:documentation>Integer 0 to 10 type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:integer">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="10"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ToxicReleaseBooleanType">
+		<xsd:annotation>
+			<xsd:documentation>Generic boolean type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:boolean"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="ToxicReleaseStringType">
+		<xsd:annotation>
+			<xsd:documentation>Generic string type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="ToxicReleaseString10Type">
+		<xsd:annotation>
+			<xsd:documentation>Generic string 1-10 characters type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="10"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

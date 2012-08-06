@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:TRI="http://www.exchangenetwork.net/schema/TRI/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/TRI/5" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.0">
+	<xsd:include schemaLocation="TRI_WaterStream_v5.0.xsd"/>
+	<xsd:include schemaLocation="TRI_SharedComponents_v5.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>		
+		Schema Name : 	TRI_OnsiteReleaseQuantity_v5.0.xsd
+		Current Version Available At :
+		Description : 	The total annual release quantities of the chemical to air, water, on-site land, and underground injection wells
+		Application : Toxics Release Inventory
+		Developed by : 	 Environmental Protection Agency, CGI
+		Point of Contact : Rajendra Bapat
+		Maintained by : Environmental Protection Agency, CGI
+		Point of Contact : Rajendra Bapat [rajendra.bapat@cgifederal.com]       
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="OnsiteReleaseQuantity" type="TRI:OnsiteReleaseQuantityDataType">
+		<xsd:annotation>
+			<xsd:documentation>The total annual release quantities of the chemical to air, water, on-site land, and underground injection wells.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="OnsiteReleaseQuantityDataType">
+		<xsd:sequence>
+			<xsd:element ref="TRI:EnvironmentalMediumCode"/>
+			<xsd:element ref="TRI:OnsiteWasteQuantity" minOccurs="0"/>
+			<xsd:element ref="TRI:WaterStream" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="EnvironmentalMediumCode" type="TRI:EnvironmentalMediumCodeType">
+		<xsd:annotation>
+			<xsd:documentation>Code indicating the environmental medium to which the toxic chemical is released from the facility.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OnsiteWasteQuantity" type="TRI:WasteQuantityDataType">
+		<xsd:annotation>
+			<xsd:documentation>Captures a quantity of waste and how the waste quantity was determined by the reporter.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!--Onsite release quantity data type-->
+	<xsd:simpleType name="EnvironmentalMediumCodeType">
+		<xsd:annotation>
+			<xsd:documentation>Enumeration of 14 codes type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="AIR FUG"/>
+			<xsd:enumeration value="AIR STACK"/>
+			<xsd:enumeration value="WATER"/>
+			<xsd:enumeration value="UNINJ8795"/>
+			<xsd:enumeration value="UNINJ I"/>
+			<xsd:enumeration value="UNINJ IIV"/>
+			<xsd:enumeration value="LANDF8795"/>
+			<xsd:enumeration value="RCRA C"/>
+			<xsd:enumeration value="OTH LANDF"/>
+			<xsd:enumeration value="LAND TREA"/>
+			<xsd:enumeration value="SURF IMP"/>
+			<xsd:enumeration value="SI 5.5.3A"/>
+			<xsd:enumeration value="SI 5.5.3B"/>
+			<xsd:enumeration value="OTH DISP"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

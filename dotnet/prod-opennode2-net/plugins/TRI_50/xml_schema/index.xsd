@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:TRI="http://www.exchangenetwork.net/schema/TRI/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sc="urn:us:net:exchangenetwork:sc:1:0" targetNamespace="http://www.exchangenetwork.net/schema/TRI/5" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.0">
+	<xsd:annotation>
+		<xsd:documentation>		
+		Schema Name : 	index.xsd
+		Current Version Available At :
+		Description : 	This is the generic root schema for Toxic Release Inventory reporting data
+		Application : Toxics Release Inventory
+		Developed by : 	 Environmental Protection Agency, CGI
+		Point of Contact : Rajendra Bapat [rajendra.bapat@cgifederal.com]       
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:include schemaLocation="0/TRI_TRI_v5.0.xsd"/>
+</xsd:schema>

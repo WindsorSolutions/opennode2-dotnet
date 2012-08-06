@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:TRI="http://www.exchangenetwork.net/schema/TRI/5" targetNamespace="http://www.exchangenetwork.net/schema/TRI/5" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.0">
+	<xsd:include schemaLocation="TRI_SharedTypes_v5.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>		
+		Schema Name : 	TRI_ToxicEquivalencyIdentification_v5.0.xsd
+		Current Version Available At :
+		Description : Toxic equivalency information for the dioxin and dioxin-like chemicals (for Form R Schedule-1) on the TRI reporting form.
+		Application : Toxics Release Inventory
+		Created by :  Environmental Protection Agency, CGI
+		Point of Contact : Rajendra Bapat [rajendra.bapat@cgifederal.com]       
+		Note:  The order in which the dioxin compounds are listed was modified in v4.0 from the order in v3.0
+		to conform to the list from page 26549 of the Federal Register, Vol. 72, No. 90, dated May 10, 2007
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="ToxicEquivalencyIdentification" type="TRI:ToxicEquivalencyIdentificationType">
+		<xsd:annotation>
+			<xsd:documentation>Identification of the toxic equivalency (for Form R Schedule-1) for dioxin and dioxin-like chemicals.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ToxicEquivalencyIdentificationType">
+		<xsd:annotation>
+			<xsd:documentation>Identification of the toxic equivalency (for Form R Schedule-1) for dioxin and dioxin-like chemicals complex data type.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="TRI:ToxicEquivalency1Value" minOccurs="0"/>
+			<xsd:element ref="TRI:ToxicEquivalency2Value" minOccurs="0"/>
+			<xsd:element ref="TRI:ToxicEquivalency3Value" minOccurs="0"/>
+			<xsd:element ref="TRI:ToxicEquivalency4Value" minOccurs="0"/>
+			<xsd:element ref="TRI:ToxicEquivalency5Value" minOccurs="0"/>
+			<xsd:element ref="TRI:ToxicEquivalency6Value" minOccurs="0"/>
+			<xsd:element ref="TRI:ToxicEquivalency7Value" minOccurs="0"/>
+			<xsd:element ref="TRI:ToxicEquivalency8Value" minOccurs="0"/>
+			<xsd:element ref="TRI:ToxicEquivalency9Value" minOccurs="0"/>
+			<xsd:element ref="TRI:ToxicEquivalency10Value" minOccurs="0"/>
+			<xsd:element ref="TRI:ToxicEquivalency11Value" minOccurs="0"/>
+			<xsd:element ref="TRI:ToxicEquivalency12Value" minOccurs="0"/>
+			<xsd:element ref="TRI:ToxicEquivalency13Value" minOccurs="0"/>
+			<xsd:element ref="TRI:ToxicEquivalency14Value" minOccurs="0"/>
+			<xsd:element ref="TRI:ToxicEquivalency15Value" minOccurs="0"/>
+			<xsd:element ref="TRI:ToxicEquivalency16Value" minOccurs="0"/>
+			<xsd:element ref="TRI:ToxicEquivalency17Value" minOccurs="0"/>
+			<xsd:element ref="TRI:ToxicEquivalencyNAIndicator" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--Toxic equivalency data elements-->
+	<xsd:element name="ToxicEquivalency1Value" type="TRI:Decimal14Point7NonNegativeType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates grams of 2,3,7,8-Tetrachlorodibenzo-p-dioxin (CAS Number: 01746-01-6) in the reported dioxin or dioxin-like compounds.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ToxicEquivalency2Value" type="TRI:Decimal14Point7NonNegativeType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates grams of 1,2,3,7,8-Pentachlorodibenzo-p-dioxin (CAS Number: 40321-76-4) in the reported dioxin or dioxin-like compounds.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ToxicEquivalency3Value" type="TRI:Decimal14Point7NonNegativeType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates grams of 1,2,3,4,7,8-Hexachlorodibenzo-p-dioxin (CAS Number: 39227-28-6) in the reported dioxin or dioxin-like compounds.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ToxicEquivalency4Value" type="TRI:Decimal14Point7NonNegativeType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates grams of 1,2,3,6,7,8-Hexachlorodibenzo-p-dioxin (CAS Number: 57653-85-7) in the reported dioxin or dioxin-like compounds.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ToxicEquivalency5Value" type="TRI:Decimal14Point7NonNegativeType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates grams of 1,2,3,7,8,9-Hexachlorodibenzo-p-dioxin (CAS Number: 19408-74-3) in the reported dioxin or dioxin-like compounds.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ToxicEquivalency6Value" type="TRI:Decimal14Point7NonNegativeType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates grams of 1,2,3,4,6,7,8-Heptachlorodibenzo-p-dioxin (CAS Number: 35822-46-9) in the reported dioxin or dioxin-like compounds.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ToxicEquivalency7Value" type="TRI:Decimal14Point7NonNegativeType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates grams of 1,2,3,4,6,7,8,9-Octachlorodibenzo-p-dioxin (CAS Number: 03268-87-9) in the reported dioxin or dioxin-like compounds.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ToxicEquivalency8Value" type="TRI:Decimal14Point7NonNegativeType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates grams of 2,3,7,8-Tetrachlorodibenzofuran (CAS Number: 51207-31-9) in the reported dioxin or dioxin-like compounds.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ToxicEquivalency9Value" type="TRI:Decimal14Point7NonNegativeType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates grams of 1,2,3,7,8-Pentachlorodibenzofuran (CAS Number: 57117-41-6) in the reported dioxin or dioxin-like compounds.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ToxicEquivalency10Value" type="TRI:Decimal14Point7NonNegativeType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates grams of 2,3,4,7,8-Pentachlorodibenzofuran (CAS Number: 57117-31-4) in the reported dioxin or dioxin-like compounds.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ToxicEquivalency11Value" type="TRI:Decimal14Point7NonNegativeType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates grams of 1,2,3,4,7,8-Hexachlorodibenzofuran (CAS Number: 70648-26-9) in the reported dioxin or dioxin-like compounds.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ToxicEquivalency12Value" type="TRI:Decimal14Point7NonNegativeType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates grams of 1,2,3,6,7,8-Hexachlorodibenzofuran (CAS Number: 57117-44-9) in the reported dioxin or dioxin-like compounds.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ToxicEquivalency13Value" type="TRI:Decimal14Point7NonNegativeType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates grams of 1,2,3,7,8,9-Hexachlorodibenzofuran (CAS Number: 72918-21-9) in the reported dioxin or dioxin-like compounds.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ToxicEquivalency14Value" type="TRI:Decimal14Point7NonNegativeType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates grams of 2,3,4,6,7,8-Hexachlorodibenzofuran (CAS Number: 60851-34-5) in the reported dioxin or dioxin-like compounds.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ToxicEquivalency15Value" type="TRI:Decimal14Point7NonNegativeType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates grams of 1,2,3,4,6,7,8-Heptachlorodibenzofuran (CAS Number: 67562-39-4) in the reported dioxin or dioxin-like compounds.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ToxicEquivalency16Value" type="TRI:Decimal14Point7NonNegativeType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates grams of 1,2,3,4,7,8,9-Heptachlorodibenzofuran (CAS Number: 55673-89-7) in the reported dioxin or dioxin-like compounds.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ToxicEquivalency17Value" type="TRI:Decimal14Point7NonNegativeType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates grams of 1,2,3,4,6,7,8,9-Octachlorodibenzofuran (CAS Number: 39001-02-0) in the reported dioxin or dioxin-like compounds.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ToxicEquivalencyNAIndicator" type="TRI:ToxicReleaseBooleanType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates whether 'NA' (Not Applicable) was entered on Form R for the distribution of each member of the dioxin and dioxin-like compounds category.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

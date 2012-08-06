@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://www.windsorsolutions.biz/xsd/TRI_v4.0/SubmittedDocuments.xsd" elementFormDefault="qualified" targetNamespace="http://www.windsorsolutions.biz/xsd/TRI_v4.0/SubmittedDocuments.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="SubmittedDocumentList" type="tns:SubmittedDocumentList" />
+  <xs:complexType name="SubmittedDocumentList">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="SubmittedDocuments" type="tns:ArrayOfSubmittedDocument" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfSubmittedDocument">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SubmittedDocument" nillable="true" type="tns:SubmittedDocument" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SubmittedDocument">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="TransactionID" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="ReceivedDate" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

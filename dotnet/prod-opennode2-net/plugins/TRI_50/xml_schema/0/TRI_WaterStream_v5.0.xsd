@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:TRI="http://www.exchangenetwork.net/schema/TRI/5" targetNamespace="http://www.exchangenetwork.net/schema/TRI/5" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.0">
+	<xsd:include schemaLocation="TRI_SharedTypes_v5.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>		
+		Schema Name : 	TRI_WaterStream_v5.0.xsd
+		Current Version Available At :
+		Description : 	The names of the streams, rivers, lakes, or other water bodies to which the chemical is discharged.
+		Application : Toxics Release Inventory
+		Developed by : 	 Environmental Protection Agency, CGI
+		Point of Contact : Rajendra Bapat
+		Maintained by : Environmental Protection Agency, CGI
+		Point of Contact : Rajendra Bapat [rajendra.bapat@cgifederal.com]       
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="WaterStream" type="TRI:WaterStreamDataType">
+		<xsd:annotation>
+			<xsd:documentation>The names of the streams, rivers, lakes, or other water bodies to which the chemical is discharged and percent of which comes from stormwater.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="WaterStreamDataType">
+		<xsd:sequence>
+			<xsd:element ref="TRI:WaterSequenceNumber" minOccurs="0"/>
+			<xsd:element ref="TRI:StreamName" minOccurs="0"/>
+			<xsd:choice minOccurs="0">
+				<xsd:element ref="TRI:ReleaseStormWaterPercent" minOccurs="0"/>
+				<xsd:element ref="TRI:ReleaseStormWaterNAIndicator" minOccurs="0"/>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="WaterSequenceNumber" type="TRI:ToxicReleaseIntegerType">
+		<xsd:annotation>
+			<xsd:documentation>Sequence in which a release to water is reported on a Form R submission.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="StreamName" type="TRI:ToxicReleaseStringType">
+		<xsd:annotation>
+			<xsd:documentation>The name of the stream, river, lake, or other water body to which the chemical is discharged.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ReleaseStormWaterPercent" type="TRI:ToxicReleaseDecimalType">
+		<xsd:annotation>
+			<xsd:documentation>The amount of the release, by weight percent, to water bodies, that came from stormwater runoff.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ReleaseStormWaterNAIndicator" type="TRI:ToxicReleaseBooleanType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates that 'NA' (Not Applicable) was entered on Form R for the percent of a release that came from stormwater runoff.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

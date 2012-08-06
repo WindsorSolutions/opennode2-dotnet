@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:sc="urn:us:net:exchangenetwork:sc:1:0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:TRI="http://www.exchangenetwork.net/schema/TRI/5" targetNamespace="http://www.exchangenetwork.net/schema/TRI/5" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.0">
+	<xsd:import namespace="urn:us:net:exchangenetwork:sc:1:0" schemaLocation="SC_SimpleContent_v1.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name  : TRI_ReportType_v5.0.xsd
+		Current Version Available At : 
+		Description   :   A designator and associated metadata used to identify a type of report.
+		Application : Toxics Release Inventory
+		Developed by : 	 Environmental Protection Agency, CGI
+		Point of Contact : Rajendra Bapat
+		Maintained by : Environmental Protection Agency, CGI
+		Point of Contact : Rajendra Bapat [rajendra.bapat@cgifederal.com]       
+</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="ReportType" type="TRI:ReportTypeDataType">
+		<xsd:annotation>
+			<xsd:documentation>A designator and associated metadata used to identify a type of report.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ReportTypeDataType">
+		<xsd:sequence>
+			<xsd:element ref="TRI:ReportTypeCode" minOccurs="0"/>
+			<xsd:element ref="sc:ReportTypeCodeListIdentifier" minOccurs="0"/>
+			<xsd:element ref="sc:ReportTypeName" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ReportTypeCode" type="TRI:ReportTypeCodeType">
+		<xsd:annotation>
+			<xsd:documentation>A code used to identify a TRI report.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!--Report type data type-->
+	<xsd:simpleType name="ReportTypeCodeType">
+		<xsd:annotation>
+			<xsd:documentation>Enumeration of 2 codes type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="TRI_FORM_R"/>
+			<xsd:enumeration value="TRI_FORM_A"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

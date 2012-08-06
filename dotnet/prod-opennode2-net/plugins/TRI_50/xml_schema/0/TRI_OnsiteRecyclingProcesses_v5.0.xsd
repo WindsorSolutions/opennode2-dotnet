@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:TRI="http://www.exchangenetwork.net/schema/TRI/5" targetNamespace="http://www.exchangenetwork.net/schema/TRI/5" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.0">
+	<xsd:include schemaLocation="TRI_SharedTypes_v5.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>		
+		Schema Name : 	TRI_OnsiteRecyclingProcesses_v5.0.xsd
+		Current Version Available At :
+		Description : 	The on-site recycling methods used on the chemical.
+		Application : Toxics Release Inventory
+		Developed by : 	 Environmental Protection Agency, CGI
+		Point of Contact : Rajendra Bapat
+		Maintained by : Environmental Protection Agency, CGI
+		Point of Contact : Rajendra Bapat [rajendra.bapat@cgifederal.com]       
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="OnsiteRecyclingProcess" type="TRI:OnsiteRecyclingProcessDataType">
+		<xsd:annotation>
+			<xsd:documentation>The on-site recycling methods used on the chemical.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="OnsiteRecyclingProcessDataType">
+		<xsd:choice>
+			<xsd:element ref="TRI:OnsiteRecyclingNAIndicator" minOccurs="0"/>
+			<xsd:element ref="TRI:OnsiteRecyclingMethodCode" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:element name="OnsiteRecyclingMethodCode" type="TRI:AlphaNumericChar3Type">
+		<xsd:annotation>
+			<xsd:documentation>Code for the specific on-site recycling method or methods applied to the toxic chemical.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OnsiteRecyclingNAIndicator" type="TRI:ToxicReleaseBooleanType">
+		<xsd:annotation>
+			<xsd:documentation>Code indicating that NA was put on the reporting form for on-site recycling processes.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>
