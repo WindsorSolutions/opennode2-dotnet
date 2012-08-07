@@ -11,7 +11,7 @@ import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
 import com.windsor.node.plugin.facid3.domain.FacilityCountDataType;
 import com.windsor.node.plugin.facid3.domain.ObjectFactory;
 
-public class FacIdGetFacilityCount extends BaseFacIdGetFacilityService
+public class GetFacilityCount extends BaseFacIdGetFacilityService
 {
     @Override
     public List<PluginServiceParameterDescriptor> getParameters()

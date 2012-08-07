@@ -9,17 +9,25 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import com.windsor.node.plugin.facid3.BaseFacIdGetFacilityService;
 import com.windsor.node.plugin.facid3.BaseFacIdPlugin;
-import com.windsor.node.plugin.facid3.FacIdGetDeletedFacilityByChangeDate;
+import com.windsor.node.plugin.facid3.GetDeletedFacilityByChangeDate;
+import com.windsor.node.plugin.facid3.domain.AlternativeIdentificationDataType;
+import com.windsor.node.plugin.facid3.domain.AlternativeIdentificationListDataType;
 import com.windsor.node.plugin.facid3.domain.AlternativeNameDataType;
 import com.windsor.node.plugin.facid3.domain.AlternativeNameListDataType;
+import com.windsor.node.plugin.facid3.domain.ElectronicAddressDataType;
+import com.windsor.node.plugin.facid3.domain.ElectronicAddressListDataType;
 import com.windsor.node.plugin.facid3.domain.FacilityDataType;
 import com.windsor.node.plugin.facid3.domain.FacilityGeographicLocationDescriptionDataType;
 import com.windsor.node.plugin.facid3.domain.FacilityGeographicLocationListDataType;
 import com.windsor.node.plugin.facid3.domain.FacilityInterestSummaryDataType;
+import com.windsor.node.plugin.facid3.domain.FacilityNAICSDataType;
 import com.windsor.node.plugin.facid3.domain.FacilityPrimaryGeographicLocationDescriptionDataType;
+import com.windsor.node.plugin.facid3.domain.FacilitySICDataType;
 import com.windsor.node.plugin.facid3.domain.FacilitySummaryDataType;
 import com.windsor.node.plugin.facid3.domain.FacilitySummaryGeographicLocationDataType;
+import com.windsor.node.plugin.facid3.domain.NAICSListDataType;
 import com.windsor.node.plugin.facid3.domain.ObjectFactory;
+import com.windsor.node.plugin.facid3.domain.SICListDataType;
 
 public class FacilityDataTypeDao extends JdbcDaoSupport
 {
@@ -38,7 +46,7 @@ public class FacilityDataTypeDao extends JdbcDaoSupport
             return null;
         }
         return (FacilityDataType)getJdbcTemplate().queryForObject(loadFacilityDataTypeByIdSql, new Object[]{facilityId}, new int[]{Types.VARCHAR},
-                                                          new FacilityDataTypeRowMapper(this, getEnvironmentalInterestDao()));
+                                                          new FacilityDataTypeRowMapper(this, getEnvironmentalInterestDao(), getEnvironmentalInterestDao().getAffiliationListDataTypeDao()));
     }
 
     public FacilityInterestSummaryDataType loadFacilityInterestSummaryById(String facilityId)
@@ -71,6 +79,46 @@ public class FacilityDataTypeDao extends JdbcDaoSupport
                                                           new DeletedFacilitySummaryDataTypeRowMapper());
     }
 
+    public SICListDataType loadSicListByFacilityId(String facilityId)
+    {
+        if(StringUtils.isBlank(facilityId))
+        {
+            return null;
+        }
+        ObjectFactory fact = new ObjectFactory();
+        SICListDataType sicList = fact.createSICListDataType();
+        @SuppressWarnings("unchecked")
+        List<FacilitySICDataType> results = (List<FacilitySICDataType>)getJdbcTemplate()
+                        .query(loadSicListByFacilityIdSql, new Object[]{facilityId},
+                               new int[]{Types.VARCHAR}, new FacilitySicDataTypeRowMapper());
+        sicList.getFacilitySIC().addAll(results);
+        if(results == null || results.size() == 0)
+        {
+            return null;
+        }
+        return sicList;
+    }
+
+    public NAICSListDataType loadNaicsListByFacilityId(String facilityId)
+    {
+        if(StringUtils.isBlank(facilityId))
+        {
+            return null;
+        }
+        ObjectFactory fact = new ObjectFactory();
+        NAICSListDataType naicsList = fact.createNAICSListDataType();
+        @SuppressWarnings("unchecked")
+        List<FacilityNAICSDataType> results = (List<FacilityNAICSDataType>)getJdbcTemplate()
+                        .query(loadNaicsListByFacilityIdSql, new Object[]{facilityId},
+                               new int[]{Types.VARCHAR}, new FacilityNaicsDataTypeRowMapper());
+        naicsList.getFacilityNAICS().addAll(results);
+        if(results == null || results.size() == 0)
+        {
+            return null;
+        }
+        return naicsList;
+    }
+
     @SuppressWarnings("unchecked")
     public List<String> loadAllFacilityIdsByParams(Map<String, Object> params)
     {
@@ -82,27 +130,14 @@ public class FacilityDataTypeDao extends JdbcDaoSupport
         if(params.get(BaseFacIdGetFacilityService.STANDARD_ENVIRONMENTAL_INTEREST_TYPE.getName()) != null)
         {
             List<String> items = (List<String>)params.get(BaseFacIdGetFacilityService.STANDARD_ENVIRONMENTAL_INTEREST_TYPE.getName());
-            sql.append(" AND UPPER(ei.envr_intr_iden) in (");
+            sql.append(" AND  (");
             for(int i = 0; i < items.size(); i++)
             {
                 if(i != 0)
                 {
-                    sql.append(", ");
+                    sql.append(" OR ");
                 }
-                sql.append("?");
-                args.add(items.get(i).toUpperCase());
-                types.add(Types.VARCHAR);
-            }
-            sql.append(" ) ");
-        }
-        if(params.get(BaseFacIdGetFacilityService.ZIP_CODE.getName()) != null)
-        {
-            //List, of starts with, parsing out the 4 digit codes, if they exist, everything is STARTS WITH according to the spec
-            //so add wild cards
-            List<String> items = (List<String>)params.get(BaseFacIdGetFacilityService.ZIP_CODE.getName());
-            sql.append(" AND UPPER(f.addr_post_code_val) in (");
-            for(int i = 0; i < items.size(); i++)
-            {
+                sql.append(" UPPER(ei.envr_intr_type_text) like ");
                 if(i != 0)
                 {
                     sql.append(", ");
@@ -113,8 +148,37 @@ public class FacilityDataTypeDao extends JdbcDaoSupport
                 {
                     param = param.substring(0, 5);
                 }
-                param += "%";
-                args.add(param.toUpperCase());//add with wildcard
+                param += "%";//add wildcard
+                args.add(param.toUpperCase());
+                types.add(Types.VARCHAR);
+            }
+            sql.append(" ) ");
+        }
+        if(params.get(BaseFacIdGetFacilityService.ZIP_CODE.getName()) != null)
+        {
+            //List, of starts with, parsing out the 4 digit codes, if they exist, everything is STARTS WITH according to the spec
+            //so add wild cards
+            List<String> items = (List<String>)params.get(BaseFacIdGetFacilityService.ZIP_CODE.getName());
+            sql.append(" AND  (");
+            for(int i = 0; i < items.size(); i++)
+            {
+                if(i != 0)
+                {
+                    sql.append(" OR ");
+                }
+                sql.append(" UPPER(f.addr_post_code_val) like ");
+                if(i != 0)
+                {
+                    sql.append(", ");
+                }
+                sql.append("?");
+                String param = items.get(i);
+                if(param.length() > 5)
+                {
+                    param = param.substring(0, 5);
+                }
+                param += "%";//add wildcard
+                args.add(param.toUpperCase());
                 types.add(Types.VARCHAR);
             }
             sql.append(" ) ");
@@ -143,30 +207,50 @@ public class FacilityDataTypeDao extends JdbcDaoSupport
             args.add(((String)params.get(BaseFacIdGetFacilityService.FACILITY_STATUS.getName())).toUpperCase());
             types.add(Types.VARCHAR);
         }
-        //TODO SIC and NAICS codes supported later, returning all matches for now, implement filtering
-        /*if(params.get(BaseFacIdGetFacilityService.SIC_CODE) != null)
+        if(params.get(BaseFacIdGetFacilityService.SIC_CODE.getName()) != null)
         {
-            //List, of starts with, parsing out the 4 digit codes, if they exist, everything is STARTS WITH according to the spec
-            //so add wild cards
-            List<String> items = (List<String>)params.get(BaseFacIdGetFacilityService.SIC_CODE);
-            sql.append(" AND f.addr_post_code_val in (");
+            List<String> items = (List<String>)params.get(BaseFacIdGetFacilityService.SIC_CODE.getName());
+            if(items.size() > 0)
+            {
+                sql.append(" AND (");
+            }
             for(int i = 0; i < items.size(); i++)
             {
                 if(i != 0)
                 {
-                    sql.append(", ");
+                    sql.append(" OR ");
                 }
-                sql.append("?");
-                String param = items.get(i);
-                if(param.length() > 5)
-                {
-                    param = param.substring(0, 5);
-                }
-                args.add(param+"%");//add with wildcard
+                sql.append(" fsic.sic_code LIKE ? ");
+                args.add(items.get(i).toUpperCase());
+                types.add(Types.VARCHAR);
+                sql.append(" OR eisic.sic_code like ? ");
+                args.add(items.get(i).toUpperCase());
                 types.add(Types.VARCHAR);
             }
-            sql.append(" ) ");
-        }*/
+            sql.append(")");
+        }
+        if(params.get(BaseFacIdGetFacilityService.NAICS_CODE.getName()) != null)
+        {
+            List<String> items = (List<String>)params.get(BaseFacIdGetFacilityService.NAICS_CODE.getName());
+            if(items.size() > 0)
+            {
+                sql.append(" AND (");
+            }
+            for(int i = 0; i < items.size(); i++)
+            {
+                if(i != 0)
+                {
+                    sql.append(" OR ");
+                }
+                sql.append(" fnaics.fac_naics_code LIKE ? ");
+                args.add(items.get(i).toUpperCase());
+                types.add(Types.VARCHAR);
+                sql.append(" OR einaics.fac_naics_code like ? ");
+                args.add(items.get(i).toUpperCase());
+                types.add(Types.VARCHAR);
+            }
+            sql.append(")");
+        }
         if(params.get(BaseFacIdGetFacilityService.CITY_NAME.getName()) != null)
         {
             List<String> items = (List<String>)params.get(BaseFacIdGetFacilityService.CITY_NAME.getName());
@@ -271,7 +355,7 @@ public class FacilityDataTypeDao extends JdbcDaoSupport
         sql.append(loadAllDeletedFacilityDataTypeIdsSql);
         if(params.get(BaseFacIdPlugin.CHANGE_DATE.getName()) != null)
         {
-            sql.append(" AND LAST_UPDT_DATE = ? ");
+            sql.append(" AND LAST_UPDT_DATE > ? ");
             args.add(params.get(BaseFacIdPlugin.CHANGE_DATE.getName()));
             types.add(Types.DATE);
         }
@@ -281,7 +365,7 @@ public class FacilityDataTypeDao extends JdbcDaoSupport
             args.add(params.get(BaseFacIdPlugin.ORIGINATING_PARTNER_NAME.getName()));
             types.add(Types.VARCHAR);
         }
-        if(StringUtils.isNotBlank((String)params.get(FacIdGetDeletedFacilityByChangeDate.INFO_SYSTEM_ACORNYM_NAME.getName())))
+        if(StringUtils.isNotBlank((String)params.get(GetDeletedFacilityByChangeDate.INFO_SYSTEM_ACORNYM_NAME.getName())))
         {
             sql.append(" AND UPPER(INFO_SYS_ACRO_NAME) = UPPER(?) ");
             args.add(params.get(BaseFacIdPlugin.INFO_SYSTEM_ACORNYM_NAME.getName()));
@@ -365,9 +449,66 @@ public class FacilityDataTypeDao extends JdbcDaoSupport
         return alternativeNameList;
     }
 
-    private static final String loadAllFacilityDataTypeIdsSql = "Select f.fac_id from FACID_FAC f " 
-        + " inner join FACID_FAC_PRI_GEO_LOC_DESC pg on f.fac_id = pg.fac_id "
-        + " inner join FACID_ENVR_INTR ei on f.fac_id = ei.fac_id where 1=1 ";
+    public ElectronicAddressListDataType loadElectronicAddressListByFacilityId(String facilityId)
+    {
+        if(StringUtils.isBlank(facilityId))
+        {
+            return null;
+        }
+        ObjectFactory fact = new ObjectFactory();
+        ElectronicAddressListDataType electronicAddressList = fact.createElectronicAddressListDataType();
+        @SuppressWarnings("unchecked")
+        List<ElectronicAddressDataType> results = (List<ElectronicAddressDataType>)getJdbcTemplate()
+                        .query(loadElectronicAddressListByFacilityIdSql, new Object[]{facilityId},
+                               new int[]{Types.VARCHAR}, new ElectronicAddressDataTypeRowMapper());
+        electronicAddressList.getElectronicAddress().addAll(results);
+        if(results == null || results.size() == 0)
+        {
+            return null;
+        }
+        return electronicAddressList;
+    }
+
+    public AlternativeIdentificationListDataType loadAlternativeIdentificationListByFacilityId(String facilityId)
+    {
+        if(StringUtils.isBlank(facilityId))
+        {
+            return null;
+        }
+        ObjectFactory fact = new ObjectFactory();
+        AlternativeIdentificationListDataType alternativeIdentificationList = fact.createAlternativeIdentificationListDataType();
+        @SuppressWarnings("unchecked")
+        List<AlternativeIdentificationDataType> results = (List<AlternativeIdentificationDataType>)getJdbcTemplate()
+                        .query(loadAlternativeIdentificationListByFacilityIdSql, new Object[]{facilityId},
+                               new int[]{Types.VARCHAR}, new AlternativeIdentificationDataTypeRowMapper());
+        alternativeIdentificationList.getAlternativeIdentification().addAll(results);
+        if(results == null || results.size() == 0)
+        {
+            return null;
+        }
+        return alternativeIdentificationList;
+    }
+
+    private final static String loadAlternativeIdentificationListByFacilityIdSql = "SELECT FAC_ALT_IDEN_ID, "
+        + " FAC_ID, "
+        + " ALT_IDEN_IDEN, "
+        + " ALT_IDEN_TYPE_TEXT "
+        + " FROM FACID_FAC_ALT_IDEN WHERE FAC_ID = ?";
+
+    private final static String loadElectronicAddressListByFacilityIdSql = "SELECT FAC_ELEC_ADDR_ID, "
+        + " FAC_ID, "
+        + " ELEC_ADDR_TEXT, "
+        + " ELEC_ADDR_TYPE_NAME "
+        + " FROM FACID_FAC_ELEC_ADDR WHERE FAC_ID = ?";
+
+    private static final String loadAllFacilityDataTypeIdsSql = "Select distinct f.fac_id from FACID_FAC f " 
+        + " left join FACID_ENVR_INTR ei on f.fac_id = ei.fac_id "
+        + " left join FACID_FAC_FAC_SIC fsic on f.fac_id = fsic.fac_id "
+        + " left join FACID_FAC_FAC_NAICS fnaics on f.fac_id = fnaics.fac_id "
+        + " left join FACID_ENVR_INTR_FAC_SIC eisic on ei.envr_intr_id = eisic.envr_intr_id "
+        + " left join FACID_ENVR_INTR_FAC_NAICS einaics on ei.envr_intr_id = einaics.envr_intr_id "
+        + " left join FACID_FAC_PRI_GEO_LOC_DESC pg on f.fac_id = pg.fac_id "
+        + " where 1=1 ";
     private static final String loadAllDeletedFacilityDataTypeIdsSql = "Select fac_site_iden_val from FACID_FAC_DEL WHERE 1=1 ";
 
     private static final String loadAlternativeNamesByFacilityIdSql = "SELECT FAC_ID, ALT_NAME_TEXT, ALT_NAME_TYPE_TEXT FROM FACID_ALT_NAME WHERE FAC_ID = ?";
@@ -550,6 +691,18 @@ public class FacilityDataTypeDao extends JdbcDaoSupport
         + " DELETED_ON_DATE, "
         + " LAST_UPDT_DATE "
         + " FROM FACID_FAC_DEL WHERE FAC_SITE_IDEN_VAL = ?";
+
+    private final static String loadSicListByFacilityIdSql = "SELECT FAC_FAC_SIC_ID, "
+        + " FAC_ID, "
+        + " SIC_CODE, "
+        + " SIC_PRI_INDI "
+        + " FROM FACID_FAC_FAC_SIC WHERE FAC_ID = ?";
+
+    private final static String loadNaicsListByFacilityIdSql = "SELECT FAC_FAC_NAICS_ID, "
+        + " FAC_ID, "
+        + " FAC_NAICS_CODE, "
+        + " FAC_NAICS_PRI_INDI "
+        + " FROM FACID_FAC_FAC_NAICS WHERE FAC_ID = ?";
 
     public EnvironmentalInterestDataTypeDao getEnvironmentalInterestDao()
     {

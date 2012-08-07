@@ -162,7 +162,7 @@ public class ActivitySearchController extends BaseSimpleFormController
     }
 
     private String makeReadable(ActivitySearchCriteria criteria,
-            String createdByName, NodeVisit visit) {
+            NodeVisit visit) {
 
         StringBuffer sb = new StringBuffer();
 
@@ -251,7 +251,7 @@ public class ActivitySearchController extends BaseSimpleFormController
 
             // Save it for later
             request.setAttribute("criteria", makeReadable(criteria,
-                    createdByName, visit));
+                    visit));
             setSearchCriteria(request, criteria);
 
             viewToReturn = getResultView();

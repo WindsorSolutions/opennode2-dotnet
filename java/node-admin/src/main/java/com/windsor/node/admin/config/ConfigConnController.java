@@ -125,11 +125,12 @@ public class ConfigConnController extends BaseSimpleFormController implements Co
                         try
                         {
                             connection.close();
+                            DriverManager.deregisterDriver(DriverManager.getDriver(conn.getProviderType()));
                         }
                         catch (Exception e)
                         {
                             //Only log, we should have logged an error by this point if the connection is invalid
-                            logger.warn("Failure closing the connection during the check JDBC connection test.", e);
+                            logger.warn("Failure closing the connection or deregistering the driver during the check JDBC connection test.", e);
                         }
                     }
                 }

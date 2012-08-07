@@ -10,7 +10,7 @@ import com.windsor.node.plugin.facid3.domain.FacilitySummaryDataType;
 import com.windsor.node.plugin.facid3.domain.FacilitySummaryListDataType;
 import com.windsor.node.plugin.facid3.domain.ObjectFactory;
 
-public class FacIdGetFacilityList extends BaseFacIdGetFacilityService
+public class GetFacilityList extends BaseFacIdGetFacilityService
 {
     @Override
     public ProcessContentResult process(NodeTransaction transaction)

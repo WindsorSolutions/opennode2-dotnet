@@ -32,10 +32,8 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.windsor.node.admin.valid;
 
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.Errors;
-
 import com.windsor.node.common.domain.AuthenticationRequest;
 
 public class AdminCredentialValidator extends AbstractValidator {

@@ -45,11 +45,11 @@ public abstract class BaseFacIdGetFacilityService extends BaseFacIdPlugin
                     Boolean.FALSE,
                     "When searching using a NAICS code, the system fill find any facilities that are in that industry, even if the data about that facility is limited to the equivalent SIC code(s).");
     public static final PluginServiceParameterDescriptor CITY_NAME = new PluginServiceParameterDescriptor(
-                    "State",
+                    "City",
                     PluginServiceParameterDescriptor.TYPE_STRING,
                     Boolean.FALSE,
                     "The name of the city, town, village or other locality, when identifiable, within whose boundaries (the majority of) the facility site is located. This is not always the same as the city used for USPS mail delivery.");
-    public static final PluginServiceParameterDescriptor STATE = new PluginServiceParameterDescriptor("County Name",
+    public static final PluginServiceParameterDescriptor STATE = new PluginServiceParameterDescriptor("State",
                     PluginServiceParameterDescriptor.TYPE_STRING, Boolean.FALSE,
                     "The U.S. Postal Service abbreviation that represents the state or state equivalent for the U.S. and Canada. Exact match is required.");
     public static final PluginServiceParameterDescriptor COUNTY_NAME = new PluginServiceParameterDescriptor(
@@ -138,7 +138,7 @@ public abstract class BaseFacIdGetFacilityService extends BaseFacIdPlugin
             }
             params.put(ZIP_CODE.getName(), zipCodeList);
         }
-        if(args.length >= 3)
+        if(args.length >= 3 && StringUtils.isNotBlank(args[2]))
         {
             String tribalLandCode = args[2];
             if(!"N".equalsIgnoreCase(tribalLandCode) && !"Y".equalsIgnoreCase(tribalLandCode))
@@ -148,7 +148,7 @@ public abstract class BaseFacIdGetFacilityService extends BaseFacIdPlugin
             }
             params.put(TRIBAL_LAND_CODE.getName(), tribalLandCode);
         }
-        if(args.length >= 4)
+        if(args.length >= 4 && StringUtils.isNotBlank(args[3]))
         {
             String federalFacility = args[3];
             if(!"N".equalsIgnoreCase(federalFacility) && !"Y".equalsIgnoreCase(federalFacility))
@@ -158,24 +158,20 @@ public abstract class BaseFacIdGetFacilityService extends BaseFacIdPlugin
             }
             params.put(FEDERAL_FACILITY.getName(), federalFacility);
         }
-        if(args.length >= 5)
+        if(args.length >= 5 && StringUtils.isNotBlank(args[4]))
         {
             String facilityName = args[4];
-            if(!"N".equalsIgnoreCase(facilityName) && !"Y".equalsIgnoreCase(facilityName))
+            if(facilityName.length() > 80)
             {
-                logger.error("Facility Name must be Y or N, if it is provided, was \"" + facilityName + "\".");
-                throw new RuntimeException("Facility Name must be Y or N, if it is provided, was \"" + facilityName + "\".");
+                logger.error("Facility Name must not exceed 80 characters, was  \"" + facilityName.length() + "\" characters.");
+                throw new RuntimeException("Facility Name must not exceed 80 characters, was  \"" + facilityName.length() + "\" characters.");
             }
             params.put(FACILITY_NAME.getName(), facilityName);
         }
-        if(args.length >= 6)
+        if(args.length >= 6 && StringUtils.isNotBlank(args[5]))
         {
             String facilityStatus = args[5];
-            if(!"N".equalsIgnoreCase(facilityStatus) && !"Y".equalsIgnoreCase(facilityStatus))
-            {
-                logger.error("Facility Status must be Y or N, if it is provided, was \"" + facilityStatus + "\".");
-                throw new RuntimeException("Facility Status must be Y or N, if it is provided, was \"" + facilityStatus + "\".");
-            }
+            //vague param, refers to Active or Inactive but doesn't give values
             params.put(FACILITY_STATUS.getName(), facilityStatus);
         }
         if(args.length >= 7 && StringUtils.isNotBlank(args[6]))
@@ -200,7 +196,7 @@ public abstract class BaseFacIdGetFacilityService extends BaseFacIdPlugin
             }
             params.put(NAICS_CODE.getName(), naicsCodeList);
         }
-        if(args.length >= 9)
+        if(args.length >= 9 && StringUtils.isNotBlank(args[8]))
         {
             String cityName = args[8];
             List<String> cityNameList = new ArrayList<String>();
@@ -211,7 +207,7 @@ public abstract class BaseFacIdGetFacilityService extends BaseFacIdPlugin
             }
             params.put(CITY_NAME.getName(), cityNameList);
         }
-        if(args.length >= 10)
+        if(args.length >= 10 && StringUtils.isNotBlank(args[9]))
         {
             String state = args[9];
             List<String> stateList = new ArrayList<String>();
@@ -222,7 +218,7 @@ public abstract class BaseFacIdGetFacilityService extends BaseFacIdPlugin
             }
             params.put(STATE.getName(), stateList);
         }
-        if(args.length >= 11)
+        if(args.length >= 11 && StringUtils.isNotBlank(args[10]))
         {
             String countyName = args[10];
             List<String> countyNameList = new ArrayList<String>();
@@ -233,7 +229,8 @@ public abstract class BaseFacIdGetFacilityService extends BaseFacIdPlugin
             }
             params.put(COUNTY_NAME.getName(), countyNameList);
         }
-        if(args.length >= 15)
+        if(args.length >= 15 && (StringUtils.isNotBlank(args[11]) || StringUtils.isNotBlank(args[12]) || StringUtils.isNotBlank(args[13])
+                        || StringUtils.isNotBlank(args[14])))
         {// Take care of bounding coords args, all 4 are required to do the search, must be numeric
             String nBoundingLat = args[11];
             String sBoundingLat = args[12];

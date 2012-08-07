@@ -145,6 +145,13 @@
 		<property name="initialSize" value="${jdbc.initialSize}" />
 		<property name="maxActive" value="${jdbc.maxActive}" />
 		<property name="maxIdle" value="${jdbc.maxIdle}" />
+        <property name="testOnBorrow" value="true"/>
+        <property name="testOnReturn" value="false"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="timeBetweenEvictionRunsMillis" value="10000"/>
+        <property name="numTestsPerEvictionRun" value="5"/>
+        <property name="minEvictableIdleTimeMillis" value="300000" />
+        <property name="validationQuery" value="select count(1) from NAccount"/>
 	</bean>
 	<!-- END DAOs -->
 

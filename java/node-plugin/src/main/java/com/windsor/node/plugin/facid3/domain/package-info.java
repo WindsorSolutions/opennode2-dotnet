@@ -4,8 +4,16 @@
 // Any modifications to this file will be lost upon recompilation of the source schema. 
 // Generated on: 2012.01.24 at 11:33:47 AM PST 
 //
-@XmlJavaTypeAdapter(value=StringAdapter.class, type=String.class)
-@javax.xml.bind.annotation.XmlSchema(namespace = "http://www.exchangenetwork.net/schema/facilityid/3", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
+//@XmlJavaTypeAdapter(value=StringAdapter.class, type=String.class)
+//@javax.xml.bind.annotation.XmlSchema(namespace = "http://www.exchangenetwork.net/schema/facilityid/3", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
+@javax.xml.bind.annotation.XmlSchema(
+                                         namespace = "http://www.exchangenetwork.net/schema/facilityid/3",
+                                         xmlns = {
+                                                     @javax.xml.bind.annotation.XmlNs(prefix = "", namespaceURI="http://www.exchangenetwork.net/schema/facilityid/3"),
+                                                     @javax.xml.bind.annotation.XmlNs(prefix = "gml", namespaceURI="http://www.opengis.net/gml"),
+                                                     @javax.xml.bind.annotation.XmlNs(prefix="xs", namespaceURI="http://www.w3.org/2001/XMLSchema")
+                                                 },
+                                         elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED
+                                    )
 package com.windsor.node.plugin.facid3.domain;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 

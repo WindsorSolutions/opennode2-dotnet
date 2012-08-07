@@ -164,7 +164,7 @@
             <id>facid3</id>
             <properties>
                 <plugin.name>facid3</plugin.name>
-                <plugin.subbuild.number>00</plugin.subbuild.number>
+                <plugin.subbuild.number>04</plugin.subbuild.number>
             </properties>
             <build>
                 <finalName>${plugin.name}</finalName>

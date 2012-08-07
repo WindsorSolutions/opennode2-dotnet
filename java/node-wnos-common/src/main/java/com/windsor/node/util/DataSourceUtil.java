@@ -62,9 +62,6 @@ public final class DataSourceUtil {
         if (StringUtils.isBlank(sourceInfo.getConnectionString())) {
             throw new RuntimeException(PROVIDER_NOT_SET);
         }
-        // TODO verify whether we really need to catch anything here, since
-        // we're already logging what we're doing
-        // try {
 
         BasicDataSource bds = new BasicDataSource();
         LOGGER.debug("Driver Class Name: " + sourceInfo.getProviderType());
@@ -72,14 +69,28 @@ public final class DataSourceUtil {
         LOGGER.debug("Url: " + sourceInfo.getConnectionString());
         bds.setUrl(sourceInfo.getConnectionString());
 
+        //add the following for stability reasons
+        bds.setPoolPreparedStatements(true);
+        bds.setInitialSize(5);
+        bds.setMaxActive(50);
+        bds.setMaxIdle(3);
+        bds.setTestOnBorrow(true);
+        bds.setTestOnReturn(false);
+        bds.setTestWhileIdle(true);
+        bds.setTimeBetweenEvictionRunsMillis(10000);
+        bds.setNumTestsPerEvictionRun(5);
+        bds.setMinEvictableIdleTimeMillis(300000);
+
+        //Oracle needs a special validationQuery
+        if(sourceInfo.getProviderType().equalsIgnoreCase("oracle.jdbc.OracleDriver"))
+        {
+            bds.setValidationQuery("select 1 from dual");
+        }
+        else
+        {
+            bds.setValidationQuery("select 1");
+        }
         return (DataSource) bds;
-
-        // } catch (Exception e) {
-        // e.printStackTrace();
-        // throw new RuntimeException("Error while getting connection from: "
-        // + sourceInfo);
-        // }
-
     }
 
 }

@@ -44,8 +44,37 @@ public class AffiliationListDataTypeDao extends JdbcDaoSupport
         return affiliationList;
     }
 
-    private static final String loadAffiliationListByEnvironmentalInterestIdSql = "SELECT ENVR_INTR_ID, "
-        + " ENVR_INTR_FAC_AFFL_ID, "
+    public AffiliationListDataType loadAffiliationListByFacilityId(String facilityId)
+    {
+        if(StringUtils.isBlank(facilityId))
+        {
+            return null;
+        }
+        ObjectFactory fact = new ObjectFactory();
+        AffiliationListDataType affiliationList = fact.createAffiliationListDataType();
+        @SuppressWarnings("unchecked")
+        List<FacilityAffiliationDataType> results = (List<FacilityAffiliationDataType>)getJdbcTemplate()
+                        .query(loadAffiliationListByFacilityIdSql, new Object[]{facilityId},
+                               new int[]{Types.VARCHAR}, new FacilityAffiliationDataTypeRowMapper(getAffiliationIds()));
+        affiliationList.getFacilityAffiliation().addAll(results);
+        if(results == null || results.size() == 0)
+        {
+            return null;
+        }
+        return affiliationList;
+    }
+
+    private static final String loadAffiliationListByFacilityIdSql = "SELECT FAC_FAC_AFFL_ID, "
+        + " FAC_ID, "
+        + " AFFL_IDEN, "
+        + " AFFL_TYPE_TEXT, "
+        + " AFFL_START_DATE, "
+        + " AFFL_END_DATE, "
+        + " AFFL_STAT_TEXT, "
+        + " AFFL_STAT_DETR_DATE "
+        + " FROM FACID_FAC_FAC_AFFL WHERE FAC_ID = ? ";
+
+    private static final String loadAffiliationListByEnvironmentalInterestIdSql = "SELECT ENVR_INTR_FAC_AFFL_ID, "
         + " ENVR_INTR_ID, "
         + " AFFL_IDEN, "
         + " AFFL_TYPE_TEXT, "

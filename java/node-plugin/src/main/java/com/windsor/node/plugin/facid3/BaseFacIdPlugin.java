@@ -1,15 +1,12 @@
 package com.windsor.node.plugin.facid3;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.sql.DataSource;
-import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import com.windsor.node.common.domain.CommonContentType;
@@ -23,12 +20,11 @@ import com.windsor.node.common.domain.RequestType;
 import com.windsor.node.common.domain.ServiceType;
 import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
 import com.windsor.node.data.dao.jdbc.JdbcTransactionDao;
-import com.windsor.node.plugin.BaseWnosPlugin;
+import com.windsor.node.plugin.common.BaseWnosJaxbPlugin;
 import com.windsor.node.plugin.facid3.dao.AffiliateDataTypeDao;
 import com.windsor.node.plugin.facid3.dao.AffiliationListDataTypeDao;
 import com.windsor.node.plugin.facid3.dao.EnvironmentalInterestDataTypeDao;
 import com.windsor.node.plugin.facid3.dao.FacilityDataTypeDao;
-import com.windsor.node.plugin.facid3.domain.FacilityDetailsDataType;
 import com.windsor.node.plugin.facid3.domain.ObjectFactory;
 import com.windsor.node.service.helper.CompressionService;
 import com.windsor.node.service.helper.IdGenerator;
@@ -36,7 +32,7 @@ import com.windsor.node.service.helper.settings.SettingServiceProvider;
 import com.windsor.node.service.helper.zip.ZipCompressionService;
 
 @SuppressWarnings("restriction")
-public abstract class BaseFacIdPlugin extends BaseWnosPlugin
+public abstract class BaseFacIdPlugin extends BaseWnosJaxbPlugin
 {
     public static final PluginServiceParameterDescriptor FACILITY_SITE_IDENTIFIER = new PluginServiceParameterDescriptor(
                     "Facility Site Identifier", PluginServiceParameterDescriptor.TYPE_STRING, Boolean.TRUE,
@@ -67,6 +63,11 @@ public abstract class BaseFacIdPlugin extends BaseWnosPlugin
         setPublishForEN20(true);
         getDataSources().put(ARG_DS_SOURCE, (DataSource)null);
         getSupportedPluginTypes().add(ServiceType.QUERY_OR_SOLICIT);
+        getConfigurationArguments().put(ARG_ADD_HEADER, "");
+        getConfigurationArguments().put(ARG_HEADER_AUTHOR, "");
+        getConfigurationArguments().put(ARG_HEADER_CONTACT_INFO, "");
+        getConfigurationArguments().put(ARG_HEADER_ORG_NAME, "");
+        getConfigurationArguments().put(ARG_HEADER_PAYLOAD_OP, "");
     }
 
     @Override
@@ -120,18 +121,6 @@ public abstract class BaseFacIdPlugin extends BaseWnosPlugin
         return null;
     }
 
-    protected void writeDocument(JAXBElement<?> document, String pathname) throws JAXBException, IOException
-    {
-        Class<?> clazz = document.getValue().getClass();
-        // doesn't matter what type we use for last argument so long as it is first loaded in this classloader
-        JAXBContext context = JAXBContext.newInstance(clazz.getPackage().getName(), FacilityDetailsDataType.class.getClassLoader());
-        Marshaller m = context.createMarshaller();
-        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-        // m.setProperty(Marshaller.JAXB_SCHEMA_LOCATION, "http://www.epa.gov/xml "); // this needs work, but I think it
-        // can be omitted.
-        m.marshal(document, new FileOutputStream(pathname));
-    }
-
     protected Document makeDocument(NodeTransaction transaction, String docId, String tempFilePath) throws IOException
     {
         Document doc = new Document();
@@ -158,9 +147,10 @@ public abstract class BaseFacIdPlugin extends BaseWnosPlugin
     {
         try
         {
+            jaxbElement = processHeaderDirectives(jaxbElement, docId, transaction.getOperation(), transaction);
             // write the doc
             writeDocument(jaxbElement, tempFilePath);
-    
+
             Document doc = makeDocument(transaction, docId, tempFilePath);
             transaction.getDocuments().add(doc);
             result.getDocuments().add(doc);

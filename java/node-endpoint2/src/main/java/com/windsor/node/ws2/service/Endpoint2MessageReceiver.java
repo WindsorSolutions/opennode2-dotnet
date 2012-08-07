@@ -97,8 +97,8 @@ public class Endpoint2MessageReceiver extends
             // Out Envelop
             org.apache.axiom.soap.SOAPEnvelope envelope = null;
 
-            org.apache.axiom.soap.SOAPBody inputEnvelope = msgContext
-                    .getEnvelope().getBody();
+            /*org.apache.axiom.soap.SOAPBody inputEnvelope = msgContext
+                    .getEnvelope().getBody();*/
 
             // Find the axisOperation that has been set by the Dispatch phase.
             org.apache.axis2.description.AxisOperation op = msgContext
@@ -120,7 +120,7 @@ public class Endpoint2MessageReceiver extends
                 logger.debug("Envelope: " + inEnvelope);
                 SOAPBody inBody = inEnvelope.getBody();
                 OMElement firstElement = inBody.getFirstElement();
-                Map namespaceMap = getEnvelopeNamespaces(inEnvelope);
+                Map<String, String> namespaceMap = getEnvelopeNamespaces(inEnvelope);
 
                 if ("Execute".equals(methodName)) {
 
@@ -465,8 +465,8 @@ public class Endpoint2MessageReceiver extends
         }
     }
 
-    private Object fromOM(org.apache.axiom.om.OMElement param, Class type,
-            Map extraNamespaces) throws AxisFault {
+    private Object fromOM(org.apache.axiom.om.OMElement param, Class<?> type,
+            Map<String, String> extraNamespaces) throws AxisFault {
 
         try {
 
@@ -694,13 +694,14 @@ public class Endpoint2MessageReceiver extends
     /**
      * A utility method that copies the namepaces from the SOAPEnvelope
      */
-    private Map getEnvelopeNamespaces(org.apache.axiom.soap.SOAPEnvelope env) {
+    private Map<String, String> getEnvelopeNamespaces(org.apache.axiom.soap.SOAPEnvelope env) {
 
-        Map returnMap = new HashMap();
-        Iterator namespaceIterator = env.getAllDeclaredNamespaces();
+        Map<String, String> returnMap = new HashMap<String, String>();
+        @SuppressWarnings("unchecked")
+        Iterator<OMNamespace> namespaceIterator = (Iterator<OMNamespace>)env.getAllDeclaredNamespaces();
 
         while (namespaceIterator.hasNext()) {
-            OMNamespace ns = (OMNamespace) namespaceIterator.next();
+            OMNamespace ns = namespaceIterator.next();
             returnMap.put(ns.getPrefix(), ns.getNamespaceURI());
         }
 

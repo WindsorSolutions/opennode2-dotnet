@@ -38,8 +38,6 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
-
-import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -53,6 +51,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  * 
  * @author mchmarny
  */
+//FIXME If this class is kept it should implement Map<String, Object>, probably inherit from TreeMap<String, Object> and be done with it
 public class ByIndexOrNameMap implements Serializable {
 
     private static final long serialVersionUID = 1;
@@ -60,10 +59,10 @@ public class ByIndexOrNameMap implements Serializable {
     private static final int HUNDRED = 100;
     private static final int THOUSAND = 1000;
 
-    private Map map = null;
+    private Map<String, Object> map = null;
 
     public ByIndexOrNameMap() {
-        map = MapUtils.typedMap(new TreeMap(), String.class, Object.class);
+        map = new TreeMap<String, Object>();
     }
 
     public ByIndexOrNameMap(String[] args) {
@@ -76,7 +75,7 @@ public class ByIndexOrNameMap implements Serializable {
         }
     }
 
-    public ByIndexOrNameMap(Map keyValueMap) {
+    public ByIndexOrNameMap(Map<String, Object> keyValueMap) {
         this.setMap(keyValueMap);
     }
 
@@ -89,9 +88,9 @@ public class ByIndexOrNameMap implements Serializable {
         int mapsize = map.size();
 
         String[] arrayOfStrings = new String[mapsize];
-        Iterator keyValuePairs1 = map.entrySet().iterator();
+        Iterator<Map.Entry<String, Object>> keyValuePairs1 = map.entrySet().iterator();
         for (int i = 0; i < mapsize; i++) {
-            Map.Entry entry = (Map.Entry) keyValuePairs1.next();
+            Map.Entry<String, Object> entry = keyValuePairs1.next();
             arrayOfStrings[i] = (String) entry.getValue();
         }
 
@@ -135,7 +134,7 @@ public class ByIndexOrNameMap implements Serializable {
         return map.isEmpty();
     }
 
-    public Set keySet() {
+    public Set<String> keySet() {
         return map.keySet();
     }
 
@@ -143,7 +142,7 @@ public class ByIndexOrNameMap implements Serializable {
         return map.remove(key);
     }
 
-    public Collection values() {
+    public Collection<Object> values() {
         return map.values();
     }
 
@@ -174,8 +173,8 @@ public class ByIndexOrNameMap implements Serializable {
         return result;
     }
 
-    private void setMap(Map map) {
-        this.map = MapUtils.typedMap(map, String.class, Object.class);
+    private void setMap(Map<String, Object> map) {
+        this.map = map;
     }
 
     public int hashCode() {
@@ -195,9 +194,9 @@ public class ByIndexOrNameMap implements Serializable {
 
         StringBuffer sb = new StringBuffer();
 
-        for (Iterator it = map.entrySet().iterator(); it.hasNext();) {
+        for (Iterator<Map.Entry<String, Object>> it = map.entrySet().iterator(); it.hasNext();) {
 
-            Map.Entry entry = (Map.Entry) it.next();
+            Map.Entry<String, Object> entry = it.next();
             sb.append("[key=" + entry.getKey() + ", value=" + entry.getValue()
                     + "] ");
 

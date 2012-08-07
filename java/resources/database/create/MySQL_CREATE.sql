@@ -595,7 +595,7 @@ ALTER TABLE NAccountAuthRequestFlow
 CREATE TABLE NNodeNotification (
     Id            varchar(50) NOT NULL,
     TransactionId varchar(50) NOT NULL,
-    NotifyData    varchar(4000) NOT NULL,
+    NotifyData    varchar(4000) NOT NULL
     ) ENGINE=InnoDB;
 ALTER TABLE NNodeNotification
     ADD CONSTRAINT PK_NNodeNotification

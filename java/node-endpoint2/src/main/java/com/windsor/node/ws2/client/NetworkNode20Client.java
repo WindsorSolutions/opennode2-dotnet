@@ -36,7 +36,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.math.BigInteger;
 import java.net.URL;
-import java.rmi.RemoteException;
 import java.util.Iterator;
 import java.util.Map;
 import javax.activation.DataHandler;
@@ -74,7 +73,6 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sun.misc.BASE64Decoder;
 import com.windsor.node.common.domain.CommonContentType;
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
 import com.windsor.node.common.domain.DataRequest;
@@ -89,7 +87,6 @@ import com.windsor.node.common.domain.WnosNotificationMessageCategoryType;
 import com.windsor.node.common.util.ByIndexOrNameMap;
 import com.windsor.node.common.util.CommonTransactionStatusCodeConverter;
 import com.windsor.node.common.util.NodeClientService;
-import com.windsor.node.ws2.Endpoint2FaultMessage;
 import com.windsor.node.ws2.util.NodeUtil;
 
 public class NetworkNode20Client implements NodeClientService {
@@ -524,7 +521,7 @@ public class NetworkNode20Client implements NodeClientService {
             logger.debug("Request parameters size: " + map.size());
             logger.debug("Request parameters: " + map);
 
-            for (Iterator it = map.keySet().iterator(); it.hasNext();) {
+            for (Iterator<String> it = map.keySet().iterator(); it.hasNext();) {
                 String key = (String) it.next();
                 ParameterType queryParam = new ParameterType();
                 queryParam.setParameterEncoding(EncodingType.XML);
@@ -679,7 +676,7 @@ public class NetworkNode20Client implements NodeClientService {
             if (request.getParameters() != null) {
                 ByIndexOrNameMap map = request.getParameters();
                 logger.debug("Params: " + map);
-                for (Iterator it = map.keySet().iterator(); it.hasNext();) {
+                for (Iterator<String> it = map.keySet().iterator(); it.hasNext();) {
 
                     String key = (String) it.next();
 

@@ -10,7 +10,7 @@ import com.windsor.node.plugin.facid3.domain.FacilityInterestSummaryDataType;
 import com.windsor.node.plugin.facid3.domain.FacilityInterestSummaryListDataType;
 import com.windsor.node.plugin.facid3.domain.ObjectFactory;
 
-public class FacIdGetFacilityInterest extends BaseFacIdGetFacilityService
+public class GetFacilityInterest extends BaseFacIdGetFacilityService
 {
 
     @Override

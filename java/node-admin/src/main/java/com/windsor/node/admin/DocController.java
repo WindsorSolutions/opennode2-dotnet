@@ -52,8 +52,6 @@ public class DocController implements Controller, InitializingBean {
 
     private static final long serialVersionUID = 1;
 
-    private static final String NO_CACHE = "no-cache";
-
     protected Logger logger = LoggerFactory.getLogger(DocController.class);
 
     private TransactionService transactionService;

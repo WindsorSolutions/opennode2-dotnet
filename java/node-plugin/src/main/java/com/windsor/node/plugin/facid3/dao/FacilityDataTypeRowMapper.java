@@ -32,11 +32,13 @@ public class FacilityDataTypeRowMapper implements RowMapper
     protected Logger logger = LoggerFactory.getLogger(getClass());
     private FacilityDataTypeDao facilityDataTypeDao;
     private EnvironmentalInterestDataTypeDao environmentalInterestDao;
+    private AffiliationListDataTypeDao affiliationListDataTypeDao;
 
-    public FacilityDataTypeRowMapper(FacilityDataTypeDao facilityDataTypeDao, EnvironmentalInterestDataTypeDao environmentalInterestDao)
+    public FacilityDataTypeRowMapper(FacilityDataTypeDao facilityDataTypeDao, EnvironmentalInterestDataTypeDao environmentalInterestDao, AffiliationListDataTypeDao affiliationListDataTypeDao)
     {
         setFacilityDataTypeDao(facilityDataTypeDao);
         setEnvironmentalInterestDao(environmentalInterestDao);
+        setAffiliationListDataTypeDao(affiliationListDataTypeDao);
     }
 
     public Object mapRow(ResultSet rs, int rowNum) throws SQLException
@@ -184,8 +186,6 @@ public class FacilityDataTypeRowMapper implements RowMapper
         facility.setEnvironmentalInterestList(getEnvironmentalInterestDao().loadEnvironmentalInterestsByFacilityId(rs.getString("FAC_ID")));
         // END Environmental Interest
 
-        //What do we do with these?
-        //Datasource
         DataSourceDataType dataSource = fact.createDataSourceDataType();
         facility.setDataSource(dataSource);
         dataSource.setInformationSystemAcronymName(rs.getString("INFO_SYS_ACRO_NAME"));
@@ -196,11 +196,26 @@ public class FacilityDataTypeRowMapper implements RowMapper
             cal.setTime(rs.getDate("LAST_UPDT_DATE"));
             dataSource.setLastUpdatedDate(datatypeFactory.newXMLGregorianCalendarDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DAY_OF_MONTH), DatatypeConstants.FIELD_UNDEFINED));
         }
-        //SC: Facility SIC
-        //Facility NAICS
-        //SC: Electronic Address
-        //Alternative Identification
-        //Facility Affiliation
+        // BEGIN SC:Facility SIC
+        facility.setSICList(getFacilityDataTypeDao().loadSicListByFacilityId(rs.getString("FAC_ID")));
+        // END SC:Facility SIC
+
+        // BEGIN SC:Facility NAICS
+        facility.setNAICSList(getFacilityDataTypeDao().loadNaicsListByFacilityId(rs.getString("FAC_ID")));
+        // END SC:Facility NAICS
+
+        // BEGIN SC:Electronic Address
+        facility.setElectronicAddressList(getFacilityDataTypeDao().loadElectronicAddressListByFacilityId(rs.getString("FAC_ID")));
+        // END SC:Electronic Address
+
+        //BEGIN Alternative Identification
+        facility.setAlternativeIdentificationList(getFacilityDataTypeDao().loadAlternativeIdentificationListByFacilityId(rs.getString("FAC_ID")));
+        //END Alternative Identification
+
+        //BEGIN Facility Affiliation
+        facility.setAffiliationList(getAffiliationListDataTypeDao().loadAffiliationListByFacilityId(rs.getString("FAC_ID")));
+        //END Facility Affiliation
+
         return facility;
     }
 
@@ -222,6 +237,16 @@ public class FacilityDataTypeRowMapper implements RowMapper
     public void setEnvironmentalInterestDao(EnvironmentalInterestDataTypeDao environmentalInterestDao)
     {
         this.environmentalInterestDao = environmentalInterestDao;
+    }
+
+    public AffiliationListDataTypeDao getAffiliationListDataTypeDao()
+    {
+        return affiliationListDataTypeDao;
+    }
+
+    public void setAffiliationListDataTypeDao(AffiliationListDataTypeDao affiliationListDataTypeDao)
+    {
+        this.affiliationListDataTypeDao = affiliationListDataTypeDao;
     }
 
 }
