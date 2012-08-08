@@ -101,6 +101,7 @@ public class JdbcTemplateHelper extends TemplateHelper {
     private static final String MS_SQL = "microsoft sql server";
     private static final String MY_SQL = "mysql";
 
+    private Connection connection;
     private int resultingRecordCount = 0;
 
     /**
@@ -126,12 +127,11 @@ public class JdbcTemplateHelper extends TemplateHelper {
         if (dataSource == null) {
             throw new NullArgumentException("null datasource");
         }
-        /*try {*/
-            //Why oh why would someone actually do this?  Left as a monument of shame!
-            //this.connection = dataSource.getConnection();
-        /*} catch (SQLException e) {
+        try {
+            this.connection = dataSource.getConnection();
+        } catch (SQLException e) {
             throw new RuntimeException(e);
-        }*/
+        }
 
     }
 
@@ -584,8 +584,7 @@ public class JdbcTemplateHelper extends TemplateHelper {
     private PreparedStatement getPreparedStatement(String sql, Object[] args,
             int type) {
 
-        //removed as it was one of the stupidest ideas I've seen in 4 years or more
-        //checkConnection();
+        checkConnection();
 
         traceArgs(sql, args, null, type);
 
@@ -655,7 +654,7 @@ public class JdbcTemplateHelper extends TemplateHelper {
         logger.trace("type = " + type);
     }
 
-    /*private void checkConnection() {
+    private void checkConnection() {
 
         if (null == connection) {
             throw new RuntimeException("Connection is null");
@@ -669,7 +668,7 @@ public class JdbcTemplateHelper extends TemplateHelper {
             throw new RuntimeException("Problem checking connection status: "
                     + e);
         }
-    }*/
+    }
 
     /**
      * @return
@@ -688,16 +687,16 @@ public class JdbcTemplateHelper extends TemplateHelper {
     /**
      * @return the connection
      */
-    /*public Connection getConnection() {
+    public Connection getConnection() {
         return connection;
-    }*/
+    }
 
     /**
      * @param connection
      *            the connection to set
      */
-    /*public void setConnection(Connection connection) {
+    public void setConnection(Connection connection) {
         this.connection = connection;
-    }*/
+    }
 
 }
