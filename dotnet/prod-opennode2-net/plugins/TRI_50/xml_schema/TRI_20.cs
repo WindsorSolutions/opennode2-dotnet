@@ -6361,6 +6361,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI5
 		}
 
 
+        [System.Xml.Serialization.XmlElementAttribute("POTWWasteQuantity")]
         public POTWWasteQuantityDataType[] POTWWasteQuantity 
 		{
 			get 
