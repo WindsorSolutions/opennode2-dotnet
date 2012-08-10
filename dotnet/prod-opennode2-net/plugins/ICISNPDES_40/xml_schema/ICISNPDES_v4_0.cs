@@ -4229,18 +4229,18 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_40
     public partial class SSOEventReportKeyElements : BasicPermitKeyElements
     {
 
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 0)]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        public System.DateTime SSOEventDate;
+
         /// <summary>
         /// Added to support new element in v4.0 schema
         /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "Int32", Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "Int32", Order = 1)]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public System.DateTime SSOEventID;
-
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 1)]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public System.DateTime SSOEventDate;
     }
 
     /// <remarks/>
@@ -4775,17 +4775,17 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_40
     public partial class CSOEventReportKeyElements : BasicPermitKeyElements
     {
 
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 0)]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        public System.DateTime CSOEventDate;
+
         /// <summary>
         /// Added to support new element in v4.0 schema
         /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "Int32", Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "Int32", Order = 1)]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public System.DateTime CSOEventID;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 1)]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public System.DateTime CSOEventDate;
     }
 
     /// <remarks/>
