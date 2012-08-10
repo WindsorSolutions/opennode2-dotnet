@@ -4229,8 +4229,16 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_40
     public partial class SSOEventReportKeyElements : BasicPermitKeyElements
     {
 
+        /// <summary>
+        /// Added to support new element in v4.0 schema
+        /// </summary>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "Int32", Order = 0)]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        public System.DateTime SSOEventID;
+
+
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 1)]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public System.DateTime SSOEventDate;
     }
@@ -4726,8 +4734,10 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_40
     public partial class LocalLimitsProgramReportKeyElements : BasicPermitKeyElements
     {
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 0)]
+        /// <summary>
+        /// Element renamed between v3.1 and v4.0. Attribute parameter below handles new XML element name mapping to old v3.1 staging table field name.
+        /// </summary>
+        [System.Xml.Serialization.XmlElementAttribute("LocalLimitsPermittingAuthorityReportReceivedDate", DataType = "date", Order = 0)]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public System.DateTime PermittingAuthorityReportReceivedDate;
     }
@@ -4765,8 +4775,15 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_40
     public partial class CSOEventReportKeyElements : BasicPermitKeyElements
     {
 
+        /// <summary>
+        /// Added to support new element in v4.0 schema
+        /// </summary>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "Int32", Order = 0)]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        public System.DateTime CSOEventID;
+
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 1)]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public System.DateTime CSOEventDate;
     }
@@ -4887,11 +4904,18 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_40
     [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
     public partial class SWEventReportKeyElements : BasicPermitKeyElements
     {
-
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 0)]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public System.DateTime DateStormEventSampled;
+
+        /// <summary>
+        /// Added to support new element in v4.0 schema
+        /// </summary>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "Int32", Order = 1)]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        public System.DateTime SWEventID;
+
     }
 
     /// <remarks/>

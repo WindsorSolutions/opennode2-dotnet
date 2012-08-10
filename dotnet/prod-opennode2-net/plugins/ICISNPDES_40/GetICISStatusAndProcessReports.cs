@@ -30,6 +30,7 @@ ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 */
 #endregion
+#define INCLUDE_TEST_SUBMIT_PROCESSOR
 
 using System;
 using System.Collections.Generic;
@@ -50,7 +51,11 @@ using System.Runtime.Serialization;
 namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_40
 {
     [Serializable]
+#if INCLUDE_TEST_SUBMIT_PROCESSOR
+    public class GetICISStatusAndProcessReports : BaseWNOSPlugin, ITaskProcessor, ISubmitProcessor
+#else // INCLUDE_TEST_SUBMIT_PROCESSOR
     public class GetICISStatusAndProcessReports : BaseWNOSPlugin, ITaskProcessor
+#endif // INCLUDE_TEST_SUBMIT_PROCESSOR
     {
         protected const string CONFIG_PARAM_STORED_PROC_NAME = "Postprocessing Procedure Name";
         protected const string CONFIG_PARAM_STORED_PROC_TIMEOUT = "Postprocessing Procedure Execute Timeout (in seconds)";
@@ -88,6 +93,20 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_40
             ConfigurationArguments[CONFIG_PARAM_NOTIFY_EMAILS] = null;
 
             DataProviders[DATA_PARAM_DESTINATION] = null;
+        }
+        // TSM: The following method is for testing purposes only, to enable, have this class implement ISubmitProcessor above
+        public virtual void ProcessSubmit(string transactionId)
+        {
+            LazyInit();
+
+            IList<string> docNames = _documentManager.GetAllDocumentNames(transactionId);
+
+            _submissionTrackingDataType = new SubmissionTrackingDataType();
+            _submissionTrackingDataType.SubmissionTransactionId = transactionId;
+            _submissionTrackingDataTypePK = Guid.NewGuid().ToString();
+
+            Windsor.Node2008.WNOSDomain.Document zipResponseFile;
+            DoProcessResponseDocuments(transactionId, docNames, out zipResponseFile);
         }
         public virtual void ProcessTaskInit(string requestId)
         {
@@ -182,10 +201,34 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_40
             AppendAuditLogEvent("Transforming accepted response file ...");
             string responseAcceptedTransformedFilePath = TransformResponseFile40(responseAcceptedFilePath);
             SubmissionResultList acceptedList = _serializationHelper.Deserialize<SubmissionResultList>(responseAcceptedTransformedFilePath);
+#if INCLUDE_TEST_SUBMIT_PROCESSOR
+            if (DebugUtils.IsDebugging)
+            {
+                foreach (var submissionResultsDataType in acceptedList.SubmissionResult)
+                {
+                    if (string.IsNullOrEmpty(submissionResultsDataType.SubmissionTransactionId))
+                    {
+                        throw new ArgException("submissionResultsDataType.SubmissionTransactionId is null");
+                    }
+                }
+            }
+#endif // INCLUDE_TEST_SUBMIT_PROCESSOR
 
             AppendAuditLogEvent("Transforming rejected response file ...");
             string responseRejectedTransformedFilePath = TransformResponseFile40(responseRejectedFilePath);
             SubmissionResultList rejectedList = _serializationHelper.Deserialize<SubmissionResultList>(responseRejectedTransformedFilePath);
+#if INCLUDE_TEST_SUBMIT_PROCESSOR
+            if (DebugUtils.IsDebugging)
+            {
+                foreach (var submissionResultsDataType in rejectedList.SubmissionResult)
+                {
+                    if (string.IsNullOrEmpty(submissionResultsDataType.SubmissionTransactionId))
+                    {
+                        throw new ArgException("submissionResultsDataType.SubmissionTransactionId is null");
+                    }
+                }
+            }
+#endif // INCLUDE_TEST_SUBMIT_PROCESSOR
 
             List<SubmissionResultsDataType> saveList = new List<SubmissionResultsDataType>(CollectionUtils.Count(acceptedList.SubmissionResult) +
                                                                                            CollectionUtils.Count(rejectedList.SubmissionResult));
@@ -193,13 +236,13 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_40
             DateTime now = DateTime.Now;
             CollectionUtils.ForEach(acceptedList.SubmissionResult, delegate(SubmissionResultsDataType result)
             {
-                DebugUtils.AssertDebuggerBreak(result.SubmissionTransactionId == _submissionTrackingDataType.SubmissionTransactionId);
+                //DebugUtils.AssertDebuggerBreak(result.SubmissionTransactionId == _submissionTrackingDataType.SubmissionTransactionId);
                 result.CreatedDateTime = now;
                 saveList.Add(result);
             });
             CollectionUtils.ForEach(rejectedList.SubmissionResult, delegate(SubmissionResultsDataType result)
             {
-                DebugUtils.AssertDebuggerBreak(result.SubmissionTransactionId == _submissionTrackingDataType.SubmissionTransactionId);
+                //DebugUtils.AssertDebuggerBreak(result.SubmissionTransactionId == _submissionTrackingDataType.SubmissionTransactionId);
                 result.CreatedDateTime = now;
                 saveList.Add(result);
             });

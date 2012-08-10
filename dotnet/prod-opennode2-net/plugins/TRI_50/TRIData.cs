@@ -58,7 +58,8 @@ namespace Windsor.Node2008.WNOSPlugin.TRI5
         TRI_TRANSFER_Q,
         TRI_UIC_ID,
         TRI_WASTE_TREAT_DTL,
-        TRI_WASTE_TREAT_METH
+        TRI_WASTE_TREAT_METH,
+        TRI_POTW_WASTE_QUANTITY,
     }
 
 
@@ -655,11 +656,6 @@ namespace Windsor.Node2008.WNOSPlugin.TRI5
 
                         #region Report Detail
 
-                        ToxicEquivalencyIdentificationDataType teidt2 = new ToxicEquivalencyIdentificationDataType();
-                        if ((rep.POTWWasteQuantity != null) && (rep.POTWWasteQuantity.ToxicEquivalencyIdentification != null))
-                        {
-                            teidt2 = rep.POTWWasteQuantity.ToxicEquivalencyIdentification;
-                        }
                         ToxicEquivalencyIdentificationDataType teidtOneTime =
                             GetAnonymousTypeValueFromList(rep.SourceReductionQuantity.Items, typeof(ToxicEquivalencyIdentificationDataType)) as ToxicEquivalencyIdentificationDataType;
                         if (teidtOneTime == null)
@@ -716,11 +712,21 @@ namespace Windsor.Node2008.WNOSPlugin.TRI5
                         rep.ChemicalActivitiesAndUses.ChemicalSalesDistributionIndicator,
                         rep.ChemicalActivitiesAndUses.ChemicalUsedProcessedIndicator,
                         rep.MaximumChemicalAmountCode,
-                        GetAnonymousTypeValueFromList(rep.POTWWasteQuantity.Items, rep.POTWWasteQuantity.ItemsElementName, "WasteQuantityMeasure", typeof(decimal)),
-                        GetAnonymousTypeValueFromList(rep.POTWWasteQuantity.Items, rep.POTWWasteQuantity.ItemsElementName, "WasteQuantityNAIndicator", typeof(bool)),
-                        GetAnonymousTypeValueFromList(rep.POTWWasteQuantity.Items, rep.POTWWasteQuantity.ItemsElementName, "WasteQuantityRangeCode", typeof(string)),
-                        GetAnonymousTypeValue(rep.POTWWasteQuantity.Item, typeof(string)),
-                        GetAnonymousTypeValue(rep.POTWWasteQuantity.Item, typeof(bool)),
+
+
+                        //TSM: v5, five fields below have moved to the new TRI_POTW_WASTE_QUANTITY table
+                        //GetAnonymousTypeValueFromList(rep.POTWWasteQuantity.Items, rep.POTWWasteQuantity.ItemsElementName, "WasteQuantityMeasure", typeof(decimal)),
+                        //GetAnonymousTypeValueFromList(rep.POTWWasteQuantity.Items, rep.POTWWasteQuantity.ItemsElementName, "WasteQuantityNAIndicator", typeof(bool)),
+                        //GetAnonymousTypeValueFromList(rep.POTWWasteQuantity.Items, rep.POTWWasteQuantity.ItemsElementName, "WasteQuantityRangeCode", typeof(string)),
+                        //GetAnonymousTypeValue(rep.POTWWasteQuantity.Item, typeof(string)),
+                        //GetAnonymousTypeValue(rep.POTWWasteQuantity.Item, typeof(bool)),
+                        null, // WASTE_Q_ME
+                        null, // WASTE_Q_ME_NA_IND
+                        null, // WASTE_Q_RANGE_CODE
+                        null, // Q_BASIS_EST_CODE
+                        null, // Q_BASIS_EST_NA_IND
+
+
                         GetAnonymousTypeValueFromList(rep.SourceReductionQuantity.Items, typeof(decimal)),
                         GetAnonymousTypeValueFromList(rep.SourceReductionQuantity.Items, typeof(bool)),
                         GetAnonymousTypeValue(rep.SourceReductionQuantity.Item1, typeof(decimal)),
@@ -732,29 +738,57 @@ namespace Windsor.Node2008.WNOSPlugin.TRI5
                         ParseItemFromArray(rep.ChemicalReportRevisionCode, 1),
                         ParseItemFromArray(rep.ChemicalReportWithdrawalCode, 0),
                         ParseItemFromArray(rep.ChemicalReportWithdrawalCode, 1),
-                        GetAnonymousTypeValue(teidt2.ToxicEquivalency1Value, typeof(string)),
-                        GetAnonymousTypeValue(teidt2.ToxicEquivalency2Value, typeof(string)),
-                        GetAnonymousTypeValue(teidt2.ToxicEquivalency3Value, typeof(string)),
-                        GetAnonymousTypeValue(teidt2.ToxicEquivalency4Value, typeof(string)),
-                        GetAnonymousTypeValue(teidt2.ToxicEquivalency5Value, typeof(string)),
-                        GetAnonymousTypeValue(teidt2.ToxicEquivalency6Value, typeof(string)),
-                        GetAnonymousTypeValue(teidt2.ToxicEquivalency7Value, typeof(string)),
-                        GetAnonymousTypeValue(teidt2.ToxicEquivalency8Value, typeof(string)),
-                        GetAnonymousTypeValue(teidt2.ToxicEquivalency9Value, typeof(string)),
-                        GetAnonymousTypeValue(teidt2.ToxicEquivalency10Value, typeof(string)),
-                        GetAnonymousTypeValue(teidt2.ToxicEquivalency11Value, typeof(string)),
-                        GetAnonymousTypeValue(teidt2.ToxicEquivalency12Value, typeof(string)),
-                        GetAnonymousTypeValue(teidt2.ToxicEquivalency13Value, typeof(string)),
-                        GetAnonymousTypeValue(teidt2.ToxicEquivalency14Value, typeof(string)),
-                        GetAnonymousTypeValue(teidt2.ToxicEquivalency15Value, typeof(string)),
-                        GetAnonymousTypeValue(teidt2.ToxicEquivalency16Value, typeof(string)),
-                        GetAnonymousTypeValue(teidt2.ToxicEquivalency17Value, typeof(string)),
-                        ToxicEquivalencyIndicatorySpecified(teidt2),
-                        GetAnonymousTypeValueFromList(rep.POTWWasteQuantity.Items, rep.POTWWasteQuantity.ItemsElementName, "WasteQuantityCatastrophicMeasure", typeof(decimal)),
-                        GetAnonymousTypeValueFromList(rep.POTWWasteQuantity.Items, rep.POTWWasteQuantity.ItemsElementName, "WasteQuantityRangeNumericBasisValue", typeof(decimal)),
-                        GetSpecifiedValue(rep.POTWWasteQuantity.QuantityDisposedLandfillPercentValueSpecified, rep.POTWWasteQuantity.QuantityDisposedLandfillPercentValue),
-                        GetSpecifiedValue(rep.POTWWasteQuantity.QuantityDisposedOtherPercentValueSpecified, rep.POTWWasteQuantity.QuantityDisposedOtherPercentValue),
-                        GetSpecifiedValue(rep.POTWWasteQuantity.QuantityTreatedPercentValueSpecified, rep.POTWWasteQuantity.QuantityTreatedPercentValue),
+
+
+                        //TSM: v5, twenty-three fields below have moved to the new TRI_POTW_WASTE_QUANTITY table
+                        //GetAnonymousTypeValue(teidt2.ToxicEquivalency1Value, typeof(string)),
+                        //GetAnonymousTypeValue(teidt2.ToxicEquivalency2Value, typeof(string)),
+                        //GetAnonymousTypeValue(teidt2.ToxicEquivalency3Value, typeof(string)),
+                        //GetAnonymousTypeValue(teidt2.ToxicEquivalency4Value, typeof(string)),
+                        //GetAnonymousTypeValue(teidt2.ToxicEquivalency5Value, typeof(string)),
+                        //GetAnonymousTypeValue(teidt2.ToxicEquivalency6Value, typeof(string)),
+                        //GetAnonymousTypeValue(teidt2.ToxicEquivalency7Value, typeof(string)),
+                        //GetAnonymousTypeValue(teidt2.ToxicEquivalency8Value, typeof(string)),
+                        //GetAnonymousTypeValue(teidt2.ToxicEquivalency9Value, typeof(string)),
+                        //GetAnonymousTypeValue(teidt2.ToxicEquivalency10Value, typeof(string)),
+                        //GetAnonymousTypeValue(teidt2.ToxicEquivalency11Value, typeof(string)),
+                        //GetAnonymousTypeValue(teidt2.ToxicEquivalency12Value, typeof(string)),
+                        //GetAnonymousTypeValue(teidt2.ToxicEquivalency13Value, typeof(string)),
+                        //GetAnonymousTypeValue(teidt2.ToxicEquivalency14Value, typeof(string)),
+                        //GetAnonymousTypeValue(teidt2.ToxicEquivalency15Value, typeof(string)),
+                        //GetAnonymousTypeValue(teidt2.ToxicEquivalency16Value, typeof(string)),
+                        //GetAnonymousTypeValue(teidt2.ToxicEquivalency17Value, typeof(string)),
+                        //ToxicEquivalencyIndicatorySpecified(teidt2),
+                        //GetAnonymousTypeValueFromList(rep.POTWWasteQuantity.Items, rep.POTWWasteQuantity.ItemsElementName, "WasteQuantityCatastrophicMeasure", typeof(decimal)),
+                        //GetAnonymousTypeValueFromList(rep.POTWWasteQuantity.Items, rep.POTWWasteQuantity.ItemsElementName, "WasteQuantityRangeNumericBasisValue", typeof(decimal)),
+                        //GetSpecifiedValue(rep.POTWWasteQuantity.QuantityDisposedLandfillPercentValueSpecified, rep.POTWWasteQuantity.QuantityDisposedLandfillPercentValue),
+                        //GetSpecifiedValue(rep.POTWWasteQuantity.QuantityDisposedOtherPercentValueSpecified, rep.POTWWasteQuantity.QuantityDisposedOtherPercentValue),
+                        //GetSpecifiedValue(rep.POTWWasteQuantity.QuantityTreatedPercentValueSpecified, rep.POTWWasteQuantity.QuantityTreatedPercentValue),
+                        null, // TOX_EQ_VAL1_POTW
+                        null, // TOX_EQ_VAL2_POTW
+                        null, // TOX_EQ_VAL3_POTW
+                        null, // TOX_EQ_VAL4_POTW
+                        null, // TOX_EQ_VAL5_POTW
+                        null, // TOX_EQ_VAL6_POTW
+                        null, // TOX_EQ_VAL7_POTW
+                        null, // TOX_EQ_VAL8_POTW
+                        null, // TOX_EQ_VAL9_POTW
+                        null, // TOX_EQ_VAL10_POTW
+                        null, // TOX_EQ_VAL11_POTW
+                        null, // TOX_EQ_VAL12_POTW
+                        null, // TOX_EQ_VAL13_POTW
+                        null, // TOX_EQ_VAL14_POTW
+                        null, // TOX_EQ_VAL15_POTW
+                        null, // TOX_EQ_VAL16_POTW
+                        null, // TOX_EQ_VAL17_POTW
+                        null, // TOX_EQ_NA_IND_POTW
+                        null, // WASTE_Q_CATASTROPHIC_MEASURE
+                        null, // WASTE_Q_RANGE_NUM_BASIS_VALUE
+                        null, // Q_DISP_LANDFILL_PERCENT_VALUE
+                        null, // Q_DISP_OTHER_PERCENT_VALUE
+                        null, // Q_TREATED_PERCENT_VALUE
+
+
                         GetAnonymousTypeValue(teidtOneTime.ToxicEquivalency1Value, typeof(string)),
                         GetAnonymousTypeValue(teidtOneTime.ToxicEquivalency2Value, typeof(string)),
                         GetAnonymousTypeValue(teidtOneTime.ToxicEquivalency3Value, typeof(string)),
@@ -773,13 +807,61 @@ namespace Windsor.Node2008.WNOSPlugin.TRI5
                         GetAnonymousTypeValue(teidtOneTime.ToxicEquivalency16Value, typeof(string)),
                         GetAnonymousTypeValue(teidtOneTime.ToxicEquivalency17Value, typeof(string)),
                         ToxicEquivalencyIndicatorySpecified(teidtOneTime),
-                        GetAnonymousTypeValueFromList(rep.SourceReductionQuantity.Items, typeof(string))
+                        GetAnonymousTypeValueFromList(rep.SourceReductionQuantity.Items, typeof(string)),
+                        rep.MiscellaneousInformationText
                         );
 
                         #endregion
 
 
 
+                        #region TRI_POTW_WASTE_QUANTITY
+                        if ((rep.POTWWasteQuantity != null) && (rep.POTWWasteQuantity.Length > 0))
+                        {
+                            foreach (POTWWasteQuantityDataType potw in rep.POTWWasteQuantity)
+                            {
+                                ToxicEquivalencyIdentificationDataType teidt2 = new ToxicEquivalencyIdentificationDataType();
+                                if (potw.ToxicEquivalencyIdentification != null)
+                                {
+                                    teidt2 = potw.ToxicEquivalencyIdentification;
+                                }
+                                Execute(TRIDBTableType.TRI_POTW_WASTE_QUANTITY, NewID(),
+                                        rep.PK,
+                                        GetSpecifiedValue(potw.POTWSequenceNumberSpecified, potw.POTWSequenceNumber),
+                                        GetAnonymousTypeValueFromList(potw.Items, potw.ItemsElementName, "WasteQuantityMeasure", typeof(decimal)),
+                                        GetAnonymousTypeValueFromList(potw.Items, potw.ItemsElementName, "WasteQuantityCatastrophicMeasure", typeof(decimal)),
+                                        GetAnonymousTypeValueFromList(potw.Items, potw.ItemsElementName, "WasteQuantityRangeCode", typeof(string)),
+                                        GetAnonymousTypeValueFromList(potw.Items, potw.ItemsElementName, "WasteQuantityRangeNumericBasisValue", typeof(decimal)),
+                                        GetAnonymousTypeValueFromList(potw.Items, potw.ItemsElementName, "WasteQuantityNAIndicator", typeof(bool)),
+                                        GetAnonymousTypeValue(potw.Item, typeof(string)),
+                                        GetAnonymousTypeValue(potw.Item, typeof(bool)),
+                                        GetAnonymousTypeValue(teidt2.ToxicEquivalency1Value, typeof(string)),
+                                        GetAnonymousTypeValue(teidt2.ToxicEquivalency2Value, typeof(string)),
+                                        GetAnonymousTypeValue(teidt2.ToxicEquivalency3Value, typeof(string)),
+                                        GetAnonymousTypeValue(teidt2.ToxicEquivalency4Value, typeof(string)),
+                                        GetAnonymousTypeValue(teidt2.ToxicEquivalency5Value, typeof(string)),
+                                        GetAnonymousTypeValue(teidt2.ToxicEquivalency6Value, typeof(string)),
+                                        GetAnonymousTypeValue(teidt2.ToxicEquivalency7Value, typeof(string)),
+                                        GetAnonymousTypeValue(teidt2.ToxicEquivalency8Value, typeof(string)),
+                                        GetAnonymousTypeValue(teidt2.ToxicEquivalency9Value, typeof(string)),
+                                        GetAnonymousTypeValue(teidt2.ToxicEquivalency10Value, typeof(string)),
+                                        GetAnonymousTypeValue(teidt2.ToxicEquivalency11Value, typeof(string)),
+                                        GetAnonymousTypeValue(teidt2.ToxicEquivalency12Value, typeof(string)),
+                                        GetAnonymousTypeValue(teidt2.ToxicEquivalency13Value, typeof(string)),
+                                        GetAnonymousTypeValue(teidt2.ToxicEquivalency14Value, typeof(string)),
+                                        GetAnonymousTypeValue(teidt2.ToxicEquivalency15Value, typeof(string)),
+                                        GetAnonymousTypeValue(teidt2.ToxicEquivalency16Value, typeof(string)),
+                                        GetAnonymousTypeValue(teidt2.ToxicEquivalency17Value, typeof(string)),
+                                        ToxicEquivalencyIndicatorySpecified(teidt2),
+                                        GetSpecifiedValue(potw.QuantityDisposedLandfillPercentValueSpecified, potw.QuantityDisposedLandfillPercentValue),
+                                        GetSpecifiedValue(potw.QuantityDisposedOtherPercentValueSpecified, potw.QuantityDisposedOtherPercentValue),
+                                        GetSpecifiedValue(potw.QuantityTreatedPercentValueSpecified, potw.QuantityTreatedPercentValue)
+                                        );
+                            }
+                        }
+                        #endregion
+
+                        
                         #region TRI_REPORT_VALIDATION
                         if (rep.ReportMetaData.ReportValidation != null)
                         {
@@ -795,6 +877,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI5
                             }
                         }
                         #endregion
+
 
                         #region TRI_ONSITE_TREATED_QUANTITY
                         if (rep.SourceReductionQuantity.OnsiteTreatedQuantity != null)

@@ -3730,6 +3730,16 @@ namespace Windsor.Node2008.WNOSPlugin.TRI5
         private bool quantityTreatedPercentValueFieldSpecified;
 
         /// <remarks/>
+        //TSM: POTWSequenceNumber and POTWSequenceNumberSpecified are new for v5
+        [System.Xml.Serialization.XmlElementAttribute()]
+        [System.ComponentModel.DescriptionAttribute("The sequence in which a POTW is reported on a Form R submission.")]
+        public int POTWSequenceNumber;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool POTWSequenceNumberSpecified;
+
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("WasteQuantityCatastrophicMeasure", typeof(decimal))]
         [System.Xml.Serialization.XmlElementAttribute("WasteQuantityMeasure", typeof(decimal))]
         [System.Xml.Serialization.XmlElementAttribute("WasteQuantityNAIndicator", typeof(bool))]
@@ -5820,7 +5830,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI5
     
 		private OnsiteReleaseQuantityDataType[] onsiteReleaseQuantityField;
 
-        private POTWWasteQuantityDataType pOTWWasteQuantityField = new POTWWasteQuantityDataType();
+        private POTWWasteQuantityDataType[] pOTWWasteQuantityField;
     
 		private TransferLocationDataType[] transferLocationField;
     
@@ -6351,7 +6361,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI5
 		}
 
 
-        public POTWWasteQuantityDataType POTWWasteQuantity 
+        public POTWWasteQuantityDataType[] POTWWasteQuantity 
 		{
 			get 
 			{
@@ -6485,7 +6495,9 @@ namespace Windsor.Node2008.WNOSPlugin.TRI5
 				this.optionalInformationTextField = value;
 			}
 		}
-	}
+        // TSM: v5
+        public string MiscellaneousInformationText;
+    }
 
 
 	
