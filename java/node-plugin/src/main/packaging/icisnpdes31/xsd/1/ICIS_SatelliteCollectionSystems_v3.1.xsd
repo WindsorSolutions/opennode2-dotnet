@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:icis="http://www.exchangenetwork.net/schema/icis/3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/icis/3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="3">
+	
+	<xsd:include schemaLocation="ICIS_Common_v3.1.xsd"/>
+	
+	<xsd:annotation>
+		<xsd:documentation>Schema Name: ICIS_SatelliteCollectionSystems_v3.1.xsd</xsd:documentation>
+		<xsd:documentation>Current Version Available: http://www.exchangenetwork.net/schema/icis/3</xsd:documentation>
+		<xsd:documentation>Description: ICIS-NPDES Satellite collection systems input format</xsd:documentation>
+		<xsd:documentation>Application: ICIS-NPDES</xsd:documentation>
+		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
+		<xsd:documentation>Point of Contact: EPA/Alison Kittle</xsd:documentation>
+		<xsd:documentation>Data Written: July 2006</xsd:documentation>
+		<xsd:documentation>Last Date Modified: 2012-02-16</xsd:documentation>
+	</xsd:annotation>
+	
+	<xsd:element name="SatelliteCollectionSystem" type="icis:SatelliteCollectionSystem"/>
+	<xsd:element name="SatelliteCollectionSystemName" type="icis:StringMin1Max50Type"/>
+	<xsd:element name="SatelliteCollectionSystemIdentifier" type="icis:StringMin1Max9Type"/>
+	
+	<xsd:complexType name="SatelliteCollectionSystem">
+		<xsd:sequence>
+			<xsd:element ref="icis:SatelliteCollectionSystemIdentifier"/>
+			<xsd:element ref="icis:SatelliteCollectionSystemName"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

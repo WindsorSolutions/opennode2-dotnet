@@ -49,8 +49,8 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>2.3</version>
                     <configuration>
-                        <source>1.5</source>
-                        <target>1.5</target>
+                        <source>1.6</source>
+                        <target>1.6</target>
                         <includes>
                             <include>**/com/windsor/node/plugin/${plugin.name}/**</include>
                             <include>**/com/windsor/node/plugin/common/**</include>
@@ -205,6 +205,36 @@
             </properties>
             <build>
                 <finalName>${plugin.name}</finalName>
+            </build>
+        </profile>
+        <profile>
+            <id>icisnpdes31</id>
+            <properties>
+                <plugin.name>icisnpdes31</plugin.name>
+                <plugin.subbuild.number>00</plugin.subbuild.number>
+            </properties>
+            <build>
+                <finalName>${plugin.name}</finalName>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jvnet.hyperjaxb3</groupId>
+                        <artifactId>maven-hyperjaxb3-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>generate</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <variant>jpa2</variant>
+                            <extension>true</extension>
+                            <roundtripTestClassName>RoundtripTest</roundtripTestClassName>
+                            <schemaDirectory>${basedir}/src/main/packaging/icisnpdes31/xsd</schemaDirectory>
+                            <generatePackage>com.windsor.node.plugin.icisnpdes31.generated</generatePackage>
+                        </configuration>
+                    </plugin>
+                </plugins>
             </build>
         </profile>
         <profile>

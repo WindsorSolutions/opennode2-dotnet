@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<xsd:schema xmlns:icis="http://www.exchangenetwork.net/schema/icis/3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/icis/3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="3">
+	<xsd:annotation>
+		<xsd:documentation>
+            Schema Name : ICIS_ResponseFileSubmissionAcceptedKey_v3.1.xsd
+            Current Version Available: http://www.exchangenetwork.net/schema/icis/3
+            Description : Component SubmissionAcceptedKey provides the options for uniquely identifying the part of the submission that was accepted. 
+    		Developed by : ICIS Full Batch IPT
+    		Point of Contact : Won Lee, U.S. EPA
+			Last Date Modified: 2012-02-16
+        </xsd:documentation>
+	</xsd:annotation>
+	<xsd:include schemaLocation="ICIS_ResponseFileShared_v3.1.xsd"/>
+	<xsd:element name="SubmissionAcceptedKey" type="icis:SubmissionAcceptedKeyDataType">
+		<xsd:annotation>
+			<xsd:documentation>Provides the keys that uniquely identify the part of a submission that was accepted.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="SubmissionAcceptedKeyDataType">
+		<xsd:sequence>
+			<xsd:choice>
+				<xsd:element ref="icis:BiosolidsProgramReportIdentifier"/>
+				<xsd:element ref="icis:CAFOAnnualProgramReportIdentifier"/>
+				<xsd:element ref="icis:ComplianceMonitoringIdentifier"/>
+				<xsd:element ref="icis:ComplianceMonitoringLinkageIdentifier"/>
+				<xsd:element ref="icis:ComplianceScheduleIdentifier"/>
+				<xsd:element ref="icis:ComplianceScheduleEventIdentifier"/>
+				<xsd:element ref="icis:CSOEventReportIdentifier"/>
+				<xsd:element ref="icis:DischargeMonitoringReportIdentifier"/>
+				<xsd:element ref="icis:DMRParameterIdentifier"/>
+				<xsd:element ref="icis:DMRProgramReportLinkageIdentifier"/>
+				<xsd:element ref="icis:DMRViolationIdentifier"/>
+				<xsd:element ref="icis:EffluentTradePartnerReportIdentifier"/>
+				<xsd:element ref="icis:EnforcementActionMilestoneReportIdentifier"/>
+				<xsd:element ref="icis:EnforcementActionViolationLinkageIdentifier"/>
+				<xsd:element ref="icis:FederalComplianceMonitoringIdentifier"/>
+				<xsd:element ref="icis:FormalEnforcementActionIdentifier"/>
+				<xsd:element ref="icis:HistoricalPermitScheduleEventIdentifier"/>
+				<xsd:element ref="icis:InformalEnforcementActionIdentifier"/>
+				<xsd:element ref="icis:LimitSegmentIdentifier"/>
+				<xsd:element ref="icis:LimitSetIdentifier"/>
+				<xsd:element ref="icis:LocalLimitsProgramReportIdentifier"/>
+				<xsd:element ref="icis:NarrativeConditionScheduleIdentifier"/>
+				<xsd:element ref="icis:ParameterLimitIdentifier"/>
+				<xsd:element ref="icis:PermitRecordIdentifier"/>
+				<xsd:element ref="icis:PermitTrackingEventIdentifier"/>
+				<xsd:element ref="icis:PermittedFeatureRecordIdentifier"/>
+				<xsd:element ref="icis:PretreatmentPerformanceSummaryIdentifier"/>
+				<xsd:element ref="icis:ScheduleEventViolationIdentifier"/>
+				<xsd:element ref="icis:SingleEventIdentifier"/>
+				<xsd:element ref="icis:SSOAnnualReportIdentifier"/>
+				<xsd:element ref="icis:SSOEventReportIdentifier"/>
+				<xsd:element ref="icis:SSOMonthlyEventReportIdentifier"/>
+				<xsd:element ref="icis:SWEventReportIdentifier"/>
+				<xsd:element ref="icis:SWMS4ProgramReportIdentifier"/>
+			</xsd:choice>
+			<xsd:element ref="icis:SubmissionTransactionTypeCode"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

@@ -66,8 +66,8 @@
                 <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <configuration>
-                        <source>1.5</source>
-                        <target>1.5</target>
+                        <source>1.6</source>
+                        <target>1.6</target>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -154,6 +154,16 @@
         	<groupId>com.sun.xml.bind</groupId>
         	<artifactId>jaxb-impl</artifactId>
         	<version>2.2.5-2</version>
+        </dependency>
+        <dependency>
+        	<groupId>org.hibernate.javax.persistence</groupId>
+        	<artifactId>hibernate-jpa-2.0-api</artifactId>
+        	<version>1.0.1.Final</version>
+        </dependency>
+        <dependency>
+        	<groupId>org.jvnet.hyperjaxb3</groupId>
+        	<artifactId>hyperjaxb3-ejb-runtime</artifactId>
+        	<version>0.5.6</version>
         </dependency>
     </dependencies>
     <dependencyManagement>
@@ -274,6 +284,16 @@
                 <artifactId>javax.persistence</artifactId>
                 <version>2.0.0</version>
             </dependency> -->
+            <dependency>
+                <groupId>org.hibernate.javax.persistence</groupId>
+                <artifactId>hibernate-jpa-2.0-api</artifactId>
+                <version>1.0.1.Final</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jvnet.hyperjaxb3</groupId>
+                <artifactId>hyperjaxb3-ejb-runtime</artifactId>
+                <version>0.5.6</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <repositories>

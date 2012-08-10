@@ -11,31 +11,39 @@
     <packaging>pom</packaging>
     <name>Node Assembly Project</name>
 
-    <build>
-        <plugins>
-            <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <inherited>false</inherited>
-                <executions>
-                    <execution>
-                        <id>package-bin</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
+    <profiles>
+        <profile>
+            <id>dist</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-assembly-plugin</artifactId>
                         <inherited>false</inherited>
-                        <configuration>
-                            <appendAssemblyId>false</appendAssemblyId>
-                            <finalName>Java_OpenNode2_v${project.version}_${build.profile}</finalName>
-                            <outputDirectory>${project.build.directory}/../../dist</outputDirectory>
-                            <descriptors>
-                                <descriptor>src/main/assembly/assembly.xml</descriptor>
-                            </descriptors>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+                        <executions>
+                            <execution>
+                                <id>package-bin</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>single</goal>
+                                </goals>
+                                <inherited>false</inherited>
+                                <configuration>
+                                    <appendAssemblyId>false</appendAssemblyId>
+                                    <finalName>Java_OpenNode2_v${project.version}_${build.profile}</finalName>
+                                    <outputDirectory>${project.build.directory}/../../dist</outputDirectory>
+                                    <descriptors>
+                                        <descriptor>src/main/assembly/assembly.xml</descriptor>
+                                    </descriptors>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>
