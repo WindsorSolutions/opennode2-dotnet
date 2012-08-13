@@ -4238,9 +4238,9 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_40
         /// <summary>
         /// Added to support new element in v4.0 schema
         /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "Int32", Order = 1)]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public System.DateTime SSOEventID;
+        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 SSOEventID;
     }
 
     /// <remarks/>
@@ -4783,9 +4783,9 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_40
         /// <summary>
         /// Added to support new element in v4.0 schema
         /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "Int32", Order = 1)]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public System.DateTime CSOEventID;
+        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 CSOEventID;
     }
 
     /// <remarks/>
@@ -4912,10 +4912,9 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_40
         /// <summary>
         /// Added to support new element in v4.0 schema
         /// </summary>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "Int32", Order = 1)]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public System.DateTime SWEventID;
-
+        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 SWEventID;
     }
 
     /// <remarks/>
