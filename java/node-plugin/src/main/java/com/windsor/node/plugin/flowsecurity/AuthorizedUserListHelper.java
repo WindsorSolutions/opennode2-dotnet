@@ -72,7 +72,7 @@ public class AuthorizedUserListHelper {
             for (UserAccessPolicy policy : user.getPolicies()) {
 
                 if (policy.getPolicyType().equals(
-                        ServiceRequestAuthorizationType.FLOW)) {
+                        ServiceRequestAuthorizationType.Flow)) {
 
                     DataFlow authedFlow = flowDao
                             .get(policy.getTypeQualifier());

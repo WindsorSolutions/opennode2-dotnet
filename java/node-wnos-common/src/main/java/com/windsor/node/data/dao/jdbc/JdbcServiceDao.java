@@ -328,7 +328,7 @@ public class JdbcServiceDao extends BaseJdbcDao implements ServiceDao,
         args[2] = FormatUtil.toYNFromBoolean(instance.isActive());
         args[3] = instance.getType().toString();
         args[4] = instance.getImplementingClassName();
-        args[5] = ServiceRequestAuthorizationType.BASIC.getName();
+        args[5] = ServiceRequestAuthorizationType.Basic.getType();
         args[6] = instance.getModifiedById();
         args[7] = DateUtil.getTimestamp();
         args[8] = instance.getId();

@@ -273,7 +273,7 @@ public class Endpoint2ServiceImpl extends BaseEndpoint2Service implements
             dataReq.setParameters(createParameters(execute0.getParameters()));
             dataReq.setService(new DataService(execute0.getMethodName(),
                     execute0.getInterfaceName()));
-            dataReq.setType(RequestType.EXECUTE);
+            dataReq.setType(RequestType.Execute);
 
             ProcessContentResult result = transactionService.execute(visit,
                     dataReq);
@@ -701,11 +701,7 @@ public class Endpoint2ServiceImpl extends BaseEndpoint2Service implements
                 NotificationMessageType wsdlNotif = notify14.getMessages()[m];
                 Notification wnosNotif = new Notification();
 
-                wnosNotif
-                        .setCategory((WnosNotificationMessageCategoryType) WnosNotificationMessageCategoryType
-                                .getEnumMap().get(
-                                        wsdlNotif.getMessageCategory()
-                                                .getValue()));
+                wnosNotif.setCategory(WnosNotificationMessageCategoryType.valueOf(wsdlNotif.getMessageCategory().getValue()));
 
                 if (wsdlNotif.getMessageCategory().equals(
                         NotificationMessageCategoryType.Document)
@@ -842,18 +838,10 @@ public class Endpoint2ServiceImpl extends BaseEndpoint2Service implements
 
                         if (StringUtils.isNotBlank(notifStr)) {
 
-                            // TODO: Create Transaction Notifcation Conversion
-                            // Utility
-                            dataRequest
-                                    .getNotifications()
-                                    .put(
-                                            wsdlNotif.getString(),
-                                            WnosTransactionNotificationType
-                                                    .getEnumMap()
-                                                    .get(
-                                                            wsdlNotif
-                                                                    .getNotificationType()
-                                                                    .getValue()));
+                            // TODO: Create Transaction Notifcation Conversion Utility
+                            dataRequest.getNotifications().put(wsdlNotif.getString(),
+                                                               WnosTransactionNotificationType.valueOf(wsdlNotif.getNotificationType()
+                                                                               .getValue()));
                         }
                     }
                 }

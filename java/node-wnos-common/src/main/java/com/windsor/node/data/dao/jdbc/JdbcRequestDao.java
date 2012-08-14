@@ -241,7 +241,7 @@ public class JdbcRequestDao extends BaseJdbcDao implements RequestDao,
             args[1] = instance.getService().getId();
             args[2] = new Integer(instance.getPaging().getStart());
             args[3] = new Integer(instance.getPaging().getCount());
-            args[4] = instance.getType().getName();
+            args[4] = instance.getType().getType();
             args[5] = instance.getModifiedById();
             args[6] = DateUtil.getTimestamp();
             args[7] = instance.getId();
@@ -339,7 +339,7 @@ public class JdbcRequestDao extends BaseJdbcDao implements RequestDao,
                     args3[0] = UUIDGenerator.makeId();
                     args3[1] = instance.getTransactionId();
                     args3[2] = entry.getKey();
-                    args3[3] = notifType.getName();
+                    args3[3] = notifType.getType();
 
                     logger.debug("args3:");
                     printourArgs(args3);
@@ -435,8 +435,7 @@ public class JdbcRequestDao extends BaseJdbcDao implements RequestDao,
             obj.setService(serviceDao.get(rs.getString("ServiceId")));
             obj.setPaging(new PaginationIndicator(rs.getInt("RowIndex"), rs
                     .getInt("MaxRowCount"), true));
-            obj.setType((RequestType) RequestType.getEnumMap().get(
-                    rs.getString("RequestType")));
+            obj.setType(RequestType.valueOf(rs.getString("RequestType")));
             obj.setModifiedById(rs.getString("ModifiedBy"));
             obj.setModifiedOn(rs.getTimestamp("ModifiedOn"));
             obj.setNotifications(getMap(SQL_SELECT_REQ_NOTIF, obj

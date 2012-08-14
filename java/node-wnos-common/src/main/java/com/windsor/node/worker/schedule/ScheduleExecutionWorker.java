@@ -205,7 +205,7 @@ public class ScheduleExecutionWorker extends NodeWorker implements ScheduleItemE
             // TRAN
             logger.debug("Getting transaction for: " + schedule.getFlowId());
 
-            tran = transactionDao.make(schedule, NodeMethodType.SCHEDULE,
+            tran = transactionDao.make(schedule, NodeMethodType.Schedule,
                     CommonTransactionStatusCode.Processing);
 
             tran.setCreator(accountDao.get(schedule.getModifiedById()));

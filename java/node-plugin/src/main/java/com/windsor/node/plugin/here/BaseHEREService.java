@@ -270,7 +270,7 @@ public abstract class BaseHEREService extends BaseWnosPlugin {
 
             Document doc = new Document();
 
-            if (transaction.getRequest().getType() != RequestType.QUERY) {
+            if (transaction.getRequest().getType() != RequestType.Query) {
 
                 result.getAuditEntries().add(
                         makeEntry("Compressing results..."));
@@ -307,7 +307,7 @@ public abstract class BaseHEREService extends BaseWnosPlugin {
 
             /* SAVE RESULTS */
             // only if the template processed any records
-            if (transaction.getRequest().getType() != RequestType.QUERY
+            if (transaction.getRequest().getType() != RequestType.Query
                     && mergedRecordCount > 0) {
                 saveResults(args, transaction);
             }
@@ -394,7 +394,7 @@ public abstract class BaseHEREService extends BaseWnosPlugin {
         for (UserAccessPolicy policy : user.getPolicies()) {
 
             if (policy.getPolicyType().equals(
-                    ServiceRequestAuthorizationType.FLOW)) {
+                    ServiceRequestAuthorizationType.Flow)) {
 
                 debug("Found a flow policy for " + user.getNaasUserName());
 

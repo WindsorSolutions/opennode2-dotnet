@@ -241,9 +241,9 @@ public class NodeUtil {
 
             // Document attributes
             LOGGER.debug("setting documentFormat to "
-                    + wnosDoc.getType().getName());
+                    + wnosDoc.getType().getType());
             newDoc.setDocumentFormat(DocumentFormatType.Factory
-                    .fromValue(wnosDoc.getType().getName()));
+                    .fromValue(wnosDoc.getType().getType()));
 
             LOGGER.debug("setting documentId to " + wnosDoc.getDocumentId());
             newDoc.setDocumentId(new Id(wnosDoc.getDocumentId()));
@@ -254,7 +254,7 @@ public class NodeUtil {
 
             // Content Type
             ContentType_type0 contentType = new ContentType_type0();
-            if (wnosDoc.getType().equals(CommonContentType.XML_STR)) {
+            if (wnosDoc.getType().equals(CommonContentType.XML)) {
                 contentType.setContentType_type0("application/xml");
             } else {
                 contentType.setContentType_type0("application/octet-stream");

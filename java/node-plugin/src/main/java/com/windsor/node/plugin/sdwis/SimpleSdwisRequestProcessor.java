@@ -115,7 +115,7 @@ public class SimpleSdwisRequestProcessor extends BaseWnosPlugin {
 
         validateTransaction(transaction);
 
-        if (!transaction.getWebMethod().equals(NodeMethodType.SUBMIT)) {
+        if (!transaction.getWebMethod().equals(NodeMethodType.Submit)) {
             throw new RuntimeException("Invalid method type: "
                     + transaction.getWebMethod());
         }

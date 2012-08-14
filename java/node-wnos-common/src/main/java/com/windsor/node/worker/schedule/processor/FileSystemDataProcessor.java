@@ -95,11 +95,11 @@ public class FileSystemDataProcessor implements InitializingBean {
                     .getAbsolutePath());
 
             if (fsFileExt == null) {
-                doc.setType(CommonContentType.BIN);
+                doc.setType(CommonContentType.Bin);
             } else if (fsFileExt.equalsIgnoreCase("xml")) {
                 doc.setType(CommonContentType.XML);
             } else if (fsFileExt.equalsIgnoreCase("txt")) {
-                doc.setType(CommonContentType.FLAT);
+                doc.setType(CommonContentType.Flat);
             } else if (fsFileExt.equalsIgnoreCase("zip")) {
                 doc.setType(CommonContentType.ZIP);
             } else if (fsFileExt.equalsIgnoreCase("odf")) {

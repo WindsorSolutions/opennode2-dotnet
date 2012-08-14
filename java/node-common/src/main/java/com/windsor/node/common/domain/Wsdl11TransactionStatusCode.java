@@ -31,42 +31,22 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.windsor.node.common.domain;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.io.Serializable;
 
-import org.apache.commons.lang.enums.Enum;
-
-public final class Wsdl11TransactionStatusCode extends Enum {
-
-    public static final Wsdl11TransactionStatusCode UNKNOWN = new Wsdl11TransactionStatusCode(
-            "Unknown");
-    public static final Wsdl11TransactionStatusCode RECEIVED = new Wsdl11TransactionStatusCode(
-            "Received");
-    public static final Wsdl11TransactionStatusCode PENDING = new Wsdl11TransactionStatusCode(
-            "Pending");
-    public static final Wsdl11TransactionStatusCode FAILED = new Wsdl11TransactionStatusCode(
-            "Failed");
-    public static final Wsdl11TransactionStatusCode PROCESSED = new Wsdl11TransactionStatusCode(
-            "Processed");
-    public static final Wsdl11TransactionStatusCode COMPLETED = new Wsdl11TransactionStatusCode(
-            "Completed");
+public enum Wsdl11TransactionStatusCode implements Serializable
+{
+    Unknown("Unknown"), Received("Received"), Pending("Pending"), Failed("Failed"), Processed("Processed"), Completed("Completed");
 
     private static final long serialVersionUID = 1;
+    private final String type;
 
-    private Wsdl11TransactionStatusCode(String s) {
-        super(s);
+    private Wsdl11TransactionStatusCode(String type)
+    {
+        this.type = type;
     }
 
-    public static Map getEnumMap() {
-        return getEnumMap(Wsdl11TransactionStatusCode.class);
-    }
-
-    public static List getEnumList() {
-        return getEnumList(Wsdl11TransactionStatusCode.class);
-    }
-
-    public static Iterator iterator() {
-        return iterator(Wsdl11TransactionStatusCode.class);
+    public String getType()
+    {
+        return type;
     }
 }

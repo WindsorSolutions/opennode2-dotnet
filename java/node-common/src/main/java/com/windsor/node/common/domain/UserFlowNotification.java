@@ -130,35 +130,35 @@ public class UserFlowNotification extends AuditableIdentity implements
     }
 
     public void setByNotificationType(NotificationType type) {
-        if (type.equals(NotificationType.ONDOWNLOAD)
-                || type.equals(NotificationType.ALL)) {
+        if (type.equals(NotificationType.OnDownload)
+                || type.equals(NotificationType.All)) {
             setOnDownload(true);
         }
-        if (type.equals(NotificationType.ONEXECUTE)
-                || type.equals(NotificationType.ALL)) {
+        if (type.equals(NotificationType.OnExecute)
+                || type.equals(NotificationType.All)) {
             setOnExecute(true);
         }
-        if (type.equals(NotificationType.ONNOTIFY)
-                || type.equals(NotificationType.ALL)) {
+        if (type.equals(NotificationType.OnNotify)
+                || type.equals(NotificationType.All)) {
             setOnNotify(true);
         }
-        if (type.equals(NotificationType.ONQUERY)
-                || type.equals(NotificationType.ALL)) {
+        if (type.equals(NotificationType.OnQuery)
+                || type.equals(NotificationType.All)) {
             setOnQuery(true);
         }
-        if (type.equals(NotificationType.ONSCHEDULE)
-                || type.equals(NotificationType.ALL)) {
+        if (type.equals(NotificationType.OnSchedule)
+                || type.equals(NotificationType.All)) {
             setOnSchedule(true);
         }
-        if (type.equals(NotificationType.ONSOLICIT)
-                || type.equals(NotificationType.ALL)) {
+        if (type.equals(NotificationType.OnSolicit)
+                || type.equals(NotificationType.All)) {
             setOnSolicit(true);
         }
-        if (type.equals(NotificationType.ONSUBMIT)
-                || type.equals(NotificationType.ALL)) {
+        if (type.equals(NotificationType.OnSubmit)
+                || type.equals(NotificationType.All)) {
             setOnSubmit(true);
         }
-        if (type.equals(NotificationType.NONE)) {
+        if (type.equals(NotificationType.None)) {
             setOnDownload(false);
             setOnExecute(false);
             setOnNotify(false);

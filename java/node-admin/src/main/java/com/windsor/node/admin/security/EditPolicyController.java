@@ -35,13 +35,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.validation.BindException;
@@ -50,7 +47,6 @@ import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 import org.springframework.web.servlet.view.RedirectView;
-
 import com.windsor.node.admin.domain.NAASFlowPolicyInfo;
 import com.windsor.node.admin.domain.NAASPolicyEditRequest;
 import com.windsor.node.admin.editor.SystemRoleTypeEditor;
@@ -147,7 +143,7 @@ public class EditPolicyController extends BaseSecurityFormController implements
 
                     policy.setAccountId(naasAccount.getId());
                     policy.setAllowed(true);
-                    policy.setPolicyType(ServiceRequestAuthorizationType.FLOW);
+                    policy.setPolicyType(ServiceRequestAuthorizationType.Flow);
                     policy.setTypeQualifier(selectedFlow[i]);
                     policy.setModifiedById(visit.getUserAccount().getId());
 
@@ -268,8 +264,8 @@ public class EditPolicyController extends BaseSecurityFormController implements
                     // TODO: For now, only flow policies are managed. In the
                     // future would be nice to implement other
                     // types (e.g. services-level policy?)
-                    if (policy.getPolicyType().getName().equalsIgnoreCase(
-                            ServiceRequestAuthorizationType.FLOW.getName())
+                    if (policy.getPolicyType().equals(
+                            ServiceRequestAuthorizationType.Flow)
                             && flow.getId().equalsIgnoreCase(
                                     policy.getTypeQualifier())) {
                         info.setAssigned(true);

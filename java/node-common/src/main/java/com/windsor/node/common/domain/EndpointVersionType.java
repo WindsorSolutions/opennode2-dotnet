@@ -56,6 +56,7 @@ public enum EndpointVersionType {
         return this.type;
     }
 
+    //FIXME get rid of this, valueOf works just as well
     public static EndpointVersionType fromString(String s)
     {
         EndpointVersionType version;

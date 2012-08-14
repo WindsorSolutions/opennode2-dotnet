@@ -127,7 +127,7 @@ public abstract class BaseFacIdPlugin extends BaseWnosJaxbPlugin
         doc.setDocumentId(docId);
         doc.setId(docId);
 
-        if(transaction.getRequest().getType() != RequestType.QUERY)
+        if(transaction.getRequest().getType() != RequestType.Query)
         {
             String zippedFilePath = getZipService().zip(tempFilePath);
             doc.setType(CommonContentType.ZIP);

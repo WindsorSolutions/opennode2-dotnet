@@ -192,7 +192,7 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao
         args[0] = instance.getId();
         args[1] = transactionId;
         args[2] = instance.getDocumentName();
-        args[3] = instance.getType().getName();
+        args[3] = instance.getType().getType();
         args[4] = (instance.getDocumentId() == null) ? instance.getId()
                 : instance.getDocumentId();
         args[5] = instance.getDocumentStatus().name();
@@ -259,7 +259,7 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao
         validateObjectArg(method, "NodeMethodType");
 
         return (List<NodeTransaction>)getJdbcTemplate().query(SQL_SELECT_STATUS_N_METHOD,
-                new Object[] { status.name(), method.getName() },
+                new Object[] { status.name(), method.getType() },
                 new TransactionMapper());
     }
 
@@ -272,7 +272,7 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao
         validateObjectArg(method, "NodeMethodType");
 
         return (List<NodeTransaction>)getJdbcTemplate().query(SQL_SELECT_N_METHOD,
-                new Object[] { method.getName() }, new TransactionMapper());
+                new Object[] { method.getType() }, new TransactionMapper());
     }
 
     public NodeTransaction getNextReceived(NodeMethodType method) {
@@ -498,7 +498,7 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao
         args[4] = DateUtil.getTimestamp();
         args[5] = instance.getStatus().getDescription();
         args[6] = instance.getOperation();
-        args[7] = instance.getWebMethod().getName();
+        args[7] = instance.getWebMethod().getType();
 
         //new as of version 2.01
         //EndpointVersion, NetworkEndpointVersion, NetworkEndpointUrl, NetworkEndpointStatus, NetworkEndpointStatusDetail
@@ -556,7 +556,7 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao
         args[5] = DateUtil.getTimestamp();
         args[6] = instance.getStatus().getDescription();
         args[7] = instance.getOperation();
-        args[8] = instance.getWebMethod().getName();
+        args[8] = instance.getWebMethod().getType();
 
         //new as of version 2.01
         //EndpointVersion, NetworkEndpointVersion, NetworkEndpointUrl, NetworkEndpointStatus, NetworkEndpointStatusDetail
@@ -681,8 +681,7 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao
             transaction.setModifiedById(rs.getString("ModifiedBy"));
             transaction.setModifiedOn(rs.getTimestamp("ModifiedOn"));
             transaction.setOperation(rs.getString("Operation"));
-            transaction.setWebMethod((NodeMethodType) NodeMethodType.getEnumMap().get(
-                    rs.getString("WebMethod")));
+            transaction.setWebMethod(NodeMethodType.valueOf(rs.getString("WebMethod")));
 
             transaction.setEndpointVersion(EndpointVersionType.fromString(rs.getString("EndpointVersion")));
             transaction.setNetworkEndpointVersion(EndpointVersionType.fromString(rs.getString("NetworkEndpointVersion")));
@@ -714,32 +713,28 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao
      * @author mchmarny
      * 
      */
-    private class DocumentMapper implements RowMapper {
-
-        public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
-
+    private class DocumentMapper implements RowMapper
+    {
+        public Object mapRow(ResultSet rs, int rowNum) throws SQLException
+        {
             Document obj = new Document();
 
             // Id, DocumentName, DocumentType, DocumentId, Status, StatusDetail
 
             obj.setId(rs.getString("Id"));
             obj.setDocumentName(rs.getString("DocumentName"));
-            obj.setType((CommonContentType) CommonContentType.getEnumMap().get(
-                    rs.getString("DocumentType")));
+            obj.setType(CommonContentType.valueOf(rs.getString("DocumentType")));
             obj.setDocumentId(rs.getString("DocumentId"));
-            obj
-                    .setDocumentStatus((CommonTransactionStatusCode) CommonTransactionStatusCodeConverter
-                            .convert(rs.getString("Status")));
+            obj.setDocumentStatus((CommonTransactionStatusCode)CommonTransactionStatusCodeConverter.convert(rs.getString("Status")));
             obj.setDocumentStatusDetail(rs.getString("StatusDetail"));
 
-            if (containsColumnNamed(rs, "DocumentContent")) {
+            if(containsColumnNamed(rs, "DocumentContent"))
+            {
                 obj.setContent(rs.getBytes("DocumentContent"));
             }
 
             return obj;
-
         }
-
     }
 
     public void setFlowDao(FlowDao flowDao)

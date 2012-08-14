@@ -32,69 +32,26 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.windsor.node.common.exception;
 
 import java.io.Serializable;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.lang.enums.Enum;
-
-public final class ENExceptionCodeType extends Enum implements Serializable {
-    
-    public static final ENExceptionCodeType E_INTERNALERROR = new ENExceptionCodeType(
-            "E_InternalError");
-    public static final ENExceptionCodeType E_UNKNOWNUSER = new ENExceptionCodeType(
-            "E_UnknownUser");
-    public static final ENExceptionCodeType E_INVALIDCREDENTIAL = new ENExceptionCodeType(
-            "E_InvalidCredential");
-    public static final ENExceptionCodeType E_TRASNACTIONID = new ENExceptionCodeType(
-            "E_TransactionId");
-    public static final ENExceptionCodeType E_UNKNOWNMETHOD = new ENExceptionCodeType(
-            "E_UnknownMethod");
-    public static final ENExceptionCodeType E_SERVICEUNAVAILABLE = new ENExceptionCodeType(
-            "E_ServiceUnavailable");
-    public static final ENExceptionCodeType E_ACCESSDENIED = new ENExceptionCodeType(
-            "E_AccessDenied");
-    public static final ENExceptionCodeType E_INVALIDTOKEN = new ENExceptionCodeType(
-            "E_InvalidToken");
-    public static final ENExceptionCodeType E_TOKENEXPIRED = new ENExceptionCodeType(
-            "E_TokenExpired");
-    public static final ENExceptionCodeType E_FILENOTFOUND = new ENExceptionCodeType(
-            "E_FileNotFound");
-    public static final ENExceptionCodeType E_VALIDATIONFAILED = new ENExceptionCodeType(
-            "E_ValidationFailed");
-    public static final ENExceptionCodeType E_SERVERBUSY = new ENExceptionCodeType(
-            "E_ServerBusy");
-    public static final ENExceptionCodeType E_ROWIDOUTOFRANGE = new ENExceptionCodeType(
-            "E_RowIdOutofRange");
-    public static final ENExceptionCodeType E_FEATUREUNSUPPORTED = new ENExceptionCodeType(
-            "E_FeatureUnsupported");
-    public static final ENExceptionCodeType E_VERSIONMISMATCH = new ENExceptionCodeType(
-            "E_VersionMismatch");
-    public static final ENExceptionCodeType E_INVALIDFILENAME = new ENExceptionCodeType(
-            "E_InvalidFileName");
-    public static final ENExceptionCodeType E_INVALIDFILETYPE = new ENExceptionCodeType(
-            "E_InvalidFileType");
-    public static final ENExceptionCodeType E_INVALIDDATAFLOW = new ENExceptionCodeType(
-            "E_InvalidDataFlow");
-    public static final ENExceptionCodeType E_INVALIDPARAMETER = new ENExceptionCodeType(
-            "E_InvalidParameter");
+//TODO are these even needed?  They don't seem to be referenced in any useful way.
+public enum ENExceptionCodeType implements Serializable
+{
+    E_InternalError("E_InternalError"), E_UnknownUser("E_UnknownUser"), E_InvalidCredential("E_InvalidCredential"), E_TransactionId(
+                    "E_TransactionId"), E_UnknownMethod("E_UnknownMethod"), E_ServiceUnavailable("E_ServiceUnavailable"), E_AccessDenied(
+                    "E_AccessDenied"), E_InvalidToken("E_InvalidToken"), E_TokenExpired("E_TokenExpired"), E_FileNotFound("E_FileNotFound"), E_ValidationFailed(
+                    "E_ValidationFailed"), E_ServerBusy("E_ServerBusy"), E_RowIdOutofRange("E_RowIdOutofRange"), E_FeatureUnsupported(
+                    "E_FeatureUnsupported"), E_VersionMismatch("E_VersionMismatch"), E_InvalidFileName("E_InvalidFileName"), E_InvalidFileType(
+                    "E_InvalidFileType"), E_InvalidDataFlow("E_InvalidDataFlow"), E_InvalidParameter("E_InvalidParameter");
 
     private static final long serialVersionUID = 1;
+    private final String type;
 
-    private ENExceptionCodeType(String type) {
-        super(type);
+    private ENExceptionCodeType(String type)
+    {
+        this.type = type;
     }
 
-    public static Map getEnumMap() {
-        return getEnumMap(ENExceptionCodeType.class);
+    public String getType()
+    {
+        return type;
     }
-
-    public static List getEnumList() {
-        return getEnumList(ENExceptionCodeType.class);
-    }
-
-    public static Iterator iterator() {
-        return iterator(ENExceptionCodeType.class);
-    }
-
 }

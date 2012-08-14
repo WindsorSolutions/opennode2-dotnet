@@ -619,7 +619,7 @@ public abstract class BaseRcra50XmlPlugin extends BaseRcra50Plugin {
 
         Document doc = new Document();
 
-        if (requestType != RequestType.QUERY) {
+        if (requestType != RequestType.Query) {
 
             String zippedFilePath = getCompressionService().zip(
                     getTempFilePath());

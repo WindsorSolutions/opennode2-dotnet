@@ -31,36 +31,22 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.windsor.node.common.domain;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.io.Serializable;
 
-import org.apache.commons.lang.enums.Enum;
-
-public final class Wsdl11ContentType extends Enum {
-
-    public static final Wsdl11ContentType OTHER = new Wsdl11ContentType("OTHER");
-    public static final Wsdl11ContentType XML = new Wsdl11ContentType("XML");
-    public static final Wsdl11ContentType FLAT = new Wsdl11ContentType("Flat");
-    public static final Wsdl11ContentType BIN = new Wsdl11ContentType("Bin");
-    public static final Wsdl11ContentType ZIP = new Wsdl11ContentType("ZIP");
+public enum Wsdl11ContentType implements Serializable
+{
+    OTHER("OTHER"), XML("XML"), Flat("Flat"), Bin("Bin"), ZIP("ZIP");
 
     private static final long serialVersionUID = 1;
+    private final String type;
 
-    private Wsdl11ContentType(String type) {
-        super(type);
+    private Wsdl11ContentType(String type)
+    {
+        this.type = type;
     }
 
-    public static Map getEnumMap() {
-        return getEnumMap(Wsdl11ContentType.class);
+    public String getType()
+    {
+        return type;
     }
-
-    public static List getEnumList() {
-        return getEnumList(Wsdl11ContentType.class);
-    }
-
-    public static Iterator iterator() {
-        return iterator(Wsdl11ContentType.class);
-    }
-
 }

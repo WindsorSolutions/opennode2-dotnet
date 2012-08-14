@@ -31,41 +31,22 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.windsor.node.common.domain;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.io.Serializable;
 
-import org.apache.commons.lang.enums.Enum;
-
-public final class WnosTransactionNotificationType extends Enum {
-
-    public static final WnosTransactionNotificationType ALL = new WnosTransactionNotificationType(
-            "All");
-    public static final WnosTransactionNotificationType WARNING = new WnosTransactionNotificationType(
-            "Warning");
-    public static final WnosTransactionNotificationType ERROR = new WnosTransactionNotificationType(
-            "Error");
-    public static final WnosTransactionNotificationType STATUS = new WnosTransactionNotificationType(
-            "Status");
-    public static final WnosTransactionNotificationType NONE = new WnosTransactionNotificationType(
-            "None");
+public enum WnosTransactionNotificationType implements Serializable
+{
+    All("All"), Warning("Warning"), Error("Error"), Status("Status"), None("None");
 
     private static final long serialVersionUID = 1;
-    
-    private WnosTransactionNotificationType(String type) {
-        super(type);
+    private final String type;
+
+    private WnosTransactionNotificationType(String type)
+    {
+        this.type = type;
     }
 
-    public static Map getEnumMap() {
-        return getEnumMap(WnosTransactionNotificationType.class);
+    public String getType()
+    {
+        return type;
     }
-
-    public static List getEnumList() {
-        return getEnumList(WnosTransactionNotificationType.class);
-    }
-
-    public static Iterator iterator() {
-        return iterator(WnosTransactionNotificationType.class);
-    }
-
 }

@@ -125,7 +125,7 @@ public class JdbcUserAccessPolicyDao extends BaseJdbcDao implements
         logger.debug(SQL + sql);
 
         Object[] args = new Object[] { instance.getAccountId(),
-                instance.getPolicyType().getName(),
+                instance.getPolicyType().getType(),
                 instance.getTypeQualifier(),
                 FormatUtil.toYNFromBoolean(instance.isAllowed()),
                 instance.getModifiedById(), instance.getModifiedOn(),
@@ -161,8 +161,7 @@ public class JdbcUserAccessPolicyDao extends BaseJdbcDao implements
             obj.setId(rs.getString("Id"));
             obj.setAccountId(rs.getString("AccountId"));
             obj
-                    .setPolicyType((ServiceRequestAuthorizationType) ServiceRequestAuthorizationType
-                            .getEnumMap().get(rs.getString("PolicyType")));
+                    .setPolicyType(ServiceRequestAuthorizationType.valueOf(rs.getString("PolicyType")));
             obj.setTypeQualifier(rs.getString("Qualifier"));
             obj.setAllowed(FormatUtil
                     .toBooleanFromYN(rs.getString("IsAllowed")));

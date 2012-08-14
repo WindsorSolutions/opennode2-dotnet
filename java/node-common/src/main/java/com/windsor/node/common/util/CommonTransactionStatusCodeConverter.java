@@ -34,27 +34,33 @@ package com.windsor.node.common.util;
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
 import com.windsor.node.common.domain.Wsdl11TransactionStatusCode;
 
-public final class CommonTransactionStatusCodeConverter {
+public final class CommonTransactionStatusCodeConverter
+{
 
-    private CommonTransactionStatusCodeConverter() {
+    private CommonTransactionStatusCodeConverter()
+    {
     }
 
-    public static CommonTransactionStatusCode convert(String s) {
+    public static CommonTransactionStatusCode convert(String s)
+    {
 
         CommonTransactionStatusCode ctsc = null;
 
         Object o = CommonTransactionStatusCode.valueOf(initCap(s));
 
-        if ((null != o) && (o instanceof CommonTransactionStatusCode)) {
-            ctsc = (CommonTransactionStatusCode) o;
-        } else {
-            throw new IllegalArgumentException("The string \"" + s
-                    + "\" does not represent a common transaction status code.");
+        if((null != o) && (o instanceof CommonTransactionStatusCode))
+        {
+            ctsc = (CommonTransactionStatusCode)o;
+        }
+        else
+        {
+            throw new IllegalArgumentException("The string \"" + s + "\" does not represent a common transaction status code.");
         }
         return ctsc;
     }
 
-    private static String initCap(String s) {
+    private static String initCap(String s)
+    {
 
         StringBuilder buf = new StringBuilder(s.length());
         buf.append(s.substring(0, 1).toUpperCase());
@@ -63,28 +69,30 @@ public final class CommonTransactionStatusCodeConverter {
         return buf.toString();
     }
 
-    public static Wsdl11TransactionStatusCode convertTo11Type(
-            CommonTransactionStatusCode ctsc) {
+    public static Wsdl11TransactionStatusCode convertTo11Type(CommonTransactionStatusCode ctsc)
+    {
         Wsdl11TransactionStatusCode wtsc = null;
 
         // account for special types that do not directly map to the common type
-        if (ctsc.equals(CommonTransactionStatusCode.Processing)) {
-            wtsc = Wsdl11TransactionStatusCode.PENDING;
-        } else if (ctsc.equals(CommonTransactionStatusCode.Cancelled)) {
-            wtsc = Wsdl11TransactionStatusCode.FAILED;
-        } else if (ctsc.equals(CommonTransactionStatusCode.Approved)) {
-            wtsc = Wsdl11TransactionStatusCode.PROCESSED;
-        } else {
+        if(ctsc.equals(CommonTransactionStatusCode.Processing))
+        {
+            wtsc = Wsdl11TransactionStatusCode.Pending;
+        }
+        else if(ctsc.equals(CommonTransactionStatusCode.Cancelled))
+        {
+            wtsc = Wsdl11TransactionStatusCode.Failed;
+        }
+        else if(ctsc.equals(CommonTransactionStatusCode.Approved))
+        {
+            wtsc = Wsdl11TransactionStatusCode.Processed;
+        }
+        else
+        {
             String s = ctsc.toString();
-            Object o = Wsdl11TransactionStatusCode.getEnumMap().get(s);
-            if ((null != o) && (o instanceof Wsdl11TransactionStatusCode)) {
-                wtsc = (Wsdl11TransactionStatusCode) o;
-            } else {
-                throw new IllegalArgumentException(
-                        "The transaction status code \""
-                                + ctsc.name()
+            wtsc = Wsdl11TransactionStatusCode.valueOf(s);
+            if(wtsc == null)
+                throw new IllegalArgumentException("The transaction status code \"" + ctsc.name()
                                 + "\" does not map to a WSDL 1.1 transaction status code.");
-            }
         }
         return wtsc;
     }

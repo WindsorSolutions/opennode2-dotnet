@@ -233,7 +233,7 @@ public class MapForceBridge extends BaseWnosPlugin implements InitializingBean {
             result.getAuditEntries()
                     .add(makeEntry("Creating Node Document..."));
 
-            if (transaction.getRequest().getType() != RequestType.QUERY) {
+            if (transaction.getRequest().getType() != RequestType.Query) {
 
                 result.getAuditEntries().add(
                         makeEntry("Compressing results..."));

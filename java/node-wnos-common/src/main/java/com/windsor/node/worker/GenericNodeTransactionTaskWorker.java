@@ -33,42 +33,43 @@ package com.windsor.node.worker;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
-
 import com.windsor.node.common.domain.NodeMethodType;
 
-public class GenericNodeTransactionTaskWorker extends NodeTransactionTaskWorker
-        implements InitializingBean {
+public class GenericNodeTransactionTaskWorker extends NodeTransactionTaskWorker implements InitializingBean
+{
 
     private NodeMethodType documentType;
     private String documentSubmissionType;
 
-    public void afterPropertiesSet() {
+    public void afterPropertiesSet()
+    {
         super.afterPropertiesSet();
 
-        if (StringUtils.isBlank(documentSubmissionType)) {
+        if(StringUtils.isBlank(documentSubmissionType))
+        {
             throw new RuntimeException("DocumentSubmissionType Not Set");
         }
 
-        if (!NodeMethodType.getEnumMap().containsKey(documentSubmissionType)) {
-            throw new RuntimeException("Invalid NodeMethodType: "
-                    + documentSubmissionType);
+        if(NodeMethodType.valueOf(documentSubmissionType) == null)
+        {
+            throw new RuntimeException("Invalid NodeMethodType: " + documentSubmissionType);
         }
 
-        documentType = (NodeMethodType) NodeMethodType.getEnumMap().get(
-                documentSubmissionType);
+        documentType = NodeMethodType.valueOf(documentSubmissionType);
 
-        if (getPartnerDataProcessor() == null
-                && documentType == NodeMethodType.SOLICIT) {
+        if(getPartnerDataProcessor() == null && documentType == NodeMethodType.Solicit)
+        {
             throw new RuntimeException("PartnerDataProcessor Not Set");
         }
     }
 
-    public void run() {
+    public void run()
+    {
         super.run(documentType);
     }
 
-    public void setDocumentSubmissionType(String documentSubmissionType) {
+    public void setDocumentSubmissionType(String documentSubmissionType)
+    {
         this.documentSubmissionType = documentSubmissionType;
     }
-
 }

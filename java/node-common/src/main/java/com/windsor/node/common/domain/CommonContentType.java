@@ -31,44 +31,21 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.windsor.node.common.domain;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.io.Serializable;
 
-import org.apache.commons.lang.enums.Enum;
-
-public final class CommonContentType extends Enum {
-
-
-    public static final String OTHER_STR = "OTHER";
-    public static final String XML_STR = "XML";
-    public static final String FLAT_STR = "Flat";
-    public static final String BIN_STR = "Bin";
-    public static final String ZIP_STR = "ZIP";
-    public static final String ODF_STR = "ODF";
-
-    public static final CommonContentType OTHER = new CommonContentType(OTHER_STR);
-    public static final CommonContentType XML = new CommonContentType(XML_STR);
-    public static final CommonContentType FLAT = new CommonContentType(FLAT_STR);
-    public static final CommonContentType BIN = new CommonContentType(BIN_STR);
-    public static final CommonContentType ZIP = new CommonContentType(ZIP_STR);
-    public static final CommonContentType ODF = new CommonContentType(ODF_STR);
+public enum CommonContentType implements Serializable
+{
+    OTHER("OTHER"),XML("XML"),Flat("Flat"),Bin("Bin"),ZIP("ZIP"),ODF("ODF");
 
     private static final long serialVersionUID = 1;
+    private final String type;
     
     private CommonContentType(String type) {
-        super(type);
+        this.type = type;
     }
 
-    public static Map getEnumMap() {
-        return getEnumMap(CommonContentType.class);
-    }
-
-    public static List getEnumList() {
-        return getEnumList(CommonContentType.class);
-    }
-
-    public static Iterator iterator() {
-        return iterator(CommonContentType.class);
+    public String getType()
+    {
+        return type;
     }
 }

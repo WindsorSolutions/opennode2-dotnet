@@ -31,12 +31,16 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.windsor.node.common.domain;
 
-public enum SystemRoleType {
+import java.io.Serializable;
+
+public enum SystemRoleType implements Serializable
+{
 
     None("None"), Authed("Endpoint User"), Program("Program User"), Admin("Admin User");
 
     private static final long serialVersionUID = 2;
     private final String description;
+
     SystemRoleType(String description)
     {
         this.description = description;

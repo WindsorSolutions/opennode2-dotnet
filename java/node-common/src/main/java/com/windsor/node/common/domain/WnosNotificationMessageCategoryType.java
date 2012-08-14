@@ -31,38 +31,22 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.windsor.node.common.domain;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.io.Serializable;
 
-import org.apache.commons.lang.enums.Enum;
-
-public final class WnosNotificationMessageCategoryType extends Enum {
-
-    public static final WnosNotificationMessageCategoryType NONE = new WnosNotificationMessageCategoryType(
-            "None");
-    public static final WnosNotificationMessageCategoryType EVENT = new WnosNotificationMessageCategoryType(
-            "Event");
-    public static final WnosNotificationMessageCategoryType STATUS = new WnosNotificationMessageCategoryType(
-            "Status");
-    public static final WnosNotificationMessageCategoryType DOCUMENT = new WnosNotificationMessageCategoryType(
-            "Document");
+public enum WnosNotificationMessageCategoryType implements Serializable
+{
+    None("None"), Event("Event"), Status("Status"), Document("Document");
 
     private static final long serialVersionUID = 1;
-    
-    private WnosNotificationMessageCategoryType(String type) {
-        super(type);
+    private final String type;
+
+    private WnosNotificationMessageCategoryType(String type)
+    {
+        this.type = type;
     }
 
-    public static Map getEnumMap() {
-        return getEnumMap(WnosNotificationMessageCategoryType.class);
-    }
-
-    public static List getEnumList() {
-        return getEnumList(WnosNotificationMessageCategoryType.class);
-    }
-
-    public static Iterator iterator() {
-        return iterator(WnosNotificationMessageCategoryType.class);
+    public String getType()
+    {
+        return type;
     }
 }

@@ -248,7 +248,7 @@ public class TransactionServiceImpl extends BaseService implements
             logEntry.addEntry("Transaction operation: {0}", new Object[] { tran
                     .getOperation() });
 
-            logEntry.setWebMethod(tran.getWebMethod().getName());
+            logEntry.setWebMethod(tran.getWebMethod().getType());
 
             logEntry.setTransactionId(tran.getId());
 
@@ -335,7 +335,7 @@ public class TransactionServiceImpl extends BaseService implements
             }
 
             NodeTransaction tran = transactionDao.make(flow.getId(), account
-                    .getId(), NodeMethodType.NOTIFY,
+                    .getId(), NodeMethodType.Notify,
                     CommonTransactionStatusCode.Received);
 
             logger.debug("Transaction: " + tran);
@@ -380,7 +380,7 @@ public class TransactionServiceImpl extends BaseService implements
                 Object[] args = new Object[] {
                         notif.getStatus().getTransactionId(),
                         (notif.getCategory() == null) ? null : notif
-                                .getCategory().getName(),
+                                .getCategory().getType(),
                         notif.getName(),
                         (notif.getStatus() == null) ? null : (notif.getStatus()
                                 .getStatus() == null) ? null : notif
@@ -405,7 +405,7 @@ public class TransactionServiceImpl extends BaseService implements
                 logEntry.addEntry("Document {0} ({1} - {2}: {3})",
                         new Object[] { doc.getDocumentName(),
                                 doc.getDocumentStatus().name(),
-                                doc.getType().getName(),
+                                doc.getType().getType(),
                                 doc.getDocumentStatusDetail() });
 
             }
@@ -676,22 +676,22 @@ public class TransactionServiceImpl extends BaseService implements
             if (info.getType() == ServiceType.QUERY) {
 
                 tran = transactionDao.make(flow.getId(), request
-                        .getModifiedById(), NodeMethodType.QUERY,
+                        .getModifiedById(), NodeMethodType.Query,
                         CommonTransactionStatusCode.Processed);
 
                 notificationHelper.sendQueries(request);
 
-                request.setType(RequestType.QUERY);
+                request.setType(RequestType.Query);
 
             } else {
 
                 tran = transactionDao.make(flow.getId(), request
-                        .getModifiedById(), NodeMethodType.SOLICIT,
+                        .getModifiedById(), NodeMethodType.Solicit,
                         CommonTransactionStatusCode.Received);
 
                 notificationHelper.sendSolicits(request);
 
-                request.setType(RequestType.SOLICIT);
+                request.setType(RequestType.Solicit);
 
             }
 

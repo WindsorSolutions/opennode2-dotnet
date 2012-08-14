@@ -112,7 +112,7 @@ public class LocalServiceDataProcessor implements InitializingBean {
             req.setModifiedById(createdById);
             req.setService(service);
             req.setTransactionId(transaction.getId());
-            req.setType(RequestType.SOLICIT);
+            req.setType(RequestType.Solicit);
             req.setFlowName(transaction.getFlow().getName());
 
             transaction.setRequest(req);

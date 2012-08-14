@@ -112,7 +112,7 @@ public class TransactionServiceImpl extends BaseService implements
      * get Called from the workers
      */
     public List get(CommonTransactionStatusCode status, NodeVisit visit) {
-        return transactionDao.get(status, NodeMethodType.ANY);
+        return transactionDao.get(status, NodeMethodType.Any);
     }
 
     /**
@@ -275,7 +275,7 @@ public class TransactionServiceImpl extends BaseService implements
         // no docs
 
         if (!withDocs) {
-            return transactionDao.get(status, NodeMethodType.ANY);
+            return transactionDao.get(status, NodeMethodType.Any);
         } else {
 
             List tranList = transactionDao.getSubmittedDocumentTransactions();

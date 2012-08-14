@@ -31,47 +31,23 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.windsor.node.common.domain;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.io.Serializable;
 
-import org.apache.commons.lang.enums.Enum;
-
-public final class NotificationType extends Enum {
-
-    public static final NotificationType NONE = new NotificationType("None");
-    public static final NotificationType ONSOLICIT = new NotificationType(
-            "OnSolicit");
-    public static final NotificationType ONQUERY = new NotificationType(
-            "OnQuery");
-    public static final NotificationType ONSUBMIT = new NotificationType(
-            "OnSubmit");
-    public static final NotificationType ONDOWNLOAD = new NotificationType(
-            "OnDownload");
-    public static final NotificationType ONNOTIFY = new NotificationType(
-            "OnNotify");
-    public static final NotificationType ONSCHEDULE = new NotificationType(
-            "OnSchedule");
-    public static final NotificationType ONEXECUTE = new NotificationType(
-            "OnExecute");
-    public static final NotificationType ALL = new NotificationType("All");
+public enum NotificationType implements Serializable
+{
+    None("None"), OnSolicit("OnSolicit"), OnQuery("OnQuery"), OnSubmit("OnSubmit"), OnDownload("OnDownload"), OnNotify("OnNotify"), OnSchedule(
+                    "OnSchedule"), OnExecute("OnExecute"), All("All");
 
     private static final long serialVersionUID = 1;
-    
-    private NotificationType(String s) {
-        super(s);
+    private final String type;
+
+    private NotificationType(String type)
+    {
+        this.type = type;
     }
 
-    public static Map getEnumMap() {
-        return getEnumMap(NotificationType.class);
+    public String getType()
+    {
+        return type;
     }
-
-    public static List getEnumList() {
-        return getEnumList(NotificationType.class);
-    }
-
-    public static Iterator iterator() {
-        return iterator(NotificationType.class);
-    }
-
 }

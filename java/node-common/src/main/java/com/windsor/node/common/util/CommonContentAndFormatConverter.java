@@ -34,9 +34,6 @@ package com.windsor.node.common.util;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.apache.commons.collections.MapUtils;
-
 import com.windsor.node.common.domain.CommonContentType;
 import com.windsor.node.common.domain.Wsdl11ContentType;
 
@@ -107,15 +104,15 @@ public final class CommonContentAndFormatConverter implements Serializable {
 
     private static final long serialVersionUID = 1;
 
-    private static Map commonContentToFormat;
+    private static Map<CommonContentType, String> commonContentToFormat;
 
-    static {
-        commonContentToFormat = MapUtils.typedMap(new HashMap(),
-                CommonContentType.class, String.class);
+    static
+    {
+        commonContentToFormat = new HashMap<CommonContentType, String>();
         commonContentToFormat.put(CommonContentType.OTHER, OTHER_MIME);
         commonContentToFormat.put(CommonContentType.XML, XML_MIME);
-        commonContentToFormat.put(CommonContentType.FLAT, FLAT_MIME);
-        commonContentToFormat.put(CommonContentType.BIN, BIN_MIME);
+        commonContentToFormat.put(CommonContentType.Flat, FLAT_MIME);
+        commonContentToFormat.put(CommonContentType.Bin, BIN_MIME);
         commonContentToFormat.put(CommonContentType.ZIP, ZIP_MIME);
     }
 
@@ -133,14 +130,16 @@ public final class CommonContentAndFormatConverter implements Serializable {
      * @throws IllegalArgumentException
      *             if no CommonContentType corresponds to the input String
      */
-    public static CommonContentType convert(String s) {
-        CommonContentType cct = null;
-        Object o = CommonContentType.getEnumMap().get(s);
-        if ((null != o) && (o instanceof CommonContentType)) {
-            cct = (CommonContentType) o;
-        } else {
-            throw new IllegalArgumentException("The string \"" + s
-                    + "\" does not represent a common content type.");
+    public static CommonContentType convert(String s)
+    {
+        CommonContentType cct = CommonContentType.valueOf(s);
+        // Object o = ;
+        /*
+         * if ((null != o) && (o instanceof CommonContentType)) { cct = (CommonContentType) o; } else {
+         */
+        if(cct == null)
+        {
+            throw new IllegalArgumentException("The string \"" + s + "\" does not represent a common content type.");
         }
         return cct;
     }
@@ -152,12 +151,16 @@ public final class CommonContentAndFormatConverter implements Serializable {
      *            the CommonContentType to convert
      * @return the corresponding Mime string (falls back to &quot;OTHER&quot;)
      */
-    public static String convertToMimeType(CommonContentType cct) {
+    public static String convertToMimeType(CommonContentType cct)
+    {
         String s;
-        if (commonContentToFormat.containsKey(cct)) {
-            s = (String) commonContentToFormat.get(cct);
-        } else {
-            s = CommonContentType.OTHER_STR;
+        if(commonContentToFormat.containsKey(cct))
+        {
+            s = (String)commonContentToFormat.get(cct);
+        }
+        else
+        {
+            s = OTHER_MIME;
         }
         return s;
     }
@@ -176,19 +179,21 @@ public final class CommonContentAndFormatConverter implements Serializable {
      *             if no Wsdl11ContentType corresponds to the input
      *             CommonContentType
      */
-    public static Wsdl11ContentType convertTo11Type(CommonContentType cct) {
+    public static Wsdl11ContentType convertTo11Type(CommonContentType cct)
+    {
         Wsdl11ContentType wct = null;
         /* _ODF is the only 2.0 type missing from 1.1 */
-        if (cct.equals(CommonContentType.ODF)) {
+        if(cct.equals(CommonContentType.ODF))
+        {
             wct = Wsdl11ContentType.OTHER;
-        } else {
-            String s = cct.getName();
-            Object o = Wsdl11ContentType.getEnumMap().get(s);
-            if ((null != o) && (o instanceof Wsdl11ContentType)) {
-                wct = (Wsdl11ContentType) o;
-            } else {
-                throw new IllegalArgumentException("The type \"" + s
-                        + "\" does not map to a WSDL 1.1 content type.");
+        }
+        else
+        {
+            String s = cct.getType();
+            wct = Wsdl11ContentType.valueOf(s);
+            if(wct == null)
+            {
+                throw new IllegalArgumentException("The type \"" + s + "\" does not map to a WSDL 1.1 content type.");
             }
         }
         return wct;
@@ -203,10 +208,10 @@ public final class CommonContentAndFormatConverter implements Serializable {
      */
     public static String getFileExtension(CommonContentType cct) {
         String s = null;
-        if (cct.equals(CommonContentType.BIN)) {
+        if (cct.equals(CommonContentType.Bin)) {
             s = BIN_EXT;
         }
-        if (cct.equals(CommonContentType.FLAT)) {
+        if (cct.equals(CommonContentType.Flat)) {
             s = FLAT_EXT;
         }
         if (cct.equals(CommonContentType.ODF)) {
@@ -238,9 +243,9 @@ public final class CommonContentAndFormatConverter implements Serializable {
             s = s.substring(s.length() - EXTENSION_LENGTH, s.length());
         }
         if (s.equalsIgnoreCase(BIN_EXT)) {
-            cct = CommonContentType.BIN;
+            cct = CommonContentType.Bin;
         } else if (s.equalsIgnoreCase(FLAT_EXT)) {
-            cct = CommonContentType.FLAT;
+            cct = CommonContentType.Flat;
         } else if (s.equalsIgnoreCase(ODF_EXT)) {
             cct = CommonContentType.ODF;
         } else if (s.equalsIgnoreCase(XML_EXT)) {

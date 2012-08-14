@@ -57,7 +57,7 @@
                     <%-- <c:if test="${model.tran.webMethod != null}"> --%>
                     <tr>
                         <td class="label" width="50" style="text-align: right; vertical-align: top;">Service Type:</td>
-                        <td class="ctrl"><c:out value="${model.tran.webMethod.name}" /></td>
+                        <td class="ctrl"><c:out value="${model.tran.webMethod.type}" /></td>
                     </tr>
                     <%-- </c:if> --%>
 
@@ -99,7 +99,7 @@
                         <tr>
                             <td class="label" width="50" style="text-align: right; vertical-align: top;">Name:</td>
                             <td class="ctrl"><c:out
-                                value="${model.tran.request.service.name}" /></td>
+                                value="${model.tran.request.service.type}" /></td>
                         </tr>
                         
                         <tr>
@@ -119,7 +119,7 @@
                         <tr>
                             <td class="label" width="50" style="text-align: right; vertical-align: top;">Type:</td>
                             <td class="ctrl"><c:out
-                                value="${model.tran.request.type.name}" /></td>
+                                value="${model.tran.request.type.type}" /></td>
                         </tr>
 
 
@@ -192,7 +192,7 @@
                                 <td nowrap="nowrap" valign="top">
                                     <img src="img/icon_attachment.gif" align="top" style="border-width:0px;vertical-align:top">File:
                                 </td>
-                                <td><a href="doc.htm?tid=<c:out value="${model.tran.id}" />&id=<c:out value="${doc.id}" />&name=<c:out value="${doc.documentName}" />"><c:out value="${doc.documentName}" />&nbsp;(<c:out value="${doc.type.name}" />)</a></td>
+                                <td><a href="doc.htm?tid=<c:out value="${model.tran.id}" />&id=<c:out value="${doc.id}" />&name=<c:out value="${doc.documentName}" />"><c:out value="${doc.documentName}" />&nbsp;(<c:out value="${doc.type.type}" />)</a></td>
                               </tr>
                             </c:forEach>
                             </table>

@@ -44,7 +44,7 @@ public class ServiceRequestAuthorizationTypeEditor extends ClassEditor {
         } else {
 
             try {
-                setValue(ServiceRequestAuthorizationType.getEnumMap().get(text));
+                setValue(ServiceRequestAuthorizationType.valueOf(text));
             } catch (Exception ex) {
                 throw new IllegalArgumentException(
                         "Value could not be converted: " + text);
@@ -58,7 +58,7 @@ public class ServiceRequestAuthorizationTypeEditor extends ClassEditor {
         if (value == null) {
             return null;
         } else {
-            return value.getName();
+            return value.getType();
         }
     }
 }

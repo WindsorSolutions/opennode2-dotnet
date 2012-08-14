@@ -230,10 +230,10 @@ public class NetworkNode11Client implements NodeClientService {
 
             String dataFlow = null;
 
-            if (notification.getCategory() == WnosNotificationMessageCategoryType.STATUS) {
+            if (notification.getCategory() == WnosNotificationMessageCategoryType.Status) {
                 dataFlow = "http://www.exchangenetwork.net/node/status";
 
-            } else if (notification.getCategory() == WnosNotificationMessageCategoryType.EVENT) {
+            } else if (notification.getCategory() == WnosNotificationMessageCategoryType.Event) {
                 dataFlow = "http://www.exchangenetwork.net/node/event";
 
             } else {
@@ -383,7 +383,7 @@ public class NetworkNode11Client implements NodeClientService {
 
                 NodeDocument document = new NodeDocument();
                 document.setName(doc.getDocumentName());
-                document.setType(doc.getType().getName());
+                document.setType(doc.getType().getType());
 
                 logger.debug("Local Document Content Size: "
                         + doc.getContent().length);
@@ -404,7 +404,7 @@ public class NetworkNode11Client implements NodeClientService {
 
             String transactionIdToSubmit = "";
 
-            if (transaction.getWebMethod() == NodeMethodType.SOLICIT) {
+            if (transaction.getWebMethod() == NodeMethodType.Solicit) {
                 transactionIdToSubmit = transaction.getNetworkId();
             }
 

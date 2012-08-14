@@ -484,7 +484,7 @@ public class ContentServiceImpl extends BaseService implements ContentService,
 
             if (StringUtils.isBlank(content.getTransactionId())) {
                 tran = transactionDao.make(flow.getId(), account.getId(),
-                        NodeMethodType.SUBMIT,
+                        NodeMethodType.Submit,
                         CommonTransactionStatusCode.Received);
             } else {
                 tran = transactionDao.get(content.getTransactionId(), true);
@@ -527,7 +527,7 @@ public class ContentServiceImpl extends BaseService implements ContentService,
                 logEntry.addEntry("Document {0} ({1} - {2}: {3})",
                         new Object[] { doc.getDocumentName(),
                                 doc.getDocumentStatus().name(),
-                                doc.getType().getName(),
+                                doc.getType().getType(),
                                 doc.getDocumentStatusDetail() });
 
             }
@@ -548,7 +548,7 @@ public class ContentServiceImpl extends BaseService implements ContentService,
                 submitProcessingRequest.setRequestor(account);
                 submitProcessingRequest.setService(submitProcessingService);
                 submitProcessingRequest.setTransactionId(tran.getId());
-                submitProcessingRequest.setType(RequestType.NONE);
+                submitProcessingRequest.setType(RequestType.None);
 
                 tran.setRequest(requestDao.save(submitProcessingRequest));
             }

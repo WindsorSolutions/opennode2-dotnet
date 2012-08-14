@@ -500,7 +500,7 @@ public abstract class BaseWqxXmlPlugin extends BaseWqxPlugin implements
         doc.setDocumentId(docId);
         doc.setId(docId);
 
-        if (transaction.getRequest().getType() != RequestType.QUERY) {
+        if (transaction.getRequest().getType() != RequestType.Query) {
 
             String zippedFilePath = zip(getTempFilePath());
             doc.setType(CommonContentType.ZIP);

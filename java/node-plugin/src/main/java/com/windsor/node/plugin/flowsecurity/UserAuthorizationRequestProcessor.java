@@ -342,7 +342,7 @@ public class UserAuthorizationRequestProcessor extends BaseWnosPlugin {
         Document processedDoc = null;
         Document docToProcess = tran.getDocuments().get(0);
 
-        debug("Document is of type " + docToProcess.getType().getName());
+        debug("Document is of type " + docToProcess.getType().getType());
 
         if (docToProcess.getType().equals(CommonContentType.ZIP)) {
 

@@ -113,7 +113,7 @@ public class JdbcNotificationDao extends BaseJdbcDao implements
         String sql = "SELECT DISTINCT NAASAccount FROM NAccount "
                 + "WHERE IsActive = ? AND Id IN "
                 + "  (SELECT AccountId FROM NNotification "
-                + "    WHERE FlowId = ? AND " + type.getName() + " = ?)";
+                + "    WHERE FlowId = ? AND " + type.getType() + " = ?)";
 
         return getJdbcTemplate().query(sql,
                 new Object[] { FormatUtil.YES, id, FormatUtil.YES },

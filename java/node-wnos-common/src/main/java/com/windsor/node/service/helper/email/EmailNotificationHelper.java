@@ -340,7 +340,7 @@ public class EmailNotificationHelper implements InitializingBean,
         logData(data);
 
         for (Iterator it = notificationDao.getByFlowIdAndType(
-                tran.getFlow().getId(), NotificationType.ONNOTIFY).iterator(); it
+                tran.getFlow().getId(), NotificationType.OnNotify).iterator(); it
                 .hasNext();) {
 
             String to = (String) it.next();
@@ -384,7 +384,7 @@ public class EmailNotificationHelper implements InitializingBean,
         logData(data);
 
         for (Iterator it = notificationDao.getByFlowIdAndType(
-                request.getService().getFlowId(), NotificationType.ONQUERY)
+                request.getService().getFlowId(), NotificationType.OnQuery)
                 .iterator(); it.hasNext();) {
 
             String to = (String) it.next();
@@ -427,7 +427,7 @@ public class EmailNotificationHelper implements InitializingBean,
         logData(data);
 
         for (Iterator it = notificationDao.getByFlowIdAndType(
-                schedule.getFlowId(), NotificationType.ONSCHEDULE).iterator(); it
+                schedule.getFlowId(), NotificationType.OnSchedule).iterator(); it
                 .hasNext();) {
 
             String to = (String) it.next();
@@ -472,7 +472,7 @@ public class EmailNotificationHelper implements InitializingBean,
         logData(data);
 
         for (Iterator it = notificationDao.getByFlowIdAndType(
-                request.getService().getFlowId(), NotificationType.ONSOLICIT)
+                request.getService().getFlowId(), NotificationType.OnSolicit)
                 .iterator(); it.hasNext();) {
 
             String to = (String) it.next();
@@ -515,7 +515,7 @@ public class EmailNotificationHelper implements InitializingBean,
         logData(data);
 
         for (Iterator it = notificationDao.getByFlowIdAndType(
-                request.getService().getFlowId(), NotificationType.ONSOLICIT)
+                request.getService().getFlowId(), NotificationType.OnSolicit)
                 .iterator(); it.hasNext();) {
 
             String to = (String) it.next();
@@ -559,7 +559,7 @@ public class EmailNotificationHelper implements InitializingBean,
         logData(data);
 
         for (Iterator it = notificationDao.getByFlowIdAndType(
-                tran.getFlow().getId(), NotificationType.ONSUBMIT).iterator(); it
+                tran.getFlow().getId(), NotificationType.OnSubmit).iterator(); it
                 .hasNext();) {
 
             String to = (String) it.next();
@@ -662,7 +662,7 @@ public class EmailNotificationHelper implements InitializingBean,
         logData(data);
 
         List notifs = notificationDao.getByFlowIdAndType(
-                tran.getFlow().getId(), NotificationType.ONSUBMIT);
+                tran.getFlow().getId(), NotificationType.OnSubmit);
 
         for (Iterator it = notifs.iterator(); it.hasNext();) {
 

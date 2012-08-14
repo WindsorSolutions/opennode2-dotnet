@@ -157,14 +157,14 @@ public class SimpleRequestProcessor extends BaseWnosPlugin {
             result.getAuditEntries().add(makeEntry("Validating transaction..."));
             validateTransaction(transaction);
 
-            result.getAuditEntries().add(makeEntry("Parsing test from: " + transaction.getWebMethod().getName()));
+            result.getAuditEntries().add(makeEntry("Parsing test from: " + transaction.getWebMethod().getType()));
 
-            if(transaction.getWebMethod().equals(NodeMethodType.QUERY))
+            if(transaction.getWebMethod().equals(NodeMethodType.Query))
             {
                 result.setDocuments(processRequest(transaction.getRequest()));
             }
-            else if(transaction.getWebMethod().equals(NodeMethodType.SOLICIT)
-                            || transaction.getWebMethod().equals(NodeMethodType.SCHEDULE))
+            else if(transaction.getWebMethod().equals(NodeMethodType.Solicit)
+                            || transaction.getWebMethod().equals(NodeMethodType.Schedule))
             {
                 result.setDocuments(processRequest(transaction.getRequest()));
             }
@@ -236,7 +236,7 @@ public class SimpleRequestProcessor extends BaseWnosPlugin {
 
             logger.debug("Wrote buffer to " + resultFilePath);
 
-            if(req.getType().equals(RequestType.SOLICIT))
+            if(req.getType().equals(RequestType.Solicit))
             {
                 resultFile = compressionService.zip(resultFile);
 
@@ -245,7 +245,7 @@ public class SimpleRequestProcessor extends BaseWnosPlugin {
 
                 logger.debug("SOLICIT request, set content type to ZIP");
             }
-            else if(req.getType().equals(RequestType.QUERY))
+            else if(req.getType().equals(RequestType.Query))
             {
                 logger.debug("QUERY request");
 
@@ -281,7 +281,7 @@ public class SimpleRequestProcessor extends BaseWnosPlugin {
                 doc.setType(CommonContentType.XML);
             }
 
-            logger.debug("doc content type set to " + doc.getType().getName());
+            logger.debug("doc content type set to " + doc.getType().getType());
 
             doc.setContent(FileUtils.readFileToByteArray(resultFile));
             resultDocs.add(doc);

@@ -31,6 +31,8 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.windsor.node.common.domain;
 
+import java.io.Serializable;
+
 /**
  * We take this non-standard approach to a Java 5 enum name for backward
  * compatilbility with earlier versions based on
@@ -39,7 +41,7 @@ package com.windsor.node.common.domain;
  * @author jniski
  * 
  */
-public enum ServiceType {
+public enum ServiceType implements Serializable{
 
     NONE("None"), QUERY("Query"), SOLICIT("Solicit"), SUBMIT("Submit"), NOTIFY(
             "Notify"), EXECUTE("Execute"), QUERY_OR_SOLICIT("QueryOrSolicit"), QUERY_OR_SOLICIT_OR_EXECUTE(
@@ -58,6 +60,7 @@ public enum ServiceType {
         return this.name;
     }
 
+    //FIXME get rid of this, valueOf works just as well
     public static ServiceType fromString(String s) {
 
         ServiceType serviceType = null;

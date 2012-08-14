@@ -669,7 +669,7 @@ public class AccountServiceImpl extends BaseService implements AccountService,
                 logger.debug("Policy: " + policy);
 
                 logEntry.addEntry("Policy: {0} ({1}).", new Object[] {
-                        policy.getPolicyType().getName(),
+                        policy.getPolicyType().getType(),
                         policy.getTypeQualifier() });
 
                 policyDao.save(policy);
@@ -718,7 +718,7 @@ public class AccountServiceImpl extends BaseService implements AccountService,
                 UserAccessPolicy policy = (UserAccessPolicy) userPolicies
                         .get(i);
 
-                if (policy.getPolicyType() == ServiceRequestAuthorizationType.FLOW
+                if (policy.getPolicyType() == ServiceRequestAuthorizationType.Flow
                         && policy.getTypeQualifier().equalsIgnoreCase(flowId)
                         && policy.isAllowed()) {
                     hasGrantPolicy = true;

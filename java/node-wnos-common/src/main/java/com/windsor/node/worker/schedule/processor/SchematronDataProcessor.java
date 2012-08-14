@@ -105,7 +105,7 @@ public class SchematronDataProcessor implements InitializingBean {
 
             info.add(new ActivityEntry("Getting subscribing user emails..."));
             List subscribers = notificationDao.getByFlowIdAndType(transaction
-                    .getFlow().getId(), NotificationType.ONSCHEDULE);
+                    .getFlow().getId(), NotificationType.OnSchedule);
 
             info.add(new ActivityEntry("Adding email: "
                     + nosConfig.getNodeAdminEmail()));

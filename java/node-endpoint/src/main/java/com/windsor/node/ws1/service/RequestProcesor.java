@@ -219,7 +219,7 @@ public class RequestProcesor implements NetworkNodePortType {
             TransactionStatus status = transactionService.getStatus(visit,
                     transactionId);
             String result = CommonTransactionStatusCodeConverter
-                    .convertTo11Type(status.getStatus()).getName();
+                    .convertTo11Type(status.getStatus()).getType();
             return result;
         } catch (Exception ex) {
             logger.error("[getStatus]: Error: " + ex.getMessage());
@@ -261,15 +261,15 @@ public class RequestProcesor implements NetworkNodePortType {
         EndpointVisit visit = getVisit(securityToken);
 
         try {
-            WnosNotificationMessageCategoryType messageCategory = WnosNotificationMessageCategoryType.NONE;
+            WnosNotificationMessageCategoryType messageCategory = WnosNotificationMessageCategoryType.None;
             if (dataflow.trim().equalsIgnoreCase(
                     "http://www.exchangenetwork.net/node/event")) {
-                messageCategory = WnosNotificationMessageCategoryType.EVENT;
+                messageCategory = WnosNotificationMessageCategoryType.Event;
             } else if (dataflow.trim().equalsIgnoreCase(
                     "http://www.exchangenetwork.net/node/status")) {
-                messageCategory = WnosNotificationMessageCategoryType.STATUS;
+                messageCategory = WnosNotificationMessageCategoryType.Status;
             } else {
-                messageCategory = WnosNotificationMessageCategoryType.DOCUMENT;
+                messageCategory = WnosNotificationMessageCategoryType.Document;
             }
 
             ComplexNotification complexNotification = new ComplexNotification();
@@ -302,7 +302,7 @@ public class RequestProcesor implements NetworkNodePortType {
                     complexNotification);
             logger.debug("Notify transaction status: " + result);
             return CommonTransactionStatusCodeConverter.convertTo11Type(
-                    result.getStatus()).getName();
+                    result.getStatus()).getType();
         } catch (Exception ex) {
             logger.error("[notify]: Error: " + ex.getMessage());
             NodeFault.throwFault(NodeFault.E_SERVICEUNAVAILABLE, ex
@@ -344,7 +344,7 @@ public class RequestProcesor implements NetworkNodePortType {
                 Document nosDoc = (Document) iter.next();
                 responseDocument.setName(nosDoc.getDocumentName());
                 responseDocument.setType(CommonContentAndFormatConverter
-                        .convertTo11Type(nosDoc.getType()).getName());
+                        .convertTo11Type(nosDoc.getType()).getType());
                 responseDocument.populateContentCustom(nosDoc.getContent(),
                         true);
                 logger.debug("responseDocument set");

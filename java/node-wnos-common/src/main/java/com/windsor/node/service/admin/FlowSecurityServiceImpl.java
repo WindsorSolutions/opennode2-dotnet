@@ -265,7 +265,7 @@ public class FlowSecurityServiceImpl extends BaseService implements
 
                     policy.setAccountId(naasAccount.getId());
                     policy.setAllowed(true);
-                    policy.setPolicyType(ServiceRequestAuthorizationType.FLOW);
+                    policy.setPolicyType(ServiceRequestAuthorizationType.Flow);
                     policy.setTypeQualifier(flow.getId());
                     policy.setModifiedById(visit.getUserAccount().getId());
 

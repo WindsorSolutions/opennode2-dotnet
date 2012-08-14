@@ -232,8 +232,8 @@ public class NodeTransactionTaskWorker extends NodeWorker implements
             } else {
 
                 // send notifications about submitted documents transaction
-                if (documentType.equals(NodeMethodType.SUBMIT)
-                        || documentType.equals(NodeMethodType.NOTIFY)) {
+                if (documentType.equals(NodeMethodType.Submit)
+                        || documentType.equals(NodeMethodType.Notify)) {
                     getNotificationHelper().sendProcessedSubmits(transaction);
                 }
 
@@ -278,7 +278,7 @@ public class NodeTransactionTaskWorker extends NodeWorker implements
                     }
 
                     // send notifications about submitted documents transaction
-                    if (documentType == NodeMethodType.SOLICIT) {
+                    if (documentType == NodeMethodType.Solicit) {
 
                         // Send the results
                         if (transaction.getRequest() != null

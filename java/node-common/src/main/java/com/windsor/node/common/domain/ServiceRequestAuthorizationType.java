@@ -31,40 +31,22 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.windsor.node.common.domain;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import org.apache.commons.lang.enums.Enum;
+import java.io.Serializable;
 
-public final class ServiceRequestAuthorizationType extends Enum {
-
-    public static final ServiceRequestAuthorizationType NONE = new ServiceRequestAuthorizationType(
-            "None");
-    public static final ServiceRequestAuthorizationType BASIC = new ServiceRequestAuthorizationType(
-            "Basic");
-    public static final ServiceRequestAuthorizationType PRIMITIVE = new ServiceRequestAuthorizationType(
-            "Primitive");
-    public static final ServiceRequestAuthorizationType FLOW = new ServiceRequestAuthorizationType(
-            "Flow");
-    public static final ServiceRequestAuthorizationType SERVICE = new ServiceRequestAuthorizationType(
-            "Service");
+public enum ServiceRequestAuthorizationType implements Serializable
+{
+    None("None"), Basic("Basic"), Primitive("Primitive"), Flow("Flow"), Service("Service");
 
     private static final long serialVersionUID = 1;
-    
-    private ServiceRequestAuthorizationType(String type) {
-        super(type);
+    private final String type;
+
+    private ServiceRequestAuthorizationType(String type)
+    {
+        this.type = type;
     }
 
-    public static Map getEnumMap() {
-        return getEnumMap(ServiceRequestAuthorizationType.class);
+    public String getType()
+    {
+        return type;
     }
-
-    public static List getEnumList() {
-        return getEnumList(ServiceRequestAuthorizationType.class);
-    }
-
-    public static Iterator iterator() {
-        return iterator(ServiceRequestAuthorizationType.class);
-    }
-
 }

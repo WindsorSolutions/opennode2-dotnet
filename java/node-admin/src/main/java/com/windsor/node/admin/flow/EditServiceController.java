@@ -31,6 +31,8 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.windsor.node.admin.flow;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -178,7 +180,7 @@ public class EditServiceController extends BaseSimpleFormController implements
         model.put(AdminConstants.BARS_KEY, SideBarUtils.getExchangeBars(request, 0));
 
         // set service types
-        model.put("authLevels", ServiceRequestAuthorizationType.getEnumList());
+        model.put("authLevels", new ArrayList<ServiceRequestAuthorizationType>(Arrays.asList(ServiceRequestAuthorizationType.values())));
 
         // set service types
         model.put("sysConnections", configService.getDataProviders(visit));

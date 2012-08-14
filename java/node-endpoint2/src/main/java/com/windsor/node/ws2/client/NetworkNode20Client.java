@@ -252,7 +252,7 @@ public class NetworkNode20Client implements NodeClientService {
                             + wnosDoc.getType());
 
                     reqDoc.setDocumentFormat(DocumentFormatType.Factory
-                            .fromValue(wnosDoc.getType().getName()));
+                            .fromValue(wnosDoc.getType().getType()));
 
                     if (StringUtils.isNotBlank(wnosDoc.getDocumentId())) {
 
@@ -332,9 +332,7 @@ public class NetworkNode20Client implements NodeClientService {
                 if (nodeDoc.getDocumentFormat() != null
                         && StringUtils.isNotBlank(nodeDoc.getDocumentFormat()
                                 .getValue())) {
-                    doc.setType((CommonContentType) CommonContentType
-                            .getEnumMap().get(
-                                    nodeDoc.getDocumentFormat().getValue()));
+                    doc.setType(CommonContentType.valueOf(nodeDoc.getDocumentFormat().getValue()));
                 }
 
                 transaction.getDocuments().add(doc);
@@ -427,18 +425,18 @@ public class NetworkNode20Client implements NodeClientService {
             request.setNodeAddress(localEndpointUrl);
             NotificationMessageType msg = new NotificationMessageType();
 
-            if (notification.getCategory() == WnosNotificationMessageCategoryType.STATUS) {
+            if (notification.getCategory() == WnosNotificationMessageCategoryType.Status) {
                 msg
                         .setMessageCategory(net.exchangenetwork.www.schema.node._2.NotificationMessageCategoryType.Status);
                 msg.setObjectId(notification.getStatus().getTransactionId());
 
                 logger.debug("Request: " + request);
-            } else if (notification.getCategory() == WnosNotificationMessageCategoryType.EVENT) {
+            } else if (notification.getCategory() == WnosNotificationMessageCategoryType.Event) {
                 msg
                         .setMessageCategory(net.exchangenetwork.www.schema.node._2.NotificationMessageCategoryType.Event);
                 msg.setObjectId(notification.getName());
 
-            } else if (notification.getCategory() == WnosNotificationMessageCategoryType.DOCUMENT) {
+            } else if (notification.getCategory() == WnosNotificationMessageCategoryType.Document) {
                 msg
                         .setMessageCategory(net.exchangenetwork.www.schema.node._2.NotificationMessageCategoryType.Document);
                 msg.setObjectId(notification.getStatus().getTransactionId());
@@ -605,7 +603,7 @@ public class NetworkNode20Client implements NodeClientService {
 
             String transactionIdToSubmit = "";
 
-            if (transaction.getWebMethod() == NodeMethodType.SOLICIT) {
+            if (transaction.getWebMethod() == NodeMethodType.Solicit) {
                 transactionIdToSubmit = transaction.getNetworkId();
             }
 

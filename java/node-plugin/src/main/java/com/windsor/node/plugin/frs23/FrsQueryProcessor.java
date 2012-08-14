@@ -283,7 +283,7 @@ public class FrsQueryProcessor extends BaseWnosPlugin {
             Document doc = new Document();
             result.getAuditEntries().add(makeEntry("Creating document..."));
 
-            if (transaction.getRequest().getType() != RequestType.QUERY) {
+            if (transaction.getRequest().getType() != RequestType.Query) {
 
                 result.getAuditEntries().add(
                         makeEntry("Compressing results..."));

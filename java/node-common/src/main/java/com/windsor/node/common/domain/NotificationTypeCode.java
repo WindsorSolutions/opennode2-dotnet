@@ -31,40 +31,22 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.windsor.node.common.domain;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.io.Serializable;
 
-import org.apache.commons.lang.enums.Enum;
-
-public final class NotificationTypeCode extends Enum {
-
-    public static final NotificationTypeCode NONE = new NotificationTypeCode(
-            "None");
-    public static final NotificationTypeCode WARNING = new NotificationTypeCode(
-            "Warning");
-    public static final NotificationTypeCode ERROR = new NotificationTypeCode(
-            "Error");
-    public static final NotificationTypeCode STATUS = new NotificationTypeCode(
-            "Status");
-    public static final NotificationTypeCode ALL = new NotificationTypeCode(
-            "All");
+public enum NotificationTypeCode implements Serializable
+{
+    None("None"), Warning("Warning"), Error("Error"), Status("Status"), All("All");
 
     private static final long serialVersionUID = 1;
-    
-    private NotificationTypeCode(String type) {
-        super(type);
+    private final String type;
+
+    private NotificationTypeCode(String type)
+    {
+        this.type = type;
     }
 
-    public static Map getEnumMap() {
-        return getEnumMap(NotificationTypeCode.class);
-    }
-
-    public static List getEnumList() {
-        return getEnumList(NotificationTypeCode.class);
-    }
-
-    public static Iterator iterator() {
-        return iterator(NotificationTypeCode.class);
+    public String getType()
+    {
+        return type;
     }
 }

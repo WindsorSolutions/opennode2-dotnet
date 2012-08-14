@@ -31,46 +31,23 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.windsor.node.common.domain;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.io.Serializable;
 
-import org.apache.commons.lang.enums.Enum;
-
-public final class NodeMethodType extends Enum {
-
-    public static final NodeMethodType NONE = new NodeMethodType("None");
-    public static final NodeMethodType AUTHENTICATE = new NodeMethodType(
-            "Authenticate");
-    public static final NodeMethodType SUBMIT = new NodeMethodType("Submit");
-    public static final NodeMethodType DOWNLOAD = new NodeMethodType("Download");
-    public static final NodeMethodType QUERY = new NodeMethodType("Query");
-    public static final NodeMethodType SOLICIT = new NodeMethodType("Solicit");
-    public static final NodeMethodType NOTIFY = new NodeMethodType("Notify");
-    public static final NodeMethodType EXECUTE = new NodeMethodType("Execute");
-    public static final NodeMethodType GETSTATUS = new NodeMethodType(
-            "GetStatus");
-    public static final NodeMethodType GETSERVICES = new NodeMethodType(
-            "GetServices");
-    public static final NodeMethodType SCHEDULE = new NodeMethodType("Schedule");
-    public static final NodeMethodType ANY = new NodeMethodType("Any");
+public enum NodeMethodType implements Serializable
+{
+    None("None"), Authenticate("Authenticate"), Submit("Submit"), Download("Download"), Query("Query"), Solicit("Solicit"), Notify("Notify"), Execute(
+                    "Execute"), GetStatus("GetStatus"), GetServices("GetServices"), Schedule("Schedule"), Any("Any");
 
     private static final long serialVersionUID = 1;
-    
-    private NodeMethodType(String type) {
-        super(type);
+    private final String type;
+
+    private NodeMethodType(String type)
+    {
+        this.type = type;
     }
 
-    public static Map getEnumMap() {
-        return getEnumMap(NodeMethodType.class);
+    public String getType()
+    {
+        return type;
     }
-
-    public static List getEnumList() {
-        return getEnumList(NodeMethodType.class);
-    }
-
-    public static Iterator iterator() {
-        return iterator(NodeMethodType.class);
-    }
-
 }

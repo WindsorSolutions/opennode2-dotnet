@@ -185,8 +185,7 @@ public class ProfileController extends BaseSimpleFormController implements
                             flowNotif = (UserFlowNotification) flowNotifs
                                     .get(flowId);
                             flowNotif
-                                    .setByNotificationType((NotificationType) NotificationType
-                                            .getEnumMap().get(notifType));
+                                    .setByNotificationType(NotificationType.valueOf(notifType));
                             logger.debug("flowNotif = " + flowNotif);
 
                         } else {
@@ -197,8 +196,7 @@ public class ProfileController extends BaseSimpleFormController implements
                             flowNotif.setFlow(new DataFlow(flowId));
                             flowNotif.setModifiedById(userId);
                             flowNotif
-                                    .setByNotificationType((NotificationType) NotificationType
-                                            .getEnumMap().get(notifType));
+                                    .setByNotificationType(NotificationType.valueOf(notifType));
                             flowNotifs.put(flowId, flowNotif);
                             logger.debug("flowNotif = " + flowNotif);
                         }

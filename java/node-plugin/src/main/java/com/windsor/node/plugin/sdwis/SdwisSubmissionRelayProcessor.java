@@ -422,7 +422,7 @@ public class SdwisSubmissionRelayProcessor extends BaseWnosPlugin {
 
         super.validateTransaction(tran);
 
-        if (!tran.getWebMethod().equals(NodeMethodType.SUBMIT)) {
+        if (!tran.getWebMethod().equals(NodeMethodType.Submit)) {
             throw new RuntimeException("Invalid method type: "
                     + tran.getWebMethod());
         }
