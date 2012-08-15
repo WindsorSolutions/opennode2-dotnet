@@ -34,7 +34,7 @@ package com.windsor.node.service.admin;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 
 import com.windsor.node.common.domain.Activity;

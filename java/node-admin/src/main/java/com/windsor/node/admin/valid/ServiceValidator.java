@@ -31,7 +31,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.windsor.node.admin.valid;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.Errors;
 import com.windsor.node.admin.domain.DataServiceForm;

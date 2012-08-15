@@ -31,7 +31,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.windsor.node.admin.editor;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.propertyeditors.ClassEditor;
 
 import com.windsor.node.common.domain.ServiceType;

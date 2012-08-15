@@ -33,7 +33,7 @@ package com.windsor.node.util;
 
 import java.util.Random;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import com.windsor.node.service.helper.id.UUIDGenerator;
 

@@ -31,39 +31,32 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.windsor.node.common.domain;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.io.Serializable;
 import java.util.Calendar;
-
-import org.apache.commons.lang.enums.ValuedEnum;
-
-public final class DayOfWeekType extends ValuedEnum {
-
-    public static final DayOfWeekType MONDAY = new DayOfWeekType("Monday",
-            Calendar.MONDAY);
-    public static final DayOfWeekType TUESDAY = new DayOfWeekType("Tuesday",
-            Calendar.TUESDAY);
-    public static final DayOfWeekType WEDNESDAY = new DayOfWeekType(
-            "Wednesday", Calendar.WEDNESDAY);
-    public static final DayOfWeekType THURSDAY = new DayOfWeekType("Thursday",
-            Calendar.THURSDAY);
+//FIXME This class may be lava, only ScheduleTime seems to use it and it appears to be unused
+public enum DayOfWeekType implements Serializable
+{
+    // FIXME Why does this only have 4 days in it???
+    Monday("Monday", Calendar.MONDAY), Tuesday("Tuesday", Calendar.TUESDAY), Wednesday("Wednesday", Calendar.WEDNESDAY), Thursday(
+                    "Thursday", Calendar.THURSDAY);
 
     private static final long serialVersionUID = 1;
-    
-    private DayOfWeekType(String type, int i) {
-        super(type, i);
+    private final String type;
+    private final int value;
+
+    private DayOfWeekType(String type, int i)
+    {
+        this.type = type;
+        this.value = i;
     }
 
-    public static Map getEnumMap() {
-        return getEnumMap(DayOfWeekType.class);
+    public String getType()
+    {
+        return type;
     }
 
-    public static List getEnumList() {
-        return getEnumList(DayOfWeekType.class);
-    }
-
-    public static Iterator iterator() {
-        return iterator(DayOfWeekType.class);
+    public int getValue()
+    {
+        return value;
     }
 }

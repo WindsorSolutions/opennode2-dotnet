@@ -39,7 +39,7 @@ import java.util.Random;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-
+//FIXME This class may be lava, it looks like a jQuery datePicker is used for all this
 public class ScheduleTime implements Serializable {
 
     private static final long serialVersionUID = 2;

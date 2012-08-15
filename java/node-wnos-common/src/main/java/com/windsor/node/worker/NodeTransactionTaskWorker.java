@@ -35,7 +35,7 @@ import java.text.FieldPosition;
 import java.text.MessageFormat;
 import java.text.NumberFormat;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 
 import com.windsor.node.common.domain.Activity;

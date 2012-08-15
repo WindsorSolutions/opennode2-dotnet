@@ -37,7 +37,7 @@ package com.windsor.node.plugin.frs23.identities;
 
 import java.lang.reflect.Field;
 
-import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 import com.windsor.node.plugin.xml.ElementUtil;
 

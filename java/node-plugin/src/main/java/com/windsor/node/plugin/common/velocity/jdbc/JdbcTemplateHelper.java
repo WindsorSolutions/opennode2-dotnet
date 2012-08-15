@@ -41,18 +41,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
-
 import javax.sql.DataSource;
-
 import org.apache.commons.beanutils.BasicDynaBean;
 import org.apache.commons.beanutils.BasicDynaClass;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.DynaBean;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.beanutils.ResultSetDynaClass;
-import org.apache.commons.lang.NullArgumentException;
-import org.apache.commons.lang.StringUtils;
-
+import org.apache.commons.lang3.StringUtils;
 import com.windsor.node.plugin.common.velocity.TemplateHelper;
 
 /**
@@ -125,7 +121,7 @@ public class JdbcTemplateHelper extends TemplateHelper {
     public JdbcTemplateHelper(DataSource dataSource) {
 
         if (dataSource == null) {
-            throw new NullArgumentException("null datasource");
+            throw new IllegalArgumentException("null datasource");
         }
         try {
             this.connection = dataSource.getConnection();

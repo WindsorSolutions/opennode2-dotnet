@@ -76,7 +76,7 @@ import net.exchangenetwork.www.schema.node._2.SubmitResponse;
 import net.exchangenetwork.www.schema.node._2.TransactionStatusCode;
 
 import org.apache.axis2.transport.http.HTTPConstants;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;

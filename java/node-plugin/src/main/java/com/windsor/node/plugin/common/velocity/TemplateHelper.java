@@ -40,10 +40,10 @@ import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 import org.apache.commons.beanutils.converters.BooleanConverter;
-import org.apache.commons.lang.StringEscapeUtils;
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.time.DateUtils;
-import org.apache.commons.lang.time.StopWatch;
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
+import org.apache.commons.lang3.time.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -120,7 +120,7 @@ public class TemplateHelper {
     }
 
     /**
-     * Calls org.apache.commons.lang.StringEscapeUtils to escape XML entities
+     * Calls org.apache.commons.lang3.StringEscapeUtils to escape XML entities
      * (&lt;, &gt;, &amp; &quot; &apos;).
      * 
      * <p>
@@ -137,7 +137,7 @@ public class TemplateHelper {
 
     /**
      * Calls the corresponding method in
-     * org.apache.commons.lang.StringEscapeUtils.
+     * org.apache.commons.lang3.StringEscapeUtils.
      * 
      * @param val
      * @return the escaped String
@@ -148,24 +148,13 @@ public class TemplateHelper {
 
     /**
      * Calls the corresponding method in
-     * org.apache.commons.lang.StringEscapeUtils.
+     * org.apache.commons.lang3.StringEscapeUtils.
      * 
      * @param val
      * @return the escaped String
      */
     public String escapeHtml(String val) {
-        return StringEscapeUtils.escapeHtml(val);
-    }
-
-    /**
-     * Calls the corresponding method in
-     * org.apache.commons.lang.StringEscapeUtils.
-     * 
-     * @param val
-     * @return the escaped String
-     */
-    public String escapeSql(String val) {
-        return StringEscapeUtils.escapeSql(val);
+        return StringEscapeUtils.escapeHtml4(val);
     }
 
     /**
