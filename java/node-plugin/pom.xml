@@ -208,9 +208,9 @@
             </build>
         </profile>
         <profile>
-            <id>icisnpdes31</id>
+            <id>icisnpdes40</id>
             <properties>
-                <plugin.name>icisnpdes31</plugin.name>
+                <plugin.name>icisnpdes40</plugin.name>
                 <plugin.subbuild.number>00</plugin.subbuild.number>
             </properties>
             <build>
@@ -230,8 +230,8 @@
                             <variant>jpa2</variant>
                             <extension>true</extension>
                             <roundtripTestClassName>RoundtripTest</roundtripTestClassName>
-                            <schemaDirectory>${basedir}/src/main/packaging/icisnpdes31/xsd</schemaDirectory>
-                            <generatePackage>com.windsor.node.plugin.icisnpdes31.generated</generatePackage>
+                            <schemaDirectory>${basedir}/src/main/packaging/icisnpdes40/xsd</schemaDirectory>
+                            <generatePackage>com.windsor.node.plugin.icisnpdes40.generated</generatePackage>
                         </configuration>
                     </plugin>
                 </plugins>

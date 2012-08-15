@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:icis="http://www.exchangenetwork.net/schema/icis/4" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/icis/4" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4">
+	<xsd:include schemaLocation="ICIS_KeyElements_v4.0e.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>Schema Name: ICIS_EnforcementActionMilestone_v4.0e.xsd</xsd:documentation>
+		<xsd:documentation>Current Version Available: http://www.exchangenetwork.net/schema/icis/4</xsd:documentation>
+		<xsd:documentation>Description: ICIS-NPDES enforcement action subactivity data input format</xsd:documentation>
+		<xsd:documentation>Application: ICIS-NPDES</xsd:documentation>
+		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
+		<xsd:documentation>Point of Contact: EPA/Alison Kittle</xsd:documentation>
+		<xsd:documentation>Data Written: July 2006</xsd:documentation>
+		<xsd:documentation>Last Date Modified: 2011-11-07</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="Milestone" type="icis:Milestone"/>
+	<xsd:element name="MilestoneActualDate" type="icis:DateType"/>
+	<xsd:element name="MilestonePlannedDate" type="icis:DateType"/>
+	<xsd:complexType name="EnforcementActionMilestoneData">
+		<xsd:sequence>
+			<xsd:element ref="icis:TransactionHeader"/>
+			<xsd:element ref="icis:Milestone"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="Milestone">
+		<xsd:complexContent>
+			<xsd:extension base="icis:EnforcementActionMilestoneKeyElements">
+				<xsd:sequence>
+					<xsd:element ref="icis:MilestonePlannedDate" minOccurs="0"/>
+					<xsd:element ref="icis:MilestoneActualDate" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+</xsd:schema>
