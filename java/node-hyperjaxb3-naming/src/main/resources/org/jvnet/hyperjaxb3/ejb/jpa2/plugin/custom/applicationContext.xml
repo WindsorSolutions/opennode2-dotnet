@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+	<bean id="config" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="classpath:NodeNaming.properties" />
+	</bean>
+
+	<bean name="xmlToDbNameMappings" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="location" value="classpath:XmlToDbNameMappings.properties"/>
+	</bean>
+
+	<bean name="naming" class="com.windsor.node.hyperjaxb3.NodeNaming">
+		<property name="reservedNames" ref="reservedNames" />
+		<property name="ignoring" ref="ignoring" />
+		<property name="xmlToDbNameMappings" ref="xmlToDbNameMappings" />
+		<property name="dbWordSeparator" value="${dbWordSeparator}" />
+		<property name="pkColumnNameSuffix" value="${pkColumnNameSuffix}" />
+		<property name="tableNamePrefix" value="${tableNamePrefix}" />
+		<property name="defaultPkColumnName" value="${defaultPkColumnName}" />
+	</bean>
+
+</beans>

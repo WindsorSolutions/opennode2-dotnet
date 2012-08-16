@@ -22,7 +22,11 @@
 				parseMethod="javax.xml.bind.DatatypeConverter.parseDate" printMethod="javax.xml.bind.DatatypeConverter.printDate" />
 
 		</jaxb:globalBindings>
-		
+
+		<hj:persistence>
+			<hj:default-generated-id name="dbid" transient="true" />
+		</hj:persistence>
+
 	</jaxb:bindings>
 
 </jaxb:bindings>

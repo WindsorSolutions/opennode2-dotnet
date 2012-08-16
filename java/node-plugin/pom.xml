@@ -235,6 +235,13 @@
                             <schemaDirectory>${basedir}/src/main/packaging/icisnpdes40/xsd</schemaDirectory>
                             <generatePackage>com.windsor.node.plugin.icisnpdes40.generated</generatePackage>
                         </configuration>
+                        <dependencies>
+                        	<dependency>
+                        		<groupId>com.windsor.node</groupId>
+                        		<artifactId>node-hyperjaxb3-naming</artifactId>
+                        		<version>2.06-SNAPSHOT</version>
+                        	</dependency>
+                        </dependencies>
                     </plugin>
                 </plugins>
             </build>

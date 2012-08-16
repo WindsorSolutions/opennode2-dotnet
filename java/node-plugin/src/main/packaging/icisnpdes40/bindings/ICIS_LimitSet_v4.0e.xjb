@@ -15,7 +15,7 @@
 					<orm:table name="ICS_LMT_SET" />
 				</hj:entity>
 
-				<hj:generated-id name="id" transient="true">
+				<hj:generated-id name="dbid" transient="true">
 					<orm:column name="ICS_LMT_SET_ID" />
 				</hj:generated-id>
 
@@ -44,52 +44,8 @@
 				<hj:embeddable />
 			</jaxb:bindings>
 
-			<jaxb:bindings node="//xsd:element[@ref='icis:LimitSetType']">
-				<hj:basic>
-					<orm:column name="LMT_SET_TYPE" length="1" />
-				</hj:basic>
-			</jaxb:bindings>
-
-			<jaxb:bindings node="//xsd:element[@ref='icis:LimitSetNameText']">
-				<hj:basic>
-					<orm:column name="LMT_SET_NAME_TXT" length="100" />
-				</hj:basic>
-			</jaxb:bindings>
-
-			<jaxb:bindings node="//xsd:element[@ref='icis:DMRPrePrintCommentsText']">
-				<hj:basic>
-					<orm:column name="DMR_PRE_PRINT_CMNTS_TXT" />
-				</hj:basic>
-			</jaxb:bindings>
-
-			<jaxb:bindings node="//xsd:element[@ref='icis:AgencyReviewer']">
-				<hj:basic>
-					<orm:column name="AGNCY_REVIEWER" />
-				</hj:basic>
-			</jaxb:bindings>
-
-			<jaxb:bindings node="//xsd:element[@ref='icis:LimitSetUserDefinedDataElement1Text']">
-				<hj:basic>
-					<orm:column name="LMT_SET_USR_DFND_DAT_ELM_1_TXT" />
-				</hj:basic>
-			</jaxb:bindings>
-
-			<jaxb:bindings node="//xsd:element[@ref='icis:LimitSetUserDefinedDataElement2Text']">
-				<hj:basic>
-					<orm:column name="LMT_SET_USR_DFND_DAT_ELM_2_TXT" />
-				</hj:basic>
-			</jaxb:bindings>
-
 			<jaxb:bindings node="//xsd:element[@ref='icis:LimitSetStatus']">
-				<hj:one-to-one name="status">
-					<!-- <orm:join-column name="ICS_LMT_SET_ID" /> -->
-				</hj:one-to-one>
-			</jaxb:bindings>
-
-			<jaxb:bindings node="//xsd:element[@ref='icis:LimitSetSchedule']">
-				<hj:one-to-many>
-					<!-- <orm:join-column name="ICS_LMT_SET_ID" /> -->
-				</hj:one-to-many>
+				<hj:one-to-one />
 			</jaxb:bindings>
 
 			<jaxb:bindings node="//xsd:element[@ref='icis:LimitSetMonthsApplicable']">
@@ -100,56 +56,6 @@
 						<orm:join-column name="ICS_LMT_SET_ID" />
 					</orm:collection-table>
 				</hj:element-collection>
-			</jaxb:bindings>
-
-		</jaxb:bindings>
-
-		<!-- limit set schedule -->
-
-		<jaxb:bindings node="//xsd:complexType[@name='LimitSetSchedule']">
-
-			<hj:entity>
-				<orm:table name="ICS_LMT_SET_SCHD" />
-			</hj:entity>
-
-			<hj:generated-id name="id" transient="true">
-				<orm:column name="ICS_LMT_SET_SCHD_ID" />
-			</hj:generated-id>
-
-			<jaxb:bindings node="//xsd:element[@ref='icis:NumberUnitsReportPeriodInteger']">
-				<hj:basic>
-					<orm:column name="NUM_UNITS_REP_PERIOD_INTEGER" />
-				</hj:basic>
-			</jaxb:bindings>
-
-			<jaxb:bindings node="//xsd:element[@ref='icis:NumberSubmissionUnitsInteger']">
-				<hj:basic>
-					<orm:column name="NUM_SUBM_UNITS_INTEGER" />
-				</hj:basic>
-			</jaxb:bindings>
-
-			<jaxb:bindings node="//xsd:element[@ref='icis:InitialMonitoringDate']">
-				<hj:basic>
-					<orm:column name="INITIAL_MON_DATE" />
-				</hj:basic>
-			</jaxb:bindings>
-
-			<jaxb:bindings node="//xsd:element[@ref='icis:InitialDMRDueDate']">
-				<hj:basic>
-					<orm:column name="INITIAL_DMR_DUE_DATE" />
-				</hj:basic>
-			</jaxb:bindings>
-
-			<jaxb:bindings node="//xsd:element[@ref='icis:LimitSetModificationTypeCode']">
-				<hj:basic>
-					<orm:column name="LMT_SET_MOD_TYPE_CODE" />
-				</hj:basic>
-			</jaxb:bindings>
-
-			<jaxb:bindings node="//xsd:element[@ref='icis:LimitSetModificationEffectiveDate']">
-				<hj:basic>
-					<orm:column name="LMT_SET_MOD_EFFECTIVE_DATE" />
-				</hj:basic>
 			</jaxb:bindings>
 
 		</jaxb:bindings>
