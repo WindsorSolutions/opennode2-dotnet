@@ -6,6 +6,7 @@ import java.util.Properties;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jvnet.hyperjaxb3.ejb.strategy.mapping.Mapping;
+import org.jvnet.hyperjaxb3.ejb.strategy.naming.Naming;
 import org.jvnet.hyperjaxb3.ejb.strategy.naming.impl.DefaultNaming;
 
 import com.sun.tools.xjc.model.CClass;
@@ -112,6 +113,11 @@ public class NodeNaming extends DefaultNaming {
 		}
 		logger.debug("getColumn$Name(): Mapping " + propertyName + " to " + columnName);
 		return columnName;
+	}
+
+	@Override
+	public Naming createEmbeddedNaming(final FieldOutline fieldOutline) {
+		return this;
 	}
 
 	/**
