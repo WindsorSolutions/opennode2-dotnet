@@ -3547,7 +3547,6 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_31
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public LimitSetType LimitSetType;
 
         /// <remarks/>
