@@ -50,7 +50,7 @@ using Windsor.Node2008.WNOS.AssemblyInfo;
 [assembly: AssemblyVersion(AssemblyInfo.cAssemblyVersion)]
 [assembly: AssemblyFileVersion(AssemblyInfo.cAssemblyFileVersion)]
 [assembly: PluginDefaultFlowAttribute("AQS-DrDas")]
-[assembly: PluginPackageNameAttribute("AQS-DrDas 2.1")]
+[assembly: PluginPackageNameAttribute("AQS-DrDas 2.2a")]
 
 
 
