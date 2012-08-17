@@ -52,6 +52,10 @@ public class NOSConfig implements InitializingBean {
     private File pluginDir;
     private File tempDir;
     private String globalArgumentIndicator = "@";
+    /**
+     * FIXME Remove this, already disabled
+     * @deprecated
+     */
     private boolean skipNaas = false;
 
     /** ENDS property. */
@@ -206,10 +210,18 @@ public class NOSConfig implements InitializingBean {
         this.globalArgumentIndicator = globalArgumentIndicator;
     }
 
+    /**
+     * FIXME Remove this, already disabled
+     * @deprecated
+     */
     public boolean isSkipNaas() {
         return skipNaas;
     }
 
+    /**
+     * FIXME Remove this, already disabled
+     * @deprecated
+     */
     public void setSkipNaas(boolean skipNaas) {
         this.skipNaas = skipNaas;
     }

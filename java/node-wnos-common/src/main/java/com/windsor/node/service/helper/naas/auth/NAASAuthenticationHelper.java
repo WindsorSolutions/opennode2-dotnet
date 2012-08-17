@@ -96,17 +96,9 @@ public class NAASAuthenticationHelper implements AuthenticationHelper,
 
             AuthMethod method = AuthMethod.fromValue(authenticationMethod);
 
-            // if (nosConfig.isSkipNaas()) {
-            // logger
-            // .info("SkipNaas Switch is on. NOT performing NAAS auth on this request");
-            // return UUIDGenerator.makeId();
-            // }
+            logger.debug("Executing centralAuth using: " + username + " from " + clientHostIP);
 
-            logger.debug("Executing centralAuth using: " + username + " from "
-                    + clientHostIP);
-
-            return proxy.centralAuth(username, password, method, clientHostIP,
-                    "");
+            return proxy.centralAuth(username, password, method, clientHostIP, "");
 
         } catch (Exception ex) {
             logger.error("NAAS Error: " + ex.getMessage(), ex);
@@ -126,14 +118,6 @@ public class NAASAuthenticationHelper implements AuthenticationHelper,
     public String validateToken(String securityToken, String clientHostIP) {
 
         try {
-
-            // TODO: remove before production deployment
-            if (nosConfig.isSkipNaas()) {
-                logger
-                        .info("SkipNaas Switch is on. NOT performing NAAS token validation");
-                return naasConfig.getAdminAccount().getUsername();
-            }
-
             logger.debug("Executing centralAuth using: " + securityToken
                     + " at " + clientHostIP);
 

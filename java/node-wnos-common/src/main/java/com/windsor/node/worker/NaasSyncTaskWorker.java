@@ -138,127 +138,121 @@ public class NaasSyncTaskWorker extends NodeWorker implements InitializingBean {
 
         try {
 
-            if (!getNosConfig().isSkipNaas()) {
+            // Get all NAAS users
+            logEntry.addEntry("Getting NAAS Users...");
+            Map naasMap = getNaasUsers();
+            logEntry.addEntry("Found: " + naasMap.size());
+            logger.debug("Found: " + naasMap.size());
 
-                // Get all NAAS users
-                logEntry.addEntry("Getting NAAS Users...");
-                Map naasMap = getNaasUsers();
-                logEntry.addEntry("Found: " + naasMap.size());
-                logger.debug("Found: " + naasMap.size());
+            // Get all local users
+            logEntry.addEntry("Getting Db Users...");
+            Map localUsers = getLocaActivelUsers();
+            logEntry.addEntry("Found: " + localUsers.size());
+            logger.debug("Found: " + localUsers.size() + " active users");
 
-                // Get all local users
-                logEntry.addEntry("Getting Db Users...");
-                Map localUsers = getLocaActivelUsers();
-                logEntry.addEntry("Found: " + localUsers.size());
-                logger.debug("Found: " + localUsers.size() + " active users");
+            // NAAS Connectivity Check
+            if (naasMap.size() < (localUsers.size() / 2)) {
 
-                // NAAS Connectivity Check
-                if (naasMap.size() < (localUsers.size() / 2)) {
+                logEntry.addEntry("NAAS appears to have more than 50% "
+                        + "less accounts than local Db. This is "
+                        + "usually a sign of an error during the "
+                        + "NAAS query (most likelly caused by "
+                        + "network timeout).");
 
-                    logEntry.addEntry("NAAS appears to have more than 50% "
-                            + "less accounts than local Db. This is "
-                            + "usually a sign of an error during the "
-                            + "NAAS query (most likelly caused by "
-                            + "network timeout).");
-
-                    logEntry.addEntry("WNOS-NAAS sync process aborted.");
-
-                } else {
-
-                    // Load new NAAS users
-                    int addedUsersCount = 0;
-                    logEntry
-                            .addEntry("Adding NAAS users that do not exist in local Db...");
-
-                    Iterator naasPairs = naasMap.entrySet().iterator();
-                    for (int i = 0; i < naasMap.size(); i++) {
-
-                        Map.Entry naasEntry = (Map.Entry) naasPairs.next();
-
-                        NaasUserInfo naasAccountInfo = (NaasUserInfo) naasEntry
-                                .getValue();
-
-                        // check if user exists
-                        if (!localUsers.containsKey(naasEntry.getKey())) {
-                            // insert with a check for existence
-                            if (accountDao.getOrCreateAccount(
-                                    naasAccountInfo.getUserName(),
-                                    naasAccountInfo.getAffiliate(),
-                                    adminAccount.getId()).isActive()) {
-                                // increment number of inserts only if saved
-                                // otherwise it must have already existed
-                                addedUsersCount++;
-                            }
-                        } else {
-
-                            // if the naas account already exists in local db
-                            // check if he has the same node affiliation
-                            UserAccount localAccountInfo = (UserAccount) localUsers
-                                    .get(naasEntry.getKey());
-
-                            String localNodeAffiliation = localAccountInfo
-                                    .getAffiliationCode();
-
-                            // update if the local affiliation is not in sync
-                            // with the NAAS one
-                            if (!localNodeAffiliation
-                                    .equalsIgnoreCase(naasAccountInfo
-                                            .getAffiliate())) {
-
-                                logger
-                                        .debug("Updating local user node affiliation: "
-                                                + localAccountInfo
-                                                        .getNaasUserName());
-                                logger.debug("from: " + localNodeAffiliation);
-                                logger.debug("to:   "
-                                        + naasAccountInfo.getAffiliate());
-
-                                localAccountInfo
-                                        .setAffiliationCode(naasAccountInfo
-                                                .getAffiliate());
-                                accountDao.save(localAccountInfo);
-
-                                // This is unusual to happen so make an entry
-                                logEntry
-                                        .addEntry(
-                                                "User {0} Node affiliation updated from {1} to {2}",
-                                                new Object[] {
-                                                        localAccountInfo
-                                                                .getNaasUserName(),
-                                                        localNodeAffiliation,
-                                                        naasAccountInfo
-                                                                .getAffiliate() });
-                            }
-                        }
-                    }
-                    logEntry.addEntry("Added: " + addedUsersCount);
-
-                    // Delete local users that no longer exist in NAAS
-                    int deletedUsersCount = 0;
-                    logEntry
-                            .addEntry("Deactivate local Db users that do not exist in NAAS...");
-                    Iterator localPairs = localUsers.entrySet().iterator();
-                    for (int i = 0; i < localUsers.size(); i++) {
-                        Map.Entry dbEntry = (Map.Entry) localPairs.next();
-                        // check if user exists
-                        if (!naasMap.containsKey(dbEntry.getKey())) {
-                            // delete
-                            UserAccount accountInfo = (UserAccount) dbEntry
-                                    .getValue();
-                            logger
-                                    .debug("User "
-                                            + accountInfo.getNaasUserName()
-                                            + " no longer found in NAAS. Deactivating local referance");
-                            accountDao.delete(accountInfo.getId());
-                            deletedUsersCount++;
-                        }
-                    }
-                    logEntry.addEntry("Deactivated: " + deletedUsersCount);
-
-                }
+                logEntry.addEntry("WNOS-NAAS sync process aborted.");
 
             } else {
-                logEntry.addEntry("Skip NAAS is set! No work perfromed.");
+
+                // Load new NAAS users
+                int addedUsersCount = 0;
+                logEntry
+                        .addEntry("Adding NAAS users that do not exist in local Db...");
+
+                Iterator naasPairs = naasMap.entrySet().iterator();
+                for (int i = 0; i < naasMap.size(); i++) {
+
+                    Map.Entry naasEntry = (Map.Entry) naasPairs.next();
+
+                    NaasUserInfo naasAccountInfo = (NaasUserInfo) naasEntry
+                            .getValue();
+
+                    // check if user exists
+                    if (!localUsers.containsKey(naasEntry.getKey())) {
+                        // insert with a check for existence
+                        if (accountDao.getOrCreateAccount(
+                                naasAccountInfo.getUserName(),
+                                naasAccountInfo.getAffiliate(),
+                                adminAccount.getId()).isActive()) {
+                            // increment number of inserts only if saved
+                            // otherwise it must have already existed
+                            addedUsersCount++;
+                        }
+                    } else {
+
+                        // if the naas account already exists in local db
+                        // check if he has the same node affiliation
+                        UserAccount localAccountInfo = (UserAccount) localUsers
+                                .get(naasEntry.getKey());
+
+                        String localNodeAffiliation = localAccountInfo
+                                .getAffiliationCode();
+
+                        // update if the local affiliation is not in sync
+                        // with the NAAS one
+                        if (!localNodeAffiliation
+                                .equalsIgnoreCase(naasAccountInfo
+                                        .getAffiliate())) {
+
+                            logger
+                                    .debug("Updating local user node affiliation: "
+                                            + localAccountInfo
+                                                    .getNaasUserName());
+                            logger.debug("from: " + localNodeAffiliation);
+                            logger.debug("to:   "
+                                    + naasAccountInfo.getAffiliate());
+
+                            localAccountInfo
+                                    .setAffiliationCode(naasAccountInfo
+                                            .getAffiliate());
+                            accountDao.save(localAccountInfo);
+
+                            // This is unusual to happen so make an entry
+                            logEntry
+                                    .addEntry(
+                                            "User {0} Node affiliation updated from {1} to {2}",
+                                            new Object[] {
+                                                    localAccountInfo
+                                                            .getNaasUserName(),
+                                                    localNodeAffiliation,
+                                                    naasAccountInfo
+                                                            .getAffiliate() });
+                        }
+                    }
+                }
+                logEntry.addEntry("Added: " + addedUsersCount);
+
+                // Delete local users that no longer exist in NAAS
+                int deletedUsersCount = 0;
+                logEntry
+                        .addEntry("Deactivate local Db users that do not exist in NAAS...");
+                Iterator localPairs = localUsers.entrySet().iterator();
+                for (int i = 0; i < localUsers.size(); i++) {
+                    Map.Entry dbEntry = (Map.Entry) localPairs.next();
+                    // check if user exists
+                    if (!naasMap.containsKey(dbEntry.getKey())) {
+                        // delete
+                        UserAccount accountInfo = (UserAccount) dbEntry
+                                .getValue();
+                        logger
+                                .debug("User "
+                                        + accountInfo.getNaasUserName()
+                                        + " no longer found in NAAS. Deactivating local referance");
+                        accountDao.delete(accountInfo.getId());
+                        deletedUsersCount++;
+                    }
+                }
+                logEntry.addEntry("Deactivated: " + deletedUsersCount);
+
             }
 
         } catch (Exception ex) {

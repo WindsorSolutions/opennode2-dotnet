@@ -132,11 +132,7 @@ public final class CommonContentAndFormatConverter implements Serializable {
      */
     public static CommonContentType convert(String s)
     {
-        CommonContentType cct = CommonContentType.valueOf(s);
-        // Object o = ;
-        /*
-         * if ((null != o) && (o instanceof CommonContentType)) { cct = (CommonContentType) o; } else {
-         */
+        CommonContentType cct = CommonContentType.fromString(s);
         if(cct == null)
         {
             throw new IllegalArgumentException("The string \"" + s + "\" does not represent a common content type.");

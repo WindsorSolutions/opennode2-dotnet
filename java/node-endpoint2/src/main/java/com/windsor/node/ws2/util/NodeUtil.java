@@ -242,14 +242,26 @@ public class NodeUtil {
             // Document attributes
             LOGGER.debug("setting documentFormat to "
                     + wnosDoc.getType().getType());
-            newDoc.setDocumentFormat(DocumentFormatType.Factory
-                    .fromValue(wnosDoc.getType().getType()));
+            //Fix for format types that don't match casing
+            if(wnosDoc.getType() == CommonContentType.Flat || wnosDoc.getType() == CommonContentType.Bin)
+            {
+                if(wnosDoc.getType() == CommonContentType.Flat)
+                {
+                    newDoc.setDocumentFormat(DocumentFormatType.FLAT);
+                }
+                if(wnosDoc.getType() == CommonContentType.Bin)
+                {
+                    newDoc.setDocumentFormat(DocumentFormatType.BIN);
+                }
+            }
+            else
+            {
+                newDoc.setDocumentFormat(DocumentFormatType.Factory.fromValue(wnosDoc.getType().getType()));
+            }
 
             LOGGER.debug("setting documentId to " + wnosDoc.getDocumentId());
             newDoc.setDocumentId(new Id(wnosDoc.getDocumentId()));
-            LOGGER
-                    .debug("setting documentName to "
-                            + wnosDoc.getDocumentName());
+            LOGGER.debug("setting documentName to " + wnosDoc.getDocumentName());
             newDoc.setDocumentName(wnosDoc.getDocumentName());
 
             // Content Type

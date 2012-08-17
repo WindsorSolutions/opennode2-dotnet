@@ -48,4 +48,23 @@ public enum CommonContentType implements Serializable
     {
         return type;
     }
+
+    /**
+     * This is necessary due to the mismatch of legacy values Flat and Bin being mixed case while the WSDL defines all upper case values
+     * @param value
+     */
+    public static CommonContentType fromString(String value)
+    {
+        CommonContentType type = null;
+        type = CommonContentType.valueOf(value);
+        if(type == null && CommonContentType.Flat.getType().equalsIgnoreCase(value))
+        {
+            type = CommonContentType.Flat;
+        }
+        if(type == null && CommonContentType.Bin.getType().equalsIgnoreCase(value))
+        {
+            type = CommonContentType.Bin;
+        }
+        return type;
+    }
 }

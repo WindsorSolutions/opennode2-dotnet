@@ -37,9 +37,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.apache.axis.Message;
 import org.apache.axis.MessageContext;
 import org.apache.axis.attachments.Attachments;
@@ -49,7 +47,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
 import com.windsor.node.common.domain.AsyncComplexContent;
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
 import com.windsor.node.common.domain.ComplexContent;
@@ -61,7 +58,6 @@ import com.windsor.node.common.domain.EndpointAuthenticationRequest;
 import com.windsor.node.common.domain.EndpointTokenValidationRequest;
 import com.windsor.node.common.domain.EndpointVersionType;
 import com.windsor.node.common.domain.EndpointVisit;
-import com.windsor.node.common.domain.NodeStatusCodeType;
 import com.windsor.node.common.domain.Notification;
 import com.windsor.node.common.domain.OperationDataFlow;
 import com.windsor.node.common.domain.PaginationIndicator;
@@ -113,8 +109,7 @@ public class RequestProcesor implements NetworkNodePortType {
                 .getBean("transactionService");
         logger.debug("NOS Services Acquired");
 
-        requestIPHeaderProperty = (String) context
-                .getBean(REQUEST_IP_HEADER_KEY);
+        requestIPHeaderProperty = (String) context.getBean(REQUEST_IP_HEADER_KEY);
         this.nodePingReadyMessage = (String)context.getBean("nodePingReadyMessage");
         logger.debug(REQUEST_IP_HEADER_KEY + COLON + requestIPHeaderProperty);
     }
