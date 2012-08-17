@@ -7,8 +7,18 @@
 
 		<!-- limit set key elements -->
 
-		<jaxb:bindings node="//xsd:complexType[@name='LimitSetKeyElements']">
-			<hj:mapped-superclass />
+		<jaxb:bindings>
+		
+			<jaxb:bindings node="//xsd:complexType[@name='LimitSetKeyElements']">
+				<hj:mapped-superclass />
+			</jaxb:bindings>
+
+			<jaxb:bindings node="//xsd:group[@name='BasicPermitKeyElementsGroup']//xsd:element[@ref='icis:PermitIdentifier']">
+				<hj:basic>
+					<orm:column column-definition="char(9)" length="9" />
+				</hj:basic>
+			</jaxb:bindings>
+			
 		</jaxb:bindings>
 
 	</jaxb:bindings>

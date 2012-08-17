@@ -15,16 +15,25 @@
 
 			<jaxb:serializable uid="1" />
 
-			<jaxb:javaType name="java.util.Calendar" xmlType="xsd:date"
-				parseMethod="javax.xml.bind.DatatypeConverter.parseDate" printMethod="javax.xml.bind.DatatypeConverter.printDate" />
+			<xjc:javaType name="java.util.Date" xmlType="xsd:date"
+				adapter="com.windsor.node.plugin.icisnpdes40.adapter.DateAdapter" />
 
-			<jaxb:javaType name="java.util.Calendar" xmlType="xsd:dateTime"
-				parseMethod="javax.xml.bind.DatatypeConverter.parseDate" printMethod="javax.xml.bind.DatatypeConverter.printDate" />
+			<xjc:javaType name="java.util.Date" xmlType="xsd:dateTime"
+				adapter="com.windsor.node.plugin.icisnpdes40.adapter.DateTimeAdapter" />
+
+			<xjc:javaType name="java.util.Date" xmlType="icis:DateType"
+				adapter="com.windsor.node.plugin.icisnpdes40.adapter.DateAdapter" />
+
+			<xjc:javaType name="java.lang.Integer" xmlType="icis:Integer2FixedRange01To60Type"
+				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
+
+			<xjc:javaType name="java.lang.Integer" xmlType="icis:NonNegativeIntegerMin1Max10Type"
+				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
 
 		</jaxb:globalBindings>
 
 		<hj:persistence>
-			<hj:default-generated-id name="dbid" transient="true" />
+			<hj:default-generated-id name="dbid" transient="true" javaType="java.lang.String" />
 		</hj:persistence>
 
 	</jaxb:bindings>
