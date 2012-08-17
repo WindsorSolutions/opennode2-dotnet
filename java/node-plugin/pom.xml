@@ -236,7 +236,7 @@
 							<bindingDirectory>${basedir}/src/main/packaging/icisnpdes40/bindings</bindingDirectory>
 							<roundtripTestClassName>RoundtripTest</roundtripTestClassName>
 							<schemaDirectory>${basedir}/src/main/packaging/icisnpdes40/xsd</schemaDirectory>
-							<generatePackage>com.windsor.node.plugin.icisnpdes40.generated</generatePackage>
+							<generatePackage>com.windsor.node.plugin.icisnpdes40.generatedtemp</generatePackage>
 						</configuration>
 						<dependencies>
 							<dependency>
