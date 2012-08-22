@@ -72,8 +72,10 @@ namespace Windsor.Node2008.WNOS.Data
 			request.Id = reader.GetString(0);
 			request.TransactionId = reader.GetString(1);
 			serviceId = reader.GetString(2);
-			request.RowIndex = reader.GetInt32(3);
-			request.MaxRowCount = reader.GetInt32(4);
+            object objNum = reader.GetValue(3);
+            request.RowIndex = (objNum != null) ? int.Parse(objNum.ToString()) : 0;
+            objNum = reader.GetValue(4);
+            request.MaxRowCount = (objNum != null) ? int.Parse(objNum.ToString()) : 0;
 			request.Type = EnumUtils.ParseEnum<RequestType>(reader.GetString(5));
 			request.ModifiedById = reader.GetString(6);
 			request.ModifiedOn = reader.GetDateTime(7);

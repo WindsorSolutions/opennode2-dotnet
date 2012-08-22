@@ -1218,30 +1218,38 @@ namespace Windsor.Node2008.WNOS.Data
         /// <returns></returns>
         public Dictionary<string, string> GetTransactionTypes()
         {
-            Dictionary<string, string> list = new Dictionary<string, string>();
-            double totalCount = 0;
-
-            AdoTemplate.QueryWithRowCallbackDelegate(CommandType.Text, SQL_TRANSACTION_TYPES,
-                delegate(IDataReader reader)
-                {
-                    //Yes, we could do it all in SQL but there is no clean way to do it in a db-agnostic way
-                    int numOfRecords = reader.GetInt32(1);
-                    totalCount += numOfRecords;
-                    string label = reader.GetString(0);
-                    list.Add(string.Format("{0} ({1})", label, numOfRecords), numOfRecords.ToString());
-                }
-            );
-            Dictionary<string, string> rtnList = new Dictionary<string, string>(list.Count);
-            // Convert values to percentages
-            foreach (KeyValuePair<string, string> pair in list)
+            Dictionary<string, string> rtnList = new Dictionary<string, string>(20);
+            try
             {
-                int value = int.Parse(pair.Value);
-                int percent = (int)Math.Round(((double)value * 100.0) / totalCount);
-                if ((percent == 0) && (value > 0))
+                Dictionary<string, string> list = new Dictionary<string, string>();
+                double totalCount = 0;
+
+                AdoTemplate.QueryWithRowCallbackDelegate(CommandType.Text, SQL_TRANSACTION_TYPES,
+                    delegate(IDataReader reader)
+                    {
+                        //Yes, we could do it all in SQL but there is no clean way to do it in a db-agnostic way
+                        object intValue = reader.GetValue(1);
+                        int numOfRecords = int.Parse(intValue.ToString());
+                        totalCount += numOfRecords;
+                        string label = reader.GetString(0);
+                        list.Add(string.Format("{0} ({1})", label, numOfRecords), numOfRecords.ToString());
+                    }
+                );
+                // Convert values to percentages
+                foreach (KeyValuePair<string, string> pair in list)
                 {
-                    percent = 1;
+                    int value = int.Parse(pair.Value);
+                    int percent = (int)Math.Round(((double)value * 100.0) / totalCount);
+                    if ((percent == 0) && (value > 0))
+                    {
+                        percent = 1;
+                    }
+                    rtnList.Add(pair.Key, percent.ToString());
                 }
-                rtnList.Add(pair.Key, percent.ToString());
+            }
+            catch (Exception)
+            {
+                throw;
             }
 
             return rtnList;

@@ -622,7 +622,9 @@ namespace Windsor.Node2008.WNOS.Data
                     //We are talking max of 10-20 users here
                     if (recordCount < maxCount)
                     {
-                        list.Add(reader.GetString(0), reader.GetInt32(1).ToString());
+                        object intValue = reader.GetValue(1);
+                        int numOfRecords = int.Parse(intValue.ToString());
+                        list.Add(reader.GetString(0), numOfRecords.ToString());
                         recordCount++;
                     }
                 }

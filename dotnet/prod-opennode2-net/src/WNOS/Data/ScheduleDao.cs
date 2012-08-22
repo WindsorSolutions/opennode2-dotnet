@@ -122,7 +122,8 @@ namespace Windsor.Node2008.WNOS.Data
 			scheduledItem.LastExecutedOn = DbUtils.ToDate(reader.GetDateTime(index++));
 			scheduledItem.NextRunOn = DbUtils.ToDate(reader.GetDateTime(index++));
 			scheduledItem.FrequencyType = EnumUtils.ParseEnum<ScheduledFrequencyType>(reader.GetString(index++));
-			scheduledItem.Frequency = reader.GetInt32(index++);
+            object freqNum = reader.GetValue(index++);
+            scheduledItem.Frequency = (freqNum != null) ? int.Parse(freqNum.ToString()) : 0;
 			scheduledItem.ModifiedById = reader.GetString(index++);
 			scheduledItem.ModifiedOn = DbUtils.ToDate(reader.GetDateTime(index++));
 			scheduledItem.IsActive = DbUtils.ToBool(reader.GetString(index++));
