@@ -86,6 +86,7 @@ namespace CopyPlugins
             }
             catch (Exception e)
             {
+                DebugUtils.CheckDebuggerBreak();
                 Console.WriteLine(ExceptionUtils.ToShortString(e));
                 Console.ReadKey();
                 return 1;
@@ -299,14 +300,27 @@ namespace CopyPlugins
             string[] pluginFilePaths = Directory.GetFiles(pluginsFolder, "*.dll", SearchOption.AllDirectories);
             CollectionUtils.ForEach(pluginFilePaths, delegate(string pluginFilePath)
             {
-                Assembly loadedAssembly = Assembly.LoadFile(pluginFilePath);
-                Attribute[] customAttributes = Attribute.GetCustomAttributes(loadedAssembly, typeof(StandardPluginAttribute));
-                if (!CollectionUtils.IsNullOrEmpty(customAttributes))
+                try
                 {
-                    // This is a standard plugin that is included with the default deployment package
-                    string includeFolder = Path.GetDirectoryName(pluginFilePath);
-                    string zipFolderName = includeFolder.Substring(includeFolder.LastIndexOf("Plugins\\", StringComparison.InvariantCultureIgnoreCase));
-                    zipHelper.CompressDirectory(zipFile, includeFolder, zipFolderName);
+                    Assembly loadedAssembly = Assembly.LoadFile(pluginFilePath);
+                    Attribute[] customAttributes = Attribute.GetCustomAttributes(loadedAssembly, typeof(StandardPluginAttribute));
+                    if (!CollectionUtils.IsNullOrEmpty(customAttributes))
+                    {
+                        // This is a standard plugin that is included with the default deployment package
+                        string includeFolder = Path.GetDirectoryName(pluginFilePath);
+                        string zipFolderName = includeFolder.Substring(includeFolder.LastIndexOf("Plugins\\", StringComparison.InvariantCultureIgnoreCase));
+                        zipHelper.CompressDirectory(zipFile, includeFolder, zipFolderName);
+                    }
+                }
+                catch (BadImageFormatException)
+                {
+                    DebugUtils.CheckDebuggerBreak();
+                    throw;
+                }
+                catch (Exception)
+                {
+                    DebugUtils.CheckDebuggerBreak();
+                    throw;
                 }
             });
         }
