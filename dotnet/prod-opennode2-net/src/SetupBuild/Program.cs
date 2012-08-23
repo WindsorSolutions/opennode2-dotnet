@@ -266,17 +266,29 @@ namespace CopyPlugins
             string privateDeploymentPath = Path.Combine(wnosConfigFolder, "Deployment_private.config");
             if (File.Exists(privateDeploymentPath))
             {
-                string deploymentPath = Path.Combine(wnosConfigFolder, "Deployment.config");
-                string deploymentGenericPath = Path.Combine(wnosConfigFolder, "Deployment_Generic.config");
-                FileUtils.SafeDeleteFile(deploymentGenericPath);
-                File.Move(deploymentPath, deploymentGenericPath);
-                FileUtils.SafeDeleteFile(deploymentPath);
-                File.Move(privateDeploymentPath, deploymentPath);
+                if (!CreateZipPackages)
+                {
+                    string deploymentPath = Path.Combine(wnosConfigFolder, "Deployment.config");
+                    FileUtils.SafeDeleteFile(deploymentPath);
+                    File.Move(privateDeploymentPath, deploymentPath);
+                }
+                else
+                {
+                    FileUtils.SafeDeleteFile(privateDeploymentPath);
+                }
             }
         }
         static string AdjustDeploymentName(string name)
         {
             return name.Replace(' ', '_');
+        }
+        static void RemoveVSHostFiles(string folderPath)
+        {
+            var files = Directory.GetFiles(folderPath, "*.vshost.*", SearchOption.TopDirectoryOnly);
+            foreach (var file in files)
+            {
+                FileUtils.SafeDeleteFile(file);
+            }
         }
         static void BuildDeployPackage()
         {
@@ -286,6 +298,7 @@ namespace CopyPlugins
             string zipFile = Path.Combine(PackagesFolderPath, "DotNET OpenNode2 v" +
                 versionMinusSvnVersion + ".zip");
             zipFile = AdjustDeploymentName(zipFile);
+            RemoveVSHostFiles(Path.Combine(BuildFolderPath, "Server"));
             FileUtils.SafeDeleteFile(zipFile);
             DotNetZipHelper zipHelper = new DotNetZipHelper();
             zipHelper.CompressDirectory(zipFile, Path.Combine(BuildFolderPath, "Config"), "Config");
