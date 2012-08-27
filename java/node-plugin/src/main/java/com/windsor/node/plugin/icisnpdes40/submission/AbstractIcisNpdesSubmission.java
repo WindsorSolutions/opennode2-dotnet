@@ -1,28 +1,23 @@
 package com.windsor.node.plugin.icisnpdes40.submission;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.spi.PersistenceProvider;
 import javax.sql.DataSource;
-import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-
+import javax.xml.namespace.QName;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.cfg.Environment;
 import org.hibernate.ejb.HibernatePersistence;
-
-import com.windsor.node.common.domain.ActivityEntry;
 import com.windsor.node.common.domain.CommonContentType;
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
 import com.windsor.node.common.domain.DataServiceRequestParameter;
@@ -37,6 +32,8 @@ import com.windsor.node.data.dao.jdbc.JdbcTransactionDao;
 import com.windsor.node.plugin.common.BaseWnosJaxbPlugin;
 import com.windsor.node.plugin.icisnpdes40.IcisNpdesStagingPersistenceUnitInfo;
 import com.windsor.node.plugin.icisnpdes40.generated.HeaderData;
+import com.windsor.node.plugin.icisnpdes40.generated.ObjectFactory;
+import com.windsor.node.plugin.icisnpdes40.generated.OperationType;
 import com.windsor.node.plugin.icisnpdes40.generated.PayloadData;
 import com.windsor.node.service.helper.CompressionService;
 import com.windsor.node.service.helper.IdGenerator;
@@ -117,8 +114,14 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
        getConfigurationArguments().put(HEADER_DATA_DATA_SERVICE.getName(), "");
        getConfigurationArguments().put(HEADER_DATA_CONTACT_INFO.getName(), "");
    }
-   
-   public abstract void appendToPayload(EntityManager em, PayloadData data);
+
+   /**
+    * All inheritors must create a List<PayloadData> of one or more PayloadData document elements, it is intended
+    * that only the complete and total ICIS Submission Service implementer will return more than one.
+    * @param em
+    * @return
+    */
+   public abstract List<PayloadData> createAllPayloads(EntityManager em);
    
    /**
     * Generates a temporary file name based on the class name and docid.
@@ -126,103 +129,83 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
     * @param docId the document guid
     * @return file name
     */
-   private String makeTemporaryFilename(String docId) {
+    private String makeTemporaryFilename(String docId) {
        
-       String submissionType =  StringUtils.substringAfterLast(this.getClass().getName(),"."); 
+        String submissionType =  StringUtils.substringAfterLast(this.getClass().getName(),"."); 
        
-       return FilenameUtils.concat(getSettingService().getTempDir().getAbsolutePath(), "ICIS-NPDES_" + submissionType + docId + ".xml");
-   }
+        return FilenameUtils.concat(getSettingService().getTempDir().getAbsolutePath(), "ICIS-NPDES_" + submissionType + docId + ".xml");
+    }
    
-   @Override
-   public ProcessContentResult process(NodeTransaction transaction) {
+    @Override
+    public ProcessContentResult process(NodeTransaction transaction) {
        
-       ProcessContentResult result = new ProcessContentResult();
+        ProcessContentResult result = new ProcessContentResult();
 
-       result.setStatus(CommonTransactionStatusCode.Failed);
-       result.setSuccess(Boolean.FALSE);
+        result.setStatus(CommonTransactionStatusCode.Failed);
+        result.setSuccess(Boolean.FALSE);
 
-       EntityManager em = emf.createEntityManager();
-       
-       /**
-        * <Document>
-        */
-       com.windsor.node.plugin.icisnpdes40.generated.Document document = new com.windsor.node.plugin.icisnpdes40.generated.Document();
-       
-       HeaderData header = new HeaderData();
-              
-       header.setAuthor(getConfigValueAsString(HEADER_DATA_AUTHOR.getName(), false));
-       header.setComment(getConfigValueAsString(HEADER_DATA_COMMENT.getName(), false));
-       header.setContactInfo(getConfigValueAsString(HEADER_DATA_CONTACT_INFO.getName(), false));
-       header.setCreationTime(new Date());
-       header.setDataService(getConfigValueAsString(HEADER_DATA_DATA_SERVICE.getName(), false));
-       header.setOrganization(getConfigValueAsString(HEADER_DATA_ORGANIZATION.getName(), false));
-       header.setTitle(getConfigValueAsString(HEADER_DATA_TITLE.getName(), false));
-               
-       /**
-        *      <Header>
-        */
-       document.setHeader(header);
-       
-       /**
-        *      <Payload>
-        */
-       List<PayloadData> payload = new ArrayList<PayloadData>();
-       PayloadData data = new PayloadData();
-       
-       appendToPayload(em, data);
-       
-       payload.add(data);
-       
-       document.setPayload(payload);
-       
-       String docId = getIdGenerator().createId();
-       
-       String tempFilePath = makeTemporaryFilename(docId);
-       
-       try {
+        EntityManager em = emf.createEntityManager();
 
-           JAXBContext context = JAXBContext.newInstance(
-                   com.windsor.node.plugin.icisnpdes40.generated.Document.class.getPackage().getName(), 
-                   getClass().getClassLoader());
-           
-           Marshaller m = context.createMarshaller();
-           m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-           m.marshal(document, new FileOutputStream(tempFilePath));
-           
-       } catch (IOException e) {
-           logger.error("Unhandled exception: " + e.getMessage());
-           throw new RuntimeException("Error while creating or zipping file: " + tempFilePath, e);
-       } catch (JAXBException e) {
-           logger.error("Unhandled exception: " + e.getMessage());
-           throw new RuntimeException("Error while creating file: " + tempFilePath, e);
-       }
+        // always use an ObjectFactory to create JAXB created objects
+        ObjectFactory fact = new ObjectFactory();
 
-       Document doc;
-       
-       try {
-           
-           doc = makeDocument(transaction, docId, tempFilePath);
+        //Create and populate com.windsor.node.plugin.icisnpdes40.generated.Document and Header
+        //NOTE ICIS DOES NOT IMPLEMENT NORMAL EN HEADER, IT USESS ITS OWN
+        com.windsor.node.plugin.icisnpdes40.generated.Document document = fact.createDocument();
+        HeaderData header = fact.createHeaderData();
+        document.setHeader(header);
 
-           transaction.getDocuments().add(doc);
-           result.getDocuments().add(doc);
-   
-           result.setPaginatedContentIndicator(new PaginationIndicator(transaction.getRequest().getPaging().getStart(), transaction
-                           .getRequest().getPaging().getCount(), true));
-           
-           result.setStatus(CommonTransactionStatusCode.Completed);
-           result.setSuccess(true);
-           
-           getTransactionDao().save(transaction);
-       
-       } catch (IOException e) {
-           e.printStackTrace();
-       }
-       
-       result.setStatus(CommonTransactionStatusCode.Pending);
-       result.setSuccess(Boolean.TRUE);
+        header.setAuthor(getConfigValueAsString(HEADER_DATA_AUTHOR.getName(), false));
+        header.setComment(getConfigValueAsString(HEADER_DATA_COMMENT.getName(), false));
+        header.setContactInfo(getConfigValueAsString(HEADER_DATA_CONTACT_INFO.getName(), false));
+        header.setCreationTime(new Date());
+        header.setDataService(getConfigValueAsString(HEADER_DATA_DATA_SERVICE.getName(), false));
+        header.setOrganization(getConfigValueAsString(HEADER_DATA_ORGANIZATION.getName(), false));
+        header.setTitle(getConfigValueAsString(HEADER_DATA_TITLE.getName(), false));
 
-       return result;
-   }
+        //create all the Payloads that will be included with this submission
+        List<PayloadData> payloadDataList = new ArrayList<PayloadData>();
+        document.setPayload(payloadDataList);
+
+        //key function call, where inheritors perform their individual "magic"
+        payloadDataList.addAll(createAllPayloads(em));
+
+        //OpenNode2 Document creation
+        String docId = getIdGenerator().createId();
+        String tempFilePath = makeTemporaryFilename(docId);
+
+        //TODO Consider pushing OpenNode2 Document creation and writing up one more class level, this is pretty identical functionality
+        try
+        {
+            // com.windsor.node.plugin.icisnpdes40.generated.Document is defined in the XSD in a funny manner, causing ObjectFactory
+            // to not create all utility methods for it so manually create the JAXBElement for it
+            writeDocument(new JAXBElement<com.windsor.node.plugin.icisnpdes40.generated.Document>(new QName(
+                            "http://www.exchangenetwork.net/schema/icis/4", "Document"),
+                            com.windsor.node.plugin.icisnpdes40.generated.Document.class, null, document), tempFilePath);
+
+            Document doc = makeDocument(transaction, docId, tempFilePath);
+            transaction.getDocuments().add(doc);
+            result.getDocuments().add(doc);
+
+            result.setPaginatedContentIndicator(new PaginationIndicator(transaction.getRequest().getPaging().getStart(), transaction
+                            .getRequest().getPaging().getCount(), true));
+            result.setStatus(CommonTransactionStatusCode.Pending);
+            result.setSuccess(Boolean.TRUE);
+            getTransactionDao().save(transaction);
+        }
+        catch(IOException e)
+        {
+            logger.error("Unhandled exception: " + e.getMessage());
+            throw new RuntimeException("Error while creating or zipping file: " + tempFilePath, e);
+        }
+        catch(JAXBException e)
+        {
+            logger.error("Unhandled exception: " + e.getMessage());
+            throw new RuntimeException("Error while creating file: " + tempFilePath, e);
+        }
+
+        return result;
+    }
    
    @Override
    public List<PluginServiceParameterDescriptor> getParameters() {

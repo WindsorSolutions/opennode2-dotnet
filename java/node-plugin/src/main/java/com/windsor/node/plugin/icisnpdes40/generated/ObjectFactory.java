@@ -6500,4 +6500,19 @@ public class ObjectFactory {
         return new JAXBElement<String>(_OtherOrganizationName_QNAME, String.class, null, value);
     }
 
+    /**
+     * Create an instance of {@link HeaderData }
+     * 
+     */
+    public HeaderData createHeaderData() {
+        return new HeaderData();
+    }
+
+    /**
+     * Create an instance of {@link PayloadData }
+     * 
+     */
+    public PayloadData createPayloadData() {
+        return new PayloadData();
+    }
 }

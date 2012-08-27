@@ -12,8 +12,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
@@ -154,6 +159,8 @@ public class PayloadData
     private final static long serialVersionUID = 1L;
     @XmlElement(name = "LimitSetData")
     protected List<LimitSetData> limitSetData;
+    @XmlAttribute(name = "Operation", required = true)
+    protected OperationType operation;
     @XmlTransient
     protected String dbid;
 
@@ -200,6 +207,33 @@ public class PayloadData
 
     public void unsetLimitSetData() {
         this.limitSetData = null;
+    }
+
+    /**
+     * Gets the value of the operation property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link OperationType }
+     *     
+     */
+    @Basic
+    @Column(name = "OPERATION", length = 255)
+    @Enumerated(EnumType.STRING)
+    public OperationType getOperation() {
+        return operation;
+    }
+
+    /**
+     * Sets the value of the operation property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link OperationType }
+     *     
+     */
+    public void setOperation(OperationType value) {
+        this.operation = value;
     }
 
     /**
