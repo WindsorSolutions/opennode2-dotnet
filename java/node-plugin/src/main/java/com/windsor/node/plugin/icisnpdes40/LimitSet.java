@@ -3,12 +3,6 @@ package com.windsor.node.plugin.icisnpdes40;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,17 +10,16 @@ import java.util.Properties;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import javax.persistence.spi.PersistenceProvider;
 import javax.sql.DataSource;
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
-import javax.xml.namespace.QName;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.lang3.StringUtils;
+import org.hibernate.cfg.Environment;
+import org.hibernate.ejb.HibernatePersistence;
 
 import com.windsor.node.common.domain.ActivityEntry;
 import com.windsor.node.common.domain.CommonContentType;
@@ -43,7 +36,6 @@ import com.windsor.node.data.dao.jdbc.JdbcTransactionDao;
 import com.windsor.node.plugin.common.BaseWnosJaxbPlugin;
 import com.windsor.node.plugin.icisnpdes40.generated.HeaderData;
 import com.windsor.node.plugin.icisnpdes40.generated.LimitSetData;
-import com.windsor.node.plugin.icisnpdes40.generated.ObjectFactory;
 import com.windsor.node.plugin.icisnpdes40.generated.PayloadData;
 import com.windsor.node.service.helper.CompressionService;
 import com.windsor.node.service.helper.IdGenerator;
@@ -52,8 +44,13 @@ import com.windsor.node.service.helper.zip.ZipCompressionService;
 
 public class LimitSet extends BaseWnosJaxbPlugin {
 
-	
-	private Properties jpaProperties = new Properties();
+	public static final PluginServiceParameterDescriptor FEDERAL_FACILITY = new PluginServiceParameterDescriptor(
+			"Federal Facility",
+			PluginServiceParameterDescriptor.TYPE_STRING,
+			Boolean.FALSE,
+			"Code indicating whether or not the facility is the property of the Federal Government. Allowable Values: Y, N.");
+
+
 	private EntityManagerFactory emf;
 	
     private SettingServiceProvider settingService;
@@ -83,65 +80,29 @@ public class LimitSet extends BaseWnosJaxbPlugin {
 	 * 
 	 * TODO Work on better logging
 	 * TODO Remove sysout statements
-	 * TODO javax.persistence.jdbc.driver property should be derived from the ARG_DS_SOURCE 
 	 */
 	private void initEntityManagerFactory() {
 		
 		/***
 		 * Get a reference to the configured DataSource, we'll get the connection info from it
 		 */
-        DataSource dataSource = (DataSource)getDataSources().get(ARG_DS_SOURCE);
-		
-        /**
-         * Get the db connection url from the configured the ARG_DS_SOURCE
-         */
-        String dsUrl = null;
-        
-        try {
-        	dsUrl = dataSource.getConnection().getMetaData().getURL();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-        
-        
-        /**
-         * Determine the .jar file path and it to the parent ClassLoader so Hibernate can load our entities.
-         */
-		URL url = getClass().getClassLoader().getResource("META-INF/persistence.xml");
-
-		String jarFile = url.getFile();
-		
-		jarFile = StringUtils.substringBetween(jarFile, "file:/", "!");
+        final DataSource dataSource = (DataSource)getDataSources().get(ARG_DS_SOURCE);
 		
 		try {
+
+			Properties jpaProperties = new Properties();
 			
-			File jar = new File(jarFile);
+			jpaProperties.put(Environment.DATASOURCE, dataSource);
 			
-			Method method = URLClassLoader.class.getDeclaredMethod("addURL", new Class[]{URL.class}); // addURL is a protected method, use reflection to call it
-			method.setAccessible(true);
-			method.invoke(getClass().getClassLoader().getParent(), new Object[]{jar.toURI().toURL()}); // How will a security manager affect this call?
+			PersistenceProvider provider = new HibernatePersistence();
+			
+			emf = provider.createContainerEntityManagerFactory(new IcisNpdesStagingPersistenceUnitInfo(jpaProperties), jpaProperties);
 			
 		} catch (SecurityException e) {
 			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
 		}
-	    		
-		jpaProperties.put("javax.persistence.jdbc.driver", "oracle.jdbc.OracleDriver");
-		jpaProperties.put("javax.persistence.jdbc.url", dsUrl);
-		
-		/**
-		 * Initialize the entity manager factory
-		 */
-		emf = Persistence.createEntityManagerFactory("pu", jpaProperties);
 	}
 	
 	@Override
@@ -160,46 +121,16 @@ public class LimitSet extends BaseWnosJaxbPlugin {
 		}
 	}
 
-
-	public SettingServiceProvider getSettingService() {
-		return settingService;
-	}
-
-	public IdGenerator getIdGenerator() {
-		return idGenerator;
-	}
-
-	public CompressionService getZipService() {
-		return zipService;
-	}
-
-	public void setSettingService(SettingServiceProvider settingService) {
-		this.settingService = settingService;
-	}
-
-	public void setIdGenerator(IdGenerator idGenerator) {
-		this.idGenerator = idGenerator;
-	}
-
-	public void setZipService(CompressionService zipService) {
-		this.zipService = zipService;
-	}
-
 	@Override
 	public List<PluginServiceParameterDescriptor> getParameters() {
-		return new ArrayList<PluginServiceParameterDescriptor>();
+		
+		List<PluginServiceParameterDescriptor> parameters = new ArrayList<PluginServiceParameterDescriptor>();
+		
+		/*parameters.add(new PluginServiceParameterDescriptor(ORIGINATING_PARTNER_NAME.getName(), ORIGINATING_PARTNER_NAME.getType(),
+                Boolean.TRUE, ORIGINATING_PARTNER_NAME.getDescription(), ORIGINATING_PARTNER_NAME.getDefaultValue()));
+		*/
+		return parameters;
 	}
-
-	/**
-	 * - Create datasource parameter in exchange
-	 * - fix objectfactory
-	 * - Run xml marshalling test
-	 * - comment manual xml gen
-	 * - get hibernate configuration setup based on datasource.
-	 * - load limit set data from WA db
-	 * - marshall it
-	 */
-	
 	
 	@Override
 	public ProcessContentResult process(NodeTransaction transaction) {
@@ -211,12 +142,9 @@ public class LimitSet extends BaseWnosJaxbPlugin {
 		
 		result.getAuditEntries().add(new ActivityEntry("Hellz yah!!"));
 
-        ObjectFactory objFactory = new ObjectFactory();
-      
 	    EntityManager em = emf.createEntityManager();
-	    
+	    	    
 		final List<LimitSetData> list = em.createQuery("select ls from LimitSetData ls").getResultList();
-		
 		
 		/**
 		 * <Document>
@@ -231,6 +159,9 @@ public class LimitSet extends BaseWnosJaxbPlugin {
 		header.setDataService("ICIS-NPDES");
 		header.setOrganization("Windsor Solutions");
 		header.setTitle("Test LimitSet batch");
+		
+		// getConfigValueAsString();
+		
 		
 		/**
 		 * 		<Header>
@@ -260,8 +191,11 @@ public class LimitSet extends BaseWnosJaxbPlugin {
         String tempFilePath = FilenameUtils.concat(getSettingService().getTempDir().getAbsolutePath(), "ICIS-NPDES_LimitSet" + docId + ".xml");
         
 		try {
-			
-	        JAXBContext context = JAXBContext.newInstance(com.windsor.node.plugin.icisnpdes40.generated.Document.class.getPackage().getName(), getClass().getClassLoader());
+
+	        JAXBContext context = JAXBContext.newInstance(
+	        		com.windsor.node.plugin.icisnpdes40.generated.Document.class.getPackage().getName(), 
+	        		getClass().getClassLoader());
+	        
 	        Marshaller m = context.createMarshaller();
 	        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 	        m.marshal(document, new FileOutputStream(tempFilePath));
@@ -285,6 +219,7 @@ public class LimitSet extends BaseWnosJaxbPlugin {
 	
 	        result.setPaginatedContentIndicator(new PaginationIndicator(transaction.getRequest().getPaging().getStart(), transaction
 	                        .getRequest().getPaging().getCount(), true));
+	        
 	        result.setStatus(CommonTransactionStatusCode.Completed);
 	        result.setSuccess(true);
 	        
@@ -327,4 +262,28 @@ public class LimitSet extends BaseWnosJaxbPlugin {
         }
         return doc;
     }
+
+	public SettingServiceProvider getSettingService() {
+		return settingService;
+	}
+
+	public IdGenerator getIdGenerator() {
+		return idGenerator;
+	}
+
+	public CompressionService getZipService() {
+		return zipService;
+	}
+
+	public void setSettingService(SettingServiceProvider settingService) {
+		this.settingService = settingService;
+	}
+
+	public void setIdGenerator(IdGenerator idGenerator) {
+		this.idGenerator = idGenerator;
+	}
+
+	public void setZipService(CompressionService zipService) {
+		this.zipService = zipService;
+	}
 }

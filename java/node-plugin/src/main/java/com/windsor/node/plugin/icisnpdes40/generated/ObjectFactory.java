@@ -929,7 +929,14 @@ public class ObjectFactory {
     public LimitSetStatus createLimitSetStatus() {
         return new LimitSetStatus();
     }
-
+    
+    /**
+     * Create an instance of {@link Document }
+     * 
+     */
+    public Document createDocument() {
+        return new Document();
+    }
 
     /**
      * Create an instance of {@link TransactionHeader }
