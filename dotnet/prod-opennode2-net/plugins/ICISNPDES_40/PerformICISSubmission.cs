@@ -103,7 +103,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_40
             {
                 _submissionTrackingDataType = new SubmissionTrackingDataType();
             }
-            else if (_submissionTrackingDataType.SubmissionStatusDateTimeSpecified)
+            else if (_submissionTrackingDataType.SubmissionDateTimeSpecified)
             {
                 DebugUtils.AssertDebuggerBreak(_submissionTrackingDataTypePK != null);
                 AppendAuditLogEvent("There is a pending partner submission in the tracking table with primary key \"{0}\", exiting plugin ...",

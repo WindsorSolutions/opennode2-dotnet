@@ -68,6 +68,6 @@ using Windsor.Node2008.WNOSPlugin;
 // by using the '*' as shown below:
 [assembly: AssemblyVersion(AssemblyInfo.cAssemblyVersion)]
 [assembly: AssemblyFileVersion(AssemblyInfo.cAssemblyFileVersion)]
-[assembly: PluginDefaultFlowAttribute("TRI")]
+[assembly: PluginDefaultFlowAttribute("TRI_5")]
 [assembly: PluginPackageNameAttribute("TRI 5.0")]
 [assembly: PluginSqlDdlFilePaths(@"TRI\5.0\staging_schema_ddl\TRI_5.0-SQL-DDL.sql,TRI\5.0\staging_schema_ddl\TRI_5.0-ORA-DDL.sql")]

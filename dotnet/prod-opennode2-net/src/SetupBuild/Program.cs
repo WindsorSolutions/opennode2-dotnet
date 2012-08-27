@@ -290,6 +290,14 @@ namespace CopyPlugins
                 FileUtils.SafeDeleteFile(file);
             }
         }
+        static void UpdateMaxNumConcurrentThreads()
+        {
+            var serverConfigFilePath = Path.Combine(Path.Combine(BuildFolderPath, "Config"), "Server.config");
+            var fileString = File.ReadAllText(serverConfigFilePath);
+            fileString = fileString.Replace("<property name=\"MaxNumConcurrentThreads\" value=\"1\" />",
+                                            "<property name=\"MaxNumConcurrentThreads\" value=\"3\" />");
+            File.WriteAllText(serverConfigFilePath, fileString);
+        }
         static void BuildDeployPackage()
         {
             string versionMinusSvnVersion = 
@@ -299,6 +307,7 @@ namespace CopyPlugins
                 versionMinusSvnVersion + ".zip");
             zipFile = AdjustDeploymentName(zipFile);
             RemoveVSHostFiles(Path.Combine(BuildFolderPath, "Server"));
+            UpdateMaxNumConcurrentThreads();
             FileUtils.SafeDeleteFile(zipFile);
             DotNetZipHelper zipHelper = new DotNetZipHelper();
             zipHelper.CompressDirectory(zipFile, Path.Combine(BuildFolderPath, "Config"), "Config");
