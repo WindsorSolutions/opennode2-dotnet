@@ -78,6 +78,8 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
            Boolean.FALSE,
            "Contact Info description");
    
+   private DataSource dataSource;
+   
    private EntityManagerFactory emf;
    
    private SettingServiceProvider settingService;
@@ -241,7 +243,7 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
        /***
         * Get a reference to the configured DataSource, we'll get the connection info from it
         */
-       final DataSource dataSource = (DataSource)getDataSources().get(ARG_DS_SOURCE);
+       this.dataSource = (DataSource)getDataSources().get(ARG_DS_SOURCE);
        
        try {
 
@@ -258,27 +260,26 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
        }
    }
 
-   protected Document makeDocument(NodeTransaction transaction, String docId, String tempFilePath) throws IOException
-   {
-       Document doc = new Document();
-       doc.setDocumentId(docId);
-       doc.setId(docId);
+    protected Document makeDocument(NodeTransaction transaction, String docId,
+            String tempFilePath) throws IOException {
+        Document doc = new Document();
+        doc.setDocumentId(docId);
+        doc.setId(docId);
 
-       if(transaction.getRequest().getType() != RequestType.Query)
-       {
-           String zippedFilePath = getZipService().zip(tempFilePath);
-           doc.setType(CommonContentType.ZIP);
-           doc.setDocumentName(FilenameUtils.getName(zippedFilePath));
-           doc.setContent(FileUtils.readFileToByteArray(new File(zippedFilePath)));
-       }
-       else
-       {
-           doc.setType(CommonContentType.XML);
-           doc.setDocumentName(FilenameUtils.getName(tempFilePath));
-           doc.setContent(FileUtils.readFileToByteArray(new File(tempFilePath)));
-       }
-       return doc;
-   }
+        if (transaction.getRequest().getType() != RequestType.Query) {
+            String zippedFilePath = getZipService().zip(tempFilePath);
+            doc.setType(CommonContentType.ZIP);
+            doc.setDocumentName(FilenameUtils.getName(zippedFilePath));
+            doc.setContent(FileUtils.readFileToByteArray(new File(
+                    zippedFilePath)));
+        } else {
+            doc.setType(CommonContentType.XML);
+            doc.setDocumentName(FilenameUtils.getName(tempFilePath));
+            doc.setContent(FileUtils
+                    .readFileToByteArray(new File(tempFilePath)));
+        }
+        return doc;
+    }
    
    public SettingServiceProvider getSettingService() {
        return settingService;
@@ -310,5 +311,9 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
 
    public void setTransactionDao(JdbcTransactionDao transactionDao) {
        this.transactionDao = transactionDao;
+   }
+
+   public DataSource getDataSource() {
+       return dataSource;
    }
 }

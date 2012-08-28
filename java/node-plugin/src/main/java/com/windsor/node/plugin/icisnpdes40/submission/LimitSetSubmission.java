@@ -1,10 +1,16 @@
 package com.windsor.node.plugin.icisnpdes40.submission;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 
+import com.windsor.node.plugin.icisnpdes40.dao.PayloadOperationDao;
+import com.windsor.node.plugin.icisnpdes40.dao.PayloadOperationDaoJdbc;
+import com.windsor.node.plugin.icisnpdes40.domain.PayloadOperation;
 import com.windsor.node.plugin.icisnpdes40.generated.LimitSetData;
 import com.windsor.node.plugin.icisnpdes40.generated.ObjectFactory;
 import com.windsor.node.plugin.icisnpdes40.generated.OperationType;
@@ -12,28 +18,131 @@ import com.windsor.node.plugin.icisnpdes40.generated.PayloadData;
 
 public class LimitSetSubmission extends AbstractIcisNpdesSubmission {
 
-    private final OperationType operationType = OperationType.LIMIT_SET_SUBMISSION;
-
+    /**
+     * Returns a {@link List} of {@link PayloadData} objects. The list of
+     * elements is determined by looking at the ICS_PAYLOAD table. Each record
+     * in the table has the type of submission operation to complete. The name
+     * of the operation is used to dynamically invoke a setter on
+     * {@link PayloadData} instance before adding it to list.
+     * 
+     */
     @Override
     public List<PayloadData> createAllPayloads(EntityManager em) {
 
-        ObjectFactory fact = new ObjectFactory();
-        PayloadData payloadData = fact.createPayloadData();
-        payloadData.setOperation(operationType);
+        log("Creating new list for <Payload>", "");
 
-        @SuppressWarnings("unchecked")
-        final List<LimitSetData> list = em.createQuery("select ls from LimitSetData ls").getResultList();
+        List<PayloadData> allPayloads = new ArrayList<PayloadData>();
 
-        List<LimitSetData> limitSetData = new ArrayList<LimitSetData>();
+        /**
+         * Instantiate a new DAO to lookup ICS_PAYLOAD records.
+         */
+        PayloadOperationDao payloadOperationDao = new PayloadOperationDaoJdbc(getDataSource());
         
-        for(LimitSetData lsd : list) {
-            limitSetData.add(lsd);
+        List<PayloadOperation> dbConfiguredOperationsToSubmit = payloadOperationDao.findPayloadsToSubmit();
+        
+        
+        log("Found {} operations to submit to ICIS.", dbConfiguredOperationsToSubmit.size());
+        
+        /**
+         * Iterate over the list ICS_PAYLOAD records.
+         */
+        for (PayloadOperation op : dbConfiguredOperationsToSubmit) {
+
+            log("...Starting the {} operation", op.getOperationType());
+            
+            PayloadData payloadData = new ObjectFactory().createPayloadData();
+
+            /**
+             * Set the type operation to send to ICIS.
+             */
+            payloadData.setOperation(op.getOperationType());
+
+            /**
+             * Look up the @Entity class that holds the payload operation data.
+             * The class definition will drive the rest of the flow in this
+             * loop.
+             */
+            Class<?> klass = payloadOperationTypeJpaEntityMap().get(op.getOperationType());
+            
+            if (klass != null ) {
+                
+                String klassName = klass.getSimpleName();
+                
+                log("Found the {} class for operation {}", klassName, op.getOperationType());
+
+                /**
+                 * Use the class name to create a JPQL select statement and then
+                 * get the results.
+                 */
+                final List<?> list = em.createQuery("select ls from "+klassName+" ls").getResultList();
+                
+                log("Found {} records in the database.", list.size());
+                
+                if (list.size() > 0 ) {
+                    
+                    String methodName = "set" + klassName;
+                    
+                    log("Searching for method {}", methodName);
+                    
+                    for(Method method : PayloadData.class.getMethods()) {
+                        
+                        log("Candidate method {}?", method.getName());
+                                                
+                        if (method.getName().equals(methodName)) {
+                            
+                            log("Found method and invoking it");
+                            
+                            try {
+                                method.invoke(payloadData, list);
+                            } catch (Exception e) {
+                                error("Unable to invoke the method {}", method.getName());
+                            }
+                        }
+                    }                    
+                }
+            } else {
+                log("!!! Did not find an @Entity class for {} operation.", op.getOperationType());
+            }
+            
+            allPayloads.add(payloadData);
         }
 
-        payloadData.setLimitSetData(limitSetData);
-        List<PayloadData> allPayloads = new ArrayList<PayloadData>();
-        allPayloads.add(payloadData);
         return allPayloads;
     }
 
+    /**
+     * Returns a map of Classes keyed on {@link OperationType}. Used to look up
+     * the class to hold the the payload data originating from the database and
+     * then eventually serialized to XML via JAXB. The operation type is known
+     * by a lookup to the ICIS_PAYLOAD table.
+     * 
+     * @return Map
+     */
+    private Map<OperationType, Class<?>> payloadOperationTypeJpaEntityMap() {
+        Map<OperationType, Class<?>> map = new HashMap<OperationType, Class<?>>();
+        map.put(OperationType.LIMIT_SET_SUBMISSION, LimitSetData.class);
+        return map;
+    }
+    
+    /**
+     * A convenience debug method, implementation can be changed in one place.
+     * 
+     * @param format A formatted string, eg. log("Successfully found {}.", arg)
+     * @param args The arguments for the string message
+     */
+    private void log(String format, Object... args) {
+        if (logger.isDebugEnabled()) {
+            logger.debug(format, args);
+        }
+    }
+        
+    /**
+     * A convenience error method, implementation can be changed in one place.
+     * 
+     * @param format A formatted string, eg. log("Successfully found {}.", arg)
+     * @param args The arguments for the string message
+     */
+    private void error(String format, Object... args) {
+        logger.error(format, args);    
+    }
 }
