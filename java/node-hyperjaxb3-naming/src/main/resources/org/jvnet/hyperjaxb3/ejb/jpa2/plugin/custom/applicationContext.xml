@@ -9,12 +9,24 @@
 	<bean name="xmlToDbNameMappings" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
 		<property name="location" value="classpath:XmlToDbNameMappings.properties"/>
 	</bean>
+	
+	<!-- -->
+	<bean name="customizing"
+		class="org.jvnet.hyperjaxb3.ejb.strategy.customizing.impl.DefaultCustomizing">
+		<property name="defaultCustomizations">
+			<bean parent="abstractCustomizationsUnmarshalledResource">
+				<property name="resource" value="classpath:org/jvnet/hyperjaxb3/ejb/strategy/customizing/impl/DefaultCustomizations2.xml"/>
+			</bean>
+		</property>
+	</bean>
+	<!-- -->
 
 	<bean name="naming" class="com.windsor.node.hyperjaxb3.NodeNaming">
 		<property name="reservedNames" ref="reservedNames" />
 		<property name="ignoring" ref="ignoring" />
 		<property name="xmlToDbNameMappings" ref="xmlToDbNameMappings" />
 		<property name="dbWordSeparator" value="${dbWordSeparator}" />
+		<property name="pkColumnNamePrefix" value="${pkColumnNamePrefix}" />
 		<property name="pkColumnNameSuffix" value="${pkColumnNameSuffix}" />
 		<property name="tableNamePrefix" value="${tableNamePrefix}" />
 		<property name="defaultPkColumnName" value="${defaultPkColumnName}" />

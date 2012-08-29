@@ -29,6 +29,11 @@ public class NodeNaming extends DefaultNaming {
 	private String dbWordSeparator;
 
 	/**
+	 * Prefix to use for DB PK columns.
+	 */
+	private String pkColumnNamePrefix;
+
+	/**
 	 * Suffix to use for DB PK columns.
 	 */
 	private String pkColumnNameSuffix;
@@ -106,13 +111,22 @@ public class NodeNaming extends DefaultNaming {
 		 * DB PK name. I would think that I can get default DB PK column name
 		 * from the context...
 		 */
-		if (getDefaultPkColumnName().equals(propertyName)) {
-			columnName = getName(fieldOutline.parent().target.shortName) + getPkColumnNameSuffix();
+		if (getDefaultPkColumnName().equalsIgnoreCase(propertyName)) {
+			// FIXME: are we ever coming in here?
+			columnName = getPkColumnNamePrefix() + getName(fieldOutline.parent().target.shortName) + getPkColumnNameSuffix();
+			logger.debug("getColumn$Name(): PK mapping " + propertyName + " to " + columnName);
 		} else {
 			columnName = super.getColumn$Name(context, fieldOutline);
+			logger.debug("getColumn$Name(): Regular mapping " + propertyName + " to " + columnName);
 		}
-		logger.debug("getColumn$Name(): Mapping " + propertyName + " to " + columnName);
+
 		return columnName;
+	}
+
+	@Override
+	public String getElementCollection$OrderColumn$Name(final Mapping context,
+			final FieldOutline fieldOutline) {
+		return "DATA_HASH";
 	}
 
 	@Override
@@ -156,6 +170,25 @@ public class NodeNaming extends DefaultNaming {
 	 */
 	public void setDbWordSeparator(final String dbWordSeparator) {
 		this.dbWordSeparator = dbWordSeparator;
+	}
+
+	/**
+	 * Returns the DB PK column prefix.
+	 *
+	 * @return the DB PK column prefix
+	 */
+	public String getPkColumnNamePrefix() {
+		return pkColumnNamePrefix;
+	}
+
+	/**
+	 * Sets the DB PK column prefix
+	 *
+	 * @param pkColumnNamePrefix
+	 *            the DB PK column prefix
+	 */
+	public void setPkColumnNamePrefix(final String pkColumnNamePrefix) {
+		this.pkColumnNamePrefix = pkColumnNamePrefix;
 	}
 
 	/**
