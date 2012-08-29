@@ -73,8 +73,10 @@ public class LimitSetData
 {
 
     private final static long serialVersionUID = 1L;
+
     @XmlElement(name = "TransactionHeader", required = true)
     protected TransactionHeader transactionHeader;
+    
     @XmlElement(name = "LimitSet", required = true)
     protected LimitSet limitSet;
     @XmlTransient

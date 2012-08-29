@@ -84,10 +84,10 @@ public class GeographicCoordinates
     private final static long serialVersionUID = 1L;
     @XmlElement(name = "LatitudeMeasure", type = String.class)
     @XmlJavaTypeAdapter(DoubleAdapter.class)
-    protected Integer latitudeMeasure;
+    protected Double latitudeMeasure;
     @XmlElement(name = "LongitudeMeasure", type = String.class)
     @XmlJavaTypeAdapter(DoubleAdapter.class)
-    protected Integer longitudeMeasure;
+    protected Double longitudeMeasure;
     @XmlElement(name = "HorizontalAccuracyMeasure", type = String.class)
     @XmlJavaTypeAdapter(IntegerAdapter.class)
     protected Integer horizontalAccuracyMeasure;
@@ -127,7 +127,7 @@ public class GeographicCoordinates
      */
     @Basic
     @Column(name = "LAT_MEAS", length = 10)
-    public Integer getLatitudeMeasure() {
+    public Double getLatitudeMeasure() {
         return latitudeMeasure;
     }
 
@@ -139,7 +139,7 @@ public class GeographicCoordinates
      *     {@link String }
      *
      */
-    public void setLatitudeMeasure(final Integer value) {
+    public void setLatitudeMeasure(final Double value) {
         this.latitudeMeasure = value;
     }
 
@@ -158,7 +158,7 @@ public class GeographicCoordinates
      */
     @Basic
     @Column(name = "LONG_MEAS", length = 11)
-    public Integer getLongitudeMeasure() {
+    public Double getLongitudeMeasure() {
         return longitudeMeasure;
     }
 
@@ -170,7 +170,7 @@ public class GeographicCoordinates
      *     {@link String }
      *
      */
-    public void setLongitudeMeasure(final Integer value) {
+    public void setLongitudeMeasure(final Double value) {
         this.longitudeMeasure = value;
     }
 
@@ -401,18 +401,18 @@ public class GeographicCoordinates
         }
         final GeographicCoordinates that = ((GeographicCoordinates) object);
         {
-            Integer lhsLatitudeMeasure;
+            Double lhsLatitudeMeasure;
             lhsLatitudeMeasure = this.getLatitudeMeasure();
-            Integer rhsLatitudeMeasure;
+            Double rhsLatitudeMeasure;
             rhsLatitudeMeasure = that.getLatitudeMeasure();
             if (!strategy.equals(LocatorUtils.property(thisLocator, "latitudeMeasure", lhsLatitudeMeasure), LocatorUtils.property(thatLocator, "latitudeMeasure", rhsLatitudeMeasure), lhsLatitudeMeasure, rhsLatitudeMeasure)) {
                 return false;
             }
         }
         {
-            Integer lhsLongitudeMeasure;
+            Double lhsLongitudeMeasure;
             lhsLongitudeMeasure = this.getLongitudeMeasure();
-            Integer rhsLongitudeMeasure;
+            Double rhsLongitudeMeasure;
             rhsLongitudeMeasure = that.getLongitudeMeasure();
             if (!strategy.equals(LocatorUtils.property(thisLocator, "longitudeMeasure", lhsLongitudeMeasure), LocatorUtils.property(thatLocator, "longitudeMeasure", rhsLongitudeMeasure), lhsLongitudeMeasure, rhsLongitudeMeasure)) {
                 return false;
@@ -485,12 +485,12 @@ public class GeographicCoordinates
 	public int hashCode(final ObjectLocator locator, final HashCodeStrategy strategy) {
         int currentHashCode = 1;
         {
-            Integer theLatitudeMeasure;
+            Double theLatitudeMeasure;
             theLatitudeMeasure = this.getLatitudeMeasure();
             currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "latitudeMeasure", theLatitudeMeasure), currentHashCode, theLatitudeMeasure);
         }
         {
-            Integer theLongitudeMeasure;
+            Double theLongitudeMeasure;
             theLongitudeMeasure = this.getLongitudeMeasure();
             currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "longitudeMeasure", theLongitudeMeasure), currentHashCode, theLongitudeMeasure);
         }

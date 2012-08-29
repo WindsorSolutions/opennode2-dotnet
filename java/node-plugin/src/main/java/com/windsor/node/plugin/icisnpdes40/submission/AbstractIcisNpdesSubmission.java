@@ -30,11 +30,11 @@ import com.windsor.node.common.domain.ServiceType;
 import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
 import com.windsor.node.data.dao.jdbc.JdbcTransactionDao;
 import com.windsor.node.plugin.common.BaseWnosJaxbPlugin;
-import com.windsor.node.plugin.icisnpdes40.IcisNpdesStagingPersistenceUnitInfo;
 import com.windsor.node.plugin.icisnpdes40.generated.HeaderData;
 import com.windsor.node.plugin.icisnpdes40.generated.ObjectFactory;
 import com.windsor.node.plugin.icisnpdes40.generated.OperationType;
 import com.windsor.node.plugin.icisnpdes40.generated.PayloadData;
+import com.windsor.node.plugin.icisnpdes40.hibernate.IcisNpdesStagingPersistenceUnitInfo;
 import com.windsor.node.service.helper.CompressionService;
 import com.windsor.node.service.helper.IdGenerator;
 import com.windsor.node.service.helper.settings.SettingServiceProvider;
@@ -151,12 +151,15 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
         // always use an ObjectFactory to create JAXB created objects
         ObjectFactory fact = new ObjectFactory();
 
+        String docId = getIdGenerator().createId();
+        
         //Create and populate com.windsor.node.plugin.icisnpdes40.generated.Document and Header
         //NOTE ICIS DOES NOT IMPLEMENT NORMAL EN HEADER, IT USESS ITS OWN
         com.windsor.node.plugin.icisnpdes40.generated.Document document = fact.createDocument();
         HeaderData header = fact.createHeaderData();
         document.setHeader(header);
 
+        header.setId(docId.substring(1, 31));
         header.setAuthor(getConfigValueAsString(HEADER_DATA_AUTHOR.getName(), false));
         header.setComment(getConfigValueAsString(HEADER_DATA_COMMENT.getName(), false));
         header.setContactInfo(getConfigValueAsString(HEADER_DATA_CONTACT_INFO.getName(), false));
@@ -173,7 +176,6 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
         payloadDataList.addAll(createAllPayloads(em));
 
         //OpenNode2 Document creation
-        String docId = getIdGenerator().createId();
         String tempFilePath = makeTemporaryFilename(docId);
 
         //TODO Consider pushing OpenNode2 Document creation and writing up one more class level, this is pretty identical functionality
@@ -250,6 +252,9 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
            Properties jpaProperties = new Properties();
            
            jpaProperties.put(Environment.DATASOURCE, dataSource);
+           
+           // jpaProperties.put(Environment.SHOW_SQL, Boolean.TRUE);
+           // jpaProperties.put(Environment.FORMAT_SQL, Boolean.TRUE);
            
            PersistenceProvider provider = new HibernatePersistence();
            

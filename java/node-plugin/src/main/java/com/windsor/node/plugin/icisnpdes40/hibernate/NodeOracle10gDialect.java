@@ -1,4 +1,4 @@
-package com.windsor.node.plugin.icisnpdes40;
+package com.windsor.node.plugin.icisnpdes40.hibernate;
 
 import java.sql.Types;
 

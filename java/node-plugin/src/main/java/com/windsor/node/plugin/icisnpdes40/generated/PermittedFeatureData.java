@@ -69,8 +69,13 @@ public class PermittedFeatureData
 {
 
     private final static long serialVersionUID = 1L;
+    
+    /**
+     * FIXME - TransactionHeader is required...
+     */
     @XmlElement(name = "TransactionHeader", required = true)
-    protected TransactionHeader transactionHeader;
+    protected TransactionHeader transactionHeader = new TransactionHeader();
+    
     @XmlElement(name = "PermittedFeature", required = true)
     protected PermittedFeature permittedFeature;
     @XmlTransient

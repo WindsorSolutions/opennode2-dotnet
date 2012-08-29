@@ -120,12 +120,15 @@ public class PermittedFeature
     protected String permittedFeatureDescription;
     @XmlElement(name = "PermittedFeatureTreatmentTypeCode")
     protected List<String> permittedFeatureTreatmentTypeCode;
+    
     @XmlElement(name = "PermittedFeatureDesignFlowNumber", type = String.class)
     @XmlJavaTypeAdapter(DoubleAdapter.class)
-    protected Integer permittedFeatureDesignFlowNumber;
+    protected Double permittedFeatureDesignFlowNumber;
+    
     @XmlElement(name = "PermittedFeatureActualAverageFlowNumber", type = String.class)
     @XmlJavaTypeAdapter(DoubleAdapter.class)
-    protected Integer permittedFeatureActualAverageFlowNumber;
+    protected Double permittedFeatureActualAverageFlowNumber;
+    
     @XmlElement(name = "PermittedFeatureStateWaterBodyCode")
     protected String permittedFeatureStateWaterBodyCode;
     @XmlElement(name = "PermittedFeatureStateWaterBodyName")
@@ -211,10 +214,10 @@ public class PermittedFeature
      * Objects of the following type(s) are allowed in the list
      * {@link String }
      *
-     *
+     * FIXME - Commented out @OrderColumn
      */
     @ElementCollection
-    @OrderColumn(name = "DATA_HASH")
+    // @OrderColumn(name = "DATA_HASH") 
     @Column(name = "PRMT_FEATR_CHAR", length = 3)
     // FIXME: added the joinColumns attribute
     @CollectionTable(name = "ICS_PRMT_FEATR_CHAR", joinColumns = @JoinColumn(name = "ICS_PRMT_FEATR_ID"))
@@ -293,10 +296,10 @@ public class PermittedFeature
      * Objects of the following type(s) are allowed in the list
      * {@link String }
      *
-     *
+     * FIXME - Commented out @OrderColumn
      */
     @ElementCollection
-    @OrderColumn(name = "DATA_HASH")
+    //@OrderColumn(name = "DATA_HASH")
     @Column(name = "PRMT_FEATR_TRTMNT_TYPE_CODE", length = 3)
     // FIXME: added the joinColumns attribute
     @CollectionTable(name = "ICS_PRMT_FEATR_TRTMNT_TYPE", joinColumns = @JoinColumn(name = "ICS_PRMT_FEATR_ID"))
@@ -334,7 +337,7 @@ public class PermittedFeature
      */
     @Basic
     @Column(name = "PRMT_FEATR_DSGN_FLOW_NUM", scale = 7)
-    public Integer getPermittedFeatureDesignFlowNumber() {
+    public Double getPermittedFeatureDesignFlowNumber() {
         return permittedFeatureDesignFlowNumber;
     }
 
@@ -346,7 +349,7 @@ public class PermittedFeature
      *     {@link String }
      *
      */
-    public void setPermittedFeatureDesignFlowNumber(final Integer value) {
+    public void setPermittedFeatureDesignFlowNumber(final Double value) {
         this.permittedFeatureDesignFlowNumber = value;
     }
 
@@ -365,7 +368,7 @@ public class PermittedFeature
      */
     @Basic
     @Column(name = "PRMT_FEATR_ACTUL_AVER_FLOW_NUM", scale = 7)
-    public Integer getPermittedFeatureActualAverageFlowNumber() {
+    public Double getPermittedFeatureActualAverageFlowNumber() {
         return permittedFeatureActualAverageFlowNumber;
     }
 
@@ -377,7 +380,7 @@ public class PermittedFeature
      *     {@link String }
      *
      */
-    public void setPermittedFeatureActualAverageFlowNumber(final Integer value) {
+    public void setPermittedFeatureActualAverageFlowNumber(final Double value) {
         this.permittedFeatureActualAverageFlowNumber = value;
     }
 
@@ -904,18 +907,18 @@ public class PermittedFeature
             }
         }
         {
-            Integer lhsPermittedFeatureDesignFlowNumber;
+            Double lhsPermittedFeatureDesignFlowNumber;
             lhsPermittedFeatureDesignFlowNumber = this.getPermittedFeatureDesignFlowNumber();
-            Integer rhsPermittedFeatureDesignFlowNumber;
+            Double rhsPermittedFeatureDesignFlowNumber;
             rhsPermittedFeatureDesignFlowNumber = that.getPermittedFeatureDesignFlowNumber();
             if (!strategy.equals(LocatorUtils.property(thisLocator, "permittedFeatureDesignFlowNumber", lhsPermittedFeatureDesignFlowNumber), LocatorUtils.property(thatLocator, "permittedFeatureDesignFlowNumber", rhsPermittedFeatureDesignFlowNumber), lhsPermittedFeatureDesignFlowNumber, rhsPermittedFeatureDesignFlowNumber)) {
                 return false;
             }
         }
         {
-            Integer lhsPermittedFeatureActualAverageFlowNumber;
+            Double lhsPermittedFeatureActualAverageFlowNumber;
             lhsPermittedFeatureActualAverageFlowNumber = this.getPermittedFeatureActualAverageFlowNumber();
-            Integer rhsPermittedFeatureActualAverageFlowNumber;
+            Double rhsPermittedFeatureActualAverageFlowNumber;
             rhsPermittedFeatureActualAverageFlowNumber = that.getPermittedFeatureActualAverageFlowNumber();
             if (!strategy.equals(LocatorUtils.property(thisLocator, "permittedFeatureActualAverageFlowNumber", lhsPermittedFeatureActualAverageFlowNumber), LocatorUtils.property(thatLocator, "permittedFeatureActualAverageFlowNumber", rhsPermittedFeatureActualAverageFlowNumber), lhsPermittedFeatureActualAverageFlowNumber, rhsPermittedFeatureActualAverageFlowNumber)) {
                 return false;
@@ -1089,12 +1092,12 @@ public class PermittedFeature
             currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "permittedFeatureTreatmentTypeCode", thePermittedFeatureTreatmentTypeCode), currentHashCode, thePermittedFeatureTreatmentTypeCode);
         }
         {
-            Integer thePermittedFeatureDesignFlowNumber;
+            Double thePermittedFeatureDesignFlowNumber;
             thePermittedFeatureDesignFlowNumber = this.getPermittedFeatureDesignFlowNumber();
             currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "permittedFeatureDesignFlowNumber", thePermittedFeatureDesignFlowNumber), currentHashCode, thePermittedFeatureDesignFlowNumber);
         }
         {
-            Integer thePermittedFeatureActualAverageFlowNumber;
+            Double thePermittedFeatureActualAverageFlowNumber;
             thePermittedFeatureActualAverageFlowNumber = this.getPermittedFeatureActualAverageFlowNumber();
             currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "permittedFeatureActualAverageFlowNumber", thePermittedFeatureActualAverageFlowNumber), currentHashCode, thePermittedFeatureActualAverageFlowNumber);
         }

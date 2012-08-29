@@ -2,6 +2,7 @@ package com.windsor.node.plugin.icisnpdes40.submission;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,8 +16,11 @@ import com.windsor.node.plugin.icisnpdes40.generated.LimitSetData;
 import com.windsor.node.plugin.icisnpdes40.generated.ObjectFactory;
 import com.windsor.node.plugin.icisnpdes40.generated.OperationType;
 import com.windsor.node.plugin.icisnpdes40.generated.PayloadData;
+import com.windsor.node.plugin.icisnpdes40.generated.PermittedFeatureData;
+import com.windsor.node.plugin.icisnpdes40.generated.TransactionHeader;
+import com.windsor.node.plugin.icisnpdes40.generated.TransactionType;
 
-public class LimitSetSubmission extends AbstractIcisNpdesSubmission {
+public class PerformICISSubmission extends AbstractIcisNpdesSubmission {
 
     /**
      * Returns a {@link List} of {@link PayloadData} objects. The list of
@@ -39,8 +43,7 @@ public class LimitSetSubmission extends AbstractIcisNpdesSubmission {
         PayloadOperationDao payloadOperationDao = new PayloadOperationDaoJdbc(getDataSource());
         
         List<PayloadOperation> dbConfiguredOperationsToSubmit = payloadOperationDao.findPayloadsToSubmit();
-        
-        
+                
         log("Found {} operations to submit to ICIS.", dbConfiguredOperationsToSubmit.size());
         
         /**
@@ -51,11 +54,6 @@ public class LimitSetSubmission extends AbstractIcisNpdesSubmission {
             log("...Starting the {} operation", op.getOperationType());
             
             PayloadData payloadData = new ObjectFactory().createPayloadData();
-
-            /**
-             * Set the type operation to send to ICIS.
-             */
-            payloadData.setOperation(op.getOperationType());
 
             /**
              * Look up the @Entity class that holds the payload operation data.
@@ -79,6 +77,31 @@ public class LimitSetSubmission extends AbstractIcisNpdesSubmission {
                 log("Found {} records in the database.", list.size());
                 
                 if (list.size() > 0 ) {
+
+                    /**
+                     * Set the type operation to send to ICIS. Only set if there are records for this operation.
+                     */
+                    payloadData.setOperation(op.getOperationType());
+                    
+                    /////
+                    // Set a transaction header - temporary code
+                    ////
+                    TransactionHeader txHeader = new TransactionHeader();
+                    txHeader.setTransactionTimestamp(new Date());
+                    txHeader.setTransactionType(TransactionType.C);
+                    
+                    try {
+                        Method m = klass.getMethod("setTransactionHeader", TransactionHeader.class);
+                        
+                        for(Object o : list) {
+                            m.invoke(o, txHeader);
+                        }
+                        
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
+                    
+                    /////
                     
                     String methodName = "set" + klassName;
                     
@@ -98,15 +121,13 @@ public class LimitSetSubmission extends AbstractIcisNpdesSubmission {
                                 error("Unable to invoke the method {}", method.getName());
                             }
                         }
-                    }                    
+                    }          
+                    allPayloads.add(payloadData);
                 }
             } else {
                 log("!!! Did not find an @Entity class for {} operation.", op.getOperationType());
             }
-            
-            allPayloads.add(payloadData);
         }
-
         return allPayloads;
     }
 
@@ -121,6 +142,7 @@ public class LimitSetSubmission extends AbstractIcisNpdesSubmission {
     private Map<OperationType, Class<?>> payloadOperationTypeJpaEntityMap() {
         Map<OperationType, Class<?>> map = new HashMap<OperationType, Class<?>>();
         map.put(OperationType.LIMIT_SET_SUBMISSION, LimitSetData.class);
+        map.put(OperationType.PERMITTED_FEATURE_SUBMISSION, PermittedFeatureData.class);
         return map;
     }
     

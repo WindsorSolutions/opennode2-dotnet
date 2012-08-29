@@ -309,10 +309,10 @@ public class LimitSet
      * Objects of the following type(s) are allowed in the list
      * {@link MonthTextType }
      *
-     *
+     * FIXME - Commented out @OrderColumn
      */
     @ElementCollection
-    @OrderColumn(name = "DATA_HASH")
+    //@OrderColumn(name = "DATA_HASH")
     @Column(name = "LMT_SET_MONTHS_APPL", length = 255)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "ICS_LMT_SET_MONTHS_APPL", joinColumns = @JoinColumn(name = "ICS_LMT_SET_ID"))

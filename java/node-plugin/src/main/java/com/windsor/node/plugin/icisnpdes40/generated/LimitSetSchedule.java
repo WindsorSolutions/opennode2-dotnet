@@ -89,14 +89,23 @@ public class LimitSetSchedule
     @XmlElement(name = "NumberSubmissionUnitsInteger", type = String.class)
     @XmlJavaTypeAdapter(IntegerAdapter.class)
     protected Integer numberSubmissionUnitsInteger;
+    
+    /**
+     * FIXME Changed to use DateAdapter (was DateTimeAdapter)
+     */
     @XmlElement(name = "InitialMonitoringDate", type = String.class)
-    @XmlJavaTypeAdapter(DateTimeAdapter.class)
+    @XmlJavaTypeAdapter(DateAdapter.class)
     @XmlSchemaType(name = "date")
     protected Date initialMonitoringDate;
+    
+    /**
+     * FIXME Changed to use DateAdapter (was DateTimeAdapter)
+     */
     @XmlElement(name = "InitialDMRDueDate", type = String.class)
-    @XmlJavaTypeAdapter(DateTimeAdapter.class)
+    @XmlJavaTypeAdapter(DateAdapter.class)
     @XmlSchemaType(name = "date")
     protected Date initialDMRDueDate;
+    
     @XmlElement(name = "LimitSetModificationTypeCode")
     protected String limitSetModificationTypeCode;
     @XmlElement(name = "LimitSetModificationEffectiveDate", type = String.class)

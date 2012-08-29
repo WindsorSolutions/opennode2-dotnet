@@ -12,10 +12,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -150,17 +146,22 @@ import org.jvnet.jaxb2_commons.locator.util.LocatorUtils;
 	    "unpermittedFacilityData"
 	})*/
 @XmlType(name = "PayloadData", propOrder = {
-    "limitSetData"
+    "limitSetData",
+    "permittedFeatureData"
 })
-public class PayloadData
-    implements Serializable, Equals, HashCode
-{
+public class PayloadData implements Serializable, Equals, HashCode {
 
     private final static long serialVersionUID = 1L;
-    @XmlElement(name = "LimitSetData")
-    protected List<LimitSetData> limitSetData;
+
     @XmlAttribute(name = "Operation", required = true)
     protected OperationType operation;
+    
+    @XmlElement(name = "LimitSetData")
+    protected List<LimitSetData> limitSetData;
+    
+    @XmlElement(name = "PermittedFeatureData")
+    protected List<PermittedFeatureData> permittedFeatureData;
+    
     @XmlTransient
     protected String dbid;
 
@@ -193,10 +194,6 @@ public class PayloadData
         return this.limitSetData;
     }
 
-    /**
-     * 
-     * 
-     */
     public void setLimitSetData(List<LimitSetData> limitSetData) {
         this.limitSetData = limitSetData;
     }
@@ -210,6 +207,47 @@ public class PayloadData
     }
 
     /**
+     * Gets the value of the permittedFeatureData property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the permittedFeatureData property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getPermittedFeatureData().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link PermittedFeatureData }
+     * 
+     * 
+     */
+    public List<PermittedFeatureData> getPermittedFeatureData() {
+        if (permittedFeatureData == null) {
+            permittedFeatureData = new ArrayList<PermittedFeatureData>();
+        }
+        return this.permittedFeatureData;
+    }
+
+    public void setPermittedFeatureData(List<PermittedFeatureData> permittedFeatureData) {
+        this.permittedFeatureData = permittedFeatureData;
+    }
+
+    public boolean isSetPermittedFeatureData() {
+        return ((this.permittedFeatureData!= null)&&(!this.permittedFeatureData.isEmpty()));
+    }
+
+    public void unsetPermittedFeatureData() {
+        this.permittedFeatureData = null;
+    }
+    
+    /**
      * Gets the value of the operation property.
      * 
      * @return
@@ -217,9 +255,6 @@ public class PayloadData
      *     {@link OperationType }
      *     
      */
-    @Basic
-    @Column(name = "OPERATION", length = 255)
-    @Enumerated(EnumType.STRING)
     public OperationType getOperation() {
         return operation;
     }
@@ -234,30 +269,6 @@ public class PayloadData
      */
     public void setOperation(OperationType value) {
         this.operation = value;
-    }
-
-    /**
-     * 
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getdbid() {
-        return dbid;
-    }
-
-    /**
-     * 
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setdbid(String value) {
-        this.dbid = value;
     }
 
     public boolean equals(ObjectLocator thisLocator, ObjectLocator thatLocator, Object object, EqualsStrategy strategy) {
@@ -278,8 +289,15 @@ public class PayloadData
                 return false;
             }
         }
-
-
+        {
+            List<PermittedFeatureData> lhsPermittedFeatureData;
+            lhsPermittedFeatureData = (this.isSetPermittedFeatureData()?this.getPermittedFeatureData():null);
+            List<PermittedFeatureData> rhsPermittedFeatureData;
+            rhsPermittedFeatureData = (that.isSetPermittedFeatureData()?that.getPermittedFeatureData():null);
+            if (!strategy.equals(LocatorUtils.property(thisLocator, "permittedFeatureData", lhsPermittedFeatureData), LocatorUtils.property(thatLocator, "permittedFeatureData", rhsPermittedFeatureData), lhsPermittedFeatureData, rhsPermittedFeatureData)) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -295,6 +313,11 @@ public class PayloadData
             List<LimitSetData> theLimitSetData;
             theLimitSetData = (this.isSetLimitSetData()?this.getLimitSetData():null);
             currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "limitSetData", theLimitSetData), currentHashCode, theLimitSetData);
+        }
+        {
+            List<PermittedFeatureData> thePermittedFeatureData;
+            thePermittedFeatureData = (this.isSetPermittedFeatureData()?this.getPermittedFeatureData():null);
+            currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "permittedFeatureData", thePermittedFeatureData), currentHashCode, thePermittedFeatureData);
         }
         return currentHashCode;
     }
