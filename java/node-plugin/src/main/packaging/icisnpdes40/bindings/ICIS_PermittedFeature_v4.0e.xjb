@@ -72,7 +72,7 @@
 			<jaxb:bindings node="//xsd:element[@ref='icis:DoesUnitHaveDailyCover']">
 
 				<hj:basic>
-					<orm:column name="DOES_UNIT_HAV_DAILY_COVER" length="1" column-definition="char(1)" />
+					<orm:column length="1" column-definition="char(1)" />
 				</hj:basic>
 
 			</jaxb:bindings>
@@ -80,7 +80,7 @@
 			<jaxb:bindings node="//xsd:element[@ref='icis:IsRequiredNitrateGroundWater']">
 
 				<hj:basic>
-					<orm:column name="IS_REQD_NITRATE_GROUND_WTR" length="1" column-definition="char(1)" />
+					<orm:column length="1" column-definition="char(1)" />
 				</hj:basic>
 
 			</jaxb:bindings>
@@ -88,7 +88,7 @@
 			<jaxb:bindings node="//xsd:element[@ref='icis:IsSiteOwnByFacility']">
 
 				<hj:basic>
-					<orm:column name="IS_SITE_OWN_BY_FAC" length="1" column-definition="char(1)" />
+					<orm:column length="1" column-definition="char(1)" />
 				</hj:basic>
 
 			</jaxb:bindings>
@@ -96,7 +96,7 @@
 			<jaxb:bindings node="//xsd:element[@ref='icis:IsSystemLinedWithLeachate']">
 
 				<hj:basic>
-					<orm:column name="IS_SYSTM_LINED_WITH_LEACHATE" length="1" column-definition="char(1)" />
+					<orm:column length="1" column-definition="char(1)" />
 				</hj:basic>
 
 			</jaxb:bindings>
