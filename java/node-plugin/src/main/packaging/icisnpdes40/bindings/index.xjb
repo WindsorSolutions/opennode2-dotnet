@@ -15,6 +15,8 @@
 
 			<jaxb:serializable uid="1" />
 
+			<!-- date/time mappings -->
+
 			<xjc:javaType name="java.util.Date" xmlType="xsd:date"
 				adapter="com.windsor.node.plugin.icisnpdes40.adapter.DateAdapter" />
 
@@ -24,11 +26,36 @@
 			<xjc:javaType name="java.util.Date" xmlType="icis:DateType"
 				adapter="com.windsor.node.plugin.icisnpdes40.adapter.DateAdapter" />
 
-			<xjc:javaType name="java.lang.Integer" xmlType="icis:Integer2FixedRange01To60Type"
+			<!-- integer mappings -->
+
+			<xjc:javaType name="java.lang.Integer" xmlType="icis:NonNegativeIntegerMin1Max3Type"
+				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
+
+			<xjc:javaType name="java.lang.Integer" xmlType="icis:NonNegativeIntegerMin1Max5Type"
+				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
+
+			<xjc:javaType name="java.lang.Integer" xmlType="icis:IntegerMin1Max6Type"
 				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
 
 			<xjc:javaType name="java.lang.Integer" xmlType="icis:NonNegativeIntegerMin1Max10Type"
 				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
+				
+			<xjc:javaType name="java.lang.Integer" xmlType="icis:NonNegativeIntegerSansPositiveSignMin1Max10Type"
+				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
+
+			<xjc:javaType name="java.lang.Integer" xmlType="icis:Integer2FixedRange01To60Type"
+				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
+
+			<!-- decimal mappings -->
+
+			<xjc:javaType name="java.lang.Integer" xmlType="icis:NonNegativeDecimal8FloatingType"
+				adapter="com.windsor.node.plugin.icisnpdes40.adapter.DoubleAdapter" />
+
+			<xjc:javaType name="java.lang.Integer" xmlType="icis:Decimal10FloatingType"
+				adapter="com.windsor.node.plugin.icisnpdes40.adapter.DoubleAdapter" />
+
+			<xjc:javaType name="java.lang.Integer" xmlType="icis:Decimal11FloatingType"
+				adapter="com.windsor.node.plugin.icisnpdes40.adapter.DoubleAdapter" />	
 
 		</jaxb:globalBindings>
 

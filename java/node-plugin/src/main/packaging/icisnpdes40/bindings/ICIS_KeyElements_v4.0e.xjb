@@ -20,6 +20,18 @@
 			</jaxb:bindings>
 			
 		</jaxb:bindings>
+					
+		<!-- permitted feature key elements -->
+		
+		<jaxb:bindings>
+
+			<jaxb:bindings node="//xsd:complexType[@name='PermittedFeatureKeyElements']">
+				<hj:mapped-superclass />
+			</jaxb:bindings>
+			
+			<!-- FIXME: do we need the above group mapping as well? -->
+
+		</jaxb:bindings>		
 
 	</jaxb:bindings>
 

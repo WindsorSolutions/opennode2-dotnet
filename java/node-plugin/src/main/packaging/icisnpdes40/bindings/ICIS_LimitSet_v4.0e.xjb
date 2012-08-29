@@ -16,7 +16,7 @@
 					<orm:table name="ICS_LMT_SET" />
 				</hj:entity>
 
-				<hj:generated-id name="dbid" transient="true">
+				<hj:generated-id name="Dbid" transient="true">
 					<orm:column name="ICS_LMT_SET_ID" />
 				</hj:generated-id>
 
@@ -51,7 +51,7 @@
 			</jaxb:bindings>
 
 			<jaxb:bindings node="//xsd:element[@ref='icis:LimitSetStatus']">
-				<hj:one-to-one />
+				<hj:one-to-one/>
 				<annox:annotate>
 					<annox:annotate annox:class="javax.persistence.JoinColumn" name="dummy" />
 				</annox:annotate>
