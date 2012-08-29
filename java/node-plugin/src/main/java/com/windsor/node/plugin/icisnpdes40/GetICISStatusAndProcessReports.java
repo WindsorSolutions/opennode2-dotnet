@@ -21,6 +21,7 @@ import com.windsor.node.data.dao.jdbc.JdbcPartnerDao;
 import com.windsor.node.data.dao.jdbc.JdbcTransactionDao;
 import com.windsor.node.plugin.common.BaseWnosJaxbPlugin;
 import com.windsor.node.plugin.icisnpdes40.dao.JdbcIcisStatusAndProcessingDao;
+import com.windsor.node.plugin.icisnpdes40.dao.JdbcIcisWorkflowDao;
 import com.windsor.node.plugin.icisnpdes40.domain.IcisWorkflow;
 import com.windsor.node.service.helper.client.NodeClientFactory;
 
@@ -55,6 +56,9 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
 
         setTransactionDao((TransactionDao)getServiceFactory().makeService(JdbcTransactionDao.class));
         setPartnerDao((PartnerDao)getServiceFactory().makeService(JdbcPartnerDao.class));
+
+        getIcisStatusAndProcessingDao().setIcisWorkflowDao(new JdbcIcisWorkflowDao());
+        getIcisStatusAndProcessingDao().getIcisWorkflowDao().setDataSource(dataSource);
     }
 
     @Override
