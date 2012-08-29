@@ -1,5 +1,6 @@
 package com.windsor.node.plugin.icisnpdes40.domain;
 
+import java.io.Serializable;
 import com.windsor.node.plugin.icisnpdes40.dao.PayloadOperationDao;
 import com.windsor.node.plugin.icisnpdes40.dao.PayloadOperationDaoJdbc;
 import com.windsor.node.plugin.icisnpdes40.generated.OperationType;
@@ -10,7 +11,9 @@ import com.windsor.node.plugin.icisnpdes40.generated.OperationType;
  * @see PayloadOperationDao
  * @see PayloadOperationDaoJdbc
  */
-public class PayloadOperation {
+public class PayloadOperation implements Serializable {
+
+    private static final long serialVersionUID = 3189897144657084019L;
 
     /**
      * The DB id.
