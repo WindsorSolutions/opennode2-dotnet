@@ -48,6 +48,103 @@
 			</jaxb:bindings>
 
 		</jaxb:bindings>
+		
+		<!-- biosolids contact -->
+		
+		<jaxb:bindings>
+
+			<jaxb:bindings node="//xsd:complexType[@name='BiosolidsPermitContact']">
+				<hj:embeddable />
+			</jaxb:bindings>
+			
+			<jaxb:bindings node="//xsd:complexType[@name='BiosolidsPermitContact']//xsd:element[@ref='icis:Contact']">
+				<annox:annotate>
+					<annox:annotate annox:class="javax.persistence.JoinColumn" name="ICS_BS_PRMT_ID" />
+				</annox:annotate>
+			</jaxb:bindings>
+
+		</jaxb:bindings>
+		
+		<!-- CAFO contact -->
+		
+		<jaxb:bindings>
+
+			<jaxb:bindings node="//xsd:complexType[@name='CAFOContact']">
+				<hj:embeddable />
+			</jaxb:bindings>
+			
+			<jaxb:bindings node="//xsd:complexType[@name='CAFOContact']//xsd:element[@ref='icis:Contact']">
+				<annox:annotate>
+					<annox:annotate annox:class="javax.persistence.JoinColumn" name="ICS_CAFO_PRMT_ID" />
+				</annox:annotate>
+			</jaxb:bindings>
+
+		</jaxb:bindings>
+		
+		<!-- facility contact -->
+		
+		<jaxb:bindings>
+
+			<jaxb:bindings node="//xsd:complexType[@name='FacilityContact']">
+				<hj:embeddable />
+			</jaxb:bindings>
+			
+			<jaxb:bindings node="//xsd:complexType[@name='FacilityContact']//xsd:element[@ref='icis:Contact']">
+				<annox:annotate>
+					<annox:annotate annox:class="javax.persistence.JoinColumn" name="ICS_FAC_ID" />
+				</annox:annotate>
+			</jaxb:bindings>
+
+		</jaxb:bindings>
+		
+		<!-- permit contact -->
+		
+		<jaxb:bindings>
+
+			<jaxb:bindings node="//xsd:complexType[@name='PermitContact']">
+				<hj:embeddable />
+			</jaxb:bindings>
+			
+			<jaxb:bindings node="//xsd:complexType[@name='PermitContact']//xsd:element[@ref='icis:Contact']">
+				<annox:annotate>
+					<annox:annotate annox:class="javax.persistence.JoinColumn" name="ICS_GNRL_PRMT_ID" />
+				</annox:annotate>
+			</jaxb:bindings>
+
+		</jaxb:bindings>
+		
+		<!-- pretreatment contact -->
+		
+		<jaxb:bindings>
+
+			<jaxb:bindings node="//xsd:complexType[@name='PretreatmentContact']">
+				<hj:embeddable />
+			</jaxb:bindings>
+			
+			<jaxb:bindings node="//xsd:complexType[@name='PretreatmentContact']//xsd:element[@ref='icis:Contact']">
+				<annox:annotate>
+					<annox:annotate annox:class="javax.persistence.JoinColumn" name="ICS_PRETR_PRMT_ID" />
+				</annox:annotate>
+			</jaxb:bindings>
+
+		</jaxb:bindings>
+		
+		<!-- storm water contact -->
+		<!-- FIXME: this needs to be overridden by each of the sub-classes -->
+		
+		<jaxb:bindings>
+
+			<jaxb:bindings node="//xsd:complexType[@name='StormWaterContact']">
+				<hj:embeddable />
+			</jaxb:bindings>
+			
+			<jaxb:bindings node="//xsd:complexType[@name='StormWaterContact']//xsd:element[@ref='icis:Contact']">
+				<annox:annotate>
+					<annox:annotate annox:class="javax.persistence.JoinColumn" name="dummy" />
+				</annox:annotate>
+			</jaxb:bindings>
+
+		</jaxb:bindings>
 
 	</jaxb:bindings>
 

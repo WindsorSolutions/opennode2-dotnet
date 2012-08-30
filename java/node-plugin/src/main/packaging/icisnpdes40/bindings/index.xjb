@@ -31,36 +31,105 @@
 			<xjc:javaType name="java.lang.Integer" xmlType="icis:NonNegativeIntegerMin1Max3Type"
 				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
 
+			<xjc:javaType name="java.lang.Integer" xmlType="icis:NonNegativeIntegerMin1Max4Type"
+				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
+
 			<xjc:javaType name="java.lang.Integer" xmlType="icis:NonNegativeIntegerMin1Max5Type"
 				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
 
 			<xjc:javaType name="java.lang.Integer" xmlType="icis:IntegerMin1Max6Type"
 				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
 
+			<xjc:javaType name="java.lang.Integer" xmlType="icis:NonNegativeIntegerMin1Max6Type"
+				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
+
+			<xjc:javaType name="java.lang.Integer" xmlType="icis:NonNegativeIntegerMin1Max8Type"
+				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
+
+			<xjc:javaType name="java.lang.Integer" xmlType="icis:NonNegativeIntegerMin1Max9Type"
+				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
+
 			<xjc:javaType name="java.lang.Integer" xmlType="icis:NonNegativeIntegerMin1Max10Type"
 				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
-				
+
 			<xjc:javaType name="java.lang.Integer" xmlType="icis:NonNegativeIntegerSansPositiveSignMin1Max10Type"
 				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
 
 			<xjc:javaType name="java.lang.Integer" xmlType="icis:Integer2FixedRange01To60Type"
 				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
 
+			<xjc:javaType name="java.lang.Integer" xmlType="icis:Integer2FixedRange01To99Type"
+				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
+				
+			<xjc:javaType name="java.lang.Integer" xmlType="icis:IntegerRange0To1000Type"
+				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
+			
+			<xjc:javaType name="java.lang.Integer" xmlType="icis:IntegerRange1970To2099Type"
+				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />				
+				
 			<!-- decimal mappings -->
 
-			<xjc:javaType name="java.lang.Integer" xmlType="icis:NonNegativeDecimal8FloatingType"
+			<!-- <xjc:javaType name="java.lang.Double" xmlType="icis:Decimal6FloatingType" adapter="com.windsor.node.plugin.icisnpdes40.adapter.DoubleAdapter" 
+				/> -->
+
+			<xjc:javaType name="java.lang.Double" xmlType="icis:NonNegativeDecimal8FloatingType"
 				adapter="com.windsor.node.plugin.icisnpdes40.adapter.DoubleAdapter" />
 
-			<xjc:javaType name="java.lang.Integer" xmlType="icis:Decimal10FloatingType"
+			<xjc:javaType name="java.lang.Double" xmlType="icis:Decimal10FloatingType"
 				adapter="com.windsor.node.plugin.icisnpdes40.adapter.DoubleAdapter" />
 
-			<xjc:javaType name="java.lang.Integer" xmlType="icis:Decimal11FloatingType"
-				adapter="com.windsor.node.plugin.icisnpdes40.adapter.DoubleAdapter" />	
+			<xjc:javaType name="java.lang.Double" xmlType="icis:Decimal11FloatingType"
+				adapter="com.windsor.node.plugin.icisnpdes40.adapter.DoubleAdapter" />
+			
+			<xjc:javaType name="java.lang.Double" xmlType="icis:DecimalRange0To999.9Type"
+				adapter="com.windsor.node.plugin.icisnpdes40.adapter.DoubleAdapter" />
 
 		</jaxb:globalBindings>
 
 		<hj:persistence>
 			<hj:default-generated-id name="dbid" transient="true" javaType="java.lang.String" />
+			<hj:default-single-property type="icis:YesNoIndicatorType">
+				<hj:basic>
+					<orm:column length="1" column-definition="char(1)"/>
+				</hj:basic>
+			</hj:default-single-property>
+			
+			<hj:default-single-property type="icis:EstimatedMeasuredType">
+				<hj:basic>
+					<orm:column length="1" column-definition="char(1)"/>
+				</hj:basic>
+			</hj:default-single-property>
+			<hj:default-single-property type="icis:PretreatmentProgramRequiredIndicatorType">
+				<hj:basic>
+					<orm:column length="1" column-definition="char(1)"/>
+				</hj:basic>
+			</hj:default-single-property>
+			<hj:default-single-property type="icis:String2FixedType">
+				<hj:basic>
+					<orm:column length="2" column-definition="char(2)"/>
+				</hj:basic>
+			</hj:default-single-property>
+			<hj:default-single-property type="icis:SICType">
+				<hj:basic>
+					<orm:column length="4" column-definition="char(4)"/>
+				</hj:basic>
+			</hj:default-single-property>
+			<hj:default-single-property type="icis:NAICSType">
+				<hj:basic>
+					<orm:column length="6" column-definition="char(6)"/>
+				</hj:basic>
+			</hj:default-single-property>
+			<hj:default-single-property type="icis:String9FixedTypeBase">
+				<hj:basic>
+					<orm:column length="9" column-definition="char(9)"/>
+				</hj:basic>
+			</hj:default-single-property>
+			<hj:default-single-property type="icis:String9FixedType">
+				<hj:basic>
+					<orm:column length="9" column-definition="char(9)"/>
+				</hj:basic>
+			</hj:default-single-property>
+			
 		</hj:persistence>
 
 	</jaxb:bindings>

@@ -22,4 +22,10 @@ public class NodeOracle10gDialect extends Oracle10gDialect {
 		registerHibernateType(Types.VARCHAR, 1, StandardBasicTypes.CHARACTER.getName() );
 	}
 
+	@Override
+	protected void registerNumericTypeMappings() {
+		super.registerNumericTypeMappings();
+		registerColumnType( Types.DOUBLE, "number" );
+	}
+
 }

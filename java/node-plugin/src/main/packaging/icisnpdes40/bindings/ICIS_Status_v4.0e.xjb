@@ -8,7 +8,7 @@
 		<!-- limit set status -->
 
 		<jaxb:bindings>
-		
+
 			<jaxb:bindings node="//xsd:complexType[@name='LimitSetStatus']">
 				<hj:generated-id name="dbid" transient="true">
 					<orm:column name="ICS_LMT_SET_STAT_ID" />
@@ -16,11 +16,20 @@
 			</jaxb:bindings>
 
 			<jaxb:bindings node="//xsd:element[@ref='icis:LimitSetStatusIndicator']">
-				<hj:basic> 
-					<orm:column column-definition="char(1)" length="1"/>
+				<hj:basic>
+					<orm:column column-definition="char(1)" length="1" />
 				</hj:basic>
 			</jaxb:bindings>
- 
+
+		</jaxb:bindings>
+
+		<!-- compliance tracking status group -->
+
+		<jaxb:bindings
+			node="//xsd:group[@name='ComplianceTrackingStatusGroup']//xsd:element[@ref='icis:StatusCode']">
+			<hj:basic>
+				<orm:column column-definition="char(1)" length="1" />
+			</hj:basic>
 		</jaxb:bindings>
 
 	</jaxb:bindings>

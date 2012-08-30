@@ -67,7 +67,7 @@
 				
 				<hj:element-collection>
 					<orm:column name="LMT_SET_MONTHS_APPL" />
-					<orm:order-column name="DATA_HASH" />
+					<!-- <orm:order-column name="DATA_HASH" />-->
 
 					<orm:collection-table name="ICS_LMT_SET_MONTHS_APPL">
 						<orm:join-column name="ICS_LMT_SET_ID" />
