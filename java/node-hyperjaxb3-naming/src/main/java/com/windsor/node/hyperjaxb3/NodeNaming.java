@@ -126,7 +126,7 @@ public class NodeNaming extends DefaultNaming {
 	@Override
 	public String getElementCollection$OrderColumn$Name(final Mapping context,
 			final FieldOutline fieldOutline) {
-		return "DATA_HASH";
+		return null;
 	}
 
 	@Override

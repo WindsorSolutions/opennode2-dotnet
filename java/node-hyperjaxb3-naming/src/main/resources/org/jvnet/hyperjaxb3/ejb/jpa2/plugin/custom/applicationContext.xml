@@ -20,6 +20,13 @@
 		</property>
 	</bean>
 	<!-- -->
+	
+	<bean name="createXAnnotations"
+		class="com.windsor.node.hyperjaxb3.NodeCreateXAnnotations">
+	</bean>
+	
+	<bean name="embeddableAttributesMapping"
+		class="com.windsor.node.hyperjaxb3.NodeEmbeddableAttributesMapping" />
 
 	<bean name="naming" class="com.windsor.node.hyperjaxb3.NodeNaming">
 		<property name="reservedNames" ref="reservedNames" />
