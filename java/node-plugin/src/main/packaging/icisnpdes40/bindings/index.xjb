@@ -60,18 +60,21 @@
 
 			<xjc:javaType name="java.lang.Integer" xmlType="icis:Integer2FixedRange01To99Type"
 				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
-				
+
 			<xjc:javaType name="java.lang.Integer" xmlType="icis:IntegerRange0To1000Type"
 				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
-			
+
 			<xjc:javaType name="java.lang.Integer" xmlType="icis:IntegerRange1970To2099Type"
-				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />				
-				
+				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
+
+			<xjc:javaType name="java.lang.Integer" xmlType="icis:IntegerRange1To99999Type"
+				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
+
 			<!-- decimal mappings -->
 
 			<!-- <xjc:javaType name="java.lang.Double" xmlType="icis:Decimal6FloatingType" adapter="com.windsor.node.plugin.icisnpdes40.adapter.DoubleAdapter" 
 				/> -->
-
+				
 			<xjc:javaType name="java.lang.Double" xmlType="icis:NonNegativeDecimal8FloatingType"
 				adapter="com.windsor.node.plugin.icisnpdes40.adapter.DoubleAdapter" />
 
@@ -80,9 +83,20 @@
 
 			<xjc:javaType name="java.lang.Double" xmlType="icis:Decimal11FloatingType"
 				adapter="com.windsor.node.plugin.icisnpdes40.adapter.DoubleAdapter" />
-			
+
 			<xjc:javaType name="java.lang.Double" xmlType="icis:DecimalRange0To999.9Type"
 				adapter="com.windsor.node.plugin.icisnpdes40.adapter.DoubleAdapter" />
+				
+			<!-- string mappings -->
+			
+			<!--
+			The reason we have to explicitly map this to a String is that it is an xsd:union
+			in the schema and unions aren't handled too well  
+			(see http://weblogs.java.net/blog/kohsuke/archive/2006/03/handling_union.html).
+			If we don't explicitly map this, we end up with a List<String> type. 
+			 -->
+			<xjc:javaType name="java.lang.String" xmlType="icis:Decimal8FloatingType"
+				adapter="com.windsor.node.plugin.icisnpdes40.adapter.StringAdapter" />
 
 		</jaxb:globalBindings>
 
@@ -90,46 +104,56 @@
 			<hj:default-generated-id name="dbid" transient="true" javaType="java.lang.String" />
 			<hj:default-single-property type="icis:YesNoIndicatorType">
 				<hj:basic>
-					<orm:column length="1" column-definition="char(1)"/>
+					<orm:column length="1" column-definition="char(1)" />
 				</hj:basic>
 			</hj:default-single-property>
-			
+
 			<hj:default-single-property type="icis:EstimatedMeasuredType">
 				<hj:basic>
-					<orm:column length="1" column-definition="char(1)"/>
+					<orm:column length="1" column-definition="char(1)" />
 				</hj:basic>
 			</hj:default-single-property>
 			<hj:default-single-property type="icis:PretreatmentProgramRequiredIndicatorType">
 				<hj:basic>
-					<orm:column length="1" column-definition="char(1)"/>
+					<orm:column length="1" column-definition="char(1)" />
+				</hj:basic>
+			</hj:default-single-property>
+			<hj:default-single-property type="icis:String1FixedType">
+				<hj:basic>
+					<orm:column length="1" column-definition="char(1)" />
+				</hj:basic>
+			</hj:default-single-property>
+			<hj:default-single-property type="icis:YesNoIndicatorTypeBase">
+				<hj:basic>
+					<orm:column length="1" column-definition="char(1)" />
 				</hj:basic>
 			</hj:default-single-property>
 			<hj:default-single-property type="icis:String2FixedType">
 				<hj:basic>
-					<orm:column length="2" column-definition="char(2)"/>
+					<orm:column length="2" column-definition="char(2)" />
 				</hj:basic>
 			</hj:default-single-property>
 			<hj:default-single-property type="icis:SICType">
 				<hj:basic>
-					<orm:column length="4" column-definition="char(4)"/>
+					<orm:column length="4" column-definition="char(4)" />
 				</hj:basic>
 			</hj:default-single-property>
 			<hj:default-single-property type="icis:NAICSType">
 				<hj:basic>
-					<orm:column length="6" column-definition="char(6)"/>
+					<orm:column length="6" column-definition="char(6)" />
 				</hj:basic>
 			</hj:default-single-property>
 			<hj:default-single-property type="icis:String9FixedTypeBase">
 				<hj:basic>
-					<orm:column length="9" column-definition="char(9)"/>
+					<orm:column length="9" column-definition="char(9)" />
 				</hj:basic>
 			</hj:default-single-property>
 			<hj:default-single-property type="icis:String9FixedType">
 				<hj:basic>
-					<orm:column length="9" column-definition="char(9)"/>
+					<orm:column length="9" column-definition="char(9)" />
 				</hj:basic>
 			</hj:default-single-property>
-			
+
 		</hj:persistence>
 
 	</jaxb:bindings>

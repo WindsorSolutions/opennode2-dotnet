@@ -40,6 +40,16 @@
 			</jaxb:bindings>
 
 		</jaxb:bindings>
+		
+		<!-- parameter limit key elements -->
+		
+		<jaxb:bindings>
+
+			<jaxb:bindings node="//xsd:complexType[@name='ParameterLimitKeyElements']">
+				<hj:mapped-superclass />
+			</jaxb:bindings>
+
+		</jaxb:bindings>
 
 	</jaxb:bindings>
 
