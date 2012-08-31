@@ -86,6 +86,9 @@
 
 			<xjc:javaType name="java.lang.Double" xmlType="icis:DecimalRange0To999.9Type"
 				adapter="com.windsor.node.plugin.icisnpdes40.adapter.DoubleAdapter" />
+			
+			<xjc:javaType name="java.lang.Double" xmlType="icis:DecimalRange0To999999999999.99Type"
+				adapter="com.windsor.node.plugin.icisnpdes40.adapter.DoubleAdapter" />
 				
 			<!-- string mappings -->
 			
@@ -136,6 +139,11 @@
 			<hj:default-single-property type="icis:String2FixedType">
 				<hj:basic>
 					<orm:column length="2" column-definition="char(2)" />
+				</hj:basic>
+			</hj:default-single-property>
+			<hj:default-single-property type="icis:String3FixedTypeBase">
+				<hj:basic>
+					<orm:column length="3" column-definition="char(3)" />
 				</hj:basic>
 			</hj:default-single-property>
 			<hj:default-single-property type="icis:SICType">

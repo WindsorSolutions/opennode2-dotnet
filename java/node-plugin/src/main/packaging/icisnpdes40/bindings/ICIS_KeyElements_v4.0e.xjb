@@ -5,6 +5,56 @@
 
 	<jaxb:bindings schemaLocation="../xsd/0/ICIS_KeyElements_v4.0e.xsd">
 
+		<!-- basic permit key elements -->
+		
+		<jaxb:bindings>
+
+			<jaxb:bindings node="//xsd:complexType[@name='BasicPermitKeyElements']">
+				<hj:mapped-superclass />
+			</jaxb:bindings>
+
+		</jaxb:bindings>
+
+		<!-- compliance schedule event key elements group -->
+		
+		<jaxb:bindings>
+
+			<jaxb:bindings node="//xsd:complexType[@name='ComplianceScheduleEventKeyElements']">
+				<hj:mapped-superclass />
+			</jaxb:bindings>
+
+		</jaxb:bindings>
+		
+		<!-- compliance schedule key elements group -->
+		
+		<jaxb:bindings>
+
+			<jaxb:bindings node="//xsd:complexType[@name='ComplianceScheduleKeyElements']">
+				<hj:mapped-superclass />
+			</jaxb:bindings>
+
+		</jaxb:bindings>
+		
+		<!-- discharge monitoring report key elements -->
+		
+		<jaxb:bindings>
+
+			<jaxb:bindings node="//xsd:complexType[@name='DischargeMonitoringReportKeyElements']">
+				<hj:mapped-superclass />
+			</jaxb:bindings>
+
+		</jaxb:bindings>
+		
+		<!-- enforcement action key elements group -->
+		
+		<jaxb:bindings>
+
+			<jaxb:bindings node="//xsd:complexType[@name='EnforcementActionKeyElements']">
+				<hj:mapped-superclass />
+			</jaxb:bindings>
+
+		</jaxb:bindings>
+
 		<!-- limit set key elements -->
 
 		<jaxb:bindings>
@@ -20,22 +70,12 @@
 			</jaxb:bindings>
 			
 		</jaxb:bindings>
-					
-		<!-- permitted feature key elements -->
+		
+		<!-- parameter key elements -->
 		
 		<jaxb:bindings>
 
-			<jaxb:bindings node="//xsd:complexType[@name='PermittedFeatureKeyElements']">
-				<hj:mapped-superclass />
-			</jaxb:bindings>
-
-		</jaxb:bindings>	
-		
-		<!-- basic permit key elements -->
-		
-		<jaxb:bindings>
-
-			<jaxb:bindings node="//xsd:complexType[@name='BasicPermitKeyElements']">
+			<jaxb:bindings node="//xsd:complexType[@name='ParameterKeyElements']">
 				<hj:mapped-superclass />
 			</jaxb:bindings>
 
@@ -51,25 +91,58 @@
 
 		</jaxb:bindings>
 		
-		<!-- discharge monitoring report key elements -->
+		<!-- permit schedule event key elements group -->
+		
 		<jaxb:bindings>
 
-			<jaxb:bindings node="//xsd:complexType[@name='DischargeMonitoringReportKeyElements']">
+			<jaxb:bindings node="//xsd:complexType[@name='PermitScheduleEventKeyElements']">
 				<hj:mapped-superclass />
 			</jaxb:bindings>
 
 		</jaxb:bindings>
 		
-		<!-- parameter key elements -->
+		<!-- permit schedule key elements group -->
+		
 		<jaxb:bindings>
 
-			<jaxb:bindings node="//xsd:complexType[@name='ParameterKeyElements']">
+			<jaxb:bindings node="//xsd:complexType[@name='PermitScheduleKeyElements']">
+				<hj:mapped-superclass />
+			</jaxb:bindings>
+
+		</jaxb:bindings>
+		
+		<!-- permit tracking event key elements group -->
+		
+		<jaxb:bindings>
+
+			<jaxb:bindings node="//xsd:complexType[@name='PermitTrackingEventKeyElements']">
+				<hj:mapped-superclass />
+			</jaxb:bindings>
+
+		</jaxb:bindings>
+		
+		<!-- permitted feature key elements -->
+		
+		<jaxb:bindings>
+
+			<jaxb:bindings node="//xsd:complexType[@name='PermittedFeatureKeyElements']">
+				<hj:mapped-superclass />
+			</jaxb:bindings>
+
+		</jaxb:bindings>
+		
+		<!-- single event key elements group -->
+		
+		<jaxb:bindings>
+
+			<jaxb:bindings node="//xsd:complexType[@name='SingleEventKeyElements']">
 				<hj:mapped-superclass />
 			</jaxb:bindings>
 
 		</jaxb:bindings>
 		
 		<!-- SW event report key elements group -->
+		
 		<jaxb:bindings>
 
 			<jaxb:bindings node="//xsd:element[@ref='icis:StormWaterEventID']">
@@ -78,16 +151,7 @@
 				</hj:basic>
 			</jaxb:bindings>
 
-		</jaxb:bindings>
-		
-		<!-- permit tracking event key elements group -->
-		<jaxb:bindings>
-
-			<jaxb:bindings node="//xsd:complexType[@name='PermitTrackingEventKeyElements']">
-				<hj:mapped-superclass />
-			</jaxb:bindings>
-
-		</jaxb:bindings>
+		</jaxb:bindings>		
 
 	</jaxb:bindings>
 
