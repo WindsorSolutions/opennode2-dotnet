@@ -79,6 +79,15 @@
 			</jaxb:bindings>
 
 		</jaxb:bindings>
+		
+		<!-- permit tracking event key elements group -->
+		<jaxb:bindings>
+
+			<jaxb:bindings node="//xsd:complexType[@name='PermitTrackingEventKeyElements']">
+				<hj:mapped-superclass />
+			</jaxb:bindings>
+
+		</jaxb:bindings>
 
 	</jaxb:bindings>
 
