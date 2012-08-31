@@ -128,6 +128,11 @@
 					<orm:column length="1" column-definition="char(1)" />
 				</hj:basic>
 			</hj:default-single-property>
+			<hj:default-single-property type="icis:PassFailIndicatorType">
+				<hj:basic>
+					<orm:column length="1" column-definition="char(1)" />
+				</hj:basic>
+			</hj:default-single-property>
 			<hj:default-single-property type="icis:String2FixedType">
 				<hj:basic>
 					<orm:column length="2" column-definition="char(2)" />

@@ -50,6 +50,35 @@
 			</jaxb:bindings>
 
 		</jaxb:bindings>
+		
+		<!-- discharge monitoring report key elements -->
+		<jaxb:bindings>
+
+			<jaxb:bindings node="//xsd:complexType[@name='DischargeMonitoringReportKeyElements']">
+				<hj:mapped-superclass />
+			</jaxb:bindings>
+
+		</jaxb:bindings>
+		
+		<!-- parameter key elements -->
+		<jaxb:bindings>
+
+			<jaxb:bindings node="//xsd:complexType[@name='ParameterKeyElements']">
+				<hj:mapped-superclass />
+			</jaxb:bindings>
+
+		</jaxb:bindings>
+		
+		<!-- SW event report key elements group -->
+		<jaxb:bindings>
+
+			<jaxb:bindings node="//xsd:element[@ref='icis:StormWaterEventID']">
+				<hj:basic>
+					<orm:column name="SW_EVT_ID"/>
+				</hj:basic>
+			</jaxb:bindings>
+
+		</jaxb:bindings>
 
 	</jaxb:bindings>
 
