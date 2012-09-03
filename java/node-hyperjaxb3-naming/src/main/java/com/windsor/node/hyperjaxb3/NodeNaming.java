@@ -2,7 +2,9 @@ package com.windsor.node.hyperjaxb3;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Properties;
+import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jvnet.hyperjaxb3.ejb.strategy.mapping.Mapping;
@@ -17,6 +19,12 @@ import com.sun.tools.xjc.outline.FieldOutline;
  *
  */
 public class NodeNaming extends DefaultNaming {
+
+	private static final Set<String> TABLE_SUFFIXES_TO_REMOVED = new HashSet();
+	static {
+		TABLE_SUFFIXES_TO_REMOVED.add("Data");
+		TABLE_SUFFIXES_TO_REMOVED.add("Code");
+	}
 
 	/**
 	 * Mapping of XML names to DB names.
@@ -57,6 +65,22 @@ public class NodeNaming extends DefaultNaming {
 		return StringUtils.splitByCharacterTypeCamelCase(xmlName);
 	}
 
+	/**
+	 * Called before an XML name is split into words. This allows the words to
+	 * be changed before the split occurs. Currently, the only example of this
+	 * is "StormWater", so the implementation is being left simple. If more
+	 * cases come up, a property file could be used to handle it.
+	 *
+	 * @param xmlName
+	 *            Name of the XML element
+	 * @return mapped name for the XML element
+	 */
+	protected String mapXmlName(final String xmlName) {
+		final String newString = xmlName.replaceAll("StormWater", "Stormwater");
+		logger.debug("mapXmlName(): Mapping " + xmlName + " to " + newString);
+		return newString;
+	}
+
 	@Override
 	public String getName(final String draftName) {
 		String name;
@@ -73,7 +97,7 @@ public class NodeNaming extends DefaultNaming {
 			 * equivalent and glue the words back together.
 			 */
 			final Collection<String> names = new ArrayList<String>();
-			for (final String part : splitXmlNameIntoWords(draftName)) {
+			for (final String part : splitXmlNameIntoWords(mapXmlName(draftName))) {
 				String translation = part.toUpperCase();
 				if (getXmlToDbNameMappings().containsKey(translation)) {
 					translation = getXmlToDbNameMappings().getProperty(translation);
@@ -86,9 +110,13 @@ public class NodeNaming extends DefaultNaming {
 		return name;
 	}
 
+	protected String getEntityTableName(final String baseName) {
+		return getTableNamePrefix() + baseName;
+	}
+
 	@Override
 	public String getEntityTableName(final CClass classInfo) {
-		final String entityTableName = getTableNamePrefix() + super.getEntityTableName(classInfo);
+		final String entityTableName = getEntityTableName(super.getEntityTableName(classInfo));
 		logger.debug("getEntityTableName(): Mapping " + classInfo.getType().fullName() + " to "
 				+ entityTableName);
 		return entityTableName;
@@ -96,9 +124,24 @@ public class NodeNaming extends DefaultNaming {
 
 	@Override
 	public String getTableName(final String qualifiedName) {
-		final String shortName = qualifiedName.substring(qualifiedName.lastIndexOf(".") + 1);
+		final String shortName = stripTableSuffix(qualifiedName.substring(qualifiedName
+				.lastIndexOf(".") + 1));
 		logger.debug("getTableName(): Mapping " + qualifiedName + " to " + shortName);
 		return shortName;
+	}
+
+	protected String stripTableSuffix(final String shortClassName) {
+		String newName = shortClassName;
+		final String[] parts = StringUtils.splitByCharacterTypeCamelCase(shortClassName);
+		if (parts.length > 0) {
+			final String lastPart = parts[parts.length - 1];
+			if (TABLE_SUFFIXES_TO_REMOVED.contains(lastPart)) {
+				newName = shortClassName.substring(0, shortClassName.length() - lastPart.length());
+			}
+			logger.debug("stripTableSuffix(): Removing the trailing " + lastPart
+					+ " from the short class name: " + shortClassName + " to " + newName);
+		}
+		return newName;
 	}
 
 	@Override
@@ -113,7 +156,9 @@ public class NodeNaming extends DefaultNaming {
 		 */
 		if (getDefaultPkColumnName().equalsIgnoreCase(propertyName)) {
 			// FIXME: are we ever coming in here?
-			columnName = getPkColumnNamePrefix() + getName(fieldOutline.parent().target.shortName) + getPkColumnNameSuffix();
+			columnName = getPkColumnNamePrefix()
+					+ getName(getTableName(fieldOutline.parent().target.shortName))
+					+ getPkColumnNameSuffix();
 			logger.debug("getColumn$Name(): PK mapping " + propertyName + " to " + columnName);
 		} else {
 			columnName = super.getColumn$Name(context, fieldOutline);
@@ -132,6 +177,41 @@ public class NodeNaming extends DefaultNaming {
 	@Override
 	public Naming createEmbeddedNaming(final FieldOutline fieldOutline) {
 		return this;
+	}
+
+	@Override
+	public String getJoinColumn$Name(final Mapping context, final FieldOutline fieldOutline,
+			final FieldOutline idFieldOutline) {
+		final String entityTableName = getEntityTable$Name(context, fieldOutline.parent());
+		final String columnName = getName(entityTableName) + getPkColumnNameSuffix();
+		logger.debug("getJoinColumn$Name(): Mapping join column for property "
+				+ fieldOutline.getPropertyInfo().getName(true) + " to " + columnName);
+		return columnName;
+	}
+
+	@Override
+	public String getElementCollection$CollectionTable$Name(final Mapping context,
+			final FieldOutline fieldOutline) {
+		final String name = fieldOutline.getPropertyInfo().getName(true);
+		final String columnName = getEntityTableName(getName(getTableName(name)));
+		logger.debug("getElementCollection$CollectionTable$Name(): Mapping collection table name for property "
+				+ name + " to " + columnName);
+		return columnName;
+	}
+
+	@Override
+	public String getElementCollection$CollectionTable$JoinColumn$Name(final Mapping context,
+			final FieldOutline fieldOutline, final FieldOutline idFieldOutline) {
+		return getJoinColumn$Name(context, fieldOutline, idFieldOutline);
+	}
+
+	@Override
+	public String getElementCollection$Column$Name(final Mapping context,
+			final FieldOutline fieldOutline) {
+		final String columnName = getName(fieldOutline.getPropertyInfo().getName(true));
+		logger.debug("getElementCollection$Column$Name(): Mapping element collection column for property "
+				+ fieldOutline.getPropertyInfo().getName(true) + " to " + columnName);
+		return columnName;
 	}
 
 	/**
