@@ -15,6 +15,26 @@
 
 		</jaxb:bindings>
 		
+		<!-- biosolids program report -->
+		
+		<jaxb:bindings>
+
+			<jaxb:bindings node="//xsd:complexType[@name='BiosolidsProgramReportKeyElements']">
+				<hj:mapped-superclass />
+			</jaxb:bindings>
+
+		</jaxb:bindings>
+		
+		<!-- CAFO annual report -->
+		
+		<jaxb:bindings>
+
+			<jaxb:bindings node="//xsd:complexType[@name='CAFOAnnualProgramReportKeyElements']">
+				<hj:mapped-superclass />
+			</jaxb:bindings>
+
+		</jaxb:bindings>
+		
 		<!-- compliance monitoring key elements group -->
 		
 		<jaxb:bindings>
@@ -33,13 +53,40 @@
 				<hj:mapped-superclass />
 			</jaxb:bindings>
 
-		</jaxb:bindings>
+		</jaxb:bindings>	
+				
+		<!-- compliance schedule event violation key elements -->
 		
+		<jaxb:bindings>
+
+			<!-- FIXME: the fix for this is to map "Key" to an empty string -->
+
+			<jaxb:bindings node="//xsd:complexType[@name='ComplianceScheduleEventViolationKeyElements']">
+				<hj:entity>
+					<orm:table name="ICS_CMPL_SCHD_EVT_VIOL_ELEM"/>
+				</hj:entity>
+				<hj:generated-id name="Dbid" transient="true">
+				<orm:column name="ICS_CMPL_SCHD_EVT_VIOL_ELEM_ID" />
+			</hj:generated-id>
+			</jaxb:bindings>
+
+		</jaxb:bindings>
+
 		<!-- compliance schedule key elements group -->
 		
 		<jaxb:bindings>
 
 			<jaxb:bindings node="//xsd:complexType[@name='ComplianceScheduleKeyElements']">
+				<hj:mapped-superclass />
+			</jaxb:bindings>
+
+		</jaxb:bindings>
+		
+		<!-- CSO event report -->
+		
+		<jaxb:bindings>
+
+			<jaxb:bindings node="//xsd:complexType[@name='CSOEventReportKeyElements']">
 				<hj:mapped-superclass />
 			</jaxb:bindings>
 
@@ -136,6 +183,33 @@
 		<jaxb:bindings>
 
 			<jaxb:bindings node="//xsd:complexType[@name='PermittedFeatureKeyElements']">
+				<hj:mapped-superclass />
+			</jaxb:bindings>
+
+		</jaxb:bindings>
+		
+		<!-- permit schedule event violation key elements -->
+		 
+		 <jaxb:bindings>
+
+			<!-- FIXME: the fix for this is to map "Key" to an empty string -->
+
+			<jaxb:bindings node="//xsd:complexType[@name='PermitScheduleEventViolationKeyElements']">
+				<hj:entity>
+					<orm:table name="ICS_PRMT_SCHD_EVT_VIOL_ELEM"/>
+				</hj:entity>
+				<hj:generated-id name="Dbid" transient="true">
+				<orm:column name="ICS_PRMT_SCHD_EVT_VIOL_ELEM_ID" />
+			</hj:generated-id>
+			</jaxb:bindings>
+
+		</jaxb:bindings>
+		
+		<!-- schedule event violation key elements group -->
+		
+		<jaxb:bindings>
+
+			<jaxb:bindings node="//xsd:complexType[@name='ScheduleEventViolationKeyElements']">
 				<hj:mapped-superclass />
 			</jaxb:bindings>
 

@@ -26,8 +26,8 @@
 			<xjc:javaType name="java.util.Date" xmlType="icis:DateType"
 				adapter="com.windsor.node.plugin.icisnpdes40.adapter.DateAdapter" />
 
-			<!-- integer mappings -->
-
+			<!-- integer mappings -->			
+			
 			<xjc:javaType name="java.lang.Integer" xmlType="icis:NonNegativeIntegerMin1Max2Type"
 				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
 
@@ -56,6 +56,9 @@
 				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
 
 			<xjc:javaType name="java.lang.Integer" xmlType="icis:NonNegativeIntegerSansPositiveSignMin1Max10Type"
+				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
+			
+			<xjc:javaType name="java.lang.Integer" xmlType="icis:Integer2FixedRange01To12Type"
 				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
 			
 			<xjc:javaType name="java.lang.Integer" xmlType="icis:IntegerRange1To12Type"
