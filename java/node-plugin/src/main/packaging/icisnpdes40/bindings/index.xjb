@@ -58,6 +58,9 @@
 			<xjc:javaType name="java.lang.Integer" xmlType="icis:NonNegativeIntegerSansPositiveSignMin1Max10Type"
 				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
 			
+			<xjc:javaType name="java.lang.Integer" xmlType="icis:IntegerRange1To12Type"
+				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
+
 			<xjc:javaType name="java.lang.Integer" xmlType="icis:NonNegativeIntegerMin1Max15Type"
 				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
 
@@ -104,7 +107,7 @@
 
 			<xjc:javaType name="java.lang.Double" xmlType="icis:DecimalRange0To999999999999.99Type"
 				adapter="com.windsor.node.plugin.icisnpdes40.adapter.DoubleAdapter" />
-				
+
 			<!-- string mappings -->
 
 			<!-- The reason we have to explicitly map this to a String is that it is an xsd:union in the schema 
@@ -146,7 +149,17 @@
 					<orm:column length="1" column-definition="char(1)" />
 				</hj:basic>
 			</hj:default-single-property>
+			<hj:default-single-property type="icis:PrecipitationFormType">
+				<hj:basic>
+					<orm:column length="1" column-definition="char(1)" />
+				</hj:basic>
+			</hj:default-single-property>
 			<hj:default-single-property type="icis:PretreatmentProgramRequiredIndicatorType">
+				<hj:basic>
+					<orm:column length="1" column-definition="char(1)" />
+				</hj:basic>
+			</hj:default-single-property>
+			<hj:default-single-property type="icis:SamplingBasisType">
 				<hj:basic>
 					<orm:column length="1" column-definition="char(1)" />
 				</hj:basic>

@@ -151,6 +151,46 @@
 
 		</jaxb:bindings>
 		
+		<!-- SSO annual report group -->
+		
+		<jaxb:bindings>
+
+			<jaxb:bindings node="//xsd:complexType[@name='SSOAnnualReportKeyElements']">
+				<hj:mapped-superclass />
+			</jaxb:bindings>
+
+		</jaxb:bindings>
+		
+		<!-- SSO event report group -->
+		
+		<jaxb:bindings>
+
+			<jaxb:bindings node="//xsd:complexType[@name='SSOEventReportKeyElements']">
+				<hj:mapped-superclass />
+			</jaxb:bindings>
+
+		</jaxb:bindings>
+		
+		<!-- SSO monthly event report group -->
+		
+		<jaxb:bindings>
+
+			<jaxb:bindings node="//xsd:complexType[@name='SSOMonthlyEventReportKeyElements']">
+				<hj:mapped-superclass />
+			</jaxb:bindings>
+
+		</jaxb:bindings>
+		
+		<!-- SW event report group -->
+		
+		<jaxb:bindings>
+
+			<jaxb:bindings node="//xsd:complexType[@name='SWEventReportKeyElements']">
+				<hj:mapped-superclass />
+			</jaxb:bindings>
+
+		</jaxb:bindings>
+		
 		<!-- SW event report key elements group -->
 		
 		<jaxb:bindings>
@@ -161,7 +201,17 @@
 				</hj:basic>
 			</jaxb:bindings>
 
-		</jaxb:bindings>		
+		</jaxb:bindings>
+		
+		<!-- SW MS4 program report group -->
+		
+		<jaxb:bindings>
+
+			<jaxb:bindings node="//xsd:complexType[@name='SWMS4ProgramReportKeyElements']">
+				<hj:mapped-superclass />
+			</jaxb:bindings>
+
+		</jaxb:bindings>	
 
 	</jaxb:bindings>
 
