@@ -28,6 +28,9 @@
 
 			<!-- integer mappings -->
 
+			<xjc:javaType name="java.lang.Integer" xmlType="icis:NonNegativeIntegerMin1Max2Type"
+				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
+
 			<xjc:javaType name="java.lang.Integer" xmlType="icis:NonNegativeIntegerMin1Max3Type"
 				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
 
@@ -54,6 +57,9 @@
 
 			<xjc:javaType name="java.lang.Integer" xmlType="icis:NonNegativeIntegerSansPositiveSignMin1Max10Type"
 				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
+			
+			<xjc:javaType name="java.lang.Integer" xmlType="icis:NonNegativeIntegerMin1Max15Type"
+				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
 
 			<xjc:javaType name="java.lang.Integer" xmlType="icis:Integer2FixedRange01To60Type"
 				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
@@ -74,7 +80,10 @@
 
 			<!-- <xjc:javaType name="java.lang.Double" xmlType="icis:Decimal6FloatingType" adapter="com.windsor.node.plugin.icisnpdes40.adapter.DoubleAdapter" 
 				/> -->
-				
+
+			<xjc:javaType name="java.lang.Double" xmlType="icis:NonNegativeDecimal4FloatingType"
+				adapter="com.windsor.node.plugin.icisnpdes40.adapter.DoubleAdapter" />
+
 			<xjc:javaType name="java.lang.Double" xmlType="icis:NonNegativeDecimal8FloatingType"
 				adapter="com.windsor.node.plugin.icisnpdes40.adapter.DoubleAdapter" />
 
@@ -86,18 +95,21 @@
 
 			<xjc:javaType name="java.lang.Double" xmlType="icis:DecimalRange0To999.9Type"
 				adapter="com.windsor.node.plugin.icisnpdes40.adapter.DoubleAdapter" />
-			
+
+			<xjc:javaType name="java.lang.Double" xmlType="icis:DecimalRange0To999.99Type"
+				adapter="com.windsor.node.plugin.icisnpdes40.adapter.DoubleAdapter" />
+
+			<xjc:javaType name="java.lang.Double" xmlType="icis:DecimalRange0To9999.99Type"
+				adapter="com.windsor.node.plugin.icisnpdes40.adapter.DoubleAdapter" />
+
 			<xjc:javaType name="java.lang.Double" xmlType="icis:DecimalRange0To999999999999.99Type"
 				adapter="com.windsor.node.plugin.icisnpdes40.adapter.DoubleAdapter" />
 				
 			<!-- string mappings -->
-			
-			<!--
-			The reason we have to explicitly map this to a String is that it is an xsd:union
-			in the schema and unions aren't handled too well  
-			(see http://weblogs.java.net/blog/kohsuke/archive/2006/03/handling_union.html).
-			If we don't explicitly map this, we end up with a List<String> type. 
-			 -->
+
+			<!-- The reason we have to explicitly map this to a String is that it is an xsd:union in the schema 
+				and unions aren't handled too well (see http://weblogs.java.net/blog/kohsuke/archive/2006/03/handling_union.html). 
+				If we don't explicitly map this, we end up with a List<String> type. -->
 			<xjc:javaType name="java.lang.String" xmlType="icis:Decimal8FloatingType"
 				adapter="com.windsor.node.plugin.icisnpdes40.adapter.StringAdapter" />
 
@@ -110,8 +122,26 @@
 					<orm:column length="1" column-definition="char(1)" />
 				</hj:basic>
 			</hj:default-single-property>
+			<hj:default-many-to-one>
+				<orm:join-column insertable="false" updatable="false" />
+			</hj:default-many-to-one>
+			<hj:default-element-collection>
+				<orm:collection-table>
+					<orm:join-column />
+				</orm:collection-table>
+			</hj:default-element-collection>
 
 			<hj:default-single-property type="icis:EstimatedMeasuredType">
+				<hj:basic>
+					<orm:column length="1" column-definition="char(1)" />
+				</hj:basic>
+			</hj:default-single-property>
+			<hj:default-single-property type="icis:LeadPartyType">
+				<hj:basic>
+					<orm:column length="1" column-definition="char(1)" />
+				</hj:basic>
+			</hj:default-single-property>
+			<hj:default-single-property type="icis:PassFailIndicatorType">
 				<hj:basic>
 					<orm:column length="1" column-definition="char(1)" />
 				</hj:basic>
@@ -121,17 +151,22 @@
 					<orm:column length="1" column-definition="char(1)" />
 				</hj:basic>
 			</hj:default-single-property>
+			<hj:default-single-property type="icis:StateFederalJointType">
+				<hj:basic>
+					<orm:column length="1" column-definition="char(1)" />
+				</hj:basic>
+			</hj:default-single-property>
 			<hj:default-single-property type="icis:String1FixedType">
 				<hj:basic>
 					<orm:column length="1" column-definition="char(1)" />
 				</hj:basic>
 			</hj:default-single-property>
-			<hj:default-single-property type="icis:YesNoIndicatorTypeBase">
+			<hj:default-single-property type="icis:WetDryType">
 				<hj:basic>
 					<orm:column length="1" column-definition="char(1)" />
 				</hj:basic>
 			</hj:default-single-property>
-			<hj:default-single-property type="icis:PassFailIndicatorType">
+			<hj:default-single-property type="icis:YesNoIndicatorTypeBase">
 				<hj:basic>
 					<orm:column length="1" column-definition="char(1)" />
 				</hj:basic>

@@ -14,6 +14,16 @@
 			</jaxb:bindings>
 
 		</jaxb:bindings>
+		
+		<!-- compliance monitoring key elements group -->
+		
+		<jaxb:bindings>
+
+			<jaxb:bindings node="//xsd:complexType[@name='ComplianceMonitoringKeyElements']">
+				<hj:mapped-superclass />
+			</jaxb:bindings>
+
+		</jaxb:bindings>
 
 		<!-- compliance schedule event key elements group -->
 		
