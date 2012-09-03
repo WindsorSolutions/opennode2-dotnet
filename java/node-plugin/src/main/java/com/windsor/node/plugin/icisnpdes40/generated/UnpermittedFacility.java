@@ -18,15 +18,12 @@ import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
+import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
-import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -105,9 +102,7 @@ import com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter;
     "geographicCoordinates",
     "permitCommentsText"
 })
-@Entity(name = "UnpermittedFacility")
-@Table(name = "ICS_UNPRMT_FAC")
-@Inheritance(strategy = InheritanceType.JOINED)
+@Embeddable
 public class UnpermittedFacility
     extends BasicPermitKeyElements
     implements Serializable, Equals, HashCode
@@ -185,8 +180,6 @@ public class UnpermittedFacility
     protected GeographicCoordinates geographicCoordinates;
     @XmlElement(name = "PermitCommentsText")
     protected String permitCommentsText;
-    @XmlTransient
-    protected String dbid;
 
     /**
      * Gets the value of the facilitySiteName property.
@@ -1348,31 +1341,6 @@ public class UnpermittedFacility
         return (this.permitCommentsText!= null);
     }
 
-    /**
-     *
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
-    @Id
-    @Column(name = "ICS_UNPRMT_FAC_ID")
-    public String getdbid() {
-        return dbid;
-    }
-
-    /**
-     *
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
-    public void setdbid(final String value) {
-        this.dbid = value;
-    }
 
     @Override
 	public boolean equals(final ObjectLocator thisLocator, final ObjectLocator thatLocator, final Object object, final EqualsStrategy strategy) {
