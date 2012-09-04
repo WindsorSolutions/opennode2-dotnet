@@ -1,173 +1,171 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
-	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
-	xmlns:annox="http://annox.dev.java.net" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
-	jaxb:extensionBindingPrefixes="hj orm annox">
+<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:annox="http://annox.dev.java.net"
+	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm" jaxb:extensionBindingPrefixes="hj orm annox"
+	schemaLocation="../xsd/0/ICIS_Address_v4.0e.xsd">
 
-	<jaxb:bindings schemaLocation="../xsd/0/ICIS_Address_v4.0e.xsd">
+	<!-- addresss -->
 
-		<!-- addresss -->
+	<jaxb:bindings node="//xsd:complexType[@name='Address']">
 
-		<jaxb:bindings node="//xsd:complexType[@name='Address']">
+		<hj:generated-id name="Dbid" transient="true">
+			<orm:column name="ICS_ADDR_ID" />
+		</hj:generated-id>
 
-			<hj:generated-id name="Dbid" transient="true">
-				<orm:column name="ICS_ADDR_ID" />
-			</hj:generated-id>
-
-			<jaxb:bindings
-				node="//xsd:complexType[@name='Address']//xsd:element[@ref='icis:MailingAddressStateCode']">
-				<hj:basic>
-					<orm:column column-definition="char(2)" length="2" />
-				</hj:basic>
-			</jaxb:bindings>
-
-			<jaxb:bindings
-				node="//xsd:complexType[@name='Address']//xsd:element[@ref='icis:OrganizationDUNSNumber']">
-				<hj:basic>
-					<orm:column column-definition="char(9)" length="9" />
-				</hj:basic>
-			</jaxb:bindings>
-
-			<jaxb:bindings node="//xsd:complexType[@name='Address']//xsd:element[@ref='icis:Telephone']">
-				<hj:one-to-many>
-					<orm:join-column name="ICS_ADDR_ID" />
-				</hj:one-to-many>
-				<!-- <annox:annotate> <annox:annotate annox:class="javax.persistence.JoinColumn" name="dummy" /> 
-					</annox:annotate> -->
-			</jaxb:bindings>
-
+		<jaxb:bindings
+			node="//xsd:complexType[@name='Address']//xsd:element[@ref='icis:MailingAddressStateCode']">
+			<hj:basic>
+				<orm:column column-definition="char(2)" length="2" />
+			</hj:basic>
 		</jaxb:bindings>
 
-		<!-- site owner address -->
-
-		<jaxb:bindings>
-
-			<jaxb:bindings node="//xsd:complexType[@name='SiteOwnerAddress']">
-				<hj:embeddable />
-
-				<jaxb:bindings node="//xsd:complexType[@name='SiteOwnerAddress']//xsd:element[@ref='icis:Address']">
-					<annox:annotate>
-						<annox:annotate annox:class="javax.persistence.JoinColumn" name="ICS_PRMT_FEATR_ID" />
-					</annox:annotate>
-				</jaxb:bindings>
-			</jaxb:bindings>
-
+		<jaxb:bindings
+			node="//xsd:complexType[@name='Address']//xsd:element[@ref='icis:OrganizationDUNSNumber']">
+			<hj:basic>
+				<orm:column column-definition="char(9)" length="9" />
+			</hj:basic>
 		</jaxb:bindings>
-		
-		<!-- biosolids address -->
-		
-		<jaxb:bindings>
 
-			<jaxb:bindings node="//xsd:complexType[@name='BiosolidsPermitAddress']">
-				<hj:embeddable />
-			</jaxb:bindings>
-			
-			<jaxb:bindings node="//xsd:complexType[@name='BiosolidsPermitAddress']//xsd:element[@ref='icis:Address']">
-				<annox:annotate>
-					<annox:annotate annox:class="javax.persistence.JoinColumn" name="ICS_BS_PRMT_ID" />
-				</annox:annotate>
-			</jaxb:bindings>
-
-		</jaxb:bindings>
-		
-		<!-- CAFO address -->
-		
-		<jaxb:bindings>
-
-			<jaxb:bindings node="//xsd:complexType[@name='CAFOAddress']">
-				<hj:embeddable />
-			</jaxb:bindings>
-			
-			<jaxb:bindings node="//xsd:complexType[@name='CAFOAddress']//xsd:element[@ref='icis:Address']">
-				<annox:annotate>
-					<annox:annotate annox:class="javax.persistence.JoinColumn" name="ICS_CAFO_PRMT_ID" />
-				</annox:annotate>
-			</jaxb:bindings>
-
-		</jaxb:bindings>
-		
-		<!-- facility address -->
-		
-		<jaxb:bindings>
-
-			<jaxb:bindings node="//xsd:complexType[@name='FacilityAddress']">
-				<hj:embeddable />
-			</jaxb:bindings>
-			
-			<jaxb:bindings node="//xsd:complexType[@name='FacilityAddress']//xsd:element[@ref='icis:Address']">
-				<annox:annotate>
-					<annox:annotate annox:class="javax.persistence.JoinColumn" name="ICS_FAC_ID" />
-				</annox:annotate>
-			</jaxb:bindings>
-
-		</jaxb:bindings>
-		
-		<!-- permit address -->
-		
-		<jaxb:bindings>
-
-			<jaxb:bindings node="//xsd:complexType[@name='PermitAddress']">
-				<hj:embeddable />
-			</jaxb:bindings>
-			
-			<jaxb:bindings node="//xsd:complexType[@name='PermitAddress']//xsd:element[@ref='icis:Address']">
-				<annox:annotate>
-					<annox:annotate annox:class="javax.persistence.JoinColumn" name="ICS_GNRL_PRMT_ID" />
-				</annox:annotate>
-			</jaxb:bindings>
-
-		</jaxb:bindings>
-		
-		<!-- pretreatment address -->
-		
-		<jaxb:bindings>
-
-			<jaxb:bindings node="//xsd:complexType[@name='PretreatmentAddress']">
-				<hj:embeddable />
-			</jaxb:bindings>
-			
-			<jaxb:bindings node="//xsd:complexType[@name='PretreatmentAddress']//xsd:element[@ref='icis:Address']">
-				<annox:annotate>
-					<annox:annotate annox:class="javax.persistence.JoinColumn" name="ICS_PRETR_PRMT_ID" />
-				</annox:annotate>
-			</jaxb:bindings>
-
-		</jaxb:bindings>
-		
-		<!-- storm water address -->
-		<!-- FIXME: this needs to be overridden by each of the sub-classes -->
-		
-		<jaxb:bindings>
-
-			<jaxb:bindings node="//xsd:complexType[@name='StormWaterAddress']">
-				<hj:embeddable />
-			</jaxb:bindings>
-			
-			<jaxb:bindings node="//xsd:complexType[@name='StormWaterAddress']//xsd:element[@ref='icis:Address']">
-				<annox:annotate>
-					<annox:annotate annox:class="javax.persistence.JoinColumn" name="dummy" />
-				</annox:annotate>
-			</jaxb:bindings>
-
-		</jaxb:bindings>
-		
-		<!-- facility location address group -->
-		
-		<jaxb:bindings>
-			
-			<jaxb:bindings node="//xsd:element[@ref='icis:LocationStateCode']">
-				<hj:basic>
-					<orm:column length="2" column-definition="char(2)"/>
-				</hj:basic>
-			</jaxb:bindings>
-			
-			<jaxb:bindings node="//xsd:group[@name='FacilityLocationAddressGroup']//xsd:element[@ref='icis:OrganizationDUNSNumber']">
-				<hj:basic>
-					<orm:column length="9" column-definition="char(9)"/>
-				</hj:basic>
-			</jaxb:bindings>
-
+		<jaxb:bindings node="//xsd:complexType[@name='Address']//xsd:element[@ref='icis:Telephone']">
+			<hj:one-to-many>
+				<orm:join-column name="ICS_ADDR_ID" />
+			</hj:one-to-many>
+			<!-- <annox:annotate> <annox:annotate annox:class="javax.persistence.JoinColumn" name="dummy" /> </annox:annotate> -->
 		</jaxb:bindings>
 
 	</jaxb:bindings>
+
+	<!-- site owner address -->
+
+	<jaxb:bindings>
+
+		<jaxb:bindings node="//xsd:complexType[@name='SiteOwnerAddress']">
+			<hj:embeddable />
+
+			<jaxb:bindings node="//xsd:complexType[@name='SiteOwnerAddress']//xsd:element[@ref='icis:Address']">
+				<annox:annotate>
+					<annox:annotate annox:class="javax.persistence.JoinColumn" name="ICS_PRMT_FEATR_ID" />
+				</annox:annotate>
+			</jaxb:bindings>
+		</jaxb:bindings>
+
+	</jaxb:bindings>
+
+	<!-- biosolids address -->
+
+	<jaxb:bindings>
+
+		<jaxb:bindings node="//xsd:complexType[@name='BiosolidsPermitAddress']">
+			<hj:embeddable />
+		</jaxb:bindings>
+
+		<jaxb:bindings
+			node="//xsd:complexType[@name='BiosolidsPermitAddress']//xsd:element[@ref='icis:Address']">
+			<annox:annotate>
+				<annox:annotate annox:class="javax.persistence.JoinColumn" name="ICS_BS_PRMT_ID" />
+			</annox:annotate>
+		</jaxb:bindings>
+
+	</jaxb:bindings>
+
+	<!-- CAFO address -->
+
+	<jaxb:bindings>
+
+		<jaxb:bindings node="//xsd:complexType[@name='CAFOAddress']">
+			<hj:embeddable />
+		</jaxb:bindings>
+
+		<jaxb:bindings node="//xsd:complexType[@name='CAFOAddress']//xsd:element[@ref='icis:Address']">
+			<annox:annotate>
+				<annox:annotate annox:class="javax.persistence.JoinColumn" name="ICS_CAFO_PRMT_ID" />
+			</annox:annotate>
+		</jaxb:bindings>
+
+	</jaxb:bindings>
+
+	<!-- facility address -->
+
+	<jaxb:bindings>
+
+		<jaxb:bindings node="//xsd:complexType[@name='FacilityAddress']">
+			<hj:embeddable />
+		</jaxb:bindings>
+
+		<jaxb:bindings node="//xsd:complexType[@name='FacilityAddress']//xsd:element[@ref='icis:Address']">
+			<annox:annotate>
+				<annox:annotate annox:class="javax.persistence.JoinColumn" name="ICS_FAC_ID" />
+			</annox:annotate>
+		</jaxb:bindings>
+
+	</jaxb:bindings>
+
+	<!-- permit address -->
+
+	<jaxb:bindings>
+
+		<jaxb:bindings node="//xsd:complexType[@name='PermitAddress']">
+			<hj:embeddable />
+		</jaxb:bindings>
+
+		<jaxb:bindings node="//xsd:complexType[@name='PermitAddress']//xsd:element[@ref='icis:Address']">
+			<annox:annotate>
+				<annox:annotate annox:class="javax.persistence.JoinColumn" name="ICS_GNRL_PRMT_ID" />
+			</annox:annotate>
+		</jaxb:bindings>
+
+	</jaxb:bindings>
+
+	<!-- pretreatment address -->
+
+	<jaxb:bindings>
+
+		<jaxb:bindings node="//xsd:complexType[@name='PretreatmentAddress']">
+			<hj:embeddable />
+		</jaxb:bindings>
+
+		<jaxb:bindings node="//xsd:complexType[@name='PretreatmentAddress']//xsd:element[@ref='icis:Address']">
+			<annox:annotate>
+				<annox:annotate annox:class="javax.persistence.JoinColumn" name="ICS_PRETR_PRMT_ID" />
+			</annox:annotate>
+		</jaxb:bindings>
+
+	</jaxb:bindings>
+
+	<!-- storm water address -->
+	<!-- FIXME: this needs to be overridden by each of the sub-classes -->
+
+	<jaxb:bindings>
+
+		<jaxb:bindings node="//xsd:complexType[@name='StormWaterAddress']">
+			<hj:embeddable />
+		</jaxb:bindings>
+
+		<jaxb:bindings node="//xsd:complexType[@name='StormWaterAddress']//xsd:element[@ref='icis:Address']">
+			<annox:annotate>
+				<annox:annotate annox:class="javax.persistence.JoinColumn" name="dummy" />
+			</annox:annotate>
+		</jaxb:bindings>
+
+	</jaxb:bindings>
+
+	<!-- facility location address group -->
+
+	<jaxb:bindings>
+
+		<jaxb:bindings node="//xsd:element[@ref='icis:LocationStateCode']">
+			<hj:basic>
+				<orm:column length="2" column-definition="char(2)" />
+			</hj:basic>
+		</jaxb:bindings>
+
+		<jaxb:bindings
+			node="//xsd:group[@name='FacilityLocationAddressGroup']//xsd:element[@ref='icis:OrganizationDUNSNumber']">
+			<hj:basic>
+				<orm:column length="9" column-definition="char(9)" />
+			</hj:basic>
+		</jaxb:bindings>
+
+	</jaxb:bindings>
+
 </jaxb:bindings>

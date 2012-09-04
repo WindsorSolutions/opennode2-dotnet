@@ -1,123 +1,117 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
-	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
-	xmlns:annox="http://annox.dev.java.net" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
-	jaxb:extensionBindingPrefixes="hj orm annox">
+<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	jaxb:extensionBindingPrefixes="hj orm" schemaLocation="../xsd/0/ICIS_PermittedFeature_v4.0e.xsd">
 
-	<jaxb:bindings schemaLocation="../xsd/0/ICIS_PermittedFeature_v4.0e.xsd">
+	<!-- permitted feature data -->
 
-		<!-- permitted feature data -->
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='PermittedFeatureData']">
 
-		<jaxb:bindings>
-			<jaxb:bindings node="//xsd:complexType[@name='PermittedFeatureData']">
+			<hj:entity>
+				<orm:table name="ICS_PRMT_FEATR" />
+			</hj:entity>
 
-				<hj:entity>
-					<orm:table name="ICS_PRMT_FEATR" />
-				</hj:entity>
+			<hj:generated-id name="Dbid" transient="true">
+				<orm:column name="ICS_PRMT_FEATR_ID" />
+			</hj:generated-id>
 
-				<hj:generated-id name="Dbid" transient="true">
-					<orm:column name="ICS_PRMT_FEATR_ID" />
-				</hj:generated-id>
+		</jaxb:bindings>
+	</jaxb:bindings>
 
-			</jaxb:bindings>
+	<jaxb:bindings node="//xsd:element[@ref='icis:PermittedFeature']">
+		<hj:embedded>
+			<orm:association-override name="permittedFeatureCharacteristics">
+				<orm:join-column name="ICS_PRMT_FEATR_ID" />
+			</orm:association-override>
+			<orm:association-override name="siteOwnerAddress">
+				<orm:join-column name="ICS_PRMT_FEATR_ID" />
+			</orm:association-override>
+		</hj:embedded>
+	</jaxb:bindings>
+
+	<!-- permitted feature -->
+
+	<jaxb:bindings>
+
+		<jaxb:bindings node="//xsd:complexType[@name='PermittedFeature']">
+			<hj:embeddable />
 		</jaxb:bindings>
 
-		<jaxb:bindings node="//xsd:element[@ref='icis:PermittedFeature']">
-			<hj:embedded>
-				<orm:association-override name="permittedFeatureCharacteristics">
+		<jaxb:bindings node="//xsd:element[@ref='icis:PermittedFeatureCharacteristics']">
+
+			<hj:element-collection>
+				<orm:column name="PRMT_FEATR_CHAR" />
+				<orm:order-column name="DATA_HASH" />
+
+				<orm:collection-table name="ICS_PRMT_FEATR_CHAR">
 					<orm:join-column name="ICS_PRMT_FEATR_ID" />
-				</orm:association-override>
-				<orm:association-override name="siteOwnerAddress">
-					<orm:join-column name="ICS_PRMT_FEATR_ID" />
-				</orm:association-override>
-			</hj:embedded>
+				</orm:collection-table>
+
+			</hj:element-collection>
+
 		</jaxb:bindings>
 
-		<!-- permitted feature -->
+		<jaxb:bindings node="//xsd:element[@ref='icis:PermittedFeatureTreatmentTypeCode']">
 
-		<jaxb:bindings>
+			<hj:element-collection>
+				<orm:column name="PRMT_FEATR_TRTMNT_TYPE_CODE" />
+				<orm:order-column name="DATA_HASH" />
 
-			<jaxb:bindings node="//xsd:complexType[@name='PermittedFeature']">
-				<hj:embeddable />
-			</jaxb:bindings>
+				<orm:collection-table name="ICS_PRMT_FEATR_TRTMNT_TYPE">
+					<orm:join-column name="ICS_PRMT_FEATR_ID" />
+				</orm:collection-table>
 
-			<jaxb:bindings node="//xsd:element[@ref='icis:PermittedFeatureCharacteristics']">
+			</hj:element-collection>
 
-				<hj:element-collection>
-					<orm:column name="PRMT_FEATR_CHAR" />
-					<orm:order-column name="DATA_HASH" />
+		</jaxb:bindings>
 
-					<orm:collection-table name="ICS_PRMT_FEATR_CHAR">
-						<orm:join-column name="ICS_PRMT_FEATR_ID" />
-					</orm:collection-table>
+		<jaxb:bindings node="//xsd:element[@ref='icis:DoesUnitHaveDailyCover']">
 
-				</hj:element-collection>
+			<hj:basic>
+				<orm:column length="1" column-definition="char(1)" />
+			</hj:basic>
 
-			</jaxb:bindings>
+		</jaxb:bindings>
 
-			<jaxb:bindings node="//xsd:element[@ref='icis:PermittedFeatureTreatmentTypeCode']">
+		<jaxb:bindings node="//xsd:element[@ref='icis:IsRequiredNitrateGroundWater']">
 
-				<hj:element-collection>
-					<orm:column name="PRMT_FEATR_TRTMNT_TYPE_CODE" />
-					<orm:order-column name="DATA_HASH" />
+			<hj:basic>
+				<orm:column length="1" column-definition="char(1)" />
+			</hj:basic>
 
-					<orm:collection-table name="ICS_PRMT_FEATR_TRTMNT_TYPE">
-						<orm:join-column name="ICS_PRMT_FEATR_ID" />
-					</orm:collection-table>
+		</jaxb:bindings>
 
-				</hj:element-collection>
+		<jaxb:bindings node="//xsd:element[@ref='icis:IsSiteOwnByFacility']">
 
-			</jaxb:bindings>
+			<hj:basic>
+				<orm:column length="1" column-definition="char(1)" />
+			</hj:basic>
 
-			<jaxb:bindings node="//xsd:element[@ref='icis:DoesUnitHaveDailyCover']">
+		</jaxb:bindings>
 
-				<hj:basic>
-					<orm:column length="1" column-definition="char(1)" />
-				</hj:basic>
+		<jaxb:bindings node="//xsd:element[@ref='icis:IsSystemLinedWithLeachate']">
 
-			</jaxb:bindings>
+			<hj:basic>
+				<orm:column length="1" column-definition="char(1)" />
+			</hj:basic>
 
-			<jaxb:bindings node="//xsd:element[@ref='icis:IsRequiredNitrateGroundWater']">
+		</jaxb:bindings>
 
-				<hj:basic>
-					<orm:column length="1" column-definition="char(1)" />
-				</hj:basic>
+		<jaxb:bindings node="//xsd:element[@ref='icis:PermittedFeatureActualAverageFlowNumber']">
 
-			</jaxb:bindings>
+			<hj:basic>
+				<orm:column name="PRMT_FEATR_ACTUL_AVER_FLOW_NUM" />
+			</hj:basic>
 
-			<jaxb:bindings node="//xsd:element[@ref='icis:IsSiteOwnByFacility']">
+		</jaxb:bindings>
 
-				<hj:basic>
-					<orm:column length="1" column-definition="char(1)" />
-				</hj:basic>
+		<jaxb:bindings node="//xsd:element[@ref='icis:GeographicCoordinates']">
 
-			</jaxb:bindings>
-
-			<jaxb:bindings node="//xsd:element[@ref='icis:IsSystemLinedWithLeachate']">
-
-				<hj:basic>
-					<orm:column length="1" column-definition="char(1)" />
-				</hj:basic>
-
-			</jaxb:bindings>
-
-			<jaxb:bindings node="//xsd:element[@ref='icis:PermittedFeatureActualAverageFlowNumber']">
-
-				<hj:basic>
-					<orm:column name="PRMT_FEATR_ACTUL_AVER_FLOW_NUM" />
-				</hj:basic>
-
-			</jaxb:bindings>
-
-			<jaxb:bindings node="//xsd:element[@ref='icis:GeographicCoordinates']">
-
-				<hj:many-to-one>
-					<orm:join-column referenced-column-name="ICS_PRMT_FEATR_ID" name="ICS_PRMT_FEATR_ID" insertable="false" updatable="false"/>
-				</hj:many-to-one>
-
-			</jaxb:bindings>
-
-
+			<hj:many-to-one>
+				<orm:join-column referenced-column-name="ICS_PRMT_FEATR_ID" name="ICS_PRMT_FEATR_ID"
+					insertable="false" updatable="false" />
+			</hj:many-to-one>
 
 		</jaxb:bindings>
 
