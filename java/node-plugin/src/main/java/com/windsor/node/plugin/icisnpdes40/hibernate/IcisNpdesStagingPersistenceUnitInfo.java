@@ -79,17 +79,26 @@ public class IcisNpdesStagingPersistenceUnitInfo implements PersistenceUnitInfo 
 	public List<String> getManagedClassNames() {
 		List<String> classes = new ArrayList<String>();
 		
-		// Limit Set
+		/**
+		 * Limit Set
+		 */
 		classes.add("com.windsor.node.plugin.icisnpdes40.generated.LimitSetData");
 		classes.add("com.windsor.node.plugin.icisnpdes40.generated.LimitSetSchedule");
 		classes.add("com.windsor.node.plugin.icisnpdes40.generated.LimitSetStatus");
 		
-		// Permitted Feature
+		/**
+		 * Permitted Feature
+		 */
 		classes.add("com.windsor.node.plugin.icisnpdes40.generated.PermittedFeatureData");
 		classes.add("com.windsor.node.plugin.icisnpdes40.generated.GeographicCoordinates");
 		classes.add("com.windsor.node.plugin.icisnpdes40.generated.Contact");
 		classes.add("com.windsor.node.plugin.icisnpdes40.generated.Telephone");
 		classes.add("com.windsor.node.plugin.icisnpdes40.generated.Address");
+		
+		/**
+		 * ???
+		 */
+		
 		
 		return classes;
 	}

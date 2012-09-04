@@ -57,8 +57,7 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
         setTransactionDao((TransactionDao)getServiceFactory().makeService(JdbcTransactionDao.class));
         setPartnerDao((PartnerDao)getServiceFactory().makeService(JdbcPartnerDao.class));
 
-        getIcisStatusAndProcessingDao().setIcisWorkflowDao(new JdbcIcisWorkflowDao());
-        getIcisStatusAndProcessingDao().getIcisWorkflowDao().setDataSource(dataSource);
+        getIcisStatusAndProcessingDao().setIcisWorkflowDao(new JdbcIcisWorkflowDao(dataSource));
     }
 
     @Override

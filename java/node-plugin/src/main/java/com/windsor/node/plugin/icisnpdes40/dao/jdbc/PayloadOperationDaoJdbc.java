@@ -1,4 +1,4 @@
-package com.windsor.node.plugin.icisnpdes40.dao;
+package com.windsor.node.plugin.icisnpdes40.dao.jdbc;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -6,16 +6,17 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
+import com.windsor.node.plugin.icisnpdes40.dao.PayloadOperationDao;
 import com.windsor.node.plugin.icisnpdes40.domain.PayloadOperation;
 
 /**
  * A JDBC implementation of the {@link PayloadOperationDao}.
  * 
  */
-public class PayloadOperationDaoJdbc implements PayloadOperationDao {
+public class PayloadOperationDaoJdbc extends JdbcDaoSupport implements PayloadOperationDao {
 
     /**
      * A complete SQL statement to find all ICS_PAYLOAD that are enabled to be
@@ -32,13 +33,7 @@ public class PayloadOperationDaoJdbc implements PayloadOperationDao {
      * The ICS_PAYLOAD operation column name.
      */
     private static final String SQL_COL_OPERATION = "operation";
-    
-    
-    /**
-     * The datasource where the ICS_PAYLOAD table is located.
-     */
-    private DataSource dataSource;
-    
+
     /**
      * Default constructor.
      * 
@@ -46,7 +41,7 @@ public class PayloadOperationDaoJdbc implements PayloadOperationDao {
      *            where the ICS_PAYLOAD table is located.
      */
     public PayloadOperationDaoJdbc(DataSource dataSource) {
-        this.dataSource = dataSource;
+        setDataSource(dataSource);
     }
     
     /**
@@ -56,9 +51,7 @@ public class PayloadOperationDaoJdbc implements PayloadOperationDao {
     @Override
     public List<PayloadOperation> findPayloadsToSubmit() {
         
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(getDataSource());
-        
-        return jdbcTemplate.query(SQL_SELECT_FILTER_BY_ENABLED_YES, new RowMapper() {
+        return getJdbcTemplate().query(SQL_SELECT_FILTER_BY_ENABLED_YES, new RowMapper() {
             
             @Override
             public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -69,9 +62,5 @@ public class PayloadOperationDaoJdbc implements PayloadOperationDao {
                             Boolean.TRUE);
             }
         });
-    }
-
-    private DataSource getDataSource() {
-        return this.dataSource;
     }
 }

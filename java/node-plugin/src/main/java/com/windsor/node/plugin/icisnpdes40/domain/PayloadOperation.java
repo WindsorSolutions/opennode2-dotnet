@@ -2,7 +2,7 @@ package com.windsor.node.plugin.icisnpdes40.domain;
 
 import java.io.Serializable;
 import com.windsor.node.plugin.icisnpdes40.dao.PayloadOperationDao;
-import com.windsor.node.plugin.icisnpdes40.dao.PayloadOperationDaoJdbc;
+import com.windsor.node.plugin.icisnpdes40.dao.jdbc.PayloadOperationDaoJdbc;
 import com.windsor.node.plugin.icisnpdes40.generated.OperationType;
 
 /**

@@ -10,7 +10,7 @@ import java.util.Map;
 import javax.persistence.EntityManager;
 
 import com.windsor.node.plugin.icisnpdes40.dao.PayloadOperationDao;
-import com.windsor.node.plugin.icisnpdes40.dao.PayloadOperationDaoJdbc;
+import com.windsor.node.plugin.icisnpdes40.dao.jdbc.PayloadOperationDaoJdbc;
 import com.windsor.node.plugin.icisnpdes40.domain.PayloadOperation;
 import com.windsor.node.plugin.icisnpdes40.generated.LimitSetData;
 import com.windsor.node.plugin.icisnpdes40.generated.ObjectFactory;
@@ -100,8 +100,6 @@ public class PerformICISSubmission extends AbstractIcisNpdesSubmission {
                     } catch (Exception e1) {
                         e1.printStackTrace();
                     }
-                    
-                    /////
                     
                     String methodName = "set" + klassName;
                     
