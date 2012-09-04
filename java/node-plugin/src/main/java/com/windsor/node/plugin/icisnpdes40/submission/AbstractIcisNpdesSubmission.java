@@ -1,6 +1,7 @@
 package com.windsor.node.plugin.icisnpdes40.submission;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -51,6 +52,8 @@ import com.windsor.node.plugin.icisnpdes40.generated.HeaderData;
 import com.windsor.node.plugin.icisnpdes40.generated.ObjectFactory;
 import com.windsor.node.plugin.icisnpdes40.generated.PayloadData;
 import com.windsor.node.plugin.icisnpdes40.hibernate.IcisNpdesStagingPersistenceUnitInfo;
+import com.windsor.node.plugin.icisnpdes40.xml.validate.XmlValidator;
+import com.windsor.node.plugin.icisnpdes40.xml.validate.jaxb.JaxbXmlValidator;
 import com.windsor.node.service.helper.CompressionService;
 import com.windsor.node.service.helper.IdGenerator;
 import com.windsor.node.service.helper.client.NodeClientFactory;
@@ -172,15 +175,14 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
     public abstract List<PayloadData> createAllPayloads(EntityManager em);
 
     /**
-     * TODO - Implement me.
+     * Generates a node document.
      * 
      * Returns null if there is no data to send.
      * 
-     * @return The payload
-     *         {@link Document}.
+     * @return The payload {@link Document}.
      * @throws XmlGenerationException
      */
-    private Document generateNodeDocument(NodeTransaction nodeTransaction) throws XmlGenerationException, EmptyIcisStagingLocalDatabaseResultsException {
+    private Document generateNodeDocument(NodeTransaction nodeTransaction, String docId, String tempFilePath) throws XmlGenerationException, EmptyIcisStagingLocalDatabaseResultsException {
         
         /**
          * Attempt to find data from staging tables...
@@ -199,8 +201,6 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
          */
         ObjectFactory objectFactory = new ObjectFactory();
 
-        String docId = getIdGenerator().createId();
-
         /**
          * Create ICIS XML document
          */
@@ -209,11 +209,6 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
         document.setHeader(makeHeaderData(objectFactory));
 
         document.setPayload(payloads);
-
-        /**
-         * OpenNode2 Document creation
-         */
-        String tempFilePath = makeTemporaryFilename(docId);
 
         /**
          * TODO Consider pushing OpenNode2 Document creation and writing up one
@@ -232,6 +227,7 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
                             com.windsor.node.plugin.icisnpdes40.generated.Document.class, null, document), tempFilePath);
 
             Document doc = makeDocument(nodeTransaction, docId, tempFilePath);
+            
             nodeTransaction.getDocuments().add(doc);
             
             return doc;
@@ -240,21 +236,42 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
             throw new XmlGenerationException("Error while creating document: " + tempFilePath, e);
         }
     }
-   
+
     /**
-     * TODO - Implement me
+     * Is the generated ICIS XML valid?
      * 
-     * @return
+     * @return Is the generated ICIS XML valid?
      */
-    private boolean isXmlPayloadDocumentNotValid() {
-        return Boolean.FALSE;
+    private boolean isXmlPayloadDocumentNotValid(String xmlDocFilePath) throws Exception {
+        
+        String schemaFilePath = getXsdFilePath();
+        
+        XmlValidator validator = new JaxbXmlValidator(schemaFilePath);
+
+        return validator.validate(new FileInputStream(xmlDocFilePath)).hasErrors();
     }
-    
+
     /**
-     * TODO - Implement Me
+     * Returns the absolute file path to the ICIS XSD, which is bundled with the
+     * plugin.
      * 
-     * @return
+     * @return The abolute file path to the ICIS XSD.
+     */
+    private String getXsdFilePath() {
+        
+        String xsd = FilenameUtils.concat(getPluginSourceDir().getAbsolutePath(), "xsd/index.xsd");
+        
+        debug("XSD file path: " + xsd);
+        
+        return xsd;
+    }
+
+    /**
+     * Builds a Node client and submits the transaction.
+     * 
+     * @return The resulting node transaction id.
      * @throws CDXSubmissionException
+     *             When submission fails for any reason
      */
     private String submitToCdx(String partnerName, NodeTransaction nodeTransaction, ProcessContentResult result) throws CDXSubmissionException, PartnerIdentityNotFoundException {
         
@@ -354,16 +371,22 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
                 
                 return completed(result, String.format("Pending workflow %s exists waiting for processing/download. Exiting.", workflow.getId()));
             }
-                        
+
+            /**
+             * Create temporary file to generate XML file.
+             */
+            String docId = getIdGenerator().createId();
+            
+            String icisXmlDocumentFilePath = makeTemporaryFilename(docId);
+            
             /**
              * Generate and validate XML
              */
             try {
                 
-                debug(result, "Attempting to generate Node document.");
+                debug(result, "Attempting to generate document.");
                 
-                
-                Document doc = generateNodeDocument(transaction);
+                Document doc = generateNodeDocument(transaction, docId, icisXmlDocumentFilePath);
                 
                 result.getDocuments().add(doc);
 
@@ -394,14 +417,13 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
                 
                 /**
                  * TODO More error checking?
-                 */
-                
+                 */                
                 error(xml);
             }
             
             debug("Starting XML validation.");
             
-            if (isXmlPayloadDocumentNotValid()) {
+            if (isXmlPayloadDocumentNotValid(icisXmlDocumentFilePath)) {
                 
                 String msg = "XML did not pass schema validation. Exiting";
                 

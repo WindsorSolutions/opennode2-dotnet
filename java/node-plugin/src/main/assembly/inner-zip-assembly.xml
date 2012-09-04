@@ -15,7 +15,7 @@
         </fileSet>
         <fileSet>
             <directory>src/main/packaging/${plugin.name}/xsd</directory>
-            <outputDirectory>./</outputDirectory>
+            <outputDirectory>./xsd/</outputDirectory>
             <includes>
                 <include>**</include>
             </includes>
