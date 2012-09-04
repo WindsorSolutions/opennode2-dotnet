@@ -13,6 +13,13 @@
                 <include>**.vm</include>
             </includes>
         </fileSet>
+        <fileSet>
+            <directory>src/main/packaging/${plugin.name}/xsd</directory>
+            <outputDirectory>./</outputDirectory>
+            <includes>
+                <include>**</include>
+            </includes>
+        </fileSet>
     </fileSets>
     <files>
         <file>
