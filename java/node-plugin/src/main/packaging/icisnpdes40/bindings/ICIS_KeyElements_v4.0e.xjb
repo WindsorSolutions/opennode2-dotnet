@@ -6,7 +6,7 @@
 	<jaxb:bindings schemaLocation="../xsd/0/ICIS_KeyElements_v4.0e.xsd">
 
 		<!-- basic permit key elements -->
-		
+
 		<jaxb:bindings>
 
 			<jaxb:bindings node="//xsd:complexType[@name='BasicPermitKeyElements']">
@@ -14,9 +14,9 @@
 			</jaxb:bindings>
 
 		</jaxb:bindings>
-		
+
 		<!-- biosolids program report -->
-		
+
 		<jaxb:bindings>
 
 			<jaxb:bindings node="//xsd:complexType[@name='BiosolidsProgramReportKeyElements']">
@@ -24,9 +24,9 @@
 			</jaxb:bindings>
 
 		</jaxb:bindings>
-		
+
 		<!-- CAFO annual report -->
-		
+
 		<jaxb:bindings>
 
 			<jaxb:bindings node="//xsd:complexType[@name='CAFOAnnualProgramReportKeyElements']">
@@ -34,9 +34,9 @@
 			</jaxb:bindings>
 
 		</jaxb:bindings>
-		
+
 		<!-- compliance monitoring key elements group -->
-		
+
 		<jaxb:bindings>
 
 			<jaxb:bindings node="//xsd:complexType[@name='ComplianceMonitoringKeyElements']">
@@ -46,34 +46,34 @@
 		</jaxb:bindings>
 
 		<!-- compliance schedule event key elements group -->
-		
+
 		<jaxb:bindings>
 
 			<jaxb:bindings node="//xsd:complexType[@name='ComplianceScheduleEventKeyElements']">
 				<hj:mapped-superclass />
 			</jaxb:bindings>
 
-		</jaxb:bindings>	
-				
+		</jaxb:bindings>
+
 		<!-- compliance schedule event violation key elements -->
-		
+
 		<jaxb:bindings>
 
 			<!-- FIXME: the fix for this is to map "Key" to an empty string -->
 
 			<jaxb:bindings node="//xsd:complexType[@name='ComplianceScheduleEventViolationKeyElements']">
 				<hj:entity>
-					<orm:table name="ICS_CMPL_SCHD_EVT_VIOL_ELEM"/>
+					<orm:table name="ICS_CMPL_SCHD_EVT_VIOL_ELEM" />
 				</hj:entity>
 				<hj:generated-id name="Dbid" transient="true">
-				<orm:column name="ICS_CMPL_SCHD_EVT_VIOL_ELEM_ID" />
-			</hj:generated-id>
+					<orm:column name="ICS_CMPL_SCHD_EVT_VIOL_ELEM_ID" />
+				</hj:generated-id>
 			</jaxb:bindings>
 
 		</jaxb:bindings>
 
 		<!-- compliance schedule key elements group -->
-		
+
 		<jaxb:bindings>
 
 			<jaxb:bindings node="//xsd:complexType[@name='ComplianceScheduleKeyElements']">
@@ -81,9 +81,9 @@
 			</jaxb:bindings>
 
 		</jaxb:bindings>
-		
+
 		<!-- CSO event report -->
-		
+
 		<jaxb:bindings>
 
 			<jaxb:bindings node="//xsd:complexType[@name='CSOEventReportKeyElements']">
@@ -91,9 +91,9 @@
 			</jaxb:bindings>
 
 		</jaxb:bindings>
-		
+
 		<!-- discharge monitoring report key elements -->
-		
+
 		<jaxb:bindings>
 
 			<jaxb:bindings node="//xsd:complexType[@name='DischargeMonitoringReportKeyElements']">
@@ -101,9 +101,9 @@
 			</jaxb:bindings>
 
 		</jaxb:bindings>
-		
+
 		<!-- DMR violation key elements -->
-		
+
 		<jaxb:bindings>
 
 			<jaxb:bindings node="//xsd:complexType[@name='DMRViolationKeyElements']">
@@ -111,9 +111,9 @@
 			</jaxb:bindings>
 
 		</jaxb:bindings>
-		
+
 		<!-- effluent trade partner key elements -->
-		
+
 		<jaxb:bindings>
 
 			<jaxb:bindings node="//xsd:complexType[@name='EffluentTradePartnerKeyElements']">
@@ -121,9 +121,9 @@
 			</jaxb:bindings>
 
 		</jaxb:bindings>
-		
+
 		<!-- enforcement action key elements group -->
-		
+
 		<jaxb:bindings>
 
 			<jaxb:bindings node="//xsd:complexType[@name='EnforcementActionKeyElements']">
@@ -131,7 +131,7 @@
 			</jaxb:bindings>
 
 		</jaxb:bindings>
-		
+
 		<!-- enforcement action milestone key elements -->
 
 		<jaxb:bindings>
@@ -141,7 +141,7 @@
 			</jaxb:bindings>
 
 		</jaxb:bindings>
-		
+
 		<!-- federal compliance monitoring key elements -->
 
 		<jaxb:bindings>
@@ -152,24 +152,55 @@
 
 		</jaxb:bindings>
 
+		<!-- historical permit schedule key elements -->
+
+		<jaxb:bindings>
+
+			<jaxb:bindings node="//xsd:complexType[@name='HistoricalPermitScheduleKeyElements']">
+				<hj:mapped-superclass />
+			</jaxb:bindings>
+
+		</jaxb:bindings>
+
+		<!-- limit key elements -->
+
+		<jaxb:bindings>
+
+			<jaxb:bindings node="//xsd:complexType[@name='LimitKeyElements']">
+				<hj:mapped-superclass />
+			</jaxb:bindings>
+
+		</jaxb:bindings>
+
 		<!-- limit set key elements -->
 
 		<jaxb:bindings>
-		
+
 			<jaxb:bindings node="//xsd:complexType[@name='LimitSetKeyElements']">
 				<hj:mapped-superclass />
 			</jaxb:bindings>
 
-			<jaxb:bindings node="//xsd:group[@name='BasicPermitKeyElementsGroup']//xsd:element[@ref='icis:PermitIdentifier']">
+			<jaxb:bindings
+				node="//xsd:group[@name='BasicPermitKeyElementsGroup']//xsd:element[@ref='icis:PermitIdentifier']">
 				<hj:basic>
 					<orm:column column-definition="char(9)" length="9" />
 				</hj:basic>
 			</jaxb:bindings>
-			
+
 		</jaxb:bindings>
-		
+
+		<!-- local limits program report key elements -->
+
+		<jaxb:bindings>
+
+			<jaxb:bindings node="//xsd:complexType[@name='LocalLimitsProgramReportKeyElements']">
+				<hj:mapped-superclass />
+			</jaxb:bindings>
+
+		</jaxb:bindings>
+
 		<!-- parameter key elements -->
-		
+
 		<jaxb:bindings>
 
 			<jaxb:bindings node="//xsd:complexType[@name='ParameterKeyElements']">
@@ -177,9 +208,9 @@
 			</jaxb:bindings>
 
 		</jaxb:bindings>
-		
+
 		<!-- parameter limit key elements -->
-		
+
 		<jaxb:bindings>
 
 			<jaxb:bindings node="//xsd:complexType[@name='ParameterLimitKeyElements']">
@@ -187,9 +218,9 @@
 			</jaxb:bindings>
 
 		</jaxb:bindings>
-		
+
 		<!-- permit schedule event key elements group -->
-		
+
 		<jaxb:bindings>
 
 			<jaxb:bindings node="//xsd:complexType[@name='PermitScheduleEventKeyElements']">
@@ -197,9 +228,9 @@
 			</jaxb:bindings>
 
 		</jaxb:bindings>
-		
+
 		<!-- permit schedule key elements group -->
-		
+
 		<jaxb:bindings>
 
 			<jaxb:bindings node="//xsd:complexType[@name='PermitScheduleKeyElements']">
@@ -207,9 +238,9 @@
 			</jaxb:bindings>
 
 		</jaxb:bindings>
-		
+
 		<!-- permit tracking event key elements group -->
-		
+
 		<jaxb:bindings>
 
 			<jaxb:bindings node="//xsd:complexType[@name='PermitTrackingEventKeyElements']">
@@ -217,9 +248,9 @@
 			</jaxb:bindings>
 
 		</jaxb:bindings>
-		
+
 		<!-- permitted feature key elements -->
-		
+
 		<jaxb:bindings>
 
 			<jaxb:bindings node="//xsd:complexType[@name='PermittedFeatureKeyElements']">
@@ -227,26 +258,36 @@
 			</jaxb:bindings>
 
 		</jaxb:bindings>
-		
+
 		<!-- permit schedule event violation key elements -->
-		 
-		 <jaxb:bindings>
+
+		<jaxb:bindings>
 
 			<!-- FIXME: the fix for this is to map "Key" to an empty string -->
 
 			<jaxb:bindings node="//xsd:complexType[@name='PermitScheduleEventViolationKeyElements']">
 				<hj:entity>
-					<orm:table name="ICS_PRMT_SCHD_EVT_VIOL_ELEM"/>
+					<orm:table name="ICS_PRMT_SCHD_EVT_VIOL_ELEM" />
 				</hj:entity>
 				<hj:generated-id name="Dbid" transient="true">
-				<orm:column name="ICS_PRMT_SCHD_EVT_VIOL_ELEM_ID" />
-			</hj:generated-id>
+					<orm:column name="ICS_PRMT_SCHD_EVT_VIOL_ELEM_ID" />
+				</hj:generated-id>
 			</jaxb:bindings>
 
 		</jaxb:bindings>
-		
+
+		<!-- pretreatment performance summary key elements -->
+
+		<jaxb:bindings>
+
+			<jaxb:bindings node="//xsd:complexType[@name='PretreatmentPerformanceSummaryReportKeyElements']">
+				<hj:mapped-superclass />
+			</jaxb:bindings>
+
+		</jaxb:bindings>
+
 		<!-- schedule event violation key elements group -->
-		
+
 		<jaxb:bindings>
 
 			<jaxb:bindings node="//xsd:complexType[@name='ScheduleEventViolationKeyElements']">
@@ -254,9 +295,9 @@
 			</jaxb:bindings>
 
 		</jaxb:bindings>
-		
+
 		<!-- single event key elements group -->
-		
+
 		<jaxb:bindings>
 
 			<jaxb:bindings node="//xsd:complexType[@name='SingleEventKeyElements']">
@@ -264,9 +305,9 @@
 			</jaxb:bindings>
 
 		</jaxb:bindings>
-		
+
 		<!-- SSO annual report group -->
-		
+
 		<jaxb:bindings>
 
 			<jaxb:bindings node="//xsd:complexType[@name='SSOAnnualReportKeyElements']">
@@ -274,9 +315,9 @@
 			</jaxb:bindings>
 
 		</jaxb:bindings>
-		
+
 		<!-- SSO event report group -->
-		
+
 		<jaxb:bindings>
 
 			<jaxb:bindings node="//xsd:complexType[@name='SSOEventReportKeyElements']">
@@ -284,9 +325,9 @@
 			</jaxb:bindings>
 
 		</jaxb:bindings>
-		
+
 		<!-- SSO monthly event report group -->
-		
+
 		<jaxb:bindings>
 
 			<jaxb:bindings node="//xsd:complexType[@name='SSOMonthlyEventReportKeyElements']">
@@ -294,9 +335,9 @@
 			</jaxb:bindings>
 
 		</jaxb:bindings>
-		
+
 		<!-- SW event report group -->
-		
+
 		<jaxb:bindings>
 
 			<jaxb:bindings node="//xsd:complexType[@name='SWEventReportKeyElements']">
@@ -304,28 +345,28 @@
 			</jaxb:bindings>
 
 		</jaxb:bindings>
-		
+
 		<!-- SW event report key elements group -->
-		
+
 		<jaxb:bindings>
 
 			<jaxb:bindings node="//xsd:element[@ref='icis:StormWaterEventID']">
 				<hj:basic>
-					<orm:column name="SW_EVT_ID"/>
+					<orm:column name="SW_EVT_ID" />
 				</hj:basic>
 			</jaxb:bindings>
 
 		</jaxb:bindings>
-		
+
 		<!-- SW MS4 program report group -->
-		
+
 		<jaxb:bindings>
 
 			<jaxb:bindings node="//xsd:complexType[@name='SWMS4ProgramReportKeyElements']">
 				<hj:mapped-superclass />
 			</jaxb:bindings>
 
-		</jaxb:bindings>	
+		</jaxb:bindings>
 
 	</jaxb:bindings>
 
