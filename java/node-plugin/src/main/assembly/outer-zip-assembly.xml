@@ -20,6 +20,13 @@
                 <include>**</include>
             </includes>
         </fileSet>
+        <fileSet>
+            <directory>src/main/packaging/${plugin.name}/xsd</directory>
+            <outputDirectory>/java_${plugin.name}_plugin_v${project.version}.${plugin.subbuild.number}</outputDirectory>
+            <includes>
+                <include>**</include>
+            </includes>
+        </fileSet>
     </fileSets>
     <files>
         <file>
