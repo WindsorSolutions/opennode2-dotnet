@@ -292,6 +292,15 @@ namespace Windsor.Node2008.Admin.Secure {
         protected global::System.Web.UI.HtmlControls.HtmlTableRow exchangeAccessLabelRow;
         
         /// <summary>
+        /// resetPasswordBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button resetPasswordBtn;
+        
+        /// <summary>
         /// addUsersBtn control.
         /// </summary>
         /// <remarks>

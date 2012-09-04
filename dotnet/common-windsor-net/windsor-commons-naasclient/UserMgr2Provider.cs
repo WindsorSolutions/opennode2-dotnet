@@ -108,7 +108,7 @@ namespace Windsor.Commons.NAASClient
         {
             Windsor.Commons.NAASClient.NAASUserMgr.UpdateUserResponse response = new Windsor.Commons.NAASClient.NAASUserMgr.UpdateUserResponse();
             response.@return = UpdateUser(arg.adminName, arg.credential, arg.userId, Windsor.Commons.NAASClient.NAASUserMgr2.UserType.user, arg.userPassword,
-                                          arg.owner, (Windsor.Commons.NAASClient.NAASUserMgr2.StateId)Enum.Parse(typeof(Windsor.Commons.NAASClient.NAASUserMgr2.StateId), arg.affiliate, true));
+                                          arg.owner, arg.affiliate);
             return response;
         }
     }

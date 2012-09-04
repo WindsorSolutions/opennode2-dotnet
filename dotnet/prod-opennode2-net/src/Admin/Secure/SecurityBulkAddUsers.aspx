@@ -160,11 +160,14 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="command" colspan="3" align="right">
+                    <td class="command" colspan="1" align="left">
+                        <asp:Button Text="Reset Password" CssClass="button" runat="server" ID="resetPasswordBtn" CausesValidation="false" OnClientClick="return confirm('Are you sure you want to reset this user\'s password?\n\nClicking OK will reset the user\'s password to a randomly generated value, and the user will be sent an email with the new password.');" OnClick="OnResetPassword" />
+                    </td>
+                    <td class="command" colspan="2" align="right">
                         <input type="button" value="Cancel" class="button" onclick="location.href='SecurityUser.aspx'" />
                         <asp:Button Text="Add Users" CssClass="button" runat="server" ID="addUsersBtn" OnClick="OnAddUsers" />
                         <asp:Button Text="Save" CssClass="button" runat="server" ID="saveUserBtn" OnClick="OnSaveUser" />
-                        <asp:Button Text="Delete" CssClass="button" runat="server" ID="deleteUserBtn" CausesValidation="false" OnClientClick="return confirm('Are you sure you want to delete this user?  In addition to deleting the user from this Node, the user account will also be deleted from NAAS.');" OnClick="OnDeleteUser" />
+                        <asp:Button Text="Delete" CssClass="button" runat="server" ID="deleteUserBtn" CausesValidation="false" OnClientClick="return confirm('Are you sure you want to delete this user?\n\nIn addition to deleting the user from this Node, the user account will also be deleted from NAAS.');" OnClick="OnDeleteUser" />
                     </td>
                 </tr>
             </table>

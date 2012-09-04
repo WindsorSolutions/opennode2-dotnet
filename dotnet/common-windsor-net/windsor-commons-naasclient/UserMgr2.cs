@@ -139,12 +139,14 @@ namespace Windsor.Commons.NAASClient.NAASUserMgr2
         }
         
         /// <remarks/>
-        public void AddUserAsync(string adminName, string adminPwd, string userEmail, UserType userType, string userPwd, string confirmUserPwd, StateId affiliate) {
+        public void AddUserAsync(string adminName, string adminPwd, string userEmail, UserType userType, string userPwd, string confirmUserPwd, string affiliate)
+        {
             this.AddUserAsync(adminName, adminPwd, userEmail, userType, userPwd, confirmUserPwd, affiliate, null);
         }
         
         /// <remarks/>
-        public void AddUserAsync(string adminName, string adminPwd, string userEmail, UserType userType, string userPwd, string confirmUserPwd, StateId affiliate, object userState) {
+        public void AddUserAsync(string adminName, string adminPwd, string userEmail, UserType userType, string userPwd, string confirmUserPwd, string affiliate, object userState)
+        {
             if ((this.AddUserOperationCompleted == null)) {
                 this.AddUserOperationCompleted = new System.Threading.SendOrPostCallback(this.OnAddUserOperationCompleted);
             }
@@ -202,7 +204,8 @@ namespace Windsor.Commons.NAASClient.NAASUserMgr2
         /// <remarks/>
         [System.Web.Services.Protocols.SoapRpcMethodAttribute("", RequestNamespace="http://neien.org/schema/usermgr.xsd", ResponseNamespace="http://neien.org/schema/usermgr.xsd")]
         [return: System.Xml.Serialization.SoapElementAttribute("return")]
-        public string UpdateUser(string adminName, string adminPwd, string userEmail, UserType userType, string userPwd, string owner, StateId affiliate) {
+        public string UpdateUser(string adminName, string adminPwd, string userEmail, UserType userType, string userPwd, string owner, string affiliate)
+        {
             object[] results = this.Invoke("UpdateUser", new object[] {
                         adminName,
                         adminPwd,
@@ -215,12 +218,14 @@ namespace Windsor.Commons.NAASClient.NAASUserMgr2
         }
         
         /// <remarks/>
-        public void UpdateUserAsync(string adminName, string adminPwd, string userEmail, UserType userType, string userPwd, string owner, StateId affiliate) {
+        public void UpdateUserAsync(string adminName, string adminPwd, string userEmail, UserType userType, string userPwd, string owner, string affiliate)
+        {
             this.UpdateUserAsync(adminName, adminPwd, userEmail, userType, userPwd, owner, affiliate, null);
         }
         
         /// <remarks/>
-        public void UpdateUserAsync(string adminName, string adminPwd, string userEmail, UserType userType, string userPwd, string owner, StateId affiliate, object userState) {
+        public void UpdateUserAsync(string adminName, string adminPwd, string userEmail, UserType userType, string userPwd, string owner, string affiliate, object userState)
+        {
             if ((this.UpdateUserOperationCompleted == null)) {
                 this.UpdateUserOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUpdateUserOperationCompleted);
             }
@@ -252,8 +257,8 @@ namespace Windsor.Commons.NAASClient.NAASUserMgr2
                     string Organization, 
                     string OrganizationUnit, 
                     string Address, 
-                    string City, 
-                    StateId State, 
+                    string City,
+                    string State, 
                     string ZipCode, 
                     string Phone, 
                     string Supervisor, 
@@ -292,8 +297,8 @@ namespace Windsor.Commons.NAASClient.NAASUserMgr2
                     string Organization, 
                     string OrganizationUnit, 
                     string Address, 
-                    string City, 
-                    StateId State, 
+                    string City,
+                    string State, 
                     string ZipCode, 
                     string Phone, 
                     string Supervisor, 
@@ -314,8 +319,8 @@ namespace Windsor.Commons.NAASClient.NAASUserMgr2
                     string Organization, 
                     string OrganizationUnit, 
                     string Address, 
-                    string City, 
-                    StateId State, 
+                    string City,
+                    string State, 
                     string ZipCode, 
                     string Phone, 
                     string Supervisor, 
@@ -404,12 +409,14 @@ namespace Windsor.Commons.NAASClient.NAASUserMgr2
         }
         
         /// <remarks/>
-        public void GetUserListAsync(string adminName, string adminPwd, string userEmail, StateId userState, string rowId, string maxRows) {
+        public void GetUserListAsync(string adminName, string adminPwd, string userEmail, string userState, string rowId, string maxRows)
+        {
             this.GetUserListAsync(adminName, adminPwd, userEmail, userState, rowId, maxRows, null);
         }
         
         /// <remarks/>
-        public void GetUserListAsync(string adminName, string adminPwd, string userEmail, StateId userState, string rowId, string maxRows, object userState1) {
+        public void GetUserListAsync(string adminName, string adminPwd, string userEmail, string userState, string rowId, string maxRows, object userState1)
+        {
             if ((this.GetUserListOperationCompleted == null)) {
                 this.GetUserListOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetUserListOperationCompleted);
             }
@@ -783,8 +790,8 @@ namespace Windsor.Commons.NAASClient.NAASUserMgr2
         private string addressField;
         
         private string cityField;
-        
-        private StateId stateField;
+
+        private string stateField;
         
         private string zipCodeField;
         
@@ -863,7 +870,8 @@ namespace Windsor.Commons.NAASClient.NAASUserMgr2
         }
         
         /// <remarks/>
-        public StateId State {
+        public string State
+        {
             get {
                 return this.stateField;
             }

@@ -72,6 +72,7 @@ namespace Windsor.Node2008.Admin.Secure
         private ICentralProcessor _centralProcessor;
         private UserAccount _editUserAccount;
         private bool _canDeleteUser;
+        private bool _canResetPassword;
         private string _userAffiliate;
         private bool _isAddUsers;
         protected bool _didValidate;
@@ -123,6 +124,7 @@ namespace Windsor.Node2008.Admin.Secure
                 bool userExistsInNAAS =
                     _accountService.UserExistsInNAAS(_editUserAccount.NaasAccount, VisitHelper.GetVisit(),
                                                      out _userAffiliate, out _canDeleteUser);
+                _canResetPassword = _canDeleteUser;
                 if (userExistsInNAAS)
                 {
                     _isAddUsers = false;
@@ -178,6 +180,7 @@ namespace Windsor.Node2008.Admin.Secure
 
                     addUsersBtn.Visible = false;
                     deleteUserBtn.Enabled = _canDeleteUser;
+                    resetPasswordBtn.Visible = _canResetPassword;
                 }
                 else
                 {
@@ -186,7 +189,7 @@ namespace Windsor.Node2008.Admin.Secure
 
                     createInNaasCheckBox.Checked = true;
 
-                    saveUserBtn.Visible = deleteUserBtn.Visible = false;
+                    saveUserBtn.Visible = deleteUserBtn.Visible = resetPasswordBtn.Visible = false;
 
                     if (_editUserAccount != null)
                     {
@@ -380,6 +383,22 @@ namespace Windsor.Node2008.Admin.Secure
                 AssignEditUserAccount(true);
 
                 _accountService.Delete(_editUserAccount, VisitHelper.GetVisit());
+
+                ResponseRedirect("../Secure/SecurityUser.aspx");
+            }
+            catch (Exception ex)
+            {
+                LOG.Error(ex.Message, ex);
+                SetDivPageError(ex);
+            }
+        }
+        protected void OnResetPassword(object sender, EventArgs e)
+        {
+            try
+            {
+                AssignEditUserAccount(true);
+
+                _accountService.ResetPassword(_editUserAccount, VisitHelper.GetVisit());
 
                 ResponseRedirect("../Secure/SecurityUser.aspx");
             }

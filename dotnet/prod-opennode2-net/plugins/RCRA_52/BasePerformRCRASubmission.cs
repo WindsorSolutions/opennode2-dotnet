@@ -87,6 +87,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
         protected PartnerIdentity _submitPartnerNode;
         protected string _submitUsername;
         protected Dictionary<string, UserSubmitInfo> _naasUsernameToPasswordMap;
+        protected bool _validateXml;
 
         protected const string CONFIG_ADD_HEADER = "Add Header";
         protected const string CONFIG_AUTHOR = "Author";
@@ -99,6 +100,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
         protected const string CONFIG_RCRA_INFO_STATE_CODE = "RCRAInfoStateCode";
         protected const string CONFIG_NAAS_USER_MAPPING_FILE_PATH = "NAAS User Mapping File Path";
         protected const string CONFIG_SUBMISSION_PARTNER_NAME = "Submission Partner Name";
+        protected const string CONFIG_VALIDATE_XML = "Validate Xml (True or False)";
 
         protected const string PARAM_NAAS_SUBMIT_USERNAME = "SubmitUsername";
         #endregion
@@ -118,6 +120,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
             ConfigurationArguments.Add(CONFIG_RCRA_INFO_STATE_CODE, null);
             ConfigurationArguments.Add(CONFIG_NAAS_USER_MAPPING_FILE_PATH, null);
             ConfigurationArguments.Add(CONFIG_SUBMISSION_PARTNER_NAME, null);
+            ConfigurationArguments.Add(CONFIG_VALIDATE_XML, null);
         }
 
         public override void ProcessTask(string requestId)
@@ -194,6 +197,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
                                                               CONFIG_NAAS_USER_MAPPING_FILE_PATH, CONFIG_SUBMISSION_PARTNER_NAME));
                 }
             }
+            TryGetConfigParameter(CONFIG_VALIDATE_XML, ref _validateXml);
         }
         protected void ParseNaasUserMappingFile()
         {
@@ -243,6 +247,11 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
                 {
                     AppendAuditLogEvent("Serializing results to file...");
                     serializedFilePath = _serializationHelper.SerializeToTempFile(data);
+                    if (_validateXml)
+                    {
+                        ValidateXmlFileAndAttachErrorsAndFileToTransaction(serializedFilePath, "xml_schema.xml_schema.zip",
+                                                                           null, _dataRequest.TransactionId);
+                    }
                 }
             }
             catch (Exception)
@@ -269,6 +278,12 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
 
                 tempXmlFilePath = settingsProvider.NewTempFilePath(".xml");
                 _serializationHelper.Serialize(dataObject, tempXmlFilePath);
+
+                if (_validateXml)
+                {
+                    ValidateXmlFileAndAttachErrorsAndFileToTransaction(tempXmlFilePath, "xml_schema.xml_schema.zip",
+                                                                       null, _dataRequest.TransactionId);
+                }
 
                 XmlDocument doc = new XmlDocument();
                 doc.Load(tempXmlFilePath);

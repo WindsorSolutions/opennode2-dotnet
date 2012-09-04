@@ -410,7 +410,14 @@ namespace Windsor.Node2008.WNOS.Logic
             updateUser.userType = NAAS_USRMGR.UserTypeCode.user;
             updateUser.userPassword = newPassword;
 
-            NAAS_USRMGR.UpdateUserResponse response = _usermgrClient.UpdateUser(updateUser);
+            try
+            {
+                NAAS_USRMGR.UpdateUserResponse response = _usermgrClient.UpdateUser(updateUser);
+            }
+            catch (Exception e)
+            {
+                throw new ArgException("NAAS returned an error: {0}", e.Message);
+            }
         }
         public bool RefreshNAASUsersIfExpired(out int numUsersRefreshed)
         {
@@ -613,7 +620,14 @@ namespace Windsor.Node2008.WNOS.Logic
             changePassword.newPassword = newPassword;
             changePassword.passwordConfirmation = newPassword;
 
-            NAAS_USRMGR.ChangePasswordResponse response = _usermgrClient.ChangePassword(changePassword);
+            try
+            {
+                NAAS_USRMGR.ChangePasswordResponse response = _usermgrClient.ChangePassword(changePassword);
+            }
+            catch (Exception e)
+            {
+                throw new ArgException("NAAS returned an error: {0}", e.Message);
+            }
         }
 
         private NAAS_USRMGR.UserAccountType GetUserAccount(string userName)
@@ -693,7 +707,14 @@ namespace Windsor.Node2008.WNOS.Logic
             addUser.userType = SystemRoleToNAASUserType(role);
             addUser.status = NAAS_USRMGR.AccountStatusCode.valid;
 
-            NAAS_USRMGR.AddUserResponse response = _usermgrClient.AddUser(addUser);
+            try
+            {
+                NAAS_USRMGR.AddUserResponse response = _usermgrClient.AddUser(addUser);
+            }
+            catch (Exception e)
+            {
+                throw new ArgException("NAAS returned an error: {0}", e.Message);
+            }
 
             AddUserToCachedUsers(GetUserAccount(userName));
 
@@ -717,7 +738,14 @@ namespace Windsor.Node2008.WNOS.Logic
             deleteUser.domain = _usermgrRuntimeCredentialDomain;
             deleteUser.userId = userName;
 
-            NAAS_USRMGR.DeleteUserResponse response = _usermgrClient.DeleteUser(deleteUser);
+            try
+            {
+                NAAS_USRMGR.DeleteUserResponse response = _usermgrClient.DeleteUser(deleteUser);
+            }
+            catch (Exception e)
+            {
+                throw new ArgException("NAAS returned an error: {0}", e.Message);
+            }
 
             RemoveUserFromCachedUsers(userName);
         }
