@@ -102,11 +102,51 @@
 
 		</jaxb:bindings>
 		
+		<!-- DMR violation key elements -->
+		
+		<jaxb:bindings>
+
+			<jaxb:bindings node="//xsd:complexType[@name='DMRViolationKeyElements']">
+				<hj:mapped-superclass />
+			</jaxb:bindings>
+
+		</jaxb:bindings>
+		
+		<!-- effluent trade partner key elements -->
+		
+		<jaxb:bindings>
+
+			<jaxb:bindings node="//xsd:complexType[@name='EffluentTradePartnerKeyElements']">
+				<hj:mapped-superclass />
+			</jaxb:bindings>
+
+		</jaxb:bindings>
+		
 		<!-- enforcement action key elements group -->
 		
 		<jaxb:bindings>
 
 			<jaxb:bindings node="//xsd:complexType[@name='EnforcementActionKeyElements']">
+				<hj:mapped-superclass />
+			</jaxb:bindings>
+
+		</jaxb:bindings>
+		
+		<!-- enforcement action milestone key elements -->
+
+		<jaxb:bindings>
+
+			<jaxb:bindings node="//xsd:complexType[@name='EnforcementActionMilestoneKeyElements']">
+				<hj:mapped-superclass />
+			</jaxb:bindings>
+
+		</jaxb:bindings>
+		
+		<!-- federal compliance monitoring key elements -->
+
+		<jaxb:bindings>
+
+			<jaxb:bindings node="//xsd:complexType[@name='FederalComplianceMonitoringKeyElements']">
 				<hj:mapped-superclass />
 			</jaxb:bindings>
 

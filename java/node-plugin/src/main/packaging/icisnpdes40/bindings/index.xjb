@@ -147,6 +147,11 @@
 					<orm:column length="1" column-definition="char(1)" />
 				</hj:basic>
 			</hj:default-single-property>
+			<hj:default-single-property type="icis:NumericReportViolationCodeType">
+				<hj:basic>
+					<orm:column length="1" column-definition="char(1)" />
+				</hj:basic>
+			</hj:default-single-property>
 			<hj:default-single-property type="icis:PassFailIndicatorType">
 				<hj:basic>
 					<orm:column length="1" column-definition="char(1)" />
