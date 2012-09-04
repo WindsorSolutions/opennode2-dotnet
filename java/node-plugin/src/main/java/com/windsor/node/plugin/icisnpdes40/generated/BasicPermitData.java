@@ -10,7 +10,6 @@ package com.windsor.node.plugin.icisnpdes40.generated;
 
 import java.io.Serializable;
 
-import javax.persistence.AssociationOverride;
 import javax.persistence.AssociationOverrides;
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
@@ -20,7 +19,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -154,12 +152,13 @@ public class BasicPermitData
         @AttributeOverride(name = "receivingPermitIdentifier", column = @Column(name = "RCVG_PRMT_IDENT", columnDefinition = "char(9)", length = 9))
     })
     @AssociationOverrides({
-        @AssociationOverride(name = "facility", joinColumns = {
-            @JoinColumn(name = "ICS_BASIC_PRMT_ID", insertable = false, updatable = false)
-        }),
-        @AssociationOverride(name = "complianceTrackingStatus", joinColumns = {
-            @JoinColumn(name = "ICS_BASIC_PRMT_ID", insertable = false, updatable = false)
-        }),
+    // FIXME: commented out
+//        @AssociationOverride(name = "facility", joinColumns = {
+//            @JoinColumn(name = "ICS_BASIC_PRMT_ID", insertable = false, updatable = false)
+//        }),
+//        @AssociationOverride(name = "complianceTrackingStatus", joinColumns = {
+//            @JoinColumn(name = "ICS_BASIC_PRMT_ID", insertable = false, updatable = false)
+//        }),
         // FIXME: commented out
         // @AssociationOverride(name = "otherPermits"),
         // FIXME: commented out

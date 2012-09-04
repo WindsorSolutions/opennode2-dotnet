@@ -192,7 +192,19 @@ public class Facility
     @XmlTransient
     protected String dbid;
 
-    /**
+    @XmlTransient
+    protected String basicPermitId;
+
+    @Column(name = "ICS_BASIC_PRMT_ID")
+    public String getBasicPermitId() {
+		return basicPermitId;
+	}
+
+	public void setBasicPermitId(final String basicPermitId) {
+		this.basicPermitId = basicPermitId;
+	}
+
+	/**
      * Gets the value of the facilitySiteName property.
      *
      * @return
@@ -1295,7 +1307,8 @@ public class Facility
     @ManyToOne(targetEntity = GeographicCoordinates.class, cascade = {
         CascadeType.ALL
     })
-    @JoinColumn(name = "ICS_FAC_ID", insertable = false, updatable = false)
+    // FIXME: added referenceColumnName
+    @JoinColumn(name = "ICS_FAC_ID", insertable = false, updatable = false, referencedColumnName = "ICS_FAC_ID")
     public GeographicCoordinates getGeographicCoordinates() {
         return geographicCoordinates;
     }

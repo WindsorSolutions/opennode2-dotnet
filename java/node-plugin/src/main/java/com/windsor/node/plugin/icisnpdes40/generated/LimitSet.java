@@ -23,7 +23,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.OrderColumn;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -309,10 +308,8 @@ public class LimitSet
      * Objects of the following type(s) are allowed in the list
      * {@link MonthTextType }
      *
-     * FIXME - Commented out @OrderColumn
      */
     @ElementCollection
-    //@OrderColumn(name = "DATA_HASH")
     @Column(name = "LMT_SET_MONTHS_APPL", length = 255)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "ICS_LMT_SET_MONTHS_APPL", joinColumns = @JoinColumn(name = "ICS_LMT_SET_ID"))

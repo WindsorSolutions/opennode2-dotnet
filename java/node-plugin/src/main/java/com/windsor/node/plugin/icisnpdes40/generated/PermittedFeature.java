@@ -21,7 +21,6 @@ import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OrderColumn;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -120,15 +119,15 @@ public class PermittedFeature
     protected String permittedFeatureDescription;
     @XmlElement(name = "PermittedFeatureTreatmentTypeCode")
     protected List<String> permittedFeatureTreatmentTypeCode;
-    
+
     @XmlElement(name = "PermittedFeatureDesignFlowNumber", type = String.class)
     @XmlJavaTypeAdapter(DoubleAdapter.class)
     protected Double permittedFeatureDesignFlowNumber;
-    
+
     @XmlElement(name = "PermittedFeatureActualAverageFlowNumber", type = String.class)
     @XmlJavaTypeAdapter(DoubleAdapter.class)
     protected Double permittedFeatureActualAverageFlowNumber;
-    
+
     @XmlElement(name = "PermittedFeatureStateWaterBodyCode")
     protected String permittedFeatureStateWaterBodyCode;
     @XmlElement(name = "PermittedFeatureStateWaterBodyName")
@@ -214,10 +213,8 @@ public class PermittedFeature
      * Objects of the following type(s) are allowed in the list
      * {@link String }
      *
-     * FIXME - Commented out @OrderColumn
      */
     @ElementCollection
-    // @OrderColumn(name = "DATA_HASH") 
     @Column(name = "PRMT_FEATR_CHAR", length = 3)
     // FIXME: added the joinColumns attribute
     @CollectionTable(name = "ICS_PRMT_FEATR_CHAR", joinColumns = @JoinColumn(name = "ICS_PRMT_FEATR_ID"))
@@ -296,10 +293,8 @@ public class PermittedFeature
      * Objects of the following type(s) are allowed in the list
      * {@link String }
      *
-     * FIXME - Commented out @OrderColumn
      */
     @ElementCollection
-    //@OrderColumn(name = "DATA_HASH")
     @Column(name = "PRMT_FEATR_TRTMNT_TYPE_CODE", length = 3)
     // FIXME: added the joinColumns attribute
     @CollectionTable(name = "ICS_PRMT_FEATR_TRTMNT_TYPE", joinColumns = @JoinColumn(name = "ICS_PRMT_FEATR_ID"))

@@ -62,7 +62,7 @@ import com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter;
 })
 
 @Entity(name = "AnimalType")
-@Table(name = "ICS_ANML_TYPE_VIEW")
+@Table(name = "ICS_ANML_TYPE")
 // @AttributeOverride(name = "dbid", column = @Column(name = "ICS_ANML_TYPE_ID"))
 public class AnimalType
 //FIXME: modified to not extend ReportedAnimalType
@@ -193,7 +193,7 @@ public class AnimalType
      */
     // FIXME: changed the "D" in dbid to capital
     @Id
-    @Column(name = "ICS_REP_ANML_TYPE_ID")
+    @Column(name = "ICS_ANML_TYPE_ID")
     public String getDbid() {
         return dbid;
     }

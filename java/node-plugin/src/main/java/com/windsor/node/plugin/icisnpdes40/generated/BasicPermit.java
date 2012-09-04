@@ -25,7 +25,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OrderColumn;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
@@ -1017,7 +1016,8 @@ public class BasicPermit
     @ManyToOne(targetEntity = Facility.class, cascade = {
         CascadeType.ALL
     })
-    @JoinColumn(name = "ICS_BASIC_PRMT_ID", insertable = false, updatable = false)
+    // FIXME: added referenced column name
+    @JoinColumn(name = "ICS_BASIC_PRMT_ID", insertable = false, updatable = false, referencedColumnName = "ICS_BASIC_PRMT_ID")
     public Facility getFacility() {
         return facility;
     }
@@ -1145,7 +1145,8 @@ public class BasicPermit
     @ManyToOne(targetEntity = ComplianceTrackingStatus.class, cascade = {
         CascadeType.ALL
     })
-    @JoinColumn(name = "ICS_BASIC_PRMT_ID", insertable = false, updatable = false)
+    // FIXME: added referencedColumnName
+    @JoinColumn(name = "ICS_BASIC_PRMT_ID", insertable = false, updatable = false, referencedColumnName = "ICS_BASIC_PRMT_ID")
     public ComplianceTrackingStatus getComplianceTrackingStatus() {
         return complianceTrackingStatus;
     }
@@ -1190,7 +1191,6 @@ public class BasicPermit
      *
      */
     @ElementCollection
-    @OrderColumn(name = "DATA_HASH")
     // FIMXE: Modified
     @Column(name = "EFFLU_GUIDE_CODE", length = 3)
     // FIMXE: Modified

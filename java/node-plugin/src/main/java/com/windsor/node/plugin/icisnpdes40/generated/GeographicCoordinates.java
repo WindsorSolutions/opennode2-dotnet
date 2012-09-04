@@ -107,8 +107,20 @@ public class GeographicCoordinates
     // FIXME: added permittedFeatureId
     @XmlTransient
     protected String permittedFeatureId;
+    // FIXME: added facilityId
+    @XmlTransient
+    protected String facilityId;
 
-    @Column(name = "ICS_PRMT_FEATR_ID")
+    @Column(name = "ICS_FAC_ID")
+    public String getFacilityId() {
+		return facilityId;
+	}
+
+	public void setFacilityId(final String facilityId) {
+		this.facilityId = facilityId;
+	}
+
+	@Column(name = "ICS_PRMT_FEATR_ID")
     public String getPermittedFeatureId() {
     	return permittedFeatureId;
     }

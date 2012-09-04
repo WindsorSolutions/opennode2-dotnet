@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.AssociationOverride;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
@@ -1245,7 +1244,7 @@ public class ComplianceMonitoring
     @ManyToOne(targetEntity = CAFOInspection.class, cascade = {
         CascadeType.ALL
     })
-    @JoinColumn(name = "ICS_CMPL_MON_ID", insertable = false, updatable = false)
+    @JoinColumn(name = "ICS_CMPL_MON_ID", insertable = false, updatable = false /*, referencedColumnName = "ICS_CMPL_MON_ID"*/)
     public CAFOInspection getCAFOInspection() {
         return cafoInspection;
     }
@@ -1278,7 +1277,7 @@ public class ComplianceMonitoring
     @ManyToOne(targetEntity = CSOInspection.class, cascade = {
         CascadeType.ALL
     })
-    @JoinColumn(name = "ICS_CMPL_MON_ID", insertable = false, updatable = false)
+    @JoinColumn(name = "ICS_CMPL_MON_ID", insertable = false, updatable = false /*, referencedColumnName = "ICS_CMPL_MON_ID"*/)
     public CSOInspection getCSOInspection() {
         return csoInspection;
     }
@@ -1311,7 +1310,7 @@ public class ComplianceMonitoring
     @ManyToOne(targetEntity = PretreatmentInspection.class, cascade = {
         CascadeType.ALL
     })
-    @JoinColumn(name = "ICS_CMPL_MON_ID", insertable = false, updatable = false)
+    @JoinColumn(name = "ICS_CMPL_MON_ID", insertable = false, updatable = false /*, referencedColumnName = "ICS_CMPL_MON_ID"*/)
     public PretreatmentInspection getPretreatmentInspection() {
         return pretreatmentInspection;
     }
@@ -1344,7 +1343,7 @@ public class ComplianceMonitoring
     @ManyToOne(targetEntity = SSOInspection.class, cascade = {
         CascadeType.ALL
     })
-    @JoinColumn(name = "ICS_CMPL_MON_ID", insertable = false, updatable = false)
+    @JoinColumn(name = "ICS_CMPL_MON_ID", insertable = false, updatable = false /*, referencedColumnName = "ICS_CMPL_MON_ID"*/)
     public SSOInspection getSSOInspection() {
         return ssoInspection;
     }
@@ -1377,7 +1376,7 @@ public class ComplianceMonitoring
     @ManyToOne(targetEntity = StormWaterConstructionInspection.class, cascade = {
         CascadeType.ALL
     })
-    @JoinColumn(name = "ICS_CMPL_MON_ID", insertable = false, updatable = false)
+    @JoinColumn(name = "ICS_CMPL_MON_ID", insertable = false, updatable = false /*, referencedColumnName = "ICS_CMPL_MON_ID"*/)
     public StormWaterConstructionInspection getStormWaterConstructionInspection() {
         return stormWaterConstructionInspection;
     }
@@ -1410,7 +1409,7 @@ public class ComplianceMonitoring
     @ManyToOne(targetEntity = StormWaterNonConstructionInspection.class, cascade = {
         CascadeType.ALL
     })
-    @JoinColumn(name = "ICS_CMPL_MON_ID", insertable = false, updatable = false)
+    @JoinColumn(name = "ICS_CMPL_MON_ID", insertable = false, updatable = false /*, referencedColumnName = "ICS_CMPL_MON_ID"*/)
     public StormWaterNonConstructionInspection getStormWaterNonConstructionInspection() {
         return stormWaterNonConstructionInspection;
     }
@@ -1443,7 +1442,7 @@ public class ComplianceMonitoring
     @ManyToOne(targetEntity = StormWaterConstructionNonConstructionInspections.class, cascade = {
         CascadeType.ALL
     })
-    @JoinColumn(name = "ICS_CMPL_MON_ID", insertable = false, updatable = false)
+    @JoinColumn(name = "ICS_CMPL_MON_ID", insertable = false, updatable = false /*, referencedColumnName = "ICS_CMPL_MON_ID"*/)
     public StormWaterConstructionNonConstructionInspections getStormWaterConstructionNonConstructionInspections() {
         return stormWaterConstructionNonConstructionInspections;
     }
@@ -1476,7 +1475,7 @@ public class ComplianceMonitoring
     @ManyToOne(targetEntity = StormWaterMS4Inspection.class, cascade = {
         CascadeType.ALL
     })
-    @JoinColumn(name = "ICS_CMPL_MON_ID", insertable = false, updatable = false)
+    @JoinColumn(name = "ICS_CMPL_MON_ID", insertable = false, updatable = false /*, referencedColumnName = "ICS_CMPL_MON_ID"*/)
     public StormWaterMS4Inspection getStormWaterMS4Inspection() {
         return stormWaterMS4Inspection;
     }
