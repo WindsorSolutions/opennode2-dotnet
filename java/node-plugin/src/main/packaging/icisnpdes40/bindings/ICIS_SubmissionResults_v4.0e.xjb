@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+	xmlns:annox="http://annox.dev.java.net" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	jaxb:extensionBindingPrefixes="hj orm annox" schemaLocation="../xsd/SubmissionResults.xsd">
+
+	<!-- submission results -->
+
+	<jaxb:bindings node="//xsd:element[@name='SubmissionResult']//xsd:complexType">
+		<!-- <jaxb:bindings node="//xsd:complexType"> -->
+		<hj:entity>
+			<orm:table name="ICS_SUBM_RESULTS" />
+		</hj:entity>
+		<hj:generated-id name="Dbid" transient="true">
+			<orm:column name="ICS_SUBM_RESULTS_ID" />
+		</hj:generated-id>
+	</jaxb:bindings>
+
+</jaxb:bindings>
