@@ -10,23 +10,26 @@
 		<property name="location" value="classpath:XmlToDbNameMappings.properties"/>
 	</bean>
 	
-	<!-- -->
+	<!-- 
+		This is being done to suppress the creation of a @GeneratedValue annotation for @Id annotations;
+		is there a better way?
+	-->
 	<bean name="customizing"
 		class="org.jvnet.hyperjaxb3.ejb.strategy.customizing.impl.DefaultCustomizing">
 		<property name="defaultCustomizations">
 			<bean parent="abstractCustomizationsUnmarshalledResource">
-				<property name="resource" value="classpath:org/jvnet/hyperjaxb3/ejb/strategy/customizing/impl/DefaultCustomizations2.xml"/>
+				<property name="resource" value="classpath:org/jvnet/hyperjaxb3/ejb/strategy/customizing/impl/NodeDefaultCustomizations.xml"/>
 			</bean>
 		</property>
 	</bean>
-	<!-- -->
 	
+	<!-- 
+		This is being done to suppress the creation of an @OrderColumn annotation for @ElementCollection annotations; 
+	    is there a better way?
+	-->
 	<bean name="createXAnnotations"
 		class="com.windsor.node.hyperjaxb3.NodeCreateXAnnotations">
 	</bean>
-	
-	<bean name="embeddableAttributesMapping"
-		class="com.windsor.node.hyperjaxb3.NodeEmbeddableAttributesMapping" />
 
 	<bean name="naming" class="com.windsor.node.hyperjaxb3.NodeNaming">
 		<property name="reservedNames" ref="reservedNames" />
@@ -37,6 +40,28 @@
 		<property name="pkColumnNameSuffix" value="${pkColumnNameSuffix}" />
 		<property name="tableNamePrefix" value="${tableNamePrefix}" />
 		<property name="defaultPkColumnName" value="${defaultPkColumnName}" />
+	</bean>
+	
+	<!-- 
+		This is being done to enable @JoinColumn annotations to be associated with
+		@ManyToOne, @OneToMany and @CollectionTable annotations.  The fact that these
+		are not currently being generated is a bug and should be fixed in hyperjaxb3 itself.
+		When it is fixed the mapping below may be removed.
+	 -->
+	 
+	 <bean name="oneToManyMapping" class="com.windsor.node.hyperjaxb3.NodeOneToManyMapping"/>
+	 <bean name="manyToOneMapping" class="com.windsor.node.hyperjaxb3.NodeManyToOneMapping"/>
+	 <bean name="elementCollectionMapping" class="com.windsor.node.hyperjaxb3.NodeElementCollectionMapping"/>
+	
+	<bean name="mapping"
+		class="org.jvnet.hyperjaxb3.ejb.strategy.mapping.Mapping">
+		<property name="customizing" ref="customizing"/>
+		<property name="naming" ref="naming"/>
+		<property name="ignoring" ref="ignoring"/>
+		<property name="embeddableAttributesMapping" ref="embeddableAttributesMapping"/>
+		<property name="oneToManyMapping" ref="oneToManyMapping"/>
+		<property name="manyToOneMapping" ref="manyToOneMapping"/>
+		<property name="elementCollectionMapping" ref="elementCollectionMapping"/>
 	</bean>
 
 </beans>

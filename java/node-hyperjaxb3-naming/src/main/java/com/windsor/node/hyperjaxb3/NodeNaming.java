@@ -20,7 +20,7 @@ import com.sun.tools.xjc.outline.FieldOutline;
  */
 public class NodeNaming extends DefaultNaming {
 
-	private static final Set<String> TABLE_SUFFIXES_TO_REMOVED = new HashSet();
+	private static final Set<String> TABLE_SUFFIXES_TO_REMOVED = new HashSet<String>();
 	static {
 		// FIXME: "Key" occurs in names but not as a suffix
 		TABLE_SUFFIXES_TO_REMOVED.add("Data");
