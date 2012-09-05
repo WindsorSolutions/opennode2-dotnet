@@ -12,6 +12,7 @@ import javax.persistence.EntityManager;
 import com.windsor.node.plugin.icisnpdes40.dao.PayloadOperationDao;
 import com.windsor.node.plugin.icisnpdes40.dao.jdbc.PayloadOperationDaoJdbc;
 import com.windsor.node.plugin.icisnpdes40.domain.PayloadOperation;
+import com.windsor.node.plugin.icisnpdes40.generated.BasicPermitData;
 import com.windsor.node.plugin.icisnpdes40.generated.LimitSetData;
 import com.windsor.node.plugin.icisnpdes40.generated.ObjectFactory;
 import com.windsor.node.plugin.icisnpdes40.generated.OperationType;
@@ -141,6 +142,8 @@ public class PerformICISSubmission extends AbstractIcisNpdesSubmission {
         Map<OperationType, Class<?>> map = new HashMap<OperationType, Class<?>>();
         map.put(OperationType.LIMIT_SET_SUBMISSION, LimitSetData.class);
         map.put(OperationType.PERMITTED_FEATURE_SUBMISSION, PermittedFeatureData.class);
+        map.put(OperationType.BASIC_PERMIT_SUBMISSION, BasicPermitData.class);
+        
         return map;
     }
     

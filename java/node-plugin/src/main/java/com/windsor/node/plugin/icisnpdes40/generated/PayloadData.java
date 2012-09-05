@@ -146,8 +146,9 @@ import org.jvnet.jaxb2_commons.locator.util.LocatorUtils;
 	    "unpermittedFacilityData"
 	})*/
 @XmlType(name = "PayloadData", propOrder = {
-    "limitSetData",
-    "permittedFeatureData"
+        "basicPermitData",
+        "limitSetData",
+        "permittedFeatureData" 
 })
 public class PayloadData implements Serializable, Equals, HashCode {
 
@@ -162,6 +163,9 @@ public class PayloadData implements Serializable, Equals, HashCode {
     @XmlElement(name = "PermittedFeatureData")
     protected List<PermittedFeatureData> permittedFeatureData;
     
+    @XmlElement(name = "BasicPermitData")
+    protected List<BasicPermitData> basicPermitData;
+
     @XmlTransient
     protected String dbid;
 
@@ -248,6 +252,46 @@ public class PayloadData implements Serializable, Equals, HashCode {
     }
     
     /**
+     * Gets the value of the basicPermitData property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the limitSetData property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getLimitSetData().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link LimitSetData }
+     * 
+     * 
+     */
+    public List<BasicPermitData> getBasicPermitData() {
+        if (basicPermitData == null) {
+            basicPermitData = new ArrayList<BasicPermitData>();
+        }
+        return this.basicPermitData;
+    }
+
+    public void setBasicPermitData(List<BasicPermitData> basicPermitData) {
+        this.basicPermitData = basicPermitData;
+    }
+
+    public boolean isSetBasicPermitData() {
+        return ((this.basicPermitData!= null)&&(!this.basicPermitData.isEmpty()));
+    }
+
+    public void unsetBasicPermitData() {
+        this.basicPermitData = null;
+    }
+    /**
      * Gets the value of the operation property.
      * 
      * @return
@@ -298,6 +342,15 @@ public class PayloadData implements Serializable, Equals, HashCode {
                 return false;
             }
         }
+        {
+            List<BasicPermitData> lhsBasicPermitData;
+            lhsBasicPermitData = (this.isSetBasicPermitData()?this.getBasicPermitData():null);
+            List<BasicPermitData> rhsBasicPermitData;
+            rhsBasicPermitData = (that.isSetBasicPermitData()?that.getBasicPermitData():null);
+            if (!strategy.equals(LocatorUtils.property(thisLocator, "basicPermitData", lhsBasicPermitData), LocatorUtils.property(thatLocator, "basicPermitData", rhsBasicPermitData), lhsBasicPermitData, rhsBasicPermitData)) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -318,6 +371,11 @@ public class PayloadData implements Serializable, Equals, HashCode {
             List<PermittedFeatureData> thePermittedFeatureData;
             thePermittedFeatureData = (this.isSetPermittedFeatureData()?this.getPermittedFeatureData():null);
             currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "permittedFeatureData", thePermittedFeatureData), currentHashCode, thePermittedFeatureData);
+        }
+        {
+            List<BasicPermitData> theBasicPermitData;
+            theBasicPermitData = (this.isSetBasicPermitData()?this.getBasicPermitData():null);
+            currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "basicPermitData", theBasicPermitData), currentHashCode, theBasicPermitData);
         }
         return currentHashCode;
     }

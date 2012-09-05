@@ -52,6 +52,7 @@ import com.windsor.node.plugin.icisnpdes40.generated.HeaderData;
 import com.windsor.node.plugin.icisnpdes40.generated.ObjectFactory;
 import com.windsor.node.plugin.icisnpdes40.generated.PayloadData;
 import com.windsor.node.plugin.icisnpdes40.hibernate.IcisNpdesStagingPersistenceUnitInfo;
+import com.windsor.node.plugin.icisnpdes40.xml.validate.ValidationResult;
 import com.windsor.node.plugin.icisnpdes40.xml.validate.XmlValidator;
 import com.windsor.node.plugin.icisnpdes40.xml.validate.jaxb.JaxbXmlValidator;
 import com.windsor.node.service.helper.CompressionService;
@@ -240,15 +241,28 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
     /**
      * Is the generated ICIS XML valid?
      * 
+     * @param result
+     *            The ProcessContentResult context.
+     * @param xmlDocFilePath
+     *            the file path to the generate xml to validate.
      * @return Is the generated ICIS XML valid?
+     * @throws Exception
+     *             When validation cannot be executed normally.
      */
-    private boolean isXmlPayloadDocumentNotValid(String xmlDocFilePath) throws Exception {
+    private boolean isXmlPayloadDocumentNotValid(ProcessContentResult result, String xmlDocFilePath) throws Exception {
         
         String schemaFilePath = getXsdFilePath();
         
         XmlValidator validator = new JaxbXmlValidator(schemaFilePath);
 
-        return validator.validate(new FileInputStream(xmlDocFilePath)).hasErrors();
+        ValidationResult validationResult = validator.validate(new FileInputStream(xmlDocFilePath));
+        
+        if (validationResult.hasErrors()) {
+            for(String e : validationResult.errors()) {
+                debug(result, e);
+            }
+        }        
+        return validationResult.hasErrors();
     }
 
     /**
@@ -423,7 +437,7 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
             
             debug("Starting XML validation.");
             
-            if (isXmlPayloadDocumentNotValid(icisXmlDocumentFilePath)) {
+            if (isXmlPayloadDocumentNotValid(result, icisXmlDocumentFilePath)) {
                 
                 String msg = "XML did not pass schema validation. Exiting";
                 
@@ -599,11 +613,6 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
        header.setCreationTime(new Date());
        header.setOrganization(getConfigValueAsString(SERVICE_PARAM_ORGANIZATION.getName(), false));
 
-       // header.setComment();
-       // header.setContactInfo();
-       // header.setDataService();
-       // header.setTitle();
-       
        return header;
    }
    
@@ -648,6 +657,15 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
        }
    }
 
+   /**
+    * TODO - Document me.
+    * 
+    * @param transaction
+    * @param docId
+    * @param tempFilePath
+    * @return
+    * @throws IOException
+    */
    protected Document makeDocument(NodeTransaction transaction, String docId, String tempFilePath) throws IOException {
         
         Document doc = new Document();
@@ -722,9 +740,6 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
    public void setPartnerDao(PartnerDao partnerDao) {
        this.partnerDao = partnerDao;
    }
-   
-   //////////////////////////////////////////////////////////////////////////////////////////////
-   //////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
     * Returns the current 'Pending' workflow.
