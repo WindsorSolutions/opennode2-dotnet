@@ -23,7 +23,7 @@ import javax.persistence.Embedded;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
@@ -1241,10 +1241,11 @@ public class ComplianceMonitoring
      *     {@link CAFOInspection }
      *
      */
-    @ManyToOne(targetEntity = CAFOInspection.class, cascade = {
+    // FIXME: changed from @ManyToOne to @OneToOne
+    @OneToOne(targetEntity = CAFOInspection.class, cascade = {
         CascadeType.ALL
     })
-    @JoinColumn(name = "ICS_CMPL_MON_ID", insertable = false, updatable = false /*, referencedColumnName = "ICS_CMPL_MON_ID"*/)
+    @JoinColumn(name = "ICS_CMPL_MON_ID")
     public CAFOInspection getCAFOInspection() {
         return cafoInspection;
     }
@@ -1274,10 +1275,11 @@ public class ComplianceMonitoring
      *     {@link CSOInspection }
      *
      */
-    @ManyToOne(targetEntity = CSOInspection.class, cascade = {
+ // FIXME: changed from @ManyToOne to @OneToOne
+    @OneToOne(targetEntity = CSOInspection.class, cascade = {
         CascadeType.ALL
     })
-    @JoinColumn(name = "ICS_CMPL_MON_ID", insertable = false, updatable = false /*, referencedColumnName = "ICS_CMPL_MON_ID"*/)
+    @JoinColumn(name = "ICS_CMPL_MON_ID")
     public CSOInspection getCSOInspection() {
         return csoInspection;
     }
@@ -1307,10 +1309,11 @@ public class ComplianceMonitoring
      *     {@link PretreatmentInspection }
      *
      */
-    @ManyToOne(targetEntity = PretreatmentInspection.class, cascade = {
+ // FIXME: changed from @ManyToOne to @OneToOne
+    @OneToOne(targetEntity = PretreatmentInspection.class, cascade = {
         CascadeType.ALL
     })
-    @JoinColumn(name = "ICS_CMPL_MON_ID", insertable = false, updatable = false /*, referencedColumnName = "ICS_CMPL_MON_ID"*/)
+    @JoinColumn(name = "ICS_CMPL_MON_ID")
     public PretreatmentInspection getPretreatmentInspection() {
         return pretreatmentInspection;
     }
@@ -1340,10 +1343,11 @@ public class ComplianceMonitoring
      *     {@link SSOInspection }
      *
      */
-    @ManyToOne(targetEntity = SSOInspection.class, cascade = {
+ // FIXME: changed from @ManyToOne to @OneToOne
+    @OneToOne(targetEntity = SSOInspection.class, cascade = {
         CascadeType.ALL
     })
-    @JoinColumn(name = "ICS_CMPL_MON_ID", insertable = false, updatable = false /*, referencedColumnName = "ICS_CMPL_MON_ID"*/)
+    @JoinColumn(name = "ICS_CMPL_MON_ID")
     public SSOInspection getSSOInspection() {
         return ssoInspection;
     }
@@ -1373,10 +1377,11 @@ public class ComplianceMonitoring
      *     {@link StormWaterConstructionInspection }
      *
      */
-    @ManyToOne(targetEntity = StormWaterConstructionInspection.class, cascade = {
+ // FIXME: changed from @ManyToOne to @OneToOne
+    @OneToOne(targetEntity = StormWaterConstructionInspection.class, cascade = {
         CascadeType.ALL
     })
-    @JoinColumn(name = "ICS_CMPL_MON_ID", insertable = false, updatable = false /*, referencedColumnName = "ICS_CMPL_MON_ID"*/)
+    @JoinColumn(name = "ICS_CMPL_MON_ID")
     public StormWaterConstructionInspection getStormWaterConstructionInspection() {
         return stormWaterConstructionInspection;
     }
@@ -1406,10 +1411,11 @@ public class ComplianceMonitoring
      *     {@link StormWaterNonConstructionInspection }
      *
      */
-    @ManyToOne(targetEntity = StormWaterNonConstructionInspection.class, cascade = {
+ // FIXME: changed from @ManyToOne to @OneToOne
+    @OneToOne(targetEntity = StormWaterNonConstructionInspection.class, cascade = {
         CascadeType.ALL
     })
-    @JoinColumn(name = "ICS_CMPL_MON_ID", insertable = false, updatable = false /*, referencedColumnName = "ICS_CMPL_MON_ID"*/)
+    @JoinColumn(name = "ICS_CMPL_MON_ID")
     public StormWaterNonConstructionInspection getStormWaterNonConstructionInspection() {
         return stormWaterNonConstructionInspection;
     }
@@ -1439,10 +1445,11 @@ public class ComplianceMonitoring
      *     {@link StormWaterConstructionNonConstructionInspections }
      *
      */
-    @ManyToOne(targetEntity = StormWaterConstructionNonConstructionInspections.class, cascade = {
+ // FIXME: changed from @ManyToOne to @OneToOne
+    @OneToOne(targetEntity = StormWaterConstructionNonConstructionInspections.class, cascade = {
         CascadeType.ALL
     })
-    @JoinColumn(name = "ICS_CMPL_MON_ID", insertable = false, updatable = false /*, referencedColumnName = "ICS_CMPL_MON_ID"*/)
+    @JoinColumn(name = "ICS_CMPL_MON_ID")
     public StormWaterConstructionNonConstructionInspections getStormWaterConstructionNonConstructionInspections() {
         return stormWaterConstructionNonConstructionInspections;
     }
@@ -1472,10 +1479,11 @@ public class ComplianceMonitoring
      *     {@link StormWaterMS4Inspection }
      *
      */
-    @ManyToOne(targetEntity = StormWaterMS4Inspection.class, cascade = {
+ // FIXME: changed from @ManyToOne to @OneToOne
+    @OneToOne(targetEntity = StormWaterMS4Inspection.class, cascade = {
         CascadeType.ALL
     })
-    @JoinColumn(name = "ICS_CMPL_MON_ID", insertable = false, updatable = false /*, referencedColumnName = "ICS_CMPL_MON_ID"*/)
+    @JoinColumn(name = "ICS_CMPL_MON_ID")
     public StormWaterMS4Inspection getStormWaterMS4Inspection() {
         return stormWaterMS4Inspection;
     }

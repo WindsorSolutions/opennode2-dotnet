@@ -18,7 +18,7 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
@@ -351,11 +351,11 @@ public class SWConstructionPermit
      *     {@link GPCFNoticeOfIntent }
      *
      */
-    @ManyToOne(targetEntity = GPCFNoticeOfIntent.class, cascade = {
+    // FIXME: changed from @ManyToOne
+    @OneToOne(targetEntity = GPCFNoticeOfIntent.class, cascade = {
         CascadeType.ALL
     })
-    // FIXME: fixed join column name
-    @JoinColumn(name = "ICS_SW_CNST_PRMT_ID", insertable = false, updatable = false)
+    @JoinColumn(name = "ICS_SW_CNST_PRMT_ID")
     public GPCFNoticeOfIntent getGPCFNoticeOfIntent() {
         return gpcfNoticeOfIntent;
     }
@@ -385,11 +385,11 @@ public class SWConstructionPermit
      *     {@link GPCFNoticeOfTermination }
      *
      */
-    @ManyToOne(targetEntity = GPCFNoticeOfTermination.class, cascade = {
+    // FIXME: changed from @ManyToOne
+    @OneToOne(targetEntity = GPCFNoticeOfTermination.class, cascade = {
         CascadeType.ALL
     })
-    // FIXME: fixed join column name
-    @JoinColumn(name = "ICS_SW_CNST_PRMT_ID", insertable = false, updatable = false)
+    @JoinColumn(name = "ICS_SW_CNST_PRMT_ID")
     public GPCFNoticeOfTermination getGPCFNoticeOfTermination() {
         return gpcfNoticeOfTermination;
     }

@@ -20,7 +20,7 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -733,10 +733,11 @@ public class PermittedFeature
      *     {@link GeographicCoordinates }
      *
      */
-    @ManyToOne(targetEntity = GeographicCoordinates.class, cascade = {
+    // FIXME: changed from @ManyToOne
+    @OneToOne(targetEntity = GeographicCoordinates.class, cascade = {
         CascadeType.ALL
     })
-    @JoinColumn(name = "ICS_PRMT_FEATR_ID", referencedColumnName = "ICS_PRMT_FEATR_ID", insertable = false, updatable = false)
+    @JoinColumn(name = "ICS_PRMT_FEATR_ID")
     public GeographicCoordinates getGeographicCoordinates() {
         return geographicCoordinates;
     }

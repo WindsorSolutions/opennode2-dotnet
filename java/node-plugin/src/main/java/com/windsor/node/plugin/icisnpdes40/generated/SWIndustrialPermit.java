@@ -17,7 +17,7 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -329,11 +329,11 @@ public class SWIndustrialPermit
      *     {@link GPCFNoticeOfIntent }
      *
      */
-    @ManyToOne(targetEntity = GPCFNoticeOfIntent.class, cascade = {
+    // FIXME: changed from @ManyToOne
+    @OneToOne(targetEntity = GPCFNoticeOfIntent.class, cascade = {
         CascadeType.ALL
     })
-    // FIXME: fixed join column
-    @JoinColumn(name = "ICS_SW_INDST_PRMT_ID", insertable = false, updatable = false)
+    @JoinColumn(name = "ICS_SW_INDST_PRMT_ID")
     public GPCFNoticeOfIntent getGPCFNoticeOfIntent() {
         return gpcfNoticeOfIntent;
     }
@@ -363,11 +363,11 @@ public class SWIndustrialPermit
      *     {@link GPCFNoticeOfTermination }
      *
      */
-    @ManyToOne(targetEntity = GPCFNoticeOfTermination.class, cascade = {
+    // FIXME: changed from @ManyToOne
+    @OneToOne(targetEntity = GPCFNoticeOfTermination.class, cascade = {
         CascadeType.ALL
     })
-    // FIXME: fixed join column
-    @JoinColumn(name = "ICS_SW_INDST_PRMT_ID", insertable = false, updatable = false)
+    @JoinColumn(name = "ICS_SW_INDST_PRMT_ID")
     public GPCFNoticeOfTermination getGPCFNoticeOfTermination() {
         return gpcfNoticeOfTermination;
     }
@@ -397,11 +397,11 @@ public class SWIndustrialPermit
      *     {@link GPCFNoExposure }
      *
      */
-    @ManyToOne(targetEntity = GPCFNoExposure.class, cascade = {
+    // FIXME: changed from @ManyToOne
+    @OneToOne(targetEntity = GPCFNoExposure.class, cascade = {
         CascadeType.ALL
     })
-    // FIXME: fixed join column
-    @JoinColumn(name = "ICS_SW_INDST_PRMT_ID", insertable = false, updatable = false)
+    @JoinColumn(name = "ICS_SW_INDST_PRMT_ID")
     public GPCFNoExposure getGPCFNoExposure() {
         return gpcfNoExposure;
     }

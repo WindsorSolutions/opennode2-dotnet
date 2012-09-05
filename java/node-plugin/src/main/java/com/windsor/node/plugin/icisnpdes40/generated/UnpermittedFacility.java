@@ -20,15 +20,13 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
@@ -1284,11 +1282,11 @@ public class UnpermittedFacility
      *     {@link GeographicCoordinates }
      *
      */
-    @ManyToOne(targetEntity = GeographicCoordinates.class, cascade = {
+    // FIXME: changed from @ManyToOne
+    @OneToOne(targetEntity = GeographicCoordinates.class, cascade = {
         CascadeType.ALL
     })
-    // FIXME: changed join column name
-    @JoinColumn(name = "ICS_UNPRMT_FAC_ID", insertable = false, updatable = false)
+    @JoinColumn(name = "ICS_UNPRMT_FAC_ID")
     public GeographicCoordinates getGeographicCoordinates() {
         return geographicCoordinates;
     }

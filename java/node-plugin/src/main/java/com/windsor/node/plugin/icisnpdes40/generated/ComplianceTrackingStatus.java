@@ -82,17 +82,6 @@ public class ComplianceTrackingStatus
     protected String statusReason;
     @XmlTransient
     protected String dbid;
-    @XmlTransient
-    protected String basicPermitId;
-
-    @Column(name = "ICS_BASIC_PRMT_ID")
-    public String getBasicPermitId() {
-		return basicPermitId;
-	}
-
-	public void setBasicPermitId(final String basicPermitId) {
-		this.basicPermitId = basicPermitId;
-	}
 
 	/**
      * Gets the value of the statusCode property.

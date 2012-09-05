@@ -15,7 +15,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -130,11 +130,12 @@ public class FinalOrderViolationLinkage
      *     {@link PermitScheduleViolation }
      *
      */
-    @ManyToOne(targetEntity = PermitScheduleViolation.class, cascade = {
+    // FIXME: changed from @ManyToOne
+    @OneToOne(targetEntity = PermitScheduleViolation.class, cascade = {
         CascadeType.ALL
     })
  // FIXME: modified
-    @JoinColumn(name = "ICS_FINAL_ORDER_VIOL_LNK_ID", insertable = false, updatable = false)
+    @JoinColumn(name = "ICS_FINAL_ORDER_VIOL_LNK_ID")
     public PermitScheduleViolation getPermitScheduleViolation() {
         return permitScheduleViolation;
     }
@@ -164,11 +165,12 @@ public class FinalOrderViolationLinkage
      *     {@link ComplianceScheduleViolation }
      *
      */
-    @ManyToOne(targetEntity = ComplianceScheduleViolation.class, cascade = {
+    // FIXME: changed from @ManyToOne
+    @OneToOne(targetEntity = ComplianceScheduleViolation.class, cascade = {
         CascadeType.ALL
     })
     // FIXME: modified
-    @JoinColumn(name = "ICS_FINAL_ORDER_VIOL_LNK_ID", insertable = false, updatable = false)
+    @JoinColumn(name = "ICS_FINAL_ORDER_VIOL_LNK_ID")
     public ComplianceScheduleViolation getComplianceScheduleViolation() {
         return complianceScheduleViolation;
     }
@@ -198,11 +200,12 @@ public class FinalOrderViolationLinkage
      *     {@link DischargeMonitoringReportViolation }
      *
      */
-    @ManyToOne(targetEntity = DischargeMonitoringReportViolation.class, cascade = {
+    // FIXME: changed from @ManyToOne
+    @OneToOne(targetEntity = DischargeMonitoringReportViolation.class, cascade = {
         CascadeType.ALL
     })
  // FIXME: modified
-    @JoinColumn(name = "ICS_FINAL_ORDER_VIOL_LNK_ID", insertable = false, updatable = false)
+    @JoinColumn(name = "ICS_FINAL_ORDER_VIOL_LNK_ID")
     public DischargeMonitoringReportViolation getDischargeMonitoringReportViolation() {
         return dischargeMonitoringReportViolation;
     }
@@ -232,11 +235,12 @@ public class FinalOrderViolationLinkage
      *     {@link DischargeMonitoringReportParameterViolation }
      *
      */
-    @ManyToOne(targetEntity = DischargeMonitoringReportParameterViolation.class, cascade = {
+    // FIXME: changed from @ManyToOne
+    @OneToOne(targetEntity = DischargeMonitoringReportParameterViolation.class, cascade = {
         CascadeType.ALL
     })
  // FIXME: modified
-    @JoinColumn(name = "ICS_FINAL_ORDER_VIOL_LNK_ID", insertable = false, updatable = false)
+    @JoinColumn(name = "ICS_FINAL_ORDER_VIOL_LNK_ID")
     public DischargeMonitoringReportParameterViolation getDischargeMonitoringReportParameterViolation() {
         return dischargeMonitoringReportParameterViolation;
     }
@@ -266,11 +270,12 @@ public class FinalOrderViolationLinkage
      *     {@link SingleEventsViolation }
      *
      */
-    @ManyToOne(targetEntity = SingleEventsViolation.class, cascade = {
+    // FIXME: changed from @ManyToOne
+    @OneToOne(targetEntity = SingleEventsViolation.class, cascade = {
         CascadeType.ALL
     })
  // FIXME: modified
-    @JoinColumn(name = "ICS_FINAL_ORDER_VIOL_LNK_ID", insertable = false, updatable = false)
+    @JoinColumn(name = "ICS_FINAL_ORDER_VIOL_LNK_ID")
     public SingleEventsViolation getSingleEventsViolation() {
         return singleEventsViolation;
     }

@@ -12,8 +12,8 @@ import java.io.Serializable;
 
 import javax.persistence.CascadeType;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -77,12 +77,11 @@ public class ScheduleEventViolationKeyElements
      *     {@link PermitScheduleEventViolationKeyElements }
      *
      */
-    @ManyToOne(targetEntity = PermitScheduleEventViolationKeyElements.class, cascade = {
+    // FIXME: changed from @ManyToOne
+    @OneToOne(targetEntity = PermitScheduleEventViolationKeyElements.class, cascade = {
         CascadeType.ALL
     })
-
-    // FIXME: modified column name
-    @JoinColumn(name = "ICS_SCHD_EVT_VIOL_ID", insertable = false, updatable = false)
+    @JoinColumn(name = "ICS_SCHD_EVT_VIOL_ID")
     public PermitScheduleEventViolationKeyElements getPermitScheduleEventViolationKeyElements() {
         return permitScheduleEventViolationKeyElements;
     }
@@ -112,11 +111,11 @@ public class ScheduleEventViolationKeyElements
      *     {@link ComplianceScheduleEventViolationKeyElements }
      *
      */
-    @ManyToOne(targetEntity = ComplianceScheduleEventViolationKeyElements.class, cascade = {
+    // FIXME: changed from @ManyToOne
+    @OneToOne(targetEntity = ComplianceScheduleEventViolationKeyElements.class, cascade = {
         CascadeType.ALL
     })
-    // FIXME: modified column name
-    @JoinColumn(name = "ICS_SCHD_EVT_VIOL_ID", insertable = false, updatable = false)
+    @JoinColumn(name = "ICS_SCHD_EVT_VIOL_ID")
     public ComplianceScheduleEventViolationKeyElements getComplianceScheduleEventViolationKeyElements() {
         return complianceScheduleEventViolationKeyElements;
     }

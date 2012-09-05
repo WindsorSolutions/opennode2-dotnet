@@ -17,7 +17,7 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -986,11 +986,11 @@ public class SWMS4SmallPermit
      *     {@link GPCFConstructionWaiver }
      *
      */
-    @ManyToOne(targetEntity = GPCFConstructionWaiver.class, cascade = {
+    // FIXME: changed from @ManyToOne
+    @OneToOne(targetEntity = GPCFConstructionWaiver.class, cascade = {
         CascadeType.ALL
     })
-    // FIXME: fixed join column name
-    @JoinColumn(name = "ICS_SWMS_4_SMALL_PRMT_ID", insertable = false, updatable = false)
+    @JoinColumn(name = "ICS_SWMS_4_SMALL_PRMT_ID")
     public GPCFConstructionWaiver getGPCFConstructionWaiver() {
         return gpcfConstructionWaiver;
     }

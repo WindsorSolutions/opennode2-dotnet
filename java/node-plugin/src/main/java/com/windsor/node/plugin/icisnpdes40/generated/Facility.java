@@ -25,8 +25,8 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -191,18 +191,6 @@ public class Facility
     protected GeographicCoordinates geographicCoordinates;
     @XmlTransient
     protected String dbid;
-
-    @XmlTransient
-    protected String basicPermitId;
-
-    @Column(name = "ICS_BASIC_PRMT_ID")
-    public String getBasicPermitId() {
-		return basicPermitId;
-	}
-
-	public void setBasicPermitId(final String basicPermitId) {
-		this.basicPermitId = basicPermitId;
-	}
 
 	/**
      * Gets the value of the facilitySiteName property.
@@ -1304,11 +1292,12 @@ public class Facility
      *     {@link GeographicCoordinates }
      *
      */
-    @ManyToOne(targetEntity = GeographicCoordinates.class, cascade = {
+    // FIXME: change from @ManyToOne
+    @OneToOne(targetEntity = GeographicCoordinates.class, cascade = {
         CascadeType.ALL
     })
     // FIXME: added referenceColumnName
-    @JoinColumn(name = "ICS_FAC_ID", insertable = false, updatable = false, referencedColumnName = "ICS_FAC_ID")
+    @JoinColumn(name = "ICS_FAC_ID")
     public GeographicCoordinates getGeographicCoordinates() {
         return geographicCoordinates;
     }
