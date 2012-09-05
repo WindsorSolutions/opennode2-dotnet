@@ -13,13 +13,56 @@ import com.windsor.node.plugin.icisnpdes40.dao.PayloadOperationDao;
 import com.windsor.node.plugin.icisnpdes40.dao.jdbc.PayloadOperationDaoJdbc;
 import com.windsor.node.plugin.icisnpdes40.domain.PayloadOperation;
 import com.windsor.node.plugin.icisnpdes40.generated.BasicPermitData;
+import com.windsor.node.plugin.icisnpdes40.generated.BiosolidsPermitData;
+import com.windsor.node.plugin.icisnpdes40.generated.BiosolidsProgramReportData;
+import com.windsor.node.plugin.icisnpdes40.generated.CAFOAnnualReportData;
+import com.windsor.node.plugin.icisnpdes40.generated.CAFOPermitData;
+import com.windsor.node.plugin.icisnpdes40.generated.CSOEventReportData;
+import com.windsor.node.plugin.icisnpdes40.generated.CSOPermitData;
+import com.windsor.node.plugin.icisnpdes40.generated.ComplianceMonitoringData;
+import com.windsor.node.plugin.icisnpdes40.generated.ComplianceMonitoringLinkageData;
+import com.windsor.node.plugin.icisnpdes40.generated.ComplianceScheduleData;
+import com.windsor.node.plugin.icisnpdes40.generated.DMRProgramReportLinkageData;
+import com.windsor.node.plugin.icisnpdes40.generated.DMRViolationData;
+import com.windsor.node.plugin.icisnpdes40.generated.DischargeMonitoringReportData;
+import com.windsor.node.plugin.icisnpdes40.generated.EffluentTradePartnerData;
+import com.windsor.node.plugin.icisnpdes40.generated.EnforcementActionMilestoneData;
+import com.windsor.node.plugin.icisnpdes40.generated.EnforcementActionViolationLinkageData;
+import com.windsor.node.plugin.icisnpdes40.generated.FinalOrderViolationLinkageData;
+import com.windsor.node.plugin.icisnpdes40.generated.FormalEnforcementActionData;
+import com.windsor.node.plugin.icisnpdes40.generated.GeneralPermitData;
+import com.windsor.node.plugin.icisnpdes40.generated.HistoricalPermitScheduleEventsData;
+import com.windsor.node.plugin.icisnpdes40.generated.InformalEnforcementActionData;
 import com.windsor.node.plugin.icisnpdes40.generated.LimitSetData;
+import com.windsor.node.plugin.icisnpdes40.generated.LimitsData;
+import com.windsor.node.plugin.icisnpdes40.generated.LocalLimitsProgramReportData;
+import com.windsor.node.plugin.icisnpdes40.generated.MasterGeneralPermitData;
+import com.windsor.node.plugin.icisnpdes40.generated.NarrativeConditionScheduleData;
 import com.windsor.node.plugin.icisnpdes40.generated.ObjectFactory;
 import com.windsor.node.plugin.icisnpdes40.generated.OperationType;
+import com.windsor.node.plugin.icisnpdes40.generated.POTWPermitData;
+import com.windsor.node.plugin.icisnpdes40.generated.ParameterLimitsData;
 import com.windsor.node.plugin.icisnpdes40.generated.PayloadData;
+import com.windsor.node.plugin.icisnpdes40.generated.PermitReissuanceData;
+import com.windsor.node.plugin.icisnpdes40.generated.PermitTerminationData;
+import com.windsor.node.plugin.icisnpdes40.generated.PermitTrackingEventData;
 import com.windsor.node.plugin.icisnpdes40.generated.PermittedFeatureData;
+import com.windsor.node.plugin.icisnpdes40.generated.PretreatmentPerformanceSummaryData;
+import com.windsor.node.plugin.icisnpdes40.generated.PretreatmentPermitData;
+import com.windsor.node.plugin.icisnpdes40.generated.SSOAnnualReportData;
+import com.windsor.node.plugin.icisnpdes40.generated.SSOEventReportData;
+import com.windsor.node.plugin.icisnpdes40.generated.SSOMonthlyEventReportData;
+import com.windsor.node.plugin.icisnpdes40.generated.SWConstructionPermitData;
+import com.windsor.node.plugin.icisnpdes40.generated.SWEventReportData;
+import com.windsor.node.plugin.icisnpdes40.generated.SWIndustrialPermitData;
+import com.windsor.node.plugin.icisnpdes40.generated.SWMS4LargePermitData;
+import com.windsor.node.plugin.icisnpdes40.generated.SWMS4ProgramReportData;
+import com.windsor.node.plugin.icisnpdes40.generated.SWMS4SmallPermitData;
+import com.windsor.node.plugin.icisnpdes40.generated.ScheduleEventViolationData;
+import com.windsor.node.plugin.icisnpdes40.generated.SingleEventViolationData;
 import com.windsor.node.plugin.icisnpdes40.generated.TransactionHeader;
 import com.windsor.node.plugin.icisnpdes40.generated.TransactionType;
+import com.windsor.node.plugin.icisnpdes40.generated.UnpermittedFacilityData;
 
 public class PerformICISSubmission extends AbstractIcisNpdesSubmission {
 
@@ -139,11 +182,56 @@ public class PerformICISSubmission extends AbstractIcisNpdesSubmission {
      * @return Map
      */
     private Map<OperationType, Class<?>> payloadOperationTypeJpaEntityMap() {
-        Map<OperationType, Class<?>> map = new HashMap<OperationType, Class<?>>();
-        map.put(OperationType.LIMIT_SET_SUBMISSION, LimitSetData.class);
-        map.put(OperationType.PERMITTED_FEATURE_SUBMISSION, PermittedFeatureData.class);
-        map.put(OperationType.BASIC_PERMIT_SUBMISSION, BasicPermitData.class);
         
+        
+        Map<OperationType, Class<?>> map = new HashMap<OperationType, Class<?>>();
+        map.put(OperationType.BASIC_PERMIT_SUBMISSION, BasicPermitData.class);
+        map.put(OperationType.BIOSOLIDS_PERMIT_SUBMISSION, BiosolidsPermitData.class);
+        map.put(OperationType.BIOSOLIDS_PROGRAM_REPORT_SUBMISSION, BiosolidsProgramReportData.class);
+        map.put(OperationType.CAFO_ANNUAL_REPORT_SUBMISSION, CAFOAnnualReportData.class);
+        map.put(OperationType.CAFO_PERMIT_SUBMISSION, CAFOPermitData.class);
+        map.put(OperationType.COMPLIANCE_MONITORING_SUBMISSION, ComplianceMonitoringData.class);
+        map.put(OperationType.COMPLIANCE_MONITORING_LINKAGE_SUBMISSION, ComplianceMonitoringLinkageData.class);
+        map.put(OperationType.COMPLIANCE_SCHEDULE_SUBMISSION, ComplianceScheduleData.class);
+        map.put(OperationType.CSO_EVENT_REPORT_SUBMISSION, CSOEventReportData.class);
+        map.put(OperationType.CSO_PERMIT_SUBMISSION, CSOPermitData.class);
+        map.put(OperationType.DISCHARGE_MONITORING_REPORT_SUBMISSION, DischargeMonitoringReportData.class);
+        map.put(OperationType.DMR_PROGRAM_REPORT_LINKAGE_SUBMISSION, DMRProgramReportLinkageData.class);
+        map.put(OperationType.DMR_VIOLATION_SUBMISSION, DMRViolationData.class);
+        map.put(OperationType.EFFLUENT_TRADE_PARTNER_SUBMISSION, EffluentTradePartnerData.class);
+        map.put(OperationType.ENFORCEMENT_ACTION_MILESTONE_SUBMISSION, EnforcementActionMilestoneData.class);
+        map.put(OperationType.ENFORCEMENT_ACTION_VIOLATION_LINKAGE_SUBMISSION, EnforcementActionViolationLinkageData.class);
+        //map.put(OperationType.FEDERAL_COMPLIANCE_MONITORING_SUBMISSION, .class);
+        map.put(OperationType.FINAL_ORDER_VIOLATION_LINKAGE_SUBMISSION, FinalOrderViolationLinkageData.class);
+        map.put(OperationType.FORMAL_ENFORCEMENT_ACTION_SUBMISSION, FormalEnforcementActionData.class);
+        map.put(OperationType.GENERAL_PERMIT_SUBMISSION, GeneralPermitData.class);
+        map.put(OperationType.HISTORICAL_PERMIT_SCHEDULE_EVENTS_SUBMISSION, HistoricalPermitScheduleEventsData.class);
+        map.put(OperationType.INFORMAL_ENFORCEMENT_ACTION_SUBMISSION, InformalEnforcementActionData.class);
+        map.put(OperationType.LIMIT_SET_SUBMISSION, LimitSetData.class);
+        map.put(OperationType.LIMITS_SUBMISSION, LimitsData.class);
+        map.put(OperationType.LOCAL_LIMITS_PROGRAM_REPORT_SUBMISSION, LocalLimitsProgramReportData.class);
+        map.put(OperationType.MASTER_GENERAL_PERMIT_SUBMISSION, MasterGeneralPermitData.class);
+        map.put(OperationType.NARRATIVE_CONDITION_SCHEDULE_SUBMISSION, NarrativeConditionScheduleData.class);
+        map.put(OperationType.PARAMETER_LIMITS_SUBMISSION, ParameterLimitsData.class);
+        map.put(OperationType.PERMIT_REISSUANCE_SUBMISSION, PermitReissuanceData.class);
+        map.put(OperationType.PERMITTED_FEATURE_SUBMISSION, PermittedFeatureData.class);
+        map.put(OperationType.PERMIT_TERMINATION_SUBMISSION, PermitTerminationData.class);
+        map.put(OperationType.PERMIT_TRACKING_EVENT_SUBMISSION, PermitTrackingEventData.class);
+        map.put(OperationType.PRETREATMENT_PERMIT_SUBMISSION, PretreatmentPermitData.class);
+        map.put(OperationType.PRETREATMENT_PERFORMANCE_SUMMARY_SUBMISSION, PretreatmentPerformanceSummaryData.class);
+        map.put(OperationType.SCHEDULE_EVENT_VIOLATION_SUBMISSION, ScheduleEventViolationData.class);
+        map.put(OperationType.SINGLE_EVENT_VIOLATION_SUBMISSION, SingleEventViolationData.class);
+        map.put(OperationType.SSO_ANNUAL_REPORT_SUBMISSION, SSOAnnualReportData.class);
+        map.put(OperationType.SSO_EVENT_REPORT_SUBMISSION, SSOEventReportData.class);
+        map.put(OperationType.SSO_MONTHLY_EVENT_REPORT_SUBMISSION, SSOMonthlyEventReportData.class);
+        map.put(OperationType.POTW_PERMIT_SUBMISSION, POTWPermitData.class);
+        map.put(OperationType.SW_CONSTRUCTION_PERMIT_SUBMISSION, SWConstructionPermitData.class);
+        map.put(OperationType.SW_EVENT_REPORT_SUBMISSION, SWEventReportData.class);
+        map.put(OperationType.SW_INDUSTRIAL_PERMIT_SUBMISSION, SWIndustrialPermitData.class);
+        map.put(OperationType.SWMS_4_LARGE_PERMIT_SUBMISSION, SWMS4LargePermitData.class);
+        map.put(OperationType.SWMS_4_PROGRAM_REPORT_SUBMISSION, SWMS4ProgramReportData.class);
+        map.put(OperationType.SWMS_4_SMALL_PERMIT_SUBMISSION, SWMS4SmallPermitData.class);
+        map.put(OperationType.UNPERMITTED_FACILITY_SUBMISSION, UnpermittedFacilityData.class);
         return map;
     }
     

@@ -57,6 +57,9 @@ import com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "AnimalType", propOrder = {
+    "animalTypeCode", // FIXME - Manually added
+    "otherAnimalTypeName", // FIXE - Manually added
+    "totalNumbersEachLivestock", // FIXME - Manually added
     "openConfinementCount",
     "housedUnderRoofConfinementCount"
 })
