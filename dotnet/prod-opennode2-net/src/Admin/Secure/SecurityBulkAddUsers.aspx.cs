@@ -180,7 +180,7 @@ namespace Windsor.Node2008.Admin.Secure
 
                     addUsersBtn.Visible = false;
                     deleteUserBtn.Enabled = _canDeleteUser;
-                    resetPasswordBtn.Visible = _canResetPassword;
+                    resetPasswordBtn.Enabled = _canResetPassword;
                 }
                 else
                 {
