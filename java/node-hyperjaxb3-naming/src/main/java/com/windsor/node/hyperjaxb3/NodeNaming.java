@@ -103,7 +103,12 @@ public class NodeNaming extends DefaultNaming {
 				if (getXmlToDbNameMappings().containsKey(translation)) {
 					translation = getXmlToDbNameMappings().getProperty(translation);
 				}
-				names.add(translation);
+				/*
+				 * Only store non-empty translations.
+				 */
+				if (! StringUtils.isEmpty(translation)) {
+					names.add(translation);
+				}
 			}
 			name = StringUtils.join(names, getDbWordSeparator());
 		}

@@ -4,12 +4,12 @@ import java.util.Collection;
 
 import javax.persistence.Embeddable;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 
 import org.jvnet.hyperjaxb3.ejb.strategy.mapping.ElementCollectionMapping;
 import org.jvnet.hyperjaxb3.ejb.strategy.mapping.Mapping;
 
 import com.sun.java.xml.ns.persistence.orm.CollectionTable;
+import com.sun.java.xml.ns.persistence.orm.JoinColumn;
 import com.sun.tools.xjc.outline.FieldOutline;
 
 /**
@@ -50,6 +50,14 @@ public class NodeElementCollectionMapping extends ElementCollectionMapping {
 		// if (idFieldsOutline.isEmpty()) {
 		// collectionTable.getJoinColumn().clear();
 		// }
+
+		/*
+		 * If there isn't a @JoinColumn associated with the @CollectionTable, add one.
+		 */
+		if (collectionTable.getJoinColumn().isEmpty()) {
+			collectionTable.getJoinColumn().add(new JoinColumn());
+		}
+
 		context.getAssociationMapping().createElementCollection$CollectionTable$JoinColumns(
 				context, fieldOutline, idFieldsOutline, collectionTable.getJoinColumn());
 	}

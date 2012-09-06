@@ -11,6 +11,7 @@
 	</hj:default-id>
 	<hj:default-generated-id name="Dbid" javaType="java.lang.Long" schemaType="xsd:long">
 		<orm:column/>
+		<!-- commented out generated value -->
 		<!-- <orm:generated-value strategy="AUTO"/>-->
 	</hj:default-generated-id>
     <hj:default-embedded-id>
@@ -25,7 +26,8 @@
 		<orm:column/>
 	</hj:default-basic>
 	<hj:default-to-one>
-		<hj:many-to-one/>
+		<!-- changed the default from many-to-one -->
+		<hj:one-to-one/>
 	</hj:default-to-one>
 	<hj:default-to-many>
 		<hj:one-to-many/>

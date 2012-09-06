@@ -18,7 +18,7 @@
 		class="org.jvnet.hyperjaxb3.ejb.strategy.customizing.impl.DefaultCustomizing">
 		<property name="defaultCustomizations">
 			<bean parent="abstractCustomizationsUnmarshalledResource">
-				<property name="resource" value="classpath:org/jvnet/hyperjaxb3/ejb/strategy/customizing/impl/NodeDefaultCustomizations.xml"/>
+				<property name="resource" value="classpath:org/jvnet/hyperjaxb3/ejb/strategy/customizing/impl/NodeCustomizations.xml"/>
 			</bean>
 		</property>
 	</bean>
@@ -52,6 +52,8 @@
 	 <bean name="oneToManyMapping" class="com.windsor.node.hyperjaxb3.NodeOneToManyMapping"/>
 	 <bean name="manyToOneMapping" class="com.windsor.node.hyperjaxb3.NodeManyToOneMapping"/>
 	 <bean name="elementCollectionMapping" class="com.windsor.node.hyperjaxb3.NodeElementCollectionMapping"/>
+	 <bean name="oneToOneMapping" class="com.windsor.node.hyperjaxb3.NodeOneToOneMapping"/>
+	 <bean name="associationMapping" class="com.windsor.node.hyperjaxb3.NodeAssociationMapping"/>
 	
 	<bean name="mapping"
 		class="org.jvnet.hyperjaxb3.ejb.strategy.mapping.Mapping">
@@ -60,8 +62,9 @@
 		<property name="ignoring" ref="ignoring"/>
 		<property name="embeddableAttributesMapping" ref="embeddableAttributesMapping"/>
 		<property name="oneToManyMapping" ref="oneToManyMapping"/>
-		<property name="manyToOneMapping" ref="manyToOneMapping"/>
+		<property name="manyToOneMapping" ref="oneToOneMapping"/>
 		<property name="elementCollectionMapping" ref="elementCollectionMapping"/>
+		<property name="associationMapping" ref="associationMapping"/>
 	</bean>
 
 </beans>
