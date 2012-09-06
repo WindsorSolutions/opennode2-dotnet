@@ -19,7 +19,7 @@
 ** 10/07/2010    KJames      Removed individual statements to create unique indexes on primary key columns.  Oracle 
 **                           automatically generates a unique index when a primary key is declared.
 ** 10/07/2010    KJames      Added drop statements on all new RCRA 5.1 objects.
-**
+** 09/05/2012    TMorris     Added RCRA_SUBMISSIONHISTORY.SUBMISSIONTYPE column.
 ******************************************************************************************************************************/--------------------------------------------------------
 
 /* ****************************
@@ -2890,6 +2890,7 @@ purge recyclebin;
 	"SCHEDULERUNDATE" DATE, 
 	"TRANSACTIONID" VARCHAR2(50), 
 	"PROCESSINGSTATUS" VARCHAR2(50)
+	"SUBMISSIONTYPE" VARCHAR2(50)
    ) ;
  
 
@@ -4167,6 +4168,8 @@ REM INSERTING into RCRA_SUBMISSIONHISTORY
   ALTER TABLE "RCRA_SUBMISSIONHISTORY" MODIFY ("TRANSACTIONID" NOT NULL ENABLE);
  
   ALTER TABLE "RCRA_SUBMISSIONHISTORY" MODIFY ("PROCESSINGSTATUS" NOT NULL ENABLE);
+
+  ALTER TABLE "RCRA_SUBMISSIONHISTORY" MODIFY ("SUBMISSIONTYPE" NOT NULL ENABLE);
 --------------------------------------------------------
 --  Constraints for Table RCRA_CA_SUBM
 --------------------------------------------------------

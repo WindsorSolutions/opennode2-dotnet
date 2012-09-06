@@ -78,6 +78,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
         protected SpringBaseDao _baseDao;
         protected DataRequest _dataRequest;
         protected DateTime _scheduleRunDate = DateTime.Now;
+        protected string _submissionHistorySubmissionType;
 
         protected const string PARAM_USE_SUBMISSION_HISTORY_TABLE_KEY = "UseSubmissionHistoryTable";
 
@@ -117,6 +118,65 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
         {
             AppendAuditLogEvent("Loading request with id \"{0}\"", requestId);
             _dataRequest = _requestManager.GetDataRequest(requestId);
+        }
+        protected override List<string> GetPendingSubmissionList(SpringBaseDao baseDao)
+        {
+            if (_useSubmissionHistoryTable)
+            {
+                ExceptionUtils.ThrowIfEmptyString(_submissionHistoryTableName, "_submissionHistoryTableName");
+                ExceptionUtils.ThrowIfEmptyString(_submissionHistoryTableProcessingStatusName, "_submissionHistoryTableProcessingStatusName");
+                ExceptionUtils.ThrowIfEmptyString(_submissionHistoryTablePkName, "_submissionHistoryTableTransactionIdName");
+                ExceptionUtils.ThrowIfEmptyString(_submissionHistorySubmissionType, "_submissionHistorySubmissionType");
+
+                List<string> recordIdList = null;
+                baseDao.DoSimpleQueryWithRowCallbackDelegate(
+                    _submissionHistoryTableName,
+                    _submissionHistoryTableProcessingStatusName + ";SUBMISSIONTYPE",
+                    new object[] { EnumUtils.ToDescription(CDX_Processing_Status.Pending), _submissionHistorySubmissionType },
+                    _submissionHistoryTablePkName,
+                    delegate(IDataReader reader)
+                    {
+                        if (recordIdList == null)
+                        {
+                            recordIdList = new List<string>();
+                        }
+                        recordIdList.Add(reader.GetString(0));
+                    });
+                return recordIdList;
+            }
+            return null;
+        }
+        protected override string SetPendingSubmission(SpringBaseDao baseDao, DateTime runDate)
+        {
+            if (_useSubmissionHistoryTable)
+            {
+                ExceptionUtils.ThrowIfEmptyString(_submissionHistoryTableName, "_submissionHistoryTableName");
+                ExceptionUtils.ThrowIfEmptyString(_submissionHistoryTableProcessingStatusName, "_submissionHistoryTableProcessingStatusName");
+                ExceptionUtils.ThrowIfEmptyString(_submissionHistoryTableRunDateName, "_submissionHistoryTableRunDateName");
+                ExceptionUtils.ThrowIfEmptyString(_submissionHistoryTablePkName, "_submissionHistoryTablePkName");
+                ExceptionUtils.ThrowIfEmptyString(_submissionHistoryTableTransactionIdName, "_submissionHistoryTableTransactionIdName");
+                ExceptionUtils.ThrowIfEmptyString(_submissionHistorySubmissionType, "_submissionHistorySubmissionType");
+
+                IdProvider idProvider;
+                GetServiceImplementation(out idProvider);
+
+                AppendAuditLogEvent("Adding pending submission to history table");
+                string recordId = idProvider.Get();
+                baseDao.DoInsert(
+                    _submissionHistoryTableName,
+                    _submissionHistoryTablePkName + ";" + _submissionHistoryTableRunDateName + ";" +
+                    _submissionHistoryTableTransactionIdName + ";" + _submissionHistoryTableProcessingStatusName +
+                    ";SUBMISSIONTYPE",
+                    new object[] { recordId, runDate, "PENDING",
+                                   EnumUtils.ToDescription(CDX_Processing_Status.Pending),
+                                   _submissionHistorySubmissionType }
+                                   );
+                return recordId;
+            }
+            else
+            {
+                return string.Empty;
+            }
         }
         /// <summary>
         /// Return the Query, Solicit, or Execute data service parameters for specified data service.

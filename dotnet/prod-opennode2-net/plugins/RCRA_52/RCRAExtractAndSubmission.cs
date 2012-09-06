@@ -106,6 +106,10 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
     [Serializable]
     public class RCRAHandlerExtractAndSubmission : RCRAExtractAndSubmission<HazardousWasteHandlerSubmissionDataType>
     {
+        public RCRAHandlerExtractAndSubmission()
+        {
+            _submissionHistorySubmissionType = "HD";
+        }
         protected override List<HazardousWasteHandlerSubmissionDataType> GetSubmissionData()
         {
             return _objectsFromDatabase.LoadFromDatabase<HazardousWasteHandlerSubmissionDataType>(_baseDao, null);
@@ -118,6 +122,10 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
     [Serializable]
     public class RCRACMEExtractAndSubmission : RCRAExtractAndSubmission<HazardousWasteCMESubmissionDataType>
     {
+        public RCRACMEExtractAndSubmission()
+        {
+            _submissionHistorySubmissionType = "CE";
+        }
         protected override List<HazardousWasteCMESubmissionDataType> GetSubmissionData()
         {
             return _objectsFromDatabase.LoadFromDatabase<HazardousWasteCMESubmissionDataType>(_baseDao, null);
@@ -130,6 +138,10 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
     [Serializable]
     public class RCRACorrectiveActionExtractAndSubmission : RCRAExtractAndSubmission<HazardousWasteCorrectiveActionDataType>
     {
+        public RCRACorrectiveActionExtractAndSubmission()
+        {
+            _submissionHistorySubmissionType = "CA";
+        }
         protected override List<HazardousWasteCorrectiveActionDataType> GetSubmissionData()
         {
             return _objectsFromDatabase.LoadFromDatabase<HazardousWasteCorrectiveActionDataType>(_baseDao, null);
@@ -142,6 +154,10 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
     [Serializable]
     public class RCRAPermitExtractAndSubmission : RCRAExtractAndSubmission<HazardousWastePermitDataType>
     {
+        public RCRAPermitExtractAndSubmission()
+        {
+            _submissionHistorySubmissionType = "PM";
+        }
         protected override List<HazardousWastePermitDataType> GetSubmissionData()
         {
             return _objectsFromDatabase.LoadFromDatabase<HazardousWastePermitDataType>(_baseDao, null);
@@ -154,6 +170,10 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
     [Serializable]
     public class RCRAFinancialAssuranceExtractAndSubmission : RCRAExtractAndSubmission<FinancialAssuranceSubmissionDataType>
     {
+        public RCRAFinancialAssuranceExtractAndSubmission()
+        {
+            _submissionHistorySubmissionType = "FA";
+        }
         protected override List<FinancialAssuranceSubmissionDataType> GetSubmissionData()
         {
             return _objectsFromDatabase.LoadFromDatabase<FinancialAssuranceSubmissionDataType>(_baseDao, null);
@@ -166,6 +186,10 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
     [Serializable]
     public class RCRAGeographicInformationExtractAndSubmission : RCRAExtractAndSubmission<GeographicInformationSubmissionDataType>
     {
+        public RCRAGeographicInformationExtractAndSubmission()
+        {
+            _submissionHistorySubmissionType = "GS";
+        }
         protected override List<GeographicInformationSubmissionDataType> GetSubmissionData()
         {
             return _objectsFromDatabase.LoadFromDatabase<GeographicInformationSubmissionDataType>(_baseDao, null);
