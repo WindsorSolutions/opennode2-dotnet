@@ -2,7 +2,6 @@ package com.windsor.node.plugin.icisnpdes40.submission;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,8 +59,6 @@ import com.windsor.node.plugin.icisnpdes40.generated.SWMS4ProgramReportData;
 import com.windsor.node.plugin.icisnpdes40.generated.SWMS4SmallPermitData;
 import com.windsor.node.plugin.icisnpdes40.generated.ScheduleEventViolationData;
 import com.windsor.node.plugin.icisnpdes40.generated.SingleEventViolationData;
-import com.windsor.node.plugin.icisnpdes40.generated.TransactionHeader;
-import com.windsor.node.plugin.icisnpdes40.generated.TransactionType;
 import com.windsor.node.plugin.icisnpdes40.generated.UnpermittedFacilityData;
 
 public class PerformICISSubmission extends AbstractIcisNpdesSubmission {
@@ -110,7 +107,7 @@ public class PerformICISSubmission extends AbstractIcisNpdesSubmission {
                 
                 String klassName = klass.getSimpleName();
                 
-                log("Found the {} class for operation {}", klassName, op.getOperationType());
+                log("...Found the {} class for operation {}", klassName, op.getOperationType());
 
                 /**
                  * Use the class name to create a JPQL select statement and then
@@ -118,7 +115,7 @@ public class PerformICISSubmission extends AbstractIcisNpdesSubmission {
                  */
                 final List<?> list = em.createQuery("select ls from "+klassName+" ls").getResultList();
                 
-                log("Found {} records in the database.", list.size());
+                log("...Found {} records in the database.", list.size());
                 
                 if (list.size() > 0 ) {
 
@@ -126,36 +123,14 @@ public class PerformICISSubmission extends AbstractIcisNpdesSubmission {
                      * Set the type operation to send to ICIS. Only set if there are records for this operation.
                      */
                     payloadData.setOperation(op.getOperationType());
-                    
-                    /////
-                    // Set a transaction header - temporary code
-                    ////
-                    TransactionHeader txHeader = new TransactionHeader();
-                    txHeader.setTransactionTimestamp(new Date());
-                    txHeader.setTransactionType(TransactionType.C);
-                    
-                    try {
-                        Method m = klass.getMethod("setTransactionHeader", TransactionHeader.class);
-                        
-                        for(Object o : list) {
-                            m.invoke(o, txHeader);
-                        }
-                        
-                    } catch (Exception e1) {
-                        e1.printStackTrace();
-                    }
-                    
+
                     String methodName = "set" + klassName;
                     
-                    log("Searching for method {}", methodName);
-                    
                     for(Method method : PayloadData.class.getMethods()) {
-                        
-                        log("Candidate method {}?", method.getName());
-                                                
+                    
                         if (method.getName().equals(methodName)) {
                             
-                            log("Found method and invoking it");
+                            log(".....invoking " + methodName);
                             
                             try {
                                 method.invoke(payloadData, list);
@@ -167,7 +142,7 @@ public class PerformICISSubmission extends AbstractIcisNpdesSubmission {
                     allPayloads.add(payloadData);
                 }
             } else {
-                log("!!! Did not find an @Entity class for {} operation.", op.getOperationType());
+                log("....did not find an @Entity class for {} operation.", op.getOperationType());
             }
         }
         return allPayloads;
@@ -182,8 +157,6 @@ public class PerformICISSubmission extends AbstractIcisNpdesSubmission {
      * @return Map
      */
     private Map<OperationType, Class<?>> payloadOperationTypeJpaEntityMap() {
-        
-        
         Map<OperationType, Class<?>> map = new HashMap<OperationType, Class<?>>();
         map.put(OperationType.BASIC_PERMIT_SUBMISSION, BasicPermitData.class);
         map.put(OperationType.BIOSOLIDS_PERMIT_SUBMISSION, BiosolidsPermitData.class);

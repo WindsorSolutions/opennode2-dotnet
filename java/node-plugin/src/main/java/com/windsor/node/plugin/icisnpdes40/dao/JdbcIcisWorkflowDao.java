@@ -48,9 +48,10 @@ public class JdbcIcisWorkflowDao extends JdbcDaoSupport
     public int countPendingWorkflows() {
         return getJdbcTemplate().queryForInt(SQL_COUNT_PENDING_WORKFLOWS, null);
     }
-    
+
     /**
-     * Returns the current 'Pending' workflow record.
+     * Returns the current 'Pending' workflow record or null if one is not
+     * found.
      * 
      * @return The current 'Pending' workflow record.
      */
