@@ -1,6 +1,5 @@
 package com.windsor.node.hyperjaxb3;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -16,9 +15,9 @@ import com.sun.tools.xjc.outline.FieldOutline;
 /**
  * Overrides the {@link DefaultAssociationMapping} to ensure that a default
  * {@link JoinColumn} annotation has a name attribute. This is necessary for
- * classes that don't define PKs (e.g., {@link Embeddable}). Also removes empty
- * {@link AssociationOverride} annotations which lead to the undoing of the
- * annotations on the {@link Embeddable} class.
+ * classes that don't define PKs (e.g., {@link Embeddable}). Also ensures that
+ * empty {@link AssociationOverride} annotations are populated with
+ * {@link JoinColumn} annotations.
  *
  */
 public class NodeAssociationMapping extends DefaultAssociationMapping {
@@ -28,16 +27,16 @@ public class NodeAssociationMapping extends DefaultAssociationMapping {
 			final List<AssociationOverride> associationOverrides) {
 		super.createAssociationOverride(context, fieldOutline, associationOverrides);
 		/*
-		 * Remove empty @AssociationOverride annotations.
+		 * Add @JoinColumn to empty @AssociationOverride annotations.
 		 */
-		final Collection<AssociationOverride> emptyOverrides = new ArrayList<AssociationOverride>();
 		for (final AssociationOverride associationOverride : associationOverrides) {
 			if (associationOverride.getJoinColumn().isEmpty()
 					&& associationOverride.getJoinTable() == null) {
-				emptyOverrides.add(associationOverride);
+				final JoinColumn joinColumn = new JoinColumn();
+				createJoinColumn$Name(context, fieldOutline, null, joinColumn);
+				associationOverride.getJoinColumn().add(joinColumn);
 			}
 		}
-		associationOverrides.removeAll(emptyOverrides);
 	}
 
 	@Override
