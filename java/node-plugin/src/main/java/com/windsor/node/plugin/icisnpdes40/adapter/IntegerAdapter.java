@@ -17,7 +17,7 @@ public class IntegerAdapter extends XmlAdapter<String, Integer> {
 
 	@Override
 	public String marshal(final Integer value) throws Exception {
-		return value == null ? "" : value.toString();
+		return value == null ? null : value.toString();
 	}
 
 }

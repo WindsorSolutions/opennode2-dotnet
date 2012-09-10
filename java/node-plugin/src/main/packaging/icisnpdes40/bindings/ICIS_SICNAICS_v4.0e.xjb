@@ -10,7 +10,6 @@
 			<hj:entity>
 				<orm:table name="ICS_NAICS_CODE" />
 			</hj:entity>
-
 			<hj:generated-id name="Dbid" transient="true">
 				<orm:column name="ICS_NAICS_CODE_ID" />
 			</hj:generated-id>
@@ -24,7 +23,6 @@
 			<hj:entity>
 				<orm:table name="ICS_SIC_CODE" />
 			</hj:entity>
-
 			<hj:generated-id name="Dbid" transient="true">
 				<orm:column name="ICS_SIC_CODE_ID" />
 			</hj:generated-id>

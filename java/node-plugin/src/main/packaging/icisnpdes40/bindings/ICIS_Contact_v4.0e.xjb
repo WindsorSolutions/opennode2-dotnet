@@ -1,159 +1,96 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:annox="http://annox.dev.java.net"
-	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm" jaxb:extensionBindingPrefixes="hj orm annox"
+	xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance"
+	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm" jaxb:extensionBindingPrefixes="hj orm inheritance"
 	schemaLocation="../xsd/0/ICIS_Contact_v4.0e.xsd">
-
-	<!-- contact -->
-
-	<jaxb:bindings node="//xsd:complexType[@name='Contact']">
-
-		<hj:generated-id name="Dbid" transient="true">
-			<orm:column name="ICS_CONTACT_ID" />
-		</hj:generated-id>
-
-		<jaxb:bindings node="//xsd:element[@ref='icis:RegionCode']">
-			<hj:basic>
-				<orm:column column-definition="char(2)" length="2" />
-			</hj:basic>
-		</jaxb:bindings>
-
-		<jaxb:bindings node="//xsd:element[@ref='icis:StateCode']">
-			<hj:basic>
-				<orm:column column-definition="char(2)" length="2" />
-			</hj:basic>
-		</jaxb:bindings>
-
-		<jaxb:bindings node="//xsd:element[@ref='icis:Telephone']">
-			<hj:one-to-many>
-				<orm:join-column name="ICS_CONTACT_ID" />
-			</hj:one-to-many>
-		</jaxb:bindings>
-
-	</jaxb:bindings>
-
-	<!-- site owner contact -->
-
-	<jaxb:bindings>
-
-		<jaxb:bindings node="//xsd:complexType[@name='SiteOwnerContact']">
-			<hj:embeddable />
-		</jaxb:bindings>
-
-		<jaxb:bindings node="//xsd:complexType[@name='SiteOwnerContact']//xsd:element[@ref='icis:Contact']">
-			<annox:annotate>
-				<annox:annotate annox:class="javax.persistence.JoinColumn" name="ICS_PRMT_FEATR_ID" />
-			</annox:annotate>
-		</jaxb:bindings>
-
-	</jaxb:bindings>
 
 	<!-- biosolids contact -->
 
 	<jaxb:bindings>
-
 		<jaxb:bindings node="//xsd:complexType[@name='BiosolidsPermitContact']">
 			<hj:embeddable />
+			<inheritance:implements>com.windsor.node.plugin.icisnpdes40.domain.IContactList</inheritance:implements>
 		</jaxb:bindings>
-
-		<jaxb:bindings
-			node="//xsd:complexType[@name='BiosolidsPermitContact']//xsd:element[@ref='icis:Contact']">
-			<annox:annotate>
-				<annox:annotate annox:class="javax.persistence.JoinColumn" name="ICS_BS_PRMT_ID" />
-			</annox:annotate>
-		</jaxb:bindings>
-
 	</jaxb:bindings>
 
 	<!-- CAFO contact -->
 
 	<jaxb:bindings>
-
 		<jaxb:bindings node="//xsd:complexType[@name='CAFOContact']">
 			<hj:embeddable />
+			<inheritance:implements>com.windsor.node.plugin.icisnpdes40.domain.IContactList</inheritance:implements>
 		</jaxb:bindings>
-
-		<jaxb:bindings node="//xsd:complexType[@name='CAFOContact']//xsd:element[@ref='icis:Contact']">
-			<annox:annotate>
-				<annox:annotate annox:class="javax.persistence.JoinColumn" name="ICS_CAFO_PRMT_ID" />
-			</annox:annotate>
-		</jaxb:bindings>
-
 	</jaxb:bindings>
 
 	<!-- facility contact -->
 
 	<jaxb:bindings>
-
 		<jaxb:bindings node="//xsd:complexType[@name='FacilityContact']">
 			<hj:embeddable />
+			<inheritance:implements>com.windsor.node.plugin.icisnpdes40.domain.IContactList</inheritance:implements>
 		</jaxb:bindings>
+	</jaxb:bindings>
+	
+	<!-- government contact -->
 
-		<jaxb:bindings node="//xsd:complexType[@name='FacilityContact']//xsd:element[@ref='icis:Contact']">
-			<annox:annotate>
-				<annox:annotate annox:class="javax.persistence.JoinColumn" name="ICS_FAC_ID" />
-			</annox:annotate>
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='GovernmentContact']">
+			<hj:ignored />
 		</jaxb:bindings>
+	</jaxb:bindings>
+	
+	<!-- inspection contact -->
 
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='InspectionContact']">
+			<hj:embeddable />
+			<inheritance:implements>com.windsor.node.plugin.icisnpdes40.domain.IContactList</inheritance:implements>
+		</jaxb:bindings>
+	</jaxb:bindings>
+	
+	<!-- inspection government contact -->
+
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='InspectionGovernmentContact']">
+			<hj:ignored />
+		</jaxb:bindings>
 	</jaxb:bindings>
 
 	<!-- permit contact -->
 
 	<jaxb:bindings>
-
 		<jaxb:bindings node="//xsd:complexType[@name='PermitContact']">
 			<hj:embeddable />
+			<inheritance:implements>com.windsor.node.plugin.icisnpdes40.domain.IContactList</inheritance:implements>
 		</jaxb:bindings>
-
-		<jaxb:bindings node="//xsd:complexType[@name='PermitContact']//xsd:element[@ref='icis:Contact']">
-			<annox:annotate>
-				<annox:annotate annox:class="javax.persistence.JoinColumn" name="ICS_GNRL_PRMT_ID" />
-			</annox:annotate>
-		</jaxb:bindings>
-
 	</jaxb:bindings>
 
 	<!-- pretreatment contact -->
 
 	<jaxb:bindings>
-
 		<jaxb:bindings node="//xsd:complexType[@name='PretreatmentContact']">
 			<hj:embeddable />
+			<inheritance:implements>com.windsor.node.plugin.icisnpdes40.domain.IContactList</inheritance:implements>
 		</jaxb:bindings>
+	</jaxb:bindings>
 
-		<jaxb:bindings node="//xsd:complexType[@name='PretreatmentContact']//xsd:element[@ref='icis:Contact']">
-			<annox:annotate>
-				<annox:annotate annox:class="javax.persistence.JoinColumn" name="ICS_PRETR_PRMT_ID" />
-			</annox:annotate>
+	<!-- site owner contact -->
+
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='SiteOwnerContact']">
+			<hj:embeddable />
+			<inheritance:implements>com.windsor.node.plugin.icisnpdes40.domain.IContactList</inheritance:implements>
 		</jaxb:bindings>
-
 	</jaxb:bindings>
 
 	<!-- storm water contact -->
-	<!-- FIXME: this needs to be overridden by each of the sub-classes -->
 
 	<jaxb:bindings>
-
 		<jaxb:bindings node="//xsd:complexType[@name='StormWaterContact']">
 			<hj:embeddable />
+			<inheritance:implements>com.windsor.node.plugin.icisnpdes40.domain.IContactList</inheritance:implements>
 		</jaxb:bindings>
-
-		<jaxb:bindings node="//xsd:complexType[@name='StormWaterContact']//xsd:element[@ref='icis:Contact']">
-			<annox:annotate>
-				<annox:annotate annox:class="javax.persistence.JoinColumn" name="dummy" />
-			</annox:annotate>
-		</jaxb:bindings>
-
-	</jaxb:bindings>
-
-	<!-- inspection contact -->
-
-	<jaxb:bindings>
-
-		<jaxb:bindings node="//xsd:complexType[@name='InspectionContact']">
-			<hj:embeddable />
-		</jaxb:bindings>
-
 	</jaxb:bindings>
 
 </jaxb:bindings>

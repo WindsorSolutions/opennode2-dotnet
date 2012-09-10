@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:icis="http://www.exchangenetwork.net/schema/icis/4" elementFormDefault="qualified" attributeFormDefault="unqualified"  targetNamespace="http://www.exchangenetwork.net/schema/icis/4">
+	<xs:include schemaLocation="0/ICIS_Common_v4.0e.xsd"/>
 	<xs:element name="SubmissionResultList">
 		<xs:annotation>
 			<xs:documentation>Represents a single row in the OpenNode2 ICIS-NPDES Full Batch plugin ICS_SUBM_RESULTS staging table. Transformed from ICIS Accepted and Rejected transaction report.</xs:documentation>
@@ -10,9 +11,9 @@
 					<xs:complexType>
 						<xs:sequence>
 							<xs:element name="SubmissionTypeName" type="xs:string"/>
-							<xs:element name="TransactionType" type="xs:string"/>
-							<xs:element name="PermitIdentifier" type="xs:string" minOccurs="0"/>
-							<xs:element name="PermitIdentifier2" type="xs:string" minOccurs="0"/>
+							<xs:element name="TransactionType" type="icis:TransactionType"/>
+							<xs:element name="PermitIdentifier" type="icis:String9FixedType" minOccurs="0"/>
+							<xs:element name="PermitIdentifier2" type="icis:String9FixedType" minOccurs="0"/>
 							<xs:element name="PermittedFeatureIdentifier" type="xs:string" minOccurs="0"/>
 							<xs:element name="LimitSetDesignator" type="xs:string" minOccurs="0"/>
 							<xs:element name="MonitoringPeriodEndDate" type="xs:date" minOccurs="0"/>
@@ -37,7 +38,7 @@
 							<xs:element name="ScheduleEventCode" type="xs:string" minOccurs="0"/>
 							<xs:element name="ScheduleDate" type="xs:date" minOccurs="0"/>
 							<xs:element name="NumericReportCode" type="xs:string" minOccurs="0"/>
-							<xs:element name="NumericReportViolationCode" type="xs:string" minOccurs="0"/>
+							<xs:element name="NumericReportViolationCode" type="icis:NumericReportViolationCodeType" minOccurs="0"/>
 							<xs:element name="PermittingAuthorityReportReceivedDate" type="xs:date" minOccurs="0"/>
 							<xs:element name="PretreatmentPerformanceSummaryEndDate" type="xs:date" minOccurs="0"/>
 							<xs:element name="ReportCoverageEndDate" type="xs:date" minOccurs="0"/>
@@ -49,11 +50,11 @@
 							<xs:element name="StormWaterMS4ReportReceivedDate" type="xs:date" minOccurs="0"/>
 							<xs:element name="EnforcementActionIdentifier" type="xs:string" minOccurs="0"/>
 							<xs:element name="EnforcementActionIdentifier2" type="xs:string" minOccurs="0"/>
-							<xs:element name="FinalOrderIdentifier" type="xs:string" minOccurs="0"/>
-							<xs:element name="FinalOrderIdentifier2" type="xs:string" minOccurs="0"/>
+							<xs:element name="FinalOrderIdentifier" type="xs:int" minOccurs="0"/>
+							<xs:element name="FinalOrderIdentifier2" type="xs:int" minOccurs="0"/>
 							<xs:element name="ComplianceScheduleNumber" type="xs:integer" minOccurs="0"/>
 							<xs:element name="MilestoneTypeCode" type="xs:string" minOccurs="0"/>
-							<xs:element name="ScheduleViolationCode" type="xs:string" minOccurs="0"/>
+							<xs:element name="ScheduleViolationCode" type="icis:ScheduleViolationCodeType" minOccurs="0"/>
 							<xs:element name="EventId" type="xs:integer" minOccurs="0"/>
 							<xs:element name="ResultCode" type="xs:string" minOccurs="0"/>
 							<xs:element name="ResultTypeCode" type="xs:string" minOccurs="0"/>

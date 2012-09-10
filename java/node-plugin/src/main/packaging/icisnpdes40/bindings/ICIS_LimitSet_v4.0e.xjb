@@ -1,95 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:annox="http://annox.dev.java.net"
-	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm" jaxb:extensionBindingPrefixes="hj orm annox"
+	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm" jaxb:extensionBindingPrefixes="hj orm"
 	schemaLocation="../xsd/0/ICIS_LimitSet_v4.0e.xsd">
-
-	<!-- limit set data -->
-
-	<jaxb:bindings>
-
-		<jaxb:bindings node="//xsd:complexType[@name='LimitSetData']">
-
-			<hj:entity>
-				<orm:table name="ICS_LMT_SET" />
-			</hj:entity>
-
-			<hj:generated-id name="Dbid" transient="true">
-				<orm:column name="ICS_LMT_SET_ID" />
-			</hj:generated-id>
-
-		</jaxb:bindings>
-
-		<jaxb:bindings node="//xsd:element[@ref='icis:LimitSet']">
-			<hj:embedded>
-				<orm:association-override name="limitSetSchedule">
-					<orm:join-column name="ICS_LMT_SET_ID" />
-				</orm:association-override>
-				<orm:association-override name="limitSetStatus">
-					<orm:join-column name="ICS_LMT_SET_ID" />
-				</orm:association-override>
-			</hj:embedded>
-
-		</jaxb:bindings>
-
-	</jaxb:bindings>
 
 	<!-- limit set -->
 
 	<jaxb:bindings>
-
 		<jaxb:bindings node="//xsd:complexType[@name='LimitSet']">
 			<hj:embeddable />
 		</jaxb:bindings>
-
-		<jaxb:bindings node="//xsd:element[@ref='icis:LimitSetType']">
-			<hj:basic>
-				<orm:column column-definition="char(1)" length="1" />
-			</hj:basic>
-		</jaxb:bindings>
-
-		<jaxb:bindings node="//xsd:element[@ref='icis:LimitSetStatus']">
-			<hj:one-to-one />
-			<annox:annotate>
-				<annox:annotate annox:class="javax.persistence.JoinColumn" name="dummy" />
-			</annox:annotate>
-		</jaxb:bindings>
-
-		<jaxb:bindings node="//xsd:element[@ref='icis:LimitSetSchedule']">
-			<annox:annotate>
-				<annox:annotate annox:class="javax.persistence.JoinColumn" name="dummy" />
-			</annox:annotate>
-		</jaxb:bindings>
-
-		<jaxb:bindings node="//xsd:element[@ref='icis:LimitSetMonthsApplicable']">
-
-			<hj:element-collection>
-				<orm:column name="LMT_SET_MONTHS_APPL" />
-				<!-- <orm:order-column name="DATA_HASH" /> -->
-
-				<orm:collection-table name="ICS_LMT_SET_MONTHS_APPL">
-					<orm:join-column name="ICS_LMT_SET_ID" />
-				</orm:collection-table>
-
-			</hj:element-collection>
-
-			<!-- <annox:annotate> <annox:annotate annox:class="javax.persistence.CollectionTable" name="ICS_LMT_SET_MONTHS_APPL"> 
-				<annox:annotate annox:field="joinColumns"> <annox:annotate annox:class="javax.persistence.JoinColumn" 
-				name="ICS_LMT_SET_ID" /> </annox:annotate> </annox:annotate> </annox:annotate> -->
-		</jaxb:bindings>
-
-	</jaxb:bindings>
-
-	<!-- limit set schedule -->
-
-	<jaxb:bindings>
-
-		<jaxb:bindings node="//xsd:complexType[@name='LimitSetSchedule']">
-			<hj:generated-id name="dbid" transient="true">
-				<orm:column name="ICS_LMT_SET_SCHD_ID" />
-			</hj:generated-id>
-		</jaxb:bindings>
-
 	</jaxb:bindings>
 
 </jaxb:bindings>

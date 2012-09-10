@@ -6,23 +6,9 @@
 	<!-- DMR program report linkage -->
 
 	<jaxb:bindings>
-
 		<jaxb:bindings node="//xsd:complexType[@name='DMRProgramReportLinkage']">
 			<hj:embeddable />
 		</jaxb:bindings>
-
-		<jaxb:bindings node="//xsd:element[@ref='icis:LinkageBiosolidsReport']">
-			<hj:many-to-one>
-				<orm:join-column name="ICS_DMR_PROG_REP_LNK_ID" insertable="false" updatable="false" />
-			</hj:many-to-one>
-		</jaxb:bindings>
-
-		<jaxb:bindings node="//xsd:element[@ref='icis:LinkageSWEventReport']">
-			<hj:many-to-one>
-				<orm:join-column name="ICS_DMR_PROG_REP_LNK_ID" insertable="false" updatable="false" />
-			</hj:many-to-one>
-		</jaxb:bindings>
-
 	</jaxb:bindings>
 
 </jaxb:bindings>

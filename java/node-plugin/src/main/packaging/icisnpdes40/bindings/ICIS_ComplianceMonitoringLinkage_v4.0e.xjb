@@ -8,7 +8,7 @@
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='ComplianceMonitoringLinkage']">
 			<hj:embeddable />
-		</jaxb:bindings>
+		</jaxb:bindings>		
 	</jaxb:bindings>
 
 </jaxb:bindings>

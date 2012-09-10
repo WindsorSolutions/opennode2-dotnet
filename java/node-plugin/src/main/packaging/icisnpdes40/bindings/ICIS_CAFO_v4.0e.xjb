@@ -12,6 +12,8 @@
 			</hj:entity>
 		</jaxb:bindings>
 
+		<!-- non-standard column name ("Under") -->
+		
 		<jaxb:bindings node="//xsd:element[@ref='icis:HousedUnderRoofConfinementCount']">
 			<hj:basic>
 				<orm:column name="HOUSD_UNDR_ROOF_CONFINEMNT_CNT" />
@@ -21,65 +23,13 @@
 	</jaxb:bindings>
 
 	<!-- animal type -->
-
+	
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='AnimalType']">
 			<hj:entity>
-				<orm:attribute-override name="dbid">
-					<orm:column name="ICS_ANML_TYPE_ID" />
-				</orm:attribute-override>
+				<orm:table name="ICS_ANML_TYPE_HIB_VIEW"/>
 			</hj:entity>
 		</jaxb:bindings>
-	</jaxb:bindings>
-
-	<!-- animal NMP litter group -->
-
-	<jaxb:bindings>
-
-		<jaxb:bindings node="//xsd:element[@ref='icis:NMPDevelopedCertifiedPlannerApprovedIndicator']">
-			<hj:basic>
-				<orm:column length="1" column-definition="char(1)" />
-			</hj:basic>
-		</jaxb:bindings>
-
-	</jaxb:bindings>
-
-	<!-- EMS group -->
-
-	<jaxb:bindings>
-
-		<jaxb:bindings node="//xsd:element[@ref='icis:EnvironmentalManagementSystemIndicator']">
-			<hj:basic>
-				<orm:column length="1" column-definition="char(1)" />
-			</hj:basic>
-		</jaxb:bindings>
-
-	</jaxb:bindings>
-
-	<!-- CAFO classification group -->
-
-	<jaxb:bindings>
-
-		<jaxb:bindings
-			node="//xsd:group[@name='CAFOClassificationGroup']//xsd:element[@ref='icis:IsAnimalFacilityTypeCAFOIndicator']">
-			<hj:basic>
-				<orm:column length="1" column-definition="char(1)" />
-			</hj:basic>
-		</jaxb:bindings>
-
-	</jaxb:bindings>
-
-	<!-- CAFO inspection classification group -->
-
-	<jaxb:bindings>
-
-		<jaxb:bindings
-			node="//xsd:group[@name='CAFOInspectionClassificationGroup']//xsd:element[@ref='icis:IsAnimalFacilityTypeCAFOIndicator']">
-			<hj:basic>
-				<orm:column length="1" column-definition="char(1)" />
-			</hj:basic>
-		</jaxb:bindings>
-
 	</jaxb:bindings>
 
 </jaxb:bindings>

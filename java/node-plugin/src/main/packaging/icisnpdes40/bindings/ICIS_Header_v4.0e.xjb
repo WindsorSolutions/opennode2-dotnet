@@ -9,10 +9,21 @@
 		<jaxb:bindings node="//xsd:complexType[@name='TransactionHeader']">
 			<hj:embeddable />
 		</jaxb:bindings>
-		<jaxb:bindings node="//xsd:element[@ref='icis:TransactionType']">
-			<hj:basic>
-				<orm:column column-definition="char(1)" length="1" />
-			</hj:basic>
+	</jaxb:bindings>
+	
+	<!-- header data -->
+	
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='HeaderData']">
+			<hj:ignored />
+		</jaxb:bindings>
+	</jaxb:bindings>
+	
+	<!-- property -->
+	
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='Property']">
+			<hj:ignored />
 		</jaxb:bindings>
 	</jaxb:bindings>
 

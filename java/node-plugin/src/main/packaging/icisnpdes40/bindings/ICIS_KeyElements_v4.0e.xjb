@@ -43,23 +43,6 @@
 		</jaxb:bindings>
 	</jaxb:bindings>
 
-	<!-- compliance schedule event violation key elements -->
-
-	<jaxb:bindings>
-
-		<!-- FIXME: the fix for this is to map "Key" to an empty string -->
-
-		<jaxb:bindings node="//xsd:complexType[@name='ComplianceScheduleEventViolationKeyElements']">
-			<hj:entity>
-				<orm:table name="ICS_CMPL_SCHD_EVT_VIOL_ELEM" />
-			</hj:entity>
-			<hj:generated-id name="Dbid" transient="true">
-				<orm:column name="ICS_CMPL_SCHD_EVT_VIOL_ELEM_ID" />
-			</hj:generated-id>
-		</jaxb:bindings>
-
-	</jaxb:bindings>
-
 	<!-- compliance schedule key elements group -->
 
 	<jaxb:bindings>
@@ -120,7 +103,7 @@
 
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='FederalComplianceMonitoringKeyElements']">
-			<hj:mapped-superclass />
+			<hj:ignored />
 		</jaxb:bindings>
 	</jaxb:bindings>
 
@@ -143,26 +126,27 @@
 	<!-- limit set key elements -->
 
 	<jaxb:bindings>
-
 		<jaxb:bindings node="//xsd:complexType[@name='LimitSetKeyElements']">
 			<hj:mapped-superclass />
 		</jaxb:bindings>
-
-		<jaxb:bindings
-			node="//xsd:group[@name='BasicPermitKeyElementsGroup']//xsd:element[@ref='icis:PermitIdentifier']">
-			<hj:basic>
-				<orm:column column-definition="char(9)" length="9" />
-			</hj:basic>
-		</jaxb:bindings>
-
 	</jaxb:bindings>
 
 	<!-- local limits program report key elements -->
 
 	<jaxb:bindings>
+		
 		<jaxb:bindings node="//xsd:complexType[@name='LocalLimitsProgramReportKeyElements']">
 			<hj:mapped-superclass />
 		</jaxb:bindings>
+		
+		<!-- non-standard column name -->
+		
+		<jaxb:bindings node="//xsd:element[@ref='icis:LocalLimitsPermittingAuthorityReportReceivedDate']">
+			<hj:basic>
+				<orm:column name="PRMT_AUTH_REP_RCVD_DATE"/>
+			</hj:basic>
+		</jaxb:bindings>
+				
 	</jaxb:bindings>
 
 	<!-- parameter key elements -->
@@ -213,21 +197,12 @@
 		</jaxb:bindings>
 	</jaxb:bindings>
 
-	<!-- permit schedule event violation key elements -->
+	<!-- program inspection key elements -->
 
 	<jaxb:bindings>
-
-		<!-- FIXME: the fix for this is to map "Key" to an empty string -->
-
-		<jaxb:bindings node="//xsd:complexType[@name='PermitScheduleEventViolationKeyElements']">
-			<hj:entity>
-				<orm:table name="ICS_PRMT_SCHD_EVT_VIOL_ELEM" />
-			</hj:entity>
-			<hj:generated-id name="Dbid" transient="true">
-				<orm:column name="ICS_PRMT_SCHD_EVT_VIOL_ELEM_ID" />
-			</hj:generated-id>
+		<jaxb:bindings node="//xsd:complexType[@name='ProgramInspectionKeyElements']">
+			<hj:ignored />
 		</jaxb:bindings>
-
 	</jaxb:bindings>
 
 	<!-- pretreatment performance summary key elements -->
@@ -249,12 +224,28 @@
 	<!-- single event key elements group -->
 
 	<jaxb:bindings>
+		
 		<jaxb:bindings node="//xsd:complexType[@name='SingleEventKeyElements']">
 			<hj:mapped-superclass />
 		</jaxb:bindings>
+		
+		<!-- non-standard name -->
+		
+		<jaxb:bindings node="//xsd:element[@ref='icis:PermitScheduleEventViolationKeyElements']">
+			<hj:one-to-one>
+				<orm:join-column name="ICS_SCHD_EVT_VIOL_ID"/>
+			</hj:one-to-one>
+		</jaxb:bindings>
+		
+		<!-- non-standard name -->
+		
+		<jaxb:bindings node="//xsd:element[@ref='icis:ComplianceScheduleEventViolationKeyElements']">
+			<hj:one-to-one>
+				<orm:join-column name="ICS_SCHD_EVT_VIOL_ID"/>
+			</hj:one-to-one>
+		</jaxb:bindings>
+		
 	</jaxb:bindings>
-
-	<!-- SSO annual report group -->
 
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='SSOAnnualReportKeyElements']">

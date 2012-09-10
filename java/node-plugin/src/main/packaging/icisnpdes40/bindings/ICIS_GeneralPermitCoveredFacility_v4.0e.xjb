@@ -1,28 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
-	jaxb:extensionBindingPrefixes="hj orm" schemaLocation="../xsd/0/ICIS_GeneralPermitCoveredFacility_v4.0e.xsd">
+	xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance"
+	jaxb:extensionBindingPrefixes="hj orm inheritance" schemaLocation="../xsd/0/ICIS_GeneralPermitCoveredFacility_v4.0e.xsd">
 
-	<!-- General permit data -->
+	<!-- general permit -->
 
 	<jaxb:bindings>
-
 		<jaxb:bindings node="//xsd:complexType[@name='GeneralPermitData']">
-			<hj:entity>
-				<orm:table name="ICS_GNRL_PRMT" />
-			</hj:entity>
-			<hj:generated-id name="Dbid" transient="true">
-				<orm:column name="ICS_GNRL_PRMT_ID" />
-			</hj:generated-id>
+			<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractGeneralPermitData</inheritance:extends>
 		</jaxb:bindings>
-
-		<jaxb:bindings node="//xsd:element[@ref='icis:GeneralPermit']">
-			<hj:embedded />
-		</jaxb:bindings>
-
 	</jaxb:bindings>
 
-	<!-- CAO permit -->
+	<!-- general permit -->
 
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='GeneralPermit']">

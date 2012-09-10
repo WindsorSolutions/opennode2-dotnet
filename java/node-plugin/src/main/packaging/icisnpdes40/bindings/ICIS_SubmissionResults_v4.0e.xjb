@@ -3,18 +3,25 @@
 	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
 	jaxb:extensionBindingPrefixes="hj orm" schemaLocation="../xsd/SubmissionResults.xsd">
 
-	<!-- submission results -->
+	<!-- submission result list -->
 
-	<jaxb:bindings node="//xsd:element[@name='SubmissionResult']//xsd:complexType">
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:element[@name='SubmissionResultList']/xsd:complexType">
+			<hj:ignored/>
+		</jaxb:bindings>
+	</jaxb:bindings>
 
-		<hj:entity>
-			<orm:table name="ICS_SUBM_RESULTS" />
-		</hj:entity>
+	<!-- submission result -->
 
-		<hj:generated-id name="Dbid" transient="true">
-			<orm:column name="ICS_SUBM_RESULTS_ID" />
-		</hj:generated-id>
-
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:element[@name='SubmissionResult']//xsd:complexType">
+			<hj:entity>
+				<orm:table name="ICS_SUBM_RESULTS" />
+			</hj:entity>
+			<hj:generated-id name="Dbid" transient="true">
+				<orm:column name="ICS_SUBM_RESULTS_ID" length="36" column-definition="char(36)"/>
+			</hj:generated-id>
+		</jaxb:bindings>
 	</jaxb:bindings>
 
 </jaxb:bindings>

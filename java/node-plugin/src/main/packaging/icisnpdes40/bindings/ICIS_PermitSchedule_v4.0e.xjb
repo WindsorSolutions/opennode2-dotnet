@@ -7,7 +7,16 @@
 
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='PermitSchedule']">
-			<hj:embeddable />
+			<hj:ignored />
+		</jaxb:bindings>
+	</jaxb:bindings>
+	
+	<!-- permit schedule data -->
+	<!-- FIXME: should this really be ignored -->
+
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='PermitScheduleData']">
+			<hj:ignored />
 		</jaxb:bindings>
 	</jaxb:bindings>
 
