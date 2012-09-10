@@ -8,21 +8,26 @@ import org.jvnet.hyperjaxb3.ejb.jpa2.strategy.annotate.CreateXAnnotations;
 
 import com.sun.java.xml.ns.persistence.orm.ElementCollection;
 
+/**
+ * Extends {@link CreateXAnnotations} to disable the creation of the
+ * {@link OrderColumn} annotation for {@link ElementCollection} annotations.
+ *
+ */
 public class NodeCreateXAnnotations extends CreateXAnnotations {
 
 	@Override
-	public Collection<XAnnotation> createElementCollectionAnnotations(
-			final ElementCollection source) {
-		return source == null ? Collections.<XAnnotation> emptyList()
-				:
-				//
+	public Collection<XAnnotation> createElementCollectionAnnotations(final ElementCollection source) {
+		return source == null ? Collections.<XAnnotation> emptyList() :
+		//
 				annotations(
 				//
 						createElementCollection(source),
 						//
 						createOrderBy(source.getOrderBy()),
 						//
-						// FIXME: explicitly commented this out
+						/*
+						 * Commented this out
+						 */
 						// createOrderColumn(source.getOrderColumn()),
 
 						//
@@ -34,8 +39,7 @@ public class NodeCreateXAnnotations extends CreateXAnnotations {
 						//
 						createMapKeyEnumerated(source.getMapKeyEnumerated()),
 						//
-						createAttributeOverrides(source
-								.getMapKeyAttributeOverride()),
+						createAttributeOverrides(source.getMapKeyAttributeOverride()),
 						//
 						createMapKeyColumn(source.getMapKeyColumn()),
 						//
@@ -51,8 +55,7 @@ public class NodeCreateXAnnotations extends CreateXAnnotations {
 						//
 						createAttributeOverrides(source.getAttributeOverride()),
 						//
-						createAssociationOverrides(source
-								.getAssociationOverride()),
+						createAssociationOverrides(source.getAssociationOverride()),
 						//
 						createCollectionTable(source.getCollectionTable()),
 						//

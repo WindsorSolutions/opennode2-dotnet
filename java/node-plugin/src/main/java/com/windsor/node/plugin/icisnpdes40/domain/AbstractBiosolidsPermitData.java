@@ -13,6 +13,12 @@ import com.windsor.node.plugin.icisnpdes40.generated.BiosolidsPermit;
 @MappedSuperclass
 public abstract class AbstractBiosolidsPermitData extends AbstractAddressContactEntity {
 
+	/**
+	 * Returns the {@link BiosolidsPermit} object. The generated class will
+	 * override this method.
+	 *
+	 * @return the {@link BiosolidsPermit} object
+	 */
 	@Transient
 	public abstract BiosolidsPermit getBiosolidsPermit();
 

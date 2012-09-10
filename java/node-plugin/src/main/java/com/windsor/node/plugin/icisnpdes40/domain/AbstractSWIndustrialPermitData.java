@@ -6,13 +6,19 @@ import javax.persistence.Transient;
 import com.windsor.node.plugin.icisnpdes40.generated.SWIndustrialPermit;
 
 /**
- * Specifies how to access address and contact info for {@link SWIndustrialPermit}
- * data.
+ * Specifies how to access address and contact info for
+ * {@link SWIndustrialPermit} data.
  *
  */
 @MappedSuperclass
 public abstract class AbstractSWIndustrialPermitData extends AbstractAddressContactEntity {
 
+	/**
+	 * Returns the {@link SWIndustrialPermit} object. The generated class will
+	 * override this method.
+	 *
+	 * @return {@link SWIndustrialPermit} object
+	 */
 	@Transient
 	public abstract SWIndustrialPermit getSWIndustrialPermit();
 

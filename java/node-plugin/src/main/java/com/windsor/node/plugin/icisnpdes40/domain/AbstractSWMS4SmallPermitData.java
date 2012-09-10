@@ -13,6 +13,12 @@ import com.windsor.node.plugin.icisnpdes40.generated.SWMS4SmallPermit;
 @MappedSuperclass
 public abstract class AbstractSWMS4SmallPermitData extends AbstractAddressContactEntity {
 
+	/**
+	 * Returns the {@link SWMS4SmallPermit} object. The generated class will
+	 * override this method.
+	 *
+	 * @return the {@link SWMS4SmallPermit} object
+	 */
 	@Transient
 	public abstract SWMS4SmallPermit getSWMS4SmallPermit();
 

@@ -13,6 +13,12 @@ import com.windsor.node.plugin.icisnpdes40.generated.SWMS4LargePermit;
 @MappedSuperclass
 public abstract class AbstractSWMS4LargePermitData extends AbstractAddressContactEntity {
 
+	/**
+	 * Returns the {@link SWMS4LargePermit} object. The generated class will
+	 * override this method.
+	 *
+	 * @return the {@link SWMS4LargePermit} object
+	 */
 	@Transient
 	public abstract SWMS4LargePermit getSWMS4LargePermit();
 

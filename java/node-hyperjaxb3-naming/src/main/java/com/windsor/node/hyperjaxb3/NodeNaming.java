@@ -130,6 +130,13 @@ public class NodeNaming extends DefaultNaming {
 		return name;
 	}
 
+	/**
+	 * Returns the name of a table.
+	 *
+	 * @param baseName
+	 *            DB table name without any prefix
+	 * @return DB table name with the prefix prepended
+	 */
 	protected String getEntityTableName(final String baseName) {
 		return getTableNamePrefix() + baseName;
 	}
@@ -144,13 +151,20 @@ public class NodeNaming extends DefaultNaming {
 
 	@Override
 	public String getTableName(final String qualifiedName) {
-		final String shortName = stripTableSuffix(qualifiedName.substring(qualifiedName
+		final String shortName = mapTableSuffix(qualifiedName.substring(qualifiedName
 				.lastIndexOf(".") + 1));
 		logger.debug("getTableName(): Mapping " + qualifiedName + " to " + shortName);
 		return shortName;
 	}
 
-	protected String stripTableSuffix(final String shortClassName) {
+	/**
+	 * Maps the suffix of a class name to a DB-appropriate name.
+	 *
+	 * @param shortClassName
+	 *            name of the class
+	 * @return name to use to derive the DB table name
+	 */
+	protected String mapTableSuffix(final String shortClassName) {
 		String newName = shortClassName;
 		final String[] parts = StringUtils.splitByCharacterTypeCamelCase(shortClassName);
 		if (parts.length > 0) {
@@ -172,11 +186,9 @@ public class NodeNaming extends DefaultNaming {
 		/*
 		 * This is a hack, but the only way I can tell if I'm mapping a DB PK
 		 * column is to check if the incoming property name matches the default
-		 * DB PK name. I would think that I can get default DB PK column name
-		 * from the context...
+		 * DB PK name.
 		 */
 		if (getDefaultPkColumnName().equalsIgnoreCase(propertyName)) {
-			// FIXME: are we ever coming in here?
 			columnName = getPkColumnNamePrefix()
 					+ getName(getTableName(fieldOutline.parent().target.shortName))
 					+ getPkColumnNameSuffix();

@@ -1,19 +1,23 @@
 package com.windsor.node.plugin.icisnpdes40.domain;
 
 import javax.persistence.MappedSuperclass;
-import javax.persistence.PostLoad;
 import javax.persistence.Transient;
 
 import com.windsor.node.plugin.icisnpdes40.generated.ComplianceMonitoring;
 
 /**
- * {@link MappedSuperclass} for nulling out the address if there are no
- * associated address objects using a {@link PostLoad} handler.
+ * Specifies how to access contact info for {@link ComplianceMonitoring} data.
  *
  */
 @MappedSuperclass
 public abstract class AbstractComplianceMonitoringData extends AbstractAddressContactEntity {
 
+	/**
+	 * Returns the {@link ComplianceMonitoring} object. The generated class will
+	 * override this method.
+	 *
+	 * @return the {@link ComplianceMonitoring} object
+	 */
 	@Transient
 	public abstract ComplianceMonitoring getComplianceMonitoring();
 

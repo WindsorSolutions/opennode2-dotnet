@@ -13,6 +13,12 @@ import com.windsor.node.plugin.icisnpdes40.generated.BasicPermit;
 @MappedSuperclass
 public abstract class AbstractBasicPermitData extends AbstractAddressContactEntity {
 
+	/**
+	 * Returns the {@link BasicPermit} object. The generated class will override
+	 * this method.
+	 *
+	 * @return the {@link BasicPermit} object
+	 */
 	@Transient
 	public abstract BasicPermit getBasicPermit();
 

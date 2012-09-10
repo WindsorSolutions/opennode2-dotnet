@@ -3,17 +3,22 @@ package com.windsor.node.plugin.icisnpdes40.domain;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
-import com.windsor.node.plugin.icisnpdes40.generated.BiosolidsPermit;
 import com.windsor.node.plugin.icisnpdes40.generated.SWConstructionPermit;
 
 /**
- * Specifies how to access address and contact info for {@link BiosolidsPermit}
- * data.
+ * Specifies how to access address and contact info for
+ * {@link SWConstructionPermit} data.
  *
  */
 @MappedSuperclass
 public abstract class AbstractSWConstructionPermitData extends AbstractAddressContactEntity {
 
+	/**
+	 * Returns the {@link SWConstructionPermit} object. The generated class will
+	 * override this method.
+	 *
+	 * @return the {@link SWConstructionPermit} object
+	 */
 	@Transient
 	public abstract SWConstructionPermit getSWConstructionPermit();
 

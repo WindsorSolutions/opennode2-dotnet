@@ -27,7 +27,7 @@
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='AnimalType']">
 			<hj:entity>
-				<orm:table name="ICS_ANML_TYPE_HIB_VIEW"/>
+				<orm:table name="ICS_V_ANML_TYPE_HIB"/>
 			</hj:entity>
 		</jaxb:bindings>
 	</jaxb:bindings>

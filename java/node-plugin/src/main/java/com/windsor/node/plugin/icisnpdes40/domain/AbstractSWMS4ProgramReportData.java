@@ -6,13 +6,19 @@ import javax.persistence.Transient;
 import com.windsor.node.plugin.icisnpdes40.generated.SWMS4ProgramReport;
 
 /**
- * Specifies how to access address and contact info for {@link SWMS4ProgramReport}
- * data.
+ * Specifies how to access address and contact info for
+ * {@link SWMS4ProgramReport} data.
  *
  */
 @MappedSuperclass
 public abstract class AbstractSWMS4ProgramReportData extends AbstractAddressContactEntity {
 
+	/**
+	 * Returns the {@link SWMS4ProgramReport} object. The generated class will
+	 * override this method.
+	 *
+	 * @return the {@link SWMS4ProgramReport} object
+	 */
 	@Transient
 	public abstract SWMS4ProgramReport getSWMS4ProgramReport();
 

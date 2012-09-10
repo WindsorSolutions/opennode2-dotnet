@@ -5,9 +5,19 @@ import javax.persistence.Transient;
 
 import com.windsor.node.plugin.icisnpdes40.generated.CAFOPermit;
 
+/**
+ * Specifies how to access address and contact info for {@link CAFOPermit} data.
+ *
+ */
 @MappedSuperclass
 public abstract class AbstractCAFOPermitData extends AbstractAddressContactEntity {
 
+	/**
+	 * Returns the {@link CAFOPermit} object. The generated class will override
+	 * this method.
+	 *
+	 * @return the {@link CAFOPermit} object
+	 */
 	@Transient
 	public abstract CAFOPermit getCAFOPermit();
 
