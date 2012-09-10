@@ -87,32 +87,34 @@
 
 			<!-- decimal mappings -->
 
+			<!-- Decimal6FloatinType is actually mapped as a *char in the DB -->
+			
 			<!-- <xjc:javaType name="java.lang.Double" xmlType="icis:Decimal6FloatingType" adapter="com.windsor.node.plugin.icisnpdes40.adapter.DoubleAdapter" 
 				/> -->
 
-			<xjc:javaType name="java.lang.Double" xmlType="icis:NonNegativeDecimal4FloatingType"
-				adapter="com.windsor.node.plugin.icisnpdes40.adapter.DoubleAdapter" />
+			<xjc:javaType name="java.math.BigDecimal" xmlType="icis:NonNegativeDecimal4FloatingType"
+				adapter="com.windsor.node.plugin.icisnpdes40.adapter.Decimal4FloatingTypeAdapter" />
 
-			<xjc:javaType name="java.lang.Double" xmlType="icis:NonNegativeDecimal8FloatingType"
-				adapter="com.windsor.node.plugin.icisnpdes40.adapter.DoubleAdapter" />
+			<xjc:javaType name="java.math.BigDecimal" xmlType="icis:NonNegativeDecimal8FloatingType"
+				adapter="com.windsor.node.plugin.icisnpdes40.adapter.Decimal8FloatingTypeAdapter" />
 
-			<xjc:javaType name="java.lang.Double" xmlType="icis:Decimal10FloatingType"
-				adapter="com.windsor.node.plugin.icisnpdes40.adapter.DoubleAdapter" />
+			<xjc:javaType name="java.math.BigDecimal" xmlType="icis:Decimal10FloatingType"
+				adapter="com.windsor.node.plugin.icisnpdes40.adapter.Decimal10FloatingTypeAdapter" />
 
-			<xjc:javaType name="java.lang.Double" xmlType="icis:Decimal11FloatingType"
-				adapter="com.windsor.node.plugin.icisnpdes40.adapter.DoubleAdapter" />
+			<xjc:javaType name="java.math.BigDecimal" xmlType="icis:Decimal11FloatingType"
+				adapter="com.windsor.node.plugin.icisnpdes40.adapter.Decimal11FloatingTypeAdapter" />
 
-			<xjc:javaType name="java.lang.Double" xmlType="icis:DecimalRange0To999.9Type"
-				adapter="com.windsor.node.plugin.icisnpdes40.adapter.DoubleAdapter" />
+			<xjc:javaType name="java.math.BigDecimal" xmlType="icis:DecimalRange0To999.9Type"
+				adapter="com.windsor.node.plugin.icisnpdes40.adapter.OneDigitPrecisionAdapter" />
 
-			<xjc:javaType name="java.lang.Double" xmlType="icis:DecimalRange0To999.99Type"
-				adapter="com.windsor.node.plugin.icisnpdes40.adapter.DoubleAdapter" />
+			<xjc:javaType name="java.math.BigDecimal" xmlType="icis:DecimalRange0To999.99Type"
+				adapter="com.windsor.node.plugin.icisnpdes40.adapter.TwoDigitPrecisionAdapter" />
 
-			<xjc:javaType name="java.lang.Double" xmlType="icis:DecimalRange0To9999.99Type"
-				adapter="com.windsor.node.plugin.icisnpdes40.adapter.DoubleAdapter" />
+			<xjc:javaType name="java.math.BigDecimal" xmlType="icis:DecimalRange0To9999.99Type"
+				adapter="com.windsor.node.plugin.icisnpdes40.adapter.TwoDigitPrecisionAdapter" />
 
-			<xjc:javaType name="java.lang.Double" xmlType="icis:DecimalRange0To999999999999.99Type"
-				adapter="com.windsor.node.plugin.icisnpdes40.adapter.DoubleAdapter" />
+			<xjc:javaType name="java.math.BigDecimal" xmlType="icis:DecimalRange0To999999999999.99Type"
+				adapter="com.windsor.node.plugin.icisnpdes40.adapter.TwoDigitPrecisionAdapter" />
 
 			<!-- unions -->
 
