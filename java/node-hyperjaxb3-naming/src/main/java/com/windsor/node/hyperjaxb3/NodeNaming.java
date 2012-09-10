@@ -2,9 +2,8 @@ package com.windsor.node.hyperjaxb3;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.Map.Entry;
 import java.util.Properties;
-import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jvnet.hyperjaxb3.ejb.strategy.mapping.Mapping;
@@ -20,17 +19,21 @@ import com.sun.tools.xjc.outline.FieldOutline;
  */
 public class NodeNaming extends DefaultNaming {
 
-	private static final Set<String> TABLE_SUFFIXES_TO_REMOVED = new HashSet<String>();
-	static {
-		// FIXME: "Key" occurs in names but not as a suffix
-		TABLE_SUFFIXES_TO_REMOVED.add("Data");
-		TABLE_SUFFIXES_TO_REMOVED.add("Code");
-	}
-
 	/**
-	 * Mapping of XML names to DB names.
+	 * Mapping of XML words (i.e., after the names have been split into words)
+	 * to DB names.
 	 */
 	private Properties xmlToDbNameMappings;
+
+	/**
+	 * Mapping of XML names <em>before</em> they are split into words.
+	 */
+	private Properties presplitXmlNameMappings;
+
+	/**
+	 * Mapping of DB table suffixes.
+	 */
+	private Properties tableNameSuffixMappings;
 
 	/**
 	 * Separator to use between words for DB names.
@@ -68,17 +71,28 @@ public class NodeNaming extends DefaultNaming {
 
 	/**
 	 * Called before an XML name is split into words. This allows the words to
-	 * be changed before the split occurs. Currently, the only example of this
-	 * is "StormWater", so the implementation is being left simple. If more
-	 * cases come up, a property file could be used to handle it.
+	 * be changed before the split occurs (e.g., StormWater to Stormwater).
 	 *
 	 * @param xmlName
 	 *            Name of the XML element
 	 * @return mapped name for the XML element
 	 */
 	protected String mapXmlName(final String xmlName) {
-		final String newString = xmlName.replaceAll("StormWater", "Stormwater");
-		logger.debug("mapXmlName(): Mapping " + xmlName + " to " + newString);
+		final StringBuilder sb = new StringBuilder(xmlName);
+		for (final Entry<Object, Object> entry : presplitXmlNameMappings.entrySet()) {
+			final String key = (String) entry.getKey();
+			final String value = (String) entry.getValue();
+			int index = sb.indexOf(key);
+			while (index != -1) {
+				sb.replace(index, index + key.length(), value);
+				index += key.length();
+				index = sb.indexOf(key, index);
+			}
+		}
+		final String newString = sb.toString();
+		if (!newString.equals(xmlName)) {
+			logger.debug("mapXmlName(): Mapping " + xmlName + " to " + newString);
+		}
 		return newString;
 	}
 
@@ -106,7 +120,7 @@ public class NodeNaming extends DefaultNaming {
 				/*
 				 * Only store non-empty translations.
 				 */
-				if (! StringUtils.isEmpty(translation)) {
+				if (!StringUtils.isEmpty(translation)) {
 					names.add(translation);
 				}
 			}
@@ -141,8 +155,9 @@ public class NodeNaming extends DefaultNaming {
 		final String[] parts = StringUtils.splitByCharacterTypeCamelCase(shortClassName);
 		if (parts.length > 0) {
 			final String lastPart = parts[parts.length - 1];
-			if (TABLE_SUFFIXES_TO_REMOVED.contains(lastPart)) {
-				newName = shortClassName.substring(0, shortClassName.length() - lastPart.length());
+			if (tableNameSuffixMappings.containsKey(lastPart)) {
+				newName = shortClassName.substring(0, shortClassName.length() - lastPart.length())
+						+ tableNameSuffixMappings.get(lastPart);
 			}
 			logger.debug("stripTableSuffix(): Removing the trailing " + lastPart
 					+ " from the short class name: " + shortClassName + " to " + newName);
@@ -237,6 +252,44 @@ public class NodeNaming extends DefaultNaming {
 	 */
 	public void setXmlToDbNameMappings(final Properties xmlToDbNameMappings) {
 		this.xmlToDbNameMappings = xmlToDbNameMappings;
+	}
+
+	/**
+	 * Returns the pre-split name mappings.
+	 *
+	 * @return the pre-split name mappings
+	 */
+	public Properties getPresplitXmlNameMappings() {
+		return presplitXmlNameMappings;
+	}
+
+	/**
+	 * Sets the pre-split name mappings.
+	 *
+	 * @param presplitMappings
+	 *            the pre-split name mappings
+	 */
+	public void setPresplitXmlNameMappings(final Properties presplitMappings) {
+		this.presplitXmlNameMappings = presplitMappings;
+	}
+
+	/**
+	 * Returns the mappings of DB table name suffixes.
+	 *
+	 * @return the mappings of DB table name suffixes
+	 */
+	public Properties getTableNameSuffixMappings() {
+		return tableNameSuffixMappings;
+	}
+
+	/**
+	 * Sets the mappings of DB table name suffixes.
+	 *
+	 * @param tableNameSuffixMappings
+	 *            the mappings of DB table name suffixes
+	 */
+	public void setTableNameSuffixMappings(final Properties tableNameSuffixMappings) {
+		this.tableNameSuffixMappings = tableNameSuffixMappings;
 	}
 
 	/**

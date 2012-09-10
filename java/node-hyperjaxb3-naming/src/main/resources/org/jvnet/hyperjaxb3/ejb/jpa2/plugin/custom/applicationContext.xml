@@ -10,10 +10,19 @@
 		<property name="location" value="classpath:XmlToDbNameMappings.properties"/>
 	</bean>
 	
+	<bean name="presplitXmlNameMappings" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="location" value="classpath:PresplitXmlNameMappings.properties"/>
+	</bean>
+	
+	<bean name="tableNameSuffixMappings" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="location" value="classpath:TableNameSuffixMappings.properties"/>
+	</bean>
+	
 	<!-- 
 		This is being done to suppress the creation of a @GeneratedValue annotation for @Id annotations;
 		is there a better way?
 	-->
+	
 	<bean name="customizing"
 		class="org.jvnet.hyperjaxb3.ejb.strategy.customizing.impl.DefaultCustomizing">
 		<property name="defaultCustomizations">
@@ -27,6 +36,7 @@
 		This is being done to suppress the creation of an @OrderColumn annotation for @ElementCollection annotations; 
 	    is there a better way?
 	-->
+	
 	<bean name="createXAnnotations"
 		class="com.windsor.node.hyperjaxb3.NodeCreateXAnnotations">
 	</bean>
@@ -40,6 +50,8 @@
 		<property name="pkColumnNameSuffix" value="${pkColumnNameSuffix}" />
 		<property name="tableNamePrefix" value="${tableNamePrefix}" />
 		<property name="defaultPkColumnName" value="${defaultPkColumnName}" />
+		<property name="presplitXmlNameMappings" ref="presplitXmlNameMappings" />
+		<property name="tableNameSuffixMappings" ref="tableNameSuffixMappings" />
 	</bean>
 	
 	<!-- 
