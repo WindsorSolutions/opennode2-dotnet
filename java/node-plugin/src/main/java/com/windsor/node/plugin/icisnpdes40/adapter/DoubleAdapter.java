@@ -1,5 +1,6 @@
 package com.windsor.node.plugin.icisnpdes40.adapter;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
@@ -17,7 +18,7 @@ public class DoubleAdapter extends XmlAdapter<String, Double> {
 
 	@Override
 	public String marshal(final Double value) throws Exception {
-		return value == null ? null : value.toString();
+		return value == null ? null : new BigDecimal(value).toPlainString();
 	}
 
 }
