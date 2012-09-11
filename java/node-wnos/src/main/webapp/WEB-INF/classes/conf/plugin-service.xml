@@ -23,6 +23,7 @@
         <property name="serviceFactory" ref="serviceFactory" />
         <property name="nodeClientFactory" ref="nodeClientFactory" />
         <property name="partnerProvider" ref="partnerDao" />
+        <property name="notificationHelper" ref="mailHelper" />
     </bean>
 
     <bean id="classLoader" class="com.windsor.node.plugin.PluginClassLoader" />

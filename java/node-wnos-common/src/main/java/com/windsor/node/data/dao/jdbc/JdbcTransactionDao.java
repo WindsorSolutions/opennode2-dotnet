@@ -457,26 +457,26 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao
     /**
      * save
      */
-    public NodeTransaction save(NodeTransaction instance) {
+    public NodeTransaction save(NodeTransaction transaction) {
 
-        validateObjectArg(instance, "NodeTransaction");
+        validateObjectArg(transaction, "NodeTransaction");
 
-        if(StringUtils.isBlank(instance.getId()) || !currentDatabaseRecord(instance))
+        if(StringUtils.isBlank(transaction.getId()) || !currentDatabaseRecord(transaction))
         {
-            instance = insert(instance);
+            transaction = insert(transaction);
         }
         else
         {
-            instance = update(instance);
+            transaction = update(transaction);
         }
-        return instance;
+        return transaction;
     }
 
-    private boolean currentDatabaseRecord(NodeTransaction instance)
+    private boolean currentDatabaseRecord(NodeTransaction transaction)
     {
-        if(instance != null && StringUtils.isNotBlank(instance.getId()))
+        if(transaction != null && StringUtils.isNotBlank(transaction.getId()))
         {
-            int count = getJdbcTemplate().queryForInt(SQL_ID_EXISTS, new Object[] {instance.getId()}, new int[]{Types.VARCHAR});
+            int count = getJdbcTemplate().queryForInt(SQL_ID_EXISTS, new Object[] {transaction.getId()}, new int[]{Types.VARCHAR});
             if(count > 0)
             {
                 return true;
@@ -485,51 +485,51 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao
         return false;
     }
 
-    private NodeTransaction update(NodeTransaction instance)
+    private NodeTransaction update(NodeTransaction transaction)
     {
         // FlowId, NetworkId, Status, ModifiedBy, ModifiedOn, StatusDetail,
         // Operation, WebMethod WHERE Id
         Object[] args = new Object[14];
 
-        args[0] = instance.getFlow().getId();
-        args[1] = instance.getNetworkId();
-        args[2] = instance.getStatus().getStatus().name();
-        args[3] = instance.getModifiedById();
+        args[0] = transaction.getFlow().getId();
+        args[1] = transaction.getNetworkId();
+        args[2] = transaction.getStatus().getStatus().name();
+        args[3] = transaction.getModifiedById();
         args[4] = DateUtil.getTimestamp();
-        args[5] = instance.getStatus().getDescription();
-        args[6] = instance.getOperation();
-        args[7] = instance.getWebMethod().getType();
+        args[5] = transaction.getStatus().getDescription();
+        args[6] = transaction.getOperation();
+        args[7] = transaction.getWebMethod().getType();
 
         //new as of version 2.01
         //EndpointVersion, NetworkEndpointVersion, NetworkEndpointUrl, NetworkEndpointStatus, NetworkEndpointStatusDetail
-        if(instance.getEndpointVersion() != null)
+        if(transaction.getEndpointVersion() != null)
         {
-            args[8] = instance.getEndpointVersion().toString();
+            args[8] = transaction.getEndpointVersion().toString();
         }
         else
         {
             args[8] = "";
         }
-        if(instance.getNetworkEndpointVersion() != null)
+        if(transaction.getNetworkEndpointVersion() != null)
         {
-            args[9] = instance.getNetworkEndpointVersion().toString();
+            args[9] = transaction.getNetworkEndpointVersion().toString();
         }
         else
         {
             args[9] = "";
         }
-        if(instance.getNetworkEndpointUrl() != null)
+        if(transaction.getNetworkEndpointUrl() != null)
         {
-            args[10] = instance.getNetworkEndpointUrl().toString();
+            args[10] = transaction.getNetworkEndpointUrl().toString();
         }
         else
         {
             args[10] = "";
         }    
-        args[11] = instance.getNetworkEndpointStatus();
-        args[12] = instance.getNetworkEndpointStatusDetail();
+        args[11] = transaction.getNetworkEndpointStatus();
+        args[12] = transaction.getNetworkEndpointStatusDetail();
 
-        args[13] = instance.getId();
+        args[13] = transaction.getId();
 
         getJdbcTemplate().update(SQL_UPDATE,
                                  args,
@@ -537,7 +537,7 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao
                                                  Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,
                                                  Types.VARCHAR, Types.VARCHAR});
 
-        return instance;
+        return transaction;
     }
 
     private NodeTransaction insert(NodeTransaction instance)

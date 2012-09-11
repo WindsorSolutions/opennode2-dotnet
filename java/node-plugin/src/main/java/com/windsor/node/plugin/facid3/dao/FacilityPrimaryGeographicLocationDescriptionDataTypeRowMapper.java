@@ -50,7 +50,7 @@ public class FacilityPrimaryGeographicLocationDescriptionDataTypeRowMapper imple
         {
             point.setSrsDimension(new BigInteger(rs.getString("SRS_DIM")));
         }
-        else
+        else if(rs.getString("SRS_DIM") != null)
         {
             logger.warn("SRS Dim could not be parsed as a number, cannot include it in extract.  It was:  " + rs.getString("SRS_DIM"));
         }

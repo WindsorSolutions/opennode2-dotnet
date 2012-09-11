@@ -188,15 +188,20 @@ CREATE TABLE NServiceConn (
     ) ENGINE=InnoDB;
 
 CREATE TABLE NTransaction ( 
-    Id              varchar(50) NOT NULL,
-    FlowId          varchar(50) NOT NULL,
-    NetworkId       varchar(255) NOT NULL,
-    Status          varchar(50) NOT NULL,
-    ModifiedBy      varchar(50) NOT NULL,
-    ModifiedOn      datetime NOT NULL,
-    StatusDetail    varchar(8192) NULL,
-    Operation       varchar(255) NULL,
-    WebMethod       varchar(50) NOT NULL 
+    Id                          varchar(50) NOT NULL,
+    FlowId                      varchar(50) NOT NULL,
+    NetworkId                   varchar(255) NOT NULL,
+    Status                      varchar(50) NOT NULL,
+    ModifiedBy                  varchar(50) NOT NULL,
+    ModifiedOn                  datetime NOT NULL,
+    StatusDetail                varchar(8192) NULL,
+    Operation                   varchar(255) NULL,
+    WebMethod                   varchar(50) NOT NULL,
+    EndpointVersion             varchar(50) NULL,
+    NetworkEndpointVersion      varchar(50) NULL, 
+    NetworkEndpointUrl          varchar(500) NULL,
+    NetworkEndpointStatus       varchar(50) NULL,
+    NetworkEndpointStatusDetail varchar(8192) NULL
     ) ENGINE=InnoDB;
 
 CREATE TABLE NTransactionNotification ( 

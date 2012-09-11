@@ -32,15 +32,12 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.windsor.node.service.helper.settings;
 
 import java.io.File;
-
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
-
 import com.windsor.node.service.helper.IdGenerator;
 import com.windsor.node.service.helper.SettingsService;
-import com.windsor.node.service.helper.email.EmailNotificationHelper;
 import com.windsor.node.service.helper.id.UUIDGenerator;
 
 public class SettingServiceProvider implements SettingsService,
@@ -48,7 +45,7 @@ public class SettingServiceProvider implements SettingsService,
 
     /** Logger for this class and subclasses */
     private final Logger logger = LoggerFactory
-            .getLogger(EmailNotificationHelper.class);
+            .getLogger(SettingServiceProvider.class);
 
     private IdGenerator idGenerator;
     private File tempDir;

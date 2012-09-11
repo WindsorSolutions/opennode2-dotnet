@@ -54,6 +54,7 @@ import com.windsor.node.common.util.NodeClientService;
 import com.windsor.node.data.dao.ParameterSpecifiedPlugin;
 import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
 import com.windsor.node.service.helper.NodePartnerProvider;
+import com.windsor.node.service.helper.NotificationHelper;
 import com.windsor.node.service.helper.ServiceFactory;
 import com.windsor.node.service.helper.client.DualEndpointNodeClientFactory;
 
@@ -98,6 +99,7 @@ public abstract class BaseWnosPlugin implements InitializingBean, ParameterSpeci
     private DualEndpointNodeClientFactory nodeClientFactory;
     private NodePartnerProvider partnerProvider;
     private File pluginSourceDir;
+    private NotificationHelper notificationHelper;
 
     /* for ENDS getServices() */
     private Boolean publishForEN11 = true;
@@ -479,6 +481,16 @@ public abstract class BaseWnosPlugin implements InitializingBean, ParameterSpeci
      */
     public void setPublishForEN20(Boolean publishForNode20) {
         this.publishForEN20 = publishForNode20;
+    }
+
+    public NotificationHelper getNotificationHelper()
+    {
+        return notificationHelper;
+    }
+
+    public void setNotificationHelper(NotificationHelper notificationHelper)
+    {
+        this.notificationHelper = notificationHelper;
     }
 
 }

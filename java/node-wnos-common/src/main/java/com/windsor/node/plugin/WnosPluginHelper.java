@@ -55,6 +55,7 @@ import com.windsor.node.data.dao.ConfigDao;
 import com.windsor.node.data.dao.PluginDao;
 import com.windsor.node.service.helper.CompressionService;
 import com.windsor.node.service.helper.NodePartnerProvider;
+import com.windsor.node.service.helper.NotificationHelper;
 import com.windsor.node.service.helper.ServiceFactory;
 import com.windsor.node.service.helper.client.DualEndpointNodeClientFactory;
 import com.windsor.node.util.DataSourceUtil;
@@ -73,6 +74,7 @@ public class WnosPluginHelper implements PluginHelper, InitializingBean {
     private ServiceFactory serviceFactory;
     private DualEndpointNodeClientFactory nodeClientFactory;
     private NodePartnerProvider partnerProvider;
+    private NotificationHelper notificationHelper;
 
     /**
      * afterPropertiesSet
@@ -345,6 +347,9 @@ public class WnosPluginHelper implements PluginHelper, InitializingBean {
         logger.debug("Setting partner dao: " + nodeClientFactory);
         processor.setPartnerProvider(partnerProvider);
 
+        logger.debug("Setting notificationHelper: " + notificationHelper);
+        processor.setNotificationHelper(notificationHelper);
+
         // This will throw an exception if not all the required args are set
         processor.afterPropertiesSet();
 
@@ -437,6 +442,16 @@ public class WnosPluginHelper implements PluginHelper, InitializingBean {
 
     public WnosClassLoader getClassLoader() {
         return classLoader;
+    }
+
+    public void setNotificationHelper(NotificationHelper notificationHelper)
+    {
+        this.notificationHelper = notificationHelper;
+    }
+
+    public NotificationHelper getNotificationHelper()
+    {
+        return notificationHelper;
     }
 
 }

@@ -266,6 +266,7 @@
         <property name="serviceFactory" ref="serviceFactory" />
         <property name="nodeClientFactory" ref="nodeClientFactory" />
         <property name="partnerProvider" ref="partnerDao" />
+        <!-- FIXME add notificationHelper mailHelper -->
     </bean>
 
     <bean id="classLoader" class="com.windsor.node.plugin.PluginClassLoader" />

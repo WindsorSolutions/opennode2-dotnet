@@ -31,7 +31,6 @@ import com.windsor.node.service.helper.IdGenerator;
 import com.windsor.node.service.helper.settings.SettingServiceProvider;
 import com.windsor.node.service.helper.zip.ZipCompressionService;
 
-@SuppressWarnings("restriction")
 public abstract class BaseFacIdPlugin extends BaseWnosJaxbPlugin
 {
     public static final PluginServiceParameterDescriptor FACILITY_SITE_IDENTIFIER = new PluginServiceParameterDescriptor(

@@ -41,10 +41,10 @@ import com.windsor.node.common.domain.ScheduledItem;
 public interface TransactionDao extends DeletableDao, ListableDao {
 
     /**
-     * @param instance
+     * @param transaction
      * @return
      */
-    NodeTransaction save(NodeTransaction instance);
+    NodeTransaction save(NodeTransaction transaction);
 
     /**
      * @param flowId

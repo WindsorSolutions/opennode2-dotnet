@@ -37,7 +37,8 @@ import com.windsor.node.data.dao.PartnerDao;
 import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
 import com.windsor.node.data.dao.jdbc.JdbcTransactionDao;
 import com.windsor.node.plugin.common.BaseWnosJaxbPlugin;
-import com.windsor.node.plugin.icisnpdes40.dao.JdbcIcisWorkflowDao;
+import com.windsor.node.plugin.icisnpdes40.dao.IcisWorkflowDao;
+import com.windsor.node.plugin.icisnpdes40.dao.jdbc.JdbcIcisWorkflowDao;
 import com.windsor.node.plugin.icisnpdes40.domain.IcisWorkflow;
 import com.windsor.node.plugin.icisnpdes40.generated.HeaderData;
 import com.windsor.node.plugin.icisnpdes40.generated.ObjectFactory;
@@ -176,7 +177,7 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
    
    private JdbcTransactionDao transactionDao;
    
-   private JdbcIcisWorkflowDao icisWorkflowDao;
+   private IcisWorkflowDao icisWorkflowDao;
 
    private PartnerDao partnerDao;
    
@@ -1047,11 +1048,11 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
         this.dataSource = dataSource;
     }
 
-    public JdbcIcisWorkflowDao getIcisWorkflowDao() {
+    public IcisWorkflowDao getIcisWorkflowDao() {
         return icisWorkflowDao;
     }
 
-    public void setIcisWorkflowDao(JdbcIcisWorkflowDao icisWorkflowDao) {
+    public void setIcisWorkflowDao(IcisWorkflowDao icisWorkflowDao) {
         this.icisWorkflowDao = icisWorkflowDao;
     }
 

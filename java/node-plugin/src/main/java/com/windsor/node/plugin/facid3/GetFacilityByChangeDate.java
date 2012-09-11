@@ -8,11 +8,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.lang3.time.DateUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
 import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.ProcessContentResult;
+import com.windsor.node.common.util.ByIndexOrNameMap;
 import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
 import com.windsor.node.plugin.facid3.domain.AffiliateListDataType;
 import com.windsor.node.plugin.facid3.domain.FacilityDataType;
@@ -82,6 +83,32 @@ public class GetFacilityByChangeDate extends BaseFacIdGetFacilityService
         }
 
         Map<String, Object> params = new HashMap<String, Object>();
+        /*if(EndpointVersionType.EN11 == transaction.getEndpointVersion())
+        {
+            params = getParametersEn11(transaction);
+        }
+        else if(EndpointVersionType.EN20 == transaction.getEndpointVersion())
+        {
+            params = getParametersEn21(transaction);
+        }
+        else
+        {
+            //error, undefined endpoint version, could not determine param strategy
+        }*/
+        if(transaction.getRequest().getParameters().get(CHANGE_DATE.getName()) != null)
+        {//then params are named
+            params = getParametersEn21(transaction);
+        }
+        else
+        {//use ordered params
+            params = getParametersEn11(transaction);
+        }
+        return params;
+    }
+
+    private Map<String, Object> getParametersEn11(NodeTransaction transaction)
+    {
+        Map<String, Object> params = new HashMap<String, Object>();
         String[] args = transaction.getRequest().getParameterValues();
         if(args.length >= 1)
         {
@@ -110,6 +137,41 @@ public class GetFacilityByChangeDate extends BaseFacIdGetFacilityService
         if(args.length >= 3 && StringUtils.isNotBlank(args[2]))
         {
             params.put(INFO_SYSTEM_ACORNYM_NAME.getName(), args[2]);
+        }
+        return params;
+    }
+
+    private Map<String, Object> getParametersEn21(NodeTransaction transaction)
+    {
+        Map<String, Object> params = new HashMap<String, Object>();
+        ByIndexOrNameMap namedParams = transaction.getRequest().getParameters();
+        if(namedParams.get(CHANGE_DATE.getName()) != null)
+        {
+            String changeDate = (String)namedParams.get(CHANGE_DATE.getName());
+            Date parsedChangeDate = null;
+            try
+            {
+                parsedChangeDate = DateUtils.parseDate(changeDate, new String[]{"yyyy/MM/dd", "yyyy-MM-dd"});
+            }
+            catch(ParseException e)
+            {
+                logger.error("Unparseable date passed in for Change Date:  " + changeDate);
+                throw new RuntimeException("Unparseable date passed in for Change Date:  " + changeDate);
+            }
+            params.put(CHANGE_DATE.getName(), parsedChangeDate);
+        }
+        else
+        {
+            logger.error(CHANGE_DATE.getName() + " is required but null was passed.");
+            throw new RuntimeException(CHANGE_DATE.getName() + " is required but null was passed.");
+        }
+        if(StringUtils.isNotEmpty((String)namedParams.get(ORIGINATING_PARTNER_NAME.getName())))
+        {
+            params.put(ORIGINATING_PARTNER_NAME.getName(), namedParams.get(ORIGINATING_PARTNER_NAME.getName()));
+        }
+        if(StringUtils.isNotEmpty((String)namedParams.get(INFO_SYSTEM_ACORNYM_NAME.getName())))
+        {
+            params.put(INFO_SYSTEM_ACORNYM_NAME.getName(), namedParams.get(INFO_SYSTEM_ACORNYM_NAME.getName()));
         }
         return params;
     }
