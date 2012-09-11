@@ -75,7 +75,7 @@
 		<property name="embeddableAttributesMapping" ref="embeddableAttributesMapping"/>
 		<property name="oneToManyMapping" ref="oneToManyMapping"/>
 		<property name="oneToOneMapping" ref="oneToOneMapping"/>
-		<property name="manyToOneMapping" ref="oneToOneMapping"/>
+		<property name="manyToOneMapping" ref="manyToOneMapping"/>
 		<property name="elementCollectionMapping" ref="elementCollectionMapping"/>
 		<property name="associationMapping" ref="associationMapping"/>
 	</bean>
