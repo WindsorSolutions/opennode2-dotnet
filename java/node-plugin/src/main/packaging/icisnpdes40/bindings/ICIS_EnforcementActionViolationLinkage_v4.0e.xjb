@@ -1,14 +1,86 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
-	jaxb:extensionBindingPrefixes="hj orm" schemaLocation="../xsd/0/ICIS_EnforcementActionViolationLinkage_v4.0e.xsd">
+	xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance" schemaLocation="../xsd/0/ICIS_EnforcementActionViolationLinkage_v4.0e.xsd">
 
 	<!-- enforcement action violation linkage -->
 
 	<jaxb:bindings>
+
 		<jaxb:bindings node="//xsd:complexType[@name='EnforcementActionViolationLinkage']">
 			<hj:embeddable />
 		</jaxb:bindings>
+
+		<jaxb:bindings node="//xsd:element[@ref='icis:ComplianceScheduleViolation']">
+			<hj:many-to-one>
+				<orm:join-column name="ICS_ENFRC_ACTN_VIOL_LNK_ID" referenced-column-name="ICS_ENFRC_ACTN_VIOL_LNK_ID"
+					insertable="false" updatable="false" />
+			</hj:many-to-one>
+		</jaxb:bindings>
+
+		<jaxb:bindings node="//xsd:element[@ref='icis:DischargeMonitoringReportParameterViolation']">
+			<hj:many-to-one>
+				<orm:join-column name="ICS_ENFRC_ACTN_VIOL_LNK_ID" referenced-column-name="ICS_ENFRC_ACTN_VIOL_LNK_ID"
+					insertable="false" updatable="false" />
+			</hj:many-to-one>
+		</jaxb:bindings>
+
+		<jaxb:bindings node="//xsd:element[@ref='icis:DischargeMonitoringReportViolation']">
+			<hj:many-to-one>
+				<orm:join-column name="ICS_ENFRC_ACTN_VIOL_LNK_ID" referenced-column-name="ICS_ENFRC_ACTN_VIOL_LNK_ID"
+					insertable="false" updatable="false" />
+			</hj:many-to-one>
+		</jaxb:bindings>
+
+		<jaxb:bindings node="//xsd:element[@ref='icis:PermitScheduleViolation']">
+			<hj:many-to-one>
+				<orm:join-column name="ICS_ENFRC_ACTN_VIOL_LNK_ID" referenced-column-name="ICS_ENFRC_ACTN_VIOL_LNK_ID"
+					insertable="false" updatable="false" />
+			</hj:many-to-one>
+		</jaxb:bindings>
+
+		<jaxb:bindings node="//xsd:element[@ref='icis:SingleEventsViolation']">
+			<hj:many-to-one>
+				<orm:join-column name="ICS_ENFRC_ACTN_VIOL_LNK_ID" referenced-column-name="ICS_ENFRC_ACTN_VIOL_LNK_ID"
+					insertable="false" updatable="false" />
+			</hj:many-to-one>
+		</jaxb:bindings>
+
+	</jaxb:bindings>
+
+	<!-- compliance schedule violation -->
+
+	<jaxb:bindings node="//xsd:complexType[@name='ComplianceScheduleViolation']">
+		<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractEnhancedComplianceScheduleKeyElements
+		</inheritance:extends>
+	</jaxb:bindings>
+
+	<!-- discharge monitoring report parameter violation -->
+
+	<jaxb:bindings node="//xsd:complexType[@name='DischargeMonitoringReportParameterViolation']">
+		<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractEnhancedDischargeMonitoringReportKeyElements
+		</inheritance:extends>
+	</jaxb:bindings>
+
+	<!-- discharge monitoring report violation -->
+
+	<jaxb:bindings node="//xsd:complexType[@name='DischargeMonitoringReportViolation']">
+		<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractEnhancedDischargeMonitoringReportKeyElements
+		</inheritance:extends>
+	</jaxb:bindings>
+
+	<!-- permit schedule violation -->
+
+	<jaxb:bindings node="//xsd:complexType[@name='PermitScheduleViolation']">
+		<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractEnhancedPermitScheduleKeyElements
+		</inheritance:extends>
+	</jaxb:bindings>
+
+	<!-- single events violation -->
+
+	<jaxb:bindings node="//xsd:complexType[@name='SingleEventsViolation']">
+		<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractEnhancedSingleEventKeyElements
+		</inheritance:extends>
 	</jaxb:bindings>
 
 </jaxb:bindings>

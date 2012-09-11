@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance"
 	jaxb:extensionBindingPrefixes="hj orm" schemaLocation="../xsd/0/ICIS_KeyElements_v4.0e.xsd">
 
 	<!-- basic permit key elements -->
@@ -134,19 +135,19 @@
 	<!-- local limits program report key elements -->
 
 	<jaxb:bindings>
-		
+
 		<jaxb:bindings node="//xsd:complexType[@name='LocalLimitsProgramReportKeyElements']">
 			<hj:mapped-superclass />
 		</jaxb:bindings>
-		
+
 		<!-- non-standard column name -->
-		
+
 		<jaxb:bindings node="//xsd:element[@ref='icis:LocalLimitsPermittingAuthorityReportReceivedDate']">
 			<hj:basic>
-				<orm:column name="PRMT_AUTH_REP_RCVD_DATE"/>
+				<orm:column name="PRMT_AUTH_REP_RCVD_DATE" />
 			</hj:basic>
 		</jaxb:bindings>
-				
+
 	</jaxb:bindings>
 
 	<!-- parameter key elements -->
@@ -224,27 +225,27 @@
 	<!-- single event key elements group -->
 
 	<jaxb:bindings>
-		
+
 		<jaxb:bindings node="//xsd:complexType[@name='SingleEventKeyElements']">
 			<hj:mapped-superclass />
 		</jaxb:bindings>
-		
+
 		<!-- non-standard name -->
-		
+
 		<jaxb:bindings node="//xsd:element[@ref='icis:PermitScheduleEventViolationKeyElements']">
 			<hj:one-to-one>
-				<orm:join-column name="ICS_SCHD_EVT_VIOL_ID"/>
+				<orm:join-column name="ICS_SCHD_EVT_VIOL_ID" />
 			</hj:one-to-one>
 		</jaxb:bindings>
-		
+
 		<!-- non-standard name -->
-		
+
 		<jaxb:bindings node="//xsd:element[@ref='icis:ComplianceScheduleEventViolationKeyElements']">
 			<hj:one-to-one>
-				<orm:join-column name="ICS_SCHD_EVT_VIOL_ID"/>
+				<orm:join-column name="ICS_SCHD_EVT_VIOL_ID" />
 			</hj:one-to-one>
 		</jaxb:bindings>
-		
+
 	</jaxb:bindings>
 
 	<jaxb:bindings>
@@ -292,6 +293,26 @@
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='SWMS4ProgramReportKeyElements']">
 			<hj:mapped-superclass />
+		</jaxb:bindings>
+	</jaxb:bindings>
+
+	<!-- permit schedule event violation key elements -->
+
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='PermitScheduleEventViolationKeyElements']">
+			<hj:generated-id name="Dbid">
+				<orm:column name="ICS_SCHD_EVT_VIOL_ID" />
+			</hj:generated-id>
+		</jaxb:bindings>
+	</jaxb:bindings>
+
+	<!-- compliance schedule event violation key elements -->
+
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='ComplianceScheduleEventViolationKeyElements']">
+			<hj:generated-id name="Dbid">
+				<orm:column name="ICS_SCHD_EVT_VIOL_ID" />
+			</hj:generated-id>
 		</jaxb:bindings>
 	</jaxb:bindings>
 
