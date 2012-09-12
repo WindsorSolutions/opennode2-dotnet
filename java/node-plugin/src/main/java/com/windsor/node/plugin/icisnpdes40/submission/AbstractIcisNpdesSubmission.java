@@ -70,7 +70,7 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
     /**
      * The prefix to be prepended to the name of the  XML file.
      */
-    private static final String FILE_PREFIX = "ICIS-NPDES";
+    private static final String FILE_PREFIX = "ICIS-NPDES_";
     
     /**
      * XML file extension.
@@ -893,7 +893,7 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
     * @return Skip XML validation?
     */
    private boolean isSkipXmlValidation() {
-        return Boolean.TRUE;
+        return Boolean.FALSE;
     }
    
    /**
