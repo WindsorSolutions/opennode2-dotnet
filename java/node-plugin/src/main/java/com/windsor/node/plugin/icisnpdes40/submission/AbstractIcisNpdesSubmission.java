@@ -146,6 +146,13 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
             "Submission Partner Name",
             PluginServiceParameterDescriptor.TYPE_STRING, Boolean.FALSE);
    
+    /**
+     * Validate Xml (true or false): Should the service validate the xml before submitting to ICIS
+     */
+    public static final PluginServiceParameterDescriptor SERVICE_PARAM_VALIDATE_XML = new PluginServiceParameterDescriptor(
+            "Validate Xml (true or false)",
+            PluginServiceParameterDescriptor.TYPE_BOOLEAN, Boolean.FALSE);
+    
     
     /**
      * All service configuration parameters configurable in the Node Admin website.
@@ -157,7 +164,8 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
                                                                     SERVICE_PARAM_ORGANIZATION,
                                                                     SERVICE_PARAM_CONTACT_INFO, 
                                                                     SERVICE_PARAM_NOTIFICATION_EMAIL_ADDRS,
-                                                                    SERVICE_PARAM_SUBMISSION_PARTNER_NAME };
+                                                                    SERVICE_PARAM_SUBMISSION_PARTNER_NAME,
+                                                                    SERVICE_PARAM_VALIDATE_XML};
 
     /**
      * ICIS Staging Local database datasource.
@@ -893,7 +901,8 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
     * @return Skip XML validation?
     */
    private boolean isSkipXmlValidation() {
-        return Boolean.FALSE;
+       String validate = getConfigurationArguments().get(SERVICE_PARAM_VALIDATE_XML.getName());
+       return !Boolean.valueOf(validate);
     }
    
    /**
