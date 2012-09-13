@@ -1,5 +1,6 @@
 package com.windsor.node.plugin.icisnpdes40.xml.validate.jaxb;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -47,7 +48,7 @@ public class JaxbXmlValidator implements XmlValidator {
     public JaxbXmlValidator(String schemaFilePath) {
         
         try {            
-            setSchemaUrl(new URL("file:/" + schemaFilePath));
+        	setSchemaUrl(new File(schemaFilePath).toURI().toURL());
         } catch (MalformedURLException e) {
             throw new ValidationException(e.getLocalizedMessage(), e);
         }
