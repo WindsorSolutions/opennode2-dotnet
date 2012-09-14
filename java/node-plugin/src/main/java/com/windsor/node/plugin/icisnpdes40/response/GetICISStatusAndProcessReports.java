@@ -139,7 +139,7 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
 
             //For the next part, load the original Transaction that we're checking up on, then check with the partner that was configured
             //during its run and check the remote status.  Do validation on the lookups, no data is a Failure condition.
-            NodeTransaction originalTransaction = getTransactionDao().get(icisWorkflow.getSubmissionTransactionId(), false);
+            NodeTransaction originalTransaction = getTransactionDao().get(icisWorkflow.getSubmissionTransactionId(), true);
             if(originalTransaction == null)
             {
                 result.getAuditEntries().add(new ActivityEntry("GetStatus operation failed: Workflow id=" + icisWorkflow.getId()
@@ -166,7 +166,7 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
             //Try for Completed or Failed status one more time, then msg: "GetStatus returned: {status}. Exiting."
             PartnerIdentity partner = new PartnerIdentity();
             partner.setUrl(originalTransaction.getNetworkEndpointUrl());
-            partner.setVersion(originalTransaction.getEndpointVersion());
+            partner.setVersion(originalTransaction.getNetworkEndpointVersion());
 
             NodeClientFactory clientFactory = (NodeClientFactory)getServiceFactory().makeService(NodeClientFactory.class);
             NodeClientService client = clientFactory.makeAndConfigure(partner);
@@ -179,7 +179,7 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
                 getIcisWorkflowDao().save(icisWorkflow);
 
                 result.getAuditEntries().add(new ActivityEntry("Remote node set transaction of id=" + originalTransaction.getNetworkId() + " to Failed.  Setting ICS_SUBM_TRACK.WORKFLOW_STAT = Failed."));
-                result.getAuditEntries().add(new ActivityEntry("This transaction completed succesfully."));
+                result.getAuditEntries().add(new ActivityEntry("This transaction completed successfully."));
                 originalTransaction.getStatus().setStatus(CommonTransactionStatusCode.Failed);
                 getTransactionDao().save(transaction);
 
@@ -190,13 +190,13 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
             else if(!CommonTransactionStatusCode.Completed.equals(statusResult.getStatus()))
             {
                 //yeah, not actually gonna block and try again, that is needlessly complex
-                icisWorkflow.setWorkflowStatus(CommonTransactionStatusCode.Failed.toString());
+                //icisWorkflow.setWorkflowStatus(CommonTransactionStatusCode.Failed.toString());
                 icisWorkflow.setWorkflowStatusMessage("GetStatus returned: " + statusResult.getStatus() + ". Exiting.");
                 icisWorkflow.setSubmissionStatusDate(new Date());
                 getIcisWorkflowDao().save(icisWorkflow);
 
                 result.getAuditEntries().add(new ActivityEntry("GetStatus returned: " + statusResult.getStatus() + ". Exiting."));
-                result.getAuditEntries().add(new ActivityEntry("This transaction completed succesfully."));
+                result.getAuditEntries().add(new ActivityEntry("This transaction completed successfully."));
                 originalTransaction.getStatus().setStatus(CommonTransactionStatusCode.Failed);
                 getTransactionDao().save(transaction);
 
@@ -387,7 +387,7 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
         if(StringUtils.isNotEmpty(allEmails))
         {
             result.getAuditEntries().add(new ActivityEntry("Email contacts configured, notifications will be sent to the following emails: " + allEmails +  "."));
-            String[] emails = allEmails.split(",");
+            String[] emails = allEmails.split(";");
             for(int i = 0; i < emails.length; i++)
             {
                 getNotificationHelper().sendTransactionStatusUpdate(transaction, emails[i], transaction.getFlow().getName());

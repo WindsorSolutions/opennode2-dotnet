@@ -393,7 +393,10 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
                 debug(result, "Attempting to submit node transaction.");
                 
                 String submissionTransactionId = executeSubmissionToCDX(partnerName, transaction, result);
-                
+                //DANGER set to NodeTransaction object's actual network id!
+                transaction.setNetworkId(submissionTransactionId);
+                getTransactionDao().save(transaction);
+
                 debug(result, "...Successfully submitted node transaction.");
                 
                 /**
