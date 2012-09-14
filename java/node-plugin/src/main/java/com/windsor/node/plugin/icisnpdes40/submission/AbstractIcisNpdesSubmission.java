@@ -2,7 +2,10 @@ package com.windsor.node.plugin.icisnpdes40.submission;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -349,19 +352,27 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
             }
             
             /**
+             * Save NodeTransaction before schema validation.
+             */
+            getTransactionDao().save(transaction);
+            
+            /**
              * Skip the XML validation?
              */
             if (!isSkipXmlValidation()) {
                 
                 debug(result, "Starting XML validation.");
                 
-                if (isXmlPayloadDocumentNotValid(result, icisXmlDocumentFilePath)) {
+                if (isXmlPayloadDocumentNotValid(result, transaction, docId, icisXmlDocumentFilePath)) {
                     
-                    String msg = "...XML did not pass schema validation. Exiting";
-                    
-                    debug(result, msg);
+                    String msg = "XML did not pass schema validation. Exiting";
                     
                     updateWorkflowStatusAsFailed(workflow, msg);
+                    
+                    /**
+                     * Save NodeTransaction when there are validation errors.
+                     */
+                    getTransactionDao().save(transaction);
                     
                     return updateProcessAsFailed(result, msg);
                 }
@@ -818,7 +829,7 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
    }
    
    /**
-    * Is the generated ICIS XML valid?
+    * Is the generated ICIS XML valid? If so, report errors.
     * 
     * @param result
     *            The ProcessContentResult context.
@@ -828,7 +839,7 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
     * @throws Exception
     *             When validation cannot be executed normally.
     */
-   private boolean isXmlPayloadDocumentNotValid(ProcessContentResult result, String xmlDocFilePath) throws Exception {
+   private boolean isXmlPayloadDocumentNotValid(ProcessContentResult result, NodeTransaction nodeTransaction, String docId, String xmlDocFilePath) throws Exception {
        
        if (isSkipXmlValidation()) return false;
        
@@ -839,9 +850,26 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
        ValidationResult validationResult = validator.validate(new FileInputStream(xmlDocFilePath));
        
        if (validationResult.hasErrors()) {
-           for(String e : validationResult.errors()) {
-               debug(result, e);
-           }
+           
+            debug(result,
+                    "The generated xml document is not valid according to the xml schema.  Review " +
+                    "the \"Validation Errors\" file for a summary of the validation errors");
+            
+            /**
+             * Create a ValidationErrors.txt file and append it to the node
+             * transaction docs collection.
+             */            
+            String filename = FilenameUtils.concat(
+                    getSettingService().getTempDir().getAbsolutePath(), 
+                    "Validation_Errors_" + this.getClass().getSimpleName() + docId + ".txt");
+            
+            FileUtils.writeLines(new File(filename), validationResult.errors());
+            
+            Document doc = makeDocument(nodeTransaction.getRequest().getType(), docId, filename);
+            doc.setDocumentName("Validation Errors.txt");
+            doc.setType(CommonContentType.Flat);
+            doc.setDocumentStatus(CommonTransactionStatusCode.Completed);
+            nodeTransaction.getDocuments().add(doc);
        } 
        
        return validationResult.hasErrors();

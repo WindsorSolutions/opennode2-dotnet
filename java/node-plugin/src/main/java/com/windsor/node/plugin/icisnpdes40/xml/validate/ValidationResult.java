@@ -21,5 +21,5 @@ public interface ValidationResult {
      * 
      * @return A {@link Collection} of error messages.
      */
-    Collection<String> errors();    
+    Collection<String> errors();
 }

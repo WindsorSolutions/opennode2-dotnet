@@ -13,7 +13,9 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 
+import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
 import com.windsor.node.plugin.icisnpdes40.xml.validate.ValidationException;
 import com.windsor.node.plugin.icisnpdes40.xml.validate.ValidationResult;
@@ -60,7 +62,7 @@ public class JaxbXmlValidator implements XmlValidator {
     @Override
     public ValidationResult validate(InputStream xmlInputStream) throws ValidationException {
 
-        JaxbValidationResult results = new JaxbValidationResult();
+        final JaxbValidationResult results = new JaxbValidationResult();
         
         try {
 
@@ -79,6 +81,22 @@ public class JaxbXmlValidator implements XmlValidator {
              */
             Validator validator = schema.newValidator();
 
+            validator.setErrorHandler(new ErrorHandler() {
+                
+                @Override
+                public void warning(SAXParseException exception) throws SAXException { }
+                
+                @Override
+                public void fatalError(SAXParseException exception) throws SAXException {
+                    results.error(exception.getLocalizedMessage());
+                }
+                
+                @Override
+                public void error(SAXParseException exception) throws SAXException {
+                    results.error(exception.getLocalizedMessage());
+                }                
+            });
+            
             /**
              * Create a source for the XML to validate.
              */
