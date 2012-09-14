@@ -232,7 +232,7 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
      * @param em
      * @return
      */
-    public abstract List<PayloadData> createAllPayloads(EntityManager em);
+    public abstract List<PayloadData> createAllPayloads(ProcessContentResult result, EntityManager em);
 
     /**
      * {@inheritDoc}
@@ -327,7 +327,7 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
                 
                 debug(result, "Attempting to generate OpenNode2 document.");
                 
-                Document doc = generateNodeDocument(transaction, docId, icisXmlDocumentFilePath);
+                Document doc = generateNodeDocument(result, transaction, docId, icisXmlDocumentFilePath);
                 
                 result.getDocuments().add(doc);
                 
@@ -408,6 +408,7 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
                 workflow.setSubmissionTransactionId(submissionTransactionId);
                 workflow.setSubmissionTransactionStatus("Pending");
                 workflow.setSubmissionStatusDate(new Date());
+                workflow.setWorkflowStatusMessage("The ICIS data has been submitted");
                 
                 getIcisWorkflowDao().save(workflow);
                 
@@ -446,12 +447,12 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
      * @return The payload {@link Document}.
      * @throws XmlGenerationException
      */
-    private Document generateNodeDocument(NodeTransaction nodeTransaction, String docId, String tempFilePath) throws XmlGenerationException, EmptyIcisStagingLocalDatabaseResultsException {
+    private Document generateNodeDocument(ProcessContentResult result, NodeTransaction nodeTransaction, String docId, String tempFilePath) throws XmlGenerationException, EmptyIcisStagingLocalDatabaseResultsException {
         
         /**
          * Attempt to find data from staging tables...
          */
-        List<PayloadData> payloads = createAllPayloads(emf.createEntityManager());
+        List<PayloadData> payloads = createAllPayloads(result, emf.createEntityManager());
         
         /**
          * No staging data to send, throw exception for process method to catch
@@ -999,7 +1000,7 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
      *            The message to append to the {@link ProcessContentResult} and
      *            debug message.
      */
-    private void debug(ProcessContentResult result, String message) {
+    protected final void debug(ProcessContentResult result, String message) {
         result.getAuditEntries().add(new ActivityEntry(messageFilter(message)));
         logger.debug(message);
     }

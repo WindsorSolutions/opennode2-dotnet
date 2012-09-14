@@ -8,6 +8,8 @@ import java.util.Map;
 
 import javax.persistence.EntityManager;
 
+import com.windsor.node.common.domain.ActivityEntry;
+import com.windsor.node.common.domain.ProcessContentResult;
 import com.windsor.node.plugin.icisnpdes40.dao.PayloadOperationDao;
 import com.windsor.node.plugin.icisnpdes40.dao.jdbc.PayloadOperationDaoJdbc;
 import com.windsor.node.plugin.icisnpdes40.domain.PayloadOperation;
@@ -72,12 +74,14 @@ public class PerformICISSubmission extends AbstractIcisNpdesSubmission {
      * 
      */
     @Override
-    public List<PayloadData> createAllPayloads(EntityManager em) {
+    public List<PayloadData> createAllPayloads(ProcessContentResult result, EntityManager em) {
 
         log("Creating new list for <Payload>", "");
 
         List<PayloadData> allPayloads = new ArrayList<PayloadData>();
 
+        PayloadsCountMessage countMessage = new PayloadsCountMessage();;
+        
         /**
          * Instantiate a new DAO to lookup ICS_PAYLOAD records.
          */
@@ -103,7 +107,7 @@ public class PerformICISSubmission extends AbstractIcisNpdesSubmission {
              */
             Class<?> klass = payloadOperationTypeJpaEntityMap().get(op.getOperationType());
             
-            if (klass != null ) {
+            if (klass != null) {
                 
                 String klassName = klass.getSimpleName();
                 
@@ -116,6 +120,8 @@ public class PerformICISSubmission extends AbstractIcisNpdesSubmission {
                 final List<?> list = em.createQuery("select ls from "+klassName+" ls where ls.transactionHeader.transactionType is not null").getResultList();
                 
                 log("...Found {} records in the database.", list.size());
+                
+                countMessage.addCount(op.getOperationType().value(), list.size());
                 
                 if (list.size() > 0 ) {
 
@@ -145,9 +151,53 @@ public class PerformICISSubmission extends AbstractIcisNpdesSubmission {
                 log("....did not find an @Entity class for {} operation.", op.getOperationType());
             }
         }
+        
+        debug(result, countMessage.formatAsActivityEntry());
+        
         return allPayloads;
     }
 
+    /**
+     * Holds the count for payload operation type, will also return a format
+     * message to use as an {@link ActivityEntry}.
+     * 
+     */
+    private class PayloadsCountMessage {
+        
+        private List<String> payloadsCounts = new ArrayList<String>();
+        
+        public void addCount(String operationTypeName, int count) {
+            payloadsCounts.add(operationTypeName + " (" + count + ")");
+        }
+        
+        public String formatAsActivityEntry() {
+            
+            StringBuilder sb = new StringBuilder(
+                    "The following ICIS payload(s) were loaded from the database: ");
+
+            if (!payloadsCounts.isEmpty()) {
+
+                /**
+                 * Iterate over each item in the list and append to
+                 * StringBuilder.
+                 */
+                for (String s : this.payloadsCounts) {
+                    sb.append(s + ", ");
+                }
+                
+                /**
+                 * Remove the last comma.
+                 */
+                sb.delete(sb.lastIndexOf(", "), sb.length());
+                
+            } else {
+                sb.append("No payloads were found.");
+            }
+            
+            return sb.toString();
+        }
+    }
+    
     /**
      * Returns a map of Classes keyed on {@link OperationType}. Used to look up
      * the class to hold the the payload data originating from the database and
