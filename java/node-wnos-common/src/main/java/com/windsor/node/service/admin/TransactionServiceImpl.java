@@ -97,15 +97,24 @@ public class TransactionServiceImpl extends BaseService implements
     public byte[] downloadContent(String transactionID, String documentID,
             NodeVisit visit) {
 
-        if (StringUtils.isBlank(transactionID)) {
+        Document doc = download(transactionID, documentID, visit);
+        if(doc == null)
+        {
+            return null;
+        }
+        return doc.getContent();
+    }
+
+    public Document download(String transactionID, String documentID, NodeVisit visit)
+    {
+        if(StringUtils.isBlank(transactionID))
+        {
             throw new RuntimeException("transactionID not set.");
         }
 
         // Make sure the user performing that action has program rights
         validateByRole(visit, SystemRoleType.Program);
-
-        return getDocument(transactionID, documentID, false).getContent();
-
+        return getDocument(transactionID, documentID, false);
     }
 
     /**

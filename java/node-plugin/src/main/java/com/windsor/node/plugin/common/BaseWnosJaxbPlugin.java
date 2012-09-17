@@ -20,7 +20,6 @@ import com.windsor.node.plugin.common.domain.DocumentPayloadType;
 import com.windsor.node.plugin.common.domain.ExchangeNetworkDocumentType;
 import com.windsor.node.plugin.common.domain.ObjectFactory;
 
-@SuppressWarnings("restriction")
 public abstract class BaseWnosJaxbPlugin extends BaseWnosPlugin
 {
     protected Logger logger = LoggerFactory.getLogger(BaseWnosJaxbPlugin.class);

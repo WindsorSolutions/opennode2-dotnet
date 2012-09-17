@@ -32,8 +32,8 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.windsor.node.common.service.admin;
 
 import java.util.List;
-
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
+import com.windsor.node.common.domain.Document;
 import com.windsor.node.common.domain.NodeMethodType;
 import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.NodeVisit;
@@ -57,9 +57,21 @@ public interface TransactionService {
      * @param documentID
      * @param visit
      * @return
+     * @deprecated
      */
     byte[] downloadContent(String transactionId, String documentID,
             NodeVisit visit);
+
+    /**
+     * download the actual Document object
+     * 
+     * @param transactionId
+     * @param documentID
+     * @param visit
+     * @return
+     */
+    Document download(String transactionId, String documentID,
+                    NodeVisit visit);
 
     /**
      * get

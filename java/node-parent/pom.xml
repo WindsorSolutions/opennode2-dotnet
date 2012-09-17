@@ -154,7 +154,7 @@
         <dependency>
         	<groupId>com.sun.xml.bind</groupId>
         	<artifactId>jaxb-impl</artifactId>
-        	<version>2.2.5-2</version>
+        	<version>2.2.7-b41</version>
         </dependency>
         <dependency>
         	<groupId>org.hibernate.javax.persistence</groupId>

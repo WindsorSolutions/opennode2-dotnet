@@ -33,7 +33,6 @@ package com.windsor.node.admin;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,11 +41,12 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
-
 import com.windsor.node.admin.util.AdminConstants;
 import com.windsor.node.admin.util.VisitUtils;
+import com.windsor.node.common.domain.Document;
 import com.windsor.node.common.domain.NodeVisit;
 import com.windsor.node.common.service.admin.TransactionService;
+import com.windsor.node.common.util.CommonContentAndFormatConverter;
 
 public class DocController implements Controller, InitializingBean {
 
@@ -93,20 +93,21 @@ public class DocController implements Controller, InitializingBean {
         logger.debug("Download document with\nTransaction id: " + tid
                 + "\nDocument Id: " + id + "\nDocument Name: " + name);
 
-        byte[] content = transactionService.downloadContent(tid, id, visit);
-
-        logger.debug("Content length (in bytes): " + content.length);
-
-        response.setHeader("Cache-Control", "must-revalidate");
-        response.setBufferSize(content.length);
-        response.setContentType("application/zip");
-        response.setContentLength(content.length);
-
-        response.setHeader("Content-Disposition", "attachment; filename=\""
-                + name + "\"");
-
-        FileCopyUtils.copy(content, response.getOutputStream());
-
+        Document doc = transactionService.download(tid, id, visit);
+        if(doc != null && doc.getContent() != null)
+        {
+            logger.debug("Content length (in bytes): " + doc.getContent().length);
+    
+            response.setHeader("Cache-Control", "must-revalidate");
+            response.setBufferSize(doc.getContent().length);
+            response.setContentType(CommonContentAndFormatConverter.convertToMimeType(doc.getType()));
+            response.setContentLength(doc.getContent().length);
+    
+            response.setHeader("Content-Disposition", "attachment; filename=\""
+                    + name + "\"");
+    
+            FileCopyUtils.copy(doc.getContent(), response.getOutputStream());
+        }
         return null;
 
     }

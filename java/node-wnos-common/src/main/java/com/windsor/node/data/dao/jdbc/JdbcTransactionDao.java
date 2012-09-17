@@ -48,6 +48,7 @@ import com.windsor.node.common.domain.PartnerIdentity;
 import com.windsor.node.common.domain.ScheduledItem;
 import com.windsor.node.common.domain.ScheduledItemTargetType;
 import com.windsor.node.common.domain.TransactionStatus;
+import com.windsor.node.common.exception.DocumentExistsException;
 import com.windsor.node.common.util.CommonTransactionStatusCodeConverter;
 import com.windsor.node.data.dao.AccountDao;
 import com.windsor.node.data.dao.FlowDao;
@@ -133,6 +134,7 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao
             + "WHERE UPPER(NetworkId) = ? ) ";
 
     private static final String SQL_ID_EXISTS = "select count(*) from NTransaction where id = ?";
+    private static final String SQL_DOC_ID_EXISTS = "select count(*) from NDocument where id = ?";
 
     /**
      * SQL INSERT statement for this table
@@ -171,6 +173,11 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao
         }
     }
 
+    private Document addDocument(NodeTransaction transaction, Document doc)
+    {
+        return addDocument(transaction.getId(), doc);
+    }
+
     /**
      * addDocument
      */
@@ -185,6 +192,13 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao
 
         if (StringUtils.isBlank(instance.getId())) {
             instance.setId(UUIDGenerator.makeId());
+        }
+
+        int count = getJdbcTemplate().queryForInt(SQL_DOC_ID_EXISTS, new Object[] {instance.getId()}, new int[] {Types.VARCHAR});
+        if(count > 0)
+        {
+            throw new DocumentExistsException("Error, document exists, cannot insert new document for Transaction Id: " + transactionId
+                            + " and document name: " + instance.getDocumentName());
         }
 
         Object[] args = new Object[8];
@@ -537,59 +551,83 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao
                                                  Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,
                                                  Types.VARCHAR, Types.VARCHAR});
 
+        insertDocuments(transaction);
         return transaction;
     }
 
-    private NodeTransaction insert(NodeTransaction instance)
+    /**
+     * Will only insert, not replace, documents.  Will silently ignore all documents already in the DB.  This means document updates are not possible.
+     * @param transaction
+     */
+    private void insertDocuments(NodeTransaction transaction)
     {
-        instance.setId(UUIDGenerator.makeId());
+        if(transaction != null && transaction.getDocuments() != null)
+        {
+            for(int i = 0; i < transaction.getDocuments().size(); i++)
+            {
+                Document doc = transaction.getDocuments().get(i);
+                try
+                {
+                    addDocument(transaction, doc);
+                }
+                catch(DocumentExistsException e)
+                {
+                    logger.debug("Document exists, no insert or update performed for doc id: " + doc.getId());
+                }
+            }
+        }
+    }
+
+    private NodeTransaction insert(NodeTransaction transaction)
+    {
+        transaction.setId(UUIDGenerator.makeId());
 
         // Id, FlowId, NetworkId, Status, ModifiedBy, ModifiedOn, StatusDetail,
         // Operation, WebMethod
         Object[] args = new Object[14];
 
-        args[0] = instance.getId();
-        args[1] = instance.getFlow().getId();
-        args[2] = instance.getNetworkId();
-        args[3] = instance.getStatus().getStatus().name();
-        args[4] = instance.getModifiedById();
+        args[0] = transaction.getId();
+        args[1] = transaction.getFlow().getId();
+        args[2] = transaction.getNetworkId();
+        args[3] = transaction.getStatus().getStatus().name();
+        args[4] = transaction.getModifiedById();
         args[5] = DateUtil.getTimestamp();
-        args[6] = instance.getStatus().getDescription();
-        args[7] = instance.getOperation();
-        args[8] = instance.getWebMethod().getType();
+        args[6] = transaction.getStatus().getDescription();
+        args[7] = transaction.getOperation();
+        args[8] = transaction.getWebMethod().getType();
 
         //new as of version 2.01
         //EndpointVersion, NetworkEndpointVersion, NetworkEndpointUrl, NetworkEndpointStatus, NetworkEndpointStatusDetail
-        if(instance.getEndpointVersion() != null)
+        if(transaction.getEndpointVersion() != null)
         {
-            args[9] = instance.getEndpointVersion().toString();
+            args[9] = transaction.getEndpointVersion().toString();
         }
         else
         {
             args[9] = "";
         }
-        if(instance.getNetworkEndpointVersion() != null)
+        if(transaction.getNetworkEndpointVersion() != null)
         {
-            args[10] = instance.getNetworkEndpointVersion().toString();
+            args[10] = transaction.getNetworkEndpointVersion().toString();
         }
         else
         {
             args[10] = "";
         }
-        if(instance.getNetworkEndpointUrl() != null)
+        if(transaction.getNetworkEndpointUrl() != null)
         {
-            args[11] = instance.getNetworkEndpointUrl().toString();
+            args[11] = transaction.getNetworkEndpointUrl().toString();
         }
         else
         {
             args[11] = "";
         }    
-        args[12] = instance.getNetworkEndpointStatus();
-        args[13] = instance.getNetworkEndpointStatusDetail();
+        args[12] = transaction.getNetworkEndpointStatus();
+        args[13] = transaction.getNetworkEndpointStatusDetail();
 
         getJdbcTemplate().update(SQL_INSERT, args);
-
-        return instance;
+        insertDocuments(transaction);
+        return transaction;
     }
 
     /**

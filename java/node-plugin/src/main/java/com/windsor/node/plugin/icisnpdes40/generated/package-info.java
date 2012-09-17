@@ -4,6 +4,13 @@
 // Any modifications to this file will be lost upon recompilation of the source schema. 
 // Generated on: 2012.09.11 at 01:40:11 PM PDT 
 //
-
-@javax.xml.bind.annotation.XmlSchema(namespace = "http://www.exchangenetwork.net/schema/icis/4", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
+//
+@javax.xml.bind.annotation.XmlSchema(
+                                     elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED,
+                                     namespace = "http://www.exchangenetwork.net/schema/icis/4",
+                                     xmlns = {
+                                                @javax.xml.bind.annotation.XmlNs(prefix="icis", namespaceURI="http://www.exchangenetwork.net/schema/icis/4"),
+                                                @javax.xml.bind.annotation.XmlNs(prefix="xsd", namespaceURI="http://www.w3.org/2001/XMLSchema"),
+                                                @javax.xml.bind.annotation.XmlNs(prefix="xsi", namespaceURI="http://www.w3.org/2001/XMLSchema-instance")
+                                             })
 package com.windsor.node.plugin.icisnpdes40.generated;

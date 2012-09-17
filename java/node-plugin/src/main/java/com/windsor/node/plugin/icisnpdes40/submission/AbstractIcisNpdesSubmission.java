@@ -2,29 +2,23 @@ package com.windsor.node.plugin.icisnpdes40.submission;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.spi.PersistenceProvider;
 import javax.sql.DataSource;
 import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.cfg.Environment;
 import org.hibernate.ejb.HibernatePersistence;
 import org.slf4j.Logger;
-
 import com.windsor.node.common.domain.ActivityEntry;
 import com.windsor.node.common.domain.CommonContentType;
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
@@ -38,6 +32,7 @@ import com.windsor.node.common.domain.ServiceType;
 import com.windsor.node.common.util.NodeClientService;
 import com.windsor.node.data.dao.PartnerDao;
 import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
+import com.windsor.node.data.dao.TransactionDao;
 import com.windsor.node.data.dao.jdbc.JdbcTransactionDao;
 import com.windsor.node.plugin.common.BaseWnosJaxbPlugin;
 import com.windsor.node.plugin.icisnpdes40.dao.IcisWorkflowDao;
@@ -186,7 +181,7 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
    
    private CompressionService zipService;
    
-   private JdbcTransactionDao transactionDao;
+   private TransactionDao transactionDao;
    
    private IcisWorkflowDao icisWorkflowDao;
 
@@ -362,8 +357,8 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
             if (!isSkipXmlValidation()) {
                 
                 debug(result, "Starting XML validation.");
-                
-                if (isXmlPayloadDocumentNotValid(result, transaction, docId, icisXmlDocumentFilePath)) {
+                String validationDocId = getIdGenerator().createId();
+                if (isXmlPayloadDocumentNotValid(result, transaction, validationDocId, icisXmlDocumentFilePath)) {
                     
                     String msg = "XML did not pass schema validation. Exiting";
                     
@@ -862,15 +857,19 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
             String filename = FilenameUtils.concat(
                     getSettingService().getTempDir().getAbsolutePath(), 
                     "Validation_Errors_" + this.getClass().getSimpleName() + docId + ".txt");
-            
-            FileUtils.writeLines(new File(filename), validationResult.errors());
-            
-            Document doc = makeDocument(nodeTransaction.getRequest().getType(), docId, filename);
+
+            File errorsFile = new File(filename);
+            FileUtils.writeLines(errorsFile, validationResult.errors());
+
+            Document doc = new Document();
+            doc.setDocumentId(docId);
+            doc.setId(docId);
             doc.setDocumentName("Validation Errors.txt");
             doc.setType(CommonContentType.Flat);
             doc.setDocumentStatus(CommonTransactionStatusCode.Completed);
+            doc.setContent(FileUtils.readFileToByteArray(errorsFile));
             nodeTransaction.getDocuments().add(doc);
-       } 
+       }
        
        return validationResult.hasErrors();
    }
@@ -1073,11 +1072,11 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
         this.zipService = zipService;
     }
 
-    public JdbcTransactionDao getTransactionDao() {
+    public TransactionDao getTransactionDao() {
         return transactionDao;
     }
 
-    public void setTransactionDao(JdbcTransactionDao transactionDao) {
+    public void setTransactionDao(TransactionDao transactionDao) {
         this.transactionDao = transactionDao;
     }
 

@@ -9,8 +9,8 @@
 @javax.xml.bind.annotation.XmlSchema(
                                          namespace = "http://www.exchangenetwork.net/schema/facilityid/3",
                                          xmlns = {
-                                                     @javax.xml.bind.annotation.XmlNs(prefix = "", namespaceURI="http://www.exchangenetwork.net/schema/facilityid/3"),
-                                                     @javax.xml.bind.annotation.XmlNs(prefix = "gml", namespaceURI="http://www.opengis.net/gml"),
+                                                     @javax.xml.bind.annotation.XmlNs(prefix="", namespaceURI="http://www.exchangenetwork.net/schema/facilityid/3"),
+                                                     @javax.xml.bind.annotation.XmlNs(prefix="gml", namespaceURI="http://www.opengis.net/gml"),
                                                      @javax.xml.bind.annotation.XmlNs(prefix="xs", namespaceURI="http://www.w3.org/2001/XMLSchema")
                                                  },
                                          elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED
