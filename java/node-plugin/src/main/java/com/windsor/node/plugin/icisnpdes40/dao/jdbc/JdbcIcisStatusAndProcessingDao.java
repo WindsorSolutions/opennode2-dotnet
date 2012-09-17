@@ -21,7 +21,7 @@ import com.windsor.node.plugin.icisnpdes40.results.IcisStatusResult;
 public class JdbcIcisStatusAndProcessingDao extends JdbcDaoSupport implements IcisStatusAndProcessingDao
 {
     private static final String SQL_COUNT_PENDING_WORKFLOWS = "SELECT count(*) from ICS_SUBM_TRACK where WORKFLOW_STAT = ?";
-    private static final String SQL_LOAD_PENDING_WORKFLOW = "SELECT ICS_SUBM_TRACK_ID where WORKFLOW_STAT = ?";
+    private static final String SQL_LOAD_PENDING_WORKFLOW = "SELECT ICS_SUBM_TRACK_ID from ICS_SUBM_TRACK where WORKFLOW_STAT = ?";
     private static final String SQL_INSERT_ICIS_STATUS_RESULT = "INSERT INTO ICS_SUBM_RESULTS (ICS_SUBM_RESULTS_ID,"
                     + " TRANSACTION_TYPE, SUBM_TYPE_NAME, PRMT_IDENT, PRMT_IDENT_2, PRMT_FEATR_IDENT, RESULT_CODE, RESULT_TYPE_CODE,"
                     + " RESULT_DESC, CREATE_DATE_TIME) " + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
