@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
-	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm" jaxb:extensionBindingPrefixes="hj orm">
+	xmlns:namespace="http://jaxb2-commons.dev.java.net/namespace-prefix" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	jaxb:extensionBindingPrefixes="hj orm namespace">
 
 	<jaxb:bindings schemaLocation="../xsd/index.xsd" node="/xsd:schema">
 
@@ -10,6 +11,8 @@
 		<jaxb:schemaBindings>
 			<jaxb:package name="com.windsor.node.plugin.icisnpdes40.generated" />
 		</jaxb:schemaBindings>
+		
+		<namespace:prefix name="icis" />
 
 		<jaxb:globalBindings generateIsSetMethod="true" localScoping="toplevel">
 
@@ -88,7 +91,7 @@
 			<!-- decimal mappings -->
 
 			<!-- Decimal6FloatinType is actually mapped as a *char in the DB -->
-			
+
 			<!-- <xjc:javaType name="java.lang.Double" xmlType="icis:Decimal6FloatingType" adapter="com.windsor.node.plugin.icisnpdes40.adapter.DoubleAdapter" 
 				/> -->
 
@@ -129,30 +132,17 @@
 
 			<!-- These enum values contain dashes which can't be easily represented in Java, so we just map them 
 				to Strings. -->
-				
+
 			<xjc:javaType name="java.lang.String" xmlType="icis:NumericReportTextType"
 				adapter="com.windsor.node.plugin.icisnpdes40.adapter.StringAdapter" />
-				
+
 			<xjc:javaType name="java.lang.String" xmlType="icis:ScheduleViolationCodeType"
 				adapter="com.windsor.node.plugin.icisnpdes40.adapter.StringAdapter" />
 
 		</jaxb:globalBindings>
 
 		<hj:persistence>
-			<hj:default-generated-id name="dbid" transient="true" javaType="java.lang.String" />
-			<hj:default-single-property type="icis:YesNoIndicatorType">
-				<hj:basic>
-					<orm:column length="1" column-definition="char(1)" />
-				</hj:basic>
-			</hj:default-single-property>
-			<hj:default-to-one>
-				<hj:one-to-one />
-			</hj:default-to-one>
-			<hj:default-element-collection>
-				<orm:collection-table>
-					<orm:join-column />
-				</orm:collection-table>
-			</hj:default-element-collection>
+			<hj:default-generated-id name="Dbid" transient="true" javaType="java.lang.String" />
 
 			<hj:default-single-property type="icis:ActiveInactiveType">
 				<hj:basic>
@@ -215,6 +205,11 @@
 				</hj:basic>
 			</hj:default-single-property>
 			<hj:default-single-property type="icis:WetDryType">
+				<hj:basic>
+					<orm:column length="1" column-definition="char(1)" />
+				</hj:basic>
+			</hj:default-single-property>
+			<hj:default-single-property type="icis:YesNoIndicatorType">
 				<hj:basic>
 					<orm:column length="1" column-definition="char(1)" />
 				</hj:basic>
