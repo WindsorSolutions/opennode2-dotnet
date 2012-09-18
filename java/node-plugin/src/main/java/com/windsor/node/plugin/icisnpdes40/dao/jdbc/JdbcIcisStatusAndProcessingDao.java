@@ -1,12 +1,9 @@
 package com.windsor.node.plugin.icisnpdes40.dao.jdbc;
 
 import java.sql.Types;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.UUID;
+import javax.persistence.EntityManager;
 import javax.sql.DataSource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.SqlParameter;
@@ -16,7 +13,7 @@ import com.windsor.node.common.domain.CommonTransactionStatusCode;
 import com.windsor.node.plugin.icisnpdes40.dao.IcisStatusAndProcessingDao;
 import com.windsor.node.plugin.icisnpdes40.dao.IcisWorkflowDao;
 import com.windsor.node.plugin.icisnpdes40.domain.IcisWorkflow;
-import com.windsor.node.plugin.icisnpdes40.results.IcisStatusResult;
+import com.windsor.node.plugin.icisnpdes40.generated.SubmissionResultList;
 
 public class JdbcIcisStatusAndProcessingDao extends JdbcDaoSupport implements IcisStatusAndProcessingDao
 {
@@ -60,9 +57,18 @@ public class JdbcIcisStatusAndProcessingDao extends JdbcDaoSupport implements Ic
      * @see com.windsor.node.plugin.icisnpdes40.dao.IcisStatusAndProcessingDao#saveIcisStatusResults(java.util.List, java.util.List)
      */
     @Override
-    public void saveIcisStatusResults(List<IcisStatusResult> accepted, List<IcisStatusResult> rejected)
+    public void saveIcisStatusResults(SubmissionResultList accepted, SubmissionResultList rejected, EntityManager em)
     {
-        List<IcisStatusResult> fullList = new ArrayList<IcisStatusResult>();
+        for(int i = 0; accepted != null && accepted.getSubmissionResult() != null  && i < accepted.getSubmissionResult().size(); i++)
+        {
+            em.persist(accepted.getSubmissionResult().get(i));
+        }
+        for(int i = 0; rejected != null && rejected.getSubmissionResult() != null  && i < rejected.getSubmissionResult().size(); i++)
+        {
+            em.persist(rejected.getSubmissionResult().get(i));
+        }
+    }
+        /*List<IcisStatusResult> fullList = new ArrayList<IcisStatusResult>();
         fullList.addAll(accepted);
         fullList.addAll(rejected);
         for(int i = 0; i < fullList.size(); i++)
@@ -95,7 +101,7 @@ public class JdbcIcisStatusAndProcessingDao extends JdbcDaoSupport implements Ic
                                                 Types.VARCHAR,
                                                 Types.DATE});
         }
-    }
+    }*/
 
     /* (non-Javadoc)
      * @see com.windsor.node.plugin.icisnpdes40.dao.IcisStatusAndProcessingDao#runCleanupStoredProc(java.lang.String, java.lang.String)

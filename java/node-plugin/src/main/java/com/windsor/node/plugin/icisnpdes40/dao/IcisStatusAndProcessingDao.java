@@ -1,8 +1,8 @@
 package com.windsor.node.plugin.icisnpdes40.dao;
 
-import java.util.List;
+import javax.persistence.EntityManager;
 import com.windsor.node.plugin.icisnpdes40.domain.IcisWorkflow;
-import com.windsor.node.plugin.icisnpdes40.results.IcisStatusResult;
+import com.windsor.node.plugin.icisnpdes40.generated.SubmissionResultList;
 
 public interface IcisStatusAndProcessingDao
 {
@@ -15,7 +15,7 @@ public interface IcisStatusAndProcessingDao
      */
     public IcisWorkflow loadPendingWorkflow();
 
-    public void saveIcisStatusResults(List<IcisStatusResult> accepted, List<IcisStatusResult> rejected);
+    public void saveIcisStatusResults(SubmissionResultList accepted, SubmissionResultList rejected, EntityManager em);
 
     public void runCleanupStoredProc(String procName, String storedProcedureTransactionIdArgument);
 

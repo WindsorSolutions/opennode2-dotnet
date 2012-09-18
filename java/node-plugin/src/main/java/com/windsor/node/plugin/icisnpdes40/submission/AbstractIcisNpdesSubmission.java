@@ -6,22 +6,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Properties;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.spi.PersistenceProvider;
 import javax.sql.DataSource;
 import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.hibernate.cfg.Environment;
-import org.hibernate.ejb.HibernatePersistence;
 import org.slf4j.Logger;
-
 import com.windsor.node.common.domain.ActivityEntry;
 import com.windsor.node.common.domain.CommonContentType;
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
@@ -38,10 +31,10 @@ import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
 import com.windsor.node.data.dao.TransactionDao;
 import com.windsor.node.data.dao.jdbc.JdbcTransactionDao;
 import com.windsor.node.plugin.common.BaseWnosJaxbPlugin;
-import com.windsor.node.plugin.common.persistence.HibernatePersistenceUnitInfo;
 import com.windsor.node.plugin.common.xml.validation.ValidationResult;
 import com.windsor.node.plugin.common.xml.validation.Validator;
 import com.windsor.node.plugin.common.xml.validation.jaxb.JaxbXmlValidator;
+import com.windsor.node.plugin.icisnpdes40.dao.IcisEntityManagerFactory;
 import com.windsor.node.plugin.icisnpdes40.dao.IcisWorkflowDao;
 import com.windsor.node.plugin.icisnpdes40.dao.jdbc.JdbcIcisWorkflowDao;
 import com.windsor.node.plugin.icisnpdes40.domain.IcisWorkflow;
@@ -539,42 +532,11 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
         setPartnerDao((PartnerDao) getServiceFactory().makeService(PartnerDao.class));
         setTransactionDao((JdbcTransactionDao) getServiceFactory().makeService(JdbcTransactionDao.class));
 
-        initEntityManagerFactory(getDataSource());
+        emf = IcisEntityManagerFactory.initEntityManagerFactory(getDataSource());
 
         setIcisWorkflowDao(new JdbcIcisWorkflowDao(getDataSource()));
     }
 
-    /**
-     * Initialize the local {@link EntityManagerFactory}.
-     *
-     * TODO - JPA code should be moved to another class...?
-     */
-    private void initEntityManagerFactory(DataSource dataSource) {
-
-        /***
-         * Get a reference to the configured DataSource, we'll get the
-         * connection info from it
-         */
-
-        try {
-
-            Properties jpaProperties = new Properties();
-
-            jpaProperties.put(Environment.DATASOURCE, dataSource);
-
-            // jpaProperties.put(Environment.SHOW_SQL, Boolean.TRUE);
-            // jpaProperties.put(Environment.FORMAT_SQL, Boolean.TRUE);
-
-            PersistenceProvider provider = new HibernatePersistence();
-
-            emf = provider.createContainerEntityManagerFactory(
-                    new HibernatePersistenceUnitInfo(jpaProperties, "com.windsor.node.plugin.icisnpdes40.generated"),
-                    jpaProperties);
-
-        } catch (Exception e) {
-            error("Unable to initialize an EntityManagerFactory", e);
-        }
-    }
 
     /**
      * Returns the current 'Pending' workflow.

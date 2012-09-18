@@ -1,12 +1,13 @@
 package com.windsor.node.plugin.icisnpdes40.results.xml;
 
-import java.util.List;
+import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
-import com.windsor.node.plugin.icisnpdes40.results.IcisStatusResult;
+import com.windsor.node.plugin.common.BaseWnosJaxbPlugin;
+import com.windsor.node.plugin.icisnpdes40.generated.SubmissionResultList;
 
 public interface ResultsParser
 {
 
-    public List<IcisStatusResult> parse(byte[] fileBytes) throws JAXBException;
+    public JAXBElement<SubmissionResultList> parse(byte[] fileBytes, BaseWnosJaxbPlugin caller) throws JAXBException;
 
 }
