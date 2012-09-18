@@ -7,18 +7,21 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.spi.PersistenceProvider;
 import javax.sql.DataSource;
 import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.cfg.Environment;
 import org.hibernate.ejb.HibernatePersistence;
 import org.slf4j.Logger;
+
 import com.windsor.node.common.domain.ActivityEntry;
 import com.windsor.node.common.domain.CommonContentType;
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
@@ -35,13 +38,13 @@ import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
 import com.windsor.node.data.dao.TransactionDao;
 import com.windsor.node.data.dao.jdbc.JdbcTransactionDao;
 import com.windsor.node.plugin.common.BaseWnosJaxbPlugin;
+import com.windsor.node.plugin.common.persistence.HibernatePersistenceUnitInfo;
 import com.windsor.node.plugin.icisnpdes40.dao.IcisWorkflowDao;
 import com.windsor.node.plugin.icisnpdes40.dao.jdbc.JdbcIcisWorkflowDao;
 import com.windsor.node.plugin.icisnpdes40.domain.IcisWorkflow;
 import com.windsor.node.plugin.icisnpdes40.generated.HeaderData;
 import com.windsor.node.plugin.icisnpdes40.generated.ObjectFactory;
 import com.windsor.node.plugin.icisnpdes40.generated.PayloadData;
-import com.windsor.node.plugin.icisnpdes40.hibernate.IcisNpdesStagingPersistenceUnitInfo;
 import com.windsor.node.plugin.icisnpdes40.submission.exception.CDXSubmissionException;
 import com.windsor.node.plugin.icisnpdes40.submission.exception.ETLExecutionException;
 import com.windsor.node.plugin.icisnpdes40.submission.exception.EmptyIcisStagingLocalDatabaseResultsException;
@@ -64,12 +67,12 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
      * Activity audit message prefix
      */
     private static final String ACTIVITY_AUDIT_PREFIX = "[icisnpdes4]";
-    
+
     /**
      * The prefix to be prepended to the name of the  XML file.
      */
     private static final String FILE_PREFIX = "ICIS-NPDES_";
-    
+
     /**
      * XML file extension.
      */
@@ -79,12 +82,12 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
      * XSD file path.
      */
     private static final String XSD_RELATIVE_FILE_PATH = "xsd/index.xsd";
-    
+
     /**
      * A static {@link QName} instance of the Document.
      */
     private static final QName DOCUMENT_QNAME = new QName("http://www.exchangenetwork.net/schema/icis/4", "Document");
-    
+
     /**
      * ETL Procedure Name: The name of the ETL stored procedure. If blank,
      * assume it is executed independently.
@@ -92,7 +95,7 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
     private static final PluginServiceParameterDescriptor SERVICE_PARAM_ETL_PROCEDURE_NAME = new PluginServiceParameterDescriptor(
             "ETL Procedure Name", PluginServiceParameterDescriptor.TYPE_STRING,
             Boolean.FALSE);
-    
+
     /**
      * ICIS User ID: The ICIS UserID to insert into the XML Header. It is the
      * ICIS user account under which to perform the submission.
@@ -100,7 +103,7 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
     public static final PluginServiceParameterDescriptor SERVICE_PARAM_ICIS_USER_ID = new PluginServiceParameterDescriptor(
             "ICIS User ID", PluginServiceParameterDescriptor.TYPE_STRING,
             Boolean.TRUE);
-    
+
     /**
      * Author: Test text to insert into the Header element's Author tag.
      */
@@ -133,7 +136,7 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
     public static final PluginServiceParameterDescriptor SERVICE_PARAM_NOTIFICATION_EMAIL_ADDRS = new PluginServiceParameterDescriptor(
             "Notification Email Addresses",
             PluginServiceParameterDescriptor.TYPE_STRING, Boolean.FALSE);
-   
+
     /**
      * Submission Partner Name: The name of the Network Partner configured in
      * OpenNode2 for the CDX endpoint that the submission data will be sent to.
@@ -143,24 +146,24 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
     public static final PluginServiceParameterDescriptor SERVICE_PARAM_SUBMISSION_PARTNER_NAME = new PluginServiceParameterDescriptor(
             "Submission Partner Name",
             PluginServiceParameterDescriptor.TYPE_STRING, Boolean.FALSE);
-   
+
     /**
      * Validate Xml (true or false): Should the service validate the xml before submitting to ICIS
      */
     public static final PluginServiceParameterDescriptor SERVICE_PARAM_VALIDATE_XML = new PluginServiceParameterDescriptor(
             "Validate Xml (true or false)",
             PluginServiceParameterDescriptor.TYPE_BOOLEAN, Boolean.FALSE);
-    
-    
+
+
     /**
      * All service configuration parameters configurable in the Node Admin website.
      */
     private static final PluginServiceParameterDescriptor[] ALL_SERVICE_PARAMS = {
                                                                     SERVICE_PARAM_ETL_PROCEDURE_NAME,
                                                                     SERVICE_PARAM_ICIS_USER_ID,
-                                                                    SERVICE_PARAM_AUTHOR, 
+                                                                    SERVICE_PARAM_AUTHOR,
                                                                     SERVICE_PARAM_ORGANIZATION,
-                                                                    SERVICE_PARAM_CONTACT_INFO, 
+                                                                    SERVICE_PARAM_CONTACT_INFO,
                                                                     SERVICE_PARAM_NOTIFICATION_EMAIL_ADDRS,
                                                                     SERVICE_PARAM_SUBMISSION_PARTNER_NAME,
                                                                     SERVICE_PARAM_VALIDATE_XML};
@@ -169,37 +172,37 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
      * ICIS Staging Local database datasource.
      */
    private DataSource dataSource;
-   
+
    /**
     * Entity Manager Factory
     */
    private EntityManagerFactory emf;
-   
+
    private SettingServiceProvider settingService;
-   
+
    private IdGenerator idGenerator;
-   
+
    private CompressionService zipService;
-   
+
    private TransactionDao transactionDao;
-   
+
    private IcisWorkflowDao icisWorkflowDao;
 
    private PartnerDao partnerDao;
-   
+
     public AbstractIcisNpdesSubmission() {
 
        getSupportedPluginTypes().add(ServiceType.QUERY_OR_SOLICIT);
-               
+
        /**
         * Data source
         */
        getDataSources().put(ARG_DS_SOURCE, (DataSource)null);
-       
+
        /**
         * Service Configuration arguments
         */
-       setupServiceConfigParameters();  
+       setupServiceConfigParameters();
    }
 
     /**
@@ -210,23 +213,23 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
             getConfigurationArguments().put(p.getName(), "");
         }
     }
-   
+
     /**
      * Returns an array of {@link PluginServiceParameterDescriptor} the user
      * will need configure through the Node Admin web interface.
-     * 
+     *
      * @return an array of {@link PluginServiceParameterDescriptor} the user
      *         will need configure through the Node Admin web interface.
      */
    private PluginServiceParameterDescriptor[] getPluginServiceParameterDescriptors() {
        return ALL_SERVICE_PARAMS;
    }
-   
+
     /**
      * All inheritors must create a List<PayloadData> of one or more PayloadData
      * document elements, it is intended that only the complete and total ICIS
      * Submission Service implementer will return more than one.
-     * 
+     *
      * @param em
      * @return
      */
@@ -234,12 +237,12 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * Submits the Staging Local data to CDX.
      */
     @Override
     public ProcessContentResult process(NodeTransaction transaction) {
-        
+
         /**
          * Initialize a new result object.
          */
@@ -248,33 +251,33 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
         result.setSuccess(Boolean.FALSE);
 
         debug(result, "ICIS-NPDES plugin process starting.");
-        
+
         try {
 
             /**
-             * Validate Workflow State: 
-             * 
+             * Validate Workflow State:
+             *
              * Attempt to find the current 'Pending'
              * workflow record. If the workflow state is invalid an
              * InvalidWorkflowStateException will be thrown and process will
              * exit.
              */
             debug(result, "Checking for a pending workflow record.");
-            
+
             IcisWorkflow workflow = findPendingWorkflow();
-            
+
             if (workflow == null) {
-                
+
                 debug(result, "...Pending workflow was not found.");
-                
+
                 debug(result, "Checking for a configured ETL stored procedure.");
-                
+
                 if (isETLProcedureNotConfigured()) {
-                    
+
                     debug(result, "...ETL stored procedure not configured. Exiting.");
-                    
+
                     return updateProcessAsCompleted(result, "ETL stored procedure is not configured, node transaction status set to Completed.");
-                    
+
                 } else {
                     debug(result, "...Found " + getConfigValueAsString(SERVICE_PARAM_ETL_PROCEDURE_NAME.getName(), false));
                 }
@@ -285,28 +288,28 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
                  * a service parameter.
                  */
                 try {
-                    
+
                     debug(result, "Executing ETL stored procedure.");
-                    
+
                     workflow = executeETLStoredProcedure();
-                    
+
                     if (workflow == null) {
                         return updateProcessAsCompleted(result, "...ETL stored procedure did not create a new workflow. Exiting.");
                     }
 
                     debug(result, "...ETL stored procedure successfully executed, workflow with id " + workflow.getId() + " created.");
-                    
+
                 } catch (ETLExecutionException e) {
                     String error = String.format("...Problem executing stored procedure, returned error: %s.", e.getMessage());
                     error(error, e);
                     return updateProcessAsFailed(result, error);
                 }
-                
+
             } else {
                 debug(result, "...Pending workflow found.");
             }
-            
-            
+
+
             if (isStagingDataAlreadySubmitted(workflow)) {
                 return updateProcessAsCompleted(result, String.format("...Pending workflow %s exists waiting for processing/download. Exiting.", workflow.getId()));
             }
@@ -315,63 +318,63 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
              * Create temporary file to generate XML file.
              */
             String docId = getIdGenerator().createId();
-            
+
             String icisXmlDocumentFilePath = makeTemporaryFilename(docId);
-            
+
             /**
              * Generate and validate XML.
              */
             try {
-                
+
                 debug(result, "Attempting to generate OpenNode2 document.");
-                
+
                 Document doc = generateNodeDocument(result, transaction, docId, icisXmlDocumentFilePath);
-                
+
                 result.getDocuments().add(doc);
-                
+
                 result.setStatus(CommonTransactionStatusCode.Pending);
-                
+
                 getTransactionDao().save(transaction);
-                
+
                 debug(result, "...OpenNode2 document successfully generated.");
-                
+
             } catch (EmptyIcisStagingLocalDatabaseResultsException eisldre) {
                 String msg = "...ETL flagged no data for submission. Exiting.";
                 updateWorkflowStatusAsCompleted(workflow, msg);
-                return updateProcessAsCompleted(result, msg);  
-                
+                return updateProcessAsCompleted(result, msg);
+
             } catch (XmlGenerationException xmle) {
                 String error = String.format("...Problem generating document, returned error: %s.", xmle.getMessage());
                 error(error, xmle);
                 return updateProcessAsFailed(result, error);
             }
-            
+
             /**
              * Save NodeTransaction before schema validation.
              */
             getTransactionDao().save(transaction);
-            
+
             /**
              * Skip the XML validation?
              */
             if (!isSkipXmlValidation()) {
-                
+
                 debug(result, "Starting XML validation.");
                 String validationDocId = getIdGenerator().createId();
                 if (isXmlPayloadDocumentNotValid(result, transaction, validationDocId, icisXmlDocumentFilePath)) {
-                    
+
                     String msg = "XML did not pass schema validation. Exiting";
-                    
+
                     updateWorkflowStatusAsFailed(workflow, msg);
-                    
+
                     /**
                      * Save NodeTransaction when there are validation errors.
                      */
                     getTransactionDao().save(transaction);
-                    
+
                     return updateProcessAsFailed(result, msg);
                 }
-                
+
                 debug(result, "...XML is valid.");
             }
 
@@ -380,9 +383,9 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
              * set.
              */
             debug(result, "Checking service parameter '" + SERVICE_PARAM_SUBMISSION_PARTNER_NAME.getName() + "' for a network partner name.");
-            
+
             String partnerName = getConfigValueAsString(SERVICE_PARAM_SUBMISSION_PARTNER_NAME.getName(), false);
-            
+
             if (isSubmissionPartnerNameServiceParameterNotConfigured()) {
                 String msg = "...Service parameter not configured. Exiting.";
                 updateWorkflowStatusAsCompleted(workflow, msg);
@@ -390,50 +393,50 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
             } else {
                 debug(result, "...Found network partner '"+partnerName+"'.");
             }
-            
+
             /**
              * Submit to CDX
              */
             try {
-                
+
                 debug(result, "Attempting to submit node transaction.");
-                
+
                 String submissionTransactionId = executeSubmissionToCDX(partnerName, transaction, result);
                 //DANGER set to NodeTransaction object's actual network id!
                 transaction.setNetworkId(submissionTransactionId);
                 getTransactionDao().save(transaction);
 
                 debug(result, "...Successfully submitted node transaction.");
-                
+
                 /**
                  * Update ICS_SUBM_TRACK workflow table.
                  */
                 debug(result, "Attempting to update workflow state.");
-                
+
                 workflow.setSubmissionDate(new Date());
                 workflow.setSubmissionTransactionId(submissionTransactionId);
                 workflow.setSubmissionTransactionStatus("Pending");
                 workflow.setSubmissionStatusDate(new Date());
                 workflow.setWorkflowStatusMessage("The ICIS data has been submitted");
-                
+
                 getIcisWorkflowDao().save(workflow);
-                
+
                 debug(result, "...Workflow state successfully saved.");
-                
+
                 return updateProcessAsCompleted(result, "ICIS-NPDES plugin completed successfully. Exiting.");
-                
+
             } catch (PartnerIdentityNotFoundException pnfe) {
-                
+
                 updateWorkflowStatusAsFailed(workflow, pnfe.getMessage());
-                
+
                 return updateProcessAsFailed(result, pnfe.getMessage());
-                
+
             } catch (CDXSubmissionException e) {
 
                 String msg = "...Error submitting document to endpoint: " + e.getMessage() + " Exiting.";
-                
+
                 updateWorkflowStatusAsFailed(workflow, msg);
-                
+
                 return updateProcessAsFailed(result, msg);
             }
 
@@ -444,22 +447,22 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
             return updateProcessAsFailed(result, String.format("Unknown exception while processing NPDES source data: %s", e.getMessage()));
         }
     }
-    
+
     /**
      * Generates a node document.
-     * 
+     *
      * Returns null if there is no data to send.
-     * 
+     *
      * @return The payload {@link Document}.
      * @throws XmlGenerationException
      */
     private Document generateNodeDocument(ProcessContentResult result, NodeTransaction nodeTransaction, String docId, String tempFilePath) throws XmlGenerationException, EmptyIcisStagingLocalDatabaseResultsException {
-        
+
         /**
          * Attempt to find data from staging tables...
          */
         List<PayloadData> payloads = createAllPayloads(result, emf.createEntityManager());
-        
+
         /**
          * No staging data to send, throw exception for process method to catch
          */
@@ -468,7 +471,7 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
         }
 
         try {
-            
+
             /**
              * Always use an ObjectFactory to create JAXB created objects
              */
@@ -482,7 +485,7 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
             document.setHeader(makeHeaderData(objectFactory));
 
             document.setPayload(payloads);
-            
+
             /**
              * com.windsor.node.plugin.icisnpdes40.generated.Document is defined
              * in the XSD in a funny manner, causing ObjectFactory to not create
@@ -493,19 +496,19 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
                             com.windsor.node.plugin.icisnpdes40.generated.Document.class, null, document), tempFilePath);
 
             Document doc = makeDocument(nodeTransaction.getRequest().getType(), docId, tempFilePath);
-            
+
             nodeTransaction.getDocuments().add(doc);
-            
+
             return doc;
 
         } catch (Exception e) {
             throw new XmlGenerationException("Error while generating document: " + tempFilePath, e);
         }
     }
-    
+
     /**
      * Returns an empty list.
-     * 
+     *
      * {@inheritDoc}
      */
    @Override
@@ -515,7 +518,7 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
 
    /**
     * Returns null.
-    * 
+    *
     * {@inheritDoc}
     */
    @Override
@@ -529,7 +532,7 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
     @Override
     public void afterPropertiesSet() {
 
-        setDataSource((DataSource) getDataSources().get(ARG_DS_SOURCE));
+        setDataSource(getDataSources().get(ARG_DS_SOURCE));
         setSettingService((SettingServiceProvider) getServiceFactory().makeService(SettingServiceProvider.class));
         setIdGenerator((IdGenerator) getServiceFactory().makeService(IdGenerator.class));
         setZipService((CompressionService) getServiceFactory().makeService(ZipCompressionService.class));
@@ -540,10 +543,10 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
 
         setIcisWorkflowDao(new JdbcIcisWorkflowDao(getDataSource()));
     }
-    
+
     /**
      * Initialize the local {@link EntityManagerFactory}.
-     * 
+     *
      * TODO - JPA code should be moved to another class...?
      */
     private void initEntityManagerFactory(DataSource dataSource) {
@@ -565,17 +568,17 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
             PersistenceProvider provider = new HibernatePersistence();
 
             emf = provider.createContainerEntityManagerFactory(
-                    new IcisNpdesStagingPersistenceUnitInfo(jpaProperties),
+                    new HibernatePersistenceUnitInfo(jpaProperties, "com.windsor.node.plugin.icisnpdes40.generated"),
                     jpaProperties);
 
-        } catch (Exception e) {           
+        } catch (Exception e) {
             error("Unable to initialize an EntityManagerFactory", e);
         }
     }
 
     /**
      * Returns the current 'Pending' workflow.
-     * 
+     *
      * @return the current pending workflow.
      * @throws InvalidWorkflowStateException
      *             When there are more than one pending workflows found or ETL
@@ -598,49 +601,49 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
         }
         return wf;
     }
-   
+
 
     /**
      * Builds a Node client and submits the transaction.
-     * 
+     *
      * @return The resulting node transaction id.
      * @throws CDXSubmissionException
      *             When submission fails for any reason
      */
     private String executeSubmissionToCDX(String partnerName, NodeTransaction nodeTransaction, ProcessContentResult result) throws CDXSubmissionException, PartnerIdentityNotFoundException {
-        
+
         try {
 
             PartnerIdentity partner;
-            
+
             try {
                 partner = findPartnerIdentityByPartnerName(partnerName, result);
             } catch (PartnerIdentityNotFoundException e) {
                 throw e;
             }
-            
+
             NodeClientService client = makeNodeClient(partner);
-            
+
             nodeTransaction.updateWithPartnerDetails(partner);
-            
+
             debug(result, "...Submitting transaction to URL " + partner.getUrl() );
-            
+
             nodeTransaction = client.submit(nodeTransaction);
-            
+
             getTransactionDao().save(nodeTransaction);
-            
+
             return nodeTransaction.getNetworkId();
-            
+
         } catch (Exception e) {
             throw new CDXSubmissionException(e.getMessage(), e);
         }
     }
-    
+
     /**
      * Executes the ETL stored procedure and returns the newly created workflow
      * record. If no workflow was created during the execution, null will be
      * returned.
-     * 
+     *
      * @return a workflow id
      * @throws ETLExecutionException
      *             when unable to execute stored procedure.
@@ -674,7 +677,7 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
 
    /**
     * Returns a new {@link PartnerIdentity} using the supplied partner name.
-    * 
+    *
     * @param partnerName
     *            The name of partner used for look up.
     * @return A new {@link PartnerIdentity} using the supplied partner name.
@@ -695,10 +698,10 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
        }
        throw new PartnerIdentityNotFoundException("No network partner with name '" + partnerName + "' found.");
    }
-   
+
    /**
     * Returns a {@link NodeClientService} from the {@link ServiceFactory}.
-    * 
+    *
     * @param partner
     *            The {@link PartnerIdentity} to communicate with.
     * @return A {@link NodeClientService} from the {@link ServiceFactory}.
@@ -708,19 +711,19 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
        NodeClientFactory clientFactory = (NodeClientFactory) getServiceFactory().makeService(NodeClientFactory.class);
 
        String msg = "Creating Node Client with partner ";
-       
+
        debug(msg + partner);
-       
+
        return clientFactory.makeAndConfigure(partner);
    }
-   
+
    /**
     * Returns a populated {@link HeaderData} to send to ICIS.
-    * 
+    *
     * @return a populated {@link HeaderData} to send.
     */
    private HeaderData makeHeaderData(ObjectFactory objectFactory) {
-       
+
        HeaderData header = objectFactory.createHeaderData();
 
        /**
@@ -732,18 +735,18 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
         * Max length is 30 characters.
         */
        header.setId(docId.substring(1, 31));
-       
+
        /**
         * Use the service parameter as the author.
         */
        header.setAuthor(getConfigValueAsString(SERVICE_PARAM_AUTHOR.getName(),
                false));
-       
+
        /**
         * Created now.
         */
        header.setCreationTime(new Date());
-       
+
        /**
         * Use the service as the organization.
         */
@@ -752,11 +755,11 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
 
        return header;
    }
-   
+
    /**
     * Generates a temporary xml file name based on the class name and document
     * id.
-    * 
+    *
     * @param docId
     *            is the document GUID.
     * @return The file name.
@@ -764,14 +767,14 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
   private String makeTemporaryFilename(String docId) {
 
        return FilenameUtils.concat(
-               getSettingService().getTempDir().getAbsolutePath(), 
+               getSettingService().getTempDir().getAbsolutePath(),
                FILE_PREFIX + this.getClass().getSimpleName() + docId + "." + FILE_EXTENSION_XML);
    }
-  
+
    /**
     * Returns a new Node2 {@link Document} instance based on the type of
     * request, document id, and absolute file path.
-    * 
+    *
     * @param requestType
     *            The type of node transaction request.
     * @param documentId
@@ -806,26 +809,26 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
     /**
      * Returns the absolute file path to the ICIS XSD, which is bundled with the
      * plugin.
-     * 
+     *
      * @return The absolute file path to the ICIS XSD.
      */
     private String makeXsdFilePath() {
         return FilenameUtils.concat(getPluginSourceDir().getAbsolutePath(),
                 XSD_RELATIVE_FILE_PATH);
     }
-  
+
   /**
     * Check to see if an endpoint is configured in the service configuration.
-    * 
+    *
     * @return Is an endpoint configured in the service configuration.
     */
    private boolean isSubmissionPartnerNameServiceParameterNotConfigured() {
        return StringUtils.isEmpty(getConfigValueAsString(SERVICE_PARAM_SUBMISSION_PARTNER_NAME.getName(), false));
    }
-   
+
    /**
     * Is the generated ICIS XML valid? If so, report errors.
-    * 
+    *
     * @param result
     *            The ProcessContentResult context.
     * @param xmlDocFilePath
@@ -835,27 +838,27 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
     *             When validation cannot be executed normally.
     */
    private boolean isXmlPayloadDocumentNotValid(ProcessContentResult result, NodeTransaction nodeTransaction, String docId, String xmlDocFilePath) throws Exception {
-       
+
        if (isSkipXmlValidation()) return false;
-       
+
        String schemaFilePath = makeXsdFilePath();
-       
+
        XmlValidator validator = new JaxbXmlValidator(schemaFilePath);
 
        ValidationResult validationResult = validator.validate(new FileInputStream(xmlDocFilePath));
-       
+
        if (validationResult.hasErrors()) {
-           
+
             debug(result,
                     "The generated xml document is not valid according to the xml schema.  Review " +
                     "the \"Validation Errors\" file for a summary of the validation errors");
-            
+
             /**
              * Create a ValidationErrors.txt file and append it to the node
              * transaction docs collection.
-             */            
+             */
             String filename = FilenameUtils.concat(
-                    getSettingService().getTempDir().getAbsolutePath(), 
+                    getSettingService().getTempDir().getAbsolutePath(),
                     "Validation_Errors_" + this.getClass().getSimpleName() + docId + ".txt");
 
             File errorsFile = new File(filename);
@@ -870,29 +873,29 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
             doc.setContent(FileUtils.readFileToByteArray(errorsFile));
             nodeTransaction.getDocuments().add(doc);
        }
-       
+
        return validationResult.hasErrors();
    }
-   
+
    /**
     * Check the record for the presence of an ETL completed date/time and a
     * change detection date/time, indicating that the most recent task in the
     * workflow was completion of the ETL and change detection process.
-    * 
+    *
     * @param workflow
     *            the workflow
     * @return Are the ETL completed and change detection time stamps present in
     *         the workflow tracking record?
     */
    private boolean isETLCompletedAndChangeDetectionTimestampsNotFound(IcisWorkflow workflow) {
-       
-       return (workflow.getDetectionChangeCompletionDate() == null || 
+
+       return (workflow.getDetectionChangeCompletionDate() == null ||
                workflow.getEtlCompletionDate() == null);
    }
-   
+
    /**
     * Is this service not configured with an ETL stored procedure?
-    * 
+    *
     * @return is an ETL stored procedure not configured.
     */
    private boolean isETLProcedureNotConfigured() {
@@ -902,14 +905,14 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
    /**
     * Is there more than one 'Pending' workflow tracking record in the
     * database?
-    * 
+    *
     * @return Is there more than one 'Pending' workflow tracking record in the
     *         database?
     */
-   private boolean isMoreThanOnePendingWorkflowRecord() {    
+   private boolean isMoreThanOnePendingWorkflowRecord() {
        return getIcisWorkflowDao().countPendingWorkflows() > 1;
    }
-   
+
    /**
     * {@inheritDoc}
     */
@@ -928,35 +931,35 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
 
    /**
     * Skip XML validation?
-    * 
+    *
     * @return Skip XML validation?
     */
    private boolean isSkipXmlValidation() {
        String validate = getConfigurationArguments().get(SERVICE_PARAM_VALIDATE_XML.getName());
        return !Boolean.valueOf(validate);
     }
-   
+
    /**
     * Has the staging data been submitted to CDX? Determine by the presence of
     * the submitted date.
-    * 
+    *
     * @param currentPendingWorkflow
     *            the current pending workflow.
     * @return staging data submitted to CDX?
     */
    private boolean isStagingDataAlreadySubmitted(IcisWorkflow currentPendingWorkflow) {
-       
+
        if (currentPendingWorkflow != null
                && currentPendingWorkflow.getSubmissionDate() != null) {
            return Boolean.TRUE;
        }
-       
+
        return Boolean.FALSE;
    }
-   
+
    /**
     * Updates the workflow columns in the ICS_SUBM_TRACK table.
-    * 
+    *
     * @param workflow
     *            the value to update the WORKFLOW_STAT column with.
     * @param workflowStatusMessage
@@ -967,10 +970,10 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
        workflow.setWorkflowStatusMessage(workflowStatusMessage);
        getIcisWorkflowDao().save(workflow);
    }
-   
+
    /**
     * Updates the workflow columns in the ICS_SUBM_TRACK table.
-    * 
+    *
     * @param workflow
     *            the value to update the WORKFLOW_STAT column with.
     * @param workflowStatusMessage
@@ -981,11 +984,11 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
        workflow.setWorkflowStatusMessage(workflowStatusMessage);
        getIcisWorkflowDao().save(workflow);
    }
-   
+
    /**
     * Updates the {@link ProcessContentResult} as failed, returns the same
     * instance passed in as the first argument.
-    * 
+    *
     * @param result
     *            the {@link ProcessContentResult} to update.
     * @param msg
@@ -998,11 +1001,11 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
        result.setSuccess(Boolean.FALSE);
        return result;
    }
-   
+
    /**
     * Updates the {@link ProcessContentResult} as completed, returns the same
     * instance passed in as the first argument.
-    * 
+    *
     * @param result
     *            the {@link ProcessContentResult} to update.
     * @param msg
@@ -1019,7 +1022,7 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
     /**
      * Adds a new {@link ActivityEntry} to {@link ProcessContentResult} and
      * calls {@link Logger#debug(String)}.
-     * 
+     *
      * @param result
      *            The {@link ProcessContentResult} instance to append the
      *            message to.
@@ -1035,7 +1038,7 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
     /**
      * Returns a read friendly {@link String} to be used as
      * {@link ActivityEntry} audit message.
-     * 
+     *
      * @param message
      *            The string to be made read friendly.
      * @return A read friendly String.
@@ -1047,7 +1050,7 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
     /**
      * Getters & Setters
      */
-    
+
     public SettingServiceProvider getSettingService() {
         return settingService;
     }
