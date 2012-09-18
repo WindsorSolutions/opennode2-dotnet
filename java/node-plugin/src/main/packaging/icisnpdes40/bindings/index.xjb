@@ -21,103 +21,103 @@
 			<!-- date/time mappings -->
 
 			<xjc:javaType name="java.util.Date" xmlType="xsd:date"
-				adapter="com.windsor.node.plugin.icisnpdes40.adapter.DateAdapter" />
+				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.DateAdapter" />
 
 			<xjc:javaType name="java.util.Date" xmlType="xsd:dateTime"
-				adapter="com.windsor.node.plugin.icisnpdes40.adapter.DateTimeAdapter" />
+				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.DateTimeAdapter" />
 
 			<xjc:javaType name="java.util.Date" xmlType="icis:DateType"
-				adapter="com.windsor.node.plugin.icisnpdes40.adapter.DateAdapter" />
+				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.DateAdapter" />
 
 			<!-- integer mappings -->
 
 			<xjc:javaType name="java.lang.Integer" xmlType="icis:NonNegativeIntegerMin1Max2Type"
-				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
+				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.IntegerAdapter" />
 
 			<xjc:javaType name="java.lang.Integer" xmlType="icis:NonNegativeIntegerMin1Max3Type"
-				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
+				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.IntegerAdapter" />
 
 			<xjc:javaType name="java.lang.Integer" xmlType="icis:NonNegativeIntegerMin1Max4Type"
-				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
+				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.IntegerAdapter" />
 
 			<xjc:javaType name="java.lang.Integer" xmlType="icis:NonNegativeIntegerMin1Max5Type"
-				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
+				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.IntegerAdapter" />
 
 			<xjc:javaType name="java.lang.Integer" xmlType="icis:IntegerMin1Max6Type"
-				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
+				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.IntegerAdapter" />
 
 			<xjc:javaType name="java.lang.Integer" xmlType="icis:NonNegativeIntegerMin1Max6Type"
-				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
+				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.IntegerAdapter" />
 
 			<xjc:javaType name="java.lang.Integer" xmlType="icis:NonNegativeIntegerMin1Max7Type"
-				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
+				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.IntegerAdapter" />
 
 			<xjc:javaType name="java.lang.Integer" xmlType="icis:NonNegativeIntegerMin1Max8Type"
-				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
+				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.IntegerAdapter" />
 
 			<xjc:javaType name="java.lang.Integer" xmlType="icis:NonNegativeIntegerMin1Max9Type"
-				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
+				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.IntegerAdapter" />
 
 			<xjc:javaType name="java.lang.Integer" xmlType="icis:NonNegativeIntegerMin1Max10Type"
-				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
+				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.IntegerAdapter" />
 
 			<xjc:javaType name="java.lang.Integer" xmlType="icis:NonNegativeIntegerSansPositiveSignMin1Max10Type"
-				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
+				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.IntegerAdapter" />
 
 			<xjc:javaType name="java.lang.Integer" xmlType="icis:Integer2FixedRange01To12Type"
-				adapter="com.windsor.node.plugin.icisnpdes40.adapter.TwoDigitIntegerAdapter" />
+				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.TwoDigitIntegerAdapter" />
 
 			<xjc:javaType name="java.lang.Integer" xmlType="icis:IntegerRange1To12Type"
-				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
+				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.IntegerAdapter" />
 
 			<xjc:javaType name="java.lang.Integer" xmlType="icis:NonNegativeIntegerMin1Max15Type"
-				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
+				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.IntegerAdapter" />
 
 			<xjc:javaType name="java.lang.Integer" xmlType="icis:Integer2FixedRange01To60Type"
-				adapter="com.windsor.node.plugin.icisnpdes40.adapter.TwoDigitIntegerAdapter" />
+				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.TwoDigitIntegerAdapter" />
 
 			<xjc:javaType name="java.lang.Integer" xmlType="icis:Integer2FixedRange01To99Type"
-				adapter="com.windsor.node.plugin.icisnpdes40.adapter.TwoDigitIntegerAdapter" />
+				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.TwoDigitIntegerAdapter" />
 
 			<xjc:javaType name="java.lang.Integer" xmlType="icis:IntegerRange0To1000Type"
-				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
+				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.IntegerAdapter" />
 
 			<xjc:javaType name="java.lang.Integer" xmlType="icis:IntegerRange1970To2099Type"
-				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
+				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.IntegerAdapter" />
 
 			<xjc:javaType name="java.lang.Integer" xmlType="icis:IntegerRange1To99999Type"
-				adapter="com.windsor.node.plugin.icisnpdes40.adapter.IntegerAdapter" />
+				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.IntegerAdapter" />
 
 			<!-- decimal mappings -->
 
 			<!-- Decimal6FloatinType is actually mapped as a *char in the DB -->
 
-			<!-- <xjc:javaType name="java.lang.Double" xmlType="icis:Decimal6FloatingType" adapter="com.windsor.node.plugin.icisnpdes40.adapter.DoubleAdapter" 
+			<!-- <xjc:javaType name="java.lang.Double" xmlType="icis:Decimal6FloatingType" adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.DoubleAdapter" 
 				/> -->
 
 			<xjc:javaType name="java.math.BigDecimal" xmlType="icis:NonNegativeDecimal4FloatingType"
-				adapter="com.windsor.node.plugin.icisnpdes40.adapter.Decimal4FloatingTypeAdapter" />
+				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.Decimal4FloatingTypeAdapter" />
 
 			<xjc:javaType name="java.math.BigDecimal" xmlType="icis:NonNegativeDecimal8FloatingType"
-				adapter="com.windsor.node.plugin.icisnpdes40.adapter.Decimal8FloatingTypeAdapter" />
+				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.Decimal8FloatingTypeAdapter" />
 
 			<xjc:javaType name="java.math.BigDecimal" xmlType="icis:Decimal10FloatingType"
-				adapter="com.windsor.node.plugin.icisnpdes40.adapter.Decimal10FloatingTypeAdapter" />
+				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.Decimal10FloatingTypeAdapter" />
 
 			<xjc:javaType name="java.math.BigDecimal" xmlType="icis:Decimal11FloatingType"
-				adapter="com.windsor.node.plugin.icisnpdes40.adapter.Decimal11FloatingTypeAdapter" />
+				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.Decimal11FloatingTypeAdapter" />
 
 			<xjc:javaType name="java.math.BigDecimal" xmlType="icis:DecimalRange0To999.9Type"
-				adapter="com.windsor.node.plugin.icisnpdes40.adapter.OneDigitPrecisionAdapter" />
+				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.OneDigitPrecisionAdapter" />
 
 			<xjc:javaType name="java.math.BigDecimal" xmlType="icis:DecimalRange0To999.99Type"
-				adapter="com.windsor.node.plugin.icisnpdes40.adapter.TwoDigitPrecisionAdapter" />
+				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.TwoDigitPrecisionAdapter" />
 
 			<xjc:javaType name="java.math.BigDecimal" xmlType="icis:DecimalRange0To9999.99Type"
-				adapter="com.windsor.node.plugin.icisnpdes40.adapter.TwoDigitPrecisionAdapter" />
+				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.TwoDigitPrecisionAdapter" />
 
 			<xjc:javaType name="java.math.BigDecimal" xmlType="icis:DecimalRange0To999999999999.99Type"
-				adapter="com.windsor.node.plugin.icisnpdes40.adapter.TwoDigitPrecisionAdapter" />
+				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.TwoDigitPrecisionAdapter" />
 
 			<!-- unions -->
 
@@ -126,7 +126,7 @@
 				If we don't explicitly map this, we end up with a List<String> type. -->
 
 			<xjc:javaType name="java.lang.String" xmlType="icis:Decimal8FloatingType"
-				adapter="com.windsor.node.plugin.icisnpdes40.adapter.StringAdapter" />
+				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter" />
 
 			<!-- enums -->
 
@@ -134,10 +134,10 @@
 				to Strings. -->
 
 			<xjc:javaType name="java.lang.String" xmlType="icis:NumericReportTextType"
-				adapter="com.windsor.node.plugin.icisnpdes40.adapter.StringAdapter" />
+				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter" />
 
 			<xjc:javaType name="java.lang.String" xmlType="icis:ScheduleViolationCodeType"
-				adapter="com.windsor.node.plugin.icisnpdes40.adapter.StringAdapter" />
+				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter" />
 
 		</jaxb:globalBindings>
 

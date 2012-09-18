@@ -39,6 +39,9 @@ import com.windsor.node.data.dao.TransactionDao;
 import com.windsor.node.data.dao.jdbc.JdbcTransactionDao;
 import com.windsor.node.plugin.common.BaseWnosJaxbPlugin;
 import com.windsor.node.plugin.common.persistence.HibernatePersistenceUnitInfo;
+import com.windsor.node.plugin.common.xml.validation.ValidationResult;
+import com.windsor.node.plugin.common.xml.validation.Validator;
+import com.windsor.node.plugin.common.xml.validation.jaxb.JaxbXmlValidator;
 import com.windsor.node.plugin.icisnpdes40.dao.IcisWorkflowDao;
 import com.windsor.node.plugin.icisnpdes40.dao.jdbc.JdbcIcisWorkflowDao;
 import com.windsor.node.plugin.icisnpdes40.domain.IcisWorkflow;
@@ -51,9 +54,6 @@ import com.windsor.node.plugin.icisnpdes40.submission.exception.EmptyIcisStaging
 import com.windsor.node.plugin.icisnpdes40.submission.exception.InvalidWorkflowStateException;
 import com.windsor.node.plugin.icisnpdes40.submission.exception.PartnerIdentityNotFoundException;
 import com.windsor.node.plugin.icisnpdes40.submission.exception.XmlGenerationException;
-import com.windsor.node.plugin.icisnpdes40.xml.validate.ValidationResult;
-import com.windsor.node.plugin.icisnpdes40.xml.validate.XmlValidator;
-import com.windsor.node.plugin.icisnpdes40.xml.validate.jaxb.JaxbXmlValidator;
 import com.windsor.node.service.helper.CompressionService;
 import com.windsor.node.service.helper.IdGenerator;
 import com.windsor.node.service.helper.ServiceFactory;
@@ -843,7 +843,7 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
 
        String schemaFilePath = makeXsdFilePath();
 
-       XmlValidator validator = new JaxbXmlValidator(schemaFilePath);
+       Validator validator = new JaxbXmlValidator(schemaFilePath);
 
        ValidationResult validationResult = validator.validate(new FileInputStream(xmlDocFilePath));
 

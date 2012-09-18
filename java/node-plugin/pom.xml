@@ -81,7 +81,8 @@
 					<artifactId>maven-assembly-plugin</artifactId>
 					<version>2.2.1</version>
 				</plugin>
-				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
@@ -247,7 +248,7 @@
 			<build>
 				<finalName>${plugin.name}</finalName>
 				<plugins>
-					<!-- 
+<!-- 
 					<plugin>
 						<groupId>org.jvnet.hyperjaxb3</groupId>
 						<artifactId>maven-hyperjaxb3-plugin</artifactId>
@@ -261,6 +262,8 @@
 						<configuration>
 							<args>
 								<arg>-Xannotate</arg>
+								<arg>-Xinheritance</arg>
+								<arg>-Xnamespace-prefix</arg>
 							</args>
 							<debug>true</debug>
 							<variant>jpa2</variant>
@@ -268,7 +271,7 @@
 							<bindingDirectory>${basedir}/src/main/packaging/icisnpdes40/bindings</bindingDirectory>
 							<roundtripTestClassName>RoundtripTest</roundtripTestClassName>
 							<schemaDirectory>${basedir}/src/main/packaging/icisnpdes40/xsd</schemaDirectory>
-							<generatePackage>com.windsor.node.plugin.icisnpdes40.generatedtemp</generatePackage>
+							<generatePackage>com.windsor.node.plugin.icisnpdes40.generated</generatePackage>
 						</configuration>
 						<dependencies>
 							<dependency>
@@ -276,9 +279,14 @@
 								<artifactId>node-hyperjaxb3-naming</artifactId>
 								<version>2.06-SNAPSHOT</version>
 							</dependency>
+							<dependency>
+								<groupId>org.jvnet.jaxb2_commons</groupId>
+								<artifactId>jaxb2-namespace-prefix</artifactId>
+								<version>1.1</version>
+							</dependency>
 						</dependencies>
 					</plugin>
-					 -->
+ -->
 				</plugins>
 			</build>
 		</profile>

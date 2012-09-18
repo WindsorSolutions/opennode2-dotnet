@@ -49,6 +49,12 @@ import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
+/**
+ * Use com.windsor.node.plugin.common.xml.validation.Validator instead
+ *
+ * @deprecated
+ */
+@Deprecated
 public class XmlValidator implements InitializingBean {
 
     protected static Logger logger = LoggerFactory.getLogger(XmlValidator.class);
@@ -65,11 +71,11 @@ public class XmlValidator implements InitializingBean {
 
     /**
      * Fail on validation errors, but first log errors first.
-     * 
+     *
      * @param filename
      *            the file to validate
      * @return whether the file is valid in a strict sense
-     * 
+     *
      * @see http://www.ibm.com/developerworks/xml/library/x-javaxmlvalidapi.html
      */
     public boolean validate(String filename) {
@@ -81,7 +87,7 @@ public class XmlValidator implements InitializingBean {
 
     /**
      * Fail on validation errors.
-     * 
+     *
      * @param filename
      *            the file to validate
      * @return whether the file is valid in a strict sense
@@ -134,7 +140,7 @@ public class XmlValidator implements InitializingBean {
 
     /**
      * Print validation errors verbosely.
-     * 
+     *
      * @param filename
      *            the file to validate
      * @return whether the file is valid in a lenient sense
@@ -213,20 +219,23 @@ public class XmlValidator implements InitializingBean {
     /**
      * Logs warnings and errors with reference to location in file, fails only
      * on fatal errors.
-     * 
+     *
      * @author jniski
-     * 
+     *
      */
     private class ForgivingErrorHandler implements ErrorHandler {
 
+        @Override
         public void warning(SAXParseException ex) {
             logger.warn("Warning: " + saxParseExceptionMsg(ex));
         }
 
+        @Override
         public void error(SAXParseException ex) {
             logger.error("Error: " + saxParseExceptionMsg(ex));
         }
 
+        @Override
         public void fatalError(SAXParseException ex) throws SAXException {
             logger.error("Fatal error: " + saxParseExceptionMsg(ex));
             throw ex;
@@ -234,6 +243,7 @@ public class XmlValidator implements InitializingBean {
 
     }
 
+    @Override
     public void afterPropertiesSet() throws Exception {
 
         if (StringUtils.isBlank(schemaFilename)) {
