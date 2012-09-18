@@ -184,8 +184,9 @@ public class ZipCompressionService implements CompressionService,
                 if (entry.isDirectory()) {
 
                     logger.debug("Extracting directory: " + entryName);
-
-                    FileUtils.forceMkdir(new File(entryName));
+                    
+                    String dirPath = FilenameUtils.concat(targetDirPath, entryName);
+                    FileUtils.forceMkdir(new File(dirPath));
 
                     continue;
 
