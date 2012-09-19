@@ -35,11 +35,11 @@ import java.io.Serializable;
 
 public enum CommonContentType implements Serializable
 {
-    OTHER("OTHER"),XML("XML"),Flat("Flat"),Bin("Bin"),ZIP("ZIP"),ODF("ODF");
+    OTHER("OTHER"),XML("XML"),Flat("FLAT"),BIN("BIN"),ZIP("ZIP"),ODF("ODF");
 
     private static final long serialVersionUID = 1;
     private final String type;
-    
+
     private CommonContentType(String type) {
         this.type = type;
     }
@@ -61,9 +61,9 @@ public enum CommonContentType implements Serializable
         {
             type = CommonContentType.Flat;
         }
-        if(type == null && CommonContentType.Bin.getType().equalsIgnoreCase(value))
+        if(type == null && CommonContentType.BIN.getType().equalsIgnoreCase(value))
         {
-            type = CommonContentType.Bin;
+            type = CommonContentType.BIN;
         }
         return type;
     }

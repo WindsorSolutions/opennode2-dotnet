@@ -6,15 +6,18 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
+
 import com.windsor.node.common.domain.ActivityEntry;
 import com.windsor.node.common.domain.CommonContentType;
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
@@ -236,208 +239,216 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
     @Override
     public ProcessContentResult process(NodeTransaction transaction) {
 
-        /**
-         * Initialize a new result object.
-         */
-        ProcessContentResult result = new ProcessContentResult();
-        result.setStatus(CommonTransactionStatusCode.Failed);
-        result.setSuccess(Boolean.FALSE);
-
-        debug(result, "ICIS-NPDES plugin process starting.");
-
         try {
 
             /**
-             * Validate Workflow State:
-             *
-             * Attempt to find the current 'Pending'
-             * workflow record. If the workflow state is invalid an
-             * InvalidWorkflowStateException will be thrown and process will
-             * exit.
+             * Initialize a new result object.
              */
-            debug(result, "Checking for a pending workflow record.");
+            ProcessContentResult result = new ProcessContentResult();
+            result.setStatus(CommonTransactionStatusCode.Failed);
+            result.setSuccess(Boolean.FALSE);
 
-            IcisWorkflow workflow = findPendingWorkflow();
+            debug(result, "ICIS-NPDES plugin process starting.");
 
-            if (workflow == null) {
+            try {
 
-                debug(result, "...Pending workflow was not found.");
+                /**
+                 * Validate Workflow State:
+                 *
+                 * Attempt to find the current 'Pending'
+                 * workflow record. If the workflow state is invalid an
+                 * InvalidWorkflowStateException will be thrown and process will
+                 * exit.
+                 */
+                debug(result, "Checking for a pending workflow record.");
 
-                debug(result, "Checking for a configured ETL stored procedure.");
+                IcisWorkflow workflow = findPendingWorkflow();
 
-                if (isETLProcedureNotConfigured()) {
+                if (workflow == null) {
 
-                    debug(result, "...ETL stored procedure not configured. Exiting.");
+                    debug(result, "...Pending workflow was not found.");
 
-                    return updateProcessAsCompleted(result, "ETL stored procedure is not configured, node transaction status set to Completed.");
+                    debug(result, "Checking for a configured ETL stored procedure.");
+
+                    if (isETLProcedureNotConfigured()) {
+
+                        debug(result, "...ETL stored procedure not configured. Exiting.");
+
+                        return updateProcessAsCompleted(result, "ETL stored procedure is not configured, node transaction status set to Completed.");
+
+                    } else {
+                        debug(result, "...Found " + getConfigValueAsString(SERVICE_PARAM_ETL_PROCEDURE_NAME.getName(), false));
+                    }
+
+                    /**
+                     * Execute ETL stored procedure when a 'Pending' workflow record
+                     * cannot be found and a stored procedure name is configured as
+                     * a service parameter.
+                     */
+                    try {
+
+                        debug(result, "Executing ETL stored procedure.");
+
+                        workflow = executeETLStoredProcedure();
+
+                        if (workflow == null) {
+                            return updateProcessAsCompleted(result, "...ETL stored procedure did not create a new workflow. Exiting.");
+                        }
+
+                        debug(result, "...ETL stored procedure successfully executed, workflow with id " + workflow.getId() + " created.");
+
+                    } catch (ETLExecutionException e) {
+                        String error = String.format("...Problem executing stored procedure, returned error: %s.", e.getMessage());
+                        error(error, e);
+                        return updateProcessAsFailed(result, error);
+                    }
 
                 } else {
-                    debug(result, "...Found " + getConfigValueAsString(SERVICE_PARAM_ETL_PROCEDURE_NAME.getName(), false));
+                    debug(result, "...Pending workflow found.");
+                }
+
+
+                if (isStagingDataAlreadySubmitted(workflow)) {
+                    return updateProcessAsCompleted(result, String.format("...Pending workflow %s exists waiting for processing/download. Exiting.", workflow.getId()));
                 }
 
                 /**
-                 * Execute ETL stored procedure when a 'Pending' workflow record
-                 * cannot be found and a stored procedure name is configured as
-                 * a service parameter.
+                 * Create temporary file to generate XML file.
+                 */
+                String docId = getIdGenerator().createId();
+
+                String icisXmlDocumentFilePath = makeTemporaryFilename(docId);
+
+                /**
+                 * Generate and validate XML.
                  */
                 try {
 
-                    debug(result, "Executing ETL stored procedure.");
+                    debug(result, "Attempting to generate OpenNode2 document.");
 
-                    workflow = executeETLStoredProcedure();
+                    Document doc = generateNodeDocument(result, transaction, docId, icisXmlDocumentFilePath);
 
-                    if (workflow == null) {
-                        return updateProcessAsCompleted(result, "...ETL stored procedure did not create a new workflow. Exiting.");
-                    }
+                    //result.getDocuments().add(doc);
 
-                    debug(result, "...ETL stored procedure successfully executed, workflow with id " + workflow.getId() + " created.");
+                    result.setStatus(CommonTransactionStatusCode.Pending);
 
-                } catch (ETLExecutionException e) {
-                    String error = String.format("...Problem executing stored procedure, returned error: %s.", e.getMessage());
-                    error(error, e);
+                    getTransactionDao().save(transaction);
+
+                    debug(result, "...OpenNode2 document successfully generated.");
+
+                } catch (EmptyIcisStagingLocalDatabaseResultsException eisldre) {
+                    String msg = "...ETL flagged no data for submission. Exiting.";
+                    updateWorkflowStatusAsCompleted(workflow, msg);
+                    return updateProcessAsCompleted(result, msg);
+
+                } catch (XmlGenerationException xmle) {
+                    String error = String.format("...Problem generating document, returned error: %s.", xmle.getMessage());
+                    error(error, xmle);
                     return updateProcessAsFailed(result, error);
                 }
 
-            } else {
-                debug(result, "...Pending workflow found.");
-            }
-
-
-            if (isStagingDataAlreadySubmitted(workflow)) {
-                return updateProcessAsCompleted(result, String.format("...Pending workflow %s exists waiting for processing/download. Exiting.", workflow.getId()));
-            }
-
-            /**
-             * Create temporary file to generate XML file.
-             */
-            String docId = getIdGenerator().createId();
-
-            String icisXmlDocumentFilePath = makeTemporaryFilename(docId);
-
-            /**
-             * Generate and validate XML.
-             */
-            try {
-
-                debug(result, "Attempting to generate OpenNode2 document.");
-
-                Document doc = generateNodeDocument(result, transaction, docId, icisXmlDocumentFilePath);
-
-                result.getDocuments().add(doc);
-
-                result.setStatus(CommonTransactionStatusCode.Pending);
-
+                /**
+                 * Save NodeTransaction before schema validation.
+                 */
                 getTransactionDao().save(transaction);
 
-                debug(result, "...OpenNode2 document successfully generated.");
+                /**
+                 * Skip the XML validation?
+                 */
+                if (!isSkipXmlValidation()) {
 
-            } catch (EmptyIcisStagingLocalDatabaseResultsException eisldre) {
-                String msg = "...ETL flagged no data for submission. Exiting.";
-                updateWorkflowStatusAsCompleted(workflow, msg);
-                return updateProcessAsCompleted(result, msg);
+                    debug(result, "Starting XML validation.");
+                    String validationDocId = getIdGenerator().createId();
+                    if (isXmlPayloadDocumentNotValid(result, transaction, validationDocId, icisXmlDocumentFilePath)) {
 
-            } catch (XmlGenerationException xmle) {
-                String error = String.format("...Problem generating document, returned error: %s.", xmle.getMessage());
-                error(error, xmle);
-                return updateProcessAsFailed(result, error);
-            }
+                        String msg = "XML did not pass schema validation. Exiting";
 
-            /**
-             * Save NodeTransaction before schema validation.
-             */
-            getTransactionDao().save(transaction);
+                        updateWorkflowStatusAsFailed(workflow, msg);
 
-            /**
-             * Skip the XML validation?
-             */
-            if (!isSkipXmlValidation()) {
+                        /**
+                         * Save NodeTransaction when there are validation errors.
+                         */
+                        getTransactionDao().save(transaction);
 
-                debug(result, "Starting XML validation.");
-                String validationDocId = getIdGenerator().createId();
-                if (isXmlPayloadDocumentNotValid(result, transaction, validationDocId, icisXmlDocumentFilePath)) {
+                        return updateProcessAsFailed(result, msg);
+                    }
 
-                    String msg = "XML did not pass schema validation. Exiting";
+                    debug(result, "...XML is valid.");
+                }
 
-                    updateWorkflowStatusAsFailed(workflow, msg);
+                /**
+                 * Determine if a partner name service configuration parameter is
+                 * set.
+                 */
+                debug(result, "Checking service parameter '" + SERVICE_PARAM_SUBMISSION_PARTNER_NAME.getName() + "' for a network partner name.");
+
+                String partnerName = getConfigValueAsString(SERVICE_PARAM_SUBMISSION_PARTNER_NAME.getName(), false);
+
+                if (isSubmissionPartnerNameServiceParameterNotConfigured()) {
+                    String msg = "...Service parameter not configured. Exiting.";
+                    updateWorkflowStatusAsCompleted(workflow, msg);
+                    return updateProcessAsCompleted(result, msg);
+                } else {
+                    debug(result, "...Found network partner '"+partnerName+"'.");
+                }
+
+                /**
+                 * Submit to CDX
+                 */
+                try {
+
+                    debug(result, "Attempting to submit node transaction.");
+
+                    String submissionTransactionId = executeSubmissionToCDX(partnerName, transaction, result);
+                    //DANGER set to NodeTransaction object's actual network id!
+                    transaction.setNetworkId(submissionTransactionId);
+
+                    getTransactionDao().save(transaction);
+
+                    debug(result, "...Successfully submitted node transaction.");
 
                     /**
-                     * Save NodeTransaction when there are validation errors.
+                     * Update ICS_SUBM_TRACK workflow table.
                      */
-                    getTransactionDao().save(transaction);
+                    debug(result, "Attempting to update workflow state.");
+
+                    workflow.setSubmissionDate(new Date());
+                    workflow.setSubmissionTransactionId(submissionTransactionId);
+                    workflow.setSubmissionTransactionStatus("Pending");
+                    workflow.setSubmissionStatusDate(new Date());
+                    workflow.setWorkflowStatusMessage("The ICIS data has been submitted");
+
+                    getIcisWorkflowDao().save(workflow);
+
+                    debug(result, "...Workflow state successfully saved.");
+
+                    return updateProcessAsCompleted(result, "ICIS-NPDES plugin completed successfully. Exiting.");
+
+                } catch (PartnerIdentityNotFoundException pnfe) {
+
+                    updateWorkflowStatusAsFailed(workflow, pnfe.getMessage());
+
+                    return updateProcessAsFailed(result, pnfe.getMessage());
+
+                } catch (CDXSubmissionException e) {
+
+                    String msg = "...Error submitting document to endpoint: " + e.getMessage() + " Exiting.";
+
+                    updateWorkflowStatusAsFailed(workflow, msg);
 
                     return updateProcessAsFailed(result, msg);
                 }
 
-                debug(result, "...XML is valid.");
+            } catch (InvalidWorkflowStateException iwse) {
+                return updateProcessAsFailed(result, iwse.getMessage());
+            } catch (Exception e) {
+                error("Unknown exception while processing.", e);
+                return updateProcessAsFailed(result, String.format("Unknown exception while processing NPDES source data: %s", e.getMessage()));
             }
-
-            /**
-             * Determine if a partner name service configuration parameter is
-             * set.
-             */
-            debug(result, "Checking service parameter '" + SERVICE_PARAM_SUBMISSION_PARTNER_NAME.getName() + "' for a network partner name.");
-
-            String partnerName = getConfigValueAsString(SERVICE_PARAM_SUBMISSION_PARTNER_NAME.getName(), false);
-
-            if (isSubmissionPartnerNameServiceParameterNotConfigured()) {
-                String msg = "...Service parameter not configured. Exiting.";
-                updateWorkflowStatusAsCompleted(workflow, msg);
-                return updateProcessAsCompleted(result, msg);
-            } else {
-                debug(result, "...Found network partner '"+partnerName+"'.");
+        } finally {
+            if (emf != null) {
+                emf.close();
             }
-
-            /**
-             * Submit to CDX
-             */
-            try {
-
-                debug(result, "Attempting to submit node transaction.");
-
-                String submissionTransactionId = executeSubmissionToCDX(partnerName, transaction, result);
-                //DANGER set to NodeTransaction object's actual network id!
-                transaction.setNetworkId(submissionTransactionId);
-                getTransactionDao().save(transaction);
-
-                debug(result, "...Successfully submitted node transaction.");
-
-                /**
-                 * Update ICS_SUBM_TRACK workflow table.
-                 */
-                debug(result, "Attempting to update workflow state.");
-
-                workflow.setSubmissionDate(new Date());
-                workflow.setSubmissionTransactionId(submissionTransactionId);
-                workflow.setSubmissionTransactionStatus("Pending");
-                workflow.setSubmissionStatusDate(new Date());
-                workflow.setWorkflowStatusMessage("The ICIS data has been submitted");
-
-                getIcisWorkflowDao().save(workflow);
-
-                debug(result, "...Workflow state successfully saved.");
-
-                return updateProcessAsCompleted(result, "ICIS-NPDES plugin completed successfully. Exiting.");
-
-            } catch (PartnerIdentityNotFoundException pnfe) {
-
-                updateWorkflowStatusAsFailed(workflow, pnfe.getMessage());
-
-                return updateProcessAsFailed(result, pnfe.getMessage());
-
-            } catch (CDXSubmissionException e) {
-
-                String msg = "...Error submitting document to endpoint: " + e.getMessage() + " Exiting.";
-
-                updateWorkflowStatusAsFailed(workflow, msg);
-
-                return updateProcessAsFailed(result, msg);
-            }
-
-        } catch (InvalidWorkflowStateException iwse) {
-            return updateProcessAsFailed(result, iwse.getMessage());
-        } catch (Exception e) {
-            error("Unknown exception while processing.", e);
-            return updateProcessAsFailed(result, String.format("Unknown exception while processing NPDES source data: %s", e.getMessage()));
         }
     }
 
@@ -536,7 +547,6 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
 
         setIcisWorkflowDao(new JdbcIcisWorkflowDao(getDataSource()));
     }
-
 
     /**
      * Returns the current 'Pending' workflow.

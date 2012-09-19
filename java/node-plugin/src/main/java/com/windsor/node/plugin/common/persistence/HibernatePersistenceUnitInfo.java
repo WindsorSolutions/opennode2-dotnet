@@ -34,9 +34,9 @@ public class HibernatePersistenceUnitInfo implements PersistenceUnitInfo {
 
     private final String entityPackageName;
 
-    public HibernatePersistenceUnitInfo(Properties jpaProperties, String entityPackageName) {
+    public HibernatePersistenceUnitInfo(Properties jpaProperties, PluginPersistenceConfig config) {
         this.jpaProperties = jpaProperties;
-        this.entityPackageName = entityPackageName;
+        this.entityPackageName = config.getRootEntityPackage();
     }
 
     @Override

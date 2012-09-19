@@ -112,7 +112,7 @@ public final class CommonContentAndFormatConverter implements Serializable {
         commonContentToFormat.put(CommonContentType.OTHER, OTHER_MIME);
         commonContentToFormat.put(CommonContentType.XML, XML_MIME);
         commonContentToFormat.put(CommonContentType.Flat, FLAT_MIME);
-        commonContentToFormat.put(CommonContentType.Bin, BIN_MIME);
+        commonContentToFormat.put(CommonContentType.BIN, BIN_MIME);
         commonContentToFormat.put(CommonContentType.ZIP, ZIP_MIME);
     }
 
@@ -204,7 +204,7 @@ public final class CommonContentAndFormatConverter implements Serializable {
      */
     public static String getFileExtension(CommonContentType cct) {
         String s = null;
-        if (cct.equals(CommonContentType.Bin)) {
+        if (cct.equals(CommonContentType.BIN)) {
             s = BIN_EXT;
         }
         if (cct.equals(CommonContentType.Flat)) {
@@ -239,7 +239,7 @@ public final class CommonContentAndFormatConverter implements Serializable {
             s = s.substring(s.length() - EXTENSION_LENGTH, s.length());
         }
         if (s.equalsIgnoreCase(BIN_EXT)) {
-            cct = CommonContentType.Bin;
+            cct = CommonContentType.BIN;
         } else if (s.equalsIgnoreCase(FLAT_EXT)) {
             cct = CommonContentType.Flat;
         } else if (s.equalsIgnoreCase(ODF_EXT)) {

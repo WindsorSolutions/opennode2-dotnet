@@ -95,7 +95,7 @@ public class FileSystemDataProcessor implements InitializingBean {
                     .getAbsolutePath());
 
             if (fsFileExt == null) {
-                doc.setType(CommonContentType.Bin);
+                doc.setType(CommonContentType.BIN);
             } else if (fsFileExt.equalsIgnoreCase("xml")) {
                 doc.setType(CommonContentType.XML);
             } else if (fsFileExt.equalsIgnoreCase("txt")) {
