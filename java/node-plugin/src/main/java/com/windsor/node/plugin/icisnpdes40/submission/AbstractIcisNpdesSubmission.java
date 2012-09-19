@@ -42,8 +42,10 @@ import com.windsor.node.plugin.icisnpdes40.dao.IcisWorkflowDao;
 import com.windsor.node.plugin.icisnpdes40.dao.jdbc.JdbcIcisWorkflowDao;
 import com.windsor.node.plugin.icisnpdes40.domain.IcisWorkflow;
 import com.windsor.node.plugin.icisnpdes40.generated.HeaderData;
+import com.windsor.node.plugin.icisnpdes40.generated.NameType;
 import com.windsor.node.plugin.icisnpdes40.generated.ObjectFactory;
 import com.windsor.node.plugin.icisnpdes40.generated.PayloadData;
+import com.windsor.node.plugin.icisnpdes40.generated.Property;
 import com.windsor.node.plugin.icisnpdes40.submission.exception.CDXSubmissionException;
 import com.windsor.node.plugin.icisnpdes40.submission.exception.ETLExecutionException;
 import com.windsor.node.plugin.icisnpdes40.submission.exception.EmptyIcisStagingLocalDatabaseResultsException;
@@ -699,20 +701,66 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
        HeaderData header = objectFactory.createHeaderData();
 
        /**
-        * Random document id.
-        */
-       String docId = getIdGenerator().createId();
-
-       /**
         * Max length is 30 characters.
         */
-       header.setId(docId.substring(1, 31));
+       header.setId(getConfigValueAsString(SERVICE_PARAM_ICIS_USER_ID.getName(), false));
 
        /**
         * Use the service parameter as the author.
         */
        header.setAuthor(getConfigValueAsString(SERVICE_PARAM_AUTHOR.getName(),
                false));
+
+       header.setContactInfo(getConfigValueAsString(SERVICE_PARAM_CONTACT_INFO.getName(),
+               false));
+
+       header.setOrganization(getConfigValueAsString(SERVICE_PARAM_ORGANIZATION.getName(),
+               false));
+
+       /**
+        * Email notification property
+        */
+       String emailNotifications = getConfigValueAsString(SERVICE_PARAM_NOTIFICATION_EMAIL_ADDRS.getName(), false);
+
+       if (StringUtils.isNotEmpty(emailNotifications)) {
+
+           String separator = null;
+           Property email;
+
+           /**
+            * Try splitting on "," and ";"
+            */
+           if (StringUtils.contains(emailNotifications, ",")) {
+               separator = ",";
+           } else if (StringUtils.contains(emailNotifications, ";")) {
+               separator = ";";
+           }
+
+           if (StringUtils.isNotEmpty(separator)) {
+               for (String e : StringUtils.split(emailNotifications, separator)) {
+                   email = new Property();
+                   email.setName(NameType.E_MAIL);
+                   email.setValue(e);
+                   header.getProperty().add(email);
+               }
+           } else {
+               email = new Property();
+               email.setName(NameType.E_MAIL);
+               email.setValue(emailNotifications);
+               header.getProperty().add(email);
+           }
+
+       }
+
+
+       /**
+        * Source property
+        */
+       Property source = new Property();
+       source.setName(NameType.SOURCE);
+       source.setValue("FullBatch");
+       header.getProperty().add(source);
+
 
        /**
         * Created now.

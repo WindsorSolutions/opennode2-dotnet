@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
@@ -15,8 +16,10 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import com.windsor.node.common.exception.WinNodeException;
 import com.windsor.node.plugin.common.BaseWnosJaxbPlugin;
 import com.windsor.node.plugin.icisnpdes40.generated.SubmissionAcceptedDataType;
@@ -74,8 +77,7 @@ public class JaxbResultsParser implements ResultsParser
         catch(Exception e)
         {
             logger.debug("Caught Exception:", e);
-            logger.debug("Throwing new WinNodeException(\"Couldn't create the XSLT transform for parsing ICIS-NPDES results files.\", e) ");
-            throw new WinNodeException("Couldn't create the XSLT transform for parsing ICIS-NPDES results files.", e);
+            throw new WinNodeException(e.getLocalizedMessage(), e);
         }
     }
 
