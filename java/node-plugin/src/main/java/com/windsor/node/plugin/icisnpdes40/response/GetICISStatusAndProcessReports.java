@@ -2,16 +2,22 @@ package com.windsor.node.plugin.icisnpdes40.response;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import javax.xml.bind.JAXBElement;
+
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+
 import com.windsor.node.common.domain.ActivityEntry;
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
 import com.windsor.node.common.domain.DataServiceRequestParameter;
@@ -38,6 +44,7 @@ import com.windsor.node.plugin.icisnpdes40.generated.SubmissionResultList;
 import com.windsor.node.plugin.icisnpdes40.results.xml.JaxbResultsParser;
 import com.windsor.node.plugin.icisnpdes40.results.xml.ResultsParser;
 import com.windsor.node.service.helper.client.NodeClientFactory;
+import com.windsor.node.service.helper.settings.SettingServiceProvider;
 
 public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
 {
@@ -60,12 +67,13 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
      */
     public static final PluginServiceParameterDescriptor SERVICE_PARAM_SUBMISSION_PARTNER_NAME = new PluginServiceParameterDescriptor(
                     "Submission Partner Name", PluginServiceParameterDescriptor.TYPE_STRING, Boolean.FALSE);
-    
+
     private IcisStatusAndProcessingDao icisStatusAndProcessingDao;
     private IcisWorkflowDao icisWorkflowDao;
     private TransactionDao transactionDao;
     private PartnerDao partnerDao;
     private ResultsParser resultsParser;
+    private SettingServiceProvider settingService;
     private EntityManagerFactory emf;
 
     public GetICISStatusAndProcessReports()
@@ -84,7 +92,7 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
     public void afterPropertiesSet()
     {
         super.afterPropertiesSet();
-        DataSource dataSource = (DataSource)getDataSources().get(ARG_DS_SOURCE);
+        DataSource dataSource = getDataSources().get(ARG_DS_SOURCE);
         //set daos and their dataSources
         setIcisWorkflowDao(new JdbcIcisWorkflowDao(dataSource));
         setIcisStatusAndProcessingDao(new JdbcIcisStatusAndProcessingDao(getIcisWorkflowDao(), dataSource));
@@ -92,6 +100,7 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
         setTransactionDao((TransactionDao)getServiceFactory().makeService(JdbcTransactionDao.class));
         setPartnerDao((PartnerDao)getServiceFactory().makeService(JdbcPartnerDao.class));
         setResultsParser(new JaxbResultsParser());
+        setSettingService((SettingServiceProvider) getServiceFactory().makeService(SettingServiceProvider.class));
 
         setEmf(IcisEntityManagerFactory.initEntityManagerFactory(dataSource));
     }
@@ -100,6 +109,14 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
     public List<PluginServiceParameterDescriptor> getParameters()
     {
         return new ArrayList<PluginServiceParameterDescriptor>();
+    }
+
+    public void setSettingService(SettingServiceProvider settingService) {
+        this.settingService = settingService;
+    }
+
+    public SettingServiceProvider getSettingService() {
+        return settingService;
     }
 
     @Override
@@ -257,13 +274,13 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
                     icisWorkflow.setWorkflowStatusMessage("Download did not contain expected files containing processing results.");
                     icisWorkflow.setSubmissionStatusDate(new Date());
                     getIcisWorkflowDao().save(icisWorkflow);
-    
+
                     result.getAuditEntries().add(new ActivityEntry("Download did not contain expected files containing processing results."));
                     result.setStatus(CommonTransactionStatusCode.Completed);
                     result.setSuccess(Boolean.TRUE);
                     return result;
                 }
-    
+
                 ZipInputStream zipIn = new ZipInputStream(new ByteArrayInputStream(responseZipDoc.getContent()));
                 ZipEntry zipEntry = zipIn.getNextEntry();
                 byte[] accpetedEntry = null;
@@ -273,14 +290,20 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
                     if(zipEntry.getName() != null && zipEntry.getName().toLowerCase().contains("accepted"))
                     {
                         accpetedEntry = readZipEntry(zipIn);
+                        String tmpFile = FilenameUtils.concat(
+                                getSettingService().getTempDir().getAbsolutePath(), zipEntry.getName());
+                        IOUtils.write(accpetedEntry, new FileOutputStream(tmpFile));
                     }
                     if(zipEntry.getName() != null && zipEntry.getName().toLowerCase().contains("rejected"))
                     {
                         rejectedEntry = readZipEntry(zipIn);
+                        String tmpFile = FilenameUtils.concat(
+                                getSettingService().getTempDir().getAbsolutePath(), zipEntry.getName());
+                        IOUtils.write(accpetedEntry, new FileOutputStream(tmpFile));
                     }
                     zipEntry = zipIn.getNextEntry();
                 }
-    
+
                 if(accpetedEntry == null || rejectedEntry == null)
                 {
                     icisWorkflow.setWorkflowStatus(CommonTransactionStatusCode.Failed.toString());
@@ -301,12 +324,12 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
                 JAXBElement<SubmissionResultList> rejected = getResultsParser().parse(rejectedEntry, this);
 
                 //Snag the transactionId out of one of the response files for use in the clean up stored proc later on
-                if(accepted != null && accepted.getValue() != null && accepted.getValue().getSubmissionResult() != null 
+                if(accepted != null && accepted.getValue() != null && accepted.getValue().getSubmissionResult() != null
                                 && accepted.getValue().getSubmissionResult().size() > 0)
                 {
                     storedProcedureTransactionIdArgument = accepted.getValue().getSubmissionResult().get(0).getSubmissionTransactionId();
                 }
-                else if(rejected != null && rejected.getValue() != null && rejected.getValue().getSubmissionResult() != null 
+                else if(rejected != null && rejected.getValue() != null && rejected.getValue().getSubmissionResult() != null
                                 && rejected.getValue().getSubmissionResult().size() > 0)
                 {
                     storedProcedureTransactionIdArgument = rejected.getValue().getSubmissionResult().get(0).getSubmissionTransactionId();
@@ -314,7 +337,7 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
 
                 //Update ICS_SUBM_RESULTS table with contents of both files, NOTE: blanks are translated to "Accepted" in the InformationCode field
                 getIcisStatusAndProcessingDao().saveIcisStatusResults(accepted.getValue(), rejected.getValue(), emf.createEntityManager());
-                
+
             }
             catch(Exception e)
             {
@@ -412,7 +435,7 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
     /**
      * Processes a zip entry from it's input stream and returns the resulting byte[]. Utility
      * method.
-     * 
+     *
      * @param zipIn
      * @return
      */
