@@ -81,8 +81,8 @@
 					<artifactId>maven-assembly-plugin</artifactId>
 					<version>2.2.1</version>
 				</plugin>
-				<!--This plugin's configuration is used to store Eclipse m2e settings 
-					only. It has no influence on the Maven build itself. -->
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on 
+					the Maven build itself. -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
@@ -247,8 +247,8 @@
 			</properties>
 			<build>
 				<finalName>${plugin.name}</finalName>
+				<!-- 
 				<plugins>
-<!-- 
 					<plugin>
 						<groupId>org.jvnet.hyperjaxb3</groupId>
 						<artifactId>maven-hyperjaxb3-plugin</artifactId>
@@ -280,14 +280,19 @@
 								<version>2.06-SNAPSHOT</version>
 							</dependency>
 							<dependency>
+								<groupId>com.windsor.node</groupId>
+								<artifactId>node-hyperjaxb3-naming-icisnpdes</artifactId>
+								<version>2.06-SNAPSHOT</version>
+							</dependency>
+							<dependency>
 								<groupId>org.jvnet.jaxb2_commons</groupId>
 								<artifactId>jaxb2-namespace-prefix</artifactId>
 								<version>1.1</version>
 							</dependency>
 						</dependencies>
 					</plugin>
- -->
 				</plugins>
+				 -->
 			</build>
 		</profile>
 		<profile>
@@ -343,6 +348,45 @@
 			</properties>
 			<build>
 				<finalName>${plugin.name}</finalName>
+				<!--
+				<plugins>
+					<plugin>
+						<groupId>org.jvnet.hyperjaxb3</groupId>
+						<artifactId>maven-hyperjaxb3-plugin</artifactId>
+						<executions>
+							<execution>
+								<goals>
+									<goal>generate</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<args>
+								<arg>-Xannotate</arg>
+								<arg>-Xinheritance</arg>
+							</args>
+							<debug>true</debug>
+							<variant>jpa2</variant>
+							<extension>true</extension>
+							<bindingDirectory>${basedir}/src/main/packaging/wqx/bindings</bindingDirectory>
+							<roundtripTestClassName>RoundtripTest</roundtripTestClassName>
+							<schemaDirectory>${basedir}/src/main/packaging/wqx/xsd</schemaDirectory>
+						</configuration>
+						<dependencies>
+							<dependency>
+								<groupId>com.windsor.node</groupId>
+								<artifactId>node-hyperjaxb3-naming</artifactId>
+								<version>2.06-SNAPSHOT</version>
+							</dependency>
+							<dependency>
+								<groupId>com.windsor.node</groupId>
+								<artifactId>node-hyperjaxb3-naming-wqx</artifactId>
+								<version>2.06-SNAPSHOT</version>
+							</dependency>
+						</dependencies>
+					</plugin>
+				</plugins>
+				 -->
 			</build>
 		</profile>
 	</profiles>
@@ -380,6 +424,11 @@
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>4.1.6.Final</version>
 		</dependency>
+		<dependency>
+			<groupId>xalan</groupId>
+			<artifactId>xalan</artifactId>
+			<version>2.7.1</version>
+		</dependency>		
 
 	</dependencies>
 </project>

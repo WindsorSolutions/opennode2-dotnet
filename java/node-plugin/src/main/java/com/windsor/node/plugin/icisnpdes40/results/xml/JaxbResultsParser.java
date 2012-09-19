@@ -50,7 +50,7 @@ public class JaxbResultsParser implements ResultsParser
             Source xsltSource = new StreamSource(xsltIn);//Doing it this way implicitly sets the systemId
 
             // the factory pattern supports different XSLT processors
-            TransformerFactory transFact = TransformerFactory.newInstance("com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl", JaxbResultsParser.class.getClassLoader());
+            TransformerFactory transFact = TransformerFactory.newInstance("org.apache.xalan.processor.TransformerFactoryImpl", JaxbResultsParser.class.getClassLoader());
             Transformer trans = transFact.newTransformer(xsltSource);
 
             File transformedResultFile = File.createTempFile("resultsin", ".xml");
