@@ -347,7 +347,7 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
                 icisWorkflow.setSubmissionStatusDate(new Date());
                 getIcisWorkflowDao().save(icisWorkflow);
 
-                result.getAuditEntries().add(new ActivityEntry("Download operation failed: " + e.getMessage() + ". Exiting."));
+                result.getAuditEntries().add(new ActivityEntry("Download operation failed: " + icisWorkflow.getShortWorkflowStatusMessage()));
                 result.setStatus(CommonTransactionStatusCode.Failed);
                 result.setSuccess(Boolean.FALSE);
                 return result;
