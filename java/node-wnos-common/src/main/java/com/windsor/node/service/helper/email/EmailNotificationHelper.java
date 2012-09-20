@@ -97,6 +97,7 @@ public class EmailNotificationHelper implements InitializingBean,
     private EmailMessagePreparator newPasswordPreparator;
     private EmailMessagePreparator transactionStatusPreparator;
 
+    @Override
     public void afterPropertiesSet() {
 
         if (transactionStatusPreparator == null) {
@@ -167,11 +168,12 @@ public class EmailNotificationHelper implements InitializingBean,
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.windsor.node.service.helper.email.EHelp#sendScheduleResults(java.
      * io.File, java.lang.String, com.windsor.node.common.domain.ScheduledItem)
      */
+    @Override
     public void sendScheduleResults(File file, String transactionID,
             ScheduledItem schedule) {
 
@@ -205,11 +207,12 @@ public class EmailNotificationHelper implements InitializingBean,
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.windsor.node.service.helper.email.EHelp#sendCustom(java.lang.String
      * [], java.lang.String)
      */
+    @Override
     public void sendCustom(String[] toEmailList, String body) {
 
         SimpleMailMessage msg = new SimpleMailMessage();
@@ -230,11 +233,12 @@ public class EmailNotificationHelper implements InitializingBean,
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.windsor.node.service.helper.email.EHelp#sendNewPassword(com.windsor
      * .node.common.domain.UserAccount, java.lang.String)
      */
+    @Override
     public void sendNewPassword(UserAccount account, String password) {
 
         Map data = new HashMap();
@@ -259,11 +263,12 @@ public class EmailNotificationHelper implements InitializingBean,
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.windsor.node.service.helper.email.EHelp#sendNewLocalUser(com.windsor
      * .node.common.domain.UserAccount, java.lang.String)
      */
+    @Override
     public void sendNewLocalUser(UserAccount account, String password) {
 
         Map data = new HashMap();
@@ -292,11 +297,12 @@ public class EmailNotificationHelper implements InitializingBean,
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.windsor.node.service.helper.email.EHelp#sendNewNAASUser(com.windsor
      * .node.common.domain.UserAccount, java.lang.String)
      */
+    @Override
     public void sendNewNAASUser(UserAccount account, String password) {
 
         Map data = new HashMap();
@@ -321,11 +327,12 @@ public class EmailNotificationHelper implements InitializingBean,
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.windsor.node.service.helper.email.EHelp#sendNotifs(com.windsor.node
      * .common.domain.NodeTransaction, java.lang.String)
      */
+    @Override
     public void sendNotifs(NodeTransaction tran) {
 
         Map data = new HashMap();
@@ -364,11 +371,12 @@ public class EmailNotificationHelper implements InitializingBean,
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.windsor.node.service.helper.email.EHelp#sendQueries(com.windsor.node
      * .common.domain.DataRequest)
      */
+    @Override
     public void sendQueries(DataRequest request) {
 
         Map data = new HashMap();
@@ -409,11 +417,12 @@ public class EmailNotificationHelper implements InitializingBean,
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.windsor.node.service.helper.email.EHelp#sendSchedule(com.windsor.
      * node.common.domain.ScheduledItem, java.lang.String)
      */
+    @Override
     public void sendSchedule(ScheduledItem schedule, String transactionID) {
 
         Map data = new HashMap();
@@ -452,11 +461,12 @@ public class EmailNotificationHelper implements InitializingBean,
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.windsor.node.service.helper.email.EHelp#sendProcessedSolicits(com
      * .windsor.node.common.domain.DataRequest)
      */
+    @Override
     public void sendProcessedSolicits(DataRequest request) {
 
         Map data = new HashMap();
@@ -496,11 +506,12 @@ public class EmailNotificationHelper implements InitializingBean,
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.windsor.node.service.helper.email.EHelp#sendSolicits(com.windsor.
      * node.common.domain.DataRequest)
      */
+    @Override
     public void sendSolicits(DataRequest request) {
 
         Map data = new HashMap();
@@ -540,11 +551,12 @@ public class EmailNotificationHelper implements InitializingBean,
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.windsor.node.service.helper.email.EHelp#sendProcessedSubmits(com.
      * windsor.node.common.domain.NodeTransaction, java.lang.String)
      */
+    @Override
     public void sendProcessedSubmits(NodeTransaction tran) {
 
         Map data = new HashMap();
@@ -584,9 +596,10 @@ public class EmailNotificationHelper implements InitializingBean,
 
     /**
      * sendTransactionStatusUpdate
-     * 
+     *
      * @param tran
      */
+    @Override
     public void sendTransactionStatusUpdate(NodeTransaction transaction,
             String emailAddress, String dataFlowName) {
 
@@ -600,7 +613,7 @@ public class EmailNotificationHelper implements InitializingBean,
 
         logger.debug("to: " + emailAddress);
 
-        submitPreparator.configure(emailAddress, data);
+        transactionStatusPreparator.configure(emailAddress, data);
 
         try {
             sender.send(transactionStatusPreparator);
@@ -616,9 +629,9 @@ public class EmailNotificationHelper implements InitializingBean,
 
     /**
      * Avoid logging passwords in clear text! Doh!
-     * 
+     *
      * Just a quick fix, doens't guarantee we don't do it somewhere else.
-     * 
+     *
      * @param data
      */
     private void logData(Map data) {
@@ -644,11 +657,12 @@ public class EmailNotificationHelper implements InitializingBean,
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.windsor.node.service.helper.email.EHelp#sendSubmits(com.windsor.node
      * .common.domain.NodeTransaction, java.lang.String)
      */
+    @Override
     public void sendSubmits(NodeTransaction tran) {
 
         Map data = new HashMap();
@@ -688,7 +702,7 @@ public class EmailNotificationHelper implements InitializingBean,
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.windsor.node.service.helper.email.EHelp#setSender(org.springframework
      * .mail.javamail.JavaMailSender)
@@ -699,7 +713,7 @@ public class EmailNotificationHelper implements InitializingBean,
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.windsor.node.service.helper.email.EHelp#setNewLocalUserPreparator
      * (com.windsor.node.service.helper.email.EmailMessagePreparator)
@@ -711,7 +725,7 @@ public class EmailNotificationHelper implements InitializingBean,
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.windsor.node.service.helper.email.EHelp#setNewNAASUserPreparator(
      * com.windsor.node.service.helper.email.EmailMessagePreparator)
@@ -723,7 +737,7 @@ public class EmailNotificationHelper implements InitializingBean,
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.windsor.node.service.helper.email.EHelp#setNotifPreparator(com.windsor
      * .node.service.helper.email.EmailMessagePreparator)
@@ -734,7 +748,7 @@ public class EmailNotificationHelper implements InitializingBean,
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.windsor.node.service.helper.email.EHelp#setQueryPreparator(com.windsor
      * .node.service.helper.email.EmailMessagePreparator)
@@ -745,7 +759,7 @@ public class EmailNotificationHelper implements InitializingBean,
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.windsor.node.service.helper.email.EHelp#setSchedulePreparator(com
      * .windsor.node.service.helper.email.EmailMessagePreparator)
@@ -756,7 +770,7 @@ public class EmailNotificationHelper implements InitializingBean,
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.windsor.node.service.helper.email.EHelp#setSolicitPreparator(com.
      * windsor.node.service.helper.email.EmailMessagePreparator)
@@ -767,7 +781,7 @@ public class EmailNotificationHelper implements InitializingBean,
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.windsor.node.service.helper.email.EHelp#setSubmitPreparator(com.windsor
      * .node.service.helper.email.EmailMessagePreparator)
@@ -778,7 +792,7 @@ public class EmailNotificationHelper implements InitializingBean,
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.windsor.node.service.helper.email.EHelp#setNaasConfig(com.windsor
      * .node.conf.NAASConfig)
@@ -789,7 +803,7 @@ public class EmailNotificationHelper implements InitializingBean,
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.windsor.node.service.helper.email.EHelp#setNosConfig(com.windsor.
      * node.conf.NOSConfig)
@@ -800,7 +814,7 @@ public class EmailNotificationHelper implements InitializingBean,
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.windsor.node.service.helper.email.EHelp#setNotificationDao(com.windsor
      * .node.data.dao.NotificationDao)
@@ -811,7 +825,7 @@ public class EmailNotificationHelper implements InitializingBean,
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.windsor.node.service.helper.email.EHelp#setProcessedSolicitPreparator
      * (com.windsor.node.service.helper.email.EmailMessagePreparator)
@@ -823,7 +837,7 @@ public class EmailNotificationHelper implements InitializingBean,
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.windsor.node.service.helper.email.EHelp#setProcessedSubmitPreparator
      * (com.windsor.node.service.helper.email.EmailMessagePreparator)
@@ -835,7 +849,7 @@ public class EmailNotificationHelper implements InitializingBean,
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.windsor.node.service.helper.email.EHelp#setScheduleResultPreparator
      * (com.windsor.node.service.helper.email.EmailMessagePreparator)
@@ -847,7 +861,7 @@ public class EmailNotificationHelper implements InitializingBean,
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.windsor.node.service.helper.email.EHelp#setNewPasswordPreparator(
      * com.windsor.node.service.helper.email.EmailMessagePreparator)

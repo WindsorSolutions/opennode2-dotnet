@@ -12,7 +12,6 @@ import java.util.zip.ZipInputStream;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
-import javax.xml.bind.JAXBElement;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
@@ -320,23 +319,22 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
                 //Parse the results out of the two byte[] arrays that contain the response files
                 /*List<IcisStatusResult> accepted = getResultsParser().parse(accpetedEntry, this);
                 List<IcisStatusResult> rejected = getResultsParser().parse(rejectedEntry, this);*/
-                JAXBElement<SubmissionResultList> accepted = getResultsParser().parse(accpetedEntry, this);
-                JAXBElement<SubmissionResultList> rejected = getResultsParser().parse(rejectedEntry, this);
+                SubmissionResultList accepted = getResultsParser().parse(accpetedEntry, this);
+                SubmissionResultList rejected = getResultsParser().parse(rejectedEntry, this);
 
                 //Snag the transactionId out of one of the response files for use in the clean up stored proc later on
-                if(accepted != null && accepted.getValue() != null && accepted.getValue().getSubmissionResult() != null
-                                && accepted.getValue().getSubmissionResult().size() > 0)
+                if(accepted != null && accepted.getSubmissionResult() != null && !accepted.getSubmissionResult().isEmpty())
                 {
-                    storedProcedureTransactionIdArgument = accepted.getValue().getSubmissionResult().get(0).getSubmissionTransactionId();
+                    storedProcedureTransactionIdArgument = accepted.getSubmissionResult().get(0).getSubmissionTransactionId();
                 }
-                else if(rejected != null && rejected.getValue() != null && rejected.getValue().getSubmissionResult() != null
-                                && rejected.getValue().getSubmissionResult().size() > 0)
+                else if(rejected != null && rejected.getSubmissionResult() != null && !rejected.getSubmissionResult().isEmpty())
                 {
-                    storedProcedureTransactionIdArgument = rejected.getValue().getSubmissionResult().get(0).getSubmissionTransactionId();
+                    storedProcedureTransactionIdArgument = rejected.getSubmissionResult().get(0).getSubmissionTransactionId();
                 }
 
                 //Update ICS_SUBM_RESULTS table with contents of both files, NOTE: blanks are translated to "Accepted" in the InformationCode field
-                getIcisStatusAndProcessingDao().saveIcisStatusResults(accepted.getValue(), rejected.getValue(), emf.createEntityManager());
+                getIcisStatusAndProcessingDao().saveIcisStatusResults(accepted, rejected, emf.createEntityManager());
+
 
             }
             catch(Exception e)
@@ -382,6 +380,23 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
             //email contacts, inserted my own logic for failure on this step
             try
             {
+                //SUCCESS  update Complete, WORKFLOW_STAT=Complete, Response Date Time to "now"
+                //msg: "Workflow completed successfully. Exiting."
+                //This is success, finally!
+                icisWorkflow.setWorkflowStatus(CommonTransactionStatusCode.Completed.toString());
+                icisWorkflow.setWorkflowStatusMessage("Workflow completed successfully. Exiting.");
+                icisWorkflow.setSubmissionStatusDate(new Date());
+                icisWorkflow.setResponseParseDate(new Date());//TODO never set this before, should I have?  confirm and either add where necessary or remove this
+                getIcisWorkflowDao().save(icisWorkflow);
+
+                result.getAuditEntries().add(new ActivityEntry("Workflow completed successfully. Exiting."));
+                result.setStatus(CommonTransactionStatusCode.Completed);
+                result.setSuccess(Boolean.TRUE);
+
+                transaction.getStatus().setStatus(CommonTransactionStatusCode.Completed);
+
+                getTransactionDao().save(transaction);
+
                 sendEmailsToContacts(transaction, result);
             }
             catch(Exception e)
@@ -396,21 +411,7 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
                 result.setSuccess(Boolean.FALSE);
                 return result;
             }
-
-            //SUCCESS  update Complete, WORKFLOW_STAT=Complete, Response Date Time to "now"
-            //msg: "Workflow completed successfully. Exiting."
-            //This is success, finally!
-            icisWorkflow.setWorkflowStatus(CommonTransactionStatusCode.Completed.toString());
-            icisWorkflow.setWorkflowStatusMessage("Workflow completed successfully. Exiting.");
-            icisWorkflow.setSubmissionStatusDate(new Date());
-            icisWorkflow.setResponseParseDate(new Date());//TODO never set this before, should I have?  confirm and either add where necessary or remove this
-            getIcisWorkflowDao().save(icisWorkflow);
-
-            result.getAuditEntries().add(new ActivityEntry("Workflow completed successfully. Exiting."));
-            result.setStatus(CommonTransactionStatusCode.Completed);
-            result.setSuccess(Boolean.TRUE);
         }
-
         return result;
     }
 
@@ -423,6 +424,7 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
             String[] emails = allEmails.split(";");
             for(int i = 0; i < emails.length; i++)
             {
+
                 getNotificationHelper().sendTransactionStatusUpdate(transaction, emails[i], transaction.getFlow().getName());
             }
         }

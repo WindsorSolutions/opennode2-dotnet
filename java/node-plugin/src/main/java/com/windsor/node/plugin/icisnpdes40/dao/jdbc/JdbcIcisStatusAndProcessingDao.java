@@ -1,27 +1,30 @@
 package com.windsor.node.plugin.icisnpdes40.dao.jdbc;
 
 import java.sql.Types;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
+
 import javax.persistence.EntityManager;
 import javax.sql.DataSource;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.jdbc.object.StoredProcedure;
+
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
 import com.windsor.node.plugin.icisnpdes40.dao.IcisStatusAndProcessingDao;
 import com.windsor.node.plugin.icisnpdes40.dao.IcisWorkflowDao;
 import com.windsor.node.plugin.icisnpdes40.domain.IcisWorkflow;
+import com.windsor.node.plugin.icisnpdes40.generated.SubmissionResult;
 import com.windsor.node.plugin.icisnpdes40.generated.SubmissionResultList;
 
 public class JdbcIcisStatusAndProcessingDao extends JdbcDaoSupport implements IcisStatusAndProcessingDao
 {
     private static final String SQL_COUNT_PENDING_WORKFLOWS = "SELECT count(*) from ICS_SUBM_TRACK where WORKFLOW_STAT = ?";
     private static final String SQL_LOAD_PENDING_WORKFLOW = "SELECT ICS_SUBM_TRACK_ID from ICS_SUBM_TRACK where WORKFLOW_STAT = ?";
-    private static final String SQL_INSERT_ICIS_STATUS_RESULT = "INSERT INTO ICS_SUBM_RESULTS (ICS_SUBM_RESULTS_ID,"
-                    + " TRANSACTION_TYPE, SUBM_TYPE_NAME, PRMT_IDENT, PRMT_IDENT_2, PRMT_FEATR_IDENT, RESULT_CODE, RESULT_TYPE_CODE,"
-                    + " RESULT_DESC, CREATE_DATE_TIME) " + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     private IcisWorkflowDao icisWorkflowDao;
 
@@ -59,49 +62,29 @@ public class JdbcIcisStatusAndProcessingDao extends JdbcDaoSupport implements Ic
     @Override
     public void saveIcisStatusResults(SubmissionResultList accepted, SubmissionResultList rejected, EntityManager em)
     {
+        SubmissionResult entity;
+
+        // FIXME - The transaction demarcation should not be here....should be in the service
+        em.getTransaction().begin();
+
         for(int i = 0; accepted != null && accepted.getSubmissionResult() != null  && i < accepted.getSubmissionResult().size(); i++)
         {
-            em.persist(accepted.getSubmissionResult().get(i));
+            entity = accepted.getSubmissionResult().get(i);
+            entity.setDbid(UUID.randomUUID().toString());
+            entity.setCreatedDate(new Date());
+            em.persist(entity);
         }
         for(int i = 0; rejected != null && rejected.getSubmissionResult() != null  && i < rejected.getSubmissionResult().size(); i++)
         {
-            em.persist(rejected.getSubmissionResult().get(i));
+            entity = rejected.getSubmissionResult().get(i);
+            entity.setDbid(UUID.randomUUID().toString());
+            entity.setCreatedDate(new Date());
+            em.persist(entity);
         }
+
+        // FIXME - The transaction demarcation should not be here....should be in the service
+        em.getTransaction().commit();
     }
-        /*List<IcisStatusResult> fullList = new ArrayList<IcisStatusResult>();
-        fullList.addAll(accepted);
-        fullList.addAll(rejected);
-        for(int i = 0; i < fullList.size(); i++)
-        {
-            IcisStatusResult currentResult = fullList.get(i);
-            String newId = UUID.randomUUID().toString();
-            getJdbcTemplate().update(SQL_INSERT_ICIS_STATUS_RESULT ,
-                                     new Object[]{newId,
-                                                    //currentResult.getSubmissionDate(), 
-                                                    //currentResult.getProcessedDate(),
-                                                    currentResult.getSubmissionTransactionTypeCode(), 
-                                                    currentResult.getSubmissionTypeName(),
-                                                    null,//PRMT_IDENT_2
-                                                    currentResult.getPermitIdentifier(), 
-                                                    currentResult.getPermittedFeatureIdentifier(),
-                                                    currentResult.getErrorCode(),
-                                                    currentResult.getErrorTypeCode(),
-                                                    currentResult.getErrorDescription(),
-                                                    new Date()},
-                                     new int[]{ Types.VARCHAR, 
-                                                //Types.DATE,
-                                                //Types.DATE,
-                                                Types.VARCHAR,
-                                                Types.VARCHAR,
-                                                Types.VARCHAR,
-                                                Types.VARCHAR,
-                                                Types.VARCHAR,
-                                                Types.VARCHAR,
-                                                Types.VARCHAR,
-                                                Types.VARCHAR,
-                                                Types.DATE});
-        }
-    }*/
 
     /* (non-Javadoc)
      * @see com.windsor.node.plugin.icisnpdes40.dao.IcisStatusAndProcessingDao#runCleanupStoredProc(java.lang.String, java.lang.String)

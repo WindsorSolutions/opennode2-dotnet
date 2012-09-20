@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.Source;
@@ -42,7 +41,7 @@ public class JaxbResultsParser implements ResultsParser
      * @see com.windsor.node.plugin.icisnpdes40.results.xml.ResultsParser#parse(byte[])
      */
     @Override
-    public JAXBElement<SubmissionResultList> parse(byte[] fileBytes, BaseWnosJaxbPlugin caller) throws JAXBException
+    public SubmissionResultList parse(byte[] fileBytes, BaseWnosJaxbPlugin caller) throws JAXBException
     {
         try
         {
@@ -56,7 +55,7 @@ public class JaxbResultsParser implements ResultsParser
             TransformerFactory transFact = TransformerFactory.newInstance("org.apache.xalan.processor.TransformerFactoryImpl", JaxbResultsParser.class.getClassLoader());
             Transformer trans = transFact.newTransformer(xsltSource);
 
-            File transformedResultFile = File.createTempFile("resultsin", ".xml");
+            File transformedResultFile = File.createTempFile("resultsin", ".xml"); // /tmp directory FIXME Hack
             trans.transform(xmlSource, new StreamResult(transformedResultFile));
             /*Templates template = getTemplate(xsltIn, factory);
             Transformer transformer = getTransformer(template);
@@ -70,9 +69,15 @@ public class JaxbResultsParser implements ResultsParser
             JAXBContext jaxbCtxt = JAXBContext.newInstance("com.windsor.node.plugin.icisnpdes40.generated",
                                                            JaxbResultsParser.class.getClassLoader());
             Unmarshaller u = jaxbCtxt.createUnmarshaller();
-            JAXBElement<SubmissionResultList> file = (JAXBElement<SubmissionResultList>)u.unmarshal(transformedIn);
-            //List<IcisStatusResult> results = deserializeXml(file.getValue());
-            return file;
+
+            Object o = u.unmarshal(transformedIn);
+
+            if (o != null) {
+                return (SubmissionResultList)o;
+            } else {
+                return null;
+            }
+
         }
         catch(Exception e)
         {
