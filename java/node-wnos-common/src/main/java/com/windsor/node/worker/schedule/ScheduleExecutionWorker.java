@@ -223,7 +223,7 @@ public class ScheduleExecutionWorker extends NodeWorker implements ScheduleItemE
                             || schedule.getSourceType().equals(ScheduledItemSourceType.WebServiceSolicit))
             {
                 // WEBSERVICE
-                logEntry.addEntryAll(partnerDataProcessor.getAndSaveData(tran.getId(), schedule.getSourceId(), schedule
+                logEntry.addEntryAll(partnerDataProcessor.getAndSaveData(tran, schedule.getSourceId(), schedule
                                 .getSourceOperation(), schedule.getSourceType(), schedule.getSourceArgs(), tran
                                 .getFlow().getName()));
 

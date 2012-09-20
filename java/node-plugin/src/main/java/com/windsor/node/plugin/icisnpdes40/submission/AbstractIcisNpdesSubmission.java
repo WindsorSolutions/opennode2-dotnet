@@ -190,7 +190,7 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
 
     public AbstractIcisNpdesSubmission() {
 
-       getSupportedPluginTypes().add(ServiceType.QUERY_OR_SOLICIT);
+       getSupportedPluginTypes().add(ServiceType.TASK);
 
        /**
         * Data source

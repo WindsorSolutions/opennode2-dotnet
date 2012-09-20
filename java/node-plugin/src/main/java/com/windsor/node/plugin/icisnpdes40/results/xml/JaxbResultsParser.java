@@ -49,20 +49,19 @@ public class JaxbResultsParser implements ResultsParser
             ByteArrayInputStream in = new ByteArrayInputStream(fileBytes);
             File xsltIn = getXsltFileInputStream(caller);
             Source xmlSource = new StreamSource(in);
-            Source xsltSource = new StreamSource(xsltIn);//Doing it this way implicitly sets the systemId
+            Source xsltSource = new StreamSource(xsltIn);//Doing it this way implicitly sets the systemId, systemId is how relative pathing in the xsd is resolved
 
-            // the factory pattern supports different XSLT processors
-            TransformerFactory transFact = TransformerFactory.newInstance("org.apache.xalan.processor.TransformerFactoryImpl", JaxbResultsParser.class.getClassLoader());
+            // the factory pattern supports different XSLT processors, explicitly define implementer and classloader to
+            // avoid classloader problems
+            TransformerFactory transFact = TransformerFactory.newInstance("org.apache.xalan.processor.TransformerFactoryImpl",
+                                                                          JaxbResultsParser.class.getClassLoader());
+            //The Transformer actually does the work, as its name suggests, the rest of the above was simply to generate
+            //a Transformer that knows all about this specific job
             Transformer trans = transFact.newTransformer(xsltSource);
 
-            File transformedResultFile = File.createTempFile("resultsin", ".xml"); // /tmp directory FIXME Hack
-            trans.transform(xmlSource, new StreamResult(transformedResultFile));
-            /*Templates template = getTemplate(xsltIn, factory);
-            Transformer transformer = getTransformer(template);
-            Source source = new StreamSource(in);
+            //TODO Dumping a temp file in, cleaned up before return but consider an alternate place to put this file
             File transformedResultFile = File.createTempFile("resultsin", ".xml");
-            Result result = new StreamResult(new FileOutputStream(transformedResultFile));
-            transformer.transform(source, result);*/
+            trans.transform(xmlSource, new StreamResult(transformedResultFile));
 
             //Now marshal it with JAXB
             FileInputStream transformedIn = new FileInputStream(transformedResultFile);
@@ -72,6 +71,11 @@ public class JaxbResultsParser implements ResultsParser
 
             Object o = u.unmarshal(transformedIn);
 
+            //we should be done with it, attempt to delete the temp file
+            if(transformedResultFile != null && transformedResultFile.exists())
+            {
+                transformedResultFile.delete();
+            }
             if (o != null) {
                 return (SubmissionResultList)o;
             } else {

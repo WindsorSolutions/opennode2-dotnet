@@ -37,6 +37,8 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.RowMapper;
 import com.windsor.node.common.domain.CommonContentType;
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
@@ -46,6 +48,7 @@ import com.windsor.node.common.domain.NodeMethodType;
 import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.PartnerIdentity;
 import com.windsor.node.common.domain.ScheduledItem;
+import com.windsor.node.common.domain.ScheduledItemSourceType;
 import com.windsor.node.common.domain.ScheduledItemTargetType;
 import com.windsor.node.common.domain.TransactionStatus;
 import com.windsor.node.common.exception.DocumentExistsException;
@@ -59,6 +62,7 @@ import com.windsor.node.util.DateUtil;
 
 public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao
 {
+    protected Logger logger = LoggerFactory.getLogger(JdbcTransactionDao.class);
 
     private static final String SQL_SELECT = "SELECT Id, FlowId, NetworkId, "
                     + "Status, ModifiedBy, ModifiedOn, StatusDetail, Operation, WebMethod, "
@@ -117,6 +121,7 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao
     private static final String SQL_SELECT_DOC_NO_CONTENT = "SELECT Id, DocumentName, DocumentType, "
             + "DocumentId, Status, StatusDetail FROM NDocument WHERE TransactionId = ? ";
 
+    //FIXME the actual DocumentId field is never passed, only Id, this never finds the file when the two do not match
     private static final String SQL_SELECT_DOC_ID = SQL_SELECT_DOC_WITH_CONTENT
             + " AND DocumentId = ? ";
 
@@ -197,8 +202,11 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao
         int count = getJdbcTemplate().queryForInt(SQL_DOC_ID_EXISTS, new Object[] {instance.getId()}, new int[] {Types.VARCHAR});
         if(count > 0)
         {
-            throw new DocumentExistsException("Error, document exists, cannot insert new document for Transaction Id: " + transactionId
+            logger.warn("Warning, document exists, cannot insert new document for Transaction Id: " + transactionId
                             + " and document name: " + instance.getDocumentName());
+            return instance;
+            /*throw new DocumentExistsException("Error, document exists, cannot insert new document for Transaction Id: " + transactionId
+                            + " and document name: " + instance.getDocumentName());*/
         }
 
         Object[] args = new Object[8];
@@ -460,10 +468,28 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao
         tran.setModifiedById(schedule.getModifiedById());
         tran.setWebMethod(method);
         //TODO set EndpointVersion, no use yet as no functionality that would set it makes use of the updated function, will fix the function to work for non schedules
-        if(schedule.getTargetType().equals(ScheduledItemTargetType.Partner) && StringUtils.isNotBlank(schedule.getTargetId()))
+        if(schedule.getSourceType() == ScheduledItemSourceType.WebServiceQuery
+                        || schedule.getSourceType() == ScheduledItemSourceType.WebServiceSolicit)
         {
-            PartnerIdentity partner = getPartnerDao().get(schedule.getTargetId());
+            // Webservice Query and Solicits use the Data Source Partner
+            PartnerIdentity partner = getPartnerDao().get(schedule.getSourceId());
+            logger.debug("Transaction (" + schedule.getSourceType() + "): \n" + tran
+                            + "\n is a Partner schedule type, updating transaction with the following: \n Partner:  " + partner);
             tran.updateWithPartnerDetails(partner);
+        }
+        else if(schedule.getTargetType() == ScheduledItemTargetType.Partner && StringUtils.isNotBlank(schedule.getTargetId()))
+        {
+            // Any other kind of Data Source uses a Target Partner if one exists
+            PartnerIdentity partner = getPartnerDao().get(schedule.getTargetId());
+            logger.debug("Transaction: \n" + tran + "\n is a Partner schedule type, updating transaction with the following: \n Partner:  "
+                            + partner);
+            tran.updateWithPartnerDetails(partner);
+        }
+        else
+        {
+            logger.debug("Transaction: \n" + tran + "\n is a \"" + schedule.getTargetType()
+                            + "\" target type with a Data Source (ScheduleItemSourceType) of \"" + schedule.getSourceType()
+                            + "\", no partner information to include.");
         }
         return save(tran);
     }

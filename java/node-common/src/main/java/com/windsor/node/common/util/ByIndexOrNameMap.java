@@ -122,7 +122,17 @@ public class ByIndexOrNameMap implements Serializable {
         return map.containsValue(value);
     }
 
+    //FIXME figure out who is doing an UPPER when saving the param names in the DB and fix that instead, remove this when done
     public Object get(String key) {
+        if(map.get(key) != null)
+        {
+            return map.get(key);
+        }
+        else if(key != null && map.get(key.toUpperCase()) != null)
+        {
+            return map.get(key.toUpperCase());
+        }
+        //will return null, but just in case I'm tired
         return map.get(key);
     }
 

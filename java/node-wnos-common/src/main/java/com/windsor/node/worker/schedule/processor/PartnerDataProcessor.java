@@ -87,12 +87,12 @@ public class PartnerDataProcessor implements InitializingBean {
         }
     }
 
-    public List<ActivityEntry> getAndSaveData(String transactionId,
+    public List<ActivityEntry> getAndSaveData(NodeTransaction transaction,
             String partnerId, String serviceName,
             ScheduledItemSourceType requestType, ByIndexOrNameMap serviceArgs,
             String flowName) {
 
-        if (StringUtils.isBlank(transactionId)) {
+        if (transaction == null || StringUtils.isBlank(transaction.getId())) {
             throw new RuntimeException("Null transactionId");
         }
 
@@ -160,7 +160,8 @@ public class PartnerDataProcessor implements InitializingBean {
 
                 info.add(new ActivityEntry("Saving document..."));
 
-                transactionDao.addDocument(transactionId, doc);
+                transaction.getDocuments().add(doc);
+                transactionDao.save(transaction);
 
             } else if (requestType == ScheduledItemSourceType.WebServiceSolicit) {
 
@@ -189,9 +190,9 @@ public class PartnerDataProcessor implements InitializingBean {
 
                 info.add(new ActivityEntry("Updating transaction..."));
 
-                logger.debug("Updating transaction id");
-                transactionDao.updateNetworkId(transactionId, solicitTranId);
-
+                logger.debug("Updating transaction");
+                transaction.setNetworkId(solicitTranId);
+                transactionDao.save(transaction);
             }
 
             return info;

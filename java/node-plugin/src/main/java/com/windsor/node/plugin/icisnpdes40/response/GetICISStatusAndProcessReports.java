@@ -12,6 +12,7 @@ import java.util.zip.ZipInputStream;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+import javax.xml.bind.JAXBException;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
@@ -79,7 +80,7 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
     {
         setPublishForEN11(true);
         setPublishForEN20(true);
-        getSupportedPluginTypes().add(ServiceType.QUERY_OR_SOLICIT);
+        getSupportedPluginTypes().add(ServiceType.TASK);
         getDataSources().put(ARG_DS_SOURCE, null);
 
         getConfigurationArguments().put(SERVICE_PARAM_NOTIFICATION_EMAIL_ADDRS.getName(), "");//A semicolon delimited list of email addresses used by OpenNode2 to send PDF processing reports downloaded from CDX for completed submissions. PDFs are not distributed in the event of failed processing.
@@ -200,6 +201,17 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
                 icisWorkflow.setSubmissionStatusDate(new Date());
                 getIcisWorkflowDao().save(icisWorkflow);
 
+                Document responseZipDoc = downloadResponseFile(originalTransaction, client);
+                if(responseZipDoc != null)
+                {
+                    result.getAuditEntries().add(new ActivityEntry("Successfully downloaded the remote response file, attaching."));
+                    attachFileToTransactionAndSave(originalTransaction, responseZipDoc);
+                }
+                else
+                {
+                    result.getAuditEntries().add(new ActivityEntry("Attempted to download the remote response file, but it was null."));
+                }
+
                 result.getAuditEntries().add(new ActivityEntry("Remote node set transaction of id=" + originalTransaction.getNetworkId() + " to Failed.  Setting ICS_SUBM_TRACK.WORKFLOW_STAT = Failed."));
                 result.getAuditEntries().add(new ActivityEntry("This transaction completed successfully."));
                 originalTransaction.getStatus().setStatus(CommonTransactionStatusCode.Failed);
@@ -231,7 +243,7 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
 
             //All Errors in this process() method: msg: "GetStatus operation failed: {error}."
 
-            //Iff Complete
+            //Iff Complete or Failed
             //If Parse Date Time exists, check WORKFLOW_STAT_MESSAGE for "Results already downloaded and parsed"
             //Set local Complete, then msg: "Results already downloaded and parsed. Exiting."
             if(icisWorkflow.getResponseParseDate() != null)
@@ -250,26 +262,14 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
 
             //else download processing report from CDX, response.zip must be present in response, must contain named files ending with
             //"Accepted.xml" and "Rejected.xml"
-            NodeTransaction downloadedTransaction = client.download(originalTransaction);
-            List<Document> downloadedDocuments = downloadedTransaction.getDocuments();
-            Document responseZipDoc = null;
-            for(int i = 0; downloadedDocuments != null && i < downloadedDocuments.size(); i++)
-            {
-                Document currentDoc = downloadedDocuments.get(i);
-                if(currentDoc.getDocumentName().toLowerCase().contains("response.zip"))
-                {
-                    responseZipDoc = currentDoc;
-                }
-            }
+            Document responseZipDoc = downloadResponseFile(originalTransaction, client);
 
-            //This will be an argument for the cleanup storec proc later, the response files will contain this, will grab and use later on
-            String storedProcedureTransactionIdArgument = null;
             try
             {
                 if(responseZipDoc == null)
                 {
-                    //error condition
-                    icisWorkflow.setWorkflowStatus(CommonTransactionStatusCode.Failed.toString());
+                    //we've chosen to leave this workflow status at Pending
+                    icisWorkflow.setWorkflowStatus(CommonTransactionStatusCode.Pending.toString());
                     icisWorkflow.setWorkflowStatusMessage("Download did not contain expected files containing processing results.");
                     icisWorkflow.setSubmissionStatusDate(new Date());
                     getIcisWorkflowDao().save(icisWorkflow);
@@ -280,32 +280,16 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
                     return result;
                 }
 
-                ZipInputStream zipIn = new ZipInputStream(new ByteArrayInputStream(responseZipDoc.getContent()));
-                ZipEntry zipEntry = zipIn.getNextEntry();
-                byte[] accpetedEntry = null;
-                byte[] rejectedEntry = null;
-                while(zipEntry != null)
-                {
-                    if(zipEntry.getName() != null && zipEntry.getName().toLowerCase().contains("accepted"))
-                    {
-                        accpetedEntry = readZipEntry(zipIn);
-                        String tmpFile = FilenameUtils.concat(
-                                getSettingService().getTempDir().getAbsolutePath(), zipEntry.getName());
-                        IOUtils.write(accpetedEntry, new FileOutputStream(tmpFile));
-                    }
-                    if(zipEntry.getName() != null && zipEntry.getName().toLowerCase().contains("rejected"))
-                    {
-                        rejectedEntry = readZipEntry(zipIn);
-                        String tmpFile = FilenameUtils.concat(
-                                getSettingService().getTempDir().getAbsolutePath(), zipEntry.getName());
-                        IOUtils.write(accpetedEntry, new FileOutputStream(tmpFile));
-                    }
-                    zipEntry = zipIn.getNextEntry();
-                }
+                //attach to the orginal transactiona and save
+                attachFileToTransactionAndSave(originalTransaction, responseZipDoc);
+
+                byte[] accpetedEntry = getAcceptedEntry(responseZipDoc);
+                byte[] rejectedEntry = getRejectedEntry(responseZipDoc);
 
                 if(accpetedEntry == null || rejectedEntry == null)
                 {
-                    icisWorkflow.setWorkflowStatus(CommonTransactionStatusCode.Failed.toString());
+                    //we've chosen to leave this workflow status at Pending
+                    icisWorkflow.setWorkflowStatus(CommonTransactionStatusCode.Pending.toString());
                     icisWorkflow.setWorkflowStatusMessage("Download did not contain expected files containing processing results.");
                     icisWorkflow.setSubmissionStatusDate(new Date());
                     getIcisWorkflowDao().save(icisWorkflow);
@@ -317,23 +301,7 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
                 }
 
                 //Parse the results out of the two byte[] arrays that contain the response files
-                /*List<IcisStatusResult> accepted = getResultsParser().parse(accpetedEntry, this);
-                List<IcisStatusResult> rejected = getResultsParser().parse(rejectedEntry, this);*/
-                SubmissionResultList accepted = getResultsParser().parse(accpetedEntry, this);
-                SubmissionResultList rejected = getResultsParser().parse(rejectedEntry, this);
-
-                //Snag the transactionId out of one of the response files for use in the clean up stored proc later on
-                if(accepted != null && accepted.getSubmissionResult() != null && !accepted.getSubmissionResult().isEmpty())
-                {
-                    storedProcedureTransactionIdArgument = accepted.getSubmissionResult().get(0).getSubmissionTransactionId();
-                }
-                else if(rejected != null && rejected.getSubmissionResult() != null && !rejected.getSubmissionResult().isEmpty())
-                {
-                    storedProcedureTransactionIdArgument = rejected.getSubmissionResult().get(0).getSubmissionTransactionId();
-                }
-
-                //Update ICS_SUBM_RESULTS table with contents of both files, NOTE: blanks are translated to "Accepted" in the InformationCode field
-                getIcisStatusAndProcessingDao().saveIcisStatusResults(accepted, rejected, emf.createEntityManager());
+               parseAndSaveResponseFiles(accpetedEntry, rejectedEntry);
 
 
             }
@@ -342,7 +310,8 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
                 //If response is improper, local transaction "Failed" and msg: "Download operation failed: {error}. Exiting."
                 //OR msg: "Download did not contain expected files containing processing results."
                 //Essentially, if anything whatsoever goes wrong, do this (IOException and JAXBException are two big candidates):
-                icisWorkflow.setWorkflowStatus(CommonTransactionStatusCode.Failed.toString());
+                //we've chosen to leave this workflow status at Pending
+                icisWorkflow.setWorkflowStatus(CommonTransactionStatusCode.Pending.toString());
                 icisWorkflow.setWorkflowStatusMessage("Download operation failed: " + e.getMessage() + ". Exiting.");
                 icisWorkflow.setSubmissionStatusDate(new Date());
                 getIcisWorkflowDao().save(icisWorkflow);
@@ -359,7 +328,7 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
                 String procName = getConfigValueAsString(SERVICE_PARAM_POST_PROCESSING_PROC_NAME.getName(), false);
                 if(StringUtils.isNotEmpty(procName))
                 {
-                    getIcisStatusAndProcessingDao().runCleanupStoredProc(procName, storedProcedureTransactionIdArgument);
+                    getIcisStatusAndProcessingDao().runCleanupStoredProc(procName, originalTransaction.getNetworkId());
                 }
             }
             catch (Exception e)
@@ -401,7 +370,8 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
             }
             catch(Exception e)
             {
-                icisWorkflow.setWorkflowStatus(CommonTransactionStatusCode.Failed.toString());
+                //we've chosen to leave this workflow status at Pending
+                icisWorkflow.setWorkflowStatus(CommonTransactionStatusCode.Pending.toString());
                 icisWorkflow.setWorkflowStatusMessage("Email to contacts configured, but sending failed with message: " + e.getMessage() + ". Exiting.");
                 icisWorkflow.setSubmissionStatusDate(new Date());
                 getIcisWorkflowDao().save(icisWorkflow);
@@ -413,6 +383,69 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
             }
         }
         return result;
+    }
+
+    private void attachFileToTransactionAndSave(NodeTransaction transaction, Document document)
+    {
+        //This is an oddball fix so we can use their Document, our DocumentId must match the actual id field.
+        document.setDocumentId(document.getId());
+        transaction.getDocuments().add(document);
+        getTransactionDao().save(transaction);
+    }
+
+    private void parseAndSaveResponseFiles(byte[] accpetedEntry, byte[] rejectedEntry)
+                    throws JAXBException
+    {
+        SubmissionResultList accepted = getResultsParser().parse(accpetedEntry, this);
+        SubmissionResultList rejected = getResultsParser().parse(rejectedEntry, this);
+
+        //Update ICS_SUBM_RESULTS table with contents of both files, NOTE: blanks are translated to "Accepted" in the InformationCode field
+        getIcisStatusAndProcessingDao().saveIcisStatusResults(accepted, rejected, emf.createEntityManager());
+    }
+
+    private byte[] getRejectedEntry(Document responseZipDoc) throws IOException
+    {
+        return getEntry(responseZipDoc, "rejected");
+    }
+
+    private byte[] getAcceptedEntry(Document responseZipDoc) throws IOException
+    {
+        return getEntry(responseZipDoc, "accepted");
+    }
+
+    private byte[] getEntry(Document responseZipDoc, String entryNameFrangment) throws IOException
+    {
+        ZipInputStream zipIn = new ZipInputStream(new ByteArrayInputStream(responseZipDoc.getContent()));
+        ZipEntry zipEntry = zipIn.getNextEntry();
+        byte[] entry = null;
+        while(zipEntry != null)
+        {
+            if(zipEntry.getName() != null && zipEntry.getName().toLowerCase().contains(entryNameFrangment))
+            {
+                entry = readZipEntry(zipIn);
+                String tmpFile = FilenameUtils.concat(
+                        getSettingService().getTempDir().getAbsolutePath(), zipEntry.getName());
+                IOUtils.write(entry, new FileOutputStream(tmpFile));
+            }
+            zipEntry = zipIn.getNextEntry();
+        }
+        return entry;
+    }
+
+    private Document downloadResponseFile(NodeTransaction originalTransaction, NodeClientService client)
+    {
+        NodeTransaction downloadedTransaction = client.download(originalTransaction);
+        List<Document> downloadedDocuments = downloadedTransaction.getDocuments();
+        Document responseZipDoc = null;
+        for(int i = 0; downloadedDocuments != null && i < downloadedDocuments.size(); i++)
+        {
+            Document currentDoc = downloadedDocuments.get(i);
+            if(currentDoc.getDocumentName().toLowerCase().contains("response.zip"))
+            {
+                responseZipDoc = currentDoc;
+            }
+        }
+        return responseZipDoc;
     }
 
     private void sendEmailsToContacts(NodeTransaction transaction, ProcessContentResult result)
