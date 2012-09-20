@@ -90,8 +90,20 @@ public class IcisWorkflow implements Serializable
     {
         this.workflowStatus = workflowStatus;
     }
+    public String getShortWorkflowStatusMessage()
+    {
+        if(workflowStatusMessage != null && workflowStatusMessage.length() > 200)
+        {
+            return workflowStatusMessage.substring(0, 200);
+        }
+        return workflowStatusMessage;
+    }
     public String getWorkflowStatusMessage()
     {
+        if(workflowStatusMessage != null && workflowStatusMessage.length() > 3000)
+        {
+            return workflowStatusMessage.substring(0, 3000);
+        }
         return workflowStatusMessage;
     }
     public void setWorkflowStatusMessage(String workflowStatusMessage)
