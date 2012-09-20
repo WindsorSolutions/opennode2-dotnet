@@ -49,7 +49,7 @@ public class JdbcConnectionDao extends BaseJdbcDao implements ConnectionDao {
      */
     private static final String SQL_SELECT = "SELECT Id, Code, Provider, ConnectionString, ModifiedBy, ModifiedOn FROM NConnection ";
 
-    private static final String SQL_SELECT_ALL = SQL_SELECT + " ORDER BY Id";
+    private static final String SQL_SELECT_ALL = SQL_SELECT + " ORDER BY Code";
 
     private static final String SQL_SELECT_ID = SQL_SELECT + " WHERE Id = ? ";
 
