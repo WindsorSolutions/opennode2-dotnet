@@ -55,7 +55,7 @@
                                 </td>
 								<td width="10" align="right">
 								<input type="image"
-									title="Show Activity Detail" src="img/action_go.gif" alt="Show Activity Detail"
+									title="Show Activity Detail" src="img/application_form_edit.png" alt="Show Activity Detail"
 									border="0" 
 									onClick="showDetail('detail<c:out value="${status.index}" />','<c:out value="${activity.id}" />');" /></td>
 							</tr>

@@ -140,7 +140,7 @@ function runScheduleNow(elementId, checkOnly)
 
                     <td>
                         <input type="image" title="Edit"
-                            src="img/action_go.gif" alt="Edit"
+                            src="img/application_form_edit.png" alt="Edit"
                             style="border-width: 0px; float:right"
                             onclick="location.href='schedule-edit.htm?id=<c:out value="${schedule.id}" />'" />
                         <span id="<c:out value="${schedule.id}" />" class="readyToRun" onclick="runScheduleNow('<c:out value="${schedule.id}" />');" style="float:right;" alt="Run Schedule Now" title="Run Schedule Now"></span>

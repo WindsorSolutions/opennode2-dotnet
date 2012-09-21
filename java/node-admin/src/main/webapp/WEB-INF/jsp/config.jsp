@@ -22,7 +22,7 @@
 				</c:if>
 
 				<div style="clear: both; text-align: right; margin-bottom: 10px">
-				<input type="button" name="cmdNew" value="Add" class="button"
+				<input type="button" name="cmdNew" value="Add Argument" class="button"
 					onclick="location.href='config-arg.htm'" /></div>
 
 				<c:if test="${model.args != null}">
@@ -38,7 +38,7 @@
 								<td width="*"><strong><a href="config-arg.htm?id=<c:out value="${arg.id}" />" class="blacktext" ><c:out value="${arg.id}" /></a></strong>:</td>
 								<td width="*" align="right"><a href="config-arg.htm?id=<c:out value="${arg.id}" />" class="blacktext" ><c:out value="${arg.value}" /></a></td>
 								<td width="10" align="right"><input type="image"
-									title="Edit" src="img/action_go.gif" alt="Edit"
+									title="Edit" src="img/application_form_edit.png" alt="Edit"
 									align="middle" style="border-width: 0px;"
 									onclick="location.href='config-arg.htm?id=<c:out value="${arg.id}" />'" /></td>
 							</tr>
@@ -57,7 +57,7 @@
 				</c:if>
 
 				<div style="clear: both; text-align: right; margin-bottom: 10px">
-				<input type="button" name="cmdNew" value="Add" class="button"
+				<input type="button" name="cmdNew" value="Add Data Source" class="button"
 					onclick="location.href='config-conn.htm'" /></div>
 
 				<c:if test="${model.conns != null}">
@@ -72,7 +72,7 @@
 								<td width="*"><strong><a href="config-conn.htm?id=<c:out value="${conn.id}" />" class="blacktext"><c:out value="${conn.code}" /></a></strong>:</td>
 								<td width="*" align="right"><a href="config-conn.htm?id=<c:out value="${conn.id}" />" class="blacktext"><c:out value="${conn.providerType}" /></a></td>
 								<td width="10" align="right"><input type="image"
-									title="Edit" src="img/action_go.gif" alt="Edit"
+									title="Edit" src="img/application_form_edit.png" alt="Edit"
 									align="middle" style="border-width: 0px;"
 									onclick="location.href='config-conn.htm?id=<c:out value="${conn.id}" />'" /></td>
 							</tr>
@@ -92,7 +92,7 @@
 				</c:if>
 
 				<div style="clear: both; text-align: right; margin-bottom: 10px">
-				<input type="button" name="cmdNew" value="Add" class="button"
+				<input type="button" name="cmdNew" value="Add Partner" class="button"
 					onclick="location.href='config-partner.htm'" /></div>
 
 				<c:if test="${model.partners != null}">
@@ -107,7 +107,7 @@
 								</td>
 								<td width="*"><strong><a href="config-partner.htm?id=<c:out value="${partner.id}" />" class="blacktext"><c:out value="${partner.name}" /></a></strong></td>
 								<td width="10" align="right"  nowrap rowspan="2"><input type="image"
-									title="Edit" src="img/action_go.gif" alt="Edit"
+									title="Edit" src="img/application_form_edit.png" alt="Edit"
 									align="middle" style="border-width: 0px;"
 									onclick="location.href='config-partner.htm?id=<c:out value="${partner.id}" />'" /></td>
 							</tr>

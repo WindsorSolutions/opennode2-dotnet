@@ -39,7 +39,7 @@
 								</td>
 								<td width="5%" align="right">
 									<input type="image"
-										title="Edit" src="img/action_go.gif" alt="Edit Exchange"
+										title="Edit" src="img/application_form_edit.png" alt="Edit Exchange"
 										align="middle" style="border-width: 0px;"
 										onclick="location.href='flow-edit.htm?id=<c:out value="${flow.id}" />'" />
 								</td>
@@ -62,7 +62,7 @@
 								</td>
 								<td width="5%" align="right">
 								    <input type="image"
-										title="Edit Service" src="img/action_go.gif" alt="Edit Service"
+										title="Edit Service" src="img/application_form_edit.png" alt="Edit Service"
 										align="middle" style="border-width: 0px;"
 										onclick="location.href='service-edit.htm?id=<c:out value="${srv.id}" />'" />
 								</td>

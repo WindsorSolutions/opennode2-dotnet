@@ -121,7 +121,7 @@ function goto(searchValue){
 									</c:otherwise>
 								</c:choose>)</a></td>
 								<td width="5%" style="text-align: right"><input type="image"
-									title="Edit" src="img/action_go.gif" alt="Edit"
+									title="Edit" src="img/application_form_edit.png" alt="Edit"
 									style="border-width: 0px;"
 									onclick="location.href='account-edit.htm?id=<c:out value="${user.id}" />'" /></td>
 

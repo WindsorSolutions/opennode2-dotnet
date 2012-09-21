@@ -18,7 +18,7 @@
                 </c:if>
 
 				<form action="plugin-upload.htm" method="post" enctype="multipart/form-data">
-				<table id="formTable" width="310" cellpadding="2" cellspacing="0">
+				<table id="formTable" width="100%" cellpadding="2" cellspacing="0">
 				    
 					<tr>
 						<td class="label" width="5%" style="text-align: right; vertical-align: top;">Plugin:</td>
