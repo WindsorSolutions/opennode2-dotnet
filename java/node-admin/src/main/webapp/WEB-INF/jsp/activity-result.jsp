@@ -49,13 +49,13 @@
 	                            <td width="10" align="right" nowrap="nowrap">
 	                                <c:if test="${activity.transactionId != null }">
 		                                <a href="tran.htm?id=<c:out value="${activity.transactionId}" />">
-		                                <img src="img/text_view.gif" alt="View Transaction Detail" border="0" />
+		                                <img src="img/zoom.png" alt="View Transaction Detail" border="0" />
 	                                </a>
 	                                </c:if>
                                 </td>
 								<td width="10" align="right">
 								<input type="image"
-									title="Show Activity Detail" src="img/application_form_edit.png" alt="Show Activity Detail"
+									title="Show Activity Detail" src="img/control-double-270-small.png" alt="Show Activity Detail"
 									border="0" 
 									onClick="showDetail('detail<c:out value="${status.index}" />','<c:out value="${activity.id}" />');" /></td>
 							</tr>

@@ -12,6 +12,10 @@ import com.windsor.node.plugin.facid3.domain.ObjectFactory;
 
 public class GetFacilityList extends BaseFacIdGetFacilityService
 {
+    /**
+     * This process implementer currently will not work when Solicited on the 2.1 endpoint with named parameters that are 
+     * out of the default order.  An updated implementer that fixes this issue will soon be deployed.
+     */
     @Override
     public ProcessContentResult process(NodeTransaction transaction)
     {
