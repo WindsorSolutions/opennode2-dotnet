@@ -247,7 +247,7 @@
 			</properties>
 			<build>
 				<finalName>${plugin.name}</finalName>
-				<!-- 
+				<!--
 				<plugins>
 					<plugin>
 						<groupId>org.jvnet.hyperjaxb3</groupId>
@@ -276,12 +276,12 @@
 						<dependencies>
 							<dependency>
 								<groupId>com.windsor.node</groupId>
-								<artifactId>node-hyperjaxb3-naming</artifactId>
+								<artifactId>node-hyperjaxb3</artifactId>
 								<version>2.06-SNAPSHOT</version>
 							</dependency>
 							<dependency>
 								<groupId>com.windsor.node</groupId>
-								<artifactId>node-hyperjaxb3-naming-icisnpdes</artifactId>
+								<artifactId>node-hyperjaxb3-icisnpdes</artifactId>
 								<version>2.06-SNAPSHOT</version>
 							</dependency>
 							<dependency>
@@ -292,7 +292,7 @@
 						</dependencies>
 					</plugin>
 				</plugins>
-				 -->
+				-->
 			</build>
 		</profile>
 		<profile>
@@ -364,6 +364,7 @@
 							<args>
 								<arg>-Xannotate</arg>
 								<arg>-Xinheritance</arg>
+								<arg>-Xnamespace-prefix</arg>
 							</args>
 							<debug>true</debug>
 							<variant>jpa2</variant>
@@ -375,18 +376,23 @@
 						<dependencies>
 							<dependency>
 								<groupId>com.windsor.node</groupId>
-								<artifactId>node-hyperjaxb3-naming</artifactId>
+								<artifactId>node-hyperjaxb3</artifactId>
 								<version>2.06-SNAPSHOT</version>
 							</dependency>
 							<dependency>
 								<groupId>com.windsor.node</groupId>
-								<artifactId>node-hyperjaxb3-naming-wqx</artifactId>
+								<artifactId>node-hyperjaxb3-wqx</artifactId>
 								<version>2.06-SNAPSHOT</version>
+							</dependency>
+							<dependency>
+								<groupId>org.jvnet.jaxb2_commons</groupId>
+								<artifactId>jaxb2-namespace-prefix</artifactId>
+								<version>1.1</version>
 							</dependency>
 						</dependencies>
 					</plugin>
 				</plugins>
-				 -->
+				-->
 			</build>
 		</profile>
 	</profiles>

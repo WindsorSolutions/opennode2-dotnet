@@ -47,7 +47,7 @@
         <module>../node-wnos-common</module>
         <module>../node-wnos</module>
         <module>../node-assembly</module>
-        <module>../node-hyperjaxb3-naming</module>
+        <module>../node-hyperjaxb3</module>
     </modules>
     <properties>
         <maven.test.skip>true</maven.test.skip>
