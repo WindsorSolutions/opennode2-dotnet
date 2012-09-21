@@ -21,7 +21,7 @@
 			<xsd:element ref="wqx:SampleTissueAnatomyName" minOccurs="0"/>
 			<xsd:element ref="wqx:GroupSummaryCountWeight" minOccurs="0"/>
 			<xsd:element ref="wqx:TaxonomicDetails" minOccurs="0"/>
-			<xsd:element ref="wqx:FrequencyClassInformation" minOccurs="0" maxOccurs="3"/>
+			<xsd:element ref="wqx:FrequencyClassInformation" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:element name="BiologicalResultDescription" type="wqx:BiologicalResultDescriptionDataType">

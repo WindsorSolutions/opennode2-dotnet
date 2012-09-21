@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	jaxb:extensionBindingPrefixes="hj orm" schemaLocation="../xsd/WQX_LabSamplePreparation_v2.0.xsd">
+
+	<!-- lab sample preparation -->
+
+	<jaxb:bindings>
+
+		<jaxb:bindings node="//xsd:complexType[@name='LabSamplePreparationDataType']">
+			<hj:entity>
+				<orm:table name="WQX_LABSAMPLEPREP" />
+			</hj:entity>
+		</jaxb:bindings>
+
+		<!-- FIXME: change this in the globale mappings instead? -->
+
+		<jaxb:bindings node="//xsd:element[@ref='wqx:PreparationStartDate']">
+			<hj:basic>
+				<orm:column column-definition="datetime" />
+			</hj:basic>
+		</jaxb:bindings>
+
+		<jaxb:bindings node="//xsd:element[@ref='wqx:PreparationEndDate']">
+			<hj:basic>
+				<orm:column column-definition="datetime" />
+			</hj:basic>
+		</jaxb:bindings>
+
+		<jaxb:bindings node="//xsd:element[@ref='wqx:PreparationStartTime']">
+			<hj:embedded>
+
+				<orm:attribute-override name="timeZoneCode">
+					<orm:column name="PREPSTARTTIMEZONECODE" />
+				</orm:attribute-override>
+
+				<orm:attribute-override name="time">
+					<orm:column name="PREPSTARTTIME" />
+				</orm:attribute-override>
+
+			</hj:embedded>
+		</jaxb:bindings>
+
+		<jaxb:bindings node="//xsd:element[@ref='wqx:PreparationEndTime']">
+			<hj:embedded>
+
+				<orm:attribute-override name="timeZoneCode">
+					<orm:column name="PREPENDTIMEZONECODE" />
+				</orm:attribute-override>
+
+				<orm:attribute-override name="time">
+					<orm:column name="PREPENDTIME" />
+				</orm:attribute-override>
+
+			</hj:embedded>
+		</jaxb:bindings>
+
+		getPreparationStartDate
+
+	</jaxb:bindings>
+</jaxb:bindings>
+

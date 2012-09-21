@@ -17,7 +17,7 @@
 			<xsd:element ref="wqx:MetricValueMeasure" minOccurs="0"/>
 			<xsd:element ref="wqx:MetricScoreNumeric"/>
 			<xsd:element ref="wqx:MetricCommentText" minOccurs="0"/>
-			<xsd:element ref="wqx:IndexIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="wqx:IndexIdentifier" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:element name="MetricValueMeasure" type="wqx:MeasureCompactDataType">

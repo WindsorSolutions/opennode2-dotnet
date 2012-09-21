@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	jaxb:extensionBindingPrefixes="hj orm" schemaLocation="../xsd/WQX_ResultLabInformation_v2.0.xsd">
+
+	<!-- result lab information -->
+
+	<jaxb:bindings>
+	
+		<jaxb:bindings node="//xsd:complexType[@name='ResultLabInformationDataType']">
+			<hj:embeddable />
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:element[@ref='wqx:AnalysisStartTime']">
+			<hj:embedded>
+			
+				<orm:attribute-override name="time">
+					<orm:column name="LABANALYSISSTARTTIME"/>
+				</orm:attribute-override>
+				
+				<orm:attribute-override name="timeZoneCode">
+					<orm:column name="LABANALYSISSTARTTIMEZONECODE"/>
+				</orm:attribute-override>
+			
+			</hj:embedded>
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:element[@ref='wqx:AnalysisEndTime']">
+			<hj:embedded>
+			
+				<orm:attribute-override name="time">
+					<orm:column name="LABANALYSISENDTIME"/>
+				</orm:attribute-override>
+				
+				<orm:attribute-override name="timeZoneCode">
+					<orm:column name="LABANALYSISENDTIMEZONECODE"/>
+				</orm:attribute-override>
+			
+			</hj:embedded>
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:element[@ref='wqx:LaboratoryName']">
+			<hj:basic>
+				<orm:column name="LABNAME"/>
+			</hj:basic>
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:element[@ref='wqx:AnalysisStartDate']">
+			<hj:basic>
+				<orm:column name="LABANALYSISSTARTDATE" column-definition="datetime"/>
+			</hj:basic>
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:element[@ref='wqx:AnalysisEndDate']">
+			<hj:basic>
+				<orm:column name="LABANALYSISENDDATE" column-definition="datetime"/>
+			</hj:basic>
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:element[@ref='wqx:ResultLaboratoryCommentCode']">
+			<hj:basic>
+				<orm:column name="RESULTLABCOMMENTCODE" />
+			</hj:basic>
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:element[@ref='wqx:LaboratoryAccreditationIndicator']">
+			<hj:basic>
+				<orm:column name="LABACCIND" />
+			</hj:basic>
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:element[@ref='wqx:LaboratoryAccreditationAuthorityName']">
+			<hj:basic>
+				<orm:column name="LABACCAUTHORITYNAME" />
+			</hj:basic>
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:element[@ref='wqx:TaxonomistAccreditationIndicator']">
+			<hj:basic>
+				<orm:column name="LABTAXACCIND" />
+			</hj:basic>
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:element[@ref='wqx:TaxonomistAccreditationAuthorityName']">
+			<hj:basic>
+				<orm:column name="LABTAXACCAUTHORITYNAME" />
+			</hj:basic>
+		</jaxb:bindings>
+
+	</jaxb:bindings>
+
+</jaxb:bindings>
+

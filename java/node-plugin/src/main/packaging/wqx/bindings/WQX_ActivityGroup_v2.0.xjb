@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	jaxb:extensionBindingPrefixes="hj orm" schemaLocation="../xsd/WQX_ActivityGroup_v2.0.xsd">
+
+	<!-- activity group -->
+
+	<jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:complexType[@name='ActivityGroupDataType']">
+			<hj:entity />
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:element[@ref='wqx:ActivityIdentifier']">
+			<hj:element-collection>
+				<orm:column name="ACTIVITYID"/>
+				<orm:collection-table name="WQX_V_ACTIVITYGROUPID_HIB">
+					<orm:join-column name="ACTIVITYGROUPPARENTID"/>
+				</orm:collection-table>
+			</hj:element-collection>
+		</jaxb:bindings>
+		
+	</jaxb:bindings>
+	
+</jaxb:bindings>
+

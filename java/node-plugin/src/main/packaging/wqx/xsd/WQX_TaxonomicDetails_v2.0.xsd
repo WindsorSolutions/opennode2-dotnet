@@ -14,12 +14,12 @@
 		<xsd:sequence>
 			<xsd:element ref="wqx:CellFormName" minOccurs="0"/>
 			<xsd:element ref="wqx:CellShapeName" minOccurs="0"/>
-			<xsd:element ref="wqx:HabitName" minOccurs="0" maxOccurs="3"/>
+			<xsd:element ref="wqx:HabitName" minOccurs="0"/>
 			<xsd:element ref="wqx:VoltinismName" minOccurs="0"/>
 			<xsd:element ref="wqx:TaxonomicPollutionTolerance" minOccurs="0"/>
 			<xsd:element ref="wqx:TaxonomicPollutionToleranceScaleText" minOccurs="0"/>
 			<xsd:element ref="wqx:TrophicLevelName" minOccurs="0"/>
-			<xsd:element ref="wqx:FunctionalFeedingGroupName" minOccurs="0" maxOccurs="3"/>
+			<xsd:element ref="wqx:FunctionalFeedingGroupName" minOccurs="0"/>
 			<xsd:element ref="wqx:TaxonomicDetailsCitation" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:complexType>

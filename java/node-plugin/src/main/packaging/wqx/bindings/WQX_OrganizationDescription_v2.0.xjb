@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	jaxb:extensionBindingPrefixes="hj orm" schemaLocation="../xsd/WQX_OrganizationDescription_v2.0.xsd">
+
+	<!-- organization description -->
+
+	<jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:complexType[@name='OrganizationDescriptionDataType']">
+			<hj:embeddable />
+		</jaxb:bindings>
+		
+		<!-- this is necessary because in most cases CODE is dropped from the column name -->
+		<jaxb:bindings node="//xsd:element[@ref='wqx:TribalCode']">
+			<hj:basic>
+				<orm:column name="TRIBALCODE"/>
+			</hj:basic>
+		</jaxb:bindings>
+		
+	</jaxb:bindings>
+
+</jaxb:bindings>
+
