@@ -5,7 +5,7 @@
     <groupId>com.windsor.node</groupId>
     <artifactId>node-parent</artifactId>
     <packaging>pom</packaging>
-    <version>2.06-SNAPSHOT</version>
+    <version>2.06</version>
     <name>Node Parent Project</name>
     <url>http://maven.apache.org</url>
     <organization>
