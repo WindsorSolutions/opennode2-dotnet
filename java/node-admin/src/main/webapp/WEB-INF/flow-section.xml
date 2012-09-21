@@ -27,7 +27,9 @@
 		<property name="configService" ref="configService" />
 		<property name="flowService" ref="flowService" />
 		<property name="validator">
-			<bean class="com.windsor.node.admin.valid.ServiceValidator" />
+			<bean class="com.windsor.node.admin.valid.ServiceValidator">
+				<property name="flowService" ref="flowService" />
+			</bean>
 		</property>
 		<property name="successView" value="flow.htm" />
 	</bean>

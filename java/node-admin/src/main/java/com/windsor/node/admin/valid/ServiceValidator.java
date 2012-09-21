@@ -34,19 +34,25 @@ package com.windsor.node.admin.valid;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.Errors;
+
 import com.windsor.node.admin.domain.DataServiceForm;
+import com.windsor.node.common.domain.DataFlow;
+import com.windsor.node.common.domain.DataService;
+import com.windsor.node.common.service.admin.FlowService;
 
 public class ServiceValidator extends AbstractValidator {
+
+    private FlowService flowService;
 
     public ServiceValidator() {
         logger = LoggerFactory.getLogger(ServiceValidator.class);
     }
 
-    public boolean supports(Class obj) {
+	public boolean supports(Class obj) {
         return obj.isAssignableFrom(DataServiceForm.class);
     }
 
-    public void validate(Object obj, Errors errors) {
+	public void validate(Object obj, Errors errors) {
 
         logger.debug(VALIDATE + this.getClass());
 
@@ -61,6 +67,16 @@ public class ServiceValidator extends AbstractValidator {
             if (StringUtils.isBlank(item.getService().getName())) {
                 errors.rejectValue("service.name", REQUIRED_ERR_CODE,
                         REQUIRED_MSG);
+            } else {
+            	// check that the service name is unique for the flow
+            	final DataFlow dataFlow = getFlowService().getDataFlow(item.getService().getFlowId(), null);
+            	for (final DataService dataService : dataFlow.getServices()) {
+            		if (dataService.getName().equals(item.getService().getName().trim()) &&
+            				(! dataService.getId().equals(item.getService().getId()))) {
+            			errors.rejectValue("service.name", DUPLICATE_ERR_CODE, "Name must be unique.");
+            			break;
+            		}
+            	}
             }
 
             if (StringUtils.isBlank(item.getService()
@@ -76,5 +92,13 @@ public class ServiceValidator extends AbstractValidator {
         }
 
     }
+
+	public FlowService getFlowService() {
+		return flowService;
+	}
+
+	public void setFlowService(FlowService flowService) {
+		this.flowService = flowService;
+	}
 
 }
