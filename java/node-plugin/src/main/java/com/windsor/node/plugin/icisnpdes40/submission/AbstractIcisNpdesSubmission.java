@@ -103,7 +103,7 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
             Boolean.TRUE);
 
     /**
-     * Author: Test text to insert into the Header element's Author tag.
+     * Author: Author text to insert into the Header element's Author tag.
      */
     public static final PluginServiceParameterDescriptor SERVICE_PARAM_AUTHOR = new PluginServiceParameterDescriptor(
             "Author", PluginServiceParameterDescriptor.TYPE_STRING,

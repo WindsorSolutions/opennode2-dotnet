@@ -70,15 +70,11 @@ public class JdbcIcisStatusAndProcessingDao extends JdbcDaoSupport implements Ic
         for(int i = 0; accepted != null && accepted.getSubmissionResult() != null  && i < accepted.getSubmissionResult().size(); i++)
         {
             entity = accepted.getSubmissionResult().get(i);
-            entity.setDbid(UUID.randomUUID().toString());
-            entity.setCreatedDate(new Date());
             em.persist(entity);
         }
         for(int i = 0; rejected != null && rejected.getSubmissionResult() != null  && i < rejected.getSubmissionResult().size(); i++)
         {
             entity = rejected.getSubmissionResult().get(i);
-            entity.setDbid(UUID.randomUUID().toString());
-            entity.setCreatedDate(new Date());
             em.persist(entity);
         }
 
