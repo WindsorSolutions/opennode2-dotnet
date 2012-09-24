@@ -370,7 +370,6 @@
 							<variant>jpa2</variant>
 							<extension>true</extension>
 							<bindingDirectory>${basedir}/src/main/packaging/wqx/bindings</bindingDirectory>
-							<roundtripTestClassName>RoundtripTest</roundtripTestClassName>
 							<schemaDirectory>${basedir}/src/main/packaging/wqx/xsd</schemaDirectory>
 						</configuration>
 						<dependencies>
@@ -433,7 +432,7 @@
 			<groupId>xalan</groupId>
 			<artifactId>xalan</artifactId>
 			<version>2.7.1</version>
-		</dependency>		
+		</dependency>
 
 	</dependencies>
 </project>

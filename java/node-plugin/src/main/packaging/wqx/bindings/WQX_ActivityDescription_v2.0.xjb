@@ -107,8 +107,8 @@
 
 		<jaxb:bindings node="//xsd:element[@ref='wqx:ProjectIdentifier']">
 			<hj:element-collection>
-				<orm:column name="PROJECTPARENTID" />
-				<orm:collection-table name="WQX_PROJECTACTIVITY">
+				<orm:column name="ACTIVITYID" />
+				<orm:collection-table name="WQX_V_PROJECTACTIVITYID_HIB">
 					<orm:join-column name="ACTIVITYPARENTID" />
 				</orm:collection-table>
 			</hj:element-collection>
