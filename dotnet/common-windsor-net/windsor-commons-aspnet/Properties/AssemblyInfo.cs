@@ -1,4 +1,4 @@
-#region License
+﻿#region License
 /*
 Copyright (c) 2009, The Environmental Council of the States (ECOS)
 All rights reserved.
@@ -31,34 +31,39 @@ POSSIBILITY OF SUCH DAMAGE.
 */
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Reflection;
+using System.Runtime.InteropServices;
 
-namespace Windsor.Node2008.WNOS.AssemblyInfo
-{
-	/// <summary>
-	/// Include a reference to this assembly in your project, then use the 
-	/// constants defined in this file within the AssemblyInfo.cs file for your project.
-	/// </summary>
-    internal static class AssemblyInfo
-	{
-		// [assembly: AssemblyVersion(AssemblyInfoServer.cAssemblyVersion)]
-        public const string cAssemblyVersion = "2.5.1.547";
-		
-		// [assembly: AssemblyFileVersion(AssemblyInfoServer.cAssemblyFileVersion)]
-        public const string cAssemblyFileVersion = cAssemblyVersion;
+// General Information about an assembly is controlled through the following 
+// set of attributes. Change these attribute values to modify the information
+// associated with an assembly.
+[assembly: AssemblyTitle("Windsor.Commons.AspNet")]
+[assembly: AssemblyDescription("")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("Windsor Solutions, Inc.")]
+[assembly: AssemblyProduct("Windsor Commons")]
+[assembly: AssemblyCopyright("©  2008-2011 Windsor Solutions. All Rights Reserved.")]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("")]
 
-		// [assembly: AssemblyCompany(AssemblyInfoServer.cAssemblyCompany)]
-		public const string cAssemblyCompany = "Windsor Solutions, Inc."; 
+// Setting ComVisible to false makes the types in this assembly not visible 
+// to COM components.  If you need to access a type in this assembly from 
+// COM, set the ComVisible attribute to true on that type.
+[assembly: ComVisible(false)]
 
-		// [assembly: AssemblyProduct(AssemblyInfoServer.cAssemblyProduct)]
-        public const string cAssemblyProduct = "OpenNode2"; 
+// The following GUID is for the ID of the typelib if this project is exposed to COM
+[assembly: Guid("3958BC1C-7D87-4E45-833A-B02355C46714")]
 
-		// [assembly: AssemblyCopyright(AssemblyInfoServer.cAssemblyCopyright)]
-        public const string cAssemblyCopyright = "(c) 2008-2012 Windsor Solutions. All Rights Reserved."; 
-		
-		// [assembly: AssemblyTrademark(AssemblyInfoServer.cAssemblyTrademark)]
-		public const string cAssemblyTrademark = "";
-	}
-}
+// Version information for an assembly consists of the following four values:
+//
+//      Major Version
+//      Minor Version 
+//      Build Number
+//      Revision
+//
+// You can specify all the values or you can default the Build and Revision Numbers 
+// by using the '*' as shown below:
+// [assembly: AssemblyVersion("1.0.*")]
+[assembly: AssemblyVersion("1.0.1.0")]
+[assembly: AssemblyFileVersion("1.0.1.0")]
+[assembly: AssemblyInformationalVersion("abcdefghijkl")]

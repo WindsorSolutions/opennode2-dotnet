@@ -366,7 +366,7 @@ namespace Windsor.Commons.Core
         {
             return GetFullyQualifiedApplicationRootUrl(null);
         }
-        public static string GetFullyQualifiedApplicationRootUrl(string relativePathPath)
+        public static string GetFullyQualifiedApplicationRootUrl(string relativePath)
         {
             //Getting the current context of HTTP request
             HttpContext context = HttpContext.Current;
@@ -377,6 +377,7 @@ namespace Windsor.Commons.Core
                 DebugUtils.CheckDebuggerBreak();
                 return string.Empty;
             }
+            relativePath = RemoveTildePrefix(relativePath);
             //Formatting the fully qualified website url/name
             string appPath = string.Format("{0}://{1}{2}{3}",
               context.Request.Url.Scheme,
@@ -389,21 +390,26 @@ namespace Windsor.Commons.Core
                 appPath += "/";
             }
 
-            if (!string.IsNullOrEmpty(relativePathPath))
+            if (!string.IsNullOrEmpty(relativePath))
             {
-                appPath += relativePathPath;
+                appPath += relativePath;
             }
             return appPath;
         }
         public static string GetPhysicalApplicationPath(string relativePath)
         {
+            relativePath = RemoveTildePrefix(relativePath);
+            string path = Path.Combine(PhysicalApplicationPath, relativePath);
+            path = Path.GetFullPath(path);
+            return path;
+        }
+        public static string RemoveTildePrefix(string relativePath)
+        {
             if (relativePath.StartsWith("~\\") || relativePath.StartsWith("~/"))
             {
                 relativePath = (relativePath.Length == 2) ? string.Empty : relativePath.Substring(2);
             }
-            string path = Path.Combine(PhysicalApplicationPath, relativePath);
-            path = Path.GetFullPath(path);
-            return path;
+            return relativePath;
         }
         public static string PhysicalApplicationPath
         {
