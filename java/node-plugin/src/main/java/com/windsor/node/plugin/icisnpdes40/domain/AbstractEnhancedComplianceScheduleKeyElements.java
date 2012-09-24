@@ -15,6 +15,11 @@ import com.windsor.node.plugin.icisnpdes40.generated.ComplianceScheduleKeyElemen
 @MappedSuperclass
 public class AbstractEnhancedComplianceScheduleKeyElements extends ComplianceScheduleKeyElements {
 
+	/**
+	 * Serialization version.
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@XmlTransient
 	protected String enforcementActionViolationLinkageId;
 

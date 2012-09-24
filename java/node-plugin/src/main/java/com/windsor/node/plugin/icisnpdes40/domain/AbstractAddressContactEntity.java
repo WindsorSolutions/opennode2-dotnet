@@ -5,12 +5,15 @@ import java.util.List;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PostLoad;
 import javax.persistence.Transient;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 
 /**
  * Class for handling nulling out the address or contact fields when their lists
  * are null or empty.
  *
  */
+@XmlAccessorType(XmlAccessType.FIELD)
 @MappedSuperclass
 public abstract class AbstractAddressContactEntity {
 

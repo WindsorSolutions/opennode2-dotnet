@@ -15,6 +15,11 @@ import com.windsor.node.plugin.icisnpdes40.generated.SingleEventKeyElements;
 @MappedSuperclass
 public class AbstractEnhancedSingleEventKeyElements extends SingleEventKeyElements {
 
+	/**
+	 * Serialization version.
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@XmlTransient
 	protected String enforcementActionViolationLinkageId;
 

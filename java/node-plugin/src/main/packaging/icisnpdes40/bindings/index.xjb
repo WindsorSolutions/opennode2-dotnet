@@ -11,8 +11,6 @@
 		<jaxb:schemaBindings>
 			<jaxb:package name="com.windsor.node.plugin.icisnpdes40.generated" />
 		</jaxb:schemaBindings>
-		
-		<namespace:prefix name="icis" />
 
 		<jaxb:globalBindings generateIsSetMethod="true" localScoping="toplevel">
 

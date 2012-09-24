@@ -15,6 +15,11 @@ import com.windsor.node.plugin.icisnpdes40.generated.DischargeMonitoringReportKe
 @MappedSuperclass
 public class AbstractEnhancedDischargeMonitoringReportKeyElements extends DischargeMonitoringReportKeyElements {
 
+	/**
+	 * Serialization version.
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@XmlTransient
 	protected String enforcementActionViolationLinkageId;
 
