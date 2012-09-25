@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
-	jaxb:extensionBindingPrefixes="hj orm" schemaLocation="../xsd/WQX_Project_v2.0.xsd">
+	xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance"
+	jaxb:extensionBindingPrefixes="hj orm inheritance" schemaLocation="../xsd/WQX_Project_v2.0.xsd">
 
 	<!-- project -->
 
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='ProjectDataType']">
 			<hj:entity />
+			<inheritance:extends>com.windsor.node.plugin.wqx.domain.AbstractLastUpdatedEntity</inheritance:extends>
 		</jaxb:bindings>
 	</jaxb:bindings>
 

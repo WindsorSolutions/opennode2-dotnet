@@ -51,21 +51,11 @@
 			<xjc:javaType name="java.lang.String" xmlType="wqx:PassCountDataType"
 				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter" />
 
-			<!-- unions -->
-
-			<!-- enums -->
-
 		</jaxb:globalBindings>
 
 		<hj:persistence>
 
 			<hj:default-generated-id name="Dbid" transient="true" javaType="java.lang.String" />
-
-			<hj:default-collection-property type="wqx:AttachedBinaryObjectDataType">
-				<hj:element-collection>
-					<orm:column name="geery"/>
-				</hj:element-collection>
-			</hj:default-collection-property>
 
 			<hj:default-single-property type="xsd:boolean">
 				<hj:basic>
