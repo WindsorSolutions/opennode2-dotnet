@@ -82,4 +82,11 @@
 		<property name="associationMapping" ref="associationMapping"/>
 	</bean>
 
+	<!-- 
+		suppress the generation of the persistence.xml file 
+	-->		
+	<bean name="persistenceMarshaller"
+		class="com.windsor.node.hyperjaxb3.NoopPersistenceMarshaller">
+	</bean>
+
 </beans>
