@@ -265,7 +265,6 @@
 								<arg>-Xinheritance</arg>
 								<arg>-Xnamespace-prefix</arg>
 							</args>
-							<debug>true</debug>
 							<variant>jpa2</variant>
 							<extension>true</extension>
 							<bindingDirectory>${basedir}/src/main/packaging/icisnpdes40/bindings</bindingDirectory>
@@ -366,7 +365,6 @@
 								<arg>-Xinheritance</arg>
 								<arg>-Xnamespace-prefix</arg>
 							</args>
-							<debug>true</debug>
 							<variant>jpa2</variant>
 							<extension>true</extension>
 							<bindingDirectory>${basedir}/src/main/packaging/wqx/bindings</bindingDirectory>
