@@ -304,7 +304,7 @@ namespace Windsor.Commons.AspNet
                     anyChanged = true;
                 }
 
-                anyChanged = ValidateRequestVars(requestVars, isPostbackRequest);
+                anyChanged |= ValidateRequestVars(requestVars, isPostbackRequest);
 
                 if (anyChanged)
                 {
@@ -345,7 +345,7 @@ namespace Windsor.Commons.AspNet
                     anyChanged = true;
                 }
 
-                anyChanged = ValidateSessionVars(sessionVars, isPostbackRequest);
+                anyChanged |= ValidateSessionVars(sessionVars, isPostbackRequest);
 
                 if (anyChanged)
                 {
@@ -370,7 +370,7 @@ namespace Windsor.Commons.AspNet
                     anyChanged = true;
                 }
 
-                anyChanged = ValidateAppVars(appVars);
+                anyChanged |= ValidateAppVars(appVars);
 
                 if (anyChanged)
                 {

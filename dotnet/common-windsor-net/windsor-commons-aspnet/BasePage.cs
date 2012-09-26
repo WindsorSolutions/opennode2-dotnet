@@ -17,19 +17,10 @@ namespace Windsor.Commons.AspNet
             ClientIdsToPublish = new Dictionary<string, string>();
             UniqueIdsToPublish = new Dictionary<string, string>();
         }
-        protected override void  OnPreInit(EventArgs e)
-        {
- 	        base.OnPreInit(e);
-        }
-
-        protected override void OnInit(EventArgs e)
-        {
-            base.OnInit(e);
-        }
 
         protected override void OnLoad(EventArgs e)
         {
-            base.OnInit(e);
+            base.OnLoad(e);
         }
 
         public virtual void RegisterScriptBlock(string clientScript)
@@ -53,7 +44,7 @@ namespace Windsor.Commons.AspNet
             DebugUtils.AssertDebuggerBreak(!string.IsNullOrEmpty(control.UniqueID));
             UniqueIdsToPublish[control.ID] = control.UniqueID;
         }
-        
+
         protected override void OnPreRender(EventArgs e)
         {
             base.OnPreRender(e);

@@ -30,6 +30,27 @@ namespace Windsor.Commons.Core
         /// <typeparam name="T"></typeparam>
         /// <param name="from"></param>
         /// <param name="to"></param>
+        /// <returns></returns>
+        public static T CopyValuePropertiesTo<D, T>(this D from, T to) where D : IDictionary<string, object>
+        {
+            foreach (var propertyInfo in to.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public).Where(p => p.PropertyType.IsValueType || p.PropertyType == typeof(string)))
+            {
+                object value;
+                if (from.TryGetValue(propertyInfo.Name, out value))
+                {
+                    propertyInfo.SetValue(to, value, null);
+                }
+            }
+
+            return to;
+        }
+
+        /// <summary>
+        /// Copies all value properties from one object to another
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
         /// <param name="except">List of properties to skip while copying</param>
         /// <returns></returns>
         public static T CopyValuePropertiesTo<T>(this T from, T to, IEnumerable<PropertyInfo> except)
