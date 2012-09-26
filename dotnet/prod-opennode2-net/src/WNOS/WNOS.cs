@@ -85,9 +85,6 @@ namespace Windsor.Node2008.WNOS
                 //springBaseDao.RowExists("NAccount", "*", "Id", "0000-0000-0000-0000-0000");
 #endif // DEBUG
 
-                //SpringBaseDao baseDao = new SpringBaseDao("System.Data.OracleClient", "user id=ICS_FLOW_LOCAL_WA; password=zRitE6giwvtO87r6mv2P; data source= (DESCRIPTION =(ADDRESS = (PROTOCOL = TCP)(HOST =10.0.1.80)(PORT = 1521)) (CONNECT_DATA =(SERVER = DEDICATED)(SERVICE_NAME = ORCL)))");
-                //Exception ex = baseDao.CheckConnection();
-
                 LOG = LogManagerEx.GetLogger(typeof(WNOSController));
                 CreateApplicationEventLog();
 
