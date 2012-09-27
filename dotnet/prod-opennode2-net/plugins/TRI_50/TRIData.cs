@@ -724,11 +724,11 @@ namespace Windsor.Node2008.WNOSPlugin.TRI5
                                 //GetAnonymousTypeValueFromList(rep.POTWWasteQuantity.Items, rep.POTWWasteQuantity.ItemsElementName, "WasteQuantityRangeCode", typeof(string)),
                                 //GetAnonymousTypeValue(rep.POTWWasteQuantity.Item, typeof(string)),
                                 //GetAnonymousTypeValue(rep.POTWWasteQuantity.Item, typeof(bool)),
-                            null, // WASTE_Q_ME
-                            null, // WASTE_Q_ME_NA_IND
-                            null, // WASTE_Q_RANGE_CODE
-                            null, // Q_BASIS_EST_CODE
-                            null, // Q_BASIS_EST_NA_IND
+                            //null, // WASTE_Q_ME
+                            //null, // WASTE_Q_ME_NA_IND
+                            //null, // WASTE_Q_RANGE_CODE
+                            //null, // Q_BASIS_EST_CODE
+                            //null, // Q_BASIS_EST_NA_IND
 
 
                             GetAnonymousTypeValueFromList(rep.SourceReductionQuantity.Items, typeof(decimal)),
@@ -768,29 +768,29 @@ namespace Windsor.Node2008.WNOSPlugin.TRI5
                                 //GetSpecifiedValue(rep.POTWWasteQuantity.QuantityDisposedLandfillPercentValueSpecified, rep.POTWWasteQuantity.QuantityDisposedLandfillPercentValue),
                                 //GetSpecifiedValue(rep.POTWWasteQuantity.QuantityDisposedOtherPercentValueSpecified, rep.POTWWasteQuantity.QuantityDisposedOtherPercentValue),
                                 //GetSpecifiedValue(rep.POTWWasteQuantity.QuantityTreatedPercentValueSpecified, rep.POTWWasteQuantity.QuantityTreatedPercentValue),
-                            null, // TOX_EQ_VAL1_POTW
-                            null, // TOX_EQ_VAL2_POTW
-                            null, // TOX_EQ_VAL3_POTW
-                            null, // TOX_EQ_VAL4_POTW
-                            null, // TOX_EQ_VAL5_POTW
-                            null, // TOX_EQ_VAL6_POTW
-                            null, // TOX_EQ_VAL7_POTW
-                            null, // TOX_EQ_VAL8_POTW
-                            null, // TOX_EQ_VAL9_POTW
-                            null, // TOX_EQ_VAL10_POTW
-                            null, // TOX_EQ_VAL11_POTW
-                            null, // TOX_EQ_VAL12_POTW
-                            null, // TOX_EQ_VAL13_POTW
-                            null, // TOX_EQ_VAL14_POTW
-                            null, // TOX_EQ_VAL15_POTW
-                            null, // TOX_EQ_VAL16_POTW
-                            null, // TOX_EQ_VAL17_POTW
-                            null, // TOX_EQ_NA_IND_POTW
-                            null, // WASTE_Q_CATASTROPHIC_MEASURE
-                            null, // WASTE_Q_RANGE_NUM_BASIS_VALUE
-                            null, // Q_DISP_LANDFILL_PERCENT_VALUE
-                            null, // Q_DISP_OTHER_PERCENT_VALUE
-                            null, // Q_TREATED_PERCENT_VALUE
+                            //null, // TOX_EQ_VAL1_POTW
+                            //null, // TOX_EQ_VAL2_POTW
+                            //null, // TOX_EQ_VAL3_POTW
+                            //null, // TOX_EQ_VAL4_POTW
+                            //null, // TOX_EQ_VAL5_POTW
+                            //null, // TOX_EQ_VAL6_POTW
+                            //null, // TOX_EQ_VAL7_POTW
+                            //null, // TOX_EQ_VAL8_POTW
+                            //null, // TOX_EQ_VAL9_POTW
+                            //null, // TOX_EQ_VAL10_POTW
+                            //null, // TOX_EQ_VAL11_POTW
+                            //null, // TOX_EQ_VAL12_POTW
+                            //null, // TOX_EQ_VAL13_POTW
+                            //null, // TOX_EQ_VAL14_POTW
+                            //null, // TOX_EQ_VAL15_POTW
+                            //null, // TOX_EQ_VAL16_POTW
+                            //null, // TOX_EQ_VAL17_POTW
+                            //null, // TOX_EQ_NA_IND_POTW
+                            //null, // WASTE_Q_CATASTROPHIC_MEASURE
+                            //null, // WASTE_Q_RANGE_NUM_BASIS_VALUE
+                            //null, // Q_DISP_LANDFILL_PERCENT_VALUE
+                            //null, // Q_DISP_OTHER_PERCENT_VALUE
+                            //null, // Q_TREATED_PERCENT_VALUE
 
 
                             GetAnonymousTypeValue(teidtOneTime.ToxicEquivalency1Value, typeof(string)),
