@@ -15,6 +15,7 @@
 		<module>node-hyperjaxb3</module>
         <module>node-hyperjaxb3-icisnpdes</module>
         <module>node-hyperjaxb3-wqx</module>
+        <module>node-hyperjaxb3-facid</module>
     </modules>
 
 </project>

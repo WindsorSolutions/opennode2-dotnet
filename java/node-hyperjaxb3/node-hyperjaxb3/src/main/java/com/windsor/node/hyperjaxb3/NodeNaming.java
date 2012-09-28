@@ -73,6 +73,11 @@ public class NodeNaming extends DefaultNaming {
 	private String fkColumnName;
 
 	/**
+	 * FK column name prefix.
+	 */
+	private String fkColumnNamePrefix = "";
+
+	/**
 	 * Splits an XML name into individual words.
 	 *
 	 * @return String array of the words in the XML name
@@ -236,8 +241,9 @@ public class NodeNaming extends DefaultNaming {
 		if (!StringUtils.isEmpty(fkColumnName)) {
 			columnName = fkColumnName;
 		} else {
-			final String entityTableName = getEntityTable$Name(context, fieldOutline.parent());
-			columnName = getName(entityTableName) + getPkColumnNameSuffix();
+			final String entityTableName2 = getTableName(fieldOutline.parent().target.getName());
+			columnName = getFkColumnNamePrefix() + getName(entityTableName2)
+					+ getPkColumnNameSuffix();
 		}
 		logger.debug("getJoinColumn$Name(): Mapping join column for property "
 				+ fieldOutline.getPropertyInfo().getName(true) + " to " + columnName);
@@ -445,6 +451,7 @@ public class NodeNaming extends DefaultNaming {
 
 	/**
 	 * Returns the name of the foreign key column.
+	 *
 	 * @return the name of the foreign key column
 	 */
 	public String getFkColumnName() {
@@ -453,10 +460,31 @@ public class NodeNaming extends DefaultNaming {
 
 	/**
 	 * Sets the name of the foreign key column.
-	 * @param fkColumnName the name of the foreign key column
+	 *
+	 * @param fkColumnName
+	 *            the name of the foreign key column
 	 */
 	public void setFkColumnName(final String fkColumnName) {
 		this.fkColumnName = fkColumnName;
+	}
+
+	/**
+	 * Returns the foreign key column name prefix.
+	 *
+	 * @return the foreign key column name prefix
+	 */
+	public String getFkColumnNamePrefix() {
+		return fkColumnNamePrefix;
+	}
+
+	/**
+	 * Sets the foreign key column name prefix.
+	 *
+	 * @param fkColumnNamePrefix
+	 *            the foreign key column name prefix
+	 */
+	public void setFkColumnNamePrefix(final String fkColumnNamePrefix) {
+		this.fkColumnNamePrefix = fkColumnNamePrefix;
 	}
 
 }
