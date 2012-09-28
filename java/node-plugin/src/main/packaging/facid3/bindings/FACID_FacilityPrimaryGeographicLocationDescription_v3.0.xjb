@@ -10,26 +10,10 @@
 
 		<jaxb:bindings node="//xsd:complexType[@name='FacilityPrimaryGeographicLocationDescriptionDataType']">
 			<hj:entity />
+			<hj:generated-id name="Dbid">
+				<orm:column name="FAC_ID" />
+			</hj:generated-id>
 		</jaxb:bindings>
-
-		<!-- FIXME: not sure why these fields have to be marked as not insertable/updatable -->
-
-		<!--
-		<jaxb:bindings node="//xsd:element[@ref='gml:Point']">
-			<hj:embedded>
-
-				<orm:attribute-override name="pos.srcName">
-					<orm:column name="SRS_NAME" insertable="false" updatable="false" />
-				</orm:attribute-override>
-
-				<orm:attribute-override name="pos.srcDimension">
-					<orm:column name="SRS_DIM" insertable="false" updatable="false" />
-				</orm:attribute-override>
-
-			</hj:embedded>
-		</jaxb:bindings>
-		
-		-->
 
 		<jaxb:bindings node="//xsd:element[@ref='facid:HorizontalAccuracyMeasure']">
 			<hj:embedded>
