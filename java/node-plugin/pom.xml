@@ -60,7 +60,7 @@
 						<args>
 							<arg>-Xannotate</arg>
 							<arg>-Xinheritance</arg>
-							<arg>-Xnamespace-prefix</arg>
+							<!-- <arg>-Xnamespace-prefix</arg> -->
 						</args>
 						<variant>jpa2</variant>
 						<extension>true</extension>
