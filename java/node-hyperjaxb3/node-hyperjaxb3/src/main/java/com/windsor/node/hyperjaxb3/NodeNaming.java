@@ -75,7 +75,7 @@ public class NodeNaming extends DefaultNaming {
 	/**
 	 * FK column name prefix.
 	 */
-	private String fkColumnNamePrefix = "";
+	private String fkColumnNamePrefix;
 
 	/**
 	 * Splits an XML name into individual words.

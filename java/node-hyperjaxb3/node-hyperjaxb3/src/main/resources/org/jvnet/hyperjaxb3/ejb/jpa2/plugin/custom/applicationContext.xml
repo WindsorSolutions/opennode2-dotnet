@@ -54,6 +54,7 @@
 		<property name="fkColumnName" value="${fkColumnName}" />
 		<property name="presplitXmlNameMappings" ref="presplitXmlNameMappings" />
 		<property name="tableNameSuffixMappings" ref="tableNameSuffixMappings" />
+		<property name="fkColumnNamePrefix" value="${fkColumnNamePrefix}" />
 	</bean>
 	
 	<!-- 
