@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	jaxb:extensionBindingPrefixes="hj orm" schemaLocation="../xsd/3/0/FACID_Facility_v3.0.xsd">
+
+	<!-- facility -->
+
+	<jaxb:bindings>
+
+		<jaxb:bindings node="//xsd:complexType[@name='FacilityDataType']">
+			<hj:entity />
+		</jaxb:bindings>
+
+		<jaxb:bindings node="//xsd:element[@ref='facid:FacilitySiteIdentity']">
+			<hj:embedded>
+
+				<orm:attribute-override name="facilitySiteIdentifier.value">
+					<orm:column name="FAC_SITE_IDEN_VAL" />
+				</orm:attribute-override>
+
+				<orm:attribute-override name="facilitySiteType.facilitySiteTypeCodeListIdentifier.value">
+					<orm:column name="CODE_LST_VER_VAL" />
+				</orm:attribute-override>
+
+				<orm:attribute-override
+					name="facilitySiteType.facilitySiteTypeCodeListIdentifier.codeListVersionIdentifier">
+					<orm:column name="CODE_LIST_VERS_IDEN" />
+				</orm:attribute-override>
+
+				<orm:attribute-override
+					name="facilitySiteType.facilitySiteTypeCodeListIdentifier.codeListVersionAgencyIdentifier">
+					<orm:column name="CODE_LIST_VERS_AGN_IDEN" />
+				</orm:attribute-override>
+
+			</hj:embedded>
+		</jaxb:bindings>
+
+		<jaxb:bindings node="//xsd:element[@ref='facid:LocationAddress']">
+			<hj:embedded>
+
+				<orm:attribute-override name="stateIdentity.stateCodeListIdentifier.value">
+					<orm:column name="LOC_ADDR_CODE_LST_VER_VAL" />
+				</orm:attribute-override>
+
+				<orm:attribute-override name="stateIdentity.stateCodeListIdentifier.codeListVersionIdentifier">
+					<orm:column name="LOC_ADDR_CODE_LIST_VERS_IDE" />
+				</orm:attribute-override>
+
+				<orm:attribute-override name="stateIdentity.stateCodeListIdentifier.codeListVersionAgencyIdentifier">
+					<orm:column name="LOC_ADDR_CODE_LIST_VER_AGN_IDE" />
+				</orm:attribute-override>
+
+				<orm:attribute-override name="addressPostalCode.value">
+					<orm:column name="ADDR_POST_CODE_VAL" />
+				</orm:attribute-override>
+
+				<orm:attribute-override name="countryIdentity.countryCodeListIdentifier.value">
+					<orm:column name="LOC_ADDR_COD_LST_VER_VAL" />
+				</orm:attribute-override>
+
+				<orm:attribute-override name="countryIdentity.countryCodeListIdentifier.codeListVersionIdentifier">
+					<orm:column name="LOC_ADDR_CODE_LIST_VERS_IDEN" />
+				</orm:attribute-override>
+
+				<orm:attribute-override
+					name="countryIdentity.countryCodeListIdentifier.codeListVersionAgencyIdentifier">
+					<orm:column name="LOC_ADDR_CODE_LIS_VER_AGN_IDE" />
+				</orm:attribute-override>
+
+				<orm:attribute-override name="countyIdentity.countyCodeListIdentifier.value">
+					<orm:column name="LOC_ADD_COD_LST_VER_VAL" />
+				</orm:attribute-override>
+
+				<orm:attribute-override name="countyIdentity.countyCodeListIdentifier.codeListVersionIdentifier">
+					<orm:column name="LOC_ADDR_CODE_LIST_VER_IDE" />
+				</orm:attribute-override>
+
+				<orm:attribute-override
+					name="countyIdentity.countyCodeListIdentifier.codeListVersionAgencyIdentifier">
+					<orm:column name="LOC_ADDR_COD_LIS_VER_AGN_IDE" />
+				</orm:attribute-override>
+
+			</hj:embedded>
+		</jaxb:bindings>
+
+		<jaxb:bindings node="//xsd:element[@ref='facid:MailingAddress']">
+			<hj:embedded>
+
+				<orm:attribute-override name="stateIdentity.stateCodeListIdentifier.value">
+					<orm:column name="MAIL_ADDR_CODE_LST_VER_VAL" />
+				</orm:attribute-override>
+
+				<orm:attribute-override name="addressPostalCode.value">
+					<orm:column name="MAIL_ADDR_ADDR_POST_CODE_VAL" />
+				</orm:attribute-override>
+
+				<orm:attribute-override name="countryIdentity.countryCode">
+					<orm:column name="MAIL_ADDR_CTRY_CODE" />
+				</orm:attribute-override>
+
+				<orm:attribute-override name="countryIdentity.countryName">
+					<orm:column name="MAIL_ADDR_CTRY_NAME" />
+				</orm:attribute-override>
+
+				<orm:attribute-override name="countryIdentity.countryCodeListIdentifier.value">
+					<orm:column name="MAIL_ADDR_COD_LST_VER_VAL" />
+				</orm:attribute-override>
+
+				<orm:attribute-override name="countryIdentity.countryCodeListIdentifier.codeListVersionIdentifier">
+					<orm:column name="MAIL_ADDR_CODE_LIST_VERS_IDE" />
+				</orm:attribute-override>
+
+				<orm:attribute-override
+					name="countryIdentity.countryCodeListIdentifier.codeListVersionAgencyIdentifier">
+					<orm:column name="MAIL_ADDR_COD_LIS_VER_AGN_IDE" />
+				</orm:attribute-override>
+
+				<orm:attribute-override name="stateIdentity.stateCode">
+					<orm:column name="MAIL_ADDR_STA_CODE" />
+				</orm:attribute-override>
+
+				<orm:attribute-override name="stateIdentity.stateName">
+					<orm:column name="MAIL_ADDR_STA_NAME" />
+				</orm:attribute-override>
+
+				<orm:attribute-override name="stateIdentity.stateCodeListIdentifier.codeListVersionIdentifier">
+					<orm:column name="MAIL_ADDR_CODE_LIST_VERS_IDEN" />
+				</orm:attribute-override>
+
+				<orm:attribute-override name="stateIdentity.stateCodeListIdentifier.codeListVersionAgencyIdentifier">
+					<orm:column name="MAIL_ADDR_CODE_LIS_VER_AGN_IDE" />
+				</orm:attribute-override>
+
+				<orm:attribute-override name="addressPostalCode.addressPostalCodeContext">
+					<orm:column name="MAIL_ADDR_ADDR_POST_CODE_CONT" />
+				</orm:attribute-override>
+
+			</hj:embedded>
+		</jaxb:bindings>
+
+		<jaxb:bindings node="//xsd:element[@ref='facid:AlternativeIdentificationList']">
+			<hj:embedded>
+
+				<orm:association-override name="alternativeIdentification">
+					<orm:join-column name="PARENT_ID" />
+				</orm:association-override>
+
+			</hj:embedded>
+		</jaxb:bindings>
+
+		<jaxb:bindings node="//xsd:element[@ref='facid:SICList']">
+			<hj:embedded>
+
+				<orm:association-override name="facilitySIC">
+					<orm:join-column name="PARENT_ID" />
+				</orm:association-override>
+
+			</hj:embedded>
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:element[@ref='facid:NAICSList']">
+			<hj:embedded>
+
+				<orm:association-override name="facilityNAICS">
+					<orm:join-column name="PARENT_ID" />
+				</orm:association-override>
+
+			</hj:embedded>
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:element[@ref='facid:AffiliationList']">
+			<hj:embedded>
+
+				<orm:association-override name="facilityAffiliation">
+					<orm:join-column name="PARENT_ID" />
+				</orm:association-override>
+
+			</hj:embedded>
+		</jaxb:bindings>
+
+	</jaxb:bindings>
+
+</jaxb:bindings>
+

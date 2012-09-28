@@ -46,6 +46,41 @@
 		<pluginManagement>
 			<plugins>
 				<plugin>
+					<groupId>org.jvnet.hyperjaxb3</groupId>
+					<artifactId>maven-hyperjaxb3-plugin</artifactId>
+					<version>0.5.6</version>
+					<executions>
+						<execution>
+							<goals>
+								<goal>generate</goal>
+							</goals>
+						</execution>
+					</executions>
+					<configuration>
+						<args>
+							<arg>-Xannotate</arg>
+							<arg>-Xinheritance</arg>
+							<arg>-Xnamespace-prefix</arg>
+						</args>
+						<variant>jpa2</variant>
+						<extension>true</extension>
+						<bindingDirectory>${basedir}/src/main/packaging/${plugin.name}/bindings</bindingDirectory>
+						<schemaDirectory>${basedir}/src/main/packaging/${plugin.name}/xsd</schemaDirectory>
+					</configuration>
+					<dependencies>
+						<dependency>
+							<groupId>com.windsor.node</groupId>
+							<artifactId>node-hyperjaxb3</artifactId>
+							<version>2.06</version>
+						</dependency>
+						<dependency>
+							<groupId>org.jvnet.jaxb2_commons</groupId>
+							<artifactId>jaxb2-namespace-prefix</artifactId>
+							<version>1.1</version>
+						</dependency>
+					</dependencies>
+				</plugin>
+				<plugin>
 					<artifactId>maven-compiler-plugin</artifactId>
 					<version>2.3</version>
 					<configuration>
@@ -200,6 +235,19 @@
 			</properties>
 			<build>
 				<finalName>${plugin.name}</finalName>
+				<plugins>
+					<plugin>
+						<groupId>org.jvnet.hyperjaxb3</groupId>
+						<artifactId>maven-hyperjaxb3-plugin</artifactId>
+						<dependencies>
+							<dependency>
+								<groupId>com.windsor.node</groupId>
+								<artifactId>node-hyperjaxb3-facid</artifactId>
+								<version>2.06</version>
+							</dependency>
+						</dependencies>
+					</plugin>
+				</plugins>
 			</build>
 		</profile>
 		<profile>
@@ -247,51 +295,21 @@
 			</properties>
 			<build>
 				<finalName>${plugin.name}</finalName>
-				<!--
+				<!-- 
 				<plugins>
 					<plugin>
 						<groupId>org.jvnet.hyperjaxb3</groupId>
 						<artifactId>maven-hyperjaxb3-plugin</artifactId>
-						<executions>
-							<execution>
-								<goals>
-									<goal>generate</goal>
-								</goals>
-							</execution>
-						</executions>
-						<configuration>
-							<args>
-								<arg>-Xannotate</arg>
-								<arg>-Xinheritance</arg>
-								<arg>-Xnamespace-prefix</arg>
-							</args>
-							<variant>jpa2</variant>
-							<extension>true</extension>
-							<bindingDirectory>${basedir}/src/main/packaging/icisnpdes40/bindings</bindingDirectory>
-							<roundtripTestClassName>RoundtripTest</roundtripTestClassName>
-							<schemaDirectory>${basedir}/src/main/packaging/icisnpdes40/xsd</schemaDirectory>
-							<generatePackage>com.windsor.node.plugin.icisnpdes40.generated</generatePackage>
-						</configuration>
 						<dependencies>
-							<dependency>
-								<groupId>com.windsor.node</groupId>
-								<artifactId>node-hyperjaxb3</artifactId>
-								<version>2.06</version>
-							</dependency>
 							<dependency>
 								<groupId>com.windsor.node</groupId>
 								<artifactId>node-hyperjaxb3-icisnpdes</artifactId>
 								<version>2.06</version>
 							</dependency>
-							<dependency>
-								<groupId>org.jvnet.jaxb2_commons</groupId>
-								<artifactId>jaxb2-namespace-prefix</artifactId>
-								<version>1.1</version>
-							</dependency>
 						</dependencies>
 					</plugin>
 				</plugins>
-				-->
+				 -->
 			</build>
 		</profile>
 		<profile>
@@ -351,40 +369,11 @@
 					<plugin>
 						<groupId>org.jvnet.hyperjaxb3</groupId>
 						<artifactId>maven-hyperjaxb3-plugin</artifactId>
-						<version>0.5.6</version>
-						<executions>
-							<execution>
-								<goals>
-									<goal>generate</goal>
-								</goals>
-							</execution>
-						</executions>
-						<configuration>
-							<args>
-								<arg>-Xannotate</arg>
-								<arg>-Xinheritance</arg>
-								<arg>-Xnamespace-prefix</arg>
-							</args>
-							<variant>jpa2</variant>
-							<extension>true</extension>
-							<bindingDirectory>${basedir}/src/main/packaging/wqx/bindings</bindingDirectory>
-							<schemaDirectory>${basedir}/src/main/packaging/wqx/xsd</schemaDirectory>
-						</configuration>
 						<dependencies>
-							<dependency>
-								<groupId>com.windsor.node</groupId>
-								<artifactId>node-hyperjaxb3</artifactId>
-								<version>2.06</version>
-							</dependency>
 							<dependency>
 								<groupId>com.windsor.node</groupId>
 								<artifactId>node-hyperjaxb3-wqx</artifactId>
 								<version>2.06</version>
-							</dependency>
-							<dependency>
-								<groupId>org.jvnet.jaxb2_commons</groupId>
-								<artifactId>jaxb2-namespace-prefix</artifactId>
-								<version>1.1</version>
 							</dependency>
 						</dependencies>
 					</plugin>

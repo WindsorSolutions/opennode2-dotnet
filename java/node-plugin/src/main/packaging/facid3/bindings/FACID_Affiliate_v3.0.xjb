@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	jaxb:extensionBindingPrefixes="hj orm" schemaLocation="../xsd/3/0/FACID_Affiliate_v3.0.xsd">
+
+	<!-- affiliate -->
+
+	<jaxb:bindings>
+
+		<jaxb:bindings node="//xsd:complexType[@name='AffiliateDataType']">
+			<hj:entity />
+		</jaxb:bindings>
+
+		<jaxb:bindings node="//xsd:element[@ref='facid:IndividualIdentity']">
+			<hj:embedded>
+
+				<orm:attribute-override name="individualIdentifier.value">
+					<orm:column name="INDV_IDEN_VAL" />
+				</orm:attribute-override>
+
+			</hj:embedded>
+		</jaxb:bindings>
+
+		<jaxb:bindings node="//xsd:element[@ref='facid:OrganizationIdentity']">
+			<hj:embedded>
+
+				<orm:attribute-override name="organizationIdentifier.value">
+					<orm:column name="ORG_IDEN_VAL" />
+				</orm:attribute-override>
+
+			</hj:embedded>
+		</jaxb:bindings>
+
+		<jaxb:bindings node="//xsd:element[@ref='facid:MailingAddress']">
+			<hj:embedded>
+
+				<orm:attribute-override name="stateIdentity.stateCodeListIdentifier.value">
+					<orm:column name="CODE_LST_VER_VAL" />
+				</orm:attribute-override>
+
+				<orm:attribute-override name="addressPostalCode.value">
+					<orm:column name="ADDR_POST_CODE_VAL" />
+				</orm:attribute-override>
+
+				<orm:attribute-override name="countryIdentity.countryCodeListIdentifier.value">
+					<orm:column name="CTRY_IDEN_CODE_LST_VER_VAL" />
+				</orm:attribute-override>
+
+				<orm:attribute-override name="countryIdentity.countryCodeListIdentifier.codeListVersionIdentifier">
+					<orm:column name="CTRY_IDEN_CODE_LIST_VERS_IDEN" />
+				</orm:attribute-override>
+
+				<orm:attribute-override
+					name="countryIdentity.countryCodeListIdentifier.codeListVersionAgencyIdentifier">
+					<orm:column name="CTRY_IDEN_CODE_LIS_VER_AGN_IDE" />
+				</orm:attribute-override>
+
+			</hj:embedded>
+		</jaxb:bindings>
+
+	</jaxb:bindings>
+
+</jaxb:bindings>
+
