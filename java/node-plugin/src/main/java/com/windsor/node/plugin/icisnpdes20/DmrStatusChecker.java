@@ -70,7 +70,7 @@ public class DmrStatusChecker extends BaseWnosPlugin implements
                     "UseSubmissionHistoryTable",
                     PluginServiceParameterDescriptor.TYPE_BOOLEAN,
                     Boolean.FALSE,
-                    "If this parameter is not set or set to “true”, the plugin will always create a record to the submission history table when a submission is performed. If set to “false”, no record of the submission will be logged in this table. Regardless of this setting, OpenNode2 will still log that the transaction occurred and it can still be found using the OpenNode2 Admin Activity search screen.");
+                    "If this parameter is not set or set to \u201Ctrue\u201D, the plugin will always create a record to the submission history table when a submission is performed. If set to \u201Cfalse\u201D, no record of the submission will be logged in this table. Regardless of this setting, OpenNode2 will still log that the transaction occurred and it can still be found using the OpenNode2 Admin Activity search screen.");
 
     private DataSource pluginDataSource;
     private SubmissionHistoryDao submissionHistoryDao;
@@ -96,7 +96,7 @@ public class DmrStatusChecker extends BaseWnosPlugin implements
     @Override
     public List<PluginServiceParameterDescriptor> getParameters()
     {
-        List<PluginServiceParameterDescriptor> params = new ArrayList<PluginServiceParameterDescriptor>();
+        final List<PluginServiceParameterDescriptor> params = new ArrayList<PluginServiceParameterDescriptor>();
         params.add(USER_ID);
         params.add(LAST_PAYLOAD_UPDATE_DATE);
         params.add(USE_SUBMISSION_HISTORY_TABLE);
@@ -105,19 +105,19 @@ public class DmrStatusChecker extends BaseWnosPlugin implements
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.windsor.node.plugin.BaseWnosPlugin#process(com.windsor.node.common
      * .domain.NodeTransaction)
      */
     @SuppressWarnings("unchecked")
     @Override
-    public ProcessContentResult process(NodeTransaction transaction) {
+    public ProcessContentResult process(final NodeTransaction transaction) {
 
         debug("Validating transaction...");
         validateTransaction(transaction);
 
-        ProcessContentResult result = new ProcessContentResult();
+        final ProcessContentResult result = new ProcessContentResult();
         result.setSuccess(false);
         result.setStatus(CommonTransactionStatusCode.Failed);
         result
@@ -130,7 +130,7 @@ public class DmrStatusChecker extends BaseWnosPlugin implements
              * 1. get tran network ids for flow where status
              * not(processed|failed)
              */
-            List<String> idList = submissionHistoryDao.getAllTranIds();
+            final List<String> idList = submissionHistoryDao.getAllTranIds();
             result.getAuditEntries().add(
                     makeEntry("Found " + idList.size()
                             + " transaction(s) to check."));
@@ -139,9 +139,9 @@ public class DmrStatusChecker extends BaseWnosPlugin implements
              * prior DMR submissions will have local status PROCESSED if
              * successfully generated and submitted, otherwise FAILED
              */
-            for (String tranId : idList) {
+            for (final String tranId : idList) {
 
-                NodeTransaction tran = transactionDao.get(tranId, false);
+                final NodeTransaction tran = transactionDao.get(tranId, false);
 
                 /* 2. getStatus & update local */
                 result.getAuditEntries().add(
@@ -160,7 +160,7 @@ public class DmrStatusChecker extends BaseWnosPlugin implements
             result.setStatus(CommonTransactionStatusCode.Processed);
             result.getAuditEntries().add(makeEntry("Done: OK"));
 
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
 
             error(ex);
             ex.printStackTrace();
@@ -180,9 +180,9 @@ public class DmrStatusChecker extends BaseWnosPlugin implements
      * @param tran
      */
     private CommonTransactionStatusCode checkAndUpdateStatus(
-            NodeTransaction tran) {
+            final NodeTransaction tran) {
 
-        CommonTransactionStatusCode status = tran.getStatus().getStatus();
+        final CommonTransactionStatusCode status = tran.getStatus().getStatus();
         CommonTransactionStatusCode remoteStatus = null;
 
         if (!status.equals(CommonTransactionStatusCode.Completed)
@@ -202,7 +202,8 @@ public class DmrStatusChecker extends BaseWnosPlugin implements
 
     }
 
-    public void afterPropertiesSet() {
+    @Override
+	public void afterPropertiesSet() {
 
         super.afterPropertiesSet();
 
@@ -231,14 +232,14 @@ public class DmrStatusChecker extends BaseWnosPlugin implements
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.windsor.node.plugin.BaseWnosPlugin#getServiceRequestParamSpecs(java
      * .lang.String)
      */
     @Override
     public List<DataServiceRequestParameter> getServiceRequestParamSpecs(
-            String serviceName) {
+            final String serviceName) {
         return null;
     }
 
@@ -246,7 +247,7 @@ public class DmrStatusChecker extends BaseWnosPlugin implements
         return transactionDao;
     }
 
-    public void setTransactionDao(TransactionDao transactionDao) {
+    public void setTransactionDao(final TransactionDao transactionDao) {
         this.transactionDao = transactionDao;
     }
 
@@ -255,7 +256,7 @@ public class DmrStatusChecker extends BaseWnosPlugin implements
     }
 
     public void setSubmissionHistoryDao(
-            SubmissionHistoryDao submissionHistoryDao) {
+            final SubmissionHistoryDao submissionHistoryDao) {
         this.submissionHistoryDao = submissionHistoryDao;
     }
 

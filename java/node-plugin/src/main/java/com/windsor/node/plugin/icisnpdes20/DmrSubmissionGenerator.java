@@ -72,7 +72,7 @@ public class DmrSubmissionGenerator extends BaseWnosPlugin implements
                     "UseSubmissionHistoryTable",
                     PluginServiceParameterDescriptor.TYPE_BOOLEAN,
                     Boolean.FALSE,
-                    "If this parameter is not set or set to “true”, the plugin will always create a record to the submission history table when a submission is performed. If set to “false”, no record of the submission will be logged in this table. Regardless of this setting, OpenNode2 will still log that the transaction occurred and it can still be found using the OpenNode2 Admin Activity search screen.");
+                    "If this parameter is not set or set to \u201Ctrue\u201D, the plugin will always create a record to the submission history table when a submission is performed. If set to \u201Cfalse\u201D, no record of the submission will be logged in this table. Regardless of this setting, OpenNode2 will still log that the transaction occurred and it can still be found using the OpenNode2 Admin Activity search screen.");
 
     private static final String FALSE = "false";
     private static final String TRUE = "true";
@@ -109,7 +109,7 @@ public class DmrSubmissionGenerator extends BaseWnosPlugin implements
     @Override
     public List<PluginServiceParameterDescriptor> getParameters()
     {
-        List<PluginServiceParameterDescriptor> params = new ArrayList<PluginServiceParameterDescriptor>();
+        final List<PluginServiceParameterDescriptor> params = new ArrayList<PluginServiceParameterDescriptor>();
         params.add(USER_ID);
         params.add(LAST_PAYLOAD_UPDATE_DATE);
         params.add(USE_SUBMISSION_HISTORY_TABLE);
@@ -117,7 +117,7 @@ public class DmrSubmissionGenerator extends BaseWnosPlugin implements
     }
 
     @Override
-    public ProcessContentResult process(NodeTransaction transaction) {
+    public ProcessContentResult process(final NodeTransaction transaction) {
 
         debug("Validating transaction...");
         validateTransaction(transaction);
@@ -125,7 +125,7 @@ public class DmrSubmissionGenerator extends BaseWnosPlugin implements
         debug("Setting properties from request parameters...");
         setPropertiesFromRequestParams(transaction);
 
-        ProcessContentResult result = new ProcessContentResult();
+        final ProcessContentResult result = new ProcessContentResult();
         result.setSuccess(false);
         result.setStatus(CommonTransactionStatusCode.Failed);
         result.getAuditEntries().add(makeEntry("Preparing DMR submission..."));
@@ -194,7 +194,7 @@ public class DmrSubmissionGenerator extends BaseWnosPlugin implements
             result.setStatus(CommonTransactionStatusCode.Processed);
             result.getAuditEntries().add(makeEntry("Done: OK"));
 
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
 
             error(ex);
             ex.printStackTrace();
@@ -210,7 +210,7 @@ public class DmrSubmissionGenerator extends BaseWnosPlugin implements
         return result;
     }
 
-    private void saveSubmissionHistory(String transactionId) {
+    private void saveSubmissionHistory(final String transactionId) {
 
         submissionHistoryDao.insertSubmissionHistory(getIcisId(),
                 new Timestamp(System.currentTimeMillis()), new Timestamp(
@@ -221,11 +221,11 @@ public class DmrSubmissionGenerator extends BaseWnosPlugin implements
      * @param icisId
      * @return
      */
-    private Date getLastSubmissionDate(String icisId) {
+    private Date getLastSubmissionDate(final String icisId) {
 
         Date date = null;
 
-        Timestamp ts = submissionHistoryDao
+        final Timestamp ts = submissionHistoryDao
                 .getLastPayloadUpdateByIcisId(getIcisId());
 
         if (null != ts) {
@@ -243,23 +243,23 @@ public class DmrSubmissionGenerator extends BaseWnosPlugin implements
     /**
      * Check status of all submissions for icisId with status other than
      * Processed, Completed, or Failed; if any found, bail out.
-     * 
+     *
      * @param icisId
      * @return
      */
-    private boolean hasPendingSubmissions(String icisId) {
+    private boolean hasPendingSubmissions(final String icisId) {
 
         boolean hasPending = true;
 
         /*
          * 1. get last tran for icisId from node db
          */
-        String latestTranId = submissionHistoryDao
+        final String latestTranId = submissionHistoryDao
                 .getLatestTranIdForIcisId(icisId);
         debug("latestTranid: " + latestTranId);
 
-        NodeTransaction latestTran = transactionDao.get(latestTranId, false);
-        CommonTransactionStatusCode status = latestTran.getStatus().getStatus();
+        final NodeTransaction latestTran = transactionDao.get(latestTranId, false);
+        final CommonTransactionStatusCode status = latestTran.getStatus().getStatus();
 
         if (null != latestTran) {
 
@@ -276,7 +276,7 @@ public class DmrSubmissionGenerator extends BaseWnosPlugin implements
         return hasPending;
     }
 
-    private boolean isPending(CommonTransactionStatusCode status) {
+    private boolean isPending(final CommonTransactionStatusCode status) {
 
         boolean hasPending = false;
 
@@ -294,12 +294,12 @@ public class DmrSubmissionGenerator extends BaseWnosPlugin implements
      * @return
      * @throws IOException
      */
-    protected Document generateDocument(List<ActivityEntry> auditEntries)
+    protected Document generateDocument(final List<ActivityEntry> auditEntries)
             throws IOException {
 
-        String docId = idGenerator.createId();
+        final String docId = idGenerator.createId();
 
-        String tempFilePath = FilenameUtils.concat(settingService.getTempDir()
+        final String tempFilePath = FilenameUtils.concat(settingService.getTempDir()
                 .getAbsolutePath(), OUTFILE_BASE_NAME + docId + ".xml");
 
         auditEntries.add(makeEntry("Generating xml file " + tempFilePath));
@@ -312,7 +312,7 @@ public class DmrSubmissionGenerator extends BaseWnosPlugin implements
         velocityHelper.setTemplateArg(TEMPLATE_LAST_PAYLOAD_UPDATE,
                 getLastPayloadUpdateDate());
 
-        int dmrCount = velocityHelper.merge(TEMPLATE_NAME, tempFilePath);
+        final int dmrCount = velocityHelper.merge(TEMPLATE_NAME, tempFilePath);
 
         if (dmrCount == 0) {
             throw new RuntimeException(ERR_NO_DMR_DATA);
@@ -321,9 +321,9 @@ public class DmrSubmissionGenerator extends BaseWnosPlugin implements
         auditEntries.add(makeEntry("Xml file generated."));
         auditEntries.add(makeEntry("Compressing results..."));
 
-        Document doc = new Document();
+        final Document doc = new Document();
 
-        String zippedFilePath = getCompressionService().zip(tempFilePath);
+        final String zippedFilePath = getCompressionService().zip(tempFilePath);
         debug("Zipped result: " + zippedFilePath);
         doc.setType(CommonContentType.ZIP);
 
@@ -333,7 +333,8 @@ public class DmrSubmissionGenerator extends BaseWnosPlugin implements
         return doc;
     }
 
-    public void afterPropertiesSet() {
+    @Override
+	public void afterPropertiesSet() {
 
         super.afterPropertiesSet();
 
@@ -392,19 +393,19 @@ public class DmrSubmissionGenerator extends BaseWnosPlugin implements
      * <li>Gets OPTIONAL (undocumented) IgnorePreviousSubmissions param from
      * transaction (default false)</li>
      * </ol>
-     * 
-     * 
+     *
+     *
      * @param transaction
      */
-    protected void setPropertiesFromRequestParams(NodeTransaction transaction) {
+    protected void setPropertiesFromRequestParams(final NodeTransaction transaction) {
 
         setIcisId(getRequiredValueFromTransactionArgs(transaction,
                 PARAM_INDEX_USERID));
 
-        String lastUpdateStr = getOptionalValueFromTransactionArgs(transaction,
+        final String lastUpdateStr = getOptionalValueFromTransactionArgs(transaction,
                 PARAM_INDEX_LAST_UPDATE);
 
-        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+        final SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
 
         try {
 
@@ -419,13 +420,13 @@ public class DmrSubmissionGenerator extends BaseWnosPlugin implements
                         ARBITRARY_START_DATE).getTime()));
             }
 
-        } catch (ParseException e) {
+        } catch (final ParseException e) {
 
             logger.error(ERR_BAD_DATE_FORMAT);
             throw new RuntimeException(ERR_BAD_DATE_FORMAT);
         }
 
-        String useHistoryStr = getOptionalValueFromTransactionArgs(transaction,
+        final String useHistoryStr = getOptionalValueFromTransactionArgs(transaction,
                 PARAM_INDEX_USE_HISTORY);
 
         if (StringUtils.isBlank(useHistoryStr)
@@ -438,7 +439,7 @@ public class DmrSubmissionGenerator extends BaseWnosPlugin implements
             setUseSubmissionHistory(false);
         }
 
-        String ignorePreviousStr = getOptionalValueFromTransactionArgs(
+        final String ignorePreviousStr = getOptionalValueFromTransactionArgs(
                 transaction, PARAM_INDEX_IGNORE_PREVIOUS);
 
         if (StringUtils.isBlank(ignorePreviousStr)
@@ -453,7 +454,7 @@ public class DmrSubmissionGenerator extends BaseWnosPlugin implements
     }
 
     @Override
-    protected void validateTransaction(NodeTransaction transaction) {
+    protected void validateTransaction(final NodeTransaction transaction) {
 
         super.validateTransaction(transaction);
 
@@ -467,7 +468,7 @@ public class DmrSubmissionGenerator extends BaseWnosPlugin implements
 
     @Override
     public List<DataServiceRequestParameter> getServiceRequestParamSpecs(
-            String serviceName) {
+            final String serviceName) {
 
         return null;
     }
@@ -476,7 +477,7 @@ public class DmrSubmissionGenerator extends BaseWnosPlugin implements
         return velocityHelper;
     }
 
-    public void setVelocityHelper(VelocityHelper velocityHelper) {
+    public void setVelocityHelper(final VelocityHelper velocityHelper) {
         this.velocityHelper = velocityHelper;
     }
 
@@ -484,7 +485,7 @@ public class DmrSubmissionGenerator extends BaseWnosPlugin implements
         return settingService;
     }
 
-    public void setSettingService(SettingServiceProvider settingService) {
+    public void setSettingService(final SettingServiceProvider settingService) {
         this.settingService = settingService;
     }
 
@@ -492,7 +493,7 @@ public class DmrSubmissionGenerator extends BaseWnosPlugin implements
         return idGenerator;
     }
 
-    public void setIdGenerator(IdGenerator idGenerator) {
+    public void setIdGenerator(final IdGenerator idGenerator) {
         this.idGenerator = idGenerator;
     }
 
@@ -500,7 +501,7 @@ public class DmrSubmissionGenerator extends BaseWnosPlugin implements
         return compressionService;
     }
 
-    public void setCompressionService(CompressionService compressionService) {
+    public void setCompressionService(final CompressionService compressionService) {
         this.compressionService = compressionService;
     }
 
@@ -508,7 +509,7 @@ public class DmrSubmissionGenerator extends BaseWnosPlugin implements
         return transactionDao;
     }
 
-    public void setTransactionDao(TransactionDao transactionDao) {
+    public void setTransactionDao(final TransactionDao transactionDao) {
         this.transactionDao = transactionDao;
     }
 
@@ -516,7 +517,7 @@ public class DmrSubmissionGenerator extends BaseWnosPlugin implements
         return useSubmissionHistory;
     }
 
-    public void setUseSubmissionHistory(boolean useSubmissionHistory) {
+    public void setUseSubmissionHistory(final boolean useSubmissionHistory) {
         this.useSubmissionHistory = useSubmissionHistory;
     }
 
@@ -524,7 +525,7 @@ public class DmrSubmissionGenerator extends BaseWnosPlugin implements
         return ignorePreviousSubmissions;
     }
 
-    public void setIgnorePreviousSubmissions(boolean ignorePreviousSubmissions) {
+    public void setIgnorePreviousSubmissions(final boolean ignorePreviousSubmissions) {
         this.ignorePreviousSubmissions = ignorePreviousSubmissions;
     }
 
@@ -532,7 +533,7 @@ public class DmrSubmissionGenerator extends BaseWnosPlugin implements
         return lastPayloadUpdateDate;
     }
 
-    public void setLastPayloadUpdateDate(Date lastPayloadUpdateDate) {
+    public void setLastPayloadUpdateDate(final Date lastPayloadUpdateDate) {
         this.lastPayloadUpdateDate = lastPayloadUpdateDate;
     }
 
@@ -540,7 +541,7 @@ public class DmrSubmissionGenerator extends BaseWnosPlugin implements
         return icisId;
     }
 
-    public void setIcisId(String icisId) {
+    public void setIcisId(final String icisId) {
         this.icisId = icisId;
     }
 
@@ -548,7 +549,7 @@ public class DmrSubmissionGenerator extends BaseWnosPlugin implements
         return pluginDataSource;
     }
 
-    public void setPluginDataSource(DataSource pluginDataSource) {
+    public void setPluginDataSource(final DataSource pluginDataSource) {
         this.pluginDataSource = pluginDataSource;
     }
 
@@ -557,7 +558,7 @@ public class DmrSubmissionGenerator extends BaseWnosPlugin implements
     }
 
     public void setSubmissionHistoryDao(
-            SubmissionHistoryDao submissionHistoryDao) {
+            final SubmissionHistoryDao submissionHistoryDao) {
         this.submissionHistoryDao = submissionHistoryDao;
     }
 
