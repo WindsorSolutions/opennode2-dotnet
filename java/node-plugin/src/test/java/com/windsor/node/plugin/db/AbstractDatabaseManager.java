@@ -36,8 +36,9 @@ public abstract class AbstractDatabaseManager implements IDatabaseManager {
 	 *
 	 * @return the statements necessary to start and initialize the DB
 	 */
+	@SuppressWarnings("unchecked")
 	protected Iterator<String> getInitSqlStatements() {
-		return Collections.emptyIterator();
+		return Collections.EMPTY_LIST.iterator();
 	}
 
 	/**
@@ -45,8 +46,9 @@ public abstract class AbstractDatabaseManager implements IDatabaseManager {
 	 *
 	 * @return the statements necessary to stop and clean up the DB
 	 */
+	@SuppressWarnings("unchecked")
 	protected Iterator<String> getStopSqlStatements() {
-		return Collections.emptyIterator();
+		return Collections.EMPTY_LIST.iterator();
 	}
 
 	/**
