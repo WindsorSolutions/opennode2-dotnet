@@ -86,11 +86,48 @@
 					<configuration>
 						<source>1.6</source>
 						<target>1.6</target>
+						<compilerArgument>-proc:none</compilerArgument>
 						<includes>
 							<include>**/com/windsor/node/plugin/${plugin.name}/**</include>
 							<include>**/com/windsor/node/plugin/common/**</include>
 						</includes>
 					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.bsc.maven</groupId>
+					<artifactId>maven-processor-plugin</artifactId>
+					<executions>
+						<execution>
+							<id>process</id>
+							<goals>
+								<goal>process</goal>
+							</goals>
+							<phase>generate-sources</phase>
+							<configuration>
+								<outputDirectory>target/generated-sources/metamodel</outputDirectory>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>build-helper-maven-plugin</artifactId>
+					<version>1.3</version>
+					<executions>
+						<execution>
+							<id>add-source</id>
+							<phase>generate-sources</phase>
+							<goals>
+								<goal>add-source</goal>
+							</goals>
+							<configuration>
+								<sources>
+									<source>target/metamodel</source>
+								</sources>
+							</configuration>
+						</execution>
+					</executions>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -295,7 +332,7 @@
 			</properties>
 			<build>
 				<finalName>${plugin.name}</finalName>
-				<!-- 
+				<!--
 				<plugins>
 					<plugin>
 						<groupId>org.jvnet.hyperjaxb3</groupId>
@@ -309,7 +346,7 @@
 						</dependencies>
 					</plugin>
 				</plugins>
-				 -->
+				-->
 			</build>
 		</profile>
 		<profile>
@@ -377,6 +414,14 @@
 							</dependency>
 						</dependencies>
 					</plugin>
+					<plugin>
+						<groupId>org.bsc.maven</groupId>
+						<artifactId>maven-processor-plugin</artifactId>
+					</plugin>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>build-helper-maven-plugin</artifactId>
+					</plugin>
 				</plugins>
 			</build>
 		</profile>
@@ -419,6 +464,11 @@
 			<groupId>xalan</groupId>
 			<artifactId>xalan</artifactId>
 			<version>2.7.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-jpamodelgen</artifactId>
+			<version>1.2.0.Final</version>
 		</dependency>
 
 	</dependencies>
