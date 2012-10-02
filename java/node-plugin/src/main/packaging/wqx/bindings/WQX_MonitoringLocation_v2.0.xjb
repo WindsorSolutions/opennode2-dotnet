@@ -11,7 +11,7 @@
 			<hj:entity>
 				<orm:table name="WQX_MONITORINGLOCATION"/>
 			</hj:entity>
-			<inheritance:extends>com.windsor.node.plugin.wqx.domain.AbstractLastUpdatedEntity</inheritance:extends>
+			<inheritance:extends>com.windsor.node.plugin.wqx.domain.TopLevelEntity</inheritance:extends>
 		</jaxb:bindings>
 	</jaxb:bindings>
 	

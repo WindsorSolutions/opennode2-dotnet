@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
-	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm" jaxb:extensionBindingPrefixes="hj orm">
+	xmlns:annox="http://annox.dev.java.net"
+	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm" jaxb:extensionBindingPrefixes="hj orm annox">
 
 	<jaxb:bindings schemaLocation="../xsd/root.xsd" node="/xsd:schema">
 
@@ -14,6 +15,11 @@
 		<jaxb:globalBindings generateIsSetMethod="true" localScoping="toplevel">
 
 			<jaxb:serializable uid="1" />
+			
+			<!-- boolean -->
+			
+			<xjc:javaType name="java.lang.String" xmlType="xsd:boolean"
+				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.YesNoAdapter" />
 
 			<!-- date/time mappings -->
 
@@ -73,7 +79,8 @@
 				<hj:basic>
 					<orm:column column-definition="varchar(30)" length="30" />
 				</hj:basic>
-			</hj:default-single-property>
+			</hj:default-single-property>		
+			
 
 			<!-- define a @Basic annotation for this so a @Temporal annotation ins't used. -->
 			

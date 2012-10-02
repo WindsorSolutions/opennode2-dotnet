@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @MappedSuperclass
-public class AbstractLastUpdatedEntity implements Serializable {
+public class TopLevelEntity implements Serializable {
 
 	/**
 	 * Serialization version.
@@ -26,10 +26,25 @@ public class AbstractLastUpdatedEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
+	 * Organization (parent) with which the record is associated.
+	 */
+	@XmlTransient
+	private String organizationId;
+	
+	/**
 	 * The last time the data was updated.
 	 */
 	@XmlTransient
 	private Date updatedDate;
+	
+	@Column(name = "PARENTID")
+	public String getOrganizationId() {
+		return organizationId;
+	}
+
+	public void setOrganizationId(String organizationId) {
+		this.organizationId = organizationId;
+	}
 
 	/**
 	 * Returns the last time the data was updated.
