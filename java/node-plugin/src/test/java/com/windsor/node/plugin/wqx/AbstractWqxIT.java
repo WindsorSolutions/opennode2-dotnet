@@ -12,6 +12,7 @@ import javax.sql.DataSource;
 import org.apache.commons.collections.iterators.IteratorChain;
 import org.testng.annotations.AfterGroups;
 import org.testng.annotations.BeforeGroups;
+import org.testng.annotations.Test;
 
 import com.windsor.node.plugin.AbstractJpaIT;
 import com.windsor.node.plugin.HsqldbOracleStatementIteratorFactory;
@@ -23,6 +24,7 @@ import com.windsor.node.plugin.db.IDatabaseManager;
  * in-memory DB.
  *
  */
+@Test(groups = AbstractWqxIT.WQX_TEST_GROUP_NAME)
 public abstract class AbstractWqxIT extends AbstractJpaIT {
 
 	/**

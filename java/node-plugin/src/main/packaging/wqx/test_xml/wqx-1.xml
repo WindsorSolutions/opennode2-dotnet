@@ -38,14 +38,46 @@
                 <ActivityIdentifier>C1569-0</ActivityIdentifier>
                 <ActivityTypeCode>Routine Sample</ActivityTypeCode>
                 <ActivityMediaName>Water</ActivityMediaName>
+                <ActivityMediaSubdivisionName>Subdivision</ActivityMediaSubdivisionName>
                 <ActivityStartDate>2007-10-02-07:00</ActivityStartDate>
                 <ActivityStartTime>
                     <Time>11:15:00.0000000</Time>
                     <TimeZoneCode>MDT</TimeZoneCode>
                 </ActivityStartTime>
+                <ActivityEndDate>2007-11-02-07:00</ActivityEndDate>
+                <ActivityEndTime>
+                    <Time>12:15:00</Time>
+                    <TimeZoneCode>EST</TimeZoneCode>
+                </ActivityEndTime>
+                <ActivityRelativeDepthName>RDN</ActivityRelativeDepthName>
+                <ActivityDepthHeightMeasure>
+                    <MeasureValue>1.01</MeasureValue>
+                    <MeasureUnitCode>CM</MeasureUnitCode>
+                </ActivityDepthHeightMeasure>
+                <ActivityTopDepthHeightMeasure>
+                    <MeasureValue>2.02</MeasureValue>
+                    <MeasureUnitCode>IN</MeasureUnitCode>
+                </ActivityTopDepthHeightMeasure>
+                <ActivityBottomDepthHeightMeasure>
+                    <MeasureValue>3.03</MeasureValue>
+                    <MeasureUnitCode>FT</MeasureUnitCode>
+                </ActivityBottomDepthHeightMeasure>
+                <ActivityDepthAltitudeReferencePointText>4.04</ActivityDepthAltitudeReferencePointText>
                 <ProjectIdentifier>C1569-0</ProjectIdentifier>
                 <MonitoringLocationIdentifier>WHP0049</MonitoringLocationIdentifier>
+                <ActivityCommentText>Activity Comment</ActivityCommentText>
             </ActivityDescription>
+            <ActivityLocation>
+                <LatitudeMeasure>42.3250</LatitudeMeasure>
+                <LongitudeMeasure>72.6417</LongitudeMeasure>
+                <SourceMapScaleNumeric>1</SourceMapScaleNumeric>
+                <HorizontalAccuracyMeasure>
+                    <MeasureValue>5.05</MeasureValue>
+                    <MeasureUnitCode>MI</MeasureUnitCode>
+                </HorizontalAccuracyMeasure>
+                <HorizontalCollectionMethodName>MAN</HorizontalCollectionMethodName>
+                <HorizontalCoordinateReferenceSystemDatumName>STD</HorizontalCoordinateReferenceSystemDatumName>
+            </ActivityLocation>
             <SampleDescription>
                 <SampleCollectionMethod>
                     <MethodIdentifier>SP-Water</MethodIdentifier>
@@ -61,7 +93,7 @@
                     <CharacteristicName>Styrene </CharacteristicName>
                     <ResultMeasure>
                         <ResultMeasureValue>1</ResultMeasureValue>
-                        <MeasureUnitCode>Âµg/l</MeasureUnitCode>
+                        <MeasureUnitCode>µg/l</MeasureUnitCode>
                     </ResultMeasure>
                     <ResultCommentText>1</ResultCommentText>
                 </ResultDescription>
@@ -78,7 +110,7 @@
                     <CharacteristicName>Tetrachloroethene </CharacteristicName>
                     <ResultMeasure>
                         <ResultMeasureValue>1</ResultMeasureValue>
-                        <MeasureUnitCode>Âµg/l</MeasureUnitCode>
+                        <MeasureUnitCode>µg/l</MeasureUnitCode>
                     </ResultMeasure>
                     <ResultCommentText>1</ResultCommentText>
                 </ResultDescription>
@@ -112,7 +144,7 @@
                     <CharacteristicName>Bromodichloromethane</CharacteristicName>
                     <ResultMeasure>
                         <ResultMeasureValue>1</ResultMeasureValue>
-                        <MeasureUnitCode>Âµg/l</MeasureUnitCode>
+                        <MeasureUnitCode>µg/l</MeasureUnitCode>
                     </ResultMeasure>
                     <ResultCommentText>1</ResultCommentText>
                 </ResultDescription>
@@ -129,7 +161,7 @@
                     <CharacteristicName>Dichlorodifluoromethane</CharacteristicName>
                     <ResultMeasure>
                         <ResultMeasureValue>1</ResultMeasureValue>
-                        <MeasureUnitCode>Âµg/l</MeasureUnitCode>
+                        <MeasureUnitCode>µg/l</MeasureUnitCode>
                     </ResultMeasure>
                     <ResultCommentText>1</ResultCommentText>
                 </ResultDescription>
@@ -146,7 +178,7 @@
                     <CharacteristicName>Isopropylbenzene </CharacteristicName>
                     <ResultMeasure>
                         <ResultMeasureValue>1</ResultMeasureValue>
-                        <MeasureUnitCode>Âµg/l</MeasureUnitCode>
+                        <MeasureUnitCode>µg/l</MeasureUnitCode>
                     </ResultMeasure>
                     <ResultCommentText>1</ResultCommentText>
                 </ResultDescription>

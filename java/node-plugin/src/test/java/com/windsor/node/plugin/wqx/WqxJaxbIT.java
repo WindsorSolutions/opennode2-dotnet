@@ -1,9 +1,10 @@
 package com.windsor.node.plugin.wqx;
 
-import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
-import java.io.File;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.StringWriter;
 import java.net.URISyntaxException;
 
@@ -11,13 +12,14 @@ import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
-import org.apache.commons.io.FileUtils;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;
 
+import com.windsor.node.plugin.XmlUtils;
 import com.windsor.node.plugin.wqx.domain.generated.ObjectFactory;
 import com.windsor.node.plugin.wqx.domain.generated.OrganizationDataType;
 import com.windsor.node.plugin.wqx.domain.generated.WQXDataType;
@@ -38,8 +40,8 @@ public class WqxJaxbIT extends AbstractWqxIT {
 	 */
 	private static final String XML_PATH = "/" + TEST_XML + "/wqx-1.xml";
 
-	@Test(groups = WQX_TEST_GROUP_NAME, description = "Tests that the marshalled data validates against the schema")
-	public void marshalTest() throws JAXBException, SAXException, URISyntaxException, IOException {
+	@Test(groups = WQX_TEST_GROUP_NAME, description = "Tests that the marshalled data matches the expected XML document")
+	public void marshalTest() throws JAXBException, SAXException, URISyntaxException, IOException, ParserConfigurationException {
 		final OrganizationDataType org = getEntityManager().createQuery(
 				"select x from OrganizationDataType x", OrganizationDataType.class)
 				.getSingleResult();
@@ -56,10 +58,15 @@ public class WqxJaxbIT extends AbstractWqxIT {
 		m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 		final StringWriter writer = new StringWriter();
 		m.marshal(wqx, writer);
+		final String marshalledXml = writer.toString();
 
-		final File f = new File(getClass().getResource(XML_PATH).toURI());
-		final String s = FileUtils.readFileToString(f, "UTF8");
-		assertEquals(writer.toString(), s);
+		LOGGER.debug("Marshalled XML:\n{}", marshalledXml);
+
+		final InputStream is1 = getClass().getResourceAsStream(XML_PATH);
+		final InputStream is2 = new ByteArrayInputStream(marshalledXml.getBytes());
+
+		assertTrue(XmlUtils.equals(is1, is2), "Check that the marshalled XML document matches the expected XML document");
+
 	}
 
 }
