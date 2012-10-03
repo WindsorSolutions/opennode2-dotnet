@@ -175,8 +175,8 @@ public class WqxHibernateIT extends AbstractWqxIT {
 
 		assertEquals(description.getActivityCommentText(), "Activity Comment");
 		final ActivityLocationDataType location = activity.getActivityLocation();
-		assertEquals(location.getLatitudeMeasure(), "42.3250 N");
-		assertEquals(location.getLongitudeMeasure(), "72.6417 W");
+		assertEquals(location.getLatitudeMeasure(), "42.3250");
+		assertEquals(location.getLongitudeMeasure(), "72.6417");
 
 		assertEquals(location.getSourceMapScaleNumeric(), new Integer(1));
 		assertEquals(location.getHorizontalAccuracyMeasure().getMeasureValue(), "5.05");
