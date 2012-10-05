@@ -6,6 +6,17 @@ public class PluginPersistenceConfig {
 
     private boolean debugSql = Boolean.FALSE;
 
+    private Integer batchFetchSize;
+
+    public Integer getBatchFetchSize() {
+        return batchFetchSize;
+    }
+
+    public PluginPersistenceConfig setBatchFetchSize(Integer batchFetchSize) {
+        this.batchFetchSize = batchFetchSize;
+        return this;
+    }
+
     public boolean isDebugSql() {
         return debugSql;
     }

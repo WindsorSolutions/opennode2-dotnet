@@ -24,6 +24,10 @@ public class HibernatePersistenceProvider {
             jpaProperties.put(Environment.FORMAT_SQL, Boolean.TRUE);
         }
 
+        if (config.getBatchFetchSize() != null) {
+            jpaProperties.put(Environment.DEFAULT_BATCH_FETCH_SIZE, config.getBatchFetchSize());
+        }
+
         return provider.createContainerEntityManagerFactory(
                 new HibernatePersistenceUnitInfo(jpaProperties, config),
                 jpaProperties);
