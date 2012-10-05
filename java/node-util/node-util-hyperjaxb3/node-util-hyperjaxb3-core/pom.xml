@@ -2,15 +2,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>com.windsor.node</groupId>
-		<artifactId>node-parent</artifactId>
-		<version>2.06</version>
+		<groupId>com.windsor.node.util.hyperjaxb3</groupId>
+		<artifactId>node-util-hyperjaxb3</artifactId>
+		<version>2.07-SNAPSHOT</version>
 	</parent>
-
-	<artifactId>node-hyperjaxb3</artifactId>
+	<artifactId>node-util-hyperjaxb3-core</artifactId>
 	<packaging>jar</packaging>
-	<name>Hyperjaxb3 custom naming extension for XML-to-DB mapping for the node.</name>
-
+	<name>Node Util - Hyperjaxb3 - Core</name>
 	<dependencies>
 		<dependency>
 			<groupId>org.jvnet.hyperjaxb3</groupId>
@@ -28,5 +26,4 @@
 			<artifactId>commons-lang3</artifactId>
 		</dependency>
 	</dependencies>
-
 </project>

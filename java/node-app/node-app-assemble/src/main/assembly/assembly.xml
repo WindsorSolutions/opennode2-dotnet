@@ -7,38 +7,30 @@
     <includeBaseDirectory>true</includeBaseDirectory>
     <fileSets>
         <fileSet>
-            <directory>../resources/database</directory>
-            <outputDirectory>database</outputDirectory>
+            <directory>src/main/resources</directory>
+            <outputDirectory>./</outputDirectory>
         </fileSet>
         <fileSet>
-            <directory>../resources/other/documentation</directory>
-            <outputDirectory>documentation</outputDirectory>
-        </fileSet>
-        <fileSet>
-            <directory>../resources/opennode2_home</directory>
-            <outputDirectory>opennode2_home</outputDirectory>
-        </fileSet>
-        <fileSet>
-            <directory>../${resources.project}/conf/${build.profile}</directory>
-            <outputDirectory>opennode2_home/conf</outputDirectory>
+            <directory>${env.build.profile}</directory>
+            <outputDirectory>./opennode2_home/conf</outputDirectory>
         </fileSet>
     </fileSets>
     <files>
         <file>
             <outputDirectory>applications</outputDirectory>
-            <source>../node-admin/target/wna.war</source>
+            <source>../node-app-wna/target/wna.war</source>
         </file>
         <file>
             <outputDirectory>applications</outputDirectory>
-            <source>../node-endpoint/target/wne.war</source>
+            <source>../node-app-wne/target/wne.war</source>
         </file>
         <file>
             <outputDirectory>applications</outputDirectory>
-            <source>../node-endpoint2/target/wne2.war</source>
+            <source>../node-app-wne2/target/wne2.war</source>
         </file>
         <file>
             <outputDirectory>applications</outputDirectory>
-            <source>../node-wnos/target/wnos.war</source>
+            <source>../node-app-wnos/target/wnos.war</source>
         </file>
     </files>
 </assembly>

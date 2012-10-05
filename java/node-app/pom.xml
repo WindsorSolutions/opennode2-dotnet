@@ -1,0 +1,22 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+                      http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.windsor.node</groupId>
+        <artifactId>node</artifactId>
+        <version>2.07-SNAPSHOT</version>
+    </parent>
+    <name>Node Application - Parent</name>
+    <groupId>com.windsor.node.app</groupId>
+    <artifactId>node-app</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>node-app-wna</module>
+        <module>node-app-wne</module>
+        <module>node-app-wne2</module>
+        <module>node-app-wnos</module>
+        <module>node-app-assemble</module>
+    </modules>
+</project>
+

@@ -2,56 +2,26 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.windsor.node</groupId>
-        <artifactId>node-parent</artifactId>
-        <version>2.06</version>
+        <groupId>com.windsor.node.app</groupId>
+        <artifactId>node-app</artifactId>
+        <version>2.07-SNAPSHOT</version>
     </parent>
-
-    <artifactId>node-endpoint</artifactId>
+    <artifactId>node-app-wne</artifactId>
     <packaging>war</packaging>
-    <name>Node Endpoint v1.1</name>
+    <name>Node Application - Web Node Endpoint v1.1</name>
     <build>
         <finalName>wne</finalName>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-            </resource>
-            <resource>
-                <directory>${wne.extra.resources.location}</directory>
-            </resource>
-        </resources>
     </build>
-    <properties>
-        <extra.resources.location>src/main/env/ecos-generic</extra.resources.location>
-        <wne.extra.resources.location>${extra.resources.location}</wne.extra.resources.location>
-    </properties>
-    <profiles>
-        <profile>
-            <id>ecos-generic</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <extra.resources.location>src/main/env/ecos-generic</extra.resources.location>
-                <wne.extra.resources.location>${extra.resources.location}</wne.extra.resources.location>
-                <build.profile>ecos-generic</build.profile>
-            </properties>
-        </profile>
-    </profiles>
     <dependencies>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>node-common</artifactId>
+            <groupId>com.windsor.node.core</groupId>
+            <artifactId>node-core-common</artifactId>
             <version>${project.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>commons-io</artifactId>
                     <groupId>commons-io</groupId>
                 </exclusion>
-                <!-- <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring</artifactId>
-                </exclusion> -->
             </exclusions>
         </dependency>
         <dependency>
@@ -68,11 +38,6 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
         </dependency>
-        <!-- <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring</artifactId>
-            <version>2.0</version>
-        </dependency> -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aspects</artifactId>
@@ -84,17 +49,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!-- <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-remoting</artifactId>
-            <version>${springframework.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>commons-logging</artifactId>
-                    <groupId>commons-logging</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency> -->
         <dependency>
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>

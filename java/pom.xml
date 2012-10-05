@@ -65,6 +65,8 @@
     </developers>
     <modules>
         <module>node-core</module>
+        <module>node-app</module>
+        <module>node-util</module>
         <!-- <module>../node-common</module>
         <module>../node-admin</module>
         <module>../node-endpoint2</module>
@@ -124,7 +126,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-war-plugin</artifactId>
-                    <version>2.1-beta-1</version> <!-- FIXME Latest version is 2.3-->
+                    <version>2.3</version> <!-- FIXME Latest version is 2.3-->
                     <configuration>
                         <archive>
                             <addMavenDescriptor>false</addMavenDescriptor>

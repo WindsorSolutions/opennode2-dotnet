@@ -2,11 +2,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>com.windsor.node</groupId>
-		<artifactId>node-hyperjaxb3-parent</artifactId>
-		<version>2.06</version>
+		<groupId>com.windsor.node.util.hyperjaxb3</groupId>
+		<artifactId>node-util-hyperjaxb3</artifactId>
+		<version>2.07-SNAPSHOT</version>
 	</parent>
-	<artifactId>node-hyperjaxb3-facid</artifactId>
+	<artifactId>node-util-hyperjaxb3-wqx</artifactId>
 	<packaging>jar</packaging>
-	<name>FacID naming configuration for Hyperjaxb3.</name>
+	<name>Node Util - Hyperjaxb3 - wqx20</name>
 </project>
