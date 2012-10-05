@@ -60,7 +60,6 @@
 						<args>
 							<arg>-Xannotate</arg>
 							<arg>-Xinheritance</arg>
-							<!-- <arg>-Xnamespace-prefix</arg> -->
 						</args>
 						<variant>jpa2</variant>
 						<extension>true</extension>
@@ -72,11 +71,6 @@
 							<groupId>com.windsor.node</groupId>
 							<artifactId>node-hyperjaxb3</artifactId>
 							<version>2.06</version>
-						</dependency>
-						<dependency>
-							<groupId>org.jvnet.jaxb2_commons</groupId>
-							<artifactId>jaxb2-namespace-prefix</artifactId>
-							<version>1.1</version>
 						</dependency>
 					</dependencies>
 				</plugin>
