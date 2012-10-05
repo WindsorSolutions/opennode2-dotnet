@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:icis="http://www.exchangenetwork.net/schema/icis/4" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/icis/4" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4">
+	<xsd:include schemaLocation="ICIS_Common_v4.0e.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>Schema Name: ICIS_Contact_v4.0e.xsd</xsd:documentation>
+		<xsd:documentation>Current Version Available: http://www.exchangenetwork.net/schema/icis/4</xsd:documentation>
+		<xsd:documentation>Description: ICIS-NPDES contact data input format</xsd:documentation>
+		<xsd:documentation>Application: ICIS-NPDES</xsd:documentation>
+		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
+		<xsd:documentation>Point of Contact: EPA/Alison Kittle</xsd:documentation>
+		<xsd:documentation>Data Written: July 2006</xsd:documentation>
+		<xsd:documentation>Last Date Modified: 2011-11-07</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="BiosolidsPermitContact" type="icis:BiosolidsPermitContact"/>
+	<xsd:element name="CAFOContact" type="icis:CAFOContact"/>
+	<xsd:element name="Contact" type="icis:Contact"/>
+	<xsd:element name="ElectronicAddressText" type="icis:StringMin1Max100Type"/>
+	<xsd:element name="EndDateOfContactAssociation" type="icis:DateType"/>
+	<xsd:element name="EnforcementActionGovernmentContact" type="icis:EnforcementActionGovernmentContact"/>
+	<xsd:element name="FacilityContact" type="icis:FacilityContact"/>
+	<xsd:element name="FirstName" type="icis:StringMin1Max30Type"/>
+	<xsd:element name="GovernmentContact" type="icis:GovernmentContact"/>
+	<xsd:element name="IndividualTitleText" type="icis:StringMin1Max40Type"/>
+	<xsd:element name="InspectionContact" type="icis:InspectionContact"/>
+	<xsd:element name="InspectionGovernmentContact" type="icis:InspectionGovernmentContact"/>
+	<xsd:element name="LastName" type="icis:StringMin1Max30Type"/>
+	<xsd:element name="MiddleName" type="icis:StringMin1Max10Type"/>
+	<xsd:element name="PermitContact" type="icis:PermitContact"/>
+	<xsd:element name="PretreatmentContact" type="icis:PretreatmentContact"/>
+	<xsd:element name="RegionCode" type="icis:String2FixedType"/>
+	<xsd:element name="SiteOwnerContact" type="icis:SiteOwnerContact"/>
+	<xsd:element name="StartDateOfContactAssociation" type="icis:DateType"/>
+	<xsd:element name="StateCode" type="icis:String2FixedType"/>
+	<xsd:element name="StormWaterContact" type="icis:StormWaterContact"/>
+	<xsd:element name="Telephone" type="icis:Telephone"/>
+	<xsd:element name="TelephoneExtensionNumber" type="icis:StringMin1Max4Type"/>
+	<xsd:element name="TelephoneNumber" type="icis:StringMin7Max10Type"/>
+	<xsd:element name="TelephoneNumberTypeCode" type="icis:StringMin1Max3Type"/>
+	<xsd:complexType name="Contact">
+		<xsd:sequence>
+			<xsd:element ref="icis:AffiliationTypeText"/>
+			<xsd:element ref="icis:FirstName"/>
+			<xsd:element ref="icis:MiddleName" minOccurs="0"/>
+			<xsd:element ref="icis:LastName"/>
+			<xsd:element ref="icis:IndividualTitleText"/>
+			<xsd:element ref="icis:OrganizationFormalName" minOccurs="0"/>
+			<xsd:element ref="icis:StateCode" minOccurs="0"/>
+			<xsd:element ref="icis:RegionCode" minOccurs="0"/>
+			<xsd:element ref="icis:Telephone" minOccurs="0" maxOccurs="4"/>
+			<xsd:element ref="icis:ElectronicAddressText" minOccurs="0"/>
+			<xsd:element ref="icis:StartDateOfContactAssociation" minOccurs="0"/>
+			<xsd:element ref="icis:EndDateOfContactAssociation" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="Telephone">
+		<xsd:sequence>
+			<xsd:element ref="icis:TelephoneNumberTypeCode"/>
+			<xsd:element ref="icis:TelephoneNumber" minOccurs="0"/>
+			<xsd:element ref="icis:TelephoneExtensionNumber" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="BiosolidsPermitContact">
+		<xsd:sequence>
+			<xsd:element ref="icis:Contact" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CAFOContact">
+		<xsd:sequence>
+			<xsd:element ref="icis:Contact" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="FacilityContact">
+		<xsd:sequence>
+			<xsd:element ref="icis:Contact" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="EnforcementActionGovernmentContact">
+		<xsd:sequence>
+			<xsd:element ref="icis:AffiliationTypeText"/>
+			<xsd:element ref="icis:ElectronicAddressText"/>
+			<xsd:element ref="icis:StartDateOfContactAssociation" minOccurs="0"/>
+			<xsd:element ref="icis:EndDateOfContactAssociation" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GovernmentContact">
+		<xsd:sequence>
+			<xsd:element ref="icis:ElectronicAddressText"/>
+			<xsd:element ref="icis:AffiliationTypeText"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="InspectionContact">
+		<xsd:sequence>
+			<xsd:element ref="icis:Contact" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="InspectionGovernmentContact">
+		<xsd:sequence>
+			<xsd:element ref="icis:AffiliationTypeText"/>
+			<xsd:element ref="icis:ElectronicAddressText"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PermitContact">
+		<xsd:sequence>
+			<xsd:element ref="icis:Contact" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PretreatmentContact">
+		<xsd:sequence>
+			<xsd:element ref="icis:Contact" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SiteOwnerContact">
+		<xsd:sequence>
+			<xsd:element ref="icis:Contact" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="StormWaterContact">
+		<xsd:sequence>
+			<xsd:element ref="icis:Contact" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

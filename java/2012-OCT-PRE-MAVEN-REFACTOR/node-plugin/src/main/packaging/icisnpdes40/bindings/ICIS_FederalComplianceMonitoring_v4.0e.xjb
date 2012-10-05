@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	jaxb:extensionBindingPrefixes="hj orm" schemaLocation="../xsd/0/ICIS_FederalComplianceMonitoring_v4.0e.xsd">
+
+	<!-- citation -->
+	
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='Citation']">
+			<hj:ignored />
+		</jaxb:bindings>
+	</jaxb:bindings>
+	
+	<!-- federal compliance monitoring -->
+
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='FederalComplianceMonitoring']">
+			<hj:ignored />
+		</jaxb:bindings>
+	</jaxb:bindings>
+	
+	<!-- federal compliance monitoring data -->
+
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='FederalComplianceMonitoringData']">
+			<hj:ignored />
+		</jaxb:bindings>
+	</jaxb:bindings>
+	
+	<!-- inspection conclusion data sheet -->
+
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='InspectionConclusionDataSheet']">
+			<hj:ignored />
+		</jaxb:bindings>
+	</jaxb:bindings>
+
+	<!-- subactivity -->
+
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='Subactivity']">
+			<hj:ignored />
+		</jaxb:bindings>
+	</jaxb:bindings>
+
+</jaxb:bindings>

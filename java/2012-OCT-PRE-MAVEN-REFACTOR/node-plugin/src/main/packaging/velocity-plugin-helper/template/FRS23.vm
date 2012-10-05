@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FacilitySiteList xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+                  xsi:schemaLocation="http://www.epa.gov/xml http://www.epa.gov/enviro/html/frs_demo/presentations/version2.3/FACID_FacilitySiteAll_v2.3.xsd" 
+                  schemaVersion="2.3" xmlns="http://www.epa.gov/xml">       
+#set ($totalRecCount = 0)
+$helper.startStopWatch()
+$helper.print("Change Date:")       
+$helper.print($changeDate)
+#foreach( $facId in $helper.getList("SELECT st_fac_ind FROM CHANGED_FACILITIES WHERE FLOW_TYPE = 'HERE-FRS' AND IS_DELETED = 0 AND UPDATE_DATE >= ?", $changeDate, "st_fac_ind", 93) )
+#if ($velocityCount % 1000 == 0)
+        $helper.print($velocityCount)
+        $helper.printElapsedTime()
+#end    
+#set ($totalRecCount = $velocityCount)
+#set ( $fac = $helper.getObject("SELECT * FROM frs_fac WHERE st_fac_ind = ? ", $facId) )     
+    <FacilitySiteAllDetails>     
+        <FacilitySite>
+#if($fac.get("st_fac_ind"))
+            <FacilityRegistryIdentifier>$fac.get("st_fac_ind")</FacilityRegistryIdentifier>
+#end
+#if($fac.get("fac_sitenm"))
+            <FacilitySiteName>$fac.get("fac_sitenm")</FacilitySiteName>
+#end
+#if($fac.get("fac_sitetype_nm"))
+            <FacilitySiteTypeName>$fac.get("fac_sitetype_nm")</FacilitySiteTypeName>
+#end
+#if($fac.get("fed_fac"))
+            <FederalFacilityIndicator>$fac.get("fed_fac")</FederalFacilityIndicator>
+#end
+#if($fac.get("trib_land"))
+            <TribalLandIndicator>$fac.get("trib_land")</TribalLandIndicator>
+#end
+#if($fac.get("trib_land_nm"))
+            <TribalLandName>$fac.get("trib_land_nm")</TribalLandName>
+#end
+#if($fac.get("cong_dist_num"))
+            <CongressionalDistrictNumber>$fac.get("cong_dist_num")</CongressionalDistrictNumber>
+#end
+#if($fac.get("leg_dist_num"))
+            <LegislativeDistrictNumber>$fac.get("leg_dist_num")</LegislativeDistrictNumber>
+#end
+#if($fac.get("huc_cd"))
+            <HUCCode>$fac.get("huc_cd")</HUCCode>
+#end
+        </FacilitySite>     
+        <LocationAddress>
+#if($fac.get("loc_add"))
+            <LocationAddressText>$fac.get("loc_add")</LocationAddressText>
+#end
+#if($fac.get("supplem_loc"))
+            <SupplementalLocationText>$fac.get("supplem_loc")</SupplementalLocationText>
+#end
+#if($fac.get("local_nm"))
+            <LocalityName>$fac.get("local_nm")</LocalityName>
+#end
+#if($fac.get("cnty_st_fips_cd"))
+            <CountyStateFIPSCode>$fac.get("cnty_st_fips_cd")</CountyStateFIPSCode>
+#end
+#if($fac.get("cnty_nm"))
+            <CountyName>$fac.get("cnty_nm")</CountyName>
+#end
+#if($fac.get("st_cd"))
+            <StateUSPSCode>$fac.get("st_cd")</StateUSPSCode>
+#end
+#if($fac.get("st_nm"))
+            <StateName>$fac.get("st_nm")</StateName>
+#end
+#if($fac.get("co_nm"))
+            <CountryName>$fac.get("co_nm")</CountryName>
+#end
+#if($fac.get("loc_zip_cd"))
+            <LocationZIPCode>$fac.get("loc_zip_cd")</LocationZIPCode>
+#end
+#if($fac.get("loc_desc"))
+            <LocationDescriptionText>$fac.get("loc_desc")</LocationDescriptionText>
+#end
+        </LocationAddress>
+#foreach( $ei in $helper.getData("SELECT * FROM frs_ei WHERE st_fac_ind = ? ", $facId) )
+        <EnvironmentalInterestDetails>
+#if($ei.get("inf_sys_ac"))
+            <InformationSystemAcronymName>$ei.get("inf_sys_ac")</InformationSystemAcronymName>
+#end
+#if($ei.get("inf_sys_ind"))
+            <InformationSystemIdentifier>$ei.get("inf_sys_ind")</InformationSystemIdentifier>
+#end
+#if($ei.get("env_int_type"))
+            <EnvironmentalInterestTypeText>$ei.get("env_int_type")</EnvironmentalInterestTypeText>
+#end
+#if($ei.get("fed_st_int"))
+            <FederalStateInterestIndicator>$ei.get("fed_st_int")</FederalStateInterestIndicator>
+#end
+#if($ei.get("env_int_start_date"))
+            <EnvironmentalInterestStartDate>$ei.get("env_int_start_date")</EnvironmentalInterestStartDate>
+#end
+#if($ei.get("int_start_date_qual"))
+            <InterestStartDateQualifierText>$ei.get("int_start_date_qual")</InterestStartDateQualifierText>
+#end
+#if($ei.get("env_int_end_date"))
+            <EnvironmentalInterestEndDate>$ei.get("env_int_end_date")</EnvironmentalInterestEndDate>
+#end
+#if($ei.get("int_end_date_qual"))
+            <InterestEndDateQualifierText>$ei.get("int_end_date_qual")</InterestEndDateQualifierText>
+#end
+        </EnvironmentalInterestDetails>
+#end     
+#foreach( $an in $helper.getData("SELECT * FROM FRS_ALT_NM WHERE ST_FAC_IND = ? ", $facId) )
+#if(($an.get("alt_nm"))||($an.get("alt_name_type")))
+        <AlternativeNameInfo>
+#if($an.get("alt_nm"))
+            <AlternativeName>$an.get("alt_nm")</AlternativeName>
+#end
+#if($an.get("alt_name_type"))
+            <AlternativeNameTypeText>$an.get("alt_name_type")</AlternativeNameTypeText>
+#end
+        </AlternativeNameInfo>
+#end#end  
+#foreach( $ad in $helper.getData("SELECT * FROM FRS_ADD WHERE ST_FAC_IND = ? ", $facId) )
+#if(($ad.get("mail_add"))||($ad.get("supplem_add"))||($ad.get("mail_add_city_nm"))||($ad.get("mail_add_st_cd"))||($ad.get("mail_add_st_nm"))||($ad.get("mail_add_co_nm"))||($ad.get("mail_add_zip_cd")))
+        <MailingAddress>
+#if($ad.get("mail_add"))
+            <MailingAddressText>$ad.get("mail_add")</MailingAddressText>
+#end
+#if($ad.get("supplem_add"))
+            <SupplementalAddressText>$ad.get("supplem_add")</SupplementalAddressText>
+#end
+#if($ad.get("mail_add_city_nm"))
+            <MailingAddressCityName>$ad.get("mail_add_city_nm")</MailingAddressCityName>
+#end
+#if($ad.get("mail_add_st_cd"))
+            <MailingAddressStateUSPSCode>$ad.get("mail_add_st_cd")</MailingAddressStateUSPSCode>
+#end
+#if($ad.get("mail_add_st_nm"))
+            <MailingAddressStateName>$ad.get("mail_add_st_nm")</MailingAddressStateName>
+#end
+#if($ad.get("mail_add_co_nm"))
+            <MailingAddressCountryName>$ad.get("mail_add_co_nm")</MailingAddressCountryName>
+#end
+#if($ad.get("mail_add_zip_cd"))
+            <MailingAddressZIPCode>$ad.get("mail_add_zip_cd")</MailingAddressZIPCode>
+#end
+        </MailingAddress>
+#end#end
+#foreach( $sic in $helper.getData("SELECT * FROM FRS_FAC_SIC WHERE ST_FAC_IND = ? ", $facId) )
+#if(($sic.get("sic_cd"))||($sic.get("sic_prim_ind")))
+        <SICCodeDetails>
+#if($sic.get("sic_cd"))
+            <SICCode>$sic.get("sic_cd")</SICCode>
+#end
+#if($sic.get("sic_prim_ind"))
+            <SICPrimaryIndicator>$sic.get("sic_prim_ind")</SICPrimaryIndicator>
+#end
+        </SICCodeDetails>
+#end#end  
+#foreach( $nai in $helper.getData("SELECT * FROM FRS_FAC_NAICS WHERE ST_FAC_IND = ? ", $facId) )
+#if(($nai.get("naics_cd"))||($nai.get("naics_prim_ind")))
+        <NAICSCodeDetails>
+#if($nai.get("naics_cd"))
+            <NAICSCode>$nai.get("naics_cd")</NAICSCode>
+#end
+#if($nai.get("naics_prim_ind"))
+            <NAICSPrimaryIndicator>$nai.get("naics_prim_ind")</NAICSPrimaryIndicator>
+#end
+        </NAICSCodeDetails>
+#end#end
+#foreach( $ind in $helper.getData("SELECT * FROM FRS_FAC_IND WHERE ST_FAC_IND = ? ", $facId) )
+        <IndividualDetails>
+#if( ($ind.get("affil_type"))||($ind.get("affil_start_date"))||($ind.get("affil_end_date")) )
+            <Affiliation>
+#if($ind.get("affil_type"))
+                <AffiliationTypeText>$ind.get("affil_type")</AffiliationTypeText>
+#end
+#if($ind.get("affil_start_date"))
+                <AffiliationStartDate>$ind.get("affil_start_date")</AffiliationStartDate>
+#end
+#if($ind.get("affil_end_date"))
+                <AffiliationEndDate>$ind.get("affil_end_date")</AffiliationEndDate>
+#end
+            </Affiliation>
+#end
+#if(($ind.get("email_add"))||($ind.get("tel_num"))||($ind.get("ph_ext"))||($ind.get("fax_num"))||($ind.get("alt_tel_num")))
+            <PhoneFaxEmail>
+#if($ind.get("email_add"))
+                <EmailAddressText>$ind.get("email_add")</EmailAddressText>
+#end
+#if($ind.get("tel_num"))
+                <TelephoneNumber>$ind.get("tel_num")</TelephoneNumber>
+#end
+#if($ind.get("ph_ext"))
+                <PhoneExtension>$ind.get("ph_ext")</PhoneExtension>
+#end
+#if($ind.get("fax_num"))
+                <FaxNumber>$ind.get("fax_num")</FaxNumber>
+#end
+#if($ind.get("alt_tel_num"))
+                <AlternateTelephoneNumber>$ind.get("alt_tel_num")</AlternateTelephoneNumber>
+#end
+            </PhoneFaxEmail>
+#end
+#if(($ind.get("ind_full_nm"))||($ind.get("ind_title")))
+            <Individual>
+#if($ind.get("ind_full_nm"))
+                <IndividualFullName>$ind.get("ind_full_nm")</IndividualFullName>
+#end
+#if($ind.get("ind_title"))
+                <IndividualTitleText>$ind.get("ind_title")</IndividualTitleText>
+#end
+            </Individual>
+#end
+#if(($ind.get("mail_add"))||($ind.get("supplem_add"))||($ind.get("mail_add_city_nm"))||($ind.get("mail_add_st_cd"))||($ind.get("mail_add_st_nm"))||($ind.get("mail_add_co_nm"))||($ind.get("mail_add_zip_cd")))
+            <MailingAddress>
+#if($ind.get("mail_add"))
+                <MailingAddressText>$ind.get("mail_add")</MailingAddressText>
+#end
+#if($ind.get("supplem_add"))
+                <SupplementalAddressText>$ind.get("supplem_add")</SupplementalAddressText>
+#end
+#if($ind.get("mail_add_city_nm"))
+                <MailingAddressCityName>$ind.get("mail_add_city_nm")</MailingAddressCityName>
+#end
+#if($ind.get("mail_add_st_cd"))
+                <MailingAddressStateUSPSCode>$ind.get("mail_add_st_cd")</MailingAddressStateUSPSCode>
+#end
+#if($ind.get("mail_add_st_nm"))
+                <MailingAddressStateName>$ind.get("mail_add_st_nm")</MailingAddressStateName>
+#end
+#if($ind.get("mail_add_co_nm"))
+                <MailingAddressCountryName>$ind.get("mail_add_co_nm")</MailingAddressCountryName>
+#end
+#if($ind.get("mail_add_zip_cd"))
+                <MailingAddressZIPCode>$ind.get("mail_add_zip_cd")</MailingAddressZIPCode>
+#end
+            </MailingAddress>
+#end
+        </IndividualDetails>
+#end
+#foreach( $org in $helper.getData("SELECT * FROM FRS_FAC_ORG WHERE ST_FAC_IND = ? ", $facId) )
+        <OrganizationDetails>
+#if(($org.get("affil_type"))||($org.get("affil_start_date"))||($org.get("affil_end_date")))
+            <Affiliation>
+#if($org.get("affil_type"))
+                <AffiliationTypeText>$org.get("affil_type")</AffiliationTypeText>
+#end
+#if($org.get("affil_start_date"))
+                <AffiliationStartDate>$org.get("affil_start_date")</AffiliationStartDate>
+#end
+#if($org.get("affil_end_date"))
+                <AffiliationEndDate>$org.get("affil_end_date")</AffiliationEndDate>
+#end
+            </Affiliation>
+#end
+#if(($org.get("email_add"))||($org.get("tel_num"))||($org.get("ph_ext"))||($org.get("fax_num"))||($org.get("alt_tel_num")))
+            <PhoneFaxEmail>
+#if($org.get("email_add"))
+                <EmailAddressText>$org.get("email_add")</EmailAddressText>
+#end
+#if($org.get("tel_num"))
+                <TelephoneNumber>$org.get("tel_num")</TelephoneNumber>
+#end
+#if($org.get("ph_ext"))
+                <PhoneExtension>$org.get("ph_ext")</PhoneExtension>
+#end
+#if($org.get("fax_num"))
+                <FaxNumber>$org.get("fax_num")</FaxNumber>
+#end
+#if($org.get("alt_tel_num"))
+                <AlternateTelephoneNumber>$org.get("alt_tel_num")</AlternateTelephoneNumber>
+#end
+            </PhoneFaxEmail>
+#end
+#if(($org.get("org_formal_nm"))||($org.get("org_duns_num"))||($org.get("org_type"))||($org.get("employer_ind"))||($org.get("st_business_ind"))||($org.get("ult_parent_nm"))||($org.get("ult_parent_duns_num")))
+            <Organization>
+#if($org.get("org_formal_nm"))
+                <OrganizationFormalName>$org.get("org_formal_nm")</OrganizationFormalName>
+#end
+#if($org.get("org_duns_num"))
+                <OrganizationDUNSNumber>$org.get("org_duns_num")</OrganizationDUNSNumber>
+#end
+#if($org.get("org_type"))
+                <OrganizationTypeText>$org.get("org_type")</OrganizationTypeText>
+#end
+#if($org.get("employer_ind"))
+                <EmployerIdentifier>$org.get("employer_ind")</EmployerIdentifier>
+#end
+#if($org.get("st_business_ind"))
+                <StateBusinessIdentifier>$org.get("st_business_ind")</StateBusinessIdentifier>
+#end
+#if($org.get("ult_parent_nm"))
+                <UltimateParentName>$org.get("ult_parent_nm")</UltimateParentName>
+#end
+#if($org.get("ult_parent_duns_num"))
+                <UltimateParentDUNSNumber>$org.get("ult_parent_duns_num")</UltimateParentDUNSNumber>
+#end
+            </Organization>
+#end
+#if(($org.get("mail_add"))||($org.get("supplem_add"))||($org.get("mail_add_city_nm"))||($org.get("mail_add_st_cd"))||($org.get("mail_add_st_nm"))||($org.get("mail_add_co_nm"))||($org.get("mail_add_zip_cd")))
+            <MailingAddress>
+#if($org.get("mail_add"))
+                <MailingAddressText>$org.get("mail_add")</MailingAddressText>
+#end
+#if($org.get("supplem_add"))
+                <SupplementalAddressText>$org.get("supplem_add")</SupplementalAddressText>
+#end
+#if($org.get("mail_add_city_nm"))
+                <MailingAddressCityName>$org.get("mail_add_city_nm")</MailingAddressCityName>
+#end
+#if($org.get("mail_add_st_cd"))
+                <MailingAddressStateUSPSCode>$org.get("mail_add_st_cd")</MailingAddressStateUSPSCode>
+#end
+#if($org.get("mail_add_st_nm"))
+                <MailingAddressStateName>$org.get("mail_add_st_nm")</MailingAddressStateName>
+#end
+#if($org.get("mail_add_co_nm"))
+                <MailingAddressCountryName>$org.get("mail_add_co_nm")</MailingAddressCountryName>
+#end
+#if($org.get("mail_add_zip_cd"))
+                <MailingAddressZIPCode>$org.get("mail_add_zip_cd")</MailingAddressZIPCode>
+#end
+            </MailingAddress>
+#end
+        </OrganizationDetails>
+#end        
+#foreach( $geo in $helper.getData("SELECT * FROM frs_geo WHERE st_fac_ind = ? ", $facId) )
+#if( ($geo.get("lat_measure")) && ($geo.get("lon_measure")) )
+        <GeographicCoordinates>
+#if($geo.get("lat_measure"))
+            <LatitudeMeasure>$geo.get("lat_measure")</LatitudeMeasure>
+#end
+#if($geo.get("lon_measure"))
+            <LongitudeMeasure>$geo.get("lon_measure")</LongitudeMeasure>
+#end
+#if($geo.get("horiz_accur_measure"))
+            <HorizontalAccuracyMeasure>$geo.get("horiz_accur_measure")</HorizontalAccuracyMeasure>
+#end
+#if($geo.get("horiz_coll_meth"))
+            <HorizontalCollectionMethodText>$geo.get("horiz_coll_meth")</HorizontalCollectionMethodText>
+#end
+#if($geo.get("horiz_ref_datum_nm"))
+            <HorizontalReferenceDatumName>$geo.get("horiz_ref_datum_nm")</HorizontalReferenceDatumName>
+#end
+#if($geo.get("src_map_scale_num"))
+            <SourceMapScaleNumber>$geo.get("src_map_scale_num")</SourceMapScaleNumber>
+#end
+#if($geo.get("ref_point"))
+            <ReferencePointText>$geo.get("ref_point")</ReferencePointText>
+#end
+#if($geo.get("data_coll_date"))
+            <DataCollectionDate>$geo.get("data_coll_date")</DataCollectionDate>
+#end
+#if($geo.get("geo_type_nm"))
+            <GeometricTypeName>$geo.get("geo_type_nm")</GeometricTypeName>
+#end
+#if($geo.get("loc_comments"))
+            <LocationCommentsText>$geo.get("loc_comments")</LocationCommentsText>
+#end
+#if($geo.get("vert_coll_meth"))
+            <VerticalCollectionMethodText>$geo.get("vert_coll_meth")</VerticalCollectionMethodText>
+#end
+#if($geo.get("vert_measure"))
+            <VerticalMeasure>$geo.get("vert_measure")</VerticalMeasure>
+#end
+#if($geo.get("vert_accur_measure"))
+            <VerticalAccuracyMeasure>$geo.get("vert_accur_measure")</VerticalAccuracyMeasure>
+#end
+#if($geo.get("vert_ref_datum_nm"))
+            <VerticalReferenceDatumName>$geo.get("vert_ref_datum_nm")</VerticalReferenceDatumName>
+#end
+#if($geo.get("data_src_nm"))
+            <DataSourceName>$geo.get("data_src_nm")</DataSourceName>
+#end
+#if($geo.get("coord_data_src_nm"))
+            <CoordinateDataSourceName>$geo.get("coord_data_src_nm")</CoordinateDataSourceName>
+#end
+#if($geo.get("sub_ent_ind"))
+            <SubEntityIdentifier>$geo.get("sub_ent_ind")</SubEntityIdentifier>
+#end
+#if($geo.get("sub_ent_type_nm"))
+            <SubEntityTypeName>$geo.get("sub_ent_type_nm")</SubEntityTypeName>
+#end
+        </GeographicCoordinates>
+#end#end 
+#if($fac.get("data_src_nm"))
+        <SourceOfData>$fac.get("data_src_nm")</SourceOfData>
+#end
+#if($fac.get("reported_date"))
+        <LastReportedDate>$fac.get("reported_date")</LastReportedDate>
+#end
+#if($fac.get("st_fac_sys_ac"))
+        <StateFacilitySystemAcronymName>$fac.get("st_fac_sys_ac")</StateFacilitySystemAcronymName>
+#end
+#if($fac.get("st_fac_ind"))
+        <StateFacilityIdentifier>$fac.get("st_fac_ind")</StateFacilityIdentifier>
+#end
+    </FacilitySiteAllDetails>
+#end  
+</FacilitySiteList>
+$helper.print("Template Records:")
+$helper.print($totalRecCount)
+## Setting the total number of records processed
+$helper.setResultingRecordCount($totalRecCount)
+$helper.print("Total Time:")
+$helper.printElapsedTime()

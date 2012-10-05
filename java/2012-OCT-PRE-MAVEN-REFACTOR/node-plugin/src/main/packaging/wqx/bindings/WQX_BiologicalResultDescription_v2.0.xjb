@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	jaxb:extensionBindingPrefixes="hj orm" schemaLocation="../xsd/WQX_BiologicalResultDescription_v2.0.xsd">
+
+	<!-- biological result description -->
+
+	<jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:complexType[@name='BiologicalResultDescriptionDataType']">
+			<hj:embeddable />
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:element[@ref='wqx:BiologicalIntentName']">
+			<hj:basic>
+				<orm:column name="BIORESULTINTENT"/>
+			</hj:basic>
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:element[@ref='wqx:BiologicalIndividualIdentifier']">
+			<hj:basic>
+				<orm:column name="BIORESULTINDIVIDUALID"/>
+			</hj:basic>
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:element[@ref='wqx:SubjectTaxonomicName']">
+			<hj:basic>
+				<orm:column name="BIORESULTSUBJECTTAXONOMIC"/>
+			</hj:basic>
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:element[@ref='wqx:UnidentifiedSpeciesIdentifier']">
+			<hj:basic>
+				<orm:column name="BIORESULTUNIDENTIFIEDSPECIESID"/>
+			</hj:basic>
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:element[@ref='wqx:SampleTissueAnatomyName']">
+			<hj:basic>
+				<orm:column name="BIORESULTSAMPTISSUEANATOMY"/>
+			</hj:basic>
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:element[@ref='wqx:GroupSummaryCountWeight']">
+			<hj:embedded>
+			
+				<orm:attribute-override name="measureValue">
+					<orm:column name="GRPSUMMCOUNTWEIGHTMEASURE"/>
+				</orm:attribute-override>
+				
+				<orm:attribute-override name="measureUnitCode">
+					<orm:column name="GRPSUMMCOUNTWEIGHTMEASUREUNIT"/>
+				</orm:attribute-override>
+				
+			
+			</hj:embedded>
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:element[@ref='wqx:TaxonomicDetails']">
+			<hj:embedded>
+			
+				<orm:attribute-override name="cellFormName">
+					<orm:column name="TAXDETAILSCELLFORM"/>
+				</orm:attribute-override>
+				
+				<orm:attribute-override name="cellShapeName">
+					<orm:column name="TAXDETAILSCELLSHAPE"/>
+				</orm:attribute-override>
+				
+				<orm:attribute-override name="voltinismName">
+					<orm:column name="TAXDETAILSVOLTINISM"/>
+				</orm:attribute-override>
+								
+				<orm:attribute-override name="taxonomicPollutionTolerance">
+					<orm:column name="TAXDETAILSPOLLTOLERANCE"/>
+				</orm:attribute-override>
+			
+				<orm:attribute-override name="taxonomicPollutionToleranceScaleText">
+					<orm:column name="TAXDETAILSPOLLTOLERANCESCALE"/>
+				</orm:attribute-override>
+				
+				<orm:attribute-override name="trophicLevelName">
+					<orm:column name="TAXDETAILSTROPHICLEVEL"/>
+				</orm:attribute-override>
+
+				<orm:attribute-override name="taxonomicDetailsCitation.resourceTitleName">
+					<orm:column name="CITATIONRESOURCETITLE"/>
+				</orm:attribute-override>
+				
+				<orm:attribute-override name="taxonomicDetailsCitation.resourceCreatorName">
+					<orm:column name="CITATIONRESOURCECREATOR"/>
+				</orm:attribute-override>
+				
+				<orm:attribute-override name="taxonomicDetailsCitation.resourceSubjectText">
+					<orm:column name="CITATIONRESOURCESUBJECT"/>
+				</orm:attribute-override>
+				
+				<orm:attribute-override name="taxonomicDetailsCitation.resourcePublisherName">
+					<orm:column name="CITATIONRESOURCEPUBLISHER"/>
+				</orm:attribute-override>
+				
+				<orm:attribute-override name="taxonomicDetailsCitation.resourceDate">
+					<orm:column name="CITATIONRESOURCEDATE"/>
+				</orm:attribute-override>
+				
+				<orm:attribute-override name="taxonomicDetailsCitation.resourceIdentifier">
+					<orm:column name="CITATIONRESOURCEID"/>
+				</orm:attribute-override>
+				
+			</hj:embedded>
+		</jaxb:bindings>
+		
+	</jaxb:bindings>
+
+</jaxb:bindings>
+

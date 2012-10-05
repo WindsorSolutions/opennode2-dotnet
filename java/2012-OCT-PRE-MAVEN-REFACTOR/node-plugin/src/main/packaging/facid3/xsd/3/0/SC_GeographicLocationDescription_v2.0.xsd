@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified" version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:include schemaLocation="SC_SimpleContent_v2.0.xsd" />
+    <xsd:include schemaLocation="SC_Measure_v2.0.xsd" />
+    <xsd:include schemaLocation="SC_ReferenceMethod_v2.0.xsd" />
+    <xsd:include schemaLocation="SC_GeographicReferencePoint_v2.0.xsd" />
+    <xsd:include schemaLocation="SC_GeographicReferenceDatum_v2.0.xsd" />
+    <xsd:include schemaLocation="SC_CoordinateDataSource_v2.0.xsd" />
+    <xsd:include schemaLocation="SC_GeometricType_v2.0.xsd" />
+    <xsd:annotation>
+        <xsd:documentation>
+        Schema Name  : SC_GeographicLocationDescription_v2.0.xsd
+        Schema Identification : SD.01
+        Current Version Available At :  http://www.exchangenetwork.net/schema/SC
+        Description   : 	Extensive list of geographic identifiers used to clearly mark an object's precise location.
+        Application   :   Exchange Network Shared Schema Component
+        Developed by  : 	 Core Reference Model (CRM) Workgroup
+        Point of Contact :   Douglas Timms, enfoTech &amp; Consulting, Inc.
+        Last Modified by :   Ross &amp; Associates - April 17, 2006 (from SSCv1.1: targetNamespace declaration removed, to conform with Exchange Network namespace decision v1.11)
+</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType name="GeographicLocationDescriptionDataType">
+        <xsd:sequence>
+            <xsd:element minOccurs="0" ref="LatitudeMeasure" />
+            <xsd:element minOccurs="0" ref="LongitudeMeasure" />
+            <xsd:element minOccurs="0" ref="SourceMapScaleNumber" />
+            <xsd:element minOccurs="0" ref="HorizontalAccuracyMeasure" />
+            <xsd:element minOccurs="0" ref="HorizontalCollectionMethod" />
+            <xsd:element minOccurs="0" ref="GeographicReferencePoint" />
+            <xsd:element minOccurs="0" ref="HorizontalReferenceDatum" />
+            <xsd:element minOccurs="0" ref="DataCollectionDate" />
+            <xsd:element minOccurs="0" ref="LocationCommentsText" />
+            <xsd:element minOccurs="0" ref="VerticalMeasure" />
+            <xsd:element minOccurs="0" ref="VerticalCollectionMethod" />
+            <xsd:element minOccurs="0" ref="VerticalReferenceDatum" />
+            <xsd:element minOccurs="0" ref="VerificationMethod" />
+            <xsd:element minOccurs="0" ref="CoordinateDataSource" />
+            <xsd:element minOccurs="0" ref="GeometricType" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="GeographicLocationDescription" type="GeographicLocationDescriptionDataType">
+        <xsd:annotation>
+            <xsd:documentation>Extensive list of geographic identifiers used to clearly mark an object's precise location.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="HorizontalAccuracyMeasure" type="MeasureDataType">
+        <xsd:annotation>
+            <xsd:documentation>The measure of the accuracy of the latitude and longitude coordinates.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="HorizontalCollectionMethod" type="ReferenceMethodDataType">
+        <xsd:annotation>
+            <xsd:documentation>Information that describes the method used to determine the latitude and longitude coordinates for a point on the earth.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="HorizontalReferenceDatum" type="GeographicReferenceDatumDataType">
+        <xsd:annotation>
+            <xsd:documentation>Information that describes the reference datum used in determining latitude and longitude coordinates.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="VerticalMeasure" type="MeasureDataType">
+        <xsd:annotation>
+            <xsd:documentation>The measure of elevation (i.e. the altitude) above or below are reference datum.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="VerticalCollectionMethod" type="ReferenceMethodDataType">
+        <xsd:annotation>
+            <xsd:documentation>Information that describes the method used to collect the vertical measure(i.e., the altitude) of a reference point.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="VerticalReferenceDatum" type="GeographicReferenceDatumDataType">
+        <xsd:annotation>
+            <xsd:documentation>Information that describes the reference datum used to determine the vertical measure (i.e., the altitude).</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="VerificationMethod" type="ReferenceMethodDataType">
+        <xsd:annotation>
+            <xsd:documentation>Information that describes the method or process used to verify the latitude and longitude coordinates.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+</xsd:schema>

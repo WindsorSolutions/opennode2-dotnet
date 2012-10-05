@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:uic="http://www.exchangenetwork.net/schema/uic/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/uic/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:include schemaLocation="UIC_SimpleContent_v1.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+        Schema Name  : UIC_Correction_v1.0.xsd
+        Description   : information on corrective actions taken to address deficiencies observed during the inspection.
+        Developed by  : 	 Lockheed Martin
+        Point of Contact :   Lockheed Martin
+</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="CorrectionDetailType">
+		<xsd:annotation>
+			<xsd:documentation>Defines the Correction information structure.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="uic:CorrectionIdentifier"/>
+			<xsd:element ref="uic:CorrectionActionTypeCode" minOccurs="0"/>
+			<xsd:element ref="uic:CorrectionCommentText" minOccurs="0"/>
+			<xsd:element ref="uic:CorrectionInspectionIdentifier"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="CorrectionDetail" type="uic:CorrectionDetailType"/>
+</xsd:schema>

@@ -1,0 +1,12 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.windsor.node</groupId>
+		<artifactId>node-hyperjaxb3-parent</artifactId>
+		<version>2.06</version>
+	</parent>
+	<artifactId>node-hyperjaxb3-icisnpdes</artifactId>
+	<packaging>jar</packaging>
+	<name>ICIS/NPDES naming configuration for Hyperjaxb3.</name>
+</project>

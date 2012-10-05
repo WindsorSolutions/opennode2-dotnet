@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>$helper.startStopWatch()
+#if($lastProcessedTimestamp)
+#set($lastProcessedTimestamp = $helper.toDbDateString($lastProcessedTimestamp))
+$helper.print("lastProcessedTimestamp: $lastProcessedTimestamp")
+#set($projectQuery = "SELECT * FROM WQX_PROJECT WHERE PARENTID = ? AND WQXUPDATEDATE >= '$lastProcessedTimestamp' ")
+#set($monLocQuery = "SELECT * FROM WQX_MONITORINGLOCATION WHERE PARENTID = ? AND WQXUPDATEDATE >= '$lastProcessedTimestamp' ")
+#set($activityQuery = "SELECT * FROM WQX_ACTIVITY WHERE PARENTID = ?  AND WQXUPDATEDATE >= '$lastProcessedTimestamp' ")
+#set($activityGroupQuery = "SELECT * FROM WQX_ACTIVITYGROUP WHERE PARENTID = ? AND WQXUPDATEDATE >= '$lastProcessedTimestamp' ")
+#set($bioHabIndexQuery = "SELECT * FROM WQX_BIOLOGICALHABITATINDEX WHERE PARENTID = ? AND WQXUPDATEDATE >= '$lastProcessedTimestamp' ")
+#elseif($startDate && $endDate)
+#set($startDate = $helper.toDbDateString($startDate))
+#set($endDate = $helper.toDbDateString($endDate))
+$helper.print("startDate: $startDate")$helper.print("endDate: $endDate")
+#set($projectQuery = "SELECT * FROM WQX_PROJECT WHERE PARENTID = ? AND WQXUPDATEDATE >= '$startDate' AND WQXUPDATEDATE < '$endDate' ")
+#set($monLocQuery = "SELECT * FROM WQX_MONITORINGLOCATION WHERE PARENTID = ? AND WQXUPDATEDATE >= '$startDate' AND WQXUPDATEDATE < '$endDate' ")
+#set($activityQuery = "SELECT * FROM WQX_ACTIVITY WHERE PARENTID = ?  AND WQXUPDATEDATE >= '$startDate' AND WQXUPDATEDATE < '$endDate' ")
+#set($activityGroupQuery = "SELECT * FROM WQX_ACTIVITYGROUP WHERE PARENTID = ? AND WQXUPDATEDATE >= '$startDate' AND WQXUPDATEDATE < '$endDate' ")
+#set($bioHabIndexQuery = "SELECT * FROM WQX_BIOLOGICALHABITATINDEX WHERE PARENTID = ? AND WQXUPDATEDATE >= '$startDate' AND WQXUPDATEDATE < '$endDate' ")
+#end##if($lastProcessedTimestamp)
+#set ($org = $helper.getObject("SELECT recordid FROM WQX_ORGANIZATION WHERE ORGID = ? ", $orgId))
+#if($makeHeader)#if($makeHeader == "true" || $makeHeader == "TRUE")
+<Document Id="$docId" 
+          xmlns="http://www.exchangenetwork.net/schema/v1.0/ExchangeNetworkDocument.xsd" 
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<Header>
+    <Author>$authorName</Author>
+    <Organization>$authorOrg</Organization>
+    <Title>WQX</Title>
+    <CreationTime>$helper.getCurrentDateTime()</CreationTime>
+    <ContactInfo>$contactInfo</ContactInfo>
+</Header>
+<Payload Operation="Delete">
+#end#end##if($makeHeader)
+<WQXDelete xmlns="http://www.exchangenetwork.net/schema/wqx/2" 
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://www.exchangenetwork.net/schema/wqx/2 http://www.exchangenetwork.net/schema/wqx/2/0/WQX_WQX_Delete_v2.0.xsd">
+    <OrganizationDelete>
+        <OrganizationIdentifier>$orgId</OrganizationIdentifier>
+$helper.print("getting Projects...")
+$helper.printElapsedTime()
+#foreach($project in $helper.getData($projectQuery, $org.get("recordid")))
+#set($totalProjectCount = $velocityCount)
+        <ProjectIdentifier>$project.get("projectid")</ProjectIdentifier>
+#end###foreach($project in $helper.getData
+$helper.print("getting MonitoringLocations...")
+$helper.printElapsedTime()    
+#foreach($monLoc in $helper.getData($monLocQuery, $org.get("recordid")))
+#set($totalMonitoringLocationCount = $velocityCount)
+        <MonitoringLocationIdentifier>$monLoc.get("monitoringlocationid")</MonitoringLocationIdentifier>
+#end##foreach($monLoc in $helper.getData
+$helper.print("getting Activites...")
+$helper.printElapsedTime()    
+#foreach($activity in $helper.getData($activityQuery, $org.get("recordid")))
+#set($totalActivityCount = $velocityCount)
+        <ActivityIdentifier>$activity.get("activityid")</ActivityIdentifier>
+#end##foreach($activity in $helper.getData
+$helper.print("getting ActivityGroups...")
+$helper.printElapsedTime()    
+#foreach($activityGroup in $helper.getData($activityGroupQuery, $org.get("recordid")))
+#set($totalActivityGroupCount = $velocityCount)
+        <ActivityGroupIdentifier>$activity.get("activitygroupid")</ActivityGroupIdentifier>
+#end##foreach($activityGroup in $helper.getData
+$helper.print("getting BiologicalHabitatIndexes...")
+$helper.printElapsedTime()
+#foreach($habitatIndex in $helper.getData($bioHabIndexQuery, $org.get("recordid")))
+#set($totalBiologicalHabitatIndexCount = $velocityCount)
+        <IndexIdentifier>$activity.get("indexid")</IndexIdentifier>
+#end##foreach($habitatIndex in $helper.getData
+    </OrganizationDelete>            
+</WQXDelete>
+#if($makeHeader)#if($makeHeader == "true" || $makeHeader == "TRUE")
+</Payload>
+</Document>
+#end#end##if($makeHeader)
+$helper.print("Template merge complete! Total elapsed time:")
+$helper.printElapsedTime()
+#set($totalRecordCount = 0)
+#if($totalProjectCount)#set($totalRecordCount = $totalProjectCount)$helper.print("Total Projects: $totalProjectCount")#end
+#if($totalMonitoringLocationCount)#set($totalRecordCount = $totalRecordCount + $totalMonitoringLocationCount)$helper.print("Total MonitoringLocations: $totalMonitoringLocationCount")#end
+#if($totalActivityCount)#set($totalRecordCount = $totalRecordCount + $totalActivityCount)$helper.print("Total Activities: $totalActivityCount")#end
+#if($totalActivityGroupCount)#set($totalRecordCount = $totalRecordCount + $totalActivityGroupCount)$helper.print("Total Activity Groups: $totalActivityGroupCount")#end
+#if($totalBiologicalHabitatIndexCount)#set($totalRecordCount = $totalRecordCount + $totalBiologicalHabitatIndexCount)$helper.print("Total BiologicalHabitatIndexes: $totalBiologicalHabitatIndexCount")#end
+#if($totalRecordCount)$helper.setResultingRecordCount($totalRecordCount)$helper.print("Total record count: $totalRecordCount")#end

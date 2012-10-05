@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance"
+	jaxb:extensionBindingPrefixes="hj orm inheritance" schemaLocation="../xsd/WQX_BiologicalHabitatIndex_v2.0.xsd">
+
+	<!-- biological habitat index -->
+
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='BiologicalHabitatIndexDataType']">
+			<hj:entity>
+				<orm:table name="WQX_BIOLOGICALHABITATINDEX"/>
+			</hj:entity>
+			<inheritance:extends>com.windsor.node.plugin.wqx.domain.TopLevelEntity</inheritance:extends>
+		</jaxb:bindings>
+	</jaxb:bindings>
+
+</jaxb:bindings>
+

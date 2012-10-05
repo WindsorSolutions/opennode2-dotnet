@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wqx="http://www.exchangenetwork.net/schema/wqx/2" targetNamespace="http://www.exchangenetwork.net/schema/wqx/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+	<xsd:include schemaLocation="./WQX_SimpleContent_v2.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+  	        Schema Name  : WQX_AlternateMonitoringLocationIdentity_v2.0.xsd
+  	        Current Version Available At :  
+  	        Description   : Alternate identifications of a monitoring location.
+  	        Developed by  : EPA Office of Water
+  	        Point of Contact : Dwane Young
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="AlternateMonitoringLocationIdentityDataType">
+		<xsd:sequence>
+			<xsd:element ref="wqx:MonitoringLocationIdentifier"/>
+			<xsd:element ref="wqx:MonitoringLocationIdentifierContext"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="AlternateMonitoringLocationIdentity" type="wqx:AlternateMonitoringLocationIdentityDataType">
+		<xsd:annotation>
+			<xsd:documentation>Alternate identifications of a monitoring location.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

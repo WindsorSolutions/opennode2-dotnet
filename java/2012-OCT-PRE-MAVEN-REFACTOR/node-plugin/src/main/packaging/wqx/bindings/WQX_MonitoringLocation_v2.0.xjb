@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance"
+	jaxb:extensionBindingPrefixes="hj orm inheritance" schemaLocation="../xsd/WQX_MonitoringLocation_v2.0.xsd">
+
+	<!-- monitoring location -->
+
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='MonitoringLocationDataType']">
+			<hj:entity>
+				<orm:table name="WQX_MONITORINGLOCATION"/>
+			</hj:entity>
+			<inheritance:extends>com.windsor.node.plugin.wqx.domain.TopLevelEntity</inheritance:extends>
+		</jaxb:bindings>
+	</jaxb:bindings>
+	
+	<!--
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:element[@ref='wqx:AttachedBinaryObject']">
+			<hj:element-collection>
+				
+				<orm:collection-table name="WQX_MONLOCATTACHEDBINARYOBJECT">
+					<orm:join-column name="PARENTID"/>
+				</orm:collection-table>
+				 
+			</hj:element-collection>
+		</jaxb:bindings>
+	</jaxb:bindings>
+	-->
+
+</jaxb:bindings>
+

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema targetNamespace="http://www.epa.gov/xml" xmlns:facid="http://www.epa.gov/xml" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="2.3">
+	<xsd:include schemaLocation=".\FACID_GeographicCoordinateDetails_v2.3.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name : 	FACID_GeographicCoordinatesList_v2.3 
+		Current Version Available At :
+		Description : 	Locational Reference schema for Data transfer.Date format is YYYY-MM-DD.
+		Application : 
+		Developed by : 	 Environmental Protection Agency, SAIC
+		Point of Contact : Meena Masti	
+	</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="GeographicCoordinatesList" type="facid:GeographicCoordinatesList"/>
+	<xsd:complexType name="GeographicCoordinatesList">
+		<xsd:sequence>
+			<xsd:element ref="facid:GeographicCoordinateDetails" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="schemaVersion" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:element name="GeographicCoordinateDetails" type="facid:GeographicCoordinateDetails"/>
+</xsd:schema>

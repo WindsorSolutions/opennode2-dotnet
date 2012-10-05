@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+                http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+               
+               
+    <!-- HELPERS -->
+	<bean id="authHelper" class="com.windsor.node.service.helper.naas.auth.NAASAuthenticationHelper">
+    <!-- bean id="authHelper" class="com.windsor.node.service.helper.mock.MockNaasAuthenticationHelper" -->
+		<property name="naasConfig" ref="naasConfig" />
+		<property name="nosConfig" ref="nosConfig" />
+	</bean>
+
+	<bean id="usrMgrHelper" class="com.windsor.node.service.helper.naas.usrmgr.NAASUserManagerHelper">
+    <!-- bean id="usrMgrHelper" class="com.windsor.node.service.helper.mock.MockNaasUserManagerHelper" -->
+		<property name="naasConfig" ref="naasConfig" />
+	</bean>
+	
+	<!-- NAAS -->
+	<bean id="naasConfig" class="com.windsor.node.conf.NAASConfig">
+		<property name="authEndpoint" value="${url.naas.auth}" />
+		<property name="mgrEndpoint" value="${url.naas.mgr}" />
+		<property name="runtimeAccount" ref="runtimeAccountInfo" />
+		<property name="adminAccount" ref="adminAccountInfo" />
+		<property name="nodeId" value="${id.node}" />
+	</bean>
+
+	<!-- Admin -->
+	<bean id="adminAccountInfo" class="com.windsor.node.common.domain.NAASAccount">
+		<property name="username" value="${naas.admin.username}" />
+		<property name="password" value="${naas.admin.password}" />
+		<property name="authMethod" value="${naas.admin.authMeth}" />
+		<property name="domain" value="default" />
+	</bean>
+
+	<!-- Runtime -->
+	<bean id="runtimeAccountInfo" class="com.windsor.node.common.domain.NAASAccount">
+		<property name="username" value="${naas.runtime.username}" />
+		<property name="password" value="${naas.runtime.password}" />
+		<property name="authMethod" value="${naas.runtime.authMeth}" />
+		<property name="domain" value="default" />
+	</bean>    
+
+</beans>

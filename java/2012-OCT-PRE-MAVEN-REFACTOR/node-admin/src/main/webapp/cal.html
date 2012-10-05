@@ -1,0 +1,537 @@
+<html>
+	<head>
+		<title>Calendar</title>
+		<script language="JavaScript">
+<!--
+
+var styleFlag;
+var DEBUG = false;
+var TIMEDEBUG = false;
+
+function setDate() 
+{
+    styleFlag = document.calControl.style?1:0;
+    this.dateField   = opener.dateField;
+    this.inDate      = dateField.value;
+
+    var now   = new Date();
+    var day   = now.getDate();
+    var month = now.getMonth();
+    var year  = now.getFullYear();
+    var hour  = now.getHours();
+    var minut = now.getMinutes();
+    
+    yearFirst = true;
+	var parts = inDate.split("-")
+	if(parseInt(parts[0]) && parseInt(parts[1]) && parseInt(parts[2]))
+	{
+		if(parts[0].length == 4 && parts[1].length == 2 && parts[2].length == 2)
+		{
+		  year = parts[0];
+		  month = parts[1];
+		  day = parts[2]; 
+		}
+	}
+    
+    var timePart = inDate.split(" ")
+    if(TIMEDEBUG) alert("Parts: " + timePart.length);
+    
+    if (timePart.length == 2)
+    {
+        if(TIMEDEBUG) alert("Part1: " + timePart[1]);
+        var timeParts = timePart[1].split(":")
+        if(TIMEDEBUG) alert("timeParts: " + timeParts.length);
+        
+        if(parseInt(timeParts[0]) && parseInt(timeParts[1]))
+        {        
+            if(TIMEDEBUG) alert("hour: " + timeParts[0] + " minut: " + timeParts[1]); 
+                
+            hour = timeParts[0];
+            minut = timeParts[1]; 
+                 
+        }
+    }
+     
+    
+    if(DEBUG) alert("Final Date: " + year + "-" + month + "-" + day);
+    if(TIMEDEBUG) alert("Final Date: " + hour + ":" + minut);
+    
+    document.forms[1].listHour.selectedIndex = (hour);
+    document.forms[1].listMinute.selectedIndex = (minut / 5);
+    
+    
+    this.focusDay = day;
+    document.calControl.month.selectedIndex = month;
+    document.calControl.year.value = year;
+	
+	
+	
+    displayCalendar(day, month, year);
+}
+
+function setToday() {
+    var now   = new Date();
+    var day   = now.getDate();
+    var month = now.getMonth();
+    var year  = now.getFullYear();
+
+    this.focusDay = day;
+    document.calControl.month.selectedIndex = month;
+    document.calControl.year.value = year;
+    displayCalendar(day, month, year);
+    }
+function isFourDigitYear(year) {
+    if (year.length != 4) {
+    alert ("Sorry, the year must be four-digits in length.");
+    document.calControl.year.select();
+    document.calControl.year.focus();
+    }
+    else {return true;
+    }
+    }
+function selectDate() {
+    var year  = document.calControl.year.value;
+    if (isFourDigitYear(year)) {
+    var day   = 0;
+    var month = document.calControl.month.selectedIndex;
+    displayCalendar(day, month, year);
+    }
+}
+function setPreviousYear() {
+    var year  = document.calControl.year.value;
+    if (isFourDigitYear(year)) {
+    var day   = 0;
+    var month = document.calControl.month.selectedIndex;
+    year--;
+    document.calControl.year.value = year;
+    displayCalendar(day, month, year);
+    }
+}
+function setPreviousMonth() {
+    var year  = document.calControl.year.value;
+    if (isFourDigitYear(year)) {
+    var day   = 0;
+    var month = document.calControl.month.selectedIndex;
+    if (month == 0) {
+    month = 11;
+    if (year > 1000) {
+    year--;
+    document.calControl.year.value = year;
+    }
+    }
+    else {
+    month--;
+    }
+    document.calControl.month.selectedIndex = month;
+    displayCalendar(day, month, year);
+    }
+}
+function setNextMonth() {
+var year  = document.calControl.year.value;
+if (isFourDigitYear(year)) {
+var day   = 0;
+var month = document.calControl.month.selectedIndex;
+if (month == 11) {
+month = 0;
+year++;
+       document.calControl.year.value = year;
+        }
+        else {
+        month++;
+        }
+        document.calControl.month.selectedIndex = month;
+        displayCalendar(day, month, year);
+    }
+}
+function setNextYear() {
+    var year  = document.calControl.year.value;
+    if (isFourDigitYear(year)) {
+    var day   = 0;
+    var month = document.calControl.month.selectedIndex;
+    year++;
+    document.calControl.year.value = year;
+    displayCalendar(day, month, year);
+    }
+}
+function displayCalendar(day, month, year) {       
+    day     = parseInt(day);
+    month   = parseInt(month);
+    year    = parseInt(year);
+    var i   = 0;
+    var now = new Date();
+    if (day == 0) {
+    var nowDay = now.getDate();
+    }
+    else {
+    var nowDay = day;
+    }
+    if(DEBUG) alert("displayCalendar1: " + year + "-" + month + "-" + day);
+    var days         = getDaysInMonth(month+1,year);
+    var firstOfMonth = new Date (year, month, 1);
+    var startingPos  = firstOfMonth.getDay();
+    if(DEBUG) alert("displayCalendar2: " + days + "\n" + firstOfMonth + "\n" + startingPos);
+    days += startingPos;
+    if(DEBUG) alert("displayCalendar3: " + days + "\n" + firstOfMonth + "\n" + startingPos);
+    
+
+//MAKE BEGINNING NON-DATE buttonS BLANK
+    for (i = 0; i < startingPos; i++) {
+        document.calbuttons.elements[i].value = "   ";
+        if (styleFlag) document.calbuttons.elements[i].style.visibility="hidden";
+    }
+    // SET VALUES FOR DAYS OF THE MONTH
+    for (i = startingPos; i < days; i++)  
+    {
+     document.calbuttons.elements[i].value = i-startingPos+1;
+     document.calbuttons.elements[i].onClick = "returnDate"
+     if (styleFlag) document.calbuttons.elements[i].style.visibility="visible";
+    }
+    // MAKE REMAINING NON-DATE buttonS BLANK
+    for (i=days; i<42; i++)  {
+        document.calbuttons.elements[i].value = "   ";
+        if (styleFlag) document.calbuttons.elements[i].style.visibility="hidden";
+    }
+    // GIVE FOCUS TO CORRECT DAY
+    if(DEBUG) alert("displayCalendar4: " + (parseInt(focusDay) + parseInt(startingPos) - 1));
+    if(DEBUG) alert("displayCalendar5: " + document.calbuttons.elements.length);
+    //document.calbuttons.elements[parseInt(focusDay)+parseInt(startingPos)-1].style.backgroundColor="yellow";
+    document.calbuttons.elements[parseInt(focusDay)+parseInt(startingPos)-1].focus();
+}
+// GET NUMBER OF DAYS IN MONTH
+function getDaysInMonth(month,year)  {
+var days;
+if (month==1 || month==3 || month==5 || month==7 || month==8 ||
+month==10 || month==12)  days=31;
+else if (month==4 || month==6 || month==9 || month==11) days=30;
+else if (month==2)  {
+if (isLeapYear(year)) {days=29;}
+else {
+days=28;
+}
+}
+return (days);
+}
+// CHECK TO SEE IF YEAR IS A LEAP YEAR
+function isLeapYear (Year) {
+    if (((Year % 4)==0) && ((Year % 100)!=0) || ((Year % 400)==0)) {
+    return (true);
+    }
+    else {
+    return (false);
+    }
+}
+
+var selectedDay = null;
+
+// SET FORM FIELD VALUE TO THE DATE SELECTED
+function returnDate(inDay)
+{
+    selectedDay = inDay;
+}
+
+function returnDate2()
+{
+    var day = selectedDay;
+    if (day == null){
+        var now   = new Date();
+        day = now.getDate();
+    }
+    var month = (document.calControl.month.selectedIndex)+1;
+    var year  = document.calControl.year.value;
+    var hour  = document.forms[1].listHour.value;
+    var minut = document.forms[1].listMinute.value;
+        
+    if ((""+month).length == 1)
+    {
+        month="0"+month;
+    }
+    
+    if ((""+day).length == 1)
+    {
+        day="0"+day;
+    }
+    
+    if ((""+hour).length == 1)
+    {
+        hour="0"+hour;
+    }
+    
+    if ((""+minut).length == 1)
+    {
+        minut="0"+minut;
+    }
+    
+    if (day != "   ") {
+        dateField.value = year + "-" + month + "-" + day + " " + hour + ":" + minut;
+        window.close();
+    }
+}
+
+//-->
+		</script>
+		
+		
+<link rel="stylesheet" type="text/css" href="admin.css" />
+    
+    
+    
+	</head>
+	<body bgcolor="#E3ECF3" onload="setDate()" text="#999" link="#999" vlink="#999" alink="#999" bottomMargin="0" leftMargin="0" topMargin="0" rightMargin="0">
+		<table bgcolor="#FFFFFF" cellpadding="2" cellspacing="1" border="0" width="100%" align="center">
+			<form name="calControl" onSubmit="return false;">
+				<TBODY>
+					<tr bgcolor="#E3ECF3">
+						<th colspan="5">
+							<select name="month" onChange='selectDate()' class='topselection'>
+								<option selected>
+								January
+								<option>
+								February
+								<option>
+								March
+								<option>
+								April
+								<option>
+								May
+								<option>
+								June
+								<option>
+								July
+								<option>
+								August
+								<option>
+								September
+								<option>
+								October
+								<option>
+								November
+								<option>
+									December</option>
+							</select>
+							</th>
+							<th colspan="2" >
+							<input name="year" type="text" size="4" maxlength="4" onChange="selectDate()" class='topbutton'>
+							</th>
+					</tr>
+					<tr bgcolor="#E3ECF3">
+							<th colspan="7">
+							<input type="button" name="previousYear" value="<<" onClick="setPreviousYear()" class="topbutton">
+							<input type="button" name="previousYear" value=" < " onClick="setPreviousMonth()" class="topbutton">
+							<input type="button" name="previousYear" value="Today" onClick="setToday()" class="topbutton">
+							<input type="button" name="previousYear" value=" > " onClick="setNextMonth()" class="topbutton">
+							<input type="button" name="previousYear" value=">>" onClick="setNextYear()" class="topbutton">
+						</th>
+					</tr>
+			</form>
+			<form name="calbuttons">
+				<tr align="middle" valign="top" bgcolor="#666666">
+					<th class="days">
+						<b>Su</b>
+					</th>
+					<th class="days">
+						<b>Mo</b>
+					</th>
+					<th class="days">
+						<b>Tu</b>
+					</th>
+					<th class="days">
+						<b>We</b>
+					</th>
+					<th class="days">
+						<b>Th</b>
+					</th>
+					<th class="days">
+						<b>Fr</b>
+					</th>
+					<th class="days">
+						<b>Sa</b>
+					</th>
+				</tr>
+				<tr align="middle" valign="top" bgcolor="#dcdcdc">
+					<td bgcolor="#dcdcdc">
+						<input type="button" name="but0" value="    " onClick="returnDate(this.value)" class="calButton">
+					</td>
+					<td bgcolor="#dcdcdc">
+						<input type="button" name="but1" value="    " onClick="returnDate(this.value)" class="calButton">
+					</td>
+					<td bgcolor="#dcdcdc">
+						<input type="button" name="but2" value="    " onClick="returnDate(this.value)" class="calButton">
+					</td>
+					<td bgcolor="#dcdcdc">
+						<input type="button" name="but3" value="    " onClick="returnDate(this.value)" class="calButton">
+					</td>
+					<td bgcolor="#dcdcdc">
+						<input type="button" name="but4" value="    " onClick="returnDate(this.value)" class="calButton">
+					</td>
+					<td bgcolor="#dcdcdc">
+						<input type="button" name="but5" value="    " onClick="returnDate(this.value)" class="calButton">
+					</td>
+					<td bgcolor="#dcdcdc">
+						<input type="button" name="but6" value="    " onClick="returnDate(this.value)" class="calButton">
+					</td>
+				</tr>
+				<tr align="middle" valign="top" bgcolor="#dcdcdc">
+					<td bgcolor="#dcdcdc">
+						<input type="button" name="but7" value="    " onClick="returnDate(this.value)" class="calButton">
+					</td>
+					<td bgcolor="#dcdcdc">
+						<input type="button" name="but8" value="    " onClick="returnDate(this.value)" class="calButton">
+					</td>
+					<td bgcolor="#dcdcdc">
+						<input type="button" name="but9" value="    " onClick="returnDate(this.value)" class="calButton">
+					</td>
+					<td bgcolor="#dcdcdc">
+						<input type="button" name="but10" value="    " onClick="returnDate(this.value)" class="calButton">
+					</td>
+					<td bgcolor="#dcdcdc">
+						<input type="button" name="but11" value="    " onClick="returnDate(this.value)" class="calButton">
+					</td>
+					<td bgcolor="#dcdcdc">
+						<input type="button" name="but12" value="    " onClick="returnDate(this.value)" class="calButton">
+					</td>
+					<td bgcolor="#dcdcdc">
+						<input type="button" name="but13" value="    " onClick="returnDate(this.value)" class="calButton">
+					</td>
+				</tr>
+				<tr align="middle" valign="top" bgcolor="#dcdcdc">
+					<td bgcolor="#dcdcdc">
+						<input type="button" name="but14" value="    " onClick="returnDate(this.value)" class="calButton">
+					</td>
+					<td bgcolor="#dcdcdc">
+						<input type="button" name="but15" value="    " onClick="returnDate(this.value)" class="calButton">
+					</td>
+					<td bgcolor="#dcdcdc">
+						<input type="button" name="but16" value="    " onClick="returnDate(this.value)" class="calButton">
+					</td>
+					<td bgcolor="#dcdcdc">
+						<input type="button" name="but17" value="    " onClick="returnDate(this.value)" class="calButton">
+					</td>
+					<td bgcolor="#dcdcdc">
+						<input type="button" name="but18" value="    " onClick="returnDate(this.value)" class="calButton">
+					</td>
+					<td bgcolor="#dcdcdc">
+						<input type="button" name="but19" value="    " onClick="returnDate(this.value)" class="calButton">
+					</td>
+					<td bgcolor="#dcdcdc">
+						<input type="button" name="but20" value="    " onClick="returnDate(this.value)" class="calButton">
+					</td>
+				</tr>
+				<tr align="middle" valign="top" bgcolor="#dcdcdc">
+					<td bgcolor="#dcdcdc">
+						<input type="button" name="but21" value="    " onClick="returnDate(this.value)" class="calButton">
+					</td>
+					<td bgcolor="#dcdcdc">
+						<input type="button" name="but22" value="    " onClick="returnDate(this.value)" class="calButton">
+					</td>
+					<td bgcolor="#dcdcdc">
+						<input type="button" name="but23" value="    " onClick="returnDate(this.value)" class="calButton">
+					</td>
+					<td bgcolor="#dcdcdc">
+						<input type="button" name="but24" value="    " onClick="returnDate(this.value)" class="calButton">
+					</td>
+					<td bgcolor="#dcdcdc">
+						<input type="button" name="but25" value="    " onClick="returnDate(this.value)" class="calButton">
+					</td>
+					<td bgcolor="#dcdcdc">
+						<input type="button" name="but26" value="    " onClick="returnDate(this.value)" class="calButton">
+					</td>
+					<td bgcolor="#dcdcdc">
+						<input type="button" name="but27" value="    " onClick="returnDate(this.value)" class="calButton">
+					</td>
+				</tr>
+				<tr align="middle" valign="top" bgcolor="#dcdcdc">
+					<td bgcolor="#dcdcdc">
+						<input type="button" name="but28" value="    " onClick="returnDate(this.value)" class="calButton">
+					</td>
+					<td bgcolor="#dcdcdc">
+						<input type="button" name="but29" value="    " onClick="returnDate(this.value)" class="calButton">
+					</td>
+					<td bgcolor="#dcdcdc">
+						<input type="button" name="but30" value="    " onClick="returnDate(this.value)" class="calButton">
+					</td>
+					<td bgcolor="#dcdcdc">
+						<input type="button" name="but31" value="    " onClick="returnDate(this.value)" class="calButton">
+					</td>
+					<td bgcolor="#dcdcdc">
+						<input type="button" name="but32" value="    " onClick="returnDate(this.value)" class="calButton">
+					</td>
+					<td bgcolor="#dcdcdc">
+						<input type="button" name="but33" value="    " onClick="returnDate(this.value)" class="calButton">
+					</td>
+					<td bgcolor="#dcdcdc">
+						<input type="button" name="but34" value="    " onClick="returnDate(this.value)" class="calButton">
+					</td>
+				</tr>
+				<tr align="middle" valign="top" bgcolor="#dcdcdc">
+					<td bgcolor="#dcdcdc">
+						<input type="button" name="but35" value="    " onClick="returnDate(this.value)" class="calButton">
+					</td>
+					<td bgcolor="#dcdcdc">
+						<input type="button" name="but36" value="    " onClick="returnDate(this.value)" class="calButton">
+					</td>
+					<td bgcolor="#dcdcdc">
+						<input type="button" name="but37" value="    " onClick="returnDate(this.value)" class="calButton">
+					</td>
+					<td bgcolor="#dcdcdc">
+						<input type="button" name="but38" value="    " onClick="returnDate(this.value)" class="calButton">
+					</td>
+					<td bgcolor="#dcdcdc">
+						<input type="button" name="but39" value="    " onClick="returnDate(this.value)" class="calButton">
+					</td>
+					<td bgcolor="#dcdcdc">
+						<input type="button" name="but40" value="    " onClick="returnDate(this.value)" class="calButton">
+					</td>
+					<td bgcolor="#dcdcdc">
+						<input type="button" name="but41" value="    " onClick="returnDate(this.value)" class="calButton">
+					</td>
+				</tr>
+				<tr bgcolor="#E3ECF3">
+				    <td colspan="4" bgcolor="#E3ECF3" align="center">Time&nbsp;<select id="listHour"  class='topselection'">
+				        <option value="0">Midnight</option>
+				        <option value="1">1 AM</option>
+				        <option value="2">2 AM</option>
+				        <option value="3">3 AM</option>
+				        <option value="4">4 AM</option>
+				        <option value="5">5 AM</option>
+				        <option value="6">6 AM</option>
+				        <option value="7">7 AM</option>
+				        <option value="8">8 AM</option>
+				        <option value="9">9 AM</option>
+				        <option value="10">10 AM</option>
+				        <option value="11">11 AM</option>
+				        <option value="12">Noon</option>
+				        <option value="13">1 PM</option>
+				        <option value="14">2 PM</option>
+				        <option value="15">3 PM</option>
+				        <option value="16">4 PM</option>
+				        <option value="17">5 PM</option>
+				        <option value="18">6 PM</option>
+				        <option value="19">7 PM</option>
+				        <option value="20">8 PM</option>
+				        <option value="21">9 PM</option>
+				        <option value="22">10 PM</option>
+				        <option value="23">11 PM</option>
+				    </select>:<select id="listMinute"  class='topselection'>
+				        <option value="0">00</option>
+				        <option value="5">05</option>
+				        <option value="10">10</option>
+				        <option value="15">15</option>
+				        <option value="20">20</option>
+				        <option value="25">25</option>
+				        <option value="30">30</option>
+				        <option value="35">35</option>
+				        <option value="40">40</option>
+				        <option value="45">45</option>
+				        <option value="50">50</option>
+				        <option value="55">55</option>
+				    </select></td>
+				    <td colspan="3" bgcolor="#E3ECF3" align="center"><input type="button" 
+				    name="cmdOK" value="OK" class="button" style="width:100%;"
+				    onClick="returnDate2();" id="okbutton"></td>
+				    
+				</tr>
+			</form>
+			</TBODY>
+		</table>
+	</body>
+</html>

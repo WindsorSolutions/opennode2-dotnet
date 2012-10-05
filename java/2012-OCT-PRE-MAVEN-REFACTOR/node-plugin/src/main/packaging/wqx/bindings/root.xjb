@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+	xmlns:annox="http://annox.dev.java.net"
+	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm" jaxb:extensionBindingPrefixes="hj orm annox">
+
+	<jaxb:bindings schemaLocation="../xsd/root.xsd" node="/xsd:schema">
+
+		<!-- global settings -->
+
+		<jaxb:schemaBindings>
+			<jaxb:package name="com.windsor.node.plugin.wqx.domain.generated" />
+		</jaxb:schemaBindings>
+
+		<jaxb:globalBindings generateIsSetMethod="true" localScoping="toplevel">
+
+			<jaxb:serializable uid="1" />
+			
+			<!-- boolean -->
+			
+			<xjc:javaType name="java.lang.String" xmlType="xsd:boolean"
+				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.YesNoAdapter" />
+
+			<!-- date/time mappings -->
+
+			<xjc:javaType name="java.util.Date" xmlType="xsd:date"
+				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.DateAdapter" />
+
+			<xjc:javaType name="java.util.Date" xmlType="xsd:dateTime"
+				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.DateTimeAdapter" />
+
+			<xjc:javaType name="java.lang.String" xmlType="wqx:TimeDataType"
+				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter" />
+				
+			<xjc:javaType name="java.lang.String" xmlType="wqx:ResourceDateDataType"
+				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter" />
+				
+			<xjc:javaType name="java.lang.String" xmlType="wqx:IndexCalculatedDateDataType"
+				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter" />
+
+			<!-- integer mappings -->
+			
+			<xjc:javaType name="java.lang.Integer" xmlType="wqx:SourceMapScaleNumericDataType"
+				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.IntegerAdapter" />
+
+			<!-- decimal mappings -->
+
+			<xjc:javaType name="java.lang.String" xmlType="wqx:LatitudeMeasureDataType"
+				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter" />
+
+			<xjc:javaType name="java.lang.String" xmlType="wqx:LongitudeMeasureDataType"
+				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter" />
+			
+			<xjc:javaType name="java.lang.String" xmlType="wqx:SamplingComponentPlaceInSeriesNumericDataType"
+				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter" />
+				
+			<xjc:javaType name="java.lang.String" xmlType="wqx:PassCountDataType"
+				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter" />
+
+		</jaxb:globalBindings>
+
+		<hj:persistence>
+
+			<hj:default-generated-id name="Dbid" transient="true" javaType="java.lang.String" />
+
+			<hj:default-single-property type="xsd:boolean">
+				<hj:basic>
+					<orm:column column-definition="char(1)" length="1" />
+				</hj:basic>
+			</hj:default-single-property>
+
+			<hj:default-single-property type="wqx:LatitudeMeasureDataType">
+				<hj:basic>
+					<orm:column column-definition="varchar(30)" length="30" />
+				</hj:basic>
+			</hj:default-single-property>
+
+			<hj:default-single-property type="wqx:LongitudeMeasureDataType">
+				<hj:basic>
+					<orm:column column-definition="varchar(30)" length="30" />
+				</hj:basic>
+			</hj:default-single-property>		
+			
+
+			<!-- define a @Basic annotation for this so a @Temporal annotation ins't used. -->
+			
+			<hj:default-single-property type="wqx:IndexCalculatedDateDataType">
+				<hj:basic>
+					<orm:column column-definition="varchar(10)" length="10" />
+				</hj:basic>
+			</hj:default-single-property>			
+			
+			<hj:default-single-property type="wqx:ResourceDateDataType">
+				<hj:basic>
+					<orm:column column-definition="varchar(10)" length="10"/>
+				</hj:basic>
+			</hj:default-single-property>
+			
+			<hj:default-single-property type="wqx:TimeDataType">
+				<hj:basic>
+					<orm:column column-definition="varchar(20)" length="20" />
+				</hj:basic>
+			</hj:default-single-property>
+			
+			<hj:default-single-property type="wqx:ActivityStartDateDataType">
+				<hj:basic>
+					<orm:column column-definition="datetime" />
+				</hj:basic>
+			</hj:default-single-property>
+			
+			<hj:default-single-property type="wqx:ActivityEndDateDataType">
+				<hj:basic>
+					<orm:column column-definition="datetime" />
+				</hj:basic>
+			</hj:default-single-property>
+
+		</hj:persistence>
+
+	</jaxb:bindings>
+
+</jaxb:bindings>

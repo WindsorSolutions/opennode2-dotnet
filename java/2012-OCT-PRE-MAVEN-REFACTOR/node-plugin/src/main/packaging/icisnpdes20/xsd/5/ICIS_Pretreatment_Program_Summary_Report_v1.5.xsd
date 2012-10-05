@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema 
+targetNamespace="http://www.exchangenetwork.net/schema/icis/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1" xmlns:icis="http://www.exchangenetwork.net/schema/icis/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<!-- INCLUDE STATEMENTS -->
+	<xsd:include schemaLocation="ICIS_Key_Elements_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_Local_Limits_Program_Report_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_Pretreatment_v1.5.xsd"/>
+	<!-- SCHEMA HEADER -->
+	<xsd:annotation>
+		<xsd:documentation>Schema Name: ICIS_Pretreatment_Program_Summary_Report_v1.5.xsd</xsd:documentation>
+		<xsd:documentation>Current Version Available: http://www.exchangenetwork.net/schema/draft/icis/SchemasVersion1.5</xsd:documentation>
+		<xsd:documentation>Description: Pretreatment summary report data input format</xsd:documentation>
+		<xsd:documentation>Application: ICIS-NPDES</xsd:documentation>
+		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
+		<xsd:documentation>Point of Contact: EPA/Alison Kittle</xsd:documentation>
+		<xsd:documentation>Data Written: July 2006</xsd:documentation>
+		<xsd:documentation>Last Date Modified:3-7-2008</xsd:documentation>
+	</xsd:annotation>
+	<!-- GLOBAL ELEMENT DECLARATIONS -->
+	<xsd:element name="PretreatmentPerformanceSummary" type="icis:PretreatmentPerformanceSummary"/>
+	<xsd:element name="PretreatmentPerformanceSummaryEndDate" type="xsd:date"/>
+	<xsd:element name="PretreatmentPerformanceSummaryStartDate" type="icis:DateType"/>
+	<!-- COMPLEX TYPE DEFINITIONS -->
+	<xsd:complexType name="PretreatmentPerformanceSummaryData">
+		<xsd:sequence>
+			<xsd:element ref="icis:TransactionHeader"/>
+			<xsd:element ref="icis:PretreatmentPerformanceSummary"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PretreatmentPerformanceSummary">
+		<xsd:complexContent>
+			<xsd:extension base="icis:BasicPermitKeyElements">
+				<xsd:sequence>
+					<xsd:element ref="icis:PretreatmentPerformanceSummaryEndDate"/>
+					<xsd:element ref="icis:PretreatmentPerformanceSummaryStartDate" minOccurs="0"/>
+					<xsd:group ref="icis:PretreatmentDataGroup" minOccurs="0"/>
+					<xsd:element ref="icis:LocalLimits" minOccurs="0"/>
+					<xsd:element ref="icis:RemovalCredits" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+</xsd:schema>

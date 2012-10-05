@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	jaxb:extensionBindingPrefixes="hj orm" schemaLocation="../xsd/WQX_FrequencyClassInformation_v2.0.xsd">
+
+	<!-- frequency class information -->
+
+	<jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:complexType[@name='FrequencyClassInformationDataType']">
+			<hj:embeddable />
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:element[@ref='wqx:FrequencyClassDescriptorCode']">
+			<hj:basic>
+				<orm:column name="FREQCLASSDESCCODE"/>
+			</hj:basic>
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:element[@ref='wqx:FrequencyClassDescriptorUnitCode']">
+			<hj:basic>
+				<orm:column name="FREQCLASSDESCUNITCODE"/>
+			</hj:basic>
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:element[@ref='wqx:LowerClassBoundValue']">
+			<hj:basic>
+				<orm:column name="FREQCLASSLOWERBOUNDVALUE"/>
+			</hj:basic>
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:element[@ref='wqx:UpperClassBoundValue']">
+			<hj:basic>
+				<orm:column name="FREQCLASSUPPERBOUNDVALUE"/>
+			</hj:basic>
+		</jaxb:bindings>
+		
+	</jaxb:bindings>
+
+</jaxb:bindings>
+

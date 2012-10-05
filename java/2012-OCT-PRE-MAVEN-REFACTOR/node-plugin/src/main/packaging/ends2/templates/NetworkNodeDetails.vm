@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NetworkNodes xsi:schemaLocation="http://www.exchangenetwork.net/schema/ends/2 GetServices_v2.0.xsd" xmlns="http://www.exchangenetwork.net/schema/ends/2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <NetworkNodeDetails>
+        <NodeIdentifier>$nodeId</NodeIdentifier>
+        <NodeName>$nodeName</NodeName>
+        <NodeAddress>$nodeAddress</NodeAddress>
+        <OrganizationIdentifier>$orgIdentifier</OrganizationIdentifier>
+        <NodeContact>$nodeContact</NodeContact>
+        <NodeVersionIdentifier>$nodeVersion</NodeVersionIdentifier>
+        <NodeDeploymentTypeCode>$deploymentType</NodeDeploymentTypeCode>
+        <NodeStatus>$nodeStatus</NodeStatus>
+        <BoundingBoxDetails>
+            <BoundingCoordinateEast>$boundingCoordinateEast</BoundingCoordinateEast>
+            <BoundingCoordinateNorth>$boundingCoordinateNorth</BoundingCoordinateNorth>
+            <BoundingCoordinateSouth>$boundingCoordinateSouth</BoundingCoordinateSouth>
+            <BoundingCoordinateWest>$boundingCoordinateWest</BoundingCoordinateWest>
+        </BoundingBoxDetails>
+        <NodeServiceList>
+#foreach($service in $serviceList)
+            <Service>
+                <MethodName>$service.getType()</MethodName>
+                <Dataflow>$service.getFlowName()</Dataflow>
+                <ServiceIdentifier>$service.getName()</ServiceIdentifier>
+                <ServiceDescription></ServiceDescription>
+#foreach($param in $service.getRequestParams())
+                <Parameter ParameterRequiredIndicator="$param.isRequired()" ParameterType="$param.getType()" ParameterName="$param.getName()" ParameterSortIndex="$param.getSortIndex()" ParameterOccurrenceNumber="$param.getOccurenceNum()" ParameterEncoding="$param.getEncodingType()" />
+#end##foreach($param in $service.getRequestParams())
+            </Service>
+#end##foreach($service in $serviceList)
+        </NodeServiceList>
+    </NetworkNodeDetails>
+</NetworkNodes>

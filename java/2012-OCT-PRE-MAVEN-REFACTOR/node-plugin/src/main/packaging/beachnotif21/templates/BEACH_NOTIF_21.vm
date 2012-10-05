@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="UTF-8"?>
+#set ($totalRecCount = 0)
+$helper.startStopWatch()
+<BeachDataSubmission 
+    xsi:schemaLocation="http://www.exchangenetwork.net/schema/BEACHES/2 index.xsd"
+    xmlns="http://www.exchangenetwork.net/schema/BEACHES/2" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+#foreach($orgId in $helper.getList("SELECT ID FROM NOTIF_ORGANIZATION", "id"))
+#set ($orgdetail = $helper.getObject("SELECT DISTINCT M.*, O.*, E.*, T.*, P.*, A.*, S.*, C.* FROM NOTIF_ORGANIZATIONMAILINGADDR M JOIN NOTIF_ORGANIZATION O ON (O.ID = M.ORGANIZATION_ID) LEFT JOIN NOTIF_ORGELECTRONICADDR E ON (E.ORGANIZATION_ID = O.ID) LEFT JOIN NOTIF_ORGANIZATIONTELEPHONE T ON (T.ORGANIZATION_ID = O.ID) LEFT JOIN NOTIF_PERSON P ON (P.ORGANIZATION_ID = O.ID) LEFT JOIN NOTIF_PERSONMAILINGADDRESS A ON (A.PERSON_ID = P.ID) LEFT JOIN NOTIF_PERSONELECTRONICADDRESS S ON (S.PERSON_ID = P.ID) LEFT JOIN NOTIF_PERSONTELEPHONE C ON (C.PERSON_ID = P.ID) WHERE O.ID = ? ", $orgId))
+    <OrganizationDetail>
+#if($orgdetail.organizationidentifier)
+        <OrganizationIdentifier>$orgdetail.organizationidentifier</OrganizationIdentifier>
+#end
+#if(($orgdetail.organizationtypecode)||($orgdetail.organizationname)||($orgdetail.organizationdescription)||($orgdetail.organizationabbreviation))
+        <OrganizationNameDetail>
+#if($orgdetail.organizationtypecode)
+            <OrganizationTypeCode>$orgdetail.organizationtypecode</OrganizationTypeCode>
+#end
+#if($orgdetail.organizationname)
+            <OrganizationName>$orgdetail.organizationname</OrganizationName>
+#end
+#if($orgdetail.organizationdescription)
+            <OrganizationDescriptionText>$orgdetail.organizationdescription</OrganizationDescriptionText>
+#end
+#if($orgdetail.organizationabbreviation)
+            <OrganizationAbbreviationText>$orgdetail.organizationabbreviation</OrganizationAbbreviationText>
+#end
+        </OrganizationNameDetail>
+#end
+#if(($orgdetail.mailingaddrtypecode)||($orgdetail.mailingaddrline1)||($orgdetail.mailingaddrline2)||($orgdetail.mailingaddrline3)||($orgdetail.mailingaddrcity)||($orgdetail.statecode)||($orgdetail.zipcode)||($orgdetail.mailingaddreffectivedate)||($orgdetail.mailingaddrstatus))
+        <OrganizationMailingAddressDetail>
+#if($orgdetail.mailingaddrtypecode)
+            <MailingAddressTypeCode>$orgdetail.mailingaddrtypecode</MailingAddressTypeCode>
+#end
+#if($orgdetail.mailingaddrline1)
+            <MailingAddressStreetLine1Text>$orgdetail.mailingaddrline1</MailingAddressStreetLine1Text>
+#end
+#if($orgdetail.mailingaddrline2)
+            <MailingAddressStreetLine2Text>$orgdetail.mailingaddrline2</MailingAddressStreetLine2Text>
+#end
+#if($orgdetail.mailingaddrline3)
+            <MailingAddressStreetLine3Text>$orgdetail.mailingaddrline3</MailingAddressStreetLine3Text>
+#end
+#if($orgdetail.mailingaddrcity)
+            <MailingAddressCityName>$orgdetail.mailingaddrcity</MailingAddressCityName>
+#end
+#if($orgdetail.statecode)
+            <StateCode>$orgdetail.statecode</StateCode>
+#end
+#if($orgdetail.zipcode)
+            <AddressPostalCode>$orgdetail.zipcode</AddressPostalCode>
+#end
+#if($orgdetail.mailingaddreffectivedate)
+            <MailingAddressEffectiveDate>$orgdetail.mailingaddreffectivedate</MailingAddressEffectiveDate>
+#end
+#if($orgdetail.mailingaddrstatus)
+            <MailingAddressStatusIndicator>$orgdetail.mailingaddrstatus</MailingAddressStatusIndicator>
+#end
+        </OrganizationMailingAddressDetail>
+#end
+#if(($orgdetail.electronicaddrtypecode)||($orgdetail.electronicaddr)||($orgdetail.electronicaddreffdate)||($orgdetail.electronicaddrstatus))
+        <OrganizationElectronicAddressDetail>
+#if($orgdetail.electronicaddrtypecode)
+            <ElectronicAddressTypeCode>$orgdetail.electronicaddrtypecode</ElectronicAddressTypeCode>
+#end
+#if($orgdetail.electronicaddr)
+            <ElectronicAddressText>$orgdetail.electronicaddr</ElectronicAddressText>
+#end
+#if($orgdetail.electronicaddreffdate)
+            <ElectronicAddressEffectiveDate>$orgdetail.electronicaddreffdate</ElectronicAddressEffectiveDate>
+#end
+#if($orgdetail.electronicaddrstatus)
+            <ElectronicAddressStatusIndicator>$orgdetail.electronicaddrstatus</ElectronicAddressStatusIndicator>
+#end
+        </OrganizationElectronicAddressDetail>
+#end
+#if(($orgdetail.telephonetypecode)||($orgdetail.telephonenumber)||($orgdetail.telephoneeffectivedate)||($orgdetail.telephonestatus))
+        <OrganizationTelephoneDetail>
+#if($orgdetail.telephonetypecode)
+            <TelephoneTypeCode>$orgdetail.telephonetypecode</TelephoneTypeCode>
+#end
+#if($orgdetail.telephonenumber)
+            <TelephoneNumberText>$orgdetail.telephonenumber</TelephoneNumberText>
+#end
+#if($orgdetail.telephoneeffectivedate)
+            <TelephoneEffectiveDate>$orgdetail.telephoneeffectivedate</TelephoneEffectiveDate>
+#end
+#if($orgdetail.telephonestatus)
+            <TelephoneStatusIndicator>$orgdetail.telephonestatus</TelephoneStatusIndicator>
+#end
+        </OrganizationTelephoneDetail>
+#end
+        <OrganizationPersonDetail>
+#if($orgdetail.personidentifier)
+            <PersonIdentifier>$orgdetail.personidentifier</PersonIdentifier>
+#end
+#if(($orgdetail.personstatus)||($orgdetail.firstname)||($orgdetail.lastname)||($orgdetail.middleinitial)||($orgdetail.suffix)||($orgdetail.title))
+            <PersonNameDetail>
+#if($orgdetail.personstatus)
+                <PersonStatusIndicator>$orgdetail.personstatus</PersonStatusIndicator>
+#end
+#if($orgdetail.firstname)
+                <FirstName>$orgdetail.firstname</FirstName>
+#end
+#if($orgdetail.lastname)
+                <LastName>$orgdetail.lastname</LastName>
+#end
+#if($orgdetail.middleinitial)
+                <PersonMiddleInitial>$orgdetail.middleinitial</PersonMiddleInitial>
+#end
+#if($orgdetail.suffix)
+                <NameSuffixText>$orgdetail.suffix</NameSuffixText>
+#end
+#if($orgdetail.title)
+                <NamePrefixText>$orgdetail.title</NamePrefixText>
+#end
+            </PersonNameDetail>
+#end
+#if(($orgdetail.mailingaddrtypecode)||($orgdetail.mailingaddrline1)||($orgdetail.mailingaddrline2)||($orgdetail.mailingaddrline3)||($orgdetail.mailingaddrcity)||($orgdetail.statecode)||($orgdetail.zipcode)||($orgdetail.mailingaddreffectivedate)||($orgdetail.mailingaddrstatus))
+            <PersonMailingAddressDetail>
+#if($orgdetail.mailingaddrtypecode)
+                <MailingAddressTypeCode>$orgdetail.mailingaddrtypecode</MailingAddressTypeCode>
+#end
+#if($orgdetail.mailingaddrline1)
+                <MailingAddressStreetLine1Text>$orgdetail.mailingaddrline1</MailingAddressStreetLine1Text>
+#end
+#if($orgdetail.mailingaddrline2)
+                <MailingAddressStreetLine2Text>$orgdetail.mailingaddrline2</MailingAddressStreetLine2Text>
+#end
+#if($orgdetail.mailingaddrline3)
+                <MailingAddressStreetLine3Text>$orgdetail.mailingaddrline3</MailingAddressStreetLine3Text>
+#end
+#if($orgdetail.mailingaddrcity)
+                <MailingAddressCityName>$orgdetail.mailingaddrcity</MailingAddressCityName>
+#end
+#if($orgdetail.statecode)
+                <StateCode>$orgdetail.statecode</StateCode>
+#end
+#if($orgdetail.zipcode)
+                <AddressPostalCode>$orgdetail.zipcode</AddressPostalCode>
+#end
+#if($orgdetail.mailingaddreffectivedate)
+                <MailingAddressEffectiveDate>$orgdetail.mailingaddreffectivedate</MailingAddressEffectiveDate>
+#end
+#if($orgdetail.mailingaddrstatus)
+                <MailingAddressStatusIndicator>$orgdetail.mailingaddrstatus</MailingAddressStatusIndicator>
+#end
+            </PersonMailingAddressDetail>
+#end
+#if(($orgdetail.electronicaddresstypecode)||($orgdetail.electronicaddress)||($orgdetail.electronicaddresseffectivedate)||($orgdetail.electronicaddressstatus))
+            <PersonElectronicAddressDetail>
+#if($orgdetail.electronicaddresstypecode)
+                <ElectronicAddressTypeCode>$orgdetail.electronicaddresstypecode</ElectronicAddressTypeCode>
+#end
+#if($orgdetail.electronicaddress)
+                <ElectronicAddressText>$orgdetail.electronicaddress</ElectronicAddressText>
+#end
+#if($orgdetail.electronicaddresseffectivedate)
+                <ElectronicAddressEffectiveDate>$orgdetail.electronicaddresseffectivedate</ElectronicAddressEffectiveDate>
+#end
+#if($orgdetail.electronicaddressstatus)
+                <ElectronicAddressStatusIndicator>$orgdetail.electronicaddressstatus</ElectronicAddressStatusIndicator>
+#end
+            </PersonElectronicAddressDetail>
+#end
+#if(($orgdetail.telephonetypecode)||($orgdetail.telephonenumber)||($orgdetail.telephoneeffectivedate)||($orgdetail.telephonestatus))
+            <PersonTelephoneDetail>
+#if($orgdetail.telephonetypecode)
+                <TelephoneTypeCode>$orgdetail.telephonetypecode</TelephoneTypeCode>
+#end
+#if($orgdetail.telephonenumber)
+                <TelephoneNumberText>$orgdetail.telephonenumber</TelephoneNumberText>
+#end
+#if($orgdetail.telephoneeffectivedate)
+                <TelephoneEffectiveDate>$orgdetail.telephoneeffectivedate</TelephoneEffectiveDate>
+#end
+#if($orgdetail.telephonestatus)
+                <TelephoneStatusIndicator>$orgdetail.telephonestatus</TelephoneStatusIndicator>
+#end
+            </PersonTelephoneDetail>
+#end
+        </OrganizationPersonDetail>
+    </OrganizationDetail>
+#set ($totalRecCount = $velocityCount)$helper.print("Total Organizations: $totalRecCount")#end##foreach($orgId in $helper.getList("SELECT ID FROM NOTIF_ORGANIZATION", "id"))
+#foreach($beachid in $helper.getList("SELECT ID FROM NOTIF_BEACH ORDER BY BEACHIDENTIFIER", "id"))
+#set ($beach = $helper.getObject("SELECT DISTINCT B.*, P.* FROM NOTIF_BEACH B LEFT JOIN NOTIF_BEACHPOLLUTION P ON (P.BEACH_ID = B.ID) WHERE B.ID = ? ", $beachid)) 
+    <BeachDetail>
+#if($beach.beachidentifier)
+        <BeachIdentifier>$beach.beachidentifier</BeachIdentifier>
+#end
+#if(($beach.beachname)||($beach.beachdescription)||($beach.beachcomment)||($beach.beachstatecode)||($beach.beachfipscountycode))
+        <BeachNameDetail>
+#if($beach.beachname)
+            <ProgramInterestName>$beach.beachname</ProgramInterestName>
+#end
+#if($beach.beachdescription)
+            <ProgramInterestDescriptionText>$beach.beachdescription</ProgramInterestDescriptionText>
+#end
+#if($beach.beachcomment)
+            <ProgramInterestCommentText>$beach.beachcomment</ProgramInterestCommentText>
+#end
+#if($beach.beachstatecode)
+            <ProgramInterestStateCode>$beach.beachstatecode</ProgramInterestStateCode>
+#end
+#if($beach.beachfipscountycode)
+            <ProgramInterestFIPSCountyCode>$beach.beachfipscountycode</ProgramInterestFIPSCountyCode>
+#end
+#if($beach.waterbodynamecode)
+            <WaterBodyNameCode>$beach.waterbodynamecode</WaterBodyNameCode>
+#end
+#if($beach.waterbodytypecode)
+            <WaterBodyTypeCode>$beach.waterbodytypecode</WaterBodyTypeCode>
+#end
+#if(($beach.beachaccesstype)||($beach.beachaccesscomment))
+            <BeachAccessibilityDetail>
+#if($beach.beachaccesstype)
+                <BeachAccessibilityType>$beach.beachaccesstype</BeachAccessibilityType>
+#end
+#if($beach.beachaccesscomment)
+                <BeachAccessibilityComment>$beach.beachaccesscomment</BeachAccessibilityComment>
+#end
+            </BeachAccessibilityDetail>
+#end
+        </BeachNameDetail>
+#end
+#if(($beach.effectiveyear)||($beach.beachtierranking)||($beach.beachactbeachindicator))
+        <BeachAttributeDetail>
+#if($beach.effectiveyear)
+            <AttributeEffectiveYear>$beach.effectiveyear</AttributeEffectiveYear>
+#end
+#if(($beach.extentlengthmeasure)||($beach.extentunitofmeasure))
+            <BeachExtentDetail>
+#if($beach.extentlengthmeasure)
+                <ExtentLengthMeasure>$beach.extentlengthmeasure</ExtentLengthMeasure>
+#end
+#if($beach.extentunitofmeasure)
+                <ExtentUnitOfMeasureCode>$beach.extentunitofmeasure</ExtentUnitOfMeasureCode>
+#end
+            </BeachExtentDetail>
+#end
+#if($beach.swimseasonlength||$beach.swimseasonunitofmeasure || $beach.swimseasonstartdate || $beach.swimseasonenddate)
+#if($beach.swimseasonlength||$beach.swimseasonunitofmeasure)
+            <BeachSwimSeasonLengthDetail>
+#if($beach.swimseasonlength)
+                <SwimSeasonLengthMeasure>$beach.swimseasonlength</SwimSeasonLengthMeasure>
+#end
+#if($beach.swimseasonunitofmeasure)
+                <SwimSeasonUnitOfMeasureCode>$beach.swimseasonunitofmeasure</SwimSeasonUnitOfMeasureCode>
+#end
+#elseif($beach.swimseasonstartdate || $beach.swimseasonenddate)
+#if($beach.swimseasonstartdate)
+                <SwimSeasonStartDate>$beach.swimseasonstartdate</SwimSeasonStartDate>
+#end
+#if($beach.swimseasonenddate)
+                <SwimSeasonEndDate>$beach.swimseasonenddate</SwimSeasonEndDate>
+#end
+#end
+            </BeachSwimSeasonLengthDetail>
+#end
+#if(($beach.swimseasonfrequencymeasure)||($beach.offseasonfrequencymeasure)||($beach.monitoringfrequnitofmeasure)||($beach.monitoredirregularly)||($beach.monitoredirregularlycomment))
+            <MonitoringFrequencyDetail>
+#if($beach.swimseasonfrequencymeasure)
+                <SwimSeasonFrequencyMeasure>$beach.swimseasonfrequencymeasure</SwimSeasonFrequencyMeasure>
+#end
+#if($beach.offseasonfrequencymeasure)
+                <OffSeasonFrequencyMeasure>$beach.offseasonfrequencymeasure</OffSeasonFrequencyMeasure>
+#end
+#if($beach.monitoringfrequnitofmeasure)
+                <MonitoringFrequencyUnitOfMeasureCode>$beach.monitoringfrequnitofmeasure</MonitoringFrequencyUnitOfMeasureCode>
+#end
+#if($beach.monitoredirregularly)
+                <MonitoredIrregularly>$beach.monitoredirregularly</MonitoredIrregularly>
+#end
+#if($beach.monitoredirregularlycomment)
+                <MonitoredIrregularlyComment>$beach.monitoredirregularlycomment</MonitoredIrregularlyComment>
+#end
+            </MonitoringFrequencyDetail>
+#end
+#if(($beach.pollutionsourcecode)||($beach.pollutionsourcedescription))
+            <BeachPollutionSourceDetail>
+                <BeachPollutionSource>
+#if($beach.pollutionsourcecode)
+                    <BeachPollutionSourceCode>$beach.pollutionsourcecode</BeachPollutionSourceCode>
+#end
+#if($beach.pollutionsourcedescription)
+                    <BeachPollutionSourceDescription>$beach.pollutionsourcedescription</BeachPollutionSourceDescription>
+#end
+                </BeachPollutionSource>
+            </BeachPollutionSourceDetail>
+#end
+#if($beach.beachtierranking)
+            <BeachTierRanking>$beach.beachtierranking</BeachTierRanking>
+#end
+#if($beach.beachactbeachindicator)
+            <BeachActBeachIndicator>$beach.beachactbeachindicator</BeachActBeachIndicator>
+#end
+        </BeachAttributeDetail>
+#end
+#foreach($activity in $helper.getData("SELECT DISTINCT A.*, R.*, S.*, I.* FROM NOTIF_BEACHACTIVITY A  LEFT JOIN NOTIF_ACTIVITYREASON R ON (R.ACTIVITY_ID = A.ID) LEFT JOIN NOTIF_ACTIVITYSOURCE S ON (S.ACTIVITY_ID = A.ID) LEFT JOIN NOTIF_ACTIVITYINDICATOR I ON (I.ACTIVITY_ID = A.ID) WHERE A.BEACH_ID = ? AND A.SENTTOEPA = 'N'", $beachid)) 
+#if(($activity.activitytypecode)||($activity.activityname)||($activity.actualstartdate)||($activity.actualstopdate)||($activity.monitoringstationidentifier)||($activity.activitydescription)||($activity.activitycomment))
+        <BeachActivityDetail>
+#if($activity.activitytypecode)
+            <ActivityTypeCode>$activity.activitytypecode</ActivityTypeCode>
+#end
+#if($activity.activityname)
+            <ActivityName>$activity.activityname</ActivityName>
+#end
+#if($activity.actualstartdate)
+            <ActivityActualStartDate>$activity.actualstartdate</ActivityActualStartDate>
+#end
+#if($activity.actualstopdate)
+            <ActivityActualStopDate>$activity.actualstopdate</ActivityActualStopDate>
+#end
+#if(($activity.reasontype)||($activity.reasondescription))
+            <ActivityReasonDetail>
+#if($activity.reasontype)
+                <ActivityReasonType>$activity.reasontype</ActivityReasonType>
+#end
+#if($activity.reasondescription)
+                <ActivityReasonDescriptionText>$activity.reasondescription</ActivityReasonDescriptionText>
+#end
+            </ActivityReasonDetail>
+#end
+#if(($activity.sourcetype)||($activity.sourcedescription))
+            <ActivitySourceDetail>
+#if($activity.sourcetype)
+                <ActivitySourceType>$activity.sourcetype</ActivitySourceType>
+#end
+#if($activity.sourcedescription)
+                <ActivitySourceDescriptionText>$activity.sourcedescription</ActivitySourceDescriptionText>
+#end
+            </ActivitySourceDetail>
+#end
+#if(($activity.indicatortype)||($activity.indicatordescription))
+            <ActivityIndicatorDetail>
+#if($activity.indicatortype)
+                <ActivityIndicatorType>$activity.indicatortype</ActivityIndicatorType>
+#end
+#if($activity.indicatordescription)
+                <ActivityIndicatorDescriptionText>$activity.indicatordescription</ActivityIndicatorDescriptionText>
+#end
+            </ActivityIndicatorDetail>
+#end
+#if($activity.monitoringstationidentifier)
+            <ActivityMonitoringStationIdentifier>$activity.monitoringstationidentifier</ActivityMonitoringStationIdentifier>
+#end
+#if($activity.activitydescription)
+            <ActivityDescriptionText>$activity.activitydescription</ActivityDescriptionText>
+#end
+#if($activity.activitycomment)
+            <ActivityCommentText>$activity.activitycomment</ActivityCommentText>
+#end
+#if(($activity.extentstartmeasure)||($activity.extentlengthmeasure)||($activity.extentunitofmeasure))
+            <ActivityExtentDetail>
+#if($activity.extentstartmeasure)
+                <ActivityExtentStartMeasure>$activity.extentstartmeasure</ActivityExtentStartMeasure>
+#end
+#if($activity.extentlengthmeasure)
+                <ActivityExtentLengthMeasure>$activity.extentlengthmeasure</ActivityExtentLengthMeasure>
+#end
+#if($activity.extentunitofmeasure)
+                <ActivityExtentUnitOfMeasureCode>$activity.extentunitofmeasure</ActivityExtentUnitOfMeasureCode>
+#end
+            </ActivityExtentDetail>
+#end
+        </BeachActivityDetail>
+#end
+#end##foreach($activity in $helper.getObject("SELECT DISTINCT A.*, R.*, S.*, I.* FROM NOTIF_BEACHACTIVITY A  LEFT JOIN NOTIF_ACTIVITYREASON R ON (R.ACTIVITY_ID = A.ID) LEFT JOIN NOTIF_ACTIVITYSOURCE S ON (S.ACTIVITY_ID = A.ID) LEFT JOIN NOTIF_ACTIVITYINDICATOR I ON (I.ACTIVITY_ID = A.ID) WHERE A.BEACH_ID = ? AND A.SENTTOEPA = 'N'", $beachid))
+#foreach($roleid in $helper.getList("SELECT ID FROM NOTIF_PERSONBEACHROLE R WHERE R.BEACH_ID = ? ", $beachid, "id"))
+#foreach($beachrole in $helper.getData("SELECT DISTINCT E.*, T.ORGANIZATION_ID  FROM NOTIF_PERSONBEACHROLE E JOIN NOTIF_BEACH B ON (E.BEACH_ID = B.ID) LEFT JOIN NOTIF_ORGANIZATIONBEACHROLE T JOIN NOTIF_ORGANIZATION O ON (T.ORGANIZATION_ID = O.ID) ON (T.BEACH_ID = B.ID) WHERE E.ID = ? ", $roleid))
+#if(($beachrole.roletypecode)||($beachrole.organization_id)||($beachrole.person_id)||($beachrole.roleeffectivedate)||($beachrole.rolestatus))
+        <BeachRoleDetail>
+#if($beachrole.roletypecode)
+            <BeachRoleTypeCode>$beachrole.roletypecode</BeachRoleTypeCode>
+#end
+#if($beachrole.organization_id)
+            <BeachRoleOrganizationIdentifier>$beachrole.organization_id</BeachRoleOrganizationIdentifier>
+#end
+#if($beachrole.person_id)
+            <BeachRolePersonIdentifier>$beachrole.person_id</BeachRolePersonIdentifier>
+#end
+#if($beachrole.roleeffectivedate)
+            <BeachRoleEffectiveDate>$beachrole.roleeffectivedate</BeachRoleEffectiveDate>
+#end
+#if($beachrole.rolestatus)
+            <BeachRoleStatusIndicator>$beachrole.rolestatus</BeachRoleStatusIndicator>
+#end
+        </BeachRoleDetail>
+#end#end#end##if...##foreach($roleid in $helper.getList("SELECT ID FROM NOTIF_PERSONBEACHROLE R WHERE R.BEACH_ID = ? ", $beachid, "id"))####foreach($beachrole in $helper.getData("SELECT DISTINCT E.*...
+#if((($beach.startlatmeasure)&&($beach.startlongmeasure))||(($beach.endlatmeasure)&&($beach.endlongmeasure)))
+        <BeachCoordinateDetail>
+#if(($beach.startlatmeasure)&&($beach.startlongmeasure))
+            <BeachCoordinateStartPointDetail>
+                <LatitudeMeasure>$beach.startlatmeasure</LatitudeMeasure>
+                <LongitudeMeasure>$beach.startlongmeasure</LongitudeMeasure>
+#if($beach.sourcemapscale)
+                <SourceMapScaleNumeric>$beach.sourcemapscale</SourceMapScaleNumeric>
+#end
+                <HorizontalCollectionMethodName>$beach.horizcollmethod</HorizontalCollectionMethodName>
+                <HorizontalCoordinateReferenceSystemDatumName>$beach.horizcolldatum</HorizontalCoordinateReferenceSystemDatumName>
+            </BeachCoordinateStartPointDetail>
+#end
+#if(($beach.endlatmeasure)&&($beach.endlongmeasure))
+            <BeachCoordinateEndPointDetail>
+                <LatitudeMeasure>$beach.endlatmeasure</LatitudeMeasure>
+                <LongitudeMeasure>$beach.endlongmeasure</LongitudeMeasure>
+#if($beach.sourcemapscale)
+                <SourceMapScaleNumeric>$beach.sourcemapscale</SourceMapScaleNumeric>
+#end
+                <HorizontalCollectionMethodName>$beach.horizcollmethod</HorizontalCollectionMethodName>
+                <HorizontalCoordinateReferenceSystemDatumName>$beach.horizcolldatum</HorizontalCoordinateReferenceSystemDatumName>
+            </BeachCoordinateEndPointDetail>
+#end
+        </BeachCoordinateDetail>
+#end
+    </BeachDetail>
+#set ($totalRecCount = $velocityCount)#end###foreach($beachid in $helper.getList("SELECT ID FROM NOTIF_BEACH", "id"))
+$helper.print("Total Beaches: $totalRecCount")#foreach($beachid in $helper.getList("SELECT ID FROM NOTIF_BEACH ORDER BY BEACHIDENTIFIER", "id"))
+#foreach($beachproc in $helper.getData("SELECT DISTINCT P.*, B.BEACHIDENTIFIER FROM NOTIF_BEACHPROCEDURE P LEFT JOIN NOTIF_BEACH B ON (P.BEACH_ID = B.ID) WHERE P.BEACH_ID = ? ", $beachid))
+### query here
+#if(($beachproc.proceduretypecode)||($beachproc.proceduredescription)||($beachproc.procedureidentifier)||($beachproc.beach_id))
+    <BeachProcedureDetail>
+#if($beachproc.proceduretypecode)
+        <ProcedureTypeCode>$beachproc.proceduretypecode</ProcedureTypeCode>
+#end
+#if($beachproc.proceduredescription)
+        <ProcedureDescriptionText>$beachproc.proceduredescription</ProcedureDescriptionText>
+#end
+#if($beachproc.procedureidentifier)
+        <ProcedureIdentifier>$beachproc.procedureidentifier</ProcedureIdentifier>
+#end
+#if($beachproc.beach_id)
+        <ProcedureBeachIdentifier>$beachproc.beachidentifier</ProcedureBeachIdentifier>
+#end
+    </BeachProcedureDetail>
+#end#end#end##foreach($beachproc in $helper.getData("SELECT DISTINCT P.*, B.BEACHIDENTIFIER FROM NOTIF_BEACHPROCEDURE P LEFT JOIN NOTIF_BEACH B ON (P.BEACH_ID = B.ID) WHERE P.BEACH_ID = ? ", $beachid))##foreach($beachid in $helper.getList("SELECT ID FROM NOTIF_BEACH", "id"))
+#set ($totalRecCount = $velocityCount)$helper.print("Total BeachProcedureDetails: $totalRecCount")#foreach($yearind in $helper.getData("SELECT * FROM NOTIF_YEARCOMPLETION"))
+#if(($yearind.completionyear)||($yearind.notificationdatacompletionind)||($yearind.monitoringdatacompletionind)||($yearind.locationdatacompletionind))
+    <YearCompletionIndicators>
+#if($yearind.completionyear)
+        <CompletionYear>$yearind.completionyear</CompletionYear>
+#end
+#if($yearind.notificationdatacompletionind)
+        <NotificiationDataCompleteIndicator>$yearind.notificationdatacompletionind</NotificiationDataCompleteIndicator>
+#end
+#if($yearind.monitoringdatacompletionind)
+        <MonitoringDataCompleteIndicator>$yearind.monitoringdatacompletionind</MonitoringDataCompleteIndicator>
+#end
+#if($yearind.locationdatacompletionind)
+        <LocationDataCompleteIndicator>$yearind.locationdatacompletionind</LocationDataCompleteIndicator>
+#end
+    </YearCompletionIndicators>
+#end#end</BeachDataSubmission>
+$helper.print("Total Time: ")$helper.printElapsedTime()

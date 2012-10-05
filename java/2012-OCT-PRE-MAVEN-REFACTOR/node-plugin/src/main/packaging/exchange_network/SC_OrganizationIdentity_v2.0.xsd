@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified" version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:include schemaLocation="SC_SimpleContent_v2.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+        Schema Name  : SC_OrganizationIdentity_v2.0.xsd
+        Schema Identification : C.02
+        Current Version Available At :  http://www.exchangenetwork.net/schema/SC
+        Description   : 	The particular terms regularly connected with a unique framework of authority within which a person or persons act, or are designated to act, towards some purpose.
+        Application   :   Exchange Network Shared Schema Component
+        Developed by  : 	 Core Reference Model (CRM) Workgroup
+        Point of Contact :   Douglas Timms, enfoTech &amp; Consulting, Inc.
+        Last Modified by :   Ross &amp; Associates - April 17, 2006 (from SSCv1.1: targetNamespace declaration removed, to conform with Exchange Network namespace decision v1.11)
+</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="OrganizationIdentityDataType">
+		<xsd:sequence>
+			<xsd:element ref="OrganizationIdentifier" minOccurs="0"/>
+			<xsd:element ref="OrganizationFormalName" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="OrganizationIdentity" type="OrganizationIdentityDataType">
+		<xsd:annotation>
+			<xsd:documentation>The particular terms regularly connected with a unique framework of authority within which a person or persons act, or are designated to act, towards some purpose.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

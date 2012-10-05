@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:cer="http://www.exchangenetwork.net/schema/cer/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/cer/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2">
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name  : CER_CERS_v1.2.xsd
+        Current Version Available At : http://www.exchangenetwork.net/schema/cer/1/2/CER_CERS_v1.2.xsd
+        Description   : Identification information regarding the submission file.
+        Developed by  : 	Perrin Quarles Associates, Inc.
+        Point of Contact : Perrin Quarles Associates, Inc.	
+        </xsd:documentation>
+	</xsd:annotation>
+	<xsd:include schemaLocation="CER_SimpleContent_v1.2.xsd"/>
+	<xsd:include schemaLocation="CER_FacilitySite_v1.2.xsd"/>
+	<xsd:include schemaLocation="CER_Location_v1.2.xsd"/>
+	<xsd:include schemaLocation="CER_Event_v1.2.xsd"/>
+	<xsd:include schemaLocation="CER_QualityFinding_v1.2.xsd"/>
+	<xsd:complexType name="CERSDataType">
+		<xsd:sequence>
+			<xsd:element ref="cer:UserIdentifier"/>
+			<xsd:element ref="cer:ProgramSystemCode"/>
+			<xsd:element ref="cer:EmissionsYear"/>
+			<xsd:element ref="cer:Model" minOccurs="0"/>
+			<xsd:element ref="cer:ModelVersion" minOccurs="0"/>
+			<xsd:element ref="cer:EmissionsCreationDate" minOccurs="0"/>
+			<xsd:element ref="cer:SubmittalComment" minOccurs="0"/>
+			<xsd:element ref="cer:FacilitySite" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="cer:Location" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="cer:Event" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="cer:QualityFinding" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="CERS" type="cer:CERSDataType"/>
+</xsd:schema>

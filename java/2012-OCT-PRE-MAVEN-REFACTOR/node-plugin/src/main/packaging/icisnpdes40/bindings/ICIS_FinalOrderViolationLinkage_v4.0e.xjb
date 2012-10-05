@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance"
+	jaxb:extensionBindingPrefixes="hj orm inheritance" schemaLocation="../xsd/0/ICIS_FinalOrderViolationLinkage_v4.0e.xsd">
+
+	<!-- final order violation linkage -->
+
+	<jaxb:bindings>
+				
+		<jaxb:bindings node="//xsd:element[@ref='icis:ComplianceScheduleViolation']">
+			<hj:many-to-one>
+				<orm:join-column name="ICS_FINAL_ORDER_VIOL_LNK_ID" referenced-column-name="ICS_FINAL_ORDER_VIOL_LNK_ID" insertable="false" updatable="false"/>
+			</hj:many-to-one>
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:complexType[@name='FinalOrderViolationLinkage']">
+			<hj:embeddable />
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:element[@ref='icis:DischargeMonitoringReportParameterViolation']">
+			<hj:many-to-one>
+				<orm:join-column name="ICS_FINAL_ORDER_VIOL_LNK_ID" referenced-column-name="ICS_FINAL_ORDER_VIOL_LNK_ID" insertable="false" updatable="false"/>
+			</hj:many-to-one>
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:element[@ref='icis:DischargeMonitoringReportViolation']">
+			<hj:many-to-one>
+				<orm:join-column name="ICS_FINAL_ORDER_VIOL_LNK_ID" referenced-column-name="ICS_FINAL_ORDER_VIOL_LNK_ID" insertable="false" updatable="false"/>
+			</hj:many-to-one>
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:element[@ref='icis:PermitScheduleViolation']">
+			<hj:many-to-one>
+				<orm:join-column name="ICS_FINAL_ORDER_VIOL_LNK_ID" referenced-column-name="ICS_FINAL_ORDER_VIOL_LNK_ID" insertable="false" updatable="false"/>
+			</hj:many-to-one>
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:element[@ref='icis:SingleEventsViolation']">
+			<hj:many-to-one>
+				<orm:join-column name="ICS_FINAL_ORDER_VIOL_LNK_ID" referenced-column-name="ICS_FINAL_ORDER_VIOL_LNK_ID" insertable="false" updatable="false"/>
+			</hj:many-to-one>
+		</jaxb:bindings>
+		
+	</jaxb:bindings>
+
+</jaxb:bindings>

@@ -1,0 +1,996 @@
+<?xml version="1.0" encoding="UTF-8"?>#set($totalRecCount = 0)$helper.startStopWatch()$helper.print("Change Date:")$helper.print($changeDate)
+        <FacilityDetails xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" schemaVersion="3.0" xmlns="http://www.exchangenetwork.net/schema/facilityid/3" xsi:schemaLocation="http://www.exchangenetwork.net/schema/facilityid/3 http://www.windsorsolutions.biz/xsd/FACID/FacilityID/index.xsd">
+#set($facIdList = $helper.getList("SELECT F.FAC_ID FROM FACID_FAC F JOIN CHANGED_FACILITIES C ON C.ST_FAC_IND = F.FAC_SITE_IDEN_VAL WHERE C.FLOW_TYPE = 'HERE-FACID' AND C.IS_DELETED = 0 AND C.UPDATE_DATE >= ?", $helper.toDbDateString($changeDate), "fac_id"))
+#if($facIdList.size() > 0)
+            <FacilityList>
+#foreach($facId in $facIdList)
+#set($totalRecCount = $velocityCount)
+                <Facility>
+#set($facility = $helper.getObject("SELECT * FROM FACID_FAC WHERE FAC_ID = ?", $facId))
+#if(($facility.get("fac_site_iden_val"))||($facility.get("fac_site_name"))||($facility.get("fac_site_type_name"))||($facility.get("fed_fac_indi")))
+                    <FacilitySiteIdentity>
+#if($facility.get("fac_site_iden_val"))
+                        <FacilitySiteIdentifier#if($facility.get("fac_site_iden_cont")) FacilitySiteIdentifierContext="$facility.get("fac_site_iden_cont")"#end>$facility.get("fac_site_iden_val")</FacilitySiteIdentifier>
+#end
+#if($facility.get("fac_site_name"))
+                        <FacilitySiteName>$facility.get("fac_site_name")</FacilitySiteName>
+#end
+#if(($facility.get("fac_site_type_code"))||($facility.get("fac_site_type_name")))
+                        <FacilitySiteType>
+#if($facility.get("fac_site_type_code"))
+                            <FacilitySiteTypeCode>$facility.get("fac_site_type_code")</FacilitySiteTypeCode>
+#end
+#if($facility.get("code_lst_ver_val"))
+                            <FacilitySiteTypeCodeListIdentifier#if($facility.get("code_list_vers_iden")) CodeListVersionIdentifier="$facility.get("code_list_vers_iden")"#end#if($facility.get("code_list_vers_agn_iden")) CodeListVersionAgencyIdentifier="$facility.get("code_list_vers_agn_iden")"#end>$facility.get("code_lst_ver_val")</FacilitySiteTypeCodeListIdentifier>
+#end
+#if($facility.get("fac_site_type_name"))
+                            <FacilitySiteTypeName>$facility.get("fac_site_type_name")</FacilitySiteTypeName>
+#end
+                        </FacilitySiteType>
+#end##FacilitySiteType
+#if($facility.get("fed_fac_indi"))
+                        <FederalFacilityIndicator>$facility.get("fed_fac_indi")</FederalFacilityIndicator>
+#end
+                    </FacilitySiteIdentity>
+#end##FacilitySiteIdentity
+#if(($facility.get("loc_addr_text"))||($facility.get("supp_loc_text"))||($facility.get("loca_name"))||($facility.get("sta_code"))||($facility.get("sta_name"))||($facility.get("addr_post_code_val"))||($facility.get("ctry_name"))||($facility.get("cnty_name"))||($facility.get("trib_land_name"))||($facility.get("loc_desc_text")))
+                    <LocationAddress>
+#if($facility.get("loc_addr_text"))
+                        <LocationAddressText>$facility.get("loc_addr_text")</LocationAddressText>
+#end
+#if($facility.get("supp_loc_text"))
+                        <SupplementalLocationText>$facility.get("supp_loc_text")</SupplementalLocationText>
+#end
+#if($facility.get("loca_name"))
+                        <LocalityName>$facility.get("loca_name")</LocalityName>
+#end
+#if(($facility.get("sta_code"))||($facility.get("sta_name")))
+                        <StateIdentity>
+#if($facility.get("sta_code"))
+                            <StateCode>$facility.get("sta_code")</StateCode>
+#end
+#if($facility.get("loc_addr_code_lst_ver_val"))
+                            <StateCodeListIdentifier#if($facility.get("loc_addr_code_list_vers_iden")) CodeListVersionIdentifier="$facility.get("loc_addr_code_list_vers_iden")"#end#if($facility.get("loc_addr_code_list_ver_agn_ide")) CodeListVersionAgencyIdentifier="$facility.get("loc_addr_code_list_ver_agn_ide")"#end>$facility.get("loc_addr_code_lst_ver_val")</StateCodeListIdentifier>
+#end
+#if($facility.get("sta_name"))
+                            <StateName>$facility.get("sta_name")</StateName>
+#end
+                        </StateIdentity>
+#end##StateIdentity
+#if($facility.get("addr_post_code_val"))
+                        <AddressPostalCode#if($facility.get("addr_post_code_cont")) AddressPostalCodeContext="$facility.get("addr_post_code_cont")"#end>$facility.get("addr_post_code_val")</AddressPostalCode>
+#end
+#if(($facility.get("ctry_code"))||($facility.get("ctry_name")))
+                        <CountryIdentity>
+#if($facility.get("ctry_code"))
+                            <CountryCode>$facility.get("ctry_code")</CountryCode>
+#end
+#if($facility.get("loc_addr_cod_lst_ver_val"))
+                            <CountryCodeListIdentifier#if($facility.get("loc_addr_code_list_vers_ide")) CodeListVersionIdentifier="$facility.get("loc_addr_code_list_vers_ide")"#end#if($facility.get("loc_addr_code_lis_ver_agn_ide")) CodeListVersionAgencyIdentifier="$facility.get("loc_addr_code_lis_ver_agn_ide")"#end>$facility.get("loc_addr_cod_lst_ver_val")</CountryCodeListIdentifier>
+#end
+#if($facility.get("ctry_name"))
+                            <CountryName>$facility.get("ctry_name")</CountryName>
+#end
+                        </CountryIdentity>
+#end##CountryIdentity
+#if(($facility.get("cnty_code"))||($facility.get("cnty_name")))
+                        <CountyIdentity>
+#if($facility.get("cnty_code"))
+                            <CountyCode>$facility.get("cnty_code")</CountyCode>
+#end
+#if($facility.get("loc_add_cod_lst_ver_val"))
+                            <CountyCodeListIdentifier#if($facility.get("loc_addr_code_list_ver_ide")) CodeListVersionIdentifier="$facility.get("loc_addr_code_list_ver_ide")"#end#if($facility.get("loc_addr_cod_lis_ver_agn_ide")) CodeListVersionAgencyIdentifier="$facility.get("loc_addr_cod_lis_ver_agn_ide")"#end>$facility.get("loc_add_cod_lst_ver_val")</CountyCodeListIdentifier>
+#end
+#if($facility.get("cnty_name"))
+                            <CountyName>$facility.get("cnty_name")</CountyName>
+#end
+                        </CountyIdentity>
+#end##CountyIdentity
+#if($facility.get("trib_land_name"))
+                        <TribalLandName>$facility.get("trib_land_name")</TribalLandName>
+#end
+#if($facility.get("trib_land_indi"))
+                        <TribalLandIndicator>$facility.get("trib_land_indi")</TribalLandIndicator>
+#end
+#if($facility.get("loc_desc_text"))
+                        <LocationDescriptionText>$facility.get("loc_desc_text")</LocationDescriptionText>
+#end
+                    </LocationAddress>
+#end##LocationAddress
+#if(($facility.get("mail_addr_text"))||($facility.get("supp_addr_text"))||($facility.get("mail_addr_city_name"))||($facility.get("mail_addr_sta_code"))||($facility.get("mail_addr_sta_name"))||($facility.get("mail_addr_addr_post_code_val"))||($facility.get("mail_addr_ctry_code"))||($facility.get("mail_addr_ctry_name")))
+                    <MailingAddress>
+#if($facility.get("mail_addr_text"))
+                        <MailingAddressText>$facility.get("mail_addr_text")</MailingAddressText>
+#end
+#if($facility.get("supp_addr_text"))
+                        <SupplementalAddressText>$facility.get("supp_addr_text")</SupplementalAddressText>
+#end
+#if($facility.get("mail_addr_city_name"))
+                        <MailingAddressCityName>$facility.get("mail_addr_city_name")</MailingAddressCityName>
+#end
+#if(($facility.get("mail_addr_sta_code"))||($facility.get("mail_addr_sta_name")))
+                        <StateIdentity>
+#if($facility.get("mail_addr_sta_code"))
+                            <StateCode>$facility.get("mail_addr_sta_code")</StateCode>
+#end
+#if($facility.get("mail_addr_code_lst_ver_val"))
+                            <StateCodeListIdentifier#if($facility.get("mail_addr_code_list_vers_iden")) CodeListVersionIdentifier="$facility.get("mail_addr_code_list_vers_iden")"#end#if($facility.get("mail_addr_code_lis_ver_agn_ide")) CodeListVersionAgencyIdentifier="$facility.get("mail_addr_code_lis_ver_agn_ide")"#end>$facility.get("mail_addr_code_lst_ver_val")</StateCodeListIdentifier>
+#end
+#if($facility.get("mail_addr_sta_name"))
+                            <StateName>$facility.get("mail_addr_sta_name")</StateName>
+#end
+                        </StateIdentity>
+#end##StateIdentity
+#if($facility.get("mail_addr_addr_post_code_val"))
+                        <AddressPostalCode#if($facility.get("mail_addr_addr_post_code_cont")) AddressPostalCodeContext="$facility.get("mail_addr_addr_post_code_cont")"#end>$facility.get("mail_addr_addr_post_code_val")</AddressPostalCode>
+#end
+#if(($facility.get("mail_addr_ctry_code"))||($facility.get("mail_addr_ctry_name")))
+                        <CountryIdentity>
+#if($facility.get("mail_addr_ctry_code"))
+                            <CountryCode>$facility.get("mail_addr_ctry_code")</CountryCode>
+#end
+#if($facility.get("mail_addr_cod_lst_ver_val"))
+                            <CountryCodeListIdentifier#if($facility.get("mail_addr_code_list_vers_ide")) CodeListVersionIdentifier="$facility.get("mail_addr_code_list_vers_ide")"#end#if($facility.get("mail_addr_cod_lis_ver_agn_ide"))CodeListVersionAgencyIdentifier="$facility.get("mail_addr_cod_lis_ver_agn_ide")"#end>$facility.get("mail_addr_cod_lst_ver_val")</CountryCodeListIdentifier>
+#end
+#if($facility.get("mail_addr_ctry_name"))
+                            <CountryName>$facility.get("mail_addr_ctry_name")</CountryName>
+#end
+                        </CountryIdentity>
+#end##CountryIdentity
+                    </MailingAddress>
+#end##MailingAddress
+#if($facility.get("cong_dist_num_code"))
+                    <CongressionalDistrictNumberCode>$facility.get("cong_dist_num_code")</CongressionalDistrictNumberCode>
+#end
+#if($facility.get("legi_dist_num_code"))
+                    <LegislativeDistrictNumberCode>$facility.get("legi_dist_num_code")</LegislativeDistrictNumberCode>
+#end
+#if($facility.get("huc_code"))
+                    <HUCCode>$facility.get("huc_code")</HUCCode>
+#end
+#set($prigeo = $helper.getObject("SELECT * FROM FACID_FAC_PRI_GEO_LOC_DESC WHERE FAC_ID = ? ", $facId))
+#if($prigeo)
+                    <FacilityPrimaryGeographicLocationDescription>
+#if(($prigeo.get("latitude"))&&($prigeo.get("longitude")))
+                        <Point#if($prigeo.get("srs_name")) srsName="$prigeo.get("srs_name")"#end#if($prigeo.get("srs_dim")) srsDimension="$prigeo.get("srs_dim")"#end xmlns="http://www.opengis.net/gml">
+                            <pos>$prigeo.get("latitude") $prigeo.get("longitude")#if($prigeo.get("elevation")) $prigeo.get("elevation")#end</pos>
+                        </Point>
+#end##if(1)
+#if($prigeo.get("src_map_scale_num"))
+                            <SourceMapScaleNumber>$prigeo.get("src_map_scale_num")</SourceMapScaleNumber>
+#end
+#if(($prigeo.get("meas_val"))||($prigeo.get("meas_prec_text")))
+                            <HorizontalAccuracyMeasure>
+#if($prigeo.get("meas_val"))
+                                <MeasureValue>$prigeo.get("meas_val")</MeasureValue>
+#end
+#if(($prigeo.get("meas_unit_code"))||($prigeo.get("meas_unit_name")))
+                                <MeasureUnit>
+#if($prigeo.get("meas_unit_code"))
+                                    <MeasureUnitCode>$prigeo.get("meas_unit_code")</MeasureUnitCode>
+#end
+#if($prigeo.get("code_lst_ver_val"))
+                                    <MeasureUnitCodeListIdentifier#if($prigeo.get("code_list_vers_iden")) CodeListVersionIdentifier="$prigeo.get("code_list_vers_iden")"#end#if($prigeo.get("code_list_vers_agn_iden")) CodeListVersionAgencyIdentifier="$prigeo.get("code_list_vers_agn_iden")"#end>$prigeo.get("code_lst_ver_val")</MeasureUnitCodeListIdentifier>
+#end
+#if($prigeo.get("meas_unit_name"))
+                                    <MeasureUnitName>$prigeo.get("meas_unit_name")</MeasureUnitName>
+#end
+                                </MeasureUnit>
+#end##MeasureUnit
+#if($prigeo.get("meas_prec_text"))
+                                <MeasurePrecisionText>$prigeo.get("meas_prec_text")</MeasurePrecisionText>
+#end
+#if(($prigeo.get("rslt_qual_code"))||($prigeo.get("rslt_qual_name")))
+                                <ResultQualifier>
+#if($prigeo.get("rslt_qual_code"))
+                                    <ResultQualifierCode>$prigeo.get("rslt_qual_code")</ResultQualifierCode>
+#end
+#if($prigeo.get("rslt_qual_code_lst_ver_val"))
+                                    <ResultQualifierCodeListIdentifier#if($prigeo.get("rslt_qual_code_list_vers_iden")) CodeListVersionIdentifier="$prigeo.get("rslt_qual_code_list_vers_iden")"#end#if($prigeo.get("rslt_qual_code_lis_ver_agn_ide")) CodeListVersionAgencyIdentifier="$prigeo.get("rslt_qual_code_lis_ver_agn_ide")"#end>$prigeo.get("rslt_qual_code_lst_ver_val")</ResultQualifierCodeListIdentifier>
+#end
+#if($prigeo.get("rslt_qual_name"))
+                                    <ResultQualifierName>$prigeo.get("rslt_qual_name")</ResultQualifierName>
+#end
+                                </ResultQualifier>
+#end##ResultQualifier
+                            </HorizontalAccuracyMeasure>
+#end##HorizontalAccuracyMeasure
+#if(($prigeo.get("meth_iden_code"))||($prigeo.get("meth_name"))||($prigeo.get("meth_desc_text"))||($prigeo.get("meth_devi_text")))
+                            <HorizontalCollectionMethod>
+#if($prigeo.get("meth_iden_code"))
+                                <MethodIdentifierCode>$prigeo.get("meth_iden_code")</MethodIdentifierCode>
+#end
+#if($prigeo.get("horz_coll_meth_cod_lst_ver_val"))
+                                <MethodIdentifierCodeListIdentifier#if($prigeo.get("horz_coll_meth_cod_lis_ver_ide")) CodeListVersionIdentifier="$prigeo.get("horz_coll_meth_cod_lis_ver_ide")"#end#if($prigeo.get("hor_col_met_cod_lis_ver_agn_id")) CodeListVersionAgencyIdentifier="$prigeo.get("hor_col_met_cod_lis_ver_agn_id")"#end>$prigeo.get("horz_coll_meth_cod_lst_ver_val")</MethodIdentifierCodeListIdentifier>
+#end
+#if($prigeo.get("meth_name"))
+                                <MethodName>$prigeo.get("meth_name")</MethodName>
+#end
+#if($prigeo.get("meth_desc_text"))
+                                <MethodDescriptionText>$prigeo.get("meth_desc_text")</MethodDescriptionText>
+#end
+#if($prigeo.get("meth_devi_text"))
+                                <MethodDeviationsText>$prigeo.get("meth_devi_text")</MethodDeviationsText>
+#end
+                            </HorizontalCollectionMethod>
+#end##HorizontalCollectionMethod
+#if(($prigeo.get("geo_ref_pt_code"))||($prigeo.get("geo_ref_pt_name")))
+                            <GeographicReferencePoint>
+#if($prigeo.get("geo_ref_pt_code"))
+                                <GeographicReferencePointCode>$prigeo.get("geo_ref_pt_code")</GeographicReferencePointCode>
+#end
+#if($prigeo.get("geo_ref_pt_code_lst_ver_val"))
+                                <ReferencePointCodeListIdentifier#if($prigeo.get("geo_ref_pt_code_list_vers_iden")) CodeListVersionIdentifier="$prigeo.get("geo_ref_pt_code_list_vers_iden")"#end#if($prigeo.get("geo_ref_pt_cod_lis_ver_agn_ide")) CodeListVersionAgencyIdentifier="$prigeo.get("geo_ref_pt_cod_lis_ver_agn_ide")"#end>$prigeo.get("geo_ref_pt_code_lst_ver_val")</ReferencePointCodeListIdentifier>
+#end
+#if($prigeo.get("geo_ref_pt_name"))
+                                <GeographicReferencePointName>$prigeo.get("geo_ref_pt_name")</GeographicReferencePointName>
+#end
+                            </GeographicReferencePoint>
+#end##GeographicReferencePoint
+#if($prigeo.get("data_coll_date"))
+                            <DataCollectionDate>$helper.toXmlDate($prigeo.get("data_coll_date"))</DataCollectionDate>
+#end
+#if($prigeo.get("loc_comm_text"))
+                            <LocationCommentsText>$prigeo.get("loc_comm_text")</LocationCommentsText>
+#end
+#if(($prigeo.get("vert_coll_meth_meth_iden_code"))||($prigeo.get("vert_coll_meth_meth_name"))||($prigeo.get("vert_coll_meth_meth_desc_text"))||($prigeo.get("vert_coll_meth_meth_devi_text")))
+                            <VerticalCollectionMethod>
+#if($prigeo.get("vert_coll_meth_meth_iden_code"))
+                                <MethodIdentifierCode>$prigeo.get("vert_coll_meth_meth_iden_code")</MethodIdentifierCode>
+#end
+#if($prigeo.get("vert_coll_meth_cod_lst_ver_val"))
+                                <MethodIdentifierCodeListIdentifier#if($prigeo.get("vert_coll_meth_cod_lis_ver_ide")) CodeListVersionIdentifier="$prigeo.get("vert_coll_meth_cod_lis_ver_ide")"#end#if($prigeo.get("ver_col_met_cod_lis_ver_agn_id")) CodeListVersionAgencyIdentifier="$prigeo.get("ver_col_met_cod_lis_ver_agn_id")"#end>$prigeo.get("vert_coll_meth_cod_lst_ver_val")</MethodIdentifierCodeListIdentifier>
+#end
+#if($prigeo.get("vert_coll_meth_meth_name"))
+                                <MethodName>$prigeo.get("vert_coll_meth_meth_name")</MethodName>
+#end
+#if($prigeo.get("vert_coll_meth_meth_desc_text"))
+                                <MethodDescriptionText>$prigeo.get("vert_coll_meth_meth_desc_text")</MethodDescriptionText>
+#end
+#if($prigeo.get("vert_coll_meth_meth_devi_text"))
+                                <MethodDeviationsText>$prigeo.get("vert_coll_meth_meth_devi_text")</MethodDeviationsText>
+#end
+                            </VerticalCollectionMethod>
+#end##VerticalCollectionMethod
+#if(($prigeo.get("verf_meth_meth_iden_code"))||($prigeo.get("verf_meth_meth_name"))||($prigeo.get("verf_meth_meth_desc_text"))||($prigeo.get("verf_meth_meth_devi_text")))
+                            <VerificationMethod>
+#if($prigeo.get("verf_meth_meth_iden_code"))
+                                <MethodIdentifierCode>$prigeo.get("verf_meth_meth_iden_code")</MethodIdentifierCode>
+#end
+#if($prigeo.get("verf_meth_code_lst_ver_val"))
+                                <MethodIdentifierCodeListIdentifier#if($prigeo.get("verf_meth_code_list_vers_iden")) CodeListVersionIdentifier="$prigeo.get("verf_meth_code_list_vers_iden")"#end#if($prigeo.get("verf_meth_code_lis_ver_agn_ide")) CodeListVersionAgencyIdentifier="$prigeo.get("verf_meth_code_lis_ver_agn_ide")"#end>$prigeo.get("verf_meth_code_lst_ver_val")</MethodIdentifierCodeListIdentifier>
+#end
+#if($prigeo.get("verf_meth_meth_name"))
+                                <MethodName>$prigeo.get("verf_meth_meth_name")</MethodName>
+#end
+#if($prigeo.get("verf_meth_meth_desc_text"))
+                                <MethodDescriptionText>$prigeo.get("verf_meth_meth_desc_text")</MethodDescriptionText>
+#end
+#if($prigeo.get("verf_meth_meth_devi_text"))
+                                <MethodDeviationsText>$prigeo.get("verf_meth_meth_devi_text")</MethodDeviationsText>
+#end
+                            </VerificationMethod>
+#end##VerificationMethod
+#if(($prigeo.get("cord_data_src_code"))||($prigeo.get("cord_data_src_name")))
+                            <CoordinateDataSource>
+#if($prigeo.get("cord_data_src_code"))
+                                <CoordinateDataSourceCode>$prigeo.get("cord_data_src_code")</CoordinateDataSourceCode>
+#end
+#if($prigeo.get("cord_data_src_code_lst_ver_val"))
+                                <CoordinateDataSourceCodeListIdentifier#if($prigeo.get("cord_data_src_code_lis_ver_ide")) CodeListVersionIdentifier="$prigeo.get("cord_data_src_code_lis_ver_ide")"#end#if($prigeo.get("cor_dat_src_cod_lis_ver_agn_id")) CodeListVersionAgencyIdentifier="$prigeo.get("cor_dat_src_cod_lis_ver_agn_id")"#end>$prigeo.get("cord_data_src_code_lst_ver_val")</CoordinateDataSourceCodeListIdentifier>
+#end
+#if($prigeo.get("cord_data_src_name"))
+                                <CoordinateDataSourceName>$prigeo.get("cord_data_src_name")</CoordinateDataSourceName>
+#end
+                            </CoordinateDataSource>
+#end##CoordinateDataSource
+                    </FacilityPrimaryGeographicLocationDescription>
+#end##if($prigeo)
+#set($geolist = $helper.getData("SELECT * FROM FACID_FAC_GEO_LOC_DESC WHERE FAC_ID = ? ", $facId))
+#if($geolist.hasNext())
+                    <FacilityGeographicLocationList>
+#foreach($geo in $geolist)
+                        <FacilityGeographicLocationDescription>
+#if(($geo.get("latitude"))&&$geo.get("longitude"))
+                            <Point#if($geo.get("srs_name")) srsName="$geo.get("srs_name")"#end#if($geo.get("srs_dim")) srsDimension="$geo.get("srs_dim")"#end xmlns="http://www.opengis.net/gml">
+                                <pos>$geo.get("latitude") $geo.get("longitude")#if($geo.get("elevation")) $geo.get("elevation")#end</pos>
+                            </Point>
+#end##Point
+#foreach($shape in $helper.getData("SELECT * FROM FACID_SHAPE WHERE FAC_GEO_LOC_DESC_ID = ? ", $geo.get("fac_geo_loc_desc_id")))
+#if($shape.get("type")=="LineString")
+                            <LineString#if($shape.get("srs_name")) srsName="$shape.get("srs_name")"#end#if($shape.get("srs_dim")) srsDimension="$shape.get("srs_dim")"#end xmlns="http://www.opengis.net/gml">
+                                <posList>
+                                     #foreach($pos in $helper.getData("SELECT * FROM FACID_POS WHERE SHAPE_ID = ? ORDER BY ORDER_INDEX", $shape.get("shape_id")))#if(($pos.get("latitude"))&&($pos.get("longitude")))$pos.get("latitude") $pos.get("longitude")#end#if($pos.get("elevation"))$pos.get("elevation") #end#end
+                                </posList>
+                            </LineString>
+#end##type=LineString
+#if($shape.get("type")=="Polygon")
+                            <Polygon#if($shape.get("srs_name")) srsName="$shape.get("srs_name")"#end#if($shape.get("srs_dim")) srsDimension="$shape.get("srs_dim")"#end xmlns="http://www.opengis.net/gml">
+                                <exterior>
+                                    <LinearRing>
+                                        <posList>
+                                        #foreach($pos in $helper.getData("SELECT * FROM FACID_POS WHERE SHAPE_ID = ? ORDER BY ORDER_INDEX", $shape.get("shape_id")))#if(($pos.get("latitude"))&&($pos.get("longitude")))$pos.get("latitude") $pos.get("longitude")#end#if($pos.get("elevation"))$pos.get("elevation") #end#end
+                                        </posList>
+                                    </LinearRing>
+                                </exterior>
+                            </Polygon>
+#end##type=Polygon
+#if($shape.get("type")=="Envelope")
+                            <Envelope#if($shape.get("srs_name")) srsName="$shape.get("srs_name")"#end#if($shape.get("srs_dim")) srsDimension="$shape.get("srs_dim")"#end xmlns="http://www.opengis.net/gml">
+#foreach($pos in $helper.getData("SELECT * FROM FACID_POS WHERE SHAPE_ID = ? ORDER BY ORDER_INDEX", $shape.get("shape_id")))
+#if(($pos.get("order_index")==0)&&($pos.get("latitude"))&&($pos.get("longitude")))
+                                <lowerCorner>$pos.get("latitude") $pos.get("longitude")#if($pos.get("elevation")) $pos.get("elevation")#end</lowerCorner>
+#end
+#if(($pos.get("order_index")==1)&&($pos.get("latitude"))&&($pos.get("longitude")))
+                                <upperCorner>$pos.get("latitude") $pos.get("longitude")#if($pos.get("elevation")) $pos.get("elevation")#end</upperCorner>
+#end
+#end##foreach($pos)
+                            </Envelope>
+#end##type=Envelope
+#end##foreach($shape)
+#if($geo.get("src_map_scale_num"))
+                            <SourceMapScaleNumber>$geo.get("src_map_scale_num")</SourceMapScaleNumber>
+#end
+#if(($geo.get("meas_val"))||($geo.get("meas_prec_text")))
+                            <HorizontalAccuracyMeasure>
+#if($geo.get("meas_val"))
+                                <MeasureValue>$geo.get("meas_val")</MeasureValue>
+#end
+#if(($geo.get("meas_unit_code"))||($geo.get("meas_unit_name")))
+                                <MeasureUnit>
+#if($geo.get("meas_unit_code"))
+                                    <MeasureUnitCode>$geo.get("meas_unit_code")</MeasureUnitCode>
+#end
+#if($geo.get("code_lst_ver_val"))
+                                    <MeasureUnitCodeListIdentifier#if($geo.get("code_list_vers_iden")) CodeListVersionIdentifier="$geo.get("code_list_vers_iden")"#end#if($geo.get("code_list_vers_agn_iden")) CodeListVersionAgencyIdentifier="$geo.get("code_list_vers_agn_iden")"#end>$geo.get("code_lst_ver_val")</MeasureUnitCodeListIdentifier>
+#end
+#if($geo.get("meas_unit_name"))
+                                    <MeasureUnitName>$geo.get("meas_unit_name")</MeasureUnitName>
+#end
+                                </MeasureUnit>
+#end##MeasureUnit
+#if($geo.get("meas_prec_text"))
+                                <MeasurePrecisionText>$geo.get("meas_prec_text")</MeasurePrecisionText>
+#end
+#if(($geo.get("rslt_qual_code"))||($geo.get("rslt_qual_name")))
+                                <ResultQualifier>
+#if($geo.get("rslt_qual_code"))
+                                    <ResultQualifierCode>$geo.get("rslt_qual_code")</ResultQualifierCode>
+#end
+#if($geo.get("rslt_qual_code_lst_ver_val"))
+                                    <ResultQualifierCodeListIdentifier#if($geo.get("rslt_qual_code_list_vers_iden")) CodeListVersionIdentifier="$geo.get("rslt_qual_code_list_vers_iden")"#end#if($geo.get("rslt_qual_code_lis_ver_agn_ide")) CodeListVersionAgencyIdentifier="$geo.get("rslt_qual_code_lis_ver_agn_ide")"#end>$geo.get("rslt_qual_code_lst_ver_val")</ResultQualifierCodeListIdentifier>
+#end
+#if($geo.get("rslt_qual_name"))
+                                    <ResultQualifierName>$geo.get("rslt_qual_name")</ResultQualifierName>
+#end
+                                </ResultQualifier>
+#end##ResultQualifier
+                            </HorizontalAccuracyMeasure>
+#end##HorizontalAccuracyMeasure
+#if(($geo.get("meth_iden_code"))||($geo.get("meth_name"))||($geo.get("meth_desc_text"))||($geo.get("meth_devi_text")))
+                            <HorizontalCollectionMethod>
+#if($geo.get("meth_iden_code"))
+                                <MethodIdentifierCode>$geo.get("meth_iden_code")</MethodIdentifierCode>
+#end
+#if($geo.get("horz_coll_meth_cod_lst_ver_val"))
+                                <MethodIdentifierCodeListIdentifier#if($geo.get("horz_coll_meth_cod_lis_ver_ide")) CodeListVersionIdentifier="$geo.get("horz_coll_meth_cod_lis_ver_ide")"#end#if($geo.get("hor_col_met_cod_lis_ver_agn_id")) CodeListVersionAgencyIdentifier="$geo.get("hor_col_met_cod_lis_ver_agn_id")"#end>$geo.get("horz_coll_meth_cod_lst_ver_val")</MethodIdentifierCodeListIdentifier>
+#end
+#if($geo.get("meth_name"))
+                                <MethodName>$geo.get("meth_name")</MethodName>
+#end
+#if($geo.get("meth_desc_text"))
+                                <MethodDescriptionText>$geo.get("meth_desc_text")</MethodDescriptionText>
+#end
+#if($geo.get("meth_devi_text"))
+                                <MethodDeviationsText>$geo.get("meth_devi_text")</MethodDeviationsText>
+#end
+                            </HorizontalCollectionMethod>
+#end##HorizontalCollectionMethod
+#if(($geo.get("geo_ref_pt_code"))||($geo.get("geo_ref_pt_name")))
+                            <GeographicReferencePoint>
+#if($geo.get("geo_ref_pt_code"))
+                                <GeographicReferencePointCode>$geo.get("geo_ref_pt_code")</GeographicReferencePointCode>
+#end
+#if($geo.get("geo_ref_pt_code_lst_ver_val"))
+                                <ReferencePointCodeListIdentifier#if($geo.get("geo_ref_pt_code_list_vers_iden")) CodeListVersionIdentifier="$geo.get("geo_ref_pt_code_list_vers_iden")"#end#if($geo.get("geo_ref_pt_cod_lis_ver_agn_ide")) CodeListVersionAgencyIdentifier="$geo.get("geo_ref_pt_cod_lis_ver_agn_ide")"#end>$geo.get("geo_ref_pt_code_lst_ver_val")</ReferencePointCodeListIdentifier>
+#end
+#if($geo.get("geo_ref_pt_name"))
+                                <GeographicReferencePointName>$geo.get("geo_ref_pt_name")</GeographicReferencePointName>
+#end
+                            </GeographicReferencePoint>
+#end##GeographicReferencePoint
+#if($geo.get("data_coll_date"))
+                            <DataCollectionDate>$helper.toXmlDate($geo.get("data_coll_date"))</DataCollectionDate>
+#end
+#if($geo.get("loc_comm_text"))
+                            <LocationCommentsText>$geo.get("loc_comm_text")</LocationCommentsText>
+#end
+#if(($geo.get("vert_coll_meth_meth_iden_code"))||($geo.get("vert_coll_meth_meth_name"))||($geo.get("vert_coll_meth_meth_desc_text"))||($geo.get("vert_coll_meth_meth_devi_text")))
+                            <VerticalCollectionMethod>
+#if($geo.get("vert_coll_meth_meth_iden_code"))
+                                <MethodIdentifierCode>$geo.get("vert_coll_meth_meth_iden_code")</MethodIdentifierCode>
+#end
+#if($geo.get("vert_coll_meth_cod_lst_ver_val"))
+                                <MethodIdentifierCodeListIdentifier#if($geo.get("vert_coll_meth_cod_lis_ver_ide")) CodeListVersionIdentifier="$geo.get("vert_coll_meth_cod_lis_ver_ide")"#end#if($geo.get("ver_col_met_cod_lis_ver_agn_id")) CodeListVersionAgencyIdentifier="$geo.get("ver_col_met_cod_lis_ver_agn_id")"#end>$geo.get("vert_coll_meth_cod_lst_ver_val")</MethodIdentifierCodeListIdentifier>
+#end
+#if($geo.get("vert_coll_meth_meth_name"))
+                                <MethodName>$geo.get("vert_coll_meth_meth_name")</MethodName>
+#end
+#if($geo.get("vert_coll_meth_meth_desc_text"))
+                                <MethodDescriptionText>$geo.get("vert_coll_meth_meth_desc_text")</MethodDescriptionText>
+#end
+#if($geo.get("vert_coll_meth_meth_devi_text"))
+                                <MethodDeviationsText>$geo.get("vert_coll_meth_meth_devi_text")</MethodDeviationsText>
+#end
+                            </VerticalCollectionMethod>
+#end##VerticalCollectionMethod
+#if(($geo.get("verf_meth_meth_iden_code"))||($geo.get("verf_meth_meth_name"))||($geo.get("verf_meth_meth_desc_text"))||($geo.get("verf_meth_meth_devi_text")))
+                            <VerificationMethod>
+#if($geo.get("verf_meth_meth_iden_code"))
+                                <MethodIdentifierCode>$geo.get("verf_meth_meth_iden_code")</MethodIdentifierCode>
+#end
+#if($geo.get("verf_meth_code_lst_ver_val"))
+                                <MethodIdentifierCodeListIdentifier#if($geo.get("verf_meth_code_list_vers_iden")) CodeListVersionIdentifier="$geo.get("verf_meth_code_list_vers_iden")"#end#if($geo.get("verf_meth_code_lis_ver_agn_ide")) CodeListVersionAgencyIdentifier="$geo.get("verf_meth_code_lis_ver_agn_ide")"#end>$geo.get("verf_meth_code_lst_ver_val")</MethodIdentifierCodeListIdentifier>
+#end
+#if($geo.get("verf_meth_meth_name"))
+                                <MethodName>$geo.get("verf_meth_meth_name")</MethodName>
+#end
+#if($geo.get("verf_meth_meth_desc_text"))
+                                <MethodDescriptionText>$geo.get("verf_meth_meth_desc_text")</MethodDescriptionText>
+#end
+#if($geo.get("verf_meth_meth_devi_text"))
+                                <MethodDeviationsText>$geo.get("verf_meth_meth_devi_text")</MethodDeviationsText>
+#end
+                            </VerificationMethod>
+#end##VerificationMethod
+#if(($geo.get("cord_data_src_code"))||($geo.get("cord_data_src_name")))
+                            <CoordinateDataSource>
+#if($geo.get("cord_data_src_code"))
+                                <CoordinateDataSourceCode>$geo.get("cord_data_src_code")</CoordinateDataSourceCode>
+#end
+#if($geo.get("cord_data_src_code_lst_ver_val"))
+                                <CoordinateDataSourceCodeListIdentifier#if($geo.get("cord_data_src_code_lis_ver_ide")) CodeListVersionIdentifier="$geo.get("cord_data_src_code_lis_ver_ide")"#end#if($geo.get("cor_dat_src_cod_lis_ver_agn_id")) CodeListVersionAgencyIdentifier="$geo.get("cor_dat_src_cod_lis_ver_agn_id")"#end>$geo.get("cord_data_src_code_lst_ver_val")</CoordinateDataSourceCodeListIdentifier>
+#end
+#if($geo.get("cord_data_src_name"))
+                                <CoordinateDataSourceName>$geo.get("cord_data_src_name")</CoordinateDataSourceName>
+#end
+                            </CoordinateDataSource>
+#end##CoordinateDataSource
+                        </FacilityGeographicLocationDescription>
+#end##foreach($geo)
+                    </FacilityGeographicLocationList>
+#end##if($geo_list)
+#set($env_list = $helper.getData("SELECT * FROM FACID_ENVR_INTR WHERE FAC_ID = ? ", $facId))
+#if($env_list.hasNext())
+                    <EnvironmentalInterestList>
+#foreach($env in $env_list)
+                        <EnvironmentalInterest>
+#if(($env.get("orig_part_name"))||($env.get("info_sys_acro_name"))||($env.get("last_updt_date")))
+                            <DataSource>
+#if($env.get("orig_part_name"))
+                                <OriginatingPartnerName>$env.get("orig_part_name")</OriginatingPartnerName>
+#end
+#if($env.get("info_sys_acro_name"))
+                                <InformationSystemAcronymName>$env.get("info_sys_acro_name")</InformationSystemAcronymName>
+#end
+#if($env.get("last_updt_date"))
+                                <LastUpdatedDate>$helper.toXmlDate($env.get("last_updt_date"))</LastUpdatedDate>
+#end
+                            </DataSource>
+#end##DataSource
+#if($env.get("envr_intr_iden"))
+                            <EnvironmentalInterestIdentifier>$env.get("envr_intr_iden")</EnvironmentalInterestIdentifier>
+#end
+#if($env.get("envr_intr_type_text"))
+                            <EnvironmentalInterestTypeText>$env.get("envr_intr_type_text")</EnvironmentalInterestTypeText>
+#end
+#if($env.get("envr_intr_start_date"))
+                            <EnvironmentalInterestStartDate>$helper.toXmlDate($env.get("envr_intr_start_date"))</EnvironmentalInterestStartDate>
+#end
+#if($env.get("envr_intr_start_date_qual_text"))
+                            <EnvironmentalInterestStartDateQualifierText>$env.get("envr_intr_start_date_qual_text")</EnvironmentalInterestStartDateQualifierText>
+#end
+#if($env.get("envr_intr_end_date"))
+                            <EnvironmentalInterestEndDate>$helper.toXmlDate($env.get("envr_intr_end_date"))</EnvironmentalInterestEndDate>
+#end
+#if($env.get("envr_intr_end_date_qual_text"))
+                            <EnvironmentalInterestEndDateQualifierText>$env.get("envr_intr_end_date_qual_text")</EnvironmentalInterestEndDateQualifierText>
+#end
+#if($env.get("envr_intr_active_indi"))
+                            <EnvironmentalInterestActiveIndicator>$env.get("envr_intr_active_indi")</EnvironmentalInterestActiveIndicator>
+#end
+#if(($env.get("agn_type_code"))||($env.get("agn_type_name")))
+                            <AgencyType>
+#if($env.get("agn_type_code"))
+                                <AgencyTypeCode>$env.get("agn_type_code")</AgencyTypeCode>
+#end
+#if($env.get("code_lst_ver_val"))
+                                <AgencyTypeCodeListIdentifier#if($env.get("code_list_vers_iden")) CodeListVersionIdentifier="$env.get("code_list_vers_iden")"#end#if($env.get("code_list_vers_agn_iden")) CodeListVersionAgencyIdentifier="$env.get("code_list_vers_agn_iden")"#end>$env.get("code_lst_ver_val")</AgencyTypeCodeListIdentifier>
+#end
+#if($env.get("agn_type_name"))
+                                <AgencyTypeName>$env.get("agn_type_name")</AgencyTypeName>
+#end
+                            </AgencyType>
+#end##AgencyType
+#set($einaicslist = $helper.getData("SELECT * FROM FACID_ENVR_INTR_FAC_NAICS WHERE ENVR_INTR_ID = ? ", $env.get("envr_intr_id")))
+#if($einaicslist.hasNext())
+                            <NAICSList>
+#foreach($einaics in $einaicslist)
+                                <FacilityNAICS>
+#if($einaics.get("fac_naics_code"))
+                                    <FacilityNAICSCode>$einaics.get("fac_naics_code")</FacilityNAICSCode>
+#end
+#if($einaics.get("fac_naics_pri_indi"))
+                                    <FacilityNAICSPrimaryIndicator>$einaics.get("fac_naics_pri_indi")</FacilityNAICSPrimaryIndicator>
+#end
+                                </FacilityNAICS>
+#end##foreach($einaics)
+                            </NAICSList>
+#end##if($einaicslist)
+#set($eisiclist = $helper.getData("SELECT * FROM FACID_ENVR_INTR_FAC_SIC WHERE ENVR_INTR_ID = ? ", $env.get("envr_intr_id")))
+#if($eisiclist.hasNext())
+                            <SICList>
+#foreach($eisic in $eisiclist)
+                                <FacilitySIC>
+#if($eisic.get("sic_code"))
+                                    <SICCode>$eisic.get("sic_code")</SICCode>
+#end
+#if($eisic.get("sic_pri_indi"))
+                                    <SICPrimaryIndicator>$eisic.get("sic_pri_indi")</SICPrimaryIndicator>
+#end
+                                </FacilitySIC>
+#end##foreach($eisic)
+                            </SICList>
+#end##if($eisiclist)
+#set($eiaffl_env_list = $helper.getData("SELECT * FROM FACID_ENVR_INTR_FAC_AFFL WHERE ENVR_INTR_ID = ? ", $env.get("envr_intr_id")))
+#if($eiaffl_env_list.hasNext())
+                            <AffiliationList>
+#foreach($eiaffl_env in $eiaffl_env_list)
+                                <FacilityAffiliation>
+#if($eiaffl_env.get("affl_iden"))
+                                    <AffiliateIdentifier>$eiaffl_env.get("affl_iden")</AffiliateIdentifier>
+#end
+#if(($eiaffl_env.get("affl_type_text"))||($eiaffl_env.get("affl_start_date"))||($eiaffl_env.get("affl_end_date"))||($eiaffl_env.get("affl_stat_text"))||($eiaffl_env.get("affl_stat_detr_date")))
+                                    <Affiliation>
+#if($eiaffl_env.get("affl_type_text"))
+                                        <AffiliationTypeText>$eiaffl_env.get("affl_type_text")</AffiliationTypeText>
+#end
+#if($eiaffl_env.get("affl_start_date"))
+                                        <AffiliationStartDate>$helper.toXmlDate($eiaffl_env.get("affl_start_date"))</AffiliationStartDate>
+#end
+#if($eiaffl_env.get("affl_end_date"))
+                                        <AffiliationEndDate>$helper.toXmlDate($eiaffl_env.get("affl_end_date"))</AffiliationEndDate>
+#end
+#if($eiaffl_env.get("affl_stat_text"))
+                                        <AffiliationStatusText>$eiaffl_env.get("affl_stat_text")</AffiliationStatusText>
+#end
+#if($eiaffl_env.get("affl_stat_detr_date"))
+                                        <AffiliationStatusDetermineDate>$helper.toXmlDate($eiaffl_env.get("affl_stat_detr_date"))</AffiliationStatusDetermineDate>
+#end
+                                    </Affiliation>
+#end##
+                                </FacilityAffiliation>
+#end##foreach($eiaffl_env)
+                            </AffiliationList>
+#end##if($eiaffl_env_list)
+#set($eialt_env_list = $helper.getData("SELECT * FROM FACID_ENVR_INTR_ALT_IDEN WHERE ENVR_INTR_ID = ? ", $env.get("envr_intr_id")))
+#if($eialt_env_list.hasNext())
+                            <AlternativeIdentificationList>
+#foreach($eialt_env in $eialt_env_list)
+                                <AlternativeIdentification>
+#if($eialt_env.get("alt_iden_iden"))
+                                    <AlternativeIdentificationIdentifier>$eialt_env.get("alt_iden_iden")</AlternativeIdentificationIdentifier>
+#end
+#if($eialt_env.get("alt_iden_type_text"))
+                                    <AlternativeIdentificationTypeText>$eialt_env.get("alt_iden_type_text")</AlternativeIdentificationTypeText>
+#end
+                                </AlternativeIdentification>
+#end##foreach($eialt_env)
+                            </AlternativeIdentificationList>
+#end##if($eialt_env_list)
+#set($eielect_env_list = $helper.getData("SELECT * FROM FACID_ENVR_INTR_ELEC_ADDR WHERE ENVR_INTR_ID = ? ", $env.get("envr_intr_id")))
+#if($eielect_env_list.hasNext())
+                            <ElectronicAddressList>
+#foreach($eielect_env in $eielect_env_list)
+                                <ElectronicAddress>
+#if($eielect_env.get("elec_addr_text"))
+                                    <ElectronicAddressText>$eielect_env.get("elec_addr_text")</ElectronicAddressText>
+#end
+#if($eielect_env.get("elec_addr_type_name"))
+                                    <ElectronicAddressTypeName>$eielect_env.get("elec_addr_type_name")</ElectronicAddressTypeName>
+#end
+                                </ElectronicAddress>
+#end##foreach($eielect_env)
+                            </ElectronicAddressList>
+#end##if($eielect_env_list)
+                        </EnvironmentalInterest>
+#end##foreach($env in $envlist)
+                    </EnvironmentalInterestList>
+#end##if($envlist)
+#set($elect_fac_list = $helper.getData("SELECT * FROM FACID_FAC_ELEC_ADDR WHERE FAC_ID = ? ", $facId))
+#if($elect_fac_list.hasNext())
+                    <ElectronicAddressList>
+#foreach($elect_fac in $elect_fac_list)
+                        <ElectronicAddress>
+#if($elect_fac.get("elec_addr_text"))
+                            <ElectronicAddressText>$elect_fac.get("elec_addr_text")</ElectronicAddressText>
+#end
+#if($elect_fac.get("elec_addr_type_name"))
+                            <ElectronicAddressTypeName>$elect_fac.get("elec_addr_type_name")</ElectronicAddressTypeName>
+#end
+                        </ElectronicAddress>
+#end##foreach($elect_fac in $elect_fac_list)
+                    </ElectronicAddressList>
+#end##if($elect_fac_list)
+#set($altname_list = $helper.getData("SELECT * FROM FACID_ALT_NAME WHERE FAC_ID = ? ", $facId))
+#if($altname_list.hasNext())
+                    <AlternativeNameList>
+#foreach($altname in $altname_list)
+                        <AlternativeName>
+#if($altname.get("alt_name_text"))
+                            <AlternativeNameText>$altname.get("alt_name_text")</AlternativeNameText>
+#end
+#if($altname.get("alt_name_type_text"))
+                            <AlternativeNameTypeText>$altname.get("alt_name_type_text")</AlternativeNameTypeText>
+#end
+                        </AlternativeName>
+#end##foreach($altname in $altname_list)
+                    </AlternativeNameList>
+#end##if($altname_list)
+#set($alt_fac_list = $helper.getData("SELECT * FROM FACID_FAC_ALT_IDEN WHERE FAC_ID = ? ", $facId))
+#if($alt_fac_list.hasNext())
+                    <AlternativeIdentificationList>
+#foreach($alt_fac in $alt_fac_list)
+                        <AlternativeIdentification>
+#if($alt_fac.get("alt_iden_iden"))
+                            <AlternativeIdentificationIdentifier>$alt_fac.get("alt_iden_iden")</AlternativeIdentificationIdentifier>
+#end
+#if($alt_fac.get("alt_iden_type_text"))
+                            <AlternativeIdentificationTypeText>$alt_fac.get("alt_iden_type_text")</AlternativeIdentificationTypeText>
+#end
+                        </AlternativeIdentification>
+#end##foreach($alt_fac in $alt_fac_list)
+                    </AlternativeIdentificationList>
+#end##if($alt_fac_list)
+#set($sic_fac_list = $helper.getData("SELECT * FROM FACID_FAC_FAC_SIC WHERE FAC_ID = ? ", $facId))
+#if($sic_fac_list.hasNext())
+                    <SICList>
+#foreach($sic_fac in $sic_fac_list)
+                        <FacilitySIC>
+#if($sic_fac.get("sic_code"))
+                            <SICCode>$sic_fac.get("sic_code")</SICCode>
+#end
+#if($sic_fac.get("sic_pri_indi"))
+                            <SICPrimaryIndicator>$sic_fac.get("sic_pri_indi")</SICPrimaryIndicator>
+#end
+                        </FacilitySIC>
+#end##foreach($sic_fac in $sic_fac_list)
+                    </SICList>
+#end##if($sic_fac_list)
+#set($naics_fac_list = $helper.getData("SELECT * FROM FACID_FAC_FAC_NAICS WHERE FAC_ID = ? ", $facId))
+#if($naics_fac_list.hasNext())
+                    <NAICSList>
+#foreach($naics_fac in $naics_fac_list)
+                        <FacilityNAICS>
+#if($naics_fac.get("fac_naics_code"))
+                            <FacilityNAICSCode>$naics_fac.get("fac_naics_code")</FacilityNAICSCode>
+#end
+#if($naics_fac.get("fac_naics_pri_indi"))
+                            <FacilityNAICSPrimaryIndicator>$naics_fac.get("fac_naics_pri_indi")</FacilityNAICSPrimaryIndicator>
+#end
+                        </FacilityNAICS>
+#end##foreach($naics_fac in $naics_fac_list)
+                    </NAICSList>
+#end##if($naics_fac_list)
+#if(($facility.get("orig_part_name"))||($facility.get("info_sys_acro_name"))||($facility.get("last_updt_date")))
+                    <DataSource>
+#if(($facility.get("orig_part_name")))
+                        <OriginatingPartnerName>$facility.get("orig_part_name")</OriginatingPartnerName>
+#end
+#if($facility.get("info_sys_acro_name"))
+                        <InformationSystemAcronymName>$facility.get("info_sys_acro_name")</InformationSystemAcronymName>
+#end
+#if($facility.get("last_updt_date"))
+                        <LastUpdatedDate>$helper.toXmlDate($facility.get("last_updt_date"))</LastUpdatedDate>
+#end
+                    </DataSource>
+#end##DataSource
+#set($affl_fac_list = $helper.getData("SELECT * FROM FACID_FAC_FAC_AFFL WHERE FAC_ID = ? ", $facId))
+#if($affl_fac_list.hasNext())
+                    <AffiliationList>
+#foreach($affl_fac in $affl_fac_list)
+                        <FacilityAffiliation>
+#if($affl_fac.get("affl_iden"))
+                            <AffiliateIdentifier>$affl_fac.get("affl_iden")</AffiliateIdentifier>
+#end
+#if(($affl_fac.get("affl_type_text"))||($affl_fac.get("affl_start_date"))||($affl_fac.get("affl_end_date"))||($affl_fac.get("affl_stat_text"))||($affl_fac.get("affl_stat_detr_date")))
+                                    <Affiliation>
+#if($affl_fac.get("affl_type_text"))
+                                        <AffiliationTypeText>$affl_fac.get("affl_type_text")</AffiliationTypeText>
+#end
+#if($affl_fac.get("affl_start_date"))
+                                        <AffiliationStartDate>$helper.toXmlDate($affl_fac.get("affl_start_date"))</AffiliationStartDate>
+#end
+#if($affl_fac.get("affl_end_date"))
+                                        <AffiliationEndDate>$helper.toXmlDate($affl_fac.get("affl_end_date"))</AffiliationEndDate>
+#end
+#if($affl_fac.get("affl_stat_text"))
+                                        <AffiliationStatusText>$affl_fac.get("affl_stat_text")</AffiliationStatusText>
+#end
+#if($affl_fac.get("affl_stat_detr_date"))
+                                        <AffiliationStatusDetermineDate>$helper.toXmlDate($affl_fac.get("affl_stat_detr_date"))</AffiliationStatusDetermineDate>
+#end
+                                    </Affiliation>
+#end
+                                </FacilityAffiliation>
+#end##foreach($affl_fac in $affl_fac_list)
+                            </AffiliationList>
+#end##if($affl_fac_list)
+                </Facility>
+#if ($velocityCount % 100 == 0)$helper.print("Facilities completed so far:")$helper.print($velocityCount)#end
+#end##foreach($facid)
+            </FacilityList>
+#end##if($facIdList.size() > 0)
+$helper.print("Total Facilities: $totalRecCount")$helper.print("Time for Facilities:")$helper.printElapsedTime()
+##
+## return affiliations for either facilities or environmental interests related to the facility
+##
+#set($afflIdFacList = $helper.getList("SELECT a.AFFL_ID FROM FACID_AFFL a JOIN FACID_FAC_FAC_AFFL fa ON fa.AFFL_IDEN = a.AFFL_IDEN JOIN FACID_FAC f ON f.FAC_ID = fa.FAC_ID JOIN CHANGED_FACILITIES c ON c.ST_FAC_IND = f.FAC_SITE_IDEN_VAL WHERE c.FLOW_TYPE = 'HERE-FACID' AND c.IS_DELETED = 0 AND c.UPDATE_DATE >= ? GROUP BY a.AFFL_ID", $helper.toDbDateString($changeDate), "affl_id"))
+#set($afflIdEnvList = $helper.getList("SELECT a.AFFL_ID FROM FACID_AFFL a JOIN FACID_ENVR_INTR_FAC_AFFL fe ON fe.AFFL_IDEN = a.AFFL_IDEN JOIN FACID_ENVR_INTR e ON e.ENVR_INTR_ID = fe.ENVR_INTR_ID JOIN FACID_FAC f ON f.FAC_ID = e.FAC_ID JOIN CHANGED_FACILITIES c ON c.ST_FAC_IND = f.FAC_SITE_IDEN_VAL WHERE c.FLOW_TYPE = 'HERE-FACID' AND c.IS_DELETED = 0 AND c.UPDATE_DATE >= ? AND NOT EXISTS (SELECT 1 FROM FACID_FAC_FAC_AFFL fa WHERE fa.AFFL_IDEN = fe.AFFL_IDEN) GROUP BY a.AFFL_ID", $helper.toDbDateString($changeDate), "affl_id"))
+#if(($afflIdFacList.size() > 0) || ($afflIdEnvList.size() > 0))
+            <AffiliateList>
+##
+## cycle through all facility-related affiliations
+##
+#foreach($afflId in $afflIdFacList)
+#set($facid_affl_fac = $helper.getObject("SELECT * FROM FACID_AFFL WHERE AFFL_ID = ?", $afflId))
+                <Affiliate>
+#if($facid_affl_fac.get("affl_iden"))
+                    <AffiliateIdentifier>$facid_affl_fac.get("affl_iden")</AffiliateIdentifier>
+#end
+#set($affl_tele_fac_list = $helper.getData("SELECT * FROM FACID_TELEPHONIC WHERE AFFL_ID = ? ", $afflId))
+#if($affl_tele_fac_list.hasNext())
+                    <TelephonicList>
+#foreach($affl_tele_fac in $affl_tele_fac_list)
+                        <Telephonic>
+#if($affl_tele_fac.get("tele_num_text"))
+                            <TelephoneNumberText>$affl_tele_fac.get("tele_num_text")</TelephoneNumberText>
+#end
+#if($affl_tele_fac.get("tele_num_type_name"))
+                            <TelephoneNumberTypeName>$affl_tele_fac.get("tele_num_type_name")</TelephoneNumberTypeName>
+#end
+#if($affl_tele_fac.get("tele_ext_num_text"))
+                            <TelephoneExtensionNumberText>$affl_tele_fac.get("tele_ext_num_text")</TelephoneExtensionNumberText>
+#end
+                        </Telephonic>
+#end##foreach($affl_tele_fac in $affl_tele_fac_list)
+                    </TelephonicList>
+#end##if($affl_tele_fac_list)
+#set($affl_elect_fac_list = $helper.getData("SELECT * FROM FACID_AFFL_ELEC_ADDR WHERE AFFL_ID = ? ", $afflId))
+#if($affl_elect_fac_list.hasNext())
+                    <ElectronicAddressList>
+#foreach($affl_elect_fac in $affl_elect_fac_list)
+                        <ElectronicAddress>
+#if($affl_elect_fac.get("elec_addr_text"))
+                            <ElectronicAddressText>$affl_elect_fac.get("elec_addr_text")</ElectronicAddressText>
+#end
+#if($affl_elect_fac.get("elec_addr_type_name"))
+                            <ElectronicAddressTypeName>$affl_elect_fac.get("elec_addr_type_name")</ElectronicAddressTypeName>
+#end
+                        </ElectronicAddress>
+#end##foreach($affl_elect_fac in $affl_elect_fac_list)
+                    </ElectronicAddressList>
+#end##if($affl_elect_fac_list)
+#if(($facid_affl_fac.get("indv_title_text")||$facid_affl_fac.get("name_prefix_text")||$facid_affl_fac.get("indv_full_name")||$facid_affl_fac.get("first_name")||$facid_affl_fac.get("middle_name")||$facid_affl_fac.get("last_name")||$facid_affl_fac.get("name_suffix_text")||$facid_affl_fac.get("indv_iden_val")))
+                    <IndividualIdentity>
+#if($facid_affl_fac.get("indv_iden_val"))
+                        <IndividualIdentifier#if($facid_affl_fac.get("indv_iden_cont")) IndividualIdentifierContext="$facid_affl_fac.get("indv_iden_cont")"#end>$facid_affl_fac.get("indv_iden_val")</IndividualIdentifier>
+#end
+#if($facid_affl_fac.get("indv_title_text"))
+                        <IndividualTitleText>$facid_affl_fac.get("indv_title_text")</IndividualTitleText>
+#end
+#if($facid_affl_fac.get("name_prefix_text"))
+                        <NamePrefixText>$facid_affl_fac.get("name_prefix_text")</NamePrefixText>
+#end
+#if($facid_affl_fac.get("indv_full_name"))
+                        <IndividualFullName>$facid_affl_fac.get("indv_full_name")</IndividualFullName>
+#end
+#if($facid_affl_fac.get("first_name"))
+                        <FirstName>$facid_affl_fac.get("first_name")</FirstName>
+#end
+#if($facid_affl_fac.get("middle_name"))
+                        <MiddleName>$facid_affl_fac.get("middle_name")</MiddleName>
+#end
+#if($facid_affl_fac.get("last_name"))
+                        <LastName>$facid_affl_fac.get("last_name")</LastName>
+#end
+#if($facid_affl_fac.get("name_suffix_text"))
+                        <NameSuffixText>$facid_affl_fac.get("name_suffix_text")</NameSuffixText>
+#end
+                    </IndividualIdentity>
+#end##IndividualIdentity
+#if(($facid_affl_fac.get("org_formal_name"))||($facid_affl_fac.get("org_iden_val")))
+                    <OrganizationIdentity>
+#if($facid_affl_fac.get("org_iden_val"))
+                        <OrganizationIdentifier#if($facid_affl_fac.get("org_iden_cont")) OrganizationIdentifierContext="$facid_affl_fac.get("org_iden_cont")"#end>$facid_affl_fac.get("org_iden_val")</OrganizationIdentifier>
+#end
+#if($facid_affl_fac.get("org_formal_name"))
+                        <OrganizationFormalName>$facid_affl_fac.get("org_formal_name")</OrganizationFormalName>
+#end
+                    </OrganizationIdentity>
+#end##OrganizationIdentity
+#if(($facid_affl_fac.get("mail_addr_text"))||($facid_affl_fac.get("supp_addr_text"))||($facid_affl_fac.get("mail_addr_city_name"))||($facid_affl_fac.get("sta_code"))||($facid_affl_fac.get("sta_name"))||($facid_affl_fac.get("addr_post_code_val"))||($facid_affl_fac.get("ctry_code"))||($facid_affl_fac.get("ctry_name")))
+                    <MailingAddress>
+#if($facid_affl_fac.get("mail_addr_text"))
+                        <MailingAddressText>$facid_affl_fac.get("mail_addr_text")</MailingAddressText>
+#end
+#if($facid_affl_fac.get("supp_addr_text"))
+                        <SupplementalAddressText>$facid_affl_fac.get("supp_addr_text")</SupplementalAddressText>
+#end
+#if($facid_affl_fac.get("mail_addr_city_name"))
+                        <MailingAddressCityName>$facid_affl_fac.get("mail_addr_city_name")</MailingAddressCityName>
+#end
+#if(($facid_affl_fac.get("sta_code"))||($facid_affl_fac.get("sta_name")))
+                        <StateIdentity>
+#if($facid_affl_fac.get("sta_code"))
+                            <StateCode>$facid_affl_fac.get("sta_code")</StateCode>
+#end
+#if($facid_affl_fac.get("code_lst_ver_val"))
+                            <StateCodeListIdentifier#if($facid_affl_fac.get("code_list_vers_iden")) CodeListVersionIdentifier="$facid_affl_fac.get("code_list_vers_iden")"#end#if($facid_affl_fac.get("code_list_vers_agn_iden")) CodeListVersionAgencyIdentifier="$facid_affl_fac.get("code_list_vers_agn_iden")"#end>$facid_affl_fac.get("code_lst_ver_val")</StateCodeListIdentifier>
+#end
+#if($facid_affl_fac.get("sta_name"))
+                            <StateName>$facid_affl_fac.get("sta_name")</StateName>
+#end
+                        </StateIdentity>
+#end
+#if($facid_affl_fac.get("addr_post_code_val"))
+                        <AddressPostalCode#if($facid_affl_fac.get("addr_post_code_cont")) AddressPostalCodeContext="$facid_affl_fac.get("addr_post_code_cont")"#end>$facid_affl_fac.get("addr_post_code_val")</AddressPostalCode>
+#end
+#if(($facid_affl_fac.get("ctry_code"))||($facid_affl_fac.get("ctry_name")))
+                        <CountryIdentity>
+#if($facid_affl_fac.get("ctry_code"))
+                            <CountryCode>$facid_affl_fac.get("ctry_code")</CountryCode>
+#end
+#if($facid_affl_fac.get("ctry_iden_code_lst_ver_val"))
+                            <CountryCodeListIdentifier#if($facid_affl_fac.get("ctry_iden_code_list_vers_iden")) CodeListVersionIdentifier="$facid_affl_fac.get("ctry_iden_code_list_vers_iden")"#end#if($facid_affl_fac.get("ctry_iden_code_lis_ver_agn_ide")) CodeListVersionAgencyIdentifier="$facid_affl_fac.get("ctry_iden_code_lis_ver_agn_ide")"#end>$facid_affl_fac.get("ctry_iden_code_lst_ver_val")</CountryCodeListIdentifier>
+#end
+#if($facid_affl_fac.get("ctry_name"))
+                            <CountryName>$facid_affl_fac.get("ctry_name")</CountryName>
+#end
+                        </CountryIdentity>
+#end
+                    </MailingAddress>
+#end##MailingAddress
+                </Affiliate>
+#end##foreach($afflId)
+##
+## cycle through all environmental interest-related affiliations
+##
+#foreach($afflId in $afflIdEnvList)
+#set($facid_affl_fac = $helper.getObject("SELECT * FROM FACID_AFFL WHERE AFFL_ID = ?", $afflId))
+                <Affiliate>
+#if($facid_affl_fac.get("affl_iden"))
+                    <AffiliateIdentifier>$facid_affl_fac.get("affl_iden")</AffiliateIdentifier>
+#end
+#set($affl_tele_fac_list = $helper.getData("SELECT * FROM FACID_TELEPHONIC WHERE AFFL_ID = ? ", $afflId))
+#if($affl_tele_fac_list.hasNext())
+                    <TelephonicList>
+#foreach($affl_tele_fac in $affl_tele_fac_list)
+                        <Telephonic>
+#if($affl_tele_fac.get("tele_num_text"))
+                            <TelephoneNumberText>$affl_tele_fac.get("tele_num_text")</TelephoneNumberText>
+#end
+#if($affl_tele_fac.get("tele_num_type_name"))
+                            <TelephoneNumberTypeName>$affl_tele_fac.get("tele_num_type_name")</TelephoneNumberTypeName>
+#end
+#if($affl_tele_fac.get("tele_ext_num_text"))
+                            <TelephoneExtensionNumberText>$affl_tele_fac.get("tele_ext_num_text")</TelephoneExtensionNumberText>
+#end
+                        </Telephonic>
+#end##foreach($affl_tele_fac in $affl_tele_fac_list)
+                    </TelephonicList>
+#end##if($affl_tele_fac_list)
+#set($affl_elect_fac_list = $helper.getData("SELECT * FROM FACID_AFFL_ELEC_ADDR WHERE AFFL_ID = ? ", $afflId))
+#if($affl_elect_fac_list.hasNext())
+                    <ElectronicAddressList>
+#foreach($affl_elect_fac in $affl_elect_fac_list)
+                        <ElectronicAddress>
+#if($affl_elect_fac.get("elec_addr_text"))
+                            <ElectronicAddressText>$affl_elect_fac.get("elec_addr_text")</ElectronicAddressText>
+#end
+#if($affl_elect_fac.get("elec_addr_type_name"))
+                            <ElectronicAddressTypeName>$affl_elect_fac.get("elec_addr_type_name")</ElectronicAddressTypeName>
+#end
+                        </ElectronicAddress>
+#end##foreach($affl_elect_fac in $affl_elect_fac_list)
+                    </ElectronicAddressList>
+#end##if($affl_elect_fac_list)
+#if(($facid_affl_fac.get("indv_title_text"))||($facid_affl_fac.get("name_prefix_text"))||($facid_affl_fac.get("indv_full_name"))||($facid_affl_fac.get("first_name"))||($facid_affl_fac.get("middle_name"))||($facid_affl_fac.get("last_name"))||($facid_affl_fac.get("name_suffix_text"))||($facid_affl_fac.get("indv_iden_val")))
+                    <IndividualIdentity>
+#if($facid_affl_fac.get("indv_iden_val"))
+                        <IndividualIdentifier#if($facid_affl_fac.get("indv_iden_cont")) IndividualIdentifierContext="$facid_affl_fac.get("indv_iden_cont")"#end>$facid_affl_fac.get("indv_iden_val")</IndividualIdentifier>
+#end
+#if($facid_affl_fac.get("indv_title_text"))
+                        <IndividualTitleText>$facid_affl_fac.get("indv_title_text")</IndividualTitleText>
+#end
+#if($facid_affl_fac.get("name_prefix_text"))
+                        <NamePrefixText>$facid_affl_fac.get("name_prefix_text")</NamePrefixText>
+#end
+#if($facid_affl_fac.get("indv_full_name"))
+                        <IndividualFullName>$facid_affl_fac.get("indv_full_name")</IndividualFullName>
+#end
+#if($facid_affl_fac.get("first_name"))
+                        <FirstName>$facid_affl_fac.get("first_name")</FirstName>
+#end
+#if($facid_affl_fac.get("middle_name"))
+                        <MiddleName>$facid_affl_fac.get("middle_name")</MiddleName>
+#end
+#if($facid_affl_fac.get("last_name"))
+                        <LastName>$facid_affl_fac.get("last_name")</LastName>
+#end
+#if($facid_affl_fac.get("name_suffix_text"))
+                        <NameSuffixText>$facid_affl_fac.get("name_suffix_text")</NameSuffixText>
+#end
+                    </IndividualIdentity>
+#end##IndividualIdentity
+#if(($facid_affl_fac.get("org_formal_name"))||($facid_affl_fac.get("org_iden_val")))
+                    <OrganizationIdentity>
+#if($facid_affl_fac.get("org_iden_val"))
+                        <OrganizationIdentifier#if($facid_affl_fac.get("org_iden_cont")) OrganizationIdentifierContext="$facid_affl_fac.get("org_iden_cont")"#end>$facid_affl_fac.get("org_iden_val")</OrganizationIdentifier>
+#end
+#if($facid_affl_fac.get("org_formal_name"))
+                        <OrganizationFormalName>$facid_affl_fac.get("org_formal_name")</OrganizationFormalName>
+#end
+                    </OrganizationIdentity>
+#end##OrganizationIdentity
+#if(($facid_affl_fac.get("mail_addr_text"))||($facid_affl_fac.get("supp_addr_text"))||($facid_affl_fac.get("mail_addr_city_name"))||($facid_affl_fac.get("sta_code"))||($facid_affl_fac.get("sta_name"))||($facid_affl_fac.get("addr_post_code_val"))||($facid_affl_fac.get("ctry_code"))||($facid_affl_fac.get("ctry_name")))
+                    <MailingAddress>
+#if($facid_affl_fac.get("mail_addr_text"))
+                        <MailingAddressText>$facid_affl_fac.get("mail_addr_text")</MailingAddressText>
+#end
+#if($facid_affl_fac.get("supp_addr_text"))
+                        <SupplementalAddressText>$facid_affl_fac.get("supp_addr_text")</SupplementalAddressText>
+#end
+#if($facid_affl_fac.get("mail_addr_city_name"))
+                        <MailingAddressCityName>$facid_affl_fac.get("mail_addr_city_name")</MailingAddressCityName>
+#end
+#if(($facid_affl_fac.get("sta_code"))||($facid_affl_fac.get("sta_name")))
+                        <StateIdentity>
+#if($facid_affl_fac.get("sta_code"))
+                            <StateCode>$facid_affl_fac.get("sta_code")</StateCode>
+#end
+#if($facid_affl_fac.get("code_lst_ver_val"))
+                            <StateCodeListIdentifier#if($facid_affl_fac.get("code_list_vers_iden")) CodeListVersionIdentifier="$facid_affl_fac.get("code_list_vers_iden")"#end#if($facid_affl_fac.get("code_list_vers_agn_iden")) CodeListVersionAgencyIdentifier="$facid_affl_fac.get("code_list_vers_agn_iden")"#end>$facid_affl_fac.get("code_lst_ver_val")</StateCodeListIdentifier>
+#end
+#if($facid_affl_fac.get("sta_name"))
+                            <StateName>$facid_affl_fac.get("sta_name")</StateName>
+#end
+                        </StateIdentity>
+#end
+#if($facid_affl_fac.get("addr_post_code_val"))
+                        <AddressPostalCode#if($facid_affl_fac.get("addr_post_code_cont")) AddressPostalCodeContext="$facid_affl_fac.get("addr_post_code_cont")"#end>$facid_affl_fac.get("addr_post_code_val")</AddressPostalCode>
+#end
+#if(($facid_affl_fac.get("ctry_code"))||($facid_affl_fac.get("ctry_name")))
+                        <CountryIdentity>
+#if($facid_affl_fac.get("ctry_code"))
+                            <CountryCode>$facid_affl_fac.get("ctry_code")</CountryCode>
+#end
+#if($facid_affl_fac.get("ctry_iden_code_lst_ver_val"))
+                            <CountryCodeListIdentifier#if($facid_affl_fac.get("ctry_iden_code_list_vers_iden")) CodeListVersionIdentifier="$facid_affl_fac.get("ctry_iden_code_list_vers_iden")"#end#if($facid_affl_fac.get("ctry_iden_code_lis_ver_agn_ide")) CodeListVersionAgencyIdentifier="$facid_affl_fac.get("ctry_iden_code_lis_ver_agn_ide")"#end>$facid_affl_fac.get("ctry_iden_code_lst_ver_val")</CountryCodeListIdentifier>
+#end
+#if($facid_affl_fac.get("ctry_name"))
+                            <CountryName>$facid_affl_fac.get("ctry_name")</CountryName>
+#end
+                        </CountryIdentity>
+#end
+                    </MailingAddress>
+#end##MailingAddress
+                </Affiliate>
+#if ($velocityCount % 100 == 0)$helper.print("Affiliates completed so far:")$helper.print($velocityCount)#end
+#end##foreach($afflId)
+            </AffiliateList>
+#end##if(($afflIdFacList.size() > 0) || ($afflIdEnvList.size() > 0))
+        </FacilityDetails>
+$helper.print("Total Facilities: $totalRecCount")
+$helper.setResultingRecordCount($totalRecCount)
+$helper.print("Time for Facilities: ")$helper.printElapsedTime()

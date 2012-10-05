@@ -1,0 +1,1 @@
+update NSchedule set ExecuteStatus='Success' where ExecuteStatus='Sucesss';

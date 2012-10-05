@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Tim Preuss (Perrin Quarles Associates) -->
+<xsd:schema xmlns:cer="http://www.exchangenetwork.net/schema/cer/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/cer/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2">
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name  : CER_Location_v1.2.xsd
+        Current Version Available At :  http://www.exchangenetwork.net/schema/cer/1/2/CER_Location_v1.2.xsd
+        Description   : Information on the location of an emissions source.
+        Developed by  :  Perrin Quarles Associates, Inc.
+        Point of Contact : Perrin Quarles Associates, Inc.	
+        </xsd:documentation>
+	</xsd:annotation>
+	<xsd:include schemaLocation="CER_SimpleContent_v1.2.xsd"/>
+	<xsd:include schemaLocation="CER_ExcludedLocationParameter_v1.2.xsd"/>
+	<xsd:include schemaLocation="CER_Process_v1.2.xsd"/>
+	<xsd:complexType name="LocationDataType">
+		<xsd:sequence>
+			<xsd:element ref="cer:StateAndCountyFIPSCode" minOccurs="0"/>
+			<xsd:element ref="cer:TribalCode" minOccurs="0"/>
+			<xsd:element ref="cer:StateAndCountryFIPSCode" minOccurs="0"/>
+			<xsd:element ref="cer:CensusBlockIdentifier" minOccurs="0"/>
+			<xsd:element ref="cer:CensusTractIdentifier" minOccurs="0"/>
+			<xsd:element ref="cer:ShapeIdentifier" minOccurs="0"/>
+			<xsd:element ref="cer:LocationComment" minOccurs="0"/>
+			<xsd:element ref="cer:ExcludedLocationParameter" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="cer:LocationEmissionsProcess" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="Location" type="cer:LocationDataType"/>
+</xsd:schema>

@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="UTF-8"?>#set ($totalRecCount = 0)$helper.startStopWatch()$helper.print("Change Date:")$helper.print($changeDate)
+<TierII:TierII schemaVersion="0.0" xmlns:TierII="http://www.exchangenetwork.net/schema/TierII/1/0"
+    xmlns:TRI="urn:us:net:exchangenetwork:TRI:1:0"
+    xmlns:sc="urn:us:net:exchangenetwork:sc:1:0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.exchangenetwork.net/schema/TierII/1/0 http://www.windsorsolutions.biz/xsd/TierII_Schema_v1.0/0/TierII_TierII_v1.0.xsd">
+<TierII:Submission>
+#foreach($fac in $helper.getData("SELECT DISTINCT R.REPORTIDENTIFIER, R.REPORTDUEDATE, R.REPORTRECEIVEDDATE, R.REPORTRECIPIENTNAME, R.REPORTINGPERIODSTARTDATE, R.REPORTINGPERIODENDDATE, R.REVISIONINDICATOR, R.REPLACEDREPORTIDENTIFIER, R.REPORTCREATEBYNAME, R.REPORTCREATEDATE, R.REPORTCREATETIME, R.REPORTTYPE, F.PK_GUID, F.FK_GUID, F.FACILITYSITEIDENTIFIER, F.FACILITYSITENAME, F.FACILITYSTATUS, F.LOCATIONADDRESSTEXT, F.SUPPLEMENTALLOCATIONTEXT, F.LOCALITYNAME, F.STATECODE, F.STATECODELISTIDENTIFIER, F.STATENAME, F.ADDRESSPOSTALCODE, F.COUNTRYCODE, F.COUNTRYCODELISTIDENTIFIER, F.COUNTRYNAME, F.COUNTYCODE, F.COUNTYCODELISTIDENTIFIER, F.COUNTYNAME, F.TRIBALCODE, F.TRIBALCODELISTIDENTIFIER, F.TRIBALNAME, F.TRIBALLANDNAME, F.TRIBALLANDINDICATOR, F.LOCATIONDESCRIPTIONTEXT, F.MAILFACILITYSITENAME, F.MAILADDRESSTEXT, F.MAILSUPPLEMENTALADDRESSTEXT, F.MAILADDRESSCITYNAME, F.MAILSTATECODE, F.MAILSTATECODELISTIDENTIFIER, F.MAILSTATENAME, F.MAILADDRESSPOSTALCODE, F.MAILCOUNTRYCODE, F.MAILCOUNTRYCODELISTIDENTIFIER, F.MAILCOUNTRYNAME, F.PARENTCOMPANYNAMENAINDICATOR, F.PARENTCOMPANYNAMETEXT, F.PARENTDUNBRADSTREETCODE, F.FIREDISTRICT FROM  T2_REPORT R INNER JOIN T2_FAC_SITE F ON R.PK_GUID = F.FK_GUID INNER JOIN CHANGED_FACILITIES C ON F.FACILITYSITEIDENTIFIER = C.ST_FAC_IND WHERE C.FLOW_TYPE = 'HERE-TIER2' AND C.IS_DELETED = 0 AND C.UPDATE_DATE >= ? ", $helper.toDbDateString($changeDate)))
+#set($totalRecCount = $velocityCount)    <TierII:TierIIReport>
+        <sc:ReportIdentity>
+#if($fac.get("reportidentifier"))
+            <sc:ReportIdentifier>$fac.get("reportidentifier")</sc:ReportIdentifier>
+#end
+#if($fac.get("reportduedate"))
+            <sc:ReportDueDate>$fac.get("reportduedate")</sc:ReportDueDate>
+#end
+#if($fac.get("reportreceiveddate"))
+            <sc:ReportReceivedDate>$fac.get("reportreceiveddate")</sc:ReportReceivedDate>
+#end
+#if($fac.get("reportrecipientname"))
+            <sc:ReportRecipientName>$fac.get("reportrecipientname")</sc:ReportRecipientName>
+#end
+#if($fac.get("reportingperiodstartdate"))
+            <sc:ReportingPeriodStartDate>$fac.get("reportingperiodstartdate")</sc:ReportingPeriodStartDate>
+#end
+#if($fac.get("reportingperiodenddate"))
+            <sc:ReportingPeriodEndDate>$fac.get("reportingperiodenddate")</sc:ReportingPeriodEndDate>
+#end
+#if($fac.get("revisionindicator"))
+            <sc:RevisionIndicator>$fac.get("revisionindicator")</sc:RevisionIndicator>
+#end
+#if($fac.get("replacedreportidentifier"))
+            <sc:ReplacedReportIdentifier>$fac.get("replacedreportidentifier")</sc:ReplacedReportIdentifier>
+#end
+##the element <sc:ReportCreateByName> is defined as 0..1 in the xsd, but we never populate it
+###if($fac.get("individualidentifier") || $fac.get("individualtitletext") || $fac.get("nameprefixtext") || $fac.get("individualfullname") || $fac.get("namesuffixtext"))
+##            <sc:ReportCreateByName>
+###if($fac.get("individualidentifier"))
+##                <sc:IndividualIdentifier IndividualIdentifierContext="StateId">$fac.get("individualidentifier")</sc:IndividualIdentifier>
+###end
+###if($fac.get("individualtitletext"))
+##                <sc:IndividualTitleText>$fac.get("individualtitletext")</sc:IndividualTitleText>
+###end
+###if($fac.get("nameprefixtext"))
+##                <sc:NamePrefixText>$fac.get("nameprefixtext")</sc:NamePrefixText>
+###end
+###if($fac.get("individualfullname"))
+##                <sc:IndividualFullName>$fac.get("individualfullname")</sc:IndividualFullName>
+###end
+###if($fac.get("namesuffixtext"))
+##                <sc:NameSuffixText>$fac.get("namesuffixtext")</sc:NameSuffixText>
+###end
+##            </sc:ReportCreateByName>
+###end##if...
+#if($fac.get("reporttype"))
+            <sc:ReportType>
+                <sc:ReportTypeCode>$fac.get("reporttype")</sc:ReportTypeCode>
+            </sc:ReportType>
+#end
+        </sc:ReportIdentity>
+        <TierII:TierIIFacility>
+#if($fac.get("facilitysiteidentifier"))
+            <TRI:FacilityIdentifier>$fac.get("facilitysiteidentifier")</TRI:FacilityIdentifier>
+#end
+#if($fac.get("facilitysitename"))
+            <sc:FacilitySiteName>$fac.get("facilitysitename")</sc:FacilitySiteName>
+#end
+#if($fac.get("facilitystatus"))
+            <TierII:FacilityStatus>$fac.get("facilitystatus")</TierII:FacilityStatus>
+#end
+            <sc:LocationAddress>
+#if($fac.get("locationaddresstext"))
+                <sc:LocationAddressText>$fac.get("locationaddresstext")</sc:LocationAddressText>
+#end
+#if($fac.get("supplementallocationtext"))
+                <sc:SupplementalLocationText>$fac.get("supplementallocationtext")</sc:SupplementalLocationText>
+#end
+#if($fac.get("localityname"))
+                <sc:LocalityName>$fac.get("localityname")</sc:LocalityName>
+#end
+#if($fac.get("statecode") || $fac.get("statecodelistidentifier") || $fac.get("statename"))
+                <sc:StateIdentity>
+#if($fac.get("statecode"))
+                    <sc:StateCode>$fac.get("statecode")</sc:StateCode>
+#end
+#if($fac.get("statecodelistidentifier"))
+                    <sc:StateCodeListIdentifier>$fac.get("statecodelistidentifier")</sc:StateCodeListIdentifier>
+#end
+#if($fac.get("statename"))
+                    <sc:StateName>$fac.get("statename")</sc:StateName>
+#end
+                </sc:StateIdentity>
+#end##if...
+#if($fac.get("addresspostalcode"))
+                <sc:AddressPostalCode>$fac.get("addresspostalcode")</sc:AddressPostalCode>
+#end
+#if($fac.get("countrycode") || $fac.get("countrycodelistidentifier") || $fac.get("countryname"))
+                <sc:CountryIdentity>
+#if($fac.get("countrycode"))
+                    <sc:CountryCode>$fac.get("countrycode")</sc:CountryCode>
+#end
+#if($fac.get("countrycodelistidentifier"))
+                    <sc:CountryCodeListIdentifier>$fac.get("countrycodelistidentifier")</sc:CountryCodeListIdentifier>
+#end
+#if($fac.get("countryname"))
+                    <sc:CountryName>$fac.get("countryname")</sc:CountryName>
+#end
+                </sc:CountryIdentity>
+#end##if...
+#if($fac.get("countycode") || $fac.get("countycodelistidentifier") || $fac.get("countyname"))
+                <sc:CountyIdentity>
+#if($fac.get("countycode"))
+                    <sc:CountyCode>$fac.get("countycode")</sc:CountyCode>
+#end
+#if($fac.get("countycodelistidentifier"))
+                    <sc:CountyCodeListIdentifier>$fac.get("countycodelistidentifier")</sc:CountyCodeListIdentifier>
+#end
+#if($fac.get("countyname"))
+                    <sc:CountyName>$fac.get("countyname")</sc:CountyName>
+#end
+                </sc:CountyIdentity>
+#end##if...
+#if($fac.get("tribalcode") || $fac.get("tribalcodelistidentifier"))
+                <sc:TribalIdentity>
+#if($fac.get("tribalcode"))
+                    <sc:TribalCode>$fac.get("tribalcode")</sc:TribalCode>
+#end
+#if($fac.get("tribalcodelistidentifier"))
+                    <sc:TribalCodeListIdentifier>$fac.get("tribalcodelistidentifier")</sc:TribalCodeListIdentifier>
+#end
+                </sc:TribalIdentity>
+#end
+#if($fac.get("triballandname"))
+                <sc:TribalLandName>$fac.get("triballandname")</sc:TribalLandName>
+#end
+#if($fac.get("triballandindicator"))
+                <sc:TribalLandIndicator>$fac.get("triballandindicator")</sc:TribalLandIndicator>
+#end
+#if($fac.get("locationdescriptiontext"))
+                <sc:LocationDescriptionText>$fac.get("locationdescriptiontext")</sc:LocationDescriptionText>
+#end
+            </sc:LocationAddress>
+#if($fac.get("mailfacilitysitename"))
+            <TRI:MailingFacilitySiteName>$fac.get("mailfacilitysitename")</TRI:MailingFacilitySiteName>
+#end
+            <TRI:MailingAddress>
+#if($fac.get("mailaddresstext"))
+                <sc:MailingAddressText>$fac.get("mailaddresstext")</sc:MailingAddressText>
+#end
+#if($fac.get("mailsupplementaladdresstext"))
+                <sc:SupplementalAddressText>$fac.get("mailsupplementaladdresstext")</sc:SupplementalAddressText>
+#end
+#if($fac.get("mailaddresscityname"))
+                <sc:MailingAddressCityName>$fac.get("mailaddresscityname")</sc:MailingAddressCityName>
+#end
+#if($fac.get("mailstatecode") || $fac.get("mailstatecodelistidentifier") || $fac.get("mailstatename"))
+                <sc:StateIdentity>
+#if($fac.get("mailstatecode"))
+                    <sc:StateCode>$fac.get("mailstatecode")</sc:StateCode>
+#end
+#if($fac.get("mailstatecodelistidentifier"))
+                    <sc:StateCodeListIdentifier>$fac.get("mailstatecodelistidentifier")</sc:StateCodeListIdentifier>
+#end
+#if($fac.get("mailstatename"))
+                    <sc:StateName>$fac.get("mailstatename")</sc:StateName>
+#end
+                </sc:StateIdentity>
+#end##if...
+#if($fac.get("mailaddresspostalcode"))
+                <sc:AddressPostalCode>$fac.get("mailaddresspostalcode")</sc:AddressPostalCode>
+#end
+#if($fac.get("mailcountrycode") || $fac.get("mailcountrycodelistidentifier") || $fac.get("mailcountryname"))
+                <sc:CountryIdentity>
+#if($fac.get("mailcountrycode"))
+                    <sc:CountryCode>$fac.get("mailcountrycode")</sc:CountryCode>
+#end
+#if($fac.get("mailcountrycodelistidentifier"))
+                    <sc:CountryCodeListIdentifier>$fac.get("mailcountrycodelistidentifier")</sc:CountryCodeListIdentifier>
+#end
+#if($fac.get("mailcountryname"))
+                    <sc:CountryName>$fac.get("mailcountryname")</sc:CountryName>
+#end
+                </sc:CountryIdentity>
+#end
+#if($fac.get("statecode"))
+                <TRI:ProvinceNameText>$fac.get("statecode")</TRI:ProvinceNameText>
+#end
+            </TRI:MailingAddress>
+#foreach($sic in $helper.getData("SELECT * FROM T2_FAC_SIC WHERE FK_GUID = ? ", $fac.get("pk_guid")))
+            <TRI:FacilitySIC>
+#if($sic.get("siccode"))
+                <sc:SICCode>$sic.get("siccode")</sc:SICCode>
+#end
+#if($sic.get("sicprimaryindicator"))
+                <sc:SICPrimaryIndicator>$sic.get("sicprimaryindicator")</sc:SICPrimaryIndicator>
+#end
+            </TRI:FacilitySIC>
+#end##foreach($sic in $helper.getData
+#foreach($naic in $helper.getData("SELECT * FROM T2_FAC_NAICS WHERE FK_GUID = ? ", $fac.get("pk_guid")))
+            <sc:NAICSIdentity>
+#if($naic.get("naicscode"))
+                <sc:NAICSCode>$naic.get("naicscode")</sc:NAICSCode>
+#end
+#if($naic.get("naicsindustrycode"))
+                <sc:NAICSIndustryCode>$naic.get("naicsindustrycode")</sc:NAICSIndustryCode>
+#end
+#if($naic.get("naicsgroupcode"))
+                <sc:NAICSGroupCode>$naic.get("naicsgroupcode")</sc:NAICSGroupCode>
+#end
+#if($naic.get("naicssubsectorcode"))
+                <sc:NAICSSubsectorCode>$naic.get("naicssubsectorcode")</sc:NAICSSubsectorCode>
+#end
+#if($naic.get("naicssectorcode"))
+                <sc:NAICSSectorCode>$naic.get("naicssectorcode")</sc:NAICSSectorCode>
+#end
+            </sc:NAICSIdentity>
+#end##foreach($naic in $helper.getData
+#if($fac.get("parentcompanynamenaindicator"))
+            <TRI:ParentCompanyNameNAIndicator>$fac.get("parentcompanynamenaindicator")</TRI:ParentCompanyNameNAIndicator>
+#end
+#if($fac.get("parentcompanynametext"))
+            <TRI:ParentCompanyNameText>$fac.get("parentcompanynametext")</TRI:ParentCompanyNameText>
+#end
+#if($fac.get("parentdunbradstreetcode"))
+            <TRI:ParentDunBradstreetCode>$fac.get("parentdunbradstreetcode")</TRI:ParentDunBradstreetCode>
+#end
+#foreach($dunb in $helper.getData("SELECT * FROM T2_FAC_DUNDB_ID DB WHERE FK_GUID = ? ", $fac.get("pk_guid")))
+#if($dunb.get("facilitydunbradstreetcode"))
+            <TRI:FacilityDunBradstreetCode>$dunb.get("facilitydunbradstreetcode")</TRI:FacilityDunBradstreetCode>
+#end
+#end##foreach($dunb in $helper.getData
+#foreach($rcraid in $helper.getData("SELECT * FROM T2_FAC_RCRA_ID WHERE FK_GUID = ? ", $fac.get("pk_guid")))
+#if($rcraid.get("rcraidentificationnumber"))
+            <TRI:RCRAIdentificationNumber>$rcraid.get("rcraidentificationnumber")</TRI:RCRAIdentificationNumber>
+#end
+#end##foreach($rcraid in $helper.getData
+#foreach($npdesid in $helper.getData("SELECT * FROM T2_FAC_NPDES_ID WHERE FK_GUID = ? ", $fac.get("pk_guid")))
+#if($npdesid.get("npdesidentificationnumber"))
+            <TRI:NPDESIdentificationNumber>$npdesid.get("npdesidentificationnumber")</TRI:NPDESIdentificationNumber>
+#end
+#end##foreach($npdesid in $helper.getData
+#foreach($uicid in $helper.getData("SELECT * FROM T2_FAC_UIC_ID WHERE FK_GUID = ? ", $fac.get("pk_guid")))
+#if($uicid.get("uicidentificationnumber"))
+            <TRI:UICIdentificationNumber>$uicid.get("uicidentificationnumber")</TRI:UICIdentificationNumber>
+#end
+#end##foreach($uicid in $helper.getData
+#foreach($contact in $helper.getData("SELECT * FROM T2_FAC_IND WHERE FK_GUID = ? ", $fac.get("pk_guid")))
+            <TierII:FacilityContact>
+#if($contact.get("individualidentifier") || $contact.get("individualtitletext") || $contact.get("nameprefixtext") || $contact.get("individualfullname") || $contact.get("namesuffixtext"))
+                <sc:IndividualIdentity>
+#if($contact.get("individualidentifier"))
+                    <sc:IndividualIdentifier>$contact.get("individualidentifier")</sc:IndividualIdentifier>
+#end
+#if($contact.get("individualtitletext"))
+                    <sc:IndividualTitleText>$contact.get("individualtitletext")</sc:IndividualTitleText>
+#end
+#if($contact.get("nameprefixtext"))
+                    <sc:NamePrefixText>$contact.get("nameprefixtext")</sc:NamePrefixText>
+#end
+#if($contact.get("individualfullname"))
+                    <sc:IndividualFullName>$contact.get("individualfullname")</sc:IndividualFullName>
+#end
+#if($contact.get("namesuffixtext"))
+                    <sc:NameSuffixText>$contact.get("namesuffixtext")</sc:NameSuffixText>
+#end
+                </sc:IndividualIdentity>
+#end##if...
+                <sc:MailingAddress>
+#if($contact.get("mailaddresstext"))
+                    <sc:MailingAddressText>$contact.get("mailaddresstext")</sc:MailingAddressText>
+#end
+#if($contact.get("mailsupplementaladdresstext"))
+                    <sc:SupplementalAddressText>$contact.get("mailsupplementaladdresstext")</sc:SupplementalAddressText>
+#end
+#if($contact.get("mailaddresscityname"))
+                    <sc:MailingAddressCityName>$contact.get("mailaddresscityname")</sc:MailingAddressCityName>
+#end
+#if($contact.get("mailstatecode") || $contact.get("mailstatecodelistidentifier") || $contact.get("mailstatename"))
+                    <sc:StateIdentity>
+#if($contact.get("mailstatecode"))
+                        <sc:StateCode>$contact.get("mailstatecode")</sc:StateCode>
+#end
+#if($contact.get("mailstatecodelistidentifier"))
+                        <sc:StateCodeListIdentifier>$contact.get("mailstatecodelistidentifier")</sc:StateCodeListIdentifier>
+#end
+#if($contact.get("mailstatename"))
+                        <sc:StateName>$contact.get("mailstatename")</sc:StateName>
+#end
+                    </sc:StateIdentity>
+#end##if...
+#if($contact.get("mailaddresspostalcode"))
+                    <sc:AddressPostalCode>$contact.get("mailaddresspostalcode")</sc:AddressPostalCode>
+#end
+#if($contact.get("mailcountrycode") || $contact.get("mailcountrycodelistidentifier") || $contact.get("mailcountryname"))
+                    <sc:CountryIdentity>
+#if($contact.get("mailcountrycode"))
+                        <sc:CountryCode>$contact.get("mailcountrycode")</sc:CountryCode>
+#end
+#if($contact.get("mailcountrycodelistidentifier"))
+                        <sc:CountryCodeListIdentifier>$contact.get("mailcountrycodelistidentifier")</sc:CountryCodeListIdentifier>
+#end
+#if($contact.get("mailcountryname"))
+                        <sc:CountryName>$contact.get("mailcountryname")</sc:CountryName>
+#end
+                    </sc:CountryIdentity>
+#end##if...
+                </sc:MailingAddress>
+#foreach($phone in $helper.getData("SELECT * FROM T2_FAC_IND_PHONE WHERE FK_GUID = ? ", $contact.get("pk_guid")))
+                <sc:Telephonic>
+#if($phone.get("telephonenumbertext"))
+                    <sc:TelephoneNumberText>$phone.get("telephonenumbertext")</sc:TelephoneNumberText>
+#end
+#if($phone.get("telephonenumbertypename"))
+                    <sc:TelephoneNumberTypeName>$phone.get("telephonenumbertypename")</sc:TelephoneNumberTypeName>
+#end
+#if($phone.get("telephoneextensionnumbertext"))
+    <sc:TelephoneExtensionNumberText>$phone.get("telephoneextensionnumbertext")</sc:TelephoneExtensionNumberText>
+#end
+                </sc:Telephonic>
+#end ##foreach($phone in $helper.getData
+#foreach($contactType in $helper.getData("SELECT * FROM T2_FAC_IND_TYPE WHERE FK_GUID = ? ", $contact.get("pk_guid")))
+#if($contactType.get("contacttype"))
+                <TierII:ContactType>$contactType.get("contacttype")</TierII:ContactType>
+#end
+#end##foreach($contactType in $helper.getData
+#foreach($email in $helper.getData("SELECT * FROM T2_FAC_IND_EMAIL WHERE FK_GUID = ? ", $contact.get("pk_guid")))
+                <sc:ElectronicAddress>
+#if($email.get("electronicaddresstext"))
+                    <sc:ElectronicAddressText>$email.get("electronicaddresstext")</sc:ElectronicAddressText>
+#end
+#if($email.get("electronicaddresstypename"))
+                    <sc:ElectronicAddressTypeName>$email.get("electronicaddresstypename")</sc:ElectronicAddressTypeName>
+#end
+                </sc:ElectronicAddress>
+#end##foreach($email in $helper.getData
+            </TierII:FacilityContact>
+#end##foreach($contact in $helper.getData
+#if($fac.get("firedistrict"))
+            <TierII:FireDistrictNameText>$fac.get("firedistrict")</TierII:FireDistrictNameText>
+#end
+        </TierII:TierIIFacility>
+#foreach($chemInv in $helper.getData("SELECT * FROM T2_CHEM_INV WHERE FK_GUID = ? ", $fac.get("pk_guid")))
+            <TierII:ChemicalInventory>
+                <TierII:ChemicalIdentification>
+#if($chemInv.get("casnumber"))
+                    <sc:CASNumber>$chemInv.get("casnumber")</sc:CASNumber>
+#end
+#if($chemInv.get("chemsubstancesystematicname"))
+                    <sc:ChemicalSubstanceSystematicName>$chemInv.get("chemsubstancesystematicname")</sc:ChemicalSubstanceSystematicName>
+#end
+#if($chemInv.get("epachemicalregistryname"))
+                    <sc:EPAChemicalRegistryName>$chemInv.get("epachemicalregistryname")</sc:EPAChemicalRegistryName>
+#end
+#if($chemInv.get("epachemicalidentifier"))
+                    <sc:EPAChemicalIdentifier>$chemInv.get("epachemicalidentifier")</sc:EPAChemicalIdentifier>
+#end
+#if($chemInv.get("chemicalnamecontext"))
+                    <sc:ChemicalNameContext>$chemInv.get("chemicalnamecontext")</sc:ChemicalNameContext>
+#end
+                </TierII:ChemicalIdentification>
+#foreach($chemPhys in $helper.getData("SELECT * FROM T2_CHEM_INV_PHYS WHERE FK_GUID = ? ", $chemInv.get("pk_guid")))
+#if($chemPhys.get("chemicalphysicalstate"))
+                <TierII:ChemicalPhysicalState>$chemPhys.get("chemicalphysicalstate")</TierII:ChemicalPhysicalState>
+#end
+#end##foreach($chemPhys in $helper.getData
+#if($chemInv.get("ehsindicator"))
+                <TierII:EHSIndicator>$chemInv.get("ehsindicator")</TierII:EHSIndicator>
+#end
+#foreach($chemHealth in $helper.getData("SELECT * FROM T2_CHEM_INV_HLTH WHERE FK_GUID = ? ", $chemInv.get("pk_guid")))
+#if($chemHealth.get("healtheffects"))
+                <TierII:HealthEffects>$chemHealth.get("healtheffects")</TierII:HealthEffects>
+#end
+#end##foreach($chemHealth in $helper.getData
+#foreach($chemHaz in $helper.getData("SELECT * FROM T2_CHEM_INV_HAZ WHERE FK_GUID = ? ", $chemInv.get("pk_guid")))
+#if($chemHaz.get("hazardtype"))
+                <TierII:HazardType>$chemHaz.get("hazardtype")</TierII:HazardType>
+#end
+#end##foreach($chemHaz in $helper.getData
+#if($chemInv.get("tradesecretindicator"))
+                <TierII:TradeSecretIndicator>$chemInv.get("tradesecretindicator")</TierII:TradeSecretIndicator>
+#end
+#foreach($chemDetail in $helper.getData("SELECT * FROM T2_CHEM_INV_DTLS WHERE FK_GUID = ? ", $chemInv.get("pk_guid")))
+                <TierII:ChemicalInventoryDetails>
+#if($chemDetail.get("numberofdaysonsite"))
+                    <TierII:NumberOfDaysOnsite>$chemDetail.get("numberofdaysonsite")</TierII:NumberOfDaysOnsite>
+#end
+#if($chemDetail.get("maximumdailyamount"))
+                    <TierII:MaximumDailyAmount>$chemDetail.get("maximumdailyamount")</TierII:MaximumDailyAmount>
+#end
+#if($chemDetail.get("maximumcode"))
+                    <TierII:MaximumCode>$chemDetail.get("maximumcode")</TierII:MaximumCode>
+#end
+#if($chemDetail.get("averagedailyamount"))
+                    <TierII:AverageDailyAmount>$chemDetail.get("averagedailyamount")</TierII:AverageDailyAmount>
+#end
+#if($chemDetail.get("averagecode"))
+                    <TierII:AverageCode>$chemDetail.get("averagecode")</TierII:AverageCode>
+#end
+                </TierII:ChemicalInventoryDetails>
+#end##foreach($chemDetail in $helper.getData
+#foreach($chemStor in $helper.getData("SELECT * FROM T2_CHEM_LOC WHERE FK_GUID = ? ", $chemInv.get("pk_guid")))
+                <TierII:ChemicalStorageLocations>
+#if($chemStor.get("confidentiallocationindicator"))
+                    <TierII:ConfidentialLocationIndicator>$chemStor.get("confidentiallocationindicator")</TierII:ConfidentialLocationIndicator>
+#end
+#if($chemStor.get("storagetypecode"))
+                    <TierII:StorageTypeCode>$chemStor.get("storagetypecode")</TierII:StorageTypeCode>
+#end
+#if($chemStor.get("storagetypedescription"))
+                    <TierII:StorageTypeDescription>$chemStor.get("storagetypedescription")</TierII:StorageTypeDescription>
+#end
+#if($chemStor.get("storageloctemperaturecode"))
+                    <TierII:StorageLocationTemperatureCode>$chemStor.get("storageloctemperaturecode")</TierII:StorageLocationTemperatureCode>
+#end
+#if($chemStor.get("storageloctemperaturedesc"))
+                    <TierII:StorageLocationTemperatureDescription>$chemStor.get("storageloctemperaturedesc")</TierII:StorageLocationTemperatureDescription>
+#end
+#if($chemStor.get("storagelocpressurecode"))
+                    <TierII:StorageLocationPressureCode>$chemStor.get("storagelocpressurecode")</TierII:StorageLocationPressureCode>
+#end
+#if($chemStor.get("storagelocpressuredesc"))
+                    <TierII:StorageLocationPressureDescription>$chemStor.get("storagelocpressuredesc")</TierII:StorageLocationPressureDescription>
+#end
+#if($chemStor.get("storagelocdescription"))
+                    <TierII:StorageLocationDescription>$chemStor.get("storagelocdescription")</TierII:StorageLocationDescription>
+#end
+#if($chemStor.get("maximumamountatlocation"))
+                    <TierII:MaximumAmountAtLocation>$chemStor.get("maximumamountatlocation")</TierII:MaximumAmountAtLocation>
+#end
+#if($chemStor.get("measurementunit"))
+                    <TierII:MeasurementUnit>$chemStor.get("measurementunit")</TierII:MeasurementUnit>
+#end
+                </TierII:ChemicalStorageLocations>
+#end##foreach($chemStor in $helper.getData
+#foreach($chemMix in $helper.getData("SELECT * FROM T2_CHEM_MIX WHERE FK_GUID = ? ", $chemInv.get("pk_guid")))
+                <TierII:MixtureComponents>
+#if($chemMix.get("casnumber"))
+                    <sc:CASNumber>$chemMix.get("casnumber")</sc:CASNumber>
+#end
+#if($chemMix.get("component"))
+                    <TierII:Component>$chemMix.get("component")</TierII:Component>
+#end
+#if($chemMix.get("componentpercentage"))
+                    <TierII:ComponentPercentage>$chemMix.get("componentpercentage")</TierII:ComponentPercentage>
+#end
+#if($chemMix.get("weightorvolume"))
+                    <TierII:WeightOrVolume>$chemMix.get("weightorvolume")</TierII:WeightOrVolume>
+#end
+#if($chemMix.get("ehsindicator"))
+                    <TierII:EHSIndicator>$chemMix.get("ehsindicator")</TierII:EHSIndicator>
+#end
+                </TierII:MixtureComponents>
+#end##foreach($chemMix in $helper.getData
+            </TierII:ChemicalInventory>
+#end##foreach($chemInv in $helper.getData
+    </TierII:TierIIReport>
+#end##foreach
+</TierII:Submission>
+</TierII:TierII>
+$helper.print("Total T2 Reports: $totalRecCount")
+## Setting the total number of records processed
+$helper.setResultingRecordCount($totalRecCount)
+$helper.print("Total Time:")
+$helper.printElapsedTime()

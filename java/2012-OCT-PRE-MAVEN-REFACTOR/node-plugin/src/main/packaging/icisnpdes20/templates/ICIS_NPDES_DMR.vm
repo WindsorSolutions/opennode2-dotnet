@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+#set ($totalRecCount = 0)    
+$helper.startStopWatch()
+<Document xmlns="http://www.exchangenetwork.net/schema/icis/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.exchangenetwork.net/schema/icis/1/5/ICIS_v1.5.xsd http://www.exchangenetwork.net/schema/icis/1/5/ICIS_v1.5.xsd">
+#set($icisDocument = $helper.getObject("select document_id, id, author, org, title, crtn_time, cmnt, data_service, contact_info from ICIS_DOCUMENT where ID = ? ", $icisId))
+	<Header>
+		<Id>$icisDocument.id</Id>
+#if($icisDocument.author)
+		<Author>$icisDocument.author</Author>
+#end
+#if($icisDocument.org)
+		<Organization>$icisDocument.org</Organization>
+#end
+#if($icisDocument.title)
+        <Title>$icisDocument.title</Title>
+#end
+#if($icisDocument.crtn_time)
+		<CreationTime>$helper.toXmlDateTime($icisDocument.crtn_time)</CreationTime>
+#end
+#if($icisDocument.cmnt)
+		<Comment>$icisDocument.cmnt</Comment>
+#end
+#if($icisDocument.data_service)
+		<DataService>$icisDocument.data_service</DataService>
+#end
+#if($icisDocument.contact_info)
+		<ContactInfo>$icisDocument.contact_info</ContactInfo>
+#end
+#foreach($headerProp in $helper.getData("select name, val from ICIS_HEADER_PROPERTY where document_id = ? ", $icisDocument.document_id))
+		<Property>
+			<name>$headerProp.name</name>
+			<value>$headerProp.val</value>
+		</Property>
+#end##foreach($headerProp in $helper.getData(
+	</Header>
+#set($icisPayload = $helper.getObject("select * from ICIS_PAYLOAD_DATA where document_id = '$icisDocument.document_id' and last_payload_update_date > ? ", $lastPayloadUpdateDate ))
+#if($icisPayload)
+    <Payload #if($icisPayload.oper)Operation="$icisPayload.oper"#end>
+#foreach($dmrData in $helper.getData("select * from ICIS_DISCHRG_MONTR_RPT_DATA where payload_data_id = ? ", $icisPayload.payload_data_id))
+#set ($totalRecCount = $velocityCount)
+		<DischargeMonitoringReportData>
+#if($dmrData.trans_type || $dmrData.trans_timestamp)
+			<TransactionHeader>
+#if($dmrData.trans_type)
+				<TransactionType>$dmrData.trans_type</TransactionType>
+#end
+#if($dmrData.trans_timestamp)
+				<TransactionTimestamp>$dmrData.trans_timestamp</TransactionTimestamp>
+#end
+			</TransactionHeader>
+#end##if($dmrData.trans_type || $dmrData.trans_timestamp)
+			<DischargeMonitoringReport>
+#if($dmrData.permit_iden)
+				<PermitIdentifier>$dmrData.permit_iden</PermitIdentifier>
+#end
+#if($dmrData.perm_feature_iden)
+				<PermittedFeatureIdentifier>$dmrData.perm_feature_iden</PermittedFeatureIdentifier>
+#end
+#if($dmrData.limit_set_designator)
+				<LimitSetDesignator>$dmrData.limit_set_designator</LimitSetDesignator>
+#end
+#if($dmrData.montr_prd_end_date)
+				<MonitoringPeriodEndDate>$helper.toXmlDate($dmrData.montr_prd_end_date)</MonitoringPeriodEndDate>
+#end
+#if($dmrData.signature_date)
+				<SignatureDate>$helper.toXmlDate($dmrData.signature_date)</SignatureDate>
+#end
+#if($dmrData.princpl_excutve_offcr_frst_nme)
+				<PrincipalExecutiveOfficerFirstName>$dmrData.princpl_excutve_offcr_frst_nme</PrincipalExecutiveOfficerFirstName>
+#end
+#if($dmrData.principl_excutve_offcr_lst_nme)
+				<PrincipalExecutiveOfficerLastName>$dmrData.principl_excutve_offcr_lst_nme</PrincipalExecutiveOfficerLastName>
+#end
+#if($dmrData.principal_excutive_officr_ttle)
+				<PrincipalExecutiveOfficerTitle>$dmrData.principal_excutive_officr_ttle</PrincipalExecutiveOfficerTitle>
+#end
+#if($dmrData.principal_executive_officr_tle)
+				<PrincipalExecutiveOfficerTelephone>$dmrData.principal_executive_officr_tle</PrincipalExecutiveOfficerTelephone>
+#end
+#if($dmrData.signatory_first_name)
+				<SignatoryFirstName>$dmrData.signatory_first_name</SignatoryFirstName>
+#end
+#if($dmrData.signatory_last_name)
+				<SignatoryLastName>$dmrData.signatory_last_name</SignatoryLastName>
+#end
+#if($dmrData.signatory_tele)
+				<SignatoryTelephone>$dmrData.signatory_tele</SignatoryTelephone>
+#end
+#if($dmrData.rpt_cmnt_txt)
+				<ReportCommentText>$dmrData.rpt_cmnt_txt</ReportCommentText>
+#end
+#if($dmrData.dmr_no_dischrg_ind)
+                <DMRNoDischargeIndicator>$dmrData.dmr_no_dischrg_ind</DMRNoDischargeIndicator>
+#end
+#if($dmrData.dmr_no_dischrg_rcvd_date)
+                <DMRNoDischargeReceivedDate>$helper.toXmlDate($dmrData.dmr_no_dischrg_rcvd_date)</DMRNoDischargeReceivedDate>
+#end
+#foreach($reportParam in $helper.getData("select * from ICIS_RPT_PARM where dischrg_montr_rpt_data_id = ? ", $dmrData.dischrg_montr_rpt_data_id))
+				<ReportParameter>
+#if($reportParam.parm_code)
+					<ParameterCode>$reportParam.parm_code</ParameterCode>
+#end
+#if($reportParam.montr_site_desc_code)
+					<MonitoringSiteDescriptionCode>$reportParam.montr_site_desc_code</MonitoringSiteDescriptionCode>
+#end
+#if($reportParam.limit_season_num)
+					<LimitSeasonNumber>$reportParam.limit_season_num</LimitSeasonNumber>
+#end
+#if($reportParam.rpt_sample_type_txt)
+					<ReportSampleTypeText>$reportParam.rpt_sample_type_txt</ReportSampleTypeText>
+#end
+#if($reportParam.rpt_frequency_code)
+					<ReportingFrequencyCode>$reportParam.rpt_frequency_code</ReportingFrequencyCode>
+#end
+#if($reportParam.rpt_num_of_excursions)
+					<ReportNumberOfExcursions>$reportParam.rpt_num_of_excursions</ReportNumberOfExcursions>
+#end
+#if($reportParam.concentrtion_nm_rpt_unt_ms_cde)
+					<ConcentrationNumericReportUnitMeasureCode>$reportParam.concentrtion_nm_rpt_unt_ms_cde</ConcentrationNumericReportUnitMeasureCode>
+#end
+#if($reportParam.qnty_num_rpt_unit_meas_code)
+					<QuantityNumericReportUnitMeasureCode>$reportParam.qnty_num_rpt_unit_meas_code</QuantityNumericReportUnitMeasureCode>
+#end
+#foreach($numReport in $helper.getData("select * from ICIS_NUMERIC_REPORT where rpt_parm_id = ? " , $reportParam.rpt_parm_id))
+					<NumericReport>
+						<NumericReportCode>$numReport.num_rpt_code</NumericReportCode>
+#if($numReport.num_rpt_rcvd_date)
+						<NumericReportReceivedDate>$helper.toXmlDate($numReport.num_rpt_rcvd_date)</NumericReportReceivedDate>
+#end
+#if($numReport.num_condition_qnty)
+						<NumericConditionQuantity>$numReport.num_condition_qnty</NumericConditionQuantity>
+#end
+#if($numReport.num_condition_adjusted_qnty)
+						<NumericConditionAdjustedQuantity>$numReport.num_condition_adjusted_qnty</NumericConditionAdjustedQuantity>
+#end
+#if($numReport.num_condition_qual)
+						<NumericConditionQualifier>$numReport.num_condition_qual</NumericConditionQualifier>
+#end
+					</NumericReport>
+#end##foreach($numReport in $helper.getData
+				</ReportParameter>
+#end##foreach($reportParam in $helper.getData
+#if($dmrData.polt_met_for_land_application || $dmrData.pathogen_redc_ind || $dmrData.vector_redc_ind || $dmrData.agronomic_gallons_rate_fr_fild || $dmrData.agronomic_dmt_rate_for_field || $dmrData.class_a_alt_used || $dmrData.class_a_alternatives_txt || $dmrData.class_b_alt_used || $dmrData.class_b_alternatives_txt || $dmrData.var_alt_used || $dmrData.var_alternatives_txt )
+				<LandApplicationSite>
+#if($dmrData.polt_met_for_land_application)
+					<PollutantMetForLandApplication>$dmrData.polt_met_for_land_application</PollutantMetForLandApplication>
+#end
+#if($dmrData.pathogen_redc_ind)
+					<PathogenReductionIndicator>$dmrData.pathogen_redc_ind</PathogenReductionIndicator>
+#end
+#if($dmrData.vector_redc_ind)
+					<VectorReductionIndicator>$dmrData.vector_redc_ind</VectorReductionIndicator>
+#end
+#if($dmrData.agronomic_gallons_rate_fr_fild)
+					<AgronomicGallonsRateForField>$dmrData.agronomic_gallons_rate_fr_fild</AgronomicGallonsRateForField>
+#end
+#if($dmrData.agronomic_dmt_rate_for_field)
+					<AgronomicDMTRateForField>$dmrData.agronomic_dmt_rate_for_field</AgronomicDMTRateForField>
+#end
+#if($dmrData.class_a_alt_used)
+					<ClassAAlternativeUsed>$dmrData.class_a_alt_used</ClassAAlternativeUsed>
+#end
+#if($dmrData.class_a_alternatives_txt)
+					<ClassAAlternativesText>$dmrData.class_a_alternatives_txt</ClassAAlternativesText>
+#end
+#if($dmrData.class_b_alt_used)
+					<ClassBAlternativeUsed>$dmrData.class_b_alt_used</ClassBAlternativeUsed>
+#end
+#if($dmrData.class_b_alternatives_txt)
+					<ClassBAlternativesText>$dmrData.class_b_alternatives_txt</ClassBAlternativesText>
+#end
+#if($dmrData.var_alt_used)
+					<VARAlternativeUsed>$dmrData.var_alt_used</VARAlternativeUsed>
+#end
+#if($dmrData.var_alternatives_txt)
+					<VARAlternativesText>$dmrData.var_alternatives_txt</VARAlternativesText>
+#end
+#foreach($typePlanted in $helper.getData("select * from ICIS_CROP_TYPES_PLANTED where dischrg_montr_rpt_data_id = ? ", $dmrData.dischrg_montr_rpt_data_id))
+					<CropTypesPlanted>$typePlanted.txt</CropTypesPlanted>
+#end##foreach($typePlanted in $helper.getData
+#foreach($typeHarvested in $helper.getData("select * from ICIS_CROP_TYPES_HARVESTED where dischrg_montr_rpt_data_id = ? ", $dmrData.dischrg_montr_rpt_data_id))
+					<CropTypesHarvested>$typeHarvested.txt</CropTypesHarvested>
+#end##foreach($typeHarvested in $helper.getData
+				</LandApplicationSite>
+#end##if($dmrData... || ...
+#if($dmrData.pathogen_redc_ind || $dmrData.vector_redc_ind || $dmrData.management_practices_ind || $dmrData.certification_statement_ind || $dmrData.certifier_first_name || $dmrData.certifier_last_name || $dmrData.srfce_dspsl_ste_clss_a_alt_usd || $dmrData.srfce_dsps_ste_clss_a_altr_txt || $dmrData.srfce_dspsl_ste_clss_b_alt_usd || $dmrData.srfce_dsps_ste_clss_b_altr_txt || $dmrData.surface_disposl_ste_vr_alt_usd || $dmrData.srfce_dspsl_ste_vr_altrntv_txt)
+				<SurfaceDisposalSite>
+#if($dmrData.pathogen_redc_ind)
+					<PathogenReductionIndicator>$dmrData.pathogen_redc_ind</PathogenReductionIndicator>
+#end
+#if($dmrData.vector_redc_ind)
+					<VectorReductionIndicator>$dmrData.vector_redc_ind</VectorReductionIndicator>
+#end
+#if($dmrData.management_practices_ind)
+					<ManagementPracticesIndicator>$dmrData.management_practices_ind</ManagementPracticesIndicator>
+#end
+#if($dmrData.certification_statement_ind)
+					<CertificationStatementIndicator>$dmrData.certification_statement_ind</CertificationStatementIndicator>
+#end
+#if($dmrData.certifier_first_name)
+					<CertifierFirstName>$dmrData.certifier_first_name</CertifierFirstName>
+#end
+#if($dmrData.certifier_last_name)
+					<CertifierLastName>$dmrData.certifier_last_name</CertifierLastName>
+#end
+#if($dmrData.srfce_dspsl_ste_clss_a_alt_usd)
+					<ClassAAlternativeUsed>$dmrData.srfce_dspsl_ste_clss_a_alt_usd</ClassAAlternativeUsed>
+#end
+#if($dmrData.srfce_dsps_ste_clss_a_altr_txt)
+					<ClassAAlternativesText>$dmrData.srfce_dsps_ste_clss_a_altr_txt</ClassAAlternativesText>
+#end
+#if($dmrData.srfce_dspsl_ste_clss_b_alt_usd)
+					<ClassBAlternativeUsed>$dmrData.srfce_dspsl_ste_clss_b_alt_usd</ClassBAlternativeUsed>
+#end
+#if($dmrData.srfce_dsps_ste_clss_b_altr_txt)
+					<ClassBAlternativesText>$dmrData.srfce_dsps_ste_clss_b_altr_txt</ClassBAlternativesText>
+#end
+#if($dmrData.surface_disposl_ste_vr_alt_usd)
+					<VARAlternativeUsed>$dmrData.surface_disposl_ste_vr_alt_usd</VARAlternativeUsed>
+#end
+#if($dmrData.srfce_dspsl_ste_vr_altrntv_txt)
+					<VARAlternativesText>$dmrData.srfce_dspsl_ste_vr_altrntv_txt</VARAlternativesText>
+#end
+				</SurfaceDisposalSite>
+#end##if($dmrData... || ...
+#if($dmrData.mercury_compl_ind || $dmrData.beryllium_compl_ind)
+				<Incinerator>
+#if($dmrData.beryllium_compl_ind)
+					<BerylliumComplianceIndicator>$dmrData.beryllium_compl_ind</BerylliumComplianceIndicator>
+#end
+#if($dmrData.mercury_compl_ind)
+					<MercuryComplianceIndicator>$dmrData.mercury_compl_ind</MercuryComplianceIndicator>
+#end
+				</Incinerator>
+#end##if($dmrData... || ...
+#if($dmrData.part_258_compl_ind || $dmrData.tclp_tst_rslt || $dmrData.paint_filter_tst_rslt)
+            <CoDisposalSite>
+#if($dmrData.part_258_compl_ind)
+					<Part258ComplianceIndicator>$dmrData.part_258_compl_ind</Part258ComplianceIndicator>
+#end
+#if($dmrData.paint_filter_tst_rslt)
+					<PaintFilterTestResult>$dmrData.paint_filter_tst_rslt</PaintFilterTestResult>
+#end
+#if($dmrData.tclp_tst_rslt)
+					<TCLPTestResult>$dmrData.tclp_tst_rslt</TCLPTestResult>
+#end
+				</CoDisposalSite>
+#end##if($dmrData... || ...
+			</DischargeMonitoringReport>
+		</DischargeMonitoringReportData>
+#end##foreach($dmrData in $helper.getData
+	</Payload>
+#end##if($icisPayload)
+</Document>
+$helper.print("Template Records: $totalRecCount")
+## Setting the total number of records processed
+$helper.setResultingRecordCount($totalRecCount)
+$helper.print("Template merge complete! Total elapsed time:")
+$helper.printElapsedTime()

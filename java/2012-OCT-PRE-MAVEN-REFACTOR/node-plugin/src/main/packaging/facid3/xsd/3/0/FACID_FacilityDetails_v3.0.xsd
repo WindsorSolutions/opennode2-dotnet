@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:facid="http://www.exchangenetwork.net/schema/facilityid/3" targetNamespace="http://www.exchangenetwork.net/schema/facilityid/3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="3.0">
+	<xsd:include schemaLocation="FACID_FacilityList_v3.0.xsd"/>
+	<xsd:include schemaLocation="FACID_AffiliateList_v3.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+			Schema Name : 	FACID_FacilityDetails_v3.0
+			Current Version Available At : http://www.exchangenetwork.net/
+			Description : 	This is a root element for the FacilityID exchange. This component contains a detailed list of facility information including environmental interests and affiliates. This element is optimized for exchanging detailed facility information for a specific user query or for database synchronization between exchange partners.
+			Application : 
+			Developed by : 	Environmental Protection Agency, Windsor Solutions, Inc.
+			Point of Contact : Kevin Lyons
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="FacilityDetails" type="facid:FacilityDetailsDataType">
+		<xsd:annotation>
+			<xsd:documentation>This is a root element for the FacilityID exchange. This component contains a detailed list of facility information including environmental interests and affiliates. This element is optimized for exchanging detailed facility information for a specific user query or for database synchronization between exchange partners.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:key name="AffiliateKey">
+			<xsd:selector xpath="facid:AffiliateList/facid:Affiliate"/>
+			<xsd:field xpath="facid:AffiliateIdentifier"/>
+		</xsd:key>
+		<xsd:keyref name="FacilityAffiliateForeignKey" refer="facid:AffiliateKey">
+			<xsd:selector xpath="facid:FacilityList/facid:Facility/facid:AffiliationList/facid:FacilityAffiliation"/>
+			<xsd:field xpath="facid:AffiliateIdentifier"/>
+		</xsd:keyref>
+		<xsd:keyref name="FacilityEnvironmentalInterestAffiliateForeignKey" refer="facid:AffiliateKey">
+			<xsd:selector xpath="facid:FacilityList/facid:Facility/facid:EnvironmentalInterestList/facid:EnvironmentalInterest/facid:AffiliationList/facid:FacilityAffiliation"/>
+			<xsd:field xpath="facid:AffiliateIdentifier"/>
+		</xsd:keyref>
+	</xsd:element>
+	<xsd:complexType name="FacilityDetailsDataType">
+		<xsd:sequence>
+			<xsd:element ref="facid:FacilityList" minOccurs="0"/>
+			<xsd:element ref="facid:AffiliateList" minOccurs="0"/>
+		</xsd:sequence>
+		<xsd:attribute name="schemaVersion" use="required">
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:decimal">
+					<xsd:pattern value="3\.\d*"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+	</xsd:complexType>
+</xsd:schema>

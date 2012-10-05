@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	jaxb:extensionBindingPrefixes="hj orm" schemaLocation="../xsd/WQX_BibliographicReference_v2.0.xsd">
+
+	<!-- bibliographic reference -->
+
+	<jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:complexType[@name='BibliographicReferenceDataType']">
+			<hj:embeddable />
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:element[@ref='wqx:ResourceTitleName']">
+			<hj:basic>
+				<orm:column name="RESOURCETITLE"/> 
+			</hj:basic>
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:element[@ref='wqx:ResourceCreatorName']">
+			<hj:basic>
+				<orm:column name="RESOURCECREATOR"/> 
+			</hj:basic>
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:element[@ref='wqx:ResourcePublisherName']">
+			<hj:basic>
+				<orm:column name="RESOURCEPUBLISHER"/> 
+			</hj:basic>
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:element[@ref='wqx:ResourceDate']">
+			<hj:basic>
+				<orm:column column-definition="datetime"/> 
+			</hj:basic>
+		</jaxb:bindings>
+		
+	</jaxb:bindings>
+
+</jaxb:bindings>
+

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>#set ($totalRecCount = 0)$helper.startStopWatch()$helper.print("Change Date:")$helper.print($changeDate)
+<TanksSubmission xsi:schemaLocation="http://www.exchangenetwork.net/schema/tanks/1 http://www.windsorsolutions.biz/xsd/TANKS_v1.0/0/Tanks_v1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.exchangenetwork.net/schema/tanks/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+#set($facIdList = $helper.getList("SELECT st_fac_ind FROM CHANGED_FACILITIES WHERE FLOW_TYPE = 'HERE-TANKS' AND IS_DELETED = 0 AND UPDATE_DATE >= ?", $helper.toDbDateString($changeDate), "st_fac_ind"))
+#if($facIdList.size() > 0)
+#foreach($facId in $facIdList)
+#set($totalRecCount = $velocityCount)
+#set($facility = $helper.getObject("SELECT * FROM TANKS_FAC_SITE WHERE FAC_SITE_IDEN = ?", $facId))
+    <TanksFacilitySite>
+        <FacilitySiteIdentity>
+#if($facility.get("fac_site_iden"))
+            <FacilitySiteIdentifier#if($facility.get("fac_site_iden_context")) FacilitySiteIdentifierContext="$facility.get("fac_site_iden_context")"#end>$facility.get("fac_site_iden")</FacilitySiteIdentifier>
+#end
+#if($facility.get("fac_site_name"))
+            <FacilitySiteName>$facility.get("fac_site_name")</FacilitySiteName>
+#end
+#if($facility.get("fac_site_type_code") || $facility.get("fac_site_type_name"))
+            <FacilitySiteType>
+#if($facility.get("fac_site_type_code"))
+                <FacilitySiteTypeCode>$facility.get("fac_site_type_code")</FacilitySiteTypeCode>
+#end
+#if($facility.get("code_list_value"))
+                <FacilitySiteTypeCodeListIdentifier#if($facility.get("code_list_version_agency_iden")) CodeListVersionAgencyIdentifier="$facility.get("code_list_version_agency_iden")"#end#if($facility.get("code_list_version_iden")) CodeListVersionIdentifier="$facility.get("code_list_version_iden")"#end>$facility.get("code_list_value")</FacilitySiteTypeCodeListIdentifier>
+#end
+#if($facility.get("fac_site_type_name"))
+                <FacilitySiteTypeName>$facility.get("fac_site_type_name")</FacilitySiteTypeName>
+#end
+            </FacilitySiteType>
+#end##if($facility.get("fac_site_type_code") || $facility.get("fac_site_type_name"))
+#if($facility.get("federal_fac_ind"))
+            <FederalFacilityIndicator>$facility.get("federal_fac_ind")</FederalFacilityIndicator>
+#end
+        </FacilitySiteIdentity>
+#foreach($tank in $helper.getData("SELECT T.* FROM TANKS_TANK T JOIN TANKS_FAC_SITE F ON F.FAC_SITE_ID = T.FAC_SITE_ID WHERE F.FAC_SITE_IDEN = ?", $facId))
+        <Tank>
+#if($tank.get("tank_type_text"))
+            <TankTypeText>$tank.get("tank_type_text")</TankTypeText>
+#end
+#if($tank.get("tank_use_status_text"))
+            <TankUseStatusText>$tank.get("tank_use_status_text")</TankUseStatusText>
+#end
+#if($tank.get("tank_iden_text"))
+            <TankIdentifierText>$tank.get("tank_iden_text")</TankIdentifierText>
+#end
+#if($tank.get("tank_install_date"))
+            <TankInstallationDate>$helper.toXmlDate($tank.get("tank_install_date"))</TankInstallationDate>
+#end
+#if($tank.get("tank_is_conf_ind"))
+            <TankIsConfidentialIndicator>$tank.get("tank_is_conf_ind")</TankIsConfidentialIndicator>
+#end
+#if($tank.get("tank_const_text"))
+            <TankConstructionText>$tank.get("tank_const_text")</TankConstructionText>
+#end
+#set($extprotlist = $helper.getData("SELECT * FROM TANKS_EXTERNAL_PROTECTION WHERE TANK_ID = ?", $tank.get("tank_id")))
+#if($extprotlist.hasNext())
+            <TankExternalProtection>
+#foreach($extprot in $extprotlist)
+                <TankExternalProtectionText>$extprot.get("text")</TankExternalProtectionText>
+#end
+            </TankExternalProtection>
+#end##if($extprotlist.hasNext())
+#set($intprotlist = $helper.getData("SELECT * FROM TANKS_INTERNAL_PROTECTION WHERE TANK_ID = ?", $tank.get("tank_id")))
+#if($intprotlist.hasNext())
+            <TankInternalProtection>
+#foreach($intprot in $intprotlist)
+                <TankInternalProtectionText>$intprot.get("text")</TankInternalProtectionText>
+#end
+            </TankInternalProtection>
+#end##if($intprotlist.hasNext())
+#if($tank.get("tank_desc_text"))
+            <TankDescriptionText>$tank.get("tank_desc_text")</TankDescriptionText>
+#end
+#if($tank.get("tank_loc_desc_text"))
+            <TankLocationDescriptionText>$tank.get("tank_loc_desc_text")</TankLocationDescriptionText>
+#end
+#set($complist = $helper.getData("SELECT * FROM TANKS_TANK_COMPART WHERE TANK_ID = ?", $tank.get("tank_id")))
+#foreach($comp in $complist)
+            <TankCompartment>
+#if($comp.get("tank_compart_capacity_num"))
+                <TankCompartmentCapacityNumber>$comp.get("tank_compart_capacity_num")</TankCompartmentCapacityNumber>
+#end
+#if($comp.get("tank_compart_install_date"))
+                <TankCompartmentInstallationDate>$helper.toXmlDate($comp.get("tank_compart_install_date"))</TankCompartmentInstallationDate>
+#end
+#if($comp.get("tank_compart_iden_text"))
+                <TankCompartmentIdentifierText>$comp.get("tank_compart_iden_text")</TankCompartmentIdentifierText>
+#end
+#if($comp.get("tank_compart_has_sec_cont_ind"))
+                <TankCompartmentHasSecondaryContainmentIndicator>$helper.toXmlBoolean($comp.get("tank_compart_has_sec_cont_ind"))</TankCompartmentHasSecondaryContainmentIndicator>
+#end
+#set($pipingconstlist = $helper.getData("SELECT * FROM TANKS_PIPING_CONST WHERE TANK_COMPART_ID = ?", $comp.get("tank_compart_id")))
+#if($comp.get("piping_system_type_text") || $comp.get("piping_has_sec_cont_ind") || $pipingconstlist.hasNext())
+                <TankPiping>
+#if($comp.get("piping_system_type_text"))
+                    <PipingSystemTypeText>$comp.get("piping_system_type_text")</PipingSystemTypeText>
+#end
+#if($pipingconstlist.hasNext())
+                    <PipingConstruction>
+#foreach($pipingconst in $pipingconstlist)
+                        <PipingConstructionText>$pipingconst.get("text")</PipingConstructionText>
+#end
+                    </PipingConstruction>
+#end##if($pipingconstlist.hasNext())
+#if($comp.get("piping_has_sec_cont_ind"))
+                    <PipingHasSecondaryContainmentIndicator>$comp.get("piping_has_sec_cont_ind")</PipingHasSecondaryContainmentIndicator>
+#end
+                </TankPiping>
+#end##if($comp.get("piping_system_type_text") || $comp.get("piping_has_sec_cont_ind") || $pipingconstlist.hasNext())
+#set($chemsublist = $helper.getData("SELECT * FROM TANKS_CHEM_SUBS_IDEN WHERE TANK_COMPART_ID = ?", $comp.get("tank_compart_id")))
+#if($comp.get("tank_content_is_mixture_ind") || $comp.get("tank_content_is_conf_ind") || $chemsublist.hasNext())
+                <TankContents>
+#if($comp.get("tank_content_is_mixture_ind"))
+                    <TankContentIsMixtureIndicator>$helper.toXmlBoolean($comp.get("tank_content_is_mixture_ind"))</TankContentIsMixtureIndicator>
+#end
+#if($comp.get("tank_content_is_conf_ind"))
+                    <TankContentIsConfidentialIndicator>$helper.toXmlBoolean($comp.get("tank_content_is_conf_ind"))</TankContentIsConfidentialIndicator>
+#end
+#foreach($chemsub in $chemsublist)
+                    <ChemicalSubstanceIdentity>
+#if($chemsub.get("epa_chem_internal_num"))
+                        <EPAChemicalInternalNumber>$chemsub.get("epa_chem_internal_num")</EPAChemicalInternalNumber>
+#end
+#if($chemsub.get("cas_reg_num"))
+                        <CASRegistryNumber>$chemsub.get("cas_reg_num")</CASRegistryNumber>
+#end
+#if($chemsub.get("chem_subs_systematic_name"))
+                        <ChemicalSubstanceSystematicName>$chemsub.get("chem_subs_systematic_name")</ChemicalSubstanceSystematicName>
+#end
+#if($chemsub.get("epa_chem_reg_name"))
+                        <EPAChemicalRegistryName>$chemsub.get("epa_chem_reg_name")</EPAChemicalRegistryName>
+#end
+#if($chemsub.get("epa_chem_iden"))
+                        <EPAChemicalIdentifier>$chemsub.get("epa_chem_iden")</EPAChemicalIdentifier>
+#end
+#if($chemsub.get("chem_name_context_name"))
+                        <ChemicalNameContextName>$chemsub.get("chem_name_context_name")</ChemicalNameContextName>
+#end
+#if($chemsub.get("epa_chem_reg_name_src_text"))
+                        <EPAChemicalRegistryNameSourceText>$chemsub.get("epa_chem_reg_name_src_text")</EPAChemicalRegistryNameSourceText>
+#end
+#if($chemsub.get("epa_chem_reg_name_context_name"))
+                        <EPAChemicalRegistryNameContextName>$chemsub.get("epa_chem_reg_name_context_name")</EPAChemicalRegistryNameContextName>
+#end
+#if($chemsub.get("chem_subs_definition_text"))
+                        <ChemicalSubstanceDefinitionText>$chemsub.get("chem_subs_definition_text")</ChemicalSubstanceDefinitionText>
+#end
+#if($chemsub.get("chem_subs_comment_text"))
+                        <ChemicalSubstanceCommentText>$chemsub.get("chem_subs_comment_text")</ChemicalSubstanceCommentText>
+#end
+#if($chemsub.get("chem_subs_synonym_name"))
+                        <ChemicalSubstanceSynonymName>$chemsub.get("chem_subs_synonym_name")</ChemicalSubstanceSynonymName>
+#end
+#if($chemsub.get("molecular_formula_code"))
+                        <MolecularFormulaCode>$chemsub.get("molecular_formula_code")</MolecularFormulaCode>
+#end
+#if($chemsub.get("chem_subs_formula_wght_qnty"))
+                        <ChemicalSubstanceFormulaWeightQuantity>$chemsub.get("chem_subs_formula_wght_qnty")</ChemicalSubstanceFormulaWeightQuantity>
+#end
+#if($chemsub.get("chem_subs_type_name"))
+                        <ChemicalSubstanceTypeName>$chemsub.get("chem_subs_type_name")</ChemicalSubstanceTypeName>
+#end
+#if($chemsub.get("chem_subs_linear_stru_code"))
+                        <ChemicalSubstanceLinearStructureCode>$chemsub.get("chem_subs_linear_stru_code")</ChemicalSubstanceLinearStructureCode>
+#end
+#if($chemsub.get("chem_stru_graphical_diagram"))
+                        <ChemicalStructureGraphicalDiagram>$chemsub.get("chem_stru_graphical_diagram")</ChemicalStructureGraphicalDiagram>
+#end
+#if($chemsub.get("chem_subs_classification_name"))
+                        <ChemicalSubstanceClassificationName>$chemsub.get("chem_subs_classification_name")</ChemicalSubstanceClassificationName>
+#end
+#if($chemsub.get("chem_synonym_status_name"))
+                        <ChemicalSynonymStatusName>$chemsub.get("chem_synonym_status_name")</ChemicalSynonymStatusName>
+#end
+#if($chemsub.get("chem_synonym_src_name"))
+                        <ChemicalSynonymSourceName>$chemsub.get("chem_synonym_src_name")</ChemicalSynonymSourceName>
+#end
+                    </ChemicalSubstanceIdentity>
+#end##foreach($chemsub in $chemsublist)
+                </TankContents>
+#end##if($comp.get("tank_content_is_mixture_ind") || $comp.get("tank_content_is_conf_ind") || $chemsublist.hasNext())
+            </TankCompartment>
+#end##foreach($comp in $complist)
+        </Tank>
+#end##foreach($tank in $helper.getData("SELECT T.* FROM TANKS_TANK T JOIN TANKS_FAC_SITE F ON F.FAC_SITE_ID = T.FAC_SITE_ID WHERE F.FAC_SITE_IDEN = ?", $facId))
+    </TanksFacilitySite>
+##$helper.print("Total Facilities: ")$helper.print($totalRecCount)$helper.print("Time for Facilities:")$helper.printElapsedTime()
+#end##foreach($facId in $facIdList)
+#end##if($facIdList.size() > 0)
+</TanksSubmission>
+$helper.print("Total Facilities: $totalRecCount")
+$helper.setResultingRecordCount($totalRecCount)
+$helper.print("Time for Facilities: ")
+$helper.printElapsedTime()

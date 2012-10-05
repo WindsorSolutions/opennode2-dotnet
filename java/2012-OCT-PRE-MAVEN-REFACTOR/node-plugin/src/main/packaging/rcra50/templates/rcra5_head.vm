@@ -1,0 +1,30 @@
+##this file included by service-specific .vm templates 
+#set ($totalRecCount = 0)
+$helper.startStopWatch()
+#if($makeHeader)#if($makeHeader.equalsIgnoreCase("true"))
+<hdr:Document xmlns:hdr="http://www.exchangenetwork.net/schema/v1.0/ExchangeNetworkDocument.xsd" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://www.exchangenetwork.net/schema/v1.0/ExchangeNetworkDocument.xsd http://www.exchangenetwork.net/schema/v1.0/ExchangeNetworkDocument.xsd"
+    id="$docId">
+    <hdr:Header>
+        <hdr:Author>$author</hdr:Author>
+        <hdr:Organization>$providingOrg</hdr:Organization>
+        <hdr:Title>RCRAInfo Submission</hdr:Title>
+        <hdr:CreationTime>$helper.getCurrentDateTime()</hdr:CreationTime>
+        <hdr:ContactInfo>$contactInfo</hdr:ContactInfo>
+        <hdr:Sensitivity>Unclassified</hdr:Sensitivity>
+        <hdr:Property>
+            <hdr:name>RCRAInfoUserID</hdr:name>
+            <hdr:value>$rcraInfoUserId</hdr:value>
+        </hdr:Property>
+        <hdr:Property>
+            <hdr:name>RCRAInfoStateCode</hdr:name>
+            <hdr:value>$rcraInfoStateCode</hdr:value>
+        </hdr:Property>
+        <hdr:Property>
+            <hdr:name>NotificationURI</hdr:name>
+            <hdr:value>$notification</hdr:value>
+        </hdr:Property>
+    </hdr:Header>
+<hdr:Payload Operation="$payloadOperation">
+#end#end##if($makeHeader)

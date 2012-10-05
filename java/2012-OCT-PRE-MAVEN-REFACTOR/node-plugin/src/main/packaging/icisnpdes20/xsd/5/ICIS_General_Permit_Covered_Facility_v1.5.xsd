@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema 
+targetNamespace="http://www.exchangenetwork.net/schema/icis/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1" xmlns:icis="http://www.exchangenetwork.net/schema/icis/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<!-- INCLUDE STATEMENTS -->
+	<xsd:include schemaLocation="ICIS_Address_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_Key_Elements_v1.5.xsd"/>
+	<xsd:include schemaLocation="ICIS_Permit_v1.5.xsd"/>
+	<!-- SCHEMA HEADER -->
+	<xsd:annotation>
+		<xsd:documentation>Schema Name: ICIS_General_Permit_Covered_Facility_v1.5.xsd</xsd:documentation>
+		<xsd:documentation>Current Version Available: http://www.exchangenetwork.net/schema/draft/icis/SchemasVersion1.5</xsd:documentation>
+		<xsd:documentation>Description: ICIS-NPDES master general permit data input format</xsd:documentation>
+		<xsd:documentation>Application: ICIS-NPDES</xsd:documentation>
+		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
+		<xsd:documentation>Point of Contact: EPA/Alison Kittle</xsd:documentation>
+		<xsd:documentation>Data Written: July 2006</xsd:documentation>
+		<xsd:documentation>Last Date Modified:3-7-2008</xsd:documentation>
+	</xsd:annotation>
+	<!-- GLOBAL ELEMENT DECLARATIONS -->
+	<xsd:element name="GeneralPermit" type="icis:GeneralPermit"/>
+	<xsd:element name="AssociatedMasterGeneralPermitIdentifier" type="icis:String9FixedType"/>
+	<!-- COMPLEX TYPE DEFINITIONS -->
+	<xsd:complexType name="GeneralPermitData">
+		<xsd:sequence>
+			<xsd:element ref="icis:TransactionHeader"/>
+			<xsd:element ref="icis:GeneralPermit"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GeneralPermit">
+		<xsd:complexContent>
+			<xsd:extension base="icis:BasicPermitKeyElements">
+				<xsd:sequence>
+					<xsd:element ref="icis:AssociatedMasterGeneralPermitIdentifier" minOccurs="0"/>
+					<xsd:group ref="icis:PermitDataGroup" minOccurs="0"/>
+					<xsd:group ref="icis:PermitBasicGPCFGroup" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+                http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<description>
+		Node Orchestration Service Configuration File. All NOS-specific settings should be in conf/nos.xml.
+	</description>
+
+	<import resource="classes/conf/nos.xml" />
+
+	<!-- Node -->
+	<bean name="/WinNodeContentService"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service" ref="contentCmfService" />
+		<property name="serviceInterface" value="com.windsor.node.common.service.cmf.ContentService" />
+	</bean>
+	
+	<bean name="/WinNodeSecurityService"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service" ref="securityCmfService" />
+		<property name="serviceInterface" value="com.windsor.node.common.service.cmf.SecurityService" />
+	</bean>
+	
+	<bean name="/WinNodeTransactionService"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service" ref="transactionCmfService" />
+		<property name="serviceInterface" value="com.windsor.node.common.service.cmf.TransactionService" />
+	</bean>
+
+
+	<!-- Admin -->
+	<bean name="/WinAccountService"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service" ref="accountService" />
+		<property name="serviceInterface" value="com.windsor.node.common.service.admin.AccountService" />
+	</bean>
+
+	<bean name="/WinActivityService"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service" ref="activityService" />
+		<property name="serviceInterface" value="com.windsor.node.common.service.admin.ActivityService" />
+	</bean>
+
+	<bean name="/WinConfigService"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service" ref="configService" />
+		<property name="serviceInterface" value="com.windsor.node.common.service.admin.ConfigService" />
+	</bean>
+
+	<bean name="/WinFlowService"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service" ref="flowService" />
+		<property name="serviceInterface" value="com.windsor.node.common.service.admin.FlowService" />
+	</bean>
+
+	<bean name="/WinNotificationService"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service" ref="notificationService" />
+		<property name="serviceInterface" value="com.windsor.node.common.service.admin.NotificationService" />
+	</bean>
+
+	<bean name="/WinPartnerService"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service" ref="partnerService" />
+		<property name="serviceInterface" value="com.windsor.node.common.service.admin.PartnerService" />
+	</bean>
+
+	<bean name="/WinPluginService"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service" ref="pluginService" />
+		<property name="serviceInterface" value="com.windsor.node.common.service.admin.PluginAdminService" />
+	</bean>
+
+	<bean name="/WinScheduleService"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service" ref="scheduleService" />
+		<property name="serviceInterface" value="com.windsor.node.common.service.admin.ScheduleService" />
+	</bean>
+
+	<bean name="/WinTransactionService"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service" ref="transactionService" />
+		<property name="serviceInterface" value="com.windsor.node.common.service.admin.TransactionService" />
+	</bean>
+
+    <bean name="/WinFlowSecurityService"
+        class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+        <property name="service" ref="flowSecurityService" />
+        <property name="serviceInterface" value="com.windsor.node.common.service.admin.FlowSecurityService" />
+    </bean>
+
+    <bean name="/WinScheduleExecutionService"
+        class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+        <property name="service" ref="scheduleWorker" />
+        <property name="serviceInterface" value="com.windsor.node.worker.schedule.ScheduleItemExecutionService" />
+    </bean>
+</beans>

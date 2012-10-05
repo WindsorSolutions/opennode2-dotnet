@@ -1,0 +1,462 @@
+================================================================================
+OpenNode2 v2.02 for Java - Release Notes                             2011-11-17
+================================================================================
+Release 2.02 enhances usability of the Java Node.
+  
+The Schedule Manager now prompts for implementer specific arguments when called 
+for by a Plugin. Refer to individual Plugin Guides for definitions of plugin 
+implementers and corresponding service and schedule parameters.
+  
+The Schedule Manager has added the ability to run a saved schedule from the 
+schedule list screen.  This 'Run Now' button allows the user to run the schedule
+without having to edit the schedule. 
+
+'Get Status' and 'Download' functions are now available on the Node Transaction
+Detail of the Activity Viewer.  "Get Status" will update the status of the 
+transaction while the request is processing.  The "Download" button is an 
+additional method to download the submitted document with the ability to save
+locally.
+
+When upgrading to version 2.02 it will be necessary to run an SQL update script.
+Please refer to the Installation Guide for details.  In addition, OpenNode2 v2.02
+contains numerous additional minor usability improvements and bug fixes.
+
+================================================================================
+OpenNode2 v2.00 for Java - Release Notes                             2011-05-2
+================================================================================
+This release complies with the new Endpoint 2.1 specification, accordingly the
+new endpoint is now labeled v21 (previously v20).
+
+With this version the Java Node now uses a new numbering scheme, versions of the 
+Node will now use a 2.XX build numbering scheme, plugins will use a 2.XX.YY scheme
+with YY signifying the plugin version and the XX signifying the lowest version of 
+the Java Node with which it is compatible.  Accordingly, plugins with version 
+numbers less than 2.00.00 will not work with this release.
+
+The source code for this version has been rearranged to comply with the Maven 2
+conventions for project organization.  With the Maven 2 pom.xml build files
+getting up and running with the Node source should be easier than ever.  Please
+note that anything in the Subversion repository's /trunk may be inherently unstable,
+please use a tagged release under /tags as a base for your work.  All pom.xml files
+contain XML comments with the most common Maven commands needed to use them.
+
+The configuration for the Java Node is now greatly simplified, if upgrading please
+refer to the Install Guide for details.
+
+Additionally the Node Admin application can now test endpoints and database connections
+as they are added.
+
+================================================================================
+OpenNode2 v1.24 for Java - Release Notes                             2010-03-21
+================================================================================
+This release addresses a number of compatibility issues in the Node itself, 
+especially the v.20 endpoint (aka wne2). It also contains an update to some
+third-party libraries, and numerous small enhancements. 
+
+Because of these changes in the Node, plugins with version numbers less than 
+1.24 will not work with this release.
+
+If installing this or a later version to run with a Node Administration database
+used with an earlier release, please run the Nschedule_frequencytype_update.sql
+script in database/fixes before starting the Node.
+
+FIXED/RESOLVED
+========================================
+  
+* Configured wne2 so that the proper WSDL 1.1 is returned when calling 
+  http<s>://<hostname>/wne2/services/v20?wsdl. This requires hard-coding the 
+  protocol, host, and port in the wsdl file, which is now stored in 
+  appropriate "Endpoint2/env/<build target>/v20.wsdl" and handled in the build. 
+  See the comments near the bottom of the WSDL file for an example.
+
+* In order to improve copmatibility with other Node implementations, wne2 was
+  modified to use MTOM only on Submit and Download method calls, and to never set 
+  headers in the SOAP envelope.
+  
+* Modified the built-in v20 client to never send the "SOAP-ACTION" HTTP header,
+  and to never set headers in the SOAP envelope.  
+
+* Refined CommonTransactionStatusCode and related classes to better handle 
+  mixed case in status codes - a compatibility issue across Node implementations.
+  
+* Found and fixed a condition in which an "action=" attribute was added to the
+  HTTP "content-type" header, thus breaking interoperability with certain ENN 
+  v20 endpoint implementations.
+  
+* Refactored fault/exception handling in the built-in ENN v20 client, so it no 
+  longer passed wne2-specific exception types back to wnos. (This would result 
+  in a ClassNotFoundException in wnos, thus masking the original error message.)
+
+NEW
+========================================
+
+* In Node Admin, linked names of items in lists (schedule.htm, flow.htm, etc.) 
+  links (or HTML labels) so clicking the name is the same as clicking the green 
+  "edit" icon.
+  
+* For Schedules, corrected the logic for setting the next run date, and made the 
+  "Next run on: display in Node Admin more sensible (especially after selecting 
+  "Save and run now".
+  
+* In the Schedule Editor, the "Save and run now" button is deactivated whenever
+  the Schedule itself is deactivated.
+  
+* The Manage Schedules page now displays [Inactive] next to the Schedule's name
+  when appropriate. 
+
+* Upgraded Endpoint2 to Axis2 v1.5.1, in the hopes of getting it compatible with
+  WebLogic 10.3.
+
+* Minor updates to DDL for EIS and WQX plugins. 
+
+================================================================================
+OpenNode2 v1.23 for Java - Release Notes                             2009-12-31
+================================================================================
+The purpose ofthis update is to address an issue in the WQX plugin.
+
+FIXED/RESOLVED
+========================================
+  
+* In testing WQX at CDX, it became clear that, unlike other data exchanges, WQX
+  submissions in which the filename ends in ".xml.zip" will be rejected by the 
+  back-end Node; they will pass schema validation and produce a Validation
+  Results file, but the staus will be "FAILED" and no Processing Report will be
+  produced.
+  
+  The WQX plugin has been modified to generate zip files that end in ".zip"
+  rather than ".xml.zip". 
+
+================================================================================
+OpenNode2 v1.22 for Java - Release Notes                             2009-12-17
+================================================================================
+A quick bug-fix release.
+
+FIXED/RESOLVED
+========================================
+  
+* The BEACHES plugin now handles <BeachSwimSeasonLengthDetail> elements, and the 
+  DDL files have been corrected.
+  
+* A bugs in the build scripts that prevented nodeCommon.jar and nodeLogic.jar
+  from properly updating in the Wnos_Plugin project has been addressed.
+    
+================================================================================
+OpenNode2 v1.21 for Java - Release Notes                             2009-12-16
+================================================================================
+This source release is accompanied by a binary release of the new EIS v.1.2, 
+UIC v 1.0, and BEACHES v2.1 plugins, and updates to WQX, RCRA, and 
+MapForceBridge plugins.
+
+FIXED/RESOLVED
+========================================
+  
+* Fixed a bug in the RCRA plugin whereby the document header might not be 
+  written, regardless of the configuration argument setting. Also cleaned up 
+  namespace qualification problems in the Veolcity templates.
+  
+* Fixed a bug in the MapForceBridge plugin that prevented the plugin from 
+  loading the supporting .jar file.
+
+* In order to work around limitations in Microsoft Internet Security and
+  Acceleration (ISA) Server 2006 when it's used as a proxy, both endpoints omit 
+  sending the HTTP "ContentLength" header.
+
+* Both endpoints can now accept self-signed SSL certificates without adding them
+  to the local certificate store, and can accept expired certs as well. This
+  "feature" is based on user demand for easy configuration in development and 
+  test environments. 
+  
+  To revert to the default settings requires modifying HTTP transport settings 
+  (commenting the current setting and un-commenting the originals) in these 
+  files:
+  
+  - Endpoint/src/org/apache/axis/client client-config.wsdd (near line 10)
+  - Endpoint2/resources/WEB-INF/conf/axis2.xml (near line 295)
+
+NEW
+========================================
+
+Three new plugins! See their repsective Implementation Guides for installation
+and configuration details.
+
+* UIC10 
+
+* EIS12 
+
+* BEACHES21
+
+* The WQX plugin now supports setting start and end dates for data extracted,
+  as well as for ignoring the status and history of prior submissions. See the
+  updated configuration guide for details.
+  
+* Updated the Oracle JDBC driver from ojdbc14_g.jar to ojdbc5_g.jar. This 
+  version is fully compatible and recommended for running with JDK 5, and is
+  also compatible with Oracle 11g.
+   
+* The windsor_checkstyle_rules.xml file has been converted to be compatible 
+  with Checkstyle 5.0. Using this version in Eclipse requires removing the 
+  eclipse-cs plugin for Checkstyle 4.0 and installing the version for Checkstyle
+  5.0.
+  
+* Added jtds-1.2.4.jar to the source and binary distributions. JTDS is a free, 
+  open source JDBC driver for MS SQL Server and Sybase, and a viable alternative 
+  to Microsoft's own JDBC driver. It's distributed under the LGPL license. See 
+  http://jtds.sourceforge.net/ for further details.
+
+================================================================================
+OpenNode2 v1.20 for Java - Release Notes                             2009-10-30
+================================================================================
+
+This release introduces support for the ICIS-NPDES Discharge Monitoring Report
+(DMR) Exchange, and support for recording SDWIS submissions in the HERE staging 
+database. Binary distributions for each plugin are included. Both plugins will 
+work with OpenNode2 v1.18 or later.
+
+Changes to the source distribution includes new and modified configuration files
+required for addressing unpredictable schedule behavior when running in a 
+WebSphere cluster. If building from source, be sure to update your existing 
+configuration files with new required propoerties.  
+
+FIXED/RESOLVED
+========================================
+
+* In hard-to-reproduce circumstances, installing the OpenNode2 on a WebSphere 6.1
+  cluster could result in schedules running in quick succession on each machine 
+  in the cluster. In addition to enhancing transaction controlsd around schedule
+  operations, the new worker.properties file enables forcing schedules to run on
+  only one node in the cluster.
+  
+* Updated the seed script for DB2 to use Timestamp rather than Date.
+
+
+NEW
+========================================
+
+* The ICIS-NPDES plugin supports the DMR exchange only. See the installation
+  guide for setup details.
+  
+* The SDWIS plugin now has an implementation for recording SDWIS submissions to 
+  the HERE Manifest records (SdwisSubmissionRelayProcessor). See the HERE 
+  configuration guide for details. The original SimpleSdwisRequestProcessor is
+  still included.
+
+* Added declarative transaction control around ScheduleDao.getForNextExec(), to
+  avoid multiple Nodes in a WebSphere cluster running the same schedule more or
+  less simultaneously. This necessitated adding .jar files for AspectJ.
+  
+* Externalized the timing settings for the various worker tasks into 
+  worker.properties, making it easier to customize the timings for differen build
+  environments (e.g., dev, test, and production). 
+  
+* The scheduleWorkerTask.executionMachineName property in worker.properties is 
+  empty by default. Setting to an unqualified hostname will limit shcedules to 
+  running only on that host. Leaving it un-set (empty) allows schedules can run 
+  on any machine in a cluster.  
+
+
+================================================================================
+OpenNode2 v1.19 for Java - Release Notes                             2009-09-30
+================================================================================
+
+This release introduces the plugin that supports the Homeland Emergency Response
+Exchange(HERE). This plugin is compatible with version 1.18 of the OpenNode. See
+the associated installation and configuration guide for details.
+
+This release  also features a number of small updates to the source code, but 
+does not include a binary distribution.
+
+FIXED/RESOLVED
+========================================
+* Cleaned up minor issues related to schedules. If you build and install this
+  version for use with an existing OpenNode2 Admin database, you'll need to run
+  a simple update statement, provided in 
+  Resources/database/fixes/fix_NSchedule_data.sql.
+
+NEW
+========================================
+* Externalized worker thread startup delay and run intervals to new 
+  worker.properties file, so they can be easily adjusted on a per-environment 
+  basis.
+
+* Added a per-minute option to the scheduler (mainly to facilitate testing)
+
+================================================================================
+OpenNode2 v1.18 for Java - Release Notes                             2009-09-15
+================================================================================
+
+This release features new plugins, enhancements to support the Homeland 
+Emergency Response Exchange (HERE), bug fixes, and additional refactoring for 
+Java 5. The fixes and improvements in OpenNode2 itself require installing the
+new OpenNode2 in order to use the plugins included in this release; the latest 
+plugins may not function correctly with earlier OpenNode2 releases. See the 
+updated installation guide for details. 
+
+FIXED/RESOLVED
+========================================
+* Fixed a bug introduced in the last release that sent transaction status codes
+  in the wrong case.
+  
+* The EN v2.0 Endpoint (wne2.war) reliably reports the root error message for
+  both incoming and outgoing service calls. 
+
+
+NEW
+========================================
+* The RCRA41 plugin now includes support for the Compliance Monitoring & 
+  Enforcement (CME) Module. See the new configuration guide foe details.
+
+* For HERE users, this release introduces User Authorization Request management. 
+  This requires installing the FlowSecurity plugin and configuring the relevant
+  service. It also requires setting a new property named "manage.user.requests"
+  in wna.war/WEB-INF/classes to "true" (it's set to "false" in this release), 
+  so that the "Manage User Requests" button will appear in the Security tab of
+  the OpenNode2 Admin application.  
+
+* The "TASK" service type is introduced in  
+  com.windsor.node.common.domain.ServiceType, to provide more robust 
+  integration and audit capabilities for creating plugins to be run from 
+  schedules only (and not callable via SOAP web services). The previous work-
+  around (creating a plugin of ServiceType.NONE) was inelegant and did not 
+  support configuration arguments.
+
+
+================================================================================
+OpenNode2 v1.17 for Java - Release Notes                             2009-08-05
+================================================================================
+
+This release primarily addresses interoperability issues in the EN v2.0 Endpoint
+(aka wne2.war). 
+
+The .war files are drop-in replacements for an existing installation; if 
+upgrading, be sure to back up the .properties files in each web application 
+before deploying. See the Java Administration Guide for details.
+
+Beginning with this release, plugin versions are synchronized with OpenNode2
+itself. Due to changes in the Node, the minimum plugin version for this release
+is also 1.17. (The gap in release numbers between 1.1.4 and 1.17 is an artifact
+of synchronizing versions).
+ 
+FIXED/RESOLVED
+========================================
+* The EN v2.0 endpoint now correctly handles Query and Solicit requests.
+
+* The EN v2.0 endpoint problem of  "null" fault messages has been fixed.
+
+* Flow security (restricting user access to Data Exchanges) now works correctly.
+
+* Bugs in the OpenNode2 Admin web application that appeared only when using IBM
+  DB2 for the metadata database (including saving a datasource configuration) 
+  have been addressed.
+
+NEW
+========================================
+* The build scripts now handle version- and build-numbering in a more automated
+  fashion. 
+
+================================================================================
+OpenNode2 v1.1.4 for Java - Release Notes                             2009-06-26
+================================================================================
+
+This release contains both new features and bug fixes. The .war files are drop-
+in replacements for an existing installation; if upgrading, be sure to back up
+the .properties files in each web application before deploying. See the Java
+Administration Guide for details.
+
+The minimum plugin versions for use with OpenNode1 v1.1.4 are:
+
+AQS: 1.1.4
+FRS: 1.1.4
+NEI: 1.1.4
+RCRA41: 1.1.6
+SDWIS20: 1.1.4
+WQX20: 1.1.5
+
+NEW
+========================================
+
+* The binary release is compiled for Java 5; Java 1.4 is no longer supported.
+  New source is fully Java 5 compliant, some existing source has been 
+  refactored to take advantage of Java 5 language features.
+  
+* Because the binary plugins are also compiled for Java 5, you must upgrade 
+  the OpenNode in order to use the new plugins.
+  
+* The binary distribution of the OpenNode and its plugins are still available in
+  the download area of the OpenNode2 site on Google Code.
+  
+* The MapForceBridge plugin supports code generated by Altova MapForce - see the 
+  "MapForce Plugin Developers Guide" for details.
+  
+* The nos.properties file in wnos.war/WEB-INF/classes now accepts a comma-
+  delimited list of IP addresses as the value for the "ip.whitelist.subnet"
+  property - there's no need to edit the nos.xml file to add additional
+  addresses.
+
+* This release includes Apache Velocity 1.6.2, upgraded from 1.5.  
+
+* The ENDS2 plugin implements the GetServices method specified in the 
+  "Exchange Network Discovery Services Flow Configuration Document", version
+  2.0. (aka ENDS2 FCD). There is no separate plugin configuration guide, so 
+  instructions are provided here.
+
+  The ENDS2 plugin requires OpeNode2 v1.1 - it will not work on prior releases.
+
+  To enable ENDS:
+  
+  1) Use Node Admin to create an Exchange named "ENDS_v20".
+
+  2) Upload the Java Ends2 plugin to the ENDS_v20 Exchange.
+
+  3) Create a new Service for the ENDS_V20 Exchange. Name it "GetServices", and 
+      select the only option that appears on the "Implementor" drop-down list - 
+      it should be 
+      "com.windsor.node.plugin.ends2.ends3GetServicesQueryProcessor".
+
+  4) Set the values in the nos.properties file in the deployed wnos web 
+      application, as described in the following paragraphs, and restart the 
+      Node. Several new properties have been added.
+  
+      These property names must be *present* in nos.properties in order for the
+      Node to start up. Values may be left empty if not installing the ENDS 
+      plugin, plugin, but MUST be set in order for the plugin to produce a valid
+      response to a GetServices request to your Node. Sample values are provided 
+      in the file in the binary distribution and the source repository.
+  
+      node.name: a short name for this Node
+
+      node.deployment.type: one of "Development", "Test", or "Production"
+
+      public.v2.endpoint.url: the URL other Nodes use to reach this Node's v2 
+      endpoint. This is currently set to ${url.node.endpoint2} as a convenience.
+      This value is set earlier in the nos.properties file, but may not be the
+      same as the Node's externally-facing endpoint url if the Node is behind a
+      firewall or proxy server.
+
+      organization.identifier: short name of the organization hosting the node, 
+      e.g., "NY Dept. of Environmental Conservation"
+      
+      bounding.coordinate.east
+      bounding.coordinate.north
+      bounding.coordinate.south
+      bounding.coordinate.west
+      
+      Each of these is a decimal value indicating latitude (for North and South) 
+      or longitude (for East and West), i.e., the coordinates that the define 
+      bounding box for this Node's jurisdiction. See the ENDS2 FCD and XML 
+      schema for details.
+
+    
+FIXED/RESOLVED
+========================================
+
+* Recurring schedules no longer run more than once per period, and the "next
+  run date" should now display correctly in the Node Admin web application.
+  
+* A bug that in certain cases would lead to erroneous results of a 
+  "GetStatus" call to another node has been fixed.
+  
+* The list of Exchanges in Node Admin is now alphabetized.
+
+* The list of plugin implementation classes on the Node Admin "Edit Service"
+  page no longer displays abstract implementation classes, thus avoiding an
+  error when trying to save the Service.

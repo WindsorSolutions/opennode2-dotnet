@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:RC="http://www.exchangenetwork.net/schema/RCRA/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/RCRA/5" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="5.0">
+	<xsd:include schemaLocation="./RCRA_Request_v5.0_draft.xsd"/>
+	<xsd:include schemaLocation="./RCRA_EvaluationCommitment_v5.0_draft.xsd"/>
+	<xsd:include schemaLocation="./RCRA_EvaluationViolation_v5.0_draft.xsd"/>
+	<xsd:include schemaLocation="./RCRA_Shared_v5.0_draft.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name : 	RCRA_Evaluation_v5.0
+		Description : 	Compliance Monitoring and Enforcement Evaluation Data
+		Developed by : 	U.S. EPA
+	</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="Evaluation" type="RC:EvaluationDataType">
+		<xsd:annotation>
+			<xsd:documentation>Compliance Monitoring and Enforcement Evaluation Data</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="EvaluationDataType">
+		<xsd:sequence>
+			<xsd:element ref="RC:TransactionCode" minOccurs="0"/>
+			<xsd:element ref="RC:EvaluationActivityLocation"/>
+			<xsd:element ref="RC:EvaluationIdentifier"/>
+			<xsd:element ref="RC:EvaluationStartDate"/>
+			<xsd:element ref="RC:EvaluationResponsibleAgency"/>
+			<xsd:element ref="RC:DayZero" minOccurs="0"/>
+			<xsd:element ref="RC:FoundViolation" minOccurs="0"/>
+			<xsd:element ref="RC:CitizenComplaintIndicator" minOccurs="0"/>
+			<xsd:element ref="RC:MultimediaIndicator" minOccurs="0"/>
+			<xsd:element ref="RC:SamplingIndicator" minOccurs="0"/>
+			<xsd:element ref="RC:NotSubtitleCIndicator" minOccurs="0"/>
+			<xsd:element ref="RC:EvaluationTypeOwner" minOccurs="0"/>
+			<xsd:element ref="RC:EvaluationType" minOccurs="0"/>
+			<xsd:element ref="RC:FocusAreaOwner" minOccurs="0"/>
+			<xsd:element ref="RC:FocusArea" minOccurs="0"/>
+			<xsd:element ref="RC:EvaluationResponsiblePersonIdentifierOwner" minOccurs="0"/>
+			<xsd:element ref="RC:EvaluationResponsiblePersonIdentifier" minOccurs="0"/>
+			<xsd:element ref="RC:EvaluationResponsibleSuborganizationOwner" minOccurs="0"/>
+			<xsd:element ref="RC:EvaluationResponsibleSuborganization" minOccurs="0"/>			
+			<xsd:element ref="RC:Notes" minOccurs="0"/>
+			<xsd:element ref="RC:Request" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="RC:EvaluationCommitment" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="RC:EvaluationViolation" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>
