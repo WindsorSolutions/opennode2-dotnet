@@ -211,7 +211,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!-- FIXME - These dependencies are redistributable???
+        <!-- FIXME - These dependencies are redistributable??? -->
         <dependency>
             <groupId>com.mapforce</groupId>
             <artifactId>mapforce_base</artifactId>
@@ -232,13 +232,6 @@
             <artifactId>db2jcc_license_cu</artifactId>
             <version>db2jcc_license_cu_1.0</version>
         </dependency>
-        <dependency>
-            <groupId>com.microsoft.sqlserver</groupId>
-            <artifactId>sqljdbc4</artifactId>
-            <version>3.0</version>
-        </dependency>
-        -->
-        
         <!--
             Be aware, with your checkout of the Resources folder, you have acquired the MS license for this driver.
             This is what allows redistribution of this JDBC driver file, please read the license 
@@ -248,6 +241,10 @@
             http://www.microsoft.com/downloads/en/details.aspx?FamilyID=A737000D-68D0-4531-B65D-DA0F2A735707&pf=true or
             http://www.microsoft.com/downloads/details.aspx?FamilyID=a737000d-68d0-4531-b65d-da0f2a735707&displaylang=en
         -->
-
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>sqljdbc4</artifactId>
+            <version>3.0</version>
+        </dependency>
     </dependencies>
 </project>

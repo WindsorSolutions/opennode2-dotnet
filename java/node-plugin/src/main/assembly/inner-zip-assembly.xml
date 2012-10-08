@@ -6,24 +6,34 @@
     </formats>
     <includeBaseDirectory>false</includeBaseDirectory>
     <fileSets>
+        <!-- copy files from the node-plugin-xxx project -->
         <fileSet>
-            <directory>src/main/packaging/${plugin.name}/templates</directory>
+            <directory>${project.basedir}/src/main/assembly/inner</directory>
             <outputDirectory>./</outputDirectory>
             <includes>
-                <include>**.vm</include>
+                <include>**/*</include>
             </includes>
         </fileSet>
+        <!-- copy files from the node-plugin-xxx /src/main/xsd into inner zip -->
         <fileSet>
-            <directory>src/main/packaging/${plugin.name}/xsd</directory>
+            <directory>${project.basedir}/src/main/xsd</directory>
             <outputDirectory>./xsd/</outputDirectory>
             <includes>
                 <include>**</include>
             </includes>
         </fileSet>
+        <!-- copy files from the node-plugin parent project -->
+        <fileSet>
+            <directory>${project.parent.basedir}/src/main/assembly/inner</directory>
+            <outputDirectory>./</outputDirectory>
+            <includes>
+                <include>**/*</include>
+            </includes>
+        </fileSet>
     </fileSets>
     <files>
         <file>
-            <source>target/${plugin.name}.jar</source>
+            <source>${project.build.directory}/${project.build.finalName}.jar</source>
         </file>
     </files>
 </assembly>

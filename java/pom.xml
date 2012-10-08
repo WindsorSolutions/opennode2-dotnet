@@ -67,23 +67,21 @@
         <module>node-core</module>
         <module>node-app</module>
         <module>node-util</module>
-        <!-- <module>../node-common</module>
-        <module>../node-admin</module>
-        <module>../node-endpoint2</module>
-        <module>../node-endpoint</module>
-        <module>../node-wnos-common</module>
-        <module>../node-wnos</module>
-        <module>../node-assembly</module>
-        <module>../node-hyperjaxb3</module> -->
+        <module>node-plugin</module>
     </modules>
     <properties>
         <specification.vendor>Environmental Council of the States (ECOS)</specification.vendor>
         <specification.vendor.url>http://www.ecos.org/</specification.vendor.url>
 
-        <maven.test.skip>true</maven.test.skip>
-        
+        <!-- Build settings -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- Library version properties -->
+        <version.org.springframework>2.5.6.SEC03</version.org.springframework>
         
+
+
+
         <springframework.version>2.5.6.SEC03</springframework.version>
         <commons.beanutils.version>1.8.0</commons.beanutils.version>
 
@@ -102,6 +100,7 @@
                     <configuration>
                         <source>1.6</source>
                         <target>1.6</target>
+                        <compilerArgument>-proc:none</compilerArgument>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -126,7 +125,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-war-plugin</artifactId>
-                    <version>2.3</version> <!-- FIXME Latest version is 2.3-->
+                    <version>2.3</version>
                     <configuration>
                         <archive>
                             <addMavenDescriptor>false</addMavenDescriptor>
@@ -138,10 +137,9 @@
                                 <Implementation-Vendor-URL>${project.organization.url}</Implementation-Vendor-URL>
                                 <Specification-Vendor>${specification.vendor}</Specification-Vendor>
                                 <Specification-Vendor-URL>${specification.vendor.url}</Specification-Vendor-URL>
-                                <!-- <Build-Profile>${build.profile}</Build-Profile> FIXME - Is this still needed? -->
                             </manifestEntries>
                         </archive>
-                        <!-- FIXME - A bit dangerous to have this defined here?
+                        <!-- FIXME - What is this for?
                         <webResources>
                             <resource>
                                 <directory>src/main/webapp</directory>
@@ -157,7 +155,7 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-assembly-plugin</artifactId>
-                    <version>2.2.1</version> <!-- FIXME Latest version is 2.3-->
+                    <version>2.3</version> <!-- FIXME Latest version is 2.3-->
                 </plugin>
             </plugins>
         </pluginManagement>        

@@ -25,6 +25,7 @@
                         <configuration>
                             <appendAssemblyId>false</appendAssemblyId>
                             <finalName>Java_OpenNode2_v${project.version}</finalName>
+                            <outputDirectory>${project.parent.basedir}/../dist</outputDirectory>
                             <descriptors>
                                 <descriptor>src/main/assembly/assembly.xml</descriptor>
                             </descriptors>
