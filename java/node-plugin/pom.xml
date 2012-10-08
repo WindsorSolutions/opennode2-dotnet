@@ -16,6 +16,10 @@
         <module>node-plugin-wqx</module>
     </modules>
 	<build>
+		<testResources>
+    		<testResource><directory>${project.basedir}/src/test/resources</directory></testResource>
+    		<testResource><directory>${project.basedir}/src/main</directory></testResource>
+    	</testResources>
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -127,7 +131,7 @@
 					</executions>
 					<configuration>
 						<additionalClasspathElements>
-							<additionalClasspathElement>${basedir}/src/main/packaging/${plugin.name}</additionalClasspathElement>
+							<additionalClasspathElement>${basedir}/src/main/assembly/outer</additionalClasspathElement>
 						</additionalClasspathElements>
 					</configuration>
 				</plugin>
