@@ -3,28 +3,46 @@ package com.windsor.node.plugin.facid3.domain;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PostLoad;
 import javax.persistence.Transient;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 
-import com.windsor.node.plugin.facid3.domain.generated.SICListDataType;
+import com.windsor.node.plugin.facid3.domain.generated.AlternativeNameListDataType;
+import com.windsor.node.plugin.facid3.domain.generated.FacilityDetailsDataType;
 
-@XmlAccessorType(XmlAccessType.FIELD)
+/**
+ * Abstract base class for {@link FacilityDetailsDataType}.
+ *
+ */
 @MappedSuperclass
-public abstract class AbstractFacilityDetailsDataType {
+public abstract class AbstractFacilityDetailsDataType extends AbstractIndustryCodeInfoDataType {
 
+	/**
+	 * Returns the list of alternative names.
+	 *
+	 * @return the list of alternative names
+	 */
 	@Transient
-	public abstract com.windsor.node.plugin.facid3.domain.generated.NAICSListDataType getNaicsList();
+	public abstract AlternativeNameListDataType getAlternativeNameList();
 
-	public abstract void setNaicsList(com.windsor.node.plugin.facid3.domain.generated.NAICSListDataType naicsList);
+	/**
+	 * Sets the list of alternative names.
+	 *
+	 * @param alternativeNameList
+	 *            the list of alternative names
+	 */
+	public abstract void setAlternativeNameList(
+			final AlternativeNameListDataType alternativeNameList);
 
-	@Transient
-	public abstract SICListDataType getSicList();
-
-	public abstract void setSicList(SICListDataType sicList);
-
+	/**
+	 * Nulls out @Embedded fields where the nested @Embeddable fields are null
+	 * or empty.
+	 */
 	@PostLoad
-	public void nullEmptyEmbeddedFields() {
-
+	public void nullEmptyListFields() {
+		final AlternativeNameListDataType altNameList = getAlternativeNameList();
+		if (altNameList != null
+				&& (altNameList.getAlternativeName() == null || altNameList.getAlternativeName()
+						.isEmpty())) {
+			setAlternativeNameList(null);
+		}
 	}
 
 }

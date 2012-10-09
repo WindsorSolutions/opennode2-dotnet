@@ -25,7 +25,7 @@ import com.windsor.node.plugin.facid3.domain.generated.FacilityListDataType;
 import com.windsor.node.plugin.facid3.domain.generated.ObjectFactory;
 import com.windsor.node.plugin.test.AbstractExistingDbIT;
 
-public class Facid3ExistingOracleDbJaxbIT extends AbstractExistingDbIT {
+public class Facid3ExistingDbIT extends AbstractExistingDbIT {
 
 	/**
 	 * Path to the root schema file, relative to the classpath.
@@ -43,7 +43,8 @@ public class Facid3ExistingOracleDbJaxbIT extends AbstractExistingDbIT {
 
 		final List<FacilityDataType> facilities = getEntityManager()
 				.createQuery(
-						"select x from FacilityDataType x left outer join fetch x.facilityPrimaryGeographicLocationDescription",
+						"select x from FacilityDataType x " +
+						"left outer join fetch x.facilityPrimaryGeographicLocationDescription ",
 						FacilityDataType.class).getResultList();
 
 		final List<AffiliateDataType> affiliates = getEntityManager().createQuery(
@@ -75,6 +76,5 @@ public class Facid3ExistingOracleDbJaxbIT extends AbstractExistingDbIT {
 		final StringWriter writer = new StringWriter();
 		m.marshal(details, writer);
 		final String marshalledXml = writer.toString();
-
 	}
 }
