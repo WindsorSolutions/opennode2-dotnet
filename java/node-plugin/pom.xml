@@ -149,6 +149,8 @@
 						<additionalClasspathElements>
 							<additionalClasspathElement>${basedir}/src/main/assembly/outer</additionalClasspathElement>
 						</additionalClasspathElements>
+						<excludeGroups>existing_db_test</excludeGroups>
+						<groups>temp_db_test</groups>
 					</configuration>
 				</plugin>
 				<plugin>

@@ -93,7 +93,7 @@
                     <CharacteristicName>Styrene </CharacteristicName>
                     <ResultMeasure>
                         <ResultMeasureValue>1</ResultMeasureValue>
-                        <MeasureUnitCode>µg/l</MeasureUnitCode>
+                        <MeasureUnitCode>Âµg/l</MeasureUnitCode>
                     </ResultMeasure>
                     <ResultCommentText>1</ResultCommentText>
                 </ResultDescription>
@@ -110,7 +110,7 @@
                     <CharacteristicName>Tetrachloroethene </CharacteristicName>
                     <ResultMeasure>
                         <ResultMeasureValue>1</ResultMeasureValue>
-                        <MeasureUnitCode>µg/l</MeasureUnitCode>
+                        <MeasureUnitCode>Âµg/l</MeasureUnitCode>
                     </ResultMeasure>
                     <ResultCommentText>1</ResultCommentText>
                 </ResultDescription>
@@ -144,7 +144,7 @@
                     <CharacteristicName>Bromodichloromethane</CharacteristicName>
                     <ResultMeasure>
                         <ResultMeasureValue>1</ResultMeasureValue>
-                        <MeasureUnitCode>µg/l</MeasureUnitCode>
+                        <MeasureUnitCode>Âµg/l</MeasureUnitCode>
                     </ResultMeasure>
                     <ResultCommentText>1</ResultCommentText>
                 </ResultDescription>
@@ -161,7 +161,7 @@
                     <CharacteristicName>Dichlorodifluoromethane</CharacteristicName>
                     <ResultMeasure>
                         <ResultMeasureValue>1</ResultMeasureValue>
-                        <MeasureUnitCode>µg/l</MeasureUnitCode>
+                        <MeasureUnitCode>Âµg/l</MeasureUnitCode>
                     </ResultMeasure>
                     <ResultCommentText>1</ResultCommentText>
                 </ResultDescription>
@@ -178,7 +178,7 @@
                     <CharacteristicName>Isopropylbenzene </CharacteristicName>
                     <ResultMeasure>
                         <ResultMeasureValue>1</ResultMeasureValue>
-                        <MeasureUnitCode>µg/l</MeasureUnitCode>
+                        <MeasureUnitCode>Âµg/l</MeasureUnitCode>
                     </ResultMeasure>
                     <ResultCommentText>1</ResultCommentText>
                 </ResultDescription>

@@ -17,15 +17,15 @@ import javax.xml.validation.SchemaFactory;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;
 
-import com.windsor.node.plugin.test.ExistingOracleDbIT;
 import com.windsor.node.plugin.facid3.domain.generated.AffiliateDataType;
 import com.windsor.node.plugin.facid3.domain.generated.AffiliateListDataType;
 import com.windsor.node.plugin.facid3.domain.generated.FacilityDataType;
 import com.windsor.node.plugin.facid3.domain.generated.FacilityDetailsDataType;
 import com.windsor.node.plugin.facid3.domain.generated.FacilityListDataType;
 import com.windsor.node.plugin.facid3.domain.generated.ObjectFactory;
+import com.windsor.node.plugin.test.AbstractExistingDbIT;
 
-public class Facid3ExistingOracleDbJaxbIT extends ExistingOracleDbIT {
+public class Facid3ExistingOracleDbJaxbIT extends AbstractExistingDbIT {
 
 	/**
 	 * Path to the root schema file, relative to the classpath.

@@ -4,6 +4,10 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -12,7 +16,13 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.xml.bind.JAXBException;
+import javax.xml.parsers.ParserConfigurationException;
 
+import org.testng.annotations.Test;
+import org.xml.sax.SAXException;
+
+import com.windsor.node.plugin.test.XmlUtils;
 import com.windsor.node.plugin.wqx.domain.generated.ActivityDataType;
 import com.windsor.node.plugin.wqx.domain.generated.ActivityDescriptionDataType;
 import com.windsor.node.plugin.wqx.domain.generated.ActivityLocationDataType;
@@ -29,7 +39,20 @@ import com.windsor.node.plugin.wqx.domain.generated.ResultDataType;
  * WQX Hibernate integration tests.
  *
  */
-public class WqxHibernateIT extends AbstractWqxIT {
+public class WqxTempDbIT extends AbstractWqxTempDbIT {
+
+	/**
+	 * Path to the test XML file, relative to the classpath.
+	 */
+	private static final String XML_PATH = "/" + TEST_XML + "/wqx-1.xml";
+
+	@Test(description = "Tests that the marshalled data matches the expected XML document")
+	public void marshalTest() throws JAXBException, SAXException, URISyntaxException, IOException, ParserConfigurationException {
+		final String xml = WqxTestUtil.validateXml(getEntityManager());
+		final InputStream is1 = getClass().getResourceAsStream(XML_PATH);
+		final InputStream is2 = new ByteArrayInputStream(xml.getBytes("UTF-8"));
+		assertTrue(XmlUtils.equals(is1, is2), "Check that the marshalled XML document matches the expected XML document");
+	}
 
 	public void organizationTest() {
 		final List<OrganizationDataType> list = getEntityManager().createQuery(

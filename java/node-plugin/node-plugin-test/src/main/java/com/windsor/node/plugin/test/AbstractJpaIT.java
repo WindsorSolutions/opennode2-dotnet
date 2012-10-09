@@ -17,6 +17,18 @@ import com.windsor.node.plugin.common.persistence.PluginPersistenceConfig;
 public abstract class AbstractJpaIT {
 
 	/**
+	 * Name of the test group that uses an existing database. These tests will
+	 * not be executed by Maven.
+	 */
+	public static final String EXISTING_DB_TEST_GROUP_NAME = "existing_db_test";
+
+	/**
+	 * Name of the test group that uses a temporary, in-memory database. These
+	 * tests will be executed by Maven.
+	 */
+	public static final String TEMP_DB_TEST_GROUP_NAME = "temp_db_test";
+
+	/**
 	 * Directory with DDL files, relative to the class path.
 	 */
 	public static final String DDL_DIR = "assembly/outer/ddl";
@@ -71,13 +83,32 @@ public abstract class AbstractJpaIT {
 		if (entityManager == null) {
 			final HibernatePersistenceProvider provider = new HibernatePersistenceProvider();
 			final PluginPersistenceConfig config = new PluginPersistenceConfig() //
-					.debugSql(true) //
+					.debugSql(showSql()) //
+					.setBatchFetchSize(getBatchFetchSize()) //
 					.rootEntityPackage(getRootEntityPackage());
 			final EntityManagerFactory emf = provider.createEntityManagerFactory(getDataSource(),
 					config);
 			entityManager = emf.createEntityManager();
 		}
 		return entityManager;
+	}
+
+	/**
+	 * Returns whether to show the SQL Hibernate is using.
+	 *
+	 * @return whether to show the SQL Hibernate is using
+	 */
+	protected boolean showSql() {
+		return true;
+	}
+
+	/**
+	 * Returns the Hibernate batch fetch size.
+	 *
+	 * @return the Hibernate batch fetch size
+	 */
+	protected int getBatchFetchSize() {
+		return 1000;
 	}
 
 }

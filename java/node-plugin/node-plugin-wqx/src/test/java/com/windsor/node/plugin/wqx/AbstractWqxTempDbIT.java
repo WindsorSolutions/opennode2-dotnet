@@ -1,5 +1,7 @@
 package com.windsor.node.plugin.wqx;
 
+import static com.windsor.node.plugin.test.AbstractJpaIT.TEMP_DB_TEST_GROUP_NAME;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.SQLException;
@@ -10,8 +12,8 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.apache.commons.collections.iterators.IteratorChain;
-import org.testng.annotations.AfterGroups;
-import org.testng.annotations.BeforeGroups;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.windsor.node.plugin.test.AbstractJpaIT;
@@ -21,11 +23,11 @@ import com.windsor.node.plugin.test.db.IDatabaseManager;
 
 /**
  * Base class which WQX-related tests should extend because it sets up the
- * in-memory DB.
+ * temporary, in-memory DB.
  *
  */
-@Test(groups = AbstractWqxIT.WQX_TEST_GROUP_NAME)
-public abstract class AbstractWqxIT extends AbstractJpaIT {
+@Test(groups = TEMP_DB_TEST_GROUP_NAME)
+public abstract class AbstractWqxTempDbIT extends AbstractJpaIT {
 
 	/**
 	 * Path to DDL SQL file, relative to the classpath.
@@ -43,16 +45,6 @@ public abstract class AbstractWqxIT extends AbstractJpaIT {
 	private static final String FILENAME_SUFFIX = ".sql";
 
 	/**
-	 * Name of the package containing the WQX entity classes.
-	 */
-	private static final String JAVA_PACKAGE_NAME = "com.windsor.node.plugin.wqx.domain.generated";
-
-	/**
-	 * Group name for the WQX tests.
-	 */
-	protected static final String WQX_TEST_GROUP_NAME = "wqx";
-
-	/**
 	 * List of DML files.
 	 */
 	private static final String[] DML_FILES = { "organization", "project", "monitoringlocation",
@@ -63,7 +55,7 @@ public abstract class AbstractWqxIT extends AbstractJpaIT {
 	 */
 	private final IDatabaseManager databaseManager;
 
-	public AbstractWqxIT() {
+	public AbstractWqxTempDbIT() {
 		databaseManager = new HsqlOracleModelDatabaseManager() {
 
 			@SuppressWarnings("unchecked")
@@ -107,7 +99,7 @@ public abstract class AbstractWqxIT extends AbstractJpaIT {
 	 * @throws IOException
 	 * @throws SQLException
 	 */
-	@BeforeGroups(groups = WQX_TEST_GROUP_NAME)
+	@BeforeClass
 	public void startup() throws IOException, SQLException {
 		LOGGER.debug("Starting and initializing database...");
 		databaseManager.startAndinitializeDatabase();
@@ -120,7 +112,7 @@ public abstract class AbstractWqxIT extends AbstractJpaIT {
 	 * @throws IOException
 	 * @throws SQLException
 	 */
-	@AfterGroups(groups = WQX_TEST_GROUP_NAME)
+	@AfterClass
 	public void shutdown() throws IOException, SQLException {
 		LOGGER.debug("Shutting down and cleaning up database...");
 		databaseManager.stopAndCleanupDatabase();
@@ -129,7 +121,7 @@ public abstract class AbstractWqxIT extends AbstractJpaIT {
 
 	@Override
 	protected String getRootEntityPackage() {
-		return JAVA_PACKAGE_NAME;
+		return WqxTestUtil.JAVA_PACKAGE_NAME;
 	}
 
 	@Override
