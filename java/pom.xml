@@ -73,25 +73,26 @@
         <specification.vendor>Environmental Council of the States (ECOS)</specification.vendor>
         <specification.vendor.url>http://www.ecos.org/</specification.vendor.url>
 
+        <!-- Distribution settings (@see assembly.xml in node-app-assemble module) -->
+        <dist.name>ecos-generic</dist.name>
+        <dist.resources.basedir>${project.basedir}/../../resources/distribution</dist.resources.basedir>
+        <dist.resources.overlay.basedir>${project.basedir}/../../resources/distribution-overlay</dist.resources.overlay.basedir>
+        <dist.resources.overlay.dir>${dist.resources.overlay.basedir}/${dist.name}</dist.resources.overlay.dir>
+
         <!-- Build settings -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- Library version properties -->
         <version.org.springframework>2.5.6.SEC03</version.org.springframework>
-        
-
-
-
+        <!--
+            .
+            .
+            .
+            .
+        -->
         <springframework.version>2.5.6.SEC03</springframework.version>
         <commons.beanutils.version>1.8.0</commons.beanutils.version>
-
-        <!-- 
-            <build.profile></build.profile>
-            <resources.project>resources</resources.project>
-            <node.home>/var/opennode2_home</node.home> 
-        -->
     </properties>
-
     <build>
         <pluginManagement>
             <plugins>
@@ -160,19 +161,6 @@
             </plugins>
         </pluginManagement>        
     </build>
-    <!-- FIXME - Not sure if we still need profiles?...
-    <profiles>
-        <profile>
-            <id>ecos-generic</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <build.profile>ecos-generic</build.profile>
-            </properties>
-        </profile>
-    </profiles>
-    -->
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
