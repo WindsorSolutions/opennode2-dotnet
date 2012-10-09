@@ -11,8 +11,24 @@
 	<packaging>pom</packaging>
 	<name>Node Plugin - Parent</name>
     <modules>
+        <!-- Plugin support modules -->
         <module>node-plugin-common</module>
         <module>node-plugin-test</module>
+
+        <!-- Plugin modules -->
+        <module>node-plugin-aqs</module>
+        <module>node-plugin-beachnotif21</module>
+        <module>node-plugin-eis12</module>
+        <module>node-plugin-ends2</module>
+        <module>node-plugin-facid3</module>
+        <module>node-plugin-flowsecurity</module>
+        <module>node-plugin-here</module>
+        <module>node-plugin-icisnpdes40</module>
+        <module>node-plugin-mapforcebridge</module>
+        <module>node-plugin-nct</module>
+		<module>node-plugin-rcra50</module>
+		<module>node-plugin-sdwis</module>
+		<module>node-plugin-windsor</module>
         <module>node-plugin-wqx</module>
     </modules>
 	<build>
@@ -59,7 +75,7 @@
 						<target>1.6</target>
 						<compilerArgument>-proc:none</compilerArgument>
 					</configuration>
-				</plugin>				
+				</plugin>			
 				<plugin>
 					<groupId>org.bsc.maven</groupId>
 					<artifactId>maven-processor-plugin</artifactId>
@@ -163,7 +179,7 @@
 							</goals>
 							<configuration>
 								<appendAssemblyId>false</appendAssemblyId>
-								<finalName>java_${node.plugin.name}_plugin_v${project.parent.version}.${node.plugin.build.number}</finalName>
+								<finalName>Java_${node.plugin.name}_plugin_v${project.parent.version}.${node.plugin.build.number}</finalName>
 								<outputDirectory>${project.parent.basedir}/../dist</outputDirectory>
 								<descriptors>
 									<descriptor>${project.parent.basedir}/src/main/assembly/outer-zip-assembly.xml</descriptor>

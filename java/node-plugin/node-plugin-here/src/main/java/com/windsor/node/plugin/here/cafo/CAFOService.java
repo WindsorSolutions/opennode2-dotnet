@@ -41,7 +41,7 @@ import com.windsor.node.plugin.here.BaseHEREService;
  * @author mchmarny
  * 
  */
-public class CAFOService extends BaseHEREService {
+public abstract class CAFOService extends BaseHEREService {
 
     public ProcessContentResult process(NodeTransaction transaction) {
         return process(transaction, CAFO_TEMPLATE_NAME, false);

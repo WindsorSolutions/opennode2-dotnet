@@ -35,7 +35,7 @@ import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.ProcessContentResult;
 import com.windsor.node.plugin.here.BaseHEREService;
 
-public class TanksService extends BaseHEREService {
+public abstract class TanksService extends BaseHEREService {
 
     public ProcessContentResult process(NodeTransaction transaction) {
 

@@ -41,7 +41,7 @@ import com.windsor.node.plugin.here.BaseHEREService;
  * @author mchmarny
  * 
  */
-public class FacIdService extends BaseHEREService {
+public abstract class FacIdService extends BaseHEREService {
 
     public ProcessContentResult process(NodeTransaction transaction) {
         return process(transaction, FACID_TEMPLATE_NAME, false);

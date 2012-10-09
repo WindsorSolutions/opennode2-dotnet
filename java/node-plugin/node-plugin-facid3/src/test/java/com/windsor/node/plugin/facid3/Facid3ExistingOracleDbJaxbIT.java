@@ -17,7 +17,7 @@ import javax.xml.validation.SchemaFactory;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;
 
-import com.windsor.node.plugin.ExistingOracleDbIT;
+import com.windsor.node.plugin.test.ExistingOracleDbIT;
 import com.windsor.node.plugin.facid3.domain.generated.AffiliateDataType;
 import com.windsor.node.plugin.facid3.domain.generated.AffiliateListDataType;
 import com.windsor.node.plugin.facid3.domain.generated.FacilityDataType;

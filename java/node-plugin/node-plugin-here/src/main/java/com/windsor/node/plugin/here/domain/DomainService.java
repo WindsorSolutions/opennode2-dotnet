@@ -36,7 +36,7 @@ import com.windsor.node.common.domain.ProcessContentResult;
 import com.windsor.node.common.domain.ServiceType;
 import com.windsor.node.plugin.here.BaseHEREService;
 
-public class DomainService extends BaseHEREService {
+public abstract class DomainService extends BaseHEREService {
 
     public DomainService() {
         super();

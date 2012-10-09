@@ -35,7 +35,7 @@ import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.ProcessContentResult;
 import com.windsor.node.plugin.here.BaseHEREService;
 
-public class GetDeletedFacilitiesByChangeDate extends BaseHEREService {
+public abstract class GetDeletedFacilitiesByChangeDate extends BaseHEREService {
 
     public ProcessContentResult process(NodeTransaction transaction) {
         return process(transaction, FRS_DELETED_TEMPLATE_NAME, false);

@@ -4,7 +4,7 @@
     <formats>
         <format>zip</format>
     </formats>
-    <includeBaseDirectory>false</includeBaseDirectory>
+    <includeBaseDirectory>true</includeBaseDirectory>
     <fileSets>
         <!-- copy files from the node-plugin-xxx project -->
         <fileSet>

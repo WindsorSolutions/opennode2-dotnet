@@ -6,37 +6,18 @@
         <artifactId>node-plugin</artifactId>
         <version>2.07-SNAPSHOT</version>
     </parent>
-    <artifactId>node-plugin-wqx</artifactId>
+    <artifactId>node-plugin-ends2</artifactId>
     <packaging>jar</packaging>
-    <name>Node Plugin - WQX</name>
+    <name>Node Plugin - ENDS v2.0</name>
     <properties>
-        <node.plugin.name>WQX</node.plugin.name>
+        <node.plugin.name>ENDS2</node.plugin.name>
         <node.plugin.build.number>00</node.plugin.build.number>
     </properties>
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.jvnet.hyperjaxb3</groupId>
-                <artifactId>maven-hyperjaxb3-plugin</artifactId>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.windsor.node.util.hyperjaxb3</groupId>
-                        <artifactId>node-util-hyperjaxb3-wqx</artifactId>
-                        <version>${project.version}</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-            <plugin>
-                <groupId>org.bsc.maven</groupId>
-                <artifactId>maven-processor-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
