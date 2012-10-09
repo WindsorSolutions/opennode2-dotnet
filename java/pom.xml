@@ -51,9 +51,9 @@
             <timezone>-5</timezone>
         </developer>
         <developer>
-            <id>tmurdoch</id>
-            <name>Tyler Murdoch</name>
-            <email>tyler_murdoch@windsorsolutions.com</email>
+            <id>tmurdock</id>
+            <name>Tyler Murdock</name>
+            <email>tyler_murdock@windsorsolutions.com</email>
             <url>http://www.windsorsolutions.com</url>
             <organization>Windsor Solutions, Inc.</organization>
             <organizationUrl>http://www.windsorsolutions.com</organizationUrl>
