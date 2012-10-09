@@ -736,7 +736,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI5
                             GetAnonymousTypeValue(rep.SourceReductionQuantity.Item1, typeof(decimal)),
                             GetAnonymousTypeValue(rep.SourceReductionQuantity.Item1, typeof(bool)),
                             rep.SubmissionAdditionalDataIndicator,
-                            rep.OptionalInformationText,
+                            CheckToTruncateText(rep.OptionalInformationText),
                             rep.PublicContactEmailAddressText,
                             ParseItemFromArray(rep.ChemicalReportRevisionCode, 0),
                             ParseItemFromArray(rep.ChemicalReportRevisionCode, 1),
@@ -812,7 +812,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI5
                             GetAnonymousTypeValue(teidtOneTime.ToxicEquivalency17Value, typeof(string)),
                             ToxicEquivalencyIndicatorySpecified(teidtOneTime),
                             GetAnonymousTypeValueFromList(rep.SourceReductionQuantity.Items, typeof(string)),
-                            rep.MiscellaneousInformationText
+                            CheckToTruncateText(rep.MiscellaneousInformationText)
                             );
 
                             #endregion
@@ -1703,6 +1703,17 @@ namespace Windsor.Node2008.WNOSPlugin.TRI5
             {
                 Dispose();
             }
+        }
+        protected string CheckToTruncateText(string text)
+        {
+            const string prependText = " **Field truncated due to size. See original submission.**";
+            const int maxTextSize = 4000;
+
+            if ((text != null) && (text.Length > maxTextSize))
+            {
+                text = text.Substring(0, maxTextSize - prependText.Length) + prependText;
+            }
+            return text;
         }
     }
 }

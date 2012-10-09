@@ -45,6 +45,7 @@ namespace Windsor.Commons.NodeClient
     public class NodeEndpointClientFactory : INodeEndpointClientFactory
     {
         private AuthenticationCredentials _defaultAuthenticationCredentials;
+        private int _defaultTimeout = 1000 * 60 * 5;
 
         public NodeEndpointClientFactory()
         {
@@ -109,7 +110,7 @@ namespace Windsor.Commons.NodeClient
         /// </summary>
         /// <returns></returns>
         public INodeEndpointClient Make(string targetEndpointUrl, EndpointVersionType type,
-                                        string naasUserToken, 
+                                        string naasUserToken,
                                         string path)
         {
             return MakeClient(targetEndpointUrl, type, null, naasUserToken, path, null);
@@ -138,7 +139,7 @@ namespace Windsor.Commons.NodeClient
         /// <param name="credentials"></param>
         /// <param name="path"></param>
         /// <returns></returns>
-        public INodeEndpointClient Make(string targetEndpointUrl, EndpointVersionType type, AuthenticationCredentials credentials, 
+        public INodeEndpointClient Make(string targetEndpointUrl, EndpointVersionType type, AuthenticationCredentials credentials,
                                         string path, IWebProxy proxy)
         {
             return MakeClient(targetEndpointUrl, type, credentials, null, path, proxy);
@@ -153,7 +154,7 @@ namespace Windsor.Commons.NodeClient
         {
             return MakeClient(targetEndpointUrl, type, null, naasUserToken, path, proxy);
         }
-        
+
         /// <summary>
         /// Makes EN Client
         /// </summary>
@@ -209,12 +210,35 @@ namespace Windsor.Commons.NodeClient
                     throw new ArgumentException("Invalid endpoint type");
             }
 
+            if (client != null)
+            {
+                // Set default timeout
+                client.Timeout = 1000 * 60 * 5;
+            }
+
             return client;
         }
         public AuthenticationCredentials DefaultAuthenticationCredentials
         {
-            get { return _defaultAuthenticationCredentials; }
-            set { _defaultAuthenticationCredentials = value; }
+            get
+            {
+                return _defaultAuthenticationCredentials;
+            }
+            set
+            {
+                _defaultAuthenticationCredentials = value;
+            }
+        }
+        public int DefaultTimeout
+        {
+            get
+            {
+                return _defaultTimeout;
+            }
+            set
+            {
+                _defaultTimeout = value;
+            }
         }
     }
 }

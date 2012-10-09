@@ -10,6 +10,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Windsor.Commons.Core;
 using System.Web.UI.HtmlControls;
+using System.Diagnostics;
+using System.Reflection;
 
 namespace Windsor.Commons.AspNet
 {
@@ -43,6 +45,7 @@ namespace Windsor.Commons.AspNet
         }
         protected virtual void OnApplicationStart()
         {
+            s_ApplicationVersion = DetermineApplicationVersion();
         }
         protected virtual void OnSessionStart()
         {
@@ -53,7 +56,23 @@ namespace Windsor.Commons.AspNet
         protected virtual void OnRequestEnd()
         {
         }
-
+        protected virtual Version DetermineApplicationVersion()
+        {
+            Version version = new Version();
+            try
+            {
+                Type type = this.GetType();
+                type = type.BaseType; // The main global implementation is wrapped by ASP.global_asax
+                Assembly assembly = Assembly.GetAssembly(type);
+                FileVersionInfo versionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
+                version = new Version(versionInfo.FileMajorPart, versionInfo.FileMinorPart, versionInfo.FileBuildPart,
+                                      versionInfo.FilePrivatePart);
+            }
+            catch (Exception)
+            {
+            }
+            return version;
+        }
         protected virtual string ConfigFolderRelativePath
         {
             get
@@ -98,6 +117,13 @@ namespace Windsor.Commons.AspNet
                     Content = "IE=9"
                 };
                 page.Header.Controls.Add(metaDescription);
+            }
+        }
+        public static Version ApplicationVersion
+        {
+            get
+            {
+                return s_ApplicationVersion;
             }
         }
         public static bool IsBrowserIE
@@ -232,6 +258,7 @@ namespace Windsor.Commons.AspNet
         }
 
         private static GlobalApplicationBase s_Application;
+        private static Version s_ApplicationVersion;
         private static string s_Validation_Image_Format_Text;
         private static object s_RequestLockObject = new object();
         private static object s_SessionLockObject = new object();

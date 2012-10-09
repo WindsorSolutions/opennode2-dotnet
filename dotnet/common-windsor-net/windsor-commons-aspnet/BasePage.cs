@@ -65,13 +65,13 @@ namespace Windsor.Commons.AspNet
                 StringBuilder sb = new StringBuilder();
                 sb.AppendFormat("var {0} = {{ ", javascriptVarName);
                 bool addedFirst = false;
-                foreach (var pair in ClientIdsToPublish)
+                foreach (var pair in ids)
                 {
                     if (addedFirst)
                     {
                         sb.Append(", ");
                     }
-                    sb.AppendFormat("{0}: \"{1}\"", pair.Key, pair.Value);
+                    sb.Append(pair.Key + ": \"" + pair.Value + "\"");
                     addedFirst = true;
                 }
                 sb.Append(" };");
