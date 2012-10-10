@@ -18,5 +18,17 @@
         <module>node-app-wnos</module>
         <module>node-app-assemble</module>
     </modules>
+    <build>
+		<resources>
+			<resource>
+				<directory>${project.basedir}/src/main/resources</directory>
+			</resource>
+			<resource>
+				<directory>${node.app.env.resources.dir}</directory>
+			</resource>
+			<resource>
+				<directory>${node.app.user.resources.dir}</directory>
+			</resource>
+		</resources>
+    </build>    
 </project>
-

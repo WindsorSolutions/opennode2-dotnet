@@ -79,7 +79,25 @@
         <dist.resources.basedir>${project.basedir}/../../resources/distribution</dist.resources.basedir>
         <dist.resources.overlay.basedir>${project.basedir}/../../resources/distribution-overlay</dist.resources.overlay.basedir>
         <dist.resources.overlay.dir>${dist.resources.overlay.basedir}/${dist.name}</dist.resources.overlay.dir>
+		
+		<!-- Environment specific resources directory (@see node-app pom for usage -->
+		<node.app.env.resources.dir>${project.basedir}/src/main/env/${dist.name}</node.app.env.resources.dir>
 
+		<!-- User specific resources directory. If this directory is found in any 
+			of the node-app modules, it will be added as a resource directory to the 
+			project. Unfortunately the file path needs to live inside the project in 
+			order for this to work in Eclipse. This direcotry is a good place to put 
+			resources that need to be on the classpath during development. A couple of 
+			use cases are as follows. First, the ability to have a custom logback config. 
+			Second, each developer may have a custom spring config file to override bean 
+			definitions. The directory should never be checked into source control as 
+			it may contain sensitive information such as passwords or other confidential 
+			information. One last note, be careful when building the node for distribution 
+			as the contents in these developer specfic directory will be packaged, either 
+			remove the directory or check out a fresh copy of the source from svn, hopefully 
+			the CI server is building the distribution zip anyways. -->
+		<node.app.user.resources.dir>${project.basedir}/src/main/env/user-${user.name}</node.app.user.resources.dir>
+ 
         <!-- Build settings -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
