@@ -7,7 +7,15 @@
 
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='EnvironmentalInterestSummaryDataType']">
-			<hj:embeddable />
+			
+			<hj:entity>
+				<orm:table name="FACID_ENVR_INTR"/>
+			</hj:entity>
+			
+			<hj:generated-id name="Dbid">
+				<orm:column name="ENVR_INTR_ID"/>
+			</hj:generated-id>
+			
 		</jaxb:bindings>
 	</jaxb:bindings>
 

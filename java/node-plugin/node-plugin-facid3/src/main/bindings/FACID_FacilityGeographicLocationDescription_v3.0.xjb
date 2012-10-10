@@ -4,26 +4,11 @@
 	jaxb:extensionBindingPrefixes="hj orm" schemaLocation="../xsd/3/0/FACID_FacilityGeographicLocationDescription_v3.0.xsd">
 
 	<!-- facility geographic location description -->
-
 	<jaxb:bindings>
 		
 		<jaxb:bindings node="//xsd:complexType[@name='FacilityGeographicLocationDescriptionDataType']">
 			<hj:entity />
 		</jaxb:bindings>
-		
-		<!-- 
-		<jaxb:bindings node="//xsd:element[@ref='gml:Polygon']">
-			<hj:ignored />
-		</jaxb:bindings>
-		
-		<jaxb:bindings node="//xsd:element[@ref='gml:LineString']">
-			<hj:ignored />
-		</jaxb:bindings>
-		
-		<jaxb:bindings node="//xsd:element[@ref='gml:Envelope']">
-			<hj:ignored />
-		</jaxb:bindings>
-		 -->
 		
 		<jaxb:bindings node="//xsd:element[@ref='facid:HorizontalAccuracyMeasure']">
 			<hj:embedded>

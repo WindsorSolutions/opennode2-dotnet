@@ -8,7 +8,7 @@
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='FacilitySiteIdentityDataType']">
 			<hj:embeddable />
-		</jaxb:bindings>
+		</jaxb:bindings>		
 	</jaxb:bindings>
 
 </jaxb:bindings>

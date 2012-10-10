@@ -7,7 +7,7 @@
 
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='FacilityInterestSummaryListDataType']">
-			<hj:embeddable />
+			<hj:ignored />
 		</jaxb:bindings>
 	</jaxb:bindings>
 
