@@ -43,10 +43,11 @@
 					<artifactId>maven-hyperjaxb3-plugin</artifactId>
 					<version>0.5.6</version>
 					<executions>
-						<execution>
+						<execution>							
 							<goals>
 								<goal>generate</goal>
 							</goals>
+							<phase>generate-sources</phase>
 						</execution>
 					</executions>
 					<configuration>
@@ -107,6 +108,7 @@
 							<configuration>
 								<sources>
 									<source>${project.build.directory}/generated-sources/metamodel</source>
+									<source>${project.build.directory}/generated-sources/xjc</source>
 								</sources>
 							</configuration>
 						</execution>

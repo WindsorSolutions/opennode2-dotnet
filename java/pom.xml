@@ -6,9 +6,10 @@
     <artifactId>node</artifactId>
     <packaging>pom</packaging>
     <version>2.07-SNAPSHOT</version>
-    <name>Node</name>
+    <name>OpenNode2</name>
     <description>Node - Parent Project</description>
     <url>http://code.google.com/p/opennode2/</url>
+    <inceptionYear>2009</inceptionYear>
     <organization>
         <name>Windsor Solutions, Inc.</name>
         <url>http://www.windsorsolutions.com/</url>
@@ -155,10 +156,71 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-assembly-plugin</artifactId>
-                    <version>2.3</version> <!-- FIXME Latest version is 2.3-->
+                    <version>2.3</version>
+                </plugin>
+                <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+                <plugin>
+                	<groupId>org.eclipse.m2e</groupId>
+                	<artifactId>lifecycle-mapping</artifactId>
+                	<version>1.0.0</version>
+                	<configuration>
+                		<lifecycleMappingMetadata>
+                			<pluginExecutions>
+                				<pluginExecution>
+                					<pluginExecutionFilter>
+                						<groupId>org.jvnet.hyperjaxb3</groupId>
+                						<artifactId>maven-hyperjaxb3-plugin</artifactId>
+                						<versionRange>[0.5.6,)</versionRange>
+                						<goals>
+                							<goal>generate</goal>
+                						</goals>
+                					</pluginExecutionFilter>
+                					<action>
+                						<execute/>
+                					</action>
+                				</pluginExecution>
+                			</pluginExecutions>
+                		</lifecycleMappingMetadata>
+                	</configuration>
                 </plugin>
             </plugins>
-        </pluginManagement>        
+        </pluginManagement>
+        <plugins>
+
+            <!-- FIXME - Work in progress...
+
+            - Generated license header is a bit ugly
+            - Exception thrown on .sql files, but license is still prepended to file
+            - Files with existing licenses will need to have license removed
+            - licenseResolver - Unable to use a file:// URL
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <version>1.3</version>
+                <configuration>
+                    <inceptionYear>2009</inceptionYear>
+                    <organizationName>The Environmental Council of the States (ECOS)</organizationName>
+                    <projectName>ECOS OpenNode2</projectName>
+                    <licenseName>opennode2</licenseName>
+                    <licenseResolver>http://opennode2.googlecode.com/svn/trunk/java/resources/license</licenseResolver>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>update-file-header</id>
+                        <goals>
+                            <goal>update-file-header</goal>
+                        </goals>
+                        <phase>process-sources</phase>
+                        <configuration>
+                            <addJavaLicenseAfterPackage>false</addJavaLicenseAfterPackage>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            
+            -->
+        </plugins>
     </build>
     <dependencies>
         <dependency>
