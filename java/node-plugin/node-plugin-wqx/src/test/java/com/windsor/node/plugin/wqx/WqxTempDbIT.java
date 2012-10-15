@@ -19,6 +19,7 @@ import javax.persistence.criteria.Root;
 import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.junit.Ignore;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;
 
@@ -46,6 +47,7 @@ public class WqxTempDbIT extends AbstractWqxTempDbIT {
 	 */
 	private static final String XML_PATH = "/" + TEST_XML + "/wqx-1.xml";
 
+	@Ignore
 	@Test(description = "Tests that the marshalled data matches the expected XML document")
 	public void marshalTest() throws JAXBException, SAXException, URISyntaxException, IOException, ParserConfigurationException {
 		final String xml = WqxTestUtil.validateXml(getEntityManager());
