@@ -31,7 +31,7 @@ public abstract class AbstractJpaIT {
 	/**
 	 * Directory with DDL files, relative to the class path.
 	 */
-	public static final String DDL_DIR = "assembly/outer/ddl";
+	public static final String DDL_DIR = ".";
 
 	/**
 	 * Directory with DML files, relative to the class path.
@@ -41,7 +41,7 @@ public abstract class AbstractJpaIT {
 	/**
 	 * Directory with XML schema files, relative to the class path.
 	 */
-	public static final String SCHEMA_DIR = "xsd";
+	public static final String SCHEMA_DIR = "";
 
 	/**
 	 * Directory with XML test files, relative to the class path.

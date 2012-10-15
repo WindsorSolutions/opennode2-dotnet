@@ -1,41 +1,48 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-     <parent>
-        <groupId>com.windsor.node</groupId>
-        <artifactId>node</artifactId>
-        <version>2.07-SNAPSHOT</version>
-    </parent>
-    <groupId>com.windsor.node.plugin</groupId>
-    <artifactId>node-plugin</artifactId>
+	<parent>
+		<groupId>com.windsor.node</groupId>
+		<artifactId>node</artifactId>
+		<version>2.07-SNAPSHOT</version>
+	</parent>
+	<groupId>com.windsor.node.plugin</groupId>
+	<artifactId>node-plugin</artifactId>
 	<packaging>pom</packaging>
 	<name>Node Plugin - Parent</name>
-    <modules>
-        <!-- Plugin support modules -->
-        <module>node-plugin-common</module>
-        <module>node-plugin-test</module>
+	<modules>
+		<!-- Plugin support modules -->
+		<module>node-plugin-common</module>
+		<module>node-plugin-test</module>
 
-        <!-- Plugin modules -->
-        <module>node-plugin-aqs</module>
-        <module>node-plugin-beachnotif21</module>
-        <module>node-plugin-eis12</module>
-        <module>node-plugin-ends2</module>
-        <module>node-plugin-facid3</module>
-        <module>node-plugin-flowsecurity</module>
-        <module>node-plugin-here</module>
-        <module>node-plugin-icisnpdes40</module>
-        <module>node-plugin-mapforcebridge</module>
-        <module>node-plugin-nct</module>
+		<!-- Plugin modules -->
+		<module>node-plugin-aqs</module>
+		<module>node-plugin-beachnotif21</module>
+		<module>node-plugin-eis12</module>
+		<module>node-plugin-ends2</module>
+		<module>node-plugin-facid3</module>
+		<module>node-plugin-flowsecurity</module>
+		<module>node-plugin-here</module>
+		<module>node-plugin-icisnpdes40</module>
+		<module>node-plugin-mapforcebridge</module>
+		<module>node-plugin-nct</module>
 		<module>node-plugin-rcra50</module>
 		<module>node-plugin-sdwis</module>
 		<module>node-plugin-windsor</module>
-        <module>node-plugin-wqx</module>
-    </modules>
+		<module>node-plugin-wqx</module>
+	</modules>
 	<build>
 		<testResources>
-    		<testResource><directory>${project.basedir}/src/test/resources</directory></testResource>
-    		<testResource><directory>${project.basedir}/src/main</directory></testResource>
-    	</testResources>
+			<testResource>
+				<directory>${project.basedir}/src/test/resources</directory>
+			</testResource>
+			<testResource>
+				<directory>${project.basedir}/src/main/assembly/outer/ddl</directory>
+			</testResource>
+			<testResource>
+				<directory>${project.basedir}/src/main/xsd</directory>
+			</testResource>
+		</testResources>
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -43,7 +50,7 @@
 					<artifactId>maven-hyperjaxb3-plugin</artifactId>
 					<version>0.5.6</version>
 					<executions>
-						<execution>							
+						<execution>
 							<goals>
 								<goal>generate</goal>
 							</goals>
@@ -67,8 +74,8 @@
 							<version>${project.version}</version>
 						</dependency>
 					</dependencies>
-				</plugin>				
- 				<plugin>
+				</plugin>
+				<plugin>
 					<artifactId>maven-compiler-plugin</artifactId>
 					<version>2.3</version>
 					<configuration>
@@ -76,7 +83,7 @@
 						<target>1.6</target>
 						<compilerArgument>-proc:none</compilerArgument>
 					</configuration>
-				</plugin>			
+				</plugin>
 				<plugin>
 					<groupId>org.bsc.maven</groupId>
 					<artifactId>maven-processor-plugin</artifactId>
@@ -90,9 +97,19 @@
 							<phase>generate-sources</phase>
 							<configuration>
 								<outputDirectory>${project.build.directory}/generated-sources/metamodel</outputDirectory>
+								<processors>
+									<processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>
+								</processors>
 							</configuration>
 						</execution>
 					</executions>
+					<dependencies>
+						<dependency>
+							<groupId>org.hibernate</groupId>
+							<artifactId>hibernate-jpamodelgen</artifactId>
+							<version>1.2.0.Final</version>
+						</dependency>
+					</dependencies>
 				</plugin>
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
@@ -204,9 +221,9 @@
 							</goals>
 							<configuration>
 								<artifactSet>
-                					<includes>
-                  						<include>com.windsor.node.plugin:node-plugin-common</include>
-                					</includes>
+									<includes>
+										<include>com.windsor.node.plugin:node-plugin-common</include>
+									</includes>
 								</artifactSet>
 							</configuration>
 						</execution>
@@ -262,12 +279,6 @@
 			<groupId>xalan</groupId>
 			<artifactId>xalan</artifactId>
 			<version>2.7.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-jpamodelgen</artifactId>
-			<version>1.2.0.Final</version>
-			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 </project>

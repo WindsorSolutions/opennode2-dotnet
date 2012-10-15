@@ -21,6 +21,7 @@ import org.xml.sax.SAXException;
 
 import com.windsor.node.plugin.common.xml.validation.ValidationResult;
 import com.windsor.node.plugin.common.xml.validation.jaxb.JaxbXmlValidator;
+import com.windsor.node.plugin.test.AbstractJpaIT;
 import com.windsor.node.plugin.wqx.domain.generated.ObjectFactory;
 import com.windsor.node.plugin.wqx.domain.generated.OrganizationDataType;
 import com.windsor.node.plugin.wqx.domain.generated.WQXDataType;
@@ -35,7 +36,7 @@ public class WqxTestUtil {
 	/**
 	 * Path to the root schema file, relative to the classpath.
 	 */
-	public static final String SCHEMA_ROOT_PATH = "/xsd/root.xsd";
+	public static final String SCHEMA_ROOT_PATH = AbstractJpaIT.SCHEMA_DIR + "/root.xsd";
 
 	public static String validateXml(final EntityManager em) throws JAXBException, SAXException,
 			URISyntaxException, IOException, ParserConfigurationException {
