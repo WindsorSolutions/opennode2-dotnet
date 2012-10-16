@@ -419,18 +419,7 @@
                 <enabled>false</enabled>
             </snapshots>
             <id>windsor-maven</id>
-            <name>windsor-maven-releases</name>
-            <!-- <url>http://www.windsorsolutions.biz:10240/artifactory/repo</url> -->
-            <url>http://10.0.1.54:8081/nexus/content/groups/public/</url>
-        </repository>
-        <!-- <repository>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <id>windsor-maven-mirror</id>
-            <name>windsor-maven-mirror</name>
             <url>http://www.windsorsolutions.biz:10240/artifactory/repo</url>
-            <url>http://10.0.1.54:8081/nexus/content/repositories/central/</url>
-        </repository> -->
+        </repository>
     </repositories>
 </project>
