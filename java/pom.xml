@@ -419,7 +419,7 @@
                 <enabled>false</enabled>
             </snapshots>
             <id>windsor-maven</id>
-            <url>http://www.windsorsolutions.biz:10240/artifactory/repo</url>
+            <url>http://maven.windsorsolutions.biz/nexus/content/groups/public/</url>
         </repository>
     </repositories>
 </project>
