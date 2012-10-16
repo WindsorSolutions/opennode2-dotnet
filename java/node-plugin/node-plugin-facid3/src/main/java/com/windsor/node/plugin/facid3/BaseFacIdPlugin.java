@@ -4,11 +4,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.sql.DataSource;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+
 import com.windsor.node.common.domain.CommonContentType;
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
 import com.windsor.node.common.domain.DataServiceRequestParameter;
@@ -25,7 +28,7 @@ import com.windsor.node.plugin.facid3.dao.AffiliateDataTypeDao;
 import com.windsor.node.plugin.facid3.dao.AffiliationListDataTypeDao;
 import com.windsor.node.plugin.facid3.dao.EnvironmentalInterestDataTypeDao;
 import com.windsor.node.plugin.facid3.dao.FacilityDataTypeDao;
-import com.windsor.node.plugin.facid3.domain.ObjectFactory;
+import com.windsor.node.plugin.facid3.domain.generated.ObjectFactory;
 import com.windsor.node.service.helper.CompressionService;
 import com.windsor.node.service.helper.IdGenerator;
 import com.windsor.node.service.helper.settings.SettingServiceProvider;
@@ -87,7 +90,7 @@ public abstract class BaseFacIdPlugin extends BaseWnosJaxbPlugin
     public void afterPropertiesSet()
     {
         super.afterPropertiesSet();
-        DataSource dataSource = (DataSource)getDataSources().get(ARG_DS_SOURCE);
+        DataSource dataSource = getDataSources().get(ARG_DS_SOURCE);
         setSettingService((SettingServiceProvider)getServiceFactory().makeService(SettingServiceProvider.class));
         setIdGenerator((IdGenerator)getServiceFactory().makeService(IdGenerator.class));
         setZipService((CompressionService)getServiceFactory().makeService(ZipCompressionService.class));
@@ -153,7 +156,7 @@ public abstract class BaseFacIdPlugin extends BaseWnosJaxbPlugin
             Document doc = makeDocument(transaction, docId, tempFilePath);
             transaction.getDocuments().add(doc);
             result.getDocuments().add(doc);
-    
+
             result.setPaginatedContentIndicator(new PaginationIndicator(transaction.getRequest().getPaging().getStart(), transaction
                             .getRequest().getPaging().getCount(), true));
             result.setStatus(CommonTransactionStatusCode.Completed);
@@ -241,4 +244,5 @@ public abstract class BaseFacIdPlugin extends BaseWnosJaxbPlugin
     {
         this.transactionDao = transactionDao;
     }
+
 }

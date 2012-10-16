@@ -2,14 +2,16 @@ package com.windsor.node.plugin.facid3.dao;
 
 import java.sql.Types;
 import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
-import com.windsor.node.plugin.facid3.domain.AffiliateDataType;
-import com.windsor.node.plugin.facid3.domain.ElectronicAddressDataType;
-import com.windsor.node.plugin.facid3.domain.ElectronicAddressListDataType;
-import com.windsor.node.plugin.facid3.domain.ObjectFactory;
-import com.windsor.node.plugin.facid3.domain.TelephonicDataType;
-import com.windsor.node.plugin.facid3.domain.TelephonicListDataType;
+
+import com.windsor.node.plugin.facid3.domain.generated.AffiliateDataType;
+import com.windsor.node.plugin.facid3.domain.generated.ElectronicAddressDataType;
+import com.windsor.node.plugin.facid3.domain.generated.ElectronicAddressListDataType;
+import com.windsor.node.plugin.facid3.domain.generated.ObjectFactory;
+import com.windsor.node.plugin.facid3.domain.generated.TelephonicDataType;
+import com.windsor.node.plugin.facid3.domain.generated.TelephonicListDataType;
 
 public class AffiliateDataTypeDao extends JdbcDaoSupport
 {
@@ -32,7 +34,7 @@ public class AffiliateDataTypeDao extends JdbcDaoSupport
         ObjectFactory fact = new ObjectFactory();
         ElectronicAddressListDataType electronicAddressListDataType = fact.createElectronicAddressListDataType();
         @SuppressWarnings("unchecked")
-        List<ElectronicAddressDataType> results = (List<ElectronicAddressDataType>)getJdbcTemplate()
+        List<ElectronicAddressDataType> results = getJdbcTemplate()
                         .query(loadElectronicAddressListDataTypeByAffiliateIdSql, new Object[]{affiliateId},
                                new int[]{Types.VARCHAR}, new ElectronicAddressDataTypeRowMapper());
         electronicAddressListDataType.getElectronicAddress().addAll(results);
@@ -52,7 +54,7 @@ public class AffiliateDataTypeDao extends JdbcDaoSupport
         ObjectFactory fact = new ObjectFactory();
         TelephonicListDataType telephonicListDataType = fact.createTelephonicListDataType();
         @SuppressWarnings("unchecked")
-        List<TelephonicDataType> results = (List<TelephonicDataType>)getJdbcTemplate()
+        List<TelephonicDataType> results = getJdbcTemplate()
                         .query(loadTelephonicDataTypeByAffiliateIdSql, new Object[]{affiliateId},
                                new int[]{Types.VARCHAR}, new TelephonicDataTypeRowMapper());
         telephonicListDataType.getTelephonic().addAll(results);

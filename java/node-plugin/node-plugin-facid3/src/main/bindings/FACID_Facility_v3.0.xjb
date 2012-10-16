@@ -10,7 +10,7 @@
 
 		<jaxb:bindings node="//xsd:complexType[@name='FacilityDataType']">
 			<hj:entity />
-			<inheritance:extends>com.windsor.node.plugin.facid3.domain.AbstractFacilityDetailsDataType</inheritance:extends>
+			<inheritance:extends>com.windsor.node.plugin.facid3.domain.AbstractFacilityDataType</inheritance:extends>
 		</jaxb:bindings>
 
 		<jaxb:bindings node="//xsd:element[@ref='facid:FacilitySiteIdentity']">

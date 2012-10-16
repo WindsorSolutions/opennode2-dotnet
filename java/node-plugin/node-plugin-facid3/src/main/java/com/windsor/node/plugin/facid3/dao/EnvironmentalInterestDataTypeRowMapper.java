@@ -2,20 +2,20 @@ package com.windsor.node.plugin.facid3.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+
 import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeConstants;
 import javax.xml.datatype.DatatypeFactory;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.RowMapper;
-import com.windsor.node.plugin.facid3.domain.AgencyTypeCodeListIdentifierDataType;
-import com.windsor.node.plugin.facid3.domain.AgencyTypeDataType;
-import com.windsor.node.plugin.facid3.domain.DataSourceDataType;
-import com.windsor.node.plugin.facid3.domain.EnvironmentalInterestDataType;
-import com.windsor.node.plugin.facid3.domain.ObjectFactory;
-import com.windsor.node.plugin.facid3.domain.YesNoIndicatorDataType;
+
+import com.windsor.node.plugin.facid3.domain.generated.AgencyTypeCodeListIdentifierDataType;
+import com.windsor.node.plugin.facid3.domain.generated.AgencyTypeDataType;
+import com.windsor.node.plugin.facid3.domain.generated.DataSourceDataType;
+import com.windsor.node.plugin.facid3.domain.generated.EnvironmentalInterestDataType;
+import com.windsor.node.plugin.facid3.domain.generated.ObjectFactory;
+import com.windsor.node.plugin.facid3.domain.generated.YesNoIndicatorDataType;
 
 public class EnvironmentalInterestDataTypeRowMapper implements RowMapper
 {
@@ -29,7 +29,8 @@ public class EnvironmentalInterestDataTypeRowMapper implements RowMapper
         setAffiliationListDataTypeDao(affiliationListDataTypeDao);
     }
 
-    public Object mapRow(ResultSet rs, int rowNum) throws SQLException
+    @Override
+	public Object mapRow(ResultSet rs, int rowNum) throws SQLException
     {
         ObjectFactory fact = new ObjectFactory();
         DatatypeFactory datatypeFactory = null;
@@ -47,16 +48,12 @@ public class EnvironmentalInterestDataTypeRowMapper implements RowMapper
         environmentalInterest.setEnvironmentalInterestTypeText(rs.getString("ENVR_INTR_TYPE_TEXT"));
         if(rs.getString("ENVR_INTR_START_DATE") != null && datatypeFactory != null)
         {
-            GregorianCalendar cal = new GregorianCalendar();
-            cal.setTime(rs.getDate("ENVR_INTR_START_DATE"));
-            environmentalInterest.setEnvironmentalInterestStartDate(datatypeFactory.newXMLGregorianCalendarDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DAY_OF_MONTH), DatatypeConstants.FIELD_UNDEFINED));
+            environmentalInterest.setEnvironmentalInterestStartDate(rs.getDate("ENVR_INTR_START_DATE"));
         }
         environmentalInterest.setEnvironmentalInterestStartDateQualifierText(rs.getString("ENVR_INTR_START_DATE_QUAL_TEXT"));
         if(rs.getString("ENVR_INTR_END_DATE") != null && datatypeFactory != null)
         {
-            GregorianCalendar cal = new GregorianCalendar();
-            cal.setTime(rs.getDate("ENVR_INTR_END_DATE"));
-            environmentalInterest.setEnvironmentalInterestEndDate(datatypeFactory.newXMLGregorianCalendarDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DAY_OF_MONTH), DatatypeConstants.FIELD_UNDEFINED));
+            environmentalInterest.setEnvironmentalInterestEndDate(rs.getDate("ENVR_INTR_END_DATE"));
         }
         environmentalInterest.setEnvironmentalInterestEndDateQualifierText(rs.getString("ENVR_INTR_END_DATE_QUAL_TEXT"));
 
@@ -89,9 +86,7 @@ public class EnvironmentalInterestDataTypeRowMapper implements RowMapper
         dataSource.setOriginatingPartnerName(rs.getString("ORIG_PART_NAME"));
         if(rs.getString("LAST_UPDT_DATE") != null && datatypeFactory != null)
         {
-            GregorianCalendar cal = new GregorianCalendar();
-            cal.setTime(rs.getDate("LAST_UPDT_DATE"));
-            dataSource.setLastUpdatedDate(datatypeFactory.newXMLGregorianCalendarDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DAY_OF_MONTH), DatatypeConstants.FIELD_UNDEFINED));
+            dataSource.setLastUpdatedDate(rs.getDate("LAST_UPDT_DATE"));
         }
         // END DataSource
 

@@ -5,17 +5,19 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.time.DateUtils;
+
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
 import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.ProcessContentResult;
 import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
-import com.windsor.node.plugin.facid3.domain.AffiliateListDataType;
-import com.windsor.node.plugin.facid3.domain.FacilityDataType;
-import com.windsor.node.plugin.facid3.domain.FacilityDetailsDataType;
-import com.windsor.node.plugin.facid3.domain.FacilityListDataType;
-import com.windsor.node.plugin.facid3.domain.ObjectFactory;
+import com.windsor.node.plugin.facid3.domain.generated.AffiliateListDataType;
+import com.windsor.node.plugin.facid3.domain.generated.FacilityDataType;
+import com.windsor.node.plugin.facid3.domain.generated.FacilityDetailsDataType;
+import com.windsor.node.plugin.facid3.domain.generated.FacilityListDataType;
+import com.windsor.node.plugin.facid3.domain.generated.ObjectFactory;
 
 public class GetFacility extends BaseFacIdGetFacilityService
 {
@@ -28,7 +30,7 @@ public class GetFacility extends BaseFacIdGetFacilityService
     }
 
     /**
-     * This process implementer currently will not work when Solicited on the 2.1 endpoint with named parameters that are 
+     * This process implementer currently will not work when Solicited on the 2.1 endpoint with named parameters that are
      * out of the default order.  An updated implementer that fixes this issue will soon be deployed.
      */
     @Override

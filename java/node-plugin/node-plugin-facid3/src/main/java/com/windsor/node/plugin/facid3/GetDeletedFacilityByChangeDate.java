@@ -6,19 +6,20 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
+
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
-import com.windsor.node.common.domain.EndpointVersionType;
 import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.ProcessContentResult;
 import com.windsor.node.common.util.ByIndexOrNameMap;
 import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
-import com.windsor.node.plugin.facid3.domain.FacilityIndexDataType;
-import com.windsor.node.plugin.facid3.domain.FacilitySummaryDataType;
-import com.windsor.node.plugin.facid3.domain.FacilitySummaryListDataType;
-import com.windsor.node.plugin.facid3.domain.ObjectFactory;
+import com.windsor.node.plugin.facid3.domain.generated.FacilityIndexDataType;
+import com.windsor.node.plugin.facid3.domain.generated.FacilitySummaryDataType;
+import com.windsor.node.plugin.facid3.domain.generated.FacilitySummaryListDataType;
+import com.windsor.node.plugin.facid3.domain.generated.ObjectFactory;
 
 public class GetDeletedFacilityByChangeDate extends BaseFacIdPlugin
 {

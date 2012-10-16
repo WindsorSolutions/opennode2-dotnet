@@ -39,7 +39,7 @@ public abstract class AbstractAffiliateDataType {
 	 */
 	@PostLoad
 	public void nullEmptyEmbeddedObjects() {
-		final TelephonicListDataType telephonicList = getTelephonicList();
+		TelephonicListDataType telephonicList = getTelephonicList();
 		if (telephonicList != null
 				&& (telephonicList.getTelephonic() == null || telephonicList.getTelephonic()
 						.isEmpty())) {

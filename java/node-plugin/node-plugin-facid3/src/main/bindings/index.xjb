@@ -31,6 +31,11 @@
 				
 			<xjc:javaType name="java.lang.String" xmlType="xsd:nonNegativeInteger"
 				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter" />
+				
+			<!-- decimal mappings (for the schema version number) -->
+				
+			<xjc:javaType name="java.lang.String" xmlType="xsd:decimal"
+				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter" />
 
 		</jaxb:globalBindings>
 

@@ -2,14 +2,17 @@ package com.windsor.node.plugin.facid3.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import org.springframework.jdbc.core.RowMapper;
-import com.windsor.node.plugin.facid3.domain.ElectronicAddressDataType;
-import com.windsor.node.plugin.facid3.domain.ObjectFactory;
+
+import com.windsor.node.plugin.facid3.domain.generated.ElectronicAddressDataType;
+import com.windsor.node.plugin.facid3.domain.generated.ObjectFactory;
 
 public class ElectronicAddressDataTypeRowMapper implements RowMapper
 {
 
-    public Object mapRow(ResultSet rs, int rowNum) throws SQLException
+    @Override
+	public Object mapRow(ResultSet rs, int rowNum) throws SQLException
     {
         ObjectFactory fact = new ObjectFactory();
         ElectronicAddressDataType electronicAddress = fact.createElectronicAddressDataType();

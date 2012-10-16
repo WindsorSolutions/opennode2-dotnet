@@ -2,21 +2,23 @@ package com.windsor.node.plugin.facid3.dao;
 
 import java.sql.Types;
 import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
-import com.windsor.node.plugin.facid3.domain.AlternativeIdentificationDataType;
-import com.windsor.node.plugin.facid3.domain.AlternativeIdentificationListDataType;
-import com.windsor.node.plugin.facid3.domain.ElectronicAddressDataType;
-import com.windsor.node.plugin.facid3.domain.ElectronicAddressListDataType;
-import com.windsor.node.plugin.facid3.domain.EnvironmentalInterestDataType;
-import com.windsor.node.plugin.facid3.domain.EnvironmentalInterestListDataType;
-import com.windsor.node.plugin.facid3.domain.EnvironmentalInterestSummaryDataType;
-import com.windsor.node.plugin.facid3.domain.EnvironmentalInterestSummaryListDataType;
-import com.windsor.node.plugin.facid3.domain.FacilityNAICSDataType;
-import com.windsor.node.plugin.facid3.domain.FacilitySICDataType;
-import com.windsor.node.plugin.facid3.domain.NAICSListDataType;
-import com.windsor.node.plugin.facid3.domain.ObjectFactory;
-import com.windsor.node.plugin.facid3.domain.SICListDataType;
+
+import com.windsor.node.plugin.facid3.domain.generated.AlternativeIdentificationDataType;
+import com.windsor.node.plugin.facid3.domain.generated.AlternativeIdentificationListDataType;
+import com.windsor.node.plugin.facid3.domain.generated.ElectronicAddressDataType;
+import com.windsor.node.plugin.facid3.domain.generated.ElectronicAddressListDataType;
+import com.windsor.node.plugin.facid3.domain.generated.EnvironmentalInterestDataType;
+import com.windsor.node.plugin.facid3.domain.generated.EnvironmentalInterestListDataType;
+import com.windsor.node.plugin.facid3.domain.generated.EnvironmentalInterestSummaryDataType;
+import com.windsor.node.plugin.facid3.domain.generated.EnvironmentalInterestSummaryListDataType;
+import com.windsor.node.plugin.facid3.domain.generated.FacilityNAICSDataType;
+import com.windsor.node.plugin.facid3.domain.generated.FacilitySICDataType;
+import com.windsor.node.plugin.facid3.domain.generated.NAICSListDataType;
+import com.windsor.node.plugin.facid3.domain.generated.ObjectFactory;
+import com.windsor.node.plugin.facid3.domain.generated.SICListDataType;
 
 public class EnvironmentalInterestDataTypeDao extends JdbcDaoSupport
 {
@@ -36,7 +38,7 @@ public class EnvironmentalInterestDataTypeDao extends JdbcDaoSupport
         ObjectFactory fact = new ObjectFactory();
         EnvironmentalInterestListDataType environmentalInterestList = fact.createEnvironmentalInterestListDataType();
         @SuppressWarnings("unchecked")
-        List<EnvironmentalInterestDataType> results = (List<EnvironmentalInterestDataType>)getJdbcTemplate()
+        List<EnvironmentalInterestDataType> results = getJdbcTemplate()
                         .query(loadEnvironmentalInterestsByFacilityIdSql, new Object[]{facilityId},
                                new int[]{Types.VARCHAR}, new EnvironmentalInterestDataTypeRowMapper(this, getAffiliationListDataTypeDao()));
         environmentalInterestList.getEnvironmentalInterest().addAll(results);
@@ -56,7 +58,7 @@ public class EnvironmentalInterestDataTypeDao extends JdbcDaoSupport
         ObjectFactory fact = new ObjectFactory();
         EnvironmentalInterestSummaryListDataType environmentalInterestSummaryList = fact.createEnvironmentalInterestSummaryListDataType();
         @SuppressWarnings("unchecked")
-        List<EnvironmentalInterestSummaryDataType> results = (List<EnvironmentalInterestSummaryDataType>)getJdbcTemplate()
+        List<EnvironmentalInterestSummaryDataType> results = getJdbcTemplate()
                         .query(loadEnvironmentalInterestsByFacilityIdSql, new Object[]{facilityId},
                                new int[]{Types.VARCHAR}, new EnvironmentalInterestSummaryDataTypeRowMapper(this));
         environmentalInterestSummaryList.getEnvironmentalInterestSummary().addAll(results);
@@ -76,7 +78,7 @@ public class EnvironmentalInterestDataTypeDao extends JdbcDaoSupport
         ObjectFactory fact = new ObjectFactory();
         SICListDataType sicList = fact.createSICListDataType();
         @SuppressWarnings("unchecked")
-        List<FacilitySICDataType> results = (List<FacilitySICDataType>)getJdbcTemplate()
+        List<FacilitySICDataType> results = getJdbcTemplate()
                         .query(loadSicListByEnvironmentalInterestIdSql, new Object[]{enviromenalInterestId},
                                new int[]{Types.VARCHAR}, new FacilitySicDataTypeRowMapper());
         sicList.getFacilitySIC().addAll(results);
@@ -96,7 +98,7 @@ public class EnvironmentalInterestDataTypeDao extends JdbcDaoSupport
         ObjectFactory fact = new ObjectFactory();
         NAICSListDataType naicsList = fact.createNAICSListDataType();
         @SuppressWarnings("unchecked")
-        List<FacilityNAICSDataType> results = (List<FacilityNAICSDataType>)getJdbcTemplate()
+        List<FacilityNAICSDataType> results = getJdbcTemplate()
                         .query(loadNaicsListByEnvironmentalInterestIdSql, new Object[]{enviromenalInterestId},
                                new int[]{Types.VARCHAR}, new FacilityNaicsDataTypeRowMapper());
         naicsList.getFacilityNAICS().addAll(results);
@@ -116,7 +118,7 @@ public class EnvironmentalInterestDataTypeDao extends JdbcDaoSupport
         ObjectFactory fact = new ObjectFactory();
         ElectronicAddressListDataType electronicAddressList = fact.createElectronicAddressListDataType();
         @SuppressWarnings("unchecked")
-        List<ElectronicAddressDataType> results = (List<ElectronicAddressDataType>)getJdbcTemplate()
+        List<ElectronicAddressDataType> results = getJdbcTemplate()
                         .query(loadElectronicAddressListByEnvironmentalInterestIdSql, new Object[]{enviromenalInterestId},
                                new int[]{Types.VARCHAR}, new ElectronicAddressDataTypeRowMapper());
         electronicAddressList.getElectronicAddress().addAll(results);
@@ -136,7 +138,7 @@ public class EnvironmentalInterestDataTypeDao extends JdbcDaoSupport
         ObjectFactory fact = new ObjectFactory();
         AlternativeIdentificationListDataType alternativeIdentificationList = fact.createAlternativeIdentificationListDataType();
         @SuppressWarnings("unchecked")
-        List<AlternativeIdentificationDataType> results = (List<AlternativeIdentificationDataType>)getJdbcTemplate()
+        List<AlternativeIdentificationDataType> results = getJdbcTemplate()
                         .query(loadAlternativeIdentificationListByEnvironmentalInterestIdSql, new Object[]{enviromenalInterestId},
                                new int[]{Types.VARCHAR}, new AlternativeIdentificationDataTypeRowMapper());
         alternativeIdentificationList.getAlternativeIdentification().addAll(results);
@@ -147,31 +149,31 @@ public class EnvironmentalInterestDataTypeDao extends JdbcDaoSupport
         return alternativeIdentificationList;
     }
 
-    private final static String loadSicListByEnvironmentalInterestIdSql = "SELECT ENVR_INTR_FAC_SIC_ID, "
+    private static final String loadSicListByEnvironmentalInterestIdSql = "SELECT ENVR_INTR_FAC_SIC_ID, "
         + " ENVR_INTR_ID, "
         + " SIC_CODE, "
         + " SIC_PRI_INDI "
         + " FROM FACID_ENVR_INTR_FAC_SIC WHERE ENVR_INTR_ID = ?";
 
-    private final static String loadNaicsListByEnvironmentalInterestIdSql = "SELECT ENVR_INTR_FAC_NAICS_ID, "
+    private static final String loadNaicsListByEnvironmentalInterestIdSql = "SELECT ENVR_INTR_FAC_NAICS_ID, "
         + " ENVR_INTR_ID, "
         + " FAC_NAICS_CODE, "
         + " FAC_NAICS_PRI_INDI "
         + " FROM FACID_ENVR_INTR_FAC_NAICS WHERE ENVR_INTR_ID = ?";
 
-    private final static String loadElectronicAddressListByEnvironmentalInterestIdSql = "SELECT ENVR_INTR_ELEC_ADDR_ID, "
+    private static final String loadElectronicAddressListByEnvironmentalInterestIdSql = "SELECT ENVR_INTR_ELEC_ADDR_ID, "
         + " ENVR_INTR_ID, "
         + " ELEC_ADDR_TEXT, "
         + " ELEC_ADDR_TYPE_NAME "
         + " FROM FACID_ENVR_INTR_ELEC_ADDR WHERE ENVR_INTR_ID = ?";
 
-    private final static String loadAlternativeIdentificationListByEnvironmentalInterestIdSql = "SELECT ENVR_INTR_ALT_IDEN_ID, "
+    private static String loadAlternativeIdentificationListByEnvironmentalInterestIdSql = "SELECT ENVR_INTR_ALT_IDEN_ID, "
         + " ENVR_INTR_ID, "
         + " ALT_IDEN_IDEN, "
         + " ALT_IDEN_TYPE_TEXT "
         + " FROM FACID_ENVR_INTR_ALT_IDEN WHERE ENVR_INTR_ID = ?";
 
-    private final static String loadEnvironmentalInterestsByFacilityIdSql = "select ENVR_INTR_ID, " 
+    private static final String loadEnvironmentalInterestsByFacilityIdSql = "select ENVR_INTR_ID, "
         + " FAC_ID, "
         + " ENVR_INTR_IDEN, "
         + " ENVR_INTR_TYPE_TEXT, "

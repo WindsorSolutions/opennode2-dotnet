@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
-	jaxb:extensionBindingPrefixes="hj orm"
+	xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance"
+	jaxb:extensionBindingPrefixes="hj orm inheritance"
 	schemaLocation="../xsd/3/0/FACID_FacilityPrimaryGeographicLocationDescription_v3.0.xsd">
 
 	<!-- facility primary geographic location description -->
@@ -13,6 +14,7 @@
 			<hj:generated-id name="Dbid">
 				<orm:column name="FAC_ID" />
 			</hj:generated-id>
+			<inheritance:extends>com.windsor.node.plugin.facid3.domain.AbstractFacilityPrimaryGeographicLocationDescriptionDataType</inheritance:extends>
 		</jaxb:bindings>
 
 		<jaxb:bindings node="//xsd:element[@ref='facid:HorizontalAccuracyMeasure']">
