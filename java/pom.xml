@@ -111,6 +111,12 @@
         -->
         <springframework.version>2.5.6.SEC03</springframework.version>
         <commons.beanutils.version>1.8.0</commons.beanutils.version>
+        <!-- The default node.home property, will be filtered into the build XML config files 
+        and can be overridden if necessary.  An example might be a build that will be deployed on the 
+        same server as another instance of OpenNode2, they cannot both have the same node.home on
+        the file system.  The second deployment could override this property via a profile (perhaps
+        in ~/.m2/settings.xml) and be rebuilt to avoid editing deployed war files after the fact -->
+        <node.home>/var/opennode2_home</node.home>
     </properties>
     <build>
         <pluginManagement>
@@ -407,4 +413,24 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+    <repositories>
+        <repository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>windsor-maven</id>
+            <name>windsor-maven-releases</name>
+            <!-- <url>http://www.windsorsolutions.biz:10240/artifactory/repo</url> -->
+            <url>http://10.0.1.54:8081/nexus/content/groups/public/</url>
+        </repository>
+        <!-- <repository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>windsor-maven-mirror</id>
+            <name>windsor-maven-mirror</name>
+            <url>http://www.windsorsolutions.biz:10240/artifactory/repo</url>
+            <url>http://10.0.1.54:8081/nexus/content/repositories/central/</url>
+        </repository> -->
+    </repositories>
 </project>
