@@ -44,7 +44,7 @@ namespace Windsor.Node2008.WNOS.AssemblyInfo
     internal static class AssemblyInfo
 	{
 		// [assembly: AssemblyVersion(AssemblyInfoServer.cAssemblyVersion)]
-        public const string cAssemblyVersion = "2.5.1.611";
+        public const string cAssemblyVersion = "2.5.1.642";
 		
 		// [assembly: AssemblyFileVersion(AssemblyInfoServer.cAssemblyFileVersion)]
         public const string cAssemblyFileVersion = cAssemblyVersion;

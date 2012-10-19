@@ -90,6 +90,7 @@
     <Compile Include="ComparableBase.cs" />
     <Compile Include="ConfigurationUtils.cs" />
     <Compile Include="Cryptography.cs" />
+    <Compile Include="CsvExporter.cs" />
     <Compile Include="DatabaseMdfUtils.cs" />
     <Compile Include="DateTimeRange.cs" />
     <Compile Include="DateTimeUtils.cs" />
