@@ -1121,13 +1121,13 @@ namespace Windsor.Node2008.WNOSPlugin
                     statusCode = endpointClient.GetStatus(endpointNetworkId);
                     transactionManager.SetNetworkIdStatus(localTransactionId, statusCode);
                 }
-                AppendAuditLogEvent("Successfully got status of \"{0}\" from network url \"{1}\" for network transaction id \"{2}.\"",
+                AppendAuditLogEvent("Successfully got status of \"{0}\" from network url \"{1}\" for network transaction id \"{2}\"",
                                     statusCode.ToString(), endpointUrl, endpointNetworkId);
                 return statusCode;
             }
             catch (Exception e)
             {
-                AppendAuditLogEvent("Failed to get status from network url \"{0}\" for network transaction id \"{1}.\"  Error: {2}",
+                AppendAuditLogEvent("Failed to get status from network url \"{0}\" for network transaction id \"{1}\".  Error: {2}",
                                     endpointUrl, endpointNetworkId, ExceptionUtils.GetDeepExceptionMessage(e));
                 return CommonTransactionStatusCode.Unknown;
             }

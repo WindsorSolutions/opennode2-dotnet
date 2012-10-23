@@ -231,7 +231,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_40
 
             if (_submissionPartner == null)
             {
-                AppendAuditLogEvent("The \"{0}\" config param was not specified", CONFIG_PARAM_SUBMISSION_PARTNER_NAME);
+                AppendAuditLogEvent("The \"{0}\" config param was not specified. Plugin will not submit.", CONFIG_PARAM_SUBMISSION_PARTNER_NAME);
                 _submissionTrackingDataType.WorkflowStatus = TransactionStatusCode.Completed;
                 _submissionTrackingDataType.WorkflowStatusMessage = "A submission partner was not specified";
                 SubmissionTrackingTableHelper.Update(_stagingDao, _submissionTrackingDataTypePK, _submissionTrackingDataType);
