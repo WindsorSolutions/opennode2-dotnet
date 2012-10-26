@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	xmlns:annox="http://annox.dev.java.net"
 	xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance" schemaLocation="../xsd/0/ICIS_EnforcementActionViolationLinkage_v4.0e.xsd">
 
 	<!-- enforcement action violation linkage -->
@@ -12,6 +13,9 @@
 		</jaxb:bindings>
 
 		<jaxb:bindings node="//xsd:element[@ref='icis:ComplianceScheduleViolation']">
+			<annox:annotate>
+				<annox:annotate annox:class="org.hibernate.annotations.NotFound" action="IGNORE" />
+			</annox:annotate>
 			<hj:many-to-one>
 				<orm:join-column name="ICS_ENFRC_ACTN_VIOL_LNK_ID" referenced-column-name="ICS_ENFRC_ACTN_VIOL_LNK_ID"
 					insertable="false" updatable="false" />
@@ -19,6 +23,9 @@
 		</jaxb:bindings>
 
 		<jaxb:bindings node="//xsd:element[@ref='icis:DischargeMonitoringReportParameterViolation']">
+			<annox:annotate>
+				<annox:annotate annox:class="org.hibernate.annotations.NotFound" action="IGNORE" />
+			</annox:annotate>
 			<hj:many-to-one>
 				<orm:join-column name="ICS_ENFRC_ACTN_VIOL_LNK_ID" referenced-column-name="ICS_ENFRC_ACTN_VIOL_LNK_ID"
 					insertable="false" updatable="false" />
@@ -26,6 +33,9 @@
 		</jaxb:bindings>
 
 		<jaxb:bindings node="//xsd:element[@ref='icis:DischargeMonitoringReportViolation']">
+			<annox:annotate>
+				<annox:annotate annox:class="org.hibernate.annotations.NotFound" action="IGNORE" />
+			</annox:annotate>
 			<hj:many-to-one>
 				<orm:join-column name="ICS_ENFRC_ACTN_VIOL_LNK_ID" referenced-column-name="ICS_ENFRC_ACTN_VIOL_LNK_ID"
 					insertable="false" updatable="false" />
@@ -33,6 +43,9 @@
 		</jaxb:bindings>
 
 		<jaxb:bindings node="//xsd:element[@ref='icis:PermitScheduleViolation']">
+			<annox:annotate>
+				<annox:annotate annox:class="org.hibernate.annotations.NotFound" action="IGNORE" />
+			</annox:annotate>
 			<hj:many-to-one>
 				<orm:join-column name="ICS_ENFRC_ACTN_VIOL_LNK_ID" referenced-column-name="ICS_ENFRC_ACTN_VIOL_LNK_ID"
 					insertable="false" updatable="false" />
@@ -40,6 +53,9 @@
 		</jaxb:bindings>
 
 		<jaxb:bindings node="//xsd:element[@ref='icis:SingleEventsViolation']">
+			<annox:annotate>
+				<annox:annotate annox:class="org.hibernate.annotations.NotFound" action="IGNORE" />
+			</annox:annotate>
 			<hj:many-to-one>
 				<orm:join-column name="ICS_ENFRC_ACTN_VIOL_LNK_ID" referenced-column-name="ICS_ENFRC_ACTN_VIOL_LNK_ID"
 					insertable="false" updatable="false" />

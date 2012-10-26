@@ -8,16 +8,24 @@
 
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='UnpermittedFacilityData']">
-			<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractUnpermittedFacilityData</inheritance:extends>
+			<hj:entity>
+				<orm:override-association name="geographicCoordinates">
+					<orm:join-column name="ICS_UNPRMT_FAC_ID" insertable="false"/>
+				</orm:override-association>
+			</hj:entity>
+			<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractUnpermittedFacilityData
+			</inheritance:extends>
 		</jaxb:bindings>
 	</jaxb:bindings>
 
 	<!-- unpermitted facility -->
 
 	<jaxb:bindings>
+
 		<jaxb:bindings node="//xsd:complexType[@name='UnpermittedFacility']">
-			<hj:embeddable />
+			<hj:embeddable/>
 		</jaxb:bindings>
+
 	</jaxb:bindings>
 
 </jaxb:bindings>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
-	xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance"
-	jaxb:extensionBindingPrefixes="hj orm inheritance" schemaLocation="../xsd/0/ICIS_ComplianceMonitoringLinkage_v4.0e.xsd">
+	xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance" xmlns:annox="http://annox.dev.java.net"
+	jaxb:extensionBindingPrefixes="hj orm inheritance annox" schemaLocation="../xsd/0/ICIS_ComplianceMonitoringLinkage_v4.0e.xsd">
 	
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='LinkageBiosolidsReport']">
@@ -11,7 +11,6 @@
 	</jaxb:bindings>
 	
 	<!-- linkage CAFO annual report -->
-	
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='LinkageCAFOAnnualReport']">
 			<hj:generated-id name="Dbid">
@@ -147,17 +146,131 @@
 		</jaxb:bindings>
 		
 		<jaxb:bindings node="//xsd:element[@ref='icis:LinkageBiosolidsReport']">
+			<annox:annotate>
+				<annox:annotate annox:class="org.hibernate.annotations.NotFound" action="IGNORE" />
+			</annox:annotate>
 			<hj:many-to-one>
 				<orm:join-column name="ICS_CMPL_MON_LNK_ID" referenced-column-name="ICS_CMPL_MON_LNK_ID" insertable="false" updatable="false"/>
 			</hj:many-to-one>
 		</jaxb:bindings>
 		
 		<jaxb:bindings node="//xsd:element[@ref='icis:LinkageSWEventReport']">
+			<annox:annotate>
+				<annox:annotate annox:class="org.hibernate.annotations.NotFound" action="IGNORE" />
+			</annox:annotate>
+			<hj:many-to-one>
+				<orm:join-column name="ICS_CMPL_MON_LNK_ID" referenced-column-name="ICS_CMPL_MON_LNK_ID" insertable="false" updatable="false"/>
+			</hj:many-to-one>
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:element[@ref='icis:LinkageSingleEvent']">
+			<annox:annotate>
+				<annox:annotate annox:class="org.hibernate.annotations.NotFound" action="IGNORE" />
+			</annox:annotate>
+			<hj:many-to-one>
+				<orm:join-column name="ICS_CMPL_MON_LNK_ID" referenced-column-name="ICS_CMPL_MON_LNK_ID" insertable="false" updatable="false"/>
+			</hj:many-to-one>
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:element[@ref='icis:LinkageEnforcementAction']">
+			<annox:annotate>
+				<annox:annotate annox:class="org.hibernate.annotations.NotFound" action="IGNORE" />
+			</annox:annotate>
+			<hj:many-to-one>
+				<orm:join-column name="ICS_CMPL_MON_LNK_ID" referenced-column-name="ICS_CMPL_MON_LNK_ID" insertable="false" updatable="false"/>
+			</hj:many-to-one>
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:element[@ref='icis:LinkageCAFOAnnualReport']">
+			<annox:annotate>
+				<annox:annotate annox:class="org.hibernate.annotations.NotFound" action="IGNORE" />
+			</annox:annotate>
+			<hj:many-to-one>
+				<orm:join-column name="ICS_CMPL_MON_LNK_ID" referenced-column-name="ICS_CMPL_MON_LNK_ID" insertable="false" updatable="false"/>
+			</hj:many-to-one>
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:element[@ref='icis:LinkageCSOEventReport']">
+			<annox:annotate>
+				<annox:annotate annox:class="org.hibernate.annotations.NotFound" action="IGNORE" />
+			</annox:annotate>
+			<hj:many-to-one>
+				<orm:join-column name="ICS_CMPL_MON_LNK_ID" referenced-column-name="ICS_CMPL_MON_LNK_ID" insertable="false" updatable="false"/>
+			</hj:many-to-one>
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:element[@ref='icis:LinkageLocalLimitsReport']">
+			<annox:annotate>
+				<annox:annotate annox:class="org.hibernate.annotations.NotFound" action="IGNORE" />
+			</annox:annotate>
+			<hj:many-to-one>
+				<orm:join-column name="ICS_CMPL_MON_LNK_ID" referenced-column-name="ICS_CMPL_MON_LNK_ID" insertable="false" updatable="false"/>
+			</hj:many-to-one>
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:element[@ref='icis:LinkagePretreatmentPerformanceReport']">
+			<annox:annotate>
+				<annox:annotate annox:class="org.hibernate.annotations.NotFound" action="IGNORE" />
+			</annox:annotate>
 			<hj:many-to-one>
 				<orm:join-column name="ICS_CMPL_MON_LNK_ID" referenced-column-name="ICS_CMPL_MON_LNK_ID" insertable="false" updatable="false"/>
 			</hj:many-to-one>
 		</jaxb:bindings>
 				
+		<jaxb:bindings node="//xsd:element[@ref='icis:LinkageSSOAnnualReport']">
+			<annox:annotate>
+				<annox:annotate annox:class="org.hibernate.annotations.NotFound" action="IGNORE" />
+			</annox:annotate>
+			<hj:many-to-one>
+				<orm:join-column name="ICS_CMPL_MON_LNK_ID" referenced-column-name="ICS_CMPL_MON_LNK_ID" insertable="false" updatable="false"/>
+			</hj:many-to-one>
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:element[@ref='icis:LinkageSSOEventReport']">
+			<annox:annotate>
+				<annox:annotate annox:class="org.hibernate.annotations.NotFound" action="IGNORE" />
+			</annox:annotate>
+			<hj:many-to-one>
+				<orm:join-column name="ICS_CMPL_MON_LNK_ID" referenced-column-name="ICS_CMPL_MON_LNK_ID" insertable="false" updatable="false"/>
+			</hj:many-to-one>
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:element[@ref='icis:LinkageSSOMonthlyEventReport']">
+			<annox:annotate>
+				<annox:annotate annox:class="org.hibernate.annotations.NotFound" action="IGNORE" />
+			</annox:annotate>
+			<hj:many-to-one>
+				<orm:join-column name="ICS_CMPL_MON_LNK_ID" referenced-column-name="ICS_CMPL_MON_LNK_ID" insertable="false" updatable="false"/>
+			</hj:many-to-one>
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:element[@ref='icis:LinkageSWMS4Report']">
+			<annox:annotate>
+				<annox:annotate annox:class="org.hibernate.annotations.NotFound" action="IGNORE" />
+			</annox:annotate>
+			<hj:many-to-one>
+				<orm:join-column name="ICS_CMPL_MON_LNK_ID" referenced-column-name="ICS_CMPL_MON_LNK_ID" insertable="false" updatable="false"/>
+			</hj:many-to-one>
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:element[@ref='icis:LinkageStateComplianceMonitoring']">
+			<annox:annotate>
+				<annox:annotate annox:class="org.hibernate.annotations.NotFound" action="IGNORE" />
+			</annox:annotate>
+			<hj:many-to-one>
+				<orm:join-column name="ICS_CMPL_MON_LNK_ID" referenced-column-name="ICS_CMPL_MON_LNK_ID" insertable="false" updatable="false"/>
+			</hj:many-to-one>
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:element[@ref='icis:LinkageFederalComplianceMonitoring']">
+			<annox:annotate>
+				<annox:annotate annox:class="org.hibernate.annotations.NotFound" action="IGNORE" />
+			</annox:annotate>
+			<hj:many-to-one>
+				<orm:join-column name="ICS_CMPL_MON_LNK_ID" referenced-column-name="ICS_CMPL_MON_LNK_ID" insertable="false" updatable="false"/>
+			</hj:many-to-one>
+		</jaxb:bindings>
+		
 	</jaxb:bindings>
 
 </jaxb:bindings>

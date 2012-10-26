@@ -8,7 +8,16 @@
 
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='GeneralPermitData']">
-			<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractGeneralPermitData</inheritance:extends>
+			<hj:entity>
+				<orm:association-override name="generalPermit.facility">
+						<orm:join-column name="ICS_GNRL_PRMT_ID" referenced-column-name="ICS_GNRL_PRMT_ID" insertable="false" updatable="false"/>
+				</orm:association-override>
+				<orm:association-override name="generalPermit.complianceTrackingStatus">
+						<orm:join-column name="ICS_GNRL_PRMT_ID" referenced-column-name="ICS_GNRL_PRMT_ID" insertable="false" updatable="false"/>
+				</orm:association-override>
+			</hj:entity>
+			<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractGeneralPermitData
+			</inheritance:extends>
 		</jaxb:bindings>
 	</jaxb:bindings>
 
@@ -16,7 +25,7 @@
 
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='GeneralPermit']">
-			<hj:embeddable />
+			<hj:embeddable/>
 		</jaxb:bindings>
 	</jaxb:bindings>
 

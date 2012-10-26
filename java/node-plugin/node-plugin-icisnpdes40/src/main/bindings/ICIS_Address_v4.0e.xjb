@@ -22,6 +22,14 @@
 			<inheritance:implements>com.windsor.node.plugin.icisnpdes40.domain.IAddressList</inheritance:implements>
 		</jaxb:bindings>
 	</jaxb:bindings>
+	
+	<!-- effluent trade partner address -->
+
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='EffluentTradePartnerAddress']">
+			<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractEffluentTradePartnerAddress</inheritance:extends>
+		</jaxb:bindings>
+	</jaxb:bindings>
 
 	<!-- facility address -->
 
