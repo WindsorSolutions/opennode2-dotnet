@@ -9,9 +9,9 @@
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='UnpermittedFacilityData']">
 			<hj:entity>
-				<orm:override-association name="geographicCoordinates">
-					<orm:join-column name="ICS_UNPRMT_FAC_ID" insertable="false"/>
-				</orm:override-association>
+				<orm:association-override name="unpermittedFacility.geographicCoordinates">
+					<orm:join-column name="ICS_UNPRMT_FAC_ID" referenced-column-name="ICS_UNPRMT_FAC_ID" insertable="false" updatable="false"/>
+				</orm:association-override>
 			</hj:entity>
 			<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractUnpermittedFacilityData
 			</inheritance:extends>

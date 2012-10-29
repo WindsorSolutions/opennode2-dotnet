@@ -21,6 +21,9 @@ public abstract class AbstractGeographicCoordinates implements Serializable {
 	private String facilityId;
 
 	@XmlTransient
+	private String unpermittedFacilityId;
+
+	@XmlTransient
 	private String permittedFeatureId;
 
 	@Column(name = "ICS_FAC_ID")
@@ -39,6 +42,15 @@ public abstract class AbstractGeographicCoordinates implements Serializable {
 
 	public void setPermittedFeatureId(final String permittedFeatureId) {
 		this.permittedFeatureId = permittedFeatureId;
+	}
+
+	@Column(name = "ICS_UNPRMT_FAC_ID")
+	public String getUnpermittedFacilityId() {
+		return unpermittedFacilityId;
+	}
+
+	public void setUnpermittedFacilityId(final String unpermittedFeatureId) {
+		this.unpermittedFacilityId = unpermittedFeatureId;
 	}
 
 }
