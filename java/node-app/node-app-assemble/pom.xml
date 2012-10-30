@@ -24,7 +24,7 @@
                         <inherited>false</inherited>
                         <configuration>
                             <appendAssemblyId>false</appendAssemblyId>
-                            <finalName>Java_OpenNode2_v${project.version}_${dist.name}</finalName>
+                            <finalName>java_OpenNode2_v${node.dist.version}_${dist.name}</finalName>
                             <outputDirectory>${project.parent.basedir}/../dist</outputDirectory>
                             <descriptors>
                                 <descriptor>src/main/assembly/assembly.xml</descriptor>

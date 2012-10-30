@@ -117,10 +117,26 @@
         the file system.  The second deployment could override this property via a profile (perhaps
         in ~/.m2/settings.xml) and be rebuilt to avoid editing deployed war files after the fact -->
         <node.home>/var/opennode2_home</node.home>
+        <!-- version number to use in the wnos and plugin distribution zip filenames -->
+        <node.dist.version>2.06</node.dist.version>
     </properties>
     <build>
         <pluginManagement>
             <plugins>
+            	<plugin>
+					<artifactId>maven-clean-plugin</artifactId>
+					<version>2.5</version>
+					<configuration>
+						<filesets>
+							<fileset>
+								<directory>dist</directory>
+								<includes>
+									<include>**/*.zip</include>
+								</includes>
+							</fileset>
+						</filesets>
+					</configuration>
+				</plugin>
                 <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <configuration>

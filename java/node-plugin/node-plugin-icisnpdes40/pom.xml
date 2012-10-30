@@ -10,8 +10,8 @@
     <packaging>jar</packaging>
     <name>Node Plugin - ICIS NPDES v4.1</name>
     <properties>
-        <node.plugin.name>ICISNPDESv40</node.plugin.name>
-        <node.plugin.build.number>00</node.plugin.build.number>
+        <node.plugin.name>icisnpdes40</node.plugin.name>
+        <node.plugin.build.number>03</node.plugin.build.number>
     </properties>
     <build>
         <plugins>

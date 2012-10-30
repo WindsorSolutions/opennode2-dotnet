@@ -31,7 +31,11 @@
 		<module>node-plugin-windsor</module>
 		<module>node-plugin-wqx</module>
 	</modules>
+	<properties>
+		<node.plugin.name>${project.artifact.artifactId}</node.plugin.name>
+	</properties>
 	<build>
+		<finalName>${node.plugin.name}</finalName>
 		<testResources>
 			<testResource>
 				<directory>${project.basedir}/src/test/resources</directory>
@@ -200,7 +204,7 @@
 							</goals>
 							<configuration>
 								<appendAssemblyId>false</appendAssemblyId>
-								<finalName>Java_${node.plugin.name}_plugin_v${project.parent.version}.${node.plugin.build.number}</finalName>
+								<finalName>java_${node.plugin.name}_plugin_v${node.dist.version}.${node.plugin.build.number}</finalName>
 								<outputDirectory>${project.parent.basedir}/../dist</outputDirectory>
 								<descriptors>
 									<descriptor>${project.parent.basedir}/src/main/assembly/outer-zip-assembly.xml</descriptor>
