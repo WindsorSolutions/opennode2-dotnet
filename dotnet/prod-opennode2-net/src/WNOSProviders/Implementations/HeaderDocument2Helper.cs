@@ -179,7 +179,23 @@ namespace Windsor.Node2008.WNOSProviders.Implementation
             {
                 if (string.Equals(key, pair.PropertyName, StringComparison.InvariantCultureIgnoreCase))
                 {
-                    value = (pair.PropertyValue == null) ? null : pair.PropertyValue.ToString();
+                    value = null;
+
+                    if (pair.PropertyValue != null)
+                    {
+                        XmlNode[] nodes = pair.PropertyValue as XmlNode[];
+                        if (nodes != null)
+                        {
+                            if (nodes.Length > 0)
+                            {
+                                value = nodes[0].Value;
+                            }
+                        }
+                        else
+                        {
+                            value = pair.PropertyValue.ToString();
+                        }
+                    }
                     return false;
                 }
                 return true;
