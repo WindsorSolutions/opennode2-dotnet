@@ -283,9 +283,9 @@
 			<SubmissionsAccepted>
 				<SubmissionAccepted>
 					<SubmissionAcceptedKey>
-						<PermitRecordIdentifier>
+						<PermitTerminationIdentifier>
 							<PermitIdentifier>AL1005932</PermitIdentifier>
-						</PermitRecordIdentifier>
+						</PermitTerminationIdentifier>
 						<SubmissionTransactionTypeCode>R</SubmissionTransactionTypeCode>
 					</SubmissionAcceptedKey>
 				</SubmissionAccepted>

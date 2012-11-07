@@ -498,6 +498,14 @@
 			<xsd:element ref="icis:SSOMonthlyEventReportIdentifier"/>
 			<xsd:element ref="icis:SWEventReportIdentifier"/>
 			<xsd:element ref="icis:SWMS4ProgramReportIdentifier"/>
+			<!--HACK for missing element in EPA-published ICIS-NPDES schema -->
+			<xsd:element name="PermitTerminationIdentifier">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="PermitIdentifier" type="xsd:string"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
 		</xsd:choice>
 	</xsd:group>
 </xsd:schema>

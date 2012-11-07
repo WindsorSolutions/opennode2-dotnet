@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubmissionResultList xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="C:/projectsHg/prod-opennode2-net/plugins/ICISNPDES_31/docs/DOWNLO~1/SubmissionResults.xsd">
-	<SubmissionResults>
-		<TransactionTypeCode>R</TransactionTypeCode>
+<SubmissionResultList xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="C:/google-opennode2/prod-opennode2-net/plugins/ICISNPDES_40/docs/DOWNLO~1/SubmissionResults.xsd">
+	<SubmissionResult>
+		<SubmissionTypeName>DischargeMonitoringReportSubmission</SubmissionTypeName>
+		<TransactionType>R</TransactionType>
 		<PermitIdentifier>AA0123456</PermitIdentifier>
 		<PermittedFeatureIdentifier>001</PermittedFeatureIdentifier>
 		<LimitSetDesignator>A</LimitSetDesignator>
@@ -11,9 +12,10 @@
 		<ResultDescription>Warning: The following Numeric Condition Quantity(ies) has a Percent Exceedence greater than 500%: column.this error message, value and column will be listed for each column that has this error.
 </ResultDescription>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
-		<TransactionTypeCode>R</TransactionTypeCode>
+	</SubmissionResult>
+	<SubmissionResult>
+		<SubmissionTypeName>DischargeMonitoringReportSubmission</SubmissionTypeName>
+		<TransactionType>R</TransactionType>
 		<PermitIdentifier>AA0123456</PermitIdentifier>
 		<PermittedFeatureIdentifier>001</PermittedFeatureIdentifier>
 		<LimitSetDesignator>A</LimitSetDesignator>
@@ -23,9 +25,10 @@
 		<ResultDescription>Warning: The following Numeric Condition Quantity(ies) has a Percent Exceedence greater than 500%: column.this error message, value and column will be listed for each column that has this error.
 </ResultDescription>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
-		<TransactionTypeCode>R</TransactionTypeCode>
+	</SubmissionResult>
+	<SubmissionResult>
+		<SubmissionTypeName>(Unrecognized)</SubmissionTypeName>
+		<TransactionType>R</TransactionType>
 		<PermitIdentifier>AZ1005932</PermitIdentifier>
 		<PermittedFeatureIdentifier>001</PermittedFeatureIdentifier>
 		<LimitSetDesignator>A</LimitSetDesignator>
@@ -35,23 +38,25 @@
 		<LimitSeasonNumber>0</LimitSeasonNumber>
 		<ResultTypeCode>Accepted</ResultTypeCode>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
+	</SubmissionResult>
+	<SubmissionResult>
 		<SubmissionTypeName>ComplianceMonitoringSubmission</SubmissionTypeName>
-		<TransactionTypeCode>N</TransactionTypeCode>
+		<TransactionType>N</TransactionType>
 		<PermitIdentifier>AL1005932</PermitIdentifier>
 		<ComplianceMonitoringCategoryCode>COM</ComplianceMonitoringCategoryCode>
 		<ComplianceMonitoringDate>2005-12-31</ComplianceMonitoringDate>
 		<ResultTypeCode>Accepted</ResultTypeCode>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
-		<TransactionTypeCode>R</TransactionTypeCode>
+	</SubmissionResult>
+	<SubmissionResult>
+		<SubmissionTypeName>(Unrecognized)</SubmissionTypeName>
+		<TransactionType>R</TransactionType>
 		<ResultTypeCode>Accepted</ResultTypeCode>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
-		<TransactionTypeCode>R</TransactionTypeCode>
+	</SubmissionResult>
+	<SubmissionResult>
+		<SubmissionTypeName>(Unrecognized)</SubmissionTypeName>
+		<TransactionType>R</TransactionType>
 		<PermitIdentifier>AL1005932</PermitIdentifier>
 		<PermitEffectiveDate>2005-01-15</PermitEffectiveDate>
 		<NarrativeConditionNumber>7</NarrativeConditionNumber>
@@ -59,9 +64,10 @@
 		<ScheduleDate>2005-12-31</ScheduleDate>
 		<ResultTypeCode>Accepted</ResultTypeCode>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
-		<TransactionTypeCode>R</TransactionTypeCode>
+	</SubmissionResult>
+	<SubmissionResult>
+		<SubmissionTypeName>(Unrecognized)</SubmissionTypeName>
+		<TransactionType>R</TransactionType>
 		<PermitIdentifier>AL1005932</PermitIdentifier>
 		<PermittedFeatureIdentifier>001</PermittedFeatureIdentifier>
 		<LimitSetDesignator>A</LimitSetDesignator>
@@ -72,26 +78,27 @@
 		<LimitEndDate>2005-12-31</LimitEndDate>
 		<ResultTypeCode>Accepted</ResultTypeCode>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
+	</SubmissionResult>
+	<SubmissionResult>
 		<SubmissionTypeName>LimitSetSubmission</SubmissionTypeName>
-		<TransactionTypeCode>R</TransactionTypeCode>
+		<TransactionType>R</TransactionType>
 		<PermitIdentifier>AZ1005932</PermitIdentifier>
 		<PermittedFeatureIdentifier>001</PermittedFeatureIdentifier>
 		<LimitSetDesignator>A</LimitSetDesignator>
 		<ResultTypeCode>Accepted</ResultTypeCode>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
+	</SubmissionResult>
+	<SubmissionResult>
 		<SubmissionTypeName>NarrativeConditionScheduleSubmission</SubmissionTypeName>
-		<TransactionTypeCode>R</TransactionTypeCode>
+		<TransactionType>R</TransactionType>
 		<PermitIdentifier>AL1005932</PermitIdentifier>
 		<NarrativeConditionNumber>7</NarrativeConditionNumber>
 		<ResultTypeCode>Accepted</ResultTypeCode>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
-		<TransactionTypeCode>R</TransactionTypeCode>
+	</SubmissionResult>
+	<SubmissionResult>
+		<SubmissionTypeName>(Unrecognized)</SubmissionTypeName>
+		<TransactionType>R</TransactionType>
 		<PermitIdentifier>AZ1005932</PermitIdentifier>
 		<PermittedFeatureIdentifier>001</PermittedFeatureIdentifier>
 		<LimitSetDesignator>A</LimitSetDesignator>
@@ -100,115 +107,125 @@
 		<LimitSeasonNumber>0</LimitSeasonNumber>
 		<ResultTypeCode>Accepted</ResultTypeCode>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
+	</SubmissionResult>
+	<SubmissionResult>
 		<SubmissionTypeName>PermitTrackingEventSubmission</SubmissionTypeName>
-		<TransactionTypeCode>C</TransactionTypeCode>
+		<TransactionType>C</TransactionType>
 		<PermitIdentifier>AL1005932</PermitIdentifier>
 		<PermitTrackingEventCode>ANC</PermitTrackingEventCode>
 		<PermitTrackingEventDate>2005-12-31</PermitTrackingEventDate>
 		<ResultTypeCode>Accepted</ResultTypeCode>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
+	</SubmissionResult>
+	<SubmissionResult>
 		<SubmissionTypeName>PermittedFeatureSubmission</SubmissionTypeName>
-		<TransactionTypeCode>R</TransactionTypeCode>
+		<TransactionType>R</TransactionType>
 		<PermitIdentifier>AL1005932</PermitIdentifier>
 		<PermittedFeatureIdentifier>001</PermittedFeatureIdentifier>
 		<ResultTypeCode>Accepted</ResultTypeCode>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
+	</SubmissionResult>
+	<SubmissionResult>
 		<SubmissionTypeName>BasicPermitSubmission</SubmissionTypeName>
-		<TransactionTypeCode>C</TransactionTypeCode>
+		<TransactionType>C</TransactionType>
 		<PermitIdentifier>AL1005932</PermitIdentifier>
 		<ResultTypeCode>Accepted</ResultTypeCode>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
+	</SubmissionResult>
+	<SubmissionResult>
 		<SubmissionTypeName>GeneralPermitSubmission</SubmissionTypeName>
-		<TransactionTypeCode>C</TransactionTypeCode>
+		<TransactionType>C</TransactionType>
 		<PermitIdentifier>AL1005932</PermitIdentifier>
 		<ResultTypeCode>Accepted</ResultTypeCode>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
+	</SubmissionResult>
+	<SubmissionResult>
 		<SubmissionTypeName>MasterGeneralPermitSubmission</SubmissionTypeName>
-		<TransactionTypeCode>R</TransactionTypeCode>
+		<TransactionType>R</TransactionType>
 		<PermitIdentifier>AL1005932</PermitIdentifier>
 		<ResultTypeCode>Accepted</ResultTypeCode>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
+	</SubmissionResult>
+	<SubmissionResult>
 		<SubmissionTypeName>PermitTerminationSubmission</SubmissionTypeName>
-		<TransactionTypeCode>R</TransactionTypeCode>
+		<TransactionType>R</TransactionType>
 		<PermitIdentifier>AL1005932</PermitIdentifier>
 		<ResultTypeCode>Accepted</ResultTypeCode>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
+	</SubmissionResult>
+	<SubmissionResult>
 		<SubmissionTypeName>PermitReissuanceSubmission</SubmissionTypeName>
-		<TransactionTypeCode>R</TransactionTypeCode>
+		<TransactionType>R</TransactionType>
 		<PermitIdentifier>AL1005932</PermitIdentifier>
 		<ResultTypeCode>Accepted</ResultTypeCode>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
-		<TransactionTypeCode>R</TransactionTypeCode>
+	</SubmissionResult>
+	<SubmissionResult>
+		<SubmissionTypeName>BiosolidsPermitSubmission</SubmissionTypeName>
+		<TransactionType>R</TransactionType>
 		<PermitIdentifier>AL1005932</PermitIdentifier>
 		<ResultTypeCode>Accepted</ResultTypeCode>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
-		<TransactionTypeCode>R</TransactionTypeCode>
+	</SubmissionResult>
+	<SubmissionResult>
+		<SubmissionTypeName>CAFOPermitSubmission</SubmissionTypeName>
+		<TransactionType>R</TransactionType>
 		<PermitIdentifier>AL1005932</PermitIdentifier>
 		<ResultTypeCode>Accepted</ResultTypeCode>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
-		<TransactionTypeCode>R</TransactionTypeCode>
+	</SubmissionResult>
+	<SubmissionResult>
+		<SubmissionTypeName>CSOPermitSubmission</SubmissionTypeName>
+		<TransactionType>R</TransactionType>
 		<PermitIdentifier>AL1005932</PermitIdentifier>
 		<ResultTypeCode>Accepted</ResultTypeCode>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
-		<TransactionTypeCode>R</TransactionTypeCode>
+	</SubmissionResult>
+	<SubmissionResult>
+		<SubmissionTypeName>POTWPermitSubmission</SubmissionTypeName>
+		<TransactionType>R</TransactionType>
 		<PermitIdentifier>AL1005932</PermitIdentifier>
 		<ResultTypeCode>Accepted</ResultTypeCode>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
-		<TransactionTypeCode>R</TransactionTypeCode>
+	</SubmissionResult>
+	<SubmissionResult>
+		<SubmissionTypeName>PretreatmentPermitSubmission</SubmissionTypeName>
+		<TransactionType>R</TransactionType>
 		<PermitIdentifier>AL1005932</PermitIdentifier>
 		<ResultTypeCode>Accepted</ResultTypeCode>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
-		<TransactionTypeCode>R</TransactionTypeCode>
+	</SubmissionResult>
+	<SubmissionResult>
+		<SubmissionTypeName>SWConstructionPermitSubmission</SubmissionTypeName>
+		<TransactionType>R</TransactionType>
 		<PermitIdentifier>AL1005932</PermitIdentifier>
 		<ResultTypeCode>Accepted</ResultTypeCode>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
-		<TransactionTypeCode>R</TransactionTypeCode>
+	</SubmissionResult>
+	<SubmissionResult>
+		<SubmissionTypeName>SWIndustrialPermitSubmission</SubmissionTypeName>
+		<TransactionType>R</TransactionType>
 		<PermitIdentifier>AL1005932</PermitIdentifier>
 		<ResultTypeCode>Accepted</ResultTypeCode>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
-		<TransactionTypeCode>R</TransactionTypeCode>
+	</SubmissionResult>
+	<SubmissionResult>
+		<SubmissionTypeName>(Unrecognized)</SubmissionTypeName>
+		<TransactionType>R</TransactionType>
 		<PermitIdentifier>AL1005932</PermitIdentifier>
 		<ResultTypeCode>Accepted</ResultTypeCode>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
-		<TransactionTypeCode>R</TransactionTypeCode>
+	</SubmissionResult>
+	<SubmissionResult>
+		<SubmissionTypeName>(Unrecognized)</SubmissionTypeName>
+		<TransactionType>R</TransactionType>
 		<PermitIdentifier>AL1005932</PermitIdentifier>
 		<ResultTypeCode>Accepted</ResultTypeCode>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
-		<TransactionTypeCode>R</TransactionTypeCode>
+	</SubmissionResult>
+	<SubmissionResult>
+		<SubmissionTypeName>DischargeMonitoringReportSubmission</SubmissionTypeName>
+		<TransactionType>R</TransactionType>
 		<PermitIdentifier>AZ1005932</PermitIdentifier>
 		<PermittedFeatureIdentifier>001</PermittedFeatureIdentifier>
 		<LimitSetDesignator>A</LimitSetDesignator>
@@ -217,9 +234,10 @@
 		<ResultTypeCode>Error</ResultTypeCode>
 		<ResultDescription>Multiple matching Parameters exist that match the data entered.</ResultDescription>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
-		<TransactionTypeCode>R</TransactionTypeCode>
+	</SubmissionResult>
+	<SubmissionResult>
+		<SubmissionTypeName>(Unrecognized)</SubmissionTypeName>
+		<TransactionType>R</TransactionType>
 		<PermitIdentifier>AZ1005932</PermitIdentifier>
 		<PermittedFeatureIdentifier>001</PermittedFeatureIdentifier>
 		<LimitSetDesignator>A</LimitSetDesignator>
@@ -231,10 +249,10 @@
 		<ResultTypeCode>Error</ResultTypeCode>
 		<ResultDescription>Multiple matching Parameters exist that match the data entered.</ResultDescription>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
+	</SubmissionResult>
+	<SubmissionResult>
 		<SubmissionTypeName>ComplianceMonitoringSubmission</SubmissionTypeName>
-		<TransactionTypeCode>N</TransactionTypeCode>
+		<TransactionType>N</TransactionType>
 		<PermitIdentifier>AL1005932</PermitIdentifier>
 		<ComplianceMonitoringCategoryCode>COM</ComplianceMonitoringCategoryCode>
 		<ComplianceMonitoringDate>2005-12-31</ComplianceMonitoringDate>
@@ -242,16 +260,18 @@
 		<ResultTypeCode>Error</ResultTypeCode>
 		<ResultDescription>A Compliance Monitoring Activity already exists for the key data entered.</ResultDescription>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
-		<TransactionTypeCode>R</TransactionTypeCode>
+	</SubmissionResult>
+	<SubmissionResult>
+		<SubmissionTypeName>(Unrecognized)</SubmissionTypeName>
+		<TransactionType>R</TransactionType>
 		<ResultCode>CM040</ResultCode>
 		<ResultTypeCode>Error</ResultTypeCode>
 		<ResultDescription>A Facility Interest does not exist for the key data entered.</ResultDescription>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
-		<TransactionTypeCode>R</TransactionTypeCode>
+	</SubmissionResult>
+	<SubmissionResult>
+		<SubmissionTypeName>(Unrecognized)</SubmissionTypeName>
+		<TransactionType>R</TransactionType>
 		<PermitIdentifier>AL1005932</PermitIdentifier>
 		<PermitEffectiveDate>2005-01-15</PermitEffectiveDate>
 		<NarrativeConditionNumber>7</NarrativeConditionNumber>
@@ -261,9 +281,10 @@
 		<ResultTypeCode>Error</ResultTypeCode>
 		<ResultDescription>The combination of Permit Identifier, Permit Effective Date, Narrative Condition, and Schedule Event must already exist in ICIS.</ResultDescription>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
-		<TransactionTypeCode>R</TransactionTypeCode>
+	</SubmissionResult>
+	<SubmissionResult>
+		<SubmissionTypeName>(Unrecognized)</SubmissionTypeName>
+		<TransactionType>R</TransactionType>
 		<PermitIdentifier>AL1005932</PermitIdentifier>
 		<PermittedFeatureIdentifier>001</PermittedFeatureIdentifier>
 		<LimitSetDesignator>A</LimitSetDesignator>
@@ -276,10 +297,10 @@
 		<ResultTypeCode>Error</ResultTypeCode>
 		<ResultDescription>A Limit cannot be added because the combination of Permit Identifier, Permitted Feature Identifier, and Limit Set Designator does not exist in ICIS.</ResultDescription>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
+	</SubmissionResult>
+	<SubmissionResult>
 		<SubmissionTypeName>LimitSetSubmission</SubmissionTypeName>
-		<TransactionTypeCode>R</TransactionTypeCode>
+		<TransactionType>R</TransactionType>
 		<PermitIdentifier>AZ1005932</PermitIdentifier>
 		<PermittedFeatureIdentifier>001</PermittedFeatureIdentifier>
 		<LimitSetDesignator>A</LimitSetDesignator>
@@ -287,19 +308,20 @@
 		<ResultTypeCode>Error</ResultTypeCode>
 		<ResultDescription>The Limit Set cannot be edited because it contains Unsubmitted DMRs.</ResultDescription>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
+	</SubmissionResult>
+	<SubmissionResult>
 		<SubmissionTypeName>NarrativeConditionScheduleSubmission</SubmissionTypeName>
-		<TransactionTypeCode>R</TransactionTypeCode>
+		<TransactionType>R</TransactionType>
 		<PermitIdentifier>AL1005932</PermitIdentifier>
 		<NarrativeConditionNumber>7</NarrativeConditionNumber>
 		<ResultCode>NC040</ResultCode>
 		<ResultTypeCode>Error</ResultTypeCode>
 		<ResultDescription>The Permit has a Permit Type of Unpermitted Facility.  An Unpermitted Facility cannot have Narrative Conditions and Permit Schedules.</ResultDescription>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
-		<TransactionTypeCode>R</TransactionTypeCode>
+	</SubmissionResult>
+	<SubmissionResult>
+		<SubmissionTypeName>(Unrecognized)</SubmissionTypeName>
+		<TransactionType>R</TransactionType>
 		<PermitIdentifier>AZ1005932</PermitIdentifier>
 		<PermittedFeatureIdentifier>001</PermittedFeatureIdentifier>
 		<LimitSetDesignator>A</LimitSetDesignator>
@@ -310,10 +332,10 @@
 		<ResultTypeCode>Error</ResultTypeCode>
 		<ResultDescription>The Parameter Limit cannot be replaced because the combination of Permit Identifier, Permitted Feature Identifier, and Limit Set Designator does not exist in ICIS.</ResultDescription>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
+	</SubmissionResult>
+	<SubmissionResult>
 		<SubmissionTypeName>PermitTrackingEventSubmission</SubmissionTypeName>
-		<TransactionTypeCode>C</TransactionTypeCode>
+		<TransactionType>C</TransactionType>
 		<PermitIdentifier>AL1005932</PermitIdentifier>
 		<PermitTrackingEventCode>ANC</PermitTrackingEventCode>
 		<PermitTrackingEventDate>2005-12-31</PermitTrackingEventDate>
@@ -321,132 +343,141 @@
 		<ResultTypeCode>Error</ResultTypeCode>
 		<ResultDescription>A Permit Tracking Event does not exist for the key data entered.</ResultDescription>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
+	</SubmissionResult>
+	<SubmissionResult>
 		<SubmissionTypeName>PermittedFeatureSubmission</SubmissionTypeName>
-		<TransactionTypeCode>R</TransactionTypeCode>
+		<TransactionType>R</TransactionType>
 		<PermitIdentifier>AL1005932</PermitIdentifier>
 		<PermittedFeatureIdentifier>001</PermittedFeatureIdentifier>
 		<ResultCode>PF040</ResultCode>
 		<ResultTypeCode>Error</ResultTypeCode>
 		<ResultDescription>A Permitted Feature cannot be added because the Permit Identifier does not exist in ICIS.</ResultDescription>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
+	</SubmissionResult>
+	<SubmissionResult>
 		<SubmissionTypeName>BasicPermitSubmission</SubmissionTypeName>
-		<TransactionTypeCode>C</TransactionTypeCode>
+		<TransactionType>C</TransactionType>
 		<PermitIdentifier>AL1005932</PermitIdentifier>
 		<ResultCode>BP040</ResultCode>
 		<ResultTypeCode>Error</ResultTypeCode>
 		<ResultDescription>The permit transaction contains key data and no other data for processing..</ResultDescription>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
+	</SubmissionResult>
+	<SubmissionResult>
 		<SubmissionTypeName>GeneralPermitSubmission</SubmissionTypeName>
-		<TransactionTypeCode>C</TransactionTypeCode>
+		<TransactionType>C</TransactionType>
 		<PermitIdentifier>AL1005932</PermitIdentifier>
 		<ResultCode>BP040</ResultCode>
 		<ResultTypeCode>Error</ResultTypeCode>
 		<ResultDescription>The permit transaction contains key data and no other data for processing..</ResultDescription>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
+	</SubmissionResult>
+	<SubmissionResult>
 		<SubmissionTypeName>MasterGeneralPermitSubmission</SubmissionTypeName>
-		<TransactionTypeCode>R</TransactionTypeCode>
+		<TransactionType>R</TransactionType>
 		<PermitIdentifier>AL1005932</PermitIdentifier>
 		<ResultCode>MGP030</ResultCode>
 		<ResultTypeCode>Error</ResultTypeCode>
 		<ResultDescription>The Permit transaction contains key data and no other data for processing.</ResultDescription>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
+	</SubmissionResult>
+	<SubmissionResult>
 		<SubmissionTypeName>PermitTerminationSubmission</SubmissionTypeName>
-		<TransactionTypeCode>R</TransactionTypeCode>
+		<TransactionType>R</TransactionType>
 		<PermitIdentifier>AL1005932</PermitIdentifier>
 		<ResultCode>TRM030</ResultCode>
 		<ResultTypeCode>Error</ResultTypeCode>
 		<ResultDescription>A Permit does not exist for the key data entered.</ResultDescription>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
+	</SubmissionResult>
+	<SubmissionResult>
 		<SubmissionTypeName>PermitReissuanceSubmission</SubmissionTypeName>
-		<TransactionTypeCode>R</TransactionTypeCode>
+		<TransactionType>R</TransactionType>
 		<PermitIdentifier>AL1005932</PermitIdentifier>
 		<ResultCode>REI030</ResultCode>
 		<ResultTypeCode>Error</ResultTypeCode>
 		<ResultDescription>A Permit does not exist for the key data entered.</ResultDescription>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
-		<TransactionTypeCode>R</TransactionTypeCode>
+	</SubmissionResult>
+	<SubmissionResult>
+		<SubmissionTypeName>(Unrecognized)</SubmissionTypeName>
+		<TransactionType>R</TransactionType>
 		<PermitIdentifier>AL1005932</PermitIdentifier>
 		<ResultCode>BIO020</ResultCode>
 		<ResultTypeCode>Error</ResultTypeCode>
 		<ResultDescription>All data cannot be blank for a Biosolids Permit Component.</ResultDescription>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
-		<TransactionTypeCode>R</TransactionTypeCode>
+	</SubmissionResult>
+	<SubmissionResult>
+		<SubmissionTypeName>(Unrecognized)</SubmissionTypeName>
+		<TransactionType>R</TransactionType>
 		<PermitIdentifier>AL1005932</PermitIdentifier>
 		<ResultCode>CAF020</ResultCode>
 		<ResultTypeCode>Error</ResultTypeCode>
 		<ResultDescription>All data cannot be blank for a CAFO Permit Component.</ResultDescription>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
-		<TransactionTypeCode>R</TransactionTypeCode>
+	</SubmissionResult>
+	<SubmissionResult>
+		<SubmissionTypeName>(Unrecognized)</SubmissionTypeName>
+		<TransactionType>R</TransactionType>
 		<PermitIdentifier>AL1005932</PermitIdentifier>
 		<ResultCode>CSO040</ResultCode>
 		<ResultTypeCode>Error</ResultTypeCode>
 		<ResultDescription>Both asterisks and values were entered in the required tags Satellite Collection System Identifier and Satellite Collection System Name.  All asterisks or all values must be entered in the required tags.</ResultDescription>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
-		<TransactionTypeCode>R</TransactionTypeCode>
+	</SubmissionResult>
+	<SubmissionResult>
+		<SubmissionTypeName>(Unrecognized)</SubmissionTypeName>
+		<TransactionType>R</TransactionType>
 		<PermitIdentifier>AL1005932</PermitIdentifier>
 		<ResultCode>POT020</ResultCode>
 		<ResultTypeCode>Error</ResultTypeCode>
 		<ResultDescription>A POTW Permit Component cannot be added to this permit because Major Minor Rating Code has been entered for the permit.</ResultDescription>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
-		<TransactionTypeCode>R</TransactionTypeCode>
+	</SubmissionResult>
+	<SubmissionResult>
+		<SubmissionTypeName>(Unrecognized)</SubmissionTypeName>
+		<TransactionType>R</TransactionType>
 		<PermitIdentifier>AL1005932</PermitIdentifier>
 		<ResultCode>PRE020</ResultCode>
 		<ResultTypeCode>Error</ResultTypeCode>
 		<ResultDescription>Pretreatment Program Required Indicator Code must be entered for a Pretreatment Permit Component.</ResultDescription>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
-		<TransactionTypeCode>R</TransactionTypeCode>
+	</SubmissionResult>
+	<SubmissionResult>
+		<SubmissionTypeName>(Unrecognized)</SubmissionTypeName>
+		<TransactionType>R</TransactionType>
 		<PermitIdentifier>AL1005932</PermitIdentifier>
 		<ResultCode>SWC030</ResultCode>
 		<ResultTypeCode>Error</ResultTypeCode>
 		<ResultDescription>All data cannot be blank for a Storm Water Construction Permit Component.</ResultDescription>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
-		<TransactionTypeCode>R</TransactionTypeCode>
+	</SubmissionResult>
+	<SubmissionResult>
+		<SubmissionTypeName>(Unrecognized)</SubmissionTypeName>
+		<TransactionType>R</TransactionType>
 		<PermitIdentifier>AL1005932</PermitIdentifier>
 		<ResultCode>SWP030</ResultCode>
 		<ResultTypeCode>Error</ResultTypeCode>
 		<ResultDescription>Species Criterion Met Code must be entered because the Species Critical Habitat Indicator = Y.</ResultDescription>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
-		<TransactionTypeCode>R</TransactionTypeCode>
+	</SubmissionResult>
+	<SubmissionResult>
+		<SubmissionTypeName>(Unrecognized)</SubmissionTypeName>
+		<TransactionType>R</TransactionType>
 		<PermitIdentifier>AL1005932</PermitIdentifier>
 		<ResultCode>SWL030</ResultCode>
 		<ResultTypeCode>Error</ResultTypeCode>
 		<ResultDescription>Species Criterion Met Code must be entered because the Species Critical Habitat Indicator = Y.</ResultDescription>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
-	<SubmissionResults>
-		<TransactionTypeCode>R</TransactionTypeCode>
+	</SubmissionResult>
+	<SubmissionResult>
+		<SubmissionTypeName>(Unrecognized)</SubmissionTypeName>
+		<TransactionType>R</TransactionType>
 		<PermitIdentifier>AL1005932</PermitIdentifier>
 		<ResultCode>SWS020</ResultCode>
 		<ResultTypeCode>Error</ResultTypeCode>
 		<ResultDescription>All data cannot be blank for a Storm Water MS4 Small Permit Component.</ResultDescription>
 		<SubmissionTransactionId>asdf-1234-sefa-1234</SubmissionTransactionId>
-	</SubmissionResults>
+	</SubmissionResult>
 </SubmissionResultList>
