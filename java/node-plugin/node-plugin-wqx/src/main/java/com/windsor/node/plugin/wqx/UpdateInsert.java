@@ -5,9 +5,9 @@ import java.util.List;
 
 import com.windsor.node.common.domain.ServiceType;
 import com.windsor.node.plugin.common.xml.stream.ElementWriter;
+import com.windsor.node.plugin.wqx.domain.Header;
 import com.windsor.node.plugin.wqx.domain.OperationType;
 import com.windsor.node.plugin.wqx.domain.SubmissionHistory;
-import com.windsor.node.plugin.wqx.domain.Header;
 import com.windsor.node.plugin.wqx.domain.generated.ActivityDataType;
 import com.windsor.node.plugin.wqx.domain.generated.ActivityGroupDataType;
 import com.windsor.node.plugin.wqx.domain.generated.BiologicalHabitatIndexDataType;
@@ -42,7 +42,7 @@ public class UpdateInsert extends AbstractSubmittingWqxService {
     }
 
     @Override
-    protected ElementWriter getJaxbElementWriter(ScheduleParameters scheduleParameters, Header headerData) {
+    protected ElementWriter getJaxbElementWriter(final ScheduleParameters scheduleParameters, final Header headerData) {
         return new UpdateInsertXmlOutputStreamWriter(headerData);
     }
 
@@ -65,22 +65,22 @@ public class UpdateInsert extends AbstractSubmittingWqxService {
      *
      */
     @Override
-    protected List<List<?>> getSubmissionData(ScheduleParameters parameters) {
+    protected List<List<?>> getSubmissionData(final ScheduleParameters parameters) {
 
-        SubmissionHistory submissionHistory = getSubmissionHistoryDao().findLatestProcessed(parameters.getOrgId(), submissionType().operation());
+        final SubmissionHistory submissionHistory = getSubmissionHistoryDao().findLatestProcessed(parameters.getOrgId(), submissionType().operation());
 
-        OrganizationDataType org = getWqxDao().findOrganizationByOrgId(parameters.getOrgId());
+        final OrganizationDataType org = getWqxDao().findOrganizationByOrgId(parameters.getOrgId());
 
         if (org == null) {
             throw new RuntimeException("Unable to locate WQX_ORGANIZATION record for Org ID {" + parameters.getOrgId() + "}");
         }
 
-        List<List<?>> uberList = new ArrayList<List<?>>();
+        final List<List<?>> uberList = new ArrayList<List<?>>();
 
         /**
          * OrganizationDescriptionDataType
          */
-        List<OrganizationDescriptionDataType> description = new ArrayList<OrganizationDescriptionDataType>(1);
+        final List<OrganizationDescriptionDataType> description = new ArrayList<OrganizationDescriptionDataType>(1);
         description.add(org.getOrganizationDescription());
         uberList.add(description);
 
@@ -94,13 +94,13 @@ public class UpdateInsert extends AbstractSubmittingWqxService {
          * TelephonicDataType
          *
          */
-        uberList.add(org.getOrganizationAddress());
+        uberList.add(org.getTelephonic());
 
         /**
          * TelephonicDataType
          *
          */
-        uberList.add(org.getTelephonic());
+        uberList.add(org.getOrganizationAddress());
 
         /**
          * ProjectDataType
@@ -168,7 +168,7 @@ public class UpdateInsert extends AbstractSubmittingWqxService {
      * ActivityGroupDataType
      */
     @Override
-    protected void writeElement(ElementWriter writer, Object o) {
+    protected void writeElement(final ElementWriter writer, final Object o) {
 
         if (OrganizationDescriptionDataType.class.isAssignableFrom(o.getClass())) {
             writer.write( objectFactory.createOrganizationDescription((OrganizationDescriptionDataType)o));

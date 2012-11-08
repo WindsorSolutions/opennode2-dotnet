@@ -36,7 +36,7 @@ public abstract class AbstractWqxOutputStreamWriter extends ElementStreamWriter 
     protected abstract String operation();
 
     @Override
-    protected void onAfterOpen(XMLStreamWriter out) throws ElementWriterException {
+    protected void onAfterOpen(final XMLStreamWriter out) throws ElementWriterException {
 
         try {
 
@@ -72,7 +72,7 @@ public abstract class AbstractWqxOutputStreamWriter extends ElementStreamWriter 
                  */
                 out.writeStartElement(XmlConstants.NS_WQX_ENHEADER, "Payload");
 
-                out.writeAttribute(XmlConstants.NS_WQX_ENHEADER, "Operation", getOperation());
+                out.writeAttribute("Operation", getOperation());
 
             }
 
@@ -83,17 +83,17 @@ public abstract class AbstractWqxOutputStreamWriter extends ElementStreamWriter 
 
             writeWqxHeaderElement(out);
 
-        } catch (XMLStreamException e) {
+        } catch (final XMLStreamException e) {
             throw new ElementWriterException(e);
         }
     }
 
-    private void writeHeaderElement(XMLStreamWriter out, String element, String data) throws ElementWriterException {
+    private void writeHeaderElement(final XMLStreamWriter out, final String element, final String data) throws ElementWriterException {
         try {
             out.writeStartElement(XmlConstants.NS_WQX_ENHEADER, element);
             out.writeCharacters(data);
             out.writeEndElement();
-        } catch (XMLStreamException e) {
+        } catch (final XMLStreamException e) {
             throw new ElementWriterException(e);
         }
     }
