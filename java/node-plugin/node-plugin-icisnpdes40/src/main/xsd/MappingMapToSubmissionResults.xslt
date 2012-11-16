@@ -8,7 +8,7 @@ OVERWRITTEN WHEN YOU RE-RUN CODE GENERATION.
 Refer to the Altova MapForce Documentation for further details.
 http://www.altova.com/mapforce
 -->
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:vmf="http://www.altova.com/MapForce/UDF/vmf" xmlns:ns0="http://www.exchangenetwork.net/schema/icis/4" xmlns:xs="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="vmf ns0 xs">
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:vmf="http://www.altova.com/MapForce/UDF/vmf" xmlns="http://www.exchangenetwork.net/schema/icis/4" xmlns:ns0="http://www.exchangenetwork.net/schema/icis/4" xmlns:xs="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="vmf xs ns0">
     <xsl:template name="vmf:vmf1_inputtoresult">
         <xsl:param name="input" select="/.."/>
         <xsl:choose>
