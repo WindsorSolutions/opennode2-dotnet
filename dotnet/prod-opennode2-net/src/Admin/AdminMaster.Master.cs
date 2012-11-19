@@ -63,6 +63,8 @@ namespace Windsor.Node2008.Admin
 
             LOG = LogManager.GetLogger(Page.AppRelativeVirtualPath);
             LOG.Debug("Path: " + Page.AppRelativeVirtualPath);
+
+            Global.ForceNoIE9CompatibilityMode(this);
         }
         protected override void OnInitializeControls(EventArgs e)
         {

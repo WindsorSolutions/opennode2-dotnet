@@ -43,6 +43,7 @@ using System.Reflection;
 using Windsor.Commons.Core;
 using System.IO;
 using System.Diagnostics;
+using System.Web.UI.HtmlControls;
 
 namespace Windsor.Node2008.Admin
 {
@@ -113,6 +114,26 @@ namespace Windsor.Node2008.Admin
             {
             }
             return versionString;
+        }
+        public static bool IsBrowserIE
+        {
+            get
+            {
+                return HttpContext.Current.Request.Browser.Browser.Equals("IE", StringComparison.OrdinalIgnoreCase);
+            }
+        }
+        public static void ForceNoIE9CompatibilityMode(System.Web.UI.UserControl control)
+        {
+            if (IsBrowserIE)
+            {
+                //Meta tag to force IE9 out of compatability mode
+                HtmlMeta metaDescription = new HtmlMeta()
+                {
+                    HttpEquiv = "X-UA-Compatible",
+                    Content = "IE=9"
+                };
+                control.Page.Header.Controls.AddAt(0, metaDescription);
+            }
         }
     }
 }

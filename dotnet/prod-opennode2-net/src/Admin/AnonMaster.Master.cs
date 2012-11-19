@@ -56,6 +56,8 @@ namespace Windsor.Node2008.Admin
             base.OnInit(e);
             LOG = LogManager.GetLogger(Page.AppRelativeVirtualPath);
             LOG.Debug("Path: " + Page.AppRelativeVirtualPath);
+
+            Global.ForceNoIE9CompatibilityMode(this);
         }
     }
 }

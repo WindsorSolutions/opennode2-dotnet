@@ -30,7 +30,7 @@
 <body>
     <form id="form1" runat="server">
     <div id="mainWrapperDiv">
-        <asp:ScriptManager ID="ScriptManager1" runat="server" AsyncPostBackTimeout="600" />
+        <asp:ScriptManager ID="ScriptManager1" runat="server" AsyncPostBackTimeout="600" ScriptMode="Release" />
         <div id="titleArea">
             <div id="title">
                 <%=Page.Title%>

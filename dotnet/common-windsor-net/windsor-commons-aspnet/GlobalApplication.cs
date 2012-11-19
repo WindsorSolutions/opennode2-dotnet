@@ -116,7 +116,7 @@ namespace Windsor.Commons.AspNet
                     HttpEquiv = "X-UA-Compatible",
                     Content = "IE=9"
                 };
-                page.Header.Controls.Add(metaDescription);
+                page.Header.Controls.AddAt(0, metaDescription);
             }
         }
         public static Version ApplicationVersion
