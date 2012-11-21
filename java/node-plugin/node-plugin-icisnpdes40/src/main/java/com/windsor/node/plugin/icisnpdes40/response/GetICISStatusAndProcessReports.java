@@ -398,7 +398,7 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
          * Does this document already exist in the DB? We need to do this check
          * to avoid duplicate constraint violation.
          */
-        if (doc != null) {
+        if (doc == null) {
             document.setDocumentId(document.getId());
             transaction.getDocuments().add(document);
             getTransactionDao().save(transaction);
