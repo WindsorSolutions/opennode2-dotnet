@@ -19,12 +19,12 @@ public class JdbcIcisWorkflowDao extends JdbcDaoSupport implements IcisWorkflowD
     /**
      * Get a count of 'Pending' workflows.
      */
-    private static final String SQL_COUNT_PENDING_WORKFLOWS = "select count(*) from ics_subm_track where WORKFLOW_STAT = 'Pending'";
+    private static final String SQL_COUNT_PENDING_WORKFLOWS = "select count(*) from ICS_SUBM_TRACK where WORKFLOW_STAT = 'Pending'";
     
     /**
      * Select the 'Pending' workflow, there should only be one 'Pending' record.
      */
-    private static final String SQL_PENDING_WORKFLOWS = "select * from ics_subm_track where WORKFLOW_STAT = 'Pending'";
+    private static final String SQL_PENDING_WORKFLOWS = "select * from ICS_SUBM_TRACK where WORKFLOW_STAT = 'Pending'";
 
     private static final String SQL_LOAD_ICISWORKFLOW_BY_ID = "SELECT ICS_SUBM_TRACK_ID, ETL_CMPL_DATE_TIME, DET_CHANGE_CMPL_DATE_TIME,"
     		        + " SUBM_DATE_TIME, SUBM_TRANSACTION_ID, SUBM_TRANSACTION_STAT, SUBM_STAT_DATE_TIME, RSPN_PARSE_DATE_TIME, WORKFLOW_STAT,"
