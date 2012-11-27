@@ -283,7 +283,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_40
                 string tempFilePath = null;
                 try
                 {
-                    string notificationEmails = StringUtils.Join(";", _notificationEmails);
+                    string notificationEmails = StringUtils.Join(",", _notificationEmails);
 
                     AppendAuditLogEvent("Sending email notifications to {0} ...", StringUtils.JoinCommaEnglish(_notificationEmails));
 
@@ -441,6 +441,9 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_40
         {
             AppendAuditLogEvent("Loading request with id \"{0}\"", requestId);
             _dataRequest = _requestManager.GetDataRequest(requestId);
+
+            Windsor.Node2008.WNOSDomain.Document doc = new WNOSDomain.Document("Blah", CommonContentType.OTHER, new byte[10]);
+            DoEmailNotifications(doc, _dataRequest.TransactionId);
         }
         protected virtual string FindResponseZipFileName(IList<string> documentNames)
         {
