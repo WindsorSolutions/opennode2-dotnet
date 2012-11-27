@@ -441,9 +441,6 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_40
         {
             AppendAuditLogEvent("Loading request with id \"{0}\"", requestId);
             _dataRequest = _requestManager.GetDataRequest(requestId);
-
-            Windsor.Node2008.WNOSDomain.Document doc = new WNOSDomain.Document("Blah", CommonContentType.OTHER, new byte[10]);
-            DoEmailNotifications(doc, _dataRequest.TransactionId);
         }
         protected virtual string FindResponseZipFileName(IList<string> documentNames)
         {
