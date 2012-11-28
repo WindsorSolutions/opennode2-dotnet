@@ -34,7 +34,7 @@ POSSIBILITY OF SUCH DAMAGE.
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using Windsor.Node2008.WNOSPlugin;
-using Windsor.Node2008.WNOS.AssemblyInfo;
+using Windsor.Commons.AssemblyInfo;
 
 [assembly: AssemblyTitle("")]
 [assembly: AssemblyDescription("")]
@@ -43,7 +43,7 @@ using Windsor.Node2008.WNOS.AssemblyInfo;
 [assembly: AssemblyProduct(AssemblyInfo.cAssemblyProduct)]
 [assembly: AssemblyCopyright(AssemblyInfo.cAssemblyCopyright)]
 [assembly: AssemblyTrademark(AssemblyInfo.cAssemblyTrademark)]
-[assembly: AssemblyCulture("")]		
+[assembly: AssemblyCulture("")]
 [assembly: AssemblyDelaySign(false)]
 [assembly: AssemblyKeyFile("")]
 [assembly: AssemblyKeyName("")]

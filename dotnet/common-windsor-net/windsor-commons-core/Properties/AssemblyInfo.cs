@@ -31,9 +31,10 @@ POSSIBILITY OF SUCH DAMAGE.
 */
 #endregion
 
-﻿using System.Reflection;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Windsor.Commons.AssemblyInfo;
 
 // DO NOT EDIT THIS AssemblyInfo.cs: it will be replaced during build from AssemblyInfo.cs.template!
 
@@ -43,10 +44,10 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Windsor.Commons.Core")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Windsor Solutions, Inc.")]
-[assembly: AssemblyProduct("Windsor Commons")]
-[assembly: AssemblyCopyright("(c) 2008-2011 Windsor Solutions. All Rights Reserved.")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCompany(AssemblyInfo.cAssemblyCompany)]
+[assembly: AssemblyProduct(AssemblyInfo.cAssemblyProduct)]
+[assembly: AssemblyCopyright(AssemblyInfo.cAssemblyCopyright)]
+[assembly: AssemblyTrademark(AssemblyInfo.cAssemblyTrademark)]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
@@ -67,6 +68,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.0.0.0")]
-[assembly: AssemblyFileVersion("2.0.0.0")]
-[assembly: AssemblyInformationalVersion("abcdefghijkl")]
+[assembly: AssemblyVersion(AssemblyInfo.cAssemblyVersion)]
+[assembly: AssemblyFileVersion(AssemblyInfo.cAssemblyFileVersion)]

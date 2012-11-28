@@ -128,11 +128,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\..\common-windsor-net\windsor-commons-assemblyinfo\AssemblyInfo.cs">
+      <Link>AssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="..\..\plugins\Security\BulkAddUsersTaskProcessorConstants.cs">
       <Link>PluginRef\BulkAddUsersTaskProcessorConstants.cs</Link>
-    </Compile>
-    <Compile Include="..\AssemblyInfo\AssemblyInfo.cs">
-      <Link>AssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Data\AccountAuthorizationRequestDao.cs" />
     <Compile Include="Data\ActivityDao.cs" />

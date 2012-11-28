@@ -124,7 +124,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\src\AssemblyInfo\AssemblyInfo.cs">
+    <Compile Include="..\..\..\common-windsor-net\windsor-commons-assemblyinfo\AssemblyInfo.cs">
       <Link>AssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Data.cs">

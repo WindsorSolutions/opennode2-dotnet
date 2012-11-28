@@ -81,6 +81,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\windsor-commons-assemblyinfo\AssemblyInfo.cs">
+      <Link>AssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="AppDomainInstanceLoader.cs" />
     <Compile Include="AspNetUtils.cs" />
     <Compile Include="AssemblyUtils.cs" />

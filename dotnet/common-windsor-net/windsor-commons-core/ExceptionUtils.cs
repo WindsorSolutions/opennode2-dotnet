@@ -163,6 +163,17 @@ namespace Windsor.Commons.Core
             }
             return collection;
         }
+        public static IEnumerable<string> ThrowIfContainsNullOrEmptyStrings(IEnumerable<string> collection)
+        {
+            CollectionUtils.ForEach(collection, delegate(string value)
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    throw new NullReferenceException("The collection cannot contain any null or empty strings");
+                }
+            });
+            return collection;
+        }
         public static void ThrowIfDifferentLengths(params IEnumerable[] collections)
         {
             if (!CollectionUtils.HaveSameLengthsEx(collections))

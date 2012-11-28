@@ -31,8 +31,9 @@ POSSIBILITY OF SUCH DAMAGE.
 */
 #endregion
 
-﻿using System.Reflection;
+using System.Reflection;
 using System.Runtime.InteropServices;
+using Windsor.Commons.AssemblyInfo;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
@@ -40,10 +41,10 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Windsor.Commons.Logging")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Windsor Solutions, Inc.")]
-[assembly: AssemblyProduct("Windsor Commons")]
-[assembly: AssemblyCopyright("©  2008-2011 Windsor Solutions. All Rights Reserved.")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCompany(AssemblyInfo.cAssemblyCompany)]
+[assembly: AssemblyProduct(AssemblyInfo.cAssemblyProduct)]
+[assembly: AssemblyCopyright(AssemblyInfo.cAssemblyCopyright)]
+[assembly: AssemblyTrademark(AssemblyInfo.cAssemblyTrademark)]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
@@ -64,6 +65,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.1.0")]
-[assembly: AssemblyFileVersion("1.0.1.0")]
-[assembly: AssemblyInformationalVersion("abcdefghijkl")]
+[assembly: AssemblyVersion(AssemblyInfo.cAssemblyVersion)]
+[assembly: AssemblyFileVersion(AssemblyInfo.cAssemblyFileVersion)]

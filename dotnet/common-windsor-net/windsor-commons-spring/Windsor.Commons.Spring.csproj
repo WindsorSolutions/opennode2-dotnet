@@ -78,6 +78,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\windsor-commons-assemblyinfo\AssemblyInfo.cs">
+      <Link>AssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="ExposablePropertyPaceholderConfigurer.cs" />
     <Compile Include="LoggerBaseAroundAdviceLogger.cs" />
     <Compile Include="NamedNullMappingDataReader.cs" />

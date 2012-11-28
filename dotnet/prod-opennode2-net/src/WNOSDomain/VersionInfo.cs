@@ -64,29 +64,53 @@ namespace Windsor.Node2008.WNOSDomain
 
         public int MajorPart
         {
-            get { return _majorPart; }
-            set { _majorPart = value; }
+            get
+            {
+                return _majorPart;
+            }
+            set
+            {
+                _majorPart = value;
+            }
         }
         private int _minorPart;
 
         public int MinorPart
         {
-            get { return _minorPart; }
-            set { _minorPart = value; }
+            get
+            {
+                return _minorPart;
+            }
+            set
+            {
+                _minorPart = value;
+            }
         }
         private int _buildPart;
 
         public int BuildPart
         {
-            get { return _buildPart; }
-            set { _buildPart = value; }
+            get
+            {
+                return _buildPart;
+            }
+            set
+            {
+                _buildPart = value;
+            }
         }
         private int _privatePart;
 
         public int PrivatePart
         {
-            get { return _privatePart; }
-            set { _privatePart = value; }
+            get
+            {
+                return _privatePart;
+            }
+            set
+            {
+                _privatePart = value;
+            }
         }
         public string ToSortableString()
         {
@@ -94,7 +118,7 @@ namespace Windsor.Node2008.WNOSDomain
         }
         public static string ToSortableString(int major, int minor, int build, int privatePart)
         {
-            return string.Format("{0}.{1}.{2}.{3}", major.ToString("D5"), minor.ToString("D5"), 
+            return string.Format("{0}.{1}.{2}.{3}", major.ToString("D5"), minor.ToString("D5"),
                                  build.ToString("D5"), privatePart.ToString("D5"));
         }
         public static VersionInfo FromSortableString(string versionString)
@@ -131,18 +155,27 @@ namespace Windsor.Node2008.WNOSDomain
         }
         public int CompareTo(VersionInfo obj)
         {
-            if (Object.ReferenceEquals(obj, null)) return 1;
-            if (_majorPart < obj.MajorPart) return -1;
-            else if (_majorPart > obj.MajorPart) return 1;
+            if (Object.ReferenceEquals(obj, null))
+                return 1;
+            if (_majorPart < obj.MajorPart)
+                return -1;
+            else if (_majorPart > obj.MajorPart)
+                return 1;
 
-            if (_minorPart < obj.MinorPart) return -1;
-            else if (_minorPart > obj.MinorPart) return 1;
+            if (_minorPart < obj.MinorPart)
+                return -1;
+            else if (_minorPart > obj.MinorPart)
+                return 1;
 
-            if (_buildPart < obj.BuildPart) return -1;
-            else if (_buildPart > obj.BuildPart) return 1;
+            if (_buildPart < obj.BuildPart)
+                return -1;
+            else if (_buildPart > obj.BuildPart)
+                return 1;
 
-            if (_privatePart < obj.PrivatePart) return -1;
-            else if (_privatePart > obj.PrivatePart) return 1;
+            if (_privatePart < obj.PrivatePart)
+                return -1;
+            else if (_privatePart > obj.PrivatePart)
+                return 1;
 
             return 0;
         }
@@ -152,7 +185,8 @@ namespace Windsor.Node2008.WNOSDomain
         }
         public bool Equals(VersionInfo obj)
         {
-            if (Object.ReferenceEquals(obj, null)) return false;
+            if (Object.ReferenceEquals(obj, null))
+                return false;
 
             return (this.CompareTo(obj) == 0);
         }
@@ -162,8 +196,10 @@ namespace Windsor.Node2008.WNOSDomain
         }
         public static bool operator ==(VersionInfo a, VersionInfo b)
         {
-            if (Object.ReferenceEquals(a, null) && Object.ReferenceEquals(b, null)) return true;
-            if (Object.ReferenceEquals(a, null) || Object.ReferenceEquals(b, null)) return false;
+            if (Object.ReferenceEquals(a, null) && Object.ReferenceEquals(b, null))
+                return true;
+            if (Object.ReferenceEquals(a, null) || Object.ReferenceEquals(b, null))
+                return false;
             return a.Equals(b);
         }
         public static bool operator !=(VersionInfo a, VersionInfo b)
@@ -172,22 +208,26 @@ namespace Windsor.Node2008.WNOSDomain
         }
         public static bool operator >(VersionInfo a, VersionInfo b)
         {
-            if (Object.ReferenceEquals(a, null)) return false;
+            if (Object.ReferenceEquals(a, null))
+                return false;
             return (a.CompareTo(b) > 0);
         }
         public static bool operator <(VersionInfo a, VersionInfo b)
         {
-            if (Object.ReferenceEquals(a, null)) return (!Object.ReferenceEquals(b, null));
+            if (Object.ReferenceEquals(a, null))
+                return (!Object.ReferenceEquals(b, null));
             return (a.CompareTo(b) < 0);
         }
         public static bool operator >=(VersionInfo a, VersionInfo b)
         {
-            if (Object.ReferenceEquals(a, null)) return (Object.ReferenceEquals(b, null));
+            if (Object.ReferenceEquals(a, null))
+                return (Object.ReferenceEquals(b, null));
             return (a.CompareTo(b) >= 0);
         }
         public static bool operator <=(VersionInfo a, VersionInfo b)
         {
-            if (Object.ReferenceEquals(a, null)) return true;
+            if (Object.ReferenceEquals(a, null))
+                return true;
             return (a.CompareTo(b) <= 0);
         }
         public static string NodeVersionString
@@ -197,8 +237,8 @@ namespace Windsor.Node2008.WNOSDomain
                 string versionString = string.Empty;
                 try
                 {
-                    versionString = string.Format("{0} .NET v{1}", Windsor.Node2008.WNOS.AssemblyInfo.AssemblyInfo.cAssemblyProduct,
-                                                  Windsor.Node2008.WNOS.AssemblyInfo.AssemblyInfo.cAssemblyVersion);
+                    versionString = string.Format("{0} .NET v{1}", Windsor.Commons.AssemblyInfo.AssemblyInfo.cAssemblyProduct,
+                                                  Windsor.Commons.AssemblyInfo.AssemblyInfo.cAssemblyVersion);
                 }
                 catch (Exception)
                 {

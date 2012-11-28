@@ -37,28 +37,28 @@ using System.Text;
 
 namespace Windsor.Commons.AssemblyInfo
 {
-	/// <summary>
-	/// Include a reference to this assembly in your project, then use the 
-	/// constants defined in this file within the AssemblyInfo.cs file for your project.
-	/// </summary>
+    /// <summary>
+    /// Include a reference to this assembly in your project, then use the 
+    /// constants defined in this file within the AssemblyInfo.cs file for your project.
+    /// </summary>
     internal static class AssemblyInfo
-	{
-		// [assembly: AssemblyVersion(AssemblyInfoServer.cAssemblyVersion)]
-        public const string cAssemblyVersion = "2.0.0.$REVNUM$";
-		
-		// [assembly: AssemblyFileVersion(AssemblyInfoServer.cAssemblyFileVersion)]
+    {
+        // [assembly: AssemblyVersion(AssemblyInfoServer.cAssemblyVersion)]
+        public const string cAssemblyVersion = "2.5.3.$WCREV$";
+
+        // [assembly: AssemblyFileVersion(AssemblyInfoServer.cAssemblyFileVersion)]
         public const string cAssemblyFileVersion = cAssemblyVersion;
 
-		// [assembly: AssemblyCompany(AssemblyInfoServer.cAssemblyCompany)]
-		public const string cAssemblyCompany = "Windsor Solutions, Inc."; 
+        // [assembly: AssemblyCompany(AssemblyInfoServer.cAssemblyCompany)]
+        public const string cAssemblyCompany = "Windsor Solutions, Inc.";
 
-		// [assembly: AssemblyProduct(AssemblyInfoServer.cAssemblyProduct)]
-        public const string cAssemblyProduct = "Windsor Commons"; 
+        // [assembly: AssemblyProduct(AssemblyInfoServer.cAssemblyProduct)]
+        public const string cAssemblyProduct = "OpenNode2";
 
-		// [assembly: AssemblyCopyright(AssemblyInfoServer.cAssemblyCopyright)]
-        public const string cAssemblyCopyright = "(c) 2008-2011 Windsor Solutions. All Rights Reserved."; 
-		
-		// [assembly: AssemblyTrademark(AssemblyInfoServer.cAssemblyTrademark)]
-		public const string cAssemblyTrademark = "";
-	}
+        // [assembly: AssemblyCopyright(AssemblyInfoServer.cAssemblyCopyright)]
+        public const string cAssemblyCopyright = "(c) 2008-2012 Windsor Solutions. All Rights Reserved.";
+
+        // [assembly: AssemblyTrademark(AssemblyInfoServer.cAssemblyTrademark)]
+        public const string cAssemblyTrademark = "";
+    }
 }

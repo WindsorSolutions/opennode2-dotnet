@@ -127,12 +127,14 @@ namespace CopyPlugins
                 DotNetZipHelper zipHelper = new DotNetZipHelper();
                 string pluginParentDir = Path.GetDirectoryName(Path.GetDirectoryName(dllPluginPath));
                 string zipFilePath = Path.Combine(PackagesFolderPath, flowName + "_Plugin.zip");
-                if (File.Exists(zipFilePath)) File.Delete(zipFilePath);
+                if (File.Exists(zipFilePath))
+                    File.Delete(zipFilePath);
                 string versionMinusSvnVersion = fileVersion.Substring(0, fileVersion.LastIndexOf('.'));
                 string packageFileName = string.Format("DotNET {0} Plugin v{1}.zip", packageName, versionMinusSvnVersion);
                 packageFileName = AdjustDeploymentName(packageFileName);
                 string packageFilePath = Path.Combine(PackagesFolderPath, packageFileName);
-                if (File.Exists(packageFilePath)) File.Delete(packageFilePath);
+                if (File.Exists(packageFilePath))
+                    File.Delete(packageFilePath);
                 try
                 {
                     zipHelper.CompressFiles(zipFilePath, new string[] { dllPluginPath, pdbPluginPath });
@@ -300,9 +302,9 @@ namespace CopyPlugins
         }
         static void BuildDeployPackage()
         {
-            string versionMinusSvnVersion = 
-                Windsor.Node2008.WNOS.AssemblyInfo.AssemblyInfo.cAssemblyVersion.Substring(0,
-                Windsor.Node2008.WNOS.AssemblyInfo.AssemblyInfo.cAssemblyVersion.LastIndexOf('.'));
+            string versionMinusSvnVersion =
+                Windsor.Commons.AssemblyInfo.AssemblyInfo.cAssemblyVersion.Substring(0,
+                Windsor.Commons.AssemblyInfo.AssemblyInfo.cAssemblyVersion.LastIndexOf('.'));
             string zipFile = Path.Combine(PackagesFolderPath, "DotNET OpenNode2 v" +
                 versionMinusSvnVersion + ".zip");
             zipFile = AdjustDeploymentName(zipFile);

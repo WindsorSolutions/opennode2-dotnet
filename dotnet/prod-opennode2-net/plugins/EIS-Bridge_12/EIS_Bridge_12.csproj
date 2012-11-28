@@ -85,7 +85,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\src\AssemblyInfo\AssemblyInfo.cs">
+    <Compile Include="..\..\..\common-windsor-net\windsor-commons-assemblyinfo\AssemblyInfo.cs">
       <Link>AssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="..\CERS_12\xml_schema\CERS_v1_2.cs">

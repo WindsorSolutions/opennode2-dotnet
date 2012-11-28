@@ -90,12 +90,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\AssemblyInfo\AssemblyInfo.cs">
+    <Compile Include="..\..\..\common-windsor-net\windsor-commons-assemblyinfo\AssemblyInfo.cs">
       <Link>AssemblyInfo.cs</Link>
     </Compile>
-    <None Include="..\AssemblyInfo\_AssemblyInfo.cs">
-      <Link>_AssemblyInfo.cs</Link>
-    </None>
     <Compile Include="IdProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WNOSLoggingUtils.cs" />
@@ -141,6 +138,6 @@
   <Target Name="AfterBuild">
   </Target>
   <PropertyGroup>
-    <PreBuildEvent>IF EXIST $(ProjectDir)..\..\..\.svn SubWCRev $(ProjectDir)..\..\..\ $(ProjectDir)..\AssemblyInfo\_AssemblyInfo.cs $(ProjectDir)..\AssemblyInfo\AssemblyInfo.cs</PreBuildEvent>
+    <PreBuildEvent>REM IF EXIST $(ProjectDir)..\..\..\.svn SubWCRev $(ProjectDir)..\..\..\ $(ProjectDir)..\AssemblyInfo\_AssemblyInfo.cs $(ProjectDir)..\AssemblyInfo\AssemblyInfo.cs</PreBuildEvent>
   </PropertyGroup>
 </Project>

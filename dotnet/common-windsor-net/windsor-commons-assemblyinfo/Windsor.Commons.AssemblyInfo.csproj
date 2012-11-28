@@ -74,10 +74,11 @@
     </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <UsingTask TaskName="HgVersionFile" AssemblyFile="..\lib\MSBuildVersioning.dll" />
   <Target Name="BeforeBuild">
-    <HgVersionFile TemplateFile=".\_AssemblyInfo.cs" DestinationFile=".\AssemblyInfo.cs" />
   </Target>
   <Target Name="AfterBuild">
   </Target>
+  <PropertyGroup>
+    <PreBuildEvent>IF EXIST $(ProjectDir)..\..\.svn SubWCRev $(ProjectDir)..\..\ $(ProjectDir)_AssemblyInfo.cs $(ProjectDir)AssemblyInfo.cs</PreBuildEvent>
+  </PropertyGroup>
 </Project>

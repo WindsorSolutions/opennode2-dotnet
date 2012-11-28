@@ -417,7 +417,7 @@ namespace Windsor.Node2008.WNOS.Logic
                                                     string emailAddresses)
         {
             SendNotificationsPriv(flowName, status.Id, emailAddresses, RemoteTransactionStatusKey, _remoteTransactionStatusSubjectLine,
-                                  (Stream)null, (string)null, 
+                                  (Stream)null, (string)null,
                                   new string[] { DateTime.Now.ToString(), status.Id.ToString(),
                                   status.Status.ToString(), AdminInterfaceUrl, status.Id.ToString() });
         }
@@ -462,7 +462,7 @@ namespace Windsor.Node2008.WNOS.Logic
             {
                 return;
             }
-            Activity activity = 
+            Activity activity =
                 new Activity(NodeMethod.None, flowName, null, ActivityType.Info, transactionId, null, null);
             try
             {
@@ -476,7 +476,7 @@ namespace Windsor.Node2008.WNOS.Logic
                     messageBody = string.Format(messageBody, args);
                 }
                 using (MailMessage msg = new MailMessage(FromEmailAddress,
-														 toEmailAddresses,
+                                                         toEmailAddresses,
                                                          subject, messageBody))
                 {
                     msg.IsBodyHtml = true;
@@ -489,7 +489,8 @@ namespace Windsor.Node2008.WNOS.Logic
                     //SaveMailMessage(msg);
 
                     int retryCount = 3;
-                    do {
+                    do
+                    {
                         try
                         {
                             SmtpClient smtpClient = new SmtpClient(SmtpHost, SmtpPort);
@@ -520,7 +521,7 @@ namespace Windsor.Node2008.WNOS.Logic
                                 throw;
                             }
                         }
-                    } while ( --retryCount > 0 );
+                    } while (--retryCount > 0);
                 }
                 activity.AppendFormat("Successfully sent \"{0}\" email notification to \"{1}\"",
                                       notificationKey, toEmailAddresses);
@@ -573,25 +574,49 @@ namespace Windsor.Node2008.WNOS.Logic
         }
         public string ChangePasswordSubjectLine
         {
-            get { return _changePasswordSubjectLine; }
-            set { _changePasswordSubjectLine = value; }
+            get
+            {
+                return _changePasswordSubjectLine;
+            }
+            set
+            {
+                _changePasswordSubjectLine = value;
+            }
         }
         public string ScheduleSubjectLine
         {
-            get { return _scheduleSubjectLine; }
-            set { _scheduleSubjectLine = value; }
+            get
+            {
+                return _scheduleSubjectLine;
+            }
+            set
+            {
+                _scheduleSubjectLine = value;
+            }
         }
 
         public string ExecuteSubjectLine
         {
-            get { return _executeSubjectLine; }
-            set { _executeSubjectLine = value; }
+            get
+            {
+                return _executeSubjectLine;
+            }
+            set
+            {
+                _executeSubjectLine = value;
+            }
         }
 
         public string NotifySubjectLine
         {
-            get { return _notifySubjectLine; }
-            set { _notifySubjectLine = value; }
+            get
+            {
+                return _notifySubjectLine;
+            }
+            set
+            {
+                _notifySubjectLine = value;
+            }
         }
 
         public string SolicitSubjectLine
@@ -667,18 +692,36 @@ namespace Windsor.Node2008.WNOS.Logic
         }
         public string NewNaasUserSubjectLine
         {
-            get { return _newNaasUserSubjectLine; }
-            set { _newNaasUserSubjectLine = value; }
+            get
+            {
+                return _newNaasUserSubjectLine;
+            }
+            set
+            {
+                _newNaasUserSubjectLine = value;
+            }
         }
         public string NewNodeUserSubjectLine
         {
-            get { return _newNodeUserSubjectLine; }
-            set { _newNodeUserSubjectLine = value; }
+            get
+            {
+                return _newNodeUserSubjectLine;
+            }
+            set
+            {
+                _newNodeUserSubjectLine = value;
+            }
         }
         public string RemoteTransactionStatusSubjectLine
         {
-            get { return _remoteTransactionStatusSubjectLine; }
-            set { _remoteTransactionStatusSubjectLine = value; }
+            get
+            {
+                return _remoteTransactionStatusSubjectLine;
+            }
+            set
+            {
+                _remoteTransactionStatusSubjectLine = value;
+            }
         }
 
 
@@ -720,33 +763,69 @@ namespace Windsor.Node2008.WNOS.Logic
 
         public int SmtpPort
         {
-            get { return _smtpPort; }
-            set { _smtpPort = value; }
+            get
+            {
+                return _smtpPort;
+            }
+            set
+            {
+                _smtpPort = value;
+            }
         }
         public string SmtpHost
         {
-            get { return _smtpHost; }
-            set { _smtpHost = value; }
+            get
+            {
+                return _smtpHost;
+            }
+            set
+            {
+                _smtpHost = value;
+            }
         }
         public SmtpDeliveryMethod DeliveryMethod
         {
-            get { return _deliveryMethod; }
-            set { _deliveryMethod = value; }
+            get
+            {
+                return _deliveryMethod;
+            }
+            set
+            {
+                _deliveryMethod = value;
+            }
         }
         public bool SmtpEnableSsl
         {
-            get { return _smtpEnableSsl; }
-            set { _smtpEnableSsl = value; }
+            get
+            {
+                return _smtpEnableSsl;
+            }
+            set
+            {
+                _smtpEnableSsl = value;
+            }
         }
         public string SmtpUsername
         {
-            get { return _smtpUsername; }
-            set { _smtpUsername = value; }
+            get
+            {
+                return _smtpUsername;
+            }
+            set
+            {
+                _smtpUsername = value;
+            }
         }
         public string SmtpPassword
         {
-            get { return _smtpPassword; }
-            set { _smtpPassword = value; }
+            get
+            {
+                return _smtpPassword;
+            }
+            set
+            {
+                _smtpPassword = value;
+            }
         }
         public IFlowDao FlowDao
         {
@@ -761,8 +840,14 @@ namespace Windsor.Node2008.WNOS.Logic
         }
         public string AdminInterfaceUrl
         {
-            get { return _adminInterfaceUrl; }
-            set { _adminInterfaceUrl = value; }
+            get
+            {
+                return _adminInterfaceUrl;
+            }
+            set
+            {
+                _adminInterfaceUrl = value;
+            }
         }
 
         public NotificationManager()

@@ -69,7 +69,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\src\AssemblyInfo\AssemblyInfo.cs">
+    <Compile Include="..\..\..\common-windsor-net\windsor-commons-assemblyinfo\AssemblyInfo.cs">
       <Link>AssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="..\AQS2\AQSCommonUtils.cs">

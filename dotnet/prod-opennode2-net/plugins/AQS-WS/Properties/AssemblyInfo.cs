@@ -31,11 +31,11 @@ POSSIBILITY OF SUCH DAMAGE.
 */
 #endregion
 
-﻿using System.Reflection;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Windsor.Node2008.WNOSPlugin;
-using Windsor.Node2008.WNOS.AssemblyInfo;
+using Windsor.Commons.AssemblyInfo;
 
 [assembly: AssemblyTitle("AQS-WS")]
 [assembly: AssemblyDescription("")]

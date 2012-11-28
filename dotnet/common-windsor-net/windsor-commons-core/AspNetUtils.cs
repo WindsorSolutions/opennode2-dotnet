@@ -93,6 +93,26 @@ namespace Windsor.Commons.Core
             }
             return null;
         }
+        public static T FindDeepControlWithClass<T>(Control parent, string cssClassName) where T : WebControl
+        {
+            foreach (Control control in parent.Controls)
+            {
+                T controlT = control as T;
+                if (controlT != null)
+                {
+                    if (controlT.CssClass == cssClassName)
+                    {
+                        return controlT;
+                    }
+                }
+                T foundControl = FindDeepControl<T>(control);
+                if (foundControl != null)
+                {
+                    return foundControl;
+                }
+            }
+            return null;
+        }
         public static T FindDeepControl<T>(Control parent, string id) where T : class
         {
             return FindDeepControl(parent, id) as T;

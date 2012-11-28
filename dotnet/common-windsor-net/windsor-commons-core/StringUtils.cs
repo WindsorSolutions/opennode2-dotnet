@@ -88,12 +88,19 @@ namespace Windsor.Commons.Core
         /// </summary>
         public static string JoinCommaEnglish<T>(IEnumerable<T> values)
         {
-            if (values == null)
+            return JoinCommaEnglish<T>(values, false);
+        }
+        /// <summary>
+        /// Join the input string values using a comma separator and English grammar.
+        /// </summary>
+        public static string JoinCommaEnglish<T>(IEnumerable<T> values, bool encloseValuesInQuotes)
+        {
+            if (CollectionUtils.IsNullOrEmpty(values))
             {
                 return string.Empty;
             }
             int numValues = CollectionUtils.Count(values);
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder(encloseValuesInQuotes ? "\"" : string.Empty);
             int currentIndex = 0;
             foreach (T value in values)
             {
@@ -101,15 +108,36 @@ namespace Windsor.Commons.Core
                 {
                     if (numValues == 2)
                     {
-                        sb.Append(" and ");
+                        if (encloseValuesInQuotes)
+                        {
+                            sb.Append("\" and \"");
+                        }
+                        else
+                        {
+                            sb.Append(" and ");
+                        }
                     }
                     else if (currentIndex == (numValues - 1))
                     {
-                        sb.Append(", and ");
+                        if (encloseValuesInQuotes)
+                        {
+                            sb.Append(",\" and \"");
+                        }
+                        else
+                        {
+                            sb.Append(", and ");
+                        }
                     }
                     else
                     {
-                        sb.Append(", ");
+                        if (encloseValuesInQuotes)
+                        {
+                            sb.Append(",\" \"");
+                        }
+                        else
+                        {
+                            sb.Append(", ");
+                        }
                     }
                 }
                 if (value != null)
@@ -121,6 +149,10 @@ namespace Windsor.Commons.Core
                     sb.Append(string.Empty);
                 }
                 ++currentIndex;
+            }
+            if (encloseValuesInQuotes)
+            {
+                sb.Append("\"");
             }
             return sb.ToString();
         }
@@ -157,7 +189,7 @@ namespace Windsor.Commons.Core
             }
             text = text.Trim();
             int curIndex = 0;
-            foreach(char curChar in text)
+            foreach (char curChar in text)
             {
                 if (char.IsWhiteSpace(curChar) || char.IsPunctuation(curChar))
                 {
@@ -548,7 +580,7 @@ namespace Windsor.Commons.Core
                 return rtnList;
             }
             int currentIndex = 0;
-            while(currentIndex < stringToSplit.Length)
+            while (currentIndex < stringToSplit.Length)
             {
                 int index = stringToSplit.IndexOf(separator, currentIndex, stringComparison);
                 int length;
