@@ -13,12 +13,13 @@ namespace Windsor.Commons.AspNet.WebApi.Helpers
     {
         private const string BasicAuthResponseHeaderValue = "Basic";
 
-        public static bool ParseAuthorizationHeader(HttpRequestMessage request, out string username, out string password)
+        public static bool ParseAuthorizationHeader(this HttpRequestMessage request, out string username, out string password)
         {
             username = password = null;
 
             AuthenticationHeaderValue authValue = request.Headers.Authorization;
-            if ((authValue != null) && !String.IsNullOrWhiteSpace(authValue.Parameter))
+            if ((authValue != null) && !String.IsNullOrWhiteSpace(authValue.Parameter) &&
+                string.Equals(authValue.Scheme, BasicAuthResponseHeaderValue, StringComparison.OrdinalIgnoreCase))
             {
                 string authValueParameter = Encoding.ASCII.GetString(Convert.FromBase64String(authValue.Parameter));
 
@@ -33,7 +34,7 @@ namespace Windsor.Commons.AspNet.WebApi.Helpers
             }
             return false;
         }
-        public static HttpActionContext CreateUnauthorizedResponse(HttpActionContext actionContext, string messageFormat = null, params object[] args)
+        public static HttpActionContext CreateUnauthorizedResponse(this HttpActionContext actionContext, string messageFormat = null, params object[] args)
         {
             HttpResponseHelper.CreateErrorResponse(actionContext, HttpStatusCode.Unauthorized, "Authorization required", messageFormat, args);
             actionContext.Response.Headers.WwwAuthenticate.Add(new AuthenticationHeaderValue(BasicAuthResponseHeaderValue));

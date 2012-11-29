@@ -12,16 +12,16 @@ namespace Windsor.Commons.AspNet.WebApi.Helpers
 {
     public static class HttpResponseHelper
     {
-        public static HttpActionContext CreateBadRequestResponse(HttpActionContext actionContext, string messageFormat = null, params object[] args)
+        public static HttpActionContext CreateBadRequestResponse(this HttpActionContext actionContext, string messageFormat = null, params object[] args)
         {
             return CreateErrorResponse(actionContext, HttpStatusCode.BadRequest, "Bad request", messageFormat, args);
         }
-        public static HttpActionContext CreateBadRequestResponse(HttpActionContext actionContext, ModelStateDictionary modelState, params object[] args)
+        public static HttpActionContext CreateBadRequestResponse(this HttpActionContext actionContext, ModelStateDictionary modelState, params object[] args)
         {
             actionContext.Response = actionContext.Request.CreateErrorResponse(HttpStatusCode.BadRequest, modelState);
             return actionContext;
         }
-        public static HttpActionContext CreateErrorResponse(HttpActionContext actionContext, HttpStatusCode code, string defaultMessage,
+        public static HttpActionContext CreateErrorResponse(this HttpActionContext actionContext, HttpStatusCode code, string defaultMessage,
                                                             string messageFormat = null, params object[] args)
         {
             string message = MakeMessage(defaultMessage, messageFormat, args);
