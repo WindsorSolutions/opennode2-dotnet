@@ -38,7 +38,7 @@ using Windsor.Commons.AssemblyInfo;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Windsor.Commons.AspNet.Mvc")]
+[assembly: AssemblyTitle("Windsor.Commons.AspNet.WebApi")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany(AssemblyInfo.cAssemblyCompany)]
@@ -53,7 +53,7 @@ using Windsor.Commons.AssemblyInfo;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("38641EC4-6894-4883-B514-3226DD85C34F")]
+[assembly: Guid("7EFADC95-7EE5-45EC-9BEF-E0CBECCCCE90")]
 
 // Version information for an assembly consists of the following four values:
 //
