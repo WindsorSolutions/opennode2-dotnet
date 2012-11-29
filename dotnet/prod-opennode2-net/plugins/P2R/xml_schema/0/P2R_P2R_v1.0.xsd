@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:P2R="http://www.exchangenetwork.net/schema/P2R/1" targetNamespace="http://www.exchangenetwork.net/schema/P2R/1" elementFormDefault="unqualified" attributeFormDefault="qualified" version="1.0">
+	<xsd:include schemaLocation="P2R_ProgramDetail_v1.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name : 					P2R_P2R_v1.0.xsd 
+		Current Version Available At :			http://www.exchangenetwork.net
+		Description : 					This schema defines the data elements to be shared through the Pollution Prevention Data Exchange
+								related to the project information.
+		Application : 					Pollution Prevention Results Data Exchange 
+		Developed by : 	 				Pacific Northwest Pollution Prevention Resource Center, Colorado Department of Public Health and Environment
+		Point of Contact : 				Prabin Kanel (prabink@gmail.com)
+								Bill Rensmith (bill_rensmith@windsorsolutions.com)
+								Andrew Putnam (andrew.putnam@state.co.us)	
+	</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="ProgramList" type="P2R:ProgramListType"/>
+	<xsd:complexType name="ProgramListType">
+		<xsd:sequence>
+			<xsd:element ref="P2R:ProgramDetails" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

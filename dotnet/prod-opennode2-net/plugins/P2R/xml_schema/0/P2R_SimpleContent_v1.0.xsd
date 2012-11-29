@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:P2R="http://www.exchangenetwork.net/schema/P2R/1" targetNamespace="http://www.exchangenetwork.net/schema/P2R/1" elementFormDefault="unqualified" attributeFormDefault="qualified" version="1.0">
+	<xsd:include schemaLocation="SC_SimpleContent_v2.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name : 					P2R_SimpleContent_v1.0.xsd
+		Current Version Available At :			http://www.exchangenetwork.net
+		Description : 					This schema defines the elements with simple content for the P2RDX exchabge.
+		Application : 					Pollution Prevention Results Data Exchange 
+		Developed by : 	 				Pacific Northwest Pollution Prevention Resource Center, Colorado Department of Public Health and Environment
+		Point of Contact : 				Prabin Kanel (prabink@gmail.com)
+								Bill Rensmith (bill_rensmith@windsorsolutions.com)
+								Andrew Putnam (andrew.putnam@state.co.us)	
+	</xsd:documentation>
+	</xsd:annotation>
+	<!-- START ENUMERATED DATA TYPE DECLARATIONS -->
+	<xsd:simpleType name="UnitOfMeasureDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Dollars/Year"/>
+			<xsd:enumeration value="Pounds/Year"/>
+			<xsd:enumeration value="Tons/Year"/>
+			<xsd:enumeration value="Gallons"/>
+			<xsd:enumeration value="Kilowatt hours/Year"/>
+			<xsd:enumeration value="Therms/Year"/>
+			<xsd:enumeration value="Miles/Year"/>
+			<xsd:enumeration value="Gallons/Year"/>
+			<xsd:enumeration value="Number of Clients"/>
+			<xsd:enumeration value="Number of Suggestions"/>
+			<xsd:enumeration value="Number of Attendees"/>
+			<xsd:enumeration value="Number of facilities participating in P2 planning"/>
+			<xsd:enumeration value="Number of Visits"/>
+			<xsd:enumeration value="Total Site Visit Hours"/>
+			<xsd:enumeration value="Number of reponses"/>
+			<xsd:enumeration value="Number of Unique documents developed"/>
+			<xsd:enumeration value="Number of Grants awarded"/>
+			<xsd:enumeration value="Total amount of grant, including match"/>
+			<xsd:enumeration value="User Sessions"/>
+			<xsd:enumeration value="Page Views (Page impressions)"/>
+			<xsd:enumeration value="Number of Applications"/>
+			<xsd:enumeration value="Number of Participants"/>
+			<xsd:enumeration value="Dollars"/>
+			<xsd:enumeration value="Number of People"/>
+			<xsd:enumeration value="Number of Documents Distributed"/>
+			<xsd:enumeration value="Kilowatt hour Equivalent/Year"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MetricTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Dollars"/>
+			<xsd:enumeration value="Materials Reduced"/>
+			<xsd:enumeration value="Hazardous Materials Reduced"/>
+			<xsd:enumeration value="Hazardous Waste Reduced"/>
+			<xsd:enumeration value="Air Emissions Reduced"/>
+			<xsd:enumeration value="Solid Waste Reduced"/>
+			<xsd:enumeration value="Energy Reduced"/>
+			<xsd:enumeration value="Energy Generated"/>
+			<xsd:enumeration value="Energy Purchased"/>
+			<xsd:enumeration value="Gallons of Water Reduced"/>
+			<xsd:enumeration value="Pounds Reduced"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ScopeAreaTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Region"/>
+			<xsd:enumeration value="State"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SectorTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Non Indicated"/>
+			<xsd:enumeration value="Agriculture"/>
+			<xsd:enumeration value="Commercial/Business"/>
+			<xsd:enumeration value="Healthcare"/>
+			<xsd:enumeration value="Industy/Manufacturing"/>
+			<xsd:enumeration value="Instituition"/>
+			<xsd:enumeration value="Materials Extraction"/>
+			<xsd:enumeration value="Non-profit Organization"/>
+			<xsd:enumeration value="Public Agency"/>
+			<xsd:enumeration value="Service"/>
+			<xsd:enumeration value="Tribe"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- END ENUMERATED DATA TYPES -->
+	<!-- START NON-ENUMERATED DATA TYPES -->
+	<xsd:simpleType name="MeasureIdentifierDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="10"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeasureNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="255"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeasureDefinitionDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="1000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeasureIntegerValueDataType">
+		<xsd:restriction base="xsd:integer"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeasureDecimalValueDataType">
+		<xsd:restriction base="xsd:decimal"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="OutcomeMeasuresRecurringYearDataType">
+		<xsd:restriction base="xsd:integer"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="ProgramIdenfierDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="120"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ProgramDescriptionDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="1000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ProjectIdentifierDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="120"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ProjectNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="255"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ProjectDescriptionDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="1000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ProjectDateDataType">
+		<xsd:restriction base="xsd:date"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="MediaTypeTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="1000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- END NON-ENUMERATED DATA TYPE DECLARATIONS -->
+	<!-- START ELEMENT DECLARATIONS -->
+	<xsd:element name="ProgramContactPerson" type="P2R:IndividualFullNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Contact Person Name for a Given Program</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ActivityMeasureIdentifier" type="P2R:MeasureIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>Unique Idenfier of the Activity Measure</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ActivityMeasureName" type="P2R:MeasureNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Name of the Activity Measure</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ActivityMeasureDefinition" type="P2R:MeasureDefinitionDataType">
+		<xsd:annotation>
+			<xsd:documentation>Description of the Activity Measure</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="P2RMeasureValue" type="P2R:MeasureIntegerValueDataType">
+		<xsd:annotation>
+			<xsd:documentation>
+				Measurement value of the Activity Measure or Behavioral Changes associated with project
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OutcomeMeasureIdentifier" type="P2R:MeasureIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>Unique Idenfier for the Outcome Measure</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OutcomeMeasureName" type="P2R:MeasureNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Name for Outcome Measure</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OutcomeMeasureDefinition" type="P2R:MeasureDefinitionDataType">
+		<xsd:annotation>
+			<xsd:documentation>Definition for Outcome Measure</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OutcomeMeasureResultValue" type="P2R:MeasureDecimalValueDataType">
+		<xsd:annotation>
+			<xsd:documentation>Value of Outcome Measure associated with the project</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OutcomeMeasureSaving" type="P2R:MeasureDecimalValueDataType">
+		<xsd:annotation>
+			<xsd:documentation>Date entered of a project</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OutcomeMeasureInitialCost" type="P2R:MeasureDecimalValueDataType">
+		<xsd:annotation>
+			<xsd:documentation>Date entered of a project</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OutcomeMeasureRecurringYear" type="P2R:OutcomeMeasuresRecurringYearDataType">
+		<xsd:annotation>
+			<xsd:documentation>Recurring year value of outcome measures</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="BehavioralChangeIdentifier" type="P2R:MeasureIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>Unique Idenfier for the Behavioral Changes</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="BehavioralChangeName" type="P2R:MeasureNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Name for Behavioral Changes</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="BehavioralChangeDefinition" type="P2R:MeasureDefinitionDataType">
+		<xsd:annotation>
+			<xsd:documentation>Definition of Behvioral Changes</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="InvestmentIdentifier" type="P2R:MeasureIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>Unique Idenfier for the Investement in P2 Activities</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="InvestmentName" type="P2R:MeasureNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Name for Investement in P2 Activities</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="InvestmentDefinition" type="P2R:MeasureDefinitionDataType">
+		<xsd:annotation>
+			<xsd:documentation>Definition of Investement in P2 Activities</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="InvestmentValue" type="P2R:MeasureDecimalValueDataType">
+		<xsd:annotation>
+			<xsd:documentation>Investment amount in p2 activities associated with agent.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ProgramIdentifier" type="P2R:ProgramIdenfierDataType">
+		<xsd:annotation>
+			<xsd:documentation>Unique Idenfier for Program</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ProgramDescription" type="P2R:ProgramDescriptionDataType">
+		<xsd:annotation>
+			<xsd:documentation>Description of the Program</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ProgramAddress" type="P2R:MailingAddressTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Address of the Program</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ProgramCity" type="P2R:MailingAddressCityNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>City of the Program where it is located</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ProgramState" type="P2R:StateNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>City of the Program where it is located</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ProgramZipCode" type="P2R:AddressPostalCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Zip Code of the Program where it is located</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ProgramPhoneNumber" type="P2R:TelephoneNumberTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Phone number of the program</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ProjectIdentifier" type="P2R:ProjectIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>Unique Identifier of a project</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ProjectName" type="P2R:ProjectNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Name of the project</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ProjectDescription" type="P2R:ProjectDescriptionDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptionof a project</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ProjectStartDate" type="P2R:ProjectDateDataType">
+		<xsd:annotation>
+			<xsd:documentation>Start Date of a project</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ProjectEndDate" type="P2R:ProjectDateDataType">
+		<xsd:annotation>
+			<xsd:documentation>End Date of a project</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ProjectInputPerson" type="P2R:IndividualFullNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Name of the person who entered the project information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ProjectDateEntered" type="P2R:ProjectDateDataType">
+		<xsd:annotation>
+			<xsd:documentation>Date entered of a project</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="UnitOfMeasure" type="P2R:UnitOfMeasureDataType">
+		<xsd:annotation>
+			<xsd:documentation>Unit of Measure associated with the measures.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MediaTypeText" type="P2R:MediaTypeTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Type of media affected by a P2 Outcome Activity (i.e. NOx)</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MetricText" type="P2R:MetricTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>
+				Controlled list of the metric to be used.
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ScopeAreaText" type="P2R:ScopeAreaTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Schema used to transfer scope information.It provided the controlled list of scope area</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SectorText" type="P2R:SectorTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Schema to transfer sector information. The schema has controlled list of sectors which are associated with project. </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!-- END ELEMENT DECLARATIONS -->
+</xsd:schema>

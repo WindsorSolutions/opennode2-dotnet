@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:P2R="http://www.exchangenetwork.net/schema/P2R/1" targetNamespace="http://www.exchangenetwork.net/schema/P2R/1" elementFormDefault="unqualified" attributeFormDefault="qualified" version="1.0">
+	<xsd:include schemaLocation="P2R_SimpleContent_v1.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name : 					P2R_QuantitativeResult_v1.0.xsd
+		Current Version Available At :			http://www.exchangenetwork.net
+		Description : 					This schema defines the data elements to be shared through the Pollution Prevention Data Exchange related to the project providing a given set of pollution prevention activity measures information.
+		Application : 					Pollution Prevention Results Data Exchange 
+		Developed by : 	 				Pacific Northwest Pollution Prevention Resource Center, Colorado Department of Public Health and Environment
+		Point of Contact : 				Prabin Kanel (prabink@gmail.com)
+								Bill Rensmith (bill_rensmith@windsorsolutions.com)
+								Andrew Putnam (andrew.putnam@state.co.us)
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="QuantitativeResultDataType">
+		<xsd:sequence>
+			<xsd:element ref="P2R:P2RMeasureValue"/>
+			<xsd:element ref="P2R:UnitOfMeasure"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="QuantitativeResult" type="P2R:QuantitativeResultDataType"/>
+</xsd:schema>

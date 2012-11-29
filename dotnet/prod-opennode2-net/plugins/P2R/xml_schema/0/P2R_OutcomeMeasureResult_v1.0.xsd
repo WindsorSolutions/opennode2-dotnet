@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:P2R="http://www.exchangenetwork.net/schema/P2R/1" targetNamespace="http://www.exchangenetwork.net/schema/P2R/1" version="1.0">
+	<xsd:include schemaLocation="P2R_SimpleContent_v1.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name : 					P2R_OutcomeMeasureResult_v1.0.xsd
+		Current Version Available At :			http://www.exchangenetwork.net
+		Description : 					This schema defines the data elements to be shared through the Pollution Prevention Data Exchange related to the project providing a given set of Outcome Measures.
+		Application : 					Pollution Prevention Results Data Exchange 
+		Developed by : 	 				Pacific Northwest Pollution Prevention Resource Center, Colorado Department of Public Health and Environment
+		Point of Contact : 				Prabin Kanel (prabink@gmail.com)
+								Bill Rensmith (bill_rensmith@windsorsolutions.com)
+								Andrew Putnam (andrew.putnam@state.co.us)	
+	</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="OutcomeMeasureResultDataType">
+		<xsd:sequence>
+			<xsd:element ref="P2R:MediaTypeText"/>
+			<xsd:element ref="P2R:OutcomeMeasureResultValue"/>
+			<xsd:element ref="P2R:UnitOfMeasure"/>
+			<xsd:element ref="P2R:MetricText"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="OutcomeMeasureResult" type="P2R:OutcomeMeasureResultDataType"/>
+</xsd:schema>
