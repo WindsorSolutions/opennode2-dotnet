@@ -8,8 +8,8 @@
     <ProjectGuid>{3B182887-CF56-4470-88E2-846ACCC9E0AF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Windsor.Commons.AspNet.Mvc</RootNamespace>
-    <AssemblyName>Windsor.Commons.AspNet.Mvc</AssemblyName>
+    <RootNamespace>Windsor.Commons.AspNet.WebApi</RootNamespace>
+    <AssemblyName>Windsor.Commons.AspNet.WebApi</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
@@ -50,11 +50,15 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\MVC4\System.Net.Http.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\System.Web.Http.dll</HintPath>
+      <HintPath>..\lib\MVC4\System.Web.Http.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -62,12 +66,14 @@
     <Compile Include="..\windsor-commons-assemblyinfo\AssemblyInfo.cs">
       <Link>AssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Filters\BaseActionFilterAttribute.cs" />
-    <Compile Include="Filters\BaseAuthorizationAttribute.cs" />
-    <Compile Include="Filters\BaseExceptionFilterAttribute.cs" />
-    <Compile Include="Filters\CustomFilterInfo.cs" />
-    <Compile Include="Filters\CustomFilterProvider.cs" />
-    <Compile Include="Filters\IBaseAttribute.cs" />
+    <Compile Include="Filters\IOrderableFilter.cs" />
+    <Compile Include="Filters\OrderableActionFilterAttribute.cs" />
+    <Compile Include="Filters\OrderableAuthorizationAttribute.cs" />
+    <Compile Include="Filters\OrderableExceptionFilterAttribute.cs" />
+    <Compile Include="Filters\OrderableFilterProvider.cs" />
+    <Compile Include="Filters\RequireHttpsAttribute.cs" />
+    <Compile Include="Helpers\HttpAuthorizationHelper.cs" />
+    <Compile Include="Helpers\HttpResponseHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -93,6 +99,7 @@
       <Name>Windsor.Commons.Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>

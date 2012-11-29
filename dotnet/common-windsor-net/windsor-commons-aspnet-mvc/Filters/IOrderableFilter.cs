@@ -4,11 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Http.Filters;
 
-namespace Windsor.Commons.AspNet.Mvc.Filters
+namespace Windsor.Commons.AspNet.WebApi.Filters
 {
-    public interface IBaseAttribute : IFilter
+    public interface IOrderableFilter : IFilter
     {
-        int Position
+        int Order
         {
             get;
             set;
