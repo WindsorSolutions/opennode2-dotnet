@@ -33,10 +33,6 @@ namespace Windsor.Commons.DataAnnotations
                 ExceptionUtils.ThrowIfNull(propertyInfo);
                 object otherValue = propertyInfo.GetValue(validationContext.ObjectInstance, null);
                 string otherDisplayName = GetDisplayNameForProperty(validationContext.ObjectType, otherPropertyName);
-                if (string.IsNullOrEmpty(otherDisplayName))
-                {
-                    otherDisplayName = otherPropertyName;
-                }
                 otherValues.Add(new KeyValuePair<string, object>(otherDisplayName, otherValue));
             }
             return otherValues;

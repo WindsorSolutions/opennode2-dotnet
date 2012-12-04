@@ -32,18 +32,11 @@ POSSIBILITY OF SUCH DAMAGE.
 #endregion
 
 using System;
-using System.Collections.Generic;
 using System.Text;
-using System.IO;
 using System.Collections;
-using System.Collections.Specialized;
 using Common.Logging;
 using System.Reflection;
-using System.Xml;
-using AopAlliance.Intercept;
-using Spring.Aop.Framework;
 using Windsor.Commons.Core;
-using Common.Logging.Log4Net;
 
 namespace Windsor.Commons.Logging
 {
@@ -108,27 +101,45 @@ namespace Windsor.Commons.Logging
         }
         public bool IsDebugEnabled
         {
-            get { return _logger.IsDebugEnabled; }
+            get
+            {
+                return _logger.IsDebugEnabled;
+            }
         }
         public bool IsErrorEnabled
         {
-            get { return _logger.IsErrorEnabled; }
+            get
+            {
+                return _logger.IsErrorEnabled;
+            }
         }
         public bool IsFatalEnabled
         {
-            get { return _logger.IsFatalEnabled; }
+            get
+            {
+                return _logger.IsFatalEnabled;
+            }
         }
         public bool IsInfoEnabled
         {
-            get { return _logger.IsInfoEnabled; }
+            get
+            {
+                return _logger.IsInfoEnabled;
+            }
         }
         public bool IsTraceEnabled
         {
-            get { return _logger.IsTraceEnabled; }
+            get
+            {
+                return _logger.IsTraceEnabled;
+            }
         }
         public bool IsWarnEnabled
         {
-            get { return _logger.IsWarnEnabled; }
+            get
+            {
+                return _logger.IsWarnEnabled;
+            }
         }
         public string DebugArguments(string message, params object[] args)
         {
@@ -161,7 +172,8 @@ namespace Windsor.Commons.Logging
 
         public void AppendMethodEnterString(ref StringBuilder sb, MethodBase methodBase, params object[] values)
         {
-            if (sb == null) sb = new StringBuilder();
+            if (sb == null)
+                sb = new StringBuilder();
             try
             {
                 int maxOututLength = sb.Length + 8192;
@@ -214,7 +226,8 @@ namespace Windsor.Commons.Logging
         }
         public void AppendMethodReturnValueString(ref StringBuilder sb, MethodBase methodBase, object returnValue)
         {
-            if (sb == null) sb = new StringBuilder();
+            if (sb == null)
+                sb = new StringBuilder();
             try
             {
                 int maxOututLength = sb.Length + 8192;
@@ -245,7 +258,8 @@ namespace Windsor.Commons.Logging
         }
         public void AppendMethodErrorString(ref StringBuilder sb, MethodBase methodBase, Exception exception)
         {
-            if (sb == null) sb = new StringBuilder();
+            if (sb == null)
+                sb = new StringBuilder();
             try
             {
                 int maxOututLength = sb.Length + 8192;
@@ -400,8 +414,14 @@ namespace Windsor.Commons.Logging
         /// </summary>
         public ILog Logger
         {
-            get { return _logger; }
-            set { _logger = value; }
+            get
+            {
+                return _logger;
+            }
+            set
+            {
+                _logger = value;
+            }
         }
 
         /// <summary>
@@ -468,7 +488,10 @@ namespace Windsor.Commons.Logging
     }
     public interface ILoggerBase
     {
-        ILogEx LOG { get; }
+        ILogEx LOG
+        {
+            get;
+        }
     }
     public class LoggerBase : ILoggerBase
     {
@@ -479,7 +502,10 @@ namespace Windsor.Commons.Logging
         }
         public ILogEx LOG
         {
-            get { return _logger; }
+            get
+            {
+                return _logger;
+            }
         }
     }
     public abstract class DisposableLoggerBase : DisposableBase, ILoggerBase
@@ -491,7 +517,10 @@ namespace Windsor.Commons.Logging
         }
         public ILogEx LOG
         {
-            get { return _logger; }
+            get
+            {
+                return _logger;
+            }
         }
     }
 }

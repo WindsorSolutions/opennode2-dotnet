@@ -397,8 +397,8 @@ namespace Windsor.Node2008.Endpoint2
                     newNotification.Category = Convert(notificationMessageType.messageCategory);
                     newNotification.Name = notificationMessageType.messageName;
                     newNotification.Status = new TransactionStatus();
-                    newNotification.Status.Status = 
-						CommonTransactionStatusCodeProvider.Convert(notificationMessageType.status.ToString());
+                    newNotification.Status.Status =
+                        CommonTransactionStatusCodeProvider.Convert(notificationMessageType.status.ToString());
                     newNotification.Status.Description = notificationMessageType.statusDetail;
                     if (newNotification.Category ==
                         Windsor.Node2008.WNOSDomain.NotificationMessageCategoryType.Status)
@@ -540,7 +540,7 @@ namespace Windsor.Node2008.Endpoint2
                         wsdlDoc.documentId = doc.DocumentId;
                         wsdlDoc.documentFormat = Convert(doc.Type);
                         wsdlDoc.documentContent = new AttachmentType();
-						wsdlDoc.documentContent.contentType = CommonContentAndFormatProvider.ConvertToMimeType(doc.Type);
+                        wsdlDoc.documentContent.contentType = CommonContentAndFormatProvider.ConvertToMimeType(doc.Type);
                         wsdlDoc.documentContent.Value = doc.Content;
                         rtnDocuments[i] = wsdlDoc;
                     }
@@ -1049,26 +1049,31 @@ namespace Windsor.Node2008.Endpoint2
             }
             return notifs;
         }
-        
-        private static GenericXmlType NewGenericXmlType(SimpleContent simpleContent) {
+
+        private static GenericXmlType NewGenericXmlType(SimpleContent simpleContent)
+        {
             return NewGenericXmlType(Convert(simpleContent.Type), simpleContent.Content);
         }
-        private static GenericXmlType NewGenericXmlType(DocumentFormatType type, 
-														byte[] content) {
+        private static GenericXmlType NewGenericXmlType(DocumentFormatType type,
+                                                        byte[] content)
+        {
             GenericXmlType genericXmlType = new GenericXmlType();
             genericXmlType.format = type;
-            if ( genericXmlType.format == DocumentFormatType.ZIP ) {
-				XmlDocument xmlDoc = new XmlDocument();
-				string base64String = (content == null) ?
-					string.Empty : System.Convert.ToBase64String(content);
-				genericXmlType.Any = new XmlNode[] { xmlDoc.CreateTextNode(base64String) };
-            } else {
-				XmlDocument xmlDoc = new XmlDocument();
+            if (genericXmlType.format == DocumentFormatType.ZIP)
+            {
+                XmlDocument xmlDoc = new XmlDocument();
+                string base64String = (content == null) ?
+                    string.Empty : System.Convert.ToBase64String(content);
+                genericXmlType.Any = new XmlNode[] { xmlDoc.CreateTextNode(base64String) };
+            }
+            else
+            {
+                XmlDocument xmlDoc = new XmlDocument();
                 using (XmlTextReader reader = new XmlTextReader(new MemoryStream(content)))
                 {
                     xmlDoc.Load(reader);
                 }
-				genericXmlType.Any = new XmlNode[] { xmlDoc.DocumentElement };
+                genericXmlType.Any = new XmlNode[] { xmlDoc.DocumentElement };
             }
             return genericXmlType;
         }

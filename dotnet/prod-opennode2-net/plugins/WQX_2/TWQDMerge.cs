@@ -33,6 +33,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
             ExceptionUtils.ThrowIfNull(organization.Organization.OrganizationDescription, "organization.Organization.OrganizationDescription");
             ExceptionUtils.ThrowIfEmptyString(organization.Organization.OrganizationDescription.OrganizationIdentifier, "organization.Organization.OrganizationDescription.OrganizationIdentifier");
 
+            const int commandTimeout = 1800;
+
             _submitToEpa = submitToEpa;
             _insertCounts = new Dictionary<string, int>();
             _updateCounts = new Dictionary<string, int>();
@@ -45,7 +47,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                 }
 
                 _dao = dao;
-                _dao.AdoTemplate.CommandTimeout = 900;
+                _dao.AdoTemplate.CommandTimeout = commandTimeout;
                 _lastUpdatedDateTime = DateTime.Now;
                 _setLastUpdatedDateTime = setLastUpdatedDateTime;
 
@@ -73,7 +75,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
             insertCounts = _insertCounts;
             updateCounts = _updateCounts;
         }
-        public static string CreateTableRowCountsString(Dictionary<string, int> insertCounts, 
+        public static string CreateTableRowCountsString(Dictionary<string, int> insertCounts,
                                                         Dictionary<string, int> updateCounts)
         {
             SortedDictionary<string, KeyValuePair<int, int>> counts = new SortedDictionary<string, KeyValuePair<int, int>>();

@@ -33,15 +33,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.IO;
-using System.Collections;
-using System.Collections.Specialized;
-using Common.Logging;
-using System.Reflection;
-using System.Xml;
-using AopAlliance.Intercept;
-using Spring.Aop.Framework;
 using Windsor.Commons.Core;
 using Common.Logging.Log4Net;
 
@@ -99,16 +91,23 @@ namespace Windsor.Node2008.WNOSUtility
     public class WNOSRollingFileAppender : log4net.Appender.RollingFileAppender
     {
         private static List<string> s_LogFilePaths = new List<string>();
-        public WNOSRollingFileAppender() : base() { }
-        public override string File {
-            get { return base.File; }
+        public WNOSRollingFileAppender()
+            : base()
+        {
+        }
+        public override string File
+        {
+            get
+            {
+                return base.File;
+            }
             set
             {
                 string path = value;
                 if (path.StartsWith(".\\")) // Assume this means relative to Node home folder
                 {
                     path = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\" + value));
-                    if ( !Directory.Exists(Path.GetDirectoryName(path)) )
+                    if (!Directory.Exists(Path.GetDirectoryName(path)))
                     {
                         path = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\" + value));
                         if (!Directory.Exists(Path.GetDirectoryName(path)))
@@ -127,7 +126,7 @@ namespace Windsor.Node2008.WNOSUtility
                     throw new UnauthorizedAccessException(string.Format("The log file location \"{0}\" is not writable", path));
                 }
                 base.File = path;
-                if ( !s_LogFilePaths.Contains(path) )
+                if (!s_LogFilePaths.Contains(path))
                 {
                     s_LogFilePaths.Add(path);
                 }
@@ -135,7 +134,10 @@ namespace Windsor.Node2008.WNOSUtility
         }
         public static ICollection<string> LogFilePaths
         {
-            get { return s_LogFilePaths; }
+            get
+            {
+                return s_LogFilePaths;
+            }
         }
     }
 }
