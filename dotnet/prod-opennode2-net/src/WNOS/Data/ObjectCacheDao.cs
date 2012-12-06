@@ -74,7 +74,7 @@ namespace Windsor.Node2008.WNOS.Data
         #endregion
         #region Mappers
         #endregion // Mappers
-		
+
         #region Methods
         public bool CacheString(string data, string name, TimeSpan cacheDuration)
         {
@@ -169,7 +169,7 @@ namespace Windsor.Node2008.WNOS.Data
                             {
                                 try
                                 {
-                                    data = (byte[]) reader.GetValue(0);
+                                    data = (byte[])reader.GetValue(0);
                                     return true;
                                 }
                                 catch (Exception e2)
@@ -252,7 +252,7 @@ namespace Windsor.Node2008.WNOS.Data
                 obj = BinaryDecompressAndDeserialize<T>(content);
                 return true;
             }
-            catch(Exception e2)
+            catch (Exception e2)
             {
                 LOG.Error("Failed to load cached object \"{0}\"", e2, name);
                 return false;
@@ -260,7 +260,8 @@ namespace Windsor.Node2008.WNOS.Data
         }
         public bool RemoveObject(string name)
         {
-            try {
+            try
+            {
                 DoSimpleDelete(TABLE_NAME, "Name", name);
                 return true;
             }
@@ -301,13 +302,25 @@ namespace Windsor.Node2008.WNOS.Data
         #region Properties
         public ISerializationHelper SerializationHelper
         {
-            get { return _serializationHelper; }
-            set { _serializationHelper = value; }
+            get
+            {
+                return _serializationHelper;
+            }
+            set
+            {
+                _serializationHelper = value;
+            }
         }
         public ICompressionHelper CompressionHelper
         {
-            get { return _compressionHelper; }
-            set { _compressionHelper = value; }
+            get
+            {
+                return _compressionHelper;
+            }
+            set
+            {
+                _compressionHelper = value;
+            }
         }
         #endregion
     }

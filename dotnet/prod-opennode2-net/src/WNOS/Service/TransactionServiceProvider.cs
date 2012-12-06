@@ -268,33 +268,25 @@ namespace Windsor.Node2008.WNOS.Service
                 }
                 if (string.IsNullOrEmpty(request.FlowName))
                 {
-                    if (visit.Version == EndpointVersionType.EN11)
+                    bool moreThanOneFlowFound;
+                    string flowNameByServiceName =
+                        FlowManager.GetDataFlowNameByServiceName(request.OperationName, out moreThanOneFlowFound);
+                    if (string.IsNullOrEmpty(flowNameByServiceName))
                     {
-                        bool moreThanOneFlowFound;
-                        string flowNameByServiceName =
-                            FlowManager.GetDataFlowNameByServiceName(request.OperationName, out moreThanOneFlowFound);
-                        if (string.IsNullOrEmpty(flowNameByServiceName))
+                        if (moreThanOneFlowFound)
                         {
-                            if (moreThanOneFlowFound)
-                            {
-                                throw FaultProvider.GetFault(visit.Version, ENExceptionCodeType.E_InvalidParameter,
-                                                             string.Format("More than one flow was found for the service \"{0}\"",
-                                                                           request.OperationName));
-                            }
-                            else
-                            {
-                                throw FaultProvider.GetFault(visit.Version, ENExceptionCodeType.E_InvalidParameter,
-                                                             string.Format("Could not find a flow for the service \"{0}\"",
-                                                                           request.OperationName));
-                            }
+                            throw FaultProvider.GetFault(visit.Version, ENExceptionCodeType.E_InvalidParameter,
+                                                            string.Format("More than one flow was found for the service \"{0}\"",
+                                                                        request.OperationName));
                         }
-                        request.FlowName = flowNameByServiceName;
+                        else
+                        {
+                            throw FaultProvider.GetFault(visit.Version, ENExceptionCodeType.E_InvalidParameter,
+                                                            string.Format("Could not find a flow for the service \"{0}\"",
+                                                                        request.OperationName));
+                        }
                     }
-                    else
-                    {
-                        throw FaultProvider.GetFault(visit.Version, ENExceptionCodeType.E_InvalidParameter,
-                                                     "Input flow is null");
-                    }
+                    request.FlowName = flowNameByServiceName;
                 }
                 bool isFlowProtected;
                 string flowId = FlowManager.GetDataFlowIdByName(request.FlowName, out isFlowProtected);

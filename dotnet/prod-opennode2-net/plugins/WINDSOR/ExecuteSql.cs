@@ -111,20 +111,22 @@ namespace Windsor.Node2008.WNOSPlugin.Windsor
                 {
                     foreach (string sqlStatement in _dataRequest.Parameters)
                     {
-                        ExecuteSqlStatement(_baseDao, sqlStatement);
+                        string exeResult = ExecuteSqlStatement(_baseDao, sqlStatement);
                     }
                     return null;
                 });
             }
             else
             {
-                ExecuteSqlStatement(_baseDao, _dataRequest.Parameters[0]);
+                string exeResult = ExecuteSqlStatement(_baseDao, _dataRequest.Parameters[0]);
             }
         }
-        private void ExecuteSqlStatement(SpringBaseDao baseDao, string sqlStatement)
+        private string ExecuteSqlStatement(SpringBaseDao baseDao, string sqlStatement)
         {
             AppendAuditLogEvent("Executing: {0}", sqlStatement);
-            baseDao.AdoTemplate.ClassicAdoTemplate.ExecuteNonQuery(CommandType.Text, sqlStatement);
+            int result = baseDao.AdoTemplate.ClassicAdoTemplate.ExecuteNonQuery(CommandType.Text, sqlStatement);
+            AppendAuditLogEvent("Execution result: {0}", result.ToString());
+            return result.ToString();
         }
     }
     [Serializable]
@@ -208,10 +210,12 @@ namespace Windsor.Node2008.WNOSPlugin.Windsor
                 _baseDao.DoStoredProc(storedProcName);
             }
         }
-        private void ExecuteSqlStatement(SpringBaseDao baseDao, string sqlStatement)
+        private string ExecuteSqlStatement(SpringBaseDao baseDao, string sqlStatement)
         {
             AppendAuditLogEvent("Executing: {0}", sqlStatement);
-            baseDao.AdoTemplate.ClassicAdoTemplate.ExecuteNonQuery(CommandType.Text, sqlStatement);
+            int result = baseDao.AdoTemplate.ClassicAdoTemplate.ExecuteNonQuery(CommandType.Text, sqlStatement);
+            AppendAuditLogEvent("Execution result: {0}", result.ToString());
+            return result.ToString();
         }
     }
 }

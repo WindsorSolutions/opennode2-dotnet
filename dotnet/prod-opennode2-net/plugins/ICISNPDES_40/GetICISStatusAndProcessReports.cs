@@ -162,15 +162,16 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_40
             }
             catch (WorkflowStatusFailedException workflowStatusFailedException)
             {
+                string errorMessage =
+                    string.Format("An error occurred during processing: {0}",
+                                  ExceptionUtils.GetDeepExceptionMessage(workflowStatusFailedException));
                 if (_submissionTrackingDataTypePK != null)
                 {
                     _submissionTrackingDataType.WorkflowStatus = TransactionStatusCode.Failed;
-                    _submissionTrackingDataType.WorkflowStatusMessage = 
-                        string.Format("An error occurred during processing: {0}", 
-                                      ExceptionUtils.GetDeepExceptionMessage(workflowStatusFailedException));
+                    _submissionTrackingDataType.WorkflowStatusMessage = errorMessage;
                     SubmissionTrackingTableHelper.Update(_baseDao, _submissionTrackingDataTypePK, _submissionTrackingDataType);
                 }
-                throw;
+                throw new ArgException(errorMessage);
             }
             catch (Exception)
             {
