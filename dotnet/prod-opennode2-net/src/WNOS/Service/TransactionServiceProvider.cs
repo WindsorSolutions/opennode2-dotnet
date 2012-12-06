@@ -244,6 +244,8 @@ namespace Windsor.Node2008.WNOS.Service
 
             result = TransformQueryResult(request, result);
 
+            ValidateQueryResult(result, request, visit);
+
             return result;
         }
         public PaginatedContentResult Query(PaginatedContentRequest request, NamedEndpointVisit visit)
@@ -736,6 +738,20 @@ namespace Windsor.Node2008.WNOS.Service
             }
             return false;
         }
+        protected virtual void ValidateQueryResult(PaginatedContentResult result, FormattedPaginatedContentRequest request, NamedOrAuthEndpointVisit visit)
+        {
+            if ((result != null) && result.HasContent)
+            {
+                if (MaxRestQueryResponseKilobytes > 0)
+                {
+                    if (result.Content.Content.Length > (MaxRestQueryResponseKilobytes * 1024L))
+                    {
+                        throw FaultProvider.GetFault(visit.Version, ENExceptionCodeType.E_QueryReturnSetTooBig,
+                                                     "The requested data result set is too large.  Please modify the query parameters so that a smaller data result set is returned.");
+                    }
+                }
+            }
+        }
 
         #region Init
 
@@ -845,6 +861,11 @@ namespace Windsor.Node2008.WNOS.Service
             }
         }
         internal ISecurityService SecurityService
+        {
+            get;
+            set;
+        }
+        internal int MaxRestQueryResponseKilobytes
         {
             get;
             set;

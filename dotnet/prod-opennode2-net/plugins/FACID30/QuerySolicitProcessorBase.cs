@@ -1050,7 +1050,10 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
             public const string LIKE_SQL_PREFIX = "@!#1";
             public const string LITERAL_SQL_PREFIX = "@!#2";
 
-            public TableQueryParamsInfoList() : base() { }
+            public TableQueryParamsInfoList()
+                : base()
+            {
+            }
 
             public void Add(string tableName, string columnName, object columnValue)
             {
@@ -1105,6 +1108,7 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
                             {
                                 sb.AppendFormat("UPPER({0}) LIKE UPPER('{1}')", columnPair.Key.Substring(LIKE_SQL_PREFIX.Length),
                                                 colValue.ToString());
+                                addValueParam = false;
                             }
                             else if (columnPair.Key.StartsWith(LITERAL_SQL_PREFIX))
                             {
