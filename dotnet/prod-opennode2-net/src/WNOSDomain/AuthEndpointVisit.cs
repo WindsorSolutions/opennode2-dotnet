@@ -42,19 +42,42 @@ namespace Windsor.Node2008.WNOSDomain
     [Serializable]
     public class AuthEndpointVisit : EndpointVisit
     {
+        public AuthEndpointVisit()
+        {
+        }
+        public AuthEndpointVisit(NamedOrAuthEndpointVisit namedOrAuthEndpointVisit)
+        {
+            this.AuthMethod = namedOrAuthEndpointVisit.AuthMethod;
+            this.CreatedOn = namedOrAuthEndpointVisit.CreatedOn;
+            this.Credentials = namedOrAuthEndpointVisit.Credentials;
+            this.IP = namedOrAuthEndpointVisit.IP;
+            this.Version = namedOrAuthEndpointVisit.Version;
+        }
         private AuthenticationCredentials _credentials;
         private string _authMethod;
 
         public AuthenticationCredentials Credentials
         {
-            get { return _credentials; }
-            set { _credentials = value; }
+            get
+            {
+                return _credentials;
+            }
+            set
+            {
+                _credentials = value;
+            }
         }
 
         public string AuthMethod
         {
-            get { return _authMethod; }
-            set { _authMethod = value; }
+            get
+            {
+                return _authMethod;
+            }
+            set
+            {
+                _authMethod = value;
+            }
         }
     }
 }

@@ -52,6 +52,7 @@ namespace Windsor.Node2008.WNOSConnector.Provider
         NamedEndpointVisit GetVisit(string token);
         AuthEndpointVisit GetVisit(string username, string password, string domain, string method);
         AuthEndpointVisit GetVisit(string username, string password);
+        NamedOrAuthEndpointVisit GetVisit(string token, string username, string password);
         string GetRequestorIP();
 
     }
@@ -116,7 +117,7 @@ namespace Windsor.Node2008.WNOSConnector.Provider
         public AuthEndpointVisit GetVisit(string username, string password, string domain, string method)
         {
             LOG.Debug(string.Format(
-                "Visit from (username: {0} password: *********** domain: {1} method: {2}", 
+                "Visit from (username: {0} password: *********** domain: {1} method: {2}",
                 username, domain, method));
 
             AuthEndpointVisit visit = GetVisit<AuthEndpointVisit>();
@@ -151,6 +152,20 @@ namespace Windsor.Node2008.WNOSConnector.Provider
             LOG.Debug("Visit: " + visit);
             return visit;
         }
+
+        /// <summary>
+        /// Get Named User Visit
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        public NamedOrAuthEndpointVisit GetVisit(string token, string username, string password)
+        {
+            NamedOrAuthEndpointVisit visit = GetVisit<NamedOrAuthEndpointVisit>();
+            visit.Token = token;
+            visit.AuthMethod = _defaultAuthMethod;
+            visit.Credentials = new AuthenticationCredentials(username, password, null);
+            return visit;
+        }
         #endregion
 
         #region Privates
@@ -160,7 +175,7 @@ namespace Windsor.Node2008.WNOSConnector.Provider
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        private T GetVisit<T>() where T : EndpointVisit, new() 
+        private T GetVisit<T>() where T : EndpointVisit, new()
         {
             LOG.Debug("Getting Basic Visit...");
             T visit = new T();
@@ -197,22 +212,34 @@ namespace Windsor.Node2008.WNOSConnector.Provider
 
         public string DefaultIp
         {
-            set { _defaultIp = value; }
+            set
+            {
+                _defaultIp = value;
+            }
         }
 
         public string HeaderIPArgument
         {
-            set { _headerIPArgument = value; }
+            set
+            {
+                _headerIPArgument = value;
+            }
         }
 
         public string DefaultAuthMethod
         {
-            set { _defaultAuthMethod = value; }
+            set
+            {
+                _defaultAuthMethod = value;
+            }
         }
 
         public EndpointVersionType Version
         {
-            set { _version = value; }
+            set
+            {
+                _version = value;
+            }
         }
 
         #endregion

@@ -34,72 +34,21 @@ POSSIBILITY OF SUCH DAMAGE.
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Net;
 
-using Windsor.Commons.Core;
-
-namespace Windsor.Commons.NodeDomain
+namespace Windsor.Node2008.WNOSDomain
 {
     [Serializable]
-    public class AuthenticationCredentials
+    public class FormattedPaginatedContentRequest : PaginatedContentRequest
     {
-        private string _username;
-        private string _password;
-        private string _domain;
-
-        public AuthenticationCredentials()
+        public string XsltName
         {
+            get;
+            set;
         }
-        public AuthenticationCredentials(string userName, string password) :
-            this(userName, password, null)
+        public bool? ZipResults
         {
-        }
-        public AuthenticationCredentials(string userName, string password, string domain)
-        {
-            _username = userName;
-            _password = password;
-            _domain = domain;
-        }
-        public override string ToString()
-        {
-            return ReflectionUtils.GetPublicPropertiesString(this);
-        }
-
-        public string UserName
-        {
-            get
-            {
-                return _username;
-            }
-            set
-            {
-                _username = value;
-            }
-        }
-
-        [ToStringQualifier(Ignore = true)]
-        public string Password
-        {
-            get
-            {
-                return _password;
-            }
-            set
-            {
-                _password = value;
-            }
-        }
-
-        public string Domain
-        {
-            get
-            {
-                return _domain;
-            }
-            set
-            {
-                _domain = value;
-            }
+            get;
+            set;
         }
     }
 }

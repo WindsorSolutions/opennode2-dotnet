@@ -54,10 +54,10 @@ namespace Windsor.Node2008.WNOS.Service
 {
     public class ContentServiceProvider : BaseEndpointService, IContentService
     {
-		private ITransactionManagerEx _transactionManager;
-		private IDocumentManagerEx _documentManager;
-		private INotificationManagerEx _notificationManager;
-		private INodeProcessor _submitDocumentProcessor;
+        private ITransactionManagerEx _transactionManager;
+        private IDocumentManagerEx _documentManager;
+        private INotificationManagerEx _notificationManager;
+        private INodeProcessor _submitDocumentProcessor;
         private ITransactionService _transactionService;
 
         #region IContentService Members
@@ -65,34 +65,38 @@ namespace Windsor.Node2008.WNOS.Service
         public TransactionStatus Submit(AsyncComplexContent content, NamedEndpointVisit visit)
         {
             Activity activity = null;
-			IList<string> newDocumentIds = null;
-			bool isNewTransaction = false;
-			
+            IList<string> newDocumentIds = null;
+            bool isNewTransaction = false;
+
             try
             {
-				// Validate inputs
+                // Validate inputs
                 NodeVisit nodeVisit;
                 MakeEndpointActivity(visit, ActivityType.Audit, NodeMethod.Submit,
                                      out nodeVisit, out activity);
-				
-				if ( content == null ) {
+
+                if (content == null)
+                {
                     throw FaultProvider.GetFault(visit.Version, ENExceptionCodeType.E_InvalidParameter,
-												 "Input content is null");
-				}
-				if ( CollectionUtils.IsNullOrEmpty(content.Documents) ) {
+                                                 "Input content is null");
+                }
+                if (CollectionUtils.IsNullOrEmpty(content.Documents))
+                {
                     throw FaultProvider.GetFault(visit.Version, ENExceptionCodeType.E_InvalidParameter,
-												 "Input document list is empty");
-				}
-				if ( content.Transaction == null ) {
+                                                 "Input document list is empty");
+                }
+                if (content.Transaction == null)
+                {
                     throw FaultProvider.GetFault(visit.Version, ENExceptionCodeType.E_InvalidParameter,
-												 "Input transaction is null");
-				}
-				if ( (content.Flow == null) || string.IsNullOrEmpty(content.Flow.FlowName) ) {
+                                                 "Input transaction is null");
+                }
+                if ((content.Flow == null) || string.IsNullOrEmpty(content.Flow.FlowName))
+                {
                     throw FaultProvider.GetFault(visit.Version, ENExceptionCodeType.E_InvalidParameter,
-												 "Input flow is null");
-				}
-				bool isFlowProtected;
-				string flowId = FlowManager.GetDataFlowIdByName(content.Flow.FlowName, out isFlowProtected);
+                                                 "Input flow is null");
+                }
+                bool isFlowProtected;
+                string flowId = FlowManager.GetDataFlowIdByName(content.Flow.FlowName, out isFlowProtected);
                 if (flowId == null)
                 {
                     throw FaultProvider.GetFault(visit.Version, ENExceptionCodeType.E_InvalidDataflow,
@@ -100,14 +104,17 @@ namespace Windsor.Node2008.WNOS.Service
                 }
                 activity.FlowName = content.Flow.FlowName;
                 activity.Operation = content.Flow.Operation;
-				isNewTransaction = string.IsNullOrEmpty(content.Transaction.Id);
+                isNewTransaction = string.IsNullOrEmpty(content.Transaction.Id);
                 string networkId = null;
-				
-				// Get the flow id associated with the transaction
-				if ( isNewTransaction ) {
 
-                } else {
-					// Existing transaction
+                // Get the flow id associated with the transaction
+                if (isNewTransaction)
+                {
+
+                }
+                else
+                {
+                    // Existing transaction
                     isNewTransaction =
                         ValidateTransaction(visit.Version, NodeMethod.Submit, content, (visit.Version != EndpointVersionType.EN11),
                                             flowId, out networkId);
@@ -115,9 +122,9 @@ namespace Windsor.Node2008.WNOS.Service
                     {
                         activity.TransactionId = content.Transaction.Id;
                     }
-				}
-				
-				DataService documentService = FlowManager.GetSubmitDocumentServiceForFlow(flowId, content.Flow.Operation);
+                }
+
+                DataService documentService = FlowManager.GetSubmitDocumentServiceForFlow(flowId, content.Flow.Operation);
                 if (documentService == null)
                 {
                     if (!string.IsNullOrEmpty(content.Flow.Operation))
@@ -127,24 +134,26 @@ namespace Windsor.Node2008.WNOS.Service
                     }
                     // Let empty operation pass through, even without a valid service, per Mark
                 }
-				else if ( !documentService.IsActive ) {
+                else if (!documentService.IsActive)
+                {
                     throw FaultProvider.GetFault(visit.Version, ENExceptionCodeType.E_ServiceUnavailable,
                                                  "The Submit service is not active for the flow \"{0}\"", content.Flow.FlowName);
-				}
+                }
 
                 if (isFlowProtected)
                 {
-                    ValidateUserPermissions(nodeVisit, content.Flow.FlowName, content.Flow.Operation, 
+                    ValidateUserPermissions(nodeVisit, content.Flow.FlowName, content.Flow.Operation,
                                             NodeMethod.Submit, activity);
                 }
 
-                if ( isNewTransaction ) {
-					// Create a new transaction
-					content.Transaction.Id =
+                if (isNewTransaction)
+                {
+                    // Create a new transaction
+                    content.Transaction.Id =
                         TransactionManager.CreateTransaction(NodeMethod.Submit, visit.Version, flowId, content.Flow.Operation,
                                                              nodeVisit.Account.Id, CommonTransactionStatusCode.Unknown,
-															 null, content.Notifications, content.Recipients, false);
-					activity.TransactionId = content.Transaction.Id;
+                                                             null, content.Notifications, content.Recipients, false);
+                    activity.TransactionId = content.Transaction.Id;
                     if (networkId != null)
                     {
                         TransactionManager.SetNetworkId(content.Transaction.Id, networkId,
@@ -162,75 +171,82 @@ namespace Windsor.Node2008.WNOS.Service
                     activity.AppendFormat("Adding submit document to transaction: {0}.", document);
                 }
                 // Add the documents to repository and DB
-				newDocumentIds = 
-					DocumentManager.AddDocuments(content.Transaction.Id, content.Documents);
+                newDocumentIds =
+                    DocumentManager.AddDocuments(content.Transaction.Id, content.Documents);
 
 #if DEBUG
-				NodeTransaction nodeTransaction = TransactionManager.GetTransaction(content.Transaction.Id, 
-																					CommonTransactionStatusCode.Received);
+                NodeTransaction nodeTransaction = TransactionManager.GetTransaction(content.Transaction.Id,
+                                                                                    CommonTransactionStatusCode.Received);
 #endif // DEBUG
-				TransactionStatus rtnTransactionStatus =
+                TransactionStatus rtnTransactionStatus =
                     TransactionManager.SetTransactionStatus(content.Transaction.Id, nodeVisit.Account.Id,
-															CommonTransactionStatusCode.Received,
-															null, false);
+                                                            CommonTransactionStatusCode.Received,
+                                                            null, false);
 
-                NotificationManager.DoSubmitNotifications(rtnTransactionStatus, flowId, content.Flow.FlowName, 
-														  content.Flow.Operation,
+                NotificationManager.DoSubmitNotifications(rtnTransactionStatus, flowId, content.Flow.FlowName,
+                                                          content.Flow.Operation,
                                                           nodeVisit.Account.NaasAccount);
 
-				SubmitProcessor.Wakeup();
-				
-				return rtnTransactionStatus;
+                SubmitProcessor.Wakeup();
+
+                return rtnTransactionStatus;
             }
             catch (Exception ex)
             {
-				if ( newDocumentIds != null ) {
-					DocumentManager.RollbackDocuments(content.Transaction.Id, newDocumentIds);
-				}
-				if ( isNewTransaction && !string.IsNullOrEmpty(content.Transaction.Id) ) {
-					TransactionManager.SetTransactionStatusNoThrow(content.Transaction.Id, 
-																   CommonTransactionStatusCode.Failed,
-																   ex.Message, false);
-				}
+                if (newDocumentIds != null)
+                {
+                    DocumentManager.RollbackDocuments(content.Transaction.Id, newDocumentIds);
+                }
+                if (isNewTransaction && !string.IsNullOrEmpty(content.Transaction.Id))
+                {
+                    TransactionManager.SetTransactionStatusNoThrow(content.Transaction.Id,
+                                                                   CommonTransactionStatusCode.Failed,
+                                                                   ex.Message, false);
+                }
                 if (activity != null)
                 {
                     activity.Append(ExceptionUtils.ToShortString(ex));
                     activity.Type = ActivityType.Error;
                 }
-                if ( ex is SoapException ) {
-					throw;	// Throw directly since already SoapException
-                } else {
+                if (ex is SoapException)
+                {
+                    throw;	// Throw directly since already SoapException
+                }
+                else
+                {
                     throw FaultProvider.GetFault(visit.Version, ex);
-				}
+                }
             }
             finally
             {
-				if ( activity != null )
-				{
-					ActivityManager.Log(activity);
-				}
+                if (activity != null)
+                {
+                    ActivityManager.Log(activity);
+                }
             }
         }
 
         public IList<Document> Download(ComplexContent content, NamedEndpointVisit visit)
         {
             Activity activity = null;
-			
+
             try
             {
-				// Validate inputs
+                // Validate inputs
                 NodeVisit nodeVisit;
                 MakeEndpointActivity(visit, ActivityType.Audit, NodeMethod.Download,
                                      out nodeVisit, out activity);
-				
-				if ( content == null ) {
+
+                if (content == null)
+                {
                     throw FaultProvider.GetFault(visit.Version, ENExceptionCodeType.E_InvalidParameter,
-												 "Input content is null");
-				}
-				if ( (content.Transaction == null) || string.IsNullOrEmpty(content.Transaction.Id) ) {
+                                                 "Input content is null");
+                }
+                if ((content.Transaction == null) || string.IsNullOrEmpty(content.Transaction.Id))
+                {
                     throw FaultProvider.GetFault(visit.Version, ENExceptionCodeType.E_InvalidParameter,
-												 "Input transaction is null");
-				}
+                                                 "Input transaction is null");
+                }
                 bool isFlowProtected;
                 string flowName, flowOperation;
                 string flowId = TransactionManager.GetTransactionFlowId(content.Transaction.Id, out flowName, out flowOperation,
@@ -268,28 +284,32 @@ namespace Windsor.Node2008.WNOS.Service
                     ValidateUserPermissions(nodeVisit, content.Flow.FlowName, content.Flow.Operation,
                                             NodeMethod.Download, activity);
                 }
-                
+
                 IList<Document> documents;
-                try {
-					documents = DocumentManager.GetDocuments(content.Transaction.Id,
+                try
+                {
+                    documents = DocumentManager.GetDocuments(content.Transaction.Id,
                                                              content.Documents, true);
-				}
-				catch(FileNotFoundException fileNotFoundException) {
+                }
+                catch (FileNotFoundException fileNotFoundException)
+                {
                     throw FaultProvider.GetFault(visit.Version, ENExceptionCodeType.E_FileNotFound,
-												 string.Format("The document \"{0}\" was not found.",
-															   Path.GetFileName(fileNotFoundException.FileName)));
-				}
-                
-                if ( !CollectionUtils.IsNullOrEmpty(documents) ) {
-					foreach(Document document in documents) {
-						activity.AppendFormat("Document: {0}.", document);
-					}
-				}
+                                                 string.Format("The document \"{0}\" was not found.",
+                                                               Path.GetFileName(fileNotFoundException.FileName)));
+                }
+
+                if (!CollectionUtils.IsNullOrEmpty(documents))
+                {
+                    foreach (Document document in documents)
+                    {
+                        activity.AppendFormat("Document: {0}.", document);
+                    }
+                }
 
                 NotificationManager.DoDownloadNotifications(content.Transaction.Id, flowId, content.Flow.FlowName,
                                                             nodeVisit.Account.NaasAccount);
-				return documents;
-			}
+                return documents;
+            }
             catch (Exception ex)
             {
                 if (activity != null)
@@ -297,18 +317,21 @@ namespace Windsor.Node2008.WNOS.Service
                     activity.Append(ExceptionUtils.ToShortString(ex));
                     activity.Type = ActivityType.Error;
                 }
-                if ( ex is SoapException ) {
-					throw;	// Throw directly since already SoapException
-                } else {
+                if (ex is SoapException)
+                {
+                    throw;	// Throw directly since already SoapException
+                }
+                else
+                {
                     throw FaultProvider.GetFault(visit.Version, ex);
-				}
+                }
             }
             finally
             {
-				if ( activity != null )
-				{
-					ActivityManager.Log(activity);
-				}
+                if (activity != null)
+                {
+                    ActivityManager.Log(activity);
+                }
             }
         }
 
@@ -336,23 +359,24 @@ namespace Windsor.Node2008.WNOS.Service
             return result.Content;
         }
 
-        private bool ValidateTransaction(EndpointVersionType endpointVersion, NodeMethod transactionWebMethod, 
+        private bool ValidateTransaction(EndpointVersionType endpointVersion, NodeMethod transactionWebMethod,
                                          ComplexContent content, bool doValidateFlowOperation,
-								         string flowId, out string networkId) {
-            
+                                         string flowId, out string networkId)
+        {
+
             networkId = null;
             string dbOperation;
-			NodeMethod webMethod;
+            NodeMethod webMethod;
             bool isNetworkTransactionId = false;
             string transactionFlowId;
-			TransactionStatus transactionStatus =
+            TransactionStatus transactionStatus =
                 TransactionManager.GetTransactionStatus(content.Transaction.Id, out transactionFlowId,
-														out dbOperation, out webMethod);
-			if ( transactionStatus == null )
-			{
+                                                        out dbOperation, out webMethod);
+            if (transactionStatus == null)
+            {
                 transactionStatus =
                     TransactionManager.GetTransactionStatusByNetworkId(content.Transaction.Id, out transactionFlowId,
-														               out dbOperation, out webMethod);
+                                                                       out dbOperation, out webMethod);
                 if (transactionStatus == null)
                 {
                     throw FaultProvider.GetFault(endpointVersion, ENExceptionCodeType.E_TransactionId,
@@ -360,24 +384,26 @@ namespace Windsor.Node2008.WNOS.Service
                                                  content.Transaction.Id);
                 }
                 isNetworkTransactionId = true;
-			}
+            }
             if (transactionFlowId != flowId)
             {
                 throw FaultProvider.GetFault(endpointVersion, ENExceptionCodeType.E_InvalidDataflow,
                                              "Flow operation \"{0}\" is not valid for transaction \"{1}\"",
                                              content.Flow.Operation, content.Transaction.Id);
             }
-			if ( doValidateFlowOperation &&
-				 !string.Equals(dbOperation, content.Flow.Operation ?? string.Empty, StringComparison.InvariantCultureIgnoreCase) ) {
-                     throw FaultProvider.GetFault(endpointVersion, ENExceptionCodeType.E_InvalidDataflow,
-											 "Flow operation \"{0}\" is not valid for transaction \"{1}\"", 
-											 content.Flow.Operation, content.Transaction.Id);
-			}
-			if ( (transactionWebMethod == NodeMethod.Submit) && (webMethod != NodeMethod.Submit) ) {
+            if (doValidateFlowOperation &&
+                 !string.Equals(dbOperation, content.Flow.Operation ?? string.Empty, StringComparison.InvariantCultureIgnoreCase))
+            {
+                throw FaultProvider.GetFault(endpointVersion, ENExceptionCodeType.E_InvalidDataflow,
+                                        "Flow operation \"{0}\" is not valid for transaction \"{1}\"",
+                                        content.Flow.Operation, content.Transaction.Id);
+            }
+            if ((transactionWebMethod == NodeMethod.Submit) && (webMethod != NodeMethod.Submit))
+            {
                 // Create new transaction and reference the input transaction id as the network id for 
                 // the new transcation
                 networkId = content.Transaction.Id;
-			}
+            }
             if (networkId != null)
             {
                 content.Transaction.Id = string.Empty;
@@ -392,62 +418,87 @@ namespace Windsor.Node2008.WNOS.Service
                 }
                 return false;
             }
-		}
+        }
         #endregion
 
         #region Init
 
-		new public void Init()
-		{
-			base.Init();
-			FieldNotInitializedException.ThrowIfNull(this, ref _transactionManager);
-			FieldNotInitializedException.ThrowIfNull(this, ref _documentManager);
-			FieldNotInitializedException.ThrowIfNull(this, ref _notificationManager);
-			FieldNotInitializedException.ThrowIfNull(this, ref _submitDocumentProcessor);
+        new public void Init()
+        {
+            base.Init();
+            FieldNotInitializedException.ThrowIfNull(this, ref _transactionManager);
+            FieldNotInitializedException.ThrowIfNull(this, ref _documentManager);
+            FieldNotInitializedException.ThrowIfNull(this, ref _notificationManager);
+            FieldNotInitializedException.ThrowIfNull(this, ref _submitDocumentProcessor);
             FieldNotInitializedException.ThrowIfNull(this, ref _transactionService);
+            FieldNotInitializedException.ThrowIfNull(this, ref _transactionService);
+            FieldNotInitializedException.ThrowIfNull(this, SecurityService, "SecurityService");
         }
 
-		#endregion // Init
+        #endregion // Init
 
-		public INotificationManagerEx NotificationManager {
-			get {
-				return _notificationManager;
-			}
-			set {
-				_notificationManager = value;
-			}
-		}
+        public INotificationManagerEx NotificationManager
+        {
+            get
+            {
+                return _notificationManager;
+            }
+            set
+            {
+                _notificationManager = value;
+            }
+        }
 
-		public IDocumentManagerEx DocumentManager {
-			get {
-				return _documentManager;
-			}
-			set {
-				_documentManager = value;
-			}
-		}
-		
-		public ITransactionManagerEx TransactionManager {
-			get {
-				return _transactionManager;
-			}
-			set {
-				_transactionManager = value;
-			}
-		}
+        public IDocumentManagerEx DocumentManager
+        {
+            get
+            {
+                return _documentManager;
+            }
+            set
+            {
+                _documentManager = value;
+            }
+        }
+
+        public ITransactionManagerEx TransactionManager
+        {
+            get
+            {
+                return _transactionManager;
+            }
+            set
+            {
+                _transactionManager = value;
+            }
+        }
         public ITransactionService TransactionService
         {
-            get { return _transactionService; }
-            set { _transactionService = value; }
+            get
+            {
+                return _transactionService;
+            }
+            set
+            {
+                _transactionService = value;
+            }
         }
 
-		internal INodeProcessor SubmitProcessor {
-			get {
-				return _submitDocumentProcessor;
-			}
-			set {
-				_submitDocumentProcessor = value;
-			}
-		}
+        internal INodeProcessor SubmitProcessor
+        {
+            get
+            {
+                return _submitDocumentProcessor;
+            }
+            set
+            {
+                _submitDocumentProcessor = value;
+            }
+        }
+        internal ISecurityService SecurityService
+        {
+            get;
+            set;
+        }
     }
 }

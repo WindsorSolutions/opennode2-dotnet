@@ -21,6 +21,11 @@ namespace Windsor.Commons.AspNet.WebApi.Helpers
             actionContext.Response = actionContext.Request.CreateErrorResponse(HttpStatusCode.BadRequest, modelState);
             return actionContext;
         }
+        public static HttpResponseMessage CreateBadRequestResponse(this HttpRequestMessage requestMessage, string messageFormat = null, params object[] args)
+        {
+            string message = MakeMessage("Bad request", messageFormat, args);
+            return requestMessage.CreateErrorResponse(HttpStatusCode.BadRequest, message);
+        }
         public static HttpActionContext CreateErrorResponse(this HttpActionContext actionContext, HttpStatusCode code, string defaultMessage,
                                                             string messageFormat = null, params object[] args)
         {

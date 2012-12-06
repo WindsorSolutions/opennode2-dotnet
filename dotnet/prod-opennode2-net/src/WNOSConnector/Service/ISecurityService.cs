@@ -52,5 +52,7 @@ namespace Windsor.Node2008.WNOSConnector.Service
         /// </summary>
         /// <returns></returns>
         NodeVisit AuthenticateAdmin(AuthenticationCredentials credentials, string requestedFromIp);
+
+        void ValidateVisitIsAuthenticated(NamedOrAuthEndpointVisit visit);
     }
 }

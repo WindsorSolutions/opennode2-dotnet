@@ -68,6 +68,7 @@
       <Link>AssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AllOrNoneAttribute.cs" />
+    <Compile Include="DataAnnotationsHelper.cs" />
     <Compile Include="DependentPropertiesAttribute.cs" />
     <Compile Include="MustBeNullOrEmptyAttribute.cs" />
     <Compile Include="MutuallyExclusiveAttribute.cs" />

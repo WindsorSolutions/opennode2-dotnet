@@ -49,22 +49,23 @@ namespace Windsor.Commons.NodeDomain
         Flat,
         Bin,
         ZIP,
-        ODF
+        ODF,
+        HTML,
     }
-    
+
     #endregion
 
     [Serializable]
     public static class CommonContentAndFormatProvider
     {
-		private enum Wsdl11ContentType
-		{
-			OTHER,
-			XML,
-			Flat,
-			Bin,
-			ZIP
-		}
+        private enum Wsdl11ContentType
+        {
+            OTHER,
+            XML,
+            Flat,
+            Bin,
+            ZIP
+        }
 
         #region Members
 
@@ -78,41 +79,67 @@ namespace Windsor.Commons.NodeDomain
         static CommonContentAndFormatProvider()
         {
             _commonContentToFormatMap = new Dictionary<CommonContentType, string>();
-			_commonContentToFormatMap.Add(CommonContentType.OTHER, "application/x");
-			_commonContentToFormatMap.Add(CommonContentType.XML, "text/xml");
-			_commonContentToFormatMap.Add(CommonContentType.Flat, "text/plain");
-			_commonContentToFormatMap.Add(CommonContentType.Bin, "application/octet-stream");
-			_commonContentToFormatMap.Add(CommonContentType.ZIP, "application/zip");
+            _commonContentToFormatMap.Add(CommonContentType.OTHER, "application/x");
+            _commonContentToFormatMap.Add(CommonContentType.XML, "text/xml");
+            _commonContentToFormatMap.Add(CommonContentType.Flat, "text/plain");
+            _commonContentToFormatMap.Add(CommonContentType.Bin, "application/octet-stream");
+            _commonContentToFormatMap.Add(CommonContentType.ZIP, "application/zip");
+            _commonContentToFormatMap.Add(CommonContentType.HTML, "text/html");
         }
-        
+
         public static CommonContentType Convert(string text)
         {
-			return EnumUtils.ParseEnum<CommonContentType>(text);
+            return EnumUtils.ParseEnum<CommonContentType>(text);
         }
-		public static string ConvertToMimeType(CommonContentType type)
-		{
-			return _commonContentToFormatMap.ContainsKey(type) ? _commonContentToFormatMap[type] :
-				_commonContentToFormatMap[CommonContentType.OTHER];
-		}
-		public static string ConvertTo11Enum(CommonContentType type)
-		{
-			return EnumUtils.ParseEnum<Wsdl11ContentType>(type.ToString()).ToString();
-		}
+        public static string ConvertToMimeType(CommonContentType type)
+        {
+            return _commonContentToFormatMap.ContainsKey(type) ? _commonContentToFormatMap[type] :
+                _commonContentToFormatMap[CommonContentType.OTHER];
+        }
+        public static string ConvertTo11Enum(CommonContentType type)
+        {
+            return EnumUtils.ParseEnum<Wsdl11ContentType>(type.ToString()).ToString();
+        }
         public static string GetFileExtension(CommonContentType type)
         {
-            switch (type) {
-                case CommonContentType.Bin: return ".bin";
-                case CommonContentType.Flat: return ".txt";
-                case CommonContentType.ODF: return ".odf";
-                case CommonContentType.OTHER: return ".dat";
-                case CommonContentType.XML: return ".xml";
-                case CommonContentType.ZIP: return ".zip";
-                default: return ".unknown";
+            switch (type)
+            {
+                case CommonContentType.Bin:
+                    return ".bin";
+                case CommonContentType.Flat:
+                    return ".txt";
+                case CommonContentType.ODF:
+                    return ".odf";
+                case CommonContentType.OTHER:
+                    return ".dat";
+                case CommonContentType.XML:
+                    return ".xml";
+                case CommonContentType.ZIP:
+                    return ".zip";
+                case CommonContentType.HTML:
+                    return ".html";
+                default:
+                    return ".unknown";
             }
         }
         public static CommonContentType GetFileTypeFromName(string fileName)
         {
             return GetFileTypeFromExtension(Path.GetExtension(fileName));
+        }
+        public static string ConvertContentBytesToString(byte[] content)
+        {
+            if (content == null)
+            {
+                return null;
+            }
+            if (content.Length == 0)
+            {
+                return string.Empty;
+            }
+            using (StreamReader reader = new StreamReader(new MemoryStream(content)))
+            {
+                return reader.ReadToEnd();
+            }
         }
         public static CommonContentType GetFileTypeFromExtension(string extension)
         {
@@ -130,13 +157,22 @@ namespace Windsor.Commons.NodeDomain
             }
             switch (extension)
             {
-                case "bin": return CommonContentType.Bin;
-                case "txt": return CommonContentType.Flat;
-                case "odf": return CommonContentType.ODF;
-                case "dat": return CommonContentType.OTHER;
-                case "xml": return CommonContentType.XML;
-                case "zip": return CommonContentType.ZIP;
-                default: return CommonContentType.OTHER;
+                case "bin":
+                    return CommonContentType.Bin;
+                case "txt":
+                    return CommonContentType.Flat;
+                case "odf":
+                    return CommonContentType.ODF;
+                case "dat":
+                    return CommonContentType.OTHER;
+                case "xml":
+                    return CommonContentType.XML;
+                case "zip":
+                    return CommonContentType.ZIP;
+                case "html":
+                    return CommonContentType.HTML;
+                default:
+                    return CommonContentType.OTHER;
             }
         }
     }

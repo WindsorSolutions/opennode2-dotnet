@@ -116,6 +116,22 @@ namespace Windsor.Node2008.WNOS.Service
 
         }
 
+        public virtual void ValidateVisitIsAuthenticated(NamedOrAuthEndpointVisit visit)
+        {
+            if (string.IsNullOrEmpty(visit.Token))
+            {
+                AuthEndpointVisit authEndpointVisit = new AuthEndpointVisit(visit);
+                try
+                {
+                    visit.Token = Authenticate(authEndpointVisit);
+                }
+                catch (Exception ex)
+                {
+                    throw new AuthenticationException("Authentication failed.", ex);
+                }
+            }
+        }
+
         /// <summary>
         /// Authenticate
         /// </summary>
@@ -154,7 +170,7 @@ namespace Windsor.Node2008.WNOS.Service
                 IDictionary<string, string> flowsIdToNameMap = FlowManager.GetAllFlowsIdToNameMap();
                 NodeVisit visit = new NodeVisit(account, requestedFromIp, flowsIdToNameMap);
 
-                ActivityManager.LogAudit(NodeMethod.AdminLogin, null, visit, "Login success for user: \"{0}\"", 
+                ActivityManager.LogAudit(NodeMethod.AdminLogin, null, visit, "Login success for user: \"{0}\"",
                                          credentials.UserName);
 
                 return visit;
@@ -169,7 +185,7 @@ namespace Windsor.Node2008.WNOS.Service
         #endregion
 
 
-        #region Properties 
+        #region Properties
         #endregion
     }
 }

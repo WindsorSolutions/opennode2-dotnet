@@ -39,32 +39,7 @@ namespace Windsor.Commons.DataAnnotations
         }
         protected virtual string GetDisplayNameForProperty(Type containerType, string propertyName)
         {
-            ICustomTypeDescriptor typeDescriptor = GetTypeDescriptor(containerType);
-            PropertyDescriptor propertyDescriptor = typeDescriptor.GetProperties().Find(propertyName, true);
-            if (propertyDescriptor == null)
-            {
-                throw new ArgumentException(string.Format("Property not found", new object[]
-                {
-                    containerType.FullName,
-                    propertyName
-                }));
-            }
-            IEnumerable<Attribute> source = propertyDescriptor.Attributes.Cast<Attribute>();
-            DisplayAttribute displayAttribute = source.OfType<DisplayAttribute>().FirstOrDefault<DisplayAttribute>();
-            if (displayAttribute != null)
-            {
-                return displayAttribute.GetName();
-            }
-            DisplayNameAttribute displayNameAttribute = source.OfType<DisplayNameAttribute>().FirstOrDefault<DisplayNameAttribute>();
-            if (displayNameAttribute != null)
-            {
-                return displayNameAttribute.DisplayName;
-            }
-            return propertyName;
-        }
-        protected virtual ICustomTypeDescriptor GetTypeDescriptor(Type type)
-        {
-            return new AssociatedMetadataTypeTypeDescriptionProvider(type).GetTypeDescriptor(type);
+            return DataAnnotationsHelper.GetDisplayNameForProperty(containerType, propertyName);
         }
         protected virtual bool IsValueSpecified(object value)
         {

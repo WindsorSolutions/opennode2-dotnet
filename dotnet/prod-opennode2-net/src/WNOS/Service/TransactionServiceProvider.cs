@@ -55,13 +55,13 @@ namespace Windsor.Node2008.WNOS.Service
     public class TransactionServiceProvider : BaseEndpointService, ITransactionService
     {
 
-		private ITransactionManagerEx _transactionManager;
-		private IDocumentManagerEx _documentManager;
-		private INotificationManagerEx _notificationManager;
+        private ITransactionManagerEx _transactionManager;
+        private IDocumentManagerEx _documentManager;
+        private INotificationManagerEx _notificationManager;
         private IRequestManagerEx _requestManager;
-		private IPluginLoader _pluginLoader;
-		private INodeProcessor _notifyDocumentProcessor;
-		private INodeProcessor _solicitProcessor;
+        private IPluginLoader _pluginLoader;
+        private INodeProcessor _notifyDocumentProcessor;
+        private INodeProcessor _solicitProcessor;
         private INodeProcessor _executeProcessor;
 
         #region ITransactionService Members
@@ -73,39 +73,39 @@ namespace Windsor.Node2008.WNOS.Service
             try
             {
                 NodeVisit nodeVisit;
-				MakeEndpointActivity(visit, ActivityType.Audit, NodeMethod.GetStatus,
+                MakeEndpointActivity(visit, ActivityType.Audit, NodeMethod.GetStatus,
                                      out nodeVisit, out activity);
-				
-				if ( (transaction == null) || string.IsNullOrEmpty(transaction.Id) )
-				{
+
+                if ((transaction == null) || string.IsNullOrEmpty(transaction.Id))
+                {
                     throw FaultProvider.GetFault(visit.Version, ENExceptionCodeType.E_InvalidParameter,
-												 "Empty input transaction");
-				}
-				
-				string flowId, operation;
-				NodeMethod webMethod;
-				TransactionStatus transactionStatus = 
-					TransactionManager.GetTransactionStatus(transaction.Id, out flowId,
-															out operation, out webMethod);
-				if ( transactionStatus == null )
-				{
+                                                 "Empty input transaction");
+                }
+
+                string flowId, operation;
+                NodeMethod webMethod;
+                TransactionStatus transactionStatus =
+                    TransactionManager.GetTransactionStatus(transaction.Id, out flowId,
+                                                            out operation, out webMethod);
+                if (transactionStatus == null)
+                {
                     throw FaultProvider.GetFault(visit.Version, ENExceptionCodeType.E_TransactionId,
-												 "Transaction not found: \"{0}\"", transaction.Id);
-				}
-				
-				activity.TransactionId = transaction.Id;
+                                                 "Transaction not found: \"{0}\"", transaction.Id);
+                }
+
+                activity.TransactionId = transaction.Id;
 
                 bool isFlowProtected;
                 string flowCode = FlowManager.GetDataFlowNameById(flowId, out isFlowProtected);
                 activity.FlowName = flowCode;
                 activity.Operation = operation;
 
-				if ( flowCode == null )
-				{
+                if (flowCode == null)
+                {
                     throw FaultProvider.GetFault(visit.Version, ENExceptionCodeType.E_InvalidDataflow,
-												 "Flow id not found: \"{0}\" for transaction: \"{1}\"", 
-												 flowId, transaction.Id);
-				}
+                                                 "Flow id not found: \"{0}\" for transaction: \"{1}\"",
+                                                 flowId, transaction.Id);
+                }
 
                 if (isFlowProtected)
                 {
@@ -117,7 +117,7 @@ namespace Windsor.Node2008.WNOS.Service
                                       visit.IP, nodeVisit.Account.NaasAccount, transaction.Id);
                 activity.AppendFormat("Result: {0}", transactionStatus);
 
-				return transactionStatus;
+                return transactionStatus;
             }
             catch (Exception ex)
             {
@@ -126,18 +126,21 @@ namespace Windsor.Node2008.WNOS.Service
                     activity.Append(ExceptionUtils.ToShortString(ex));
                     activity.Type = ActivityType.Error;
                 }
-                if ( ex is SoapException ) {
-					throw;	// Throw directly since already SoapException
-                } else {
+                if (ex is SoapException)
+                {
+                    throw;	// Throw directly since already SoapException
+                }
+                else
+                {
                     throw FaultProvider.GetFault(visit.Version, ex);
-				}
+                }
             }
             finally
             {
-				if ( activity != null )
-				{
-					ActivityManager.Log(activity);
-				}
+                if (activity != null)
+                {
+                    ActivityManager.Log(activity);
+                }
             }
         }
 
@@ -150,14 +153,16 @@ namespace Windsor.Node2008.WNOS.Service
                 NodeVisit nodeVisit;
                 MakeEndpointActivity(visit, ActivityType.Audit, NodeMethod.Notify,
                                      out nodeVisit, out activity);
-				if ( notification == null ) {
+                if (notification == null)
+                {
                     throw FaultProvider.GetFault(visit.Version, ENExceptionCodeType.E_InvalidParameter,
-												 "Empty input notification");
-				}
-				if ( string.IsNullOrEmpty(notification.FlowName) ) {
+                                                 "Empty input notification");
+                }
+                if (string.IsNullOrEmpty(notification.FlowName))
+                {
                     throw FaultProvider.GetFault(visit.Version, ENExceptionCodeType.E_InvalidDataflow,
-												 "Empty dataflow name");
-				}
+                                                 "Empty dataflow name");
+                }
                 bool isFlowProtected;
                 string flowId = FlowManager.GetDataFlowIdByName(notification.FlowName, out isFlowProtected);
                 if (flowId == null)
@@ -169,8 +174,8 @@ namespace Windsor.Node2008.WNOS.Service
                 if (CollectionUtils.IsNullOrEmpty(notification.Notifications))
                 {
                     throw FaultProvider.GetFault(visit.Version, ENExceptionCodeType.E_InvalidParameter,
-												 "Notifications array is empty");
-				}
+                                                 "Notifications array is empty");
+                }
                 if (isFlowProtected)
                 {
                     ValidateUserPermissions(nodeVisit, notification.FlowName, null, NodeMethod.Notify,
@@ -178,27 +183,27 @@ namespace Windsor.Node2008.WNOS.Service
                 }
 
                 activity.AppendFormat("Notify request from {0} by {1}.", visit.IP, nodeVisit.Account.NaasAccount);
-				foreach (Notification notifyElement in notification.Notifications)
-				{
-					activity.AppendFormat("Notify element name {0}, type {1}, status.", notifyElement.Name, 
-										  notifyElement.Category.ToString(), notifyElement.Status.ToString());
+                foreach (Notification notifyElement in notification.Notifications)
+                {
+                    activity.AppendFormat("Notify element name {0}, type {1}, status.", notifyElement.Name,
+                                          notifyElement.Category.ToString(), notifyElement.Status.ToString());
                 }
 
                 transactionId = TransactionManager.CreateNotifyTransaction(flowId, string.Empty, nodeVisit.Account.Id,
                                                                            CommonTransactionStatusCode.Received,
                                                                            null, notification, visit.Version, true);
-				activity.TransactionId = transactionId;
+                activity.TransactionId = transactionId;
 
-                TransactionStatus rtnTransactionStatus = 
+                TransactionStatus rtnTransactionStatus =
                         new TransactionStatus(transactionId, CommonTransactionStatusCode.Received);
 
                 NotificationManager.DoNotifyNotifications(rtnTransactionStatus, flowId, notification.FlowName,
                                                           nodeVisit.Account.NaasAccount);
 
-				NotifyProcessor.Wakeup();
+                NotifyProcessor.Wakeup();
 
-				return rtnTransactionStatus;
-			}
+                return rtnTransactionStatus;
+            }
             catch (Exception ex)
             {
                 if (transactionId != null)
@@ -212,21 +217,35 @@ namespace Windsor.Node2008.WNOS.Service
                     activity.Append(ExceptionUtils.ToShortString(ex));
                     activity.Type = ActivityType.Error;
                 }
-                if ( ex is SoapException ) {
-					throw;	// Throw directly since already SoapException
-                } else {
+                if (ex is SoapException)
+                {
+                    throw;	// Throw directly since already SoapException
+                }
+                else
+                {
                     throw FaultProvider.GetFault(visit.Version, ex);
-				}
+                }
             }
             finally
             {
-				if ( activity != null )
-				{
-					ActivityManager.Log(activity);
-				}
+                if (activity != null)
+                {
+                    ActivityManager.Log(activity);
+                }
             }
         }
 
+        public PaginatedContentResult QueryEx(FormattedPaginatedContentRequest request,
+                                              NamedOrAuthEndpointVisit visit)
+        {
+            SecurityService.ValidateVisitIsAuthenticated(visit);
+
+            PaginatedContentResult result = Query(request, visit);
+
+            result = TransformQueryResult(request, result);
+
+            return result;
+        }
         public PaginatedContentResult Query(PaginatedContentRequest request, NamedEndpointVisit visit)
         {
             Activity activity = null;
@@ -237,11 +256,11 @@ namespace Windsor.Node2008.WNOS.Service
                 NodeVisit nodeVisit;
                 MakeEndpointActivity(visit, ActivityType.Audit, NodeMethod.Query,
                                      out nodeVisit, out activity);
-				if ( request == null )
-				{
+                if (request == null)
+                {
                     throw FaultProvider.GetFault(visit.Version, ENExceptionCodeType.E_InvalidParameter,
-												 "Empty input request");
-				}
+                                                 "Empty input request");
+                }
                 if (string.IsNullOrEmpty(request.OperationName))
                 {
                     throw FaultProvider.GetFault(visit.Version, ENExceptionCodeType.E_InvalidParameter,
@@ -252,7 +271,7 @@ namespace Windsor.Node2008.WNOS.Service
                     if (visit.Version == EndpointVersionType.EN11)
                     {
                         bool moreThanOneFlowFound;
-                        string flowNameByServiceName = 
+                        string flowNameByServiceName =
                             FlowManager.GetDataFlowNameByServiceName(request.OperationName, out moreThanOneFlowFound);
                         if (string.IsNullOrEmpty(flowNameByServiceName))
                         {
@@ -276,7 +295,7 @@ namespace Windsor.Node2008.WNOS.Service
                         throw FaultProvider.GetFault(visit.Version, ENExceptionCodeType.E_InvalidParameter,
                                                      "Input flow is null");
                     }
-				}
+                }
                 bool isFlowProtected;
                 string flowId = FlowManager.GetDataFlowIdByName(request.FlowName, out isFlowProtected);
                 if (flowId == null)
@@ -290,25 +309,32 @@ namespace Windsor.Node2008.WNOS.Service
                 if (request.Paging == null)
                 {
                     throw FaultProvider.GetFault(visit.Version, ENExceptionCodeType.E_InvalidParameter,
-												 "Input paging is null");
-				}
-				if ( request.Paging.Count == -1 ) {
-					if ( request.Paging.Start != 0 ) {
+                                                 "Input paging is null");
+                }
+                if (request.Paging.Count == -1)
+                {
+                    if (request.Paging.Start != 0)
+                    {
                         throw FaultProvider.GetFault(visit.Version, ENExceptionCodeType.E_InvalidParameter,
-													 "Start row is not valid: \"{0}\"", request.Paging.Start);
-					}
-				} else if ( request.Paging.Count > 0 ) {
-				} else {
+                                                     "Start row is not valid: \"{0}\"", request.Paging.Start);
+                    }
+                }
+                else if (request.Paging.Count > 0)
+                {
+                }
+                else
+                {
                     throw FaultProvider.GetFault(visit.Version, ENExceptionCodeType.E_InvalidParameter,
-												 "Max row count is not valid: \"{0}\"", request.Paging.Count);
-				}
-				
-				DataService queryService = FlowManager.GetQueryServiceForFlow(flowId, request.OperationName);
-				if ( (queryService == null) || !queryService.IsActive ) {
+                                                 "Max row count is not valid: \"{0}\"", request.Paging.Count);
+                }
+
+                DataService queryService = FlowManager.GetQueryServiceForFlow(flowId, request.OperationName);
+                if ((queryService == null) || !queryService.IsActive)
+                {
                     throw FaultProvider.GetFault(visit.Version, ENExceptionCodeType.E_ServiceUnavailable,
-												 "A valid Query service was not found for the flow \"{0}\" and request \"{1}\"", 
-												 request.FlowName, request.OperationName);
-				}
+                                                 "A valid Query service was not found for the flow \"{0}\" and request \"{1}\"",
+                                                 request.FlowName, request.OperationName);
+                }
 
                 if (isFlowProtected)
                 {
@@ -317,22 +343,24 @@ namespace Windsor.Node2008.WNOS.Service
                 }
 
                 activity.AppendFormat("Query request from {0} by {1}. ", visit.IP, nodeVisit.Account.NaasAccount);
-                activity.AppendFormat("Service:{0} Parameters:{1} Row:{2} Rows:{3}. ", 
-									  request.OperationName, ParsingHelper.ToQualifiedString(request.Parameters),
-									  request.Paging.Start.ToString(), request.Paging.Count.ToString());
-									  
-				// Load the service plugin
-				IQueryProcessor plugin;
+                activity.AppendFormat("Service:{0} Parameters:{1} Row:{2} Rows:{3}. ",
+                                      request.OperationName, ParsingHelper.ToQualifiedString(request.Parameters),
+                                      request.Paging.Start.ToString(), request.Paging.Count.ToString());
+
+                // Load the service plugin
+                IQueryProcessor plugin;
                 IPluginDisposer disposer;
-				try {
+                try
+                {
                     string flowName = FlowManager.GetDataFlowNameById(queryService.FlowId);
                     disposer = PluginLoader.LoadQueryProcessor(queryService, out plugin);
-				}
-				catch(Exception) {
+                }
+                catch (Exception)
+                {
                     throw FaultProvider.GetFault(visit.Version, ENExceptionCodeType.E_ServiceUnavailable,
-												 "Failed to load the Query service for the flow \"{0}\" and request \"{1}\"", 
-												 request.FlowName, request.OperationName);
-				}
+                                                 "Failed to load the Query service for the flow \"{0}\" and request \"{1}\"",
+                                                 request.FlowName, request.OperationName);
+                }
                 PaginatedContentResult result;
                 using (disposer)
                 {
@@ -357,38 +385,42 @@ namespace Windsor.Node2008.WNOS.Service
                     }
                 }
 
-				TransactionManager.SetTransactionStatus(transactionId, CommonTransactionStatusCode.Processed,
-														null, false);
+                TransactionManager.SetTransactionStatus(transactionId, CommonTransactionStatusCode.Processed,
+                                                        null, false);
 
-                NotificationManager.DoQueryNotifications(flowId, transactionId, request.FlowName, nodeVisit.Account.NaasAccount, 
-														 request.OperationName, request.Paging.Start,
-														 request.Paging.Count, request.Parameters);
-				return result;
+                NotificationManager.DoQueryNotifications(flowId, transactionId, request.FlowName, nodeVisit.Account.NaasAccount,
+                                                         request.OperationName, request.Paging.Start,
+                                                         request.Paging.Count, request.Parameters);
+                return result;
             }
             catch (Exception ex)
             {
-				if ( transactionId != null ) {
-					TransactionManager.SetTransactionStatusNoThrow(transactionId, 
-																   CommonTransactionStatusCode.Failed,
-																   ex.Message, false);
-				}
+                if (transactionId != null)
+                {
+                    TransactionManager.SetTransactionStatusNoThrow(transactionId,
+                                                                   CommonTransactionStatusCode.Failed,
+                                                                   ex.Message, false);
+                }
                 if (activity != null)
                 {
                     activity.Append(ExceptionUtils.ToShortString(ex));
                     activity.Type = ActivityType.Error;
                 }
-                if ( ex is SoapException ) {
-					throw;	// Throw directly since already SoapException
-                } else {
+                if (ex is SoapException)
+                {
+                    throw;	// Throw directly since already SoapException
+                }
+                else
+                {
                     throw FaultProvider.GetFault(visit.Version, ex);
-				}
+                }
             }
             finally
             {
-				if ( activity != null )
-				{
-					ActivityManager.Log(activity);
-				}
+                if (activity != null)
+                {
+                    ActivityManager.Log(activity);
+                }
             }
         }
 
@@ -402,15 +434,16 @@ namespace Windsor.Node2008.WNOS.Service
                 NodeVisit nodeVisit;
                 MakeEndpointActivity(visit, ActivityType.Audit, NodeMethod.Solicit,
                                      out nodeVisit, out activity);
-				if ( request == null )
-				{
+                if (request == null)
+                {
                     throw FaultProvider.GetFault(visit.Version, ENExceptionCodeType.E_InvalidParameter,
-												 "Empty input request");
-				}
-				if ( string.IsNullOrEmpty(request.OperationName) ) {
+                                                 "Empty input request");
+                }
+                if (string.IsNullOrEmpty(request.OperationName))
+                {
                     throw FaultProvider.GetFault(visit.Version, ENExceptionCodeType.E_InvalidParameter,
-												 "Input request is null");
-				}
+                                                 "Input request is null");
+                }
                 if ((request.FlowName == null) || string.IsNullOrEmpty(request.FlowName))
                 {
                     if (visit.Version == EndpointVersionType.EN11)
@@ -442,20 +475,21 @@ namespace Windsor.Node2008.WNOS.Service
                     }
                 }
                 bool isFlowProtected;
-				string flowId = FlowManager.GetDataFlowIdByName(request.FlowName, out isFlowProtected);
-				if ( flowId == null )
-				{
+                string flowId = FlowManager.GetDataFlowIdByName(request.FlowName, out isFlowProtected);
+                if (flowId == null)
+                {
                     throw FaultProvider.GetFault(visit.Version, ENExceptionCodeType.E_InvalidDataflow,
-												 "Flow \"{0}\" was not found", request.FlowName);
-				}
+                                                 "Flow \"{0}\" was not found", request.FlowName);
+                }
                 activity.FlowName = request.FlowName;
                 activity.Operation = request.OperationName;
-				DataService solicitService = FlowManager.GetSolicitServiceForFlow(flowId, request.OperationName);
-				if ( (solicitService == null) || !solicitService.IsActive ) {
+                DataService solicitService = FlowManager.GetSolicitServiceForFlow(flowId, request.OperationName);
+                if ((solicitService == null) || !solicitService.IsActive)
+                {
                     throw FaultProvider.GetFault(visit.Version, ENExceptionCodeType.E_ServiceUnavailable,
-												 "A valid Solicit service was not found for the flow \"{0}\" and request \"{1}\"", 
-												 request.FlowName, request.OperationName);
-				}
+                                                 "A valid Solicit service was not found for the flow \"{0}\" and request \"{1}\"",
+                                                 request.FlowName, request.OperationName);
+                }
                 if (isFlowProtected)
                 {
                     ValidateUserPermissions(nodeVisit, request.FlowName, request.OperationName, NodeMethod.Solicit,
@@ -463,62 +497,68 @@ namespace Windsor.Node2008.WNOS.Service
                 }
 
                 activity.AppendFormat("Solicit request from {0} by {1}. ", visit.IP, nodeVisit.Account.NaasAccount);
-                activity.AppendFormat("Service:{0} Parameters:{1}. ", 
-									  request.OperationName, ParsingHelper.ToQualifiedString(request.Parameters));
+                activity.AppendFormat("Service:{0} Parameters:{1}. ",
+                                      request.OperationName, ParsingHelper.ToQualifiedString(request.Parameters));
 
-				// Validate the service plugin
-				try {
+                // Validate the service plugin
+                try
+                {
                     PluginLoader.ValidateSolicitProcessor(solicitService);
-				}
-				catch(Exception) {
+                }
+                catch (Exception)
+                {
                     throw FaultProvider.GetFault(visit.Version, ENExceptionCodeType.E_ServiceUnavailable,
-												 "Failed to load the Solicit service for the flow \"{0}\" and request \"{1}\"", 
-												 request.FlowName, request.OperationName);
-				}
+                                                 "Failed to load the Solicit service for the flow \"{0}\" and request \"{1}\"",
+                                                 request.FlowName, request.OperationName);
+                }
 
-				transactionId =
+                transactionId =
                     TransactionManager.CreateTransaction(NodeMethod.Solicit, visit.Version, flowId, request.OperationName,
                                                          nodeVisit.Account.Id, CommonTransactionStatusCode.Unknown,
-														 null, request.Notifications, request.Recipients, false);
+                                                         null, request.Notifications, request.Recipients, false);
                 activity.TransactionId = transactionId;
-                
-                string requestId =
-                    RequestManager.CreateDataRequest(transactionId, solicitService.Id, 0, -1, RequestType.Solicit, nodeVisit.Account.Id, 
-													 request.Parameters);
-													 
-				TransactionStatus transactionStatus = 
-					TransactionManager.SetTransactionStatus(transactionId, CommonTransactionStatusCode.Received,
-															null, false);
 
-                NotificationManager.DoSolicitNotifications(transactionStatus, flowId, request.FlowName, nodeVisit.Account.NaasAccount, 
-														   request.OperationName, request.Parameters);
-				SolicitProcessor.Wakeup();
+                string requestId =
+                    RequestManager.CreateDataRequest(transactionId, solicitService.Id, 0, -1, RequestType.Solicit, nodeVisit.Account.Id,
+                                                     request.Parameters);
+
+                TransactionStatus transactionStatus =
+                    TransactionManager.SetTransactionStatus(transactionId, CommonTransactionStatusCode.Received,
+                                                            null, false);
+
+                NotificationManager.DoSolicitNotifications(transactionStatus, flowId, request.FlowName, nodeVisit.Account.NaasAccount,
+                                                           request.OperationName, request.Parameters);
+                SolicitProcessor.Wakeup();
 
                 return transactionStatus;
             }
             catch (Exception ex)
             {
-				if ( transactionId != null ) {
-					TransactionManager.SetTransactionStatusNoThrow(transactionId, CommonTransactionStatusCode.Failed,
-																   ex.Message, false);
-				}
+                if (transactionId != null)
+                {
+                    TransactionManager.SetTransactionStatusNoThrow(transactionId, CommonTransactionStatusCode.Failed,
+                                                                   ex.Message, false);
+                }
                 if (activity != null)
                 {
                     activity.Append(ExceptionUtils.ToShortString(ex));
                     activity.Type = ActivityType.Error;
                 }
-                if ( ex is SoapException ) {
-					throw;	// Throw directly since already SoapException
-                } else {
+                if (ex is SoapException)
+                {
+                    throw;	// Throw directly since already SoapException
+                }
+                else
+                {
                     throw FaultProvider.GetFault(visit.Version, ex);
-				}
+                }
             }
             finally
             {
-				if ( activity != null )
-				{
-					ActivityManager.Log(activity);
-				}
+                if (activity != null)
+                {
+                    ActivityManager.Log(activity);
+                }
             }
         }
 
@@ -615,7 +655,7 @@ namespace Windsor.Node2008.WNOS.Service
                                                         string.Empty, false);
 
                 NotificationManager.DoExecuteNotifications(result.Id, result.Status, flowId,
-                                                           request.Interface, nodeVisit.Account.NaasAccount, 
+                                                           request.Interface, nodeVisit.Account.NaasAccount,
                                                            request.OperationName, request.Parameters);
                 ExecuteProcessor.Wakeup();
 
@@ -653,86 +693,123 @@ namespace Windsor.Node2008.WNOS.Service
         }
 
         #endregion
-        
+
+        protected virtual PaginatedContentResult TransformQueryResult(FormattedPaginatedContentRequest request, PaginatedContentResult result)
+        {
+            return result;
+        }
+
         #region Init
 
         new public void Init()
         {
             base.Init();
- 			FieldNotInitializedException.ThrowIfNull(this, ref _transactionManager);
- 			FieldNotInitializedException.ThrowIfNull(this, ref _documentManager);
- 			FieldNotInitializedException.ThrowIfNull(this, ref _notificationManager);
- 			FieldNotInitializedException.ThrowIfNull(this, ref _requestManager);
- 			FieldNotInitializedException.ThrowIfNull(this, ref _pluginLoader);
-			FieldNotInitializedException.ThrowIfNull(this, ref _notifyDocumentProcessor);
-			FieldNotInitializedException.ThrowIfNull(this, ref _solicitProcessor);
-		}
+            FieldNotInitializedException.ThrowIfNull(this, ref _transactionManager);
+            FieldNotInitializedException.ThrowIfNull(this, ref _documentManager);
+            FieldNotInitializedException.ThrowIfNull(this, ref _notificationManager);
+            FieldNotInitializedException.ThrowIfNull(this, ref _requestManager);
+            FieldNotInitializedException.ThrowIfNull(this, ref _pluginLoader);
+            FieldNotInitializedException.ThrowIfNull(this, ref _notifyDocumentProcessor);
+            FieldNotInitializedException.ThrowIfNull(this, ref _solicitProcessor);
+            FieldNotInitializedException.ThrowIfNull(this, SecurityService, "SecurityService");
+        }
 
         #endregion // Init
-        
-		public INotificationManagerEx NotificationManager {
-			get {
-				return _notificationManager;
-			}
-			set {
-				_notificationManager = value;
-			}
-		}
 
-		public IDocumentManagerEx DocumentManager {
-			get {
-				return _documentManager;
-			}
-			set {
-				_documentManager = value;
-			}
-		}
+        public INotificationManagerEx NotificationManager
+        {
+            get
+            {
+                return _notificationManager;
+            }
+            set
+            {
+                _notificationManager = value;
+            }
+        }
 
-		public ITransactionManagerEx TransactionManager {
-			get {
-				return _transactionManager;
-			}
-			set {
-				_transactionManager = value;
-			}
-		}
+        public IDocumentManagerEx DocumentManager
+        {
+            get
+            {
+                return _documentManager;
+            }
+            set
+            {
+                _documentManager = value;
+            }
+        }
+
+        public ITransactionManagerEx TransactionManager
+        {
+            get
+            {
+                return _transactionManager;
+            }
+            set
+            {
+                _transactionManager = value;
+            }
+        }
         public IRequestManagerEx RequestManager
         {
-			get {
-				return _requestManager;
-			}
-			set {
-				_requestManager = value;
-			}
-		}
-		internal IPluginLoader PluginLoader {
-			get {
-				return _pluginLoader;
-			}
-			set {
-				_pluginLoader = value;
-			}
-		}
-		internal INodeProcessor NotifyProcessor
-		{
-			get
-			{
-				return _notifyDocumentProcessor;
-			}
-			set
-			{
-				_notifyDocumentProcessor = value;
-			}
-		}
-		internal INodeProcessor SolicitProcessor
-		{
-			get { return _solicitProcessor; }
-			set { _solicitProcessor = value; }
-		}
+            get
+            {
+                return _requestManager;
+            }
+            set
+            {
+                _requestManager = value;
+            }
+        }
+        internal IPluginLoader PluginLoader
+        {
+            get
+            {
+                return _pluginLoader;
+            }
+            set
+            {
+                _pluginLoader = value;
+            }
+        }
+        internal INodeProcessor NotifyProcessor
+        {
+            get
+            {
+                return _notifyDocumentProcessor;
+            }
+            set
+            {
+                _notifyDocumentProcessor = value;
+            }
+        }
+        internal INodeProcessor SolicitProcessor
+        {
+            get
+            {
+                return _solicitProcessor;
+            }
+            set
+            {
+                _solicitProcessor = value;
+            }
+        }
         internal INodeProcessor ExecuteProcessor
         {
-            get { return _executeProcessor; }
-            set { _executeProcessor = value; }
+            get
+            {
+                return _executeProcessor;
+            }
+            set
+            {
+                _executeProcessor = value;
+            }
+        }
+        internal ISecurityService SecurityService
+        {
+            get;
+            set;
         }
     }
 }

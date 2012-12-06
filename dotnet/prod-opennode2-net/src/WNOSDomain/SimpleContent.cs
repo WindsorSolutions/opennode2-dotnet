@@ -44,31 +44,48 @@ namespace Windsor.Node2008.WNOSDomain
     [Serializable]
     public class SimpleContent
     {
-		public SimpleContent() {
-		}
-		public SimpleContent(CommonContentType type, byte[] content)
-		{
-			_type = type;
-			_content = content;
-		}
-		private CommonContentType _type;
+        public SimpleContent()
+        {
+        }
+        public SimpleContent(CommonContentType type, byte[] content)
+        {
+            _type = type;
+            _content = content;
+        }
+        private CommonContentType _type;
         private byte[] _content;
 
         [ToStringQualifier(CollectionCountOnly = true)]
         public byte[] Content
         {
-            get { return _content; }
-            set { _content = value; }
+            get
+            {
+                return _content;
+            }
+            set
+            {
+                _content = value;
+            }
         }
 
-		public CommonContentType Type
+        public CommonContentType Type
         {
-            get { return _type; }
-            set { _type = value; }
+            get
+            {
+                return _type;
+            }
+            set
+            {
+                _type = value;
+            }
         }
         public override string ToString()
         {
             return ReflectionUtils.GetPublicPropertiesString(this);
+        }
+        public virtual string ConvertContentBytesToString()
+        {
+            return CommonContentAndFormatProvider.ConvertContentBytesToString(_content);
         }
     }
 }

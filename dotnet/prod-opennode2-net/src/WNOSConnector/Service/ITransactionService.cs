@@ -70,6 +70,15 @@ namespace Windsor.Node2008.WNOSConnector.Service
                                      NamedEndpointVisit visit);
 
         /// <summary>
+        /// Query data in real time
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="visit"></param>
+        /// <returns></returns>
+        PaginatedContentResult QueryEx(FormattedPaginatedContentRequest request,
+                                       NamedOrAuthEndpointVisit visit);
+
+        /// <summary>
         /// Solicit data anynchrouniously
         /// </summary>
         /// <param name="request"></param>

@@ -557,6 +557,20 @@ namespace Windsor.Commons.Core
             }
             return false;
         }
+        public static List<string> SplitAndTrimEntries(string stringToSplit, params char[] separators)
+        {
+            stringToSplit = stringToSplit.Trim();
+            if (string.IsNullOrEmpty(stringToSplit))
+            {
+                return new List<string>();
+            }
+            List<string> list =
+                new List<string>(stringToSplit.Split(separators, StringSplitOptions.None));
+
+            TrimEntries(list);
+
+            return list;
+        }
         public static List<string> SplitAndReallyRemoveEmptyEntries(string stringToSplit, params char[] separators)
         {
             stringToSplit = stringToSplit.Trim();
@@ -628,6 +642,22 @@ namespace Windsor.Commons.Core
                     {
                         list[i] = value;
                     }
+                }
+            }
+        }
+        public static void TrimEntries(List<string> list)
+        {
+            if (CollectionUtils.IsNullOrEmpty(list))
+            {
+                return;
+            }
+            for (int i = list.Count - 1; i >= 0; --i)
+            {
+                string value = list[i];
+                if (value != null)
+                {
+                    value = value.Trim();
+                    list[i] = value;
                 }
             }
         }

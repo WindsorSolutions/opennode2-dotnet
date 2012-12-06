@@ -30,7 +30,8 @@
 <body>
     <form id="form1" runat="server">
     <div id="mainWrapperDiv">
-        <asp:ScriptManager ID="ScriptManager1" runat="server" AsyncPostBackTimeout="600" ScriptMode="Release" />
+<%--        <asp:ScriptManager ID="ScriptManager1" runat="server" AsyncPostBackTimeout="600" ScriptMode="Release" EnablePartialRendering="false" />--%>
+        <cc1:ToolkitScriptManager ID="ScriptManager1" CombineScripts="true" runat="server" AsyncPostBackTimeout="600" ScriptMode="Release" EnablePartialRendering="true" />
         <div id="titleArea">
             <div id="title">
                 <%=Page.Title%>

@@ -45,8 +45,10 @@ namespace Windsor.Node2008.WNOSDomain
     [Serializable]
     public class PaginatedContentResult
     {
-        public PaginatedContentResult() { }
-        public PaginatedContentResult(int rowIndex, int rowCount, bool isLast, 
+        public PaginatedContentResult()
+        {
+        }
+        public PaginatedContentResult(int rowIndex, int rowCount, bool isLast,
                                       CommonContentType contentType, byte[] content)
         {
             _paging = new PaginationIndicator(rowIndex, rowCount, isLast);
@@ -54,12 +56,12 @@ namespace Windsor.Node2008.WNOSDomain
         }
         public PaginatedContentResult(int rowIndex, int rowCount, bool isLast,
                                       CommonContentType contentType, string filePath) :
-                                      this(rowIndex, rowCount, isLast, contentType,
+            this(rowIndex, rowCount, isLast, contentType,
                                            File.ReadAllBytes(filePath))
         {
         }
         public PaginatedContentResult(string filePath) :
-                                      this(0, -1, true, CommonContentAndFormatProvider.GetFileTypeFromName(filePath),
+            this(0, -1, true, CommonContentAndFormatProvider.GetFileTypeFromName(filePath),
                                            File.ReadAllBytes(filePath))
         {
         }
@@ -68,18 +70,34 @@ namespace Windsor.Node2008.WNOSDomain
 
         public SimpleContent Content
         {
-            get { return _content; }
-            set { _content = value; }
-        } 
+            get
+            {
+                return _content;
+            }
+            set
+            {
+                _content = value;
+            }
+        }
 
         public PaginationIndicator Paging
         {
-            get { return _paging; }
-            set { _paging = value; }
+            get
+            {
+                return _paging;
+            }
+            set
+            {
+                _paging = value;
+            }
         }
         public override string ToString()
         {
             return ReflectionUtils.GetPublicPropertiesString(this);
+        }
+        public virtual string ConvertContentBytesToString()
+        {
+            return (_content != null) ? _content.ConvertContentBytesToString() : null;
         }
     }
 }

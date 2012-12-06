@@ -81,7 +81,7 @@ namespace Windsor.Commons.AspNet.WebApi.Helpers
         }
         public static HttpActionContext CacheFirstAccessedTime(this HttpActionContext actionContext)
         {
-            if ((actionContext.Response.StatusCode == HttpStatusCode.Unauthorized) || !actionContext.GetFirstAccessedTime().HasValue)
+            if ((actionContext.Response != null) && ((actionContext.Response.StatusCode == HttpStatusCode.Unauthorized) || !actionContext.GetFirstAccessedTime().HasValue))
             {
                 var cookieValue = Convert.ToBase64String(Encoding.ASCII.GetBytes(DateTime.UtcNow.ToString()));
                 var cookie = new CookieHeaderValue(FirstAccessedTimeCookieName, cookieValue);
@@ -107,17 +107,20 @@ namespace Windsor.Commons.AspNet.WebApi.Helpers
         {
             try
             {
-                CookieHeaderValue cookie = request.Headers.GetCookies(FirstAccessedTimeCookieName).FirstOrDefault();
-                if (cookie != null)
+                if (request != null)
                 {
-                    CookieState cookieState = cookie[FirstAccessedTimeCookieName];
-                    if (cookieState != null)
+                    CookieHeaderValue cookie = request.Headers.GetCookies(FirstAccessedTimeCookieName).FirstOrDefault();
+                    if (cookie != null)
                     {
-                        string FirstAccessedTimeString = Encoding.ASCII.GetString(Convert.FromBase64String(cookieState.Value));
-                        DateTime FirstAccessedTime;
-                        if (DateTime.TryParse(FirstAccessedTimeString, out FirstAccessedTime))
+                        CookieState cookieState = cookie[FirstAccessedTimeCookieName];
+                        if (cookieState != null)
                         {
-                            return FirstAccessedTime;
+                            string FirstAccessedTimeString = Encoding.ASCII.GetString(Convert.FromBase64String(cookieState.Value));
+                            DateTime FirstAccessedTime;
+                            if (DateTime.TryParse(FirstAccessedTimeString, out FirstAccessedTime))
+                            {
+                                return FirstAccessedTime;
+                            }
                         }
                     }
                 }

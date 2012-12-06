@@ -91,10 +91,12 @@
     <Compile Include="AuthResponse.cs" />
     <Compile Include="ExecuteContentResult.cs" />
     <Compile Include="FlowNotification.cs" />
+    <Compile Include="FormattedPaginatedContentRequest.cs" />
     <Compile Include="GetAuthorizedUsersResponse.cs" />
     <Compile Include="ImportExportSettings.cs" />
     <Compile Include="LatLong.cs" />
     <Compile Include="NaasUserInfo.cs" />
+    <Compile Include="NamedOrAuthEndpointVisit.cs" />
     <Compile Include="NodeVisit.cs" />
     <Compile Include="PluginItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -59,6 +59,8 @@ namespace Windsor.Node2008.Admin
         {
             base.OnInit(e);
 
+            var script = ScriptManager1;
+
             ShowHideTabs();
 
             LOG = LogManager.GetLogger(Page.AppRelativeVirtualPath);
@@ -153,7 +155,7 @@ namespace Windsor.Node2008.Admin
             }
             else
             {
-//                menu.Visible = false;
+                //                menu.Visible = false;
                 menuPanel.Visible = false;
             }
         }
@@ -166,7 +168,7 @@ namespace Windsor.Node2008.Admin
             }
             else
             {
-                return string.Format("{0}&nbsp;as&nbsp;{1}", visit.Account.NaasAccount, 
+                return string.Format("{0}&nbsp;as&nbsp;{1}", visit.Account.NaasAccount,
                                      EnumUtils.ToDescription(PermissionsHelper.CurrentUserRole));
             }
         }
