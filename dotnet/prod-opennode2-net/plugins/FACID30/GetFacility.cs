@@ -53,11 +53,12 @@ using Windsor.Commons.Core;
 using Windsor.Commons.Logging;
 using Windsor.Commons.Spring;
 using Windsor.Commons.XsdOrm;
+using Windsor.Commons.NodeDomain;
 
 namespace Windsor.Node2008.WNOSPlugin.FACID30
 {
     [Serializable]
-    public class GetFacility : QuerySolicitProcessorBase, ISolicitProcessor
+    public class GetFacility : QuerySolicitProcessorBase, ISolicitProcessor, IQueryProcessor
     {
         public GetFacility()
         {
@@ -74,6 +75,16 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
         public void ProcessSolicit(string requestId)
         {
             DoFacilityDetailsQuery(requestId);
+        }
+        public PaginatedContentResult ProcessQuery(string requestId)
+        {
+            int rowCount;
+            bool isLast;
+            byte[] data = DoFacilityDetailsQuery(requestId, out rowCount, out isLast);
+
+            PaginatedContentResult result = new PaginatedContentResult(_dataRequest.RowIndex, rowCount, isLast,
+                                                                       CommonContentType.XML, data);
+            return result;
         }
     }
 }

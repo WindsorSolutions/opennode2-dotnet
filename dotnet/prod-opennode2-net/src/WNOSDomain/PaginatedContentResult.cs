@@ -99,5 +99,12 @@ namespace Windsor.Node2008.WNOSDomain
         {
             return (_content != null) ? _content.ConvertContentBytesToString() : null;
         }
+        public virtual bool HasContent
+        {
+            get
+            {
+                return (_content != null) && !CollectionUtils.IsNullOrEmpty(_content.Content);
+            }
+        }
     }
 }

@@ -55,7 +55,7 @@ using Windsor.Commons.NodeDomain;
 namespace Windsor.Node2008.WNOSPlugin.FACID30
 {
     [Serializable]
-    public class GetFacilityCount : QuerySolicitProcessorBase, IQueryProcessor
+    public class GetFacilityCount : QuerySolicitProcessorBase, ISolicitProcessor, IQueryProcessor
     {
         public GetFacilityCount()
         {
@@ -68,6 +68,10 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
         protected override void ValidateRequest(string requestId)
         {
             base.ValidateRequest(requestId);
+        }
+        public void ProcessSolicit(string requestId)
+        {
+            DoFacilityCountQuery(requestId);
         }
         public PaginatedContentResult ProcessQuery(string requestId)
         {

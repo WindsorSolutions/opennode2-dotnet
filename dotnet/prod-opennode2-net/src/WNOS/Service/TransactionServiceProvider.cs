@@ -688,7 +688,53 @@ namespace Windsor.Node2008.WNOS.Service
 
         protected virtual PaginatedContentResult TransformQueryResult(FormattedPaginatedContentRequest request, PaginatedContentResult result)
         {
+            CheckToCompressContent(request, result);
+
             return result;
+        }
+        protected virtual string GetFileNameForRequestContent(FormattedPaginatedContentRequest request, PaginatedContentResult result)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            if (!string.IsNullOrEmpty(request.FlowName))
+            {
+                if (sb.Length > 0)
+                {
+                    sb.Append("_");
+                }
+                sb.Append(request.FlowName);
+            }
+            if (!string.IsNullOrEmpty(request.OperationName))
+            {
+                if (sb.Length > 0)
+                {
+                    sb.Append("_");
+                }
+                sb.Append(request.OperationName);
+            }
+            if (sb.Length > 0)
+            {
+                sb.Append("_");
+            }
+            sb.Append("Results");
+            sb.Append(CommonContentAndFormatProvider.GetFileExtension(result.Content.Type));
+            return FileUtils.ReplaceInvalidFilenameChars(sb.ToString(), '_');
+        }
+        protected virtual bool CheckToCompressContent(FormattedPaginatedContentRequest request, PaginatedContentResult result)
+        {
+            if ((result == null) || !result.HasContent)
+            {
+                return false;
+            }
+            if (request.ZipResults.HasValue && request.ZipResults.Value)
+            {
+                byte[] content = result.Content.Content;
+                string fileName = GetFileNameForRequestContent(request, result);
+                result.Content.Content = CompressionHelper.Compress(fileName, content);
+                result.Content.Type = CommonContentType.ZIP;
+                return true;
+            }
+            return false;
         }
 
         #region Init

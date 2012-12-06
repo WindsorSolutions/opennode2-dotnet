@@ -58,9 +58,9 @@ namespace Windsor.Node2008.WNOS.Service
 
         private INAASManagerEx _authProvider;
         private IFaultProvider _faultProvider;
-		private IIdProvider _idProvider;
-		private IAccountManagerEx _accountManager;
-		private ISerializationHelper _serializationHelper;
+        private IIdProvider _idProvider;
+        private IAccountManagerEx _accountManager;
+        private ISerializationHelper _serializationHelper;
         private IFlowManagerEx _flowManager;
 
         #region Init
@@ -70,12 +70,13 @@ namespace Windsor.Node2008.WNOS.Service
 
             base.Init();
 
-			FieldNotInitializedException.ThrowIfNull(this, ref _authProvider);
-			FieldNotInitializedException.ThrowIfNull(this, ref _faultProvider);
-			FieldNotInitializedException.ThrowIfNull(this, ref _idProvider);
- 			FieldNotInitializedException.ThrowIfNull(this, ref _accountManager);
-			FieldNotInitializedException.ThrowIfNull(this, ref _serializationHelper);
+            FieldNotInitializedException.ThrowIfNull(this, ref _authProvider);
+            FieldNotInitializedException.ThrowIfNull(this, ref _faultProvider);
+            FieldNotInitializedException.ThrowIfNull(this, ref _idProvider);
+            FieldNotInitializedException.ThrowIfNull(this, ref _accountManager);
+            FieldNotInitializedException.ThrowIfNull(this, ref _serializationHelper);
             FieldNotInitializedException.ThrowIfNull(this, ref _flowManager);
+            FieldNotInitializedException.ThrowIfNull(this, CompressionHelper, "CompressionHelper");
         }
 
         #endregion
@@ -115,7 +116,7 @@ namespace Windsor.Node2008.WNOS.Service
 
             IDictionary<string, string> flowsIdToNameMap = _flowManager.GetAllFlowsIdToNameMap();
             nodeVisit = new NodeVisit(userAccount, visit.IP, flowsIdToNameMap);
-            
+
             if (wasCreated)
             {
                 activity.AppendFormat("Successfully created local user account for {0}.",
@@ -134,7 +135,7 @@ namespace Windsor.Node2008.WNOS.Service
         /// <param name="visit"></param>
         /// <returns>Activity</returns>
         protected void AuthenticateEndpointActivity(AuthEndpointVisit visit, ActivityType activityType,
-                                                    NodeMethod method, out NodeVisit nodeVisit, 
+                                                    NodeMethod method, out NodeVisit nodeVisit,
                                                     out string userToken, out Activity activity)
         {
             if (visit == null)
@@ -157,7 +158,7 @@ namespace Windsor.Node2008.WNOS.Service
 
             //Always returns an account
             bool wasCreated;
-            UserAccount userAccount = 
+            UserAccount userAccount =
                 AccountManager.GetOrCreate(visit.Credentials.UserName, true, out wasCreated);
 
             //Update the activity to created by the current user
@@ -201,46 +202,80 @@ namespace Windsor.Node2008.WNOS.Service
             }
         }
 
-        #region Properties 
+        #region Properties
         public INAASManagerEx AuthProvider
         {
-            get { return _authProvider; }
-            set { _authProvider = value; }
+            get
+            {
+                return _authProvider;
+            }
+            set
+            {
+                _authProvider = value;
+            }
         }
 
-		public IAccountManagerEx AccountManager
-		{
-			get {
-				return _accountManager;
-			}
-			set {
-				_accountManager = value;
-			}
-		}
+        public IAccountManagerEx AccountManager
+        {
+            get
+            {
+                return _accountManager;
+            }
+            set
+            {
+                _accountManager = value;
+            }
+        }
 
         public IFaultProvider FaultProvider
         {
-            get { return _faultProvider; }
-            set { _faultProvider = value; }
+            get
+            {
+                return _faultProvider;
+            }
+            set
+            {
+                _faultProvider = value;
+            }
         }
-		public IIdProvider IdProvider {
-			get {
-				return _idProvider;
-			}
-			set {
-				_idProvider = value;
-			}
-		}
+        public IIdProvider IdProvider
+        {
+            get
+            {
+                return _idProvider;
+            }
+            set
+            {
+                _idProvider = value;
+            }
+        }
 
-		public ISerializationHelper SerializationHelper
-		{
-			get { return _serializationHelper; }
-			set { _serializationHelper = value; }
-		}
+        public ISerializationHelper SerializationHelper
+        {
+            get
+            {
+                return _serializationHelper;
+            }
+            set
+            {
+                _serializationHelper = value;
+            }
+        }
         public IFlowManagerEx FlowManager
         {
-            get { return _flowManager; }
-            set { _flowManager = value; }
+            get
+            {
+                return _flowManager;
+            }
+            set
+            {
+                _flowManager = value;
+            }
+        }
+        public ICompressionHelper CompressionHelper
+        {
+            get;
+            set;
         }
 
         #endregion
