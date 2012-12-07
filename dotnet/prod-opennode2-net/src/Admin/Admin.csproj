@@ -608,7 +608,7 @@
     <Content Include="Test.aspx" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Properties\PublishProfiles\Profile1.pubxml" />
+    <None Include="Properties\PublishProfiles\Publish.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
