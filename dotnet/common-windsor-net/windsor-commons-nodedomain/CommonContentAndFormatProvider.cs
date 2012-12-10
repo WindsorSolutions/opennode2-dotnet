@@ -51,6 +51,7 @@ namespace Windsor.Commons.NodeDomain
         ZIP,
         ODF,
         HTML,
+        PDF,
     }
 
     #endregion
@@ -85,6 +86,7 @@ namespace Windsor.Commons.NodeDomain
             _commonContentToFormatMap.Add(CommonContentType.Bin, "application/octet-stream");
             _commonContentToFormatMap.Add(CommonContentType.ZIP, "application/zip");
             _commonContentToFormatMap.Add(CommonContentType.HTML, "text/html");
+            _commonContentToFormatMap.Add(CommonContentType.PDF, "application/pdf");
         }
 
         public static CommonContentType Convert(string text)
@@ -118,6 +120,8 @@ namespace Windsor.Commons.NodeDomain
                     return ".zip";
                 case CommonContentType.HTML:
                     return ".html";
+                case CommonContentType.PDF:
+                    return ".pdf";
                 default:
                     return ".unknown";
             }
@@ -171,6 +175,8 @@ namespace Windsor.Commons.NodeDomain
                     return CommonContentType.ZIP;
                 case "html":
                     return CommonContentType.HTML;
+                case "pdf":
+                    return CommonContentType.PDF;
                 default:
                     return CommonContentType.OTHER;
             }
