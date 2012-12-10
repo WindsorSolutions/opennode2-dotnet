@@ -156,18 +156,36 @@ namespace Windsor.Node2008.WNOS.Data
         }
         public INodeNotificationDao NodeNotificationDao
         {
-            get { return _nodeNotificationDao; }
-            set { _nodeNotificationDao = value; }
+            get
+            {
+                return _nodeNotificationDao;
+            }
+            set
+            {
+                _nodeNotificationDao = value;
+            }
         }
         public IAccountDao AccountDao
         {
-            get { return _accountDao; }
-            set { _accountDao = value; }
+            get
+            {
+                return _accountDao;
+            }
+            set
+            {
+                _accountDao = value;
+            }
         }
         public IActivityDao ActivityDao
         {
-            get { return _activityDao; }
-            set { _activityDao = value; }
+            get
+            {
+                return _activityDao;
+            }
+            set
+            {
+                _activityDao = value;
+            }
         }
         #region Init
 
@@ -702,12 +720,14 @@ namespace Windsor.Node2008.WNOS.Data
                 if (values.Length > 0)
                 {
                     networkFlowName = values[0].Trim();
-                    if (networkFlowName.Length == 0) networkFlowName = null;
+                    if (networkFlowName.Length == 0)
+                        networkFlowName = null;
                 }
                 if (values.Length > 1)
                 {
                     networkFlowOperation = values[1].Trim();
-                    if (networkFlowOperation.Length == 0) networkFlowOperation = null;
+                    if (networkFlowOperation.Length == 0)
+                        networkFlowOperation = null;
                 }
             }
         }
@@ -798,6 +818,71 @@ namespace Windsor.Node2008.WNOS.Data
                             return reader.GetString(0);
                         });
                 return transactionId;
+            }
+            catch (Spring.Dao.IncorrectResultSizeDataAccessException)
+            {
+                return null; // Not found
+            }
+        }
+        public NodeTransaction GetLastTransaction(string flowName, string flowOperation, NodeMethod? nodeMethod, bool loadDocuments,
+                                                  bool loadDocumentsContent)
+        {
+            try
+            {
+                List<object> whereValues = new List<object>();
+                string whereColumns = string.Empty;
+                if (!string.IsNullOrEmpty(flowName))
+                {
+                    if (whereColumns.Length > 0)
+                    {
+                        whereColumns += ";";
+                    }
+                    whereColumns += "f.Code";
+                    whereValues.Add(flowName);
+                }
+                if (!string.IsNullOrEmpty(flowOperation))
+                {
+                    if (whereColumns.Length > 0)
+                    {
+                        whereColumns += ";";
+                    }
+                    whereColumns += "t.Operation";
+                    whereValues.Add(flowOperation);
+                }
+                if (nodeMethod.HasValue)
+                {
+                    if (whereColumns.Length > 0)
+                    {
+                        whereColumns += ";";
+                    }
+                    whereColumns += "t.WebMethod";
+                    whereValues.Add(nodeMethod.Value.ToString());
+                }
+                if (whereColumns.Length > 0)
+                {
+                    whereColumns += ";";
+                }
+                whereColumns += "t.FlowId = f.Id";
+
+                string mapColumns = "t." + MAP_TRANSACTION_COLUMNS.Replace(";", ";t.");
+                NodeTransaction nodeTransaction = null;
+                DoSimpleQueryWithTypedCancelableRowCallbackDelegate<NodeTransaction>(
+                    string.Format("{0} t, {1} f", TABLE_NAME, Windsor.Node2008.WNOS.Data.FlowDao.TABLE_NAME),
+                    whereColumns, whereValues, "t.ModifiedOn DESC", mapColumns,
+                    delegate(IDataReader reader)
+                    {
+                        nodeTransaction = MapTransaction(reader);
+                        return false;
+                    });
+
+                if (nodeTransaction != null)
+                {
+                    if (loadDocuments)
+                    {
+                        nodeTransaction.Documents = _documentManager.GetDocuments(nodeTransaction.Id, loadDocumentsContent);
+                    }
+                }
+                return nodeTransaction;
             }
             catch (Spring.Dao.IncorrectResultSizeDataAccessException)
             {
@@ -1302,7 +1387,8 @@ namespace Windsor.Node2008.WNOS.Data
                     "DISTINCT " + MAP_TRANSACTION_TRACKING_COLUMNS,
                     delegate(IDataReader reader)
                     {
-                        if (list == null) list = new List<TransactionType>();
+                        if (list == null)
+                            list = new List<TransactionType>();
                         TransactionType transaction = MapTransactionTracking(reader, flowIdToNameMap, userIdToNameMap);
                         if (transaction != null)
                         {

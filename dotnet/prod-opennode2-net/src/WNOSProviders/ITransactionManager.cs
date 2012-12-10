@@ -71,18 +71,18 @@ namespace Windsor.Node2008.WNOSProviders
         TransactionStatus SetTransactionStatus(string transactionId, CommonTransactionStatusCode statusCode,
                                                string statusDetail, bool sendStatusChangeNotifications);
 
-		/// <summary>
-		/// Return the current status of a transaction.
-		/// </summary>
-		TransactionStatus GetTransactionStatus(string transactionID);
+        /// <summary>
+        /// Return the current status of a transaction.
+        /// </summary>
+        TransactionStatus GetTransactionStatus(string transactionID);
 
         CommonTransactionStatusCode GetNetworkTransactionStatus(string localTransactionId);
-        
+
         /// <summary>
         /// Return the current status of a transaction, along with other relevant information.
         /// </summary>
         TransactionStatus GetTransactionStatus(string transactionId, out string flowId,
-											   out string operation, out NodeMethod webMethod);
+                                               out string operation, out NodeMethod webMethod);
 
         TransactionStatus GetTransactionStatusByNetworkId(string networkId, out string flowId,
                                                           out string operation, out NodeMethod webMethod);
@@ -97,7 +97,7 @@ namespace Windsor.Node2008.WNOSProviders
         /// ids can be used with the methods in IDocumentManager.
         /// </summary>
         IList<string> GetAllUnprocessedDocumentDbIds(string transactionID);
-       
+
         /// <summary>
         /// Return a notification associated with a transaction (should be used with 
         /// INotifyProcessor.ProcessNotify()).
@@ -114,7 +114,7 @@ namespace Windsor.Node2008.WNOSProviders
         /// GetNotifications
         /// </summary>
         IDictionary<string, TransactionNotificationType> GetNotifications(string transactionId);
- 
+
         /// <summary>
         /// GetRecipients
         /// </summary>
@@ -133,7 +133,7 @@ namespace Windsor.Node2008.WNOSProviders
         /// </summary>
         string GetTransactionUsername(string transactionId);
 
-        string GetTransactionFlowId(string transactionId, out string flowName, out string operation, 
+        string GetTransactionFlowId(string transactionId, out string flowName, out string operation,
                                     out bool isProtected);
 
         void AppendRealtimeTransactionDetail(string transactionId, string message,
@@ -168,5 +168,8 @@ namespace Windsor.Node2008.WNOSProviders
         IList<string> GetAllDocumentNames(string transactionId);
 
         TransactionStatus RefreshNetworkStatus(string transactionID);
+
+        NodeTransaction GetLastTransaction(string flowName, string flowOperation, NodeMethod? nodeMethod, bool loadDocuments,
+                                           bool loadDocumentsContent);
     }
 }

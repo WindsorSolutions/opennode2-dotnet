@@ -31,7 +31,7 @@ POSSIBILITY OF SUCH DAMAGE.
 */
 #endregion
 
-﻿using System;
+using System;
 using Windsor.Node2008.WNOSDomain;
 using System.Collections.Generic;
 using Windsor.Node2008.WNOSConnector.Logic;
@@ -113,5 +113,8 @@ namespace Windsor.Node2008.WNOS.Data
         TransactionCount GetTransactionTrackingQueryCount(ICollection<KeyValuePair<TransactionTrackingQueryParameter, object>> queryParameters);
         TransactionDetailType DoTransactionTrackingDetail(string transactionId);
         CommonTransactionStatusCode GetNetworkTransactionStatus(string localTransactionId);
+
+        NodeTransaction GetLastTransaction(string flowName, string flowOperation, NodeMethod? nodeMethod, bool loadDocuments,
+                                           bool loadDocumentsContent);
     }
 }

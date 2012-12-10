@@ -1405,6 +1405,42 @@ namespace Windsor.Commons.Spring
                                                                        new CancelableRowCallbackResultSetExtractor(callback),
                                                                        parameters);
         }
+        private class TypedCancelableRowCallbackResultSetExtractor<T> : IResultSetExtractor<T>
+        {
+            private CancelableRowCallbackDelegate rowCallbackDelegate;
+            public TypedCancelableRowCallbackResultSetExtractor(CancelableRowCallbackDelegate rowCallbackDelegate)
+            {
+                this.rowCallbackDelegate = rowCallbackDelegate;
+            }
+            public T ExtractData(IDataReader reader)
+            {
+                while (reader.Read())
+                {
+                    if (!rowCallbackDelegate(reader))
+                    {
+                        return default(T);
+                    }
+                }
+                return default(T);
+            }
+        }
+        public void DoSimpleQueryWithTypedCancelableRowCallbackDelegate<T>(string semicolonSeparatedTableNames,
+                                                                           string semicolonSeparatedWhereColumnNames,
+                                                                           IList<object> whereValues,
+                                                                           string semicolonSeparatedOrderByColumns,
+                                                                           string semicolonSeparatedColumnNames,
+                                                                           CancelableRowCallbackDelegate callback)
+        {
+
+            string selectText =
+                CreateSelectSqlParamText(semicolonSeparatedTableNames, semicolonSeparatedWhereColumnNames,
+                                         (whereValues == null) ? 0 : whereValues.Count, semicolonSeparatedOrderByColumns,
+                                         semicolonSeparatedColumnNames);
+            IDbParameters parameters = AppendDbParameters(null, whereValues);
+            AdoTemplate.QueryWithResultSetExtractor<T>(CommandType.Text, selectText,
+                                                       new TypedCancelableRowCallbackResultSetExtractor<T>(callback),
+                                                       parameters);
+        }
         public IDbParameters AppendDbParameters(IDbParameters parameters, IList<object> whereValues)
         {
             if (whereValues != null)

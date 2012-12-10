@@ -195,6 +195,11 @@ namespace Windsor.Node2008.WNOS.Logic
         {
             return _transactionDao.GetOutstandingNetworkTransactions(newerThan, getFlowNames, notOutstandingCodes);
         }
+        public NodeTransaction GetLastTransaction(string flowName, string flowOperation, NodeMethod? nodeMethod, bool loadDocuments,
+                                                  bool loadDocumentsContent)
+        {
+            return _transactionDao.GetLastTransaction(flowName, flowOperation, nodeMethod, loadDocuments, loadDocumentsContent);
+        }
         public TransactionListType1 DoTransactionTrackingQuery(ICollection<KeyValuePair<TransactionTrackingQueryParameter, object>> queryParameters)
         {
             return _transactionDao.DoTransactionTrackingQuery(queryParameters);
@@ -232,18 +237,18 @@ namespace Windsor.Node2008.WNOS.Logic
                 if (!CollectionUtils.Contains(localDocumentNames, networkFileName,
                                               StringComparison.OrdinalIgnoreCase))
                 {
-                    byte[] networkFileContent = 
+                    byte[] networkFileContent =
                         _compressionHelper.UncompressFile(content, networkFileName);
                     CommonContentType contentType =
                         CommonContentAndFormatProvider.GetFileTypeFromName(networkFileName);
-                    Document document = 
+                    Document document =
                         new Document(networkFileName, contentType, networkFileContent);
                     document.DontAutoCompress = true;
-                    string documentId = 
+                    string documentId =
                         _documentManager.AddDocument(transactionID, CommonTransactionStatusCode.Completed,
                                                      null, document);
                     CollectionUtils.Add(document.DocumentName, ref addedDocumentIds);
-               }
+                }
             }
 
             return addedDocumentIds;
@@ -557,7 +562,8 @@ namespace Windsor.Node2008.WNOS.Logic
             if (GetZippedTransactionDocuments(transactionId, filePath))
             {
                 IList<string> fileNames = CompressionHelper.GetFileNames(filePath);
-                if (CollectionUtils.Count(fileNames) == 1 ) {
+                if (CollectionUtils.Count(fileNames) == 1)
+                {
                     string folderPath = SettingsProvider.CreateNewTempFolderPath();
                     string singleFileName = fileNames[0];
                     if (CommonContentAndFormatProvider.GetFileTypeFromName(singleFileName) == CommonContentType.ZIP)
@@ -908,42 +914,84 @@ namespace Windsor.Node2008.WNOS.Logic
         }
         public INodeEndpointClientFactory NodeEndpointClientFactory
         {
-            get { return _nodeEndpointClientFactory; }
-            set { _nodeEndpointClientFactory = value; }
+            get
+            {
+                return _nodeEndpointClientFactory;
+            }
+            set
+            {
+                _nodeEndpointClientFactory = value;
+            }
         }
 
         public ICompressionHelper CompressionHelper
         {
-            get { return _compressionHelper; }
-            set { _compressionHelper = value; }
+            get
+            {
+                return _compressionHelper;
+            }
+            set
+            {
+                _compressionHelper = value;
+            }
         }
 
         public INotificationManagerEx NotificationManager
         {
-            get { return _notificationManager; }
-            set { _notificationManager = value; }
+            get
+            {
+                return _notificationManager;
+            }
+            set
+            {
+                _notificationManager = value;
+            }
         }
         public IServiceManager ServiceManager
         {
-            get { return _serviceManager; }
-            set { _serviceManager = value; }
+            get
+            {
+                return _serviceManager;
+            }
+            set
+            {
+                _serviceManager = value;
+            }
         }
 
         public IPluginLoader PluginLoader
         {
-            get { return _pluginLoader; }
-            set { _pluginLoader = value; }
+            get
+            {
+                return _pluginLoader;
+            }
+            set
+            {
+                _pluginLoader = value;
+            }
         }
 
         public IRequestManagerEx RequestManager
         {
-            get { return _requestManager; }
-            set { _requestManager = value; }
+            get
+            {
+                return _requestManager;
+            }
+            set
+            {
+                _requestManager = value;
+            }
         }
         public IObjectCacheDao ObjectCacheDao
         {
-            get { return _objectCacheDao; }
-            set { _objectCacheDao = value; }
+            get
+            {
+                return _objectCacheDao;
+            }
+            set
+            {
+                _objectCacheDao = value;
+            }
         }
         #endregion
 

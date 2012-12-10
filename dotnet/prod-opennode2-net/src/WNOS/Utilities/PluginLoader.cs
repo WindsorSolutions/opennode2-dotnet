@@ -117,6 +117,10 @@ namespace Windsor.Node2008.WNOS.Utilities
 
         private const string INSTALLING_DIRECTORY_PREFIX = "__INSTALLING__";
 
+        public PluginLoader()
+        {
+            ServiceImpementersCacheTimeInMinutes = 60 * 24 * 7;
+        }
         public void Init()
         {
             FieldNotInitializedException.ThrowIfNull(this, ref _configManager);
@@ -273,8 +277,8 @@ namespace Windsor.Node2008.WNOS.Utilities
                     implementers = new List<SimpleDataService>();
                 }
                 HttpRuntime.Cache.Add(cacheName, implementers, new CacheDependency(parentDirPath),
-                          DateTime.Now + TimeSpan.FromMinutes(20), Cache.NoSlidingExpiration,
-                          CacheItemPriority.Default, null);
+                                      DateTime.Now + TimeSpan.FromMinutes(ServiceImpementersCacheTimeInMinutes), Cache.NoSlidingExpiration,
+                                      CacheItemPriority.Default, null);
             }
             return implementers;
         }
@@ -728,7 +732,9 @@ namespace Windsor.Node2008.WNOS.Utilities
         {
 
             T plugin;
-            using (IPluginDisposer disposer = LoadPluginInterfaceInstance<T>(inDataService, true, null, out plugin)) { }
+            using (IPluginDisposer disposer = LoadPluginInterfaceInstance<T>(inDataService, true, null, out plugin))
+            {
+            }
         }
         public IConfigManager ConfigManager
         {
@@ -743,28 +749,63 @@ namespace Windsor.Node2008.WNOS.Utilities
         }
         public ICompressionHelper CompressionHelper
         {
-            get { return _compressionHelper; }
-            set { _compressionHelper = value; }
+            get
+            {
+                return _compressionHelper;
+            }
+            set
+            {
+                _compressionHelper = value;
+            }
         }
         public IFlowDao FlowDao
         {
-            get { return _flowDao; }
-            set { _flowDao = value; }
+            get
+            {
+                return _flowDao;
+            }
+            set
+            {
+                _flowDao = value;
+            }
         }
         public IPluginDao PluginDao
         {
-            get { return _pluginDao; }
-            set { _pluginDao = value; }
+            get
+            {
+                return _pluginDao;
+            }
+            set
+            {
+                _pluginDao = value;
+            }
         }
         public string PluginConfigFilePath
         {
-            get { return _pluginConfigFilePath; }
-            set { _pluginConfigFilePath = value; }
+            get
+            {
+                return _pluginConfigFilePath;
+            }
+            set
+            {
+                _pluginConfigFilePath = value;
+            }
         }
         public string PluginFolderPath
         {
-            get { return _pluginFolderPath; }
-            set { _pluginFolderPath = value; }
+            get
+            {
+                return _pluginFolderPath;
+            }
+            set
+            {
+                _pluginFolderPath = value;
+            }
+        }
+        public int ServiceImpementersCacheTimeInMinutes
+        {
+            get;
+            set;
         }
         private class PluginDisposer : DisposableBase, IPluginDisposer
         {
