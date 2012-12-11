@@ -116,9 +116,13 @@ namespace Windsor.Node2008.WNOSPlugin.ENDS_2
         protected NetworkNodeType GetServices(ServiceType returnServiceTypes)
         {
             LatLongRectangle nodeBox = _settingsProvider.NodeBoundingBox;
-            EndpointVersionType endpointVersionType = 
+            EndpointVersionType endpointVersionType =
                 _transactionManager.GetTransactionEndpointVersionType(_dataRequest.TransactionId);
-            Dictionary<ServiceType, NodeMethodTypeCode> publishServiceTypeMap = new Dictionary<ServiceType,NodeMethodTypeCode>();
+            if (endpointVersionType == EndpointVersionType.Undefined)
+            {
+                endpointVersionType = EndpointVersionType.EN20;
+            }
+            Dictionary<ServiceType, NodeMethodTypeCode> publishServiceTypeMap = new Dictionary<ServiceType, NodeMethodTypeCode>();
             if (EnumUtils.IsFlagSet(returnServiceTypes, ServiceType.Query))
             {
                 publishServiceTypeMap.Add(ServiceType.Query, NodeMethodTypeCode.Query);
@@ -170,10 +174,17 @@ namespace Windsor.Node2008.WNOSPlugin.ENDS_2
             networkNodeType.OrganizationIdentifier = _settingsProvider.NodeOrganizationName;
             networkNodeType.NodeStatus = NodeStatusCode.Operational;
 
-            IList<DataFlow> dataFlows = _flowManager.GetAllDataFlows(true, false);
+            string username = _transactionManager.GetTransactionUsername(_dataRequest.TransactionId);
+
+            AppendAuditLogEvent("Loading information for all data flows for user: {0}", username);
+            IList<DataFlow> dataFlows = _flowManager.GetAllDataFlows(true, true);
+
+
             if (!CollectionUtils.IsNullOrEmpty(dataFlows))
             {
-                DataServicePublishFlags validPublishFlags = (endpointVersionType == EndpointVersionType.EN20) ? 
+                AppendAuditLogEvent("Loaded information for {0} data flows for user: {1}", dataFlows.Count.ToString(), username);
+
+                DataServicePublishFlags validPublishFlags = (endpointVersionType == EndpointVersionType.EN20) ?
                     DataServicePublishFlags.PublishToEndpointVersion20 : DataServicePublishFlags.PublishToEndpointVersion11;
                 List<ServiceDescriptionListTypeService> services = null;
                 foreach (DataFlow dataFlow in dataFlows)
@@ -185,8 +196,9 @@ namespace Windsor.Node2008.WNOSPlugin.ENDS_2
                             if (EnumUtils.IsFlagSet(dataService.PublishFlags, validPublishFlags) && dataService.IsActive &&
                                 (dataService.PluginInfo != null) && !string.IsNullOrEmpty(dataService.PluginInfo.ImplementingClassName))
                             {
-                                foreach (KeyValuePair<ServiceType, NodeMethodTypeCode> pair in publishServiceTypeMap) {
-                                    
+                                foreach (KeyValuePair<ServiceType, NodeMethodTypeCode> pair in publishServiceTypeMap)
+                                {
+
                                     if (EnumUtils.IsFlagSet(dataService.Type, pair.Key))
                                     {
                                         ServiceDescriptionListTypeService nodeService = new ServiceDescriptionListTypeService();
@@ -201,7 +213,8 @@ namespace Windsor.Node2008.WNOSPlugin.ENDS_2
                                         if (publishParamCount > 0)
                                         {
                                             nodeService.Parameter = new RequestParameterType[publishParamCount];
-                                            for (int i = 0, index = 0; i < dataService.ServiceParameters.Count; ++i) {
+                                            for (int i = 0, index = 0; i < dataService.ServiceParameters.Count; ++i)
+                                            {
                                                 TypedParameter typedParameter = dataService.ServiceParameters[i];
                                                 if (typedParameter.DoPublishParam)
                                                 {
@@ -226,9 +239,11 @@ namespace Windsor.Node2008.WNOSPlugin.ENDS_2
                     services.Sort(delegate(ServiceDescriptionListTypeService s1, ServiceDescriptionListTypeService s2)
                     {
                         int result = string.Compare(s1.Dataflow, s2.Dataflow);
-                        if (result != 0) return result;
+                        if (result != 0)
+                            return result;
                         result = string.Compare(s1.ServiceIdentifier, s2.ServiceIdentifier);
-                        if (result != 0) return result;
+                        if (result != 0)
+                            return result;
                         return string.Compare(s1.MethodName.ToString(), s2.MethodName.ToString());
                     });
                     networkNodeType.NodeServiceList = services.ToArray();

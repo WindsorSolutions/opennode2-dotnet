@@ -34,27 +34,8 @@ POSSIBILITY OF SUCH DAMAGE.
 using System;
 using System.Collections.Generic;
 using System.Collections;
-using System.Text;
-using System.Xml;
-using System.IO;
-using System.Data;
-using System.Data.Common;
-using System.Data.ProviderBase;
-using Windsor.Node2008.WNOSPlugin;
-using System.Diagnostics;
-using System.Reflection;
-using Windsor.Node2008.WNOSUtility;
 using Windsor.Node2008.WNOSDomain;
-using Windsor.Node2008.WNOSProviders;
-using Spring.Data.Common;
-using Spring.Transaction.Support;
-using Spring.Data.Core;
-using System.Runtime.InteropServices;
-using System.ComponentModel;
 using Windsor.Commons.Core;
-using Windsor.Commons.Logging;
-using Windsor.Commons.Spring;
-using Windsor.Commons.XsdOrm;
 using Windsor.Node2008.WNOSDomain.TransactionTracking;
 
 namespace Windsor.Node2008.WNOSPlugin.ADMIN_10
@@ -67,7 +48,7 @@ namespace Windsor.Node2008.WNOSPlugin.ADMIN_10
         }
         protected override object GetServiceData()
         {
-            TransactionListType1 transactionList = 
+            TransactionListType1 transactionList =
                 _transactionManager.DoTransactionTrackingQuery(_serviceParameters);
             if (CollectionUtils.IsNullOrEmpty(transactionList.Transaction))
             {
@@ -79,6 +60,11 @@ namespace Windsor.Node2008.WNOSPlugin.ADMIN_10
                                     transactionList.Transaction.Length.ToString());
             }
             return transactionList;
+        }
+        public override IList<TypedParameter> GetDataServiceParameters(string serviceName, out DataServicePublishFlags publishFlags)
+        {
+            IList<TransactionTrackingQueryParameter> possibleParameters = EnumUtils.GetAllEnumValues<TransactionTrackingQueryParameter>();
+            return GetDataServiceParameters(serviceName, possibleParameters, out publishFlags);
         }
     }
     [Serializable]
@@ -93,6 +79,11 @@ namespace Windsor.Node2008.WNOSPlugin.ADMIN_10
                 _transactionManager.GetTransactionTrackingQueryCount(_serviceParameters);
             AppendAuditLogEvent("Returning transaction count of {0}", transactionCount.Value.ToString());
             return transactionCount;
+        }
+        public override IList<TypedParameter> GetDataServiceParameters(string serviceName, out DataServicePublishFlags publishFlags)
+        {
+            IList<TransactionTrackingQueryParameter> possibleParameters = EnumUtils.GetAllEnumValues<TransactionTrackingQueryParameter>();
+            return GetDataServiceParameters(serviceName, possibleParameters, out publishFlags);
         }
     }
     [Serializable]
@@ -120,6 +111,11 @@ namespace Windsor.Node2008.WNOSPlugin.ADMIN_10
                 _transactionManager.DoTransactionTrackingDetail(_transactionId);
             AppendAuditLogEvent("Returning details for transaction \"{0}\"", _transactionId);
             return transactionDetail;
+        }
+        public override IList<TypedParameter> GetDataServiceParameters(string serviceName, out DataServicePublishFlags publishFlags)
+        {
+            IList<TransactionTrackingQueryParameter> possibleParameters = new TransactionTrackingQueryParameter[] { TransactionTrackingQueryParameter.TransactionId };
+            return GetDataServiceParameters(serviceName, possibleParameters, out publishFlags);
         }
     }
 }

@@ -73,6 +73,11 @@ namespace Windsor.Node2008.WNOSProviders
         IList<DataFlow> GetAllDataFlows(bool loadDataServices, bool includeServiceParameters);
 
         /// <summary>
+        /// Return all data flows that are accessible to the specified user, optionally including parameters associated with each data service.
+        /// </summary>
+        IList<DataFlow> GetAllDataFlows(string username, bool loadDataServices, bool includeServiceParameters);
+
+        /// <summary>
         /// Key is the flow name, value is the flow id.
         /// </summary>
         IDictionary<string, string> GetAllFlowsNameToIdMap();

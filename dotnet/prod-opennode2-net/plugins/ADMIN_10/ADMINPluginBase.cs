@@ -35,27 +35,11 @@ using System;
 using System.Collections.Generic;
 using System.Collections;
 using System.Text;
-using System.Xml;
-using System.IO;
-using System.Data;
-using System.Xml.Serialization;
-using System.Data.Common;
-using System.Data.ProviderBase;
-using Windsor.Node2008.WNOSPlugin;
-using System.Diagnostics;
 using System.Reflection;
-using Windsor.Node2008.WNOSUtility;
 using Windsor.Node2008.WNOSDomain;
 using Windsor.Node2008.WNOSProviders;
-using Spring.Data.Common;
-using Spring.Transaction.Support;
-using Spring.Data.Core;
-using System.Runtime.InteropServices;
-using System.ComponentModel;
 using Windsor.Commons.Core;
 using Windsor.Commons.Logging;
-using Windsor.Commons.Spring;
-using Windsor.Commons.XsdOrm;
 using Windsor.Commons.NodeDomain;
 using Windsor.Node2008.WNOSDomain.TransactionTracking;
 
@@ -109,7 +93,7 @@ namespace Windsor.Node2008.WNOSPlugin.ADMIN_10
         {
             object data = GetServiceData();
 
-            string filePath = 
+            string filePath =
                 SerializeDataAndAddToTransaction(data, _settingsProvider, _serializationHelper, _compressionHelper,
                                                  _documentManager, _dataRequest.TransactionId);
 
@@ -158,7 +142,7 @@ namespace Windsor.Node2008.WNOSPlugin.ADMIN_10
         }
         protected virtual void GetServiceParameters()
         {
-            Dictionary<TransactionTrackingQueryParameter, object> serviceParameters = 
+            Dictionary<TransactionTrackingQueryParameter, object> serviceParameters =
                 new Dictionary<TransactionTrackingQueryParameter, object>();
 
             IList<TransactionTrackingQueryParameter> possibleParameters = EnumUtils.GetAllEnumValues<TransactionTrackingQueryParameter>();
@@ -284,6 +268,52 @@ namespace Windsor.Node2008.WNOSPlugin.ADMIN_10
             {
                 AppendAuditLogEvent("No query parameters were passed to the service.");
             }
+        }
+        protected virtual IList<TypedParameter> GetDataServiceParameters(string serviceName, IList<TransactionTrackingQueryParameter> possibleParameters,
+                                                                         out DataServicePublishFlags publishFlags)
+        {
+            publishFlags = DataServicePublishFlags.PublishToEndpointVersion20;
+
+            List<TypedParameter> typedParameters = new List<TypedParameter>(possibleParameters.Count);
+
+            foreach (TransactionTrackingQueryParameter parameter in possibleParameters)
+            {
+                TypedParameter typedParameter = new TypedParameter(parameter.ToString());
+                switch (parameter)
+                {
+                    case TransactionTrackingQueryParameter.TransactionId:
+                    case TransactionTrackingQueryParameter.Dataflow:
+                    case TransactionTrackingQueryParameter.Userid:
+                    case TransactionTrackingQueryParameter.Recipients:
+                    case TransactionTrackingQueryParameter.Organization:
+                        typedParameter.IsRequired = false;
+                        typedParameter.Type = typeof(string);
+                        break;
+                    case TransactionTrackingQueryParameter.toDate:
+                    case TransactionTrackingQueryParameter.fromDate:
+                        typedParameter.IsRequired = false;
+                        typedParameter.Type = typeof(DateTime);
+                        break;
+                    case TransactionTrackingQueryParameter.Status:
+                        typedParameter.IsRequired = false;
+                        typedParameter.Type = typeof(string);
+                        typedParameter.AcceptableValues = CollectionUtils.CreateObjectList(EnumUtils.GetAllDescriptions<CommonTransactionStatusCode>());
+                        break;
+                    case TransactionTrackingQueryParameter.Type:
+                        typedParameter.IsRequired = false;
+                        typedParameter.Type = typeof(string);
+                        typedParameter.AcceptableValues = CollectionUtils.CreateObjectList(CollectionUtils.CreateStringList(NodeMethod.Download,
+                                                                                                                            NodeMethod.Execute,
+                                                                                                                            NodeMethod.GetStatus,
+                                                                                                                            NodeMethod.Notify,
+                                                                                                                            NodeMethod.Query,
+                                                                                                                            NodeMethod.Solicit,
+                                                                                                                            NodeMethod.Submit));
+                        break;
+                }
+                typedParameters.Add(typedParameter);
+            }
+            return typedParameters;
         }
     }
 }

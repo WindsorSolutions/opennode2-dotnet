@@ -369,7 +369,8 @@ namespace Windsor.Node2008.WNOS.Utilities
                                 {
                                     if (loader == null)
                                     {
-                                        loader = new PluginDomainInstanceLoader(_pluginConfigFilePath, assemblyPath);
+                                        // Don't need to load spring objects here
+                                        loader = new PluginDomainInstanceLoader(null, assemblyPath);
                                         pluginFinder = loader.GetInstance<PluginInstanceFinder>();
                                     }
                                     GetDataServiceImplementers(pluginFinder, assemblyPath, ref implementers);

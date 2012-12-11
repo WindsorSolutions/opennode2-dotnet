@@ -42,9 +42,9 @@ using System.ComponentModel;
 
 namespace Windsor.Commons.Core
 {
-	/// <summary>
-	/// Basic helper functions for dealing with enums.
-	/// </summary>
+    /// <summary>
+    /// Basic helper functions for dealing with enums.
+    /// </summary>
     [CLSCompliant(false)]
     public static class EnumUtils
     {
@@ -207,7 +207,7 @@ namespace Windsor.Commons.Core
                 foreach (string value in values)
                 {
                     string enumValueStr = value.Trim();
-                    if ( !string.IsNullOrEmpty(enumValueStr) )
+                    if (!string.IsNullOrEmpty(enumValueStr))
                     {
                         T enumValue = FromDescription<T>(enumValueStr);
                         rtnValue = SetFlag<T>(rtnValue, enumValue);
@@ -263,11 +263,12 @@ namespace Windsor.Commons.Core
                         fieldInfo.GetCustomAttributes(typeof(DescriptionAttribute), false);
                     if (da.Length > 0)
                     {
-                        T fieldValue = (T) fieldInfo.GetValue(null);
+                        T fieldValue = (T)fieldInfo.GetValue(null);
                         if (isFlags)
                         {
-                            long fieldFlagValue = (long) Convert.ChangeType(fieldValue, typeof(long));
-                            if ( (fieldFlagValue & flagValue) == fieldFlagValue ) {
+                            long fieldFlagValue = (long)Convert.ChangeType(fieldValue, typeof(long));
+                            if ((fieldFlagValue & flagValue) == fieldFlagValue)
+                            {
                                 list.Add(da[0].Description);
                             }
                         }

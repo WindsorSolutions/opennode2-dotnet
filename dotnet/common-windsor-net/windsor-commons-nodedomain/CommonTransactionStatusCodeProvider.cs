@@ -67,61 +67,61 @@ namespace Windsor.Commons.NodeDomain
     }
 
     #endregion
-    
+
     [Serializable]
     public static class CommonTransactionStatusCodeProvider
     {
 
-		[Flags]
-		private enum Wsdl11TransactionStatusCode
-		{
-			Unknown = 0x00,
-			Received = 0x01,
-			Pending = 0x04,
-			Failed = 0x08,
-			Processed = 0x40,
-			Completed = 0x80
-		}
+        [Flags]
+        private enum Wsdl11TransactionStatusCode
+        {
+            Unknown = 0x00,
+            Received = 0x01,
+            Pending = 0x04,
+            Failed = 0x08,
+            Processed = 0x40,
+            Completed = 0x80
+        }
 
-		public static CommonTransactionStatusCode Convert(string text)
-		{
-			return EnumUtils.ParseEnum<CommonTransactionStatusCode>(text);
-		}
-		public static string ConvertTo11Enum(CommonTransactionStatusCode type)
-		{
-			Wsdl11TransactionStatusCode wsdl11TransactionStatus =
-				EnumUtils.ParseEnum<Wsdl11TransactionStatusCode>(type.ToString());
+        public static CommonTransactionStatusCode Convert(string text)
+        {
+            return EnumUtils.ParseEnum<CommonTransactionStatusCode>(text);
+        }
+        public static string ConvertTo11Enum(CommonTransactionStatusCode type)
+        {
+            Wsdl11TransactionStatusCode wsdl11TransactionStatus =
+                EnumUtils.ParseEnum<Wsdl11TransactionStatusCode>(type.ToString());
 
-			if ((wsdl11TransactionStatus == Wsdl11TransactionStatusCode.Unknown) &&
-				 (type != CommonTransactionStatusCode.Unknown))
-			{
-				//account for special types that do not directly map to the common type
+            if ((wsdl11TransactionStatus == Wsdl11TransactionStatusCode.Unknown) &&
+                 (type != CommonTransactionStatusCode.Unknown))
+            {
+                //account for special types that do not directly map to the common type
 
-				switch (type)
-				{
-					case (CommonTransactionStatusCode.Processing):
-						wsdl11TransactionStatus = Wsdl11TransactionStatusCode.Pending;
-						break;
+                switch (type)
+                {
+                    case (CommonTransactionStatusCode.Processing):
+                        wsdl11TransactionStatus = Wsdl11TransactionStatusCode.Pending;
+                        break;
 
-					case (CommonTransactionStatusCode.Cancelled):
-						wsdl11TransactionStatus = Wsdl11TransactionStatusCode.Failed;
-						break;
+                    case (CommonTransactionStatusCode.Cancelled):
+                        wsdl11TransactionStatus = Wsdl11TransactionStatusCode.Failed;
+                        break;
 
-					case (CommonTransactionStatusCode.Approved):
-						wsdl11TransactionStatus = Wsdl11TransactionStatusCode.Processed;
-						break;
+                    case (CommonTransactionStatusCode.Approved):
+                        wsdl11TransactionStatus = Wsdl11TransactionStatusCode.Processed;
+                        break;
 
                     case (CommonTransactionStatusCode.ReceivedUnprocessed):
                         wsdl11TransactionStatus = Wsdl11TransactionStatusCode.Received;
                         break;
 
                     default:
-						throw new ArgumentException("Invalid transaction status code", type.ToString());
+                        throw new ArgumentException("Invalid transaction status code", type.ToString());
 
-				}
+                }
 
-			}
-			return wsdl11TransactionStatus.ToString();
-		}
+            }
+            return wsdl11TransactionStatus.ToString();
+        }
     }
 }

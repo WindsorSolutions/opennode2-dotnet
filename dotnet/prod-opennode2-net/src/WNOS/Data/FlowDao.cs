@@ -48,6 +48,8 @@ using Windsor.Node2008.WNOSDomain;
 using Windsor.Node2008.WNOSUtility;
 using Windsor.Commons.Core;
 
+using System.Linq;
+
 namespace Windsor.Node2008.WNOS.Data
 {
     /// <summary>
@@ -184,7 +186,7 @@ namespace Windsor.Node2008.WNOS.Data
         public IDictionary<string, string> GetFlowsIdToNameMap(IEnumerable<string> flowNames)
         {
             Dictionary<string, string> dataFlows = new Dictionary<string, string>();
-            if ( CollectionUtils.IsNullOrEmpty(flowNames))
+            if (CollectionUtils.IsNullOrEmpty(flowNames))
             {
                 return dataFlows;
             }
@@ -231,13 +233,34 @@ namespace Windsor.Node2008.WNOS.Data
         /// </summary>
         public IList<DataFlow> GetAllDataFlows(bool loadDataServices, bool includeServiceParameters)
         {
+            return GetAllDataFlows(null, loadDataServices, includeServiceParameters);
+        }
+
+        /// <summary>
+        /// Return all data flows in the DB.
+        /// </summary>
+        public IList<DataFlow> GetAllDataFlows(string username, bool loadDataServices, bool includeServiceParameters)
+        {
+            IList<string> protectedFlowNames = null;
+            if (!string.IsNullOrEmpty(username))
+            {
+                protectedFlowNames = GetProtectedFlowNamesForUser(username);
+            }
             List<DataFlow> dataFlows = new List<DataFlow>();
             DoSimpleQueryWithRowCallbackDelegate(
                 TABLE_NAME, null, null, "Code",
                 MAP_DATA_FLOW_COLUMNS,
                 delegate(IDataReader reader)
                 {
-                    dataFlows.Add(MapDataFlow(reader));
+                    DataFlow dataFlow = MapDataFlow(reader);
+                    if (!string.IsNullOrEmpty(username) && dataFlow.IsProtected)
+                    {
+                        if ((protectedFlowNames == null) || (protectedFlowNames.FirstOrDefault(f => f.Equals(dataFlow.FlowName, StringComparison.OrdinalIgnoreCase)) == null))
+                        {
+                            return; // User does not have access to this flow, do not add it to the list
+                        }
+                    }
+                    dataFlows.Add(dataFlow);
                 });
             if (loadDataServices)
             {
@@ -544,7 +567,8 @@ namespace Windsor.Node2008.WNOS.Data
         }
         public void Delete(DataFlow item)
         {
-			TransactionTemplate.Execute(delegate {
+            TransactionTemplate.Execute(delegate
+            {
                 DoSimpleDelete(ScheduleDao.TABLE_NAME, "FlowId", new object[] { item.Id });
                 DoSimpleDelete(TransactionDao.TABLE_NAME, "FlowId", new object[] { item.Id });
                 DoSimpleDelete(TABLE_NAME, "Id", new object[] { item.Id });
@@ -554,7 +578,13 @@ namespace Windsor.Node2008.WNOS.Data
         #endregion
 
         #region Properties
-        public string TableName { get { return TABLE_NAME; }  }
+        public string TableName
+        {
+            get
+            {
+                return TABLE_NAME;
+            }
+        }
         #endregion
     }
 }

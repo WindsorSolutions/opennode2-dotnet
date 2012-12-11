@@ -96,6 +96,28 @@ namespace Windsor.Commons.Core
             }
             return list;
         }
+        public static List<object> CreateObjectList(IEnumerable inArray)
+        {
+            if (inArray == null)
+            {
+                return null;
+            }
+            List<object> rtnList = null;
+            ICollection collection = inArray as ICollection;
+            if (collection != null)
+            {
+                rtnList = new List<object>(collection.Count);
+            }
+            else
+            {
+                rtnList = new List<object>();
+            }
+            foreach (object item in inArray)
+            {
+                rtnList.Add(item);
+            }
+            return rtnList;
+        }
         public static bool IsNullOrEmpty(IEnumerable inArray)
         {
 
@@ -560,6 +582,15 @@ namespace Windsor.Commons.Core
             }
             return list;
         }
+        public static List<string> CreateStringList(params object[] objects)
+        {
+            List<string> list = new List<string>(objects.Length);
+            foreach (object obj in objects)
+            {
+                list.Add(obj != null ? obj.ToString() : "null");
+            }
+            return list;
+        }
         public static StringCollection CreateStringCollection(IEnumerable<string> list)
         {
             StringCollection collection = new StringCollection();
@@ -823,7 +854,8 @@ namespace Windsor.Commons.Core
         }
         public static List<T> Intersect<T>(ICollection<T> list1, ICollection<T> list2)
         {
-            if ( CollectionUtils.IsNullOrEmpty(list1) || CollectionUtils.IsNullOrEmpty(list2) ) {
+            if (CollectionUtils.IsNullOrEmpty(list1) || CollectionUtils.IsNullOrEmpty(list2))
+            {
                 return null;
             }
             if (list1 == list2)
@@ -832,7 +864,7 @@ namespace Windsor.Commons.Core
             }
             Dictionary<T, T> rtnList = new Dictionary<T, T>(Math.Min(list1.Count, list2.Count));
             if (list1.Count > list2.Count)
-            { 
+            {
                 ICollection<T> temp = list2;
                 list2 = list1;
                 list1 = temp;
@@ -918,7 +950,7 @@ namespace Windsor.Commons.Core
             int index = 0, rtnIndex = -1;
             CollectionUtils.ForEachBreak(list, delegate(string checkElement)
             {
-                if ( string.Equals(element, checkElement, comparison) )
+                if (string.Equals(element, checkElement, comparison))
                 {
                     rtnIndex = index;
                     return false;
@@ -1009,7 +1041,7 @@ namespace Windsor.Commons.Core
             }
             IEnumerator<string> e1 = c1.GetEnumerator();
             IEnumerator<string> e2 = c2.GetEnumerator();
-            for(;;)
+            for (; ; )
             {
                 bool moved1 = e1.MoveNext();
                 bool moved2 = e2.MoveNext();

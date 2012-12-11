@@ -31,7 +31,7 @@ POSSIBILITY OF SUCH DAMAGE.
 */
 #endregion
 
-﻿using System;
+using System;
 using Windsor.Node2008.WNOSDomain;
 using System.Collections.Generic;
 using Windsor.Node2008.WNOSUtility;
@@ -53,7 +53,14 @@ namespace Windsor.Node2008.WNOS.Data
         /// is true, load service parameters for each data service, as well.
         /// </summary>
         IList<DataFlow> GetAllDataFlows(bool loadDataServices, bool includeServiceParameters);
-        
+
+        /// <summary>
+        /// Get a list of all data flows.  If loadDataServices is true, all data services associated with each flow
+        /// are loaded from persistent storage and populated into the DataFlow.Services collection.  If includeServiceParameters
+        /// is true, load service parameters for each data service, as well.
+        /// </summary>
+        IList<DataFlow> GetAllDataFlows(string username, bool loadDataServices, bool includeServiceParameters);
+
         /// <summary>
         /// Get a list of all protected data flows.  If loadDataServices is true, all data services associated with each flow
         /// are loaded from persistent storage and populated into the DataFlow.Services collection.
@@ -69,7 +76,7 @@ namespace Windsor.Node2008.WNOS.Data
         /// Get a map of all protected data flow name (key) to their ids (value).
         /// </summary>
         IDictionary<string, string> GetAllProtectedUpperDataFlowNamesToIdMap();
-        
+
         /// <summary>
         /// Get a list of key/value pairs for all data flows, where the key is the data flow id and the value is
         /// the data flow name.
@@ -162,7 +169,10 @@ namespace Windsor.Node2008.WNOS.Data
         /// <summary>
         /// Get the name of the root table where data flows are persisted.
         /// </summary>
-        string TableName { get; }
+        string TableName
+        {
+            get;
+        }
 
         /// <summary>
         /// Key is the flow name, value is the flow id.

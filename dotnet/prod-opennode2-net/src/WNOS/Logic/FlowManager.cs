@@ -64,9 +64,9 @@ namespace Windsor.Node2008.WNOS.Logic
 
         new public void Init()
         {
-			base.Init();
-			
-			FieldNotInitializedException.ThrowIfNull(this, ref _flowDao);
+            base.Init();
+
+            FieldNotInitializedException.ThrowIfNull(this, ref _flowDao);
             FieldNotInitializedException.ThrowIfNull(this, ref _serviceDao);
             FieldNotInitializedException.ThrowIfNull(this, ref _accountDao);
             FieldNotInitializedException.ThrowIfNull(this, ref _pluginLoader);
@@ -83,11 +83,11 @@ namespace Windsor.Node2008.WNOS.Logic
 
         public string GetDataFlowNameById(string flowId)
         {
-			return _flowDao.GetDataFlowNameById(flowId);
+            return _flowDao.GetDataFlowNameById(flowId);
         }
         public string GetDataFlowNameById(string flowId, out bool isProtected)
         {
-			return _flowDao.GetDataFlowNameById(flowId, out isProtected);
+            return _flowDao.GetDataFlowNameById(flowId, out isProtected);
         }
         public string GetDataFlowIdByName(string flowName)
         {
@@ -103,7 +103,7 @@ namespace Windsor.Node2008.WNOS.Logic
         }
         public DataFlow GetDataFlow(string flowId)
         {
-			return _flowDao.GetDataFlow(flowId);
+            return _flowDao.GetDataFlow(flowId);
         }
         public IList<string> GetProtectedFlowNamesForUser(string username)
         {
@@ -111,17 +111,19 @@ namespace Windsor.Node2008.WNOS.Logic
         }
         public DataService GetSubmitDocumentServiceForFlow(string flowId, string operation)
         {
-			return _flowDao.GetSubmitDocumentServiceForFlow(flowId, operation);
+            return _flowDao.GetSubmitDocumentServiceForFlow(flowId, operation);
         }
         public DataService GetNotifyDocumentServiceForFlow(string flowId, string operation)
         {
-			return _flowDao.GetNotifyDocumentServiceForFlow(flowId, operation);
+            return _flowDao.GetNotifyDocumentServiceForFlow(flowId, operation);
         }
-        public DataService GetQueryServiceForFlow(string flowId, string request) {
-			return _flowDao.GetQueryServiceForFlow(flowId, request);
+        public DataService GetQueryServiceForFlow(string flowId, string request)
+        {
+            return _flowDao.GetQueryServiceForFlow(flowId, request);
         }
-        public DataService GetSolicitServiceForFlow(string flowId, string request) {
-			return _flowDao.GetSolicitServiceForFlow(flowId, request);
+        public DataService GetSolicitServiceForFlow(string flowId, string request)
+        {
+            return _flowDao.GetSolicitServiceForFlow(flowId, request);
         }
         public DataService GetExecuteServiceForFlow(string flowId, string methodName)
         {
@@ -130,6 +132,10 @@ namespace Windsor.Node2008.WNOS.Logic
         public IList<DataFlow> GetAllDataFlows(bool loadDataServices, bool includeServiceParameters)
         {
             return _flowDao.GetAllDataFlows(loadDataServices, includeServiceParameters);
+        }
+        public IList<DataFlow> GetAllDataFlows(string username, bool loadDataServices, bool includeServiceParameters)
+        {
+            return _flowDao.GetAllDataFlows(username, loadDataServices, includeServiceParameters);
         }
         public IDictionary<string, string> GetAllFlowsNameToIdMap()
         {
@@ -318,7 +324,7 @@ namespace Windsor.Node2008.WNOS.Logic
                 foreach (DataFlow flow in flows)
                 {
                     string name = flow.FlowName;
-                    if ( flow.IsProtected )
+                    if (flow.IsProtected)
                     {
                         name += " (Protected)";
                     }
@@ -327,12 +333,18 @@ namespace Windsor.Node2008.WNOS.Logic
             }
             return dict;
         }
-            
+
         #region Properties
         public IServiceDao ServiceDao
         {
-            get { return _serviceDao; }
-            set { _serviceDao = value; }
+            get
+            {
+                return _serviceDao;
+            }
+            set
+            {
+                _serviceDao = value;
+            }
         }
 
         public IFlowDao FlowDao
@@ -348,23 +360,47 @@ namespace Windsor.Node2008.WNOS.Logic
         }
         public IPluginLoader PluginLoader
         {
-            get { return _pluginLoader; }
-            set { _pluginLoader = value; }
+            get
+            {
+                return _pluginLoader;
+            }
+            set
+            {
+                _pluginLoader = value;
+            }
         }
         public IConfigManager ConfigManager
         {
-            get { return _configManager; }
-            set { _configManager = value; }
+            get
+            {
+                return _configManager;
+            }
+            set
+            {
+                _configManager = value;
+            }
         }
         public IDataProviderDao DataProviderDao
         {
-            get { return _dataProviderDao; }
-            set { _dataProviderDao = value; }
+            get
+            {
+                return _dataProviderDao;
+            }
+            set
+            {
+                _dataProviderDao = value;
+            }
         }
         public IAccountDao AccountDao
         {
-            get { return _accountDao; }
-            set { _accountDao = value; }
+            get
+            {
+                return _accountDao;
+            }
+            set
+            {
+                _accountDao = value;
+            }
         }
 
         #endregion

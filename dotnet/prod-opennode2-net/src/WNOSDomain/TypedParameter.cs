@@ -51,11 +51,23 @@ namespace Windsor.Node2008.WNOSDomain
         private string _name;
         private string _description;
         private bool _isRequired;
-        private object _value;
+        private object _defaultValue;
         private bool _doPublishParam;
 
         public TypedParameter()
         {
+        }
+        public TypedParameter(string name)
+        {
+            _name = name;
+            _doPublishParam = true;
+        }
+        public TypedParameter(string name, bool isRequired, Type type)
+        {
+            _type = type;
+            _name = name;
+            _isRequired = isRequired;
+            _doPublishParam = true;
         }
         public TypedParameter(string name, string description, bool isRequired,
                               Type type, bool doPublishParam, object value)
@@ -65,7 +77,7 @@ namespace Windsor.Node2008.WNOSDomain
             _description = description;
             _isRequired = isRequired;
             _doPublishParam = doPublishParam;
-            _value = value;
+            _defaultValue = value;
         }
         public TypedParameter(string name, string description, bool isRequired,
                               Type type, bool doPublishParam)
@@ -78,33 +90,74 @@ namespace Windsor.Node2008.WNOSDomain
         }
         public Type Type
         {
-            get { return _type; }
-            set { _type = value; }
+            get
+            {
+                return _type;
+            }
+            set
+            {
+                _type = value;
+            }
         }
         public string Name
         {
-            get { return _name; }
-            set { _name = value; }
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                _name = value;
+            }
         }
         public string Description
         {
-            get { return _description; }
-            set { _description = value; }
+            get
+            {
+                return _description;
+            }
+            set
+            {
+                _description = value;
+            }
         }
         public bool IsRequired
         {
-            get { return _isRequired; }
-            set { _isRequired = value; }
+            get
+            {
+                return _isRequired;
+            }
+            set
+            {
+                _isRequired = value;
+            }
         }
-        public object Value
+        public object DefaultValue
         {
-            get { return _value; }
-            set { _value = value; }
+            get
+            {
+                return _defaultValue;
+            }
+            set
+            {
+                _defaultValue = value;
+            }
+        }
+        public IList<object> AcceptableValues
+        {
+            get;
+            set;
         }
         public bool DoPublishParam
         {
-            get { return _doPublishParam; }
-            set { _doPublishParam = value; }
+            get
+            {
+                return _doPublishParam;
+            }
+            set
+            {
+                _doPublishParam = value;
+            }
         }
     }
 }
