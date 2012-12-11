@@ -61,19 +61,34 @@ namespace Windsor.Node2008.WNOSDomain
 
         public TransactionStatus Status
         {
-            get { return _status; }
-            set { _status = value; }
+            get
+            {
+                return _status;
+            }
+            set
+            {
+                _status = value;
+            }
         }
 
         public string NetworkId
         {
-            get { return _networkId; }
-            set { _networkId = value; }
+            get
+            {
+                return _networkId;
+            }
+            set
+            {
+                _networkId = value;
+            }
         }
 
         public DataFlow Flow
         {
-            get { return _flow; }
+            get
+            {
+                return _flow;
+            }
             set
             {
                 _flow = value;
@@ -82,54 +97,119 @@ namespace Windsor.Node2008.WNOSDomain
 
         public IList<Document> Documents
         {
-            get { return _documents; }
-            set { _documents = value; }
+            get
+            {
+                return _documents;
+            }
+            set
+            {
+                _documents = value;
+            }
         }
 
         public AsyncContentRequest Request
         {
-            get { return _request; }
-            set { _request = value; }
+            get
+            {
+                return _request;
+            }
+            set
+            {
+                _request = value;
+            }
         }
         public string Operation
         {
-            get { return _operation; }
-            set { _operation = value; }
+            get
+            {
+                return _operation;
+            }
+            set
+            {
+                _operation = value;
+            }
         }
         public NodeMethod NodeMethod
         {
-            get { return _nodeMethod; }
-            set { _nodeMethod = value; }
+            get
+            {
+                return _nodeMethod;
+            }
+            set
+            {
+                _nodeMethod = value;
+            }
         }
         public EndpointVersionType EndpointVersion
         {
-            get { return _endpointVersion; }
-            set { _endpointVersion = value; }
+            get
+            {
+                return _endpointVersion;
+            }
+            set
+            {
+                _endpointVersion = value;
+            }
         }
         public string NetworkEndpointUrl
         {
-            get { return _networkEndpointUrl; }
-            set { _networkEndpointUrl = value; }
+            get
+            {
+                return _networkEndpointUrl;
+            }
+            set
+            {
+                _networkEndpointUrl = value;
+            }
         }
         public EndpointVersionType NetworkEndpointVersion
         {
-            get { return _networkEndpointVersion; }
-            set { _networkEndpointVersion = value; }
+            get
+            {
+                return _networkEndpointVersion;
+            }
+            set
+            {
+                _networkEndpointVersion = value;
+            }
         }
         public CommonTransactionStatusCode NetworkEndpointStatus
         {
-            get { return _networkEndpointStatus; }
-            set { _networkEndpointStatus = value; }
+            get
+            {
+                return _networkEndpointStatus;
+            }
+            set
+            {
+                _networkEndpointStatus = value;
+            }
+        }
+        public string NetworkEndpointStatusDetail
+        {
+            get;
+            set;
         }
         public string NetworkFlowName
         {
-            get { return _networkFlowName; }
-            set { _networkFlowName = value; }
+            get
+            {
+                return _networkFlowName;
+            }
+            set
+            {
+                _networkFlowName = value;
+            }
         }
         public string NetworkOperationName
         {
-            get { return _networkOperationName; }
-            set { _networkOperationName = value; }
+            get
+            {
+                return _networkOperationName;
+            }
+            set
+            {
+                _networkOperationName = value;
+            }
         }
     }
 }

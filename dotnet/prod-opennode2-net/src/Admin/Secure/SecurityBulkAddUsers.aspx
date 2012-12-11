@@ -168,6 +168,7 @@
                         <asp:Button Text="Add Users" CssClass="button" runat="server" ID="addUsersBtn" OnClick="OnAddUsers" />
                         <asp:Button Text="Save" CssClass="button" runat="server" ID="saveUserBtn" OnClick="OnSaveUser" />
                         <asp:Button Text="Delete" CssClass="button" runat="server" ID="deleteUserBtn" CausesValidation="false" OnClientClick="return confirm('Are you sure you want to delete this user?\n\nIn addition to deleting the user from this Node, the user account will also be deleted from NAAS.');" OnClick="OnDeleteUser" />
+                        <asp:Button Text="Remove" CssClass="button" runat="server" ID="removeUserBtn" CausesValidation="false" OnClientClick="return confirm('Are you sure you want to remove this user from the node?');" OnClick="OnRemoveUser" />
                     </td>
                 </tr>
             </table>

@@ -57,9 +57,21 @@ namespace Windsor.Node2008.Admin.Secure
     {
         public class ModelState
         {
-            public Dictionary<string, string> Flows { get; set; }
-            public Dictionary<string, Dictionary<string, ScheduledItem>> FlowToScheduledItems { get; set; }
-            public Dictionary<string, ScheduledItem> ScheduledItems { get; set; }
+            public Dictionary<string, string> Flows
+            {
+                get;
+                set;
+            }
+            public Dictionary<string, Dictionary<string, ScheduledItem>> FlowToScheduledItems
+            {
+                get;
+                set;
+            }
+            public Dictionary<string, ScheduledItem> ScheduledItems
+            {
+                get;
+                set;
+            }
         }
         #region Members
         const string showInfoScriptName = "ShowInfoScript";
@@ -221,10 +233,14 @@ namespace Windsor.Node2008.Admin.Secure
         {
             switch (type)
             {
-                case ScheduleExecuteStatus.CompletedSuccess: return "../Images/UI/accept.png";
-                case ScheduleExecuteStatus.CompletedFailure: return "../Images/UI/exclamation.png";
-                case ScheduleExecuteStatus.Running: return "../Images/UI/cog_go.png";
-                default: return "../Images/UI/time.png";
+                case ScheduleExecuteStatus.CompletedSuccess:
+                    return "../Images/UI/accept.png";
+                case ScheduleExecuteStatus.CompletedFailure:
+                    return "../Images/UI/exclamation.png";
+                case ScheduleExecuteStatus.Running:
+                    return "../Images/UI/cog_go.png";
+                default:
+                    return "../Images/UI/time.png";
             }
         }
         public void OnViewTransactionDetailClick(object source, CommandEventArgs e)
@@ -234,7 +250,7 @@ namespace Windsor.Node2008.Admin.Secure
                 string transactionId = DataItemService.GetTransactionIdFromActivityId(e.CommandArgument.ToString());
                 if (!string.IsNullOrEmpty(transactionId))
                 {
-                    ResponseRedirect("../Secure/Transaction.aspx?back=true&id=" + transactionId);
+                    ResponseRedirect("../Secure/Transaction.aspx?" + Transaction.BACK_PAGE_PARAM + "=Schedule.aspx&id=" + transactionId);
                 }
             }
         }

@@ -132,17 +132,10 @@ namespace Windsor.Node2008.WNOS.Logic
         protected TransactionStatus RefreshNetworkStatus(INodeEndpointClient client, NodeTransaction nodeTransaction)
         {
             CommonTransactionStatusCode status;
-            if (client.Version == EndpointVersionType.EN20)
-            {
-                // TODO: Could get status detail here too
-                status = client.GetStatus(nodeTransaction.NetworkId);
-            }
-            else
-            {
-                status = client.GetStatus(nodeTransaction.NetworkId);
-            }
-            _transactionDao.SetNetworkIdStatus(nodeTransaction.Id, status);
-            return new TransactionStatus(nodeTransaction.NetworkId, status, null);
+            string statusDetail;
+            status = client.GetStatus(nodeTransaction.NetworkId, out statusDetail);
+            _transactionDao.SetNetworkIdStatus(nodeTransaction.Id, status, statusDetail);
+            return new TransactionStatus(nodeTransaction.NetworkId, status, statusDetail);
         }
         public TransactionStatus RefreshNetworkStatus(string transactionID, NodeVisit visit)
         {
@@ -808,6 +801,12 @@ namespace Windsor.Node2008.WNOS.Logic
         {
             _transactionDao.SetNetworkId(transactionId, networkId, networkEndpointVersion, networkEndpointUrl,
                                          networkFlowName, networkFlowOperation);
+        }
+        public void SetNetworkId(string transactionId, string networkId, EndpointVersionType networkEndpointVersion,
+                                 string networkEndpointUrl, string networkFlowName, string networkFlowOperation, string networkStatusDetail)
+        {
+            _transactionDao.SetNetworkId(transactionId, networkId, networkEndpointVersion, networkEndpointUrl,
+                                         networkFlowName, networkFlowOperation, networkStatusDetail);
         }
         public string GetNetworkId(string transactionId)
         {

@@ -157,6 +157,7 @@
                                     Status:
                                 </td>
                                 <td class="ctrl" style="vertical-align: middle; white-space: nowrap">
+                                    <asp:Image ID="networkStatusImage" runat="server" Style="vertical-align: middle" />
                                     <asp:Label ID="networkStatus" runat="server" Style="vertical-align: middle; margin-right: 20px" />
                                     <asp:ImageButton ImageUrl="../Images/UI/arrow-circle-double-135.png" AlternateText="Refresh network status" ToolTip="Refresh network status" BorderWidth="0" ImageAlign="AbsMiddle" runat="server" ID="refreshNetworkStatusBtn" OnClick="OnRefreshNetworkStatus" CausesValidation="False" />
                                     <asp:LinkButton ID="refreshNetworkStatusButton" runat="server" OnClick="OnRefreshNetworkStatus" Style="vertical-align: middle; margin-left: 3px" CausesValidation="False">Refresh Status</asp:LinkButton>
@@ -169,7 +170,7 @@
                 </tr>
                 <tr id="BackBtnTableRow" runat="server">
                     <td colspan="2" align="right">
-                        <input id="BackButton" runat="server" class="button" type="button" value="Back" name="ClickBack" causesvalidation="false" enableviewstate="false" />
+                        <asp:Button Text="Back" CssClass="button" runat="server" ID="backBtn" OnClick="OnBackClick" CausesValidation="False" />
                     </td>
                 </tr>
             </table>

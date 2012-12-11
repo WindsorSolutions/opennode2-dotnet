@@ -204,6 +204,13 @@ namespace Windsor.Commons.NodeClient
         CommonTransactionStatusCode GetStatus(string transactionId);
 
         /// <summary>
+        /// Get the status of the input transaction.
+        /// </summary>
+        /// <param name="transactionId">Id of the transaction to check.</param>
+        /// <returns>The current status of the transaction.</returns>
+        CommonTransactionStatusCode GetStatus(string transactionId, out string statusDetail);
+
+        /// <summary>
         /// Send a status notification to a v2.0 node.  This method should only be called if Version == EndpointVersionType.EN20.
         /// </summary>
         /// <param name="nodeEndpoint">Url of the node that is submitting the notification.</param>

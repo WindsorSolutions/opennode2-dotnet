@@ -68,8 +68,16 @@ namespace Windsor.Node2008.Admin.Secure
 
         private class DataModel
         {
-            public IList<Activity> SearchResults { get; set; }
-            public OrderedSet<string> MoreInfoIds { get; set; }
+            public IList<Activity> SearchResults
+            {
+                get;
+                set;
+            }
+            public OrderedSet<string> MoreInfoIds
+            {
+                get;
+                set;
+            }
         }
         #endregion
 
@@ -89,7 +97,7 @@ namespace Windsor.Node2008.Admin.Secure
             }
             _dataModel = new DataModel();
             _dataModel.MoreInfoIds = new OrderedSet<string>();
-            _dataModel.SearchResults = 
+            _dataModel.SearchResults =
                 _dataService.GetRecentActivities(_recentTransactionDisplayCount, true, VisitHelper.GetVisit());
         }
         protected override void OnInitializeControls(EventArgs e)
@@ -202,11 +210,11 @@ namespace Windsor.Node2008.Admin.Secure
         }
         public void OnViewTransactionDetailClick(object source, CommandEventArgs e)
         {
-            ResponseRedirect("../Secure/Transaction.aspx?back=true&id=" + e.CommandArgument);
+            ResponseRedirect("../Secure/Transaction.aspx?" + Transaction.BACK_PAGE_PARAM + "=Dashboard.aspx&id=" + e.CommandArgument);
         }
         public void OnViewTaskDetailClick(object source, CommandEventArgs e)
         {
-            ResponseRedirect("../Secure/TaskDetails.aspx?back=true&id=" + e.CommandArgument);
+            ResponseRedirect("../Secure/TaskDetails.aspx?" + Transaction.BACK_PAGE_PARAM + "=Dashboard.aspx&id=" + e.CommandArgument);
         }
         protected bool IsTaskMethod(object method)
         {
@@ -215,11 +223,14 @@ namespace Windsor.Node2008.Admin.Secure
         protected void OnMoreInfoClick(object sender, EventArgs e)
         {
             Control control = sender as Control;
-            if (control == null) return;
+            if (control == null)
+                return;
             DataControlFieldCell dataControlFieldCell = control.Parent as DataControlFieldCell;
-            if (dataControlFieldCell == null) return;
+            if (dataControlFieldCell == null)
+                return;
             GridViewRow gridViewRow = dataControlFieldCell.Parent as GridViewRow;
-            if (gridViewRow == null) return;
+            if (gridViewRow == null)
+                return;
             int itemIndex = gridViewRow.RowIndex;
             string id = _dataModel.SearchResults[itemIndex].Id;
             ImageButton button = sender as ImageButton;
@@ -303,33 +314,63 @@ namespace Windsor.Node2008.Admin.Secure
 
         public string RssFeedUrl
         {
-            set { _rssFeedUrl = value; }
+            set
+            {
+                _rssFeedUrl = value;
+            }
         }
 
         public ChartConfig ChartConfig
         {
-            set { _chartConfig = value; }
+            set
+            {
+                _chartConfig = value;
+            }
         }
 
         public IActivityService DataService
         {
-            get { return _dataService; }
-            set { _dataService = value; }
+            get
+            {
+                return _dataService;
+            }
+            set
+            {
+                _dataService = value;
+            }
         }
         public int RecentTransactionDisplayCount
         {
-            get { return _recentTransactionDisplayCount; }
-            set { _recentTransactionDisplayCount = value; }
+            get
+            {
+                return _recentTransactionDisplayCount;
+            }
+            set
+            {
+                _recentTransactionDisplayCount = value;
+            }
         }
         public bool ProvideUsageStats
         {
-            get { return _provideUsageStats; }
-            set { _provideUsageStats = value; }
+            get
+            {
+                return _provideUsageStats;
+            }
+            set
+            {
+                _provideUsageStats = value;
+            }
         }
         public ISettingsProvider SettingsProvider
         {
-            get { return _settingsProvider; }
-            set { _settingsProvider = value; }
+            get
+            {
+                return _settingsProvider;
+            }
+            set
+            {
+                _settingsProvider = value;
+            }
         }
         #endregion
     }

@@ -61,77 +61,132 @@ namespace Windsor.Node2008.Admin.Secure
         #region Members
 
         private const int DEFAULT_RESULTS_PER_PAGE = 10;
+        private const string ACTIVITY_SEARCH_CRITERIA_RESULTS_KEY = "ACTIVITY_SEARCH_CRITERIA_RESULTS_KEY";
         private class DataModel
         {
             private ActivitySearchParams _searchParams;
 
             public ActivitySearchParams SearchParams
             {
-                get { return _searchParams; }
-                set { _searchParams = value; }
+                get
+                {
+                    return _searchParams;
+                }
+                set
+                {
+                    _searchParams = value;
+                }
             }
 
             private IDictionary<string, string> _userIdToNameMap;
 
             public IDictionary<string, string> UserIdToNameMap
             {
-                get { return _userIdToNameMap; }
-                set { _userIdToNameMap = value; }
+                get
+                {
+                    return _userIdToNameMap;
+                }
+                set
+                {
+                    _userIdToNameMap = value;
+                }
             }
 
             private SortableCollection<Activity> _searchResults;
 
             public SortableCollection<Activity> SearchResults
             {
-                get { return _searchResults; }
-                set { _searchResults = value; }
+                get
+                {
+                    return _searchResults;
+                }
+                set
+                {
+                    _searchResults = value;
+                }
             }
 
             private int _resultsPerPage = DEFAULT_RESULTS_PER_PAGE;
 
             public int ResultsPerPage
             {
-                get { return _resultsPerPage; }
-                set { _resultsPerPage = value; }
+                get
+                {
+                    return _resultsPerPage;
+                }
+                set
+                {
+                    _resultsPerPage = value;
+                }
             }
 
             private string _sortProperty = "ModifiedOn";
 
             public string SortProperty
             {
-                get { return _sortProperty; }
-                set { _sortProperty = value; }
+                get
+                {
+                    return _sortProperty;
+                }
+                set
+                {
+                    _sortProperty = value;
+                }
             }
 
             private bool _sortAscending = false;
 
             public bool SortAscending
             {
-                get { return _sortAscending; }
-                set { _sortAscending = value; }
+                get
+                {
+                    return _sortAscending;
+                }
+                set
+                {
+                    _sortAscending = value;
+                }
             }
 
             private OrderedSet<string> _moreInfoIds = new OrderedSet<string>();
 
             public OrderedSet<string> MoreInfoIds
             {
-                get { return _moreInfoIds; }
-                set { _moreInfoIds = value; }
+                get
+                {
+                    return _moreInfoIds;
+                }
+                set
+                {
+                    _moreInfoIds = value;
+                }
             }
 
             private int _pageIndex;
 
             public int PageIndex
             {
-                get { return _pageIndex; }
-                set { _pageIndex = value; }
+                get
+                {
+                    return _pageIndex;
+                }
+                set
+                {
+                    _pageIndex = value;
+                }
             }
             private bool _rebindResults;
 
             public bool RebindResults
             {
-                get { return _rebindResults; }
-                set { _rebindResults = value; }
+                get
+                {
+                    return _rebindResults;
+                }
+                set
+                {
+                    _rebindResults = value;
+                }
             }
 
         }
@@ -150,14 +205,22 @@ namespace Windsor.Node2008.Admin.Secure
             {
                 throw new ArgumentNullException("_dataItemService");
             }
-            _dataModel = new DataModel();
-            _dataModel.SearchParams = new ActivitySearchParams();
+            DataModel dataModel = Session[ACTIVITY_SEARCH_CRITERIA_RESULTS_KEY] as DataModel;
+            if (dataModel != null)
+            {
+                _dataModel = dataModel;
+            }
+            else
+            {
+                _dataModel = new DataModel();
+                _dataModel.SearchParams = new ActivitySearchParams();
+            }
             _dataModel.UserIdToNameMap = DataService.GetUserIdToNameMap();
         }
         protected override void OnInitializeControls(EventArgs e)
         {
             base.OnInitializeControls(e);
-  
+
             if (!this.IsPostBack)
             {
                 NodeVisit nodeVisit = VisitHelper.GetVisit();
@@ -166,6 +229,8 @@ namespace Windsor.Node2008.Admin.Secure
 
                 introParagraphs.DataSource = IntroParagraphs;
                 introParagraphs.DataBind();
+
+                ActivitySearchParams activitySearchParams = (_dataModel != null) && (_dataModel.SearchParams != null) ? _dataModel.SearchParams : null;
 
                 exchangeDropDownList.DataSource = DataService.GetAllFlowNames(nodeVisit);
                 exchangeDropDownList.DataBind();
@@ -203,6 +268,52 @@ namespace Windsor.Node2008.Admin.Secure
                 byUserCtrl.Items.Insert(0, NOT_SELECTED_TEXT);
                 byUserCtrl.SelectedIndex = 0;
 
+                if (activitySearchParams != null)
+                {
+                    if (!CollectionUtils.IsNullOrEmpty(activitySearchParams.FlowNames))
+                    {
+                        exchangeDropDownList.SelectedValue = activitySearchParams.FlowNames[0];
+                    }
+                    if (!string.IsNullOrEmpty(activitySearchParams.OperationName))
+                    {
+                        operationDropDownList.SelectedValue = activitySearchParams.OperationName;
+                    }
+                    if (activitySearchParams.NodeMethod != NodeMethod.None)
+                    {
+                        nodeMethodTypeDropdown.SelectedValue = EnumUtils.ToDescription(activitySearchParams.NodeMethod);
+                    }
+                    if (activitySearchParams.Type != ActivityType.None)
+                    {
+                        activityTypeCtrl.SelectedValue = EnumUtils.ToDescription(activitySearchParams.Type);
+                    }
+                    if (!string.IsNullOrEmpty(activitySearchParams.IP))
+                    {
+                        fromIpCtrl.SelectedValue = activitySearchParams.IP;
+                    }
+                    if (!string.IsNullOrEmpty(activitySearchParams.CreatedByUsername))
+                    {
+                        byUserCtrl.SelectedValue = activitySearchParams.CreatedByUsername;
+                    }
+                    if (!string.IsNullOrEmpty(activitySearchParams.TransactionId))
+                    {
+                        transactionIdCtrl.Text = activitySearchParams.TransactionId;
+                    }
+                    if (!string.IsNullOrEmpty(activitySearchParams.DetailContains))
+                    {
+                        contentCtrl.Text = activitySearchParams.DetailContains;
+                    }
+                    if (activitySearchParams.CreatedFrom != ActivitySearchParams.MIN_DATETIME)
+                    {
+                        fromDateImageButton.Text = activitySearchParams.CreatedFrom.ToString(fromDateCalendarExtender.Format);
+                        fromDateCalendarExtender.SelectedDate = activitySearchParams.CreatedFrom;
+                    }
+                    if (activitySearchParams.CreatedTo != ActivitySearchParams.MAX_DATETIME)
+                    {
+                        toDateImageButton.Text = activitySearchParams.CreatedTo.ToString(toDateCalendarExtender.Format);
+                        toDateCalendarExtender.SelectedDate = activitySearchParams.CreatedTo;
+                    }
+                }
+
                 resultsPerPage.Text = _dataModel.ResultsPerPage.ToString();
 
                 if (!nodeVisit.IsAdmin)
@@ -227,14 +338,15 @@ namespace Windsor.Node2008.Admin.Secure
 
         protected override object SaveModel()
         {
+            Session[ACTIVITY_SEARCH_CRITERIA_RESULTS_KEY] = _dataModel;
             return _dataModel;
         }
 
         protected override void InitializeDataBindings()
         {
-            BindingManager.AddBinding("fromDateImageButton.Text", "DataItem.CreatedFrom",
+            BindingManager.AddBinding("FromDateBinder", "DataItem.CreatedFrom",
                                       BindingDirection.SourceToTarget);
-            BindingManager.AddBinding("toDateImageButton.Text", "DataItem.CreatedTo",
+            BindingManager.AddBinding("ToDateBinder", "DataItem.CreatedTo",
                                       BindingDirection.SourceToTarget);
             BindingManager.AddBinding("ExchangeBinder", "DataItem.FlowNames",
                                       BindingDirection.SourceToTarget);
@@ -295,13 +407,14 @@ namespace Windsor.Node2008.Admin.Secure
             e.IsValid = DateTime.TryParse(e.Value, out result);
             if (e.IsValid)
             {
-                e.IsValid = (result >= ActivitySearchParams.MIN_DATETIME) && 
+                e.IsValid = (result >= ActivitySearchParams.MIN_DATETIME) &&
                             (result <= ActivitySearchParams.MAX_DATETIME);
             }
         }
         protected void UpdateCurrentPageLabel()
         {
-            if ( resultsGridView.FooterRow != null ) {
+            if (resultsGridView.FooterRow != null)
+            {
                 string text = string.Format("Page {0} of {1}", (_dataModel.PageIndex + 1).ToString(),
                                             this.TotalPages);
                 SetLabelsText("currentPageLabel", text);
@@ -353,7 +466,7 @@ namespace Windsor.Node2008.Admin.Secure
         protected override void OnPreRender(EventArgs e)
         {
             base.OnPreRender(e);
-            if ( _dataModel.RebindResults )
+            if (_dataModel.RebindResults)
             {
                 BindSearchResults();
             }
@@ -396,7 +509,7 @@ namespace Windsor.Node2008.Admin.Secure
                         GridViewRow row =
                             new GridViewRow(-1, -1, DataControlRowType.DataRow, DataControlRowState.Normal);
 
-                        row.BackColor = ((i & 1) == 0) ? 
+                        row.BackColor = ((i & 1) == 0) ?
                             resultsGridView.RowStyle.BackColor : resultsGridView.AlternatingRowStyle.BackColor;
                         table.Rows.AddAt(i + numRowsAdded + rowOffset, row);
 
@@ -480,6 +593,64 @@ namespace Windsor.Node2008.Admin.Secure
             }
 
         }
+        protected DateTime FromDateBinder
+        {
+            get
+            {
+                DateTime dateTime;
+                if (!string.IsNullOrEmpty(fromDateImageButton.Text) && DateTime.TryParse(fromDateImageButton.Text, out dateTime))
+                {
+                    return ValidateDateRange(dateTime, ActivitySearchParams.MIN_DATETIME);
+                }
+                else
+                {
+                    return ActivitySearchParams.MIN_DATETIME;
+                }
+            }
+            set
+            {
+                if (value == ActivitySearchParams.MIN_DATETIME)
+                {
+                    fromDateImageButton.Text = string.Empty;
+                    fromDateCalendarExtender.SelectedDate = null;
+                }
+                else
+                {
+                    fromDateImageButton.Text = value.ToString(fromDateCalendarExtender.Format);
+                    fromDateCalendarExtender.SelectedDate = value;
+                }
+            }
+
+        }
+        protected DateTime ToDateBinder
+        {
+            get
+            {
+                DateTime dateTime;
+                if (!string.IsNullOrEmpty(toDateImageButton.Text) && DateTime.TryParse(toDateImageButton.Text, out dateTime))
+                {
+                    return ValidateDateRange(dateTime, ActivitySearchParams.MAX_DATETIME);
+                }
+                else
+                {
+                    return ActivitySearchParams.MAX_DATETIME;
+                }
+            }
+            set
+            {
+                if (value == ActivitySearchParams.MAX_DATETIME)
+                {
+                    toDateImageButton.Text = string.Empty;
+                    toDateCalendarExtender.SelectedDate = null;
+                }
+                else
+                {
+                    toDateImageButton.Text = value.ToString(toDateCalendarExtender.Format);
+                    toDateCalendarExtender.SelectedDate = value;
+                }
+            }
+
+        }
         protected string OperationBinder
         {
             get
@@ -519,8 +690,10 @@ namespace Windsor.Node2008.Admin.Secure
             {
                 DataItem.CreatedTo = DataItem.CreatedTo + TimeSpan.FromMilliseconds((60 * 60 * 24 * 1000) - 1);
             }
-            if (DataItem.IP == NOT_SELECTED_TEXT) DataItem.IP = null;
-            if (DataItem.CreatedByUsername == NOT_SELECTED_TEXT) DataItem.CreatedByUsername = null;
+            if (DataItem.IP == NOT_SELECTED_TEXT)
+                DataItem.IP = null;
+            if (DataItem.CreatedByUsername == NOT_SELECTED_TEXT)
+                DataItem.CreatedByUsername = null;
             if (!string.IsNullOrEmpty(DataItem.TransactionId))
             {
                 DataItem.TransactionId = DataItem.TransactionId.Trim();
@@ -591,6 +764,7 @@ namespace Windsor.Node2008.Admin.Secure
             try
             {
                 exchangeDropDownList.SelectedValue = NOT_SELECTED_TEXT;
+                operationDropDownList.SelectedValue = NOT_SELECTED_TEXT;
                 noItemsDiv.Visible = false;
                 fromDateImageButton.Text = string.Empty;
                 toDateImageButton.Text = string.Empty;
@@ -602,8 +776,9 @@ namespace Windsor.Node2008.Admin.Secure
                 fromIpCtrl.SelectedValue = NOT_SELECTED_TEXT;
                 byUserCtrl.SelectedValue = NOT_SELECTED_TEXT;
                 contentCtrl.Text = string.Empty;
-                _dataModel.SearchResults = null;
-                _dataModel.PageIndex = 0;
+                _dataModel = new DataModel();
+                _dataModel.SearchParams = new ActivitySearchParams();
+                _dataModel.UserIdToNameMap = DataService.GetUserIdToNameMap();
                 _dataModel.RebindResults = true;
             }
             catch (Exception ex)
@@ -616,11 +791,14 @@ namespace Windsor.Node2008.Admin.Secure
         protected void OnMoreInfoClick(object sender, EventArgs e)
         {
             Control control = sender as Control;
-            if ( control == null ) return;
+            if (control == null)
+                return;
             DataControlFieldCell dataControlFieldCell = control.Parent as DataControlFieldCell;
-            if (dataControlFieldCell == null) return;
+            if (dataControlFieldCell == null)
+                return;
             GridViewRow gridViewRow = dataControlFieldCell.Parent as GridViewRow;
-            if (gridViewRow == null) return;
+            if (gridViewRow == null)
+                return;
             int itemIndex = (_dataModel.PageIndex * _dataModel.ResultsPerPage) + gridViewRow.RowIndex;
             string id = _dataModel.SearchResults[itemIndex].Id;
             ImageButton button = sender as ImageButton;
@@ -642,13 +820,25 @@ namespace Windsor.Node2008.Admin.Secure
 
         public ActivitySearchParams DataItem
         {
-            get { return _dataModel.SearchParams; }
-            set { _dataModel.SearchParams = value; }
+            get
+            {
+                return _dataModel.SearchParams;
+            }
+            set
+            {
+                _dataModel.SearchParams = value;
+            }
         }
         public IActivityService DataService
         {
-            get { return _dataService; }
-            set { _dataService = value; }
+            get
+            {
+                return _dataService;
+            }
+            set
+            {
+                _dataService = value;
+            }
         }
         #endregion
 
@@ -672,11 +862,11 @@ namespace Windsor.Node2008.Admin.Secure
         }
         public void OnViewTransactionDetailClick(object source, CommandEventArgs e)
         {
-            ResponseRedirect("../Secure/Transaction.aspx?back=true&id=" + e.CommandArgument);
+            ResponseRedirect("../Secure/Transaction.aspx?" + Transaction.BACK_PAGE_PARAM + "=ActivitySearchCriteria.aspx&id=" + e.CommandArgument);
         }
         public void OnViewTaskDetailClick(object source, CommandEventArgs e)
         {
-            ResponseRedirect("../Secure/TaskDetails.aspx?back=true&id=" + e.CommandArgument);
+            ResponseRedirect("../Secure/TaskDetails.aspx?" + Transaction.BACK_PAGE_PARAM + "=ActivitySearchCriteria.aspx&id=" + e.CommandArgument);
         }
         protected string GetUsernameById(string id)
         {
@@ -742,10 +932,14 @@ namespace Windsor.Node2008.Admin.Secure
         }
         protected int TotalPages
         {
-            get { 
-                if ( _dataModel.SearchResults != null ) {
+            get
+            {
+                if (_dataModel.SearchResults != null)
+                {
                     return ((_dataModel.SearchResults.Count + _dataModel.ResultsPerPage - 1) / _dataModel.ResultsPerPage);
-                } else {
+                }
+                else
+                {
                     return 0;
                 }
             }
@@ -761,7 +955,7 @@ namespace Windsor.Node2008.Admin.Secure
         }
         protected void OnPreviousPageClick(object sender, EventArgs e)
         {
-            if (_dataModel.PageIndex > 0 )
+            if (_dataModel.PageIndex > 0)
             {
                 _dataModel.PageIndex = _dataModel.PageIndex - 1;
                 _dataModel.RebindResults = true;

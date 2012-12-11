@@ -45,6 +45,7 @@ namespace Windsor.Node2008.WNOSConnector.Admin
 
         bool UserExistsInNAAS(string userName);
         bool UserExistsInNAAS(string userName, NodeVisit visit, out string affiliate, out bool canDelete);
+        bool UserExistsInNAAS(string userName, NodeVisit visit, out string affiliate, out bool canDelete, out bool canRemove);
         bool UserPasswordExistsInDB(string userName);
 
         UserAccount ResetPassword(UserAccount instance, NodeVisit visit);
@@ -60,18 +61,23 @@ namespace Windsor.Node2008.WNOSConnector.Admin
 
         void Delete(UserAccount instance, NodeVisit visit);
 
+        void Remove(UserAccount instance, NodeVisit visit);
+
         void ValidateUserMinimumRole(NodeVisit visit, SystemRoleType minimumRole);
 
         string GetUsernameById(string userId);
         /// <summary>
         /// Return true if the node is setup in Demo mode
         /// </summary>
-        bool IsDemoNode { get; }
+        bool IsDemoNode
+        {
+            get;
+        }
 
         string GenerateRandomPassword();
 
         string BulkAddUsers(ICollection<string> usernames, bool createInNaas, string defaultPassword,
-                            SystemRoleType defaultRole, ICollection<FlowNameAndRole> accessFlows, 
+                            SystemRoleType defaultRole, ICollection<FlowNameAndRole> accessFlows,
                             bool isUserActive, NodeVisit visit);
         UserAccount BulkAddUser(string username, bool createInNaas, string defaultPassword,
                                 SystemRoleType defaultRole, ICollection<FlowNameAndRole> accessFlows,

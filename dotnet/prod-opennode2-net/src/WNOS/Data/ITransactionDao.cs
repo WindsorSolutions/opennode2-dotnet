@@ -87,8 +87,11 @@ namespace Windsor.Node2008.WNOS.Data
         void SendStatusChangeNotifications(TransactionStatus status);
         void SendStatusChangeNotifications(TransactionStatus status, IDictionary<string, TransactionNotificationType> notifications);
         void SetNetworkId(string transactionId, string networkId, EndpointVersionType networkEndpointVersion,
+                          string networkEndpointUrl, string networkFlowName, string networkFlowOperation, string networkStatusDetail);
+        void SetNetworkId(string transactionId, string networkId, EndpointVersionType networkEndpointVersion,
                           string networkEndpointUrl, string networkFlowName, string networkFlowOperation);
         void SetNetworkIdStatus(string transactionId, CommonTransactionStatusCode networkStatus);
+        void SetNetworkIdStatus(string transactionId, CommonTransactionStatusCode networkStatus, string statusDetail);
         string GetNetworkId(string transactionId);
         TransactionStatus SetTransactionStatus(string transactionId, string userCreatorId, CommonTransactionStatusCode statusCode, string statusDetail, bool sendStatusChangeNotifications);
         TransactionStatus SetTransactionStatus(string transactionId, CommonTransactionStatusCode statusCode, string statusDetail, bool sendStatusChangeNotifications);

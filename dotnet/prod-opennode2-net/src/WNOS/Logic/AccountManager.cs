@@ -108,7 +108,10 @@ namespace Windsor.Node2008.WNOS.Logic
         }
         public string NodeId
         {
-            get { return _naasManager.NodeId; }
+            get
+            {
+                return _naasManager.NodeId;
+            }
         }
 
         public UserAccount BulkAddUser(string username, bool createInNaas, string defaultPassword,
@@ -236,13 +239,25 @@ namespace Windsor.Node2008.WNOS.Logic
                     !string.Equals(userName, _runtimeAccount.NaasAccount, StringComparison.InvariantCultureIgnoreCase) &&
                     !string.Equals(userName, visit.Account.NaasAccount, StringComparison.InvariantCultureIgnoreCase));
         }
+        protected bool CanRemoveUser(string userName, NodeVisit visit)
+        {
+            return (!string.Equals(userName, _adminAccount.NaasAccount, StringComparison.InvariantCultureIgnoreCase) &&
+                    !string.Equals(userName, _runtimeAccount.NaasAccount, StringComparison.InvariantCultureIgnoreCase) &&
+                    !string.Equals(userName, visit.Account.NaasAccount, StringComparison.InvariantCultureIgnoreCase));
+        }
         public bool UserExistsInNAAS(string userName, NodeVisit visit, out string affiliate, out bool canDelete)
         {
+            bool canRemove;
+            return UserExistsInNAAS(userName, visit, out affiliate, out canDelete, out canRemove);
+        }
+        public bool UserExistsInNAAS(string userName, NodeVisit visit, out string affiliate, out bool canDelete, out bool canRemove)
+        {
+            canRemove = CanRemoveUser(userName, visit);
             if (_naasManager.UserExists(userName, out affiliate, out canDelete))
             {
                 if (canDelete)
                 {
-                   canDelete = CanDeleteUser(userName, visit);
+                    canDelete = CanDeleteUser(userName, visit);
                 }
                 return true;
             }
@@ -261,7 +276,7 @@ namespace Windsor.Node2008.WNOS.Logic
                                    bool isUserActive, NodeVisit visit)
         {
             ValidateByRoleAndNotDemoAccount(visit, SystemRoleType.Admin);
-            
+
             if (CollectionUtils.IsNullOrEmpty(usernames))
             {
                 throw new ArgumentException("usernames cannot be empty");
@@ -271,7 +286,7 @@ namespace Windsor.Node2008.WNOS.Logic
             ByIndexOrNameDictionary<string> parameters = new ByIndexOrNameDictionary<string>(true);
 
             int i = 0;
-            foreach(string username in usernames)
+            foreach (string username in usernames)
             {
                 string key = string.Format("{0}{1}", BulkAddUsersConstants.PARAM_USERNAME_PREFIX, i.ToString());
                 parameters.Add(key, username);
@@ -346,7 +361,7 @@ namespace Windsor.Node2008.WNOS.Logic
                     }
                 }
 
-                instance.Policies = 
+                instance.Policies =
                     _accountPolicyManager.CleanseFlowPoliciesForUser(instance.Role, instance.Policies);
 
                 string naasPassword = null;
@@ -390,7 +405,13 @@ namespace Windsor.Node2008.WNOS.Logic
                 throw;
             }
         }
-        public bool IsDemoNode { get { return _settingsProvider.IsDemoNode; } }
+        public bool IsDemoNode
+        {
+            get
+            {
+                return _settingsProvider.IsDemoNode;
+            }
+        }
 
         public string GenerateRandomPassword()
         {
@@ -558,6 +579,31 @@ namespace Windsor.Node2008.WNOS.Logic
                 throw;
             }
         }
+        public void Remove(UserAccount instance, NodeVisit visit)
+        {
+            try
+            {
+                ValidateByRoleAndNotDemoAccount(visit, SystemRoleType.Admin);
+                if (!CanRemoveUser(instance.NaasAccount, visit))
+                {
+                    throw new InvalidOperationException(string.Format("The user \"{0}\" cannot be removed from the node",
+                                                                      instance.NaasAccount));
+                }
+                TransactionTemplate.Execute(delegate
+                {
+                    _accountDao.Delete(instance);
+                    ActivityManager.LogAudit(NodeMethod.None, null, visit, "{0} removed account: {1}.",
+                                             visit.Account.NaasAccount, instance.ToString());
+                    return null;
+                });
+            }
+            catch (Exception e)
+            {
+                ActivityManager.LogError(NodeMethod.None, null, e, visit, "{0} failed to remove user account: {1}.",
+                                         visit.Account.NaasAccount, instance.ToString());
+                throw;
+            }
+        }
         public string GetUsernameById(string userId)
         {
             return _accountDao.GetUsernameById(userId);
@@ -569,53 +615,113 @@ namespace Windsor.Node2008.WNOS.Logic
         #region Properties
         public IAccountDao AccountDao
         {
-            get { return _accountDao; }
-            set { _accountDao = value; }
+            get
+            {
+                return _accountDao;
+            }
+            set
+            {
+                _accountDao = value;
+            }
         }
         public UserAccount AdminAccount
         {
-            get { return _adminAccount; }
-            set { _adminAccount = value; }
+            get
+            {
+                return _adminAccount;
+            }
+            set
+            {
+                _adminAccount = value;
+            }
         }
         public string AdminUserName
         {
-            get { return _adminUserName; }
-            set { _adminUserName = value; }
+            get
+            {
+                return _adminUserName;
+            }
+            set
+            {
+                _adminUserName = value;
+            }
         }
         public UserAccount RuntimeAccount
         {
-            get { return _runtimeAccount; }
-            set { _runtimeAccount = value; }
+            get
+            {
+                return _runtimeAccount;
+            }
+            set
+            {
+                _runtimeAccount = value;
+            }
         }
         public string RuntimeUserName
         {
-            get { return _runtimeUserName; }
-            set { _runtimeUserName = value; }
+            get
+            {
+                return _runtimeUserName;
+            }
+            set
+            {
+                _runtimeUserName = value;
+            }
         }
         public INAASManagerEx NAASManager
         {
-            get { return _naasManager; }
-            set { _naasManager = value; }
+            get
+            {
+                return _naasManager;
+            }
+            set
+            {
+                _naasManager = value;
+            }
         }
         public INotificationManagerEx NotificationManager
         {
-            get { return _notificationManager; }
-            set { _notificationManager = value; }
+            get
+            {
+                return _notificationManager;
+            }
+            set
+            {
+                _notificationManager = value;
+            }
         }
         protected ITransactionManagerEx TransactionManager
         {
-            get { return _transactionManager; }
-            set { _transactionManager = value; }
+            get
+            {
+                return _transactionManager;
+            }
+            set
+            {
+                _transactionManager = value;
+            }
         }
         public string SecurityFlowName
         {
-            get { return _securityFlowName; }
-            set { _securityFlowName = value; }
+            get
+            {
+                return _securityFlowName;
+            }
+            set
+            {
+                _securityFlowName = value;
+            }
         }
         public string SecurityBulkAddUsersServiceName
         {
-            get { return _securityBulkAddUsersServiceName; }
-            set { _securityBulkAddUsersServiceName = value; }
+            get
+            {
+                return _securityBulkAddUsersServiceName;
+            }
+            set
+            {
+                _securityBulkAddUsersServiceName = value;
+            }
         }
         #endregion
     }

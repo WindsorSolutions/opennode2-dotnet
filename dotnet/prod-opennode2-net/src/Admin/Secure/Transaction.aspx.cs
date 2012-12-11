@@ -56,6 +56,8 @@ namespace Windsor.Node2008.Admin.Secure
 
     public partial class Transaction : SecurePage
     {
+        public const string BACK_PAGE_PARAM = "backpage";
+
         class DataModel
         {
             public NodeTransaction _dataItem;
@@ -97,11 +99,11 @@ namespace Windsor.Node2008.Admin.Secure
                 }
             }
 
-            string back = Request["back"];
+            string backPage = Request[BACK_PAGE_PARAM];
 
-            if (!string.IsNullOrEmpty(back))
+            if (!string.IsNullOrEmpty(backPage))
             {
-                BackBtnTableRow.Visible = string.Equals(back, true.ToString(), StringComparison.InvariantCultureIgnoreCase);
+                BackBtnTableRow.Visible = true;
             }
             else
             {
@@ -112,7 +114,8 @@ namespace Windsor.Node2008.Admin.Secure
         protected string DocumentDisplayName(object dataItem)
         {
             Document document = dataItem as Document;
-            if (document == null) return string.Empty;
+            if (document == null)
+                return string.Empty;
             return string.Format("{0} ({1})", document.DocumentName,
                                  FileUtils.GetDisplayFileSize(document.ContentByteSize));
         }
@@ -156,8 +159,36 @@ namespace Windsor.Node2008.Admin.Secure
 
                 activityDetailsRow.Visible = false;
             }
-            BackButton.Attributes.Remove("onclick");
-            BackButton.Attributes.Add("onclick", string.Format("(history.go({0}))", _pageData._postbackCount.ToString()));
+        }
+        protected void OnBackClick(object sender, EventArgs e)
+        {
+            try
+            {
+                string backPage = Request[BACK_PAGE_PARAM];
+
+                if (!string.IsNullOrEmpty(backPage))
+                {
+                    string responsePage = null;
+                    switch (backPage.ToLower())
+                    {
+                        case "schedule.aspx":
+                        case "dashboard.aspx":
+                        case "activitysearchcriteria.aspx":
+                            responsePage = backPage;
+                            break;
+                    }
+                    if (responsePage != null)
+                    {
+                        ResponseRedirect("../Secure/" + responsePage);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LOG.Error(ex.Message, ex);
+                divPageError.Visible = true;
+                divPageError.InnerText = ExceptionUtils.GetDeepExceptionMessage(ex);
+            }
         }
         protected bool AssignNodeTransaction()
         {
@@ -224,14 +255,20 @@ namespace Windsor.Node2008.Admin.Secure
                         transactionNetworkIdTable.Visible = true;
                         networkUrl.Text = _pageData._dataItem.NetworkEndpointUrl;
                         networkVersion.Text = EnumUtils.ToDescription(_pageData._dataItem.NetworkEndpointVersion);
+                        networkStatusImage.ImageUrl = GetNetworkStatusImageUrl();
                         networkStatus.Text = EnumUtils.ToDescription(_pageData._dataItem.NetworkEndpointStatus);
+                        networkStatus.ToolTip = GetNetworkStatusDetailToolTip();
+                        networkStatusImage.ToolTip = GetNetworkStatusDetailToolTip();
                     }
                 }
             }
         }
         public override string UniqueDataModelKey
         {
-            get { return Request["id"]; }
+            get
+            {
+                return Request["id"];
+            }
         }
         protected override void LoadModel(object savedModel)
         {
@@ -255,6 +292,9 @@ namespace Windsor.Node2008.Admin.Secure
             BindingManager.AddBinding("transactionActivityDetails.Text", "GetActivityDetails()", BindingDirection.TargetToSource);
             BindingManager.AddBinding("transactionServiceTypeCtrl.Text", "Tran.NodeMethod", BindingDirection.TargetToSource);
             BindingManager.AddBinding("transactionOperationNameCtrl.Text", "Tran.Operation", BindingDirection.TargetToSource);
+            BindingManager.AddBinding("networkStatusImage.ImageUrl", "GetNetworkStatusImageUrl()", BindingDirection.TargetToSource);
+            BindingManager.AddBinding("networkStatusImage.ToolTip", "GetNetworkStatusDetailToolTip()", BindingDirection.TargetToSource);
+            BindingManager.AddBinding("networkStatus.ToolTip", "GetNetworkStatusDetailToolTip()", BindingDirection.TargetToSource);
         }
 
         protected string GetTransactionStatusImageUrl()
@@ -264,13 +304,48 @@ namespace Windsor.Node2008.Admin.Secure
             {
                 switch (Tran.Status.Status)
                 {
-                    case CommonTransactionStatusCode.Completed: status = ScheduleExecuteStatus.CompletedSuccess; break;
-                    case CommonTransactionStatusCode.Failed: status = ScheduleExecuteStatus.CompletedFailure; break;
+                    case CommonTransactionStatusCode.Completed:
+                        status = ScheduleExecuteStatus.CompletedSuccess;
+                        break;
+                    case CommonTransactionStatusCode.Failed:
+                        status = ScheduleExecuteStatus.CompletedFailure;
+                        break;
                     case CommonTransactionStatusCode.Pending:
-                    case CommonTransactionStatusCode.Processing: status = ScheduleExecuteStatus.Running; break;
+                    case CommonTransactionStatusCode.Processing:
+                        status = ScheduleExecuteStatus.Running;
+                        break;
                 }
             }
             return Schedule.GetImageUrlForExecuteStatus(status);
+        }
+        protected string GetNetworkStatusImageUrl()
+        {
+            ScheduleExecuteStatus status = ScheduleExecuteStatus.None;
+            if ((Tran != null) || !string.IsNullOrEmpty(Tran.NetworkEndpointUrl))
+            {
+                switch (Tran.NetworkEndpointStatus)
+                {
+                    case CommonTransactionStatusCode.Completed:
+                        status = ScheduleExecuteStatus.CompletedSuccess;
+                        break;
+                    case CommonTransactionStatusCode.Failed:
+                        status = ScheduleExecuteStatus.CompletedFailure;
+                        break;
+                    case CommonTransactionStatusCode.Pending:
+                    case CommonTransactionStatusCode.Processing:
+                        status = ScheduleExecuteStatus.Running;
+                        break;
+                }
+            }
+            return Schedule.GetImageUrlForExecuteStatus(status);
+        }
+        protected string GetNetworkStatusDetailToolTip()
+        {
+            if ((Tran != null) || !string.IsNullOrEmpty(Tran.NetworkEndpointUrl))
+            {
+                return (Tran.NetworkEndpointStatusDetail != null) ? Tran.NetworkEndpointStatusDetail : string.Empty;
+            }
+            return string.Empty;
         }
         protected string GetTransactionStatusDetails()
         {
@@ -379,18 +454,36 @@ namespace Windsor.Node2008.Admin.Secure
         }
         public ITransactionService DataService
         {
-            get { return _dataService; }
-            set { _dataService = value; }
+            get
+            {
+                return _dataService;
+            }
+            set
+            {
+                _dataService = value;
+            }
         }
         public IAccountService AccountService
         {
-            get { return _accountService; }
-            set { _accountService = value; }
+            get
+            {
+                return _accountService;
+            }
+            set
+            {
+                _accountService = value;
+            }
         }
         public NodeTransaction Tran
         {
-            get { return _pageData._dataItem; }
-            set { _pageData._dataItem = value; }
+            get
+            {
+                return _pageData._dataItem;
+            }
+            set
+            {
+                _pageData._dataItem = value;
+            }
         }
         public string GetActivityDetails()
         {
@@ -405,8 +498,14 @@ namespace Windsor.Node2008.Admin.Secure
         }
         private DataModel PageData
         {
-            get { return _pageData; }
-            set { _pageData = value; }
+            get
+            {
+                return _pageData;
+            }
+            set
+            {
+                _pageData = value;
+            }
         }
 
         protected void linkDoc_Init(object sender, EventArgs e)

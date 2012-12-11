@@ -44,7 +44,11 @@ namespace Windsor.Node2008.WNOSDomain
     /// </summary>
     public enum RequestType
     {
-        None, Solicit, Query, Execute, Task
+        None,
+        Solicit,
+        Query,
+        Execute,
+        Task
     }
     /// <summary>
     /// User roles on a system level
@@ -81,21 +85,21 @@ namespace Windsor.Node2008.WNOSDomain
     [Flags]
     public enum NotificationType
     {
-        None = 0x00, 
-        OnSolicit = 0x01, 
-        OnQuery = 0x02, 
-        OnSubmit = 0x04, 
-        OnDownload = 0x08, 
-        OnNotify = 0x10, 
-        OnSchedule = 0x20, 
-        OnExecute = 0x40, 
+        None = 0x00,
+        OnSolicit = 0x01,
+        OnQuery = 0x02,
+        OnSubmit = 0x04,
+        OnDownload = 0x08,
+        OnNotify = 0x10,
+        OnSchedule = 0x20,
+        OnExecute = 0x40,
         All = (OnSolicit | OnQuery | OnSubmit | OnDownload | OnNotify | OnSchedule | OnExecute)
     }
 
     /// <summary>
     /// Type of data service (NOTE: flags enum)
     /// </summary>
-	[Flags]
+    [Flags]
     public enum ServiceType
     {
         None = 0x00,
@@ -180,7 +184,7 @@ namespace Windsor.Node2008.WNOSDomain
         [Description("Schedule")]
         Schedule,
         [Description("Task")]
-        Task, 
+        Task,
         Any
     }
 

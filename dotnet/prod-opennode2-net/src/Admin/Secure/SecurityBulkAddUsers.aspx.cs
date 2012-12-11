@@ -72,6 +72,7 @@ namespace Windsor.Node2008.Admin.Secure
         private ICentralProcessor _centralProcessor;
         private UserAccount _editUserAccount;
         private bool _canDeleteUser;
+        private bool _canRemoveUser;
         private bool _canResetPassword;
         private string _userAffiliate;
         private bool _isAddUsers;
@@ -123,7 +124,7 @@ namespace Windsor.Node2008.Admin.Secure
             {
                 bool userExistsInNAAS =
                     _accountService.UserExistsInNAAS(_editUserAccount.NaasAccount, VisitHelper.GetVisit(),
-                                                     out _userAffiliate, out _canDeleteUser);
+                                                     out _userAffiliate, out _canDeleteUser, out _canRemoveUser);
                 _canResetPassword = _canDeleteUser;
                 if (userExistsInNAAS)
                 {
@@ -144,7 +145,7 @@ namespace Windsor.Node2008.Admin.Secure
                                                 id));
                 }
             }
-            else if ( throwException )
+            else if (throwException)
             {
                 throw new ArgumentException("Failed to load user account from database.");
             }
@@ -180,6 +181,7 @@ namespace Windsor.Node2008.Admin.Secure
 
                     addUsersBtn.Visible = false;
                     deleteUserBtn.Enabled = _canDeleteUser;
+                    removeUserBtn.Enabled = _canRemoveUser;
                     resetPasswordBtn.Enabled = _canResetPassword;
                 }
                 else
@@ -206,7 +208,7 @@ namespace Windsor.Node2008.Admin.Secure
                 }
 
                 UpdateVisibleRows();
-                
+
                 addSelectedUsers.Enabled = false;
 
                 RebindFlowRepeater();
@@ -277,7 +279,7 @@ namespace Windsor.Node2008.Admin.Secure
                 FlowRoleType flowRole = FlowRoleType.None;
                 string flowName = null;
 
-                if ((flowRoleCtrl != null) && (flowCodeLabel != null) && (flowIsProtected != null) && 
+                if ((flowRoleCtrl != null) && (flowCodeLabel != null) && (flowIsProtected != null) &&
                     flowRoleCtrl.Visible)
                 {
                     flowName = flowCodeLabel.Text;
@@ -383,6 +385,22 @@ namespace Windsor.Node2008.Admin.Secure
                 AssignEditUserAccount(true);
 
                 _accountService.Delete(_editUserAccount, VisitHelper.GetVisit());
+
+                ResponseRedirect("../Secure/SecurityUser.aspx");
+            }
+            catch (Exception ex)
+            {
+                LOG.Error(ex.Message, ex);
+                SetDivPageError(ex);
+            }
+        }
+        protected void OnRemoveUser(object sender, EventArgs e)
+        {
+            try
+            {
+                AssignEditUserAccount(true);
+
+                _accountService.Remove(_editUserAccount, VisitHelper.GetVisit());
 
                 ResponseRedirect("../Secure/SecurityUser.aspx");
             }
@@ -517,28 +535,58 @@ namespace Windsor.Node2008.Admin.Secure
 
         public IAccountService AccountService
         {
-            get { return _accountService; }
-            set { _accountService = value; }
+            get
+            {
+                return _accountService;
+            }
+            set
+            {
+                _accountService = value;
+            }
         }
         public IPolicyService PolicyService
         {
-            get { return _policyService; }
-            set { _policyService = value; }
+            get
+            {
+                return _policyService;
+            }
+            set
+            {
+                _policyService = value;
+            }
         }
         public IFlowService FlowService
         {
-            get { return _flowService; }
-            set { _flowService = value; }
+            get
+            {
+                return _flowService;
+            }
+            set
+            {
+                _flowService = value;
+            }
         }
         public ICentralProcessor CentralProcessor
         {
-            get { return _centralProcessor; }
-            set { _centralProcessor = value; }
+            get
+            {
+                return _centralProcessor;
+            }
+            set
+            {
+                _centralProcessor = value;
+            }
         }
         public ModelState DataModel
         {
-            get { return _modelState; }
-            set { _modelState = value; }
+            get
+            {
+                return _modelState;
+            }
+            set
+            {
+                _modelState = value;
+            }
         }
 
         #endregion
@@ -595,7 +643,7 @@ namespace Windsor.Node2008.Admin.Secure
             }
             else
             {
-                addUsersEditCtrlRow.Visible = createUsersInNaasEditCtrlRow.Visible = 
+                addUsersEditCtrlRow.Visible = createUsersInNaasEditCtrlRow.Visible =
                     passwordCtrlRow.Visible = confirmPasswordCtrlRow.Visible = false;
                 usernameCtrlRow.Visible = affiliateCtrlRow.Visible = true;
             }

@@ -75,6 +75,7 @@ namespace Windsor.Node2008.WNOS.Data
         private INodeNotificationDao _nodeNotificationDao;
         private ITransactionStatusChangeNotifier _transactionStatusChangeNotifier;
         private const int MAX_DETAIL_CHARS = 4000;
+        private bool? _;
 
         private const CommonTransactionStatusCode UNPROCESSED_STATUS = CommonTransactionStatusCode.Received |
                                                                        CommonTransactionStatusCode.Pending |
@@ -100,9 +101,10 @@ namespace Windsor.Node2008.WNOS.Data
             transaction.NetworkEndpointVersion = EnumUtils.ParseEnum<EndpointVersionType>(reader.GetString(index++));
             transaction.NetworkEndpointUrl = reader.GetString(index++);
             transaction.NetworkEndpointStatus = EnumUtils.ParseEnum<CommonTransactionStatusCode>(reader.GetString(index++));
-            string networkStatusDetail = reader.GetString(index++);
-            string networkFlowName, networkOperationName;
-            GetNetworkStatusDetails(networkStatusDetail, out networkFlowName, out networkOperationName);
+            string networkStatusDetailText = reader.GetString(index++);
+            string networkFlowName, networkOperationName, networkStatusDetail;
+            GetNetworkStatusDetails(networkStatusDetailText, out networkFlowName, out networkOperationName, out networkStatusDetail);
+            transaction.NetworkEndpointStatusDetail = networkStatusDetail;
             transaction.NetworkFlowName = networkFlowName;
             transaction.NetworkOperationName = networkOperationName;
             transaction.Flow = FlowDao.GetDataFlow(flowId);
@@ -711,39 +713,69 @@ namespace Windsor.Node2008.WNOS.Data
         /// </summary>
 
         private readonly string[] NetworkStatusDetailSeparator = new string[] { ";;;" };
-        private void GetNetworkStatusDetails(string networkStatusDetail, out string networkFlowName, out string networkFlowOperation)
+        private void GetNetworkStatusDetailsById(string transactionId, out string networkFlowName, out string networkFlowOperation, out string networkStatusDetail)
         {
-            networkFlowName = networkFlowOperation = null;
-            if (!string.IsNullOrEmpty(networkStatusDetail))
+            string networkStatusDetailText =
+                DoSimpleQueryForObjectDelegate<string>(
+                    TABLE_NAME, "Id", transactionId, "NetworkEndpointStatusDetail",
+                    delegate(IDataReader reader, int rowNum)
+                    {
+                        return reader.GetString(0);
+                    });
+            GetNetworkStatusDetails(networkStatusDetailText, out networkFlowName, out networkFlowOperation, out networkStatusDetail);
+        }
+        private void GetNetworkStatusDetails(string networkStatusDetailText, out string networkFlowName, out string networkFlowOperation, out string networkStatusDetail)
+        {
+            networkFlowName = networkFlowOperation = networkStatusDetail = null;
+            if (!string.IsNullOrEmpty(networkStatusDetailText))
             {
-                string[] values = networkStatusDetail.Split(NetworkStatusDetailSeparator, StringSplitOptions.None);
+                string[] values = networkStatusDetailText.Split(NetworkStatusDetailSeparator, StringSplitOptions.None);
                 if (values.Length > 0)
                 {
                     networkFlowName = values[0].Trim();
                     if (networkFlowName.Length == 0)
+                    {
                         networkFlowName = null;
+                    }
                 }
                 if (values.Length > 1)
                 {
                     networkFlowOperation = values[1].Trim();
                     if (networkFlowOperation.Length == 0)
+                    {
                         networkFlowOperation = null;
+                    }
+                }
+                if (values.Length > 2)
+                {
+                    networkStatusDetail = values[2].Trim();
+                    if (networkStatusDetail.Length == 0)
+                    {
+                        networkFlowOperation = null;
+                    }
                 }
             }
         }
-        private string MakeNetworkStatusDetail(string networkFlowName, string networkFlowOperation)
+        private string MakeNetworkStatusDetail(string networkFlowName, string networkFlowOperation, string networkStatusDetail)
         {
-            return string.Format("{0}{1}{2}", networkFlowName ?? string.Empty, NetworkStatusDetailSeparator[0],
-                                              networkFlowOperation ?? string.Empty);
+            string detailText = string.Format("{0}{1}{2}{3}{4}", networkFlowName ?? string.Empty, NetworkStatusDetailSeparator[0],
+                                              networkFlowOperation ?? string.Empty, NetworkStatusDetailSeparator[0], networkStatusDetail ?? string.Empty);
+            detailText = LimitDbText(detailText, MAX_DETAIL_CHARS);
+            return detailText;
         }
         public void SetNetworkId(string transactionId, string networkId, EndpointVersionType networkEndpointVersion,
                                  string networkEndpointUrl, string networkFlowName, string networkFlowOperation)
+        {
+            SetNetworkId(transactionId, networkId, networkEndpointVersion, networkEndpointUrl, networkFlowName, null);
+        }
+        public void SetNetworkId(string transactionId, string networkId, EndpointVersionType networkEndpointVersion,
+                                 string networkEndpointUrl, string networkFlowName, string networkFlowOperation, string networkStatusDetail)
         {
             object version =
                 (networkEndpointVersion == EndpointVersionType.Undefined) ? (object)null : (object)networkEndpointVersion.ToString();
             DoSimpleUpdateOne(TABLE_NAME, "Id", transactionId,
                               "NetworkId;NetworkEndpointVersion;NetworkEndpointUrl;NetworkEndpointStatusDetail", networkId,
-                              version, networkEndpointUrl, MakeNetworkStatusDetail(networkFlowName, networkFlowOperation));
+                              version, networkEndpointUrl, MakeNetworkStatusDetail(networkFlowName, networkFlowOperation, networkStatusDetail));
         }
         /// <summary>
         /// Set the network status and status details for the specified transaction.
@@ -752,6 +784,17 @@ namespace Windsor.Node2008.WNOS.Data
         {
             DoSimpleUpdateOne(TABLE_NAME, "Id", transactionId,
                               "NetworkEndpointStatus", networkStatus.ToString());
+        }
+        /// <summary>
+        /// Set the network status and status details for the specified transaction.
+        /// </summary>
+        public void SetNetworkIdStatus(string transactionId, CommonTransactionStatusCode networkStatus, string statusDetail)
+        {
+            string networkFlowName, networkFlowOperation, networkStatusDetail;
+            GetNetworkStatusDetailsById(transactionId, out networkFlowName, out networkFlowOperation, out networkStatusDetail);
+            DoSimpleUpdateOne(TABLE_NAME, "Id", transactionId,
+                              "NetworkEndpointStatus;NetworkEndpointStatusDetail", networkStatus.ToString(),
+                              MakeNetworkStatusDetail(networkFlowName, networkFlowOperation, statusDetail));
         }
         public void AppendRealtimeTransactionDetail(string transactionId, string message,
                                                     StatusActivityType statusType)

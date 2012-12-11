@@ -101,37 +101,61 @@ namespace Windsor.Commons.NodeClient
             {
                 throw new ApplicationException("Client not configured. Please call Configure first");
             }
-			if ( _cachedSecurityToken == null )
-			{
+            if (_cachedSecurityToken == null)
+            {
                 if (_credentials == null)
                 {
                     throw new ApplicationException("Client not configured. Please call Configure first");
                 }
-                
-				Authenticate authRequest =
-					NewAuthenticateObject(_credentials.UserName, 
-										  _credentials.Password,
-										  _credentials.Domain);
 
-				AuthenticateResponse authResp = _requestor.Authenticate(authRequest);
-				_cachedSecurityToken = authResp.securityToken;
-			}
+                Authenticate authRequest =
+                    NewAuthenticateObject(_credentials.UserName,
+                                          _credentials.Password,
+                                          _credentials.Domain);
+
+                AuthenticateResponse authResp = _requestor.Authenticate(authRequest);
+                _cachedSecurityToken = authResp.securityToken;
+            }
             return _cachedSecurityToken;
 
         }
 
         #region IENCommonClientHelper Members
 
-        public EndpointVersionType Version { get { return EndpointVersionType.EN20; } }
+        public EndpointVersionType Version
+        {
+            get
+            {
+                return EndpointVersionType.EN20;
+            }
+        }
 
-        public string Url { get { return _requestor.Url; } }
+        public string Url
+        {
+            get
+            {
+                return _requestor.Url;
+            }
+        }
 
-        public string NaasToken { get { return _cachedSecurityToken; } }
+        public string NaasToken
+        {
+            get
+            {
+                return _cachedSecurityToken;
+            }
+        }
 
         public int Timeout
         {
-            get { return _requestor.Timeout; }
-            set { _requestor.Timeout = value; }
+            get
+            {
+                return _requestor.Timeout;
+            }
+            set
+            {
+                _requestor.Timeout = value;
+            }
         }
 
         /// <summary>
@@ -217,10 +241,10 @@ namespace Windsor.Commons.NodeClient
         /// <param name="documentIds"></param>
         /// <returns></returns>
         public string[] DownloadWithDocumentIds(string flow, string transactionId,
-												out IList<string> documentIds)
+                                                out IList<string> documentIds)
         {
-			List<string> list = new List<string>();
-			documentIds = list;
+            List<string> list = new List<string>();
+            documentIds = list;
             return Download(flow, transactionId, null, false, list, null, null);
         }
 
@@ -232,10 +256,10 @@ namespace Windsor.Commons.NodeClient
         /// <param name="documentNames"></param>
         /// <returns></returns>
         public string[] DownloadWithDocumentNames(string flow, string transactionId,
-												  out IList<string> documentNames)
+                                                  out IList<string> documentNames)
         {
-			List<string> list = new List<string>();
-			documentNames = list;
+            List<string> list = new List<string>();
+            documentNames = list;
             return Download(flow, transactionId, null, false, null, list, null);
         }
 
@@ -280,8 +304,20 @@ namespace Windsor.Commons.NodeClient
         /// <returns></returns>
         public CommonTransactionStatusCode GetStatus(string transactionId)
         {
+            string statusDetail;
+            return GetStatus(transactionId, out statusDetail);
+        }
+
+        /// <summary>
+        /// GetStatus
+        /// </summary>
+        /// <param name="transactionId"></param>
+        /// <returns></returns>
+        public CommonTransactionStatusCode GetStatus(string transactionId, out string statusDetail)
+        {
             GetStatus status = NewStatusObject(transactionId);
             StatusResponseType statusResp = _requestor.GetStatus(status);
+            statusDetail = statusResp.statusDetail;
             return EnumUtils.ParseEnum<CommonTransactionStatusCode>(statusResp.status.ToString());
         }
 
@@ -343,7 +379,7 @@ namespace Windsor.Commons.NodeClient
         {
             throw new InvalidOperationException("NotifyDocument11() is not supported by a v2.0 client");
         }
-        public string NotifyDocument11(string nodeEndpoint, string flow, string name, CommonContentType type, 
+        public string NotifyDocument11(string nodeEndpoint, string flow, string name, CommonContentType type,
                                        string content)
         {
             throw new InvalidOperationException("NotifyDocument11() is not supported by a v2.0 client");
@@ -427,13 +463,20 @@ namespace Windsor.Commons.NodeClient
         }
         public static CommonContentType GetContentType(DocumentFormatType formatType)
         {
-            switch ( formatType ) {
-                case DocumentFormatType.BIN: return CommonContentType.Bin;
-                case DocumentFormatType.FLAT: return CommonContentType.Flat;
-                case DocumentFormatType.ODF: return CommonContentType.ODF;
-                case DocumentFormatType.XML: return CommonContentType.XML;
-                case DocumentFormatType.ZIP: return CommonContentType.ZIP;
-                default: return CommonContentType.OTHER;
+            switch (formatType)
+            {
+                case DocumentFormatType.BIN:
+                    return CommonContentType.Bin;
+                case DocumentFormatType.FLAT:
+                    return CommonContentType.Flat;
+                case DocumentFormatType.ODF:
+                    return CommonContentType.ODF;
+                case DocumentFormatType.XML:
+                    return CommonContentType.XML;
+                case DocumentFormatType.ZIP:
+                    return CommonContentType.ZIP;
+                default:
+                    return CommonContentType.OTHER;
             }
         }
 
@@ -613,7 +656,7 @@ namespace Windsor.Commons.NodeClient
                 throw new DirectoryNotFoundException(string.Format("Missing temp folder: \"{0}\"", path));
             }
 
-            if ( (credentials != null) && !string.IsNullOrEmpty(credentials.UserName) &&
+            if ((credentials != null) && !string.IsNullOrEmpty(credentials.UserName) &&
                  !string.IsNullOrEmpty(credentials.Password))
             {
                 _credentials = credentials;
@@ -779,7 +822,7 @@ namespace Windsor.Commons.NodeClient
         }
         private NodeDocumentType[] LoadDocumentsToSubmit(IList<string> documentPaths, IList<EndpointDocument> documents)
         {
-            if (CollectionUtils.IsNullOrEmpty(documentPaths) && 
+            if (CollectionUtils.IsNullOrEmpty(documentPaths) &&
                 CollectionUtils.IsNullOrEmpty(documents))
             {
                 throw new ArgumentException("Must have documents to submit.");
@@ -931,25 +974,28 @@ namespace Windsor.Commons.NodeClient
         }
         private byte[] GetUncompressedBytes(GenericXmlType data)
         {
-			switch ( data.format ) {
-				case DocumentFormatType.ZIP: {
-                    byte[] bytes = Convert.FromBase64String(data.Any[0].Value);
-                    bytes = _compressionHelper.Uncompress(bytes);
-                    return bytes;
-				}
-				default: {
-					string xmlString = data.Any[0].OuterXml;
-                    byte[] bytes = StringUtils.UTF8.GetBytes(xmlString);
-                    return bytes;
-                    /*
-					byte[] bytes = StringUtils.UTF8.GetBytes(xmlString);
-#if DEBUG
-					try { File.WriteAllBytes(@"C:\Temp.xml", bytes); } catch(Exception) { }
-#endif // DEBUG
-					return bytes;
-                    */
-                }
-			}
+            switch (data.format)
+            {
+                case DocumentFormatType.ZIP:
+                    {
+                        byte[] bytes = Convert.FromBase64String(data.Any[0].Value);
+                        bytes = _compressionHelper.Uncompress(bytes);
+                        return bytes;
+                    }
+                default:
+                    {
+                        string xmlString = data.Any[0].OuterXml;
+                        byte[] bytes = StringUtils.UTF8.GetBytes(xmlString);
+                        return bytes;
+                        /*
+                        byte[] bytes = StringUtils.UTF8.GetBytes(xmlString);
+    #if DEBUG
+                        try { File.WriteAllBytes(@"C:\Temp.xml", bytes); } catch(Exception) { }
+    #endif // DEBUG
+                        return bytes;
+                        */
+                    }
+            }
         }
         private GetStatus NewStatusObject(string transactionId)
         {

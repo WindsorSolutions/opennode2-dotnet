@@ -44,8 +44,8 @@ namespace Windsor.Node2008.WNOSDomain
     [Serializable]
     public class ActivitySearchParams
     {
-        public static readonly DateTime MIN_DATETIME = DateTime.Parse("2/12/1970 6:15 AM");
-        public static readonly DateTime MAX_DATETIME = DateTime.Parse("2/12/2050 6:15 AM");
+        public static readonly DateTime MIN_DATETIME = DateTime.Parse("1/1/1970 12:00 AM");
+        public static readonly DateTime MAX_DATETIME = DateTime.Parse("1/1/2050 12:00 AM");
 
         private ActivityType _type;
         private string _transactionId;
@@ -60,54 +60,114 @@ namespace Windsor.Node2008.WNOSDomain
 
         public IList<string> FlowNames
         {
-            get { return _flowNames; }
-            set { _flowNames = value; }
+            get
+            {
+                return _flowNames;
+            }
+            set
+            {
+                _flowNames = value;
+            }
         }
         public string OperationName
         {
-            get { return _operationName; }
-            set { _operationName = value; }
+            get
+            {
+                return _operationName;
+            }
+            set
+            {
+                _operationName = value;
+            }
         }
         public DateTime CreatedTo
         {
-            get { return _createdTo; }
-            set { _createdTo = value; }
+            get
+            {
+                return _createdTo;
+            }
+            set
+            {
+                _createdTo = value;
+            }
         }
 
         public DateTime CreatedFrom
         {
-            get { return _createdFrom; }
-            set { _createdFrom = value; }
+            get
+            {
+                return _createdFrom;
+            }
+            set
+            {
+                _createdFrom = value;
+            }
         }
         public ActivityType Type
         {
-            get { return _type; }
-            set { _type = value; }
+            get
+            {
+                return _type;
+            }
+            set
+            {
+                _type = value;
+            }
         }
         public NodeMethod NodeMethod
         {
-            get { return _nodeMethod; }
-            set { _nodeMethod = value; }
+            get
+            {
+                return _nodeMethod;
+            }
+            set
+            {
+                _nodeMethod = value;
+            }
         }
         public string TransactionId
         {
-            get { return _transactionId; }
-            set { _transactionId = value; }
+            get
+            {
+                return _transactionId;
+            }
+            set
+            {
+                _transactionId = value;
+            }
         }
         public string IP
         {
-            get { return _ip; }
-            set { _ip = value; }
+            get
+            {
+                return _ip;
+            }
+            set
+            {
+                _ip = value;
+            }
         }
         public string CreatedByUsername
         {
-            get { return _createdByUsername; }
-            set { _createdByUsername = value; }
+            get
+            {
+                return _createdByUsername;
+            }
+            set
+            {
+                _createdByUsername = value;
+            }
         }
         public string DetailContains
         {
-            get { return _detailContains; }
-            set { _detailContains = value; }
+            get
+            {
+                return _detailContains;
+            }
+            set
+            {
+                _detailContains = value;
+            }
         }
 
         public override string ToString()

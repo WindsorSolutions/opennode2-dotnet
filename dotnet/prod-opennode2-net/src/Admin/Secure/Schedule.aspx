@@ -3,7 +3,8 @@
 <%@ Register Src="../Controls/UpdateProgressCntl.ascx" TagName="UpdateProgressCntl" TagPrefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="SecureContentHolder" runat="server">
     <div id="pageTitle">
-        <%= SectionTitle %></div>
+        <%= SectionTitle %>
+    </div>
     <div class="sectionHead">
         <%= ListConfig.SectionHeadline%>
     </div>
@@ -11,7 +12,8 @@
         <asp:Repeater ID="introParagraphs" runat="server">
             <ItemTemplate>
                 <p>
-                    <%# Container.DataItem %></p>
+                    <%# Container.DataItem %>
+                </p>
             </ItemTemplate>
         </asp:Repeater>
     </div>
@@ -42,7 +44,7 @@
                                 <tr runat="server" class="rowOdd" style='<%# Container.ItemIndex % 2 == 0 ? "background-color: #E3ECF3; color: #3366CC": "background-color: #DCDCDC; color: #3366CC"%>'>
                                     <td>
                                         <asp:Image ID="scheduleImage" runat="server" Style="padding-left: 4px; padding-right: 4px" ImageUrl="../Images/UI/time.png" />
-                                        <asp:HiddenField ID="hiddenScheduleId" runat="server" Value='<%# Eval("Key") %>'/>
+                                        <asp:HiddenField ID="hiddenScheduleId" runat="server" Value='<%# Eval("Key") %>' />
                                     </td>
                                     <td runat="server" id="valueNameItem">
                                         <a href='<%= ListConfig.DetailItemLinkUri %>?id=<%# UriEscapeDataString(Eval("Key")) %>' class="listlabel" style="font-weight: bold;" title="<%#ScheduleToolTipEditName(Container.DataItem)%>">
@@ -50,7 +52,8 @@
                                         </a>
                                     </td>
                                     <td align="right" style="white-space: nowrap">
-                                        <asp:ImageButton ID="runNowImageButton" runat="server" CausesValidation="false" ImageUrl="../Images/UI/arrow_rotate_clockwise.png" Style="padding-left: 4px; vertical-align: middle" OnCommand="OnRunNowClick" />
+                                        <asp:ImageButton ID="runNowImageButton" runat="server" CausesValidation="false" ImageUrl="../Images/UI/arrow_rotate_clockwise.png" Style="padding-left: 4px; vertical-align: middle" OnCommand="OnRunNowClick"
+                                            OnClientClick="return confirm('Are you sure you want to run this schedule?');"  />
                                         <a href='<%= ListConfig.DetailItemLinkUri %>?id=<%# UriEscapeDataString(Eval("Key")) %>' title="<%#ScheduleToolTipEditName(Container.DataItem)%>">
                                             <img src="<%#ScheduleEditImageUrl(Container.DataItem)%>" alt="" align="middle" style="border-width: 0px; padding-left: 4px; padding-right: 4px; vertical-align: middle" />
                                         </a>

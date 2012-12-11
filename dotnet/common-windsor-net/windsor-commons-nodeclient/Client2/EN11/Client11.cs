@@ -336,6 +336,17 @@ namespace Windsor.Commons.NodeClient
         }
 
         /// <summary>
+        /// GetStatus
+        /// </summary>
+        /// <param name="transactionId"></param>
+        /// <returns></returns>
+        public CommonTransactionStatusCode GetStatus(string transactionId, out string statusDetail)
+        {
+            statusDetail = null;
+            return GetStatus(transactionId);
+        }
+
+        /// <summary>
         /// NotifyEvent
         /// </summary>
         /// <returns></returns>
