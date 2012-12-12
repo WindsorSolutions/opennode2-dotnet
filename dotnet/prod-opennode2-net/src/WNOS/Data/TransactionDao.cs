@@ -766,7 +766,7 @@ namespace Windsor.Node2008.WNOS.Data
         public void SetNetworkId(string transactionId, string networkId, EndpointVersionType networkEndpointVersion,
                                  string networkEndpointUrl, string networkFlowName, string networkFlowOperation)
         {
-            SetNetworkId(transactionId, networkId, networkEndpointVersion, networkEndpointUrl, networkFlowName, null);
+            SetNetworkId(transactionId, networkId, networkEndpointVersion, networkEndpointUrl, networkFlowName, networkFlowOperation, null);
         }
         public void SetNetworkId(string transactionId, string networkId, EndpointVersionType networkEndpointVersion,
                                  string networkEndpointUrl, string networkFlowName, string networkFlowOperation, string networkStatusDetail)

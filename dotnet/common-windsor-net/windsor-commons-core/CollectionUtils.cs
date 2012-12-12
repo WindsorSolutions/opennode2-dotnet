@@ -118,6 +118,15 @@ namespace Windsor.Commons.Core
             }
             return rtnList;
         }
+        public static List<object> CreateObjectList(params object[] values)
+        {
+            List<object> rtnList = new List<object>(values.Length);
+            foreach (object obj in values)
+            {
+                rtnList.Add(obj != null ? obj.ToString() : "null");
+            }
+            return rtnList;
+        }
         public static bool IsNullOrEmpty(IEnumerable inArray)
         {
 

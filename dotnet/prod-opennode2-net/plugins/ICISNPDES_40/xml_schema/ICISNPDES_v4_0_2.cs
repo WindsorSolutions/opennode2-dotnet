@@ -412,7 +412,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_40
 
         [System.Xml.Serialization.XmlIgnore]
         public ReportParameter[] ReportParameter;
-        
+
         public virtual void AfterLoadFromDatabase()
         {
             List<object> items = null;
@@ -920,5 +920,20 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_40
         [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4000)]
         public string WorkflowStatusMessage;
+    }
+    [Serializable]
+    public class RemoveTrailingZerosDecimal : CustomXmlStringFormatType<decimal>
+    {
+        public RemoveTrailingZerosDecimal()
+        {
+        }
+        public RemoveTrailingZerosDecimal(decimal value)
+            : base(value)
+        {
+        }
+        public override string GetXmlString()
+        {
+            return Value.ToString("G29");
+        }
     }
 }

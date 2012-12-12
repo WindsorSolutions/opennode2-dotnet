@@ -14,7 +14,7 @@ namespace Windsor.Commons.XsdOrm2
     }
 
     [Serializable]
-    public abstract class CustomXmlStringFormatType<T> : CustomXmlStringFormatTypeBase, IXmlSerializable, IEquatable<T>, IComparable<T>, IConvertible 
+    public abstract class CustomXmlStringFormatType<T> : CustomXmlStringFormatTypeBase, IXmlSerializable, IEquatable<T>, IComparable<T>, IConvertible
         where T : struct, IEquatable<T>, IComparable<T>, IConvertible
     {
         public T Value;
@@ -43,7 +43,7 @@ namespace Windsor.Commons.XsdOrm2
         public void ReadXml(System.Xml.XmlReader reader)
         {
             string s = reader.ReadElementString();
-            Value = (T) Convert.ChangeType(s, typeof(T));
+            Value = (T)Convert.ChangeType(s, typeof(T));
         }
         public void WriteXml(System.Xml.XmlWriter writer)
         {
@@ -198,6 +198,21 @@ namespace Windsor.Commons.XsdOrm2
         public override string GetXmlString()
         {
             return Value.ToString("yyyy-MM-dd");
+        }
+    }
+    [Serializable]
+    public class RemoveTrailingZerosDecimal : CustomXmlStringFormatType<decimal>
+    {
+        public RemoveTrailingZerosDecimal()
+        {
+        }
+        public RemoveTrailingZerosDecimal(decimal value)
+            : base(value)
+        {
+        }
+        public override string GetXmlString()
+        {
+            return Value.ToString("G29");
         }
     }
 }

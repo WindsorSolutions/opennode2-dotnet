@@ -72,10 +72,21 @@ namespace Windsor.Node2008.WNOSProviders
         byte[] Uncompress(byte[] content);
 
         /// <summary>
+        /// Uncompress simple byte content returned from Compress().
+        /// </summary>
+        byte[] Uncompress(byte[] content, out string fileName);
+
+        /// <summary>
         /// Same as Uncompress(), but continues to uncompress until a non zip
         /// entry is reached (zip within zip).
         /// </summary>
         byte[] UncompressDeep(byte[] content);
+
+        /// <summary>
+        /// Same as Uncompress(), but continues to uncompress until a non zip
+        /// entry is reached (zip within zip).
+        /// </summary>
+        byte[] UncompressDeep(byte[] content, out string fileName);
 
         /// <summary>
         /// Uncompress simple byte content returned from Compress() to a file.

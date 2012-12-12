@@ -731,10 +731,13 @@ namespace Windsor.Node2008.WNOS.Service
             if (request.ZipResults.HasValue && request.ZipResults.Value)
             {
                 byte[] content = result.Content.Content;
-                string fileName = GetFileNameForRequestContent(request, result);
-                result.Content.Content = CompressionHelper.Compress(fileName, content);
-                result.Content.Type = CommonContentType.ZIP;
-                return true;
+                if (!CompressionHelper.IsCompressed(content))
+                {
+                    string fileName = GetFileNameForRequestContent(request, result);
+                    result.Content.Content = CompressionHelper.Compress(fileName, content);
+                    result.Content.Type = CommonContentType.ZIP;
+                    return true;
+                }
             }
             return false;
         }

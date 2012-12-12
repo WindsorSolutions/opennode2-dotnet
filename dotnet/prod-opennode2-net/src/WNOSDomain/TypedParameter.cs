@@ -70,14 +70,14 @@ namespace Windsor.Node2008.WNOSDomain
             _doPublishParam = true;
         }
         public TypedParameter(string name, string description, bool isRequired,
-                              Type type, bool doPublishParam, object value)
+                              Type type, bool doPublishParam, object defaultValue)
         {
             _type = type;
             _name = name;
             _description = description;
             _isRequired = isRequired;
             _doPublishParam = doPublishParam;
-            _defaultValue = value;
+            _defaultValue = defaultValue;
         }
         public TypedParameter(string name, string description, bool isRequired,
                               Type type, bool doPublishParam)

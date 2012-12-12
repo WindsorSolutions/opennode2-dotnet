@@ -150,33 +150,48 @@ namespace Windsor.Commons.Compression
         }
         public byte[] UncompressDeep(byte[] content)
         {
-            return UncompressDeepWithPassword(content, null);
+            string fileName;
+            return UncompressDeepWithPassword(content, null, out fileName);
+        }
+        public byte[] UncompressDeep(byte[] content, out string fileName)
+        {
+            return UncompressDeepWithPassword(content, null, out fileName);
         }
         public byte[] UncompressDeepWithPassword(byte[] content, string password)
         {
-            byte[] rtnBytes = UncompressWithPassword(content, password);
-            for (; ; )
+            string fileName;
+            return UncompressDeepWithPassword(content, password, out fileName);
+        }
+        public byte[] UncompressDeepWithPassword(byte[] content, string password, out string fileName)
+        {
+            byte[] rtnBytes = UncompressWithPassword(content, password, out fileName);
+
+            while (IsCompressed(rtnBytes))
             {
-                try
-                {
-                    byte[] nextBytes = UncompressWithPassword(rtnBytes, password);
-                    rtnBytes = nextBytes;
-                }
-                catch (Ionic.Zip.ZipException)
-                {
-                    return rtnBytes;
-                }
+                rtnBytes = UncompressWithPassword(rtnBytes, password, out fileName);
             }
+
+            return rtnBytes;
         }
         public byte[] Uncompress(byte[] content)
         {
             return UncompressWithPassword(content, null);
         }
+        public byte[] Uncompress(byte[] content, out string fileName)
+        {
+            return UncompressWithPassword(content, null, out fileName);
+        }
         public byte[] UncompressWithPassword(byte[] content, string password)
         {
-            return UncompressToBytesWithPassword(content, password, null);
+            string fileName = null;
+            return UncompressToBytesWithPassword(content, password, ref fileName);
         }
-        public byte[] UncompressToBytesWithPassword(byte[] content, string password, string fileName)
+        public byte[] UncompressWithPassword(byte[] content, string password, out string fileName)
+        {
+            fileName = null;
+            return UncompressToBytesWithPassword(content, password, ref fileName);
+        }
+        public byte[] UncompressToBytesWithPassword(byte[] content, string password, ref string fileName)
         {
             using (ZipFile zip = ZipFile.Read(content))
             {
@@ -200,6 +215,7 @@ namespace Windsor.Commons.Compression
                                 ValidateIsPasswordProtected(e);
                                 e.ExtractWithPassword(memStreamOut, password);
                             }
+                            fileName = e.FileName;
                             break; // Only return the first file
                         }
                     }
@@ -226,7 +242,7 @@ namespace Windsor.Commons.Compression
         }
         public byte[] UncompressFile(byte[] content, string fileName)
         {
-            return UncompressToBytesWithPassword(content, null, fileName);
+            return UncompressToBytesWithPassword(content, null, ref fileName);
         }
         public void Uncompress(string zipFilePath, string contentFilePath)
         {

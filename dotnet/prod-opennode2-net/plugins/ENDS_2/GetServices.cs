@@ -59,7 +59,9 @@ namespace Windsor.Node2008.WNOSPlugin.ENDS_2
     [Serializable]
     public class GetServices : EndsPluginBase, IQueryProcessor
     {
-        protected string _serviceCategory = "AllServices";
+        protected const string SERVICE_CATEGORY_KEY = "ServiceCategory";
+        protected const string SERVICE_CATEGORY_ALL_SERVICES = "AllServices";
+        protected string _serviceCategory = SERVICE_CATEGORY_ALL_SERVICES;
         protected ServiceType _returnServiceTypes;
 
         public GetServices()
@@ -69,15 +71,16 @@ namespace Windsor.Node2008.WNOSPlugin.ENDS_2
         {
             base.ValidateRequest(requestId);
 
-            GetParameter(_dataRequest, "ServiceCategory", 0, out _serviceCategory);
-            AppendAuditLogEvent("ServiceCategory = \"{0}\"", _serviceCategory);
+            GetParameter(_dataRequest, SERVICE_CATEGORY_KEY, 0, out _serviceCategory);
+            AppendAuditLogEvent("{0} = \"{1}\"", SERVICE_CATEGORY_KEY, _serviceCategory);
 
             _returnServiceTypes = GetServiceTypes(_serviceCategory);
         }
         protected static ServiceType GetServiceTypes(string serviceCategory)
         {
-            switch (serviceCategory.ToUpper()) {
-                case "ALLSERVICES" :
+            switch (serviceCategory.ToUpper())
+            {
+                case "ALLSERVICES":
                     return ServiceType.QueryOrSolicitOrExecute | ServiceType.Submit;
                 case "QUERY":
                     return ServiceType.Query;
@@ -112,7 +115,14 @@ namespace Windsor.Node2008.WNOSPlugin.ENDS_2
         {
             publishFlags = DataServicePublishFlags.PublishToEndpointVersion11And20;
             List<TypedParameter> list = new List<TypedParameter>(1);
-            list.Add(new TypedParameter("Service Category", "The service category to return (AllServices, Solicit, Query, Execute or Submit)", true, typeof(string), true));
+
+            var typedParameter = new TypedParameter(SERVICE_CATEGORY_KEY, "The service category to return (AllServices, Solicit, Query, Execute or Submit)",
+                                                    true, typeof(string), true, SERVICE_CATEGORY_ALL_SERVICES);
+            List<object> acceptableValues = new List<object>(10);
+            acceptableValues.Add("AllServices");
+            acceptableValues.AddRange(CollectionUtils.CreateObjectList(NodeMethod.Execute, NodeMethod.Query, NodeMethod.Solicit, NodeMethod.Submit));
+            typedParameter.AcceptableValues = acceptableValues;
+            list.Add(typedParameter);
             return list;
         }
     }

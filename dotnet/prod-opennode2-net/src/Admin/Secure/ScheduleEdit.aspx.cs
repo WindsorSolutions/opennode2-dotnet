@@ -62,11 +62,31 @@ namespace Windsor.Node2008.Admin.Secure
 
         private class DataModel
         {
-            public bool IsNewSchedule { get; set; }
-            public ScheduledItem ScheduledItem { get; set; }
-            public IList<KeyValuePair<string, string>> LocalServiceList { get; set; }
-            public IList<string> ValidSchematronFlowNames { get; set; }
-            public IList<KeyValuePair<string, string>> SubmitServiceList { get; set; }
+            public bool IsNewSchedule
+            {
+                get;
+                set;
+            }
+            public ScheduledItem ScheduledItem
+            {
+                get;
+                set;
+            }
+            public IList<KeyValuePair<string, string>> LocalServiceList
+            {
+                get;
+                set;
+            }
+            public IList<string> ValidSchematronFlowNames
+            {
+                get;
+                set;
+            }
+            public IList<KeyValuePair<string, string>> SubmitServiceList
+            {
+                get;
+                set;
+            }
         }
         private DataModel _dataModel;
         private IScheduleService _dataItemService;
@@ -123,7 +143,7 @@ namespace Windsor.Node2008.Admin.Secure
         }
         protected void ShowHideDataTargetControls()
         {
-            toTargetLabel.Enabled = resultExchangeLabel.Enabled = resultOperationLabel.Enabled = 
+            toTargetLabel.Enabled = resultExchangeLabel.Enabled = resultOperationLabel.Enabled =
                 ResultProcessDescLabel.Enabled = !_disableEditing;
 
             ScheduledItemSourceType selectedSource =
@@ -147,7 +167,7 @@ namespace Windsor.Node2008.Admin.Secure
                     resultPartnerDropDownList.Visible = false;
                     fileTargetTextBox.Visible = false;
                     emailTargetTextBox.Visible = false;
-                    resultExchangeLabel.Visible = resultExchangeTextBox.Visible= false;
+                    resultExchangeLabel.Visible = resultExchangeTextBox.Visible = false;
                     resultOperationLabel.Visible = resultOperationTextBox.Visible = false;
                     destinationSubmitServiceDropDownList.Visible = false;
                     break;
@@ -255,7 +275,7 @@ namespace Windsor.Node2008.Admin.Secure
                 _disableEditing = false;
                 _dataModel.ScheduledItem = new ScheduledItem();
                 _dataModel.ScheduledItem.StartOn = DateTime.Now.Date;
-                _dataModel.ScheduledItem.EndOn = _dataModel.ScheduledItem.StartOn.AddYears(1);
+                _dataModel.ScheduledItem.EndOn = _dataModel.ScheduledItem.StartOn.AddYears(10);
                 _dataModel.ScheduledItem.FrequencyType = ScheduledFrequencyType.Once;
                 _dataModel.ScheduledItem.Frequency = 1;
                 _dataModel.ScheduledItem.IsActive = true;
@@ -382,7 +402,10 @@ namespace Windsor.Node2008.Admin.Secure
         }
         public override string UniqueDataModelKey
         {
-            get { return Request["id"]; }
+            get
+            {
+                return Request["id"];
+            }
         }
         protected override void LoadModel(object savedModel)
         {
@@ -857,19 +880,37 @@ namespace Windsor.Node2008.Admin.Secure
 
         public IScheduleService DataItemService
         {
-            get { return _dataItemService; }
-            set { _dataItemService = value; }
+            get
+            {
+                return _dataItemService;
+            }
+            set
+            {
+                _dataItemService = value;
+            }
         }
 
         public ScheduledItem DataItem
         {
-            get { return _dataModel.ScheduledItem; }
-            set { _dataModel.ScheduledItem = value; }
+            get
+            {
+                return _dataModel.ScheduledItem;
+            }
+            set
+            {
+                _dataModel.ScheduledItem = value;
+            }
         }
         public INodeProcessor ScheduleProcessor
         {
-            get { return _scheduleProcessor; }
-            set { _scheduleProcessor = value; }
+            get
+            {
+                return _scheduleProcessor;
+            }
+            set
+            {
+                _scheduleProcessor = value;
+            }
         }
         #endregion
 
@@ -1195,14 +1236,18 @@ namespace Windsor.Node2008.Admin.Secure
                 }
                 else
                 {
-                    if (!nameValueArgsPanel.Visible) nameValueArgsPanel.Visible = true;
-                    if (valueArgsPanel.Visible) valueArgsPanel.Visible = false;
+                    if (!nameValueArgsPanel.Visible)
+                        nameValueArgsPanel.Visible = true;
+                    if (valueArgsPanel.Visible)
+                        valueArgsPanel.Visible = false;
                 }
             }
             else
             {
-                if (nameValueArgsPanel.Visible) nameValueArgsPanel.Visible = false;
-                if (!valueArgsPanel.Visible) valueArgsPanel.Visible = true;
+                if (nameValueArgsPanel.Visible)
+                    nameValueArgsPanel.Visible = false;
+                if (!valueArgsPanel.Visible)
+                    valueArgsPanel.Visible = true;
             }
         }
         protected void byValueRadioButton_CheckedChanged(object sender, EventArgs e)
