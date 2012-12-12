@@ -867,8 +867,10 @@ namespace Windsor.Node2008.WNOS.Data
                 return null; // Not found
             }
         }
-        public NodeTransaction GetLastTransaction(string flowName, string flowOperation, NodeMethod? nodeMethod, bool loadDocuments,
-                                                  bool loadDocumentsContent)
+        public NodeTransaction GetLastTransaction(string flowName, string flowOperation, IEnumerable<NodeMethod> allowedNodeMethods,
+                                                  IEnumerable<CommonTransactionStatusCode> allowedTransactionStatus,
+                                                  IEnumerable<CommonTransactionStatusCode> notAllowedTransactionStatus,
+                                                  bool loadDocuments, bool loadDocumentsContent)
         {
             try
             {
@@ -892,14 +894,32 @@ namespace Windsor.Node2008.WNOS.Data
                     whereColumns += "t.Operation";
                     whereValues.Add(flowOperation);
                 }
-                if (nodeMethod.HasValue)
+                if (!CollectionUtils.IsNullOrEmpty(allowedNodeMethods))
                 {
                     if (whereColumns.Length > 0)
                     {
                         whereColumns += ";";
                     }
-                    whereColumns += "t.WebMethod";
-                    whereValues.Add(nodeMethod.Value.ToString());
+                    var list = CollectionUtils.CreateStringListFromEnumerable(allowedNodeMethods);
+                    whereColumns += "UPPER(t.WebMethod) IN (UPPER('" + StringUtils.Join("'),UPPER('", list) + "'))";
+                }
+                if (!CollectionUtils.IsNullOrEmpty(allowedTransactionStatus))
+                {
+                    if (whereColumns.Length > 0)
+                    {
+                        whereColumns += ";";
+                    }
+                    var list = CollectionUtils.CreateStringListFromEnumerable(allowedTransactionStatus);
+                    whereColumns += "UPPER(t.Status) IN (UPPER('" + StringUtils.Join("'),UPPER('", list) + "'))";
+                }
+                if (!CollectionUtils.IsNullOrEmpty(notAllowedTransactionStatus))
+                {
+                    if (whereColumns.Length > 0)
+                    {
+                        whereColumns += ";";
+                    }
+                    var list = CollectionUtils.CreateStringListFromEnumerable(notAllowedTransactionStatus);
+                    whereColumns += "UPPER(t.Status) NOT IN (UPPER('" + StringUtils.Join("'),UPPER('", list) + "'))";
                 }
                 if (whereColumns.Length > 0)
                 {

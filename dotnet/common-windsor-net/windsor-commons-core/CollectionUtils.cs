@@ -600,6 +600,24 @@ namespace Windsor.Commons.Core
             }
             return list;
         }
+        public static List<string> CreateStringListFromEnumerable(IEnumerable objects)
+        {
+            if (objects == null)
+            {
+                return null;
+            }
+            int count = Count(objects);
+            if (count == 0)
+            {
+                return new List<string>();
+            }
+            List<string> list = new List<string>(count);
+            foreach (object obj in objects)
+            {
+                list.Add(obj != null ? obj.ToString() : "null");
+            }
+            return list;
+        }
         public static StringCollection CreateStringCollection(IEnumerable<string> list)
         {
             StringCollection collection = new StringCollection();

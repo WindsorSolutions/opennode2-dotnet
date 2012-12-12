@@ -191,7 +191,16 @@ namespace Windsor.Node2008.WNOS.Logic
         public NodeTransaction GetLastTransaction(string flowName, string flowOperation, NodeMethod? nodeMethod, bool loadDocuments,
                                                   bool loadDocumentsContent)
         {
-            return _transactionDao.GetLastTransaction(flowName, flowOperation, nodeMethod, loadDocuments, loadDocumentsContent);
+            return GetLastTransaction(flowName, flowOperation, nodeMethod.HasValue ? new NodeMethod[] { nodeMethod.Value } : null,
+                                      null, null, loadDocuments, loadDocumentsContent);
+        }
+        public NodeTransaction GetLastTransaction(string flowName, string flowOperation, IEnumerable<NodeMethod> allowedNodeMethods,
+                                                  IEnumerable<CommonTransactionStatusCode> allowedTransactionStatus,
+                                                  IEnumerable<CommonTransactionStatusCode> notAllowedTransactionStatus,
+                                                  bool loadDocuments, bool loadDocumentsContent)
+        {
+            return _transactionDao.GetLastTransaction(flowName, flowOperation, allowedNodeMethods, allowedTransactionStatus,
+                                                      notAllowedTransactionStatus, loadDocuments, loadDocumentsContent);
         }
         public TransactionListType1 DoTransactionTrackingQuery(ICollection<KeyValuePair<TransactionTrackingQueryParameter, object>> queryParameters)
         {

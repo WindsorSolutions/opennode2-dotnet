@@ -68,7 +68,8 @@ namespace Windsor.Commons.Core
         }
         protected AppDomain AppDomain
         {
-            get {
+            get
+            {
                 if (_appDomain == null)
                 {
                     lock (_lockObject)
@@ -112,12 +113,13 @@ namespace Windsor.Commons.Core
     /// </summary>
     public class MarshalByRefObjectIndefinite : MarshalByRefObject
     {
-        public override object InitializeLifetimeService() {
-			// See: http://www.codeproject.com/csharp/Net_Remoting.asp
-			// See: http://www.informit.com/guides/content.asp?g=dotnet&seqNum=395&rl=1
-			// See: http://www.codeproject.com/csharp/dynamicpluginmanager.asp
-			// This keeps our object alive indefinitely
-			return null;
-		}
+        public override object InitializeLifetimeService()
+        {
+            // See: http://www.codeproject.com/csharp/Net_Remoting.asp
+            // See: http://www.informit.com/guides/content.asp?g=dotnet&seqNum=395&rl=1
+            // See: http://www.codeproject.com/csharp/dynamicpluginmanager.asp
+            // This keeps our object alive indefinitely
+            return null;
+        }
     }
 }

@@ -111,6 +111,8 @@ namespace Windsor.Node2008.WNOS.Utilities
         private ICompressionHelper _compressionHelper;
         private IFlowDao _flowDao;
         private IPluginDao _pluginDao;
+        private static object s_CachedServiceImplementersLock = new object();
+        private static object s_CachedPluginInstanceLoadersLock = new object();
 
         private string _pluginConfigFilePath;
         private string _pluginFolderPath;
@@ -120,6 +122,7 @@ namespace Windsor.Node2008.WNOS.Utilities
         public PluginLoader()
         {
             ServiceImpementersCacheTimeInMinutes = 60 * 24 * 7;
+            PluginInstanceLoadersCacheTimeInMinutes = 5;
         }
         public void Init()
         {
@@ -222,7 +225,7 @@ namespace Windsor.Node2008.WNOS.Utilities
             try
             {
                 string pluginRootFilePath = GetPluginFilePath(CollectionUtils.FirstItem(dataServices), true);
-                PluginDomainInstanceLoader loader = new PluginDomainInstanceLoader(null, pluginRootFilePath);
+                PluginDomainInstanceLoader loader = GetPluginInstanceLoader(null, pluginRootFilePath);
                 using (PluginDisposer disposer = new PluginDisposer(loader))
                 {
                     foreach (DataService dataService in dataServices)
@@ -263,12 +266,16 @@ namespace Windsor.Node2008.WNOS.Utilities
         }
         public virtual ICollection<SimpleDataService> GetDataServiceImplementersForFlow(string flowId)
         {
-            const string CACHED_IMPLEMENTERS = "_CACHED_IMPLEMENTERS";
+            const string CACHED_SERVICE_IMPLEMENTERS = "_CACHED_SERVICE_IMPLEMENTERS";
             string searchDirectory = VerifyPluginSubFolderWithHighestVersion(flowId);
             string parentDirPath = Path.GetDirectoryName(searchDirectory);
             string parentDirName = Path.GetFileName(parentDirPath);
-            string cacheName = CACHED_IMPLEMENTERS + "_" + parentDirName;
-            ICollection<SimpleDataService> implementers = HttpRuntime.Cache[cacheName] as ICollection<SimpleDataService>;
+            string cacheName = CACHED_SERVICE_IMPLEMENTERS + "_" + parentDirName;
+            ICollection<SimpleDataService> implementers = null;
+            lock (s_CachedServiceImplementersLock)
+            {
+                implementers = HttpRuntime.Cache[cacheName] as ICollection<SimpleDataService>;
+            }
             if (implementers == null)
             {
                 implementers = GetDataServiceImplementersInDirectory(searchDirectory, true);
@@ -276,9 +283,16 @@ namespace Windsor.Node2008.WNOS.Utilities
                 {
                     implementers = new List<SimpleDataService>();
                 }
-                HttpRuntime.Cache.Add(cacheName, implementers, new CacheDependency(parentDirPath),
-                                      DateTime.Now + TimeSpan.FromMinutes(ServiceImpementersCacheTimeInMinutes), Cache.NoSlidingExpiration,
-                                      CacheItemPriority.Default, null);
+                lock (s_CachedServiceImplementersLock)
+                {
+                    ICollection<SimpleDataService> implementersAlreadyThere = HttpRuntime.Cache[cacheName] as ICollection<SimpleDataService>;
+                    if (implementersAlreadyThere == null)
+                    {
+                        HttpRuntime.Cache.Add(cacheName, implementers, new CacheDependency(parentDirPath),
+                                              DateTime.Now + TimeSpan.FromMinutes(ServiceImpementersCacheTimeInMinutes), Cache.NoSlidingExpiration,
+                                              CacheItemPriority.Default, null);
+                    }
+                }
             }
             return implementers;
         }
@@ -370,7 +384,7 @@ namespace Windsor.Node2008.WNOS.Utilities
                                     if (loader == null)
                                     {
                                         // Don't need to load spring objects here
-                                        loader = new PluginDomainInstanceLoader(null, assemblyPath);
+                                        loader = GetPluginInstanceLoader(null, assemblyPath);
                                         pluginFinder = loader.GetInstance<PluginInstanceFinder>();
                                     }
                                     GetDataServiceImplementers(pluginFinder, assemblyPath, ref implementers);
@@ -553,7 +567,7 @@ namespace Windsor.Node2008.WNOS.Utilities
                                                                          out T plugin) where T : class
         {
             string pluginFilePath = GetPluginFilePath(inDataService, ignoreInstallingAssemblies);
-            PluginDomainInstanceLoader loader = new PluginDomainInstanceLoader(pluginConfigFilePath, pluginFilePath);
+            PluginDomainInstanceLoader loader = GetPluginInstanceLoader(pluginConfigFilePath, pluginFilePath);
             PluginDisposer disposer = new PluginDisposer(loader);
             try
             {
@@ -566,8 +580,60 @@ namespace Windsor.Node2008.WNOS.Utilities
             }
             return disposer;
         }
-        protected bool GetDataServiceImplementers(PluginInstanceFinder pluginFinder, string inAssemblyPath,
-                                                  ref OrderedSet<SimpleDataService> ioImplementers)
+        protected virtual PluginDomainInstanceLoader GetPluginInstanceLoader(string pluginConfigFilePath, string pluginFilePath)
+        {
+            if (string.IsNullOrEmpty(pluginConfigFilePath) || (PluginInstanceLoadersCacheTimeInMinutes <= 0))
+            {
+                // This is not an expensive case with string.IsNullOrEmpty(pluginConfigFilePath), since we are 
+                // not creating spring objects, so don't cache
+                //
+                // OR 
+                //
+                // we've specified to turn off the cache with PluginInstanceLoadersCacheTimeInMinutes <= 0
+                return new PluginDomainInstanceLoader(pluginConfigFilePath, pluginFilePath);
+            }
+            const string CACHED_PLUGIN_INSTANCE_LOADERS = "_CACHED_PLUGIN_INSTANCE_LOADERS";
+            string cacheName = CACHED_PLUGIN_INSTANCE_LOADERS + "_" + pluginConfigFilePath + "_" + pluginFilePath;
+            PluginDomainInstanceLoader loader;
+            lock (s_CachedPluginInstanceLoadersLock)
+            {
+                loader = HttpRuntime.Cache[cacheName] as PluginDomainInstanceLoader;
+            }
+            if (loader != null)
+            {
+                return loader;
+            }
+            string parentDirPath = Path.GetDirectoryName(Path.GetDirectoryName(pluginFilePath));
+
+            loader = new PluginDomainInstanceLoader(pluginConfigFilePath, pluginFilePath);
+
+            PluginDomainInstanceLoader loaderAlreadyThere = null;
+            lock (s_CachedPluginInstanceLoadersLock)
+            {
+                loaderAlreadyThere = HttpRuntime.Cache[cacheName] as PluginDomainInstanceLoader;
+                if (loaderAlreadyThere == null)
+                {
+                    HttpRuntime.Cache.Add(cacheName, loader, new CacheDependency(parentDirPath),
+                                          Cache.NoAbsoluteExpiration, TimeSpan.FromMinutes(PluginInstanceLoadersCacheTimeInMinutes),
+                                          CacheItemPriority.AboveNormal, OnCachePluginDomainInstanceLoaderRemovedCallback);
+                    loader.Acquire();
+                }
+            }
+            if (loaderAlreadyThere != null)
+            {
+                // Switch over to already cached instance
+                DisposableBase.SafeDispose(ref loader);
+                loader = loaderAlreadyThere;
+            }
+            return loader;
+        }
+        protected virtual void OnCachePluginDomainInstanceLoaderRemovedCallback(string key, object value, CacheItemRemovedReason reason)
+        {
+            PluginDomainInstanceLoader loader = (PluginDomainInstanceLoader)value;
+            loader.Release();
+        }
+        protected virtual bool GetDataServiceImplementers(PluginInstanceFinder pluginFinder, string inAssemblyPath,
+                                                          ref OrderedSet<SimpleDataService> ioImplementers)
         {
             try
             {
@@ -808,18 +874,28 @@ namespace Windsor.Node2008.WNOS.Utilities
             get;
             set;
         }
+        public int PluginInstanceLoadersCacheTimeInMinutes
+        {
+            get;
+            set;
+        }
         private class PluginDisposer : DisposableBase, IPluginDisposer
         {
-            AppDomainInstanceLoader _loader;
-            public PluginDisposer(AppDomainInstanceLoader loader)
+            PluginDomainInstanceLoader _loader;
+            public PluginDisposer(PluginDomainInstanceLoader loader)
             {
                 _loader = loader;
+                _loader.Acquire();
             }
             protected override void OnDispose(bool inIsDisposing)
             {
                 if (inIsDisposing)
                 {
-                    DisposableBase.SafeDispose(ref _loader);
+                    if (_loader != null)
+                    {
+                        _loader.Release();
+                        _loader = null;
+                    }
                 }
             }
         }
@@ -827,6 +903,7 @@ namespace Windsor.Node2008.WNOS.Utilities
         {
             private string _springConfigFilePath;
             private string _pluginParentFolderPath;
+            private int _useCount;
             public PluginDomainInstanceLoader(string springConfigFilePath,
                                               string pluginFilePath)
             {
@@ -834,6 +911,20 @@ namespace Windsor.Node2008.WNOS.Utilities
                 if (!string.IsNullOrEmpty(pluginFilePath))
                 {
                     _pluginParentFolderPath = Path.GetDirectoryName(pluginFilePath);
+                }
+            }
+            public virtual void Acquire()
+            {
+                Interlocked.Increment(ref _useCount);
+            }
+            public virtual void Release()
+            {
+                int useCount = Interlocked.Decrement(ref _useCount);
+                DebugUtils.AssertDebuggerBreak(useCount >= 0);
+                DebugUtils.AssertDebuggerBreak(!IsDisposed);
+                if (useCount == 0)
+                {
+                    this.Dispose();
                 }
             }
             protected override AppDomain CreateAppDomain()

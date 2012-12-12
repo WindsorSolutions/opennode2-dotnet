@@ -117,7 +117,9 @@ namespace Windsor.Node2008.WNOS.Data
         TransactionDetailType DoTransactionTrackingDetail(string transactionId);
         CommonTransactionStatusCode GetNetworkTransactionStatus(string localTransactionId);
 
-        NodeTransaction GetLastTransaction(string flowName, string flowOperation, NodeMethod? nodeMethod, bool loadDocuments,
-                                           bool loadDocumentsContent);
+        NodeTransaction GetLastTransaction(string flowName, string flowOperation, IEnumerable<NodeMethod> allowedNodeMethods,
+                                           IEnumerable<CommonTransactionStatusCode> allowedTransactionStatus,
+                                           IEnumerable<CommonTransactionStatusCode> notAllowedTransactionStatus,
+                                           bool loadDocuments, bool loadDocumentsContent);
     }
 }
