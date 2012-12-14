@@ -24,7 +24,7 @@
 			<!-- date/time mappings -->
 
 			<xjc:javaType name="java.util.Date" xmlType="xsd:date"
-				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.DateAdapter" />
+				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.DateNoTimeZoneAdapter" />
 
 			<xjc:javaType name="java.util.Date" xmlType="xsd:dateTime"
 				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.DateTimeAdapter" />
