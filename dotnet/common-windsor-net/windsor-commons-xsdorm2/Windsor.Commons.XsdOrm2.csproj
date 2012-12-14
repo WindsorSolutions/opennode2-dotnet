@@ -100,14 +100,12 @@
       <Name>Windsor.Commons.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\windsor-commons-logging\Windsor.Commons.Logging.csproj">
-      <Project>{C201FD80-438C-4252-9655-B3E26F75A5AA}</Project>
+      <Project>{c201fd80-438c-4252-9655-b3e26f75a5aa}</Project>
       <Name>Windsor.Commons.Logging</Name>
-      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\windsor-commons-spring\Windsor.Commons.Spring.csproj">
-      <Project>{2249EFD8-40F1-4C41-BCF0-AD29FEDFCBD0}</Project>
+      <Project>{2249efd8-40f1-4c41-bcf0-ad29fedfcbd0}</Project>
       <Name>Windsor.Commons.Spring</Name>
-      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

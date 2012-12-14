@@ -57,7 +57,7 @@ using Windsor.Commons.NodeDomain;
 namespace Windsor.Node2008.WNOSPlugin.ENDS_2
 {
     [Serializable]
-    public class GetServices : EndsPluginBase, IQueryProcessor
+    public class GetServices : EndsPluginBase, IQueryProcessor, ISolicitProcessor
     {
         protected const string SERVICE_CATEGORY_KEY = "ServiceCategory";
         protected const string SERVICE_CATEGORY_ALL_SERVICES = "AllServices";
@@ -73,6 +73,12 @@ namespace Windsor.Node2008.WNOSPlugin.ENDS_2
 
             GetParameter(_dataRequest, SERVICE_CATEGORY_KEY, 0, out _serviceCategory);
             AppendAuditLogEvent("{0} = \"{1}\"", SERVICE_CATEGORY_KEY, _serviceCategory);
+
+            if (TryGetParameter(_dataRequest, CommonQueryParameterKeys.XSLT_RESULTS_TRANSFORMATION_NAME, 1,
+                                ref _xsltTransformName))
+            {
+                AppendAuditLogEvent("{0} = \"{1}\"", CommonQueryParameterKeys.XSLT_RESULTS_TRANSFORMATION_NAME, _xsltTransformName);
+            }
 
             _returnServiceTypes = GetServiceTypes(_serviceCategory);
         }
@@ -94,16 +100,25 @@ namespace Windsor.Node2008.WNOSPlugin.ENDS_2
                     throw new ArgumentException(string.Format("Invalid service category specified: \"{0}\"", serviceCategory));
             }
         }
-        public PaginatedContentResult ProcessQuery(string requestId)
+        public void ProcessSolicit(string requestId)
         {
             ProcessRequestInit(requestId);
 
             int rowCount;
-            byte[] content = GetServices(_returnServiceTypes, out rowCount);
+            CommonContentType contentType;
+            GetServices(_returnServiceTypes, out rowCount, out contentType);
+        }
+        public virtual PaginatedContentResult ProcessQuery(string requestId)
+        {
+            ProcessRequestInit(requestId);
+
+            int rowCount;
+            CommonContentType contentType;
+            byte[] content = GetServices(_returnServiceTypes, out rowCount, out contentType);
 
             PaginatedContentResult result = new PaginatedContentResult();
             result.Paging = new PaginationIndicator(0, rowCount, true);
-            result.Content = new SimpleContent(CommonContentType.XML, content);
+            result.Content = new SimpleContent(contentType, content);
 
             return result;
         }

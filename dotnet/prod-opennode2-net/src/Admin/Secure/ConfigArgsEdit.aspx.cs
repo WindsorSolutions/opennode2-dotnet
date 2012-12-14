@@ -104,14 +104,17 @@ namespace Windsor.Node2008.Admin.Secure
                 introParagraphs.DataBind();
 
                 addArgumentBtn.Visible = !string.IsNullOrEmpty(_dataModel._dataItem.Id);
-                
+
                 AspNetUtils.SetFocus(this, codeCtrl, true);
             }
         }
 
         public override string UniqueDataModelKey
         {
-            get { return Request["id"]; }
+            get
+            {
+                return Request["id"];
+            }
         }
         protected override void LoadModel(object savedModel)
         {
@@ -161,6 +164,11 @@ namespace Windsor.Node2008.Admin.Secure
         {
             try
             {
+                if (divPageError.Visible || !Page.IsValid)
+                {
+                    // Error on page, get out of here
+                    return;
+                }
                 _dataModel._dataItem = _dataItemService.Save(_dataModel._lastId, _dataModel._dataItem, VisitHelper.GetVisit());
                 _dataModel._lastId = _dataModel._dataItem.Id;
                 ResponseRedirect("../Secure/ConfigArgs.aspx");
@@ -201,14 +209,26 @@ namespace Windsor.Node2008.Admin.Secure
 
         public ConfigItem DataItem
         {
-            get { return _dataModel._dataItem; }
-            set { _dataModel._dataItem = value; }
+            get
+            {
+                return _dataModel._dataItem;
+            }
+            set
+            {
+                _dataModel._dataItem = value;
+            }
         }
 
         public IConfigService DataItemService
         {
-            get { return _dataItemService; }
-            set { _dataItemService = value; }
+            get
+            {
+                return _dataItemService;
+            }
+            set
+            {
+                _dataItemService = value;
+            }
         }
 
         #endregion

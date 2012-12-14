@@ -181,5 +181,9 @@ namespace Windsor.Commons.NodeDomain
                     return CommonContentType.OTHER;
             }
         }
+        public static CommonContentType? GetFileTypeFromContent(string filePath)
+        {
+            return FileTypeIdentifier.GetFileTypeFromContent(filePath);
+        }
     }
 }

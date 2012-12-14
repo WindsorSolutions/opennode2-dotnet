@@ -69,6 +69,7 @@ namespace Windsor.Node2008.WNOSPlugin.ENDS_2
         protected ITransactionManager _transactionManager;
 
         protected DataRequest _dataRequest;
+        protected string _xsltTransformName;
 
         public EndsPluginBase()
         {
@@ -99,7 +100,7 @@ namespace Windsor.Node2008.WNOSPlugin.ENDS_2
 
             AppendAuditLogEvent("Validating request: {0}", _dataRequest);
         }
-        protected byte[] GetServices(ServiceType returnServiceTypes, out int rowCount)
+        protected byte[] GetServices(ServiceType returnServiceTypes, out int rowCount, out CommonContentType contentType)
         {
             NetworkNodeType networkNodeType = GetServices(returnServiceTypes);
             rowCount = networkNodeType.NodeServiceList.Length;
@@ -108,9 +109,14 @@ namespace Windsor.Node2008.WNOSPlugin.ENDS_2
             networkNodeListType.NetworkNodeDetails = new NetworkNodeType[1] { networkNodeType };
 
             byte[] content = _serializationHelper.Serialize(networkNodeListType);
+
+            contentType = CommonContentType.XML;
+            content = CheckToXsltTransformContent(content, "xml_schema.XsltTransforms.zip",
+                                                  _xsltTransformName, ref contentType);
+
             string docId =
                 _documentManager.AddDocument(_dataRequest.TransactionId, CommonTransactionStatusCode.Completed,
-                                             null, new Document(null, CommonContentType.XML, content));
+                                             null, new Document(null, contentType, content));
             return content;
         }
         protected NetworkNodeType GetServices(ServiceType returnServiceTypes)

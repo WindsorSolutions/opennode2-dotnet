@@ -393,7 +393,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
                             environmentalPermit.EnvironmentalPermitDescription = RCRAHelper.NAString;
                         }
                     });
-                    
+
                 });
             });
         }
@@ -918,6 +918,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
 
     //PointType
     [AppliedAttribute(typeof(PointType), "id", typeof(DbIgnoreAttribute))]
+    [AppliedAttribute(typeof(AbstractGMLType), "id", typeof(DbIgnoreAttribute))]
 
     //AbstractGeometryType
     [AppliedAttribute(typeof(AbstractGeometryType), "srsName", typeof(DbIgnoreAttribute))]
@@ -982,7 +983,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
             Longitude = longitude;
         }
         [XmlIgnore]
-        [Column("LATITUDE", ColumnSize=19, ColumnScale=14)]
+        [Column("LATITUDE", ColumnSize = 19, ColumnScale = 14)]
         public decimal Latitude;
 
         [XmlIgnore]

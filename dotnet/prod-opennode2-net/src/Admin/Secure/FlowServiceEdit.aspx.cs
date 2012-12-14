@@ -62,11 +62,31 @@ namespace Windsor.Node2008.Admin.Secure
 
         private class DataModel
         {
-            public DataService DataService { get; set; }
-            public string FlowId { get; set; }
-            public bool IsNewService { get; set; }
-            public ICollection<string> GlobalArgs { get; set; }
-            public ICollection<string> DataSources { get; set; }
+            public DataService DataService
+            {
+                get;
+                set;
+            }
+            public string FlowId
+            {
+                get;
+                set;
+            }
+            public bool IsNewService
+            {
+                get;
+                set;
+            }
+            public ICollection<string> GlobalArgs
+            {
+                get;
+                set;
+            }
+            public ICollection<string> DataSources
+            {
+                get;
+                set;
+            }
         }
         private class KeyInitialValueModel : IComparable<KeyInitialValueModel>
         {
@@ -79,12 +99,28 @@ namespace Windsor.Node2008.Admin.Secure
             {
                 return string.Compare(Key, other.Key);
             }
-            public string Key { get; set; }
-            public string InitialValue { get; set; }
+            public string Key
+            {
+                get;
+                set;
+            }
+            public string InitialValue
+            {
+                get;
+                set;
+            }
         }
-        private DataModel Model { get; set; }
+        private DataModel Model
+        {
+            get;
+            set;
+        }
         private bool _disableRepeaterEditing;
-        public IFlowService FlowService { get; set; }
+        public IFlowService FlowService
+        {
+            get;
+            set;
+        }
 
         private readonly string SERVICE_TYPE_NONE = ServiceType.None.ToString();
 
@@ -139,6 +175,7 @@ namespace Windsor.Node2008.Admin.Secure
                         typeDropDownList.DataSource = EnumUtils.GetAllDescriptions(implementer.Type);
                         typeDropDownList.DataBind();
                         typeDropDownList.Enabled = true;
+                        typeDropDownList.SelectedValue = EnumUtils.ToDescription(implementer.Type);
                     }
                     argsRepeater.DataSource = CreateArgumentModelList(implementer.Args);
                     argsRepeater.DataBind();
@@ -450,7 +487,7 @@ namespace Windsor.Node2008.Admin.Secure
                 Label dsKeyLabel = item.FindControl("dsKeyValueLabel") as Label;
                 string key = dsKeyLabel.Text;
                 DropDownList dataSourcesDropDownList = item.FindControl("dataSourcesDropDownList") as DropDownList;
-                if ( dataSourcesDropDownList == null )
+                if (dataSourcesDropDownList == null)
                 {
                     throw new ArgumentNullException(string.Format("Could not find dataSourcesDropDownList for key: {0}", key));
                 }
@@ -524,8 +561,10 @@ namespace Windsor.Node2008.Admin.Secure
             {
                 DropDownList argGlobalValueDropDownList = checkBox.Parent.FindControl("argGlobalValueDropDownList") as DropDownList;
                 TextBox argValueEdit = checkBox.Parent.FindControl("argValueEdit") as TextBox;
-                if (argGlobalValueDropDownList != null) argGlobalValueDropDownList.Visible = checkBox.Checked;
-                if (argValueEdit != null) argValueEdit.Visible = !checkBox.Checked;
+                if (argGlobalValueDropDownList != null)
+                    argGlobalValueDropDownList.Visible = checkBox.Checked;
+                if (argValueEdit != null)
+                    argValueEdit.Visible = !checkBox.Checked;
             }
         }
         protected void argsRepeater_ItemDataBound(object sender, RepeaterItemEventArgs e)
@@ -545,8 +584,10 @@ namespace Windsor.Node2008.Admin.Secure
                 ((argumentModel.InitialValue != null) && argumentModel.InitialValue.StartsWith(ConfigItem.GLOBAL_ARG_INDICATOR));
             if (isGlobalArg)
             {
-                if (checkBox != null) checkBox.Checked = true;
-                if (argValueEdit != null) argValueEdit.Visible = false;
+                if (checkBox != null)
+                    checkBox.Checked = true;
+                if (argValueEdit != null)
+                    argValueEdit.Visible = false;
                 if (argGlobalValueDropDownList != null)
                 {
                     argGlobalValueDropDownList.Visible = true;
@@ -560,7 +601,8 @@ namespace Windsor.Node2008.Admin.Secure
             }
             else
             {
-                if (checkBox != null) checkBox.Checked = false;
+                if (checkBox != null)
+                    checkBox.Checked = false;
                 if (argValueEdit != null)
                 {
                     argValueEdit.Visible = true;
@@ -569,7 +611,8 @@ namespace Windsor.Node2008.Admin.Secure
                         argValueEdit.Text = argumentModel.InitialValue;
                     }
                 }
-                if (argGlobalValueDropDownList != null) argGlobalValueDropDownList.Visible = false;
+                if (argGlobalValueDropDownList != null)
+                    argGlobalValueDropDownList.Visible = false;
             }
             if (_disableRepeaterEditing)
             {

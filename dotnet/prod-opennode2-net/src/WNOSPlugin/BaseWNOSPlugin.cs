@@ -75,8 +75,16 @@ namespace Windsor.Node2008.WNOSPlugin
             Value = value;
             WasSpecified = true;
         }
-        public bool WasSpecified { get; private set; }
-        public T Value { get; private set; }
+        public bool WasSpecified
+        {
+            get;
+            private set;
+        }
+        public T Value
+        {
+            get;
+            private set;
+        }
     }
     /// <summary>
     /// All plugin implementations must descend from this class, then implement one or more of the 
@@ -200,7 +208,7 @@ namespace Windsor.Node2008.WNOSPlugin
         {
             IPartnerManager partnerManager;
             GetServiceImplementation(out partnerManager);
-            
+
             PartnerIdentity partner = partnerManager.GetByName(partnerName);
 
             if (partner == null)
@@ -462,7 +470,7 @@ namespace Windsor.Node2008.WNOSPlugin
             if (type == typeof(string))
             {
                 return (T)(object)valueStr;
-            } 
+            }
             else if (typeof(T) == typeof(TimeSpan))
             {
                 return (T)Convert.ChangeType(TimeSpan.Parse(valueStr), typeof(T));
@@ -868,7 +876,7 @@ namespace Windsor.Node2008.WNOSPlugin
                                                 IDocumentManager documentManager,
                                                 out string operation)
         {
-            return (T) GetHeaderDocumentContent(typeof(T), transactionId, documentId, settingsProvider, serializationHelper,
+            return (T)GetHeaderDocumentContent(typeof(T), transactionId, documentId, settingsProvider, serializationHelper,
                                                 compressionHelper, documentManager, out operation);
         }
         protected T GetHeaderDocumentContent<T>(Document document, string transactionId,
@@ -994,7 +1002,10 @@ namespace Windsor.Node2008.WNOSPlugin
         #region Properties
         public Dictionary<string, string> ConfigurationArguments
         {
-            get { return _configurationArguments; }
+            get
+            {
+                return _configurationArguments;
+            }
         }
         public void SetConfigurationArgument(string key, string value)
         {
@@ -1014,7 +1025,10 @@ namespace Windsor.Node2008.WNOSPlugin
         }
         public Dictionary<string, IDbProvider> DataProviders
         {
-            get { return _dataProviders; }
+            get
+            {
+                return _dataProviders;
+            }
         }
         public void SetDataProvider(string key, DataProviderInfo provider)
         {
@@ -1185,12 +1199,12 @@ namespace Windsor.Node2008.WNOSPlugin
                 }
 
                 NodeTransaction nodeTransaction = transactionManager.GetTransaction(transactionId);
-                if ( nodeTransaction == null )
+                if (nodeTransaction == null)
                 {
                     AppendAuditLogEvent("Failed to retrieve transaction with id \"{0}\" from database", transactionId);
                     return null;
                 }
-                if ( string.IsNullOrEmpty(nodeTransaction.NetworkFlowName) )
+                if (string.IsNullOrEmpty(nodeTransaction.NetworkFlowName))
                 {
                     AppendAuditLogEvent("Failed to retrieve network flow name for transaction with id \"{0}\" from database", transactionId);
                     return null;
@@ -1256,7 +1270,8 @@ namespace Windsor.Node2008.WNOSPlugin
                     delegate(IDataReader reader)
                     {
                         NamedNullMappingDataReader readerEx = (NamedNullMappingDataReader)reader;
-                        if (pendingSubmissions == null) pendingSubmissions = new List<string>();
+                        if (pendingSubmissions == null)
+                            pendingSubmissions = new List<string>();
                         pendingSubmissions.Add(readerEx.GetString(0));
                     });
                 if (pendingSubmissions != null)
@@ -1286,7 +1301,8 @@ namespace Windsor.Node2008.WNOSPlugin
                     _submissionHistoryTablePkName,
                     delegate(IDataReader reader)
                     {
-                        if (recordIdList == null) recordIdList = new List<string>();
+                        if (recordIdList == null)
+                            recordIdList = new List<string>();
                         recordIdList.Add(reader.GetString(0));
                     });
                 return recordIdList;
@@ -1327,7 +1343,7 @@ namespace Windsor.Node2008.WNOSPlugin
                 string recordId = idProvider.Get();
                 baseDao.DoInsert(
                     _submissionHistoryTableName,
-                    _submissionHistoryTablePkName + ";" + _submissionHistoryTableRunDateName + ";" + 
+                    _submissionHistoryTablePkName + ";" + _submissionHistoryTableRunDateName + ";" +
                     _submissionHistoryTableTransactionIdName + ";" + _submissionHistoryTableProcessingStatusName,
                     new object[] { recordId, runDate, "PENDING",
                                    EnumUtils.ToDescription(CDX_Processing_Status.Pending) }
@@ -1432,7 +1448,7 @@ namespace Windsor.Node2008.WNOSPlugin
         /// the method returns a file path to a text file containing the schema validation errors.  If
         /// the file is valid, the method returns null.
         /// </summary>
-        protected virtual string ValidateXmlFile(string xmlFilePath, string xmlSchemaResourceName, 
+        protected virtual string ValidateXmlFile(string xmlFilePath, string xmlSchemaResourceName,
                                                  string xmlSchemaRootFileName)
         {
             if (string.IsNullOrEmpty(xmlSchemaResourceName))
@@ -1555,11 +1571,34 @@ namespace Windsor.Node2008.WNOSPlugin
                 throw;
             }
         }
-        /// <summary>
-        /// Attempts to validate an xml file against an xml schema resource.  If the file is invalid,
-        /// the method returns false and attaches a text file containing the validation errors to the input
-        /// transaction.  If the file is valid, the method returns true.
-        /// </summary>
+        protected virtual byte[] CheckToXsltTransformContent(byte[] content, string xsltResourceName, string xsltTransformName,
+                                                             ref CommonContentType contentType)
+        {
+            if (!CollectionUtils.IsNullOrEmpty(content) && (contentType == CommonContentType.XML) &&
+                !string.IsNullOrEmpty(xsltResourceName) && !string.IsNullOrEmpty(xsltTransformName))
+            {
+                return TransformXmlBytes(content, xsltResourceName, xsltTransformName, out contentType);
+            }
+            return content;
+        }
+        protected virtual byte[] TransformXmlBytes(byte[] xmlFileBytes, string xsltResourceName, string xsltRootFileName,
+                                                   out CommonContentType contentType)
+        {
+            string newFilePath = TransformXmlFile(xmlFileBytes, xsltResourceName, xsltRootFileName);
+            contentType = CommonContentAndFormatProvider.GetFileTypeFromName(newFilePath);
+
+            return File.ReadAllBytes(newFilePath);
+        }
+        protected virtual string TransformXmlFile(byte[] xmlFileBytes, string xsltResourceName, string xsltRootFileName)
+        {
+            ISettingsProvider settingsProvider;
+            GetServiceImplementation(out settingsProvider);
+
+            string xmlFilePath = settingsProvider.NewTempFilePath(".xml");
+            File.WriteAllBytes(xmlFilePath, xmlFileBytes);
+
+            return TransformXmlFile(xmlFilePath, xsltResourceName, xsltRootFileName);
+        }
         protected virtual string TransformXmlFile(string xmlFilePath, string xsltResourceName, string xsltRootFileName)
         {
             AppendAuditLogEvent("Verifying xslt transformation source files ...");
@@ -1568,9 +1607,18 @@ namespace Windsor.Node2008.WNOSPlugin
             string xsltRootFilePath = Path.Combine(xsltFolder, xsltRootFileName);
             if (!File.Exists(xsltRootFilePath))
             {
-                FileUtils.SafeDeleteDirectory(xsltFolder);
-                throw new FileNotFoundException(string.Format("The root xslt file \"{0}\" was not found in the xslt resource \"{1}\"",
-                                                              xsltRootFileName, xsltResourceName));
+                bool didFind = false;
+                if (Path.GetExtension(xsltRootFilePath) == string.Empty)
+                {
+                    xsltRootFilePath = Path.ChangeExtension(xsltRootFilePath, ".xslt");
+                    didFind = File.Exists(xsltRootFilePath);
+                }
+                if (!didFind)
+                {
+                    FileUtils.SafeDeleteDirectory(xsltFolder);
+                    throw new FileNotFoundException(string.Format("The root xslt file \"{0}\" was not found in the xslt resource \"{1}\"",
+                                                                  xsltRootFileName, xsltResourceName));
+                }
             }
 
             string transformedFile = null;
@@ -1589,6 +1637,12 @@ namespace Windsor.Node2008.WNOSPlugin
                 xsltUtils.Transform(xmlFilePath, xsltRootFilePath, transformedFile);
 
                 AppendAuditLogEvent("Successfully transformed the xml document using the xslt source files");
+
+                CommonContentType? transformedContent = CommonContentAndFormatProvider.GetFileTypeFromContent(transformedFile);
+                if (transformedContent.HasValue && (transformedContent.Value != CommonContentType.XML))
+                {
+                    transformedFile = FileUtils.ChangeFileExtension(transformedFile, CommonContentAndFormatProvider.GetFileExtension(transformedContent.Value));
+                }
 
                 return transformedFile;
             }
@@ -1643,7 +1697,7 @@ namespace Windsor.Node2008.WNOSPlugin
             Mutex mutex = new Mutex(true, uniqueName, out isAcquired);
             if (!isAcquired)
             {
-                isAcquired = 
+                isAcquired =
                     mutex.WaitOne((timeoutInSeconds == Timeout.Infinite) ? timeoutInSeconds : timeoutInSeconds * 1000);
                 if (!isAcquired)
                 {
@@ -1778,7 +1832,7 @@ namespace Windsor.Node2008.WNOSPlugin
             AppendAuditLogEvent("Submitted target documents to partner \"{0}\" at url \"{1}\" for flow \"{2}\" with returned transaction id \"{3}\"",
                                 partner.Name, partner.Url, flowName, submitTransactionId);
 
-            transactionManager.SetNetworkId(transactionId, submitTransactionId, endpointVersion, endpointUrl, 
+            transactionManager.SetNetworkId(transactionId, submitTransactionId, endpointVersion, endpointUrl,
                                             networkFlowName, networkFlowOperation);
 
             return submitTransactionId;
@@ -1882,7 +1936,7 @@ namespace Windsor.Node2008.WNOSPlugin
             IList<string> documentNames = transactionManager.DownloadNetworkDocumentsAndAddToTransaction(transactionId, out outEndpointStatus);
 
             AppendAuditLogEvent("Retrieved endpoint status of \"{0}\"", outEndpointStatus.ToString());
-            
+
             if (CollectionUtils.IsNullOrEmpty(documentNames))
             {
                 AppendAuditLogEvent("Did not download any new network documents");

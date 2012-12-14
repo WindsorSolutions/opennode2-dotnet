@@ -117,7 +117,7 @@
       <Name>Windsor.Commons.GenericCollectionLibrary</Name>
     </ProjectReference>
     <ProjectReference Include="..\windsor-commons-logging\Windsor.Commons.Logging.csproj">
-      <Project>{C201FD80-438C-4252-9655-B3E26F75A5AA}</Project>
+      <Project>{c201fd80-438c-4252-9655-b3e26f75a5aa}</Project>
       <Name>Windsor.Commons.Logging</Name>
     </ProjectReference>
   </ItemGroup>

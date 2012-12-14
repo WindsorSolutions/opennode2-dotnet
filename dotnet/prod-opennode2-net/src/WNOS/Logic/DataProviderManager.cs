@@ -55,10 +55,10 @@ namespace Windsor.Node2008.WNOS.Logic
 
         new public void Init()
         {
-			base.Init();
+            base.Init();
 
             FieldNotInitializedException.ThrowIfNull(this, ref _dataProviderDao);
-		}
+        }
 
         #endregion
 
@@ -71,7 +71,7 @@ namespace Windsor.Node2008.WNOS.Logic
             {
                 foreach (DataProviderInfo dataProvider in dataProviders)
                 {
-                    dict.Add(dataProvider.Name, new SimpleListDisplayInfo(dataProvider.Name, 
+                    dict.Add(dataProvider.Name, new SimpleListDisplayInfo(dataProvider.Name,
                                                                           dataProvider.ConnectionString));
                 }
             }
@@ -83,7 +83,7 @@ namespace Windsor.Node2008.WNOS.Logic
         {
             ValidateByRole(visit, SystemRoleType.Admin);
 
-            if ((instance == null) || string.IsNullOrEmpty(instance.ConnectionString) || 
+            if ((instance == null) || string.IsNullOrEmpty(instance.Name) || string.IsNullOrEmpty(instance.ConnectionString) ||
                 string.IsNullOrEmpty(instance.ProviderType))
             {
                 throw new ArgumentException("Input values are null.");
@@ -151,9 +151,15 @@ namespace Windsor.Node2008.WNOS.Logic
         #region Properties
         public IDataProviderDao DataProviderDao
         {
-            get { return _dataProviderDao; }
-            set { _dataProviderDao = value; }
+            get
+            {
+                return _dataProviderDao;
+            }
+            set
+            {
+                _dataProviderDao = value;
+            }
         }
-		#endregion
+        #endregion
     }
 }

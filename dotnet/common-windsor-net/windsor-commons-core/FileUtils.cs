@@ -564,6 +564,18 @@ namespace Windsor.Commons.Core
 
             return names;
         }
+        public static byte[] ReadMaxBytes(string filePath, int maxNumBytesToRead)
+        {
+            var fileInfo = new FileInfo(filePath);
+            int numBytesToRead = (int)Math.Min((long)maxNumBytesToRead, fileInfo.Length);
+
+            var bytes = new byte[numBytesToRead];
+            using (var fileStream = File.OpenRead(filePath))
+            {
+                fileStream.Read(bytes, 0, numBytesToRead);
+            }
+            return bytes;
+        }
         public static void SetReadOnly(string filePath, bool isReadOnly)
         {
             FileAttributes attributes = File.GetAttributes(filePath);
@@ -663,25 +675,32 @@ namespace Windsor.Commons.Core
     /// </summary>
     public class NoCloseStreamWriter : StreamWriter
     {
-        public NoCloseStreamWriter(Stream stream) : base(stream)
+        public NoCloseStreamWriter(Stream stream)
+            : base(stream)
         {
         }
-        public NoCloseStreamWriter(string path) : base(path)
+        public NoCloseStreamWriter(string path)
+            : base(path)
         {
         }
-        public NoCloseStreamWriter(Stream stream, Encoding encoding) : base(stream, encoding)
+        public NoCloseStreamWriter(Stream stream, Encoding encoding)
+            : base(stream, encoding)
         {
         }
-        public NoCloseStreamWriter(string path, bool append) : base(path, append)
+        public NoCloseStreamWriter(string path, bool append)
+            : base(path, append)
         {
         }
-        public NoCloseStreamWriter(Stream stream, Encoding encoding, int bufferSize) : base(stream, encoding, bufferSize)
+        public NoCloseStreamWriter(Stream stream, Encoding encoding, int bufferSize)
+            : base(stream, encoding, bufferSize)
         {
         }
-        public NoCloseStreamWriter(string path, bool append, Encoding encoding) : base(path, append, encoding)
+        public NoCloseStreamWriter(string path, bool append, Encoding encoding)
+            : base(path, append, encoding)
         {
         }
-        public NoCloseStreamWriter(string path, bool append, Encoding encoding, int bufferSize) : base(path, append, encoding, bufferSize)
+        public NoCloseStreamWriter(string path, bool append, Encoding encoding, int bufferSize)
+            : base(path, append, encoding, bufferSize)
         {
         }
         protected override void Dispose(bool disposing)
@@ -695,34 +714,44 @@ namespace Windsor.Commons.Core
     /// </summary>
     public class NoCloseStreamReader : StreamReader
     {
-        public NoCloseStreamReader(Stream stream) : base(stream)
+        public NoCloseStreamReader(Stream stream)
+            : base(stream)
         {
         }
-        public NoCloseStreamReader(string path) : base(path)
+        public NoCloseStreamReader(string path)
+            : base(path)
         {
         }
-        public NoCloseStreamReader(Stream stream, bool detectEncodingFromByteOrderMarks) : base(stream, detectEncodingFromByteOrderMarks)
+        public NoCloseStreamReader(Stream stream, bool detectEncodingFromByteOrderMarks)
+            : base(stream, detectEncodingFromByteOrderMarks)
         {
         }
-        public NoCloseStreamReader(Stream stream, Encoding encoding) : base(stream, encoding)
+        public NoCloseStreamReader(Stream stream, Encoding encoding)
+            : base(stream, encoding)
         {
         }
-        public NoCloseStreamReader(string path, bool detectEncodingFromByteOrderMarks) : base(path, detectEncodingFromByteOrderMarks)
+        public NoCloseStreamReader(string path, bool detectEncodingFromByteOrderMarks)
+            : base(path, detectEncodingFromByteOrderMarks)
         {
         }
-        public NoCloseStreamReader(string path, Encoding encoding) : base(path, encoding)
+        public NoCloseStreamReader(string path, Encoding encoding)
+            : base(path, encoding)
         {
         }
-        public NoCloseStreamReader(Stream stream, Encoding encoding, bool detectEncodingFromByteOrderMarks) : base(stream, encoding, detectEncodingFromByteOrderMarks)
+        public NoCloseStreamReader(Stream stream, Encoding encoding, bool detectEncodingFromByteOrderMarks)
+            : base(stream, encoding, detectEncodingFromByteOrderMarks)
         {
         }
-        public NoCloseStreamReader(string path, Encoding encoding, bool detectEncodingFromByteOrderMarks) : base(path, encoding, detectEncodingFromByteOrderMarks)
+        public NoCloseStreamReader(string path, Encoding encoding, bool detectEncodingFromByteOrderMarks)
+            : base(path, encoding, detectEncodingFromByteOrderMarks)
         {
         }
-        public NoCloseStreamReader(Stream stream, Encoding encoding, bool detectEncodingFromByteOrderMarks, int bufferSize) : base(stream, encoding, detectEncodingFromByteOrderMarks, bufferSize)
+        public NoCloseStreamReader(Stream stream, Encoding encoding, bool detectEncodingFromByteOrderMarks, int bufferSize)
+            : base(stream, encoding, detectEncodingFromByteOrderMarks, bufferSize)
         {
         }
-        public NoCloseStreamReader(string path, Encoding encoding, bool detectEncodingFromByteOrderMarks, int bufferSize) : base(path, encoding, detectEncodingFromByteOrderMarks, bufferSize)
+        public NoCloseStreamReader(string path, Encoding encoding, bool detectEncodingFromByteOrderMarks, int bufferSize)
+            : base(path, encoding, detectEncodingFromByteOrderMarks, bufferSize)
         {
         }
         protected override void Dispose(bool disposing)

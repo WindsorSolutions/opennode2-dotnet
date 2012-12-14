@@ -55,9 +55,11 @@
     <Compile Include="AuthenticationCredentials.cs" />
     <Compile Include="ByIndexOrNameDictionary.cs" />
     <Compile Include="CommonContentAndFormatProvider.cs" />
+    <Compile Include="CommonQueryParameterKeys.cs" />
     <Compile Include="CommonTransactionStatusCodeProvider.cs" />
     <Compile Include="EndpointDocument.cs" />
     <Compile Include="EndpointVersionType.cs" />
+    <Compile Include="FileTypeIdentifier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

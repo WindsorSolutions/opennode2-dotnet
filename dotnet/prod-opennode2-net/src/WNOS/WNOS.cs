@@ -58,6 +58,7 @@ using Windsor.Node2008.WNOSDomain;
 using Windsor.Commons.Core;
 using Windsor.Commons.Logging;
 using Windsor.Commons.Spring;
+using Windsor.Commons.NodeDomain;
 
 namespace Windsor.Node2008.WNOS
 {
@@ -69,7 +70,10 @@ namespace Windsor.Node2008.WNOS
 
         public static string ServiceName
         {
-            get { return _serviceName; }
+            get
+            {
+                return _serviceName;
+            }
         }
 
         public static void Start(string serviceName)
@@ -83,6 +87,8 @@ namespace Windsor.Node2008.WNOS
                 //SpringBaseDao springBaseDao = new SpringBaseDao(dbProvider);
 
                 //springBaseDao.RowExists("NAccount", "*", "Id", "0000-0000-0000-0000-0000");
+
+                //FileTypeIdentifier.Test();
 #endif // DEBUG
 
                 LOG = LogManagerEx.GetLogger(typeof(WNOSController));
@@ -102,7 +108,7 @@ namespace Windsor.Node2008.WNOS
                 }
                 LogInfo("Starting centralProcessor");
                 _centralProcessor.Start();
-                
+
                 LogInfo("Exit WNOSController.Start()");
             }
             catch (Exception e)
@@ -188,7 +194,7 @@ namespace Windsor.Node2008.WNOS
 
         private static void CheckDatabaseConnection(IApplicationContext ctx)
         {
-            SpringBaseDao baseDao = (SpringBaseDao) ctx.GetObject("baseDao");
+            SpringBaseDao baseDao = (SpringBaseDao)ctx.GetObject("baseDao");
         }
         private static void ConfigureRemoting(IApplicationContext ctx)
         {

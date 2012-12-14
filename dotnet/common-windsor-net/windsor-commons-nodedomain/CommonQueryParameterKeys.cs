@@ -34,16 +34,14 @@ POSSIBILITY OF SUCH DAMAGE.
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Collections;
 
-namespace Windsor.Node2008.WNOSDomain
+using Windsor.Commons.Core;
+
+namespace Windsor.Commons.NodeDomain
 {
-    [Serializable]
-    public class FormattedPaginatedContentRequest : PaginatedContentRequest
+    public static class CommonQueryParameterKeys
     {
-        public bool? ZipResults
-        {
-            get;
-            set;
-        }
+        public static string XSLT_RESULTS_TRANSFORMATION_NAME = "XSLT_RESULTS_TRANSFORMATION_NAME";
     }
 }

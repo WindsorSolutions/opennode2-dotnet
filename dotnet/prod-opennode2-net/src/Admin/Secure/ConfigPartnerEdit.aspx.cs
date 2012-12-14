@@ -104,7 +104,10 @@ namespace Windsor.Node2008.Admin.Secure
         }
         public override string UniqueDataModelKey
         {
-            get { return Request["id"]; }
+            get
+            {
+                return Request["id"];
+            }
         }
         protected override void LoadModel(object savedModel)
         {
@@ -134,7 +137,7 @@ namespace Windsor.Node2008.Admin.Secure
                 this.Validate();
 
                 base.UnbindFormData();
-                
+
                 if (this.IsValid)
                 {
                     _dataItem.Id = _dataItem.Id.Trim();
@@ -153,7 +156,8 @@ namespace Windsor.Node2008.Admin.Secure
             {
                 return EnumUtils.FromDescription<EndpointVersionType>(versionCtrl.SelectedValue);
             }
-            set {
+            set
+            {
                 versionCtrl.SelectedValue = EnumUtils.ToDescription<EndpointVersionType>(value);
             }
 
@@ -162,6 +166,11 @@ namespace Windsor.Node2008.Admin.Secure
         {
             try
             {
+                if (divPageError.Visible || !Page.IsValid)
+                {
+                    // Error on page, get out of here
+                    return;
+                }
                 _dataItem = _dataItemService.Save(_dataItem, VisitHelper.GetVisit());
                 ResponseRedirect("../Secure/ConfigPartner.aspx");
             }
@@ -234,14 +243,26 @@ namespace Windsor.Node2008.Admin.Secure
 
         public PartnerIdentity DataItem
         {
-            get { return _dataItem; }
-            set { _dataItem = value; }
+            get
+            {
+                return _dataItem;
+            }
+            set
+            {
+                _dataItem = value;
+            }
         }
 
         public IPartnerService DataItemService
         {
-            get { return _dataItemService; }
-            set { _dataItemService = value; }
+            get
+            {
+                return _dataItemService;
+            }
+            set
+            {
+                _dataItemService = value;
+            }
         }
 
         #endregion
