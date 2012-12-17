@@ -17,6 +17,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
+import org.apache.commons.io.FileUtils;
 import org.xml.sax.SAXException;
 
 import com.windsor.node.plugin.common.xml.validation.ValidationResult;
@@ -55,6 +56,7 @@ public class WqxTestUtil {
 		m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 		final StringWriter writer = new StringWriter();
 		m.marshal(wqx, writer);
+		FileUtils.writeStringToFile(new File("c:/tmp/andrew.xml"), writer.toString());
 
 		final String schemaPath = new File(WqxTestUtil.class.getResource(SCHEMA_ROOT_PATH).toURI()).getPath();
 		final JaxbXmlValidator validator = new JaxbXmlValidator(schemaPath);
