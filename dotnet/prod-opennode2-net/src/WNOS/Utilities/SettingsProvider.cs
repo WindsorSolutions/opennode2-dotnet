@@ -62,6 +62,13 @@ namespace Windsor.Node2008.WNOS.Utilities
             {
                 _tempFolderPath = Path.GetTempPath();
             }
+            else
+            {
+                if (_tempFolderPath.StartsWith(".") || _tempFolderPath.StartsWith("\\") || _tempFolderPath.StartsWith("/"))
+                {
+                    throw new ArgException(string.Format("The setting 'wnos.temp.dir.path' in Deployment.config cannot be a relative or network path: {0}", _tempFolderPath));
+                }
+            }
             if (!Directory.Exists(_tempFolderPath))
             {
                 throw new DirectoryNotFoundException(string.Format("The node temporary folder does not exist: {0}",
@@ -83,61 +90,116 @@ namespace Windsor.Node2008.WNOS.Utilities
 
         public LatLongRectangle NodeBoundingBox
         {
-            get { return _nodeBoundingBox; }
-            set { _nodeBoundingBox = value; }
+            get
+            {
+                return _nodeBoundingBox;
+            }
+            set
+            {
+                _nodeBoundingBox = value;
+            }
         }
 
         public string NodeAdminEmail
         {
-            get { return _nodeAdminEmail; }
-            set { _nodeAdminEmail = value; }
+            get
+            {
+                return _nodeAdminEmail;
+            }
+            set
+            {
+                _nodeAdminEmail = value;
+            }
         }
 
         public string AdminUrl
         {
-            get { return _adminUrl; }
-            set { _adminUrl = value; }
+            get
+            {
+                return _adminUrl;
+            }
+            set
+            {
+                _adminUrl = value;
+            }
         }
 
         public string Endpoint11Url
         {
-            get { return _endpoint11Url; }
-            set { _endpoint11Url = value; }
+            get
+            {
+                return _endpoint11Url;
+            }
+            set
+            {
+                _endpoint11Url = value;
+            }
         }
 
         public string Endpoint20Url
         {
-            get { return _endpoint20Url; }
-            set { _endpoint20Url = value; }
+            get
+            {
+                return _endpoint20Url;
+            }
+            set
+            {
+                _endpoint20Url = value;
+            }
         }
 
         public string NodeId
         {
-            get { return _nodeId; }
-            set { _nodeId = value; }
+            get
+            {
+                return _nodeId;
+            }
+            set
+            {
+                _nodeId = value;
+            }
         }
 
         public string NodeOrganizationName
         {
-            get { return _nodeOrganizationName; }
-            set { _nodeOrganizationName = value; }
+            get
+            {
+                return _nodeOrganizationName;
+            }
+            set
+            {
+                _nodeOrganizationName = value;
+            }
         }
 
         public bool IsDemoNode
         {
-            get { return _isDemoNode; }
-            set { _isDemoNode = value; }
+            get
+            {
+                return _isDemoNode;
+            }
+            set
+            {
+                _isDemoNode = value;
+            }
         }
 
         public bool IsProductionNode
         {
-            get { return _isProductionNode; }
-            set { _isProductionNode = value; }
+            get
+            {
+                return _isProductionNode;
+            }
+            set
+            {
+                _isProductionNode = value;
+            }
         }
 
         public string TempFolderPath
-        { 
-            get {
+        {
+            get
+            {
                 return _tempFolderPath;
             }
             set

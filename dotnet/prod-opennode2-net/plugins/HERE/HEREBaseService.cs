@@ -51,7 +51,9 @@ namespace Windsor.Node2008.WNOSPlugin.HERE
     /// </summary>
     public enum HERERunTimeArgs
     {
-        EndpointUri, IsFacilitySourceIndicator, SourceSystemName
+        EndpointUri,
+        IsFacilitySourceIndicator,
+        SourceSystemName
     }
 
     /// <summary>
@@ -59,7 +61,8 @@ namespace Windsor.Node2008.WNOSPlugin.HERE
     /// </summary>
     public enum DataSourceParameterType
     {
-        SourceDatabaseDataSource, TargetDatabaseDataSource
+        SourceDatabaseDataSource,
+        TargetDatabaseDataSource
     }
 
     [Serializable]
@@ -108,22 +111,11 @@ namespace Windsor.Node2008.WNOSPlugin.HERE
             _argDate = DateTime.Now.AddDays(-_numOfDays);
         }
 
-        /// <summary>
-        /// ProcessQuery
-        /// </summary>
-        public virtual PaginatedContentResult ProcessQuery(string requestId)
+        protected abstract string ServiceName
         {
-            ValidateRequest(requestId);
-            _argDate = DateTime.MinValue;
-            if (!TryGetParameterByIndex<DateTime>(_dataRequest, 0, ref _argDate))
-            {
-                throw new ApplicationException("Invalid Change Date argument");
-            }
-            return null;
+            get;
         }
 
-        protected abstract string ServiceName { get; }
-        
         protected string TargetXmlFilePath
         {
             get
@@ -137,11 +129,17 @@ namespace Windsor.Node2008.WNOSPlugin.HERE
         }
         protected string CurrentTransaction
         {
-            get { return _dataRequest.TransactionId; }
+            get
+            {
+                return _dataRequest.TransactionId;
+            }
         }
         protected string FlowCode
         {
-            get { return _flowCode; }
+            get
+            {
+                return _flowCode;
+            }
         }
         protected virtual void ValidateRequest(string requestId)
         {
@@ -171,7 +169,7 @@ namespace Windsor.Node2008.WNOSPlugin.HERE
                 AppendAuditLogEvent("A {0} config parameter was not specified, so no manifest entry will be created.", HERERunTimeArgs.SourceSystemName.ToString());
                 return;
             }
-            
+
             HERE10.HEREData data = new HERE10.HEREData(ValidateDBProvider(DataSourceParameterType.TargetDatabaseDataSource.ToString()));
 
             string endpointUrl = _settingsProvider.Endpoint20Url;   // Default
@@ -180,7 +178,7 @@ namespace Windsor.Node2008.WNOSPlugin.HERE
             bool isFullReplace = (numOfDays > 365);
             bool isFacilitySource = false;
 
-            if (!bool.TryParse(ValidateNonEmptyConfigParameter(HERERunTimeArgs.IsFacilitySourceIndicator.ToString()), 
+            if (!bool.TryParse(ValidateNonEmptyConfigParameter(HERERunTimeArgs.IsFacilitySourceIndicator.ToString()),
                                out isFacilitySource))
             {
                 throw new ApplicationException(string.Format(

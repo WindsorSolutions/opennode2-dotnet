@@ -66,7 +66,7 @@ namespace Windsor.Node2008.WNOSPlugin.HERE.TIER2
 
             Tier2DataSet ds = _dbService.GetTier2DataSet(changeDate);
 
-            hereBaseService.AppendAuditLogEvent("Data retrieved. (Record Count = {0}).", 
+            hereBaseService.AppendAuditLogEvent("Data retrieved. (Record Count = {0}).",
                 ds.T2_SUBMISSION.Rows.Count);
 
             hereBaseService.AppendAuditLogEvent("Transforming results.");
@@ -90,7 +90,14 @@ namespace Windsor.Node2008.WNOSPlugin.HERE.TIER2
 
                 hereBaseService.AppendAuditLogEvent("Transformed results Serialized.");
 
-                return compressionHelper.CompressFile(targetXmlPath);
+                if (compressionHelper != null)
+                {
+                    return compressionHelper.CompressFile(targetXmlPath);
+                }
+                else
+                {
+                    return targetXmlPath;
+                }
 
             }
         }

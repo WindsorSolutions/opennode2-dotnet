@@ -46,27 +46,64 @@ using Windsor.Commons.NodeDomain;
 
 namespace Windsor.Node2008.WNOSPlugin.HERE
 {
-    [Serializable]
-    public class GetHERETier2 : HEREBaseService, ISolicitProcessor
+    [Serializable, System.Runtime.InteropServices.GuidAttribute("57AEF8D8-C57A-451C-BBFD-EAF52A30CCD8")]
+    public class GetHERETier2 : HEREBaseService, ISolicitProcessor, IQueryProcessor
     {
         private const string FLOW_NAME = "HERE-TIER2";
 
         public GetHERETier2()
         {
-        
+
         }
 
-        protected override string ServiceName { get { return "GetHERETier2"; } }
+        protected override string ServiceName
+        {
+            get
+            {
+                return "GetHERETier2";
+            }
+        }
 
         public override void ProcessSolicit(string requestId)
+        {
+            GetDataFile(requestId, true);
+        }
+
+        public virtual PaginatedContentResult ProcessQuery(string requestId)
+        {
+            string dataFilePath = GetDataFile(requestId, false);
+
+            byte[] data;
+            CommonContentType? contentType = CommonContentType.XML;
+
+            if (string.IsNullOrEmpty(dataFilePath))
+            {
+                data = new byte[0];
+            }
+            else
+            {
+                data = File.ReadAllBytes(dataFilePath);
+                contentType = CommonContentAndFormatProvider.GetFileTypeFromContent(data);
+                if (!contentType.HasValue)
+                {
+                    contentType = CommonContentType.OTHER;
+                }
+            }
+
+            PaginatedContentResult result = new PaginatedContentResult(_dataRequest.RowIndex, 0, true,
+                                                                       contentType.Value, data);
+            return result;
+        }
+
+        public virtual string GetDataFile(string requestId, bool doCompress)
         {
             base.ProcessSolicit(requestId);
 
             Tier2Data data = new Tier2Data(ValidateDBProvider(DataSourceParameterType.SourceDatabaseDataSource.ToString()));
             Tier2Service service = new Tier2Service(data);
 
-            string resultPath = service.Execute(_argDate, TargetXmlFilePath, _serializationHelper, 
-                                                _compressionHelper, this);
+            string resultPath = service.Execute(_argDate, TargetXmlFilePath, _serializationHelper,
+                                                doCompress ? _compressionHelper : null, this);
 
             if (!string.IsNullOrEmpty(resultPath))
             {
@@ -74,6 +111,8 @@ namespace Windsor.Node2008.WNOSPlugin.HERE
                 _documentManager.AddDocument(_dataRequest.TransactionId, CommonTransactionStatusCode.Completed,
                                              null, resultPath);
             }
+
+            return resultPath;
         }
 
 #if TEST_CODE

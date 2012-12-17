@@ -62,11 +62,22 @@ namespace Windsor.Node2008.WNOSPlugin.HERE
         }
 
 
-        protected override string ServiceName { get { return "GetHEREManifest"; } }
-
-        public override PaginatedContentResult ProcessQuery(string requestId)
+        protected override string ServiceName
         {
-            base.ProcessQuery(requestId);
+            get
+            {
+                return "GetHEREManifest";
+            }
+        }
+
+        public virtual PaginatedContentResult ProcessQuery(string requestId)
+        {
+            ValidateRequest(requestId);
+            _argDate = DateTime.MinValue;
+            if (!TryGetParameterByIndex<DateTime>(_dataRequest, 0, ref _argDate))
+            {
+                throw new ApplicationException("Invalid Change Date argument");
+            }
 
             string requestingUsername = _transactionManager.GetTransactionUsername(_dataRequest.TransactionId);
 
@@ -78,8 +89,8 @@ namespace Windsor.Node2008.WNOSPlugin.HERE
             HEREManifestService service = new HEREManifestService(data);
 
             PaginatedContentResult result = GetXmlPaginatedContentResult(service.Execute(allFlowList, protectedFlowList, userProtectedFlowList,
-                                                                         _argDate, _serializationHelper, this), 
-                                                                         _dataRequest.RowIndex, _dataRequest.MaxRowCount, 
+                                                                         _argDate, _serializationHelper, this),
+                                                                         _dataRequest.RowIndex, _dataRequest.MaxRowCount,
                                                                          true);
 
             string xmlString = Encoding.UTF8.GetString(result.Content.Content);
