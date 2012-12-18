@@ -77,6 +77,11 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_40
         }
         public static void Update(SpringBaseDao baseDao, string submissionTrackingDataTypePK, SubmissionTrackingDataType data)
         {
+            const int MAX_STATUS_MESSAGE_LENGTH = 4000;
+            if (!string.IsNullOrEmpty(data.WorkflowStatusMessage) && (data.WorkflowStatusMessage.Length > MAX_STATUS_MESSAGE_LENGTH))
+            {
+                data.WorkflowStatusMessage = data.WorkflowStatusMessage.Substring(0, MAX_STATUS_MESSAGE_LENGTH);
+            }
             baseDao.DoSimpleUpdate(TABLE_NAME, PK_COLUMN, submissionTrackingDataTypePK, UPDATE_COLUMNS, 1,
                                    data.SubmissionDateTimeSpecified ? (object)data.SubmissionDateTime : null,
                                    data.SubmissionTransactionId,
