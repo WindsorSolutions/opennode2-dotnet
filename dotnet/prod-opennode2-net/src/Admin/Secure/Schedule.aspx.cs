@@ -355,9 +355,7 @@ namespace Windsor.Node2008.Admin.Secure
                 introParagraphs.DataSource = ListConfig.IntroParagraphs;
                 introParagraphs.DataBind();
 
-                flowRepeaterList.ItemDataBound += new RepeaterItemEventHandler(flowRepeater_ItemDataBound);
-                flowRepeaterList.DataSource = UIUtility.GetSortedList(_modelState.Flows);
-                flowRepeaterList.DataBind();
+                BindSchedules();
 
                 addScheduleBtn.Visible = CanEditAnyFlow();
 
@@ -372,6 +370,30 @@ namespace Windsor.Node2008.Admin.Secure
                     PageTimer.Interval = RefreshFrequencyInSeconds * 1000;
                 }
             }
+        }
+        protected override void BindFormData()
+        {
+            try
+            {
+                if (!this.IsPostBack)
+                {
+                    base.BindFormData();
+                }
+                if (NeedsRebind)
+                {
+                    BindSchedules();
+                }
+            }
+            catch (Exception ex)
+            {
+                SetDivPageError(ex);
+            }
+        }
+        protected virtual void BindSchedules()
+        {
+            flowRepeaterList.ItemDataBound += new RepeaterItemEventHandler(flowRepeater_ItemDataBound);
+            flowRepeaterList.DataSource = UIUtility.GetSortedList(_modelState.Flows);
+            flowRepeaterList.DataBind();
         }
         protected void OnAddScheduleClick(object sender, EventArgs e)
         {
@@ -540,19 +562,19 @@ namespace Windsor.Node2008.Admin.Secure
                 {
                     return;
                 }
-                //bool isExpanded = SetFlowExpanded(control.CommandArgument, !IsFlowExpanded(control.CommandArgument));
-                //NeedsRebind = true;
+                bool isExpanded = SetScheduleExpanded(control.CommandArgument, !IsScheduleExpanded(control.CommandArgument));
+                NeedsRebind = true;
             }
         }
         protected void ExpandAllLinkButton_Click(object sender, EventArgs e)
         {
-            //DoExpandAll = true;
-            //NeedsRebind = true;
+            DoExpandAll = true;
+            NeedsRebind = true;
         }
         protected void CollapseAllLinkButton_Click(object sender, EventArgs e)
         {
-            //SessionStateData.ExpandedFlows.Clear();
-            //NeedsRebind = true;
+            SessionStateData.ExpandedSchedules.Clear();
+            NeedsRebind = true;
         }
     }
 }
