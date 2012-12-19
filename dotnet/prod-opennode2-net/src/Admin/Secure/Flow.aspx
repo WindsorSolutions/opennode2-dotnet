@@ -26,13 +26,13 @@
                 <table id="wrapperTable" width="600px" cellpadding="0" cellspacing="0" border="0" class="basicTable">
                     <tr>
                         <td class="command" align="left" style="width: 100%;">
-                            <asp:LinkButton ID="ExpandAllLinkButton" runat="server" CausesValidation="false" Style="padding-right: 12px" ToolTip="Expand all flows" OnClick="ExpandAllLinkButton_Click">
-                                <asp:Image runat="server" ImageUrl="~/Images/UI/expand_16.png" Style="vertical-align:middle"/>
-                                <asp:Label runat="server" Style="vertical-align: middle">Expand All</asp:Label>
+                            <asp:LinkButton ID="ExpandAllLinkButton" runat="server" CausesValidation="false" Style="padding-right: 12px" ToolTip="Show All Services" OnClick="ExpandAllLinkButton_Click">
+                                <asp:Image runat="server" ImageUrl="~/Images/UI/expand_16.png" Style="vertical-align:middle; padding-right: 2px"/>
+                                <asp:Label runat="server" Style="vertical-align: middle">Show All Services</asp:Label>
                             </asp:LinkButton>
-                            <asp:LinkButton ID="CollapseAllLinkButton" runat="server" CausesValidation="false" ToolTip="Collapse all flows" OnClick="CollapseAllLinkButton_Click">
-                                <asp:Image runat="server" ImageUrl="~/Images/UI/collapse_16.png" Style="vertical-align: middle" />
-                                <asp:Label runat="server" Style="vertical-align: middle">Collapse All</asp:Label>
+                            <asp:LinkButton ID="CollapseAllLinkButton" runat="server" CausesValidation="false" ToolTip="Hide All Services" OnClick="CollapseAllLinkButton_Click">
+                                <asp:Image runat="server" ImageUrl="~/Images/UI/collapse_16.png" Style="vertical-align: middle; padding-right: 2px" />
+                                <asp:Label runat="server" Style="vertical-align: middle">Hide All Services</asp:Label>
                             </asp:LinkButton>
                         </td>
                         <td class="command" align="right">

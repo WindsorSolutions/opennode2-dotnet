@@ -55,6 +55,23 @@ namespace Windsor.Node2008.Admin.Secure
 {
     public partial class Schedule : SecureListPage
     {
+        private const string SCHEDULE_PAGE_SESSION_STATE_KEY = "SCHEDULE_PAGE_SESSION_STATE_KEY";
+        private bool NeedsRebind
+        {
+            get;
+            set;
+        }
+        private bool DoExpandAll
+        {
+            get;
+            set;
+        }
+
+        protected class SessionStateDataStorage
+        {
+            public CaseInsensitiveDictionary<bool> ExpandedSchedules = new CaseInsensitiveDictionary<bool>();
+        }
+
         public class ModelState
         {
             public Dictionary<string, string> Flows
@@ -76,6 +93,11 @@ namespace Windsor.Node2008.Admin.Secure
         #region Members
         const string showInfoScriptName = "ShowInfoScript";
         private ModelState _modelState;
+        protected SessionStateDataStorage SessionStateData
+        {
+            get;
+            set;
+        }
         #endregion
 
         protected void lastRunInfoButton_Click(object sender, EventArgs e)
@@ -319,6 +341,13 @@ namespace Windsor.Node2008.Admin.Secure
         }
         protected override void OnInitializeControls(EventArgs e)
         {
+            SessionStateData = Session[SCHEDULE_PAGE_SESSION_STATE_KEY] as SessionStateDataStorage;
+            if (SessionStateData == null)
+            {
+                SessionStateData = new SessionStateDataStorage();
+                Session[SCHEDULE_PAGE_SESSION_STATE_KEY] = SessionStateData;
+            }
+
             base.OnInitializeControls(e);
 
             if (!IsPostBack)
@@ -373,22 +402,70 @@ namespace Windsor.Node2008.Admin.Secure
             get;
             set;
         }
+        protected virtual bool IsScheduleExpanded(string scheduleId)
+        {
+            return SessionStateData.ExpandedSchedules.ContainsKey(scheduleId);
+        }
+        protected virtual bool SetScheduleExpanded(string scheduleId, bool isExpanded)
+        {
+            if (isExpanded)
+            {
+                SessionStateData.ExpandedSchedules[scheduleId] = true;
+            }
+            else
+            {
+                SessionStateData.ExpandedSchedules.Remove(scheduleId);
+            }
+            return isExpanded;
+        }
+        protected virtual string FlowSchedulesDisplay(object dataItem)
+        {
+            KeyValuePair<string, string> pair = (KeyValuePair<string, string>)dataItem;
+            return IsScheduleExpanded(pair.Key) || DoExpandAll ? "" : "display: none";
+        }
         protected void flowRepeater_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
             KeyValuePair<string, string> pair = (KeyValuePair<string, string>)e.Item.DataItem;
-            Dictionary<string, ScheduledItem> scheduledItemList;
-            if (_modelState.FlowToScheduledItems.TryGetValue(pair.Key, out scheduledItemList))
+            bool isExpanded;
+            if (DoExpandAll)
             {
-                Repeater repeaterList = e.Item.FindControl("repeaterList") as Repeater;
-                if (repeaterList != null)
+                isExpanded = true;
+                SetScheduleExpanded(pair.Key, true);
+            }
+            else
+            {
+                isExpanded = IsScheduleExpanded(pair.Key);
+            }
+
+            ImageButton expandCollapseButton = e.Item.FindControl("expandCollapseServicesImageButton") as ImageButton;
+
+            if (isExpanded)
+            {
+                expandCollapseButton.ImageUrl = "../Images/UI/collapse_16.png";
+                expandCollapseButton.ToolTip = "Hide Schedules";
+            }
+            else
+            {
+                expandCollapseButton.ImageUrl = "../Images/UI/expand_16.png";
+                expandCollapseButton.ToolTip = "Show Schedules";
+            }
+
+            if (isExpanded)
+            {
+                Dictionary<string, ScheduledItem> scheduledItemList;
+                if (_modelState.FlowToScheduledItems.TryGetValue(pair.Key, out scheduledItemList))
                 {
-                    repeaterList.DataSource = UIUtility.GetSortedList(scheduledItemList,
-                        delegate(KeyValuePair<string, ScheduledItem> x, KeyValuePair<string, ScheduledItem> y)
-                        {
-                            return string.Compare(x.Value.Name, y.Value.Name);
-                        });
-                    repeaterList.ItemDataBound += new RepeaterItemEventHandler(repeater_ItemDataBound);
-                    repeaterList.DataBind();
+                    Repeater repeaterList = e.Item.FindControl("repeaterList") as Repeater;
+                    if (repeaterList != null)
+                    {
+                        repeaterList.DataSource = UIUtility.GetSortedList(scheduledItemList,
+                            delegate(KeyValuePair<string, ScheduledItem> x, KeyValuePair<string, ScheduledItem> y)
+                            {
+                                return string.Compare(x.Value.Name, y.Value.Name);
+                            });
+                        repeaterList.ItemDataBound += new RepeaterItemEventHandler(repeater_ItemDataBound);
+                        repeaterList.DataBind();
+                    }
                 }
             }
         }
@@ -453,6 +530,29 @@ namespace Windsor.Node2008.Admin.Secure
             catch (Exception)
             {
             }
+        }
+        protected void OnExpandCollapseSchedulesClick(object sender, EventArgs e)
+        {
+            if (IsPostBack)
+            {
+                ImageButton control = sender as ImageButton;
+                if (control == null)
+                {
+                    return;
+                }
+                //bool isExpanded = SetFlowExpanded(control.CommandArgument, !IsFlowExpanded(control.CommandArgument));
+                //NeedsRebind = true;
+            }
+        }
+        protected void ExpandAllLinkButton_Click(object sender, EventArgs e)
+        {
+            //DoExpandAll = true;
+            //NeedsRebind = true;
+        }
+        protected void CollapseAllLinkButton_Click(object sender, EventArgs e)
+        {
+            //SessionStateData.ExpandedFlows.Clear();
+            //NeedsRebind = true;
         }
     }
 }

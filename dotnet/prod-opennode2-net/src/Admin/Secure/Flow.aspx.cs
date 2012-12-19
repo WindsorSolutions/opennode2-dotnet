@@ -54,7 +54,6 @@ namespace Windsor.Node2008.Admin.Secure
 {
     public partial class Flow : SecurePage
     {
-
         private const string FLOW_PAGE_SESSION_STATE_KEY = "FLOW_PAGE_SESSION_STATE_KEY";
         private bool NeedsRebind
         {
@@ -251,13 +250,11 @@ namespace Windsor.Node2008.Admin.Secure
 
             if (isExpanded)
             {
-                expandCollapseButton.ImageUrl = "../Images/UI/control-double-090.png";
                 expandCollapseButton.ImageUrl = "../Images/UI/collapse_16.png";
                 expandCollapseButton.ToolTip = "Hide Services";
             }
             else
             {
-                expandCollapseButton.ImageUrl = "../Images/UI/control-double-270.png";
                 expandCollapseButton.ImageUrl = "../Images/UI/expand_16.png";
                 expandCollapseButton.ToolTip = "Show Services";
             }

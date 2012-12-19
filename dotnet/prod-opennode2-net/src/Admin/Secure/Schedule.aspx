@@ -17,19 +17,35 @@
             </ItemTemplate>
         </asp:Repeater>
     </div>
-    <div style="clear: both; text-align: right; margin-bottom: 10px">
-        <asp:Button Text="Add Schedule" CssClass="button" runat="server" ID="addScheduleBtn" OnClick="OnAddScheduleClick" />
-    </div>
     <asp:UpdatePanel ID="UpdatePanel" runat="server">
         <ContentTemplate>
             <div runat="server" id="divPageError" visible="false" class="error" enableviewstate="false">
             </div>
             <div>
-                <table id="formTable" width="100%" cellpadding="2" cellspacing="0" style="border-style: none">
+                <table id="wrapperTable" width="100%" cellpadding="0" cellspacing="0" border="0" class="basicTable">
+                    <tr>
+                        <td class="command" align="left" style="width: 100%;">
+                            <asp:LinkButton ID="ExpandAllLinkButton" runat="server" CausesValidation="false" Style="padding-right: 12px" ToolTip="Show All Schedules" OnClick="ExpandAllLinkButton_Click">
+                                <asp:Image ID="Image1" runat="server" ImageUrl="~/Images/UI/expand_16.png" Style="vertical-align: middle; padding-right: 2px" />
+                                <asp:Label ID="Label1" runat="server" Style="vertical-align: middle">Show All Schedules</asp:Label>
+                            </asp:LinkButton>
+                            <asp:LinkButton ID="CollapseAllLinkButton" runat="server" CausesValidation="false" ToolTip="Hide All Schedules" OnClick="CollapseAllLinkButton_Click">
+                                <asp:Image ID="Image2" runat="server" ImageUrl="~/Images/UI/collapse_16.png" Style="vertical-align: middle; padding-right: 2px" />
+                                <asp:Label ID="Label2" runat="server" Style="vertical-align: middle">Hide All Schedules</asp:Label>
+                            </asp:LinkButton>
+                        </td>
+                        <td class="command" align="right">
+                            <asp:Button Text="Add Schedule" CssClass="button" runat="server" ID="addScheduleBtn" OnClick="OnAddScheduleClick" />
+                        </td>
+                    </tr>
+                </table>
+                <table id="formTable" width="600px" cellpadding="2" cellspacing="0" style="border-style: none">
                     <asp:Repeater runat="server" ID="flowRepeaterList">
                         <ItemTemplate>
                             <tr runat="server" style="background-color: #83ACCA">
-                                <td style="width: 20px">
+                                <td style="width: 20px; white-space: nowrap">
+                                    <asp:ImageButton ID="expandCollapseServicesImageButton" runat="server" CausesValidation="false" Style="vertical-align: middle;"
+                                        OnClick="OnExpandCollapseSchedulesClick" CommandArgument='<%#Eval("Key")%>' />
                                     <img alt="" src='../Images/UI/globe-network.png' style="border: 0; vertical-align: middle; padding-top: 2px; padding-bottom: 2px; padding-right: 3px; padding-left: 3px;" />
                                 </td>
                                 <td style="width: 100%">
@@ -90,12 +106,11 @@
                                     </tr>
                                 </ItemTemplate>
                             </asp:Repeater>
+                            <tr runat="server" style="background-color: White">
+                                <td colspan="3">
+                                    &nbsp;
+                                </td>
                             </tr>
-                        <tr runat="server" style="background-color: White">
-                            <td colspan="3">
-                                &nbsp;
-                            </td>
-                        </tr>
                         </ItemTemplate>
                     </asp:Repeater>
                 </table>

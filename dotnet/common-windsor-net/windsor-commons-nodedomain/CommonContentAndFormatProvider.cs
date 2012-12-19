@@ -52,6 +52,7 @@ namespace Windsor.Commons.NodeDomain
         ODF,
         HTML,
         PDF,
+        GML,
     }
 
     #endregion
@@ -87,6 +88,7 @@ namespace Windsor.Commons.NodeDomain
             _commonContentToFormatMap.Add(CommonContentType.ZIP, "application/zip");
             _commonContentToFormatMap.Add(CommonContentType.HTML, "text/html");
             _commonContentToFormatMap.Add(CommonContentType.PDF, "application/pdf");
+            _commonContentToFormatMap.Add(CommonContentType.GML, "text/xml");
         }
 
         public static CommonContentType Convert(string text)
@@ -122,6 +124,8 @@ namespace Windsor.Commons.NodeDomain
                     return ".html";
                 case CommonContentType.PDF:
                     return ".pdf";
+                case CommonContentType.GML:
+                    return ".gml";
                 default:
                     return ".unknown";
             }
@@ -177,6 +181,8 @@ namespace Windsor.Commons.NodeDomain
                     return CommonContentType.HTML;
                 case "pdf":
                     return CommonContentType.PDF;
+                case "gml":
+                    return CommonContentType.GML;
                 default:
                     return CommonContentType.OTHER;
             }
