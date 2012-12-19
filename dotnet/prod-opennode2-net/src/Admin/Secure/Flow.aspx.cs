@@ -37,6 +37,7 @@ using System.Configuration;
 using System.Collections;
 using System.Web;
 using System.Web.Security;
+using System.Collections.Generic;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
@@ -54,8 +55,34 @@ namespace Windsor.Node2008.Admin.Secure
     public partial class Flow : SecurePage
     {
 
+        private const string FLOW_PAGE_SESSION_STATE_KEY = "FLOW_PAGE_SESSION_STATE_KEY";
+        private bool NeedsRebind
+        {
+            get;
+            set;
+        }
+        private bool DoExpandAll
+        {
+            get;
+            set;
+        }
+
+        protected class SessionStateDataStorage
+        {
+            public CaseInsensitiveDictionary<bool> ExpandedFlows = new CaseInsensitiveDictionary<bool>();
+        }
+
         #region Members
-        public IFlowService FlowService { get; set; }
+        public IFlowService FlowService
+        {
+            get;
+            set;
+        }
+        protected SessionStateDataStorage SessionStateData
+        {
+            get;
+            set;
+        }
         #endregion
 
         #region Spring Biding Stuff
@@ -72,6 +99,13 @@ namespace Windsor.Node2008.Admin.Secure
 
         protected override void OnInitializeControls(EventArgs e)
         {
+            SessionStateData = Session[FLOW_PAGE_SESSION_STATE_KEY] as SessionStateDataStorage;
+            if (SessionStateData == null)
+            {
+                SessionStateData = new SessionStateDataStorage();
+                Session[FLOW_PAGE_SESSION_STATE_KEY] = SessionStateData;
+            }
+
             base.OnInitializeControls(e);
 
             addExchangeBtn.Visible = UserIsAdmin();
@@ -81,10 +115,14 @@ namespace Windsor.Node2008.Admin.Secure
                 introParagraphs.DataSource = IntroParagraphs;
                 introParagraphs.DataBind();
 
-                flowRepeaterList.ItemDataBound += new RepeaterItemEventHandler(repeater_ItemDataBound);
-                flowRepeaterList.DataSource = FlowService.GetFlows(VisitHelper.GetVisit(), true);
-                flowRepeaterList.DataBind();
+                BindFlows();
             }
+        }
+        protected virtual void BindFlows()
+        {
+            flowRepeaterList.ItemDataBound += new RepeaterItemEventHandler(repeater_ItemDataBound);
+            flowRepeaterList.DataSource = FlowService.GetFlows(VisitHelper.GetVisit(), true);
+            flowRepeaterList.DataBind();
         }
         protected override void BindFormData()
         {
@@ -93,6 +131,10 @@ namespace Windsor.Node2008.Admin.Secure
                 if (!this.IsPostBack)
                 {
                     base.BindFormData();
+                }
+                if (NeedsRebind)
+                {
+                    BindFlows();
                 }
             }
             catch (Exception ex)
@@ -133,6 +175,27 @@ namespace Windsor.Node2008.Admin.Secure
                 return dataFlow.FlowName;
             }
         }
+        protected virtual bool IsFlowExpanded(string flowId)
+        {
+            return SessionStateData.ExpandedFlows.ContainsKey(flowId);
+        }
+        protected virtual bool SetFlowExpanded(string flowId, bool isExpanded)
+        {
+            if (isExpanded)
+            {
+                SessionStateData.ExpandedFlows[flowId] = true;
+            }
+            else
+            {
+                SessionStateData.ExpandedFlows.Remove(flowId);
+            }
+            return isExpanded;
+        }
+        protected virtual string FlowServicesDisplay(object dataItem)
+        {
+            DataFlow dataFlow = (DataFlow)dataItem;
+            return IsFlowExpanded(dataFlow.Id) || DoExpandAll ? "" : "display: none";
+        }
         protected string ServiceDisplayName(object dataItem)
         {
             DataService dataService = (DataService)dataItem;
@@ -165,14 +228,41 @@ namespace Windsor.Node2008.Admin.Secure
         protected string FlowToolTipEditName(object dataItem)
         {
             DataFlow dataFlow = (DataFlow)dataItem;
-            string tooltip = FlowEditPrefixTextByName(dataFlow.FlowName) + " '" + 
+            string tooltip = FlowEditPrefixTextByName(dataFlow.FlowName) + " '" +
                              FlowDisplayName(dataItem) + "'";
             return tooltip;
         }
         protected void repeater_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
             DataFlow dataFlow = (DataFlow)e.Item.DataItem;
-            if (!CollectionUtils.IsNullOrEmpty(dataFlow.Services))
+
+            bool isExpanded;
+            if (DoExpandAll)
+            {
+                isExpanded = true;
+                SetFlowExpanded(dataFlow.Id, true);
+            }
+            else
+            {
+                isExpanded = IsFlowExpanded(dataFlow.Id);
+            }
+
+            ImageButton expandCollapseButton = e.Item.FindControl("expandCollapseServicesImageButton") as ImageButton;
+
+            if (isExpanded)
+            {
+                expandCollapseButton.ImageUrl = "../Images/UI/control-double-090.png";
+                expandCollapseButton.ImageUrl = "../Images/UI/collapse_16.png";
+                expandCollapseButton.ToolTip = "Hide Services";
+            }
+            else
+            {
+                expandCollapseButton.ImageUrl = "../Images/UI/control-double-270.png";
+                expandCollapseButton.ImageUrl = "../Images/UI/expand_16.png";
+                expandCollapseButton.ToolTip = "Show Services";
+            }
+
+            if (isExpanded && !CollectionUtils.IsNullOrEmpty(dataFlow.Services))
             {
                 Repeater serviceRepeaterList = e.Item.FindControl("serviceRepeaterList") as Repeater;
                 if (serviceRepeaterList != null)
@@ -185,6 +275,30 @@ namespace Windsor.Node2008.Admin.Secure
         public void OnAddService(object source, CommandEventArgs e)
         {
             ResponseRedirect("../Secure/FlowServiceEdit.aspx?flowid=" + e.CommandArgument);
+        }
+        protected void OnExpandCollapseServicesClick(object sender, EventArgs e)
+        {
+            if (IsPostBack)
+            {
+                ImageButton control = sender as ImageButton;
+                if (control == null)
+                {
+                    return;
+                }
+                bool isExpanded = SetFlowExpanded(control.CommandArgument, !IsFlowExpanded(control.CommandArgument));
+                NeedsRebind = true;
+            }
+        }
+
+        protected void ExpandAllLinkButton_Click(object sender, EventArgs e)
+        {
+            DoExpandAll = true;
+            NeedsRebind = true;
+        }
+        protected void CollapseAllLinkButton_Click(object sender, EventArgs e)
+        {
+            SessionStateData.ExpandedFlows.Clear();
+            NeedsRebind = true;
         }
     }
 }

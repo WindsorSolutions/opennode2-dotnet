@@ -30,7 +30,7 @@ ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 */
 #endregion
-//#define BYPASS_LOGIN
+#define BYPASS_LOGIN
 
 using System;
 using System.Data;
@@ -181,29 +181,53 @@ namespace Windsor.Node2008.Admin
 
         public ISecurityService SecurityService
         {
-            set { _securityService = value; }
+            set
+            {
+                _securityService = value;
+            }
         }
 
         public string MessageOnSignOut
         {
-            set { _messageOnSignOut = value; }
+            set
+            {
+                _messageOnSignOut = value;
+            }
         }
 
         public IAccountService AccountService
         {
-            get { return _accountService; }
-            set { _accountService = value; }
+            get
+            {
+                return _accountService;
+            }
+            set
+            {
+                _accountService = value;
+            }
         }
 
         public IVisitProvider VisitProvider
         {
-            get { return _visitProvider; }
-            set { _visitProvider = value; }
+            get
+            {
+                return _visitProvider;
+            }
+            set
+            {
+                _visitProvider = value;
+            }
         }
         public IFlowService FlowService
         {
-            get { return _flowService; }
-            set { _flowService = value; }
+            get
+            {
+                return _flowService;
+            }
+            set
+            {
+                _flowService = value;
+            }
         }
         #endregion
     }

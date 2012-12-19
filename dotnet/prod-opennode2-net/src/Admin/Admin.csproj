@@ -91,6 +91,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Images\UI\check.png" />
+    <Content Include="Images\UI\collapse_16.png" />
+    <Content Include="Images\UI\expand_16.png" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
