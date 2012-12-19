@@ -67,15 +67,6 @@ namespace Windsor.Node2008.Admin.Secure {
         protected global::System.Web.UI.WebControls.LinkButton CollapseAllLinkButton;
         
         /// <summary>
-        /// Image1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Image Image1;
-        
-        /// <summary>
         /// addExchangeBtn control.
         /// </summary>
         /// <remarks>
