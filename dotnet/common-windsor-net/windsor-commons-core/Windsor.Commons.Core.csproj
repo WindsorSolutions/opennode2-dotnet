@@ -68,6 +68,7 @@
     <Compile Include="AspNetUtils.cs" />
     <Compile Include="AssemblyUtils.cs" />
     <Compile Include="CaseInsensitiveDictionary.cs" />
+    <Compile Include="CaseInsensitiveList.cs" />
     <Compile Include="CollectionUtils.cs" />
     <Compile Include="CommaSeparatedFileParser.cs" />
     <Compile Include="ComparableBase.cs" />

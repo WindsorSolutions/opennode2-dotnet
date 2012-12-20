@@ -69,7 +69,7 @@ namespace Windsor.Node2008.Admin.Secure
 
         protected class SessionStateDataStorage
         {
-            public CaseInsensitiveDictionary<bool> ExpandedSchedules = new CaseInsensitiveDictionary<bool>();
+            public IList<string> ExpandedSchedules;
         }
 
         public class ModelState
@@ -94,6 +94,11 @@ namespace Windsor.Node2008.Admin.Secure
         const string showInfoScriptName = "ShowInfoScript";
         private ModelState _modelState;
         protected SessionStateDataStorage SessionStateData
+        {
+            get;
+            set;
+        }
+        public IUserSettingsManager UserSettingsManager
         {
             get;
             set;
@@ -311,6 +316,10 @@ namespace Windsor.Node2008.Admin.Secure
             {
                 throw new ArgumentNullException("DataItemService");
             }
+            if (UserSettingsManager == null)
+            {
+                throw new ArgumentNullException("Missing UserSettingsManager");
+            }
 
             _modelState = new ModelState();
 
@@ -346,6 +355,13 @@ namespace Windsor.Node2008.Admin.Secure
             {
                 SessionStateData = new SessionStateDataStorage();
                 Session[SCHEDULE_PAGE_SESSION_STATE_KEY] = SessionStateData;
+
+                SessionStateData.ExpandedSchedules = UserSettingsManager.LoadAdminSchedulePageExpandedScheduleIds(GetCurrentUsername());
+
+                if (SessionStateData.ExpandedSchedules == null)
+                {
+                    SessionStateData.ExpandedSchedules = new CaseInsensitiveList();
+                }
             }
 
             base.OnInitializeControls(e);
@@ -426,18 +442,22 @@ namespace Windsor.Node2008.Admin.Secure
         }
         protected virtual bool IsScheduleExpanded(string scheduleId)
         {
-            return SessionStateData.ExpandedSchedules.ContainsKey(scheduleId);
+            return SessionStateData.ExpandedSchedules.Contains(scheduleId);
         }
         protected virtual bool SetScheduleExpanded(string scheduleId, bool isExpanded)
         {
             if (isExpanded)
             {
-                SessionStateData.ExpandedSchedules[scheduleId] = true;
+                if (!SessionStateData.ExpandedSchedules.Contains(scheduleId))
+                {
+                    SessionStateData.ExpandedSchedules.Add(scheduleId);
+                }
             }
             else
             {
                 SessionStateData.ExpandedSchedules.Remove(scheduleId);
             }
+            UserSettingsManager.SaveAdminSchedulePageExpandedScheduleIds(GetCurrentUsername(), SessionStateData.ExpandedSchedules);
             return isExpanded;
         }
         protected virtual string FlowSchedulesDisplay(object dataItem)

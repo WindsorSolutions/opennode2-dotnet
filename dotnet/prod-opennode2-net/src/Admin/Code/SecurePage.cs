@@ -54,7 +54,7 @@ namespace Windsor.Node2008.Admin
 {
     public abstract class SecurePage : AnonPage
     {
-        #region Members 
+        #region Members
 
         private AdminMaster _SecureMasterPage;
         private SideTabItem[] _sideTabs;
@@ -82,6 +82,10 @@ namespace Windsor.Node2008.Admin
             {
                 SecureMasterPage.SetupPage(SideTabs, SelectedTabIndex);
             }
+        }
+        protected string GetCurrentUsername()
+        {
+            return VisitHelper.GetCurrentUsername();
         }
         protected bool CanEditNewFlows()
         {
@@ -154,7 +158,7 @@ namespace Windsor.Node2008.Admin
         {
             AppendDivPageError(null, errorMessage, addBullet, args);
         }
-        protected void AppendDivPageError(HtmlContainerControl pageErrorDiv, string errorMessage, bool addBullet, 
+        protected void AppendDivPageError(HtmlContainerControl pageErrorDiv, string errorMessage, bool addBullet,
                                           params string[] args)
         {
             if (pageErrorDiv == null)
@@ -209,7 +213,8 @@ namespace Windsor.Node2008.Admin
         }
         protected HtmlContainerControl PageErrorDiv
         {
-            get {
+            get
+            {
                 if (_divPageError == null)
                 {
                     _divPageError = AspNetUtils.FindDeepControl<HtmlContainerControl>(this, "divPageError");
@@ -221,39 +226,72 @@ namespace Windsor.Node2008.Admin
 
         public AdminMaster SecureMasterPage
         {
-            get { return _SecureMasterPage; }
+            get
+            {
+                return _SecureMasterPage;
+            }
         }
 
         public SideTabItem[] SideTabs
         {
-            get { return _sideTabs; }
-            set { _sideTabs = value; }
+            get
+            {
+                return _sideTabs;
+            }
+            set
+            {
+                _sideTabs = value;
+            }
         }
 
         public string SectionTitle
         {
-            get { return _sectionTitle; }
-            set { _sectionTitle = value; }
+            get
+            {
+                return _sectionTitle;
+            }
+            set
+            {
+                _sectionTitle = value;
+            }
         }
 
 
 
         public int SelectedTabIndex
         {
-            get { return _selectedTabIndex; }
-            set { _selectedTabIndex = value; }
+            get
+            {
+                return _selectedTabIndex;
+            }
+            set
+            {
+                _selectedTabIndex = value;
+            }
         }
 
         public string RedirectPageIfNotAdmin
         {
-            get { return _redirectPageIfNotAdmin; }
-            set { _redirectPageIfNotAdmin = value; }
+            get
+            {
+                return _redirectPageIfNotAdmin;
+            }
+            set
+            {
+                _redirectPageIfNotAdmin = value;
+            }
         }
 
         public bool RequiresAdmin
         {
-            get { return _requiresAdmin; }
-            set { _requiresAdmin = value; }
+            get
+            {
+                return _requiresAdmin;
+            }
+            set
+            {
+                _requiresAdmin = value;
+            }
         }
 
         #endregion

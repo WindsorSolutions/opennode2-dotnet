@@ -107,6 +107,7 @@
     <Compile Include="IServiceFactory.cs" />
     <Compile Include="ISettingsProvider.cs" />
     <Compile Include="ITransactionManager.cs" />
+    <Compile Include="IUserSettingsManager.cs" />
     <Compile Include="IXmlValidationHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

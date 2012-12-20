@@ -34,31 +34,18 @@ POSSIBILITY OF SUCH DAMAGE.
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Reflection;
 
-namespace Windsor.Commons.AssemblyInfo
+using Windsor.Node2008.WNOSDomain;
+
+namespace Windsor.Node2008.WNOSProviders
 {
-    /// <summary>
-    /// Include a reference to this assembly in your project, then use the 
-    /// constants defined in this file within the AssemblyInfo.cs file for your project.
-    /// </summary>
-    internal static class AssemblyInfo
+    public interface IUserSettingsManager
     {
-        // [assembly: AssemblyVersion(AssemblyInfoServer.cAssemblyVersion)]
-        public const string cAssemblyVersion = "2.6.0.723";
+        IList<string> LoadAdminSchedulePageExpandedScheduleIds(string username);
+        bool SaveAdminSchedulePageExpandedScheduleIds(string username, IList<string> ids);
 
-        // [assembly: AssemblyFileVersion(AssemblyInfoServer.cAssemblyFileVersion)]
-        public const string cAssemblyFileVersion = cAssemblyVersion;
-
-        // [assembly: AssemblyCompany(AssemblyInfoServer.cAssemblyCompany)]
-        public const string cAssemblyCompany = "Windsor Solutions, Inc.";
-
-        // [assembly: AssemblyProduct(AssemblyInfoServer.cAssemblyProduct)]
-        public const string cAssemblyProduct = "OpenNode2";
-
-        // [assembly: AssemblyCopyright(AssemblyInfoServer.cAssemblyCopyright)]
-        public const string cAssemblyCopyright = "(c) 2008-2012 Windsor Solutions. All Rights Reserved.";
-
-        // [assembly: AssemblyTrademark(AssemblyInfoServer.cAssemblyTrademark)]
-        public const string cAssemblyTrademark = "";
+        IList<string> LoadAdminFlowPageExpandedFlowIds(string username);
+        bool SaveAdminFlowPageExpandedFlowIds(string username, IList<string> ids);
     }
 }

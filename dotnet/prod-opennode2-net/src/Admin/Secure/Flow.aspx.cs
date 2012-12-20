@@ -49,6 +49,7 @@ using Windsor.Node2008.WNOSDomain;
 using Windsor.Node2008.Admin.Controls;
 using Spring.DataBinding;
 using Windsor.Commons.Core;
+using Windsor.Node2008.WNOSProviders;
 
 namespace Windsor.Node2008.Admin.Secure
 {
@@ -68,11 +69,16 @@ namespace Windsor.Node2008.Admin.Secure
 
         protected class SessionStateDataStorage
         {
-            public CaseInsensitiveDictionary<bool> ExpandedFlows = new CaseInsensitiveDictionary<bool>();
+            public IList<string> ExpandedFlows;
         }
 
         #region Members
         public IFlowService FlowService
+        {
+            get;
+            set;
+        }
+        public IUserSettingsManager UserSettingsManager
         {
             get;
             set;
@@ -94,6 +100,10 @@ namespace Windsor.Node2008.Admin.Secure
             {
                 throw new ArgumentNullException("Missing FlowService");
             }
+            if (UserSettingsManager == null)
+            {
+                throw new ArgumentNullException("Missing UserSettingsManager");
+            }
         }
 
         protected override void OnInitializeControls(EventArgs e)
@@ -103,6 +113,13 @@ namespace Windsor.Node2008.Admin.Secure
             {
                 SessionStateData = new SessionStateDataStorage();
                 Session[FLOW_PAGE_SESSION_STATE_KEY] = SessionStateData;
+
+                SessionStateData.ExpandedFlows = UserSettingsManager.LoadAdminFlowPageExpandedFlowIds(GetCurrentUsername());
+
+                if (SessionStateData.ExpandedFlows == null)
+                {
+                    SessionStateData.ExpandedFlows = new CaseInsensitiveList();
+                }
             }
 
             base.OnInitializeControls(e);
@@ -176,18 +193,22 @@ namespace Windsor.Node2008.Admin.Secure
         }
         protected virtual bool IsFlowExpanded(string flowId)
         {
-            return SessionStateData.ExpandedFlows.ContainsKey(flowId);
+            return SessionStateData.ExpandedFlows.Contains(flowId);
         }
         protected virtual bool SetFlowExpanded(string flowId, bool isExpanded)
         {
             if (isExpanded)
             {
-                SessionStateData.ExpandedFlows[flowId] = true;
+                if (!SessionStateData.ExpandedFlows.Contains(flowId))
+                {
+                    SessionStateData.ExpandedFlows.Add(flowId);
+                }
             }
             else
             {
                 SessionStateData.ExpandedFlows.Remove(flowId);
             }
+            UserSettingsManager.SaveAdminFlowPageExpandedFlowIds(GetCurrentUsername(), SessionStateData.ExpandedFlows);
             return isExpanded;
         }
         protected virtual string FlowServicesDisplay(object dataItem)

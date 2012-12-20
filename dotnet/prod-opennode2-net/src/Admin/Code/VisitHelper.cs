@@ -47,6 +47,15 @@ namespace Windsor.Node2008.Admin
     public static class VisitHelper
     {
 
+        internal static string GetCurrentUsername()
+        {
+            NodeVisit visit = VisitHelper.GetVisit();
+            if ((visit != null) && (visit.Account != null))
+            {
+                return visit.Account.NaasAccount;
+            }
+            return null;
+        }
         internal static void CheckVisit(bool requiresAdmin, string redirectPageIfNotAdmin)
         {
             //Valling the visit property will retreave the object from the session

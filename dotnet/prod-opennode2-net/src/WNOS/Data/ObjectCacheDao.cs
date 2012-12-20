@@ -53,29 +53,10 @@ using Windsor.Commons.Core;
 
 namespace Windsor.Node2008.WNOS.Data
 {
-    /// <summary>
-    /// Should be implementing interface but for now just use the raw object
-    /// </summary>
-    public class ObjectCacheDao : BaseDao, IObjectCacheDao, IDataCache
+    public abstract class BaseObjectCacheDao : BaseDao, IObjectCacheDao, IDataCache
     {
         public const string TABLE_NAME = "NObjectCache";
-        private ISerializationHelper _serializationHelper;
-        private ICompressionHelper _compressionHelper;
 
-        #region Init
-
-        new public void Init()
-        {
-            base.Init();
-            FieldNotInitializedException.ThrowIfNull(this, ref _serializationHelper);
-            FieldNotInitializedException.ThrowIfNull(this, ref _compressionHelper);
-        }
-
-        #endregion
-        #region Mappers
-        #endregion // Mappers
-
-        #region Methods
         public bool CacheString(string data, string name, TimeSpan cacheDuration)
         {
             return CacheString(data, name, DateTime.Now + cacheDuration);
@@ -198,7 +179,7 @@ namespace Windsor.Node2008.WNOS.Data
         {
             try
             {
-                return CacheData(BinarySerializeAndCompress(obj), name, expirationTime);
+                return CacheData(SerializeToBytes(obj), name, expirationTime);
             }
             catch (Exception e)
             {
@@ -249,7 +230,7 @@ namespace Windsor.Node2008.WNOS.Data
                 {
                     return false;
                 }
-                obj = BinaryDecompressAndDeserialize<T>(content);
+                obj = DeserializeFromBytes<T>(content);
                 return true;
             }
             catch (Exception e2)
@@ -289,17 +270,32 @@ namespace Windsor.Node2008.WNOS.Data
                 return true;
             }
         }
-        public byte[] BinarySerializeAndCompress<T>(T obj)
+        public abstract byte[] SerializeToBytes<T>(T obj);
+        public abstract T DeserializeFromBytes<T>(byte[] bytes);
+    }
+
+
+    public class ObjectCacheDao : BaseObjectCacheDao
+    {
+        private ISerializationHelper _serializationHelper;
+        private ICompressionHelper _compressionHelper;
+
+        new public void Init()
+        {
+            base.Init();
+            FieldNotInitializedException.ThrowIfNull(this, ref _serializationHelper);
+            FieldNotInitializedException.ThrowIfNull(this, ref _compressionHelper);
+        }
+
+        public override byte[] SerializeToBytes<T>(T obj)
         {
             return _compressionHelper.Compress("obj", _serializationHelper.BinarySerialize<T>(obj));
         }
-        public T BinaryDecompressAndDeserialize<T>(byte[] bytes)
+        public override T DeserializeFromBytes<T>(byte[] bytes)
         {
             return _serializationHelper.BinaryDeserialize<T>(_compressionHelper.Uncompress(bytes));
         }
-        #endregion
 
-        #region Properties
         public ISerializationHelper SerializationHelper
         {
             get
@@ -322,6 +318,22 @@ namespace Windsor.Node2008.WNOS.Data
                 _compressionHelper = value;
             }
         }
-        #endregion
+    }
+
+    public class FastObjectCacheDao : BaseObjectCacheDao
+    {
+        new public void Init()
+        {
+            base.Init();
+        }
+
+        public override byte[] SerializeToBytes<T>(T obj)
+        {
+            return Encoding.UTF8.GetBytes(ServiceStack.Text.TypeSerializer.SerializeToString(obj));
+        }
+        public override T DeserializeFromBytes<T>(byte[] bytes)
+        {
+            return ServiceStack.Text.TypeSerializer.DeserializeFromString<T>(Encoding.UTF8.GetString(bytes));
+        }
     }
 }

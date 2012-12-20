@@ -48,8 +48,8 @@ namespace Windsor.Node2008.WNOSProviders
     {
         T Deserialize<T>(string xml, XmlElementEventHandler unknownElementHandler);
         T Deserialize<T>(string sourceFile, XmlElementEventHandler unknownElementHandler, bool deleteAfterDeserialization);
-		T Deserialize<T>(byte[] bytes);
-		T Deserialize<T>(byte[] bytes, XmlElementEventHandler unknownElementHandler);
+        T Deserialize<T>(byte[] bytes);
+        T Deserialize<T>(byte[] bytes, XmlElementEventHandler unknownElementHandler);
         T DeserializeFromBase64String<T>(string text, XmlElementEventHandler unknownElementHandler);
         T Deserialize<T>(string sourceFile, bool deleteAfterDeserialization);
         T Deserialize<T>(string sourceFile);
@@ -70,6 +70,10 @@ namespace Windsor.Node2008.WNOSProviders
         byte[] BinarySerialize<T>(T obj);
         T BinaryDeserialize<T>(byte[] bytes);
 
-        XmlSerializerNamespaces SerializerNamespaces { get; set; }
+        XmlSerializerNamespaces SerializerNamespaces
+        {
+            get;
+            set;
+        }
     }
 }

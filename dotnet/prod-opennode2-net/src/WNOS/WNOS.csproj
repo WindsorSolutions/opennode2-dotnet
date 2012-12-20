@@ -84,6 +84,9 @@
       <HintPath>..\..\..\common-windsor-net\lib\Microsoft.Web.Services3.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="ServiceStack.Text">
+      <HintPath>..\..\..\common-windsor-net\lib\ServiceStack.Text.dll</HintPath>
+    </Reference>
     <Reference Include="Spring.Aop, Version=1.3.1.20711, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\common-windsor-net\lib\Spring.Aop.dll</HintPath>
@@ -184,6 +187,7 @@
     <Compile Include="Logic\ServiceManager.cs" />
     <Compile Include="Logic\TransactionManager.cs" />
     <Compile Include="Logic\TransactionStatusChangeNotifier.cs" />
+    <Compile Include="Logic\UserSettingsManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server\BaseNodeProcessor.cs" />
     <Compile Include="Server\BaseTransactionProcessor.cs" />
