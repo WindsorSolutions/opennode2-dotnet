@@ -118,7 +118,7 @@ namespace Windsor.Node2008.WNOS.Logic
         }
         protected virtual string GetDataStorageName(string username, UserSettingsDataType dataType)
         {
-            string usernameHash = StringUtils.HashCode64(username).ToString("D21");
+            string usernameHash = StringUtils.HashCode64(username).ToString("D19");
             usernameHash = usernameHash.Replace('-', '1');
             return "Settings_" + usernameHash + "_" + dataType.ToString();
         }
