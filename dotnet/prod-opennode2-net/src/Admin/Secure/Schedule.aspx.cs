@@ -385,6 +385,7 @@ namespace Windsor.Node2008.Admin.Secure
                     PageTimer.Enabled = true;
                     PageTimer.Interval = RefreshFrequencyInSeconds * 1000;
                 }
+                PageTimer.Enabled = false;
             }
         }
         protected override void BindFormData()
@@ -479,7 +480,7 @@ namespace Windsor.Node2008.Admin.Secure
                 isExpanded = IsScheduleExpanded(pair.Key);
             }
 
-            ImageButton expandCollapseButton = e.Item.FindControl("expandCollapseServicesImageButton") as ImageButton;
+            ImageButton expandCollapseButton = e.Item.FindControl("expandCollapseSchedulesImageButton") as ImageButton;
 
             if (isExpanded)
             {

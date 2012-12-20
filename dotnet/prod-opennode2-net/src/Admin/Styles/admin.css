@@ -305,8 +305,10 @@ table td .note {
 	background-color: #E3ECF3;
 	padding: 0px;
 	margin: 0;
+	border-left-color: #83ACCA;
+	border-left-width: 1px;
+	border-left-style: solid;
 }
-
 #formTable {
 	background-color: #E3ECF3;
 	padding: 0px;
@@ -651,3 +653,17 @@ td.label{
     vertical-align:middle;
     border-radius: 30px;
 }
+.listItemLeftCell
+{
+	border-left: solid 1px #83ACCA;
+}
+
+.listItemRightCell
+{
+	border-right: solid 1px #83ACCA;
+}
+.listItemBottomCell
+{
+	border-top: solid 1px #83ACCA;
+}
+
