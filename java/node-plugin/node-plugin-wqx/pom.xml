@@ -10,7 +10,7 @@
     <packaging>jar</packaging>
     <name>Node Plugin - WQX</name>
     <properties>
-        <node.plugin.name>WQX</node.plugin.name>
+        <node.plugin.name>w</node.plugin.name>
         <node.plugin.build.number>03</node.plugin.build.number>
     </properties>
     <build>
