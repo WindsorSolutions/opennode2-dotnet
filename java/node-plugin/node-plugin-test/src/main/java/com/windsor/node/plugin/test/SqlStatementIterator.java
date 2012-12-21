@@ -15,12 +15,17 @@ public class SqlStatementIterator implements Iterator<String> {
 	/**
 	 * Start of a comment.
 	 */
-	private static final String COMMENT_START = "/*";
+	private static final String COMMENT_START_REGEX = "^\\s*/\\*";
 
 	/**
 	 * End of a comment.
 	 */
-	private static final String COMMENT_END = "*/";
+	private static final String COMMENT_END_REGEX = "\\*/\\s*$";
+
+	/**
+	 * Regular expression to skip the rest of a line.
+	 */
+	private static final String SKIP_REST_OF_LINE_REGEX = "--.*$";
 
 	/**
 	 * {@link Reader} into the file of SQL statements.
@@ -94,16 +99,17 @@ public class SqlStatementIterator implements Iterator<String> {
 			while ((nextLine = reader.readLine()) != null
 					&& (inMultiLineComment || !nextLine.matches("^\\s*" + separator + "\\s*$"))) {
 
-				if (nextLine.startsWith(COMMENT_START)) {
+				if (nextLine.matches(COMMENT_START_REGEX)) {
 					inMultiLineComment = true;
 				}
 
 				if (!inMultiLineComment) {
+					nextLine = nextLine.replaceFirst(SKIP_REST_OF_LINE_REGEX, "");
 					sb.append(nextLine);
 					sb.append(" ");
 				}
 
-				if (nextLine.endsWith(COMMENT_END)) {
+				if (nextLine.matches(COMMENT_END_REGEX)) {
 					inMultiLineComment = false;
 				}
 
