@@ -53,6 +53,8 @@ namespace Windsor.Node2008.Admin
         protected void Application_Start(object sender, EventArgs e)
         {
             string path = Assembly.GetExecutingAssembly().Location;
+
+            string var1 = Environment.GetEnvironmentVariable("APP_POOL_ID", EnvironmentVariableTarget.Process);
         }
 
         protected void Application_End(object sender, EventArgs e)

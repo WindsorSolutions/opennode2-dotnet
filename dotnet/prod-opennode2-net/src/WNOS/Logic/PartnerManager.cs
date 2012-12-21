@@ -58,7 +58,7 @@ namespace Windsor.Node2008.WNOS.Logic
 
         new public void Init()
         {
-			base.Init();
+            base.Init();
 
             FieldNotInitializedException.ThrowIfNull(this, ref _partnerDao);
             FieldNotInitializedException.ThrowIfNull(this, ref _nodeEndpointClientFactory);
@@ -89,7 +89,7 @@ namespace Windsor.Node2008.WNOS.Logic
         {
             ValidateByRole(visit, SystemRoleType.Admin);
 
-            if ((instance == null) || string.IsNullOrEmpty(instance.Url) || 
+            if ((instance == null) || string.IsNullOrEmpty(instance.Url) ||
                 string.IsNullOrEmpty(instance.Name))
             {
                 throw new ArgumentException("Input values are null.");
@@ -181,13 +181,25 @@ namespace Windsor.Node2008.WNOS.Logic
         #region Properties
         public IPartnerDao PartnerDao
         {
-            get { return _partnerDao; }
-            set { _partnerDao = value; }
+            get
+            {
+                return _partnerDao;
+            }
+            set
+            {
+                _partnerDao = value;
+            }
         }
         public INodeEndpointClientFactory NodeEndpointClientFactory
         {
-            get { return _nodeEndpointClientFactory; }
-            set { _nodeEndpointClientFactory = value; }
+            get
+            {
+                return _nodeEndpointClientFactory;
+            }
+            set
+            {
+                _nodeEndpointClientFactory = value;
+            }
         }
 
         #endregion

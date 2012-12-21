@@ -47,6 +47,8 @@ using Spring.Objects.Factory.Config;
 using Common.Logging;
 using Spring.Aop.Support;
 using Windsor.Commons.Core;
+using System.Linq;
+using Spring.Core.IO;
 
 namespace Windsor.Commons.Spring
 {
@@ -55,7 +57,9 @@ namespace Windsor.Commons.Spring
     /// (i.e., after they have been assigned during the Spring context initialization process).
     /// </summary>
     [Obsolete("This class is mispelled and should not be used.  Use ExposablePropertyPlaceholderConfigurer instead")]
-    public class ExposablePropertyPaceholderConfigurer : ExposablePropertyPlaceholderConfigurer{}
+    public class ExposablePropertyPaceholderConfigurer : ExposablePropertyPlaceholderConfigurer
+    {
+    }
 
     /// <summary>
     /// Improves PropertyPlaceholderConfigurer by storing the property values for access at a later time 
@@ -71,21 +75,116 @@ namespace Windsor.Commons.Spring
             this.IgnoreUnresolvablePlaceholders = false;
             this.EnvironmentVariableMode = EnvironmentVariableMode.Fallback;
         }
-        protected override void ProcessProperties(IConfigurableListableObjectFactory factory,
-                                                  NameValueCollection props) {
+        public new IResource Location
+        {
+            set
+            {
+                string deploymentFilePath = GetDeploymentFilePathFromCommandLine();
 
+                if (!string.IsNullOrEmpty(deploymentFilePath))
+                {
+                    deploymentFilePath = deploymentFilePath.Replace('\\', '/');
+                    deploymentFilePath = "file://" + deploymentFilePath;
+                    try
+                    {
+                        base.Location = new FileSystemResource(deploymentFilePath);
+                    }
+                    catch (Exception e)
+                    {
+                        throw new ArgException("Failed to set the deployment file path location specified on the command line, \"{0},\" with exception: {1}",
+                                                deploymentFilePath, ExceptionUtils.GetDeepExceptionMessage(e));
+                    }
+                }
+                else
+                {
+                    base.Location = value;
+                }
+            }
+        }
+        public static string GetDeploymentFilePathFromCommandLine()
+        {
+            // Use case for plugins and WNOS service
+            string[] commandLineArgs = Environment.GetCommandLineArgs();
+
+            if (commandLineArgs.Length > 1)
+            {
+                List<string> values = commandLineArgs.SkipWhile(s => !string.Equals(s, "-deployment", StringComparison.OrdinalIgnoreCase)).ToList();
+                if (values.Count > 1)
+                {
+                    string deploymentFilePath = values[1];
+                    deploymentFilePath = Path.GetFullPath(deploymentFilePath);
+                    if (!File.Exists(deploymentFilePath))
+                    {
+                        throw new ArgException("The deployment file path specified on the command line cannot be found: {0}", deploymentFilePath);
+                    }
+                    return deploymentFilePath;
+                }
+            }
+
+            // Use case for IIS apps
+            string appPoolName = Environment.GetEnvironmentVariable("APP_POOL_ID", EnvironmentVariableTarget.Process);
+            if (!string.IsNullOrEmpty(appPoolName))
+            {
+                string configDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                if (configDirectory.EndsWith("\\"))
+                {
+                    configDirectory = configDirectory.Substring(0, configDirectory.Length - 1);
+                }
+                configDirectory = Path.Combine(Path.GetDirectoryName(Path.GetDirectoryName(configDirectory)), "Config");
+                if (Directory.Exists(configDirectory))
+                {
+                    string[] configFiles = Directory.GetFiles(configDirectory, "Deployment*.config", SearchOption.TopDirectoryOnly);
+                    string deploymentFilePath = null;
+                    foreach (string configFile in configFiles)
+                    {
+                        try
+                        {
+                            IDictionary<string, string> configItems = SpringConfigParser.ParseFile(configFile);
+                            string configAppPoolName;
+                            if (configItems.TryGetValue("wnos.iis.app.pool.name", out configAppPoolName))
+                            {
+                                if (string.Equals(appPoolName, configAppPoolName, StringComparison.OrdinalIgnoreCase))
+                                {
+                                    deploymentFilePath = configFile;
+                                    break;
+                                }
+                            }
+                        }
+                        catch (Exception)
+                        {
+                        }
+                    }
+                    if (deploymentFilePath != null)
+                    {
+                        return deploymentFilePath;
+                    }
+                }
+            }
+
+            return null;
+        }
+        protected override void ProcessProperties(IConfigurableListableObjectFactory factory,
+                                                  NameValueCollection props)
+        {
             base.ProcessProperties(factory, props);
-            for (int i = 0; i < props.Count; ++i) {
+            for (int i = 0; i < props.Count; ++i)
+            {
                 _exposedProperties.Add(props.GetKey(i), props.Get(i));
             }
         }
         public IDictionary<string, string> ExposedProps
         {
-            get { return _exposedProperties; }
+            get
+            {
+                return _exposedProperties;
+            }
         }
         public string this[string key]
         {
-            get { return _exposedProperties[key]; }
+            get
+            {
+                return _exposedProperties[key];
+            }
         }
     }
 }

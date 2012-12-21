@@ -36,6 +36,7 @@ using System.Collections.Generic;
 using System.IO;
 using Windsor.Commons.Core;
 using Common.Logging.Log4Net;
+using Windsor.Commons.Spring;
 
 namespace Windsor.Node2008.WNOSUtility
 {
@@ -103,32 +104,48 @@ namespace Windsor.Node2008.WNOSUtility
             }
             set
             {
-                string path = value;
-                if (path.StartsWith(".\\")) // Assume this means relative to Node home folder
+                string loggingFilePath = null;
+
+                string deploymentFilePath = ExposablePropertyPlaceholderConfigurer.GetDeploymentFilePathFromCommandLine();
+                if (!string.IsNullOrEmpty(deploymentFilePath))
                 {
-                    path = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\" + value));
-                    if (!Directory.Exists(Path.GetDirectoryName(path)))
+                    IDictionary<string, string> configItems = SpringConfigParser.ParseFile(deploymentFilePath);
+                    string wnosLogFilePath;
+                    const string loggingKey = "wnos.log.file.path";
+                    if (configItems.TryGetValue(loggingKey, out wnosLogFilePath) && !string.IsNullOrEmpty(wnosLogFilePath))
                     {
-                        path = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\" + value));
-                        if (!Directory.Exists(Path.GetDirectoryName(path)))
+                        loggingFilePath = SpringConfigParser.ResolveDictionaryReferencesInValue(loggingKey, wnosLogFilePath, configItems);
+                    }
+                }
+                if (loggingFilePath == null)
+                {
+                    loggingFilePath = value;
+                    if (loggingFilePath.StartsWith(".\\")) // Assume this means relative to Node home folder
+                    {
+                        loggingFilePath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\" + value));
+                        if (!Directory.Exists(Path.GetDirectoryName(loggingFilePath)))
                         {
-                            path = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\BUILD" + value));
-                            if (!Directory.Exists(Path.GetDirectoryName(path)))
+                            loggingFilePath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\" + value));
+                            if (!Directory.Exists(Path.GetDirectoryName(loggingFilePath)))
                             {
-                                throw new FileNotFoundException(string.Format("WNOSRollingFileAppender: Could not find file location \"{0}\"", value));
+                                loggingFilePath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\BUILD" + value));
+                                if (!Directory.Exists(Path.GetDirectoryName(loggingFilePath)))
+                                {
+                                    throw new FileNotFoundException(string.Format("WNOSRollingFileAppender: Could not find file location \"{0}\"", value));
+                                }
                             }
                         }
                     }
                 }
                 // Make sure the log file location is "writable"
-                if (!FileUtils.IsWritableDirectory(Path.GetDirectoryName(path)))
+                if (!FileUtils.IsWritableDirectory(Path.GetDirectoryName(loggingFilePath)))
                 {
-                    throw new UnauthorizedAccessException(string.Format("The log file location \"{0}\" is not writable", path));
+                    throw new UnauthorizedAccessException(string.Format("The log file location \"{0}\" is not writable", loggingFilePath));
                 }
-                base.File = path;
-                if (!s_LogFilePaths.Contains(path))
+                base.File = loggingFilePath;
+                if (!s_LogFilePaths.Contains(loggingFilePath))
                 {
-                    s_LogFilePaths.Add(path);
+                    s_LogFilePaths.Add(loggingFilePath);
                 }
             }
         }

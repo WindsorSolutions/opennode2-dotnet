@@ -268,13 +268,7 @@ namespace CopyPlugins
             string privateDeploymentPath = Path.Combine(wnosConfigFolder, "Deployment_private.config");
             if (File.Exists(privateDeploymentPath))
             {
-                if (!CreateZipPackages)
-                {
-                    string deploymentPath = Path.Combine(wnosConfigFolder, "Deployment.config");
-                    FileUtils.SafeDeleteFile(deploymentPath);
-                    File.Move(privateDeploymentPath, deploymentPath);
-                }
-                else
+                if (CreateZipPackages)
                 {
                     FileUtils.SafeDeleteFile(privateDeploymentPath);
                 }

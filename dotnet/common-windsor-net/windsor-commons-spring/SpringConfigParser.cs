@@ -65,5 +65,70 @@ namespace Windsor.Commons.Spring
 
             return configItems;
         }
+        public static string ResolveDictionaryReferencesInValue(string key, string value, IDictionary<string, string> dictionary)
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                return value;
+            }
+            int curIndex = 0;
+            string rtnValue = value;
+            bool didResolveAny;
+            int recursionCount = 0;
+            const int maxRecursionCount = 20;
+            do
+            {
+                ++recursionCount;
+                if (recursionCount == maxRecursionCount)
+                {
+                    throw new ArgException("The configuration key \"" + key + "\" with value \"" + value + "\" exceeded the maximum recursion count to resolve.");
+                }
+                didResolveAny = false;
+                for (; ; )
+                {
+                    if (curIndex > (rtnValue.Length - 1))
+                    {
+                        break;
+                    }
+                    int startIndex = rtnValue.IndexOf("${", curIndex);
+                    if (startIndex < 0)
+                    {
+                        break;
+                    }
+                    int endIndex = rtnValue.IndexOf("}", startIndex + 2);
+                    if (endIndex < 0)
+                    {
+                        throw new ArgException("The configuration key \"" + key + "\" with value \"" + value + "\" is missing a closing '}'.");
+                    }
+                    int origLen = endIndex - startIndex + 1;
+                    string curKey = rtnValue.Substring(startIndex + 2, origLen - 3);
+                    if (string.IsNullOrEmpty(curKey))
+                    {
+                        throw new ArgException("The configuration key \"" + key + "\" with value \"" + value + "\" has an empty key reference.");
+                    }
+                    if (curKey == key)
+                    {
+                        throw new ArgException("The configuration key \"" + key + "\" with value \"" + value + "\" references itself; this is not allowed.");
+                    }
+                    string curValue;
+                    if (!dictionary.TryGetValue(curKey, out curValue))
+                    {
+                        throw new ArgException("The configuration key \"" + key + "\" with value \"" + value + "\" has a key reference that cannot be found: " + curKey + ".");
+                    }
+                    curIndex = endIndex + 1;
+                    curIndex += (curValue.Length - origLen);
+
+                    string endSubstring = null;
+                    if ((endIndex + 1) <= (rtnValue.Length - 1))
+                    {
+                        endSubstring = rtnValue.Substring(endIndex + 1);
+                    }
+                    rtnValue = rtnValue.Substring(0, startIndex) + curValue + (endSubstring ?? string.Empty);
+                    didResolveAny = true;
+                }
+            } while (didResolveAny);
+
+            return rtnValue;
+        }
     }
 }
