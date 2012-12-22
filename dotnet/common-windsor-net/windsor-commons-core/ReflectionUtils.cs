@@ -50,23 +50,37 @@ namespace Windsor.Commons.Core
         private bool _ignore;
         private bool _collectionCountOnly;
 
-        public ToStringQualifierAttribute() { }
+        public ToStringQualifierAttribute()
+        {
+        }
 
         /// <summary>
         /// Ignore this property in the string output
         /// </summary>
         public bool Ignore
         {
-            get { return _ignore; }
-            set { _ignore = value; }
+            get
+            {
+                return _ignore;
+            }
+            set
+            {
+                _ignore = value;
+            }
         }
         /// <summary>
         /// Only output ICollection.Count, not any of the elements in the string output
         /// </summary>
         public bool CollectionCountOnly
         {
-            get { return _collectionCountOnly; }
-            set { _collectionCountOnly = value; }
+            get
+            {
+                return _collectionCountOnly;
+            }
+            set
+            {
+                _collectionCountOnly = value;
+            }
         }
     }
 
@@ -271,6 +285,16 @@ namespace Windsor.Commons.Core
         public static string GetPublicPropertiesString(object obj)
         {
             return GetPublicPropertiesString(obj, 4096);
+        }
+        public static void SetStaticFieldValue(Type objType, string fieldName, object fieldValue)
+        {
+            FieldInfo fieldInfo = objType.GetField(fieldName, BindingFlags.Public | BindingFlags.NonPublic |
+                                                              BindingFlags.Static | BindingFlags.DeclaredOnly);
+            if (fieldInfo == null)
+            {
+                throw new ArgumentException(string.Format("The field {0} was not found for the object {1}", fieldName, objType.FullName));
+            }
+            fieldInfo.SetValue(null, fieldValue);
         }
         public static void SetFieldValue(object obj, string fieldName, object fieldValue)
         {

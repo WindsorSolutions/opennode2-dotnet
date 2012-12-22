@@ -44,6 +44,9 @@ using Windsor.Commons.Core;
 using System.IO;
 using System.Diagnostics;
 using System.Web.UI.HtmlControls;
+using System.Text;
+using System.Collections.Generic;
+using Windsor.Commons.Spring;
 
 namespace Windsor.Node2008.Admin
 {
@@ -52,16 +55,28 @@ namespace Windsor.Node2008.Admin
         private const string LAST_EXCEPTION_CACHE_NAME = "LastException";
         protected void Application_Start(object sender, EventArgs e)
         {
-            string path = Assembly.GetExecutingAssembly().Location;
-
-            string var1 = Environment.GetEnvironmentVariable("APP_POOL_ID", EnvironmentVariableTarget.Process);
+            // Get unique forms authentication cookie name postfix value for this app
+            string deploymentFilePath = ExposablePropertyPlaceholderConfigurer.GetDeploymentFilePathFromCommandLine();
+            if (!string.IsNullOrEmpty(deploymentFilePath))
+            {
+                IDictionary<string, string> configItems = SpringConfigParser.ParseFile(deploymentFilePath);
+                string formsCookieNamePostfix;
+                if (configItems.TryGetValue("wnos.admin.form.cookie.name", out formsCookieNamePostfix))
+                {
+                    FormsCookieNamePostfix = formsCookieNamePostfix;
+                    CheckToSetFormsCookieName();
+                }
+            }
         }
 
         protected void Application_End(object sender, EventArgs e)
         {
 
         }
-
+        protected void Session_Start(object sender, EventArgs e)
+        {
+            CheckToSetFormsCookieName();
+        }
         protected void Application_Error(object sender, EventArgs e)
         {
             try
@@ -135,6 +150,19 @@ namespace Windsor.Node2008.Admin
                     Content = "IE=9"
                 };
                 control.Page.Header.Controls.AddAt(0, metaDescription);
+            }
+        }
+        protected static string FormsCookieNamePostfix
+        {
+            get;
+            set;
+        }
+        protected static void CheckToSetFormsCookieName()
+        {
+            if (!string.IsNullOrEmpty(FormsCookieNamePostfix))
+            {
+                string formsCookieName = FormsAuthentication.FormsCookieName + FormsCookieNamePostfix;
+                ReflectionUtils.SetStaticFieldValue(typeof(FormsAuthentication), "_FormsName", formsCookieName);
             }
         }
     }
