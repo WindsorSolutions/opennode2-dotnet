@@ -175,8 +175,8 @@ namespace Windsor.Node2008.WNOS.Service
                     DocumentManager.AddDocuments(content.Transaction.Id, content.Documents);
 
 #if DEBUG
-                NodeTransaction nodeTransaction = TransactionManager.GetTransaction(content.Transaction.Id,
-                                                                                    CommonTransactionStatusCode.Received);
+                //NodeTransaction nodeTransaction = TransactionManager.GetTransaction(content.Transaction.Id,
+                //                                                                    CommonTransactionStatusCode.Received);
 #endif // DEBUG
                 TransactionStatus rtnTransactionStatus =
                     TransactionManager.SetTransactionStatus(content.Transaction.Id, nodeVisit.Account.Id,

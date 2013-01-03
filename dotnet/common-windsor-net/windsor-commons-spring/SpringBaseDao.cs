@@ -502,7 +502,7 @@ namespace Windsor.Commons.Spring
                 throw new ArgumentException("columnNames is empty");
             }
             StringBuilder sb;
-            if (IsOracleDatabase)
+            if (IsOracleDatabase || IsMySqlDatabase)
             {
                 sb = new StringBuilder("INSERT INTO ");
                 sb.Append(tableName);
@@ -522,9 +522,13 @@ namespace Windsor.Commons.Spring
             foreach (string columnName in columnNames)
             {
                 if (addedFirst)
+                {
                     sb.Append(',');
+                }
                 else
+                {
                     addedFirst = true;
+                }
                 sb.Append(ParseParamName(columnName));
             }
             sb.Append(")");
@@ -550,6 +554,13 @@ namespace Windsor.Commons.Spring
                 return IsSqlServerDatabaseProvider(DbProvider);
             }
         }
+        public bool IsMySqlDatabase
+        {
+            get
+            {
+                return IsMySqlDatabaseProvider(DbProvider);
+            }
+        }
         public static bool IsOracleDatabaseProvider(IDbProvider dbProvider)
         {
             // This works for both System.Data.OracleClient.OracleParameter and Oracle.DataAccess.Client.OracleParameter
@@ -558,6 +569,10 @@ namespace Windsor.Commons.Spring
         public static bool IsSqlServerDatabaseProvider(IDbProvider dbProvider)
         {
             return (dbProvider.DbMetadata.ParameterType == typeof(System.Data.SqlClient.SqlParameter));
+        }
+        public static bool IsMySqlDatabaseProvider(IDbProvider dbProvider)
+        {
+            return (dbProvider.DbMetadata.ParameterType.Name == "MySqlParameter");
         }
         public static bool IsSqlServerProvider(IDbProvider dbProvider)
         {
@@ -736,12 +751,20 @@ namespace Windsor.Commons.Spring
 
             LOG.DebugArguments("AdoTemplate.ExecuteNonQuery()", "CommandType.Text", CommandType.Text);
 
-            int result = AdoTemplate.ExecuteNonQuery(CommandType.Text, insertText, parameters);
-
-            if (result < 1)
+            try
             {
-                throw new UncategorizedAdoException(string.Format("Failed to insert: \"{0}\".",
-                                                                  insertText));
+                int result = AdoTemplate.ExecuteNonQuery(CommandType.Text, insertText, parameters);
+
+                if (result < 1)
+                {
+                    throw new UncategorizedAdoException(string.Format("Failed to insert: \"{0}\".",
+                                                                      insertText));
+                }
+            }
+            catch (Exception)
+            {
+                DebugUtils.CheckDebuggerBreak();
+                throw;
             }
         }
         public delegate IList<object> GetInsertValuesDelegate(int currentInsertIndex);

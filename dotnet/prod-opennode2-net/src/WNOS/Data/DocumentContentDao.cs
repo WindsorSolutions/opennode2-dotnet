@@ -63,14 +63,14 @@ namespace Windsor.Node2008.WNOS.Data
         new public void Init()
         {
             base.Init();
-		}
+        }
 
         #endregion
 
         #region Methods
-		/// <summary>
-		/// Get the document content from the DB.
-		/// </summary>
+        /// <summary>
+        /// Get the document content from the DB.
+        /// </summary>
         public byte[] GetDocumentContent(string transactionId, string id)
         {
             byte[] content =
@@ -88,9 +88,17 @@ namespace Windsor.Node2008.WNOS.Data
         /// </summary>
         public int GetDocumentContentSize(string transactionId, string id)
         {
-            string lengthQuery = this.IsOracleDatabase ? "LENGTH (Data)" : "DATALENGTH (Data)";
+            string lengthQuery;
+            if (IsOracleDatabase || IsMySqlDatabase)
+            {
+                lengthQuery = "LENGTH (Data)";
+            }
+            else
+            {
+                lengthQuery = "DATALENGTH (Data)";
+            }
             int size = 0;
-            DoSimpleQueryWithRowCallbackDelegate(TABLE_NAME, 
+            DoSimpleQueryWithRowCallbackDelegate(TABLE_NAME,
                 "DocumentId", id, null, lengthQuery,
                 delegate(IDataReader reader)
                 {
@@ -98,7 +106,7 @@ namespace Windsor.Node2008.WNOS.Data
                 });
             return size;
         }
-        public void AddDocumentContent(string transactionId, string id, byte[] content, 
+        public void AddDocumentContent(string transactionId, string id, byte[] content,
                                        bool overwriteExisting)
         {
             try
@@ -119,7 +127,7 @@ namespace Windsor.Node2008.WNOS.Data
             }
         }
         public void DeleteAllDocuments(string transactionId)
-		{
+        {
             // NOP for now: By default, this is a cascade delete when the parent document is deleted
         }
         public void DeleteDocument(string id)

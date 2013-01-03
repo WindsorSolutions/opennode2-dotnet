@@ -30,7 +30,7 @@ ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 */
 #endregion
-#define BYPASS_LOGIN
+//#define BYPASS_LOGIN
 
 using System;
 using System.Data;
