@@ -334,8 +334,8 @@ namespace Windsor.Node2008.WNOS.Data
             }
             const string TABLE_NAMES_KEY = "___TABLE_NAMES___";
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("SELECT DISTINCT {0} FROM {1} WHERE a.ModifiedOn >= ? AND a.ModifiedOn <= ?", 
-                             MAP_ACTIVITY_COLUMNS.Replace(';',','), TABLE_NAMES_KEY);
+            sql.AppendFormat("SELECT DISTINCT {0} FROM {1} WHERE a.ModifiedOn >= ? AND a.ModifiedOn <= ?",
+                             MAP_ACTIVITY_COLUMNS.Replace(';', ','), TABLE_NAMES_KEY);
 
             whereValues =
                 new List<object>(new object[] { ActivitySearchParams.ConstrainDate(searchParams.CreatedFrom), 
@@ -403,7 +403,7 @@ namespace Windsor.Node2008.WNOS.Data
             }
             if (!string.IsNullOrEmpty(searchParams.DetailContains))
             {
-                sql.AppendFormat(" AND UPPER(d.Detail) LIKE '%' {0} UPPER(?) {0} '%'", SqlConcatString);
+                sql.Append(" AND UPPER(d.Detail) LIKE CONCAT(CONCAT('%', UPPER(?)), '%')");
                 addedDetail = true;
                 whereValues.Add(searchParams.DetailContains);
             }
@@ -418,7 +418,7 @@ namespace Windsor.Node2008.WNOS.Data
                 sql.Append(" AND d.ActivityId = a.Id");
                 tableNames += ", " + DETAIL_TABLE_NAME + " d";
             }
-           return sql.ToString().Replace(TABLE_NAMES_KEY, tableNames);
+            return sql.ToString().Replace(TABLE_NAMES_KEY, tableNames);
         }
         public int DeleteActivities(ActivitySearchParams searchParams, bool addFlowIsNullQuery)
         {
@@ -426,8 +426,8 @@ namespace Windsor.Node2008.WNOS.Data
             string tableNames;
             string whereColumns = ConstructSearchWhereValues(searchParams, addFlowIsNullQuery, out whereValues, out tableNames);
 
-            string selectIdText = CreateSelectSqlParamText(tableNames, whereColumns, 
-                                                         (whereValues == null) ? 0 : whereValues.Count, 
+            string selectIdText = CreateSelectSqlParamText(tableNames, whereColumns,
+                                                         (whereValues == null) ? 0 : whereValues.Count,
                                                          null, "DISTINCT a.Id");
 
             IDbParameters parameters = AppendDbParameters(null, whereValues);
@@ -456,7 +456,8 @@ namespace Windsor.Node2008.WNOS.Data
                 MAP_ACTIVITY_COLUMNS,
                 delegate(IDataReader reader)
                 {
-                    if (list == null) list = new List<Activity>();
+                    if (list == null)
+                        list = new List<Activity>();
                     list.Add(MapActivity(reader));
                 });
             PostMapActivities(list);
@@ -511,7 +512,7 @@ namespace Windsor.Node2008.WNOS.Data
         }
 
         public IList<Activity> GetRecentActivities(ActivitySearchParams searchParams,
-                                                   bool addFlowIsNullQuery, int maxNumToReturn, 
+                                                   bool addFlowIsNullQuery, int maxNumToReturn,
                                                    bool returnUsernames)
         {
             List<object> whereValues;
@@ -522,7 +523,8 @@ namespace Windsor.Node2008.WNOS.Data
             DoJDBCQueryWithCancelableRowCallbackDelegate(sql, whereValues,
                 delegate(IDataReader reader)
                 {
-                    if (list == null) list = new List<Activity>();
+                    if (list == null)
+                        list = new List<Activity>();
                     if (list.Count == maxNumToReturn)
                     {
                         return false;
@@ -554,7 +556,8 @@ namespace Windsor.Node2008.WNOS.Data
             DoJDBCQueryWithRowCallbackDelegate(sql, whereValues,
                 delegate(IDataReader reader)
                 {
-                    if (list == null) list = new SortableCollection<Activity>();
+                    if (list == null)
+                        list = new SortableCollection<Activity>();
                     Activity activity = MapActivity(reader);
                     list.Add(activity);
                 });
@@ -577,7 +580,8 @@ namespace Windsor.Node2008.WNOS.Data
                     string value = reader.GetString(0);
                     if (!string.IsNullOrEmpty(value))
                     {
-                        if (list == null) list = new List<string>();
+                        if (list == null)
+                            list = new List<string>();
                         list.Add(value);
                     }
                 });
@@ -626,7 +630,7 @@ namespace Windsor.Node2008.WNOS.Data
 #endif // DEBUG
             if (!string.IsNullOrEmpty(item.TransactionId))
             {
-                if (string.IsNullOrEmpty(item.FlowName) || string.IsNullOrEmpty(item.Operation) || 
+                if (string.IsNullOrEmpty(item.FlowName) || string.IsNullOrEmpty(item.Operation) ||
                    (item.Method == NodeMethod.None))
                 {
                     NodeMethod method;
@@ -711,18 +715,36 @@ namespace Windsor.Node2008.WNOS.Data
         #region Properties
         public IAccountDao AccountDao
         {
-            get { return _accountDao; }
-            set { _accountDao = value; }
+            get
+            {
+                return _accountDao;
+            }
+            set
+            {
+                _accountDao = value;
+            }
         }
         public IFlowDao FlowDao
         {
-            get { return _flowDao; }
-            set { _flowDao = value; }
+            get
+            {
+                return _flowDao;
+            }
+            set
+            {
+                _flowDao = value;
+            }
         }
         public ITransactionDao TransactionDao
         {
-            get { return _transactionDao; }
-            set { _transactionDao = value; }
+            get
+            {
+                return _transactionDao;
+            }
+            set
+            {
+                _transactionDao = value;
+            }
         }
 
         #endregion

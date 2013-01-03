@@ -70,7 +70,6 @@ namespace Windsor.Commons.Spring
         protected const string WHERE_PARAM_NAME = "whrParam";
         protected const string DELETE_PARAM_NAME = "delParam";
         protected readonly char[] SPLIT_CHAR = new char[] { ';' };
-        protected string SQL_CONCAT_STRING = string.Empty;
 
         public SpringBaseDao(IDbProvider dbProvider)
             : this(dbProvider, null)
@@ -114,7 +113,6 @@ namespace Windsor.Commons.Spring
             TransactionTemplate transactionTemplate = new TransactionTemplate(transactionManager);
             transactionTemplate.TransactionIsolationLevel = IsolationLevel.ReadCommitted;
             _transactionTemplate = transactionTemplate;
-            SQL_CONCAT_STRING = IsOracleDatabase ? "||" : "+";
         }
 
         #region Init
@@ -123,7 +121,6 @@ namespace Windsor.Commons.Spring
         {
             FieldNotInitializedException.ThrowIfNull(this, ref _transactionTemplate);
             FieldNotInitializedException.ThrowIfNull(this, ref _adoDaoSupport);
-            SQL_CONCAT_STRING = IsOracleDatabase ? "||" : "+";
         }
         public bool CheckIfDatabaseExists()
         {
@@ -878,18 +875,18 @@ namespace Windsor.Commons.Spring
                         }
                         else if (whereColumnName.EndsWith(" LIKE '%'p'%'", StringComparison.InvariantCultureIgnoreCase))
                         {
-                            sb.AppendFormat("{0} LIKE '%' {1} {2} {3} '%'", whereColumnName.Substring(0, whereColumnName.Length - 13),
-                                            SQL_CONCAT_STRING, ParseParamName(whereParamName), SQL_CONCAT_STRING);
+                            sb.AppendFormat("{0} LIKE CONCAT(CONCAT('%', {1}), '%')", whereColumnName.Substring(0, whereColumnName.Length - 13),
+                                            ParseParamName(whereParamName));
                         }
                         else if (whereColumnName.EndsWith(" LIKE p'%'", StringComparison.InvariantCultureIgnoreCase))
                         {
-                            sb.AppendFormat("{0} LIKE {1} {2} '%'", whereColumnName.Substring(0, whereColumnName.Length - 10),
-                                            ParseParamName(whereParamName), SQL_CONCAT_STRING);
+                            sb.AppendFormat("{0} LIKE CONCAT({1}, '%')", whereColumnName.Substring(0, whereColumnName.Length - 10),
+                                            ParseParamName(whereParamName));
                         }
                         else if (whereColumnName.EndsWith(" LIKE '%'p", StringComparison.InvariantCultureIgnoreCase))
                         {
-                            sb.AppendFormat("{0} LIKE '%' {1} {2}", whereColumnName.Substring(0, whereColumnName.Length - 10),
-                                            SQL_CONCAT_STRING, ParseParamName(whereParamName));
+                            sb.AppendFormat("{0} LIKE CONCAT('%', {1})", whereColumnName.Substring(0, whereColumnName.Length - 10),
+                                            ParseParamName(whereParamName));
                         }
                         else
                         {
@@ -1263,10 +1260,7 @@ namespace Windsor.Commons.Spring
                                                             string semicolonSeparatedColumnNames, int numRows,
                                                             RowCallbackDelegate callback)
         {
-            if (IsOracleDatabase)
-            {
-            }
-            else if (IsSqlServerDatabase)
+            if (IsSqlServerDatabase)
             {
                 semicolonSeparatedColumnNames = string.Format("TOP {0} {1}", numRows.ToString(),
                     (semicolonSeparatedColumnNames == null) ? string.Empty :
@@ -1282,6 +1276,10 @@ namespace Windsor.Commons.Spring
             if (IsOracleDatabase)
             {
                 selectText += " AND ROWNUM <= " + numRows.ToString();
+            }
+            else if (IsMySqlDatabase)
+            {
+                selectText += " LIMIT " + numRows.ToString();
             }
             IDbParameters parameters = AdoTemplate.CreateDbParameters();
             parameters.AddWithValue(WHERE_PARAM_NAME, whereValue);
@@ -1602,13 +1600,6 @@ namespace Windsor.Commons.Spring
                                        HandleMappedObjectArray<T> handleMappedObjectsDelete)
         {
             MapArrayObjects<T>(keyField, listKeyFields, selectText, mapperDelegate, null, handleMappedObjectsDelete);
-        }
-        public string SqlConcatString
-        {
-            get
-            {
-                return SQL_CONCAT_STRING;
-            }
         }
 
         public Dictionary<string, T> MapArrayObjects<T>(string keyField, IEnumerable<string> listKeyFields,
