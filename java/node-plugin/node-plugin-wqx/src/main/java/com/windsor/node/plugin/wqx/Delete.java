@@ -53,7 +53,7 @@ public class Delete extends AbstractSubmittingWqxService<List<DeleteComponentIde
     @Override
     protected List<List<DeleteComponentIdentifier>> getSubmissionData(ScheduleParameters parameters) {
 
-        SubmissionHistory submissionHistory = getSubmissionHistoryDao().findLatestProcessed(parameters.getOrgId(), submissionType().operation());
+        SubmissionHistory submissionHistory = getSubmissionHistoryDao().findLatestCompleted(parameters.getOrgId(), submissionType().operation());
 
         OrganizationDataType org = getWqxDao().findOrganizationByOrgId(parameters.getOrgId());
 

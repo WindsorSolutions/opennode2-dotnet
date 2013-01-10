@@ -11,7 +11,7 @@ public interface SubmissionHistoryDao {
 
     SubmissionHistory createSubmissionHistoryRecord(String id, String orgId, String submissionType, String localTransactionId, CommonTransactionStatusCode status);
 
-    SubmissionHistory findLatestProcessed(String orgId, String submissionType);
+    SubmissionHistory findLatestCompleted(String orgId, String submissionType);
 
     void resetSubmissionStatusByOrgId(String orgId);
 

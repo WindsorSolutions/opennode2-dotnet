@@ -67,7 +67,7 @@ public class UpdateInsert extends AbstractSubmittingWqxService {
     @Override
     protected List<List<?>> getSubmissionData(final ScheduleParameters parameters) {
 
-        final SubmissionHistory submissionHistory = getSubmissionHistoryDao().findLatestProcessed(parameters.getOrgId(), submissionType().operation());
+        final SubmissionHistory submissionHistory = getSubmissionHistoryDao().findLatestCompleted(parameters.getOrgId(), submissionType().operation());
 
         final OrganizationDataType org = getWqxDao().findOrganizationByOrgId(parameters.getOrgId());
 

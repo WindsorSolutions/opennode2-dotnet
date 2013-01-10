@@ -78,7 +78,7 @@ public class SubmissionHistoryDaoJpaImpl implements SubmissionHistoryDao {
     }
 
     @Override
-    public SubmissionHistory findLatestProcessed(String orgId, String operationType) {
+    public SubmissionHistory findLatestCompleted(String orgId, String operationType) {
 
         String sql =
                 "select " +
@@ -86,7 +86,7 @@ public class SubmissionHistoryDaoJpaImpl implements SubmissionHistoryDao {
                 "from" +
                 "  SubmissionHistory x " +
                 "where " +
-                "  (x.cdxProcessingStatus = :pending or x.cdxProcessingStatus = :processing) " +
+                "  x.cdxProcessingStatus = :status " +
                 "   and x.submissionType = :operation " +
                 "   and x.parentId in (select" +
                 "                         o.dbid " +
@@ -97,8 +97,7 @@ public class SubmissionHistoryDaoJpaImpl implements SubmissionHistoryDao {
                 "order by x.wqxDateTime desc";
 
         Query query = em.createQuery(sql);
-        query.setParameter("pending", CommonTransactionStatusCode.Pending.toString());
-        query.setParameter("processing", CommonTransactionStatusCode.Processing.toString());
+        query.setParameter("status", CommonTransactionStatusCode.Completed.toString());
         query.setParameter("operation", operationType);
         query.setParameter("orgId", orgId);
 
