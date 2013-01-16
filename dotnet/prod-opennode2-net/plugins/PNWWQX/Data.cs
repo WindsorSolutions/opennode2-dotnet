@@ -37,32 +37,32 @@ using System.Data.SqlClient;
 
 namespace Windsor.Node2008.WNOSPlugin.PNWWQX
 {
-	/// <summary>
-	/// Summary description for Data.
-	/// </summary>
-	public class PNWWQXData
-	{
+    /// <summary>
+    /// Summary description for Data.
+    /// </summary>
+    public class PNWWQXData
+    {
         public static DataSet GetData
-			(
+            (
             int rowId,
             int maxRows,
             string providingOrganizationName,
             string projectOrganizationName,
-			string projectName,
-			Utility.MinMaxDate dateProject,
-			string responsibleOrganizationName,
-			Utility.LatLong ll,
-			string locationDescriptorContext,
-			string locationDescriptorName,
-			string stationType, 
-			string stationName, 
+            string projectName,
+            Utility.MinMaxDate dateProject,
+            string responsibleOrganizationName,
+            Utility.LatLong ll,
+            string locationDescriptorContext,
+            string locationDescriptorName,
+            string stationType,
+            string stationName,
             string samplingOrganizationName,
             Utility.MinMaxDate dateFieldEvent,
             string sampledMedia,
-			string analyteName,
+            string analyteName,
             string sampledTaxon,
-			Common.PNWWQDXIdentity identType
-			)
+            Common.PNWWQDXIdentity identType
+            )
         {
             SqlParameter[] arParms = new SqlParameter[23];
 
@@ -78,41 +78,41 @@ namespace Windsor.Node2008.WNOSPlugin.PNWWQX
             arParms[3] = new SqlParameter("@projectOrganizationName", SqlDbType.VarChar, 80);
             arParms[3].Value = projectOrganizationName;
 
-			arParms[4] = new SqlParameter("@projectName", SqlDbType.VarChar, 255);
-			arParms[4].Value = projectName;
+            arParms[4] = new SqlParameter("@projectName", SqlDbType.VarChar, 255);
+            arParms[4].Value = projectName;
 
-			arParms[5] = new SqlParameter("@projectStartDate", SqlDbType.DateTime);
-			arParms[5].Value = dateProject.minDate;
+            arParms[5] = new SqlParameter("@projectStartDate", SqlDbType.DateTime);
+            arParms[5].Value = dateProject.minDate;
 
-			arParms[6] = new SqlParameter("@projectEndDate", SqlDbType.DateTime);
-			arParms[6].Value = dateProject.maxDate;
+            arParms[6] = new SqlParameter("@projectEndDate", SqlDbType.DateTime);
+            arParms[6].Value = dateProject.maxDate;
 
-			arParms[7] = new SqlParameter("@responsibleOrganizationName", SqlDbType.VarChar, 80);
-			arParms[7].Value = responsibleOrganizationName;
+            arParms[7] = new SqlParameter("@responsibleOrganizationName", SqlDbType.VarChar, 80);
+            arParms[7].Value = responsibleOrganizationName;
 
-			arParms[8] = new SqlParameter("@maximumLocationLatitude", SqlDbType.Decimal, 8);
-			arParms[8].Value = ll.maxLat;
+            arParms[8] = new SqlParameter("@maximumLocationLatitude", SqlDbType.Decimal, 8);
+            arParms[8].Value = ll.maxLat;
 
-			arParms[9] = new SqlParameter("@maximumLocationLongitude", SqlDbType.Decimal, 8);
-			arParms[9].Value = ll.maxLong;
+            arParms[9] = new SqlParameter("@maximumLocationLongitude", SqlDbType.Decimal, 8);
+            arParms[9].Value = ll.maxLong;
 
-			arParms[10] = new SqlParameter("@minimumLocationLatitude", SqlDbType.Decimal, 8);
-			arParms[10].Value = ll.minLat;
+            arParms[10] = new SqlParameter("@minimumLocationLatitude", SqlDbType.Decimal, 8);
+            arParms[10].Value = ll.minLat;
 
-			arParms[11] = new SqlParameter("@minimumLocationLongitude", SqlDbType.Decimal, 8);
-			arParms[11].Value = ll.minLong;
+            arParms[11] = new SqlParameter("@minimumLocationLongitude", SqlDbType.Decimal, 8);
+            arParms[11].Value = ll.minLong;
 
-			arParms[12] = new SqlParameter("@locationDescriptorContext", SqlDbType.VarChar, 100);
-			arParms[12].Value = locationDescriptorContext;
+            arParms[12] = new SqlParameter("@locationDescriptorContext", SqlDbType.VarChar, 100);
+            arParms[12].Value = locationDescriptorContext;
 
-			arParms[13] = new SqlParameter("@locationDescriptorName", SqlDbType.VarChar, 100);
-			arParms[13].Value = locationDescriptorName;
+            arParms[13] = new SqlParameter("@locationDescriptorName", SqlDbType.VarChar, 100);
+            arParms[13].Value = locationDescriptorName;
 
-			arParms[14] = new SqlParameter("@stationType", SqlDbType.VarChar, 4000);
-			arParms[14].Value = stationType;
+            arParms[14] = new SqlParameter("@stationType", SqlDbType.VarChar, 4000);
+            arParms[14].Value = stationType;
 
-			arParms[15] = new SqlParameter("@stationName", SqlDbType.VarChar, 255);
-			arParms[15].Value = stationName;
+            arParms[15] = new SqlParameter("@stationName", SqlDbType.VarChar, 255);
+            arParms[15].Value = stationName;
 
             arParms[16] = new SqlParameter("@samplingOrganizationName", SqlDbType.VarChar, 80);
             arParms[16].Value = samplingOrganizationName;
@@ -126,8 +126,8 @@ namespace Windsor.Node2008.WNOSPlugin.PNWWQX
             arParms[19] = new SqlParameter("@sampledMedia", SqlDbType.VarChar, 4000);
             arParms[19].Value = sampledMedia;
 
-			arParms[20] = new SqlParameter("@analyteName", SqlDbType.VarChar, 4000);
-			arParms[20].Value = analyteName;
+            arParms[20] = new SqlParameter("@analyteName", SqlDbType.VarChar, 4000);
+            arParms[20].Value = analyteName;
 
             arParms[21] = new SqlParameter("@sampledTaxon", SqlDbType.VarChar, 4000);
             arParms[21].Value = sampledTaxon;
@@ -135,32 +135,32 @@ namespace Windsor.Node2008.WNOSPlugin.PNWWQX
             arParms[22] = new SqlParameter("@Deliminator", SqlDbType.Char, 1);
             arParms[22].Value = Config.SQL_ARR_DELIMINATOR;
 
-			switch (identType) 
-			{
-				case Common.PNWWQDXIdentity.Measurements:
-					return SqlHelper.ExecuteDataset(
-						Config.connectionString,
-						CommandType.StoredProcedure,
-						"PNWWQX_GetMeasurementsData",
-						arParms);
+            switch (identType)
+            {
+                case Common.PNWWQDXIdentity.Measurements:
+                    return SqlHelper.ExecuteDataset(
+                        Config.connectionString,
+                        CommandType.StoredProcedure,
+                        "PNWWQX_GetMeasurementsData",
+                        arParms);
 
-				case Common.PNWWQDXIdentity.Project:
-					return SqlHelper.ExecuteDataset(
-						Config.connectionString,
-						CommandType.StoredProcedure,
-						"PNWWQX_GetProjectsData",
-						arParms);
+                case Common.PNWWQDXIdentity.Project:
+                    return SqlHelper.ExecuteDataset(
+                        Config.connectionString,
+                        CommandType.StoredProcedure,
+                        "PNWWQX_GetProjectsData",
+                        arParms);
 
-				case Common.PNWWQDXIdentity.Station:
-					return SqlHelper.ExecuteDataset(
-						Config.connectionString,
-						CommandType.StoredProcedure,
-						"PNWWQX_GetStationsData",
-						arParms);
+                case Common.PNWWQDXIdentity.Station:
+                    return SqlHelper.ExecuteDataset(
+                        Config.connectionString,
+                        CommandType.StoredProcedure,
+                        "PNWWQX_GetStationsData",
+                        arParms);
 
-				default:
-					throw new Exception("methodName not found.");
-			}
+                default:
+                    throw new Exception("methodName not found.");
+            }
         }
-	}
+    }
 }

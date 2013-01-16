@@ -58,6 +58,17 @@ namespace Windsor.Commons.Core
             : base(dictionary, StringComparer.OrdinalIgnoreCase)
         {
         }
+        public CaseInsensitiveDictionary(IEnumerable<TValue> values, Func<TValue, string> callback)
+            : base(CollectionUtils.Count(values))
+        {
+            if (values != null)
+            {
+                foreach (TValue value in values)
+                {
+                    Add(callback(value), value);
+                }
+            }
+        }
         public CaseInsensitiveDictionary(int capacity)
             : base(capacity, StringComparer.OrdinalIgnoreCase)
         {

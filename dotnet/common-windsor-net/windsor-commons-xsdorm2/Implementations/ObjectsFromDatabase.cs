@@ -143,7 +143,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
 
         protected virtual Dictionary<object, IList> LoadObjectInstancesToList(Table tableOfObjectsToLoad, Dictionary<object, object> parentPKToObjectMap,
                                                                               IDictionary<string, DbAppendSelectWhereClause> appendSelectWhereClauseMap,
-                                                                              ColumnCachedValues cachedValues, MappingContext mappingContext, 
+                                                                              ColumnCachedValues cachedValues, MappingContext mappingContext,
                                                                               IDbCommand command)
         {
             Dictionary<object, IList> list = null;
@@ -188,7 +188,19 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                             {
                                 if (value != null)
                                 {
-                                    ExceptionUtils.ThrowIfFalse(fkColumn == null, "fkColumn == null");
+                                    if (fkColumn != null)
+                                    {
+                                        if (pk != null)
+                                        {
+                                            throw new ArgException("The table \"{0}\" has a row with a primary key of \"{1}\" that has more than one foreign key specified.  Please specify only one foreign key per row for this table.",
+                                                                   column.Table.TableName, pk.ToString());
+                                        }
+                                        else
+                                        {
+                                            throw new ArgException("The table \"{0}\" has a row that has more than one foreign key specified.  Please specify only one foreign key per row for this table.",
+                                                                   column.Table.TableName);
+                                        }
+                                    }
                                     if (!parentPKToObjectMap.ContainsKey(value))
                                     {
                                         // This object has no parent, assume we skip it
@@ -251,7 +263,11 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                         }
                         else
                         {
-                            ExceptionUtils.ThrowIfFalse(parentPKToObjectMap == null, "parentPKToObjectMap == null");   // Should not have parent in this case!
+                            if (parentPKToObjectMap != null)
+                            {
+                                throw new ArgException("The table \"{0}\" has a row with a primary key of \"{1}\" that does not have a foreign key specified.",
+                                                       pkColumn.Table.TableName, pk.ToString());
+                            }
                             fk = pk;
                         }
                         LoadSameTableInstances(objectToSet, tableOfObjectsToLoad.ChildSameTableElements, cachedValues, reader,
