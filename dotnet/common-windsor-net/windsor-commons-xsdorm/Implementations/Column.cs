@@ -43,6 +43,9 @@ namespace Windsor.Commons.XsdOrm.Implementations
 {
     public class Column : MemberInfoWrapper
     {
+        public static readonly DateTime MIN_VALID_DB_DATETIME = new DateTime(1800, 1, 1);
+        public static readonly DateTime MAX_VALID_DB_DATETIME = new DateTime(9999, 1, 1);
+
         public Column(Table table, MemberInfo member, string memberPath,
                       MemberInfo isSpecifiedMember, ColumnAttribute columnAttribute) :
             base(member, memberPath, isSpecifiedMember)
@@ -50,7 +53,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
             Init(table, columnAttribute);
         }
         // Virtual column member:
-        public Column(Table table, string memberPath, Type memberType, 
+        public Column(Table table, string memberPath, Type memberType,
                       ColumnAttribute columnAttribute) :
             base(memberPath, memberType)
         {
@@ -109,61 +112,127 @@ namespace Windsor.Commons.XsdOrm.Implementations
 
         public string ColumnName
         {
-            get { return m_ColumnName; }
-            set { m_ColumnName = value; }
+            get
+            {
+                return m_ColumnName;
+            }
+            set
+            {
+                m_ColumnName = value;
+            }
         }
         public DbType? ColumnType
         {
-            get { return m_ColumnType; }
-            set { m_ColumnType = value; }
+            get
+            {
+                return m_ColumnType;
+            }
+            set
+            {
+                m_ColumnType = value;
+            }
         }
         public int ColumnSize
         {
-            get { return m_ColumnSize; }
-            set { m_ColumnSize = value; }
+            get
+            {
+                return m_ColumnSize;
+            }
+            set
+            {
+                m_ColumnSize = value;
+            }
         }
         public int ColumnScale
         {
-            get { return m_ColumnScale; }
-            set { m_ColumnScale = value; }
+            get
+            {
+                return m_ColumnScale;
+            }
+            set
+            {
+                m_ColumnScale = value;
+            }
         }
         public virtual bool IsNullable
         {
-            get { return m_IsNullable; }
-            set { m_IsNullable = value; }
+            get
+            {
+                return m_IsNullable;
+            }
+            set
+            {
+                m_IsNullable = value;
+            }
         }
         public virtual bool IsPrimaryKey
         {
-            get { return false; }
+            get
+            {
+                return false;
+            }
         }
         public virtual bool IsForeignKey
         {
-            get { return false; }
+            get
+            {
+                return false;
+            }
         }
         public Table Table
         {
-            get { return m_Table; }
-            set { m_Table = value; }
+            get
+            {
+                return m_Table;
+            }
+            set
+            {
+                m_Table = value;
+            }
         }
         public bool IsIndexable
         {
-            get { return m_IsIndexable; }
-            set { m_IsIndexable = value; }
+            get
+            {
+                return m_IsIndexable;
+            }
+            set
+            {
+                m_IsIndexable = value;
+            }
         }
         public bool NoLoad
         {
-            get { return m_NoLoad; }
-            set { m_NoLoad = value; }
+            get
+            {
+                return m_NoLoad;
+            }
+            set
+            {
+                m_NoLoad = value;
+            }
         }
         public string IndexName
         {
-            get { return m_IndexName; }
-            set { m_IndexName = value; }
+            get
+            {
+                return m_IndexName;
+            }
+            set
+            {
+                m_IndexName = value;
+            }
         }
         public string ColumnDescription
         {
-            get { return m_ColumnDescription; }
-            set { m_ColumnDescription = value; }
+            get
+            {
+                return m_ColumnDescription;
+            }
+            set
+            {
+                m_ColumnDescription = value;
+            }
         }
         protected override void SetCachedValue(object primaryKey, object secondaryKey, object value)
         {
@@ -218,7 +287,32 @@ namespace Windsor.Commons.XsdOrm.Implementations
             {
                 value = int.Parse(value.ToString());
             }
+            else if (m_ColumnType == DbType.DateTime)
+            {
+                if (m_MemberType == typeof(string))
+                {
+                    DateTime dateTime = DateTime.Parse(value.ToString());
+                    return MakeValidDbDateTime(dateTime);
+                }
+                else
+                {
+                    DateTime dateTime = (DateTime)value;
+                    return MakeValidDbDateTime(dateTime);
+                }
+            }
             return value;
+        }
+        public static DateTime MakeValidDbDateTime(DateTime dateTime)
+        {
+            if (dateTime < MIN_VALID_DB_DATETIME)
+            {
+                return MIN_VALID_DB_DATETIME;
+            }
+            else if (dateTime > MAX_VALID_DB_DATETIME)
+            {
+                return MAX_VALID_DB_DATETIME;
+            }
+            return dateTime;
         }
         public override void SetMemberValue<T>(T instance, object value)
         {
@@ -247,7 +341,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 if (value != null)
                 {
                     string valueStr = value.ToString();
-                    if ( valueStr.IndexOf('.') > 0 )
+                    if (valueStr.IndexOf('.') > 0)
                     {
                         valueStr = valueStr.TrimEnd('0').TrimEnd('.');
                     }
@@ -315,11 +409,17 @@ namespace Windsor.Commons.XsdOrm.Implementations
 
         public override bool IsPrimaryKey
         {
-            get { return true; }
+            get
+            {
+                return true;
+            }
         }
         public override bool IsNullable
         {
-            get { return m_IsNullable; }
+            get
+            {
+                return m_IsNullable;
+            }
             set
             {
                 if (value == true)
@@ -335,11 +435,15 @@ namespace Windsor.Commons.XsdOrm.Implementations
     {
         public GuidPrimaryKeyColumn(Table table, MemberInfo member, string memberPath,
                                     PrimaryKeyAttribute columnAttribute) :
-            base(table, member, memberPath, columnAttribute) { }
+            base(table, member, memberPath, columnAttribute)
+        {
+        }
         // Virtual column member:
         public GuidPrimaryKeyColumn(Table table, string memberPath,
                                     PrimaryKeyAttribute columnAttribute) :
-            base(table, memberPath, typeof(string), columnAttribute) { }
+            base(table, memberPath, typeof(string), columnAttribute)
+        {
+        }
 
         public override object GetInsertColumnValue<T>(T objectToSave,
                                                        Dictionary<string, object> previousInsertColumnValues)
@@ -358,7 +462,9 @@ namespace Windsor.Commons.XsdOrm.Implementations
     {
         public UserPrimaryKeyColumn(Table table, MemberInfo member, string memberPath,
                                     PrimaryKeyAttribute columnAttribute) :
-            base(table, member, memberPath, columnAttribute) { }
+            base(table, member, memberPath, columnAttribute)
+        {
+        }
 
         public override object GetInsertColumnValue<T>(T objectToSave,
                                                        Dictionary<string, object> previousInsertColumnValues)
@@ -394,32 +500,65 @@ namespace Windsor.Commons.XsdOrm.Implementations
 
         public string ForeignTableName
         {
-            get { return m_ForeignTableName; }
-            set { m_ForeignTableName = value; }
+            get
+            {
+                return m_ForeignTableName;
+            }
+            set
+            {
+                m_ForeignTableName = value;
+            }
         }
         public string ForeignColumnName
         {
-            get { return m_ForeignColumnName; }
-            set { m_ForeignColumnName = value; }
+            get
+            {
+                return m_ForeignColumnName;
+            }
+            set
+            {
+                m_ForeignColumnName = value;
+            }
         }
         public override bool IsForeignKey
         {
-            get { return true; }
+            get
+            {
+                return true;
+            }
         }
         public Table ForeignTable
         {
-            get { return m_ForeignTable; }
-            set { m_ForeignTable = value; }
+            get
+            {
+                return m_ForeignTable;
+            }
+            set
+            {
+                m_ForeignTable = value;
+            }
         }
         public Column ForeignColumn
         {
-            get { return m_ForeignColumn; }
-            set { m_ForeignColumn = value; }
+            get
+            {
+                return m_ForeignColumn;
+            }
+            set
+            {
+                m_ForeignColumn = value;
+            }
         }
         public DeleteRule DeleteRule
         {
-            get { return m_DeleteRule; }
-            set { m_DeleteRule = value; }
+            get
+            {
+                return m_DeleteRule;
+            }
+            set
+            {
+                m_DeleteRule = value;
+            }
         }
         public override object GetInsertColumnValue<T>(T objectToSave,
                                                        Dictionary<string, object> previousInsertColumnValues)

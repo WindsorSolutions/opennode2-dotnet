@@ -48,6 +48,9 @@ namespace Windsor.Commons.XsdOrm2.Implementations
 
     public class Column : MemberInfoWrapper
     {
+        public static readonly DateTime MIN_VALID_DB_DATETIME = new DateTime(1800, 1, 1);
+        public static readonly DateTime MAX_VALID_DB_DATETIME = new DateTime(9999, 1, 1);
+
         public Column(Table table, MemberInfo member, MemberInfo isSpecifiedMember, ColumnAttribute columnAttribute) :
             base(member, isSpecifiedMember)
         {
@@ -280,7 +283,32 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                     value = new DateTime(1900, 1, 1, existingValue.Hour, existingValue.Minute, existingValue.Second);
                 }
             }
+            else if (m_ColumnType == DbType.DateTime)
+            {
+                if (m_MemberType == typeof(string))
+                {
+                    DateTime dateTime = DateTime.Parse(value.ToString());
+                    return MakeValidDbDateTime(dateTime);
+                }
+                else
+                {
+                    DateTime dateTime = (DateTime)value;
+                    return MakeValidDbDateTime(dateTime);
+                }
+            }
             return value;
+        }
+        public static DateTime MakeValidDbDateTime(DateTime dateTime)
+        {
+            if (dateTime < MIN_VALID_DB_DATETIME)
+            {
+                return MIN_VALID_DB_DATETIME;
+            }
+            else if (dateTime > MAX_VALID_DB_DATETIME)
+            {
+                return MAX_VALID_DB_DATETIME;
+            }
+            return dateTime;
         }
         public virtual void SetSelectColumnValue<T>(T objectToSet, object value, ColumnCachedValues cachedValues)
         {
@@ -341,7 +369,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
             {
                 if (value != null)
                 {
-                    CustomXmlStringFormatTypeBase newValue = (CustomXmlStringFormatTypeBase) Activator.CreateInstance(m_MemberType);
+                    CustomXmlStringFormatTypeBase newValue = (CustomXmlStringFormatTypeBase)Activator.CreateInstance(m_MemberType);
                     try
                     {
                         newValue.SetValue(value);
