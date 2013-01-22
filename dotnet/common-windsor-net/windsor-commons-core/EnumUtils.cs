@@ -156,8 +156,13 @@ namespace Windsor.Commons.Core
             {
                 throw new InvalidOperationException("T must be an enum");
             }
+            FieldInfo fieldInfo = typeof(T).GetField(enumValue.ToString());
+            if (fieldInfo == null)
+            {
+                return enumValue.ToString();
+            }
             DescriptionAttribute[] da = (DescriptionAttribute[])
-                (typeof(T).GetField(enumValue.ToString()).GetCustomAttributes(typeof(DescriptionAttribute), false));
+               fieldInfo.GetCustomAttributes(typeof(DescriptionAttribute), false);
             return ((da.Length > 0) ? da[0].Description : enumValue.ToString());
         }
         /// <summary>
@@ -255,7 +260,8 @@ namespace Windsor.Commons.Core
             {
                 flagValue = (long)Convert.ChangeType(enumValue, typeof(long));
             }
-            foreach (FieldInfo fieldInfo in typeof(T).GetFields())
+            FieldInfo[] fields = typeof(T).GetFields();
+            foreach (FieldInfo fieldInfo in fields)
             {
                 try
                 {

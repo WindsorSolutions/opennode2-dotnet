@@ -175,7 +175,14 @@ namespace Windsor.Node2008.Admin.Secure
                         typeDropDownList.DataSource = EnumUtils.GetAllDescriptions(implementer.Type);
                         typeDropDownList.DataBind();
                         typeDropDownList.Enabled = true;
-                        typeDropDownList.SelectedValue = EnumUtils.ToDescription(implementer.Type);
+                        if ((Model != null) && (Model.DataService != null))
+                        {
+                            typeDropDownList.SelectedValue = EnumUtils.ToDescription(Model.DataService.Type);
+                        }
+                        else
+                        {
+                            typeDropDownList.SelectedValue = SERVICE_TYPE_NONE;
+                        }
                     }
                     argsRepeater.DataSource = CreateArgumentModelList(implementer.Args);
                     argsRepeater.DataBind();
