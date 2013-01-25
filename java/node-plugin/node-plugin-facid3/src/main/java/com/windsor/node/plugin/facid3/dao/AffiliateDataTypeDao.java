@@ -98,12 +98,12 @@ public class AffiliateDataTypeDao extends JdbcDaoSupport
         + " FROM FACID_AFFL WHERE AFFL_IDEN = ? ";
 
     private static final String loadElectronicAddressListDataTypeByAffiliateIdSql = "SELECT AFFL_ELEC_ADDR_ID, "
-        + " AFFL_ID "
+        + " AFFL_ID, "
         + " ELEC_ADDR_TEXT, "
         + " ELEC_ADDR_TYPE_NAME "
         + " FROM FACID_AFFL_ELEC_ADDR WHERE AFFL_ID = ?";
     private static final String loadTelephonicDataTypeByAffiliateIdSql = "SELECT TELEPHONIC_ID, "
-        + " AFFL_ID "
+        + " AFFL_ID, "
         + " TELE_NUM_TEXT, "
         + " TELE_NUM_TYPE_NAME, "
         + " TELE_EXT_NUM_TEXT "
