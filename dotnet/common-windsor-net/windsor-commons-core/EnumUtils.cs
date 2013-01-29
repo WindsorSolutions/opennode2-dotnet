@@ -152,18 +152,49 @@ namespace Windsor.Commons.Core
             {
                 throw new ArgumentException("enumValue must be an enum");
             }
-            if (!typeof(T).IsEnum)
+            Type type = typeof(T);
+            if (!type.IsEnum)
             {
                 throw new InvalidOperationException("T must be an enum");
             }
-            FieldInfo fieldInfo = typeof(T).GetField(enumValue.ToString());
-            if (fieldInfo == null)
+            bool isFlags = type.IsDefined(typeof(FlagsAttribute), true);
+            if (isFlags)
             {
+                long flagValue = (long)Convert.ChangeType(enumValue, typeof(long));
+                FieldInfo[] fields = type.GetFields();
+                foreach (FieldInfo fieldInfo in fields)
+                {
+                    try
+                    {
+                        DescriptionAttribute[] da = (DescriptionAttribute[])
+                            fieldInfo.GetCustomAttributes(typeof(DescriptionAttribute), false);
+                        if (da.Length > 0)
+                        {
+                            T fieldValue = (T)fieldInfo.GetValue(null);
+                            long fieldFlagValue = (long)Convert.ChangeType(fieldValue, typeof(long));
+                            if ((fieldFlagValue & flagValue) == flagValue)
+                            {
+                                return da[0].Description;
+                            }
+                        }
+                    }
+                    catch (Exception)
+                    {
+                    }
+                }
                 return enumValue.ToString();
             }
-            DescriptionAttribute[] da = (DescriptionAttribute[])
-               fieldInfo.GetCustomAttributes(typeof(DescriptionAttribute), false);
-            return ((da.Length > 0) ? da[0].Description : enumValue.ToString());
+            else
+            {
+                FieldInfo fieldInfo = type.GetField(enumValue.ToString());
+                if (fieldInfo == null)
+                {
+                    return enumValue.ToString();
+                }
+                DescriptionAttribute[] da = (DescriptionAttribute[])
+                   fieldInfo.GetCustomAttributes(typeof(DescriptionAttribute), false);
+                return ((da.Length > 0) ? da[0].Description : enumValue.ToString());
+            }
         }
         /// <summary>
         /// Return the enum value from a [Description] attribute.

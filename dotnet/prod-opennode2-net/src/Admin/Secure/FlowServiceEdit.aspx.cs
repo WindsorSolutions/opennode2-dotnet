@@ -172,16 +172,27 @@ namespace Windsor.Node2008.Admin.Secure
                     }
                     else
                     {
-                        typeDropDownList.DataSource = EnumUtils.GetAllDescriptions(implementer.Type);
+                        var allDescriptions = EnumUtils.GetAllDescriptions(implementer.Type);
+                        typeDropDownList.DataSource = allDescriptions;
                         typeDropDownList.DataBind();
                         typeDropDownList.Enabled = true;
-                        if ((Model != null) && (Model.DataService != null))
+                        if (!CollectionUtils.IsNullOrEmpty(allDescriptions))
                         {
-                            typeDropDownList.SelectedValue = EnumUtils.ToDescription(Model.DataService.Type);
-                        }
-                        else
-                        {
-                            typeDropDownList.SelectedValue = SERVICE_TYPE_NONE;
+                            try
+                            {
+                                if ((Model != null) && (Model.DataService != null) && (Model.DataService.Type != ServiceType.None))
+                                {
+                                    typeDropDownList.SelectedValue = EnumUtils.ToDescription(Model.DataService.Type);
+                                }
+                                else
+                                {
+                                    typeDropDownList.SelectedValue = EnumUtils.ToDescription(implementer.Type);
+                                }
+                            }
+                            catch (Exception)
+                            {
+                                typeDropDownList.SelectedIndex = 0;
+                            }
                         }
                     }
                     argsRepeater.DataSource = CreateArgumentModelList(implementer.Args);
