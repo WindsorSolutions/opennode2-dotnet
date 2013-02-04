@@ -11,7 +11,7 @@
     <name>Node Plugin - ICIS NPDES v4.1</name>
     <properties>
         <node.plugin.name>icisnpdes40</node.plugin.name>
-        <node.plugin.build.number>08</node.plugin.build.number>
+        <node.plugin.build.number>09</node.plugin.build.number>
     </properties>
     <build>
         <finalName>${node.plugin.name}</finalName>
