@@ -59,6 +59,7 @@ namespace Windsor.Node2008.WNOS.Data
         public const string POLICY_TABLE_NAME = "NAccountPolicy";
         private ICryptographyProvider _cryptographyProvider;
         private IFlowDao _flowDao;
+        private bool _hasIsEndpointUserColumn;
 
         #region Init
 
@@ -70,9 +71,11 @@ namespace Windsor.Node2008.WNOS.Data
             FieldNotInitializedException.ThrowIfNull(this, ref _flowDao);
 
             MAP_USER_ACCOUNT_COLUMNS = "Id;NAASAccount;IsActive;SystemRole;ModifiedBy;ModifiedOn";
-            if (IsDemoNode)
+
+            _hasIsEndpointUserColumn = CheckIfColumnExists(TABLE_NAME, "IsEndpointUser");
+            if (_hasIsEndpointUserColumn)
             {
-                MAP_USER_ACCOUNT_COLUMNS += ";IsDemoUser";
+                MAP_USER_ACCOUNT_COLUMNS += ";PasswordHash;IsEndpointUser";
             }
         }
 
@@ -82,8 +85,14 @@ namespace Windsor.Node2008.WNOS.Data
 
         public IFlowDao FlowDao
         {
-          get { return _flowDao; }
-          set { _flowDao = value; }
+            get
+            {
+                return _flowDao;
+            }
+            set
+            {
+                _flowDao = value;
+            }
         }
 
         private string MAP_USER_ACCOUNT_COLUMNS;
@@ -97,10 +106,10 @@ namespace Windsor.Node2008.WNOS.Data
             account.Role = EnumUtils.ParseEnum<SystemRoleType>(reader.GetString(index++));
             account.ModifiedById = reader.GetString(index++);
             account.ModifiedOn = reader.GetDateTime(index++);
-            if (IsDemoNode)
+            if (_hasIsEndpointUserColumn)
             {
-                account.IsDemoUser = reader.IsDBNull(index) ? new bool?(false) : new bool?(DbUtils.ToBool(reader.GetString(index)));
-                index++;
+                account.PasswordHash = reader.GetString(index++);
+                account.IsEndpointUser = DbUtils.ToBool(reader.GetString(index++));
             }
             return account;
         }
@@ -116,10 +125,18 @@ namespace Windsor.Node2008.WNOS.Data
             string isAllowed = reader.GetString(index++);
             switch (isAllowed)
             {
-                case "Y": policy.FlowRoleType = FlowRoleType.Endpoint; break;
-                case "V": policy.FlowRoleType = FlowRoleType.View; break;
-                case "M": policy.FlowRoleType = FlowRoleType.Modify; break;
-                default: policy.FlowRoleType = FlowRoleType.None; break;
+                case "Y":
+                    policy.FlowRoleType = FlowRoleType.Endpoint;
+                    break;
+                case "V":
+                    policy.FlowRoleType = FlowRoleType.View;
+                    break;
+                case "M":
+                    policy.FlowRoleType = FlowRoleType.Modify;
+                    break;
+                default:
+                    policy.FlowRoleType = FlowRoleType.None;
+                    break;
             }
             policy.ModifiedById = reader.GetString(index++);
             policy.ModifiedOn = reader.GetDateTime(index++);
@@ -176,7 +193,7 @@ namespace Windsor.Node2008.WNOS.Data
                 UserAccessPolicy policy = policies[i];
                 if (policy.PolicyType == ServiceRequestAuthorizationType.Flow)
                 {
-                    if ( !CollectionUtils.Contains(flowNames, policy.TypeQualifier, 
+                    if (!CollectionUtils.Contains(flowNames, policy.TypeQualifier,
                                                    StringComparison.InvariantCultureIgnoreCase))
                     {
                         policies.RemoveAt(i);
@@ -214,38 +231,17 @@ namespace Windsor.Node2008.WNOS.Data
                 if (string.IsNullOrEmpty(item.Id))
                 {
                     id = IdProvider.Get();
-                    if (IsDemoNode && (item.IsDemoUser != null))
-                    {
-                        DoInsert(TABLE_NAME, "Id;NAASAccount;IsActive;SystemRole;ModifiedBy;ModifiedOn;IsDeleted;IsDemoUser",
-                                 id, item.NaasAccount, DbUtils.ToDbBool(item.IsActive),
-                                 item.Role.ToString(), item.ModifiedById, now, DbUtils.ToDbBool(false),
-                                 DbUtils.ToDbBool(item.IsDemoUser.Value));
-                    }
-                    else
-                    {
-                        DoInsert(TABLE_NAME, "Id;NAASAccount;IsActive;SystemRole;ModifiedBy;ModifiedOn;IsDeleted",
+                    DoInsert(TABLE_NAME, "Id;NAASAccount;IsActive;SystemRole;ModifiedBy;ModifiedOn;IsDeleted",
                                  id, item.NaasAccount, DbUtils.ToDbBool(item.IsActive),
                                  item.Role.ToString(), item.ModifiedById, now, DbUtils.ToDbBool(false));
-                    }
                 }
                 else
                 {
                     id = item.Id;
-                    if (IsDemoNode && (item.IsDemoUser != null))
-                    {
-                        DoSimpleUpdateOne(TABLE_NAME, "Id", item.Id.ToString(),
-                                          "NAASAccount;IsActive;SystemRole;ModifiedBy;ModifiedOn;IsDemoUser",
-                                          item.NaasAccount, DbUtils.ToDbBool(item.IsActive),
-                                          item.Role.ToString(), item.ModifiedById, now,
-                                          DbUtils.ToDbBool(item.IsDemoUser.Value));
-                    }
-                    else
-                    {
-                        DoSimpleUpdateOne(TABLE_NAME, "Id", item.Id.ToString(),
-                                          "NAASAccount;IsActive;SystemRole;ModifiedBy;ModifiedOn",
-                                          item.NaasAccount, DbUtils.ToDbBool(item.IsActive),
-                                          item.Role.ToString(), item.ModifiedById, now);
-                    }
+                    DoSimpleUpdateOne(TABLE_NAME, "Id", item.Id.ToString(),
+                                        "NAASAccount;IsActive;SystemRole;ModifiedBy;ModifiedOn",
+                                        item.NaasAccount, DbUtils.ToDbBool(item.IsActive),
+                                        item.Role.ToString(), item.ModifiedById, now);
                 }
                 // Update policies
                 DeleteAllPoliciesForUser(id);
@@ -290,25 +286,31 @@ namespace Windsor.Node2008.WNOS.Data
         }
         public IList<string> GetAuthorizedUsernamesForFlow(string flowName, FlowRoleType roleType)
         {
-            if ( roleType == FlowRoleType.None )
+            if (roleType == FlowRoleType.None)
             {
                 return null;
             }
             List<string> usernames = null;
             DoSimpleQueryWithRowCallbackDelegate(
                 TABLE_NAME, "SystemRole;IsActive;IsDeleted",
-                new object[] { SystemRoleType.Admin.ToString(), DbUtils.ToDbBool(true), DbUtils.ToDbBool(false) }, 
+                new object[] { SystemRoleType.Admin.ToString(), DbUtils.ToDbBool(true), DbUtils.ToDbBool(false) },
                 null, "NAASAccount",
                 delegate(IDataReader reader)
                 {
                     CollectionUtils.Add(reader.GetString(0), ref usernames);
                 });
             string isAllowedQuery;
-            switch(roleType)
+            switch (roleType)
             {
-                case FlowRoleType.Modify: isAllowedQuery = "(p.IsAllowed = 'M')"; break;
-                case FlowRoleType.View: isAllowedQuery = "(p.IsAllowed = 'M' OR p.IsAllowed = 'V')"; break;
-                default: isAllowedQuery = "(p.IsAllowed = 'M' OR p.IsAllowed = 'V' OR p.IsAllowed = 'Y')"; break;
+                case FlowRoleType.Modify:
+                    isAllowedQuery = "(p.IsAllowed = 'M')";
+                    break;
+                case FlowRoleType.View:
+                    isAllowedQuery = "(p.IsAllowed = 'M' OR p.IsAllowed = 'V')";
+                    break;
+                default:
+                    isAllowedQuery = "(p.IsAllowed = 'M' OR p.IsAllowed = 'V' OR p.IsAllowed = 'Y')";
+                    break;
             }
             isAllowedQuery = string.Format("(UPPER(a.SystemRole) != UPPER('{0}') AND {1})", SystemRoleType.Admin.ToString(), isAllowedQuery);
             DoSimpleQueryWithRowCallbackDelegate(
@@ -375,36 +377,6 @@ namespace Windsor.Node2008.WNOS.Data
             catch (Spring.Dao.IncorrectResultSizeDataAccessException)
             {
                 return null; // Not found
-            }
-        }
-        public bool IsValidDemoUser(string username, string password, out bool isDemoUser)
-        {
-            isDemoUser = false;
-            if (!IsDemoNode)
-            {
-                return false;
-            }
-            try
-            {
-                string passwordHash =
-                    DoSimpleQueryForObjectDelegate<string>(
-                        TABLE_NAME, "NAASAccount;IsDeleted;IsDemoUser",
-                        new object[] { username, DbUtils.ToDbBool(false), DbUtils.ToDbBool(true) },
-                        "PasswordHash",
-                        delegate(IDataReader reader, int rowNum)
-                        {
-                            return reader.GetString(0);
-                        });
-                isDemoUser = true;
-                if (string.IsNullOrEmpty(passwordHash))
-                {
-                    return false;
-                }
-                return _cryptographyProvider.IsValueCorrect(password, passwordHash);
-            }
-            catch (Spring.Dao.IncorrectResultSizeDataAccessException)
-            {
-                return false; // Not found
             }
         }
         public void ResetPassword(string userName, string newPassword)
@@ -565,10 +537,18 @@ namespace Windsor.Node2008.WNOS.Data
                          insertValues[3] = policy.TypeQualifier;
                          switch (policy.FlowRoleType)
                          {
-                             case FlowRoleType.Endpoint: insertValues[4] = "Y"; break;
-                             case FlowRoleType.View: insertValues[4] = "V"; break;
-                             case FlowRoleType.Modify: insertValues[4] = "M"; break;
-                             default: insertValues[4] = "N"; break;
+                             case FlowRoleType.Endpoint:
+                                 insertValues[4] = "Y";
+                                 break;
+                             case FlowRoleType.View:
+                                 insertValues[4] = "V";
+                                 break;
+                             case FlowRoleType.Modify:
+                                 insertValues[4] = "M";
+                                 break;
+                             default:
+                                 insertValues[4] = "N";
+                                 break;
                          }
                          insertValues[5] = policy.ModifiedById;
                          insertValues[6] = policy.ModifiedOn;
@@ -581,15 +561,20 @@ namespace Windsor.Node2008.WNOS.Data
                  });
         }
 
-        public bool IsDemoNode { get { return SettingsProvider.IsDemoNode; } }
         #endregion
 
         #region Properties
 
         public ICryptographyProvider CryptographyProvider
         {
-            get { return _cryptographyProvider; }
-            set { _cryptographyProvider = value; }
+            get
+            {
+                return _cryptographyProvider;
+            }
+            set
+            {
+                _cryptographyProvider = value;
+            }
         }
 
         #endregion

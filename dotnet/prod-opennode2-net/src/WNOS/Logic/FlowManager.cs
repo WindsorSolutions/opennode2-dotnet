@@ -266,7 +266,7 @@ namespace Windsor.Node2008.WNOS.Logic
         }
         public void InstallPluginForFlow(byte[] zipFileContent, string flowName, NodeVisit visit)
         {
-            ValidateByRoleAndNotDemoAccount(visit, SystemRoleType.Admin);
+            ValidateByRole(visit, SystemRoleType.Admin);
 
             string flowId = GetDataFlowIdByName(flowName);
             if (flowId == null)

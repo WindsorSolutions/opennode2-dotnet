@@ -52,7 +52,6 @@ namespace Windsor.Node2008.WNOS.Data
         bool UserPasswordExistsInDB(string userName);
         void ResetPassword(string userName, string newPassword);
         void ChangePassword(string userName, string currentPassword, string newPassword);
-        bool IsValidDemoUser(string username, string password, out bool isDemoUser);
         IList<string> GetAuthorizedUsernamesForFlow(string flowName, FlowRoleType roleType);
     }
 }

@@ -110,29 +110,6 @@ namespace Windsor.Node2008.WNOS.Logic
         /// </summary>
         public static void ValidateByRole(NodeVisit visit, SystemRoleType minimumRole)
         {
-            ValidateByRole(visit, minimumRole, false);
-        }
- 
-        /// <summary>
-        /// Validate that the input admin visitor has at least minimumRole permissions AND is not
-        /// a demo visitor.  Throw an UnauthorizedAccessException() if visitor is not validated.
-        /// </summary>
-        public static void ValidateByRoleAndNotDemoAccount(NodeVisit visit, SystemRoleType minimumRole)
-        {
-            ValidateByRole(visit, minimumRole, true);
-        }
-
-        public static void ThrowInsuficientPrivileges()
-        {
-            throw new UnauthorizedAccessException(InsuficientPrivilegesMessage);
-        }
-
-        /// <summary>
-        /// Internal validation method.  Throw an UnauthorizedAccessException() if visitor is not validated.
-        /// </summary>
-        private static void ValidateByRole(NodeVisit visit, SystemRoleType minimumRole, bool doValidateNotDemoAccount)
-        {
-
             if (visit == null)
             {
                 throw new ArgumentException("Input visit is null.");
@@ -143,12 +120,13 @@ namespace Windsor.Node2008.WNOS.Logic
             {
                 ThrowInsuficientPrivileges();
             }
-
-            if (doValidateNotDemoAccount && (visit.Account.IsDemoUser != null) && visit.Account.IsDemoUser.Value)
-            {
-                throw new UnauthorizedAccessException("The current demo user does not have sufficient permissions to perform this operation.");
-            }
         }
+
+        public static void ThrowInsuficientPrivileges()
+        {
+            throw new UnauthorizedAccessException(InsuficientPrivilegesMessage);
+        }
+
         protected bool CanUserViewFlowByName(NodeVisit visit, string flowName)
         {
             return CanUserAccessFlowByName(visit, flowName, false);
@@ -159,7 +137,7 @@ namespace Windsor.Node2008.WNOS.Logic
         }
         protected bool CanUserAccessFlowByName(NodeVisit visit, string flowName, bool checkCanEdit)
         {
-            return visit.IsFlowPermittedByName(flowName, checkCanEdit ? 
+            return visit.IsFlowPermittedByName(flowName, checkCanEdit ?
                                                FlowRoleType.Modify : FlowRoleType.View);
         }
         protected bool CanUserViewFlowById(NodeVisit visit, string flowId)
@@ -206,7 +184,7 @@ namespace Windsor.Node2008.WNOS.Logic
             }
             return flowNames;
         }
-        protected IList<SimpleFlowNotification> 
+        protected IList<SimpleFlowNotification>
             FilterFlowsForUser(NodeVisit visit, IList<SimpleFlowNotification> flowNotifications)
         {
             if (!CollectionUtils.IsNullOrEmpty(flowNotifications))
@@ -276,8 +254,14 @@ namespace Windsor.Node2008.WNOS.Logic
         /// </summary>
         public IActivityManager ActivityManager
         {
-            get { return _activityManager; }
-            set { _activityManager = value; }
+            get
+            {
+                return _activityManager;
+            }
+            set
+            {
+                _activityManager = value;
+            }
         }
 
         /// <summary>
@@ -285,13 +269,25 @@ namespace Windsor.Node2008.WNOS.Logic
         /// </summary>
         public ISettingsProvider SettingsProvider
         {
-            get { return _settingsProvider; }
-            set { _settingsProvider = value; }
+            get
+            {
+                return _settingsProvider;
+            }
+            set
+            {
+                _settingsProvider = value;
+            }
         }
         protected IPolicyService AccountPolicyManager
         {
-            get { return _accountPolicyManager; }
-            set { _accountPolicyManager = value; }
+            get
+            {
+                return _accountPolicyManager;
+            }
+            set
+            {
+                _accountPolicyManager = value;
+            }
         }
 
         #endregion

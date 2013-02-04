@@ -66,13 +66,6 @@ namespace Windsor.Node2008.WNOSConnector.Admin
         void ValidateUserMinimumRole(NodeVisit visit, SystemRoleType minimumRole);
 
         string GetUsernameById(string userId);
-        /// <summary>
-        /// Return true if the node is setup in Demo mode
-        /// </summary>
-        bool IsDemoNode
-        {
-            get;
-        }
 
         string GenerateRandomPassword();
 

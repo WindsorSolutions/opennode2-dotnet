@@ -446,16 +446,18 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_40
         protected virtual string FindResponseZipFileName(IList<string> documentNames)
         {
             string responseFileName = null;
-            CollectionUtils.ForEach(documentNames, delegate(string fileName)
+            CollectionUtils.ForEachBreak(documentNames, delegate(string fileName)
             {
                 if (fileName.EndsWith("_Response.zip", StringComparison.OrdinalIgnoreCase))
                 {
                     if (responseFileName != null)
                     {
-                        throw new WorkflowStatusFailedException("More than one response document was found for the submission transaction");
+                        AppendAuditLogEvent("Warning: more than one response document was found for the submission transaction ...");
+                        return false;
                     }
                     responseFileName = fileName;
                 }
+                return true;
             });
             if (responseFileName == null)
             {
@@ -466,16 +468,18 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_40
         protected virtual string FindResponseAcceptedFilePath(IList<string> filePaths)
         {
             string responseFilePath = null;
-            CollectionUtils.ForEach(filePaths, delegate(string filePath)
+            CollectionUtils.ForEachBreak(filePaths, delegate(string filePath)
             {
                 if (filePath.EndsWith("Accepted_Response.xml", StringComparison.OrdinalIgnoreCase))
                 {
                     if (responseFilePath != null)
                     {
-                        throw new ArgException("More than one accepted response document was found for the submission transaction");
+                        AppendAuditLogEvent("Warning: more than one accepted response document was found for the submission transaction ...");
+                        return false;
                     }
                     responseFilePath = filePath;
                 }
+                return true;
             });
             if (responseFilePath == null)
             {
@@ -486,16 +490,18 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_40
         protected virtual string FindResponseRejectedFilePath(IList<string> filePaths)
         {
             string responseFilePath = null;
-            CollectionUtils.ForEach(filePaths, delegate(string filePath)
+            CollectionUtils.ForEachBreak(filePaths, delegate(string filePath)
             {
                 if (filePath.EndsWith("Rejected_Response.xml", StringComparison.OrdinalIgnoreCase))
                 {
                     if (responseFilePath != null)
                     {
-                        throw new ArgException("More than one rejected response document was found for the submission transaction");
+                        AppendAuditLogEvent("Warning: more than one rejected response document was found for the submission transaction ...");
+                        return false;
                     }
                     responseFilePath = filePath;
                 }
+                return true;
             });
             if (responseFilePath == null)
             {

@@ -172,18 +172,6 @@ namespace Windsor.Node2008.WNOS.Utilities
             }
         }
 
-        public bool IsDemoNode
-        {
-            get
-            {
-                return _isDemoNode;
-            }
-            set
-            {
-                _isDemoNode = value;
-            }
-        }
-
         public bool IsProductionNode
         {
             get

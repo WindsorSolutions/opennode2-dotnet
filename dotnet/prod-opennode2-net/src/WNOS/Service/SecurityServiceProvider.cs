@@ -141,17 +141,8 @@ namespace Windsor.Node2008.WNOS.Service
         {
             try
             {
-                bool isDemoUser;
-                if (!AccountManager.IsValidDemoUser(credentials.UserName, credentials.Password, out isDemoUser))
-                {
-                    if (isDemoUser)
-                    {
-                        throw new ApplicationException("Invalid credentials");
-                    }
-                    //Get a token or fail trying
-                    string token = AuthProvider.AuthenticateUser(credentials, requestedFromIp,
-                                                                 "Password");
-                }
+                //Get a token or fail trying
+                string token = AuthProvider.AuthenticateUser(credentials, requestedFromIp, "Password");
 
                 //Always returns an account
                 bool wasCreated;

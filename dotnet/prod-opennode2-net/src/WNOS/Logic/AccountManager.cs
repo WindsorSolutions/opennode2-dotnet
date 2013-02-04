@@ -102,10 +102,6 @@ namespace Windsor.Node2008.WNOS.Logic
 
         #endregion
 
-        public bool IsValidDemoUser(string username, string password, out bool isDemoUser)
-        {
-            return _accountDao.IsValidDemoUser(username, password, out isDemoUser);
-        }
         public string NodeId
         {
             get
@@ -118,7 +114,7 @@ namespace Windsor.Node2008.WNOS.Logic
                                        SystemRoleType defaultRole, ICollection<FlowNameAndRole> accessFlows,
                                        bool isUserActive, NodeVisit visit)
         {
-            ValidateByRoleAndNotDemoAccount(visit, SystemRoleType.Admin);
+            ValidateByRole(visit, SystemRoleType.Admin);
 
             UserAccount usr = _accountDao.GetByName(username);
             if (usr == null)
@@ -267,15 +263,11 @@ namespace Windsor.Node2008.WNOS.Logic
         {
             return _accountDao.UserPasswordExistsInDB(userName);
         }
-        private bool IsDemoUser(UserAccount instance)
-        {
-            return IsDemoNode && (instance.IsDemoUser != null) && instance.IsDemoUser.Value;
-        }
         public string BulkAddUsers(ICollection<string> usernames, bool createInNaas, string defaultPassword,
                                    SystemRoleType defaultRole, ICollection<FlowNameAndRole> accessFlows,
                                    bool isUserActive, NodeVisit visit)
         {
-            ValidateByRoleAndNotDemoAccount(visit, SystemRoleType.Admin);
+            ValidateByRole(visit, SystemRoleType.Admin);
 
             if (CollectionUtils.IsNullOrEmpty(usernames))
             {
@@ -324,9 +316,8 @@ namespace Windsor.Node2008.WNOS.Logic
                     throw new ArgumentException("Input values are null.");
                 }
 
-                bool isDemoUser = IsDemoUser(instance);
                 bool createInDB = string.IsNullOrEmpty(instance.Id);
-                bool needToCreateInNAAS = !isDemoUser && !_naasManager.UserExists(instance.NaasAccount);
+                bool needToCreateInNAAS = !_naasManager.UserExists(instance.NaasAccount);
 
                 if (needToCreateInNAAS && string.IsNullOrEmpty(naasCreatePassword))
                 {
@@ -376,10 +367,6 @@ namespace Windsor.Node2008.WNOS.Logic
                 TransactionTemplate.Execute(delegate
                 {
                     _accountDao.Save(instance);
-                    if (isDemoUser)
-                    {
-                        _accountDao.ResetPassword(instance.NaasAccount, naasCreatePassword);
-                    }
                     ActivityManager.LogAudit(NodeMethod.None, null, visit, activityFormatString,
                                              visit.Account.NaasAccount, instance.ToString());
                     return null;
@@ -405,13 +392,6 @@ namespace Windsor.Node2008.WNOS.Logic
                 throw;
             }
         }
-        public bool IsDemoNode
-        {
-            get
-            {
-                return _settingsProvider.IsDemoNode;
-            }
-        }
 
         public string GenerateRandomPassword()
         {
@@ -421,19 +401,11 @@ namespace Windsor.Node2008.WNOS.Logic
         {
             try
             {
-                ValidateByRoleAndNotDemoAccount(visit, SystemRoleType.Admin);
+                ValidateByRole(visit, SystemRoleType.Admin);
 
                 string newPassword = GenerateRandomPassword();
 
-                bool isDemoUser = IsDemoUser(instance);
-                if (!isDemoUser)
-                {
-                    _naasManager.ResetPassword(instance.NaasAccount, newPassword);
-                }
-                else
-                {
-                    _accountDao.ResetPassword(instance.NaasAccount, newPassword);
-                }
+                _naasManager.ResetPassword(instance.NaasAccount, newPassword);
 
                 ActivityManager.LogAudit(NodeMethod.None, null, visit, "{0} reset password for user account: {1}.",
                                          visit.Account.NaasAccount, instance.ToString());
@@ -457,16 +429,8 @@ namespace Windsor.Node2008.WNOS.Logic
             {
                 ValidateByRole(visit, SystemRoleType.Program);
 
-                bool isDemoUser = IsDemoUser(instance);
-                if (!isDemoUser)
-                {
-                    _naasManager.ChangePassword(instance.NaasAccount, currentPassword,
-                                                newPassword);
-                }
-                else
-                {
-                    _accountDao.ChangePassword(instance.NaasAccount, currentPassword, newPassword);
-                }
+                _naasManager.ChangePassword(instance.NaasAccount, currentPassword,
+                                            newPassword);
 
                 ActivityManager.LogAudit(NodeMethod.None, null, visit, "{0} reset password for user account: {1}.",
                                          visit.Account.NaasAccount, instance.ToString());
@@ -552,14 +516,13 @@ namespace Windsor.Node2008.WNOS.Logic
         {
             try
             {
-                ValidateByRoleAndNotDemoAccount(visit, SystemRoleType.Admin);
+                ValidateByRole(visit, SystemRoleType.Admin);
                 if (!CanDeleteUser(instance.NaasAccount, visit))
                 {
                     throw new InvalidOperationException(string.Format("The user \"{0}\" cannot be deleted from the node",
                                                                       instance.NaasAccount));
                 }
-                bool isDemoUser = IsDemoUser(instance);
-                bool deleteFromNAAS = !isDemoUser && _naasManager.UserExists(instance.NaasAccount);
+                bool deleteFromNAAS = _naasManager.UserExists(instance.NaasAccount);
                 if (deleteFromNAAS)
                 {
                     _naasManager.DeleteUser(instance.NaasAccount);
@@ -583,7 +546,7 @@ namespace Windsor.Node2008.WNOS.Logic
         {
             try
             {
-                ValidateByRoleAndNotDemoAccount(visit, SystemRoleType.Admin);
+                ValidateByRole(visit, SystemRoleType.Admin);
                 if (!CanRemoveUser(instance.NaasAccount, visit))
                 {
                     throw new InvalidOperationException(string.Format("The user \"{0}\" cannot be removed from the node",

@@ -59,7 +59,7 @@ namespace Windsor.Node2008.WNOS.Logic
 
         new public void Init()
         {
-			base.Init();
+            base.Init();
 
             FieldNotInitializedException.ThrowIfNull(this, ref _accountManager);
             FieldNotInitializedException.ThrowIfNull(this, ref _accountService);
@@ -69,7 +69,6 @@ namespace Windsor.Node2008.WNOS.Logic
 
         #endregion
 
-        public bool IsDemoNode { get { return _settingsProvider.IsDemoNode; } }
         public IDictionary<string, SimpleListDisplayInfo> GetListInfo(params string[] args)
         {
             ICollection<string> usernames = GetNaasUsernameList(false, false);
@@ -115,7 +114,7 @@ namespace Windsor.Node2008.WNOS.Logic
             return _accountManager.Get(username, visit);
         }
 
-        public UserAccount GetOrCreateUser(string username, NodeVisit visit, 
+        public UserAccount GetOrCreateUser(string username, NodeVisit visit,
                                            out NaasUserInfo naasUserInfo)
         {
             ValidateByRole(visit, SystemRoleType.Admin);
@@ -135,7 +134,7 @@ namespace Windsor.Node2008.WNOS.Logic
                 case SystemRoleType.Admin:
                     return true;
                 case SystemRoleType.Program:
-                    return (flowRole == FlowRoleType.Endpoint) || (flowRole == FlowRoleType.View) || 
+                    return (flowRole == FlowRoleType.Endpoint) || (flowRole == FlowRoleType.View) ||
                            (flowRole == FlowRoleType.Modify);
                 case SystemRoleType.Authed:
                     return (flowRole == FlowRoleType.Endpoint);
@@ -143,10 +142,10 @@ namespace Windsor.Node2008.WNOS.Logic
                     return false;
             }
         }
-        public UserAccessPolicy CreatePolicy(SystemRoleType userRole, string userId, 
+        public UserAccessPolicy CreatePolicy(SystemRoleType userRole, string userId,
                                              string flowName, FlowRoleType flowRoleType)
         {
-            if ((flowRoleType == FlowRoleType.None) || 
+            if ((flowRoleType == FlowRoleType.None) ||
                 !IsFlowRoleTypePermittedForUserRole(userRole, flowRoleType))
             {
                 throw new ArgumentException(string.Format("Invalid user role (\"{0}\") specified for flow role (\"{0}\")",
@@ -181,21 +180,21 @@ namespace Windsor.Node2008.WNOS.Logic
                                                                   EnumUtils.ToDescription(userRole), EnumUtils.ToDescription(policy.FlowRoleType)));
                     }
 
-                    bool isFlowProtected = 
-                        (CollectionUtils.IndexOf(protectedFlows, policy.TypeQualifier, 
+                    bool isFlowProtected =
+                        (CollectionUtils.IndexOf(protectedFlows, policy.TypeQualifier,
                                                  StringComparison.InvariantCultureIgnoreCase) >= 0);
 
                     if (userRole == SystemRoleType.Authed)
                     {
-                         DebugUtils.AssertDebuggerBreak(policy.FlowRoleType == FlowRoleType.Endpoint);
-                         if (isFlowProtected)
-                         {
-                             cleansedPolicies.Add(policy);
-                         }
-                         else
-                         {
-                             // Don't add, must be FlowRoleType.Endpoint and flow is not protected
-                         }
+                        DebugUtils.AssertDebuggerBreak(policy.FlowRoleType == FlowRoleType.Endpoint);
+                        if (isFlowProtected)
+                        {
+                            cleansedPolicies.Add(policy);
+                        }
+                        else
+                        {
+                            // Don't add, must be FlowRoleType.Endpoint and flow is not protected
+                        }
                     }
                     else if (userRole == SystemRoleType.Program)
                     {
@@ -227,23 +226,47 @@ namespace Windsor.Node2008.WNOS.Logic
         #region Properties
         public IAccountManagerEx AccountManager
         {
-            get { return _accountManager; }
-            set { _accountManager = value; }
+            get
+            {
+                return _accountManager;
+            }
+            set
+            {
+                _accountManager = value;
+            }
         }
         public IAccountService AccountService
         {
-            get { return _accountService; }
-            set { _accountService = value; }
+            get
+            {
+                return _accountService;
+            }
+            set
+            {
+                _accountService = value;
+            }
         }
         public INAASManagerEx NAASManager
         {
-            get { return _naasManager; }
-            set { _naasManager = value; }
+            get
+            {
+                return _naasManager;
+            }
+            set
+            {
+                _naasManager = value;
+            }
         }
         public IFlowManager FlowManager
         {
-            get { return _flowManager; }
-            set { _flowManager = value; }
+            get
+            {
+                return _flowManager;
+            }
+            set
+            {
+                _flowManager = value;
+            }
         }
         #endregion
     }

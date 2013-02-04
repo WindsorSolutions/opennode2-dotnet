@@ -50,9 +50,8 @@ namespace Windsor.Node2008.WNOSDomain
         private bool _isActive;
         private SystemRoleType _role;
         private IList<UserAccessPolicy> _policies;
-        private bool? _isDemoUser = null;
 
-        public UserAccount() 
+        public UserAccount()
         {
             _role = SystemRoleType.None;
             _policies = new SortableCollection<UserAccessPolicy>();
@@ -63,8 +62,14 @@ namespace Windsor.Node2008.WNOSDomain
         /// </summary>
         public bool IsActive
         {
-            get { return _isActive; }
-            set { _isActive = value; }
+            get
+            {
+                return _isActive;
+            }
+            set
+            {
+                _isActive = value;
+            }
         }
 
         /// <summary>
@@ -72,8 +77,14 @@ namespace Windsor.Node2008.WNOSDomain
         /// </summary>
         public string NaasAccount
         {
-            get { return _naasAccount; }
-            set { _naasAccount = value; }
+            get
+            {
+                return _naasAccount;
+            }
+            set
+            {
+                _naasAccount = value;
+            }
         }
 
         /// <summary>
@@ -81,8 +92,14 @@ namespace Windsor.Node2008.WNOSDomain
         /// </summary>
         public SystemRoleType Role
         {
-            get { return _role; }
-            set { _role = value; }
+            get
+            {
+                return _role;
+            }
+            set
+            {
+                _role = value;
+            }
         }
 
         /// <summary>
@@ -90,16 +107,30 @@ namespace Windsor.Node2008.WNOSDomain
         /// </summary>
         public IList<UserAccessPolicy> Policies
         {
-            get { return _policies; }
-            set { _policies = value; }
+            get
+            {
+                return _policies;
+            }
+            set
+            {
+                _policies = value;
+            }
         }
         /// <summary>
-        /// Is this a demo user?
+        /// Hashed password
         /// </summary>
-        public bool? IsDemoUser
+        public string PasswordHash
         {
-            get { return _isDemoUser; }
-            set { _isDemoUser = value; }
+            get;
+            set;
+        }
+        /// <summary>
+        /// Is this an endpoint user (that can interact with endpoints)
+        /// </summary>
+        public bool IsEndpointUser
+        {
+            get;
+            set;
         }
     }
 }

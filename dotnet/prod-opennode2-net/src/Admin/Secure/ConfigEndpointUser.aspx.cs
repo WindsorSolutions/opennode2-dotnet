@@ -32,48 +32,41 @@ POSSIBILITY OF SUCH DAMAGE.
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Reflection;
-
+using System.Data;
+using System.Configuration;
+using System.Collections;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Web.UI.HtmlControls;
+using Common.Logging;
+using Windsor.Node2008.WNOSConnector.Admin;
 using Windsor.Node2008.WNOSDomain;
-using Windsor.Node2008.WNOSProviders;
+using Windsor.Node2008.Admin.Controls;
 
-namespace Windsor.Node2008.WNOSConnector.Logic
+namespace Windsor.Node2008.Admin.Secure
 {
-    public interface IAccountManagerEx : IAccountManager
+    public partial class ConfigEndpointUser : SecureListPage
     {
-        /// <summary>
-        /// Get or create the user account with the specified username.
-        /// </summary>
-        UserAccount GetOrCreate(string username, bool alwaysCreateUserInDb, out bool wasCreated);
-        /// <summary>
-        /// Get AdminAccount
-        /// </summary>
-        UserAccount AdminAccount
+
+        #region Members
+
+        #endregion
+
+        protected override void OnInitializeControls(EventArgs e)
         {
-            get;
+            if (Response.IsRequestBeingRedirected)
+            {
+                return;
+            }
+
+            base.OnInitializeControls(e);
+            list.Config = ListConfig;
         }
-        /// <summary>
-        /// Get RuntimeAccount
-        /// </summary>
-        UserAccount RuntimeAccount
-        {
-            get;
-        }
+        #region Properties
 
-        UserAccount Get(string username, NodeVisit visit);
-
-        UserAccount Save(UserAccount instance, bool allowCreateInNaasIfNecessary,
-                         string naasCreatePassword, NodeVisit visit);
-
-        string GenerateRandomPassword();
-
-        bool UserExistsInNAAS(string userName, NodeVisit visit, out string affiliate, out bool canDelete);
-
-        string NodeId
-        {
-            get;
-        }
+        #endregion
     }
 }

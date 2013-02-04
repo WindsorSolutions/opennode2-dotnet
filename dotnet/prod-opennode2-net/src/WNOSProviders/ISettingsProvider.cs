@@ -46,11 +46,17 @@ namespace Windsor.Node2008.WNOSProviders
         /// <summary>
         /// Return the directory path to the temporary WNOS folder
         /// </summary>
-        string TempFolderPath { get; }
+        string TempFolderPath
+        {
+            get;
+        }
         /// <summary>
         /// Return the directory path to the Logs WNOS folder
         /// </summary>
-        string LogsFolderPath { get; }
+        string LogsFolderPath
+        {
+            get;
+        }
         /// <summary>
         /// Return a file path to a temporary WNOS file
         /// </summary>
@@ -70,38 +76,58 @@ namespace Windsor.Node2008.WNOSProviders
         /// <summary>
         /// Return the external url to the node admin url
         /// </summary>
-        string AdminUrl { get; }
+        string AdminUrl
+        {
+            get;
+        }
         /// <summary>
         /// Return the external url to the node endpoint v2.0 url
         /// </summary>
-        string Endpoint20Url { get; }
+        string Endpoint20Url
+        {
+            get;
+        }
         /// <summary>
         /// Return the external url to the node endpoint v1.1 url
         /// </summary>
-        string Endpoint11Url { get; }
-        /// <summary>
-        /// Return true if the node is setup in Demo node
-        /// </summary>
-        bool IsDemoNode { get; }
+        string Endpoint11Url
+        {
+            get;
+        }
         /// <summary>
         /// Return true if the node is setup in Production node, false if Test node
         /// </summary>
-        bool IsProductionNode { get; }
+        bool IsProductionNode
+        {
+            get;
+        }
         /// <summary>
         /// Return the bounding box of the node's physical location
         /// </summary>
-        LatLongRectangle NodeBoundingBox { get; }
+        LatLongRectangle NodeBoundingBox
+        {
+            get;
+        }
         /// <summary>
         /// Email address for node admin
         /// </summary>
-        string NodeAdminEmail { get; }
+        string NodeAdminEmail
+        {
+            get;
+        }
         /// <summary>
         /// The NAAS id for the node
         /// </summary>
-        string NodeId { get; }
+        string NodeId
+        {
+            get;
+        }
         /// <summary>
         /// The node organization name
         /// </summary>
-        string NodeOrganizationName { get; }
+        string NodeOrganizationName
+        {
+            get;
+        }
     }
 }

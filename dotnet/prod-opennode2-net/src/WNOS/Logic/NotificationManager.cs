@@ -142,7 +142,7 @@ namespace Windsor.Node2008.WNOS.Logic
         {
             try
             {
-                ValidateByRoleAndNotDemoAccount(visit, SystemRoleType.Program);
+                ValidateByRole(visit, SystemRoleType.Program);
 
                 _notificationDao.SaveNotifications(userAccount.Id, visit.Account.Id, notifications);
 

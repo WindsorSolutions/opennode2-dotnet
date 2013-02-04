@@ -122,6 +122,18 @@ namespace Windsor.Commons.Spring
             FieldNotInitializedException.ThrowIfNull(this, ref _transactionTemplate);
             FieldNotInitializedException.ThrowIfNull(this, ref _adoDaoSupport);
         }
+        public bool CheckIfColumnExists(string tableName, string columnName)
+        {
+            DataTable table = GetTableColumns(tableName);
+            foreach (DataColumn column in table.Columns)
+            {
+                if (string.Equals(column.ColumnName, columnName, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
         public bool CheckIfDatabaseExists()
         {
             if (!IsSqlServerDatabase)
