@@ -32,41 +32,22 @@ POSSIBILITY OF SUCH DAMAGE.
 #endregion
 
 using System;
-using System.Data;
-using System.Configuration;
-using System.Collections;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
-using Common.Logging;
-using Windsor.Node2008.WNOSConnector.Admin;
 using Windsor.Node2008.WNOSDomain;
-using Windsor.Node2008.Admin.Controls;
+using System.Collections.Generic;
+using Windsor.Node2008.WNOSUtility;
 
-namespace Windsor.Node2008.Admin.Secure
+namespace Windsor.Node2008.WNOS.Data
 {
-    public partial class ConfigPartner : SecureConfigSectionListPage
+    public interface IEndpointUserDao
     {
-
-        #region Members
-
-        #endregion
-
-        protected override void OnInitializeControls(EventArgs e)
+        bool AreEndpointUsersEnabled
         {
-            if (Response.IsRequestBeingRedirected)
-            {
-                return;
-            }
-
-            base.OnInitializeControls(e);
-            list.Config = ListConfig;
+            get;
         }
-        #region Properties
-
-        #endregion
+        IList<UserAccount> Get();
+        UserAccount GetByName(string name);
+        IList<UserAccount> GetAllPossibleEndpointUsers();
+        void Save(UserAccount item, string testNaasPassword, string prodNaasPassword);
+        void Remove(UserAccount item);
     }
 }

@@ -65,7 +65,7 @@ namespace Windsor.Node2008.WNOS.Data
         new public void Init()
         {
             base.Init();
-		}
+        }
 
         #endregion
         #region Mappers
@@ -83,7 +83,7 @@ namespace Windsor.Node2008.WNOS.Data
             return partnerIdentity;
         }
         #endregion // Mappers
-		
+
         #region Methods
         /// <summary>
         /// Save()
@@ -116,26 +116,28 @@ namespace Windsor.Node2008.WNOS.Data
             }
             item.ModifiedOn = now;
         }
-        
+
         /// <summary>
         /// GetById()
-		/// </summary>
+        /// </summary>
         public PartnerIdentity GetById(string id)
         {
-			try {
+            try
+            {
                 PartnerIdentity partnerIdentity =
                     DoSimpleQueryForObjectDelegate<PartnerIdentity>(
-                        TABLE_NAME, "Id", id, MAP_PARTNER_IDENTITY_COLUMNS, 
-						delegate(IDataReader reader, int rowNum) 
-						{
+                        TABLE_NAME, "Id", id, MAP_PARTNER_IDENTITY_COLUMNS,
+                        delegate(IDataReader reader, int rowNum)
+                        {
                             return MapPartnerIdentity(reader);
-						});
+                        });
 
                 return partnerIdentity;
-			}
-			catch(Spring.Dao.IncorrectResultSizeDataAccessException) {
-				return null; // Not found
-			}
+            }
+            catch (Spring.Dao.IncorrectResultSizeDataAccessException)
+            {
+                return null; // Not found
+            }
         }
 
         /// <summary>

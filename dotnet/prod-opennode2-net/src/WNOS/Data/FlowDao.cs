@@ -33,16 +33,8 @@ POSSIBILITY OF SUCH DAMAGE.
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 using System.Data;
-using System.Data.Common;
-using System.Reflection;
-
-using Spring.Data.Generic;
-using Spring.Data.Common;
-
-using Common.Logging;
 
 using Windsor.Node2008.WNOSDomain;
 using Windsor.Node2008.WNOSUtility;

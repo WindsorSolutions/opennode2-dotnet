@@ -138,6 +138,7 @@
     <Compile Include="Data\DbUtils.cs" />
     <Compile Include="Data\DocumentContentDao.cs" />
     <Compile Include="Data\DocumentDao.cs" />
+    <Compile Include="Data\EndpointUserDao.cs" />
     <Compile Include="Data\FlowDao.cs" />
     <Compile Include="Data\IAccountAuthorizationRequestDao.cs" />
     <Compile Include="Data\IAccountDao.cs" />
@@ -147,6 +148,7 @@
     <Compile Include="Data\IDataProviderDao.cs" />
     <Compile Include="Data\IDocumentContentDao.cs" />
     <Compile Include="Data\IDocumentDao.cs" />
+    <Compile Include="Data\IEndpointUserDao.cs" />
     <Compile Include="Data\IFlowDao.cs" />
     <Compile Include="Data\INodeNotificationDao.cs" />
     <Compile Include="Data\INotificationDao.cs" />
@@ -173,6 +175,7 @@
     <Compile Include="Logic\DatabaseBasedContentManager.cs" />
     <Compile Include="Logic\DataProviderManager.cs" />
     <Compile Include="Logic\DocumentManager.cs" />
+    <Compile Include="Logic\EndpointUserManager.cs" />
     <Compile Include="Logic\FileBasedContentManager.cs" />
     <Compile Include="Logic\ImportExportSettingsManager.cs" />
     <Compile Include="Logic\LogicAuditBaseManager.cs" />

@@ -283,7 +283,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                     value = new DateTime(1900, 1, 1, existingValue.Hour, existingValue.Minute, existingValue.Second);
                 }
             }
-            else if (m_ColumnType == DbType.DateTime)
+            else if ((m_ColumnType == DbType.DateTime) || (m_ColumnType == DbType.Date))
             {
                 if (m_MemberType == typeof(string))
                 {

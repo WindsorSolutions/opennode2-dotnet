@@ -60,7 +60,7 @@ using Windsor.Commons.NodeDomain;
 
 namespace Windsor.Node2008.Admin.Secure
 {
-    public partial class ConfigImportExportSettings : SecurePage
+    public partial class ConfigImportExportSettings : SecureConfigSectionPage
     {
         public enum ImportExpertSettingsType
         {
@@ -149,7 +149,7 @@ namespace Windsor.Node2008.Admin.Secure
                 ImportExportSettings settingsToImport = GetImportSettings();
                 ImportSettingsAction importSettingsAction = GetImportSettingsAction();
 
-                string errorText = 
+                string errorText =
                     _importExportSettingsService.ImportSettings(fileUpload.FileBytes, settingsToImport,
                                                                 importSettingsAction, VisitHelper.GetVisit());
                 divPageNote.Visible = true;
@@ -277,13 +277,25 @@ namespace Windsor.Node2008.Admin.Secure
 
         public IImportExportSettingsManager ImportExportSettingsService
         {
-            get { return _importExportSettingsService; }
-            set { _importExportSettingsService = value; }
+            get
+            {
+                return _importExportSettingsService;
+            }
+            set
+            {
+                _importExportSettingsService = value;
+            }
         }
         public DataModel Model
         {
-            get { return _dataModel; }
-            set { _dataModel = value; }
+            get
+            {
+                return _dataModel;
+            }
+            set
+            {
+                _dataModel = value;
+            }
         }
         #endregion
 

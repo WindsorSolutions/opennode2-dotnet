@@ -35,38 +35,54 @@ using System;
 using System.Data;
 using System.Configuration;
 using System.Collections;
+using System.Collections.Generic;
 using System.Web;
 using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
+
 using Common.Logging;
+
 using Windsor.Node2008.WNOSConnector.Admin;
 using Windsor.Node2008.WNOSDomain;
 using Windsor.Node2008.Admin.Controls;
+using Windsor.Commons.Core;
 
-namespace Windsor.Node2008.Admin.Secure
+namespace Windsor.Node2008.Admin
 {
-    public partial class ConfigPartner : SecureConfigSectionListPage
+    public abstract class SecureConfigSectionPage : SecurePage
     {
-
-        #region Members
-
-        #endregion
-
-        protected override void OnInitializeControls(EventArgs e)
+        protected override void OnInit(EventArgs e)
         {
-            if (Response.IsRequestBeingRedirected)
-            {
-                return;
-            }
-
-            base.OnInitializeControls(e);
-            list.Config = ListConfig;
+            base.OnInit(e);
         }
-        #region Properties
+        protected override void InitializeModel()
+        {
+            base.InitializeModel();
 
-        #endregion
+            if (EndpointUserService == null)
+            {
+                throw new ArgumentNullException("Missing EndpointUserService");
+            }
+            if (!EndpointUserService.AreEndpointUsersEnabled)
+            {
+                List<SideTabItem> list = new List<SideTabItem>(SideTabs.Length);
+                foreach (SideTabItem item in SideTabs)
+                {
+                    if (!item.Url.Contains("EndpointUser"))
+                    {
+                        list.Add(item);
+                    }
+                }
+                SideTabs = list.ToArray();
+            }
+        }
+        public IEndpointUserService EndpointUserService
+        {
+            get;
+            set;
+        }
     }
 }

@@ -42,7 +42,7 @@ namespace Windsor.Node2008.WNOSPlugin.PNWWQX
 	/// </summary>
 	public class PNWWQXProcessor
 	{
-        public static PNWWQXMeasurements GetMeasurements(
+		public static PNWWQXMeasurements GetMeasurements(
 			int rowId, 
 			int maxRows, 
 			string providingOrganizationName, 
@@ -66,37 +66,37 @@ namespace Windsor.Node2008.WNOSPlugin.PNWWQX
 			string[] analyteName, 
 			string[] sampledTaxon
 			)
-        {
+		{
 
-            PNWWQXMeasurements measurments = new PNWWQXMeasurements();
+			PNWWQXMeasurements measurments = new PNWWQXMeasurements();
 
-            //Validate Lat long
-            //Do not wrap in try,catch -- validation logic build in
-            Utility.LatLong ll = new Utility.LatLong(
-                minimumLocationLatitude, 
-                minimumLocationLongitude,
-                maximumLocationLatitude,
-                maximumLocationLongitude);
+			//Validate Lat long
+			//Do not wrap in try,catch -- validation logic build in
+			Utility.LatLong ll = new Utility.LatLong(
+				minimumLocationLatitude, 
+				minimumLocationLongitude,
+				maximumLocationLatitude,
+				maximumLocationLongitude);
 
 			Utility.MinMaxDate dateProject = new Utility.MinMaxDate(
 				projectStartDate,
 				projectEndDate);
 			
 			Utility.MinMaxDate dateFieldEvent = new Utility.MinMaxDate(
-                fieldEventStartDate,
-                fieldEventEndDate);
+				fieldEventStartDate,
+				fieldEventEndDate);
 
 
-            //Array Used to buld the return array
-            ArrayList returnMeasurments = new ArrayList();
+			//Array Used to buld the return array
+			ArrayList returnMeasurments = new ArrayList();
 
-            //Get Data
-            DataSet ds = PNWWQXData.GetData
+			//Get Data
+			DataSet ds = PNWWQXData.GetData
 				(
-                rowId,
-                maxRows,
-                providingOrganizationName,
-                projectOrganizationName,
+				rowId,
+				maxRows,
+				providingOrganizationName,
+				projectOrganizationName,
 				projectName,
 				dateProject,
 				responsibleOrganizationName,
@@ -105,13 +105,13 @@ namespace Windsor.Node2008.WNOSPlugin.PNWWQX
 				string.Join(Config.SQL_ARR_DELIMINATOR.ToString(), locationDescriptorName),
 				string.Join(Config.SQL_ARR_DELIMINATOR.ToString(), stationType),
 				stationName,
-                samplingOrganizationName,
-                dateFieldEvent,
+				samplingOrganizationName,
+				dateFieldEvent,
 				string.Join(Config.SQL_ARR_DELIMINATOR.ToString(), sampledMedia),
 				string.Join(Config.SQL_ARR_DELIMINATOR.ToString(), analyteName),                    
-                string.Join(Config.SQL_ARR_DELIMINATOR.ToString(), sampledTaxon),
+				string.Join(Config.SQL_ARR_DELIMINATOR.ToString(), sampledTaxon),
 				Common.PNWWQDXIdentity.Measurements
-                );
+				);
 
 #if DEBUG
 
@@ -122,37 +122,37 @@ namespace Windsor.Node2008.WNOSPlugin.PNWWQX
 
 #endif
 
-                //Load Measurments
-                Measurements.LoadMeasurementsValues(ref returnMeasurments, ref ds);
+				//Load Measurments
+				Measurements.LoadMeasurementsValues(ref returnMeasurments, ref ds);
 
-            //Return cased array
-            measurments.PNWWQXMeasurementsList = (PNWWQXMeasurementsList[])returnMeasurments.ToArray(typeof(PNWWQXMeasurementsList));
+			//Return cased array
+			measurments.PNWWQXMeasurementsList = (PNWWQXMeasurementsList[])returnMeasurments.ToArray(typeof(PNWWQXMeasurementsList));
 
-           
-            return measurments;
-        }
+		   
+			return measurments;
+		}
 
 
 
-        /// <summary>
-        /// getProjects
-        /// </summary>
-        /// <param name="rowId"></param>
-        /// <param name="maxRows"></param>
-        /// <param name="providingOrganizationName"></param>
-        /// <param name="projectOrganizationName"></param>
-        /// <param name="samplingOrganizationName"></param>
-        /// <param name="projectStartDate"></param>
-        /// <param name="projectEndDate"></param>
-        /// <param name="maximumLocationLatitude"></param>
-        /// <param name="maximumLocationLongitude"></param>
-        /// <param name="minimumLocationLatitude"></param>
-        /// <param name="minimumLocationLongitude"></param>
-        /// <param name="locationDescriptorContext"></param>
-        /// <param name="locationDescriptorName"></param>
-        /// <param name="analyteName"></param>
-        /// <returns>PNWWQXProjects</returns>
-        public static PNWWQXProjects GetProjects
+		/// <summary>
+		/// getProjects
+		/// </summary>
+		/// <param name="rowId"></param>
+		/// <param name="maxRows"></param>
+		/// <param name="providingOrganizationName"></param>
+		/// <param name="projectOrganizationName"></param>
+		/// <param name="samplingOrganizationName"></param>
+		/// <param name="projectStartDate"></param>
+		/// <param name="projectEndDate"></param>
+		/// <param name="maximumLocationLatitude"></param>
+		/// <param name="maximumLocationLongitude"></param>
+		/// <param name="minimumLocationLatitude"></param>
+		/// <param name="minimumLocationLongitude"></param>
+		/// <param name="locationDescriptorContext"></param>
+		/// <param name="locationDescriptorName"></param>
+		/// <param name="analyteName"></param>
+		/// <returns>PNWWQXProjects</returns>
+		public static PNWWQXProjects GetProjects
 			(
 			int rowId, 
 			int maxRows, 
@@ -177,7 +177,7 @@ namespace Windsor.Node2008.WNOSPlugin.PNWWQX
 			string[] analyteName, 
 			string[] sampledTaxon
 			)
-        {
+		{
 
 			//begin test raising user exceptions
 			//SoapException SoapExcept = CreateSoapException();
@@ -185,7 +185,7 @@ namespace Windsor.Node2008.WNOSPlugin.PNWWQX
 			//throw new Exception("E_InvalidSQL");
 			//end test
 
-            PNWWQXProjects projects = new PNWWQXProjects();
+			PNWWQXProjects projects = new PNWWQXProjects();
 
 			//Validate Lat long
 			//Do not wrap in try,catch -- validation logic build in
@@ -247,29 +247,29 @@ namespace Windsor.Node2008.WNOSPlugin.PNWWQX
 
 			
 			return projects;
-        }
+		}
 
 
-        /// <summary>
-        /// getStations
-        /// </summary>
-        /// <param name="rowId"></param>
-        /// <param name="maxRows"></param>
-        /// <param name="responsibleOrganizationName"></param>
-        /// <param name="providingOrganizationName"></param>
-        /// <param name="projectName"></param>
-        /// <param name="fieldEventStartDate"></param>
-        /// <param name="fieldEventEndDate"></param>
-        /// <param name="maximumLocationLatitude"></param>
-        /// <param name="maximumLocationLongitude"></param>
-        /// <param name="minimumLocationLatitude"></param>
-        /// <param name="minimumLocationLongitude"></param>
-        /// <param name="locationDescriptorContext"></param>
-        /// <param name="locationDescriptorName"></param>
-        /// <param name="stationType"></param>
-        /// <param name="analyteName"></param>
-        /// <returns>PNWWQXStations</returns>
-        public static PNWWQXStations GetStations
+		/// <summary>
+		/// getStations
+		/// </summary>
+		/// <param name="rowId"></param>
+		/// <param name="maxRows"></param>
+		/// <param name="responsibleOrganizationName"></param>
+		/// <param name="providingOrganizationName"></param>
+		/// <param name="projectName"></param>
+		/// <param name="fieldEventStartDate"></param>
+		/// <param name="fieldEventEndDate"></param>
+		/// <param name="maximumLocationLatitude"></param>
+		/// <param name="maximumLocationLongitude"></param>
+		/// <param name="minimumLocationLatitude"></param>
+		/// <param name="minimumLocationLongitude"></param>
+		/// <param name="locationDescriptorContext"></param>
+		/// <param name="locationDescriptorName"></param>
+		/// <param name="stationType"></param>
+		/// <param name="analyteName"></param>
+		/// <returns>PNWWQXStations</returns>
+		public static PNWWQXStations GetStations
 			(
 			int rowId, 
 			int maxRows, 
@@ -293,9 +293,9 @@ namespace Windsor.Node2008.WNOSPlugin.PNWWQX
 			string[] sampledMedia, 
 			string[] analyteName, 
 			string[] sampledTaxon
-            )
-        {
-            PNWWQXStations station = new PNWWQXStations();
+			)
+		{
+			PNWWQXStations station = new PNWWQXStations();
 
 			//Validate Lat long
 			//Do not wrap in try,catch -- validation logic build in
@@ -360,8 +360,8 @@ namespace Windsor.Node2008.WNOSPlugin.PNWWQX
 			station.PNWWQXStationsList = (PNWWQXStationsList[])returnStations.ToArray(typeof(PNWWQXStationsList));
 
 
-            return station;
-        }
+			return station;
+		}
 
 
 	}

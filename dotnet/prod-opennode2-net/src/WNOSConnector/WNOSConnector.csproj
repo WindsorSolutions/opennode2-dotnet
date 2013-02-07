@@ -82,6 +82,7 @@
     </Compile>
     <Compile Include="Admin\IAccountAuthorizationRequestService.cs" />
     <Compile Include="Admin\IDataSourceService.cs" />
+    <Compile Include="Admin\IEndpointUserService.cs" />
     <Compile Include="Admin\IPolicyService.cs" />
     <Compile Include="Admin\IAccountService.cs" />
     <Compile Include="Admin\IActivityService.cs" />

@@ -287,7 +287,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
             {
                 value = int.Parse(value.ToString());
             }
-            else if (m_ColumnType == DbType.DateTime)
+            else if ((m_ColumnType == DbType.DateTime) || (m_ColumnType == DbType.Date))
             {
                 if (m_MemberType == typeof(string))
                 {

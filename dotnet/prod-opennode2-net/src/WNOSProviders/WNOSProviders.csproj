@@ -80,6 +80,7 @@
     <Compile Include="IDataCache.cs" />
     <Compile Include="IDbConnectionFactory.cs" />
     <Compile Include="IDocumentManager.cs" />
+    <Compile Include="IEndpointUserManager.cs" />
     <Compile Include="IFlowManager.cs" />
     <Compile Include="IHeaderDocumentHelper.cs" />
     <Compile Include="Implementations\CompressionHelper.cs" />

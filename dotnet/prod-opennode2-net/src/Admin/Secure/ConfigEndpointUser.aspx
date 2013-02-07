@@ -7,7 +7,7 @@
 
     <div id="pageTitle"><%= SectionTitle %></div>
 
-<%--    <uc1:SimpleList ID="list" runat="server" />
---%>    <uc1:SimpleStackList ID="list" runat="server" />
+    <uc1:SimpleList ID="list" runat="server" />
+<%--    <uc1:SimpleStackList ID="list" runat="server" />--%>
     
 </asp:Content>

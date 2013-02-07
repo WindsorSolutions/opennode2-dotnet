@@ -35,6 +35,7 @@ using System;
 using System.Data;
 using System.Configuration;
 using System.Collections;
+using System.Collections.Generic;
 using System.Web;
 using System.Web.Security;
 using System.Web.UI;
@@ -46,27 +47,14 @@ using Windsor.Node2008.WNOSConnector.Admin;
 using Windsor.Node2008.WNOSDomain;
 using Windsor.Node2008.Admin.Controls;
 
-namespace Windsor.Node2008.Admin.Secure
+namespace Windsor.Node2008.Admin
 {
-    public partial class ConfigPartner : SecureConfigSectionListPage
+    public abstract class SecureConfigSectionListPage : SecureConfigSectionPage
     {
-
-        #region Members
-
-        #endregion
-
-        protected override void OnInitializeControls(EventArgs e)
+        public SimpleListConfig ListConfig
         {
-            if (Response.IsRequestBeingRedirected)
-            {
-                return;
-            }
-
-            base.OnInitializeControls(e);
-            list.Config = ListConfig;
+            get;
+            set;
         }
-        #region Properties
-
-        #endregion
     }
 }

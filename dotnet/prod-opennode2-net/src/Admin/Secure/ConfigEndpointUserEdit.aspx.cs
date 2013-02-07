@@ -52,32 +52,26 @@ using Windsor.Commons.NodeDomain;
 
 namespace Windsor.Node2008.Admin.Secure
 {
-    public partial class ConfigEndpointUserEdit : SecurePage
+    public partial class ConfigEndpointUserEdit : SecureConfigSectionPage
     {
-        #region Members
-
-        private PartnerIdentity _dataItem;
-        private IPartnerService _dataItemService;
-
-        #endregion
-
         #region Spring Biding Stuff
+
+        protected string m_TestPassword;
+        protected string m_ProdPassword;
 
         protected override void InitializeModel()
         {
             base.InitializeModel();
 
-            if (_dataItemService == null)
+            string id = UniqueDataModelKey;
+
+            if (!string.IsNullOrEmpty(id))
             {
-                throw new ArgumentNullException("DataItemService");
-            }
-            if (!string.IsNullOrEmpty(Request["id"]))
-            {
-                _dataItem = _dataItemService.GetByName(Request["id"], VisitHelper.GetVisit());
+                DataItem = EndpointUserService.GetByName(id, VisitHelper.GetVisit());
             }
             else
             {
-                _dataItem = new PartnerIdentity();
+                DataItem = new UserAccount();
             }
         }
         protected override void OnInitializeControls(EventArgs e)
@@ -89,17 +83,33 @@ namespace Windsor.Node2008.Admin.Secure
 
             base.OnInitializeControls(e);
 
+            addEndpointUserBtn.Visible = false;
+
             if (!IsPostBack)
             {
                 introParagraphs.DataSource = IntroParagraphs;
                 introParagraphs.DataBind();
 
-                versionCtrl.DataSource = EnumUtils.GetAllDescriptions<EndpointVersionType>();
-                versionCtrl.DataBind();
+                if (!string.IsNullOrEmpty(DataItem.Id))
+                {
+                    removeBtn.Visible = true;
+                    usernameDropDownList.Visible = false;
+                    usernameLabel.Visible = true;
 
-                addPartnerBtn.Visible = !string.IsNullOrEmpty(_dataItem.Id);
+                    AspNetUtils.SetFocus(this, testNaasPasswordCtrl, true);
+                }
+                else
+                {
+                    removeBtn.Visible = false;
+                    usernameLabel.Visible = false;
 
-                AspNetUtils.SetFocus(this, nameCtrl, true);
+                    usernameDropDownList.Visible = true;
+                    usernameDropDownList.DataTextField = usernameDropDownList.DataValueField = "NaasAccount";
+                    usernameDropDownList.DataSource = EndpointUserService.GetAllPossibleEndpointUsers(VisitHelper.GetVisit());
+                    usernameDropDownList.DataBind();
+
+                    AspNetUtils.SetFocus(this, usernameDropDownList, true);
+                }
             }
         }
         public override string UniqueDataModelKey
@@ -111,23 +121,55 @@ namespace Windsor.Node2008.Admin.Secure
         }
         protected override void LoadModel(object savedModel)
         {
-            _dataItem = (PartnerIdentity)savedModel;
+            DataItem = (UserAccount)savedModel;
         }
 
         protected override object SaveModel()
         {
-            return _dataItem;
+            return DataItem;
         }
 
+        protected void ServerValidateTestOrProdPassword(Object source, ServerValidateEventArgs e)
+        {
+            CustomValidator validator = (CustomValidator)source;
+            PasswordTextBox passwordControl = AspNetUtils.FindDeepControl(this, validator.ControlToValidate) as PasswordTextBox;
+            string password = passwordControl.Text.Trim();
+            e.IsValid = (password.Length > 0);
+        }
         protected override void InitializeDataBindings()
         {
             BindingManager.AddBinding("idCtrl.Value", "DataItem.Id");
-            BindingManager.AddBinding("nameCtrl.Text", "DataItem.Name");
-            BindingManager.AddBinding("endpointCtrl.Text", "DataItem.Url");
-            BindingManager.AddBinding("deleteBtn.Enabled", "!string.IsNullOrEmpty(DataItem.Id)", BindingDirection.TargetToSource);
-            BindingManager.AddBinding("VersionDisplyStringToValue", "DataItem.Version");
+            BindingManager.AddBinding("GetSetControlUsername", "DataItem.NaasAccount");
+            BindingManager.AddBinding("testNaasPasswordCtrl.Text.Trim()", "m_TestPassword");
+            BindingManager.AddBinding("prodNaasPasswordCtrl.Text.Trim()", "m_ProdPassword");
         }
 
+        protected string GetSetControlUsername
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(DataItem.Id))
+                {
+                    return usernameLabel.Text;
+                }
+                else
+                {
+                    return usernameDropDownList.SelectedValue;
+                }
+            }
+            set
+            {
+                if (!string.IsNullOrEmpty(DataItem.Id))
+                {
+                    usernameLabel.Text = value;
+                }
+                else
+                {
+                    usernameDropDownList.SelectedValue = value;
+                }
+            }
+
+        }
         protected override void UnbindFormData()
         {
             try
@@ -140,7 +182,7 @@ namespace Windsor.Node2008.Admin.Secure
 
                 if (this.IsValid)
                 {
-                    _dataItem.Id = _dataItem.Id.Trim();
+                    DataItem.Id = DataItem.Id.Trim();
                 }
             }
             catch (Exception ex)
@@ -150,18 +192,6 @@ namespace Windsor.Node2008.Admin.Secure
             }
         }
         #endregion
-        protected EndpointVersionType VersionDisplyStringToValue
-        {
-            get
-            {
-                return EnumUtils.FromDescription<EndpointVersionType>(versionCtrl.SelectedValue);
-            }
-            set
-            {
-                versionCtrl.SelectedValue = EnumUtils.ToDescription<EndpointVersionType>(value);
-            }
-
-        }
         protected void SaveDataItem(object sender, EventArgs e)
         {
             try
@@ -171,7 +201,7 @@ namespace Windsor.Node2008.Admin.Secure
                     // Error on page, get out of here
                     return;
                 }
-                _dataItem = _dataItemService.Save(_dataItem, VisitHelper.GetVisit());
+                DataItem = EndpointUserService.Save(DataItem, m_TestPassword, m_ProdPassword, VisitHelper.GetVisit());
                 ResponseRedirect("../Secure/ConfigEndpointUser.aspx");
             }
             catch (Exception ex)
@@ -183,11 +213,11 @@ namespace Windsor.Node2008.Admin.Secure
         }
 
 
-        protected void DeleteDataItem(object sender, EventArgs e)
+        protected void RemoveDataItem(object sender, EventArgs e)
         {
             try
             {
-                _dataItemService.Delete(_dataItem, VisitHelper.GetVisit());
+                EndpointUserService.Remove(DataItem, VisitHelper.GetVisit());
                 ResponseRedirect("../Secure/ConfigEndpointUser.aspx");
             }
             catch (Exception ex)
@@ -198,16 +228,16 @@ namespace Windsor.Node2008.Admin.Secure
             }
         }
 
-        protected void OnCheckConnection(object sender, EventArgs e)
+        protected void OnCheckPasswords(object sender, EventArgs e)
         {
             try
             {
-                nameValidator.Enabled = false;
+                usernameValidator.Enabled = false;
                 UnbindFormData();
             }
             finally
             {
-                nameValidator.Enabled = true;
+                usernameValidator.Enabled = true;
             }
             if (!this.IsValid)
             {
@@ -215,16 +245,17 @@ namespace Windsor.Node2008.Admin.Secure
             }
             try
             {
-                Exception exception = _dataItemService.CheckConnection(_dataItem);
-                if (exception != null)
+                string message = EndpointUserService.CheckPasswords(DataItem, m_TestPassword, m_ProdPassword, VisitHelper.GetVisit());
+                if (!string.IsNullOrEmpty(message))
                 {
                     divPageError.Visible = true;
-                    divPageError.InnerText = UIUtility.ParseException(exception);
+                    message = HttpUtility.HtmlEncode(message);
+                    divPageError.InnerHtml = message.Replace(Environment.NewLine, "<br />");
                 }
                 else
                 {
                     divPageNote.Visible = true;
-                    divPageNote.InnerText = "Node endpoint connection attempt was successful!";
+                    divPageNote.InnerText = "Passwords are valid!";
                 }
             }
             catch (Exception ex)
@@ -234,35 +265,17 @@ namespace Windsor.Node2008.Admin.Secure
                 divPageError.InnerText = UIUtility.ParseException(ex);
             }
         }
-        protected void OnAddPartner(object sender, EventArgs e)
+        protected void OnAddEndpointUser(object sender, EventArgs e)
         {
             ResponseRedirect("../Secure/ConfigEndpointUserEdit.aspx");
         }
         #region Properties
 
 
-        public PartnerIdentity DataItem
+        public UserAccount DataItem
         {
-            get
-            {
-                return _dataItem;
-            }
-            set
-            {
-                _dataItem = value;
-            }
-        }
-
-        public IPartnerService DataItemService
-        {
-            get
-            {
-                return _dataItemService;
-            }
-            set
-            {
-                _dataItemService = value;
-            }
+            get;
+            set;
         }
 
         #endregion

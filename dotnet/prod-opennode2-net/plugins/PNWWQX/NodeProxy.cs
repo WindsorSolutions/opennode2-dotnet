@@ -45,7 +45,7 @@ namespace Windsor.Node2008.WNOSPlugin.PNWWQX
 
     [Serializable]
     public class NodeProxy : BaseWNOSPlugin, ISolicitProcessor, IQueryProcessor
-	{
+    {
         public enum ServiceParameterType
         {
 
@@ -114,7 +114,7 @@ namespace Windsor.Node2008.WNOSPlugin.PNWWQX
         }
 
         public PaginatedContentResult ProcessQuery(string requestId)
-		{
+        {
             LOG.DebugEnter(MethodBase.GetCurrentMethod(), requestId);
 
             LazyInit();
@@ -133,11 +133,11 @@ namespace Windsor.Node2008.WNOSPlugin.PNWWQX
             LOG.Debug("OK");
             return result;
 
-		}
+        }
 
 
         public void ProcessSolicit(string requestId)
-		{
+        {
             try
             {
                 AppendAuditLogEvent("Getting request...");
@@ -177,7 +177,7 @@ namespace Windsor.Node2008.WNOSPlugin.PNWWQX
                 throw new ApplicationException("Error while executing plugin", ex);
             }
 
-		}
+        }
 
 
 
@@ -202,7 +202,7 @@ namespace Windsor.Node2008.WNOSPlugin.PNWWQX
 
             if (testServiceName.Contains("_"))
             {
-                testServiceName = testServiceName.Substring(testServiceName.IndexOf("_") +1);
+                testServiceName = testServiceName.Substring(testServiceName.IndexOf("_") + 1);
             }
             if (testServiceName.Contains("."))
             {
@@ -305,6 +305,6 @@ namespace Windsor.Node2008.WNOSPlugin.PNWWQX
 
             return returnData;
         }
-	}
+    }
 }
 

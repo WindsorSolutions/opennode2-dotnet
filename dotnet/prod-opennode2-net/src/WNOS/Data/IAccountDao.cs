@@ -31,7 +31,7 @@ POSSIBILITY OF SUCH DAMAGE.
 */
 #endregion
 
-﻿using System;
+using System;
 using Windsor.Node2008.WNOSDomain;
 using System.Collections.Generic;
 
@@ -53,5 +53,14 @@ namespace Windsor.Node2008.WNOS.Data
         void ResetPassword(string userName, string newPassword);
         void ChangePassword(string userName, string currentPassword, string newPassword);
         IList<string> GetAuthorizedUsernamesForFlow(string flowName, FlowRoleType roleType);
+        bool AreEndpointUsersEnabled
+        {
+            get;
+        }
+        IList<UserAccount> GetEndpointUsers();
+        UserAccount GetEndpointUserByName(string username);
+        IList<UserAccount> GetAllPossibleEndpointUsers();
+        void SaveEndpointUser(UserAccount item, string testNaasPassword, string prodNaasPassword);
+        void RemoveEndpointUser(UserAccount item);
     }
 }

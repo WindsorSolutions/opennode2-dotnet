@@ -31,7 +31,7 @@ POSSIBILITY OF SUCH DAMAGE.
 */
 #endregion
 
-﻿using System;
+using System;
 using System.Net;
 using System.Collections.Generic;
 using Windsor.Node2008.WNOSDomain;
@@ -42,37 +42,37 @@ namespace Windsor.Node2008.WNOSConnector.Logic
 {
     public interface INAASManagerEx : INAASManager
     {
-		/// <summary>
-		/// AuthenticateUser
-		/// </summary>
-		string AuthenticateUser(AuthenticationCredentials credential, string clientHostIP, string authenticationMethod);
-		/// <summary>
-		/// AuthenticateUser
-		/// </summary>
-		string AuthenticateUser(string username, string password, string clientHostIP, string authenticationMethod);
-		/// <summary>
-		/// AuthenticateUser
-		/// </summary>
-		string AuthenticateUser(string username, string password, string clientHostIp);
+        /// <summary>
+        /// AuthenticateUser
+        /// </summary>
+        string AuthenticateUser(AuthenticationCredentials credential, string clientHostIP, string authenticationMethod);
+        /// <summary>
+        /// AuthenticateUser
+        /// </summary>
+        string AuthenticateUser(string username, string password, string clientHostIP, string authenticationMethod);
+        /// <summary>
+        /// AuthenticateUser
+        /// </summary>
+        string AuthenticateUser(string username, string password, string clientHostIp);
 
-		/// <summary>
-		/// Validate
-		/// </summary>
-		string Validate(string securityToken, string clientHostIP);
-		/// <summary>
-		/// Validate
-		/// </summary>
-		string Validate(string securityToken, string clientHostIP, NodeMethod method);
-		/// <summary>
-		/// Validate
-		/// </summary>
-		string Validate(string securityToken, string clientHostIP, NodeMethod method,
-						string flowCode);
-		/// <summary>
-		/// Validate
-		/// </summary>
-		string Validate(string securityToken, string clientHostIP, NodeMethod method,
-						string flowCode, string serviceName);
+        /// <summary>
+        /// Validate
+        /// </summary>
+        string Validate(string securityToken, string clientHostIP);
+        /// <summary>
+        /// Validate
+        /// </summary>
+        string Validate(string securityToken, string clientHostIP, NodeMethod method);
+        /// <summary>
+        /// Validate
+        /// </summary>
+        string Validate(string securityToken, string clientHostIP, NodeMethod method,
+                        string flowCode);
+        /// <summary>
+        /// Validate
+        /// </summary>
+        string Validate(string securityToken, string clientHostIP, NodeMethod method,
+                        string flowCode, string serviceName);
 
         /// <summary>
         /// GetAllUsernames
@@ -110,6 +110,11 @@ namespace Windsor.Node2008.WNOSConnector.Logic
         /// <summary>
         /// RuntimeCredentials
         /// </summary>
-        AuthenticationCredentials RuntimeCredentials { get; }
+        AuthenticationCredentials RuntimeCredentials
+        {
+            get;
+        }
+
+        void ValidateUsernameAndPassword(string username, string password, bool isTestNAASUser);
     }
 }

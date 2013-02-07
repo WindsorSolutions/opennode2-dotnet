@@ -48,7 +48,7 @@ using Windsor.Node2008.Admin.Controls;
 
 namespace Windsor.Node2008.Admin.Secure
 {
-    public partial class ConfigArgs : SecureListPage
+    public partial class ConfigArgs : SecureConfigSectionListPage
     {
 
         #region Members

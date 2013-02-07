@@ -63,6 +63,8 @@ namespace Windsor.Node2008.WNOS.Logic
         private string _bypassNaasUserName = "naasAuthenticateFailed@whatsupnass.com";
 
         private readonly Windsor.Commons.NAASClient.NAASClient _naasClient;
+        private readonly Windsor.Commons.NAASClient.NAASClient _testNaasClient;
+        private readonly Windsor.Commons.NAASClient.NAASClient _prodNaasClient;
         private Windsor.Commons.NAASClient.IUserMgr _usermgrClient;
 
         private readonly AuthenticationCredentials _naasRuntimeCredential;
@@ -70,6 +72,7 @@ namespace Windsor.Node2008.WNOS.Logic
         private readonly AuthenticationCredentials _usermgrRuntimeCredential;
         private readonly NAAS_USRMGR.DomainTypeCode _usermgrRuntimeCredentialDomain;
         private string _nodeId;
+        private string _defaultRequestIp;
         private IObjectCacheDao _objectCacheDao;
         private const string CACHE_NAAS_USER_ACCOUNTS = "CACHE_NAAS_USERNAMES";
 
@@ -79,6 +82,7 @@ namespace Windsor.Node2008.WNOS.Logic
         /// <param name="endpointUrl"></param>
         /// <param name="runtimeCredentials"></param>
         public NAASManager(string testUrl, string prodUrl, bool isProduction,
+                           string defaultRequestIp,
                            AuthenticationCredentials naasRuntimeCredentials,
                            AuthenticationCredentials usermgrRuntimeCredentials)
         {
@@ -91,7 +95,10 @@ namespace Windsor.Node2008.WNOS.Logic
             {
                 throw new ArgumentNullException("prodUrl");
             }
-
+            if (string.IsNullOrEmpty(defaultRequestIp))
+            {
+                throw new ArgumentNullException("defaultRequestIp");
+            }
             if (!testUrl.StartsWith("https://", StringComparison.InvariantCultureIgnoreCase))
             {
                 throw new ArgumentException("Invalid protocol. Must be HTTPS: " + testUrl);
@@ -132,9 +139,12 @@ namespace Windsor.Node2008.WNOS.Logic
                     Enum.Parse(typeof(NAAS_USRMGR.DomainTypeCode),
                     usermgrRuntimeCredentials.Domain, true);
             }
-            _naasClient = new Windsor.Commons.NAASClient.NAASClient(isProduction ? prodUrl : testUrl);
+            _testNaasClient = new Windsor.Commons.NAASClient.NAASClient(testUrl);
+            _prodNaasClient = new Windsor.Commons.NAASClient.NAASClient(prodUrl);
+            _naasClient = isProduction ? _prodNaasClient : _testNaasClient;
             _naasRuntimeCredential = naasRuntimeCredentials;
             _usermgrRuntimeCredential = usermgrRuntimeCredentials;
+            _defaultRequestIp = defaultRequestIp;
         }
 
         #region Authenticate
@@ -195,6 +205,25 @@ namespace Windsor.Node2008.WNOS.Logic
             string authenticationMethod)
         {
 
+            return AuthenticateUser(username, password, clientHostIP, authenticationMethod, _naasClient);
+        }
+
+        /// <summary>
+        /// Authenticate user NAAS credentials
+        /// </summary>
+        /// <param name="username">NAAS Username</param>
+        /// <param name="password">NAAS Password</param>
+        /// <param name="clientHostIp">IP address of the orginal requestor</param>
+        /// <param name="authenticationMethod">one of the authentication methods supported by naas [password]</param>
+        /// <returns></returns>
+        protected string AuthenticateUser(
+            string username,
+            string password,
+            string clientHostIP,
+            string authenticationMethod,
+            Windsor.Commons.NAASClient.NAASClient naasClient)
+        {
+
             try
             {
                 NAAS_CLIENT.CentralAuth req = new NAAS_CLIENT.CentralAuth();
@@ -206,7 +235,7 @@ namespace Windsor.Node2008.WNOS.Logic
                 req.resourceURI = string.Empty;
                 req.userId = username;
 
-                NAAS_CLIENT.CentralAuthResponse resp = _naasClient.CentralAuth(req);
+                NAAS_CLIENT.CentralAuthResponse resp = naasClient.CentralAuth(req);
 
                 string token = resp.@return;
 
@@ -236,7 +265,16 @@ namespace Windsor.Node2008.WNOS.Logic
             }
 
         }
+        public void ValidateUsernameAndPassword(string username, string password, bool isTestNAASUser)
+        {
 
+            AuthenticateUser(
+                username,
+                password,
+                _defaultRequestIp,
+                DEFAULT_AUTH_METHOD,
+                isTestNAASUser ? _testNaasClient : _prodNaasClient);
+        }
         #endregion
 
 
@@ -461,7 +499,7 @@ namespace Windsor.Node2008.WNOS.Logic
             getUserList.affiliate = string.Empty;
 
             userAccounts = new OrderedSet<CachedUserAccountInfo>();
-            for (int i = 0; ;)
+            for (int i = 0; ; )
             {
                 int length = GetAllUserAccounts(getUserList, i, getBatchCount, userAccounts);
                 if (length <= 0)
@@ -493,7 +531,7 @@ namespace Windsor.Node2008.WNOS.Logic
                     {
                         // This is the error, skip it
                         return 1;
-                    } 
+                    }
                     else
                     {
                         return GetAllUserAccountsXmlError(getUserList, startIndex, count, userAccounts);
@@ -541,7 +579,7 @@ namespace Windsor.Node2008.WNOS.Logic
             {
                 return numAddedFirst;
             }
-            int numAddedSecond = GetAllUserAccounts(getUserList, startIndex + firstHalfCount, 
+            int numAddedSecond = GetAllUserAccounts(getUserList, startIndex + firstHalfCount,
                                                     secondHalfCount, userAccounts);
             if (numAddedSecond == 0)
             {
@@ -583,7 +621,7 @@ namespace Windsor.Node2008.WNOS.Logic
             }
             return list;
         }
-        private ICollection<KeyValuePair<string, string>> 
+        private ICollection<KeyValuePair<string, string>>
             CreateUsernamePairList(OrderedSet<CachedUserAccountInfo> userAccounts, bool appendAffiliation)
         {
             if (CollectionUtils.IsNullOrEmpty(userAccounts))
@@ -595,8 +633,8 @@ namespace Windsor.Node2008.WNOS.Logic
             {
                 foreach (CachedUserAccountInfo info in userAccounts)
                 {
-                    list.Add(new KeyValuePair<string, string>(info.Username, 
-                                                              string.Format("{0}  ({1})", 
+                    list.Add(new KeyValuePair<string, string>(info.Username,
+                                                              string.Format("{0}  ({1})",
                                                                             info.Username, info.Affiliate)));
                 }
             }
@@ -800,13 +838,25 @@ namespace Windsor.Node2008.WNOS.Logic
 
         public bool BypassNaasAuthenticateFailures
         {
-            get { return _bypassNaasAuthenticateFailures; }
-            set { _bypassNaasAuthenticateFailures = value; }
+            get
+            {
+                return _bypassNaasAuthenticateFailures;
+            }
+            set
+            {
+                _bypassNaasAuthenticateFailures = value;
+            }
         }
         public string BypassNaasUserName
         {
-            get { return _bypassNaasUserName; }
-            set { _bypassNaasUserName = value; }
+            get
+            {
+                return _bypassNaasUserName;
+            }
+            set
+            {
+                _bypassNaasUserName = value;
+            }
         }
         public string NodeId
         {
@@ -821,55 +871,74 @@ namespace Windsor.Node2008.WNOS.Logic
         }
         public TimeSpan CacheNaasUsernamesDuration
         {
-            get { return _cacheNaasUsernamesDuration; }
-            set { _cacheNaasUsernamesDuration = value; }
+            get
+            {
+                return _cacheNaasUsernamesDuration;
+            }
+            set
+            {
+                _cacheNaasUsernamesDuration = value;
+            }
         }
         public AuthenticationCredentials RuntimeCredentials
         {
-            get { return _usermgrRuntimeCredential; }
+            get
+            {
+                return _usermgrRuntimeCredential;
+            }
         }
         public Windsor.Commons.NAASClient.IUserMgr UsermgrClient
         {
-            get { return _usermgrClient; }
-            set { 
+            get
+            {
+                return _usermgrClient;
+            }
+            set
+            {
                 _usermgrClient = value;
                 //TestGetUserInfo();
             }
         }
         public IObjectCacheDao ObjectCacheDao
         {
-            get { return _objectCacheDao; }
-            set { _objectCacheDao = value; }
+            get
+            {
+                return _objectCacheDao;
+            }
+            set
+            {
+                _objectCacheDao = value;
+            }
         }
         private void TestGetUserInfo()
         {
-                NAAS_USRMGR.GetUserList getUserList = new NAAS_USRMGR.GetUserList();
-                getUserList.adminName = "lsuydam@svt.org";
-                getUserList.credential = "CDXwqxls11";
-                getUserList.domain = _usermgrRuntimeCredentialDomain;
-                getUserList.rowId = "0";
-                getUserList.maxRows = "-1";
-                getUserList.userId = "NDEQ.DEQNODE@NEBRASKA.GOV".ToLower();
-                //getUserList.userId = "ted@windsorsolutions.com";
-                getUserList.userId = "Ndeq.Deqnode@NEBRASKA.GOV";
-                getUserList.status = string.Empty;
-                getUserList.affiliate = string.Empty;
+            NAAS_USRMGR.GetUserList getUserList = new NAAS_USRMGR.GetUserList();
+            getUserList.adminName = "lsuydam@svt.org";
+            getUserList.credential = "CDXwqxls11";
+            getUserList.domain = _usermgrRuntimeCredentialDomain;
+            getUserList.rowId = "0";
+            getUserList.maxRows = "-1";
+            getUserList.userId = "NDEQ.DEQNODE@NEBRASKA.GOV".ToLower();
+            //getUserList.userId = "ted@windsorsolutions.com";
+            getUserList.userId = "Ndeq.Deqnode@NEBRASKA.GOV";
+            getUserList.status = string.Empty;
+            getUserList.affiliate = string.Empty;
 
-                getUserList.userId = "Morgan.leibrandt@nebraska.gov";
-                getUserList.userId = "Morgan.leibrandt@nebraska.gov".ToLower();
+            getUserList.userId = "Morgan.leibrandt@nebraska.gov";
+            getUserList.userId = "Morgan.leibrandt@nebraska.gov".ToLower();
 
-                NAAS_USRMGR.GetUserListResponse response = _usermgrClient.GetUserList(getUserList);
-                if (CollectionUtils.IsNullOrEmpty(response.@return))
+            NAAS_USRMGR.GetUserListResponse response = _usermgrClient.GetUserList(getUserList);
+            if (CollectionUtils.IsNullOrEmpty(response.@return))
+            {
+                return;
+            }
+            foreach (NAAS_USRMGR.UserAccountType userAcct in response.@return)
+            {
+                if (string.Equals(userAcct.userId, getUserList.userId, StringComparison.InvariantCultureIgnoreCase))
                 {
                     return;
                 }
-                foreach (NAAS_USRMGR.UserAccountType userAcct in response.@return)
-                {
-                    if (string.Equals(userAcct.userId, getUserList.userId, StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        return;
-                    }
-                }
+            }
         }
     }
     [Serializable]
@@ -890,13 +959,25 @@ namespace Windsor.Node2008.WNOS.Logic
 
         public string Username
         {
-            get { return _username; }
-            set { _username = value; }
+            get
+            {
+                return _username;
+            }
+            set
+            {
+                _username = value;
+            }
         }
         public string Affiliate
         {
-            get { return _affiliate; }
-            set { _affiliate = value; }
+            get
+            {
+                return _affiliate;
+            }
+            set
+            {
+                _affiliate = value;
+            }
         }
         public int CompareTo(CachedUserAccountInfo other)
         {

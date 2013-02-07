@@ -181,6 +181,19 @@ namespace Windsor.Commons.Core
             }
             return -1;
         }
+        public static string GetRandomAsciiString(int minChars, int maxChars)
+        {
+            StringBuilder sb = new StringBuilder();
+            Random random = new Random((int)DateTime.Now.Ticks);
+
+            int numChars = random.Next(minChars, maxChars);
+            for (int i = 0; i < numChars; ++i)
+            {
+                int asciiChar = random.Next(32, 126);
+                sb.Append(Convert.ToChar(asciiChar));
+            }
+            return sb.ToString();
+        }
         public static string FirstWord(string text)
         {
             if (text == null)

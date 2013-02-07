@@ -51,7 +51,7 @@ using Windsor.Commons.Core;
 
 namespace Windsor.Node2008.Admin.Secure
 {
-    public partial class ConfigArgsEdit : SecurePage
+    public partial class ConfigArgsEdit : SecureConfigSectionPage
     {
         private class DataModel
         {

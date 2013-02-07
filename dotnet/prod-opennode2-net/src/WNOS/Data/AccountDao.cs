@@ -50,16 +50,17 @@ using Windsor.Node2008.WNOSDomain;
 using Windsor.Node2008.WNOSUtility;
 using Windsor.Node2008.WNOSProviders;
 using Windsor.Commons.Core;
+using Microsoft.VisualBasic;
 
 namespace Windsor.Node2008.WNOS.Data
 {
+    [System.Runtime.InteropServices.GuidAttribute("19B8ABD5-192B-4F6F-BFF6-11CA3D312EDE")]
     public class AccountDao : BaseDao, IAccountDao
     {
         public const string TABLE_NAME = "NAccount";
         public const string POLICY_TABLE_NAME = "NAccountPolicy";
         private ICryptographyProvider _cryptographyProvider;
         private IFlowDao _flowDao;
-        private bool _hasIsEndpointUserColumn;
 
         #region Init
 
@@ -72,8 +73,8 @@ namespace Windsor.Node2008.WNOS.Data
 
             MAP_USER_ACCOUNT_COLUMNS = "Id;NAASAccount;IsActive;SystemRole;ModifiedBy;ModifiedOn";
 
-            _hasIsEndpointUserColumn = CheckIfColumnExists(TABLE_NAME, "IsEndpointUser");
-            if (_hasIsEndpointUserColumn)
+            AreEndpointUsersEnabled = CheckIfColumnExists(TABLE_NAME, "IsEndpointUser");
+            if (AreEndpointUsersEnabled)
             {
                 MAP_USER_ACCOUNT_COLUMNS += ";PasswordHash;IsEndpointUser";
             }
@@ -106,10 +107,14 @@ namespace Windsor.Node2008.WNOS.Data
             account.Role = EnumUtils.ParseEnum<SystemRoleType>(reader.GetString(index++));
             account.ModifiedById = reader.GetString(index++);
             account.ModifiedOn = reader.GetDateTime(index++);
-            if (_hasIsEndpointUserColumn)
+            if (AreEndpointUsersEnabled)
             {
-                account.PasswordHash = reader.GetString(index++);
+                string passwordHash = reader.GetString(index++);
                 account.IsEndpointUser = DbUtils.ToBool(reader.GetString(index++));
+                if (string.IsNullOrEmpty(passwordHash))
+                {
+                    account.IsEndpointUser = false;
+                }
             }
             return account;
         }
@@ -270,6 +275,111 @@ namespace Windsor.Node2008.WNOS.Data
                 });
             PostMapUserAccounts(userAccounts, FlowDao.GetAllDataFlowNames());
             return userAccounts;
+        }
+
+        public IList<UserAccount> GetEndpointUsers()
+        {
+            List<UserAccount> userAccounts = new List<UserAccount>();
+            if (AreEndpointUsersEnabled)
+            {
+                DoSimpleQueryWithRowCallbackDelegate(
+                    TABLE_NAME, "IsDeleted;IsActive;IsEndpointUser;PasswordHash IS NOT NULL",
+                    new object[] { DbUtils.ToDbBool(false), DbUtils.ToDbBool(true), DbUtils.ToDbBool(true) },
+                    null, MAP_USER_ACCOUNT_COLUMNS,
+                    delegate(IDataReader reader)
+                    {
+                        userAccounts.Add(MapUserAccount(reader));
+                    });
+            }
+            return userAccounts;
+        }
+        public UserAccount GetEndpointUserByName(string username)
+        {
+            try
+            {
+                if (AreEndpointUsersEnabled)
+                {
+                    UserAccount userAccount =
+                        DoSimpleQueryForObjectDelegate<UserAccount>(
+                            TABLE_NAME, "NAASAccount;IsDeleted;IsActive;IsEndpointUser;PasswordHash IS NOT NULL",
+                            new object[] { username, DbUtils.ToDbBool(false), DbUtils.ToDbBool(true), DbUtils.ToDbBool(true) },
+                            MAP_USER_ACCOUNT_COLUMNS,
+                            delegate(IDataReader reader, int rowNum)
+                            {
+                                return MapUserAccount(reader);
+                            });
+                    return userAccount;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Spring.Dao.IncorrectResultSizeDataAccessException)
+            {
+                return null; // Not found
+            }
+        }
+        public IList<UserAccount> GetAllPossibleEndpointUsers()
+        {
+            List<UserAccount> userAccounts = new List<UserAccount>();
+            if (AreEndpointUsersEnabled)
+            {
+                DoSimpleQueryWithRowCallbackDelegate(
+                    TABLE_NAME, "IsDeleted;IsActive",
+                    new object[] { DbUtils.ToDbBool(false), DbUtils.ToDbBool(true) },
+                    "NAASAccount", MAP_USER_ACCOUNT_COLUMNS,
+                    delegate(IDataReader reader)
+                    {
+                        userAccounts.Add(MapUserAccount(reader));
+                    });
+            }
+            return userAccounts;
+        }
+        public void RemoveEndpointUser(UserAccount item)
+        {
+            DateTime now = DateTime.Now;
+            TransactionTemplate.Execute(delegate
+            {
+                DoSimpleUpdateOne(TABLE_NAME, "Id", item.Id.ToString(),
+                                  "IsEndpointUser;PasswordHash",
+                                  DbUtils.ToDbBool(false), null);
+                //DeleteAllPoliciesForUser(id);
+                return null;
+            });
+        }
+        public void SaveEndpointUser(UserAccount item, string testNaasPassword, string prodNaasPassword)
+        {
+            if ((item == null) || string.IsNullOrEmpty(item.NaasAccount) ||
+                (string.IsNullOrEmpty(testNaasPassword) || string.IsNullOrEmpty(prodNaasPassword)))
+            {
+                throw new ArgumentException("Input values are null.");
+            }
+
+            item.Id = GetUserIdByName(item.NaasAccount);
+            if (string.IsNullOrEmpty(item.Id))
+            {
+                throw new ArgException("Could not locate username in database: {0}.", item.NaasAccount);
+            }
+
+            DateTime now = DateTime.Now;
+
+            string passwordHash = ComputePaaswordHash(testNaasPassword, prodNaasPassword);
+
+            DoSimpleUpdateOne(TABLE_NAME, "Id", item.Id.ToString(),
+                              "ModifiedBy;ModifiedOn;IsEndpointUser;PasswordHash",
+                              item.ModifiedById, now, DbUtils.ToDbBool(true), passwordHash);
+            item.ModifiedOn = now;
+        }
+
+        protected readonly string PASSWORDS_SEPARATOR = ControlChars.NullChar.ToString() + ControlChars.NullChar.ToString() + ControlChars.NullChar.ToString() + ControlChars.NullChar.ToString();
+        protected virtual string ComputePaaswordHash(string testNaasPassword, string prodNaasPassword)
+        {
+            string passwordsValue = StringUtils.GetRandomAsciiString(8, 32) + PASSWORDS_SEPARATOR +
+                ((testNaasPassword == null) ? string.Empty : testNaasPassword) + PASSWORDS_SEPARATOR +
+                ((prodNaasPassword == null) ? string.Empty : prodNaasPassword);
+            string passwordsHashValue = _cryptographyProvider.Encrypt(passwordsValue);
+            return passwordsHashValue;
         }
 
         public ICollection<string> GetAllUserNames()
@@ -576,6 +686,13 @@ namespace Windsor.Node2008.WNOS.Data
                 _cryptographyProvider = value;
             }
         }
+
+        public bool AreEndpointUsersEnabled
+        {
+            get;
+            protected set;
+        }
+
 
         #endregion
 

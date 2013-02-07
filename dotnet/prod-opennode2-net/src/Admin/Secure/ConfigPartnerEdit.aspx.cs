@@ -52,7 +52,7 @@ using Windsor.Commons.NodeDomain;
 
 namespace Windsor.Node2008.Admin.Secure
 {
-    public partial class ConfigPartnerEdit : SecurePage
+    public partial class ConfigPartnerEdit : SecureConfigSectionPage
     {
         #region Members
 

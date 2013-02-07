@@ -34,92 +34,64 @@ POSSIBILITY OF SUCH DAMAGE.
 using System;
 using System.Collections.Generic;
 using System.Text;
+
+using System.Data;
+using System.Data.Common;
+using System.Reflection;
+
+using Spring.Data.Generic;
+using Spring.Data.Common;
+
+
+using Common.Logging;
+
 using Windsor.Node2008.WNOSDomain;
+using Windsor.Node2008.WNOSConnector.Provider;
 using Windsor.Node2008.WNOSUtility;
 using Windsor.Commons.Core;
+using Windsor.Commons.NodeDomain;
 
-namespace Windsor.Node2008.WNOSDomain
+namespace Windsor.Node2008.WNOS.Data
 {
     /// <summary>
-    /// Domain object that represents a WNOS user.
+    /// Should be implementing interface but for now just use the raw object
     /// </summary>
-    [Serializable]
-    public class UserAccount : AuditableIdentity
+    public class EndpointUserDao : BaseDao, IEndpointUserDao
     {
-        private string _naasAccount;
-        private bool _isActive;
-        private SystemRoleType _role;
-        private IList<UserAccessPolicy> _policies;
-
-        public UserAccount()
+        new public void Init()
         {
-            _role = SystemRoleType.None;
-            _policies = new SortableCollection<UserAccessPolicy>();
-        }
+            base.Init();
 
-        /// <summary>
-        /// Is this user active?
-        /// </summary>
-        public bool IsActive
+            FieldNotInitializedException.ThrowIfNull(this, AccountDao, "AccountDao");
+        }
+        public IList<UserAccount> Get()
         {
-            get
-            {
-                return _isActive;
-            }
-            set
-            {
-                _isActive = value;
-            }
+            return AccountDao.GetEndpointUsers();
         }
-
-        /// <summary>
-        /// The NAAS account username for this user.
-        /// </summary>
-        public string NaasAccount
+        public IList<UserAccount> GetAllPossibleEndpointUsers()
+        {
+            return AccountDao.GetAllPossibleEndpointUsers();
+        }
+        public bool AreEndpointUsersEnabled
         {
             get
             {
-                return _naasAccount;
-            }
-            set
-            {
-                _naasAccount = value;
+                return AccountDao.AreEndpointUsersEnabled;
             }
         }
-
-        /// <summary>
-        /// The system user role assigned to this user.
-        /// </summary>
-        public SystemRoleType Role
+        public UserAccount GetByName(string username)
         {
-            get
-            {
-                return _role;
-            }
-            set
-            {
-                _role = value;
-            }
+            return AccountDao.GetEndpointUserByName(username);
         }
-
-        /// <summary>
-        /// The user access policies assigned to this user.
-        /// </summary>
-        public IList<UserAccessPolicy> Policies
+        public void Save(UserAccount item, string testNaasPassword, string prodNaasPassword)
         {
-            get
-            {
-                return _policies;
-            }
-            set
-            {
-                _policies = value;
-            }
+            AccountDao.SaveEndpointUser(item, testNaasPassword, prodNaasPassword);
         }
-        /// <summary>
-        /// Is this an endpoint user (that can interact with endpoints)
-        /// </summary>
-        public bool IsEndpointUser
+        public void Remove(UserAccount item)
+        {
+            AccountDao.RemoveEndpointUser(item);
+        }
+        public IAccountDao AccountDao
         {
             get;
             set;
