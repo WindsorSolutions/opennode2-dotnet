@@ -35,6 +35,7 @@ using System;
 using Windsor.Node2008.WNOSDomain;
 using System.Collections.Generic;
 using Windsor.Node2008.WNOSUtility;
+using Windsor.Commons.NodeDomain;
 
 namespace Windsor.Node2008.WNOS.Data
 {
@@ -45,9 +46,13 @@ namespace Windsor.Node2008.WNOS.Data
             get;
         }
         IList<UserAccount> Get();
-        UserAccount GetByName(string name);
+        UserAccount GetByName(string username);
         IList<UserAccount> GetAllPossibleEndpointUsers();
         void Save(UserAccount item, string testNaasPassword, string prodNaasPassword);
         void Remove(UserAccount item);
+        bool GetEnpointUserPasswordsByUsername(string username, out string testPassword, out string prodPassword);
+        void SetNetworkEndpointTransactionInfo(string transactionId, string networkId, EndpointVersionType networkEndpointVersion,
+                                               string networkEndpointUrl, string networkFlowName, string networkFlowOperation,
+                                               string endpointUsername);
     }
 }

@@ -46,7 +46,7 @@
                                     Affiliated State:
                                 </td>
                                 <td class="controlplain">
-                                    <%#Eval("AffiliatedNodeId")%>
+                                    <%#Server.HtmlEncode((string)Eval("AffiliatedNodeId"))%>
                                 </td>
                             </tr>
                             <tr>
@@ -54,7 +54,7 @@
                                     Organization:
                                 </td>
                                 <td class="controlplain">
-                                    <%#Eval("OrganizationAffiliation")%>
+                                    <%#Server.HtmlEncode((string)Eval("OrganizationAffiliation"))%>
                                 </td>
                             </tr>
                             <tr>
@@ -62,7 +62,7 @@
                                     Contact Email:
                                 </td>
                                 <td class="controlplain">
-                                    <%#Eval("EmailAddress")%>
+                                    <%#Server.HtmlEncode((string)Eval("EmailAddress"))%>
                                 </td>
                             </tr>
                             <tr>
@@ -70,7 +70,7 @@
                                     Contact Phone #:
                                 </td>
                                 <td class="controlplain">
-                                    <%#Eval("TelephoneNumber")%>
+                                    <%#Server.HtmlEncode((string)Eval("TelephoneNumber"))%>
                                 </td>
                             </tr>
                             <tr>
@@ -78,7 +78,7 @@
                                     Request Purpose:
                                 </td>
                                 <td class="controlplain">
-                                    <%#Eval("PurposeDescription")%>
+                                    <%#Server.HtmlEncode((string)Eval("PurposeDescription"))%>
                                 </td>
                             </tr>
                             <tr>

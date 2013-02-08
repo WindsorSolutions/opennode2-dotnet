@@ -50,7 +50,7 @@
                                 </td>
                                 <td style="width: 100%">
                                     <a style="color: White; font-weight: bold;">
-                                        <%#Eval("Value")%>
+                                        <%#Server.HtmlEncode((string)Eval("Value"))%>
                                     </a>
                                 </td>
                                 <td style="width: 20px" align="right">

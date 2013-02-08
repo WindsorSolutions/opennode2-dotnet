@@ -27,7 +27,7 @@
                         <img alt="" src="../Images/UI/globe-network.png" style="border: 0; vertical-align: middle; padding-right: 3px;" />
                     </td>
                     <td align="left">
-                        <%# Eval("Value.Name")%>
+                        <%# Server.HtmlEncode((string)Eval("Value.Name"))%>
                     </td>
                     <td width="100%" align="right">
                         <asp:CheckBoxList ID="checkBoxList" runat="server" RepeatDirection="Horizontal" CellSpacing="6">
@@ -51,7 +51,7 @@
                         <img alt="" src="../Images/UI/globe-network.png" style="border: 0; vertical-align: middle; padding-right: 3px;" />
                     </td>
                     <td align="left">
-                        <%# Eval("Value.Name")%>
+                        <%# Server.HtmlEncode((string)Eval("Value.Name"))%>
                     </td>
                     <td width="100%" align="right">
                         <asp:CheckBoxList ID="checkBoxList" runat="server" RepeatDirection="Horizontal" CellSpacing="6">

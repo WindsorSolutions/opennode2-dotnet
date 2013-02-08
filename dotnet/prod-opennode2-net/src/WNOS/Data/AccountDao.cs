@@ -51,6 +51,7 @@ using Windsor.Node2008.WNOSUtility;
 using Windsor.Node2008.WNOSProviders;
 using Windsor.Commons.Core;
 using Microsoft.VisualBasic;
+using Windsor.Commons.NodeDomain;
 
 namespace Windsor.Node2008.WNOS.Data
 {
@@ -320,6 +321,39 @@ namespace Windsor.Node2008.WNOS.Data
                 return null; // Not found
             }
         }
+        public bool GetEnpointUserPasswordsByUsername(string username, out string testPassword, out string prodPassword)
+        {
+            testPassword = prodPassword = null;
+            try
+            {
+                if (AreEndpointUsersEnabled)
+                {
+                    string passwordHash = null;
+                    DoSimpleQueryWithRowCallbackDelegate(
+                        TABLE_NAME, "NAASAccount;IsDeleted;IsActive;IsEndpointUser;PasswordHash IS NOT NULL",
+                        new object[] { username, DbUtils.ToDbBool(false), DbUtils.ToDbBool(true), DbUtils.ToDbBool(true) },
+                        null, "PasswordHash",
+                        delegate(IDataReader reader)
+                        {
+                            passwordHash = reader.GetString(0);
+                        });
+                    if (string.IsNullOrEmpty(passwordHash))
+                    {
+                        return false;
+                    }
+                    ParsePasswordHash(passwordHash, out testPassword, out prodPassword);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Spring.Dao.IncorrectResultSizeDataAccessException)
+            {
+                return false; // Not found
+            }
+        }
         public IList<UserAccount> GetAllPossibleEndpointUsers()
         {
             List<UserAccount> userAccounts = new List<UserAccount>();
@@ -380,6 +414,15 @@ namespace Windsor.Node2008.WNOS.Data
                 ((prodNaasPassword == null) ? string.Empty : prodNaasPassword);
             string passwordsHashValue = _cryptographyProvider.Encrypt(passwordsValue);
             return passwordsHashValue;
+        }
+        protected virtual void ParsePasswordHash(string passwordHash, out string testNaasPassword, out string prodNaasPassword)
+        {
+            ExceptionUtils.ThrowIfEmptyString(passwordHash);
+            string passwordsHashValue = _cryptographyProvider.Decrypt(passwordHash);
+            string[] values = passwordsHashValue.Split(new string[] { PASSWORDS_SEPARATOR }, StringSplitOptions.None);
+            ExceptionUtils.ThrowIfFalse(values.Length == 3, "Invalid password hash in database.");
+            testNaasPassword = values[1];
+            prodNaasPassword = values[2];
         }
 
         public ICollection<string> GetAllUserNames()

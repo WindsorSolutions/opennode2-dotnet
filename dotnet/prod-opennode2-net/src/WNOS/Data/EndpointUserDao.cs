@@ -63,6 +63,7 @@ namespace Windsor.Node2008.WNOS.Data
             base.Init();
 
             FieldNotInitializedException.ThrowIfNull(this, AccountDao, "AccountDao");
+            FieldNotInitializedException.ThrowIfNull(this, TransactionDao, "TransactionDao");
         }
         public IList<UserAccount> Get()
         {
@@ -91,7 +92,24 @@ namespace Windsor.Node2008.WNOS.Data
         {
             AccountDao.RemoveEndpointUser(item);
         }
+        public bool GetEnpointUserPasswordsByUsername(string username, out string testPassword, out string prodPassword)
+        {
+            return AccountDao.GetEnpointUserPasswordsByUsername(username, out testPassword, out prodPassword);
+        }
+        public void SetNetworkEndpointTransactionInfo(string transactionId, string networkId, EndpointVersionType networkEndpointVersion,
+                                                      string networkEndpointUrl, string networkFlowName, string networkFlowOperation,
+                                                      string endpointUsername)
+        {
+            TransactionDao.SetNetworkEndpointTransactionInfo(transactionId, networkId, networkEndpointVersion,
+                                                             networkEndpointUrl, networkFlowName, networkFlowOperation,
+                                                             endpointUsername);
+        }
         public IAccountDao AccountDao
+        {
+            get;
+            set;
+        }
+        public ITransactionDao TransactionDao
         {
             get;
             set;

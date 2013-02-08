@@ -8,8 +8,8 @@
     
     <div>
     
-        <div class="sectionHead"><strong><%# Eval("Title")%></strong></div>
-        <div class="introText"><%# Eval("Description")%></div>
+        <div class="sectionHead"><strong><%# Server.HtmlEncode((string)Eval("Title"))%></strong></div>
+        <div class="introText"><%# Server.HtmlEncode((string)Eval("Description"))%></div>
         <div>
         
         <asp:Repeater runat="server" ID="listItems" DataSource='<%# Eval("Items") %>'>
@@ -18,9 +18,9 @@
                 
                 <div>
                    
-                   <div class="newsTitle"><img alt="" src="../Images/UI/balloon.png" /><%# Eval("Title")%></div> 
-                   <div class="newsTime"><%# Eval("PubDate")%></div> 
-                   <div class="newsDescr"><%# Eval("Description")%></div> 
+                   <div class="newsTitle"><img alt="" src="../Images/UI/balloon.png" /><%# Server.HtmlEncode((string)Eval("Title"))%></div> 
+                   <div class="newsTime"><%# Server.HtmlEncode(Eval("PubDate").ToString())%></div> 
+                   <div class="newsDescr"><%# Server.HtmlEncode((string)Eval("Description"))%></div> 
                     
                 </div>
             

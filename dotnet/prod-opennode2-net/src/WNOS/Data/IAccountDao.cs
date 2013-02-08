@@ -34,6 +34,7 @@ POSSIBILITY OF SUCH DAMAGE.
 using System;
 using Windsor.Node2008.WNOSDomain;
 using System.Collections.Generic;
+using Windsor.Commons.NodeDomain;
 
 namespace Windsor.Node2008.WNOS.Data
 {
@@ -62,5 +63,6 @@ namespace Windsor.Node2008.WNOS.Data
         IList<UserAccount> GetAllPossibleEndpointUsers();
         void SaveEndpointUser(UserAccount item, string testNaasPassword, string prodNaasPassword);
         void RemoveEndpointUser(UserAccount item);
+        bool GetEnpointUserPasswordsByUsername(string username, out string testPassword, out string prodPassword);
     }
 }

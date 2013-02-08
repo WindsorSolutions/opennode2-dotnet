@@ -22,7 +22,7 @@
                 </td>
                 <td runat="server" id="valueNameItem" width="100%">
                     <a href='<%= Config.DetailItemLinkUri %>?id=<%# UriEscapeDataString(Eval("Key")) %>' class="listlabel" title="Edit"><strong>
-                        <%# Eval("Value.Name") %></strong>&nbsp;&nbsp;<%# !string.IsNullOrEmpty((string)Eval("Value.Description")) ? "(" + Eval("Value.Description") + ")" : "" %> </a>
+                        <%# Server.HtmlEncode((string)Eval("Value.Name")) %></strong><%# !string.IsNullOrEmpty((string)Eval("Value.Description")) ? "&nbsp;&nbsp;(" + Server.HtmlEncode((string)Eval("Value.Description")) + ")" : "" %> </a>
                 </td>
                 <td width="10px" align="right">
                     <a href='<%= Config.DetailItemLinkUri %>?id=<%# UriEscapeDataString(Eval("Key")) %>'>

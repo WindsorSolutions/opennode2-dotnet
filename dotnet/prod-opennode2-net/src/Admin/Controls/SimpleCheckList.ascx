@@ -17,10 +17,10 @@
 					    style="border: 0; vertical-align: middle; padding-right: 3px;" /></td>
 					<td align="left">
                         <a href='<%= Config.DetailItemLinkUri %>?id=<%# UriEscapeDataString(Eval("Key")) %>' class="listlabel">
-                            <strong><%# Eval("Value.Name") %></strong>
+                            <strong><%# Server.HtmlEncode((string)Eval("Value.Name")) %></strong>
                         </a>
 					</td>
-				    <td width="*" align="right"><%# Eval("Value.Description")%></td>
+				    <td width="*" align="right"><%# Server.HtmlEncode((string)Eval("Value.Description"))%></td>
 				    <td align="right" nowrap="nowrap">
 				        <asp:CheckBox ID="checkBox" runat="server" />
 				        <asp:Label ID="checkTag" runat="server" Visible="false"/>
@@ -33,10 +33,10 @@
 					    style="border: 0; vertical-align: middle; padding-right: 3px;" /></td>
 					<td align="left">
                         <a href='<%= Config.DetailItemLinkUri %>?id=<%# UriEscapeDataString(Eval("Key")) %>' class="listlabel">
-                            <strong><%# Eval("Value.Name") %></strong>
+                            <strong><%# Server.HtmlEncode((string)Eval("Value.Name")) %></strong>
                         </a>
 					</td>
-				    <td width="*" align="right"><%# Eval("Value.Description")%></td>
+				    <td width="*" align="right"><%# Server.HtmlEncode((string)Eval("Value.Description"))%></td>
 				    <td align="right" nowrap="nowrap">
 				        <asp:CheckBox ID="checkBox" runat="server" />
 				        <asp:Label ID="checkTag" runat="server" Visible="false"/>

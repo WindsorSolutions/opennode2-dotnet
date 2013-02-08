@@ -766,16 +766,52 @@ namespace Windsor.Node2008.WNOS.Data
         public void SetNetworkId(string transactionId, string networkId, EndpointVersionType networkEndpointVersion,
                                  string networkEndpointUrl, string networkFlowName, string networkFlowOperation)
         {
-            SetNetworkId(transactionId, networkId, networkEndpointVersion, networkEndpointUrl, networkFlowName, networkFlowOperation, null);
+            SetNetworkId(transactionId, networkId, networkEndpointVersion, networkEndpointUrl, networkFlowName,
+                         networkFlowOperation, null);
         }
         public void SetNetworkId(string transactionId, string networkId, EndpointVersionType networkEndpointVersion,
                                  string networkEndpointUrl, string networkFlowName, string networkFlowOperation, string networkStatusDetail)
         {
+            SetNetworkEndpointTransactionInfo(transactionId, networkId, networkEndpointVersion,
+                                              networkEndpointUrl, networkFlowName, networkFlowOperation,
+                                              networkStatusDetail, null);
+        }
+        public void SetNetworkEndpointTransactionInfo(string transactionId, string networkId, EndpointVersionType networkEndpointVersion,
+                                                      string networkEndpointUrl, string networkFlowName, string networkFlowOperation,
+                                                      string endpointUsername)
+        {
+            SetNetworkEndpointTransactionInfo(transactionId, networkId, networkEndpointVersion, networkEndpointUrl, networkFlowName,
+                                              networkFlowOperation, null, endpointUsername);
+        }
+        protected void SetNetworkEndpointTransactionInfo(string transactionId, string networkId, EndpointVersionType networkEndpointVersion,
+                                                         string networkEndpointUrl, string networkFlowName, string networkFlowOperation,
+                                                         string networkStatusDetail, string endpointUsername)
+        {
             object version =
                 (networkEndpointVersion == EndpointVersionType.Undefined) ? (object)null : (object)networkEndpointVersion.ToString();
-            DoSimpleUpdateOne(TABLE_NAME, "Id", transactionId,
-                              "NetworkId;NetworkEndpointVersion;NetworkEndpointUrl;NetworkEndpointStatusDetail", networkId,
-                              version, networkEndpointUrl, MakeNetworkStatusDetail(networkFlowName, networkFlowOperation, networkStatusDetail));
+            if (!string.IsNullOrEmpty(endpointUsername))
+            {
+                if (!AccountDao.AreEndpointUsersEnabled)
+                {
+                    throw new ArgException("Internal error: the node is trying to save endpoint user info, but the node metadata database has not been upgraded to support this feature.  Please upgrade your node metadata database to the latest version.");
+                }
+                UserAccount userAccount = AccountDao.GetEndpointUserByName(endpointUsername);
+                if (userAccount == null)
+                {
+                    throw new ArgException("The node could not find the endpoint user \"{0}\", so information related to the network transaction could not be saved.");
+                }
+                DoSimpleUpdateOne(TABLE_NAME, "Id", transactionId,
+                                  "NetworkId;NetworkEndpointVersion;NetworkEndpointUrl;NetworkEndpointStatusDetail;NetworkEndpointUser", networkId,
+                                  version, networkEndpointUrl, MakeNetworkStatusDetail(networkFlowName, networkFlowOperation,
+                                  networkStatusDetail), userAccount.Id);
+            }
+            else
+            {
+                DoSimpleUpdateOne(TABLE_NAME, "Id", transactionId,
+                                  "NetworkId;NetworkEndpointVersion;NetworkEndpointUrl;NetworkEndpointStatusDetail", networkId,
+                                  version, networkEndpointUrl, MakeNetworkStatusDetail(networkFlowName, networkFlowOperation,
+                                  networkStatusDetail));
+            }
         }
         /// <summary>
         /// Set the network status and status details for the specified transaction.

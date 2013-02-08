@@ -37,6 +37,8 @@ using System.Text;
 using System.Reflection;
 
 using Windsor.Node2008.WNOSDomain;
+using Windsor.Commons.NodeClient;
+using Windsor.Commons.NodeDomain;
 
 namespace Windsor.Node2008.WNOSProviders
 {
@@ -46,5 +48,11 @@ namespace Windsor.Node2008.WNOSProviders
         {
             get;
         }
+
+        INodeEndpointClient GetNodeEndpointClient(string targetEndpointUrl, EndpointVersionType type, string endpointUsername);
+
+        void SetNetworkEndpointTransactionInfo(string transactionId, string networkId, EndpointVersionType networkEndpointVersion,
+                                               string networkEndpointUrl, string networkFlowName, string networkFlowOperation,
+                                               string endpointUsername);
     }
 }

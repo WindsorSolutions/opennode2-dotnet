@@ -46,6 +46,7 @@ using Windsor.Node2008.WNOSConnector.Admin;
 using Windsor.Node2008.WNOSProviders;
 using Windsor.Commons.Core;
 using Windsor.Commons.NodeClient;
+using Windsor.Commons.NodeDomain;
 
 namespace Windsor.Node2008.WNOS.Logic
 {
@@ -57,6 +58,7 @@ namespace Windsor.Node2008.WNOS.Logic
 
             FieldNotInitializedException.ThrowIfNull(this, EndpointUserDao, "EndpointUserDao");
             FieldNotInitializedException.ThrowIfNull(this, NAASManager, "NAASManager");
+            FieldNotInitializedException.ThrowIfNull(this, NodeEndpointClientFactory, "NodeEndpointClientFactory");
         }
 
         public bool AreEndpointUsersEnabled
@@ -186,17 +188,71 @@ namespace Windsor.Node2008.WNOS.Logic
             return rtnMessage;
         }
 
-        //public PartnerIdentity GetById(string id, NodeVisit visit)
-        //{
-        //    // TODO: Validate visit (4.1 doesn't)?
-        //    return _partnerDao.GetById(id);
-        //}
+        public INodeEndpointClient GetNodeEndpointClient(string targetEndpointUrl, EndpointVersionType type, string endpointUsername)
+        {
+            if (!string.IsNullOrEmpty(endpointUsername))
+            {
+                string testPassword, prodPassword;
+                if (!EndpointUserDao.GetEnpointUserPasswordsByUsername(endpointUsername, out testPassword, out prodPassword))
+                {
+                    throw new ArgumentException(string.Format("The node endpoint user \"{0}\" could not be found.", endpointUsername));
+                }
+                INodeEndpointClient client = null;
+                try
+                {
+                    AuthenticationCredentials credentials = new AuthenticationCredentials(endpointUsername, testPassword);
+                    client = NodeEndpointClientFactory.Make(targetEndpointUrl, type, credentials);
+                    // First, check to ping the node to make sure it is up and running
+                    try
+                    {
+                        client.NodePing();
+                    }
+                    catch (Exception pingEx)
+                    {
+                        throw new ArgumentException(string.Format("The node endpoint \"{0}\" cannot be contacted.  NodePing returned the error: {1}",
+                                                                  targetEndpointUrl, ExceptionUtils.GetDeepExceptionMessage(pingEx)));
+                    }
 
-        //public PartnerIdentity GetByName(string name, NodeVisit visit)
-        //{
-        //    // TODO: Validate visit (4.1 doesn't)?
-        //    return _partnerDao.GetByName(name);
-        //}
+                    client.Authenticate();
+                }
+                catch (Exception)
+                {
+                    DisposableBase.SafeDispose(ref client);
+                }
+                if (client == null)
+                {
+                    try
+                    {
+                        AuthenticationCredentials credentials = new AuthenticationCredentials(endpointUsername, prodPassword);
+                        client = NodeEndpointClientFactory.Make(targetEndpointUrl, type, credentials);
+                        client.Authenticate();
+                    }
+                    catch (Exception)
+                    {
+                        DisposableBase.SafeDispose(ref client);
+                    }
+                }
+                if (client == null)
+                {
+                    throw new ArgumentException(string.Format("The endpoint user \"{0}\" failed to authenticate against the node endpoint \"{1}\".  Please check that the endpoint user's passwords have been entered correctly in the Node Admin.",
+                                                              endpointUsername, targetEndpointUrl));
+                }
+                return client;
+            }
+            else
+            {
+                return NodeEndpointClientFactory.Make(targetEndpointUrl, type);
+            }
+        }
+
+        public void SetNetworkEndpointTransactionInfo(string transactionId, string networkId, EndpointVersionType networkEndpointVersion,
+                                                      string networkEndpointUrl, string networkFlowName, string networkFlowOperation,
+                                                      string endpointUsername)
+        {
+            EndpointUserDao.SetNetworkEndpointTransactionInfo(transactionId, networkId, networkEndpointVersion,
+                                                              networkEndpointUrl, networkFlowName, networkFlowOperation,
+                                                              endpointUsername);
+        }
 
         public IList<UserAccount> GetAllPossibleEndpointUsers(NodeVisit visit)
         {
@@ -204,49 +260,17 @@ namespace Windsor.Node2008.WNOS.Logic
             return EndpointUserDao.GetAllPossibleEndpointUsers();
         }
 
-        //public PartnerIdentity GetById(string id)
-        //{
-        //    return _partnerDao.GetById(id);
-        //}
-
-        //public PartnerIdentity GetByName(string name)
-        //{
-        //    return _partnerDao.GetByName(name);
-        //}
-
-        //public IList<PartnerIdentity> Get()
-        //{
-        //    return _partnerDao.Get();
-        //}
-
-        //public void Delete(PartnerIdentity instance, NodeVisit visit)
-        //{
-        //    ValidateByRole(visit, SystemRoleType.Admin);
-        //    TransactionTemplate.Execute(delegate
-        //    {
-        //        _partnerDao.Delete(instance);
-        //        ActivityManager.LogAudit(NodeMethod.None, null, visit, "{0} deleted partner identity: {1}.",
-        //                                 visit.Account.NaasAccount, instance.ToString());
-        //        return null;
-        //    });
-        //}
-        ///// <summary>
-        ///// GetAllPartnerNames
-        ///// </summary>
-        //public IDictionary<string, string> GetAllPartnerNames()
-        //{
-        //    return _partnerDao.GetAllPartnerNames();
-        //}
-        //public IDictionary<string, string> GetAllPartnersIdToNameMap()
-        //{
-        //    return _partnerDao.GetAllPartnersIdToNameMap();
-        //}
         public IEndpointUserDao EndpointUserDao
         {
             get;
             set;
         }
         public INAASManagerEx NAASManager
+        {
+            get;
+            set;
+        }
+        public INodeEndpointClientFactory NodeEndpointClientFactory
         {
             get;
             set;
