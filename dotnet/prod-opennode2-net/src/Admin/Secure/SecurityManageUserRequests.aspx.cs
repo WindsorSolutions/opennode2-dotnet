@@ -152,7 +152,7 @@ namespace Windsor.Node2008.Admin.Secure
                             _accountAuthorizationRequestManagerService.GetProtectedFlowNamesForUser(visit, request.NaasAccount);
                         if (!CollectionUtils.IsNullOrEmpty(existingProtectedFlows))
                         {
-                            foreach(string protectedFlowName in existingProtectedFlows)
+                            foreach (string protectedFlowName in existingProtectedFlows)
                             {
                                 foreach (AccountAuthorizationRequestFlow requestFlow in request.RequestedFlows)
                                 {
@@ -263,37 +263,42 @@ namespace Windsor.Node2008.Admin.Secure
             HtmlGenericControl itemPageErrorDiv = null;
             try
             {
-                UpdateRequestsToViewState();
-                int index;
-                AccountAuthorizationRequest request = GetRequest(e, out index);
-                itemPageErrorDiv = (HtmlGenericControl)userRepeaterList.Items[index].FindControl("itemDivPageError");
-
-                if (doAccept)
+                if (!CollectionUtils.IsNullOrEmpty(userRepeaterList.Items) && !CollectionUtils.IsNullOrEmpty(_modelState.Requests))
                 {
-                    bool atleastOneFlowChecked = false;
-                    if (!CollectionUtils.IsNullOrEmpty(request.RequestedFlows))
+                    UpdateRequestsToViewState();
+                    int index;
+                    AccountAuthorizationRequest request = GetRequest(e, out index);
+                    itemPageErrorDiv = (HtmlGenericControl)userRepeaterList.Items[index].FindControl("itemDivPageError");
+
+                    if (doAccept)
                     {
-                        foreach (AccountAuthorizationRequestFlow flow in request.RequestedFlows)
+                        bool atleastOneFlowChecked = false;
+                        if (!CollectionUtils.IsNullOrEmpty(request.RequestedFlows))
                         {
-                            if (flow.AccessGranted)
+                            foreach (AccountAuthorizationRequestFlow flow in request.RequestedFlows)
                             {
-                                atleastOneFlowChecked = true;
-                                break;
+                                if (flow.AccessGranted)
+                                {
+                                    atleastOneFlowChecked = true;
+                                    break;
+                                }
                             }
                         }
+                        if (!atleastOneFlowChecked)
+                        {
+                            SetDivPageError(itemPageErrorDiv, "Please allow the user access to at least one requested flow.");
+                            return;
+                        }
+                        _accountAuthorizationRequestManagerService.AcceptRequest(request, VisitHelper.GetVisit());
                     }
-                    if (!atleastOneFlowChecked)
+                    else
                     {
-                        SetDivPageError(itemPageErrorDiv, "Please allow the user access to at least one requested flow.");
-                        return;
+                        _accountAuthorizationRequestManagerService.RejectRequest(request, VisitHelper.GetVisit());
                     }
-                    _accountAuthorizationRequestManagerService.AcceptRequest(request, VisitHelper.GetVisit());
+                    _modelState.Requests.RemoveAt(index);
+                    divPageNote.Visible = true;
+                    divPageNote.InnerText = string.Format("The request from user \"{0}\" has been {1}.", request.NaasAccount, doAccept ? "accepted" : "rejected");
                 }
-                else
-                {
-                    _accountAuthorizationRequestManagerService.RejectRequest(request, VisitHelper.GetVisit());
-                }
-                _modelState.Requests.RemoveAt(index);
                 userRepeaterList.DataSource = _modelState.Requests;
                 userRepeaterList.DataBind();
             }
@@ -312,26 +317,29 @@ namespace Windsor.Node2008.Admin.Secure
         }
         protected void UpdateRequestsToViewState()
         {
-            for (int i = 0; i < userRepeaterList.Items.Count; ++i)
+            if (!CollectionUtils.IsNullOrEmpty(userRepeaterList.Items) && !CollectionUtils.IsNullOrEmpty(_modelState.Requests))
             {
-                RepeaterItem repeaterItem = userRepeaterList.Items[i];
-                AccountAuthorizationRequest request = _modelState.Requests[i];
-                TextBox commentsBox = (TextBox)repeaterItem.FindControl("commentsTextBox");
-                request.Response.AuthorizationComments = commentsBox.Text;
-
-                Repeater flowsRepeater = (Repeater)repeaterItem.FindControl("flowRepeaterList");
-                for (int j = 0; j < flowsRepeater.Items.Count; ++j)
+                for (int i = 0; i < userRepeaterList.Items.Count; ++i)
                 {
-                    RepeaterItem flowRepeaterItem = flowsRepeater.Items[j];
-                    CheckBox allowCheckBox = (CheckBox)flowRepeaterItem.FindControl("allowCheckBox");
-                    Label allowCheckTag = (Label)flowRepeaterItem.FindControl("allowCheckTag");
-                    string flowName = allowCheckTag.Text;
-                    foreach (AccountAuthorizationRequestFlow requestFlow in request.RequestedFlows)
+                    RepeaterItem repeaterItem = userRepeaterList.Items[i];
+                    AccountAuthorizationRequest request = _modelState.Requests[i];
+                    TextBox commentsBox = (TextBox)repeaterItem.FindControl("commentsTextBox");
+                    request.Response.AuthorizationComments = commentsBox.Text;
+
+                    Repeater flowsRepeater = (Repeater)repeaterItem.FindControl("flowRepeaterList");
+                    for (int j = 0; j < flowsRepeater.Items.Count; ++j)
                     {
-                        if (string.Equals(flowName, requestFlow.FlowName, StringComparison.InvariantCultureIgnoreCase))
+                        RepeaterItem flowRepeaterItem = flowsRepeater.Items[j];
+                        CheckBox allowCheckBox = (CheckBox)flowRepeaterItem.FindControl("allowCheckBox");
+                        Label allowCheckTag = (Label)flowRepeaterItem.FindControl("allowCheckTag");
+                        string flowName = allowCheckTag.Text;
+                        foreach (AccountAuthorizationRequestFlow requestFlow in request.RequestedFlows)
                         {
-                            requestFlow.AccessGranted = allowCheckBox.Checked;
-                            break;
+                            if (string.Equals(flowName, requestFlow.FlowName, StringComparison.InvariantCultureIgnoreCase))
+                            {
+                                requestFlow.AccessGranted = allowCheckBox.Checked;
+                                break;
+                            }
                         }
                     }
                 }
@@ -340,7 +348,7 @@ namespace Windsor.Node2008.Admin.Secure
         protected override void ClearDivPageError()
         {
             base.ClearDivPageError();
-            foreach(RepeaterItem repeaterItem in userRepeaterList.Items)
+            foreach (RepeaterItem repeaterItem in userRepeaterList.Items)
             {
                 HtmlGenericControl itemPageErrorDiv = (HtmlGenericControl)repeaterItem.FindControl("itemDivPageError");
                 itemPageErrorDiv.Visible = false;
@@ -387,19 +395,37 @@ namespace Windsor.Node2008.Admin.Secure
 
         public IAccountAuthorizationRequestService AccountAuthorizationRequestService
         {
-            get { return _accountAuthorizationRequestManagerService; }
-            set { _accountAuthorizationRequestManagerService = value; }
+            get
+            {
+                return _accountAuthorizationRequestManagerService;
+            }
+            set
+            {
+                _accountAuthorizationRequestManagerService = value;
+            }
         }
         public IFlowService FlowService
         {
-            get { return _flowService; }
-            set { _flowService = value; }
+            get
+            {
+                return _flowService;
+            }
+            set
+            {
+                _flowService = value;
+            }
         }
 
         public ModelState DataModel
         {
-            get { return _modelState; }
-            set { _modelState = value; }
+            get
+            {
+                return _modelState;
+            }
+            set
+            {
+                _modelState = value;
+            }
         }
 
         #endregion

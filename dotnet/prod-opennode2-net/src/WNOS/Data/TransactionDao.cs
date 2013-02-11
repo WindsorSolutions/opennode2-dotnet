@@ -75,13 +75,12 @@ namespace Windsor.Node2008.WNOS.Data
         private INodeNotificationDao _nodeNotificationDao;
         private ITransactionStatusChangeNotifier _transactionStatusChangeNotifier;
         private const int MAX_DETAIL_CHARS = 4000;
-        private bool? _;
 
         private const CommonTransactionStatusCode UNPROCESSED_STATUS = CommonTransactionStatusCode.Received |
                                                                        CommonTransactionStatusCode.Pending |
                                                                        CommonTransactionStatusCode.Processing;
 
-        private const string MAP_TRANSACTION_COLUMNS = "Id;FlowId;NetworkId;Status;ModifiedBy;ModifiedOn;StatusDetail;Operation;WebMethod;EndpointVersion;NetworkEndpointVersion;NetworkEndpointUrl;NetworkEndpointStatus;NetworkEndpointStatusDetail";
+        private string MAP_TRANSACTION_COLUMNS = "Id;FlowId;NetworkId;Status;ModifiedBy;ModifiedOn;StatusDetail;Operation;WebMethod;EndpointVersion;NetworkEndpointVersion;NetworkEndpointUrl;NetworkEndpointStatus;NetworkEndpointStatusDetail";
 
         private NodeTransaction MapTransaction(IDataReader reader)
         {
@@ -107,6 +106,10 @@ namespace Windsor.Node2008.WNOS.Data
             transaction.NetworkEndpointStatusDetail = networkStatusDetail;
             transaction.NetworkFlowName = networkFlowName;
             transaction.NetworkOperationName = networkOperationName;
+            if (AreEndpointUsersEnabled)
+            {
+                transaction.NetworkEndpointUserId = reader.GetString(index++);
+            }
             transaction.Flow = FlowDao.GetDataFlow(flowId);
             return transaction;
         }
@@ -202,12 +205,24 @@ namespace Windsor.Node2008.WNOS.Data
             FieldNotInitializedException.ThrowIfNull(this, ref _nodeNotificationDao);
             FieldNotInitializedException.ThrowIfNull(this, ref _accountDao);
             FieldNotInitializedException.ThrowIfNull(this, ref _activityDao);
+
+            if (AreEndpointUsersEnabled)
+            {
+                MAP_TRANSACTION_COLUMNS += ";NetworkEndpointUser";
+            }
         }
 
         #endregion
 
         #region Methods
 
+        public bool AreEndpointUsersEnabled
+        {
+            get
+            {
+                return AccountDao.AreEndpointUsersEnabled;
+            }
+        }
         /// <summary>
         /// Set the status of the specified transaction and return current status.
         /// </summary>
@@ -751,7 +766,7 @@ namespace Windsor.Node2008.WNOS.Data
                     networkStatusDetail = values[2].Trim();
                     if (networkStatusDetail.Length == 0)
                     {
-                        networkFlowOperation = null;
+                        networkStatusDetail = null;
                     }
                 }
             }

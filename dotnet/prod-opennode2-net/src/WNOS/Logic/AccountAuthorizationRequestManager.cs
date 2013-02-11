@@ -47,10 +47,11 @@ using Windsor.Node2008.WNOSConnector.Admin;
 using Windsor.Commons.Core;
 using Windsor.Node2008.WNOSPlugin.Security;
 using Windsor.Node2008.WNOSProviders;
+using System.Threading;
 
 namespace Windsor.Node2008.WNOS.Logic
 {
-    public class AccountAuthorizationRequestManager : LogicAuditBaseManager, IAccountAuthorizationRequestManager, 
+    public class AccountAuthorizationRequestManager : LogicAuditBaseManager, IAccountAuthorizationRequestManager,
                                                       IAccountAuthorizationRequestService
     {
         private IAccountAuthorizationRequestDao _accountAuthorizationRequestDao;
@@ -180,7 +181,7 @@ namespace Windsor.Node2008.WNOS.Logic
                 }
             }
         }
-        protected bool ValidateUserExistance(string naasUsername, string affiliatedNode, 
+        protected bool ValidateUserExistance(string naasUsername, string affiliatedNode,
                                              IEnumerable<string> requestedFlowNames,
                                              IDictionary<string, string> upperFlowNameToIdMap)
         {
@@ -208,18 +209,18 @@ namespace Windsor.Node2008.WNOS.Logic
             {
                 throw new ArgumentException("This node does not publish any protected flows");
             }
-            if (!CollectionUtils.IsNullOrEmpty(requestedFlowNames)) 
+            if (!CollectionUtils.IsNullOrEmpty(requestedFlowNames))
             {
                 bool foundMatchingFlow = false;
                 foreach (string requestedFlowName in requestedFlowNames)
                 {
                     foundMatchingFlow = upperFlowNameToIdMap.ContainsKey(requestedFlowName.ToUpper());
-                    if ( foundMatchingFlow )
+                    if (foundMatchingFlow)
                     {
                         break;
                     }
                 }
-                if ( !foundMatchingFlow )
+                if (!foundMatchingFlow)
                 {
                     throw new ArgumentException("The node does not contain any protected flows to which the user is requesting access");
                 }
@@ -303,7 +304,7 @@ namespace Windsor.Node2008.WNOS.Logic
                     else if (!foundFlow && requestedFlow.AccessGranted)
                     {
                         UserAccessPolicy policy =
-                            _accountPolicyManager.CreatePolicy(userAccount.Role, null, requestedFlow.FlowName, 
+                            _accountPolicyManager.CreatePolicy(userAccount.Role, null, requestedFlow.FlowName,
                                                                FlowRoleType.Endpoint);
                         policy.ModifiedById = visit.Account.Id;
                         CollectionUtils.Add(policy, ref policies);
@@ -311,7 +312,7 @@ namespace Windsor.Node2008.WNOS.Logic
                 }
                 userAccount.Policies = policies;
             }
- 
+
             _accountManager.Save(userAccount, true, password, visit);
 
             request.Response.AuthorizationAccountId = visit.Account.Id;
@@ -353,30 +354,60 @@ namespace Windsor.Node2008.WNOS.Logic
         #region Properties
         public IAccountAuthorizationRequestDao AccountAuthorizationRequestDao
         {
-            get { return _accountAuthorizationRequestDao; }
-            set { _accountAuthorizationRequestDao = value; }
+            get
+            {
+                return _accountAuthorizationRequestDao;
+            }
+            set
+            {
+                _accountAuthorizationRequestDao = value;
+            }
         }
         public IAccountManagerEx AccountManager
         {
-            get { return _accountManager; }
-            set { _accountManager = value; }
+            get
+            {
+                return _accountManager;
+            }
+            set
+            {
+                _accountManager = value;
+            }
         }
 
         public INAASManagerEx NAASManager
         {
-            get { return _naasManager; }
-            set { _naasManager = value; }
+            get
+            {
+                return _naasManager;
+            }
+            set
+            {
+                _naasManager = value;
+            }
         }
 
         public IFlowManagerEx FlowManager
         {
-            get { return _flowManager; }
-            set { _flowManager = value; }
+            get
+            {
+                return _flowManager;
+            }
+            set
+            {
+                _flowManager = value;
+            }
         }
         public IAccountDao AccountDao
         {
-            get { return _accountDao; }
-            set { _accountDao = value; }
+            get
+            {
+                return _accountDao;
+            }
+            set
+            {
+                _accountDao = value;
+            }
         }
         #endregion
     }

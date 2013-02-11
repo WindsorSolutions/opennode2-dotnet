@@ -72,6 +72,16 @@ namespace Windsor.Commons.NodeClient
         /// </summary>
         /// <param name="targetEndpointUrl">The url for the Exchange node endpoint.</param>
         /// <param name="type">The version of the Exchange node endpoint.</param>
+        /// <param name="credentials">The credentials used to authenticate with the Exchange node endpoint.</param>
+        /// <returns>A new <see cref="INodeEndpointClient"/> instance for accessing and communicating with a specific Exchange node.  Dispose()
+        /// should be called on the returned instance when the caller is finished using the instance.</returns>
+        INodeEndpointClient Make(string targetEndpointUrl, EndpointVersionType type, string username, string testPassword, string prodPassword);
+
+        /// <summary>
+        /// Create a new <see cref="INodeEndpointClient"/> instance for accessing and communicating with a specific Exchange node.
+        /// </summary>
+        /// <param name="targetEndpointUrl">The url for the Exchange node endpoint.</param>
+        /// <param name="type">The version of the Exchange node endpoint.</param>
         /// <param name="naasUserToken">A valid NAAS user token that will be used for validating this endpoint.</param>
         /// <returns>A new <see cref="INodeEndpointClient"/> instance for accessing and communicating with a specific Exchange node.  Dispose()
         /// should be called on the returned instance when the caller is finished using the instance.</returns>
@@ -133,6 +143,9 @@ namespace Windsor.Commons.NodeClient
         INodeEndpointClient Make(string targetEndpointUrl, EndpointVersionType type, string naasUserToken,
                                  string tempDirectoryPath, IWebProxy proxy);
 
-        AuthenticationCredentials DefaultAuthenticationCredentials { get; }
+        AuthenticationCredentials DefaultAuthenticationCredentials
+        {
+            get;
+        }
     }
 }

@@ -105,6 +105,56 @@ namespace Windsor.Commons.NodeClient
             return MakeClient(targetEndpointUrl, type, credentials, null, null, null);
         }
 
+        public INodeEndpointClient Make(string targetEndpointUrl, EndpointVersionType type, string username,
+                                        string testPassword, string prodPassword)
+        {
+            ExceptionUtils.ThrowIfEmptyString(username);
+            ExceptionUtils.ThrowIfEmptyString(testPassword);
+            ExceptionUtils.ThrowIfEmptyString(prodPassword);
+
+            INodeEndpointClient client = null;
+            try
+            {
+                AuthenticationCredentials credentials = new AuthenticationCredentials(username, testPassword);
+                client = Make(targetEndpointUrl, type, credentials);
+                // First, check to ping the node to make sure it is up and running
+                try
+                {
+                    client.NodePing();
+                }
+                catch (Exception pingEx)
+                {
+                    throw new ArgumentException(string.Format("The node endpoint \"{0}\" cannot be contacted.  NodePing returned the error: {1}",
+                                                              targetEndpointUrl, ExceptionUtils.GetDeepExceptionMessage(pingEx)));
+                }
+
+                client.Authenticate();
+            }
+            catch (Exception)
+            {
+                DisposableBase.SafeDispose(ref client);
+            }
+            if (client == null)
+            {
+                try
+                {
+                    AuthenticationCredentials credentials = new AuthenticationCredentials(username, prodPassword);
+                    client = Make(targetEndpointUrl, type, credentials);
+                    client.Authenticate();
+                }
+                catch (Exception)
+                {
+                    DisposableBase.SafeDispose(ref client);
+                }
+            }
+            if (client == null)
+            {
+                throw new ArgumentException(string.Format("The NAAS user \"{0}\" failed to authenticate against the node endpoint \"{1}\".  Please check that the NAAS user's passwords have been entered correctly.",
+                                                          username, targetEndpointUrl));
+            }
+            return client;
+        }
+
         /// <summary>
         /// Makes EN Client
         /// </summary>

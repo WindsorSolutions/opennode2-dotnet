@@ -53,9 +53,6 @@ using Windsor.Commons.NodeDomain;
 
 namespace Windsor.Node2008.WNOS.Data
 {
-    /// <summary>
-    /// Should be implementing interface but for now just use the raw object
-    /// </summary>
     public class EndpointUserDao : BaseDao, IEndpointUserDao
     {
         new public void Init()
@@ -95,6 +92,10 @@ namespace Windsor.Node2008.WNOS.Data
         public bool GetEnpointUserPasswordsByUsername(string username, out string testPassword, out string prodPassword)
         {
             return AccountDao.GetEnpointUserPasswordsByUsername(username, out testPassword, out prodPassword);
+        }
+        public bool GetEnpointUserPasswordsById(string userId, out string username, out string testPassword, out string prodPassword)
+        {
+            return AccountDao.GetEnpointUserPasswordsById(userId, out username, out testPassword, out prodPassword);
         }
         public void SetNetworkEndpointTransactionInfo(string transactionId, string networkId, EndpointVersionType networkEndpointVersion,
                                                       string networkEndpointUrl, string networkFlowName, string networkFlowOperation,

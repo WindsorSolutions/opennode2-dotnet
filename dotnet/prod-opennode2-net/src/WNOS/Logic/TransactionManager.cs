@@ -318,7 +318,21 @@ namespace Windsor.Node2008.WNOS.Logic
                 throw new ArgumentException(string.Format("The transaction \"{0}\" does not have an associated network id or url", transactionID));
             }
 
-            return _nodeEndpointClientFactory.Make(nodeTransaction.NetworkEndpointUrl, nodeTransaction.NetworkEndpointVersion);
+            if (!string.IsNullOrEmpty(nodeTransaction.NetworkEndpointUserId))
+            {
+                string username, testPassword, prodPassword;
+                if (!EndpointUserDao.GetEnpointUserPasswordsById(nodeTransaction.NetworkEndpointUserId, out username, out testPassword, out prodPassword))
+                {
+                    throw new ArgumentException(string.Format("The node endpoint user with id \"{0}\" could not be found.", nodeTransaction.NetworkEndpointUserId));
+                }
+                INodeEndpointClient client = NodeEndpointClientFactory.Make(nodeTransaction.NetworkEndpointUrl, nodeTransaction.NetworkEndpointVersion,
+                                                                            username, testPassword, prodPassword);
+                return client;
+            }
+            else
+            {
+                return _nodeEndpointClientFactory.Make(nodeTransaction.NetworkEndpointUrl, nodeTransaction.NetworkEndpointVersion);
+            }
         }
         public TransactionStatus SetTransactionStatusIfNotStatus(string transactionId, CommonTransactionStatusCode statusCodeToSet,
                                                                  string statusDetail, CommonTransactionStatusCode setIfNotStatusCodes,
@@ -1001,6 +1015,12 @@ namespace Windsor.Node2008.WNOS.Logic
                 _objectCacheDao = value;
             }
         }
+        public IEndpointUserDao EndpointUserDao
+        {
+            get;
+            set;
+        }
+
         #endregion
 
 

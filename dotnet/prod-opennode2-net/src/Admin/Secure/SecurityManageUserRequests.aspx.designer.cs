@@ -22,6 +22,15 @@ namespace Windsor.Node2008.Admin.Secure {
         protected global::System.Web.UI.WebControls.Repeater introParagraphs;
         
         /// <summary>
+        /// UpdatePanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanel;
+        
+        /// <summary>
         /// divPageError control.
         /// </summary>
         /// <remarks>
@@ -31,13 +40,13 @@ namespace Windsor.Node2008.Admin.Secure {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divPageError;
         
         /// <summary>
-        /// idCtrl control.
+        /// divPageNote control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField idCtrl;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divPageNote;
         
         /// <summary>
         /// userRepeaterList control.
@@ -47,5 +56,14 @@ namespace Windsor.Node2008.Admin.Secure {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Repeater userRepeaterList;
+        
+        /// <summary>
+        /// UpdateProgressCntl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Windsor.Node2008.Admin.Controls.UpdateProgressCntl UpdateProgressCntl;
     }
 }

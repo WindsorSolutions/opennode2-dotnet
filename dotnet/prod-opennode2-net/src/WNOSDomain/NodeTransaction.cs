@@ -211,5 +211,10 @@ namespace Windsor.Node2008.WNOSDomain
                 _networkOperationName = value;
             }
         }
+        public string NetworkEndpointUserId
+        {
+            get;
+            set;
+        }
     }
 }

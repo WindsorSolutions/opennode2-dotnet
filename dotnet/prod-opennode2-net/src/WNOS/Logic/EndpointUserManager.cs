@@ -197,46 +197,7 @@ namespace Windsor.Node2008.WNOS.Logic
                 {
                     throw new ArgumentException(string.Format("The node endpoint user \"{0}\" could not be found.", endpointUsername));
                 }
-                INodeEndpointClient client = null;
-                try
-                {
-                    AuthenticationCredentials credentials = new AuthenticationCredentials(endpointUsername, testPassword);
-                    client = NodeEndpointClientFactory.Make(targetEndpointUrl, type, credentials);
-                    // First, check to ping the node to make sure it is up and running
-                    try
-                    {
-                        client.NodePing();
-                    }
-                    catch (Exception pingEx)
-                    {
-                        throw new ArgumentException(string.Format("The node endpoint \"{0}\" cannot be contacted.  NodePing returned the error: {1}",
-                                                                  targetEndpointUrl, ExceptionUtils.GetDeepExceptionMessage(pingEx)));
-                    }
-
-                    client.Authenticate();
-                }
-                catch (Exception)
-                {
-                    DisposableBase.SafeDispose(ref client);
-                }
-                if (client == null)
-                {
-                    try
-                    {
-                        AuthenticationCredentials credentials = new AuthenticationCredentials(endpointUsername, prodPassword);
-                        client = NodeEndpointClientFactory.Make(targetEndpointUrl, type, credentials);
-                        client.Authenticate();
-                    }
-                    catch (Exception)
-                    {
-                        DisposableBase.SafeDispose(ref client);
-                    }
-                }
-                if (client == null)
-                {
-                    throw new ArgumentException(string.Format("The endpoint user \"{0}\" failed to authenticate against the node endpoint \"{1}\".  Please check that the endpoint user's passwords have been entered correctly in the Node Admin.",
-                                                              endpointUsername, targetEndpointUrl));
-                }
+                INodeEndpointClient client = NodeEndpointClientFactory.Make(targetEndpointUrl, type, endpointUsername, testPassword, prodPassword);
                 return client;
             }
             else

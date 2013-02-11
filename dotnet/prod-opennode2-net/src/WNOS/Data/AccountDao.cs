@@ -354,6 +354,41 @@ namespace Windsor.Node2008.WNOS.Data
                 return false; // Not found
             }
         }
+        public bool GetEnpointUserPasswordsById(string userId, out string username, out string testPassword, out string prodPassword)
+        {
+            username = testPassword = prodPassword = null;
+            try
+            {
+                if (AreEndpointUsersEnabled)
+                {
+                    string passwordHash = null, usernameValue = null;
+                    DoSimpleQueryWithRowCallbackDelegate(
+                        TABLE_NAME, "Id;IsDeleted;IsActive;IsEndpointUser;PasswordHash IS NOT NULL",
+                        new object[] { userId, DbUtils.ToDbBool(false), DbUtils.ToDbBool(true), DbUtils.ToDbBool(true) },
+                        null, "NAASAccount;PasswordHash",
+                        delegate(IDataReader reader)
+                        {
+                            usernameValue = reader.GetString(0);
+                            passwordHash = reader.GetString(1);
+                        });
+                    if (string.IsNullOrEmpty(passwordHash))
+                    {
+                        return false;
+                    }
+                    ParsePasswordHash(passwordHash, out testPassword, out prodPassword);
+                    username = usernameValue;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Spring.Dao.IncorrectResultSizeDataAccessException)
+            {
+                return false; // Not found
+            }
+        }
         public IList<UserAccount> GetAllPossibleEndpointUsers()
         {
             List<UserAccount> userAccounts = new List<UserAccount>();
