@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UpdateApplicationManifest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <CurrentDatabaseVersionStr>1.0.0</CurrentDatabaseVersionStr>
+  <DatabaseFileDownloadUrl>http://www.windsorsolutions.biz/zip/here_mdf.zip</DatabaseFileDownloadUrl>
+  <DatabaseScriptsDownloadUrl>http://www.windsorsolutions.biz/zip/here_scripts.zip</DatabaseScriptsDownloadUrl>
+  <LastFullUpdateVersionStr>1.0.0</LastFullUpdateVersionStr>
+  <CurrentApplicationVersionStr>1.0.0</CurrentApplicationVersionStr>
+  <ApplicationDownloadUrl>http://www.windsorsolutions.biz/zip/here_setup.exe</ApplicationDownloadUrl>
+</UpdateApplicationManifest>

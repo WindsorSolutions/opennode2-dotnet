@@ -1,4 +1,4 @@
-#region License
+﻿#region License
 /*
 Copyright (c) 2009, The Environmental Council of the States (ECOS)
 All rights reserved.
@@ -31,34 +31,20 @@ POSSIBILITY OF SUCH DAMAGE.
 */
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+using Windsor.Commons.AssemblyInfo;
 
-namespace Windsor.Commons.AssemblyInfo
-{
-    /// <summary>
-    /// Include a reference to this assembly in your project, then use the 
-    /// constants defined in this file within the AssemblyInfo.cs file for your project.
-    /// </summary>
-    internal static class AssemblyInfo
-    {
-        // [assembly: AssemblyVersion(AssemblyInfoServer.cAssemblyVersion)]
-        public const string cAssemblyVersion = "2.6.0.754";
-
-        // [assembly: AssemblyFileVersion(AssemblyInfoServer.cAssemblyFileVersion)]
-        public const string cAssemblyFileVersion = cAssemblyVersion;
-
-        // [assembly: AssemblyCompany(AssemblyInfoServer.cAssemblyCompany)]
-        public const string cAssemblyCompany = "Windsor Solutions, Inc.";
-
-        // [assembly: AssemblyProduct(AssemblyInfoServer.cAssemblyProduct)]
-        public const string cAssemblyProduct = "OpenNode2";
-
-        // [assembly: AssemblyCopyright(AssemblyInfoServer.cAssemblyCopyright)]
-        public const string cAssemblyCopyright = "(c) 2008-2013 Windsor Solutions. All Rights Reserved.";
-
-        // [assembly: AssemblyTrademark(AssemblyInfoServer.cAssemblyTrademark)]
-        public const string cAssemblyTrademark = "";
-    }
-}
+[assembly: AssemblyTitle("Windsor.Commons.ApplicationUpdater")]
+[assembly: AssemblyDescription("")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany(AssemblyInfo.cAssemblyCompany)]
+[assembly: AssemblyProduct(AssemblyInfo.cAssemblyProduct)]
+[assembly: AssemblyCopyright(AssemblyInfo.cAssemblyCopyright)]
+[assembly: AssemblyTrademark(AssemblyInfo.cAssemblyTrademark)]
+[assembly: AssemblyCulture("")]
+[assembly: ComVisible(false)]
+[assembly: Guid("45BE0CE3-3FAC-43ef-927D-F83EA1D5727B")]
+[assembly: AssemblyVersion(AssemblyInfo.cAssemblyVersion)]
+[assembly: AssemblyFileVersion(AssemblyInfo.cAssemblyFileVersion)]
