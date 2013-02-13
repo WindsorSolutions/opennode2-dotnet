@@ -41,6 +41,11 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
 {
     public static class WQXFlatFileParser
     {
+
+        static WQXFlatFileParser()
+        {
+            AutoGenerateActivityIdIfDoesntExist = false;
+        }
         public static WQXDataType GetWQXDataFromResultsFlatFile(string filePath, string lookupValuesFilePath, string orgId, string organizationName)
         {
             Dictionary<string, MonitoringLocationDataType> monitoringLocations = new Dictionary<string, MonitoringLocationDataType>();
@@ -55,7 +60,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
             }
 
             Dictionary<string, ActivityDataType> activities =
-                WQXFlatFileParser.ParseResults(filePath, projects, monitoringLocations, resultAnalyticalMethodLookups, 
+                WQXFlatFileParser.ParseResults(filePath, projects, monitoringLocations, resultAnalyticalMethodLookups,
                                                sampleCollectionMethodLookups, true);
 
             WQXDataType data = new WQXDataType();
@@ -279,6 +284,30 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
             }
             return activites;
         }
+        private static string GetActivityId(TabSeparatedFileParser parser, string columnName, DateTime startDate,
+                                            string monitoringId)
+        {
+            string id;
+
+            if (AutoGenerateActivityIdIfDoesntExist)
+            {
+                id = GetResultString(parser, columnName);
+                if (string.IsNullOrEmpty(id))
+                {
+                    if (string.IsNullOrEmpty(monitoringId))
+                    {
+                        throw new InvalidDataException(string.Format("The \"Monitoring Location ID\" value for the {0} at line {1} does not exist",
+                                                                     cResultTypeName, parser.LineNumber.ToString()));
+                    }
+                    id = startDate.ToString("yyyyMMdd") + "M" + monitoringId;
+                }
+                return id;
+            }
+            else
+            {
+                return GetNonEmptyResultString(parser, columnName);
+            }
+        }
         private static void ParsePhysicalResults(TabSeparatedFileParser parser, Dictionary<string, ProjectDataType> projects,
                                                    Dictionary<string, MonitoringLocationDataType> monitoringLocations,
                                                    Dictionary<string, ActivityDataType> activites,
@@ -295,7 +324,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
             {
                 string projectId = GetNonEmptyResultString(parser, "Project ID");
                 string monitoringId = GetResultString(parser, "Monitoring Location ID");
-                string activityId = GetNonEmptyResultString(parser, "Activity ID");
+                DateTime activityStartDate = GetResultDate(parser, "Activity Start Date");
+                string activityId = GetActivityId(parser, "Activity ID", activityStartDate, monitoringId);
                 if (!projects.ContainsKey(projectId))
                 {
                     if (addMissingProjectsAndLocations)
@@ -326,7 +356,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                 activity.ActivityDescription.ActivityIdentifier = activityId;
                 activity.ActivityDescription.ActivityTypeCode = GetNonEmptyResultString(parser, "Activity Type");
                 activity.ActivityDescription.ActivityMediaName = GetNonEmptyResultString(parser, "Activity Media Name");
-                activity.ActivityDescription.ActivityStartDate = GetResultDate(parser, "Activity Start Date");
+                activity.ActivityDescription.ActivityStartDate = activityStartDate;
                 activity.ActivityDescription.ActivityStartTime = GetResultTime(parser, "Activity Start Time", "Activity Start Time Zone");
                 activity.ActivityDescription.ActivityDepthHeightMeasure = GetResultMeasureCompact(parser, "Activity Depth/Height Measure", "Activity Depth/Height Unit");
                 activity.ActivityDescription.MonitoringLocationIdentifier = monitoringId;
@@ -432,7 +462,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
             {
                 string projectId = GetNonEmptyResultString(parser, "Project ID");
                 string monitoringId = GetResultString(parser, "Monitoring Location ID");
-                string activityId = GetNonEmptyResultString(parser, "Activity ID");
+                DateTime activityStartDate = GetResultDate(parser, "Activity Start Date");
+                string activityId = GetActivityId(parser, "Activity ID", activityStartDate, monitoringId);
                 if (!projects.ContainsKey(projectId))
                 {
                     if (addMissingProjectsAndLocations)
@@ -462,7 +493,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                 activity.ActivityDescription.ActivityIdentifier = activityId;
                 activity.ActivityDescription.ActivityTypeCode = GetNonEmptyResultString(parser, "Activity Type");
                 activity.ActivityDescription.ActivityMediaName = GetNonEmptyResultString(parser, "Activity Media Name");
-                activity.ActivityDescription.ActivityStartDate = GetResultDate(parser, "Activity Start Date");
+                activity.ActivityDescription.ActivityStartDate = activityStartDate;
                 activity.ActivityDescription.ActivityStartTime = GetResultTime(parser, "Activity Start Time", "Activity Start Time Zone");
                 activity.ActivityDescription.ActivityDepthHeightMeasure = GetResultMeasureCompact(parser, "Activity Depth/Height Measure", "Activity Depth/Height Unit");
                 activity.ActivityDescription.MonitoringLocationIdentifier = monitoringId;
@@ -659,7 +690,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
             {
                 string projectId = GetNonEmptyResultString(parser, "Project Identifier");
                 string monitoringId = GetResultString(parser, "Monitoring Location Identifier");
-                string activityId = GetNonEmptyResultString(parser, "Activity ID");
+                DateTime activityStartDate = GetResultDate(parser, "Activity Start Date");
+                string activityId = GetActivityId(parser, "Activity ID", activityStartDate, monitoringId);
                 if (!projects.ContainsKey(projectId))
                 {
                     if (addMissingProjectsAndLocations)
@@ -689,7 +721,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                 activity.ActivityDescription.ActivityIdentifier = activityId;
                 activity.ActivityDescription.ActivityTypeCode = GetNonEmptyResultString(parser, "Activity Type Code");
                 activity.ActivityDescription.ActivityMediaName = GetNonEmptyResultString(parser, "Activity Media Name");
-                activity.ActivityDescription.ActivityStartDate = GetResultDate(parser, "Activity Start Date");
+                activity.ActivityDescription.ActivityStartDate = activityStartDate;
                 activity.ActivityDescription.ActivityStartTime = GetResultTime(parser, "Activity Start Time", "Activity Start Time Zone Code");
                 activity.ActivityDescription.MonitoringLocationIdentifier = monitoringId;
 
@@ -1197,6 +1229,11 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
             valueRtn.DetectionQuantitationLimitTypeName = type;
             valueRtn.DetectionQuantitationLimitMeasure = GetResultMeasureCompact(parser, measureColumnName, codeColumnName);
             return new DetectionQuantitationLimitDataType[] { valueRtn };
+        }
+        public static bool AutoGenerateActivityIdIfDoesntExist
+        {
+            get;
+            set;
         }
         private const string cMonitoringTypeName = "monitoring location";
         private const string cProjectTypeName = "project";

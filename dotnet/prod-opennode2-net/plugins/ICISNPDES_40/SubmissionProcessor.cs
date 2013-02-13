@@ -154,8 +154,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_40
                 }
 
                 AppendAuditLogEvent("Deserializing document data to ICIS data");
-                XmlReader reader = new NamespaceSpecifiedXmlTextReader("http://www.exchangenetwork.net/schema/icis/3", tempXmlFilePath);
-                Windsor.Node2008.WNOSPlugin.ICISNPDES_40.Document data = 
+                XmlReader reader = new NamespaceSpecifiedXmlTextReader("http://www.exchangenetwork.net/schema/icis/4", tempXmlFilePath);
+                Windsor.Node2008.WNOSPlugin.ICISNPDES_40.Document data =
                     _serializationHelper.Deserialize<Windsor.Node2008.WNOSPlugin.ICISNPDES_40.Document>(reader);
 
                 //Windsor.Node2008.WNOSPlugin.ICISNPDES_40.Document data =
@@ -225,7 +225,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_40
             string tempZipFilePath = _settingsProvider.NewTempFilePath();
             try
             {
-                Windsor.Node2008.WNOSPlugin.NetDMR_10.SubmissionResponseDataType response = 
+                Windsor.Node2008.WNOSPlugin.NetDMR_10.SubmissionResponseDataType response =
                     new NetDMR_10.SubmissionResponseDataType();
                 response.CreationDate = response.SubmissionDate = DateTime.Now;
                 response.TransactionIdentifier = transactionId;
@@ -237,7 +237,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_40
 
                 _compressionHelper.CompressFile(tempXmlFilePath, zipDocumentName, tempZipFilePath);
 
-                var document = 
+                var document =
                     new Windsor.Node2008.WNOSDomain.Document(transactionDocumentName, CommonContentType.ZIP,
                                                              File.ReadAllBytes(tempZipFilePath));
                 _documentManager.AddDocument(transactionId, CommonTransactionStatusCode.Completed, null, document);

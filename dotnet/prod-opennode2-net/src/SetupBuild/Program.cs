@@ -272,6 +272,10 @@ namespace CopyPlugins
                 {
                     FileUtils.SafeDeleteFile(privateDeploymentPath);
                 }
+                else
+                {
+                    File.Copy(privateDeploymentPath, Path.Combine(wnosConfigFolder, "Deployment.config"), true);
+                }
             }
         }
         static string AdjustDeploymentName(string name)
