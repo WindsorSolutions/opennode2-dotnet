@@ -867,6 +867,10 @@ namespace Windsor.Node2008.WNOS.Logic
         {
             return ScheduleDao.GetTransactionLastExecuteInfo(transactionId);
         }
+        public ScheduledItemExecuteInfo GetTransactionCompleteLastExecuteInfo(string transactionId)
+        {
+            return ScheduleDao.GetTransactionCompleteLastExecuteInfo(transactionId);
+        }
         public IList<StatusActivityEntry> GetRealtimeTransactionDetails(string transactionId, NodeVisit visit)
         {
             ValidateByRole(visit, SystemRoleType.Program);

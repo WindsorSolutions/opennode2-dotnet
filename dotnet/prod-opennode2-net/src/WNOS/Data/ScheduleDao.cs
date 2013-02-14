@@ -100,36 +100,36 @@ namespace Windsor.Node2008.WNOS.Data
         private const string MAP_SCHEDULED_ITEM_COLUMNS = "Id;Name;FlowId;StartOn;EndOn;SourceType;SourceId;SourceFlow;SourceOperation;" +
                                                           "TargetType;TargetId;TargetFlow;TargetOperation;LastExecuteActivityId;LastExecutedOn;" +
                                                           "NextRun;FrequencyType;Frequency;ModifiedBy;ModifiedOn;IsActive;ExecuteStatus";
-		private ScheduledItem MapScheduledItem(IDataReader reader)
-		{
-			ScheduledItem scheduledItem = new ScheduledItem();
-			int index = 0;
-			scheduledItem.Id = reader.GetString(index++);
-			scheduledItem.Name = reader.GetString(index++);
+        private ScheduledItem MapScheduledItem(IDataReader reader)
+        {
+            ScheduledItem scheduledItem = new ScheduledItem();
+            int index = 0;
+            scheduledItem.Id = reader.GetString(index++);
+            scheduledItem.Name = reader.GetString(index++);
             scheduledItem.FlowId = reader.GetString(index++);
             scheduledItem.StartOn = DbUtils.ToDate(reader.GetDateTime(index++));
-			scheduledItem.EndOn = DbUtils.ToDate(reader.GetDateTime(index++));
-			scheduledItem.SourceType = EnumUtils.ParseEnum<ScheduledItemSourceType>(reader.GetString(index++));
-			scheduledItem.SourceId = reader.GetString(index++);
+            scheduledItem.EndOn = DbUtils.ToDate(reader.GetDateTime(index++));
+            scheduledItem.SourceType = EnumUtils.ParseEnum<ScheduledItemSourceType>(reader.GetString(index++));
+            scheduledItem.SourceId = reader.GetString(index++);
             scheduledItem.SourceFlow = reader.GetString(index++);
             scheduledItem.SourceRequest = reader.GetString(index++);
-			scheduledItem.TargetType = EnumUtils.ParseEnum<ScheduledItemTargetType>(reader.GetString(index++));
-			scheduledItem.TargetId = reader.GetString(index++);
+            scheduledItem.TargetType = EnumUtils.ParseEnum<ScheduledItemTargetType>(reader.GetString(index++));
+            scheduledItem.TargetId = reader.GetString(index++);
             scheduledItem.TargetFlow = reader.GetString(index++);
             scheduledItem.TargetRequest = reader.GetString(index++);
             scheduledItem.LastExecuteActivityId = reader.IsDBNull(index) ? null : reader.GetString(index);
             index++;
-			scheduledItem.LastExecutedOn = DbUtils.ToDate(reader.GetDateTime(index++));
-			scheduledItem.NextRunOn = DbUtils.ToDate(reader.GetDateTime(index++));
-			scheduledItem.FrequencyType = EnumUtils.ParseEnum<ScheduledFrequencyType>(reader.GetString(index++));
+            scheduledItem.LastExecutedOn = DbUtils.ToDate(reader.GetDateTime(index++));
+            scheduledItem.NextRunOn = DbUtils.ToDate(reader.GetDateTime(index++));
+            scheduledItem.FrequencyType = EnumUtils.ParseEnum<ScheduledFrequencyType>(reader.GetString(index++));
             object freqNum = reader.GetValue(index++);
             scheduledItem.Frequency = (freqNum != null) ? int.Parse(freqNum.ToString()) : 0;
-			scheduledItem.ModifiedById = reader.GetString(index++);
-			scheduledItem.ModifiedOn = DbUtils.ToDate(reader.GetDateTime(index++));
-			scheduledItem.IsActive = DbUtils.ToBool(reader.GetString(index++));
+            scheduledItem.ModifiedById = reader.GetString(index++);
+            scheduledItem.ModifiedOn = DbUtils.ToDate(reader.GetDateTime(index++));
+            scheduledItem.IsActive = DbUtils.ToBool(reader.GetString(index++));
             scheduledItem.ExecuteStatus = EnumUtils.ParseEnum<ScheduleExecuteStatus>(reader.GetString(index++));
             return scheduledItem;
-		}
+        }
         private void PostMapSchedule(ScheduledItem scheduledItem)
         {
             scheduledItem.SourceArgs = GetScheduleSourceArgs(scheduledItem.Id);
@@ -152,19 +152,22 @@ namespace Windsor.Node2008.WNOS.Data
         /// <summary>
         /// Returns a list of Schedule ids that are ready to be processed
         /// </summary>
-        public IList<string> GetNextScheduledItemsToProcess() {
-			IList<string> scheduleList = null;
+        public IList<string> GetNextScheduledItemsToProcess()
+        {
+            IList<string> scheduleList = null;
             DateTime now = DateTime.Now;
-			DoSimpleQueryWithRowCallbackDelegate(TABLE_NAME,
+            DoSimpleQueryWithRowCallbackDelegate(TABLE_NAME,
                 "(StartOn <=;EndOn >=;NextRun <=;IsActive;) OR (IsActive;IsRunNow;)",
-                new object[] { now, now, now, DbUtils.ToDbBool(true), DbUtils.ToDbBool(true), DbUtils.ToDbBool(true) }, 
+                new object[] { now, now, now, DbUtils.ToDbBool(true), DbUtils.ToDbBool(true), DbUtils.ToDbBool(true) },
                 null, "Id",
-				delegate(IDataReader reader) {
-					if ( scheduleList == null ) {
-						scheduleList = new List<string>();
-					}
-					scheduleList.Add(reader.GetString(0));
-				});
+                delegate(IDataReader reader)
+                {
+                    if (scheduleList == null)
+                    {
+                        scheduleList = new List<string>();
+                    }
+                    scheduleList.Add(reader.GetString(0));
+                });
             return scheduleList;
         }
 
@@ -187,7 +190,7 @@ namespace Windsor.Node2008.WNOS.Data
         {
             List<ScheduledItemExecuteStatus> scheduledItems = null;
             DoSimpleQueryWithRowCallbackDelegate(
-                TABLE_NAME,string.Empty, null, null, MAP_SCHEDULED_ITEM_EXECUTE_STATUS_COLUMNS,
+                TABLE_NAME, string.Empty, null, null, MAP_SCHEDULED_ITEM_EXECUTE_STATUS_COLUMNS,
                 delegate(IDataReader reader)
                 {
                     CollectionUtils.Add(MapScheduledItemExecuteStatus(reader), ref scheduledItems);
@@ -215,9 +218,51 @@ namespace Windsor.Node2008.WNOS.Data
                 return null; // Not found
             }
         }
+        public ScheduledItemExecuteInfo GetScheduleLastExecuteInfo(IList<string> activityIds)
+        {
+            if (CollectionUtils.IsNullOrEmpty(activityIds))
+            {
+                return null;
+            }
+            try
+            {
+                string transactionId = null;
+                StringBuilder sb = new StringBuilder();
+                foreach (string activityId in activityIds)
+                {
+                    Activity activity = _activityDao.Get(activityId, true);
+                    if (activity != null)
+                    {
+                        if (sb.Length > 0)
+                        {
+                            sb.AppendLine();
+                            sb.AppendLine();
+                        }
+                        transactionId = activity.TransactionId;
+                        sb.AppendLine(GetLastExecutionInfo(activity));
+                    }
+                }
+                if (transactionId != null)
+                {
+                    return new ScheduledItemExecuteInfo(transactionId, sb.ToString());
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Spring.Dao.IncorrectResultSizeDataAccessException)
+            {
+                return null; // Not found
+            }
+        }
         public ScheduledItemExecuteInfo GetTransactionLastExecuteInfo(string transactionId)
         {
             return GetScheduleLastExecuteInfo(_activityDao.GetActivityIdFromTransactionId(transactionId));
+        }
+        public ScheduledItemExecuteInfo GetTransactionCompleteLastExecuteInfo(string transactionId)
+        {
+            return GetScheduleLastExecuteInfo(_activityDao.GetActivityIdsFromTransactionId(transactionId));
         }
         protected string GetLastExecutionInfo(Activity activity)
         {
@@ -279,28 +324,30 @@ namespace Windsor.Node2008.WNOS.Data
         /// </summary>
         public ScheduledItem GetScheduledItem(string inScheduledItemId, out bool isRunNow)
         {
-			try {
+            try
+            {
                 bool isRunNowPriv = false;
-				ScheduledItem scheduledItem =
-					DoSimpleQueryForObjectDelegate<ScheduledItem>(
-						TABLE_NAME, "Id", inScheduledItemId, MAP_SCHEDULED_ITEM_COLUMNS + ";IsRunNow", 
-						delegate(IDataReader reader, int rowNum) 
-						{
+                ScheduledItem scheduledItem =
+                    DoSimpleQueryForObjectDelegate<ScheduledItem>(
+                        TABLE_NAME, "Id", inScheduledItemId, MAP_SCHEDULED_ITEM_COLUMNS + ";IsRunNow",
+                        delegate(IDataReader reader, int rowNum)
+                        {
                             ScheduledItem item = MapScheduledItem(reader);
                             isRunNowPriv = DbUtils.ToBool(reader.GetString(reader.FieldCount - 1));
                             return item;
-						});
+                        });
                 isRunNow = isRunNowPriv;
                 if (scheduledItem != null)
                 {
                     PostMapSchedule(scheduledItem);
                 }
-				return scheduledItem;
-			}
-			catch(Spring.Dao.IncorrectResultSizeDataAccessException) {
+                return scheduledItem;
+            }
+            catch (Spring.Dao.IncorrectResultSizeDataAccessException)
+            {
                 isRunNow = false;
-				return null; // Not found
-			}
+                return null; // Not found
+            }
         }
         /// <summary>
         /// Returns a scheduled item Id, or null if the item does not exist.
@@ -363,7 +410,7 @@ namespace Windsor.Node2008.WNOS.Data
             }
             if (!item.IsActive)
             {
-                throw new ArgumentException(string.Format("The schedule \"{0}\" is inactive and could not be scheduled.  Please active the schedule and try again.", 
+                throw new ArgumentException(string.Format("The schedule \"{0}\" is inactive and could not be scheduled.  Please active the schedule and try again.",
                                                           scheduleName));
             }
             if ((item.StartOn > nextRuntime) || (item.EndOn < nextRuntime))
@@ -496,7 +543,7 @@ namespace Windsor.Node2008.WNOS.Data
                              {
                                  insertValues[2] = currentInsertIndex.ToString(cIndexFormatString);
                              }
-                             insertValues[3] = string.IsNullOrEmpty(args[currentInsertIndex]) ? (object) DBNull.Value : (object) args[currentInsertIndex];
+                             insertValues[3] = string.IsNullOrEmpty(args[currentInsertIndex]) ? (object)DBNull.Value : (object)args[currentInsertIndex];
                              return insertValues;
                          }
                          else
@@ -553,18 +600,36 @@ namespace Windsor.Node2008.WNOS.Data
         #region Properties
         public IActivityDao ActivityDao
         {
-            get { return _activityDao; }
-            set { _activityDao = value; }
+            get
+            {
+                return _activityDao;
+            }
+            set
+            {
+                _activityDao = value;
+            }
         }
         public IServiceDao ServiceDao
         {
-            get { return _serviceDao; }
-            set { _serviceDao = value; }
+            get
+            {
+                return _serviceDao;
+            }
+            set
+            {
+                _serviceDao = value;
+            }
         }
         public IAccountManagerEx AccountManager
         {
-            get { return _accountManager; }
-            set { _accountManager = value; }
+            get
+            {
+                return _accountManager;
+            }
+            set
+            {
+                _accountManager = value;
+            }
         }
         #endregion
     }

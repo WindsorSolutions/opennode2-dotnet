@@ -205,6 +205,30 @@ namespace Windsor.Node2008.WNOS.Data
             }
         }
 
+        public IList<string> GetActivityIdsFromTransactionId(string transactionId)
+        {
+            try
+            {
+                List<string> list = null;
+                DoSimpleQueryWithRowCallbackDelegate(
+                    TABLE_NAME, "TransactionId", transactionId, "ModifiedOn",
+                    "Id",
+                    delegate(IDataReader reader)
+                    {
+                        if (list == null)
+                        {
+                            list = new List<string>();
+                        }
+                        list.Add(reader.GetString(0));
+                    });
+                return list;
+            }
+            catch (Spring.Dao.IncorrectResultSizeDataAccessException)
+            {
+                return null; // Not found
+            }
+        }
+
         public Activity Get(string activityId, bool includeActivityEntries)
         {
             try

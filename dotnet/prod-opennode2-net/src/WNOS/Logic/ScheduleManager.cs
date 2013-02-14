@@ -66,9 +66,9 @@ namespace Windsor.Node2008.WNOS.Logic
 
         new public void Init()
         {
-			base.Init();
-			
-			FieldNotInitializedException.ThrowIfNull(this, ref _scheduleDao);
+            base.Init();
+
+            FieldNotInitializedException.ThrowIfNull(this, ref _scheduleDao);
             FieldNotInitializedException.ThrowIfNull(this, ref _flowManager);
             FieldNotInitializedException.ThrowIfNull(this, ref _serviceManager);
             FieldNotInitializedException.ThrowIfNull(this, ref _partnerManager);
@@ -78,18 +78,20 @@ namespace Windsor.Node2008.WNOS.Logic
         }
 
         #endregion
-        
+
         /// <summary>
         /// Returns a list of Schedule ids that are ready to be processed
         /// </summary>
-        public IList<string> GetNextScheduledItemsToProcess() {
-			return ScheduleDao.GetNextScheduledItemsToProcess();
+        public IList<string> GetNextScheduledItemsToProcess()
+        {
+            return ScheduleDao.GetNextScheduledItemsToProcess();
         }
         /// <summary>
         /// Returns the scheduled item, or null if not found.
         /// </summary>
-        public ScheduledItem GetScheduledItem(string inScheduledItemId) {
-			return ScheduleDao.GetScheduledItem(inScheduledItemId);
+        public ScheduledItem GetScheduledItem(string inScheduledItemId)
+        {
+            return ScheduleDao.GetScheduledItem(inScheduledItemId);
         }
         public ScheduledItem GetScheduledItem(string inScheduledItemId, out bool isRunNow)
         {
@@ -151,8 +153,8 @@ namespace Windsor.Node2008.WNOS.Logic
                     {
                         name += " [Inactive]";
                     }
-                    string description = string.Format("Last Executed: {0}, Next Run: {1}", 
-                                                       GetDateTimeString(item.LastExecutedOn), 
+                    string description = string.Format("Last Executed: {0}, Next Run: {1}",
+                                                       GetDateTimeString(item.LastExecutedOn),
                                                        GetDateTimeString(item.NextRunOn));
                     dict.Add(item.Id, new SimpleListDisplayInfo(name, description, item));
                 }
@@ -226,14 +228,14 @@ namespace Windsor.Node2008.WNOS.Logic
             return FilterSchedulesForUser(visit, scheduledItemExecuteStatus);
         }
 
-        protected IDictionary<string, string> FilterFlowsForUser(NodeVisit visit, 
+        protected IDictionary<string, string> FilterFlowsForUser(NodeVisit visit,
                                                                  IDictionary<string, string> flowsIdToName,
                                                                  bool checkCanEditExchange)
         {
             List<string> removeKeys = null;
             CollectionUtils.ForEach(flowsIdToName, delegate(KeyValuePair<string, string> pair)
             {
-                if (checkCanEditExchange ? !CanUserEditFlowById(visit, pair.Key) : 
+                if (checkCanEditExchange ? !CanUserEditFlowById(visit, pair.Key) :
                                            !CanUserViewFlowById(visit, pair.Key))
                 {
                     CollectionUtils.Add(pair.Key, ref removeKeys);
@@ -342,13 +344,15 @@ namespace Windsor.Node2008.WNOS.Logic
         #region Properties
         public IScheduleDao ScheduleDao
         {
-			get {
-				return _scheduleDao;
-			}
-			set {
-				_scheduleDao = value;
-			}
-		}
+            get
+            {
+                return _scheduleDao;
+            }
+            set
+            {
+                _scheduleDao = value;
+            }
+        }
         public IFlowManagerEx FlowManager
         {
             get
@@ -396,13 +400,25 @@ namespace Windsor.Node2008.WNOS.Logic
         }
         public ISchematronHelper SchematronHelper
         {
-            get { return _schematronHelper; }
-            set { _schematronHelper = value; }
+            get
+            {
+                return _schematronHelper;
+            }
+            set
+            {
+                _schematronHelper = value;
+            }
         }
         public IActivityDao ActivityDao
         {
-            get { return _activityDao; }
-            set { _activityDao = value; }
+            get
+            {
+                return _activityDao;
+            }
+            set
+            {
+                _activityDao = value;
+            }
         }
 
     }

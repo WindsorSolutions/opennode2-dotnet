@@ -202,12 +202,14 @@ namespace Windsor.Node2008.Admin.Secure
                     {
                         throw new ArgumentException(string.Format("Could not find transaction with id: {0}.", id));
                     }
-                    ScheduledItemExecuteInfo scheduledItemExecuteInfo = _dataService.GetTransactionLastExecuteInfo(id);
+                    //ScheduledItemExecuteInfo scheduledItemExecuteInfo = _dataService.GetTransactionLastExecuteInfo(id);
+                    ScheduledItemExecuteInfo scheduledItemExecuteInfo = _dataService.GetTransactionCompleteLastExecuteInfo(id);
                     string text = null;
                     if ((scheduledItemExecuteInfo != null) &&
                         !string.IsNullOrEmpty(scheduledItemExecuteInfo.Summary))
                     {
-                        text = StringUtils.BreakUpText(scheduledItemExecuteInfo.Summary, 80, "<br/>");
+                        text = scheduledItemExecuteInfo.Summary.Replace("\r\n\r\n\r\n", "<div class='multipleActivitySpacerDiv'></div>");
+                        text = StringUtils.BreakUpText(text, 80, "<br/>");
                         text = text.Replace("\r\n", "<br/><br/>");
                     }
                     _pageData._activityDetails = text;
@@ -406,8 +408,6 @@ namespace Windsor.Node2008.Admin.Secure
         }
         protected void showActivityDetailsButton_Click(object sender, EventArgs e)
         {
-            Thread.Sleep(3000);
-
             LinkButton control = sender as LinkButton;
             if (control != null)
             {

@@ -54,5 +54,7 @@ namespace Windsor.Node2008.WNOSConnector.Admin
         byte[] DownloadNetworkDocumentsAsZipFile(string transactionID, NodeVisit visit);
 
         ScheduledItemExecuteInfo GetTransactionLastExecuteInfo(string transactionId);
+
+        ScheduledItemExecuteInfo GetTransactionCompleteLastExecuteInfo(string transactionId);
     }
 }

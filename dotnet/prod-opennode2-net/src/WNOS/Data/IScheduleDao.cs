@@ -31,7 +31,7 @@ POSSIBILITY OF SUCH DAMAGE.
 */
 #endregion
 
-﻿using System;
+using System;
 using Windsor.Node2008.WNOSDomain;
 using System.Collections.Generic;
 using Windsor.Node2008.WNOSUtility;
@@ -57,6 +57,8 @@ namespace Windsor.Node2008.WNOS.Data
         ScheduledItem CreateRunOnceLocalServiceSchedule(string scheduleName, string serviceName, DateTime nextRuntime,
                                                         ByIndexOrNameDictionary<string> parameters);
         ScheduledItemExecuteInfo GetScheduleLastExecuteInfo(string activityId);
+        ScheduledItemExecuteInfo GetScheduleLastExecuteInfo(IList<string> activityIds);
         ScheduledItemExecuteInfo GetTransactionLastExecuteInfo(string transactionId);
+        ScheduledItemExecuteInfo GetTransactionCompleteLastExecuteInfo(string transactionId);
     }
 }

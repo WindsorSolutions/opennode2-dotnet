@@ -666,4 +666,13 @@ td.label{
 {
 	border-top: solid 1px #83ACCA;
 }
+.multipleActivitySpacerDiv
+{
+	width: 100%;
+	height: 1px;
+	background-color:#AAA;
+	margin-top: 18px;
+	margin-bottom: 18px;
+}
+
 

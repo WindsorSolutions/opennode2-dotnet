@@ -31,7 +31,7 @@ POSSIBILITY OF SUCH DAMAGE.
 */
 #endregion
 
-﻿using System;
+using System;
 using Windsor.Node2008.WNOSDomain;
 using System.Collections.Generic;
 using Windsor.Node2008.WNOSUtility;
@@ -54,6 +54,7 @@ namespace Windsor.Node2008.WNOS.Data
         int DeleteActivities(ActivitySearchParams searchParams, bool addFlowIsNullQuery);
         string GetTransactionIdFromActivityId(string activityId);
         string GetActivityIdFromTransactionId(string transactionId);
+        IList<string> GetActivityIdsFromTransactionId(string transactionId);
         ICollection<Activity> GetActivitiesForTransaction(string transactionId, bool getActivityEntries);
         ICollection<string> GetAllOperationNames(NodeVisit visit);
         ICollection<string> GetAllWebMethodNames(NodeVisit visit);
