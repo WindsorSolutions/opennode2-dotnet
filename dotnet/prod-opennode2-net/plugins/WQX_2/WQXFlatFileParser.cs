@@ -42,10 +42,6 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
     public static class WQXFlatFileParser
     {
 
-        static WQXFlatFileParser()
-        {
-            AutoGenerateActivityIdIfDoesntExist = false;
-        }
         public static WQXDataType GetWQXDataFromResultsFlatFile(string filePath, string lookupValuesFilePath, string orgId, string organizationName)
         {
             Dictionary<string, MonitoringLocationDataType> monitoringLocations = new Dictionary<string, MonitoringLocationDataType>();
@@ -287,26 +283,28 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
         private static string GetActivityId(TabSeparatedFileParser parser, string columnName, DateTime startDate,
                                             string monitoringId)
         {
-            string id;
+            return GetNonEmptyResultString(parser, columnName);
 
-            if (AutoGenerateActivityIdIfDoesntExist)
-            {
-                id = GetResultString(parser, columnName);
-                if (string.IsNullOrEmpty(id))
-                {
-                    if (string.IsNullOrEmpty(monitoringId))
-                    {
-                        throw new InvalidDataException(string.Format("The \"Monitoring Location ID\" value for the {0} at line {1} does not exist",
-                                                                     cResultTypeName, parser.LineNumber.ToString()));
-                    }
-                    id = startDate.ToString("yyyyMMdd") + "M" + monitoringId;
-                }
-                return id;
-            }
-            else
-            {
-                return GetNonEmptyResultString(parser, columnName);
-            }
+            //string id;
+
+            //if (AutoGenerateActivityIdIfDoesntExist)
+            //{
+            //    id = GetResultString(parser, columnName);
+            //    if (string.IsNullOrEmpty(id))
+            //    {
+            //        if (string.IsNullOrEmpty(monitoringId))
+            //        {
+            //            throw new InvalidDataException(string.Format("The \"Monitoring Location ID\" value for the {0} at line {1} does not exist",
+            //                                                         cResultTypeName, parser.LineNumber.ToString()));
+            //        }
+            //        id = startDate.ToString("yyyyMMdd") + "M" + monitoringId;
+            //    }
+            //    return id;
+            //}
+            //else
+            //{
+            //    return GetNonEmptyResultString(parser, columnName);
+            //}
         }
         private static void ParsePhysicalResults(TabSeparatedFileParser parser, Dictionary<string, ProjectDataType> projects,
                                                    Dictionary<string, MonitoringLocationDataType> monitoringLocations,
@@ -1229,11 +1227,6 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
             valueRtn.DetectionQuantitationLimitTypeName = type;
             valueRtn.DetectionQuantitationLimitMeasure = GetResultMeasureCompact(parser, measureColumnName, codeColumnName);
             return new DetectionQuantitationLimitDataType[] { valueRtn };
-        }
-        public static bool AutoGenerateActivityIdIfDoesntExist
-        {
-            get;
-            set;
         }
         private const string cMonitoringTypeName = "monitoring location";
         private const string cProjectTypeName = "project";

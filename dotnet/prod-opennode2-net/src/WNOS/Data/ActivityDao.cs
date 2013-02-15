@@ -292,7 +292,7 @@ namespace Windsor.Node2008.WNOS.Data
                 }
                 else
                 {
-                    flowNameColumns.Append(";)");
+                    flowNameColumns.Append(")");
                 }
                 whereColumns.Append(flowNameColumns.ToString());
             }
@@ -427,7 +427,14 @@ namespace Windsor.Node2008.WNOS.Data
             }
             if (!string.IsNullOrEmpty(searchParams.DetailContains))
             {
-                sql.Append(" AND UPPER(d.Detail) LIKE CONCAT(CONCAT('%', UPPER(?)), '%')");
+                if (this.IsSqlServerDatabase)
+                {
+                    sql.Append(" AND UPPER(d.Detail) LIKE '%' + UPPER(?) + '%'");
+                }
+                else
+                {
+                    sql.Append(" AND UPPER(d.Detail) LIKE CONCAT(CONCAT('%', UPPER(?)), '%')");
+                }
                 addedDetail = true;
                 whereValues.Add(searchParams.DetailContains);
             }
