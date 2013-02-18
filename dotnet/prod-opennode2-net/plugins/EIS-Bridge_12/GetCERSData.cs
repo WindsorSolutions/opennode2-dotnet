@@ -1358,7 +1358,37 @@ namespace Windsor.Node2008.WNOSPlugin.EIS_Bridge_12
                         facility.FacilitySiteAddress[0].LocationAddressCountryCode = readerEx.GetNullString("LocationAddressCountryCode");
                         facility.FacilitySiteAddress[0].AddressComment = readerEx.GetNullString("AddressComment");
 
-                        //TODO: Map to FacilitySiteGeographicCoordinate XML
+                        //Map to FacilitySiteGeographicCoordinate XML
+                        string queryGeoCoords = string.Format(@"SELECT TOP 1 * FROM FacilitySiteGeographicCoordinates 
+                                                                WHERE FacilitySiteIdentifier = '{0}' 
+                                                                AND FacilitySiteProgramSystemCode = '{1}' 
+                                                                AND StateAndCountyFIPSCode = '{2}'"
+                                        , readerEx.GetNullString("FacilitySiteIdentifier")
+                                        , readerEx.GetNullString("FacilitySiteProgramSystemCode")
+                                        , readerEx.GetNullString("StateAndCountyFIPSCode"));
+
+                        dao.QueryWithRowCallbackDelegate(CommandType.Text, queryGeoCoords, delegate(IDataReader dataReaderGeoCoords) {
+                            NamedNullMappingDataReader readerExGeoCoords = (NamedNullMappingDataReader)dataReaderGeoCoords;
+                            facility.FacilitySiteGeographicCoordinates = new GeographicCoordinatesDataType();
+
+                            facility.FacilitySiteGeographicCoordinates.LatitudeMeasure = readerExGeoCoords.GetNullString("LatitudeMeasure");
+                            facility.FacilitySiteGeographicCoordinates.LongitudeMeasure = readerExGeoCoords.GetNullString("LongitudeMeasure");
+                            facility.FacilitySiteGeographicCoordinates.SourceMapScaleNumber = readerExGeoCoords.GetNullString("SourceMapScaleNumber");
+                            facility.FacilitySiteGeographicCoordinates.HorizontalAccuracyMeasure = readerExGeoCoords.GetNullString("HorizontalAccuracyMeasure");
+                            facility.FacilitySiteGeographicCoordinates.HorizontalAccuracyUnitofMeasure = readerExGeoCoords.GetNullString("HorizontalAccuracyUnitofMeasure");
+                            facility.FacilitySiteGeographicCoordinates.HorizontalCollectionMethodCode = readerExGeoCoords.GetNullString("HorizontalCollectionMethodCode");
+                            facility.FacilitySiteGeographicCoordinates.HorizontalReferenceDatumCode = readerExGeoCoords.GetNullString("HorizontalReferenceDatumCode");
+                            facility.FacilitySiteGeographicCoordinates.GeographicReferencePointCode = readerExGeoCoords.GetNullString("GeographicReferencePointCode");
+                            facility.FacilitySiteGeographicCoordinates.DataCollectionDate = CERSDate(readerExGeoCoords.GetNullString("DataCollectionDate"), out facility.FacilitySiteGeographicCoordinates.DataCollectionDateSpecified);
+                            facility.FacilitySiteGeographicCoordinates.GeographicComment = readerExGeoCoords.GetNullString("GeographicComment");
+                            facility.FacilitySiteGeographicCoordinates.VerticalMeasure = readerExGeoCoords.GetNullString("VerticalMeasure");
+                            facility.FacilitySiteGeographicCoordinates.VerticalUnitofMeasureCode = readerExGeoCoords.GetNullString("VerticalUnitofMeasureCode");
+                            facility.FacilitySiteGeographicCoordinates.VerticalCollectionMethodCode = readerExGeoCoords.GetNullString("VerticalCollectionMethodCode");
+                            facility.FacilitySiteGeographicCoordinates.VerticalReferenceDatumCode = readerExGeoCoords.GetNullString("VerticalReferenceDatumCode");
+                            facility.FacilitySiteGeographicCoordinates.VerificationMethodCode = readerExGeoCoords.GetNullString("VerificationMethodCode");
+                            facility.FacilitySiteGeographicCoordinates.CoordinateDataSourceCode = readerExGeoCoords.GetNullString("CoordinateDataSourceCode");
+                            facility.FacilitySiteGeographicCoordinates.GeometricTypeCode = readerExGeoCoords.GetNullString("GeometricTypeCode");
+                        });
 
                         //TODO: Map to AlternativeFacilityName XML
 
@@ -1615,7 +1645,7 @@ namespace Windsor.Node2008.WNOSPlugin.EIS_Bridge_12
         {
             Spring.Data.Common.IDbProvider dbProvider = Spring.Data.Common.DbProviderFactory.GetDbProvider("OleDb-2.0");
             dbProvider.ConnectionString =
-                string.Format(@"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=""{0}"";User Id=admin;Password=;", databaseFilePath);
+                string.Format(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=""{0}"";User Id=admin;Password=;", databaseFilePath);
             SpringBaseDao springBaseDao = new SpringBaseDao(dbProvider, typeof(NamedNullMappingDataReader));
 
             try
