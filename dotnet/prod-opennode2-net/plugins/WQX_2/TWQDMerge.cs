@@ -230,122 +230,74 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
             int maxColCount = RSLT_UPDATE_COLUMNS.Split(';').Length;
             object[] values = new object[maxColCount];
 
-            DoBulkInsert(dbCommand, RSLT_TABLE_NAME, RSLT_UPDATE_COLUMNS, delegate(int currentInsertIndex)
+            try
             {
-                if (currentInsertIndex < results.Count)
+                DoBulkInsert(dbCommand, RSLT_TABLE_NAME, RSLT_UPDATE_COLUMNS, delegate(int currentInsertIndex)
                 {
-                    ResultDataType result = results[currentInsertIndex];
+                    if (currentInsertIndex < results.Count)
+                    {
+                        ResultDataType result = results[currentInsertIndex];
 
-                    int valueIndex = 0;
-                    values[valueIndex++] = result.ParentId;
-                    if (result.ResultDescription != null)
-                    {
-                        values[valueIndex++] = result.ResultDescription.DataLoggerLineName;
-                        values[valueIndex++] = null; // SampleDateTime?
-                        values[valueIndex++] = result.ResultDescription.ResultDetectionConditionText;
-                        if (!characteristicNames.ContainsKey(result.ResultDescription.CharacteristicName))
+                        int valueIndex = 0;
+                        values[valueIndex++] = result.ParentId;
+                        if (result.ResultDescription != null)
                         {
-                            throw new ArgException("A result has an unrecognized CharacteristicName: {0}", result.ResultDescription.CharacteristicName);
-                        }
-                        values[valueIndex++] = result.ResultDescription.CharacteristicName;
-                        values[valueIndex++] = result.ResultDescription.ResultSampleFractionText;
-                        if (result.ResultDescription.ResultMeasure != null)
-                        {
-                            values[valueIndex++] = result.ResultDescription.ResultMeasure.ResultMeasureValue;
-                            values[valueIndex++] = result.ResultDescription.ResultMeasure.MeasureUnitCode;
-                        }
-                        else
-                        {
-                            values[valueIndex++] = null;
-                            values[valueIndex++] = null;
-                        }
-                        if (!resultStatusIds.ContainsKey(result.ResultDescription.ResultStatusIdentifier))
-                        {
-                            throw new ArgException("A result has an unrecognized ResultStatusIdentifier: {0}", result.ResultDescription.ResultStatusIdentifier);
-                        }
-                        values[valueIndex++] = result.ResultDescription.ResultStatusIdentifier;
-                        values[valueIndex++] = result.ResultDescription.StatisticalBaseCode;
-
-                        values[valueIndex++] = result.ResultDescription.ResultValueTypeName;
-                        values[valueIndex++] = result.ResultDescription.ResultWeightBasisText;
-                        values[valueIndex++] = result.ResultDescription.ResultTimeBasisText;
-                        values[valueIndex++] = result.ResultDescription.ResultTemperatureBasisText;
-                        values[valueIndex++] = result.ResultDescription.ResultParticleSizeBasisText;
-                        values[valueIndex++] = result.ResultDescription.ResultCommentText;
-                    }
-                    else
-                    {
-                        throw new ArgException("A result is missing a ResultDescription element");
-                    }
-                    if (result.BiologicalResultDescription != null)
-                    {
-                        values[valueIndex++] = result.BiologicalResultDescription.BiologicalIntentName;
-                        values[valueIndex++] = result.BiologicalResultDescription.BiologicalIndividualIdentifier;
-                        values[valueIndex++] = result.BiologicalResultDescription.SubjectTaxonomicName;
-                        values[valueIndex++] = result.BiologicalResultDescription.UnidentifiedSpeciesIdentifier;
-                        values[valueIndex++] = result.BiologicalResultDescription.SampleTissueAnatomyName;
-                        if (result.BiologicalResultDescription.GroupSummaryCountWeight != null)
-                        {
-                            values[valueIndex++] = result.BiologicalResultDescription.GroupSummaryCountWeight.MeasureValue;
-                            values[valueIndex++] = result.BiologicalResultDescription.GroupSummaryCountWeight.MeasureUnitCode;
-                        }
-                        else
-                        {
-                            values[valueIndex++] = null;
-                            values[valueIndex++] = null;
-                        }
-                    }
-                    else
-                    {
-                        values[valueIndex++] = null;
-                        values[valueIndex++] = null;
-                        values[valueIndex++] = null;
-                        values[valueIndex++] = null;
-                        values[valueIndex++] = null;
-                        values[valueIndex++] = null;
-                        values[valueIndex++] = null;
-                    }
-                    if (result.ResultAnalyticalMethod != null)
-                    {
-                        values[valueIndex++] = result.ResultAnalyticalMethod.MethodIdentifier;
-                        values[valueIndex++] = result.ResultAnalyticalMethod.MethodIdentifierContext;
-                        values[valueIndex++] = result.ResultAnalyticalMethod.MethodName;
-                    }
-                    else
-                    {
-                        values[valueIndex++] = null;
-                        values[valueIndex++] = null;
-                        values[valueIndex++] = null;
-                    }
-
-                    if (result.ResultLabInformation != null)
-                    {
-                        values[valueIndex++] = result.ResultLabInformation.LaboratoryName;
-                        if (result.ResultLabInformation.AnalysisStartDateSpecified)
-                        {
-                            values[valueIndex++] = result.ResultLabInformation.AnalysisStartDate;
-                        }
-                        else
-                        {
-                            values[valueIndex++] = null;
-                        }
-                        if (result.ResultLabInformation.AnalysisEndDateSpecified)
-                        {
-                            values[valueIndex++] = result.ResultLabInformation.AnalysisEndDate;
-                        }
-                        else
-                        {
-                            values[valueIndex++] = null;
-                        }
-                        values[valueIndex++] = result.ResultLabInformation.ResultLaboratoryCommentCode;
-                        if (!CollectionUtils.IsNullOrEmpty(result.ResultLabInformation.ResultDetectionQuantitationLimit))
-                        {
-                            DetectionQuantitationLimitDataType detectionQuantitationLimitDataType = result.ResultLabInformation.ResultDetectionQuantitationLimit[0];
-                            values[valueIndex++] = detectionQuantitationLimitDataType.DetectionQuantitationLimitTypeName;
-                            if (detectionQuantitationLimitDataType.DetectionQuantitationLimitMeasure != null)
+                            values[valueIndex++] = result.ResultDescription.DataLoggerLineName;
+                            values[valueIndex++] = null; // SampleDateTime?
+                            values[valueIndex++] = result.ResultDescription.ResultDetectionConditionText;
+                            if (string.IsNullOrEmpty(result.ResultDescription.CharacteristicName))
                             {
-                                values[valueIndex++] = detectionQuantitationLimitDataType.DetectionQuantitationLimitMeasure.MeasureValue;
-                                values[valueIndex++] = detectionQuantitationLimitDataType.DetectionQuantitationLimitMeasure.MeasureUnitCode;
+                                throw new ArgException("A result is missing a CharacteristicName for Activity: {0}", result.ParentId);
+                            }
+                            if (!characteristicNames.ContainsKey(result.ResultDescription.CharacteristicName))
+                            {
+                                throw new ArgException("A result has an unrecognized CharacteristicName: {0}", result.ResultDescription.CharacteristicName);
+                            }
+                            values[valueIndex++] = result.ResultDescription.CharacteristicName;
+                            values[valueIndex++] = result.ResultDescription.ResultSampleFractionText;
+                            if (result.ResultDescription.ResultMeasure != null)
+                            {
+                                values[valueIndex++] = result.ResultDescription.ResultMeasure.ResultMeasureValue;
+                                values[valueIndex++] = result.ResultDescription.ResultMeasure.MeasureUnitCode;
+                            }
+                            else
+                            {
+                                values[valueIndex++] = null;
+                                values[valueIndex++] = null;
+                            }
+                            if (string.IsNullOrEmpty(result.ResultDescription.ResultStatusIdentifier))
+                            {
+                                throw new ArgException("A result is missing a ResultStatusIdentifier for Activity: {0}", result.ParentId);
+                            }
+                            if (!resultStatusIds.ContainsKey(result.ResultDescription.ResultStatusIdentifier))
+                            {
+                                throw new ArgException("A result has an unrecognized ResultStatusIdentifier: {0}", result.ResultDescription.ResultStatusIdentifier);
+                            }
+                            values[valueIndex++] = result.ResultDescription.ResultStatusIdentifier;
+                            values[valueIndex++] = result.ResultDescription.StatisticalBaseCode;
+
+                            values[valueIndex++] = result.ResultDescription.ResultValueTypeName;
+                            values[valueIndex++] = result.ResultDescription.ResultWeightBasisText;
+                            values[valueIndex++] = result.ResultDescription.ResultTimeBasisText;
+                            values[valueIndex++] = result.ResultDescription.ResultTemperatureBasisText;
+                            values[valueIndex++] = result.ResultDescription.ResultParticleSizeBasisText;
+                            values[valueIndex++] = result.ResultDescription.ResultCommentText;
+                        }
+                        else
+                        {
+                            throw new ArgException("A result is missing a ResultDescription element");
+                        }
+                        if (result.BiologicalResultDescription != null)
+                        {
+                            values[valueIndex++] = result.BiologicalResultDescription.BiologicalIntentName;
+                            values[valueIndex++] = result.BiologicalResultDescription.BiologicalIndividualIdentifier;
+                            values[valueIndex++] = result.BiologicalResultDescription.SubjectTaxonomicName;
+                            values[valueIndex++] = result.BiologicalResultDescription.UnidentifiedSpeciesIdentifier;
+                            values[valueIndex++] = result.BiologicalResultDescription.SampleTissueAnatomyName;
+                            if (result.BiologicalResultDescription.GroupSummaryCountWeight != null)
+                            {
+                                values[valueIndex++] = result.BiologicalResultDescription.GroupSummaryCountWeight.MeasureValue;
+                                values[valueIndex++] = result.BiologicalResultDescription.GroupSummaryCountWeight.MeasureUnitCode;
                             }
                             else
                             {
@@ -358,26 +310,16 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                             values[valueIndex++] = null;
                             values[valueIndex++] = null;
                             values[valueIndex++] = null;
+                            values[valueIndex++] = null;
+                            values[valueIndex++] = null;
+                            values[valueIndex++] = null;
+                            values[valueIndex++] = null;
                         }
-                    }
-                    else
-                    {
-                        values[valueIndex++] = null;
-                        values[valueIndex++] = null;
-                        values[valueIndex++] = null;
-                        values[valueIndex++] = null;
-                        values[valueIndex++] = null;
-                        values[valueIndex++] = null;
-                        values[valueIndex++] = null;
-                    }
-                    if (!CollectionUtils.IsNullOrEmpty(result.LabSamplePreparation))
-                    {
-                        LabSamplePreparationDataType labSamplePreparationDataType = result.LabSamplePreparation[0];
-                        if (labSamplePreparationDataType.LabSamplePreparationMethod != null)
+                        if (result.ResultAnalyticalMethod != null)
                         {
-                            values[valueIndex++] = labSamplePreparationDataType.LabSamplePreparationMethod.MethodIdentifier;
-                            values[valueIndex++] = labSamplePreparationDataType.LabSamplePreparationMethod.MethodIdentifierContext;
-                            values[valueIndex++] = labSamplePreparationDataType.LabSamplePreparationMethod.MethodName;
+                            values[valueIndex++] = result.ResultAnalyticalMethod.MethodIdentifier;
+                            values[valueIndex++] = result.ResultAnalyticalMethod.MethodIdentifierContext;
+                            values[valueIndex++] = result.ResultAnalyticalMethod.MethodName;
                         }
                         else
                         {
@@ -385,34 +327,107 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                             values[valueIndex++] = null;
                             values[valueIndex++] = null;
                         }
+
+                        if (result.ResultLabInformation != null)
+                        {
+                            values[valueIndex++] = result.ResultLabInformation.LaboratoryName;
+                            if (result.ResultLabInformation.AnalysisStartDateSpecified)
+                            {
+                                values[valueIndex++] = result.ResultLabInformation.AnalysisStartDate;
+                            }
+                            else
+                            {
+                                values[valueIndex++] = null;
+                            }
+                            if (result.ResultLabInformation.AnalysisEndDateSpecified)
+                            {
+                                values[valueIndex++] = result.ResultLabInformation.AnalysisEndDate;
+                            }
+                            else
+                            {
+                                values[valueIndex++] = null;
+                            }
+                            values[valueIndex++] = result.ResultLabInformation.ResultLaboratoryCommentCode;
+                            if (!CollectionUtils.IsNullOrEmpty(result.ResultLabInformation.ResultDetectionQuantitationLimit))
+                            {
+                                DetectionQuantitationLimitDataType detectionQuantitationLimitDataType = result.ResultLabInformation.ResultDetectionQuantitationLimit[0];
+                                values[valueIndex++] = detectionQuantitationLimitDataType.DetectionQuantitationLimitTypeName;
+                                if (detectionQuantitationLimitDataType.DetectionQuantitationLimitMeasure != null)
+                                {
+                                    values[valueIndex++] = detectionQuantitationLimitDataType.DetectionQuantitationLimitMeasure.MeasureValue;
+                                    values[valueIndex++] = detectionQuantitationLimitDataType.DetectionQuantitationLimitMeasure.MeasureUnitCode;
+                                }
+                                else
+                                {
+                                    values[valueIndex++] = null;
+                                    values[valueIndex++] = null;
+                                }
+                            }
+                            else
+                            {
+                                values[valueIndex++] = null;
+                                values[valueIndex++] = null;
+                                values[valueIndex++] = null;
+                            }
+                        }
+                        else
+                        {
+                            values[valueIndex++] = null;
+                            values[valueIndex++] = null;
+                            values[valueIndex++] = null;
+                            values[valueIndex++] = null;
+                            values[valueIndex++] = null;
+                            values[valueIndex++] = null;
+                            values[valueIndex++] = null;
+                        }
+                        if (!CollectionUtils.IsNullOrEmpty(result.LabSamplePreparation))
+                        {
+                            LabSamplePreparationDataType labSamplePreparationDataType = result.LabSamplePreparation[0];
+                            if (labSamplePreparationDataType.LabSamplePreparationMethod != null)
+                            {
+                                values[valueIndex++] = labSamplePreparationDataType.LabSamplePreparationMethod.MethodIdentifier;
+                                values[valueIndex++] = labSamplePreparationDataType.LabSamplePreparationMethod.MethodIdentifierContext;
+                                values[valueIndex++] = labSamplePreparationDataType.LabSamplePreparationMethod.MethodName;
+                            }
+                            else
+                            {
+                                values[valueIndex++] = null;
+                                values[valueIndex++] = null;
+                                values[valueIndex++] = null;
+                            }
+                        }
+                        else
+                        {
+                            values[valueIndex++] = null;
+                            values[valueIndex++] = null;
+                            values[valueIndex++] = null;
+                        }
+                        if (_setLastUpdatedDateTime)
+                        {
+                            values[valueIndex++] = _lastUpdatedDateTime;
+                        }
+                        else
+                        {
+                            values[valueIndex++] = null;
+                        }
+                        values[valueIndex++] = _submitToEpa ? 1 : 0;
+                        values[valueIndex++] = 0;
+                        values[valueIndex++] = 0;
+
+                        IncInsertCount(RSLT_TABLE_NAME);
+
+                        return values;
                     }
                     else
                     {
-                        values[valueIndex++] = null;
-                        values[valueIndex++] = null;
-                        values[valueIndex++] = null;
+                        return null;
                     }
-                    if (_setLastUpdatedDateTime)
-                    {
-                        values[valueIndex++] = _lastUpdatedDateTime;
-                    }
-                    else
-                    {
-                        values[valueIndex++] = null;
-                    }
-                    values[valueIndex++] = _submitToEpa ? 1 : 0;
-                    values[valueIndex++] = 0;
-                    values[valueIndex++] = 0;
-
-                    IncInsertCount(RSLT_TABLE_NAME);
-
-                    return values;
-                }
-                else
-                {
-                    return null;
-                }
-            });
+                });
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         private void MergeActivities(IDbCommand dbCommand, WQXDataType organization)
         {
