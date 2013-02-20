@@ -33,32 +33,36 @@ POSSIBILITY OF SUCH DAMAGE.
 
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Web;
+using System.Web.Security;
+using System.Web.SessionState;
+using System.IO;
 
-namespace Windsor.Commons.AssemblyInfo
+namespace Windsor.Commons.AspNet
 {
-    /// <summary>
-    /// Include a reference to this assembly in your project, then use the 
-    /// constants defined in this file within the AssemblyInfo.cs file for your project.
-    /// </summary>
-    internal static class AssemblyInfo
+    public static class RequestStateUtils
     {
-        // [assembly: AssemblyVersion(AssemblyInfoServer.cAssemblyVersion)]
-        public const string cAssemblyVersion = "2.6.0.762";
-
-        // [assembly: AssemblyFileVersion(AssemblyInfoServer.cAssemblyFileVersion)]
-        public const string cAssemblyFileVersion = cAssemblyVersion;
-
-        // [assembly: AssemblyCompany(AssemblyInfoServer.cAssemblyCompany)]
-        public const string cAssemblyCompany = "Windsor Solutions, Inc.";
-
-        // [assembly: AssemblyProduct(AssemblyInfoServer.cAssemblyProduct)]
-        public const string cAssemblyProduct = "OpenNode2";
-
-        // [assembly: AssemblyCopyright(AssemblyInfoServer.cAssemblyCopyright)]
-        public const string cAssemblyCopyright = "(c) 2008-2013 Windsor Solutions. All Rights Reserved.";
-
-        // [assembly: AssemblyTrademark(AssemblyInfoServer.cAssemblyTrademark)]
-        public const string cAssemblyTrademark = "";
+        public static bool Contains(string key)
+        {
+            return (HttpContext.Current.Items[key] != null);
+        }
+        public static void Set(string key, object value)
+        {
+            HttpContext.Current.Items[key] = value;
+        }
+        public static T Get<T>(string key) where T : class
+        {
+            return HttpContext.Current.Items[key] as T;
+        }
+        public static T Remove<T>(string key) where T : class
+        {
+            T value = Get<T>(key);
+            Remove(key);
+            return value;
+        }
+        public static void Remove(string key)
+        {
+            HttpContext.Current.Items[key] = null;
+        }
     }
 }

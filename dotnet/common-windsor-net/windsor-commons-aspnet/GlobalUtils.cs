@@ -33,32 +33,51 @@ POSSIBILITY OF SUCH DAMAGE.
 
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Web;
+using System.Web.Security;
+using System.Web.SessionState;
+using System.IO;
 
-namespace Windsor.Commons.AssemblyInfo
+namespace Windsor.Commons.AspNet
 {
-    /// <summary>
-    /// Include a reference to this assembly in your project, then use the 
-    /// constants defined in this file within the AssemblyInfo.cs file for your project.
-    /// </summary>
-    internal static class AssemblyInfo
+    public static class GlobalUtils
     {
-        // [assembly: AssemblyVersion(AssemblyInfoServer.cAssemblyVersion)]
-        public const string cAssemblyVersion = "2.6.0.762";
-
-        // [assembly: AssemblyFileVersion(AssemblyInfoServer.cAssemblyFileVersion)]
-        public const string cAssemblyFileVersion = cAssemblyVersion;
-
-        // [assembly: AssemblyCompany(AssemblyInfoServer.cAssemblyCompany)]
-        public const string cAssemblyCompany = "Windsor Solutions, Inc.";
-
-        // [assembly: AssemblyProduct(AssemblyInfoServer.cAssemblyProduct)]
-        public const string cAssemblyProduct = "OpenNode2";
-
-        // [assembly: AssemblyCopyright(AssemblyInfoServer.cAssemblyCopyright)]
-        public const string cAssemblyCopyright = "(c) 2008-2013 Windsor Solutions. All Rights Reserved.";
-
-        // [assembly: AssemblyTrademark(AssemblyInfoServer.cAssemblyTrademark)]
-        public const string cAssemblyTrademark = "";
+        public static string GetPhysicalApplicationPath(string relativePath)
+        {
+            if (relativePath.StartsWith("~\\") || relativePath.StartsWith("~/"))
+            {
+                relativePath = (relativePath.Length == 2) ? string.Empty : relativePath.Substring(2);
+            }
+            string path = Path.Combine(PhysicalApplicationPath, relativePath);
+            path = Path.GetFullPath(path);
+            return path;
+        }
+        public static string PhysicalApplicationPath
+        {
+            //get { return HttpContext.Current.Request.PhysicalApplicationPath; }
+            get { return HttpRuntime.AppDomainAppPath; }
+        }
+        public static string ThemesPhysicalApplicationPath
+        {
+            get
+            {
+                return GetPhysicalApplicationPath("~/App_Themes");
+            }
+        }
+        public static void ReloadPage(System.Web.UI.Page page)
+        {
+            if (page.IsCallback)
+            {
+            }
+            else
+            {
+                HttpContext.Current.Server.Transfer(HttpContext.Current.Request.Url.PathAndQuery);
+            }
+        }
+        public static void GetPostbackParams(out string eventTarget, out string eventArgument)
+        {
+            eventTarget = HttpContext.Current.Request.Params.Get("__EVENTTARGET");
+            eventArgument = HttpContext.Current.Request.Params.Get("__EVENTARGUMENT");
+        }
     }
 }

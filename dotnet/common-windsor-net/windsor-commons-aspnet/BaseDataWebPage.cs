@@ -33,32 +33,69 @@ POSSIBILITY OF SUCH DAMAGE.
 
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Web;
+using System.Web.Security;
+using System.Web.SessionState;
+using System.IO;
 
-namespace Windsor.Commons.AssemblyInfo
+using Windsor.Commons.Core;
+
+namespace Windsor.Commons.AspNet
 {
-    /// <summary>
-    /// Include a reference to this assembly in your project, then use the 
-    /// constants defined in this file within the AssemblyInfo.cs file for your project.
-    /// </summary>
-    internal static class AssemblyInfo
+    public abstract class BaseDataWebPage<T> : BaseWebPage where T : class
     {
-        // [assembly: AssemblyVersion(AssemblyInfoServer.cAssemblyVersion)]
-        public const string cAssemblyVersion = "2.6.0.762";
+        private T _pageSessionData;
 
-        // [assembly: AssemblyFileVersion(AssemblyInfoServer.cAssemblyFileVersion)]
-        public const string cAssemblyFileVersion = cAssemblyVersion;
+        protected virtual T PageSessionData
+        {
+            get
+            {
+                return _pageSessionData;
+            }
+            set
+            {
+                _pageSessionData = value;
+            }
+        }
 
-        // [assembly: AssemblyCompany(AssemblyInfoServer.cAssemblyCompany)]
-        public const string cAssemblyCompany = "Windsor Solutions, Inc.";
+        protected virtual string PageSessionDataKey
+        {
+            get
+            {
+                return this.GetType().FullName;
+            }
+        }
 
-        // [assembly: AssemblyProduct(AssemblyInfoServer.cAssemblyProduct)]
-        public const string cAssemblyProduct = "OpenNode2";
+        protected override void OnPreInit(EventArgs e)
+        {
+            string key = PageSessionDataKey;
 
-        // [assembly: AssemblyCopyright(AssemblyInfoServer.cAssemblyCopyright)]
-        public const string cAssemblyCopyright = "(c) 2008-2013 Windsor Solutions. All Rights Reserved.";
+            if (!string.IsNullOrEmpty(key))
+            {
+                if (!IsPostBack)
+                {
+                    InitializePageSessionData();
+                }
+                else
+                {
+                    PageSessionData = SessionStateUtils.Get<T>(key);
+                }
+            }
 
-        // [assembly: AssemblyTrademark(AssemblyInfoServer.cAssemblyTrademark)]
-        public const string cAssemblyTrademark = "";
+            base.OnPreInit(e);
+        }
+        protected override void OnSaveStateComplete(EventArgs e)
+        {
+            string key = PageSessionDataKey;
+
+            if (!string.IsNullOrEmpty(key))
+            {
+                SessionStateUtils.Set(key, PageSessionData);
+            }
+            base.OnSaveStateComplete(e);
+        }
+        protected virtual void InitializePageSessionData()
+        {
+        }
     }
 }

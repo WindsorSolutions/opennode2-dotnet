@@ -9,9 +9,9 @@ using System.Text;
 
 namespace Windsor.Commons.AspNet
 {
-    public abstract class BasePage : System.Web.UI.Page
+    public abstract class BaseWebPage : System.Web.UI.Page
     {
-        public BasePage()
+        public BaseWebPage()
         {
             RegisteredScriptBlocks = new StringBuilder();
             ClientIdsToPublish = new Dictionary<string, string>();
