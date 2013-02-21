@@ -232,8 +232,9 @@ namespace Windsor.Node2008.WNOSPlugin.PNWWQX
                             ProjectContactType contactItem = new ProjectContactType();
 
                             contactItem.ProjectContactIdentifier = Utility.toStr(drContact["ContactEntityIdentifier"]);
-                            contactItem.PrimaryDataSourceIndicator = (Utility.toStr(drProject["ProjectContactIdentifier"]).Equals(
-                                contactItem.ProjectContactIdentifier));
+                            string projectContactIdentifier = Utility.toStr(drProject["ProjectContactIdentifier"]);
+                            contactItem.PrimaryDataSourceIndicator = !string.IsNullOrEmpty(contactItem.ProjectContactIdentifier) &&
+                                string.Equals(contactItem.ProjectContactIdentifier, projectContactIdentifier);
 
                             projectContactList.Add(contactItem);
                             loadedProjectContacts.Add(Utility.toStr(drContact["ContactEntityIdentifier"]), drContact["ContactEntityIdentifier"]);
