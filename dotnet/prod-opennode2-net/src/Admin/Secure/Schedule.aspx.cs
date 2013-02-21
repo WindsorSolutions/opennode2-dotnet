@@ -61,15 +61,10 @@ namespace Windsor.Node2008.Admin.Secure
             get;
             set;
         }
-        private bool DoExpandAll
-        {
-            get;
-            set;
-        }
 
         protected class SessionStateDataStorage
         {
-            public IList<string> ExpandedSchedules;
+            public IList<string> HiddenSchedules;
         }
 
         public class ModelState
@@ -356,11 +351,11 @@ namespace Windsor.Node2008.Admin.Secure
                 SessionStateData = new SessionStateDataStorage();
                 Session[SCHEDULE_PAGE_SESSION_STATE_KEY] = SessionStateData;
 
-                SessionStateData.ExpandedSchedules = UserSettingsManager.LoadAdminSchedulePageExpandedScheduleIds(GetCurrentUsername());
+                SessionStateData.HiddenSchedules = UserSettingsManager.LoadAdminSchedulePageHiddenScheduleIds(GetCurrentUsername());
 
-                if (SessionStateData.ExpandedSchedules == null)
+                if (SessionStateData.HiddenSchedules == null)
                 {
-                    SessionStateData.ExpandedSchedules = new CaseInsensitiveList();
+                    SessionStateData.HiddenSchedules = new CaseInsensitiveList();
                 }
             }
 
@@ -443,42 +438,33 @@ namespace Windsor.Node2008.Admin.Secure
         }
         protected virtual bool IsScheduleExpanded(string scheduleId)
         {
-            return SessionStateData.ExpandedSchedules.Contains(scheduleId);
+            return !SessionStateData.HiddenSchedules.Contains(scheduleId);
         }
         protected virtual bool SetScheduleExpanded(string scheduleId, bool isExpanded)
         {
-            if (isExpanded)
+            if (!isExpanded)
             {
-                if (!SessionStateData.ExpandedSchedules.Contains(scheduleId))
+                if (!SessionStateData.HiddenSchedules.Contains(scheduleId))
                 {
-                    SessionStateData.ExpandedSchedules.Add(scheduleId);
+                    SessionStateData.HiddenSchedules.Add(scheduleId);
                 }
             }
             else
             {
-                SessionStateData.ExpandedSchedules.Remove(scheduleId);
+                SessionStateData.HiddenSchedules.Remove(scheduleId);
             }
-            UserSettingsManager.SaveAdminSchedulePageExpandedScheduleIds(GetCurrentUsername(), SessionStateData.ExpandedSchedules);
+            UserSettingsManager.SaveAdminSchedulePageHiddenScheduleIds(GetCurrentUsername(), SessionStateData.HiddenSchedules);
             return isExpanded;
         }
         protected virtual string FlowSchedulesDisplay(object dataItem)
         {
             KeyValuePair<string, string> pair = (KeyValuePair<string, string>)dataItem;
-            return IsScheduleExpanded(pair.Key) || DoExpandAll ? "" : "display: none";
+            return IsScheduleExpanded(pair.Key) ? "" : "display: none";
         }
         protected void flowRepeater_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
             KeyValuePair<string, string> pair = (KeyValuePair<string, string>)e.Item.DataItem;
-            bool isExpanded;
-            if (DoExpandAll)
-            {
-                isExpanded = true;
-                SetScheduleExpanded(pair.Key, true);
-            }
-            else
-            {
-                isExpanded = IsScheduleExpanded(pair.Key);
-            }
+            bool isExpanded = IsScheduleExpanded(pair.Key);
 
             ImageButton expandCollapseButton = e.Item.FindControl("expandCollapseSchedulesImageButton") as ImageButton;
 
@@ -589,12 +575,19 @@ namespace Windsor.Node2008.Admin.Secure
         }
         protected void ExpandAllLinkButton_Click(object sender, EventArgs e)
         {
-            DoExpandAll = true;
+            SessionStateData.HiddenSchedules.Clear();
+            UserSettingsManager.SaveAdminSchedulePageHiddenScheduleIds(GetCurrentUsername(), SessionStateData.HiddenSchedules);
             NeedsRebind = true;
         }
         protected void CollapseAllLinkButton_Click(object sender, EventArgs e)
         {
-            SessionStateData.ExpandedSchedules.Clear();
+            IDictionary<string, string> flows = DataItemService.GetExchangeList(VisitHelper.GetVisit(), false);
+            SessionStateData.HiddenSchedules.Clear();
+            CollectionUtils.ForEach(flows, delegate(KeyValuePair<string, string> pair)
+            {
+                SessionStateData.HiddenSchedules.Add(pair.Key);
+            });
+            UserSettingsManager.SaveAdminSchedulePageHiddenScheduleIds(GetCurrentUsername(), SessionStateData.HiddenSchedules);
             NeedsRebind = true;
         }
     }

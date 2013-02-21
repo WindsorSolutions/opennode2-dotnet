@@ -42,10 +42,10 @@ namespace Windsor.Node2008.WNOSProviders
 {
     public interface IUserSettingsManager
     {
-        IList<string> LoadAdminSchedulePageExpandedScheduleIds(string username);
-        bool SaveAdminSchedulePageExpandedScheduleIds(string username, IList<string> ids);
+        IList<string> LoadAdminSchedulePageHiddenScheduleIds(string username);
+        bool SaveAdminSchedulePageHiddenScheduleIds(string username, IList<string> ids);
 
-        IList<string> LoadAdminFlowPageExpandedFlowIds(string username);
-        bool SaveAdminFlowPageExpandedFlowIds(string username, IList<string> ids);
+        IList<string> LoadAdminFlowPageHiddenFlowIds(string username);
+        bool SaveAdminFlowPageHiddenFlowIds(string username, IList<string> ids);
     }
 }

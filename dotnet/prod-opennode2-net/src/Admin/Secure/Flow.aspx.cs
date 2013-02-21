@@ -61,15 +61,10 @@ namespace Windsor.Node2008.Admin.Secure
             get;
             set;
         }
-        private bool DoExpandAll
-        {
-            get;
-            set;
-        }
 
         protected class SessionStateDataStorage
         {
-            public IList<string> ExpandedFlows;
+            public IList<string> HiddenFlows;
         }
 
         #region Members
@@ -114,11 +109,11 @@ namespace Windsor.Node2008.Admin.Secure
                 SessionStateData = new SessionStateDataStorage();
                 Session[FLOW_PAGE_SESSION_STATE_KEY] = SessionStateData;
 
-                SessionStateData.ExpandedFlows = UserSettingsManager.LoadAdminFlowPageExpandedFlowIds(GetCurrentUsername());
+                SessionStateData.HiddenFlows = UserSettingsManager.LoadAdminFlowPageHiddenFlowIds(GetCurrentUsername());
 
-                if (SessionStateData.ExpandedFlows == null)
+                if (SessionStateData.HiddenFlows == null)
                 {
-                    SessionStateData.ExpandedFlows = new CaseInsensitiveList();
+                    SessionStateData.HiddenFlows = new CaseInsensitiveList();
                 }
             }
 
@@ -193,28 +188,28 @@ namespace Windsor.Node2008.Admin.Secure
         }
         protected virtual bool IsFlowExpanded(string flowId)
         {
-            return SessionStateData.ExpandedFlows.Contains(flowId);
+            return !SessionStateData.HiddenFlows.Contains(flowId);
         }
         protected virtual bool SetFlowExpanded(string flowId, bool isExpanded)
         {
-            if (isExpanded)
+            if (!isExpanded)
             {
-                if (!SessionStateData.ExpandedFlows.Contains(flowId))
+                if (!SessionStateData.HiddenFlows.Contains(flowId))
                 {
-                    SessionStateData.ExpandedFlows.Add(flowId);
+                    SessionStateData.HiddenFlows.Add(flowId);
                 }
             }
             else
             {
-                SessionStateData.ExpandedFlows.Remove(flowId);
+                SessionStateData.HiddenFlows.Remove(flowId);
             }
-            UserSettingsManager.SaveAdminFlowPageExpandedFlowIds(GetCurrentUsername(), SessionStateData.ExpandedFlows);
+            UserSettingsManager.SaveAdminFlowPageHiddenFlowIds(GetCurrentUsername(), SessionStateData.HiddenFlows);
             return isExpanded;
         }
         protected virtual string FlowServicesDisplay(object dataItem)
         {
             DataFlow dataFlow = (DataFlow)dataItem;
-            return IsFlowExpanded(dataFlow.Id) || DoExpandAll ? "" : "display: none";
+            return IsFlowExpanded(dataFlow.Id) ? "" : "display: none";
         }
         protected string ServiceDisplayName(object dataItem)
         {
@@ -256,16 +251,7 @@ namespace Windsor.Node2008.Admin.Secure
         {
             DataFlow dataFlow = (DataFlow)e.Item.DataItem;
 
-            bool isExpanded;
-            if (DoExpandAll)
-            {
-                isExpanded = true;
-                SetFlowExpanded(dataFlow.Id, true);
-            }
-            else
-            {
-                isExpanded = IsFlowExpanded(dataFlow.Id);
-            }
+            bool isExpanded = IsFlowExpanded(dataFlow.Id);
 
             ImageButton expandCollapseButton = e.Item.FindControl("expandCollapseServicesImageButton") as ImageButton;
 
@@ -310,12 +296,19 @@ namespace Windsor.Node2008.Admin.Secure
 
         protected void ExpandAllLinkButton_Click(object sender, EventArgs e)
         {
-            DoExpandAll = true;
+            SessionStateData.HiddenFlows.Clear();
+            UserSettingsManager.SaveAdminFlowPageHiddenFlowIds(GetCurrentUsername(), SessionStateData.HiddenFlows);
             NeedsRebind = true;
         }
         protected void CollapseAllLinkButton_Click(object sender, EventArgs e)
         {
-            SessionStateData.ExpandedFlows.Clear();
+            IList<DataFlow> flows = FlowService.GetFlows(VisitHelper.GetVisit(), true);
+            SessionStateData.HiddenFlows.Clear();
+            CollectionUtils.ForEach(flows, delegate(DataFlow dataFlow)
+            {
+                SessionStateData.HiddenFlows.Add(dataFlow.Id);
+            });
+            UserSettingsManager.SaveAdminFlowPageHiddenFlowIds(GetCurrentUsername(), SessionStateData.HiddenFlows);
             NeedsRebind = true;
         }
     }

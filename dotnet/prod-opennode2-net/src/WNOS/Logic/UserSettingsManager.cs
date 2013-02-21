@@ -51,8 +51,8 @@ namespace Windsor.Node2008.WNOS.Logic
 {
     public enum UserSettingsDataType
     {
-        AdminSchedulePageExpandedScheduleIds,
-        AdminFlowPageExpandedFlowIds,
+        AdminSchedulePageHiddenScheduleIds,
+        AdminFlowPageHiddenFlowIds,
     }
     public class UserSettingsManager : LogicAuditBaseManager, IUserSettingsManager
     {
@@ -74,21 +74,21 @@ namespace Windsor.Node2008.WNOS.Logic
             FieldNotInitializedException.ThrowIfNull(this, ObjectCacheDao, "ObjectCacheDao");
         }
 
-        public virtual IList<string> LoadAdminSchedulePageExpandedScheduleIds(string username)
+        public virtual IList<string> LoadAdminSchedulePageHiddenScheduleIds(string username)
         {
-            return LoadData<IList<string>>(username, UserSettingsDataType.AdminSchedulePageExpandedScheduleIds);
+            return LoadData<IList<string>>(username, UserSettingsDataType.AdminSchedulePageHiddenScheduleIds);
         }
-        public virtual bool SaveAdminSchedulePageExpandedScheduleIds(string username, IList<string> ids)
+        public virtual bool SaveAdminSchedulePageHiddenScheduleIds(string username, IList<string> ids)
         {
-            return SaveData(username, UserSettingsDataType.AdminSchedulePageExpandedScheduleIds, ids);
+            return SaveData(username, UserSettingsDataType.AdminSchedulePageHiddenScheduleIds, ids);
         }
-        public virtual IList<string> LoadAdminFlowPageExpandedFlowIds(string username)
+        public virtual IList<string> LoadAdminFlowPageHiddenFlowIds(string username)
         {
-            return LoadData<IList<string>>(username, UserSettingsDataType.AdminFlowPageExpandedFlowIds);
+            return LoadData<IList<string>>(username, UserSettingsDataType.AdminFlowPageHiddenFlowIds);
         }
-        public virtual bool SaveAdminFlowPageExpandedFlowIds(string username, IList<string> ids)
+        public virtual bool SaveAdminFlowPageHiddenFlowIds(string username, IList<string> ids)
         {
-            return SaveData(username, UserSettingsDataType.AdminFlowPageExpandedFlowIds, ids);
+            return SaveData(username, UserSettingsDataType.AdminFlowPageHiddenFlowIds, ids);
         }
         public virtual T LoadData<T>(string username, UserSettingsDataType dataType)
         {

@@ -184,7 +184,38 @@ namespace Windsor.Commons.Spring
         #endregion
 
         #region Helper Methods
-
+        public string SqlConcat(params string[] strings)
+        {
+            if (CollectionUtils.IsNullOrEmpty(strings))
+            {
+                return string.Empty;
+            }
+            if (strings.Length == 1)
+            {
+                return strings[0];
+            }
+            string result = strings[0];
+            for (int i = 1; i < strings.Length; ++i)
+            {
+                if (IsSqlServerDatabase)
+                {
+                    result = result + " + " + strings[i];
+                }
+                else if (IsOracleDatabase)
+                {
+                    result = result + " || " + strings[i];
+                }
+                else if (IsMySqlDatabase)
+                {
+                    result = "CONCAT(" + result + "," + strings[i] + ")";
+                }
+                else
+                {
+                    throw new NotSupportedException();
+                }
+            }
+            return result;
+        }
         public delegate void CommandNoReturnDelegate(DbCommand command);
         public static void ExecuteCommandWithTimeout(System.Data.Common.DbCommand command, int timeoutInSeconds,
                                                      CommandNoReturnDelegate del)
@@ -887,18 +918,18 @@ namespace Windsor.Commons.Spring
                         }
                         else if (whereColumnName.EndsWith(" LIKE '%'p'%'", StringComparison.InvariantCultureIgnoreCase))
                         {
-                            sb.AppendFormat("{0} LIKE CONCAT(CONCAT('%', {1}), '%')", whereColumnName.Substring(0, whereColumnName.Length - 13),
-                                            ParseParamName(whereParamName));
+                            sb.AppendFormat("{0} LIKE {1}", whereColumnName.Substring(0, whereColumnName.Length - 13),
+                                            SqlConcat("'%'", ParseParamName(whereParamName), "'%'"));
                         }
                         else if (whereColumnName.EndsWith(" LIKE p'%'", StringComparison.InvariantCultureIgnoreCase))
                         {
-                            sb.AppendFormat("{0} LIKE CONCAT({1}, '%')", whereColumnName.Substring(0, whereColumnName.Length - 10),
-                                            ParseParamName(whereParamName));
+                            sb.AppendFormat("{0} LIKE {1}", whereColumnName.Substring(0, whereColumnName.Length - 10),
+                                            SqlConcat(ParseParamName(whereParamName), "'%'"));
                         }
                         else if (whereColumnName.EndsWith(" LIKE '%'p", StringComparison.InvariantCultureIgnoreCase))
                         {
-                            sb.AppendFormat("{0} LIKE CONCAT('%', {1})", whereColumnName.Substring(0, whereColumnName.Length - 10),
-                                            ParseParamName(whereParamName));
+                            sb.AppendFormat("{0} LIKE {1}", whereColumnName.Substring(0, whereColumnName.Length - 10),
+                                            SqlConcat("'%'", ParseParamName(whereParamName)));
                         }
                         else
                         {

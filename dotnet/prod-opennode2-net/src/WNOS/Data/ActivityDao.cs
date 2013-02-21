@@ -427,14 +427,7 @@ namespace Windsor.Node2008.WNOS.Data
             }
             if (!string.IsNullOrEmpty(searchParams.DetailContains))
             {
-                if (this.IsSqlServerDatabase)
-                {
-                    sql.Append(" AND UPPER(d.Detail) LIKE '%' + UPPER(?) + '%'");
-                }
-                else
-                {
-                    sql.Append(" AND UPPER(d.Detail) LIKE CONCAT(CONCAT('%', UPPER(?)), '%')");
-                }
+                sql.Append(" AND UPPER(d.Detail) LIKE " + SqlConcat("'%'", "UPPER(?)", "'%'"));
                 addedDetail = true;
                 whereValues.Add(searchParams.DetailContains);
             }
@@ -463,7 +456,7 @@ namespace Windsor.Node2008.WNOS.Data
 
             IDbParameters parameters = AppendDbParameters(null, whereValues);
 
-            string deleteSqlCommand = string.Format("DELETE FROM {0} WHERE ID IN ({1})",
+            string deleteSqlCommand = string.Format("DELETE FROM {0} WHERE Id IN ({1})",
                                                     TABLE_NAME, selectIdText);
             string updateSqlCommand = string.Format("UPDATE {0} SET LastExecuteActivityId = NULL WHERE LastExecuteActivityId IN ({1})",
                                                     ScheduleDao.TABLE_NAME, selectIdText);

@@ -123,7 +123,7 @@ namespace Windsor.Node2008.WNOS.Data
                         }
                         _didCheckForDatabaseStartup = true;
                     }
-               }
+                }
             }
         }
         /// <summary>
@@ -131,8 +131,14 @@ namespace Windsor.Node2008.WNOS.Data
         /// </summary>
         public IdProvider IdProvider
         {
-            get { return _idProvider; }
-            set { _idProvider = value; }
+            get
+            {
+                return _idProvider;
+            }
+            set
+            {
+                _idProvider = value;
+            }
         }
         public ITransactionOperations GetTransactionTemplate()
         {
@@ -144,14 +150,26 @@ namespace Windsor.Node2008.WNOS.Data
         /// </summary>
         protected ISettingsProvider SettingsProvider
         {
-            get { return _settingsProvider; }
-            set { _settingsProvider = value; }
+            get
+            {
+                return _settingsProvider;
+            }
+            set
+            {
+                _settingsProvider = value;
+            }
         }
 
         public int SecondsToWaitForDatabaseStartup
         {
-            get { return _secondsToWaitForDatabaseStartup; }
-            set { _secondsToWaitForDatabaseStartup = value; }
+            get
+            {
+                return _secondsToWaitForDatabaseStartup;
+            }
+            set
+            {
+                _secondsToWaitForDatabaseStartup = value;
+            }
         }
     }
 }

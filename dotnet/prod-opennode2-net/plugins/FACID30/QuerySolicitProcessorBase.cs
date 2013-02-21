@@ -838,7 +838,7 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
                                               bool includeAffiliates)
         {
             TableQueryParamsInfoList tableParams = new TableQueryParamsInfoList();
-            AppendDbQueryParam("FACID_FAC", "ADDR_POST_CODE_VAL LIKE CONCAT(?, '%')",
+            AppendDbQueryParam("FACID_FAC", "ADDR_POST_CODE_VAL LIKE " + _baseDao.SqlConcat("?", "'%'"),
                                QueryParameter.ZIPCode, normalizedQueryParameters, tableParams);
             AppendDbQueryParam("FACID_FAC", "TRIB_LAND_INDI",
                                QueryParameter.TribalLandCode, normalizedQueryParameters, tableParams);
