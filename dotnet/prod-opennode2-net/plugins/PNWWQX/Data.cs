@@ -73,64 +73,64 @@ namespace Windsor.Node2008.WNOSPlugin.PNWWQX
             arParms[1].Value = maxRows;
 
             arParms[2] = new SqlParameter("@providingOrganizationName", SqlDbType.VarChar, 80);
-            arParms[2].Value = providingOrganizationName;
+            arParms[2].Value = string.IsNullOrEmpty(providingOrganizationName) ? null : providingOrganizationName;
 
             arParms[3] = new SqlParameter("@projectOrganizationName", SqlDbType.VarChar, 80);
-            arParms[3].Value = projectOrganizationName;
+            arParms[3].Value = string.IsNullOrEmpty(projectOrganizationName) ? null : projectOrganizationName;
 
             arParms[4] = new SqlParameter("@projectName", SqlDbType.VarChar, 255);
-            arParms[4].Value = projectName;
+            arParms[4].Value = string.IsNullOrEmpty(projectName) ? null : projectName;
 
             arParms[5] = new SqlParameter("@projectStartDate", SqlDbType.DateTime);
-            arParms[5].Value = dateProject.minDate;
+            arParms[5].Value = dateProject.minDate.HasValue ? (object)dateProject.minDate.Value : null;
 
             arParms[6] = new SqlParameter("@projectEndDate", SqlDbType.DateTime);
-            arParms[6].Value = dateProject.maxDate;
+            arParms[6].Value = dateProject.maxDate.HasValue ? (object)dateProject.maxDate.Value : null;
 
             arParms[7] = new SqlParameter("@responsibleOrganizationName", SqlDbType.VarChar, 80);
-            arParms[7].Value = responsibleOrganizationName;
+            arParms[7].Value = string.IsNullOrEmpty(responsibleOrganizationName) ? null : responsibleOrganizationName;
 
             arParms[8] = new SqlParameter("@maximumLocationLatitude", SqlDbType.Decimal, 8);
-            arParms[8].Value = ll.maxLat;
+            arParms[8].Value = ll.maxLat.HasValue ? (object)ll.maxLat.Value : null;
 
             arParms[9] = new SqlParameter("@maximumLocationLongitude", SqlDbType.Decimal, 8);
-            arParms[9].Value = ll.maxLong;
+            arParms[9].Value = ll.maxLong.HasValue ? (object)ll.maxLong.Value : null;
 
             arParms[10] = new SqlParameter("@minimumLocationLatitude", SqlDbType.Decimal, 8);
-            arParms[10].Value = ll.minLat;
+            arParms[10].Value = ll.minLat.HasValue ? (object)ll.minLat.Value : null;
 
             arParms[11] = new SqlParameter("@minimumLocationLongitude", SqlDbType.Decimal, 8);
-            arParms[11].Value = ll.minLong;
+            arParms[11].Value = ll.minLong.HasValue ? (object)ll.minLong.Value : null;
 
             arParms[12] = new SqlParameter("@locationDescriptorContext", SqlDbType.VarChar, 100);
-            arParms[12].Value = locationDescriptorContext;
+            arParms[12].Value = string.IsNullOrEmpty(locationDescriptorContext) ? null : locationDescriptorContext;
 
             arParms[13] = new SqlParameter("@locationDescriptorName", SqlDbType.VarChar, 100);
-            arParms[13].Value = locationDescriptorName;
+            arParms[13].Value = string.IsNullOrEmpty(locationDescriptorName) ? null : locationDescriptorName;
 
             arParms[14] = new SqlParameter("@stationType", SqlDbType.VarChar, 4000);
-            arParms[14].Value = stationType;
+            arParms[14].Value = string.IsNullOrEmpty(stationType) ? null : stationType;
 
             arParms[15] = new SqlParameter("@stationName", SqlDbType.VarChar, 255);
-            arParms[15].Value = stationName;
+            arParms[15].Value = string.IsNullOrEmpty(stationName) ? null : stationName;
 
             arParms[16] = new SqlParameter("@samplingOrganizationName", SqlDbType.VarChar, 80);
-            arParms[16].Value = samplingOrganizationName;
+            arParms[16].Value = string.IsNullOrEmpty(samplingOrganizationName) ? null : samplingOrganizationName;
 
             arParms[17] = new SqlParameter("@fieldEventStartDate", SqlDbType.DateTime);
-            arParms[17].Value = dateFieldEvent.minDate;
+            arParms[17].Value = dateFieldEvent.minDate.HasValue ? (object)dateFieldEvent.minDate.Value : null;
 
             arParms[18] = new SqlParameter("@fieldEventEndDate", SqlDbType.DateTime);
-            arParms[18].Value = dateFieldEvent.maxDate;
+            arParms[18].Value = dateFieldEvent.maxDate.HasValue ? (object)dateFieldEvent.maxDate.Value : null;
 
             arParms[19] = new SqlParameter("@sampledMedia", SqlDbType.VarChar, 4000);
-            arParms[19].Value = sampledMedia;
+            arParms[19].Value = string.IsNullOrEmpty(sampledMedia) ? null : sampledMedia;
 
             arParms[20] = new SqlParameter("@analyteName", SqlDbType.VarChar, 4000);
-            arParms[20].Value = analyteName;
+            arParms[20].Value = string.IsNullOrEmpty(analyteName) ? null : analyteName;
 
             arParms[21] = new SqlParameter("@sampledTaxon", SqlDbType.VarChar, 4000);
-            arParms[21].Value = sampledTaxon;
+            arParms[21].Value = string.IsNullOrEmpty(sampledTaxon) ? null : sampledTaxon;
 
             arParms[22] = new SqlParameter("@Deliminator", SqlDbType.Char, 1);
             arParms[22].Value = Config.SQL_ARR_DELIMINATOR;

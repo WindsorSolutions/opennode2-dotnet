@@ -32,34 +32,35 @@ POSSIBILITY OF SUCH DAMAGE.
 #endregion
 
 using System;
+using Windsor.Commons.Core;
 
 namespace Windsor.Node2008.WNOSPlugin.PNWWQX
 {
-	/// <summary>
-	/// Summary description for Utility.
-	/// </summary>
-	public class Utility
-	{
+    /// <summary>
+    /// Summary description for Utility.
+    /// </summary>
+    public class Utility
+    {
 
         #region Traps
-        public static string toStr(object val) 
+        public static string toStr(object val)
         {
             return (val == DBNull.Value) ? null : val.ToString().Trim();
         }
 
-        public static DateTime toDT(object val) 
+        public static DateTime toDT(object val)
         {
-            try 
+            try
             {
                 return DateTime.Parse(val.ToString());
             }
-            catch 
+            catch
             {
                 return DateTime.MinValue;
             }
         }
 
-        public static bool toBool(object val) 
+        public static bool toBool(object val)
         {
             if ((val == null) || (val == DBNull.Value))
             {
@@ -78,28 +79,28 @@ namespace Windsor.Node2008.WNOSPlugin.PNWWQX
             }
         }
 
-        public static decimal toDecimal(object val) 
+        public static decimal toDecimal(object val)
         {
             return (val == DBNull.Value) ? Decimal.Zero : System.Decimal.Parse(val.ToString());
         }
 
-        public static int toInt(object val) 
+        public static int toInt(object val)
         {
             return (val == DBNull.Value) ? 0 : int.Parse(val.ToString());
         }
 
 
-		public static int isInt(string val) 
-		{
-			try
-			{
-				return int.Parse(val);
-			}
-			catch
-			{
-				return 0;
-			}
-		}
+        public static int isInt(string val)
+        {
+            try
+            {
+                return int.Parse(val);
+            }
+            catch
+            {
+                return 0;
+            }
+        }
 
         #endregion
 
@@ -111,12 +112,11 @@ namespace Windsor.Node2008.WNOSPlugin.PNWWQX
         /// <summary>
         /// MinMaxDate
         /// </summary>
-        public class MinMaxDate 
+        public class MinMaxDate
         {
 
-            private bool m_isValid;
-            private DateTime m_minDate;
-            private DateTime m_maxDate;
+            private DateTime? m_minDate;
+            private DateTime? m_maxDate;
 
             /// <summary>
             /// MinMaxDate
@@ -126,71 +126,58 @@ namespace Windsor.Node2008.WNOSPlugin.PNWWQX
             public MinMaxDate(string minDate, string maxDate)
             {
 
-                try 
+                try
                 {
-
-                    if (minDate.Equals(string.Empty))
-                    {
-                        m_minDate = DateTime.Parse("1/1/1753");
-                    } 
-                    else
+                    if (!string.IsNullOrEmpty(minDate))
                     {
                         m_minDate = DateTime.Parse(minDate);
                     }
 
-                    if (maxDate.Equals(string.Empty))
-                    {
-                        m_maxDate = DateTime.Parse("12/31/9999");
-                    } 
-                    else
+                    if (!string.IsNullOrEmpty(maxDate))
                     {
                         m_maxDate = DateTime.Parse(maxDate);
                     }
-
-                    m_isValid = true;
-
                 }
-                catch
+                catch (Exception ex)
                 {
-                    m_isValid = false;
-                    throw new Exception("One of the provided dates is not valid. "
-                        + "Dates must be valid or omitted.");
+                    throw new Exception(string.Format("Date parameter could not be parsed: {0}",
+                                                      ExceptionUtils.GetDeepExceptionMessageOnly(ex)));
                 }
 
             }
 
-            public bool isValid 
+            public DateTime? minDate
             {
-                get { return m_isValid; }
+                get
+                {
+                    return m_minDate;
+                }
             }
 
-            public DateTime minDate 
+            public DateTime? maxDate
             {
-                get { return m_minDate; }
-            }
-
-            public DateTime maxDate 
-            {
-                get { return m_maxDate; }
+                get
+                {
+                    return m_maxDate;
+                }
             }
 
         }
 
 
 
-	
+
 
         /// <summary>
         /// LatLong
         /// </summary>
-        public class LatLong 
+        public class LatLong
         {
 
-            private bool m_isValid;
-            private decimal m_minLat;
-            private decimal m_minLong;
-            private decimal m_maxLat;
-            private decimal m_maxLong;
+            private decimal? m_minLat;
+            private decimal? m_minLong;
+            private decimal? m_maxLat;
+            private decimal? m_maxLong;
 
             /// <summary>
             /// LatLong
@@ -202,75 +189,66 @@ namespace Windsor.Node2008.WNOSPlugin.PNWWQX
             public LatLong(string minLat, string minLong, string maxLat, string maxLong)
             {
 
-                try 
+                try
                 {
-
-                    //Asssumes all or none value must be provided
-                    if (
-                        (minLat.Equals(string.Empty)) &&
-                        (minLong.Equals(string.Empty)) &&
-                        (maxLat.Equals(string.Empty)) &&
-                        (maxLong.Equals(string.Empty))
-                        )
-                    {
-                        //These should be inclusve of all db
-                        //select  
-                        //    Min(LatitudeMeasure) AS minLat,
-                        //    Min(LongitudeMeasure) AS minLong,
-                        //    Max(LatitudeMeasure) AS maxLat,
-                        //    Max(LongitudeMeasure) AS maxLong
-                        //from PNWWQX_XtraJoinTable
-                        m_isValid = true;
-                        m_minLat = 0;
-                        m_minLong = 0;
-                        m_maxLat = 0;
-                        m_maxLong = 0;
-                    } 
-                    else
+                    if (!string.IsNullOrEmpty(minLat))
                     {
                         m_minLat = decimal.Parse(minLat);
-                        m_minLong = decimal.Parse(minLong);
-                        m_maxLat = decimal.Parse(maxLat);
-                        m_maxLong = decimal.Parse(maxLong);
-                        m_isValid = true;
                     }
-
+                    if (!string.IsNullOrEmpty(minLong))
+                    {
+                        m_minLong = decimal.Parse(minLong);
+                    }
+                    if (!string.IsNullOrEmpty(maxLat))
+                    {
+                        m_maxLat = decimal.Parse(maxLat);
+                    }
+                    if (!string.IsNullOrEmpty(maxLong))
+                    {
+                        m_maxLong = decimal.Parse(maxLong);
+                    }
                 }
-                catch
+                catch (Exception ex)
                 {
-                    m_isValid = false;
-                    throw new Exception("Either both min and max Lat/Longs must "
-                        + "be provided or all four values must be omitted.");
+                    throw new Exception(string.Format("Latitude or longitude parameter could not be parsed: {0}",
+                                                      ExceptionUtils.GetDeepExceptionMessageOnly(ex)));
                 }
 
             }
 
-            public bool isValid 
+            public decimal? minLat
             {
-                get { return m_isValid; }
+                get
+                {
+                    return m_minLat;
+                }
             }
 
-            public decimal minLat 
+            public decimal? minLong
             {
-                get { return m_minLat; }
+                get
+                {
+                    return m_minLong;
+                }
             }
 
-            public decimal minLong 
+            public decimal? maxLat
             {
-                get { return m_minLong; }
+                get
+                {
+                    return m_maxLat;
+                }
             }
 
-            public decimal maxLat 
+            public decimal? maxLong
             {
-                get { return m_maxLat; }
-            }
-
-            public decimal maxLong 
-            {
-                get { return m_maxLong; }
+                get
+                {
+                    return m_maxLong;
+                }
             }
         }
 
         #endregion
-	}
+    }
 }

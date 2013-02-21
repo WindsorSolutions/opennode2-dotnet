@@ -211,13 +211,16 @@ namespace Windsor.Node2008.WNOSPlugin.PNWWQX
 
             LOG.Debug("Parsed Service Name: " + testServiceName);
 
+            int rowIndex = int.Parse(request.Parameters[0]);
+            int maxRows = int.Parse(request.Parameters[1]);
+
             switch (testServiceName)
             {
                 case "getmeasurements":
                     returnData = (object)PNWWQXProcessor.GetMeasurements
                         (
-                        request.RowIndex,
-                        request.MaxRowCount,
+                        rowIndex,
+                        maxRows,
                         request.Parameters[2],
                         request.Parameters[3],
                         request.Parameters[4],
@@ -243,8 +246,8 @@ namespace Windsor.Node2008.WNOSPlugin.PNWWQX
                 case "getprojects":
                     returnData = (object)PNWWQXProcessor.GetProjects
                         (
-                        request.RowIndex,
-                        request.MaxRowCount,
+                        rowIndex,
+                        maxRows,
                         request.Parameters[2],
                         request.Parameters[3],
                         request.Parameters[4],
@@ -270,8 +273,8 @@ namespace Windsor.Node2008.WNOSPlugin.PNWWQX
                 case "getstations":
                     returnData = (object)PNWWQXProcessor.GetStations
                         (
-                        request.RowIndex,
-                        request.MaxRowCount,
+                        rowIndex,
+                        maxRows,
                         request.Parameters[2],
                         request.Parameters[3],
                         request.Parameters[4],

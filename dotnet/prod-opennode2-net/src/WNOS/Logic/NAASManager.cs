@@ -249,6 +249,12 @@ namespace Windsor.Node2008.WNOS.Logic
             }
             catch (SoapException soapException)
             {
+#if DEBUG
+                if (BypassNaasAuthenticateFailures)
+                {
+                    return _bypassNaasUserName;
+                }
+#endif // DEBUG
                 LOG.Error("NAAS authentication error", soapException);
                 throw new InvalidCredentialException("NAAS authentication error: " + soapException.Message);
             }
@@ -376,7 +382,7 @@ namespace Windsor.Node2008.WNOS.Logic
 #if DEBUG
                 if (BypassNaasAuthenticateFailures)
                 {
-                    return "naasAuthenticateFailed@whatsupnass.com";
+                    return _bypassNaasUserName;
                 }
 #endif // DEBUG
                 throw new ApplicationException("Invalid token", ex);
