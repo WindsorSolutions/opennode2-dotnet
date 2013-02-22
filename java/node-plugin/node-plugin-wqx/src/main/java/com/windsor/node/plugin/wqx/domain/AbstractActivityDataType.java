@@ -25,14 +25,6 @@ public abstract class AbstractActivityDataType extends TopLevelEntity {
 	public abstract ActivityDescriptionDataType getActivityDescription();
 
 	/**
-	 * Sets the description of the activity.
-	 *
-	 * @param activityDescriptionType
-	 *            the description of the activity
-	 */
-	public abstract void getActivityDescription(ActivityDescriptionDataType activityDescriptionType);
-
-	/**
 	 * Null out the activity description end time field if the time is null but
 	 * the time-zone is not.
 	 */
