@@ -1,6 +1,9 @@
 package com.windsor.node.plugin.wqx.domain;
 
+import javax.persistence.MappedSuperclass;
 import javax.persistence.PostLoad;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 
 import com.windsor.node.plugin.wqx.domain.generated.ActivityDescriptionDataType;
 import com.windsor.node.plugin.wqx.domain.generated.WQXTimeDataType;
@@ -10,6 +13,8 @@ import com.windsor.node.plugin.wqx.domain.generated.WQXTimeDataType;
  * is set but the time is not.
  *
  */
+@XmlAccessorType(XmlAccessType.FIELD)
+@MappedSuperclass
 public abstract class AbstractActivityDataType extends TopLevelEntity {
 
 	/**
