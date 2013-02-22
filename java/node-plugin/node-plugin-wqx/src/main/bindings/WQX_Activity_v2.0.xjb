@@ -10,7 +10,7 @@
 
 		<jaxb:bindings node="//xsd:complexType[@name='ActivityDataType']">
 			<hj:entity />
-			<inheritance:extends>com.windsor.node.plugin.wqx.domain.TopLevelEntity</inheritance:extends>
+			<inheritance:extends>com.windsor.node.plugin.wqx.domain.AbstractActivityDataType</inheritance:extends>
 		</jaxb:bindings>
 
 		<jaxb:bindings node="//xsd:element[@ref='wqx:ActivityLocation']">

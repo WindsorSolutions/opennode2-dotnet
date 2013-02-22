@@ -11,7 +11,7 @@
     <name>Node Plugin - WQX</name>
     <properties>
         <node.plugin.name>wqx</node.plugin.name>
-        <node.plugin.build.number>04</node.plugin.build.number>
+        <node.plugin.build.number>05</node.plugin.build.number>
     </properties>
     <build>
         <plugins>
