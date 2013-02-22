@@ -2,6 +2,7 @@ package com.windsor.node.plugin.wqx.domain;
 
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PostLoad;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 
@@ -27,6 +28,7 @@ public abstract class AbstractActivityDataType extends TopLevelEntity {
 	 *
 	 * @return the description of the activity
 	 */
+	@Transient
 	public abstract ActivityDescriptionDataType getActivityDescription();
 
 	/**
