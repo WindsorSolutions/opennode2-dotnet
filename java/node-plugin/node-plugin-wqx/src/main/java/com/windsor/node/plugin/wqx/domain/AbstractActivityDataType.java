@@ -6,6 +6,8 @@ import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.windsor.node.plugin.wqx.domain.generated.ActivityDescriptionDataType;
 import com.windsor.node.plugin.wqx.domain.generated.WQXTimeDataType;
 
@@ -41,11 +43,10 @@ public abstract class AbstractActivityDataType extends TopLevelEntity {
 		if (activityDescription != null) {
 			final WQXTimeDataType endTime = activityDescription.getActivityEndTime();
 			if (endTime != null) {
-				if (endTime.getTime() == null && endTime.getTimeZoneCode() != null) {
+				if (StringUtils.isBlank(endTime.getTime()) && endTime.getTimeZoneCode() != null) {
 					activityDescription.setActivityEndTime(null);
 				}
 			}
 		}
 	}
-
 }

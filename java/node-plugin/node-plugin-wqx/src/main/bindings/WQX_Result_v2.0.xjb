@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance"
 	jaxb:extensionBindingPrefixes="hj orm" schemaLocation="../xsd/WQX_Result_v2.0.xsd">
 
 	<!-- result -->
@@ -9,6 +10,7 @@
 	
 		<jaxb:bindings node="//xsd:complexType[@name='ResultDataType']">
 			<hj:entity />
+			<inheritance:extends>com.windsor.node.plugin.wqx.domain.AbstractResultDataType</inheritance:extends>
 		</jaxb:bindings>
 		
 		<jaxb:bindings node="//xsd:element[@ref='wqx:BiologicalResultDescription']">
