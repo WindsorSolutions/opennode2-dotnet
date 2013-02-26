@@ -25,7 +25,9 @@ public class WqxExistingDbIT extends AbstractExistingDbIT {
 
 	public void testValidXmlGeneratedFromExistingDb() throws JAXBException, SAXException,
 			URISyntaxException, IOException, ParserConfigurationException {
+		getEntityManager().getTransaction().begin();
 		WqxTestUtil.validateXml(getEntityManager());
+		getEntityManager().getTransaction().commit();
 	}
 
 }
