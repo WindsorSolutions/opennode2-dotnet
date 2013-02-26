@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
 import com.windsor.node.common.domain.Document;
@@ -21,8 +22,8 @@ import com.windsor.node.plugin.common.xml.stream.ElementWriter;
 import com.windsor.node.plugin.wqx.dao.OrganizationNotFoundException;
 import com.windsor.node.plugin.wqx.document.CompressingExchangeNetworkDocumentFactory;
 import com.windsor.node.plugin.wqx.document.ExchangeNetworkDocumentFactory;
-import com.windsor.node.plugin.wqx.domain.OperationType;
 import com.windsor.node.plugin.wqx.domain.Header;
+import com.windsor.node.plugin.wqx.domain.OperationType;
 import com.windsor.node.service.helper.zip.ZipCompressionService;
 
 public abstract class AbstractSubmittingWqxService<L extends List<T>, T> extends AbstractWqxService implements ElementsDataProvider<List<T>>, ElementWriteHandler<T> {
@@ -243,7 +244,7 @@ public abstract class AbstractSubmittingWqxService<L extends List<T>, T> extends
         } catch (Exception e) {
             result.setSuccess(Boolean.FALSE);
             result.setStatus(CommonTransactionStatusCode.Failed);
-            recordAtivity(result, e.getLocalizedMessage());
+            recordAtivity(result, e.getLocalizedMessage() + ", root cause: " + ExceptionUtils.getRootCauseMessage(e));
         }
         return result;
     }
