@@ -120,5 +120,5 @@
         </Triggers>
     </asp:UpdatePanel>
     <uc1:UpdateProgressCntl ID="UpdateProgressCntl" runat="server" />
-    <asp:Timer ID="PageTimer" runat="server" Interval="45000" OnTick="PageTimer_Tick" />
+    <asp:Timer ID="PageTimer" runat="server" Interval="5000" OnTick="PageTimer_Tick" />
 </asp:Content>

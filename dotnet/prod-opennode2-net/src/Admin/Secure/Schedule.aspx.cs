@@ -380,7 +380,6 @@ namespace Windsor.Node2008.Admin.Secure
                     PageTimer.Enabled = true;
                     PageTimer.Interval = RefreshFrequencyInSeconds * 1000;
                 }
-                PageTimer.Enabled = false;
             }
         }
         protected override void BindFormData()
