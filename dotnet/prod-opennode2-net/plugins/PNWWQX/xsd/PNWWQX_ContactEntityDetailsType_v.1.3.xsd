@@ -30,9 +30,17 @@
 	<xsd:element name="ContactIndividualName" type="xsd:string"/>
 	<xsd:element name="ContactMailingAddress" type="pnwwqx:MailingAddressType"/>
 	<xsd:element name="ContactPhoneEmail" type="pnwwqx:PhoneEmailType"/>
-	<xsd:simpleType name="ContactEntityType">
+    <xsd:simpleType name="MyExtEntityType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="Individual"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="ContactEntityType">
+        <xsd:union memberTypes="pnwwqx:EntityType pnwwqx:MyExtEntityType"/>
+    </xsd:simpleType>
+	<!--<xsd:simpleType name="ContactEntityType">
 		<xsd:restriction base="pnwwqx:EntityType">
 			<xsd:enumeration value="Individual"/>
 		</xsd:restriction>
-	</xsd:simpleType>
+	</xsd:simpleType>-->
 </xsd:schema>

@@ -39,6 +39,7 @@ using Windsor.Node2008.WNOSPlugin;
 using Windsor.Node2008.WNOSProviders;
 using Windsor.Commons.Logging;
 using Windsor.Commons.NodeDomain;
+using Windsor.Commons.Core;
 
 namespace Windsor.Node2008.WNOSPlugin.PNWWQX
 {
@@ -211,8 +212,31 @@ namespace Windsor.Node2008.WNOSPlugin.PNWWQX
 
             LOG.Debug("Parsed Service Name: " + testServiceName);
 
-            int rowIndex = int.Parse(request.Parameters[0]);
-            int maxRows = int.Parse(request.Parameters[1]);
+            int paramCount = CollectionUtils.Count(request.Parameters);
+            if (paramCount < 22)
+            {
+                throw new ArgumentException(string.Format("An invalid number of parameters were supplied to the service.  22 parameters are required, but only {0} were supplied.",
+                                                          paramCount.ToString()));
+            }
+
+            int rowIndex, maxRows;
+
+            if (string.IsNullOrEmpty(request.Parameters[0]))
+            {
+                rowIndex = 0;
+            }
+            else
+            {
+                rowIndex = int.Parse(request.Parameters[0]);
+            }
+            if (string.IsNullOrEmpty(request.Parameters[1]))
+            {
+                maxRows = 1000000;
+            }
+            else
+            {
+                maxRows = int.Parse(request.Parameters[1]);
+            }
 
             switch (testServiceName)
             {

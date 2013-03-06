@@ -82,12 +82,18 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
             OrgId,
             [Description("ProjectId")]
             ProjectId,
+            [Description("StartDate")]
+            StartDate,
+            [Description("EndDate")]
+            EndDate,
         }
 
         protected const string p_project_id = "p_project_id";
         protected const string p_org_id = "p_org_id";
         protected const string p_runtime_txt = "p_runtime_txt";
         protected const string p_runtime = "p_runtime";
+        protected const string p_start_date = "p_start_date";
+        protected const string p_end_date = "p_end_date";
 
         protected string _projectId;
         protected string _orgId;
@@ -128,8 +134,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
             try
             {
                 IDbParameters parameters = baseDao.AdoTemplate.CreateDbParameters();
-                parameters.AddWithValue(p_project_id, string.IsNullOrEmpty(projectId) ? (object) DBNull.Value :
-                                                                                        (object) projectId);
+                parameters.AddWithValue(p_project_id, string.IsNullOrEmpty(projectId) ? (object)DBNull.Value :
+                                                                                        (object)projectId);
                 parameters.AddWithValue(p_org_id, orgId);
                 IDbDataParameter runtimeTextParameter = parameters.AddOut(p_runtime_txt, DbType.String, 2048);
                 IDbDataParameter runtimeParameter = parameters.AddOut(p_runtime, DbType.Date);
@@ -165,7 +171,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                     {
                         runtime = DateTime.Parse(command.Parameters[runtimeParameter.ParameterName].Value.ToString());
                     }
-                    
+
                     return 0;
                 });
 
@@ -178,6 +184,51 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                 throw;
             }
             return runtime;
+        }
+
+        public static void DoExtract(BaseWNOSPlugin plugin, SpringBaseDao baseDao, string storedProcName,
+                                     int commandTimeout, string orgId, DateTime? startDate, DateTime? endDate)
+        {
+            plugin.AppendAuditLogEvent("Executing stored procedure \"{0}\" with timeout of {1} seconds ...",
+                                       storedProcName, commandTimeout.ToString());
+
+            try
+            {
+                IDbParameters parameters = baseDao.AdoTemplate.CreateDbParameters();
+                parameters.AddWithValue(p_org_id, orgId);
+                parameters.AddWithValue(p_start_date, startDate.HasValue ? (object)startDate.Value : (object)DBNull.Value);
+                parameters.AddWithValue(p_end_date, endDate.HasValue ? (object)endDate.Value : (object)DBNull.Value);
+
+                baseDao.AdoTemplate.Execute<int>(delegate(DbCommand command)
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = storedProcName;
+                    Spring.Data.Support.ParameterUtils.CopyParameters(command, parameters);
+
+                    try
+                    {
+                        SpringBaseDao.ExecuteCommandWithTimeout(command, commandTimeout, delegate(DbCommand commandToExecute)
+                        {
+                            commandToExecute.ExecuteNonQuery();
+                        });
+                    }
+                    catch (Exception ex2)
+                    {
+                        plugin.AppendAuditLogEvent("Error returned from stored procedure: {0}", ExceptionUtils.GetDeepExceptionMessage(ex2));
+                        throw;
+                    }
+
+                    return 0;
+                });
+
+                plugin.AppendAuditLogEvent("Successfully executed stored procedure \"{0}\"", storedProcName);
+            }
+            catch (Exception e)
+            {
+                plugin.AppendAuditLogEvent("Failed to execute stored procedure \"{0}\" with error: {1}",
+                                           storedProcName, ExceptionUtils.GetDeepExceptionMessage(e));
+                throw;
+            }
         }
 
         public virtual void ProcessTaskInit(string requestId)
@@ -203,13 +254,13 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
             AppendAuditLogEvent("Loading request with id \"{0}\"", requestId);
             _dataRequest = _requestManager.GetDataRequest(requestId);
 
-            GetParameter(_dataRequest, EnumUtils.ToDescription(ScheduleParams.OrgId), 0, 
+            GetParameter(_dataRequest, EnumUtils.ToDescription(ScheduleParams.OrgId), 0,
                           out _orgId);
-            TryGetParameter(_dataRequest, EnumUtils.ToDescription(ScheduleParams.ProjectId), 1, 
+            TryGetParameter(_dataRequest, EnumUtils.ToDescription(ScheduleParams.ProjectId), 1,
                             ref _projectId);
 
             AppendAuditLogEvent("Schedule parameters: {0} ({1}), {2} ({3})", EnumUtils.ToDescription(ScheduleParams.OrgId),
-                                _orgId, EnumUtils.ToDescription(ScheduleParams.ProjectId), _projectId);
+                                _orgId, EnumUtils.ToDescription(ScheduleParams.ProjectId), _projectId ?? "Not specified");
         }
     }
 }

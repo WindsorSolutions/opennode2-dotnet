@@ -1443,6 +1443,67 @@ namespace Windsor.Node2008.WNOSPlugin
                 }
             }
         }
+        protected static bool TryGetNowDateParameter(DataRequest dataRequest, string name, int index, ref DateTime value)
+        {
+            string stringValue = null;
+            if (TryGetNonEmptyStringParameter(dataRequest, name, index, ref stringValue))
+            {
+                DateTime dateTimeValue;
+                if (TryParseNowDate(stringValue, out dateTimeValue))
+                {
+                    value = dateTimeValue;
+                    return true;
+                }
+                else
+                {
+                    if (dataRequest.Parameters.IsByName)
+                    {
+                        throw new ArgException("An invalid date parameter with name \"{0}\" was specified: {1}", name, stringValue);
+                    }
+                    else
+                    {
+                        throw new ArgException("An invalid date parameter at index \"{0}\" was specified: {1}", index.ToString(), stringValue);
+                    }
+                }
+            }
+            return false;
+        }
+        protected static bool TryParseNowDate(string value, out DateTime dateTime)
+        {
+            if (DateTime.TryParse(value, out dateTime))
+            {
+                return true;
+            }
+            else
+            {
+                const string NOW_PREFIX = "NOW";
+                string valueUpper = value.Trim().ToUpper();
+                if (valueUpper.StartsWith(NOW_PREFIX))
+                {
+                    if (valueUpper == NOW_PREFIX)
+                    {
+                        dateTime = DateTime.Now;
+                        return true;
+                    }
+                    string[] tokens = value.Split('-');
+                    int subtractDays;
+                    if ((tokens.Length == 2) && int.TryParse(tokens[1], out subtractDays))
+                    {
+                        dateTime = DateTime.Now.AddDays(-subtractDays);
+                        return true;
+                    }
+                    tokens = value.Split('+');
+                    int addDays;
+                    if ((tokens.Length == 2) && int.TryParse(tokens[1], out addDays))
+                    {
+                        dateTime = DateTime.Now.AddDays(addDays);
+                        return true;
+                    }
+                }
+            }
+            dateTime = DateTime.MinValue;
+            return false;
+        }
         /// <summary>
         /// Attempts to validate an xml file against an xml schema resource.  If the file is invalid,
         /// the method returns a file path to a text file containing the schema validation errors.  If
