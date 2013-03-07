@@ -40,6 +40,7 @@ using Windsor.Node2008.WNOSProviders;
 using Windsor.Commons.Logging;
 using Windsor.Commons.NodeDomain;
 using Windsor.Commons.Core;
+using System.ComponentModel;
 
 namespace Windsor.Node2008.WNOSPlugin.PNWWQX
 {
@@ -49,7 +50,8 @@ namespace Windsor.Node2008.WNOSPlugin.PNWWQX
     {
         public enum ServiceParameterType
         {
-
+            [DescriptionAttribute("Maximum number of rows to return")]
+            MaxNumRowsToReturn
         }
 
         public enum DataProviderParameterType
@@ -88,12 +90,13 @@ namespace Windsor.Node2008.WNOSPlugin.PNWWQX
         private ISerializationHelper _serializationHelper;
         private ICompressionHelper _compressionHelper;
         private IDocumentManager _documentManager;
+        private int _maxNumRowsToReturn = -1;
         #endregion
 
         public NodeProxy()
         {
             //Load Parameters
-            foreach (string arg in Enum.GetNames(typeof(ServiceParameterType)))
+            foreach (string arg in EnumUtils.GetAllDescriptions<ServiceParameterType>())
             {
                 ConfigurationArguments.Add(arg, null);
             }
@@ -112,6 +115,8 @@ namespace Windsor.Node2008.WNOSPlugin.PNWWQX
             GetServiceImplementation(out _serializationHelper);
             GetServiceImplementation(out _compressionHelper);
             GetServiceImplementation(out _documentManager);
+
+            TryGetConfigParameter(EnumUtils.ToDescription(ServiceParameterType.MaxNumRowsToReturn), ref _maxNumRowsToReturn);
         }
 
         public PaginatedContentResult ProcessQuery(string requestId)
@@ -212,6 +217,9 @@ namespace Windsor.Node2008.WNOSPlugin.PNWWQX
 
             LOG.Debug("Parsed Service Name: " + testServiceName);
 
+            //??
+            ////update NTransaction set Status = 'error' where Id = '_30093e58-c213-49ab-b58c-ed66885414fc'
+
             int paramCount = CollectionUtils.Count(request.Parameters);
             if (paramCount < 22)
             {
@@ -219,7 +227,7 @@ namespace Windsor.Node2008.WNOSPlugin.PNWWQX
                                                           paramCount.ToString()));
             }
 
-            int rowIndex, maxRows;
+            int rowIndex, maxRows = -1;
 
             if (string.IsNullOrEmpty(request.Parameters[0]))
             {
@@ -229,13 +237,21 @@ namespace Windsor.Node2008.WNOSPlugin.PNWWQX
             {
                 rowIndex = int.Parse(request.Parameters[0]);
             }
-            if (string.IsNullOrEmpty(request.Parameters[1]))
-            {
-                maxRows = 1000000;
-            }
-            else
+            if (!string.IsNullOrEmpty(request.Parameters[1]))
             {
                 maxRows = int.Parse(request.Parameters[1]);
+            }
+            if (maxRows < -1)
+            {
+                throw new ArgumentException(string.Format("An invalid maximum number of rows parameter was specified: {0}",
+                                                          maxRows.ToString()));
+            }
+            if (_maxNumRowsToReturn > 0)
+            {
+                if ((maxRows <= 0) || (maxRows > _maxNumRowsToReturn))
+                {
+                    maxRows = _maxNumRowsToReturn;
+                }
             }
 
             switch (testServiceName)
