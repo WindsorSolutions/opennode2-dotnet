@@ -24,19 +24,19 @@ namespace Windsor.Commons.Spring.AspNet
         {
             // do some initialization work
         }
-        public void ReloadPage()
+        public virtual void ReloadPage()
         {
             GlobalUtils.ReloadPage(this.Page);
         }
-        public void RegisterScriptFile(string scriptFilePageRelativePath)
+        public virtual void RegisterScriptFile(string scriptFilePageRelativePath)
         {
             AspNetUtils.RegisterScriptFile(this, scriptFilePageRelativePath);
         }
-        public void RegisterScriptBlock(string clientScript)
+        public virtual void RegisterScriptBlock(string clientScript)
         {
             AspNetUtils.RegisterScriptBlock(this, clientScript);
         }
-        public void RegisterCssFile(string cssFilePageRelativePath)
+        public virtual void RegisterCssFile(string cssFilePageRelativePath)
         {
             AspNetUtils.RegisterCssFile(this, cssFilePageRelativePath);
         }

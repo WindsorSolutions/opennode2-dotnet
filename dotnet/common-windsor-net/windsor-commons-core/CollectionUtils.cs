@@ -630,6 +630,15 @@ namespace Windsor.Commons.Core
             }
             return collection;
         }
+        public static List<T> Add<T>(T obj, List<T> list)
+        {
+            if (list == null)
+            {
+                list = new List<T>();
+            }
+            list.Add(obj);
+            return list;
+        }
         public static void Add<T>(T obj, ref IList<T> list)
         {
             if (list == null)

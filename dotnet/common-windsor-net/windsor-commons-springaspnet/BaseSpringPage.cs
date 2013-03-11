@@ -24,19 +24,19 @@ namespace Windsor.Commons.Spring.AspNet
             // do some initialization work
         }
 
-        public void ReloadPage()
+        public virtual void ReloadPage()
         {
             GlobalUtils.ReloadPage(this);
         }
-        public void RegisterScriptFile(string scriptFilePageRelativePath)
+        public virtual void RegisterScriptFile(string scriptFilePageRelativePath)
         {
             AspNetUtils.RegisterScriptFile(this, scriptFilePageRelativePath);
         }
-        public void RegisterCssFile(string cssFilePageRelativePath)
+        public virtual void RegisterCssFile(string cssFilePageRelativePath)
         {
             AspNetUtils.RegisterCssFile(this, cssFilePageRelativePath);
         }
-        public void RegisterScriptBlock(string clientScript)
+        public virtual void RegisterScriptBlock(string clientScript)
         {
             AspNetUtils.RegisterScriptBlock(this, clientScript);
         }
@@ -86,17 +86,31 @@ namespace Windsor.Commons.Spring.AspNet
         }
 
         // Subclasses use CreateDataModel() instead of InitializeModel()
-        protected sealed override void InitializeModel() { }
+        protected sealed override void InitializeModel()
+        {
+        }
         // Subclasses use CreateDataModel() instead of InitializeModel()
-        protected virtual void CreateDataModel() { }
+        protected virtual void CreateDataModel()
+        {
+        }
         // Subclasses use LoadDataModel() instead of LoadModel()
-        protected sealed override void LoadModel(object savedModel) { }
+        protected sealed override void LoadModel(object savedModel)
+        {
+        }
         // Subclasses use LoadDataModel() instead of LoadModel()
-        protected virtual void LoadDataModel(object savedModel) { }
+        protected virtual void LoadDataModel(object savedModel)
+        {
+        }
         // Subclasses use SaveDataModel() instead of SaveModel()
-        protected sealed override object SaveModel() { return SaveDataModel(); }
+        protected sealed override object SaveModel()
+        {
+            return SaveDataModel();
+        }
         // Subclasses use SaveDataModel() instead of SaveModel()
-        protected virtual object SaveDataModel() { return null; }
+        protected virtual object SaveDataModel()
+        {
+            return null;
+        }
 
         protected virtual void CheckDataModel()
         {
@@ -138,40 +152,70 @@ namespace Windsor.Commons.Spring.AspNet
 
         public bool PersistModelForEntireSession
         {
-            get { return _persistModelForEntireSession; }
-            set { _persistModelForEntireSession = value; }
+            get
+            {
+                return _persistModelForEntireSession;
+            }
+            set
+            {
+                _persistModelForEntireSession = value;
+            }
         }
 
         private bool _enableDependencyInjection;
 
         public bool EnableDependencyInjection
         {
-            get { return _enableDependencyInjection; }
-            set { _enableDependencyInjection = value; }
+            get
+            {
+                return _enableDependencyInjection;
+            }
+            set
+            {
+                _enableDependencyInjection = value;
+            }
         }
 
         private ILogEx _logger;
 
         public ILogEx Logger
         {
-            get { return _logger; }
-            set { _logger = value; }
+            get
+            {
+                return _logger;
+            }
+            set
+            {
+                _logger = value;
+            }
         }
-        
+
         private IApplicationContext _defaultApplicationContext;
 
         public IApplicationContext DefaultApplicationContext
         {
-            get { return _defaultApplicationContext; }
-            set { _defaultApplicationContext = value; }
+            get
+            {
+                return _defaultApplicationContext;
+            }
+            set
+            {
+                _defaultApplicationContext = value;
+            }
         }
 
         private bool _throwExceptionIfSessionStateExpires;
 
         public bool ThrowExceptionIfSessionStateExpires
         {
-            get { return _throwExceptionIfSessionStateExpires; }
-            set { _throwExceptionIfSessionStateExpires = value; }
+            get
+            {
+                return _throwExceptionIfSessionStateExpires;
+            }
+            set
+            {
+                _throwExceptionIfSessionStateExpires = value;
+            }
         }
 
     }
