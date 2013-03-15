@@ -159,7 +159,26 @@ namespace Windsor.Commons.WinForms
             {
                 try
                 {
-                    using (Process.Start(url)) { }
+                    using (Process.Start(url))
+                    {
+                    }
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+        }
+        public static bool OpenFileWithDefaultProgram(string filePath)
+        {
+            using (UseWaitCursor waitCursor = new UseWaitCursor())
+            {
+                try
+                {
+                    using (Process.Start(filePath))
+                    {
+                    }
                     return true;
                 }
                 catch (Exception)
