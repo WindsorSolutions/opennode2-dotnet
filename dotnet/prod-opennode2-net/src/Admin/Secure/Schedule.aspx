@@ -106,8 +106,13 @@
                                     </tr>
                                 </ItemTemplate>
                             </asp:Repeater>
+                            <tr style="<%#AddFlowScheduleDisplay(Container.DataItem)%>">
+                                <td class="listItemLeftCell listItemRightCell" colspan="3" align="right" style="width: 100%; background-color:white">
+                                    <asp:Button Text="Add Schedule" CssClass="button" Height="24px" Width="92px" runat="server" ID="addFlowScheduleBtn" Visible='<%#CanEditScheduleFlow(Container.DataItem)%>' OnCommand="OnAddFlowSchedule" CommandArgument='<%#GetScheduleFlowId(Container.DataItem)%>' />
+                                </td>
+                            </tr>
                             <tr>
-                                <td class="listItemBottomCell" style="height: 10px; width: 100%; background-color: White" colspan="3">
+                                <td class="listItemBottomCell" style="height: 10px; width: 100%; background-color:white" colspan="3">
                                 </td>
                             </tr>
                         </ItemTemplate>

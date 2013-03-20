@@ -250,6 +250,10 @@ namespace Windsor.Node2008.Admin.Secure
             {
                 throw new ArgumentNullException("ScheduleProcessor");
             }
+            if (UserSettingsManager == null)
+            {
+                throw new ArgumentNullException("UserSettingsManager");
+            }
             _dataModel = new DataModel();
             string id = Request["id"];
             string username = string.Empty;
@@ -421,7 +425,7 @@ namespace Windsor.Node2008.Admin.Secure
         {
             BindingManager.AddBinding("nameEdit.Text", "DataItem.Name");
             BindingManager.AddBinding("activeCheckBox.Checked", "DataItem.IsActive");
-            BindingManager.AddBinding("flowDropDownList.SelectedValue", "DataItem.FlowId");
+            BindingManager.AddBinding("FlowIdBinder", "DataItem.FlowId");
             BindingManager.AddBinding("StartTimeBinder", "DataItem.StartOn");
             BindingManager.AddBinding("EndTimeBinder", "DataItem.EndOn");
             BindingManager.AddBinding("frequencyValue.Text", "DataItem.Frequency");
@@ -633,6 +637,45 @@ namespace Windsor.Node2008.Admin.Secure
             return new DateTime(runDate.Year, runDate.Month, runDate.Day,
                                 runTime.Hour, runTime.Minute, 0);
         }
+        protected string FlowIdBinder
+        {
+            get
+            {
+                return flowDropDownList.SelectedValue;
+            }
+            set
+            {
+                if (!IsPostBack)
+                {
+                    flowDropDownList.SelectedIndex = 0;
+                    try
+                    {
+                        if (!string.IsNullOrEmpty(_dataModel.ScheduledItem.FlowId))
+                        {
+                            flowDropDownList.SelectedValue = _dataModel.ScheduledItem.FlowId;
+                        }
+                        else
+                        {
+                            string id = Request["id"];
+                            string flowId = Request["flowid"];
+                            if (string.IsNullOrEmpty(id))
+                            {
+                                if (!string.IsNullOrEmpty(flowId))
+                                {
+                                    flowDropDownList.SelectedValue = flowId;
+                                }
+                            }
+                            else
+                            {
+                            }
+                        }
+                    }
+                    catch (Exception)
+                    {
+                    }
+                }
+            }
+        }
         protected string SourceIdBinder
         {
             get
@@ -813,6 +856,8 @@ namespace Windsor.Node2008.Admin.Secure
             {
                 _dataModel.ScheduledItem = _dataItemService.Save(_dataModel.ScheduledItem, VisitHelper.GetVisit());
 
+                Schedule.SetScheduleExpanded(_dataModel.ScheduledItem.FlowId, true, GetCurrentUsername(), Session, UserSettingsManager);
+
                 if (_scheduleProcessor != null)
                 {
                     _scheduleProcessor.Wakeup();
@@ -911,6 +956,11 @@ namespace Windsor.Node2008.Admin.Secure
             {
                 _scheduleProcessor = value;
             }
+        }
+        public IUserSettingsManager UserSettingsManager
+        {
+            get;
+            set;
         }
         #endregion
 

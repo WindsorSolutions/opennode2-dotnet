@@ -50,6 +50,7 @@ using Windsor.Node2008.WNOSUtility;
 using Windsor.Commons.Core;
 using Windsor.Node2008.WNOSConnector.Server;
 using Windsor.Node2008.WNOSProviders;
+using System.Web.SessionState;
 
 namespace Windsor.Node2008.Admin.Secure
 {
@@ -343,21 +344,31 @@ namespace Windsor.Node2008.Admin.Secure
                 }
             }
         }
-        protected override void OnInitializeControls(EventArgs e)
+        protected static SessionStateDataStorage ValidateSessionStateData(string currentUsername, HttpSessionState sessionState,
+                                                                          IUserSettingsManager userSettingsManager)
         {
-            SessionStateData = Session[SCHEDULE_PAGE_SESSION_STATE_KEY] as SessionStateDataStorage;
-            if (SessionStateData == null)
+            ExceptionUtils.ThrowIfEmptyString(currentUsername);
+            ExceptionUtils.ThrowIfNull(sessionState);
+            ExceptionUtils.ThrowIfNull(userSettingsManager);
+
+            SessionStateDataStorage sessionStateData = sessionState[SCHEDULE_PAGE_SESSION_STATE_KEY] as SessionStateDataStorage;
+            if (sessionStateData == null)
             {
-                SessionStateData = new SessionStateDataStorage();
-                Session[SCHEDULE_PAGE_SESSION_STATE_KEY] = SessionStateData;
+                sessionStateData = new SessionStateDataStorage();
+                sessionState[SCHEDULE_PAGE_SESSION_STATE_KEY] = sessionStateData;
 
-                SessionStateData.HiddenSchedules = UserSettingsManager.LoadAdminSchedulePageHiddenScheduleIds(GetCurrentUsername());
+                sessionStateData.HiddenSchedules = userSettingsManager.LoadAdminSchedulePageHiddenScheduleIds(currentUsername);
 
-                if (SessionStateData.HiddenSchedules == null)
+                if (sessionStateData.HiddenSchedules == null)
                 {
-                    SessionStateData.HiddenSchedules = new CaseInsensitiveList();
+                    sessionStateData.HiddenSchedules = new CaseInsensitiveList();
                 }
             }
+            return sessionStateData;
+        }
+        protected override void OnInitializeControls(EventArgs e)
+        {
+            SessionStateData = ValidateSessionStateData(GetCurrentUsername(), Session, UserSettingsManager);
 
             base.OnInitializeControls(e);
 
@@ -435,30 +446,50 @@ namespace Windsor.Node2008.Admin.Secure
             get;
             set;
         }
-        protected virtual bool IsScheduleExpanded(string scheduleId)
+        protected virtual bool IsScheduleExpanded(string flowId)
         {
-            return !SessionStateData.HiddenSchedules.Contains(scheduleId);
+            return !SessionStateData.HiddenSchedules.Contains(flowId);
         }
-        protected virtual bool SetScheduleExpanded(string scheduleId, bool isExpanded)
+        public static bool SetScheduleExpanded(string flowId, bool isExpanded, string currentUsername, HttpSessionState sessionState,
+                                               IUserSettingsManager userSettingsManager)
         {
+            SessionStateDataStorage sessionStateData = ValidateSessionStateData(currentUsername, sessionState, userSettingsManager);
             if (!isExpanded)
             {
-                if (!SessionStateData.HiddenSchedules.Contains(scheduleId))
+                if (!sessionStateData.HiddenSchedules.Contains(flowId))
                 {
-                    SessionStateData.HiddenSchedules.Add(scheduleId);
+                    sessionStateData.HiddenSchedules.Add(flowId);
                 }
             }
             else
             {
-                SessionStateData.HiddenSchedules.Remove(scheduleId);
+                sessionStateData.HiddenSchedules.Remove(flowId);
             }
-            UserSettingsManager.SaveAdminSchedulePageHiddenScheduleIds(GetCurrentUsername(), SessionStateData.HiddenSchedules);
+            userSettingsManager.SaveAdminSchedulePageHiddenScheduleIds(currentUsername, sessionStateData.HiddenSchedules);
             return isExpanded;
         }
-        protected virtual string FlowSchedulesDisplay(object dataItem)
+        protected virtual bool SetScheduleExpanded(string flowId, bool isExpanded)
+        {
+            return SetScheduleExpanded(flowId, isExpanded, GetCurrentUsername(), Session, UserSettingsManager);
+        }
+        protected virtual string AddFlowScheduleDisplay(object dataItem)
         {
             KeyValuePair<string, string> pair = (KeyValuePair<string, string>)dataItem;
-            return IsScheduleExpanded(pair.Key) ? "" : "display: none";
+            return IsScheduleExpanded(pair.Key) && CanEditScheduleFlow(dataItem) ? "" : "display: none";
+        }
+        protected virtual bool CanEditScheduleFlow(object dataItem)
+        {
+            KeyValuePair<string, string> pair = (KeyValuePair<string, string>)dataItem;
+            return PermissionsHelper.CanEditFlowById(pair.Key);
+        }
+        protected virtual string GetScheduleFlowId(object dataItem)
+        {
+            KeyValuePair<string, string> pair = (KeyValuePair<string, string>)dataItem;
+            return pair.Key;
+        }
+        public void OnAddFlowSchedule(object source, CommandEventArgs e)
+        {
+            ResponseRedirect("../Secure/ScheduleEdit.aspx?flowid=" + e.CommandArgument);
         }
         protected void flowRepeater_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
