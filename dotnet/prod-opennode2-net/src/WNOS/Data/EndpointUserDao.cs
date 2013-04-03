@@ -81,6 +81,10 @@ namespace Windsor.Node2008.WNOS.Data
         {
             return AccountDao.GetEndpointUserByName(username);
         }
+        public UserAccount GetById(string userId)
+        {
+            return AccountDao.GetEndpointUserById(userId);
+        }
         public void Save(UserAccount item, string testNaasPassword, string prodNaasPassword)
         {
             AccountDao.SaveEndpointUser(item, testNaasPassword, prodNaasPassword);

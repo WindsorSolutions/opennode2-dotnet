@@ -188,6 +188,17 @@ namespace Windsor.Node2008.WNOS.Logic
             return rtnMessage;
         }
 
+        public INodeEndpointClient GetNodeEndpointClientForEndpointUserId(string targetEndpointUrl, EndpointVersionType type,
+                                                                          string endpointUserId, out string endpointUsername)
+        {
+            UserAccount account = EndpointUserDao.GetById(endpointUserId);
+            if (account == null)
+            {
+                throw new ArgumentException(string.Format("The node endpoint user with id \"{0}\" could not be found.", endpointUserId));
+            }
+            endpointUsername = account.NaasAccount;
+            return GetNodeEndpointClient(targetEndpointUrl, type, endpointUsername);
+        }
         public INodeEndpointClient GetNodeEndpointClient(string targetEndpointUrl, EndpointVersionType type, string endpointUsername)
         {
             if (!string.IsNullOrEmpty(endpointUsername))

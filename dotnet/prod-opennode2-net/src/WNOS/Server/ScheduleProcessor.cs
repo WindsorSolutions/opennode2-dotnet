@@ -68,7 +68,7 @@ namespace Windsor.Node2008.WNOS.Server
         private INotificationManagerEx _notificationManager;
         private ICompressionHelper _compressionHelper;
         private IPartnerManager _partnerManager;
-        private INodeEndpointClientFactory _nodeEndpointClientFactory;
+        private IEndpointUserManager _endpointUserManager;
 
         #region Init
 
@@ -86,7 +86,7 @@ namespace Windsor.Node2008.WNOS.Server
             FieldNotInitializedException.ThrowIfNull(this, ref _partnerManager);
             FieldNotInitializedException.ThrowIfNull(this, ref _compressionHelper);
             FieldNotInitializedException.ThrowIfNull(this, ref _schematronHelper);
-            FieldNotInitializedException.ThrowIfNull(this, ref _nodeEndpointClientFactory);
+            FieldNotInitializedException.ThrowIfNull(this, ref _endpointUserManager);
         }
 
         #endregion
@@ -449,7 +449,7 @@ namespace Windsor.Node2008.WNOS.Server
 
             string filePath = Path.Combine(SettingsProvider.TempFolderPath, GetResultFileName(scheduledItem));
 
-            using (INodeEndpointClient client = GetNodeClient(partner, activity))
+            using (INodeEndpointClient client = GetNodeClient(partner, activity, scheduledItem.SourceEndpointUser))
             {
                 CommonContentType type;
                 try
@@ -491,7 +491,7 @@ namespace Windsor.Node2008.WNOS.Server
             EndpointVersionType endpointVersion;
             string endpointUrl;
             string networkFlowName = null, networkFlowOperation = scheduledItem.SourceRequest;
-            using (INodeEndpointClient client = GetNodeClient(partner, activity))
+            using (INodeEndpointClient client = GetNodeClient(partner, activity, scheduledItem.SourceEndpointUser))
             {
                 try
                 {
@@ -540,7 +540,7 @@ namespace Windsor.Node2008.WNOS.Server
                 EndpointVersionType endpointVersion;
                 string endpointUrl;
                 string networkFlowName = null, networkFlowOperation = null;
-                using (INodeEndpointClient client = GetNodeClient(partner, activity))
+                using (INodeEndpointClient client = GetNodeClient(partner, activity, scheduledItem.TargetEndpointUser))
                 {
                     try
                     {
@@ -589,7 +589,7 @@ namespace Windsor.Node2008.WNOS.Server
             {
                 string flowCode = _flowManager.GetDataFlowNameById(scheduledItem.FlowId);
                 string token = _schematronHelper.Validate(filePath, flowCode);
-                LogActivity(activity, "Submitted target document to schematron service: {0}", token); 
+                LogActivity(activity, "Submitted target document to schematron service: {0}", token);
             }
             else
             {
@@ -695,13 +695,27 @@ namespace Windsor.Node2008.WNOS.Server
                 LogActivity(activity, "Called ProcessSubmit()");
             }
         }
-        protected virtual INodeEndpointClient GetNodeClient(PartnerIdentity partner,
-                                                            Activity activity)
+        protected virtual INodeEndpointClient GetNodeClient(PartnerIdentity partner, Activity activity, string endpointUserId)
         {
-            LogActivity(activity, "Acquiring node endpoint client for partner \"{0}\" with version \"{1}\" at url \"{2}\" using NAAS user account \"{3}\"",
-                        partner.Name, EnumUtils.ToDescription(partner.Version),
-                        partner.Url, _nodeEndpointClientFactory.DefaultAuthenticationCredentials.UserName);
-            return _nodeEndpointClientFactory.Make(partner.Url, partner.Version);
+            LogActivity(activity, "Attempting to acquire node endpoint client for partner \"{0}\" with version \"{1}\" at url \"{2}\"...",
+                        partner.Name, EnumUtils.ToDescription(partner.Version), partner.Url);
+
+            try
+            {
+                string naasUsername;
+                INodeEndpointClient client =
+                    EndpointUserManager.GetNodeEndpointClientForEndpointUserId(partner.Url, partner.Version, endpointUserId, out naasUsername);
+
+                LogActivity(activity, "Acquired node endpoint client for partner \"{0}\" using NAAS user account \"{1}\"",
+                            partner.Name, naasUsername);
+                return client;
+            }
+            catch (Exception ex)
+            {
+                LogActivity(activity, "Failed to acquire node endpoint client for partner \"{0}\" with exception: {1}",
+                            partner.Name, ExceptionUtils.GetDeepExceptionMessage(ex));
+                throw;
+            }
         }
 
         protected virtual string GetResultFileName(ScheduledItem scheduledItem)
@@ -772,8 +786,14 @@ namespace Windsor.Node2008.WNOS.Server
         }
         public IAccountManagerEx AccountManager
         {
-            get { return _accountManager; }
-            set { _accountManager = value; }
+            get
+            {
+                return _accountManager;
+            }
+            set
+            {
+                _accountManager = value;
+            }
         }
         public ITransactionManagerEx TransactionManager
         {
@@ -799,37 +819,76 @@ namespace Windsor.Node2008.WNOS.Server
         }
         public IFlowManagerEx FlowManager
         {
-            get { return _flowManager; }
-            set { _flowManager = value; }
+            get
+            {
+                return _flowManager;
+            }
+            set
+            {
+                _flowManager = value;
+            }
         }
         public ISchematronHelper SchematronHelper
         {
-            get { return _schematronHelper; }
-            set { _schematronHelper = value; }
+            get
+            {
+                return _schematronHelper;
+            }
+            set
+            {
+                _schematronHelper = value;
+            }
         }
         public INotificationManagerEx NotificationManager
         {
-            get { return _notificationManager; }
-            set { _notificationManager = value; }
+            get
+            {
+                return _notificationManager;
+            }
+            set
+            {
+                _notificationManager = value;
+            }
         }
         public ICompressionHelper CompressionHelper
         {
-            get { return _compressionHelper; }
-            set { _compressionHelper = value; }
+            get
+            {
+                return _compressionHelper;
+            }
+            set
+            {
+                _compressionHelper = value;
+            }
         }
         public IPartnerManager PartnerManager
         {
-            get { return _partnerManager; }
-            set { _partnerManager = value; }
+            get
+            {
+                return _partnerManager;
+            }
+            set
+            {
+                _partnerManager = value;
+            }
         }
-        public INodeEndpointClientFactory NodeEndpointClientFactory
+        public IEndpointUserManager EndpointUserManager
         {
-            get { return _nodeEndpointClientFactory; }
-            set { _nodeEndpointClientFactory = value; }
+            get
+            {
+                return _endpointUserManager;
+            }
+            set
+            {
+                _endpointUserManager = value;
+            }
         }
         protected override string MutexPrefix
         {
-            get { return "ProcessScheduledItem_"; }
+            get
+            {
+                return "ProcessScheduledItem_";
+            }
         }
     }
 }

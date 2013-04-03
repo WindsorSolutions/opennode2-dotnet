@@ -50,6 +50,8 @@ namespace Windsor.Node2008.WNOSProviders
         }
 
         INodeEndpointClient GetNodeEndpointClient(string targetEndpointUrl, EndpointVersionType type, string endpointUsername);
+        INodeEndpointClient GetNodeEndpointClientForEndpointUserId(string targetEndpointUrl, EndpointVersionType type,
+                                                                   string endpointUserId, out string endpointUsername);
 
         void SetNetworkEndpointTransactionInfo(string transactionId, string networkId, EndpointVersionType networkEndpointVersion,
                                                string networkEndpointUrl, string networkFlowName, string networkFlowOperation,

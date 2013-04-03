@@ -331,6 +331,33 @@ namespace Windsor.Node2008.WNOS.Data
                 return null; // Not found
             }
         }
+        public UserAccount GetEndpointUserById(string userId)
+        {
+            try
+            {
+                if (AreEndpointUsersEnabled)
+                {
+                    UserAccount userAccount =
+                        DoSimpleQueryForObjectDelegate<UserAccount>(
+                            TABLE_NAME, "Id;IsDeleted;IsActive;IsEndpointUser;PasswordHash IS NOT NULL",
+                            new object[] { userId, DbUtils.ToDbBool(false), DbUtils.ToDbBool(true), DbUtils.ToDbBool(true) },
+                            MAP_USER_ACCOUNT_COLUMNS,
+                            delegate(IDataReader reader, int rowNum)
+                            {
+                                return MapUserAccount(reader);
+                            });
+                    return userAccount;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Spring.Dao.IncorrectResultSizeDataAccessException)
+            {
+                return null; // Not found
+            }
+        }
         public bool GetEnpointUserPasswordsByUsername(string username, out string testPassword, out string prodPassword)
         {
             testPassword = prodPassword = null;
@@ -707,10 +734,15 @@ namespace Windsor.Node2008.WNOS.Data
         public void Delete(UserAccount account)
         {
             string deletedName = MakeDeletedName(account.NaasAccount);
-            DoSimpleUpdateOne(TABLE_NAME, "Id", account.Id,
-                              "NAASAccount;ModifiedBy;ModifiedOn;IsDeleted",
-                              deletedName, account.ModifiedById, DateTime.Now,
-                              DbUtils.ToDbBool(true));
+            TransactionTemplate.Execute(delegate
+            {
+                DoSimpleUpdateOne(TABLE_NAME, "Id", account.Id,
+                                  "NAASAccount;ModifiedBy;ModifiedOn;IsDeleted",
+                                  deletedName, account.ModifiedById, DateTime.Now,
+                                  DbUtils.ToDbBool(true));
+                ClearAllSchedulesWithEndpointUser(account.Id);
+                return null;
+            });
         }
         private void DeleteAllPoliciesForUser(string accountId)
         {

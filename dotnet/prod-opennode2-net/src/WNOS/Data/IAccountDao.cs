@@ -60,6 +60,7 @@ namespace Windsor.Node2008.WNOS.Data
         }
         IList<UserAccount> GetEndpointUsers();
         UserAccount GetEndpointUserByName(string username);
+        UserAccount GetEndpointUserById(string userId);
         IList<UserAccount> GetAllPossibleEndpointUsers();
         void SaveEndpointUser(UserAccount item, string testNaasPassword, string prodNaasPassword);
         void RemoveEndpointUser(UserAccount item);
