@@ -47,6 +47,12 @@ namespace Windsor.Node2008.WNOSDomain
     [Serializable]
     public class TypedParameter
     {
+        public const bool DoPublishValue = true;
+        public const bool DoNotPublishValue = false;
+
+        public const bool IsRequiredValue = true;
+        public const bool IsNotRequiredValue = false;
+
         private Type _type;
         private string _name;
         private string _description;
@@ -144,6 +150,16 @@ namespace Windsor.Node2008.WNOSDomain
             }
         }
         public IList<object> AcceptableValues
+        {
+            get;
+            set;
+        }
+        public int? MinStringLength
+        {
+            get;
+            set;
+        }
+        public int? MaxStringLength
         {
             get;
             set;

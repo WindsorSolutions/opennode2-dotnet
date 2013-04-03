@@ -79,6 +79,15 @@ namespace Windsor.Node2008.WNOS.Data
             FieldNotInitializedException.ThrowIfNull(this, ref _activityDao);
             FieldNotInitializedException.ThrowIfNull(this, ref _serviceDao);
             FieldNotInitializedException.ThrowIfNull(this, ref _accountManager);
+            FieldNotInitializedException.ThrowIfNull(this, AccountDao, "AccountDao");
+
+            MAP_SCHEDULED_ITEM_COLUMNS = "Id;Name;FlowId;StartOn;EndOn;SourceType;SourceId;SourceFlow;SourceOperation;" +
+                                         "TargetType;TargetId;TargetFlow;TargetOperation;LastExecuteActivityId;LastExecutedOn;" +
+                                         "NextRun;FrequencyType;Frequency;ModifiedBy;ModifiedOn;IsActive;ExecuteStatus";
+            if (AreEndpointUsersEnabled)
+            {
+                MAP_SCHEDULED_ITEM_COLUMNS += ";SourceEndpointUser;TargetEndpointUser";
+            }
         }
 
         #endregion
@@ -97,9 +106,7 @@ namespace Windsor.Node2008.WNOS.Data
             scheduledItem.ExecuteStatus = EnumUtils.ParseEnum<ScheduleExecuteStatus>(reader.GetString(index++));
             return scheduledItem;
         }
-        private const string MAP_SCHEDULED_ITEM_COLUMNS = "Id;Name;FlowId;StartOn;EndOn;SourceType;SourceId;SourceFlow;SourceOperation;" +
-                                                          "TargetType;TargetId;TargetFlow;TargetOperation;LastExecuteActivityId;LastExecutedOn;" +
-                                                          "NextRun;FrequencyType;Frequency;ModifiedBy;ModifiedOn;IsActive;ExecuteStatus";
+        private string MAP_SCHEDULED_ITEM_COLUMNS;
         private ScheduledItem MapScheduledItem(IDataReader reader)
         {
             ScheduledItem scheduledItem = new ScheduledItem();
@@ -128,6 +135,19 @@ namespace Windsor.Node2008.WNOS.Data
             scheduledItem.ModifiedOn = DbUtils.ToDate(reader.GetDateTime(index++));
             scheduledItem.IsActive = DbUtils.ToBool(reader.GetString(index++));
             scheduledItem.ExecuteStatus = EnumUtils.ParseEnum<ScheduleExecuteStatus>(reader.GetString(index++));
+            if (AreEndpointUsersEnabled)
+            {
+                scheduledItem.SourceEndpointUser = reader.GetString(index++);
+                scheduledItem.TargetEndpointUser = reader.GetString(index++);
+                if (string.IsNullOrEmpty(scheduledItem.SourceEndpointUser))
+                {
+                    scheduledItem.SourceEndpointUser = null;
+                }
+                if (string.IsNullOrEmpty(scheduledItem.TargetEndpointUser))
+                {
+                    scheduledItem.TargetEndpointUser = null;
+                }
+            }
             return scheduledItem;
         }
         private void PostMapSchedule(ScheduledItem scheduledItem)
@@ -446,6 +466,13 @@ namespace Windsor.Node2008.WNOS.Data
         {
             SaveAndRun(item, new bool?(true));
         }
+        public bool AreEndpointUsersEnabled
+        {
+            get
+            {
+                return AccountDao.AreEndpointUsersEnabled;
+            }
+        }
         private void SaveAndRun(ScheduledItem item, bool? runNow)
         {
             if (item == null)
@@ -454,60 +481,37 @@ namespace Windsor.Node2008.WNOS.Data
             }
             DateTime now = DateTime.Now;
             string id = null;
+            bool isRunNow = runNow.HasValue ? runNow.Value : false;
+            string columnNames = "Name;FlowId;StartOn;EndOn;SourceType;SourceId;SourceFlow;SourceOperation;TargetType;" +
+                                 "TargetId;TargetFlow;TargetOperation;LastExecuteActivityId;LastExecutedOn;NextRun;" +
+                                 "FrequencyType;Frequency;ModifiedBy;ModifiedOn;IsActive;IsRunNow;ExecuteStatus";
+            List<object> columnValues =
+                CollectionUtils.CreateList<object>(item.Name, item.FlowId, DbUtils.ToDbDate(item.StartOn),
+                                                   DbUtils.ToDbDate(item.EndOn),
+                                                   item.SourceType.ToString(), item.SourceId, item.SourceFlow ?? string.Empty,
+                                                   item.SourceRequest ?? string.Empty, item.TargetType.ToString(), item.TargetId,
+                                                   item.TargetFlow ?? string.Empty, item.TargetRequest ?? string.Empty, item.LastExecuteActivityId,
+                                                   DbUtils.ToDbDate(item.LastExecutedOn),
+                                                   DbUtils.ToDbDate(item.NextRunOn), item.FrequencyType.ToString(),
+                                                   item.Frequency, item.ModifiedById, now, DbUtils.ToDbBool(item.IsActive),
+                                                   DbUtils.ToDbBool(isRunNow), item.ExecuteStatus.ToString());
+            if (AreEndpointUsersEnabled)
+            {
+                columnNames += ";SourceEndpointUser;TargetEndpointUser";
+                columnValues.AddRange(new object[] { item.SourceEndpointUser, item.TargetEndpointUser });
+            }
             TransactionTemplate.Execute(delegate
             {
                 if (string.IsNullOrEmpty(item.Id))
                 {
                     id = IdProvider.Get();
-                    bool isRunNow = (runNow != null) ? runNow.Value : false;
-                    DoInsert(TABLE_NAME,
-                             "Id;Name;FlowId;StartOn;EndOn;SourceType;SourceId;SourceFlow;SourceOperation;TargetType;" +
-                             "TargetId;TargetFlow;TargetOperation;LastExecuteActivityId;LastExecutedOn;NextRun;" +
-                             "FrequencyType;Frequency;ModifiedBy;ModifiedOn;IsActive;IsRunNow;ExecuteStatus",
-                             id, item.Name, item.FlowId, DbUtils.ToDbDate(item.StartOn),
-                             DbUtils.ToDbDate(item.EndOn),
-                             item.SourceType.ToString(), item.SourceId, item.SourceFlow ?? string.Empty,
-                             item.SourceRequest ?? string.Empty, item.TargetType.ToString(), item.TargetId,
-                             item.TargetFlow ?? string.Empty, item.TargetRequest ?? string.Empty, item.LastExecuteActivityId,
-                             DbUtils.ToDbDate(item.LastExecutedOn),
-                             DbUtils.ToDbDate(item.NextRunOn), item.FrequencyType.ToString(),
-                             item.Frequency, item.ModifiedById, now, DbUtils.ToDbBool(item.IsActive),
-                             DbUtils.ToDbBool(isRunNow), item.ExecuteStatus.ToString());
+                    columnNames = "Id;" + columnNames;
+                    columnValues.Insert(0, id);
+                    DoInsertWithValues(TABLE_NAME, columnNames, columnValues);
                 }
                 else
                 {
-                    if (runNow != null)
-                    {
-                        DoSimpleUpdateOne(TABLE_NAME, "Id", item.Id.ToString(),
-                                          "Name;FlowId;StartOn;EndOn;SourceType;SourceId;SourceFlow;SourceOperation;TargetType;" +
-                                          "TargetId;TargetFlow;TargetOperation;LastExecuteActivityId;LastExecutedOn;NextRun;" +
-                                          "FrequencyType;Frequency;ModifiedBy;ModifiedOn;IsActive;IsRunNow;ExecuteStatus",
-                                          item.Name, item.FlowId, DbUtils.ToDbDate(item.StartOn),
-                                          DbUtils.ToDbDate(item.EndOn),
-                                          item.SourceType.ToString(), item.SourceId, item.SourceFlow ?? string.Empty,
-                                          item.SourceRequest ?? string.Empty, item.TargetType.ToString(), item.TargetId,
-                                          item.TargetFlow ?? string.Empty, item.TargetRequest ?? string.Empty, item.LastExecuteActivityId,
-                                          DbUtils.ToDbDate(item.LastExecutedOn),
-                                          DbUtils.ToDbDate(item.NextRunOn), item.FrequencyType.ToString(),
-                                          item.Frequency, item.ModifiedById, now, DbUtils.ToDbBool(item.IsActive),
-                                          DbUtils.ToDbBool(runNow.Value), item.ExecuteStatus.ToString());
-                    }
-                    else
-                    {
-                        DoSimpleUpdateOne(TABLE_NAME, "Id", item.Id.ToString(),
-                                         "Name;FlowId;StartOn;EndOn;SourceType;SourceId;SourceFlow;SourceOperation;TargetType;" +
-                                          "TargetId;TargetFlow;TargetOperation;LastExecuteActivityId;LastExecutedOn;NextRun;" +
-                                          "FrequencyType;Frequency;ModifiedBy;ModifiedOn;IsActive;ExecuteStatus",
-                                          item.Name, item.FlowId, DbUtils.ToDbDate(item.StartOn),
-                                          DbUtils.ToDbDate(item.EndOn),
-                                          item.SourceType.ToString(), item.SourceId, item.SourceFlow ?? string.Empty,
-                                          item.SourceRequest ?? string.Empty, item.TargetType.ToString(), item.TargetId,
-                                          item.TargetFlow ?? string.Empty, item.TargetRequest ?? string.Empty, item.LastExecuteActivityId,
-                                          DbUtils.ToDbDate(item.LastExecutedOn),
-                                          DbUtils.ToDbDate(item.NextRunOn), item.FrequencyType.ToString(),
-                                          item.Frequency, item.ModifiedById, now, DbUtils.ToDbBool(item.IsActive),
-                                          item.ExecuteStatus.ToString());
-                    }
+                    DoSimpleUpdateOneWithValues(TABLE_NAME, "Id", item.Id, columnNames, columnValues);
                 }
                 SaveScheduleSourceArgs(id ?? item.Id, item.SourceArgs);
                 return null;
@@ -630,6 +634,11 @@ namespace Windsor.Node2008.WNOS.Data
             {
                 _accountManager = value;
             }
+        }
+        public IAccountDao AccountDao
+        {
+            get;
+            set;
         }
         #endregion
     }

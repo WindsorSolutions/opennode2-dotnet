@@ -97,6 +97,10 @@ namespace Windsor.Node2008.WNOS.Data
         {
             return AccountDao.GetEnpointUserPasswordsById(userId, out username, out testPassword, out prodPassword);
         }
+        public IDictionary<string, string> GetEndpointUserDisplayList()
+        {
+            return AccountDao.GetEndpointUserDisplayList();
+        }
         public void SetNetworkEndpointTransactionInfo(string transactionId, string networkId, EndpointVersionType networkEndpointVersion,
                                                       string networkEndpointUrl, string networkFlowName, string networkFlowOperation,
                                                       string endpointUsername)

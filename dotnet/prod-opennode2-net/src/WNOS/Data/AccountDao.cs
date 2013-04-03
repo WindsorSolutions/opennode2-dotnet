@@ -294,6 +294,16 @@ namespace Windsor.Node2008.WNOS.Data
             }
             return userAccounts;
         }
+        public IDictionary<string, string> GetEndpointUserDisplayList()
+        {
+            Dictionary<string, string> userList = new Dictionary<string, string>();
+            IList<UserAccount> endpointUsers = GetEndpointUsers();
+            CollectionUtils.ForEach(endpointUsers, delegate(UserAccount userAccount)
+            {
+                userList.Add(userAccount.Id, userAccount.NaasAccount);
+            });
+            return userList;
+        }
         public UserAccount GetEndpointUserByName(string username)
         {
             try
@@ -407,15 +417,26 @@ namespace Windsor.Node2008.WNOS.Data
         }
         public void RemoveEndpointUser(UserAccount item)
         {
-            DateTime now = DateTime.Now;
-            TransactionTemplate.Execute(delegate
+            if (AreEndpointUsersEnabled)
             {
-                DoSimpleUpdateOne(TABLE_NAME, "Id", item.Id.ToString(),
-                                  "IsEndpointUser;PasswordHash",
-                                  DbUtils.ToDbBool(false), null);
-                //DeleteAllPoliciesForUser(id);
-                return null;
-            });
+                DateTime now = DateTime.Now;
+                TransactionTemplate.Execute(delegate
+                {
+                    DoSimpleUpdateOne(TABLE_NAME, "Id", item.Id,
+                                      "IsEndpointUser;PasswordHash",
+                                      DbUtils.ToDbBool(false), null);
+                    ClearAllSchedulesWithEndpointUser(item.Id);
+                    return null;
+                });
+            }
+        }
+        private void ClearAllSchedulesWithEndpointUser(string accountId)
+        {
+            if (AreEndpointUsersEnabled)
+            {
+                DoSimpleUpdateAny(ScheduleDao.TABLE_NAME, "SourceEndpointUser", accountId, "SourceEndpointUser", (object)null);
+                DoSimpleUpdateAny(ScheduleDao.TABLE_NAME, "TargetEndpointUser", accountId, "TargetEndpointUser", (object)null);
+            }
         }
         public void SaveEndpointUser(UserAccount item, string testNaasPassword, string prodNaasPassword)
         {

@@ -43,26 +43,26 @@ using Windsor.Commons.NodeDomain;
 
 namespace Windsor.Node2008.WNOSDomain
 {
-	public enum ScheduledItemSourceType
-	{
-		None,
-		WebServiceSolicit,
-		WebServiceQuery,
-		LocalService,
-		File
-	}
-	public enum ScheduledItemTargetType
-	{
-		None,
-		Partner,
-		Schematron,
-		File,
-		Email,
-		LocalService,
-	}
-	public enum ScheduledFrequencyType
-	{
-		None,
+    public enum ScheduledItemSourceType
+    {
+        None,
+        WebServiceSolicit,
+        WebServiceQuery,
+        LocalService,
+        File
+    }
+    public enum ScheduledItemTargetType
+    {
+        None,
+        Partner,
+        Schematron,
+        File,
+        Email,
+        LocalService,
+    }
+    public enum ScheduledFrequencyType
+    {
+        None,
         [Description("Once")]
         Once,
         [Description("Minute")]
@@ -76,7 +76,7 @@ namespace Windsor.Node2008.WNOSDomain
         [Description("Month")]
         Month,
         OnceThenDelete,
-	}
+    }
     public enum ScheduleExecuteStatus
     {
         None,
@@ -93,7 +93,9 @@ namespace Windsor.Node2008.WNOSDomain
         private string _transactionId;
         private string _summary;
 
-        public ScheduledItemExecuteInfo() { }
+        public ScheduledItemExecuteInfo()
+        {
+        }
         public ScheduledItemExecuteInfo(string transactionId, string summary)
         {
             _transactionId = transactionId;
@@ -102,162 +104,304 @@ namespace Windsor.Node2008.WNOSDomain
 
         public string TransactionId
         {
-            get { return _transactionId; }
-            set { _transactionId = value; }
+            get
+            {
+                return _transactionId;
+            }
+            set
+            {
+                _transactionId = value;
+            }
         }
         public string Summary
         {
-            get { return _summary; }
-            set { _summary = value; }
+            get
+            {
+                return _summary;
+            }
+            set
+            {
+                _summary = value;
+            }
         }
     }
 
-	[Serializable]
-	public class ScheduledItem : AuditableIdentity
-	{
-		private string _name;
+    [Serializable]
+    public class ScheduledItem : AuditableIdentity
+    {
+        private string _name;
         private string _flowId;
         private DateTime _startOn = DateTime.MinValue;
-		private DateTime _endOn = DateTime.MaxValue;
-		private ScheduledItemSourceType _sourceType;
-		private string _sourceId;
+        private DateTime _endOn = DateTime.MaxValue;
+        private ScheduledItemSourceType _sourceType;
+        private string _sourceId;
         private string _sourceFlow;
         private string _sourceRequest;
         private ByIndexOrNameDictionary<string> _sourceArgs;
-		private ScheduledItemTargetType _targetType;
-		private string _targetId;
+        private ScheduledItemTargetType _targetType;
+        private string _targetId;
         private string _targetFlow;
         private string _targetRequest;
         private string _lastExecuteActivityId;
-		private DateTime _lastExecutedOn = DateTime.MinValue;
-		private DateTime _nextRunOn = DateTime.MinValue;
-		private ScheduledFrequencyType _frequencyType;
-		private int _frequency;
-		private bool _isActive;
+        private DateTime _lastExecutedOn = DateTime.MinValue;
+        private DateTime _nextRunOn = DateTime.MinValue;
+        private ScheduledFrequencyType _frequencyType;
+        private int _frequency;
+        private bool _isActive;
         private ScheduleExecuteStatus _executeStatus;
         private ScheduledItemExecuteInfo _lastExecuteInfo;
 
-		public bool IsActive {
-			get {
-				return _isActive;
-			}
-			set {
-				_isActive = value;
-			}
-		}
-		public string Name
-		{
-			get { return _name; }
-			set { _name = value; }
-		}
+        public bool IsActive
+        {
+            get
+            {
+                return _isActive;
+            }
+            set
+            {
+                _isActive = value;
+            }
+        }
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                _name = value;
+            }
+        }
 
         public string FlowId
         {
-            get { return _flowId; }
-            set { _flowId = value; }
+            get
+            {
+                return _flowId;
+            }
+            set
+            {
+                _flowId = value;
+            }
         }
-        
+
         public DateTime StartOn
-		{
-			get { return _startOn; }
-			set { _startOn = value; }
-		}
+        {
+            get
+            {
+                return _startOn;
+            }
+            set
+            {
+                _startOn = value;
+            }
+        }
 
-		public DateTime EndOn
-		{
-			get { return _endOn; }
-			set { _endOn = value; }
-		}
+        public DateTime EndOn
+        {
+            get
+            {
+                return _endOn;
+            }
+            set
+            {
+                _endOn = value;
+            }
+        }
 
-		public ScheduledItemSourceType SourceType
-		{
-			get { return _sourceType; }
-			set { _sourceType = value; }
-		}
+        public ScheduledItemSourceType SourceType
+        {
+            get
+            {
+                return _sourceType;
+            }
+            set
+            {
+                _sourceType = value;
+            }
+        }
 
         public string SourceRequest
         {
-            get { return _sourceRequest; }
-            set { _sourceRequest = value; }
+            get
+            {
+                return _sourceRequest;
+            }
+            set
+            {
+                _sourceRequest = value;
+            }
         }
         public string SourceFlow
         {
-            get { return _sourceFlow; }
-            set { _sourceFlow = value; }
+            get
+            {
+                return _sourceFlow;
+            }
+            set
+            {
+                _sourceFlow = value;
+            }
         }
         public string SourceId
-		{
-			get { return _sourceId; }
-			set { _sourceId = value; }
-		}
+        {
+            get
+            {
+                return _sourceId;
+            }
+            set
+            {
+                _sourceId = value;
+            }
+        }
+        public string SourceEndpointUser
+        {
+            get;
+            set;
+        }
 
-		public ByIndexOrNameDictionary<string> SourceArgs
-		{
-			get { return _sourceArgs; }
-			set { _sourceArgs = value; }
-		}
+        public ByIndexOrNameDictionary<string> SourceArgs
+        {
+            get
+            {
+                return _sourceArgs;
+            }
+            set
+            {
+                _sourceArgs = value;
+            }
+        }
 
-		public ScheduledItemTargetType TargetType
-		{
-			get { return _targetType; }
-			set { _targetType = value; }
-		}
+        public ScheduledItemTargetType TargetType
+        {
+            get
+            {
+                return _targetType;
+            }
+            set
+            {
+                _targetType = value;
+            }
+        }
 
-		public string TargetId
-		{
-			get { return _targetId; }
-			set { _targetId = value; }
-		}
+        public string TargetId
+        {
+            get
+            {
+                return _targetId;
+            }
+            set
+            {
+                _targetId = value;
+            }
+        }
         public string TargetFlow
         {
-            get { return _targetFlow; }
-            set { _targetFlow = value; }
+            get
+            {
+                return _targetFlow;
+            }
+            set
+            {
+                _targetFlow = value;
+            }
         }
         public string TargetRequest
         {
-            get { return _targetRequest; }
-            set { _targetRequest = value; }
+            get
+            {
+                return _targetRequest;
+            }
+            set
+            {
+                _targetRequest = value;
+            }
+        }
+        public string TargetEndpointUser
+        {
+            get;
+            set;
         }
 
         public string LastExecuteActivityId
-		{
-			get { return _lastExecuteActivityId; }
-			set { _lastExecuteActivityId = value; }
-		}
+        {
+            get
+            {
+                return _lastExecuteActivityId;
+            }
+            set
+            {
+                _lastExecuteActivityId = value;
+            }
+        }
 
-		public DateTime LastExecutedOn {
-			get {
-				return _lastExecutedOn;
-			}
-			set {
-				_lastExecutedOn = value;
-			}
-		}
-		public DateTime NextRunOn
-		{
-			get { return _nextRunOn; }
-			set { _nextRunOn = value; }
-		}
+        public DateTime LastExecutedOn
+        {
+            get
+            {
+                return _lastExecutedOn;
+            }
+            set
+            {
+                _lastExecutedOn = value;
+            }
+        }
+        public DateTime NextRunOn
+        {
+            get
+            {
+                return _nextRunOn;
+            }
+            set
+            {
+                _nextRunOn = value;
+            }
+        }
 
-		public ScheduledFrequencyType FrequencyType
-		{
-			get { return _frequencyType; }
-			set { _frequencyType = value; }
-		}
-		public int Frequency
-		{
-			get { return _frequency; }
-			set { _frequency = value; }
-		}
+        public ScheduledFrequencyType FrequencyType
+        {
+            get
+            {
+                return _frequencyType;
+            }
+            set
+            {
+                _frequencyType = value;
+            }
+        }
+        public int Frequency
+        {
+            get
+            {
+                return _frequency;
+            }
+            set
+            {
+                _frequency = value;
+            }
+        }
         public ScheduleExecuteStatus ExecuteStatus
         {
-            get { return _executeStatus; }
-            set { _executeStatus = value; }
+            get
+            {
+                return _executeStatus;
+            }
+            set
+            {
+                _executeStatus = value;
+            }
         }
         public ScheduledItemExecuteInfo LastExecuteInfo
         {
-            get { return _lastExecuteInfo; }
-            set { _lastExecuteInfo = value; }
+            get
+            {
+                return _lastExecuteInfo;
+            }
+            set
+            {
+                _lastExecuteInfo = value;
+            }
         }
         public string Description
         {
@@ -280,7 +424,7 @@ namespace Windsor.Node2008.WNOSDomain
             }
         }
         public static DateTime CalcNextRunTime(DateTime nextRunOn, ScheduledFrequencyType frequencyType,
-                                               int frequency, bool hasRunOnceAlready, DateTime startOn, 
+                                               int frequency, bool hasRunOnceAlready, DateTime startOn,
                                                DateTime endOn, bool isActive)
         {
             if (!isActive)
@@ -303,23 +447,28 @@ namespace Windsor.Node2008.WNOSDomain
                     break;
                 case ScheduledFrequencyType.Minute:
                     newDate = nextRunOn;
-                    while (newDate < now) newDate = newDate.AddMinutes(frequency);
+                    while (newDate < now)
+                        newDate = newDate.AddMinutes(frequency);
                     break;
                 case ScheduledFrequencyType.Hour:
                     newDate = nextRunOn;
-                    while (newDate < now) newDate = newDate.AddHours(frequency);
+                    while (newDate < now)
+                        newDate = newDate.AddHours(frequency);
                     break;
                 case ScheduledFrequencyType.Day:
                     newDate = nextRunOn;
-                    while (newDate < now) newDate = newDate.AddDays(frequency);
+                    while (newDate < now)
+                        newDate = newDate.AddDays(frequency);
                     break;
                 case ScheduledFrequencyType.Week:
                     newDate = nextRunOn;
-                    while (newDate < now) newDate = newDate.AddDays(frequency * 7);
+                    while (newDate < now)
+                        newDate = newDate.AddDays(frequency * 7);
                     break;
                 case ScheduledFrequencyType.Month:
                     newDate = nextRunOn;
-                    while (newDate < now) newDate = newDate.AddMonths(frequency);
+                    while (newDate < now)
+                        newDate = newDate.AddMonths(frequency);
                     break;
                 default:
                     return DateTime.MaxValue;

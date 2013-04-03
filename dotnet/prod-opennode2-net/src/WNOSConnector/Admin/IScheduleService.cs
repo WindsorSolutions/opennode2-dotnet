@@ -44,7 +44,7 @@ namespace Windsor.Node2008.WNOSConnector.Admin
 
         void Delete(ScheduledItem instance, NodeVisit visit);
 
-        ScheduledItem Get(string scheduleId, NodeVisit visit, 
+        ScheduledItem Get(string scheduleId, NodeVisit visit,
                           out string modifierUsername);
 
         IList<ScheduledItem> GetSchedules(NodeVisit visit);
@@ -82,6 +82,8 @@ namespace Windsor.Node2008.WNOSConnector.Admin
         /// Return all local submit service names as a dictionary of key/value pairs.
         /// </summary>
         IDictionary<string, string> GetSubmitServiceDisplayList(NodeVisit visit);
+
+        IDictionary<string, string> GetEndpointUserDisplayList(NodeVisit visit);
 
         string GetTransactionIdFromActivityId(string activityId);
         ScheduledItemExecuteInfo GetScheduleLastExecuteInfo(string activityId);

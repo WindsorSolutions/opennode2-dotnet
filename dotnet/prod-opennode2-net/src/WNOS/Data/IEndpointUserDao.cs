@@ -55,5 +55,6 @@ namespace Windsor.Node2008.WNOS.Data
         void SetNetworkEndpointTransactionInfo(string transactionId, string networkId, EndpointVersionType networkEndpointVersion,
                                                string networkEndpointUrl, string networkFlowName, string networkFlowOperation,
                                                string endpointUsername);
+        IDictionary<string, string> GetEndpointUserDisplayList();
     }
 }

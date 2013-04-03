@@ -65,5 +65,6 @@ namespace Windsor.Node2008.WNOS.Data
         void RemoveEndpointUser(UserAccount item);
         bool GetEnpointUserPasswordsByUsername(string username, out string testPassword, out string prodPassword);
         bool GetEnpointUserPasswordsById(string userId, out string username, out string testPassword, out string prodPassword);
+        IDictionary<string, string> GetEndpointUserDisplayList();
     }
 }

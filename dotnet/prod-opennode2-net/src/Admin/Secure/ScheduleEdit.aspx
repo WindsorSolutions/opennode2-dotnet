@@ -149,6 +149,14 @@
                                         <asp:TextBox ID="sourceRequestTextBox" runat="server" Width="90%" />
                                     </td>
                                 </tr>
+                                <tr valign="middle">
+                                    <td align="right" nowrap="nowrap">
+                                        <asp:Label ID="sourceEndpointUserLabel" runat="server" Text="Endpoint User:" />
+                                    </td>
+                                    <td width="100%">
+                                        <asp:DropDownList ID="sourceEndpointUserDropDownList" runat="server" Width="90%" AutoPostBack="False" />
+                                    </td>
+                                </tr>
                             </table>
                             <asp:Panel ID="additionalArgumentsPanel" runat="server" BorderColor="Gainsboro" BorderStyle="Solid" BorderWidth="3px" Width="98%">
                                 <table id="Table2" width="100%" cellpadding="2" cellspacing="0">
@@ -276,6 +284,14 @@
                                     </td>
                                     <td width="100%">
                                         <asp:TextBox ID="resultOperationTextBox" runat="server" Width="90%" />
+                                    </td>
+                                </tr>
+                                <tr valign="middle">
+                                    <td align="right" nowrap="nowrap">
+                                        <asp:Label ID="resultEndpointUserLabel" runat="server" Text="Endpoint User:" />
+                                    </td>
+                                    <td width="100%">
+                                        <asp:DropDownList ID="resultEndpointUserDropDownList" runat="server" Width="90%" AutoPostBack="False" />
                                     </td>
                                 </tr>
                             </table>

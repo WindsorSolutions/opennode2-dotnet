@@ -382,6 +382,24 @@ namespace Windsor.Node2008.Admin.Secure {
         protected global::System.Web.UI.WebControls.TextBox sourceRequestTextBox;
         
         /// <summary>
+        /// sourceEndpointUserLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label sourceEndpointUserLabel;
+        
+        /// <summary>
+        /// sourceEndpointUserDropDownList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList sourceEndpointUserDropDownList;
+        
+        /// <summary>
         /// additionalArgumentsPanel control.
         /// </summary>
         /// <remarks>
@@ -569,6 +587,24 @@ namespace Windsor.Node2008.Admin.Secure {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox resultOperationTextBox;
+        
+        /// <summary>
+        /// resultEndpointUserLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label resultEndpointUserLabel;
+        
+        /// <summary>
+        /// resultEndpointUserDropDownList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList resultEndpointUserDropDownList;
         
         /// <summary>
         /// auditLabel control.

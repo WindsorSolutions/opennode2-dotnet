@@ -94,12 +94,14 @@ namespace Windsor.Node2008.Admin.Secure
         private bool _disableEditing;
         private readonly DateTime MIN_VALID_DATE = new DateTime(1900, 1, 1);
         private readonly DateTime MAX_VALID_DATE = new DateTime(3000, 1, 1);
+        private const string NODE_RUNTIME_ACCOUNT_TEXT = "Node Runtime";
 
         #endregion
 
         protected void ShowHideDataSourceControls()
         {
-            fromLabel.Enabled = sourceExchangeLabel.Enabled = sourceRequestLabel.Enabled = !_disableEditing;
+            fromLabel.Enabled = sourceExchangeLabel.Enabled = sourceRequestLabel.Enabled =
+                sourceEndpointUserLabel.Enabled = resultEndpointUserLabel.Enabled = !_disableEditing;
 
             ScheduledItemSourceType selectedSource =
                 EnumUtils.ParseEnum<ScheduledItemSourceType>(dataSourceRadioButtonList.SelectedValue);
@@ -115,6 +117,7 @@ namespace Windsor.Node2008.Admin.Secure
                     byNameValueRadioButton.Enabled = byValueRadioButton.Enabled = !_disableEditing;
                     nameValueArgsPanel.Visible = byNameValueRadioButton.Checked;
                     valueArgsPanel.Visible = !byNameValueRadioButton.Checked;
+                    sourceEndpointUserLabel.Visible = sourceEndpointUserDropDownList.Visible = false;
                     break;
                 case ScheduledItemSourceType.WebServiceQuery:
                 case ScheduledItemSourceType.WebServiceSolicit:
@@ -130,6 +133,7 @@ namespace Windsor.Node2008.Admin.Secure
                     byNameValueRadioButton.Enabled = byValueRadioButton.Enabled = false;
                     nameValueArgsPanel.Visible = is20Endpoint;
                     valueArgsPanel.Visible = !is20Endpoint;
+                    sourceEndpointUserLabel.Visible = sourceEndpointUserDropDownList.Visible = true;
                     break;
                 case ScheduledItemSourceType.File:
                     sourceLocalServiceDropDownList.Visible = false;
@@ -138,6 +142,7 @@ namespace Windsor.Node2008.Admin.Secure
                     fileSourceTextBox.Visible = true;
                     sourceExchangeLabel.Visible = sourceExchangeTextBox.Visible = false;
                     sourceRequestLabel.Visible = sourceRequestTextBox.Visible = false;
+                    sourceEndpointUserLabel.Visible = sourceEndpointUserDropDownList.Visible = false;
                     break;
             }
         }
@@ -170,6 +175,7 @@ namespace Windsor.Node2008.Admin.Secure
                     resultExchangeLabel.Visible = resultExchangeTextBox.Visible = false;
                     resultOperationLabel.Visible = resultOperationTextBox.Visible = false;
                     destinationSubmitServiceDropDownList.Visible = false;
+                    resultEndpointUserLabel.Visible = resultEndpointUserDropDownList.Visible = false;
                     break;
                 case ScheduledItemTargetType.Partner:
                     toTargetLabel.Visible = true;
@@ -180,6 +186,7 @@ namespace Windsor.Node2008.Admin.Secure
                     resultOperationLabel.Visible = resultOperationTextBox.Visible =
                         (GetPartnerVersionFromResultPartnerDropDownList() == EndpointVersionType.EN20);
                     destinationSubmitServiceDropDownList.Visible = false;
+                    resultEndpointUserLabel.Visible = resultEndpointUserDropDownList.Visible = true;
                     break;
                 case ScheduledItemTargetType.Schematron:
                     toTargetLabel.Visible = false;
@@ -189,6 +196,7 @@ namespace Windsor.Node2008.Admin.Secure
                     resultExchangeLabel.Visible = resultExchangeTextBox.Visible = false;
                     resultOperationLabel.Visible = resultOperationTextBox.Visible = false;
                     destinationSubmitServiceDropDownList.Visible = false;
+                    resultEndpointUserLabel.Visible = resultEndpointUserDropDownList.Visible = false;
                     break;
                 case ScheduledItemTargetType.File:
                     toTargetLabel.Visible = true;
@@ -198,6 +206,7 @@ namespace Windsor.Node2008.Admin.Secure
                     resultExchangeLabel.Visible = resultExchangeTextBox.Visible = false;
                     resultOperationLabel.Visible = resultOperationTextBox.Visible = false;
                     destinationSubmitServiceDropDownList.Visible = false;
+                    resultEndpointUserLabel.Visible = resultEndpointUserDropDownList.Visible = false;
                     break;
                 case ScheduledItemTargetType.Email:
                     toTargetLabel.Visible = true;
@@ -207,6 +216,7 @@ namespace Windsor.Node2008.Admin.Secure
                     resultExchangeLabel.Visible = resultExchangeTextBox.Visible = false;
                     resultOperationLabel.Visible = resultOperationTextBox.Visible = false;
                     destinationSubmitServiceDropDownList.Visible = false;
+                    resultEndpointUserLabel.Visible = resultEndpointUserDropDownList.Visible = false;
                     break;
                 case ScheduledItemTargetType.LocalService:
                     toTargetLabel.Visible = true;
@@ -216,6 +226,7 @@ namespace Windsor.Node2008.Admin.Secure
                     resultExchangeLabel.Visible = resultExchangeTextBox.Visible = false;
                     resultOperationLabel.Visible = resultOperationTextBox.Visible = false;
                     destinationSubmitServiceDropDownList.Visible = true;
+                    resultEndpointUserLabel.Visible = resultEndpointUserDropDownList.Visible = false;
                     break;
             }
         }
@@ -334,6 +345,23 @@ namespace Windsor.Node2008.Admin.Secure
                 sourcePartnerDropDownList.Items.Insert(0, new ListItem(NOT_SELECTED_TEXT, string.Empty));
                 sourcePartnerDropDownList.SelectedIndex = 0;
 
+                IDictionary<string, string> endpointUserList = _dataItemService.GetEndpointUserDisplayList(VisitHelper.GetVisit());
+                IList<KeyValuePair<string, string>> sortedEndpointUserList = UIUtility.GetSortedList(endpointUserList);
+
+                sourceEndpointUserDropDownList.DataSource = sortedEndpointUserList;
+                sourceEndpointUserDropDownList.DataTextField = "Value";
+                sourceEndpointUserDropDownList.DataValueField = "Key";
+                sourceEndpointUserDropDownList.DataBind();
+                sourceEndpointUserDropDownList.Items.Insert(0, new ListItem(NODE_RUNTIME_ACCOUNT_TEXT, string.Empty));
+                sourceEndpointUserDropDownList.SelectedIndex = 0;
+
+                resultEndpointUserDropDownList.DataSource = sortedEndpointUserList;
+                resultEndpointUserDropDownList.DataTextField = "Value";
+                resultEndpointUserDropDownList.DataValueField = "Key";
+                resultEndpointUserDropDownList.DataBind();
+                resultEndpointUserDropDownList.Items.Insert(0, new ListItem(NODE_RUNTIME_ACCOUNT_TEXT, string.Empty));
+                resultEndpointUserDropDownList.SelectedIndex = 0;
+
                 resultPartnerDropDownList.DataSource = sortedPartnerList;
                 resultPartnerDropDownList.DataTextField = "Value";
                 resultPartnerDropDownList.DataValueField = "Key";
@@ -388,7 +416,8 @@ namespace Windsor.Node2008.Admin.Secure
                         destinationSubmitServiceDropDownList.Enabled = resultExchangeTextBox.Enabled =
                         resultOperationTextBox.Enabled = activeCheckBox.Enabled = startCalImage.Enabled =
                         endCalImage.Enabled = startsOnLabel.Enabled = endsOnLabel.Enabled =
-                        runTimeLabel.Enabled = runTimeFormatLabel.Enabled = false;
+                        runTimeLabel.Enabled = runTimeFormatLabel.Enabled = sourceEndpointUserDropDownList.Enabled =
+                        resultEndpointUserDropDownList.Enabled = false;
 
                     cancelBtn.Text = "Back";
                     runNowBtn.Text = "Run Now";
@@ -432,12 +461,15 @@ namespace Windsor.Node2008.Admin.Secure
             BindingManager.AddBinding("frequencyQualifier.SelectedValue", "DataItem.FrequencyType");
             BindingManager.AddBinding("dataSourceRadioButtonList.SelectedValue", "DataItem.SourceType");
             BindingManager.AddBinding("SourceIdBinder", "DataItem.SourceId");
+            BindingManager.AddBinding("SourceEndpointUserBinder", "DataItem.SourceEndpointUser");
             BindingManager.AddBinding("sourceExchangeTextBox.Text", "DataItem.SourceFlow");
             BindingManager.AddBinding("sourceRequestTextBox.Text", "DataItem.SourceRequest");
             BindingManager.AddBinding("resultProcessRadioButtonList.SelectedValue", "DataItem.TargetType");
             BindingManager.AddBinding("TargetIdBinder", "DataItem.TargetId");
             BindingManager.AddBinding("resultExchangeTextBox.Text", "DataItem.TargetFlow");
             BindingManager.AddBinding("resultOperationTextBox.Text", "DataItem.TargetRequest");
+            BindingManager.AddBinding("TargetEndpointUserBinder", "DataItem.TargetEndpointUser");
+
             BindingManager.AddBinding("RunTimeBinder", "DataItem.StartOn");
         }
         protected override void BindFormData()
@@ -510,6 +542,10 @@ namespace Windsor.Node2008.Admin.Secure
                     {
                         _dataModel.ScheduledItem.SourceRequest = string.Empty;
                     }
+                    if (!sourceEndpointUserDropDownList.Visible || string.IsNullOrEmpty(_dataModel.ScheduledItem.SourceEndpointUser))
+                    {
+                        _dataModel.ScheduledItem.SourceEndpointUser = null;
+                    }
                     if (!resultExchangeTextBox.Visible)
                     {
                         _dataModel.ScheduledItem.TargetFlow = string.Empty;
@@ -517,6 +553,10 @@ namespace Windsor.Node2008.Admin.Secure
                     if (!resultOperationTextBox.Visible)
                     {
                         _dataModel.ScheduledItem.TargetRequest = string.Empty;
+                    }
+                    if (!resultEndpointUserDropDownList.Visible || string.IsNullOrEmpty(_dataModel.ScheduledItem.TargetEndpointUser))
+                    {
+                        _dataModel.ScheduledItem.TargetEndpointUser = null;
                     }
                 }
                 else
@@ -715,6 +755,31 @@ namespace Windsor.Node2008.Admin.Secure
                 }
             }
         }
+        protected string SourceEndpointUserBinder
+        {
+            get
+            {
+                return sourceEndpointUserDropDownList.SelectedValue;
+            }
+            set
+            {
+                sourceEndpointUserDropDownList.SelectedValue = string.IsNullOrEmpty(_dataModel.ScheduledItem.SourceEndpointUser) ?
+                    string.Empty : _dataModel.ScheduledItem.SourceEndpointUser;
+            }
+        }
+        protected string TargetEndpointUserBinder
+        {
+            get
+            {
+                return resultEndpointUserDropDownList.SelectedValue;
+            }
+            set
+            {
+                resultEndpointUserDropDownList.SelectedValue = string.IsNullOrEmpty(_dataModel.ScheduledItem.TargetEndpointUser) ?
+                    string.Empty : _dataModel.ScheduledItem.TargetEndpointUser;
+            }
+        }
+
         protected string TargetIdBinder
         {
             get

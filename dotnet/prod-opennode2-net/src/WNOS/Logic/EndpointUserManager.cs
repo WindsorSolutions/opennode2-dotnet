@@ -214,6 +214,11 @@ namespace Windsor.Node2008.WNOS.Logic
                                                               networkEndpointUrl, networkFlowName, networkFlowOperation,
                                                               endpointUsername);
         }
+        public IDictionary<string, string> GetEndpointUserDisplayList(NodeVisit visit)
+        {
+            ValidateByRole(visit, SystemRoleType.Program);
+            return EndpointUserDao.GetEndpointUserDisplayList();
+        }
 
         public IList<UserAccount> GetAllPossibleEndpointUsers(NodeVisit visit)
         {

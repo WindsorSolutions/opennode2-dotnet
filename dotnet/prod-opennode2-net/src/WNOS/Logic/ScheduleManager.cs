@@ -57,6 +57,7 @@ namespace Windsor.Node2008.WNOS.Logic
         private IScheduleDao _scheduleDao;
         private IFlowManagerEx _flowManager;
         private IServiceManager _serviceManager;
+        private IEndpointUserManager _endpointUserManager;
         private IPartnerManager _partnerManager;
         private IAccountManagerEx _accountManager;
         private ISchematronHelper _schematronHelper;
@@ -75,6 +76,7 @@ namespace Windsor.Node2008.WNOS.Logic
             FieldNotInitializedException.ThrowIfNull(this, ref _accountManager);
             FieldNotInitializedException.ThrowIfNull(this, ref _schematronHelper);
             FieldNotInitializedException.ThrowIfNull(this, ref _activityDao);
+            FieldNotInitializedException.ThrowIfNull(this, ref _endpointUserManager);
         }
 
         #endregion
@@ -258,6 +260,10 @@ namespace Windsor.Node2008.WNOS.Logic
         {
             return _serviceManager.GetDataServiceDisplayList(ServiceType.Submit, visit);
         }
+        public IDictionary<string, string> GetEndpointUserDisplayList(NodeVisit visit)
+        {
+            return _endpointUserManager.GetEndpointUserDisplayList(visit);
+        }
         public IList<string> GetValidFlowCodes()
         {
             return _schematronHelper.GetValidFlowCodes();
@@ -420,6 +426,16 @@ namespace Windsor.Node2008.WNOS.Logic
                 _activityDao = value;
             }
         }
-
+        public IEndpointUserManager EndpointUserManager
+        {
+            get
+            {
+                return _endpointUserManager;
+            }
+            set
+            {
+                _endpointUserManager = value;
+            }
+        }
     }
 }

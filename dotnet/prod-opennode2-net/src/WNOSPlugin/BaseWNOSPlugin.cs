@@ -997,9 +997,54 @@ namespace Windsor.Node2008.WNOSPlugin
         {
             TrimListToRequestSize<T>(dataRequest.RowIndex, dataRequest.MaxRowCount, list);
         }
+        protected virtual TypedParameter AddTypedConfigurationArgument_AddExchangeHeader(string key)
+        {
+            var typedParameter =
+                new TypedParameter("Add Exchange Header", "Should an Exchange Header be added to the generated xml document?",
+                                   TypedParameter.IsNotRequiredValue, typeof(bool), TypedParameter.DoPublishValue, false);
+            TypedConfigurationArguments.Add(key, typedParameter);
+            return typedParameter;
+        }
+        protected virtual TypedParameter AddTypedConfigurationArgument_ExchangeHeaderOrganization(string key)
+        {
+            var typedParameter =
+                new TypedParameter("Organization", "This value is placed in the Exchange Header and should be the name of the company or environmental agency that is generating the xml document.",
+                                   TypedParameter.IsNotRequiredValue, typeof(string), TypedParameter.DoPublishValue, false);
+            TypedConfigurationArguments.Add(key, typedParameter);
+            return typedParameter;
+        }
+        protected virtual TypedParameter AddTypedConfigurationArgument_ExchangeHeaderAuthor(string key)
+        {
+            var typedParameter =
+                new TypedParameter("Author", "This value is placed in the Exchange Header and should be the first and last name of the individual generating the xml document.",
+                                   TypedParameter.IsNotRequiredValue, typeof(string), TypedParameter.DoPublishValue, false);
+            TypedConfigurationArguments.Add(key, typedParameter);
+            return typedParameter;
+        }
+        protected virtual TypedParameter AddTypedConfigurationArgument_ExchangeHeaderContactInfo(string key)
+        {
+            var typedParameter =
+                new TypedParameter("Contact Info", "This value is placed in the Exchange Header and should be the area code and telephone number and/or e-mail address of the author generating the xml document.",
+                                   TypedParameter.IsNotRequiredValue, typeof(string), TypedParameter.DoPublishValue, false);
+            TypedConfigurationArguments.Add(key, typedParameter);
+            return typedParameter;
+        }
+        protected virtual TypedParameter AddTypedConfigurationArgument_ExchangeHeaderPayloadOperation(string key)
+        {
+            var typedParameter =
+                new TypedParameter("Payload Operation", "This value is placed in the Exchange Header and should be the operation to be performed using the xml document.",
+                                   TypedParameter.IsNotRequiredValue, typeof(string), TypedParameter.DoPublishValue, false);
+            TypedConfigurationArguments.Add(key, typedParameter);
+            return typedParameter;
+        }
         #endregion
 
         #region Properties
+        public virtual Dictionary<string, TypedParameter> TypedConfigurationArguments
+        {
+            get;
+            protected set;
+        }
         public Dictionary<string, string> ConfigurationArguments
         {
             get
