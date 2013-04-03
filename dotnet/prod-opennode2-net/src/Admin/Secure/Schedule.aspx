@@ -96,7 +96,7 @@
                                         </td>
                                     </tr>
                                     <tr runat="server" id="lastRunTextRow" class="rowOdd" visible="false" style='<%# Container.ItemIndex % 2 == 0 ? "background-color: #E3ECF3; color: #3366CC": "background-color: #DCDCDC; color: #3366CC"%>'>
-                                        <td class="listItemLeftCell listItemBottomCell">
+                                        <td class="listItemLeftCell">
                                             &nbsp;
                                         </td>
                                         <td runat="server" id="Td2" colspan="2" class="ctrl listItemRightCell">
