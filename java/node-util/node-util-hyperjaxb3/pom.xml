@@ -12,6 +12,7 @@
 	<name>Node Util - Hyperjaxb3 - Parent</name>
 	<modules>
 		<module>node-util-hyperjaxb3-core</module>
+        <module>node-util-hyperjaxb3-attains</module>
         <module>node-util-hyperjaxb3-icisnpdes</module>
         <module>node-util-hyperjaxb3-wqx</module>
         <module>node-util-hyperjaxb3-facid</module>
