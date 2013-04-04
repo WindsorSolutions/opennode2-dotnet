@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:att="http://www.exchangenetwork.net/schema/OWIR/ATT/2" targetNamespace="http://www.exchangenetwork.net/schema/OWIR/ATT/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+  <xsd:annotation>
+    <xsd:documentation>Schema Name: ATT_AssessmentWaters.xsd</xsd:documentation>
+    <xsd:documentation>Description: Component Schema for ATT (Water Assessment Data) AssessmentWater types</xsd:documentation>
+    <xsd:documentation>Application: Integrated Reports (IR) for 305(b) and 303(d) systems</xsd:documentation>
+    <xsd:documentation>Developed by: Environmental Protection Agency, INDUS Corporation</xsd:documentation>
+    <xsd:documentation>Point of Contact: Shera Reems</xsd:documentation>
+  </xsd:annotation>
+  <xsd:include schemaLocation="./ATT_Shared_v2.0.xsd"/>
+  <xsd:complexType name="AssessmentWatersDataType">
+    <xsd:sequence>
+      <xsd:element ref="att:AssessmentWaterDetails" minOccurs="1" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="AssessmentWaterDetailsDataType">
+    <xsd:sequence>
+      <xsd:element ref="att:WaterType"/>
+      <xsd:element ref="att:WaterSize"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="AssessmentWaters" type="att:AssessmentWatersDataType">
+    <xsd:unique name="AWPK">
+      <xsd:selector xpath="att:AssessmentWaterDetails"/>
+      <xsd:field xpath="att:WaterType"/>
+    </xsd:unique>
+  </xsd:element>
+  <xsd:element name="AssessmentWaterDetails" type="att:AssessmentWaterDetailsDataType"/>
+  <xsd:element name="WaterType" type="att:WaterTypeDataType"/>
+  <xsd:element name="WaterSize" type="xsd:decimal"/>
+</xsd:schema>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:att="http://www.exchangenetwork.net/schema/OWIR/ATT/2" targetNamespace="http://www.exchangenetwork.net/schema/OWIR/ATT/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+	<xsd:annotation>
+		<xsd:documentation>Schema Name: ATT_WQSAttainments.xsd</xsd:documentation>
+		<xsd:documentation>Description: Component Schema for ATT (Water Assessment Data) WQSAttainment types</xsd:documentation>
+		<xsd:documentation>Application: Integrated Reports (IR) for 305(b) and 303(d) systems</xsd:documentation>
+		<xsd:documentation>Developed by: Environmental Protection Agency, INDUS Corporation</xsd:documentation>
+		<xsd:documentation>Point of Contact: Shera Reems</xsd:documentation>
+	</xsd:annotation>
+	<xsd:include schemaLocation="./ATT_Shared_v2.0.xsd"/>
+	<xsd:include schemaLocation="./ATT_AssessmentUnitCauses_v2.0.xsd"/>
+	<xsd:include schemaLocation="./ATT_AssessmentMethods_v2.0.xsd"/>
+	<xsd:include schemaLocation="./ATT_Causes_v2.0.xsd"/>
+	<xsd:complexType name="WQSAttainmentsDataType">
+		<xsd:sequence>
+			<xsd:element ref="att:WQSAttainmentDetails" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="WQSAttainmentDetailsDataType">
+		<xsd:sequence>
+			<xsd:element ref="att:UseDescription"/>
+			<xsd:element ref="att:AttainmentDescription"/>
+			<xsd:element ref="att:ThreatenedFlag" minOccurs="0"/>
+			<xsd:element ref="att:UseComment" minOccurs="0"/>
+			<xsd:element ref="att:AssessmentDate" minOccurs="0"/>
+			<xsd:element ref="att:StartDate" minOccurs="0"/>
+			<xsd:element ref="att:EndDate" minOccurs="0"/>
+			<xsd:element ref="att:AssessmentMethods" minOccurs="0"/>
+			<xsd:element ref="att:AssessmentTypes" minOccurs="0"/>
+			<xsd:element ref="att:Causes" minOccurs="0"/>
+			<xsd:element ref="att:ObservedEffects" minOccurs="0"/>
+			<xsd:element ref="att:KeyDate" minOccurs="0"/>
+			<xsd:element ref="att:Assessor" minOccurs="0"/>
+			<xsd:element ref="att:EPAAddedAttainment" minOccurs="0"/>
+			<xsd:element ref="att:StateUseCategory" minOccurs="0"/>
+			<xsd:element ref="att:EPAUseCategory" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AssessmentTypesDataType">
+		<xsd:sequence>
+			<xsd:element ref="att:AssessmentTypeDetails" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AssessmentTypeDetailsDataType">
+		<xsd:sequence>
+			<xsd:element ref="att:AssessmentTypeType"/>
+			<xsd:element ref="att:AssessmentConfidence" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ObservedEffectsDataType">
+		<xsd:sequence>
+			<xsd:element ref="att:ObservedEffectDetails" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ObservedEffectDetailsDataType">
+		<xsd:sequence>
+			<xsd:element ref="att:CauseName"/>
+			<xsd:element ref="att:ObservedEffectsComment" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="WQSAttainments" type="att:WQSAttainmentsDataType">
+		<xsd:unique name="WAPK">
+			<xsd:selector xpath="att:WQSAttainmentDetails"/>
+			<xsd:field xpath="att:UseDescription"/>
+		</xsd:unique>
+	</xsd:element>
+	<xsd:element name="WQSAttainmentDetails" type="att:WQSAttainmentDetailsDataType"/>
+	<xsd:element name="UseDescription" type="att:String4000DataType"/>
+	<xsd:element name="AttainmentDescription" type="att:AttainmentDescriptionDataType"/>
+	<xsd:element name="ThreatenedFlag" type="att:StringYesNoDataType"/>
+	<xsd:element name="AssessmentDate" type="xsd:date"/>
+	<xsd:element name="StartDate" type="xsd:date"/>
+	<xsd:element name="EndDate" type="xsd:date"/>
+	<xsd:element name="AssessmentTypes" type="att:AssessmentTypesDataType">
+		<xsd:unique name="ATPK">
+			<xsd:selector xpath="att:AssessmentTypeDetails"/>
+			<xsd:field xpath="att:AssessmentTypeType"/>
+		</xsd:unique>
+	</xsd:element>
+	<xsd:element name="AssessmentTypeDetails" type="att:AssessmentTypeDetailsDataType"/>
+	<xsd:element name="ObservedEffects" type="att:ObservedEffectsDataType">
+		<xsd:unique name="OEPK">
+			<xsd:selector xpath="att:ObservedEffectDetails"/>
+			<xsd:field xpath="att:ObservedEffectsCauseName"/>
+		</xsd:unique>
+	</xsd:element>
+	<xsd:element name="ObservedEffectDetails" type="att:ObservedEffectDetailsDataType"/>
+	<xsd:element name="AssessmentTypeType" type="att:AssessmentTypeTypeDataType"/>
+	<xsd:element name="AssessmentConfidence" type="att:AssessmentConfidenceDataType"/>
+	<xsd:element name="ObservedEffectComment" type="att:String4000DataType"/>
+	<xsd:element name="KeyDate" type="xsd:date"/>
+	<xsd:element name="Assessor" type="att:String40DataType"/>
+	<xsd:element name="StateUseCategory" type="att:String10DataType"/>
+	<xsd:element name="EPAUseCategory" type="att:EPACategoryDataType"/>
+	<xsd:element name="EPAAddedAttainment" type="att:StringYNDataType"/>
+	<xsd:element name="ObservedEffectsComment"/>
+</xsd:schema>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+    jaxb:extensionBindingPrefixes="hj orm" > 
+    <jaxb:bindings schemaLocation="../xsd/2/0/ATT_WQSAttainments_v2.0.xsd">
+        <jaxb:bindings node="//xsd:complexType[@name='WQSAttainmentsDataType']">
+            <hj:ignored>
+            </hj:ignored>
+        </jaxb:bindings>
+        <jaxb:bindings node="//xsd:complexType[@name='WQSAttainmentDetailsDataType']">
+            <hj:entity>
+                <orm:table name="OWIR_WQS_ATTAIN_DTLS"/>
+            </hj:entity>
+            <hj:generated-id name="Dbid">
+                <orm:column name="WQS_ATTAIN_DTLS_ID"/>
+            </hj:generated-id>
+        </jaxb:bindings>
+        <jaxb:bindings node="//xsd:element[@ref='att:AssessmentDate']">
+            <hj:basic>
+                <orm:column name="ASMT_DATE" />
+            </hj:basic>
+        </jaxb:bindings>
+        <jaxb:bindings node="//xsd:element[@ref='att:StartDate']">
+            <hj:basic>
+                <orm:column name="START_DATE" />
+            </hj:basic>
+        </jaxb:bindings>
+        <jaxb:bindings node="//xsd:element[@ref='att:EndDate']">
+            <hj:basic>
+                <orm:column name="END_DATE" />
+            </hj:basic>
+        </jaxb:bindings>
+        <jaxb:bindings node="//xsd:element[@ref='att:KeyDate']">
+            <hj:basic>
+                <orm:column name="KEY_DATE" />
+            </hj:basic>
+        </jaxb:bindings>
+        <jaxb:bindings node="//xsd:complexType[@name='AssessmentTypesDataType']">
+            <hj:ignored>
+            </hj:ignored>
+        </jaxb:bindings>
+        <jaxb:bindings node="//xsd:complexType[@name='AssessmentTypeDetailsDataType']">
+            <hj:entity>
+                <orm:table name="OWIR_ASMT_TYPE_DTLS"/>
+            </hj:entity>
+            <hj:generated-id name="Dbid">
+                <orm:column name="ASMT_TYPE_DTLS_ID"/>
+            </hj:generated-id>
+        </jaxb:bindings>
+        <jaxb:bindings node="//xsd:complexType[@name='ObservedEffectsDataType']">
+            <hj:ignored>
+            </hj:ignored>
+        </jaxb:bindings>
+        <jaxb:bindings node="//xsd:complexType[@name='ObservedEffectDetailsDataType']">
+            <hj:entity>
+                <orm:table name="OWIR_OBSERVED_EFFECT_DTLS"/>
+            </hj:entity>
+            <hj:generated-id name="Dbid">
+                <orm:column name="OBSERVED_EFFECT_DTLS_ID"/>
+            </hj:generated-id>
+        </jaxb:bindings>
+    </jaxb:bindings>
+</jaxb:bindings>

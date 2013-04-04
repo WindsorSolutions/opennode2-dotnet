@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+    jaxb:extensionBindingPrefixes="hj orm" > 
+    <jaxb:bindings schemaLocation="../xsd/2/0/ATT_AssessmentUnitCauses_v2.0.xsd">
+        <jaxb:bindings node="//xsd:complexType[@name='AssessmentUnitCausesDataType']">
+            <hj:ignored>
+            </hj:ignored>
+        </jaxb:bindings>
+        <jaxb:bindings node="//xsd:complexType[@name='AssessmentUnitCauseDetailsDataType']">
+            <hj:entity>
+                <orm:table name="OWIR_ASMT_UNIT_CAUSE_DTLS"/>
+            </hj:entity>
+            <hj:generated-id name="Dbid">
+                <orm:column name="ASMT_UNIT_CAUSE_DTLS_ID"/>
+            </hj:generated-id>
+        </jaxb:bindings>
+        <jaxb:bindings node="//xsd:element[@ref='att:CycleFirstListed']">
+            <hj:basic>
+                <orm:column name="CYCLE_FIRST_LISTED" />
+            </hj:basic>
+        </jaxb:bindings>
+        <jaxb:bindings node="//xsd:element[@ref='att:ExpectedToAttainDate']">
+            <hj:basic>
+                <orm:column name="EXPECTED_TO_ATTAIN_DATE" />
+            </hj:basic>
+        </jaxb:bindings>
+        <jaxb:bindings node="//xsd:element[@ref='att:ConsentDecreeCycle']">
+            <hj:basic>
+                <orm:column name="CNST_DECREE_CYCLE" />
+            </hj:basic>
+        </jaxb:bindings>
+        <jaxb:bindings node="//xsd:complexType[@name='ImplementationActionsDataType']">
+            <hj:ignored>
+            </hj:ignored>
+        </jaxb:bindings>
+        <jaxb:bindings node="//xsd:complexType[@name='ImplementationActionDetailsDataType']">
+            <hj:entity>
+                <orm:table name="OWIR_IMPL_ACT_DTLS"/>
+            </hj:entity>
+            <hj:generated-id name="Dbid">
+                <orm:column name="IMPL_ACT_DTLS_ID"/>
+            </hj:generated-id>
+        </jaxb:bindings>
+        <jaxb:bindings node="//xsd:complexType[@name='NPDESDataType']">
+            <hj:ignored>
+            </hj:ignored>
+        </jaxb:bindings>
+        <jaxb:bindings node="//xsd:complexType[@name='NPDESDetailsDataType']">
+            <hj:entity>
+                <orm:table name="OWIR_NPDES_DTLS"/>
+            </hj:entity>
+            <hj:generated-id name="Dbid">
+                <orm:column name="NPDES_DTLS_ID"/>
+            </hj:generated-id>
+        </jaxb:bindings>
+        <jaxb:bindings node="//xsd:complexType[@name='TMDLsDataType']">
+            <hj:ignored>
+            </hj:ignored>
+        </jaxb:bindings>
+        <jaxb:bindings node="//xsd:complexType[@name='TMDLsDetailsDataType']">
+            <hj:entity>
+                <orm:table name="OWIR_TMD_LS_DTLS"/>
+            </hj:entity>
+            <hj:generated-id name="Dbid">
+                <orm:column name="TMD_LS_DTLS_ID"/>
+            </hj:generated-id>
+        </jaxb:bindings>
+    </jaxb:bindings>
+</jaxb:bindings>
