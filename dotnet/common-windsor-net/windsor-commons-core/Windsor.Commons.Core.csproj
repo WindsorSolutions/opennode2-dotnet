@@ -81,6 +81,7 @@
     <Compile Include="DebugUtils.cs" />
     <Compile Include="DisposableBase.cs" />
     <Compile Include="DrawingUtils.cs" />
+    <Compile Include="DynamicLinq.cs" />
     <Compile Include="EnumUtils.cs" />
     <Compile Include="ExceptionUtils.cs" />
     <Compile Include="File.cs" />

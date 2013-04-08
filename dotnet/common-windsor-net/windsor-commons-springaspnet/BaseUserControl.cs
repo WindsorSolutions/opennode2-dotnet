@@ -150,6 +150,10 @@ namespace Windsor.Commons.Spring.AspNet
 
         protected void WriteZipDownloadToResponse(byte[] zipFileContent, string contentName)
         {
+            WriteDownloadBytesToResponse(zipFileContent, contentName, "application/zip");
+        }
+        protected void WriteDownloadBytesToResponse(byte[] zipFileContent, string contentName, string contentMimeType)
+        {
             Response.ClearHeaders();
             Response.ClearContent();
             Response.Cache.SetNoServerCaching();
@@ -159,7 +163,7 @@ namespace Windsor.Commons.Spring.AspNet
             Response.AddHeader("Content-Disposition",
                 string.Format("attachment;filename=\"{0}\"", contentName));
             Response.AddHeader("Content-Length", zipFileContent.Length.ToString());
-            Response.ContentType = "application/zip";
+            Response.ContentType = contentMimeType;
             Response.BinaryWrite(zipFileContent);
             Response.End();
         }
