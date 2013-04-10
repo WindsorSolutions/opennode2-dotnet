@@ -608,6 +608,8 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
 
     [AppliedAttribute(typeof(CorrectiveActionAuthorityRelatedEventDataType), "AgencyText", typeof(DbIgnoreAttribute))]
 
+    [AppliedAttribute(typeof(CorrectiveActionRelatedEventDataType), "AgencyText", typeof(DbIgnoreAttribute))]
+
     [Table("RCRA_CA_SUBM")]
     public partial class HazardousWasteCorrectiveActionDataType : BaseDataType
     {
