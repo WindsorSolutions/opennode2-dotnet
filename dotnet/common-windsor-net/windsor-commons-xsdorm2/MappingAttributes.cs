@@ -315,6 +315,14 @@ namespace Windsor.Commons.XsdOrm2
         }
         private string m_Prefix;
     }
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Assembly)]
+    public class DontUseDefaultTableNamePrefixForPKAndFKAttribute : MappingAttribute
+    {
+        public override string GetShortDescription()
+        {
+            return "DontUseDefaultTableNamePrefixForPKAndFK";
+        }
+    }
     public abstract class BaseAppliedAttribute : MappingAttribute
     {
         public BaseAppliedAttribute(Type mappedAttributeType, params object[] args)

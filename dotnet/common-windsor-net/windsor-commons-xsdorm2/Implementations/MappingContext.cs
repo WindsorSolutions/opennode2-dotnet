@@ -422,7 +422,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                             throw new MappingException("Unsupported relationAttribute");
                         }
                         string description = ReflectionUtils.GetDescription(member);
-                        CollectionUtils.Add(new ChildRelationInfo(currentTable.TableRootType, assignType, member, null, null, description, isOneToMany, sameTableElementInfo), 
+                        CollectionUtils.Add(new ChildRelationInfo(currentTable.TableRootType, assignType, member, null, null, description, isOneToMany, sameTableElementInfo),
                                             ref relationMembers);
                         lastRelationAttribute = relationAttribute;
                         members[memberIndex] = null;
@@ -647,36 +647,44 @@ namespace Windsor.Commons.XsdOrm2.Implementations
         protected Type GetValueTypeFomCustomXmlStringFormatTypeBase(Type valueType)
         {
             Type rtnType;
-            if ( m_CustomXmlStringFormatTypeBaseMap.TryGetValue(valueType, out rtnType)) 
+            if (m_CustomXmlStringFormatTypeBaseMap.TryGetValue(valueType, out rtnType))
             {
                 return rtnType;
             }
             DebugUtils.AssertDebuggerBreak(valueType.IsSubclassOf(typeof(CustomXmlStringFormatTypeBase)));
             TypeCode typeCode = ((CustomXmlStringFormatTypeBase)Activator.CreateInstance(valueType)).GetTypeCode();
 
-            switch(typeCode)
+            switch (typeCode)
             {
                 case TypeCode.Boolean:
-                    rtnType = typeof(bool); break;
+                    rtnType = typeof(bool);
+                    break;
                 case TypeCode.Char:
                 case TypeCode.String:
-                    rtnType = typeof(string); break;
+                    rtnType = typeof(string);
+                    break;
                 case TypeCode.Int16:
                 case TypeCode.UInt16:
                 case TypeCode.Int32:
                 case TypeCode.UInt32:
-                    rtnType = typeof(int); break;
+                    rtnType = typeof(int);
+                    break;
                 case TypeCode.DateTime:
-                    rtnType = typeof(DateTime); break;
+                    rtnType = typeof(DateTime);
+                    break;
                 case TypeCode.Int64:
                 case TypeCode.UInt64:
-                    rtnType = typeof(long); break;
+                    rtnType = typeof(long);
+                    break;
                 case TypeCode.Single:
-                    rtnType = typeof(float); break;
+                    rtnType = typeof(float);
+                    break;
                 case TypeCode.Double:
-                    rtnType = typeof(double); break;
+                    rtnType = typeof(double);
+                    break;
                 case TypeCode.Decimal:
-                    rtnType = typeof(decimal); break;
+                    rtnType = typeof(decimal);
+                    break;
                 default:
                     throw new MappingException("Invalid CustomXmlStringFormatTypeBase.GetTypeCode(): {0}", typeCode.ToString());
             }
@@ -856,7 +864,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                     }
                 }
             }
-            tables = DatabaseNameShortener.ShortenDatabaseNames(tables, m_NameReplacements);
+            tables = DatabaseNameShortener.ShortenDatabaseNames(tables, m_NameReplacements, m_DontUseDefaultTableNamePrefixForPKAndFKPrefix);
 
             CollectionUtils.ForEach(m_AdditionalCreateIndexAttributes, delegate(AdditionalCreateIndexAttribute attr)
             {
@@ -1033,6 +1041,10 @@ namespace Windsor.Commons.XsdOrm2.Implementations
             m_DefaultStringDbValues = GetDefaultDbStringValues(mappingAttributesType);
             m_ElementNamePostfixToLength = GetElementNamePostfixToLength(mappingAttributesType);
             m_DefaultTableNamePrefix = GetDefaultTableNamePrefix(mappingAttributesType);
+            if (HasDontUseDefaultTableNamePrefixForPKAndFK(mappingAttributesType))
+            {
+                m_DontUseDefaultTableNamePrefixForPKAndFKPrefix = m_DefaultTableNamePrefix;
+            }
             m_DefaultDecimalCreateString = GetDefaultDecimalPrecision(mappingAttributesType);
             m_DefaultFloatCreateString = GetDefaultFloatPrecision(mappingAttributesType);
             m_DefaultDoubleCreateString = GetDefaultDoublePrecision(mappingAttributesType);
@@ -1099,6 +1111,11 @@ namespace Windsor.Commons.XsdOrm2.Implementations
         {
             DefaultTableNamePrefixAttribute attr = GetGlobalAttribute<DefaultTableNamePrefixAttribute>(rootType);
             return (attr == null) ? null : attr.Prefix;
+        }
+        protected virtual bool HasDontUseDefaultTableNamePrefixForPKAndFK(Type rootType)
+        {
+            DontUseDefaultTableNamePrefixForPKAndFKAttribute attr = GetGlobalAttribute<DontUseDefaultTableNamePrefixForPKAndFKAttribute>(rootType);
+            return (attr != null);
         }
         protected virtual IList<string> GetRemovePostfixNamesFromTableAndColumnNamesAttribute(Type rootType)
         {
@@ -1192,7 +1209,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
         }
         private Dictionary<Type, Dictionary<string, List<MappingAttribute>>> GetAppliedAttributes(Type rootType)
         {
-            Dictionary<Type, Dictionary<string, List<MappingAttribute>>> appliedAttributes = new Dictionary<Type,Dictionary<string,List<MappingAttribute>>>();
+            Dictionary<Type, Dictionary<string, List<MappingAttribute>>> appliedAttributes = new Dictionary<Type, Dictionary<string, List<MappingAttribute>>>();
             ConstructAppliedAttributes(rootType.Assembly.GetCustomAttributes(typeof(AppliedAttribute), false),
                                        ref appliedAttributes);
             ConstructAppliedAttributes(GetStaticClassGlobalAttributes<AppliedAttribute>(rootType),
@@ -1205,7 +1222,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
         }
         private Dictionary<Type, List<MappingAttribute>> GetMemberTypeAppliedAttributes(Type rootType)
         {
-            Dictionary<Type, List<MappingAttribute>> memberTypeAppliedAttributes = new Dictionary<Type,List<MappingAttribute>>();
+            Dictionary<Type, List<MappingAttribute>> memberTypeAppliedAttributes = new Dictionary<Type, List<MappingAttribute>>();
             ConstructMemberTypeAppliedAttributes(rootType.Assembly.GetCustomAttributes(typeof(MemberTypeAppliedAttribute), false),
                                                  ref memberTypeAppliedAttributes);
             ConstructMemberTypeAppliedAttributes(GetStaticClassGlobalAttributes<MemberTypeAppliedAttribute>(rootType),
@@ -1218,7 +1235,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
         }
         private static Dictionary<string, MappingAttribute> GetNamePostfixAppliedAttributes(Type rootType)
         {
-            Dictionary<string, MappingAttribute> namePostfixAppliedAttributes = new Dictionary<string,MappingAttribute>();
+            Dictionary<string, MappingAttribute> namePostfixAppliedAttributes = new Dictionary<string, MappingAttribute>();
             ConstructNamePostfixAppliedAttributes(rootType.Assembly.GetCustomAttributes(typeof(NamePostfixAppliedAttribute), false),
                                                   ref namePostfixAppliedAttributes);
             ConstructNamePostfixAppliedAttributes(GetStaticClassGlobalAttributes<NamePostfixAppliedAttribute>(rootType),
@@ -1449,6 +1466,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
         private Dictionary<string, MappingAttribute> m_NamePostfixAppliedAttributes;
         private string m_SpecifiedFieldPostfixName = "Specified";
         private string m_DefaultTableNamePrefix;
+        private string m_DontUseDefaultTableNamePrefixForPKAndFKPrefix;
         private string m_DefaultDecimalCreateString;
         private string m_DefaultFloatCreateString;
         private string m_DefaultDoubleCreateString;

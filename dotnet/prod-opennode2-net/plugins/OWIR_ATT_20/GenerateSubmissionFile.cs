@@ -158,7 +158,7 @@ namespace Windsor.Node2008.WNOSPlugin.OWIR_ATT_20
 
             // Load database provider
 
-            _baseDao = ValidateDBProvider(EnumUtils.ToDescription(DataSourceParams.DataSource), 
+            _baseDao = ValidateDBProvider(EnumUtils.ToDescription(DataSourceParams.DataSource),
                                           typeof(NamedNullMappingDataReader));
         }
         protected virtual void ValidateRequest(string requestId)
@@ -174,7 +174,7 @@ namespace Windsor.Node2008.WNOSPlugin.OWIR_ATT_20
 
             // Load data from database
 
-            List<StateAssessmentDetailsDataType> dataList = 
+            List<StateAssessmentDetailsDataType> dataList =
                 _objectsFromDatabase.LoadFromDatabase<StateAssessmentDetailsDataType>(_baseDao, null);
 
             if (CollectionUtils.IsNullOrEmpty(dataList))
@@ -198,7 +198,7 @@ namespace Windsor.Node2008.WNOSPlugin.OWIR_ATT_20
         protected string GetSubmissionResultsString(StateAssessmentDetailsDataType data)
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendFormat("Found the following EMTS submission data: ");
+            sb.AppendFormat("Found the following OWIR-ATT submission data: ");
             int i = 0;
             AppendCountString("Assessment Units", data.AssessmentUnits, ++i == 1, sb);
             AppendCountString("User Categories", data.UserCategories, ++i == 1, sb);
@@ -236,7 +236,7 @@ namespace Windsor.Node2008.WNOSPlugin.OWIR_ATT_20
 
                 IHeaderDocument2Helper headerDocumentHelper;
                 GetServiceImplementation(out headerDocumentHelper);
-                
+
                 // Configure the submission exchange header and add header to xml file
                 headerDocumentHelper.Configure(_authorName, _organizationName, _documentTitle, FLOW_NAME,
                                                _dataServiceName, _senderAddress, null, _keywords);
