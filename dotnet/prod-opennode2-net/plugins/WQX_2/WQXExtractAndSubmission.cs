@@ -71,6 +71,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
         protected string _orgRecordId;
         protected DateTime? _startDate;
         protected DateTime? _endDate;
+        protected DateTime? _lastUpdateDate;
         #endregion
 
         public WQXExtractAndSubmission()
@@ -106,6 +107,12 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                 _endDate = dateTime;
             }
 
+            if (TryGetNowDateParameter(_dataRequest, EnumUtils.ToDescription(ExecuteWQXExtract.ScheduleParams.LastUpdateDate), 4,
+                                       ref dateTime))
+            {
+                _lastUpdateDate = dateTime;
+            }
+
             if (!string.IsNullOrEmpty(_storedProcName))
             {
                 if (!string.IsNullOrEmpty(_projectId))
@@ -122,18 +129,45 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                                                EnumUtils.ToDescription(ExecuteWQXExtract.ScheduleParams.ProjectId),
                                                EnumUtils.ToDescription(ExecuteWQXExtract.ScheduleParams.EndDate));
                     }
-                }
-                if (_startDate.HasValue && _endDate.HasValue)
-                {
-                    if (_startDate.Value > _endDate.Value)
+                    if (_lastUpdateDate.HasValue)
                     {
-                        throw new ArgException("The service was passed a {0} parameter of {1} and an {2} parameter of {3}; {4} must be earlier than {5}",
+                        throw new ArgException("The service was passed a {0} parameter and a {1} parameter; both parameters cannot be passed to the service at the same time.",
+                                               EnumUtils.ToDescription(ExecuteWQXExtract.ScheduleParams.ProjectId),
+                                               EnumUtils.ToDescription(ExecuteWQXExtract.ScheduleParams.LastUpdateDate));
+                    }
+                }
+                else
+                {
+                    if (_startDate.HasValue && _endDate.HasValue)
+                    {
+                        if (_lastUpdateDate.HasValue)
+                        {
+                            throw new ArgException("The service was passed a {0} parameter and a {1} parameter; both parameters cannot be passed to the service at the same time.",
+                                                   EnumUtils.ToDescription(ExecuteWQXExtract.ScheduleParams.StartDate),
+                                                   EnumUtils.ToDescription(ExecuteWQXExtract.ScheduleParams.LastUpdateDate));
+                        }
+                        if (_startDate.Value > _endDate.Value)
+                        {
+                            throw new ArgException("The service was passed a {0} parameter of {1} and an {2} parameter of {3}; {4} must be earlier than {5}",
+                                                   EnumUtils.ToDescription(ExecuteWQXExtract.ScheduleParams.StartDate),
+                                                   _startDate.Value.ToString(),
+                                                   EnumUtils.ToDescription(ExecuteWQXExtract.ScheduleParams.EndDate),
+                                                   _endDate.Value.ToString(),
+                                                   EnumUtils.ToDescription(ExecuteWQXExtract.ScheduleParams.StartDate),
+                                                   EnumUtils.ToDescription(ExecuteWQXExtract.ScheduleParams.EndDate));
+                        }
+                    }
+                    else if (_startDate.HasValue && _lastUpdateDate.HasValue)
+                    {
+                        throw new ArgException("The service was passed a {0} parameter and a {1} parameter; both parameters cannot be passed to the service at the same time.",
                                                EnumUtils.ToDescription(ExecuteWQXExtract.ScheduleParams.StartDate),
-                                               _startDate.Value.ToString(),
+                                               EnumUtils.ToDescription(ExecuteWQXExtract.ScheduleParams.LastUpdateDate));
+                    }
+                    else if (_endDate.HasValue && _lastUpdateDate.HasValue)
+                    {
+                        throw new ArgException("The service was passed a {0} parameter and a {1} parameter; both parameters cannot be passed to the service at the same time.",
                                                EnumUtils.ToDescription(ExecuteWQXExtract.ScheduleParams.EndDate),
-                                               _endDate.Value.ToString(),
-                                               EnumUtils.ToDescription(ExecuteWQXExtract.ScheduleParams.StartDate),
-                                               EnumUtils.ToDescription(ExecuteWQXExtract.ScheduleParams.EndDate));
+                                               EnumUtils.ToDescription(ExecuteWQXExtract.ScheduleParams.LastUpdateDate));
                     }
                 }
             }
@@ -157,20 +191,32 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                                            EnumUtils.ToDescription(ExecuteWQXExtract.ScheduleParams.EndDate),
                                            EnumUtils.ToDescription(ExecuteWQXExtract.ConfigArgs.StoredProcedureName));
                 }
+                if (_lastUpdateDate.HasValue)
+                {
+                    throw new ArgException("The service was passed an {0} parameter, but a {1} configuration parameter was not specified",
+                                           EnumUtils.ToDescription(ExecuteWQXExtract.ScheduleParams.LastUpdateDate),
+                                           EnumUtils.ToDescription(ExecuteWQXExtract.ConfigArgs.StoredProcedureName));
+                }
             }
 
             AppendAuditLogEvent("Schedule parameters: {0} ({1}), {2} ({3}), {4} ({5}), {6} ({7})",
                                 EnumUtils.ToDescription(ExecuteWQXExtract.ScheduleParams.OrgId), _orgId,
                                 EnumUtils.ToDescription(ExecuteWQXExtract.ScheduleParams.ProjectId), _projectId ?? "Not specified",
                                 EnumUtils.ToDescription(ExecuteWQXExtract.ScheduleParams.StartDate), _startDate.HasValue ? _startDate.Value.ToString() : "Not specified",
-                                EnumUtils.ToDescription(ExecuteWQXExtract.ScheduleParams.EndDate), _endDate.HasValue ? _endDate.Value.ToString() : "Not specified");
+                                EnumUtils.ToDescription(ExecuteWQXExtract.ScheduleParams.EndDate), _endDate.HasValue ? _endDate.Value.ToString() : "Not specified",
+                                EnumUtils.ToDescription(ExecuteWQXExtract.ScheduleParams.LastUpdateDate), _lastUpdateDate.HasValue ? _lastUpdateDate.Value.ToString() : "Not specified");
         }
 
         protected override void PrepareForSubmission()
         {
             if (!string.IsNullOrEmpty(_storedProcName))
             {
-                if (_startDate.HasValue || _endDate.HasValue)
+                if (_lastUpdateDate.HasValue)
+                {
+                    ExecuteWQXExtract.DoExtract(this, _baseDao, _storedProcName, _commandTimeout, _orgId, _lastUpdateDate.Value);
+                    _scheduleRunDate = DateTime.Now;
+                }
+                else if (_startDate.HasValue || _endDate.HasValue)
                 {
                     ExecuteWQXExtract.DoExtract(this, _baseDao, _storedProcName, _commandTimeout, _orgId, _startDate, _endDate);
                     _scheduleRunDate = DateTime.Now;

@@ -162,14 +162,14 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
 
         public QuerySolicitProcessorBase()
         {
-            AddTypedConfigurationArgument_AddExchangeHeader(CONFIG_ADD_HEADER).DefaultValue = false;
-            AddTypedConfigurationArgument_ExchangeHeaderAuthor(CONFIG_AUTHOR);
-            AddTypedConfigurationArgument_ExchangeHeaderOrganization(CONFIG_ORGANIZATION);
-            AddTypedConfigurationArgument_ExchangeHeaderContactInfo(CONFIG_CONTACT_INFO);
-            AddTypedConfigurationArgument_ExchangeHeaderPayloadOperation(CONFIG_PAYLOAD_OPERATION);
-            TypedConfigurationArguments.Add(CONFIG_RESULT_CACHE_DURATION,
-                new TypedParameter(CONFIG_RESULT_CACHE_DURATION, "The amount of time to cache a generated result set.  Leave this value empty or set it to 0 to disable caching results.",
-                                   TypedParameter.IsNotRequiredValue, typeof(TimeSpan), TypedParameter.DoPublishValue, false));
+            //AddTypedConfigurationArgument_AddExchangeHeader(CONFIG_ADD_HEADER).DefaultValue = false;
+            //AddTypedConfigurationArgument_ExchangeHeaderAuthor(CONFIG_AUTHOR);
+            //AddTypedConfigurationArgument_ExchangeHeaderOrganization(CONFIG_ORGANIZATION);
+            //AddTypedConfigurationArgument_ExchangeHeaderContactInfo(CONFIG_CONTACT_INFO);
+            //AddTypedConfigurationArgument_ExchangeHeaderPayloadOperation(CONFIG_PAYLOAD_OPERATION);
+            //TypedConfigurationArguments.Add(CONFIG_RESULT_CACHE_DURATION,
+            //    new TypedParameter(CONFIG_RESULT_CACHE_DURATION, "The amount of time to cache a generated result set.  Leave this value empty or set it to 0 to disable caching results.",
+            //                       TypedParameter.IsNotRequiredValue, typeof(TimeSpan), TypedParameter.DoPublishValue, false));
 
             ConfigurationArguments.Add(CONFIG_ADD_HEADER, null);
             ConfigurationArguments.Add(CONFIG_AUTHOR, null);

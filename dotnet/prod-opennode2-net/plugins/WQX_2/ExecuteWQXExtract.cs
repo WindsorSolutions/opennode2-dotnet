@@ -86,6 +86,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
             StartDate,
             [Description("EndDate")]
             EndDate,
+            [Description("LastUpdateDate")]
+            LastUpdateDate,
         }
 
         protected const string p_project_id = "p_project_id";
@@ -94,6 +96,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
         protected const string p_runtime = "p_runtime";
         protected const string p_start_date = "p_start_date";
         protected const string p_end_date = "p_end_date";
+        protected const string p_last_update_date = "p_last_update_date";
 
         protected string _projectId;
         protected string _orgId;
@@ -192,13 +195,35 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
             plugin.AppendAuditLogEvent("Executing stored procedure \"{0}\" with timeout of {1} seconds ...",
                                        storedProcName, commandTimeout.ToString());
 
+            IDbParameters parameters = baseDao.AdoTemplate.CreateDbParameters();
+            parameters.AddWithValue(p_org_id, orgId);
+            parameters.AddWithValue(p_start_date, startDate.HasValue ? (object)startDate.Value : (object)DBNull.Value);
+            parameters.AddWithValue(p_end_date, endDate.HasValue ? (object)endDate.Value : (object)DBNull.Value);
+
+            ExecStoredProc(plugin, baseDao, storedProcName, commandTimeout, parameters);
+        }
+
+        public static void DoExtract(BaseWNOSPlugin plugin, SpringBaseDao baseDao, string storedProcName,
+                                     int commandTimeout, string orgId, DateTime lastUpdateDate)
+        {
+            plugin.AppendAuditLogEvent("Executing stored procedure \"{0}\" with timeout of {1} seconds ...",
+                                       storedProcName, commandTimeout.ToString());
+
+            IDbParameters parameters = baseDao.AdoTemplate.CreateDbParameters();
+            parameters.AddWithValue(p_org_id, orgId);
+            parameters.AddWithValue(p_last_update_date, lastUpdateDate);
+
+            ExecStoredProc(plugin, baseDao, storedProcName, commandTimeout, parameters);
+        }
+
+        protected static void ExecStoredProc(BaseWNOSPlugin plugin, SpringBaseDao baseDao, string storedProcName,
+                                             int commandTimeout, IDbParameters parameters)
+        {
+            plugin.AppendAuditLogEvent("Executing stored procedure \"{0}\" with timeout of {1} seconds ...",
+                                       storedProcName, commandTimeout.ToString());
+
             try
             {
-                IDbParameters parameters = baseDao.AdoTemplate.CreateDbParameters();
-                parameters.AddWithValue(p_org_id, orgId);
-                parameters.AddWithValue(p_start_date, startDate.HasValue ? (object)startDate.Value : (object)DBNull.Value);
-                parameters.AddWithValue(p_end_date, endDate.HasValue ? (object)endDate.Value : (object)DBNull.Value);
-
                 baseDao.AdoTemplate.Execute<int>(delegate(DbCommand command)
                 {
                     command.CommandType = CommandType.StoredProcedure;
@@ -230,7 +255,6 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                 throw;
             }
         }
-
         public virtual void ProcessTaskInit(string requestId)
         {
             LazyInit();
