@@ -711,7 +711,7 @@ namespace Windsor.Node2008.WNOS.Logic
             if (userAccount != null)
             {
                 affiliate = userAccount.affiliate;
-                canDelete = string.Equals(userAccount.affiliate, _nodeId);
+                canDelete = string.Equals(userAccount.affiliate, _nodeId, StringComparison.InvariantCultureIgnoreCase);
                 if (canDelete)
                 {
                     canDelete = CanDeleteUser(userName);

@@ -45,6 +45,9 @@ namespace Windsor.Commons.XsdOrm2
 
         void BuildDatabase(Type objectToSaveType, Type mappingAttributesType);
 
+        Dictionary<string, int> BuildAndSaveToDatabase<T>(IEnumerable<T> objectsToSave, SpringBaseDao baseDao,
+                                                          bool deleteAllBeforeSave, Type mappingAttributesType);
+
         /// <summary>
         /// Save the input object to the database.  Returns a list of table names and 
         /// insert row counts for each table.

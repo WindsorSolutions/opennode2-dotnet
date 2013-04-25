@@ -182,13 +182,16 @@ namespace Windsor.Commons.XsdOrm2.Implementations
             }
             foreach (Table table in tables.Values)
             {
-                table.PrimaryKey.ColumnName = table.TableName + Utils.ID_NAME_POSTIFX;
-                if (!string.IsNullOrEmpty(dontUseDefaultTableNamePrefixForPKAndFKPrefix) &&
-                    (table.PrimaryKey.ColumnName.IndexOf(dontUseDefaultTableNamePrefixForPKAndFKPrefix, StringComparison.OrdinalIgnoreCase) == 0))
+                if (table.HasDefaultPrimaryKeyColumn)
                 {
-                    table.PrimaryKey.ColumnName =
-                        table.PrimaryKey.ColumnName.Substring(dontUseDefaultTableNamePrefixForPKAndFKPrefix.Length,
-                                                              table.PrimaryKey.ColumnName.Length - dontUseDefaultTableNamePrefixForPKAndFKPrefix.Length);
+                    table.PrimaryKey.ColumnName = table.TableName + Utils.ID_NAME_POSTIFX;
+                    if (!string.IsNullOrEmpty(dontUseDefaultTableNamePrefixForPKAndFKPrefix) &&
+                        (table.PrimaryKey.ColumnName.IndexOf(dontUseDefaultTableNamePrefixForPKAndFKPrefix, StringComparison.OrdinalIgnoreCase) == 0))
+                    {
+                        table.PrimaryKey.ColumnName =
+                            table.PrimaryKey.ColumnName.Substring(dontUseDefaultTableNamePrefixForPKAndFKPrefix.Length,
+                                                                  table.PrimaryKey.ColumnName.Length - dontUseDefaultTableNamePrefixForPKAndFKPrefix.Length);
+                    }
                 }
                 // TSM: Foreign keys already reference foreignKeyColumn.ForeignTable.PrimaryKey.ColumnType in their properties
                 //foreach (ForeignKeyColumn foreignKeyColumn in table.ForeignKeys)

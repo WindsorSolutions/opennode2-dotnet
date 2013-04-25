@@ -62,21 +62,45 @@ namespace Windsor.Commons.Core
     public class CommaSeparatedFileParser : TextFieldParser
     {
         public CommaSeparatedFileParser(Stream stream)
-            : base(stream) { Init();  }
+            : base(stream)
+        {
+            Init();
+        }
         public CommaSeparatedFileParser(TextReader reader)
-            : base(reader) { Init(); }
+            : base(reader)
+        {
+            Init();
+        }
         public CommaSeparatedFileParser(string path)
-            : base(path) { Init(); }
+            : base(path)
+        {
+            Init();
+        }
         public CommaSeparatedFileParser(Stream stream, Encoding defaultEncoding)
-            : base(stream, defaultEncoding) { Init(); }
+            : base(stream, defaultEncoding)
+        {
+            Init();
+        }
         public CommaSeparatedFileParser(string path, Encoding defaultEncoding)
-            : base(path, defaultEncoding) { Init(); }
+            : base(path, defaultEncoding)
+        {
+            Init();
+        }
         public CommaSeparatedFileParser(Stream stream, Encoding defaultEncoding, bool detectEncoding)
-            : base(stream, defaultEncoding, detectEncoding) { Init(); }
+            : base(stream, defaultEncoding, detectEncoding)
+        {
+            Init();
+        }
         public CommaSeparatedFileParser(string path, Encoding defaultEncoding, bool detectEncoding)
-            : base(path, defaultEncoding, detectEncoding) { Init(); }
+            : base(path, defaultEncoding, detectEncoding)
+        {
+            Init();
+        }
         public CommaSeparatedFileParser(Stream stream, Encoding defaultEncoding, bool detectEncoding, bool leaveOpen)
-            : base(stream, defaultEncoding, detectEncoding, leaveOpen) { Init(); }
+            : base(stream, defaultEncoding, detectEncoding, leaveOpen)
+        {
+            Init();
+        }
 
         /// <summary>
         /// Returns true if there is another input line to process.
@@ -112,6 +136,13 @@ namespace Windsor.Commons.Core
             get
             {
                 return GetColumnString(columnName);
+            }
+        }
+        public IList<string> CurrentRowValues
+        {
+            get
+            {
+                return m_NextValues;
             }
         }
 
@@ -186,20 +217,23 @@ namespace Windsor.Commons.Core
         }
         protected virtual char Delimiter
         {
-            get { return COMMA; }
+            get
+            {
+                return COMMA;
+            }
         }
         protected virtual void Init()
         {
             TextFieldType = FieldType.Delimited;
             Delimiters = new string[] { Delimiter.ToString() };
-            
+
             // Get column header fields
             string[] columnNames = ReadFields();
             if (CollectionUtils.IsNullOrEmpty(columnNames))
             {
                 throw new InvalidDataException(string.Format("The file does not contain valid column headers"));
             }
-            m_ColumnNameToIndexMap = new Dictionary<string,int>();
+            m_ColumnNameToIndexMap = new Dictionary<string, int>();
             for (int i = 0; i < columnNames.Length; ++i)
             {
                 string columnName = columnNames[i].ToUpper();
@@ -219,25 +253,44 @@ namespace Windsor.Commons.Core
     public class TabSeparatedFileParser : CommaSeparatedFileParser
     {
         public TabSeparatedFileParser(Stream stream)
-            : base(stream) { }
+            : base(stream)
+        {
+        }
         public TabSeparatedFileParser(TextReader reader)
-            : base(reader) { }
+            : base(reader)
+        {
+        }
         public TabSeparatedFileParser(string path)
-            : base(path) { }
+            : base(path)
+        {
+        }
         public TabSeparatedFileParser(Stream stream, Encoding defaultEncoding)
-            : base(stream, defaultEncoding) { }
+            : base(stream, defaultEncoding)
+        {
+        }
         public TabSeparatedFileParser(string path, Encoding defaultEncoding)
-            : base(path, defaultEncoding) { }
+            : base(path, defaultEncoding)
+        {
+        }
         public TabSeparatedFileParser(Stream stream, Encoding defaultEncoding, bool detectEncoding)
-            : base(stream, defaultEncoding, detectEncoding) { }
+            : base(stream, defaultEncoding, detectEncoding)
+        {
+        }
         public TabSeparatedFileParser(string path, Encoding defaultEncoding, bool detectEncoding)
-            : base(path, defaultEncoding, detectEncoding) { }
+            : base(path, defaultEncoding, detectEncoding)
+        {
+        }
         public TabSeparatedFileParser(Stream stream, Encoding defaultEncoding, bool detectEncoding, bool leaveOpen)
-            : base(stream, defaultEncoding, detectEncoding, leaveOpen) { }
+            : base(stream, defaultEncoding, detectEncoding, leaveOpen)
+        {
+        }
 
         protected override char Delimiter
         {
-            get { return TAB; }
+            get
+            {
+                return TAB;
+            }
         }
         private const char TAB = '\t';
     }

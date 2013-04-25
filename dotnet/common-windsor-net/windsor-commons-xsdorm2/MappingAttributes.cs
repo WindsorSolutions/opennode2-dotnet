@@ -645,13 +645,14 @@ namespace Windsor.Commons.XsdOrm2
     /// enclosing table.  See subclasses for possible attributes that can be instantiated.
     /// </summary>
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
-    public abstract class PrimaryKeyAttribute : ColumnAttribute
+    public class PrimaryKeyAttribute : ColumnAttribute
     {
-        internal PrimaryKeyAttribute()
-        {
-        }
         public PrimaryKeyAttribute(string columnName, DbType columnType, int columnSize) :
             base(columnName, columnType, columnSize, false)
+        {
+        }
+        public PrimaryKeyAttribute() :
+            base(false)
         {
         }
         public override string GetShortDescription()

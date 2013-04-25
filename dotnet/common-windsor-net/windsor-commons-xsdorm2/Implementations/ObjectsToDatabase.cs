@@ -98,6 +98,10 @@ namespace Windsor.Commons.XsdOrm2.Implementations
         {
             MappingContext mappingContext = MappingContext.GetMappingContext(objectToSaveType, mappingAttributesType);
 
+            BuildDatabase(objectToSaveType, baseDao, mappingContext);
+        }
+        public virtual void BuildDatabase(Type objectToSaveType, SpringBaseDao baseDao, MappingContext mappingContext)
+        {
             bool createdDatabase;
             IDictionary<string, DataTable> tableSchemas =
                 BuildDatabase(mappingContext.Tables, baseDao, out createdDatabase);
@@ -129,6 +133,11 @@ namespace Windsor.Commons.XsdOrm2.Implementations
         public virtual int DeleteAllFromDatabase(Type objectToDeleteType, SpringBaseDao baseDao, Type mappingAttributesType)
         {
             MappingContext mappingContext = MappingContext.GetMappingContext(objectToDeleteType, mappingAttributesType);
+
+            return DeleteAllFromDatabase(objectToDeleteType, baseDao, mappingContext);
+        }
+        public virtual int DeleteAllFromDatabase(Type objectToDeleteType, SpringBaseDao baseDao, MappingContext mappingContext)
+        {
             List<Table> deleteFirstFromTables = null;
             foreach (Table table in mappingContext.Tables.Values)
             {
@@ -227,8 +236,34 @@ namespace Windsor.Commons.XsdOrm2.Implementations
         public virtual Dictionary<string, int> SaveToDatabase<T>(IEnumerable<T> objectsToSave, SpringBaseDao baseDao,
                                                                  bool deleteAllBeforeSave, Type mappingAttributesType)
         {
+            return SaveToDatabase<T>(objectsToSave, baseDao, deleteAllBeforeSave, mappingAttributesType, false);
+        }
+        public virtual Dictionary<string, int> BuildAndSaveToDatabase<T>(IEnumerable<T> objectsToSave, SpringBaseDao baseDao,
+                                                                         bool deleteAllBeforeSave, Type mappingAttributesType)
+        {
+            return SaveToDatabase<T>(objectsToSave, baseDao, deleteAllBeforeSave, mappingAttributesType, true);
+        }
+        protected virtual Dictionary<string, int> SaveToDatabase<T>(IEnumerable<T> objectsToSave, SpringBaseDao baseDao,
+                                                                    bool deleteAllBeforeSave, Type mappingAttributesType,
+                                                                    bool checkToBuildDatabase)
+        {
             Type objectToSaveType = typeof(T);
             MappingContext mappingContext = MappingContext.GetMappingContext(objectToSaveType, mappingAttributesType);
+
+            if (checkToBuildDatabase)
+            {
+                BuildDatabase(objectToSaveType, baseDao, mappingContext);
+            }
+
+            BuildObjectSql(mappingContext, baseDao);
+
+            return SaveToDatabase<T>(objectsToSave, baseDao, deleteAllBeforeSave, mappingContext);
+        }
+
+        public virtual Dictionary<string, int> SaveToDatabase<T>(IEnumerable<T> objectsToSave, SpringBaseDao baseDao,
+                                                                 bool deleteAllBeforeSave, MappingContext mappingContext)
+        {
+            Type objectToSaveType = typeof(T);
 
             BuildObjectSql(mappingContext, baseDao);
 
@@ -240,7 +275,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                 {
                     if (deleteAllBeforeSave)
                     {
-                        DeleteAllFromDatabase(objectToSaveType, baseDao, mappingAttributesType);
+                        DeleteAllFromDatabase(objectToSaveType, baseDao, mappingContext);
                     }
                     CollectionUtils.ForEach(objectsToSave, delegate(T objectToSave)
                     {

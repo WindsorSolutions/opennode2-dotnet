@@ -243,7 +243,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
             return anyPopulated;
         }
         protected virtual bool PopulateInsertValues(IDbCommand command, object parentOfObjectToSave, Table parentTableOfObjectToSave,
-                                                    object objectToSave, ColumnCachedValues cachedValues, 
+                                                    object objectToSave, ColumnCachedValues cachedValues,
                                                     ICollection<SameTableElementInfo> sameTableElements)
         {
             bool anyPopulated = false;
@@ -329,6 +329,13 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                 return m_PrimaryKeyColumn;
             }
         }
+        public bool HasDefaultPrimaryKeyColumn
+        {
+            get
+            {
+                return (m_PrimaryKeyColumn is GuidPrimaryKeyColumn) && (((GuidPrimaryKeyColumn)m_PrimaryKeyColumn).MemberInfo == null);
+            }
+        }
         public ForeignKeyColumn AddFKTable(Table fkTable)
         {
             ExceptionUtils.ThrowIfTrue(fkTable == this, "fkTable == this");
@@ -351,18 +358,39 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                                     ColumnAttribute columnAttribute)
         {
             Column column;
-            if (columnAttribute is PrimaryKeyAttribute)
-            {
-                throw new MappingException("Table already has primary key");
-            }
-            else if (columnAttribute is ForeignKeyAttribute)
+            if (columnAttribute is ForeignKeyAttribute)
             {
                 throw new MappingException("Use AddFKTable() instead");
             }
             else
             {
-                column = new Column(this, member, isSpecifiedMember, columnAttribute);
-                CollectionUtils.Add(column, ref m_DataColumns);
+                if (columnAttribute is PrimaryKeyAttribute)
+                {
+                    if (!HasDefaultPrimaryKeyColumn)
+                    {
+                        throw new MappingException("Attempting to map the column \"{0}\" as the primary key for table \"{1},\" but the already has a primary key column mapped to it: \"{2}\"",
+                                                    columnAttribute.ColumnName, this.m_TableName, m_PrimaryKeyColumn.ColumnName);
+                    }
+                    if (isSpecifiedMember != null)
+                    {
+                        throw new MappingException("Attempting to map the column \"{0}\" as the primary key for table \"{1},\" but the column has an isSpecifiedMember: \"{2}\"",
+                                                    columnAttribute.ColumnName, this.m_TableName, isSpecifiedMember.Name);
+                    }
+                    if (columnAttribute is GuidPrimaryKeyAttribute)
+                    {
+                        column = new GuidPrimaryKeyColumn(this, member, columnAttribute);
+                    }
+                    else
+                    {
+                        column = new PrimaryKeyColumn(this, member, columnAttribute);
+                    }
+                    m_PrimaryKeyColumn = column as PrimaryKeyColumn;
+                }
+                else
+                {
+                    column = new Column(this, member, isSpecifiedMember, columnAttribute);
+                    CollectionUtils.Add(column, ref m_DataColumns);
+                }
                 m_AllColumns = m_DirectColumns = null;
             }
             return column;

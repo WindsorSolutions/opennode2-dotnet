@@ -310,10 +310,11 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                     ColumnAttribute columnAttribute = mappingAttribute as ColumnAttribute;
                     if (columnAttribute != null)
                     {
-                        if (mappingAttribute is PrimaryKeyAttribute)
-                        {
-                            throw new MappingException("PrimaryKeyAttribute not supported");
-                        }
+                        //DID
+                        //if (mappingAttribute is PrimaryKeyAttribute)
+                        //{
+                        //    //throw new MappingException("PrimaryKeyAttribute not supported");
+                        //}
                         if (mappingAttribute is ForeignKeyAttribute)
                         {
                             throw new MappingException("ForeignKeyAttribute not supported");

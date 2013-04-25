@@ -402,10 +402,15 @@ namespace Windsor.Commons.XsdOrm2.Implementations
         protected int m_ColumnScale;
     }
 
-    public abstract class PrimaryKeyColumn : Column
+    public class PrimaryKeyColumn : Column
     {
         public PrimaryKeyColumn(Table table, PrimaryKeyAttribute columnAttribute) :
             base(table, columnAttribute)
+        {
+            m_IsNullable = false;
+        }
+        public PrimaryKeyColumn(Table table, MemberInfo member, ColumnAttribute columnAttribute) :
+            base(table, member, null, columnAttribute)
         {
             m_IsNullable = false;
         }
@@ -440,9 +445,15 @@ namespace Windsor.Commons.XsdOrm2.Implementations
             base(table, new GuidPrimaryKeyAttribute(table.TableName + Utils.ID_NAME_POSTIFX))
         {
         }
+        public GuidPrimaryKeyColumn(Table table, MemberInfo member, ColumnAttribute columnAttribute) :
+            base(table, member, columnAttribute)
+        {
+        }
 
         public override object GetInsertColumnValue(object parentOfObjectToSave, object objectToSave, ColumnCachedValues cachedValues)
         {
+            // TODO
+            DebugUtils.CheckDebuggerBreak();
             object pkGuid;
             if (Utils.IsValidColumnType(objectToSave.GetType()))
             {
