@@ -46,6 +46,13 @@ namespace Windsor.Commons.XsdOrm2.Implementations
         public Dictionary<object, object> ObjectToPrimaryKeyMap = new Dictionary<object, object>();
     }
 
+    public enum IndexableType
+    {
+        None,
+        Indexable,
+        UniqueIndexable
+    }
+
     public class Column : MemberInfoWrapper
     {
         public static readonly DateTime MIN_VALID_DB_DATETIME = new DateTime(1800, 1, 1);
@@ -70,7 +77,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
             m_ColumnSize = columnAttribute.ColumnSize;
             m_ColumnScale = columnAttribute.ColumnScale;
             m_IsNullable = columnAttribute.IsNullable;
-            m_IsIndexable = columnAttribute.IsIndexable;
+            m_IsIndexable = columnAttribute.IsIndexable ? IndexableType.Indexable : IndexableType.None;
             m_IndexName = columnAttribute.IndexName;
             if (m_ColumnType != null)
             {
@@ -190,7 +197,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                 m_Table = value;
             }
         }
-        public bool IsIndexable
+        public IndexableType IsIndexable
         {
             get
             {
@@ -390,7 +397,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
         protected DbType? m_ColumnType;
         protected int m_ColumnSize;
         protected bool m_IsNullable;
-        protected bool m_IsIndexable;
+        protected IndexableType m_IsIndexable;
         protected bool m_NoLoad;
         protected string m_IndexName;
         protected string m_ColumnDescription;
@@ -462,6 +469,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
             }
             else
             {
+                ExceptionUtils.ThrowIfNull(cachedValues, "cachedValues");
                 if (!cachedValues.ObjectToPrimaryKeyMap.TryGetValue(objectToSave, out pkGuid))
                 {
                     pkGuid = StringUtils.CreateSequentialGuid();

@@ -191,7 +191,7 @@ namespace Windsor.Commons.Core
                 return string.Empty;
             }
         }
-        protected virtual int GetColumnIndex(string columnName)
+        public virtual int GetColumnIndex(string columnName)
         {
             int index;
             if (!m_ColumnNameToIndexMap.TryGetValue(columnName.ToUpper(), out index))

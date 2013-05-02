@@ -76,8 +76,13 @@ namespace Windsor.Commons.XsdOrm2
     {
         void BeforeSaveToDatabase();
     }
-    public interface ICanSaveToDatabase
+    public interface ISaveInfoProvider
     {
-        bool CanSaveToDatabase(IObjectsToDatabase objectsToDatabase, SpringBaseDao baseDao);
+        bool IsUpdateSave(SpringBaseDao baseDao, IMappingContext mappingContext);
+    }
+    public interface IBuildDatabaseInitValueProvider
+    {
+        IList<object> GetBuildInitValues(SpringBaseDao baseDao, IMappingContext mappingContext,
+                                         out bool deleteAllBeforeInit);
     }
 }

@@ -663,6 +663,14 @@ namespace Windsor.Commons.Core
             }
             list.AddRange(collection);
         }
+        public static void AddRangeIfNotEmpty<T>(IEnumerable<T> collection, ref List<T> list)
+        {
+            if (CollectionUtils.IsNullOrEmpty(collection))
+            {
+                return;
+            }
+            AddRange(collection, ref list);
+        }
         public static T[] Add<T>(T obj, T[] list)
         {
             T[] rtnArray = new T[CollectionUtils.Count(list) + 1];

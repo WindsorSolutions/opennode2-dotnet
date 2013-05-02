@@ -40,13 +40,15 @@ using System.Text;
 using System.Xml.Serialization;
 using System.Diagnostics;
 using System.ComponentModel;
+using System.Linq;
 using Windsor.Commons.Core;
+using Wintellect.PowerCollections;
 
 namespace Windsor.Commons.XsdOrm2.Implementations
 {
-    public class MappingContext
+    public class MappingContext : IMappingContext
     {
-        public static MappingContext GetMappingContext(Type rootType, Type mappingAttributesType)
+        internal static MappingContext GetMappingContext(Type rootType, Type mappingAttributesType)
         {
             MappingContext mappingContext = null;
             lock (s_MappingContexts)
@@ -141,7 +143,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                 DbIndexableAttribute indexableAttribute = mappingAttribute as DbIndexableAttribute;
                 if (indexableAttribute != null)
                 {
-                    newColumn.IsIndexable = true;
+                    newColumn.IsIndexable = indexableAttribute.IsUnique ? IndexableType.UniqueIndexable : IndexableType.Indexable;
                     continue;
                 }
             }
@@ -162,10 +164,23 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                 if (mappingAttribute is AdditionalCreateIndexAttribute)
                 {
                     m_AdditionalCreateIndexAttributes.Add((AdditionalCreateIndexAttribute)mappingAttribute);
-                    continue;   // Ignore, already taken care of on root element only
+                }
+                else if (mappingAttribute is AdditionalCreateIndexAttributeEx)
+                {
+                    m_AdditionalCreateIndexAttributesEx.Add((AdditionalCreateIndexAttributeEx)mappingAttribute);
+                }
+                else if (mappingAttribute is AdditionalForeignKeyAttributeEx)
+                {
+                    m_AdditionalForeignKeyAttributes.Add((AdditionalForeignKeyAttributeEx)mappingAttribute);
                 }
             }
-
+            if (typeof(IBuildDatabaseInitValueProvider).IsAssignableFrom(objType))
+            {
+                if (!m_BuildDatabaseInitValueProviderTypes.Contains(objType))
+                {
+                    m_BuildDatabaseInitValueProviderTypes.Add(objType);
+                }
+            }
             if (currentTable == null)
             {
                 string tableName = GetDefaultTableName(objType);
@@ -310,11 +325,6 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                     ColumnAttribute columnAttribute = mappingAttribute as ColumnAttribute;
                     if (columnAttribute != null)
                     {
-                        //DID
-                        //if (mappingAttribute is PrimaryKeyAttribute)
-                        //{
-                        //    //throw new MappingException("PrimaryKeyAttribute not supported");
-                        //}
                         if (mappingAttribute is ForeignKeyAttribute)
                         {
                             throw new MappingException("ForeignKeyAttribute not supported");
@@ -547,7 +557,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                 {
                     if (newColumn != null)
                     {
-                        newColumn.IsIndexable = true;
+                        newColumn.IsIndexable = dbIndexableAttribute.IsUnique ? IndexableType.UniqueIndexable : IndexableType.Indexable;
                     }
                     else
                     {
@@ -867,6 +877,19 @@ namespace Windsor.Commons.XsdOrm2.Implementations
             }
             tables = DatabaseNameShortener.ShortenDatabaseNames(tables, m_NameReplacements, m_DontUseDefaultTableNamePrefixForPKAndFKPrefix);
 
+            CollectionUtils.ForEach(tables.Values, delegate(Table table)
+            {
+                Dictionary<string, string> columnNameLookup = new Dictionary<string, string>(table.AllColumns.Count);
+                CollectionUtils.ForEach(table.AllColumns, delegate(Column column)
+                {
+                    if (columnNameLookup.ContainsKey(column.ColumnName))
+                    {
+                        throw new MappingException("The table \"{0}\" contains more than one column with the same name: {1}",
+                                                   table.TableName, column.ColumnName);
+                    }
+                    columnNameLookup[column.ColumnName] = column.ColumnName;
+                });
+            });
             CollectionUtils.ForEach(m_AdditionalCreateIndexAttributes, delegate(AdditionalCreateIndexAttribute attr)
             {
                 Table table;
@@ -884,6 +907,79 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                                                    attr.ParentTable, colName);
                     }
                 });
+            });
+            CollectionUtils.ForEach(m_AdditionalCreateIndexAttributesEx, delegate(AdditionalCreateIndexAttributeEx attr)
+            {
+                IList<string> memberNames = StringUtils.SplitAndReallyRemoveEmptyEntries(attr.CommaSeparatedMembers, ',');
+                if (CollectionUtils.IsNullOrEmpty(memberNames))
+                {
+                    throw new MappingException("The AdditionalCreateIndexAttributeEx attribute is missing member names: {0}",
+                                               attr.ToString());
+                }
+                MultiDictionary<string, string> foundTablesAndColumns = new MultiDictionary<string, string>(false);
+                int addedColumnCount = 0;
+                foreach (Table table in m_Tables.Values)
+                {
+                    foreach (string memberName in memberNames)
+                    {
+                        IList<Column> columns = table.TryGetColumns(attr.ClassType, memberName);
+                        CollectionUtils.ForEach(columns, delegate(Column column)
+                        {
+                            foundTablesAndColumns[column.Table.TableName].Add(column.ColumnName);
+                            addedColumnCount++;
+                        });
+                    }
+                }
+                if (addedColumnCount != memberNames.Count)
+                {
+                    throw new MappingException("Failed to find all matching columns for the AdditionalCreateIndexAttributeEx: {0}",
+                                               attr.ToString());
+                }
+                foreach (KeyValuePair<string, ICollection<string>> tableColumnsPair in foundTablesAndColumns)
+                {
+                    string columnNames = StringUtils.Join(",", tableColumnsPair.Value);
+                    m_AdditionalCreateIndexAttributes.Add(new AdditionalCreateIndexAttribute(tableColumnsPair.Key, columnNames, attr.IsUnique));
+                }
+            });
+            CollectionUtils.ForEach(m_AdditionalForeignKeyAttributes, delegate(AdditionalForeignKeyAttributeEx attr)
+            {
+                List<KeyValuePair<string, string>> childTableColumnPairs = null;
+                foreach (Table table in m_Tables.Values)
+                {
+                    IList<Column> columns = table.TryGetColumns(attr.ParentType, attr.ParentMember);
+                    if (!CollectionUtils.IsNullOrEmpty(columns))
+                    {
+                        if (attr.ParentTableName != null)
+                        {
+                            throw new MappingException("Found more than one parent table (\"{0}\") that applies to the AdditionalForeignKeyAttributeEx: {1}",
+                                                       table.TableName, attr.ToString());
+                        }
+                        if (columns.Count > 1)
+                        {
+                            throw new MappingException("Found more than one parent table column (\"{0}\") that applies to the AdditionalForeignKeyAttributeEx: {1}",
+                                                       StringUtils.JoinCommaEnglish(columns.Select(c => c.ColumnName)), attr.ToString());
+                        }
+                        attr.ParentTableName = table.TableName;
+                        attr.ParentColumnName = columns[0].ColumnName;
+                    }
+                    columns = table.TryGetColumns(attr.ChildType, attr.ChildMember);
+                    CollectionUtils.ForEach(columns, delegate(Column childColumn)
+                    {
+                        CollectionUtils.Add(new KeyValuePair<string, string>(table.TableName, childColumn.ColumnName),
+                                            ref childTableColumnPairs);
+                    });
+                }
+                if (attr.ParentTableName == null)
+                {
+                    throw new MappingException("Failed to find a parent table that applies to the AdditionalForeignKeyAttributeEx: {0}",
+                                               attr.ToString());
+                }
+                if (childTableColumnPairs == null)
+                {
+                    throw new MappingException("Failed to find a child table that applies to the AdditionalForeignKeyAttributeEx: {0}",
+                                               attr.ToString());
+                }
+                attr.ChildTableColumnPairs = childTableColumnPairs;
             });
 
             return tables;
@@ -976,7 +1072,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
             Column column = table.AddDataColumn(member, isSpecifiedMember, columnAttribute);
             return column;
         }
-        public IDictionary<string, Table> Tables
+        internal IDictionary<string, Table> Tables
         {
             get
             {
@@ -987,7 +1083,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
         {
             return ReflectionUtils.GetPublicPropertiesString(this);
         }
-        public string DefaultDecimalCreateString
+        internal string DefaultDecimalCreateString
         {
             get
             {
@@ -998,7 +1094,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                 m_DefaultDecimalCreateString = value;
             }
         }
-        public string DefaultFloatCreateString
+        internal string DefaultFloatCreateString
         {
             get
             {
@@ -1009,7 +1105,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                 m_DefaultFloatCreateString = value;
             }
         }
-        public string DefaultDoubleCreateString
+        internal string DefaultDoubleCreateString
         {
             get
             {
@@ -1020,7 +1116,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                 m_DefaultDoubleCreateString = value;
             }
         }
-        public string DefaultTableNamePrefix
+        internal string DefaultTableNamePrefix
         {
             get
             {
@@ -1061,10 +1157,31 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                 {
                     m_AdditionalCreateIndexAttributes.Add((AdditionalCreateIndexAttribute)mappingAttribute);
                 }
+                else if (mappingAttribute is AdditionalForeignKeyAttributeEx)
+                {
+                    m_AdditionalForeignKeyAttributes.Add((AdditionalForeignKeyAttributeEx)mappingAttribute);
+                }
+                else if (mappingAttribute is AdditionalCreateIndexAttributeEx)
+                {
+                    m_AdditionalCreateIndexAttributesEx.Add((AdditionalCreateIndexAttributeEx)mappingAttribute);
+                }
+                else if (mappingAttribute is AdditionalTopLevelTypeAttribute)
+                {
+                    m_AdditionalTopLevelTypes.Add(((AdditionalTopLevelTypeAttribute)mappingAttribute).AdditionalType);
+                }
             }
             m_Tables = new Dictionary<string, Table>();
             ConstructTableMappings(rootType, null, null, null, null, m_Tables, true, null);
+            foreach (Type additionalType in m_AdditionalTopLevelTypes)
+            {
+                ConstructTableMappings(additionalType, null, null, null, null, m_Tables, true, null);
+            }
             m_Tables = ValidateTables(m_Tables);
+            m_TypeToTable = new Dictionary<Type, Table>(m_Tables.Count);
+            foreach (Table table in m_Tables.Values)
+            {
+                m_TypeToTable.Add(table.TableRootType, table);
+            }
         }
         protected virtual List<KeyValuePair<string, string>> ConstructNameReplacements(Type rootType)
         {
@@ -1337,7 +1454,14 @@ namespace Windsor.Commons.XsdOrm2.Implementations
             }
             else if (appliedAttribute.MappedAttributeType == typeof(DbIndexableAttribute))
             {
-                mappingAttribute = new DbIndexableAttribute();
+                bool isIndexable = false;
+                int count = CollectionUtils.Count(appliedAttribute.Args);
+                ExceptionUtils.ThrowIfFalse(count <= 1);
+                if (count == 1)
+                {
+                    isIndexable = (bool)appliedAttribute.Args[0];
+                }
+                mappingAttribute = new DbIndexableAttribute(isIndexable);
             }
             else if (appliedAttribute.MappedAttributeType == typeof(DbNullAttribute))
             {
@@ -1419,6 +1543,16 @@ namespace Windsor.Commons.XsdOrm2.Implementations
             {
                 mappingAttribute = new GuidForeignKeyAttribute();
             }
+            else if (appliedAttribute.MappedAttributeType == typeof(PrimaryKeyAttribute))
+            {
+                mappingAttribute = new PrimaryKeyAttribute();
+            }
+            else if (appliedAttribute.MappedAttributeType == typeof(DbColumnScaleAttribute))
+            {
+                int count = CollectionUtils.Count(appliedAttribute.Args);
+                ExceptionUtils.ThrowIfFalse(count == 2);
+                mappingAttribute = new DbColumnScaleAttribute(appliedAttribute.Args[0].ToString(), appliedAttribute.Args[1].ToString());
+            }
             else
             {
                 throw new NotImplementedException(string.Format("attribute.MappedAttributeType arg is not implemented: {0}",
@@ -1426,38 +1560,37 @@ namespace Windsor.Commons.XsdOrm2.Implementations
             }
             return mappingAttribute;
         }
-        public string GetTableNameForType(Type objectType)
+        public virtual string GetTableNameForType(Type objectType)
         {
             Table table = GetTableForType(objectType);
             return table.TableName;
         }
-        public object GetPrimaryKeyValueForObject(object obj)
+        public virtual object GetPrimaryKeyValueForObject(object obj)
         {
             Table table = GetTableForType(obj.GetType());
-            return table.PrimaryKey;
+            return table.PrimaryKey.GetInsertColumnValue(null, obj, null);
         }
-        public string GetPrimaryKeyNameForType(Type objectType)
+        public virtual string GetPrimaryKeyNameForType(Type objectType)
         {
             Table table = GetTableForType(objectType);
             return table.PrimaryKey.ColumnName;
         }
-        public Table GetTableForType(Type objectType)
+        internal Table GetTableForType(Type objectType)
         {
-            if (m_Tables == null)
+            if (m_TypeToTable == null)
             {
                 throw new MappingException("No tables are defined");
             }
-            foreach (Table table in m_Tables.Values)
+            Table table;
+            if (!m_TypeToTable.TryGetValue(objectType, out table))
             {
-                if (table.TableRootType == objectType)
-                {
-                    return table;
-                }
+                throw new MappingException("Could not find table for type \"{0}\"", objectType.FullName);
             }
-            throw new MappingException("Could not find table for type \"{0}\"", objectType.FullName);
+            return table;
         }
         private const string DATA_TYPE_STR = "DataType";
         private IDictionary<string, Table> m_Tables = new Dictionary<string, Table>();
+        private IDictionary<Type, Table> m_TypeToTable = new Dictionary<Type, Table>();
         private List<KeyValuePair<string, string>> m_NameReplacements = null;
         private static Dictionary<Type, MappingContext> s_MappingContexts = new Dictionary<Type, MappingContext>();
         private DefaultStringDbValuesAttribute m_DefaultStringDbValues;
@@ -1474,17 +1607,35 @@ namespace Windsor.Commons.XsdOrm2.Implementations
         private bool m_UseExactElementNameForTableName;
         private IList<string> m_RemovePostfixNamesFromTableAndColumnNames;
         private List<AdditionalCreateIndexAttribute> m_AdditionalCreateIndexAttributes = new List<AdditionalCreateIndexAttribute>();
+        private List<AdditionalForeignKeyAttributeEx> m_AdditionalForeignKeyAttributes = new List<AdditionalForeignKeyAttributeEx>();
+        private List<AdditionalCreateIndexAttributeEx> m_AdditionalCreateIndexAttributesEx = new List<AdditionalCreateIndexAttributeEx>();
+        private List<Type> m_AdditionalTopLevelTypes = new List<Type>();
         private Dictionary<Type, Type> m_CustomXmlStringFormatTypeBaseMap = new Dictionary<Type, Type>();
+        private List<Type> m_BuildDatabaseInitValueProviderTypes = new List<Type>();
 
-        public List<AdditionalCreateIndexAttribute> AdditionalCreateIndexAttributes
+        internal List<AdditionalCreateIndexAttribute> AdditionalCreateIndexAttributes
         {
             get
             {
                 return m_AdditionalCreateIndexAttributes;
             }
         }
+        internal List<AdditionalForeignKeyAttributeEx> AdditionalForeignKeyAttributes
+        {
+            get
+            {
+                return m_AdditionalForeignKeyAttributes;
+            }
+        }
+        internal List<Type> BuildDatabaseInitValueProviderTypes
+        {
+            get
+            {
+                return m_BuildDatabaseInitValueProviderTypes;
+            }
+        }
 
-        public IList<string> RemovePostfixNamesFromTableAndColumnNames
+        internal IList<string> RemovePostfixNamesFromTableAndColumnNames
         {
             get
             {
@@ -1495,7 +1646,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                 m_RemovePostfixNamesFromTableAndColumnNames = value;
             }
         }
-        public bool UseExactElementNameForTableName
+        internal bool UseExactElementNameForTableName
         {
             get
             {
@@ -1507,7 +1658,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
             }
         }
 
-        public bool FixShortenNameBreakBug
+        internal bool FixShortenNameBreakBug
         {
             get
             {
@@ -1515,7 +1666,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
             }
         }
 
-        public bool ShortenNamesByRemovingVowelsFirst
+        internal bool ShortenNamesByRemovingVowelsFirst
         {
             get
             {

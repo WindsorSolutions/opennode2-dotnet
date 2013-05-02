@@ -123,6 +123,11 @@ namespace Windsor.Commons.XsdOrm2.Implementations
             get;
             set;
         }
+        public string UpdateSql
+        {
+            get;
+            set;
+        }
         public ICollection<ChildRelationInfo> ChildRelationMembers
         {
             get;
@@ -179,6 +184,74 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                 return m_DirectColumns;
             }
         }
+        public IList<Column> TryGetColumns(Type elementType, string elementMemberName)
+        {
+            List<Column> columns = TryGetColumnsSelf(elementType, elementMemberName);
+
+            if (IsVirtualTable && (CollectionUtils.Count(DataColumns) == 1))
+            {
+                // If this is a virtual table (i.e., representing a string[], for example), we need to check
+                // if this table represents columns/fields that are really part of the parent table
+                CollectionUtils.ForEach(ForeignKeys, delegate(ForeignKeyColumn fkColumn)
+                {
+                    if ((fkColumn.ForeignTable != null) && (fkColumn.ForeignTable.TableRootType == elementType))
+                    {
+                        ChildRelationInfo ftChildRelationInfo = null;
+                        CollectionUtils.ForEachBreak(fkColumn.ForeignTable.ChildRelationMembers, delegate(ChildRelationInfo childRelationInfo)
+                        {
+                            if (childRelationInfo.ChildTable == this)
+                            {
+                                ftChildRelationInfo = childRelationInfo;
+                                return false;
+                            }
+                            return true;
+                        });
+                        if ((ftChildRelationInfo != null) && (ftChildRelationInfo.MemberInfo != null) &&
+                            (ftChildRelationInfo.MemberInfo.DeclaringType == elementType) &&
+                            (ftChildRelationInfo.MemberInfo.Name == elementMemberName))
+                        {
+                            CollectionUtils.Add(DataColumns[0], ref columns);
+                        }
+                    }
+                });
+            }
+            return columns;
+        }
+        protected List<Column> TryGetColumnsSelf(Type elementType, string elementMemberName)
+        {
+            List<Column> columns = null;
+            foreach (Column checkColumn in AllColumns)
+            {
+                if (checkColumn.MemberInfo != null)
+                {
+                    if ((checkColumn.MemberInfo.DeclaringType == elementType) && (checkColumn.MemberInfo.Name == elementMemberName))
+                    {
+                        CollectionUtils.Add(checkColumn, ref columns);
+                    }
+                }
+                else if (TableRootType == elementType)
+                {
+                    if (checkColumn is ForeignKeyColumn)
+                    {
+                        ForeignKeyColumn foreignKeyColumn = (ForeignKeyColumn)checkColumn;
+                        Column foundColumn;
+                        if (foreignKeyColumn.ForeignTable.TryGetColumn(foreignKeyColumn.ColumnName, out foundColumn))
+                        {
+                            if ((foundColumn.MemberInfo != null) && (foundColumn.MemberInfo.Name == elementMemberName))
+                            {
+                                CollectionUtils.Add(checkColumn, ref columns);
+                            }
+                        }
+                    }
+                    else if (checkColumn is PrimaryKeyColumn)
+                    {
+                        // Not done yet
+                        PrimaryKeyColumn primaryKeyColumn = (PrimaryKeyColumn)checkColumn;
+                    }
+                }
+            }
+            return columns;
+        }
         public bool TryGetColumn(string columnName, out Column column)
         {
             foreach (Column checkColumn in AllColumns)
@@ -196,13 +269,26 @@ namespace Windsor.Commons.XsdOrm2.Implementations
         {
             List<string> columnNames = new List<string>(AllColumns.Count);
             List<string> columnParamNames = new List<string>(AllColumns.Count);
+            List<string> updateColumnNames = new List<string>(AllColumns.Count);
+            string pkColumnName = null, pkColumnParamName = null;
 
             foreach (Column column in AllColumns)
             {
                 if (!column.NoLoad)
                 {
+                    string columnParamName = baseDao.DbProvider.CreateParameterName(column.ColumnName);
                     columnNames.Add(column.ColumnName);
-                    columnParamNames.Add(baseDao.DbProvider.CreateParameterName(column.ColumnName));
+                    columnParamNames.Add(columnParamName);
+                    if (column == m_PrimaryKeyColumn)
+                    {
+                        pkColumnName = column.ColumnName;
+                        pkColumnParamName = columnParamName;
+                    }
+                    else
+                    {
+                        //updateColumnNames.Add(column.ColumnName + "=" + columnParamName);
+                    }
+                    updateColumnNames.Add(column.ColumnName + "=" + columnParamName);
                 }
             }
             if (columnNames.Count > 0)
@@ -213,36 +299,41 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                                                     TableName, columnNameStr,
                                                     columnParamNamesStr);
                 SelectSql = string.Format("SELECT {0} FROM {1}", columnNameStr, TableName);
+                string updateColumnNameStr = StringUtils.Join(",", updateColumnNames);
+                UpdateSql = string.Format("UPDATE {0} SET {1} WHERE {2} = {3}", TableName, updateColumnNameStr,
+                                          pkColumnName, pkColumnParamName);
             }
             else
             {
                 InsertSql = null;
                 SelectSql = null;
+                UpdateSql = null;
             }
         }
-        public virtual bool PopulateInsertValues(IDbCommand command, object parentOfObjectToSave, Table parentTableOfObjectToSave,
-                                                 object objectToSave, ColumnCachedValues cachedValues)
+        public virtual bool PopulateSaveValues(IDbCommand command, bool isUpdate, object parentOfObjectToSave, Table parentTableOfObjectToSave,
+                                               object objectToSave, ColumnCachedValues cachedValues)
         {
             bool anyPopulated = false;
 
-            if (!string.IsNullOrEmpty(InsertSql))
+            command.CommandText = isUpdate ? UpdateSql : InsertSql;
+
+            if (!string.IsNullOrEmpty(command.CommandText))
             {
-                command.CommandText = InsertSql;
                 command.CommandType = CommandType.Text;
                 command.Parameters.Clear();
 
-                if (PopulateInsertValues(command, parentOfObjectToSave, parentTableOfObjectToSave, objectToSave, cachedValues, DirectColumns))
+                if (PopulateSaveValues(command, parentOfObjectToSave, parentTableOfObjectToSave, objectToSave, cachedValues, DirectColumns))
                 {
                     anyPopulated = true;
                 }
-                if (PopulateInsertValues(command, parentOfObjectToSave, parentTableOfObjectToSave, objectToSave, cachedValues, m_ChildSameTableElements))
+                if (PopulateSaveValues(command, parentOfObjectToSave, parentTableOfObjectToSave, objectToSave, cachedValues, m_ChildSameTableElements))
                 {
                     anyPopulated = true;
                 }
             }
             return anyPopulated;
         }
-        protected virtual bool PopulateInsertValues(IDbCommand command, object parentOfObjectToSave, Table parentTableOfObjectToSave,
+        protected virtual bool PopulateSaveValues(IDbCommand command, object parentOfObjectToSave, Table parentTableOfObjectToSave,
                                                     object objectToSave, ColumnCachedValues cachedValues,
                                                     ICollection<SameTableElementInfo> sameTableElements)
         {
@@ -254,13 +345,13 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                 {
                     object objectInstance = sameTableElementInfo.GetMemberValue(objectToSave);
 
-                    if (PopulateInsertValues(command, objectToSave, parentTableOfObjectToSave, objectInstance, cachedValues,
-                                             sameTableElementInfo.DirectColumns))
+                    if (PopulateSaveValues(command, objectToSave, parentTableOfObjectToSave, objectInstance, cachedValues,
+                                           sameTableElementInfo.DirectColumns))
                     {
                         anyPopulated = true;
                     }
-                    if (PopulateInsertValues(command, objectToSave, parentTableOfObjectToSave, objectInstance, cachedValues,
-                                             sameTableElementInfo.ChildSameTableElements))
+                    if (PopulateSaveValues(command, objectToSave, parentTableOfObjectToSave, objectInstance, cachedValues,
+                                           sameTableElementInfo.ChildSameTableElements))
                     {
                         anyPopulated = true;
                     }
@@ -268,8 +359,8 @@ namespace Windsor.Commons.XsdOrm2.Implementations
             }
             return anyPopulated;
         }
-        protected virtual bool PopulateInsertValues(IDbCommand command, object parentOfObjectToSave, Table parentTableOfObjectToSave,
-                                                    object objectToSave, ColumnCachedValues cachedValues, ICollection<Column> columns)
+        protected virtual bool PopulateSaveValues(IDbCommand command, object parentOfObjectToSave, Table parentTableOfObjectToSave,
+                                                  object objectToSave, ColumnCachedValues cachedValues, ICollection<Column> columns)
         {
             bool anyPopulated = false;
 

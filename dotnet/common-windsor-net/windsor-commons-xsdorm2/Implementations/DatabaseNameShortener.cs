@@ -121,7 +121,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
 
                 foreach (Column column in table.AllColumns)
                 {
-                    if (!column.IsPrimaryKey && !column.IsForeignKey)
+                    if (!(column.IsPrimaryKey && table.HasDefaultPrimaryKeyColumn) && !column.IsForeignKey)
                     {
                         nameWrapper = AddNameToUniqueStrings(column.ColumnName, dontShortenStrings, uniqueStrings);
                         columnNames.Add(column, nameWrapper);
@@ -167,7 +167,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                 table.TableName = ReplaceNames(table.TableName, nameReplacements);
                 foreach (Column column in table.AllColumns)
                 {
-                    if (!column.IsPrimaryKey && !column.IsForeignKey)
+                    if (!(column.IsPrimaryKey && table.HasDefaultPrimaryKeyColumn) && !column.IsForeignKey)
                     {
                         column.ColumnName = ReplaceNames(column.ColumnName, nameReplacements);
                     }
