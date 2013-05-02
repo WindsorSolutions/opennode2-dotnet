@@ -11,11 +11,12 @@ using System.ComponentModel;
 using System.IO;
 using Windsor.Commons.Core;
 
-namespace Windsor.Commons.XsdOrm2.Implementations
+namespace Windsor.Commons.XsdOrm3.Implementations
 {
     public static class DatabaseNameShortener
     {
-        public static IDictionary<string, Table> ShortenDatabaseNames(IDictionary<string, Table> tables, List<KeyValuePair<string, string>> nameReplacements)
+        public static IDictionary<string, Table> ShortenDatabaseNames(IDictionary<string, Table> tables, List<KeyValuePair<string, string>> nameReplacements,
+                                                                      string dontUseDefaultTableNamePrefixForPKAndFKPrefix)
         {
 #if SHORTEN_NAMES
             ReplaceDatabaseNames(tables, nameReplacements);
@@ -48,7 +49,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
             }
 #endif // SHORTEN_NAMES
 
-            ResetPrimaryKeys(tables);
+            ResetPrimaryKeys(tables, dontUseDefaultTableNamePrefixForPKAndFKPrefix);
 
             SortedDictionary<string, Table> newTables = new SortedDictionary<string, Table>();
             foreach (Table table in tables.Values)
@@ -57,7 +58,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
             }
             return newTables;
         }
-        private static void ShortenNames(ICollection<NameWrapper> names, int maxNumChars) 
+        private static void ShortenNames(ICollection<NameWrapper> names, int maxNumChars)
         {
             if (CollectionUtils.IsNullOrEmpty(names))
             {
@@ -120,7 +121,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
 
                 foreach (Column column in table.AllColumns)
                 {
-                    if (!column.IsPrimaryKey && !column.IsForeignKey)
+                    if (!(column.IsPrimaryKey && table.HasDefaultPrimaryKeyColumn) && !column.IsForeignKey)
                     {
                         nameWrapper = AddNameToUniqueStrings(column.ColumnName, dontShortenStrings, uniqueStrings);
                         columnNames.Add(column, nameWrapper);
@@ -166,18 +167,32 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                 table.TableName = ReplaceNames(table.TableName, nameReplacements);
                 foreach (Column column in table.AllColumns)
                 {
-                    if (!column.IsPrimaryKey && !column.IsForeignKey)
+                    if (!(column.IsPrimaryKey && table.HasDefaultPrimaryKeyColumn) && !column.IsForeignKey)
                     {
                         column.ColumnName = ReplaceNames(column.ColumnName, nameReplacements);
                     }
                 }
             }
         }
-        private static void ResetPrimaryKeys(IDictionary<string, Table> tables)
+        private static void ResetPrimaryKeys(IDictionary<string, Table> tables, string dontUseDefaultTableNamePrefixForPKAndFKPrefix)
         {
+            if (!string.IsNullOrEmpty(dontUseDefaultTableNamePrefixForPKAndFKPrefix))
+            {
+                dontUseDefaultTableNamePrefixForPKAndFKPrefix += Utils.NAME_SEPARATOR_CHAR.ToString();
+            }
             foreach (Table table in tables.Values)
             {
-                table.PrimaryKey.ColumnName = table.TableName + Utils.ID_NAME_POSTIFX;
+                if (table.HasDefaultPrimaryKeyColumn)
+                {
+                    table.PrimaryKey.ColumnName = table.TableName + Utils.ID_NAME_POSTIFX;
+                    if (!string.IsNullOrEmpty(dontUseDefaultTableNamePrefixForPKAndFKPrefix) &&
+                        (table.PrimaryKey.ColumnName.IndexOf(dontUseDefaultTableNamePrefixForPKAndFKPrefix, StringComparison.OrdinalIgnoreCase) == 0))
+                    {
+                        table.PrimaryKey.ColumnName =
+                            table.PrimaryKey.ColumnName.Substring(dontUseDefaultTableNamePrefixForPKAndFKPrefix.Length,
+                                                                  table.PrimaryKey.ColumnName.Length - dontUseDefaultTableNamePrefixForPKAndFKPrefix.Length);
+                    }
+                }
                 // TSM: Foreign keys already reference foreignKeyColumn.ForeignTable.PrimaryKey.ColumnType in their properties
                 //foreach (ForeignKeyColumn foreignKeyColumn in table.ForeignKeys)
                 //{
@@ -189,9 +204,9 @@ namespace Windsor.Commons.XsdOrm2.Implementations
         {
             foreach (KeyValuePair<string, string> pair in nameReplacements)
             {
-                name = name.Replace(Utils.NAME_SEPARATOR + pair.Key + Utils.NAME_SEPARATOR, 
+                name = name.Replace(Utils.NAME_SEPARATOR + pair.Key + Utils.NAME_SEPARATOR,
                                     Utils.NAME_SEPARATOR + pair.Value + Utils.NAME_SEPARATOR);
-                if ( name.StartsWith(pair.Key + Utils.NAME_SEPARATOR) )
+                if (name.StartsWith(pair.Key + Utils.NAME_SEPARATOR))
                 {
                     name = pair.Value + name.Substring(pair.Key.Length);
                 }
@@ -340,7 +355,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                     throw new MappingException("The database name cannot be shortened enough: {0}", OriginalName);
                 }
                 string[] newStrings = shortenedName.Split(Utils.NAME_SEPARATOR_CHAR);
-                if ( newStrings.Length != stringsToShorten.Count )
+                if (newStrings.Length != stringsToShorten.Count)
                 {
                     throw new MappingException("Error occurred shortening string: {0}", OriginalName);
                 }

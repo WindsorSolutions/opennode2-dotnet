@@ -38,9 +38,9 @@ using System.Data;
 using System.Xml.Serialization;
 using System.ComponentModel;
 using Windsor.Commons.Core;
-using Windsor.Commons.XsdOrm2.Implementations;
+using Windsor.Commons.XsdOrm3.Implementations;
 
-namespace Windsor.Commons.XsdOrm2
+namespace Windsor.Commons.XsdOrm3
 {
     public enum DeleteRule
     {
@@ -315,6 +315,35 @@ namespace Windsor.Commons.XsdOrm2
         }
         private string m_Prefix;
     }
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Assembly)]
+    public class DontUseDefaultTableNamePrefixForPKAndFKAttribute : MappingAttribute
+    {
+        public override string GetShortDescription()
+        {
+            return "DontUseDefaultTableNamePrefixForPKAndFK";
+        }
+    }
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Assembly, AllowMultiple = true)]
+    public class AdditionalTopLevelTypeAttribute : MappingAttribute
+    {
+        public AdditionalTopLevelTypeAttribute(Type type)
+        {
+            m_AdditionalType = type;
+        }
+        public override string GetShortDescription()
+        {
+            return string.Format("{0}: {1}", this.GetType().Name, m_AdditionalType.Name);
+        }
+        public Type AdditionalType
+        {
+            get
+            {
+                return m_AdditionalType;
+            }
+        }
+        private Type m_AdditionalType;
+    }
+
     public abstract class BaseAppliedAttribute : MappingAttribute
     {
         public BaseAppliedAttribute(Type mappedAttributeType, params object[] args)
@@ -637,13 +666,14 @@ namespace Windsor.Commons.XsdOrm2
     /// enclosing table.  See subclasses for possible attributes that can be instantiated.
     /// </summary>
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
-    public abstract class PrimaryKeyAttribute : ColumnAttribute
+    public class PrimaryKeyAttribute : ColumnAttribute
     {
-        internal PrimaryKeyAttribute()
-        {
-        }
         public PrimaryKeyAttribute(string columnName, DbType columnType, int columnSize) :
             base(columnName, columnType, columnSize, false)
+        {
+        }
+        public PrimaryKeyAttribute() :
+            base(false)
         {
         }
         public override string GetShortDescription()
@@ -959,9 +989,22 @@ namespace Windsor.Commons.XsdOrm2
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
     public class DbIndexableAttribute : MappingAttribute
     {
+        public DbIndexableAttribute()
+        {
+            IsUnique = false;
+        }
+        public DbIndexableAttribute(bool isUnique)
+        {
+            IsUnique = isUnique;
+        }
         public override string GetShortDescription()
         {
             return "Indexable";
+        }
+        public bool IsUnique
+        {
+            get;
+            set;
         }
     }
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
@@ -1077,6 +1120,102 @@ namespace Windsor.Commons.XsdOrm2
             {
                 return m_IsUnique;
             }
+        }
+    }
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Assembly, AllowMultiple = true)]
+    public class AdditionalCreateIndexAttributeEx : MappingAttribute
+    {
+        public AdditionalCreateIndexAttributeEx(Type classType, string commaSeparatedMembers, bool isUnique)
+        {
+            ClassType = classType;
+            CommaSeparatedMembers = commaSeparatedMembers;
+            IsUnique = isUnique;
+        }
+        public override string GetShortDescription()
+        {
+            return string.Format("{0}.{1} ({2})", ClassType, CommaSeparatedMembers, IsUnique);
+        }
+        public Type ClassType
+        {
+            get;
+            set;
+        }
+        public string CommaSeparatedMembers
+        {
+            get;
+            set;
+        }
+        public bool IsUnique
+        {
+            get;
+            set;
+        }
+    }
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Assembly, AllowMultiple = true)]
+    public class AdditionalForeignKeyAttributeEx : MappingAttribute
+    {
+        public AdditionalForeignKeyAttributeEx(Type parentType, string parentMember, Type childType, string childMember)
+        {
+            ParentType = parentType;
+            ParentMember = parentMember;
+            ChildType = childType;
+            ChildMember = childMember;
+            DeleteRule = DeleteRule.None;
+            UpdateRule = UpdateRule.Cascade;
+        }
+        public override string GetShortDescription()
+        {
+            return ToString();
+        }
+        public override string ToString()
+        {
+            return string.Format("Parent ({0}.{1}) <-- Child ({2}.{3})", ParentType.Name, ParentMember,
+                                 ChildType.Name, ChildMember);
+        }
+        public Type ParentType
+        {
+            get;
+            set;
+        }
+        public string ParentMember
+        {
+            get;
+            set;
+        }
+        public Type ChildType
+        {
+            get;
+            set;
+        }
+        public string ChildMember
+        {
+            get;
+            set;
+        }
+        public DeleteRule DeleteRule
+        {
+            get;
+            set;
+        }
+        public UpdateRule UpdateRule
+        {
+            get;
+            set;
+        }
+        internal string ParentTableName
+        {
+            get;
+            set;
+        }
+        internal string ParentColumnName
+        {
+            get;
+            set;
+        }
+        internal List<KeyValuePair<string, string>> ChildTableColumnPairs
+        {
+            get;
+            set;
         }
     }
 }

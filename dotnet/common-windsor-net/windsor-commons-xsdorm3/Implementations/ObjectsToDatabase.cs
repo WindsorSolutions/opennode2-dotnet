@@ -40,7 +40,7 @@ using Spring.Data.Common;
 using System.Collections.Generic;
 using System.Collections;
 using System.Threading;
-using Windsor.Commons.XsdOrm2;
+using Windsor.Commons.XsdOrm3;
 using Windsor.Commons.Core;
 using Windsor.Commons.Spring;
 using Spring.Data;
@@ -48,7 +48,7 @@ using Spring.Transaction;
 using Spring.Data.Support;
 using Spring.Dao;
 
-namespace Windsor.Commons.XsdOrm2.Implementations
+namespace Windsor.Commons.XsdOrm3.Implementations
 {
     public class ObjectsToDatabase : ObjectsDatabaseBase, IObjectsToDatabase
     {
@@ -98,11 +98,28 @@ namespace Windsor.Commons.XsdOrm2.Implementations
         {
             MappingContext mappingContext = MappingContext.GetMappingContext(objectToSaveType, mappingAttributesType);
 
+            BuildDatabase(objectToSaveType, baseDao, mappingContext);
+        }
+        public virtual void BuildDatabase(Type objectToSaveType, SpringBaseDao baseDao, MappingContext mappingContext)
+        {
             bool createdDatabase;
             IDictionary<string, DataTable> tableSchemas =
                 BuildDatabase(mappingContext.Tables, baseDao, out createdDatabase);
 
             BuildTables(tableSchemas, mappingContext, baseDao, createdDatabase);
+
+            foreach (Type buildDatabaseInitValueProviderType in mappingContext.BuildDatabaseInitValueProviderTypes)
+            {
+                IBuildDatabaseInitValueProvider buildDatabaseInitValueProvider =
+                    ((IBuildDatabaseInitValueProvider)Activator.CreateInstance(buildDatabaseInitValueProviderType));
+                bool deleteAllBeforeInit;
+                IList<object> buildInitValues =
+                    buildDatabaseInitValueProvider.GetBuildInitValues(baseDao, mappingContext, out deleteAllBeforeInit);
+                if (!CollectionUtils.IsNullOrEmpty(buildInitValues))
+                {
+                    SaveToDatabase(buildInitValues, baseDao, deleteAllBeforeInit, mappingContext);
+                }
+            }
         }
         public virtual string GetTableNameForType(Type objectType, Type mappingAttributesType)
         {
@@ -129,6 +146,11 @@ namespace Windsor.Commons.XsdOrm2.Implementations
         public virtual int DeleteAllFromDatabase(Type objectToDeleteType, SpringBaseDao baseDao, Type mappingAttributesType)
         {
             MappingContext mappingContext = MappingContext.GetMappingContext(objectToDeleteType, mappingAttributesType);
+
+            return DeleteAllFromDatabase(objectToDeleteType, baseDao, mappingContext);
+        }
+        public virtual int DeleteAllFromDatabase(Type objectToDeleteType, SpringBaseDao baseDao, MappingContext mappingContext)
+        {
             List<Table> deleteFirstFromTables = null;
             foreach (Table table in mappingContext.Tables.Values)
             {
@@ -194,6 +216,12 @@ namespace Windsor.Commons.XsdOrm2.Implementations
         }
         public virtual Dictionary<string, int> SaveToDatabase(object objectToSave, SpringBaseDao baseDao, Type mappingAttributesType)
         {
+            Dictionary<string, int> updateRowCounts;
+            return SaveToDatabase(objectToSave, baseDao, mappingAttributesType, out updateRowCounts);
+        }
+        public virtual Dictionary<string, int> SaveToDatabase(object objectToSave, SpringBaseDao baseDao, Type mappingAttributesType,
+                                                              out Dictionary<string, int> updateRowCounts)
+        {
             Type objectToSaveType = objectToSave.GetType();
             MappingContext mappingContext = MappingContext.GetMappingContext(objectToSaveType, mappingAttributesType);
 
@@ -206,6 +234,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
             }
 
             Dictionary<string, int> insertRowCounts = new Dictionary<string, int>();
+            Dictionary<string, int> updateRowCountsLocal = new Dictionary<string, int>();
 
             baseDao.TransactionTemplate.Execute(delegate
             {
@@ -213,11 +242,12 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                 {
                     ColumnCachedValues cachedValues = new ColumnCachedValues();
                     SaveToDatabase(null, objectToSave, null, cachedValues, mappingContext,
-                                   insertRowCounts, command);
+                                   insertRowCounts, command, baseDao, updateRowCountsLocal);
                     return null;
                 });
                 return null;
             });
+            updateRowCounts = updateRowCountsLocal;
             return insertRowCounts;
         }
         public virtual Dictionary<string, int> SaveToDatabase<T>(IEnumerable<T> objectsToSave, bool deleteAllBeforeSave, Type mappingAttributesType)
@@ -227,12 +257,35 @@ namespace Windsor.Commons.XsdOrm2.Implementations
         public virtual Dictionary<string, int> SaveToDatabase<T>(IEnumerable<T> objectsToSave, SpringBaseDao baseDao,
                                                                  bool deleteAllBeforeSave, Type mappingAttributesType)
         {
+            return SaveToDatabase<T>(objectsToSave, baseDao, deleteAllBeforeSave, mappingAttributesType, false);
+        }
+        public virtual Dictionary<string, int> BuildAndSaveToDatabase<T>(IEnumerable<T> objectsToSave, SpringBaseDao baseDao,
+                                                                         bool deleteAllBeforeSave, Type mappingAttributesType)
+        {
+            return SaveToDatabase<T>(objectsToSave, baseDao, deleteAllBeforeSave, mappingAttributesType, true);
+        }
+        protected virtual Dictionary<string, int> SaveToDatabase<T>(IEnumerable<T> objectsToSave, SpringBaseDao baseDao,
+                                                                    bool deleteAllBeforeSave, Type mappingAttributesType,
+                                                                    bool checkToBuildDatabase)
+        {
             Type objectToSaveType = typeof(T);
             MappingContext mappingContext = MappingContext.GetMappingContext(objectToSaveType, mappingAttributesType);
 
+            if (checkToBuildDatabase)
+            {
+                BuildDatabase(objectToSaveType, baseDao, mappingContext);
+            }
+
+            return SaveToDatabase(objectsToSave, baseDao, deleteAllBeforeSave, mappingContext);
+        }
+
+        public virtual Dictionary<string, int> SaveToDatabase(IEnumerable objectsToSave, SpringBaseDao baseDao,
+                                                              bool deleteAllBeforeSave, MappingContext mappingContext)
+        {
             BuildObjectSql(mappingContext, baseDao);
 
             Dictionary<string, int> insertRowCounts = new Dictionary<string, int>();
+            Dictionary<string, int> updateRowCounts = new Dictionary<string, int>();
 
             baseDao.TransactionTemplate.Execute(delegate
             {
@@ -240,30 +293,28 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                 {
                     if (deleteAllBeforeSave)
                     {
-                        DeleteAllFromDatabase(objectToSaveType, baseDao, mappingAttributesType);
+                        Dictionary<Type, bool> deletedTypes = new Dictionary<Type, bool>();
+                        CollectionUtils.ForEach(objectsToSave, delegate(object objectToSave)
+                        {
+                            Type type = objectToSave.GetType();
+                            if (!deletedTypes.ContainsKey(type))
+                            {
+                                DeleteAllFromDatabase(type, baseDao, mappingContext);
+                                deletedTypes[type] = true;
+                            }
+                        });
                     }
-                    CollectionUtils.ForEach(objectsToSave, delegate(T objectToSave)
+                    CollectionUtils.ForEach(objectsToSave, delegate(object objectToSave)
                     {
-                        bool doSave = true;
-                        ICanSaveToDatabase checkToSaveToDatabase = objectToSave as ICanSaveToDatabase;
-                        if (checkToSaveToDatabase != null)
+                        IBeforeSaveToDatabase beforeSaveToDatabase = objectToSave as IBeforeSaveToDatabase;
+                        if (beforeSaveToDatabase != null)
                         {
-                            if (!checkToSaveToDatabase.CanSaveToDatabase(this, baseDao))
-                            {
-                                doSave = false;
-                            }
+                            beforeSaveToDatabase.BeforeSaveToDatabase();
                         }
-                        if (doSave)
-                        {
-                            IBeforeSaveToDatabase beforeSaveToDatabase = objectToSave as IBeforeSaveToDatabase;
-                            if (beforeSaveToDatabase != null)
-                            {
-                                beforeSaveToDatabase.BeforeSaveToDatabase();
-                            }
 
-                            ColumnCachedValues cachedValues = new ColumnCachedValues();
-                            SaveToDatabase(null, objectToSave, null, cachedValues, mappingContext, insertRowCounts, command);
-                        }
+                        ColumnCachedValues cachedValues = new ColumnCachedValues();
+                        SaveToDatabase(null, objectToSave, null, cachedValues, mappingContext, insertRowCounts,
+                                       command, baseDao, updateRowCounts);
                     });
                     return null;
                 });
@@ -447,18 +498,66 @@ namespace Windsor.Commons.XsdOrm2.Implementations
             CollectionUtils.ForEach(mappingContext.AdditionalCreateIndexAttributes,
                 delegate(AdditionalCreateIndexAttribute indexAttribute)
                 {
-                    string indexColumnName = StringUtils.RemoveAllWhitespace(indexAttribute.ColumnName.Replace(",", "_"));
-                    string idxName =
-                        string.Format("IX_{0}_{1}", Utils.RemoveTableNamePrefix(indexAttribute.ParentTable, indexAttribute.ParentTablePrefix, mappingContext.DefaultTableNamePrefix),
-                                                    indexColumnName);
-                    idxName = Utils.ShortenDatabaseName(idxName, Utils.MAX_INDEX_NAME_CHARS, mappingContext.ShortenNamesByRemovingVowelsFirst,
-                                                        mappingContext.FixShortenNameBreakBug, null);
+                    string idxName = Utils.GetIndexName(indexAttribute.ParentTable, indexAttribute.ParentTablePrefix, indexAttribute.ColumnName,
+                                                        mappingContext.ShortenNamesByRemovingVowelsFirst, mappingContext.FixShortenNameBreakBug,
+                                                        mappingContext.DefaultTableNamePrefix);
                     idxName = CheckDatabaseNameDoesNotExist(idxName, indexNames);
                     string cmd = string.Format("CREATE {0} INDEX {1} ON {2}({3})", indexAttribute.IsUnique ? "UNIQUE" : "",
                                                idxName, indexAttribute.ParentTable,
                                                indexAttribute.ColumnName);
                     cmd = string.Format(idxFormat, idxName, indexAttribute.ParentTable, cmd);
                     postCommands.Add(cmd);
+                });
+
+            CollectionUtils.ForEach(mappingContext.AdditionalForeignKeyAttributes,
+                delegate(AdditionalForeignKeyAttributeEx fkAttribute)
+                {
+                    CollectionUtils.ForEach(fkAttribute.ChildTableColumnPairs,
+                        delegate(KeyValuePair<string, string> childTableColumnPair)
+                        {
+                            string fkName =
+                                string.Format("FK_{0}_{1}_{2}_{3}", Utils.RemoveTableNamePrefix(childTableColumnPair.Key, null, mappingContext.DefaultTableNamePrefix),
+                                                            childTableColumnPair.Value,
+                                                            Utils.RemoveTableNamePrefix(fkAttribute.ParentTableName, null, mappingContext.DefaultTableNamePrefix),
+                                                            fkAttribute.ParentColumnName);
+                            fkName = Utils.ShortenDatabaseName(fkName, Utils.MAX_CONSTRAINT_NAME_CHARS, mappingContext.ShortenNamesByRemovingVowelsFirst,
+                                                               mappingContext.FixShortenNameBreakBug, null);
+                            fkName = CheckDatabaseNameDoesNotExist(fkName, indexNames);
+                            string cmd = string.Format("ALTER TABLE {0} ADD CONSTRAINT {1} FOREIGN KEY ({2}) REFERENCES {3}({4})",
+                                                        childTableColumnPair.Key, fkName, childTableColumnPair.Value,
+                                                        fkAttribute.ParentTableName, fkAttribute.ParentColumnName);
+                            if (fkAttribute.DeleteRule != DeleteRule.None)
+                            {
+                                cmd += (fkAttribute.DeleteRule == DeleteRule.Cascade) ? " ON DELETE CASCADE" : " ON DELETE SET NULL";
+                            }
+                            if (fkAttribute.UpdateRule != UpdateRule.None)
+                            {
+                                if (baseDao.IsSqlServerDatabase)
+                                {
+                                    // UPDATE only supported on Sql Server
+                                    cmd += (fkAttribute.UpdateRule == UpdateRule.Cascade) ? " ON UPDATE CASCADE" : " ON UPDATE SET NULL";
+                                }
+                            }
+                            cmd = string.Format(fkFormat, fkName, childTableColumnPair.Key, cmd);
+
+                            postCommands.Add(cmd);
+                            Table parentTable = mappingContext.Tables[childTableColumnPair.Key];
+                            PrimaryKeyColumn pkColumn = parentTable.PrimaryKey;
+                            if ((pkColumn == null) || (pkColumn.ColumnName != childTableColumnPair.Value))
+                            {
+                                string idxName =
+                                    string.Format("IX_{0}_{1}", Utils.RemoveTableNamePrefix(childTableColumnPair.Key, null, mappingContext.DefaultTableNamePrefix),
+                                                                childTableColumnPair.Value);
+
+                                idxName = Utils.ShortenDatabaseName(idxName, Utils.MAX_INDEX_NAME_CHARS, mappingContext.ShortenNamesByRemovingVowelsFirst,
+                                                                    mappingContext.FixShortenNameBreakBug, null);
+                                idxName = CheckDatabaseNameDoesNotExist(idxName, indexNames);
+                                cmd = string.Format("CREATE INDEX {0} ON {1}({2})", idxName, childTableColumnPair.Key,
+                                                    childTableColumnPair.Value);
+                                cmd = string.Format(idxFormat, idxName, childTableColumnPair.Key, cmd);
+                                postCommands.Add(cmd);
+                            }
+                        });
                 });
 
             if (primaryKeyCommands.Count > 0)
@@ -654,12 +753,14 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                                     foreignKeyColumn.Table.TableName, foreignKeyColumn.ColumnName);
                 postCommands.Add(cmd);
             }
-            else if (column.IsIndexable)
+            else if (column.IsIndexable != IndexableType.None)
             {
                 string indexName = Utils.GetIndexName(column, mappingContext.ShortenNamesByRemovingVowelsFirst,
                                                       mappingContext.FixShortenNameBreakBug, mappingContext.DefaultTableNamePrefix);
                 indexName = CheckDatabaseNameDoesNotExist(indexName, dbNames);
-                string cmd = string.Format("CREATE INDEX {0} ON {1}({2})", indexName, column.Table.TableName, column.ColumnName);
+                string uniqueString = (column.IsIndexable == IndexableType.UniqueIndexable) ? "UNIQUE" : "";
+                string cmd = string.Format("CREATE {0} INDEX {1} ON {2}({3})", uniqueString, indexName,
+                                           column.Table.TableName, column.ColumnName);
                 postCommands.Add(cmd);
             }
             if (!string.IsNullOrEmpty(column.ColumnDescription))
@@ -795,7 +896,8 @@ namespace Windsor.Commons.XsdOrm2.Implementations
         }
         protected virtual void SaveToDatabase(object parentOfObjectToSave, object objectToSave,
                                               Table tableOfObjectToSave, ColumnCachedValues cachedValues, MappingContext mappingContext,
-                                              Dictionary<string, int> insertRowCounts, IDbCommand command)
+                                              Dictionary<string, int> insertRowCounts, IDbCommand command, SpringBaseDao baseDao,
+                                              Dictionary<string, int> updateRowCounts)
         {
             if (objectToSave == null)
             {
@@ -814,7 +916,14 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                 parentTable = mappingContext.GetTableForType(parentOfObjectToSave.GetType());
             }
 
-            if (tableOfObjectToSave.PopulateInsertValues(command, parentOfObjectToSave, parentTable, objectToSave, cachedValues))
+            bool isUpdate = false;
+            ISaveInfoProvider saveInfoProvider = objectToSave as ISaveInfoProvider;
+            if (saveInfoProvider != null)
+            {
+                isUpdate = saveInfoProvider.IsUpdateSave(baseDao, mappingContext);
+            }
+            if (tableOfObjectToSave.PopulateSaveValues(command, isUpdate, parentOfObjectToSave, parentTable, objectToSave,
+                                                       cachedValues))
             {
                 DebugUtils.AssertDebuggerBreak(command.Parameters.Count == tableOfObjectToSave.AllColumns.Count);
                 try
@@ -826,10 +935,11 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                     DebugUtils.CheckDebuggerBreak();
                     throw;
                 }
-                if (insertRowCounts != null)
+                Dictionary<string, int> rowCounts = isUpdate ? updateRowCounts : insertRowCounts;
+                if (rowCounts != null)
                 {
                     int value;
-                    if (insertRowCounts.TryGetValue(tableOfObjectToSave.TableName, out value))
+                    if (rowCounts.TryGetValue(tableOfObjectToSave.TableName, out value))
                     {
                         value++;
                     }
@@ -837,7 +947,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                     {
                         value = 1;
                     }
-                    insertRowCounts[tableOfObjectToSave.TableName] = value;
+                    rowCounts[tableOfObjectToSave.TableName] = value;
                 }
             }
             // Save children
@@ -887,7 +997,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                                             if (element != null)
                                             {
                                                 SaveToDatabase(objectToSave, element, elementTable, cachedValues, mappingContext,
-                                                               insertRowCounts, command);
+                                                               insertRowCounts, command, baseDao, updateRowCounts);
                                                 insertedAny = true;
                                             }
                                         }
@@ -917,7 +1027,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                                         if (element != null)
                                         {
                                             SaveToDatabase(objectToSave, element, elementTable, cachedValues, mappingContext,
-                                                           insertRowCounts, command);
+                                                           insertRowCounts, command, baseDao, updateRowCounts);
                                         }
                                     }
                                 }

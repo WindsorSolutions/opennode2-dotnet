@@ -37,13 +37,16 @@ using System.Reflection;
 using Spring.Data.Common;
 using Windsor.Commons.Spring;
 
-namespace Windsor.Commons.XsdOrm2
+namespace Windsor.Commons.XsdOrm3
 {
     public interface IObjectsToDatabase
     {
         void BuildDatabase(Type objectToSaveType, SpringBaseDao baseDao, Type mappingAttributesType);
 
         void BuildDatabase(Type objectToSaveType, Type mappingAttributesType);
+
+        Dictionary<string, int> BuildAndSaveToDatabase<T>(IEnumerable<T> objectsToSave, SpringBaseDao baseDao,
+                                                          bool deleteAllBeforeSave, Type mappingAttributesType);
 
         /// <summary>
         /// Save the input object to the database.  Returns a list of table names and 
@@ -73,8 +76,13 @@ namespace Windsor.Commons.XsdOrm2
     {
         void BeforeSaveToDatabase();
     }
-    public interface ICanSaveToDatabase
+    public interface ISaveInfoProvider
     {
-        bool CanSaveToDatabase(IObjectsToDatabase objectsToDatabase, SpringBaseDao baseDao);
+        bool IsUpdateSave(SpringBaseDao baseDao, IMappingContext mappingContext);
+    }
+    public interface IBuildDatabaseInitValueProvider
+    {
+        IList<object> GetBuildInitValues(SpringBaseDao baseDao, IMappingContext mappingContext,
+                                         out bool deleteAllBeforeInit);
     }
 }

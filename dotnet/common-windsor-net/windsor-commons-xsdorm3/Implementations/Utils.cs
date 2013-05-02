@@ -42,7 +42,7 @@ using System.Diagnostics;
 using System.ComponentModel;
 using Windsor.Commons.Core;
 
-namespace Windsor.Commons.XsdOrm2.Implementations
+namespace Windsor.Commons.XsdOrm3.Implementations
 {
     public static class Utils
     {
@@ -262,9 +262,17 @@ namespace Windsor.Commons.XsdOrm2.Implementations
             }
             else
             {
-                return ShortenDatabaseName("IX" + Utils.NAME_SEPARATOR + RemoveTableNamePrefix(column.Table.TableName, column.Table.TableNamePrefix, defaultTableNamePrefix) +
-                                           Utils.NAME_SEPARATOR + column.ColumnName, MAX_INDEX_NAME_CHARS, shortenNamesByRemovingVowelsFirst, fixBreakBug, null);
+                return GetIndexName(column.Table.TableName, column.Table.TableNamePrefix, column.ColumnName,
+                                    shortenNamesByRemovingVowelsFirst, fixBreakBug, defaultTableNamePrefix);
             }
+        }
+        public static string GetIndexName(string tableName, string tableNamePrefix, string columnName, bool shortenNamesByRemovingVowelsFirst,
+                                          bool fixBreakBug, string defaultTableNamePrefix)
+        {
+            string indexColumnName = StringUtils.RemoveAllWhitespace(columnName.Replace(",", "_")); // For when multiple columns specified
+
+            return ShortenDatabaseName("IX" + Utils.NAME_SEPARATOR + RemoveTableNamePrefix(tableName, tableNamePrefix, defaultTableNamePrefix) +
+                                       Utils.NAME_SEPARATOR + indexColumnName, MAX_INDEX_NAME_CHARS, shortenNamesByRemovingVowelsFirst, fixBreakBug, null);
         }
         /// <summary>
         /// Return true if the input type can be assigned directly to a column value.
@@ -453,7 +461,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                     members.AddRange(fields);
                 }
                 curType = curType.BaseType;
-            } 
+            }
             while (curType != null);
             members.Reverse();
             return members;

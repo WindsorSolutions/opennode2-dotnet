@@ -32,17 +32,35 @@ POSSIBILITY OF SUCH DAMAGE.
 #endregion
 
 using System;
-using System.Collections.Generic;
+using System.Text;
+using System.Data;
+using System.Data.Common;
 using System.Reflection;
 using Spring.Data.Common;
+using System.Collections.Generic;
+using System.Collections;
+using Windsor.Commons.XsdOrm3;
+using Windsor.Commons.Core;
 using Windsor.Commons.Spring;
+using Spring.Data;
+using Spring.Data.Support;
+using Spring.Dao;
 
-namespace Windsor.Commons.XsdOrm2
+namespace Windsor.Commons.XsdOrm3.Implementations
 {
-    public interface IMappingContext
+    public abstract class ObjectsDatabaseBase
     {
-        string GetTableNameForType(Type objectType);
-        object GetPrimaryKeyValueForObject(object obj);
-        string GetPrimaryKeyNameForType(Type objectType);
+        public void Init()
+        {
+        }
+
+        protected virtual void BuildObjectSql(MappingContext mappingContext,
+                                              SpringBaseDao baseDao)
+        {
+            foreach (Table table in mappingContext.Tables.Values)
+            {
+                table.BuildObjectSql(baseDao);
+            }
+        }
     }
 }
