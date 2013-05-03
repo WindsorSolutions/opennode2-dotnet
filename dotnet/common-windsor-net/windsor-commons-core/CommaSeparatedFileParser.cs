@@ -145,6 +145,13 @@ namespace Windsor.Commons.Core
                 return m_NextValues;
             }
         }
+        public IList<string> ColumnNames
+        {
+            get
+            {
+                return m_ColumnNames;
+            }
+        }
 
         /// <summary>
         /// Returns true and column value if the current row's column value is a non-empty string, otherwise
@@ -228,19 +235,19 @@ namespace Windsor.Commons.Core
             Delimiters = new string[] { Delimiter.ToString() };
 
             // Get column header fields
-            string[] columnNames = ReadFields();
-            if (CollectionUtils.IsNullOrEmpty(columnNames))
+            m_ColumnNames = ReadFields();
+            if (CollectionUtils.IsNullOrEmpty(m_ColumnNames))
             {
                 throw new InvalidDataException(string.Format("The file does not contain valid column headers"));
             }
             m_ColumnNameToIndexMap = new Dictionary<string, int>();
-            for (int i = 0; i < columnNames.Length; ++i)
+            for (int i = 0; i < m_ColumnNames.Length; ++i)
             {
-                string columnName = columnNames[i].ToUpper();
+                string columnName = m_ColumnNames[i].ToUpper();
                 if (m_ColumnNameToIndexMap.ContainsKey(columnName))
                 {
                     throw new InvalidDataException(string.Format("The file contains duplicate column headers: \"{0}.\"  Column headers are case-insensitive",
-                                                                 columnNames[i]));
+                                                                 m_ColumnNames[i]));
                 }
                 m_ColumnNameToIndexMap.Add(columnName, i);
             }
@@ -248,6 +255,7 @@ namespace Windsor.Commons.Core
 
         private Dictionary<string, int> m_ColumnNameToIndexMap;
         private string[] m_NextValues;
+        private string[] m_ColumnNames;
         private const char COMMA = ',';
     }
     public class TabSeparatedFileParser : CommaSeparatedFileParser
