@@ -214,6 +214,12 @@ namespace Windsor.Commons.XsdOrm3.Implementations
         {
             return SaveToDatabase(objectToSave, CheckBaseDao(), mappingAttributesType);
         }
+        public virtual Dictionary<string, int> SaveToDatabase(object objectToSave, SpringBaseDao baseDao,
+                                                              bool deleteAllBeforeSave, Type mappingAttributesType)
+        {
+            Dictionary<string, int> updateRowCounts;
+            return SaveToDatabase(objectToSave, baseDao, deleteAllBeforeSave, mappingAttributesType, out updateRowCounts);
+        }
         public virtual Dictionary<string, int> SaveToDatabase(object objectToSave, SpringBaseDao baseDao, Type mappingAttributesType)
         {
             Dictionary<string, int> updateRowCounts;
@@ -221,6 +227,11 @@ namespace Windsor.Commons.XsdOrm3.Implementations
         }
         public virtual Dictionary<string, int> SaveToDatabase(object objectToSave, SpringBaseDao baseDao, Type mappingAttributesType,
                                                               out Dictionary<string, int> updateRowCounts)
+        {
+            return SaveToDatabase(objectToSave, baseDao, false, mappingAttributesType, out updateRowCounts);
+        }
+        public virtual Dictionary<string, int> SaveToDatabase(object objectToSave, SpringBaseDao baseDao, bool deleteAllBeforeSave,
+                                                              Type mappingAttributesType, out Dictionary<string, int> updateRowCounts)
         {
             Type objectToSaveType = objectToSave.GetType();
             MappingContext mappingContext = MappingContext.GetMappingContext(objectToSaveType, mappingAttributesType);
@@ -240,6 +251,11 @@ namespace Windsor.Commons.XsdOrm3.Implementations
             {
                 baseDao.AdoTemplate.ClassicAdoTemplate.Execute(delegate(IDbCommand command)
                 {
+                    if (deleteAllBeforeSave)
+                    {
+                        Type type = objectToSave.GetType();
+                        DeleteAllFromDatabase(type, baseDao, mappingContext);
+                    }
                     ColumnCachedValues cachedValues = new ColumnCachedValues();
                     SaveToDatabase(null, objectToSave, null, cachedValues, mappingContext,
                                    insertRowCounts, command, baseDao, updateRowCountsLocal);

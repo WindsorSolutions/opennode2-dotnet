@@ -51,16 +51,22 @@ namespace Windsor.Commons.XsdOrm3.Implementations
         internal static MappingContext GetMappingContext(Type rootType, Type mappingAttributesType)
         {
             MappingContext mappingContext = null;
+            string rootKey = rootType.FullName + ((mappingAttributesType == null) ? string.Empty : "-" + mappingAttributesType.FullName);
             lock (s_MappingContexts)
             {
-                s_MappingContexts.TryGetValue(rootType, out mappingContext);
+                s_MappingContexts.TryGetValue(rootKey, out mappingContext);
             }
             if (mappingContext == null)
             {
                 mappingContext = new MappingContext(rootType, mappingAttributesType);
                 lock (s_MappingContexts)
                 {
-                    s_MappingContexts.Add(rootType, mappingContext);
+                    s_MappingContexts[rootKey] = mappingContext;
+                    foreach (Type additionalType in mappingContext.AdditionalTopLevelTypes)
+                    {
+                        string additionalKey = additionalType.FullName + ((mappingAttributesType == null) ? string.Empty : "-" + mappingAttributesType.FullName);
+                        s_MappingContexts[additionalKey] = mappingContext;
+                    }
                 }
             }
             else
@@ -1592,7 +1598,7 @@ namespace Windsor.Commons.XsdOrm3.Implementations
         private IDictionary<string, Table> m_Tables = new Dictionary<string, Table>();
         private IDictionary<Type, Table> m_TypeToTable = new Dictionary<Type, Table>();
         private List<KeyValuePair<string, string>> m_NameReplacements = null;
-        private static Dictionary<Type, MappingContext> s_MappingContexts = new Dictionary<Type, MappingContext>();
+        private static Dictionary<string, MappingContext> s_MappingContexts = new Dictionary<string, MappingContext>();
         private DefaultStringDbValuesAttribute m_DefaultStringDbValues;
         private List<KeyValuePair<string, int>> m_ElementNamePostfixToLength;
         private Dictionary<Type, Dictionary<string, List<MappingAttribute>>> m_AppliedAttributes;
@@ -1613,6 +1619,13 @@ namespace Windsor.Commons.XsdOrm3.Implementations
         private Dictionary<Type, Type> m_CustomXmlStringFormatTypeBaseMap = new Dictionary<Type, Type>();
         private List<Type> m_BuildDatabaseInitValueProviderTypes = new List<Type>();
 
+        internal List<Type> AdditionalTopLevelTypes
+        {
+            get
+            {
+                return m_AdditionalTopLevelTypes;
+            }
+        }
         internal List<AdditionalCreateIndexAttribute> AdditionalCreateIndexAttributes
         {
             get

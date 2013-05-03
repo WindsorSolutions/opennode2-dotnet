@@ -459,8 +459,6 @@ namespace Windsor.Commons.XsdOrm3.Implementations
 
         public override object GetInsertColumnValue(object parentOfObjectToSave, object objectToSave, ColumnCachedValues cachedValues)
         {
-            // TODO
-            DebugUtils.CheckDebuggerBreak();
             object pkGuid;
             if (Utils.IsValidColumnType(objectToSave.GetType()))
             {

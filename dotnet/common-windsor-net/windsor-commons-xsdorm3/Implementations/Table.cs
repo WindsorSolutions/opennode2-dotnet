@@ -224,7 +224,8 @@ namespace Windsor.Commons.XsdOrm3.Implementations
             {
                 if (checkColumn.MemberInfo != null)
                 {
-                    if ((checkColumn.MemberInfo.DeclaringType == elementType) && (checkColumn.MemberInfo.Name == elementMemberName))
+                    if (((checkColumn.MemberInfo.DeclaringType == elementType) || (this.TableRootType == elementType)) &&
+                        (checkColumn.MemberInfo.Name == elementMemberName))
                     {
                         CollectionUtils.Add(checkColumn, ref columns);
                     }
