@@ -170,16 +170,19 @@ namespace Windsor.Commons.XsdOrm3.Implementations
             {
                 if (m_DirectColumns == null)
                 {
-                    m_DirectColumns = new List<Column>(1 + m_ForeignKeyColumns.Count + m_DataColumns.Count);
+                    int colCount = 1 + CollectionUtils.Count(AdditionalPrimaryKeyColumns) +
+                        m_ForeignKeyColumns.Count + m_DataColumns.Count;
+                    m_DirectColumns = new List<Column>(colCount);
                     m_DirectColumns.Add(m_PrimaryKeyColumn);
-                    foreach (Column column in m_ForeignKeyColumns)
+                    CollectionUtils.ForEach(AdditionalPrimaryKeyColumns, delegate(PrimaryKeyColumn addPkColumn)
                     {
-                        m_DirectColumns.Add(column);
-                    }
-                    foreach (Column column in m_DataColumns)
+                        m_DirectColumns.Add(addPkColumn);
+                    });
+                    CollectionUtils.ForEach(m_ForeignKeyColumns, delegate(ForeignKeyColumn addFkColumn)
                     {
-                        m_DirectColumns.Add(column);
-                    }
+                        m_DirectColumns.Add(addFkColumn);
+                    });
+                    CollectionUtils.AddRange(m_DataColumns, ref m_DirectColumns);
                 }
                 return m_DirectColumns;
             }
@@ -428,6 +431,14 @@ namespace Windsor.Commons.XsdOrm3.Implementations
                 return (m_PrimaryKeyColumn is GuidPrimaryKeyColumn) && (((GuidPrimaryKeyColumn)m_PrimaryKeyColumn).MemberInfo == null);
             }
         }
+        public IList<PrimaryKeyColumn> AdditionalPrimaryKeyColumns
+        {
+            get
+            {
+                return m_AdditionalPrimaryKeyColumns;
+
+            }
+        }
         public ForeignKeyColumn AddFKTable(Table fkTable)
         {
             ExceptionUtils.ThrowIfTrue(fkTable == this, "fkTable == this");
@@ -458,11 +469,6 @@ namespace Windsor.Commons.XsdOrm3.Implementations
             {
                 if (columnAttribute is PrimaryKeyAttribute)
                 {
-                    if (!HasDefaultPrimaryKeyColumn)
-                    {
-                        throw new MappingException("Attempting to map the column \"{0}\" as the primary key for table \"{1},\" but the already has a primary key column mapped to it: \"{2}\"",
-                                                    columnAttribute.ColumnName, this.m_TableName, m_PrimaryKeyColumn.ColumnName);
-                    }
                     if (isSpecifiedMember != null)
                     {
                         throw new MappingException("Attempting to map the column \"{0}\" as the primary key for table \"{1},\" but the column has an isSpecifiedMember: \"{2}\"",
@@ -476,7 +482,19 @@ namespace Windsor.Commons.XsdOrm3.Implementations
                     {
                         column = new PrimaryKeyColumn(this, member, columnAttribute);
                     }
-                    m_PrimaryKeyColumn = column as PrimaryKeyColumn;
+                    if (!HasDefaultPrimaryKeyColumn)
+                    {
+                        // In this case, the table already has a user-defined PrimaryKey column,
+                        // so add this next PrimaryKey column as an additional column, this would be 
+                        // for a table with a compound PrimaryKey (two or more columns as PrimaryKey).
+                        CollectionUtils.Add(column as PrimaryKeyColumn, ref m_AdditionalPrimaryKeyColumns);
+                        //throw new MappingException("Attempting to map the column \"{0}\" as the primary key for table \"{1},\" but the already has a primary key column mapped to it: \"{2}\"",
+                        //                            columnAttribute.ColumnName, this.m_TableName, m_PrimaryKeyColumn.ColumnName);
+                    }
+                    else
+                    {
+                        m_PrimaryKeyColumn = column as PrimaryKeyColumn;
+                    }
                 }
                 else
                 {
@@ -491,6 +509,7 @@ namespace Windsor.Commons.XsdOrm3.Implementations
         private string m_TableNamePrefix;
         private Type m_TableRootType;
         private PrimaryKeyColumn m_PrimaryKeyColumn;
+        private List<PrimaryKeyColumn> m_AdditionalPrimaryKeyColumns;
         private List<ForeignKeyColumn> m_ForeignKeyColumns = new List<ForeignKeyColumn>();
         private List<Column> m_DataColumns = new List<Column>();
         private List<Column> m_AllColumns = null;

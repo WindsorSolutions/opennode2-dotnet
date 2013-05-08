@@ -742,14 +742,19 @@ namespace Windsor.Commons.XsdOrm3.Implementations
                 GetColumnSqlDataTypeCreateString(mappingContext, column, baseDao),
                 column.IsNullable ? string.Empty : " NOT NULL");
 
-            if (column.IsPrimaryKey)
+            if (column.IsPrimaryKey && (column == column.Table.PrimaryKey))
             {
                 PrimaryKeyColumn primaryKeyColumn = (PrimaryKeyColumn)column;
                 string pkName = Utils.GetPrimaryKeyConstraintName(primaryKeyColumn, mappingContext.ShortenNamesByRemovingVowelsFirst,
                                                                   mappingContext.FixShortenNameBreakBug, mappingContext.DefaultTableNamePrefix);
                 pkName = CheckDatabaseNameDoesNotExist(pkName, dbNames);
+                string pkColumnNames = primaryKeyColumn.ColumnName;
+                CollectionUtils.ForEach(column.Table.AdditionalPrimaryKeyColumns, delegate(PrimaryKeyColumn addPkColumn)
+                {
+                    pkColumnNames += "," + addPkColumn.ColumnName;
+                });
                 string cmd = string.Format("ALTER TABLE {0} ADD CONSTRAINT {1} PRIMARY KEY ({2})",
-                                           primaryKeyColumn.Table.TableName, pkName, primaryKeyColumn.ColumnName);
+                                           primaryKeyColumn.Table.TableName, pkName, pkColumnNames);
                 primaryKeyCommands.Add(cmd);
             }
             else if (column.IsForeignKey)
