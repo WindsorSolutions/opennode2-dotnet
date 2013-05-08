@@ -214,6 +214,11 @@ namespace Windsor.Commons.XsdOrm3.Implementations
         {
             return SaveToDatabase(objectToSave, CheckBaseDao(), mappingAttributesType);
         }
+        public virtual Dictionary<string, int> SaveToDatabase(object objectToSave, bool deleteAllBeforeSave,
+                                                              Type mappingAttributesType)
+        {
+            return SaveToDatabase(objectToSave, CheckBaseDao(), deleteAllBeforeSave, mappingAttributesType);
+        }
         public virtual Dictionary<string, int> SaveToDatabase(object objectToSave, SpringBaseDao baseDao,
                                                               bool deleteAllBeforeSave, Type mappingAttributesType)
         {

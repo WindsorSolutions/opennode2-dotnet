@@ -25,6 +25,7 @@ namespace Windsor.Commons.DeveloperExpress
         public static void SelectSkin(string skinName)
         {
             string selectedSkinName = SkinManager.Default.GetValidSkinName(skinName);
+            //UserLookAndFeel.Default.SetSkinStyle("DevExpress Style");
             if (UserLookAndFeel.Default.SkinName != selectedSkinName)
             {
                 UserLookAndFeel.Default.SkinName = selectedSkinName;

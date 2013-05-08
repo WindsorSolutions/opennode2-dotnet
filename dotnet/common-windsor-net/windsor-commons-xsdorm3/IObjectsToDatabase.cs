@@ -57,6 +57,8 @@ namespace Windsor.Commons.XsdOrm3
         Dictionary<string, int> SaveToDatabase(object objectToSave, SpringBaseDao baseDao,
                                                bool deleteAllBeforeSave, Type mappingAttributesType);
 
+        Dictionary<string, int> SaveToDatabase(object objectToSave, bool deleteAllBeforeSave,
+                                               Type mappingAttributesType);
         Dictionary<string, int> SaveToDatabase(object objectToSave, Type mappingAttributesType);
 
         Dictionary<string, int> SaveToDatabase<T>(IEnumerable<T> objectsToSave, bool deleteAllBeforeSave, Type mappingAttributesType);
