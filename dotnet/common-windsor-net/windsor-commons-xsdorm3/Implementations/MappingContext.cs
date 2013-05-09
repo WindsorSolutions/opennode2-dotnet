@@ -950,30 +950,63 @@ namespace Windsor.Commons.XsdOrm3.Implementations
             CollectionUtils.ForEach(m_AdditionalForeignKeyAttributes, delegate(AdditionalForeignKeyAttributeEx attr)
             {
                 List<KeyValuePair<string, string>> childTableColumnPairs = null;
+                IList<string> parentMemberNames = StringUtils.SplitAndReallyRemoveEmptyEntries(attr.ParentMember, ',');
                 foreach (Table table in m_Tables.Values)
                 {
-                    IList<Column> columns = table.TryGetColumns(attr.ParentType, attr.ParentMember);
-                    if (!CollectionUtils.IsNullOrEmpty(columns))
+                    foreach (string parentMemberName in parentMemberNames)
                     {
-                        if (attr.ParentTableName != null)
+                        IList<Column> columns = table.TryGetColumns(attr.ParentType, parentMemberName);
+                        if (!CollectionUtils.IsNullOrEmpty(columns))
                         {
-                            throw new MappingException("Found more than one parent table (\"{0}\") that applies to the AdditionalForeignKeyAttributeEx: {1}",
-                                                       table.TableName, attr.ToString());
+                            if (attr.ParentTableName != null)
+                            {
+                                if (attr.ParentTableName != table.TableName)
+                                {
+                                    throw new MappingException("Found more than one parent table (\"{0}\") that applies to the AdditionalForeignKeyAttributeEx: {1}",
+                                                               table.TableName, attr.ToString());
+                                }
+                            }
+                            if (columns.Count > 1)
+                            {
+                                throw new MappingException("Found more than one parent table column (\"{0}\") that applies to the AdditionalForeignKeyAttributeEx: {1}",
+                                                           StringUtils.JoinCommaEnglish(columns.Select(c => c.ColumnName)), attr.ToString());
+                            }
+                            if (string.IsNullOrEmpty(attr.ParentTableName))
+                            {
+                                attr.ParentTableName = table.TableName;
+                                attr.ParentColumnName = columns[0].ColumnName;
+                            }
+                            else
+                            {
+                                attr.ParentColumnName += "," + columns[0].ColumnName;
+                            }
                         }
-                        if (columns.Count > 1)
-                        {
-                            throw new MappingException("Found more than one parent table column (\"{0}\") that applies to the AdditionalForeignKeyAttributeEx: {1}",
-                                                       StringUtils.JoinCommaEnglish(columns.Select(c => c.ColumnName)), attr.ToString());
-                        }
-                        attr.ParentTableName = table.TableName;
-                        attr.ParentColumnName = columns[0].ColumnName;
                     }
-                    columns = table.TryGetColumns(attr.ChildType, attr.ChildMember);
-                    CollectionUtils.ForEach(columns, delegate(Column childColumn)
+                }
+                IList<string> childMemberNames = StringUtils.SplitAndReallyRemoveEmptyEntries(attr.ChildMember, ',');
+                foreach (Table table in m_Tables.Values)
+                {
+                    string childColumnName = null;
+                    foreach (string childMemberName in childMemberNames)
                     {
-                        CollectionUtils.Add(new KeyValuePair<string, string>(table.TableName, childColumn.ColumnName),
+                        IList<Column> columns = table.TryGetColumns(attr.ChildType, childMemberName);
+                        CollectionUtils.ForEach(columns, delegate(Column childColumn)
+                        {
+                            if (string.IsNullOrEmpty(childColumnName))
+                            {
+                                childColumnName = childColumn.ColumnName;
+                            }
+                            else
+                            {
+                                childColumnName += "," + childColumn.ColumnName;
+                            }
+                        });
+                    }
+                    if (!string.IsNullOrEmpty(childColumnName))
+                    {
+                        CollectionUtils.Add(new KeyValuePair<string, string>(table.TableName, childColumnName),
                                             ref childTableColumnPairs);
-                    });
+                    }
                 }
                 if (attr.ParentTableName == null)
                 {
@@ -1558,6 +1591,10 @@ namespace Windsor.Commons.XsdOrm3.Implementations
                 int count = CollectionUtils.Count(appliedAttribute.Args);
                 ExceptionUtils.ThrowIfFalse(count == 2);
                 mappingAttribute = new DbColumnScaleAttribute(appliedAttribute.Args[0].ToString(), appliedAttribute.Args[1].ToString());
+            }
+            else if (appliedAttribute.MappedAttributeType == typeof(DbNotNullAttribute))
+            {
+                mappingAttribute = new DbNotNullAttribute();
             }
             else
             {

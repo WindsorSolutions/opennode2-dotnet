@@ -269,7 +269,7 @@ namespace Windsor.Commons.XsdOrm3.Implementations
         public static string GetIndexName(string tableName, string tableNamePrefix, string columnName, bool shortenNamesByRemovingVowelsFirst,
                                           bool fixBreakBug, string defaultTableNamePrefix)
         {
-            string indexColumnName = StringUtils.RemoveAllWhitespace(columnName.Replace(",", "_")); // For when multiple columns specified
+            string indexColumnName = StringUtils.RemoveAllWhitespace(columnName.Replace(',', Utils.NAME_SEPARATOR_CHAR)); // For when multiple columns specified
 
             return ShortenDatabaseName("IX" + Utils.NAME_SEPARATOR + RemoveTableNamePrefix(tableName, tableNamePrefix, defaultTableNamePrefix) +
                                        Utils.NAME_SEPARATOR + indexColumnName, MAX_INDEX_NAME_CHARS, shortenNamesByRemovingVowelsFirst, fixBreakBug, null);

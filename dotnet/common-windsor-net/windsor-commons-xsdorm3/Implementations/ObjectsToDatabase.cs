@@ -536,11 +536,14 @@ namespace Windsor.Commons.XsdOrm3.Implementations
                     CollectionUtils.ForEach(fkAttribute.ChildTableColumnPairs,
                         delegate(KeyValuePair<string, string> childTableColumnPair)
                         {
+                            string parentIndexColumnName = fkAttribute.ParentColumnName.Replace(" ", "").Replace(',', Utils.NAME_SEPARATOR_CHAR);
                             string fkName =
-                                string.Format("FK_{0}_{1}_{2}_{3}", Utils.RemoveTableNamePrefix(childTableColumnPair.Key, null, mappingContext.DefaultTableNamePrefix),
+                                string.Format("FK_{0}_{1}_{2}_{3}", Utils.RemoveTableNamePrefix(childTableColumnPair.Key, null,
+                                                                                                mappingContext.DefaultTableNamePrefix),
                                                             childTableColumnPair.Value,
-                                                            Utils.RemoveTableNamePrefix(fkAttribute.ParentTableName, null, mappingContext.DefaultTableNamePrefix),
-                                                            fkAttribute.ParentColumnName);
+                                                            Utils.RemoveTableNamePrefix(fkAttribute.ParentTableName, null,
+                                                                                        mappingContext.DefaultTableNamePrefix),
+                                                            parentIndexColumnName);
                             fkName = Utils.ShortenDatabaseName(fkName, Utils.MAX_CONSTRAINT_NAME_CHARS, mappingContext.ShortenNamesByRemovingVowelsFirst,
                                                                mappingContext.FixShortenNameBreakBug, null);
                             fkName = CheckDatabaseNameDoesNotExist(fkName, indexNames);
@@ -566,9 +569,11 @@ namespace Windsor.Commons.XsdOrm3.Implementations
                             PrimaryKeyColumn pkColumn = parentTable.PrimaryKey;
                             if ((pkColumn == null) || (pkColumn.ColumnName != childTableColumnPair.Value))
                             {
+                                string indexColumnName = childTableColumnPair.Value.Replace(" ", "").Replace(',', Utils.NAME_SEPARATOR_CHAR);
                                 string idxName =
-                                    string.Format("IX_{0}_{1}", Utils.RemoveTableNamePrefix(childTableColumnPair.Key, null, mappingContext.DefaultTableNamePrefix),
-                                                                childTableColumnPair.Value);
+                                    string.Format("IX_{0}_{1}", Utils.RemoveTableNamePrefix(childTableColumnPair.Key, null,
+                                                                                            mappingContext.DefaultTableNamePrefix),
+                                                                indexColumnName);
 
                                 idxName = Utils.ShortenDatabaseName(idxName, Utils.MAX_INDEX_NAME_CHARS, mappingContext.ShortenNamesByRemovingVowelsFirst,
                                                                     mappingContext.FixShortenNameBreakBug, null);

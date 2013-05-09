@@ -1169,7 +1169,7 @@ namespace Windsor.Commons.XsdOrm3
         }
         public override string ToString()
         {
-            return string.Format("Parent ({0}.{1}) <-- Child ({2}.{3})", ParentType.Name, ParentMember,
+            return string.Format("Parent ({0} ({1})) <-- Child ({2} ({3}))", ParentType.Name, ParentMember,
                                  ChildType.Name, ChildMember);
         }
         public Type ParentType
