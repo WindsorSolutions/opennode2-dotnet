@@ -1608,15 +1608,42 @@ namespace Windsor.Commons.XsdOrm3.Implementations
             Table table = GetTableForType(objectType);
             return table.TableName;
         }
+        public virtual bool HasCompoundPrimaryKey(Type objectType)
+        {
+            Table table = GetTableForType(objectType);
+            return !CollectionUtils.IsNullOrEmpty(table.AdditionalPrimaryKeyColumns);
+        }
         public virtual object GetPrimaryKeyValueForObject(object obj)
         {
             Table table = GetTableForType(obj.GetType());
             return table.PrimaryKey.GetInsertColumnValue(null, obj, null);
         }
+        public virtual IList<object> GetPrimaryKeyValuesForObject(object obj)
+        {
+            Table table = GetTableForType(obj.GetType());
+            List<object> list = new List<object>();
+            list.Add(table.PrimaryKey.GetInsertColumnValue(null, obj, null));
+            CollectionUtils.ForEach(table.AdditionalPrimaryKeyColumns, delegate(PrimaryKeyColumn pkColumn)
+            {
+                list.Add(pkColumn.GetInsertColumnValue(null, obj, null));
+            });
+            return list;
+        }
         public virtual string GetPrimaryKeyNameForType(Type objectType)
         {
             Table table = GetTableForType(objectType);
             return table.PrimaryKey.ColumnName;
+        }
+        public IList<string> GetPrimaryKeyNamesForType(Type objectType)
+        {
+            Table table = GetTableForType(objectType);
+            List<string> names = new List<string>();
+            names.Add(table.PrimaryKey.ColumnName);
+            CollectionUtils.ForEach(table.AdditionalPrimaryKeyColumns, delegate(PrimaryKeyColumn pkColumn)
+            {
+                names.Add(pkColumn.ColumnName);
+            });
+            return names;
         }
         internal Table GetTableForType(Type objectType)
         {

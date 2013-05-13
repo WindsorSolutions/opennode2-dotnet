@@ -274,7 +274,7 @@ namespace Windsor.Commons.XsdOrm3.Implementations
             List<string> columnNames = new List<string>(AllColumns.Count);
             List<string> columnParamNames = new List<string>(AllColumns.Count);
             List<string> updateColumnNames = new List<string>(AllColumns.Count);
-            string pkColumnName = null, pkColumnParamName = null;
+            List<string> pkColumnNames = new List<string>(), pkColumnParamNames = new List<string>();
 
             foreach (Column column in AllColumns)
             {
@@ -283,10 +283,10 @@ namespace Windsor.Commons.XsdOrm3.Implementations
                     string columnParamName = baseDao.DbProvider.CreateParameterName(column.ColumnName);
                     columnNames.Add(column.ColumnName);
                     columnParamNames.Add(columnParamName);
-                    if (column == m_PrimaryKeyColumn)
+                    if (column is PrimaryKeyColumn)
                     {
-                        pkColumnName = column.ColumnName;
-                        pkColumnParamName = columnParamName;
+                        pkColumnNames.Add(column.ColumnName);
+                        pkColumnParamNames.Add(columnParamName);
                     }
                     else
                     {
@@ -297,6 +297,7 @@ namespace Windsor.Commons.XsdOrm3.Implementations
             }
             if (columnNames.Count > 0)
             {
+                ExceptionUtils.ThrowIfFalse(pkColumnNames.Count > 0);
                 string columnNameStr = StringUtils.Join(",", columnNames);
                 string columnParamNamesStr = StringUtils.Join(",", columnParamNames);
                 InsertSql = string.Format("INSERT INTO {0} ({1}) VALUES ({2})",
@@ -304,8 +305,12 @@ namespace Windsor.Commons.XsdOrm3.Implementations
                                                     columnParamNamesStr);
                 SelectSql = string.Format("SELECT {0} FROM {1}", columnNameStr, TableName);
                 string updateColumnNameStr = StringUtils.Join(",", updateColumnNames);
-                UpdateSql = string.Format("UPDATE {0} SET {1} WHERE {2} = {3}", TableName, updateColumnNameStr,
-                                          pkColumnName, pkColumnParamName);
+                string updateWhereClause = string.Format("{0} = {1}", pkColumnNames[0], pkColumnParamNames[0]);
+                for (int i = 1; i < pkColumnNames.Count; ++i)
+                {
+                    updateWhereClause += " AND " + string.Format("{0} = {1}", pkColumnNames[i], pkColumnParamNames[i]);
+                }
+                UpdateSql = string.Format("UPDATE {0} SET {1} WHERE {2}", TableName, updateColumnNameStr, updateWhereClause);
             }
             else
             {

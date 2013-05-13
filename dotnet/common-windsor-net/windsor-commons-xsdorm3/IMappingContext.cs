@@ -42,7 +42,10 @@ namespace Windsor.Commons.XsdOrm3
     public interface IMappingContext
     {
         string GetTableNameForType(Type objectType);
+        IList<object> GetPrimaryKeyValuesForObject(object obj);
+        bool HasCompoundPrimaryKey(Type objectType);
         object GetPrimaryKeyValueForObject(object obj);
         string GetPrimaryKeyNameForType(Type objectType);
+        IList<string> GetPrimaryKeyNamesForType(Type objectType);
     }
 }

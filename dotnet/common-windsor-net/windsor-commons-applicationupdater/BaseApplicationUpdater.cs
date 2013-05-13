@@ -95,7 +95,9 @@ namespace Windsor.Commons.ApplicationUpdater
     /// <summary>Utilities to help with database update tasks</summary>
     public abstract class BaseApplicationUpdater : LoggerBase
     {
-        public BaseApplicationUpdater() { }
+        public BaseApplicationUpdater()
+        {
+        }
 
         public BaseApplicationUpdater(string manifestDownloadUrl, string downloadedContentPassword)
         {
@@ -103,7 +105,7 @@ namespace Windsor.Commons.ApplicationUpdater
             _downloadedContentPassword = downloadedContentPassword;
             _tempFolderPath = Path.GetTempPath();
         }
-        
+
         /// <summary>
         /// Perform any database updates in a separate thread.
         /// </summary>
@@ -138,35 +140,59 @@ namespace Windsor.Commons.ApplicationUpdater
         /// </summary>
         public bool IsRunning
         {
-            get { return _isRunning; }
+            get
+            {
+                return _isRunning;
+            }
         }
 
         public event UpdateProgressHandler Progress;
-        
+
         public event UpdateCompleteHandler Complete;
-        
+
         /// <summary>
         /// Return true if the update was cancelled.
         /// </summary>
         public bool DidCancel
         {
-            get { return _cancelUpdate; }
+            get
+            {
+                return _cancelUpdate;
+            }
         }
 
         public string ManifestDownloadUrl
         {
-            get { return _manifestDownloadUrl; }
-            set { _manifestDownloadUrl = value; }
+            get
+            {
+                return _manifestDownloadUrl;
+            }
+            set
+            {
+                _manifestDownloadUrl = value;
+            }
         }
         public string DownloadedContentPassword
         {
-            get { return _downloadedContentPassword; }
-            set { _downloadedContentPassword = value; }
+            get
+            {
+                return _downloadedContentPassword;
+            }
+            set
+            {
+                _downloadedContentPassword = value;
+            }
         }
         public string TempFolderPath
         {
-            get { return _tempFolderPath; }
-            set { _tempFolderPath = value; }
+            get
+            {
+                return _tempFolderPath;
+            }
+            set
+            {
+                _tempFolderPath = value;
+            }
         }
         protected void CheckToCancel()
         {
