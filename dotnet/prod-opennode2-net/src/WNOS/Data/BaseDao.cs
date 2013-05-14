@@ -53,6 +53,7 @@ using Windsor.Commons.Core;
 using Windsor.Commons.Logging;
 using Windsor.Commons.Spring;
 using System.Threading;
+using System.Diagnostics;
 
 namespace Windsor.Node2008.WNOS.Data
 {
@@ -90,10 +91,10 @@ namespace Windsor.Node2008.WNOS.Data
                         // Wait for the database to startup immediately after a system startup
                         if (SecondsToWaitForDatabaseStartup > 0)
                         {
-                            DateTime computerStartTime = SystemUtils.GetSystemStartTime();
-                            if (computerStartTime < DateTime.Now)
+                            DateTime processStartTime = Process.GetCurrentProcess().StartTime;
+                            if (processStartTime < DateTime.Now)
                             {
-                                DateTime endCheckTime = computerStartTime + TimeSpan.FromSeconds(SecondsToWaitForDatabaseStartup);
+                                DateTime endCheckTime = processStartTime + TimeSpan.FromSeconds(SecondsToWaitForDatabaseStartup);
                                 if (DateTime.Now < endCheckTime)
                                 {
                                     for (; ; )

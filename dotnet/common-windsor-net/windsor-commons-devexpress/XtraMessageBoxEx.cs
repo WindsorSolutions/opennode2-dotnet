@@ -16,6 +16,18 @@ namespace Windsor.Commons.DeveloperExpress
         private const MessageBoxDefaultButton DefaultDefButton = MessageBoxDefaultButton.Button1;
         private const MessageBoxIcon DefaultIcon = MessageBoxIcon.None;
         private const IWin32Window DefaultOwner = null;
+        private static Icon s_ErrorIcon = null;
+        private static Icon s_QuestionIcon = null;
+        private static Icon s_ExclamationIcon = null;
+        private static Icon s_InformationIcon = null;
+
+        static XtraMessageBoxEx()
+        {
+            s_ErrorIcon = SystemIcons.Error;
+            s_QuestionIcon = SystemIcons.Question;
+            s_ExclamationIcon = SystemIcons.Exclamation;
+            s_InformationIcon = SystemIcons.Information;
+        }
 
         [DllImport("user32.dll")]
         private static extern bool MessageBeep(int uType);
@@ -23,7 +35,7 @@ namespace Windsor.Commons.DeveloperExpress
         {
             if (!Enum.IsDefined(typeof(MessageBoxButtons), buttons))
             {
-                throw new InvalidEnumArgumentException("buttons", (int) buttons, typeof(DialogResult));
+                throw new InvalidEnumArgumentException("buttons", (int)buttons, typeof(DialogResult));
             }
             switch (buttons)
             {
@@ -52,7 +64,7 @@ namespace Windsor.Commons.DeveloperExpress
         {
             if (!Enum.IsDefined(typeof(MessageBoxDefaultButton), defButton))
             {
-                throw new InvalidEnumArgumentException("defaultButton", (int) defButton, typeof(DialogResult));
+                throw new InvalidEnumArgumentException("defaultButton", (int)defButton, typeof(DialogResult));
             }
             MessageBoxDefaultButton button = defButton;
             if (button != MessageBoxDefaultButton.Button1)
@@ -74,7 +86,7 @@ namespace Windsor.Commons.DeveloperExpress
         {
             if (!Enum.IsDefined(typeof(MessageBoxIcon), icon))
             {
-                throw new InvalidEnumArgumentException("icon", (int) icon, typeof(DialogResult));
+                throw new InvalidEnumArgumentException("icon", (int)icon, typeof(DialogResult));
             }
             switch (icon)
             {
@@ -82,23 +94,30 @@ namespace Windsor.Commons.DeveloperExpress
                     return null;
 
                 case MessageBoxIcon.Hand:
-                    return SystemIcons.Error;
+                    return s_ErrorIcon;
 
                 case MessageBoxIcon.Question:
-                    return SystemIcons.Question;
+                    return s_QuestionIcon;
 
                 case MessageBoxIcon.Exclamation:
-                    return SystemIcons.Exclamation;
+                    return s_ExclamationIcon;
 
                 case MessageBoxIcon.Asterisk:
-                    return SystemIcons.Information;
+                    return s_InformationIcon;
             }
             throw new ArgumentException("icon");
         }
 
+        public static void SetDefaultIcons(Icon errorIcon, Icon questionIcon, Icon exclamationIcon, Icon informationIcon)
+        {
+            s_ErrorIcon = errorIcon ?? SystemIcons.Error;
+            s_QuestionIcon = questionIcon ?? SystemIcons.Question;
+            s_ExclamationIcon = exclamationIcon ?? SystemIcons.Exclamation;
+            s_InformationIcon = informationIcon ?? SystemIcons.Information;
+        }
         public static DialogResult Show(string text)
         {
-            return Show((IWin32Window) null, text, "", MessageBoxButtons.OK, MessageBoxIcon.None, MessageBoxDefaultButton.Button1);
+            return Show((IWin32Window)null, text, "", MessageBoxButtons.OK, MessageBoxIcon.None, MessageBoxDefaultButton.Button1);
         }
 
         public static DialogResult Show(UserLookAndFeel lookAndFeel, string text)
@@ -108,7 +127,7 @@ namespace Windsor.Commons.DeveloperExpress
 
         public static DialogResult Show(string text, string caption)
         {
-            return Show((IWin32Window) null, text, caption, MessageBoxButtons.OK, MessageBoxIcon.None, MessageBoxDefaultButton.Button1);
+            return Show((IWin32Window)null, text, caption, MessageBoxButtons.OK, MessageBoxIcon.None, MessageBoxDefaultButton.Button1);
         }
 
         public static DialogResult Show(IWin32Window owner, string text)
@@ -128,7 +147,7 @@ namespace Windsor.Commons.DeveloperExpress
 
         public static DialogResult Show(string text, string caption, MessageBoxButtons buttons)
         {
-            return Show((IWin32Window) null, text, caption, buttons, MessageBoxIcon.None, MessageBoxDefaultButton.Button1);
+            return Show((IWin32Window)null, text, caption, buttons, MessageBoxIcon.None, MessageBoxDefaultButton.Button1);
         }
 
         public static DialogResult Show(IWin32Window owner, string text, string caption)
@@ -148,7 +167,7 @@ namespace Windsor.Commons.DeveloperExpress
 
         public static DialogResult Show(string text, string caption, MessageBoxButtons buttons, MessageBoxIcon icon)
         {
-            return Show((IWin32Window) null, text, caption, buttons, icon, MessageBoxDefaultButton.Button1);
+            return Show((IWin32Window)null, text, caption, buttons, icon, MessageBoxDefaultButton.Button1);
         }
 
         public static DialogResult Show(IWin32Window owner, string text, string caption, MessageBoxButtons buttons)
@@ -168,7 +187,7 @@ namespace Windsor.Commons.DeveloperExpress
 
         public static DialogResult Show(string text, string caption, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultButton)
         {
-            return Show((IWin32Window) null, text, caption, buttons, icon, defaultButton);
+            return Show((IWin32Window)null, text, caption, buttons, icon, defaultButton);
         }
 
         public static DialogResult Show(IWin32Window owner, string text, string caption, MessageBoxButtons buttons, MessageBoxIcon icon,
@@ -231,16 +250,16 @@ namespace Windsor.Commons.DeveloperExpress
             return Show(null, owner, text, caption, buttons, icon, defaultButton, messageBeepSound, dontShowAgainText, ref dontShowAgainChecked);
         }
 
-        public static DialogResult Show(UserLookAndFeel lookAndFeel, IWin32Window owner, string text, string caption, DialogResult[] buttons, Icon icon, int defaultButton, 
+        public static DialogResult Show(UserLookAndFeel lookAndFeel, IWin32Window owner, string text, string caption, DialogResult[] buttons, Icon icon, int defaultButton,
                                         MessageBoxIcon messageBeepSound, Exception ex)
         {
-            MessageBeep((int) messageBeepSound);
+            MessageBeep((int)messageBeepSound);
             XtraMessageBoxFormEx form = new XtraMessageBoxFormEx();
             return form.ShowMessageBoxDialog(new XtraMessageBoxArgsEx(lookAndFeel, owner, text, caption, buttons, icon, defaultButton, null, false, ex));
         }
         public static DialogResult Show(UserLookAndFeel lookAndFeel, IWin32Window owner, string text, string caption, DialogResult[] buttons, Icon icon, int defaultButton, MessageBoxIcon messageBeepSound)
         {
-            MessageBeep((int) messageBeepSound);
+            MessageBeep((int)messageBeepSound);
             XtraMessageBoxFormEx form = new XtraMessageBoxFormEx();
             return form.ShowMessageBoxDialog(new XtraMessageBoxArgsEx(lookAndFeel, owner, text, caption, buttons, icon, defaultButton, null, false));
         }
