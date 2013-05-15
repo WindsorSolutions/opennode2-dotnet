@@ -181,6 +181,15 @@ namespace Windsor.Commons.Core
                 throw new NullReferenceException("The collections have different lengths");
             }
         }
+        public static void ThrowIfNotInRange(int value, int min, int max)
+        {
+            ExceptionUtils.ThrowIfFalse(min <= max);
+            if ((value > max) || (value < min))
+            {
+                throw new ArgException("value must be between {0} and {1}, but it is not: {2}",
+                                       min.ToString(), max.ToString(), value.ToString());
+            }
+        }
         public static string ThrowIfEmptyString(string parameter, string paramName)
         {
             if (string.IsNullOrEmpty(parameter))

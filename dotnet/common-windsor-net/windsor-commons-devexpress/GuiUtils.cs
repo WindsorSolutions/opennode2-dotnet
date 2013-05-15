@@ -1,25 +1,27 @@
-using XTRA_MSG_BOX = Windsor.Commons.DeveloperExpress.XtraMessageBoxEx;
 using System;
-using System.Collections.Generic;
 using System.Collections;
 using System.Collections.Specialized;
-using System.Windows.Forms;
+using System.Drawing;
 using System.IO;
 using System.Reflection;
-using System.Diagnostics;
-using System.Drawing;
-using Windsor.Commons.Core;
-using DevExpress.Skins;
+using System.Windows.Forms;
 using DevExpress.LookAndFeel;
+using DevExpress.Skins;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraEditors.DXErrorProvider;
+using Windsor.Commons.Core;
 using Windsor.Commons.WinForms;
+using XTRA_MSG_BOX = Windsor.Commons.DeveloperExpress.XtraMessageBoxEx;
 
 namespace Windsor.Commons.DeveloperExpress
 {
     public static class GuiUtils
     {
+        static GuiUtils()
+        {
+            DefaultDontShowMessageBoxAgainText = "Don't show this message again";
+        }
         public static bool ShowDetailedErrorMessages = false;
 
         public static void SelectSkin(string skinName)
@@ -35,6 +37,11 @@ namespace Windsor.Commons.DeveloperExpress
         {
             return message;
         }
+        public static string DefaultDontShowMessageBoxAgainText
+        {
+            get;
+            set;
+        }
         public static void InformationMessageBox(IWin32Window owner, string messageFormat, params object[] args)
         {
             if (!CollectionUtils.IsNullOrEmpty(args))
@@ -44,12 +51,21 @@ namespace Windsor.Commons.DeveloperExpress
             XTRA_MSG_BOX.Show(owner, WrapMessage(messageFormat), Application.ProductName + " Information",
                               MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+        public static void InformationMessageBox(IWin32Window owner, ref bool dontShowAgainChecked,
+                                                 string messageFormat, params object[] args)
+        {
+            InformationMessageBox(owner, null, ref dontShowAgainChecked, messageFormat, args);
+        }
         public static void InformationMessageBox(IWin32Window owner, string dontShowAgainText, ref bool dontShowAgainChecked,
                                                  string messageFormat, params object[] args)
         {
             if (!CollectionUtils.IsNullOrEmpty(args))
             {
                 messageFormat = string.Format(messageFormat, args);
+            }
+            if (string.IsNullOrEmpty(dontShowAgainText))
+            {
+                dontShowAgainText = DefaultDontShowMessageBoxAgainText;
             }
             XTRA_MSG_BOX.Show(owner, WrapMessage(messageFormat), Application.ProductName + " Information",
                                 MessageBoxButtons.OK, MessageBoxIcon.Information, dontShowAgainText,
@@ -77,12 +93,21 @@ namespace Windsor.Commons.DeveloperExpress
                                   MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
             return (result == DialogResult.OK);
         }
+        public static bool InformationMessageBoxOkCancel(IWin32Window owner, ref bool dontShowAgainChecked,
+                                                 string messageFormat, params object[] args)
+        {
+            return InformationMessageBoxOkCancel(owner, null, ref dontShowAgainChecked, messageFormat, args);
+        }
         public static bool InformationMessageBoxOkCancel(IWin32Window owner, string dontShowAgainText, ref bool dontShowAgainChecked,
                                                          string messageFormat, params object[] args)
         {
             if (!CollectionUtils.IsNullOrEmpty(args))
             {
                 messageFormat = string.Format(messageFormat, args);
+            }
+            if (string.IsNullOrEmpty(dontShowAgainText))
+            {
+                dontShowAgainText = DefaultDontShowMessageBoxAgainText;
             }
             DialogResult result =
                 XTRA_MSG_BOX.Show(owner, WrapMessage(messageFormat), Application.ProductName + " Information",
@@ -122,6 +147,11 @@ namespace Windsor.Commons.DeveloperExpress
         {
             ErrorMessageBox(owner, null, messageFormat, args);
         }
+        public static bool QuestionMessageBox(IWin32Window owner, ref bool dontShowAgainChecked,
+                                              string messageFormat, params object[] args)
+        {
+            return QuestionMessageBox(owner, null, ref dontShowAgainChecked, messageFormat, args);
+        }
         public static bool QuestionMessageBox(IWin32Window owner, string dontShowAgainText, ref bool dontShowAgainChecked,
                                               string messageFormat, params object[] args)
         {
@@ -130,6 +160,10 @@ namespace Windsor.Commons.DeveloperExpress
                 messageFormat = string.Format(messageFormat, args);
             }
             messageFormat += Environment.NewLine + " ";
+            if (string.IsNullOrEmpty(dontShowAgainText))
+            {
+                dontShowAgainText = DefaultDontShowMessageBoxAgainText;
+            }
             return (XTRA_MSG_BOX.Show(owner, WrapMessage(messageFormat), Application.ProductName + " Question",
                                         MessageBoxButtons.YesNo, MessageBoxIcon.Question,
                                         dontShowAgainText, ref dontShowAgainChecked) == DialogResult.Yes);
@@ -510,9 +544,27 @@ namespace Windsor.Commons.DeveloperExpress
             }
             return folderPath;
         }
-        public static Skin GetCurrentSkin()
+        public static Skin GetCurrentCommonSkin()
         {
-            return SkinManager.Default.Skins[UserLookAndFeel.Default.SkinName].CommonSkin;
+            return CommonSkins.GetSkin(GetCurrentUserLookAndFeel);
+        }
+        public static Skin GetCurrentGridSkin()
+        {
+            return GridSkins.GetSkin(GetCurrentUserLookAndFeel);
+        }
+        public static UserLookAndFeel GetCurrentUserLookAndFeel
+        {
+            get
+            {
+                return DevExpress.LookAndFeel.UserLookAndFeel.Default;
+            }
+        }
+        public static string CurrentSkinName
+        {
+            get
+            {
+                return DevExpress.LookAndFeel.UserLookAndFeel.Default.SkinName;
+            }
         }
         public static Color GetCurrentBorderColor()
         {
@@ -521,12 +573,12 @@ namespace Windsor.Commons.DeveloperExpress
         }
         public static Color GetCurrentSkinControlColor()
         {
-            Skin skin = GetCurrentSkin();
+            Skin skin = GetCurrentCommonSkin();
             return skin.Colors["Control"];
         }
         public static Color GetCurrentSkinControlTextColor()
         {
-            Skin skin = GetCurrentSkin();
+            Skin skin = GetCurrentCommonSkin();
             return skin.Colors["ControlText"];
         }
     }
