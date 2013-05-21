@@ -20,11 +20,11 @@
 ***************************************************************************************************/
 
 
-/*  
 
---  DROP STATEMENTS --
---  DROP STATEMENTS --
---  DROP STATEMENTS --
+
+/*
+
+  --  DROP database objects supporting TRI functionality
 
 ALTER TABLE "TRI_WASTE_TREAT_METH"
  DROP CONSTRAINT "FK_WASTETREATMETH_WTDTL";
@@ -1692,3 +1692,4 @@ BEGIN
     END IF; 
   END IF; 
 END; 
+/
