@@ -156,6 +156,15 @@ namespace Windsor.Commons.Core
             }
             return sb.ToString();
         }
+        public static string TrimAndReturnNonEmptyOrNullString(this string text)
+        {
+            if (text == null)
+            {
+                return null;
+            }
+            text = text.Trim();
+            return string.IsNullOrEmpty(text) ? null : text;
+        }
         /// <summary>
         /// Return the character index of findChar within text, starting from the end of text
         /// and working backwards until the n-th occurance is found (specified by 1-based lastNthCount).
