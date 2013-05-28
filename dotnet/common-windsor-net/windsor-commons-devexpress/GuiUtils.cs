@@ -188,6 +188,19 @@ namespace Windsor.Commons.DeveloperExpress
             return XTRA_MSG_BOX.Show(owner, WrapMessage(messageFormat), Application.ProductName + " Question",
                                        MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
         }
+        public static DialogResult YesNoCancelMessageBox(IWin32Window owner, ref bool dontShowAgainChecked,
+                                                         string messageFormat, params object[] args)
+        {
+            if (!CollectionUtils.IsNullOrEmpty(args))
+            {
+                messageFormat = string.Format(messageFormat, args);
+            }
+            messageFormat += Environment.NewLine + " ";
+            string dontShowAgainText = DefaultDontShowMessageBoxAgainText;
+            return XTRA_MSG_BOX.Show(owner, WrapMessage(messageFormat), Application.ProductName + " Question",
+                                       MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question,
+                                       dontShowAgainText, ref dontShowAgainChecked);
+        }
         public static bool WarningYesNoMessageBox(IWin32Window owner, string messageFormat, params object[] args)
         {
             if (!CollectionUtils.IsNullOrEmpty(args))
@@ -197,6 +210,19 @@ namespace Windsor.Commons.DeveloperExpress
             messageFormat += Environment.NewLine + " ";
             return (XTRA_MSG_BOX.Show(owner, WrapMessage(messageFormat), Application.ProductName + " Warning",
                                         MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes);
+        }
+        public static bool WarningYesNoMessageBox(IWin32Window owner, ref bool dontShowAgainChecked,
+                                                  string messageFormat, params object[] args)
+        {
+            if (!CollectionUtils.IsNullOrEmpty(args))
+            {
+                messageFormat = string.Format(messageFormat, args);
+            }
+            messageFormat += Environment.NewLine + " ";
+            string dontShowAgainText = DefaultDontShowMessageBoxAgainText;
+            return (XTRA_MSG_BOX.Show(owner, WrapMessage(messageFormat), Application.ProductName + " Warning",
+                                        MessageBoxButtons.YesNo, MessageBoxIcon.Warning,
+                                        dontShowAgainText, ref dontShowAgainChecked) == DialogResult.Yes);
         }
         public static void DataBind(ComboBoxItemCollection collection, IEnumerable dataSource,
                                     string valueMemberName, string tagMemberName)
@@ -509,7 +535,7 @@ namespace Windsor.Commons.DeveloperExpress
                                                         bool showNewFolderBtn, string description,
                                                         IWin32Window owner)
         {
-            if (args.Button.Kind == ButtonPredefines.Ellipsis)
+            if ((ButtonPredefines)args.Button.Tag == ButtonPredefines.Ellipsis)
             {
                 string startFolderPath = null;
                 if (!string.IsNullOrEmpty(comboBox.Text))

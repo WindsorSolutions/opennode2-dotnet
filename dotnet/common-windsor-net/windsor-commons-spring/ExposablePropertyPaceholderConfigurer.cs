@@ -75,6 +75,27 @@ namespace Windsor.Commons.Spring
             this.IgnoreUnresolvablePlaceholders = false;
             this.EnvironmentVariableMode = EnvironmentVariableMode.Fallback;
         }
+        private string m_LocationString;
+        public string LocationString
+        {
+            get
+            {
+                return m_LocationString;
+            }
+            set
+            {
+                try
+                {
+                    base.Location = new FileSystemResource(value);
+                    m_LocationString = value;
+                }
+                catch (Exception e)
+                {
+                    throw new ArgException("Failed to set the ExposablePropertyPlaceholderConfigurer.LocationString property with exception: {1}",
+                                            value, ExceptionUtils.GetDeepExceptionMessage(e));
+                }
+            }
+        }
         public new IResource Location
         {
             set

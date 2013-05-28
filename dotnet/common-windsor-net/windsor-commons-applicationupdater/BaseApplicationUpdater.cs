@@ -452,7 +452,9 @@ namespace Windsor.Commons.ApplicationUpdater
                     CheckToCancel();
                     LOG.Debug("ThreadWorkProc: Performing {0} from version {1} to version {2}",
                               updateAction.ToString(), (existingVersion == null) ? "Unknown" :
-                              existingVersion.ToString(), appManifest.CurrentDatabaseVersion.ToString());
+                              existingVersion.ToString(),
+                              (appManifest.CurrentDatabaseVersion == null) ? "Not specified" :
+                              appManifest.CurrentDatabaseVersion.ToString());
 
                     if (EnumUtils.IsFlagSet(updateAction, UpdateAction.FullRefresh))
                     {

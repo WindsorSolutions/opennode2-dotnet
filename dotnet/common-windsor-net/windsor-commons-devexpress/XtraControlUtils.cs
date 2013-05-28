@@ -20,5 +20,12 @@ namespace Windsor.Commons.DeveloperExpress
 {
     public static class XtraControlUtils
     {
+        public static void FocusAndSelectAll(this DevExpress.XtraEditors.TextEdit textEdit)
+        {
+            textEdit.Focus();
+            textEdit.SelectAll();
+            //textEdit.SelectionStart = 0;
+            //textEdit.SelectionLength = textEdit.Text.Length;
+        }
     }
 }
