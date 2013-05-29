@@ -42,8 +42,10 @@ namespace Windsor.Commons.Core
 
         public static IEnumerable<T> GetPage<T>(this IEnumerable<T> items, int? pageSize, int? pageNumber)
         {
-            if (pageSize.HasValue && pageSize < 0) throw new ArgumentOutOfRangeException("pageSize", "pageSize cannot be less than 0 (and even 0 is a bit ridiculous, but we'll take it)");
-            if (pageNumber.HasValue && pageNumber <= 0) throw new ArgumentOutOfRangeException("pageNumber", "pageNumber is 1-based");
+            if (pageSize.HasValue && pageSize < 0)
+                throw new ArgumentOutOfRangeException("pageSize", "pageSize cannot be less than 0 (and even 0 is a bit ridiculous, but we'll take it)");
+            if (pageNumber.HasValue && pageNumber <= 0)
+                throw new ArgumentOutOfRangeException("pageNumber", "pageNumber is 1-based");
 
             var rc = items;
             //subtract one from page, because page 1 should start at skipping 0 items.
@@ -53,11 +55,17 @@ namespace Windsor.Commons.Core
             return pageSize.HasValue ? rc.Take(pageSize.Value) : rc;
         }
 
-        public static void ForEach<T>(this IEnumerable<T> items, Action<T> action)
+        public static List<T> ForEachEx<T>(this List<T> items, Action<T> action)
         {
-            if (action == null) throw new ArgumentNullException("action"); 
+            if (action == null)
+            {
+                throw new ArgumentNullException("action");
+            }
             foreach (var item in items)
+            {
                 action(item);
+            }
+            return items;
         }
     }
 }

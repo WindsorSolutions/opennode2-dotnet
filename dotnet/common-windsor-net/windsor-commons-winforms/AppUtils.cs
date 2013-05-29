@@ -214,6 +214,15 @@ namespace Windsor.Commons.WinForms
             }
             return false;
         }
+        // Should be called from the Form's Shown event
+        public static void ForceFormToForeground(Form form)
+        {
+            bool wasTopMost = form.TopMost;
+            form.TopMost = true;
+            form.BringToFront();
+            form.Activate();
+            form.TopMost = wasTopMost;
+        }
     }
     public static class Extensions
     {
