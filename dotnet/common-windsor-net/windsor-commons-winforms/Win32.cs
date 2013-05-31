@@ -10,6 +10,7 @@ namespace Windsor.Commons.WinForms
 {
     public static class Win32
     {
+        public const uint SW_SHOW = 5;
 
         public static bool Is64Bit()
         {
@@ -73,10 +74,33 @@ namespace Windsor.Commons.WinForms
         public static extern bool EndPaint(IntPtr hWnd, [In] ref PAINTSTRUCT lpPaint);
 
         [DllImport("user32.dll")]
+        public static extern IntPtr GetActiveWindow();
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
+
+        // When you don't want the ProcessId, use this overload and pass IntPtr.Zero for the second parameter
+        [DllImport("user32.dll")]
+        public static extern uint GetWindowThreadProcessId(IntPtr hWnd, IntPtr ProcessId);
+
+        [DllImport("kernel32.dll")]
+        public static extern uint GetCurrentThreadId();
+
+        /// <summary>The GetForegroundWindow function returns a handle to the foreground window.</summary>
+        [DllImport("user32.dll")]
         public static extern IntPtr GetForegroundWindow();
 
         [DllImport("user32.dll")]
-        public static extern IntPtr GetActiveWindow();
+        public static extern bool AttachThreadInput(uint idAttach, uint idAttachTo, bool fAttach);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern bool BringWindowToTop(IntPtr hWnd);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern bool BringWindowToTop(HandleRef hWnd);
+
+        [DllImport("user32.dll")]
+        public static extern bool ShowWindow(IntPtr hWnd, uint nCmdShow);
 
         private const uint WM_SETREDRAW = 0x000B;
         private const uint TRUE = 1;

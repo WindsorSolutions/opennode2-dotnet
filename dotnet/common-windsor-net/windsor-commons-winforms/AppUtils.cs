@@ -217,11 +217,32 @@ namespace Windsor.Commons.WinForms
         // Should be called from the Form's Shown event
         public static void ForceFormToForeground(Form form)
         {
-            bool wasTopMost = form.TopMost;
-            form.TopMost = true;
-            form.BringToFront();
+            //bool wasTopMost = form.TopMost;
+            //form.TopMost = true;
+            //form.BringToFront();
+            //form.Activate();
+            //form.TopMost = wasTopMost;
+            try
+            {
+                uint foreThread = Win32.GetWindowThreadProcessId(Win32.GetForegroundWindow(), IntPtr.Zero);
+                uint appThread = Win32.GetCurrentThreadId();
+                if (foreThread != appThread)
+                {
+                    Win32.AttachThreadInput(foreThread, appThread, true);
+                    Win32.BringWindowToTop(form.Handle);
+                    Win32.ShowWindow(form.Handle, Win32.SW_SHOW);
+                    Win32.AttachThreadInput(foreThread, appThread, false);
+                }
+                else
+                {
+                    Win32.BringWindowToTop(form.Handle);
+                    Win32.ShowWindow(form.Handle, Win32.SW_SHOW);
+                }
+            }
+            catch (Exception)
+            {
+            }
             form.Activate();
-            form.TopMost = wasTopMost;
         }
     }
     public static class Extensions
