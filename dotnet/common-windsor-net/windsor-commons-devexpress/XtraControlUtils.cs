@@ -27,5 +27,12 @@ namespace Windsor.Commons.DeveloperExpress
             //textEdit.SelectionStart = 0;
             //textEdit.SelectionLength = textEdit.Text.Length;
         }
+        public static void FocusAndSelectAll(this DevExpress.XtraEditors.LabelControl label)
+        {
+            label.Focus();
+            label.Select();
+            //textEdit.SelectionStart = 0;
+            //textEdit.SelectionLength = textEdit.Text.Length;
+        }
     }
 }

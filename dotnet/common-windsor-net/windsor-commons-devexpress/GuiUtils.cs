@@ -604,6 +604,9 @@ namespace Windsor.Commons.DeveloperExpress
         }
         public static Color GetCurrentSkinControlTextColor()
         {
+            Skin currentSkin = GetCurrentCommonSkin();
+
+            Color c = currentSkin.TranslateColor(SystemColors.GrayText);
             Skin skin = GetCurrentCommonSkin();
             return skin.Colors["ControlText"];
         }

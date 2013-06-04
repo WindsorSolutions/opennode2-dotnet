@@ -112,4 +112,11 @@ namespace Windsor.Commons.DeveloperExpress
             }
         }
     }
+    public static class DXErrorProviderExtensions
+    {
+        public static void SetErrorFormat(this DXErrorProvider errorProvider, Control control, string errorText, params object[] args)
+        {
+            errorProvider.SetError(control, string.Format(errorText, args));
+        }
+    }
 }
