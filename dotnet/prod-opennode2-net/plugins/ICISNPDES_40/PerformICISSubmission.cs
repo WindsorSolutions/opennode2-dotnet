@@ -103,6 +103,20 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_40
             {
                 _submissionTrackingDataType = new SubmissionTrackingDataType();
             }
+
+            if (_submissionTrackingDataType.WorkflowStatus == TransactionStatusCode.Pending && _submissionTrackingDataType.ETLCompletionDateTimeSpecified == false)
+            {
+                AppendAuditLogEvent("Previous ETL execution in the tracking table with primary key \"{0}\" did not complete due to unrecoverable database error. Setting transaction to Failed."
+                    , _submissionTrackingDataTypePK);
+                // Update submission status in tracking table
+                _submissionTrackingDataType.WorkflowStatus = TransactionStatusCode.Failed;
+                _submissionTrackingDataType.WorkflowStatusMessage = "ETL did not complete due to unrecoverable database error";
+                SubmissionTrackingTableHelper.Update(_stagingDao, _submissionTrackingDataTypePK, _submissionTrackingDataType);
+
+                //create a new submission tracking record for the current workflow execution
+                _submissionTrackingDataType = new SubmissionTrackingDataType();
+                _submissionTrackingDataTypePK = null;
+            }
             else if (_submissionTrackingDataType.SubmissionDateTimeSpecified)
             {
                 DebugUtils.AssertDebuggerBreak(_submissionTrackingDataTypePK != null);
