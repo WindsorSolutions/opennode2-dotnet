@@ -3,10 +3,8 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="AnonContentHolder" runat="server">
     <div id="pageTitle">
-        Welcome to the Node Admin</div>
+        Welcome to OpenNode2 Admin</div>
     <div class="introText">
-        <p>
-            Welcome to the Network Node Administration application or Node Admin!</p>
         <p>
             The purpose of this application is to enable you to manage all aspects of the operation of your Network Node.  If you encounter any problems when using the Node Admin, please contact the Node Administrator by clicking on the support link at the bottom of each page.</p>
         <p>

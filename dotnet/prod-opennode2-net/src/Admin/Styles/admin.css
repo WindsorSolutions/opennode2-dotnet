@@ -43,8 +43,7 @@ select[disabled] {
 #titleArea {
 	width: 100%;
 	padding: 0;
-	margin: 0;
-	/*background: #E3ECF3;*/
+	margin: 0;	
 	border-bottom: 1px solid #DCDCDC;
 }
 
@@ -150,7 +149,7 @@ select[disabled] {
 }
 
 #pageTitle {
-	color: #99CC33;
+	color: #7294AD;
 	font-size: 22px;
 	font-weight: bold;
 	font-family: Verdana, Helvetica, Arial, sans-serif;
@@ -366,6 +365,10 @@ input{
 	font-family: Verdana, Helvetica, Arial, sans-serif;
 	margin-left: 0px;
 }
+input[type=submit]
+{
+    cursor:pointer;
+}
 
 #formTable th {
 	border-bottom: solid 1px #999;
@@ -511,12 +514,9 @@ td.label{
 
 .button {
 	width: auto;
-	border: 3px double #999999;
-	border-top-color: #CCCCCC;
-	border-left-color: #CCCCCC;
-	padding: 3px;
-	background-color: #9EC630;
-	background-repeat: repeat-x;
+	border: 0px;
+	padding: 5px;
+	background-color: #7294AD; /*#245592;*/
 	color: #FFF;
 	font-size: 10px;
 	font-weight: bold;
@@ -575,7 +575,7 @@ td.label{
     padding: 2px 2px 2px 2px;
     margin: 0px;
     border: solid 1px #666;
-    background-color: #99CC33;
+    background-color: #245592;
 }
 
 .formtext 

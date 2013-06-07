@@ -34,7 +34,7 @@
         <cc1:ToolkitScriptManager ID="ScriptManager1" CombineScripts="true" runat="server" AsyncPostBackTimeout="600" ScriptMode="Release" EnablePartialRendering="true" />
         <div id="titleArea">
             <div id="title">
-                <%=Page.Title%>
+                <asp:Image ID="Image1" ImageUrl="~/Images/UI/ON2_logo_2013.png" AlternateText="OpenNode2 Logo" runat="server" />
             </div>
             <div id="tabs">
                 <ul id="tabsList" runat="server">

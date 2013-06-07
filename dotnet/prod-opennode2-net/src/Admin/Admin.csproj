@@ -94,6 +94,7 @@
     <Content Include="Images\UI\collapse_16.png" />
     <Content Include="Images\UI\expand_16.png" />
     <Content Include="Images\UI\group_key.png" />
+    <Content Include="Images\UI\ON2_logo_2013.png" />
     <Content Include="Secure\ConfigEndpointUser.aspx" />
     <Content Include="Secure\ConfigEndpointUserEdit.aspx" />
     <Content Include="Web.config">

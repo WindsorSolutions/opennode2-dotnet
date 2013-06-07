@@ -17,7 +17,7 @@
     <form id="form1" runat="server">
     <div id="titleArea">
         <div id="title">
-            <%=Page.Title%>
+            <asp:Image ImageUrl="~/Images/UI/ON2_logo_2013.png" AlternateText="OpenNode2 Logo" runat="server" />
         </div>
         <div style="clear: both">
         </div>
