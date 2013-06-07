@@ -121,8 +121,8 @@
                                         </tr>
                                         <tr style="padding-top: 0px">
                                             <td colspan="100%" align="right" style="padding: 0px">
-                                                <asp:Button Text="Accept" CssClass="button" runat="server" ID="acceptServiceBtn" Height="25px" OnCommand="OnAcceptClick" CommandArgument='<%#Eval("Id")%>' />
-                                                <asp:Button Text="Reject" CssClass="button" runat="server" ID="rejectServiceBtn" Height="25px" OnCommand="OnDenyClick" CommandArgument='<%#Eval("Id")%>' />
+                                                <asp:Button Text="Accept" CssClass="button" runat="server" ID="acceptServiceBtn" OnCommand="OnAcceptClick" CommandArgument='<%#Eval("Id")%>' />
+                                                <asp:Button Text="Reject" CssClass="button" runat="server" ID="rejectServiceBtn" OnCommand="OnDenyClick" CommandArgument='<%#Eval("Id")%>' />
                                             </td>
                                         </tr>
                                     </table>

@@ -527,12 +527,9 @@ td.label{
 
 .button[disabled] {
 	width: auto;
-	border: 3px double #999999;
-	border-top-color: #CCCCCC;
-	border-left-color: #CCCCCC;
-	padding: 3px;
+	border: 0px;
+	padding: 5px;
 	background-color: #dcdcdc;
-	background-repeat: repeat-x;
 	color: #FFF;
 	font-size: 10px;
 	font-weight: bold;
