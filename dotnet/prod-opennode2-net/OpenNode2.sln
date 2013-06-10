@@ -178,6 +178,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TRI_50", "plugins\TRI_50\TR
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestEndpoint", "src\RestEndpoint\RestEndpoint.csproj", "{A3C6F384-ECB4-4A64-A06F-3E70F0EA7D10}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Windsor.Commons.AspNet.WebApi", "..\common-windsor-net\windsor-commons-aspnet-webapi\Windsor.Commons.AspNet.WebApi.csproj", "{3B182887-CF56-4470-88E2-846ACCC9E0AF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -392,6 +394,10 @@ Global
 		{A3C6F384-ECB4-4A64-A06F-3E70F0EA7D10}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3C6F384-ECB4-4A64-A06F-3E70F0EA7D10}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3C6F384-ECB4-4A64-A06F-3E70F0EA7D10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B182887-CF56-4470-88E2-846ACCC9E0AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B182887-CF56-4470-88E2-846ACCC9E0AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B182887-CF56-4470-88E2-846ACCC9E0AF}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B182887-CF56-4470-88E2-846ACCC9E0AF}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
