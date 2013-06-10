@@ -272,7 +272,7 @@ namespace Windsor.Commons.Logging
                 if (sb.Length > maxOututLength)
                 {
                     sb.Remove(maxOututLength, sb.Length - maxOututLength);
-                    sb.Append(" ....");
+                    sb.Append(" ...");
                 }
             }
             catch (Exception e)
@@ -305,7 +305,7 @@ namespace Windsor.Commons.Logging
                 if (sb.Length > maxOututLength)
                 {
                     sb.Remove(maxOututLength, sb.Length - maxOututLength);
-                    sb.Append(" ....");
+                    sb.Append(" ...");
                 }
             }
             catch (Exception)
