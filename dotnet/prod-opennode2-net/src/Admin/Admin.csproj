@@ -475,7 +475,9 @@
     <Content Include="Config\DashboardSection.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Config\FlowSection.config" />
+    <Content Include="Config\FlowSection.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Config\ProfileSection.config" />
