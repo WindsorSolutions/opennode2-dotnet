@@ -70,17 +70,17 @@ namespace Windsor.Node2008.Admin.Secure
                 feed = HttpContext.Current.Cache.Get(RSS_CACHE_NAME) as RssFeed;
             }
 
-            // Limit feed to the first 2 elements:
+            // Limit feed to the first 4 elements:
             if ((feed.Channels != null) && (feed.Channels.Count > 0))
             {
-                for (int i = feed.Channels.Count - 1; i > 1; --i)
+                for (int i = feed.Channels.Count - 1; i > 3; --i)
                 {
                     feed.Channels.RemoveAt(i);
                 }
                 RssItemCollection items = feed.Channels[0].Items;
                 if ((items != null) && (items.Count > 0))
                 {
-                    for (int i = items.Count - 1; i > 1; --i)
+                    for (int i = items.Count - 1; i > 3; --i)
                     {
                         RssElement element = items[i];
                         items.RemoveAt(i);

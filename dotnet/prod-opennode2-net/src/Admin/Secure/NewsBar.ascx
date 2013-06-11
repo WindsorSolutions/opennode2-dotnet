@@ -18,8 +18,8 @@
                 
                 <div>
                    
-                   <div class="newsTitle"><img alt="" src="../Images/UI/balloon.png" /><%# Server.HtmlEncode((string)Eval("Title"))%></div> 
-                   <div class="newsTime"><%# Server.HtmlEncode(Eval("PubDate").ToString())%></div> 
+                   <div class="newsTitle"><img alt="" src="../Images/UI/balloon.png" /><a href="<%# Eval("Link").ToString() %>" target="_blank"><%# Server.HtmlEncode((string)Eval("Title"))%></a></div> 
+                   <div class="newsTime"><%# Server.HtmlEncode(Convert.ToDateTime(Eval("PubDate")).ToString("g"))%></div> 
                    <div class="newsDescr"><%# Server.HtmlEncode((string)Eval("Description"))%></div> 
                     
                 </div>
