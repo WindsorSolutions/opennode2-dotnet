@@ -27,7 +27,7 @@
 </head>
 <body>
 <div id="titleArea">
-		<div id="title"><fmt:message key="appTitle" /></div>
+		<div id="title"><img src="<c:url value="img/ON2_logo_2013.png"/>" alt="OpenNode2 Logo"/></div>
 		<div id="tabs">
 		<ul>
 			<c:choose>
