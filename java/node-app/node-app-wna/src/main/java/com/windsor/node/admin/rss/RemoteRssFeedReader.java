@@ -130,6 +130,17 @@ public class RemoteRssFeedReader implements FeedReader, InitializingBean {
                     item.setDate(entry.getPublishedDate());
                 }
 
+                if (null == entry.getLink()) {
+
+                    logger.debug("Null link");
+
+                } else {
+
+                    logger.debug("entry.getLink(): "
+                            + entry.getLink());
+                    item.setUrl(entry.getLink());
+                }
+                
                 result.getItems().add(item);
             }
 

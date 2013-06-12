@@ -11,7 +11,10 @@
 </c:if>
 
 <c:forEach items="${feed.items}" var="item">
-    <div class="newsTitle"><img alt="" src="img/comment_yellow.gif" /><c:out value="${item.title}" escapeXml="false"/></div>
+    <div class="newsTitle">
+    	<img alt="" src="img/comment_yellow.gif" />
+    	<a href="<c:out value="${item.url}" escapeXml="false"/>" target="_blank"><c:out value="${item.title}" escapeXml="false"/></a>
+    </div>
     <div class="newsTime"><c:out value="${item.date}" escapeXml="false"/></div>
     <div class="newsDescr"><c:out value="${item.body}" escapeXml="false"/></div>
 </c:forEach>
