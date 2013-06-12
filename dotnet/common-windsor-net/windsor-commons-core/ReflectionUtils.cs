@@ -684,7 +684,15 @@ namespace Windsor.Commons.Core
             PropertyInfo property = objType.GetProperty(memberName, flags);
             if (property == null)
             {
-                FieldInfo field = objType.GetField(memberName, flags);
+                FieldInfo field;
+                if (includeInheritedMembers && includeNonPublicMembers)
+                {
+                    field = GetFieldByName(objType, memberName);
+                }
+                else
+                {
+                    field = objType.GetField(memberName, flags);
+                }
                 if (field == null)
                 {
                     throw new ArgumentException(string.Format("Did not find member \"{0}\" on type \"{1}\"", memberName,
