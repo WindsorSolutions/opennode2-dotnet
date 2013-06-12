@@ -150,7 +150,7 @@ public class BaseJdbcDao extends JdbcDaoSupport {
 
         validateStringArg(id);
 
-        int result = getJdbcTemplate().queryForInt(sql, new Object[] { id });
+        Integer result = getJdbcTemplate().queryForObject(sql, new Object[] { id }, Integer.class);
 
         logger.debug("exists result: " + result);
 
@@ -165,13 +165,10 @@ public class BaseJdbcDao extends JdbcDaoSupport {
      * @param upperKey
      * @return
      */
-    @SuppressWarnings("unchecked")
     protected Map<String, String> getMap(String sql, boolean upperKey) {
-
         validateStringArg(sql);
-
         return (Map<String, String>) getJdbcTemplate().query(sql,
-                new MapExtractor(upperKey));
+                new StringMapExtractor(upperKey));
     }
 
     /**
@@ -182,13 +179,18 @@ public class BaseJdbcDao extends JdbcDaoSupport {
      * @param upperKey
      * @return
      */
-    @SuppressWarnings("unchecked")
-    protected Map<String, String> getMap(String sql, String id, boolean upperKey) {
+    protected Map<String, Object> getMap(String sql, String id, boolean upperKey) {
 
         validateStringArg(sql);
 
-        return (Map) getJdbcTemplate().query(sql, new Object[] { id },
+        return getJdbcTemplate().query(sql, new Object[] { id },
                 new MapExtractor(upperKey));
+    }
+
+    protected Map<String, String> getStringMap(String sql, String id, boolean upperKey)
+    {
+        validateStringArg(sql);
+        return getJdbcTemplate().query(sql, new Object[]{id}, new StringMapExtractor(upperKey));
     }
 
     /**
@@ -204,7 +206,7 @@ public class BaseJdbcDao extends JdbcDaoSupport {
 
         ByIndexOrNameMap indeNameMap = new ByIndexOrNameMap();
 
-        Map<String, String> map = getMap(sql, id, true);
+        Map<String, String> map = getStringMap(sql, id, true);
 
         for (Iterator<Entry<String, String>> it = map.entrySet().iterator(); it
                 .hasNext();) {
@@ -242,7 +244,7 @@ public class BaseJdbcDao extends JdbcDaoSupport {
      * @param id
      * @return
      */
-    protected List<?> getList(String sql, String id) {
+    protected List<String> getList(String sql, String id) {
 
         validateStringArg(sql);
         validateStringArg(id);
@@ -273,7 +275,7 @@ public class BaseJdbcDao extends JdbcDaoSupport {
      * @param rowMapper
      * @return
      */
-    protected List<?> getList(String sql, String id, RowMapper rowMapper)
+    protected List<?> getList(String sql, String id, RowMapper<?> rowMapper)
     {
         validateStringArg(sql);
         validateStringArg(id);
@@ -337,8 +339,8 @@ public class BaseJdbcDao extends JdbcDaoSupport {
      * @author mchmarny
      * 
      */
-    protected class ArrayMapper implements RowMapper {
-        public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+    protected class ArrayMapper implements RowMapper<String> {
+        public String mapRow(ResultSet rs, int rowNum) throws SQLException {
             return rs.getString(1);
         }
     }
@@ -351,7 +353,7 @@ public class BaseJdbcDao extends JdbcDaoSupport {
      * @return
      * @throws DataAccessException
      */
-    public Object queryForObject(String sql, Object[] args, RowMapper rowMapper)
+    public Object queryForObject(String sql, Object[] args, RowMapper<?> rowMapper)//FIXME deprecate and remove this, serves almost no purpose at all
             throws DataAccessException {
 
         logger.debug("SQL: " + sql);
@@ -371,7 +373,7 @@ public class BaseJdbcDao extends JdbcDaoSupport {
      * @author mchmarny
      * 
      */
-    protected class MapExtractor implements ResultSetExtractor {
+    protected class MapExtractor implements ResultSetExtractor<Map<String, Object>> {
 
         private boolean makeKeyUpper = false;
 
@@ -379,10 +381,10 @@ public class BaseJdbcDao extends JdbcDaoSupport {
             makeKeyUpper = upperKey;
         }
 
-        public Object extractData(ResultSet rs) throws SQLException,
+        public Map<String, Object> extractData(ResultSet rs) throws SQLException,
                 DataAccessException {
 
-            Map<String, String> map = new TreeMap<String, String>(
+            Map<String, Object> map = new TreeMap<String, Object>(
                     String.CASE_INSENSITIVE_ORDER);
 
             while (rs.next()) {
@@ -404,15 +406,44 @@ public class BaseJdbcDao extends JdbcDaoSupport {
 
     }
 
+    //FIXME Duplicate method because return types are an issue
+    protected class StringMapExtractor implements ResultSetExtractor<Map<String, String>>
+    {
+        private boolean makeKeyUpper = false;
+        public StringMapExtractor(boolean upperKey)
+        {
+            makeKeyUpper = upperKey;
+        }
+
+        public Map<String, String> extractData(ResultSet rs) throws SQLException, DataAccessException
+        {
+            Map<String, String> map = new TreeMap<String, String>(String.CASE_INSENSITIVE_ORDER);
+            while(rs.next())
+            {
+                String key = rs.getString(1);
+                String val = rs.getString(2);
+                if(makeKeyUpper)
+                {
+                    map.put(key.toUpperCase(), val);
+                }
+                else
+                {
+                    map.put(key, val);
+                }
+            }
+            return map;
+        }
+    }
+
     /**
      * SimpleStringMapper
      * 
      * @author mchmarny
      * 
      */
-    protected class SimpleStringMapper implements RowMapper {
+    protected class SimpleStringMapper implements RowMapper<String> {
 
-        public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+        public String mapRow(ResultSet rs, int rowNum) throws SQLException {
 
             return rs.getString(1);
 

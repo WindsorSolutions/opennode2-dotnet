@@ -164,7 +164,7 @@ public class JdbcRequestDao extends BaseJdbcDao implements RequestDao,
     /**
      * get
      */
-    public List get(CommonTransactionStatusCode status) {
+    public List<DataRequest> get(CommonTransactionStatusCode status) {
 
         validateObjectArg(status, "CommonTransactionStatusCode");
 
@@ -175,7 +175,7 @@ public class JdbcRequestDao extends BaseJdbcDao implements RequestDao,
     /**
      * get
      */
-    public List get(CommonTransactionStatusCode status, RequestType type) {
+    public List<DataRequest> get(CommonTransactionStatusCode status, RequestType type) {
 
         validateObjectArg(status, "CommonTransactionStatusCode");
         validateObjectArg(type, "RequestType");
@@ -278,13 +278,13 @@ public class JdbcRequestDao extends BaseJdbcDao implements RequestDao,
             if (instance.getParameters() != null
                     && instance.getParameters().size() > 0) {
 
-                for (Iterator it = instance.getParameters().keySet().iterator(); it
+                for (Iterator<String> it = instance.getParameters().keySet().iterator(); it
                         .hasNext();) {
 
                     logger.debug("Saving request parameters...");
 
                     // Id, RequestId, ArgKey, ArgValue
-                    String key = (String) it.next();
+                    String key = it.next();
 
                     args2[0] = UUIDGenerator.makeId();
                     args2[1] = instance.getId();
@@ -321,12 +321,12 @@ public class JdbcRequestDao extends BaseJdbcDao implements RequestDao,
                 int notifSize = instance.getNotifications().size();
                 logger.debug("Numberof notifications: " + notifSize);
 
-                Iterator notifKeyValuePair = instance.getNotifications()
+                Iterator<Map.Entry<String, Object>> notifKeyValuePair = instance.getNotifications()
                         .entrySet().iterator();
 
                 for (int i = 0; i < notifSize; i++) {
 
-                    Map.Entry entry = (Map.Entry) notifKeyValuePair.next();
+                    Map.Entry<String, Object> entry = notifKeyValuePair.next();
 
                     logger.debug("Map.Entry: " + entry);
 
@@ -371,7 +371,7 @@ public class JdbcRequestDao extends BaseJdbcDao implements RequestDao,
 
                 for (int r = 0; r < instance.getRecipients().size(); r++) {
 
-                    String recipient = (String) instance.getRecipients().get(r);
+                    String recipient = instance.getRecipients().get(r);
 
                     if (StringUtils.isNotBlank(recipient)) {
 
@@ -421,9 +421,9 @@ public class JdbcRequestDao extends BaseJdbcDao implements RequestDao,
      * @author mchmarny
      * 
      */
-    private class RequestMapper implements RowMapper {
+    private class RequestMapper implements RowMapper<DataRequest> {
 
-        public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+        public DataRequest mapRow(ResultSet rs, int rowNum) throws SQLException {
 
             DataRequest obj = new DataRequest();
 

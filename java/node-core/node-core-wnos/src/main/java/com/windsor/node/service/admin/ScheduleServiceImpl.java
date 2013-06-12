@@ -40,6 +40,7 @@ import org.springframework.beans.factory.InitializingBean;
 import com.windsor.node.common.domain.Activity;
 import com.windsor.node.common.domain.ActivityType;
 import com.windsor.node.common.domain.NodeVisit;
+import com.windsor.node.common.domain.ScheduleFrequencyType;
 import com.windsor.node.common.domain.ScheduledItem;
 import com.windsor.node.common.domain.SystemRoleType;
 import com.windsor.node.common.exception.WinNodeException;
@@ -170,7 +171,10 @@ public class ScheduleServiceImpl extends BaseService implements
 
         save(instance, visit);
 
-        scheduleDao.setRun(instance.getId(), DateUtil.getTimestamp());
+        //scheduleDao.setRun(instance.getId(), DateUtil.getTimestamp());
+        instance.setRunNow(false);
+        instance.setNextRunOn(DateUtil.getTimestamp());
+        scheduleDao.save(instance);
 
     }
 
@@ -205,9 +209,10 @@ public class ScheduleServiceImpl extends BaseService implements
 
             instance.setModifiedById(visit.getUserAccount().getId());
 
-            if (instance.getNextRunOn() == null
+            //New functionality, only do this if not set to Never
+            if (ScheduleFrequencyType.Never != instance.getFrequencyType() && (instance.getNextRunOn() == null
                     || instance.getNextRunOn().equals(
-                            new Timestamp(Integer.MIN_VALUE))) {
+                            new Timestamp(Integer.MIN_VALUE)))) {
                 instance.setNextRunOn(instance.getStartOn());
             }
 

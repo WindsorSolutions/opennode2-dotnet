@@ -128,7 +128,7 @@ public class Endpoint2ServiceImpl extends BaseEndpoint2Service implements
     private String nodePingReadyMessage;
     private static final String HTTP_HEADER_FORWARD_FOR = "X-Forward-For";
 
-    private static final EndpointVersionType endpointVersion = EndpointVersionType.EN20;
+    private static final EndpointVersionType endpointVersion = EndpointVersionType.EN21;
 
     /**
      * Endpoint2ServiceImpl

@@ -32,9 +32,9 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.windsor.node.common.service.cmf;
 
 import java.util.List;
-
 import com.windsor.node.common.domain.AsyncComplexContent;
 import com.windsor.node.common.domain.ComplexContent;
+import com.windsor.node.common.domain.Document;
 import com.windsor.node.common.domain.EndpointVisit;
 import com.windsor.node.common.domain.SimpleContent;
 import com.windsor.node.common.domain.TransactionStatus;
@@ -58,7 +58,7 @@ public interface ContentService {
      * @return a list of type
      * @link{com.windsor.node.common.domain.Document
      */
-    List download(EndpointVisit visit, ComplexContent content);
+    List<Document> download(EndpointVisit visit, ComplexContent content);
 
     /**
      * Returns service description.

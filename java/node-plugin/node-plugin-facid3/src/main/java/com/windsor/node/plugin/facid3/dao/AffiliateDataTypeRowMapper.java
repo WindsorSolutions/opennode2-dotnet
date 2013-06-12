@@ -2,24 +2,22 @@ package com.windsor.node.plugin.facid3.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.jdbc.core.RowMapper;
+import com.windsor.node.plugin.facid3.domain.AddressPostalCodeDataType;
+import com.windsor.node.plugin.facid3.domain.AffiliateDataType;
+import com.windsor.node.plugin.facid3.domain.CountryCodeListIdentifierDataType;
+import com.windsor.node.plugin.facid3.domain.CountryIdentityDataType;
+import com.windsor.node.plugin.facid3.domain.IndividualIdentifierDataType;
+import com.windsor.node.plugin.facid3.domain.IndividualIdentityDataType;
+import com.windsor.node.plugin.facid3.domain.MailingAddressDataType;
+import com.windsor.node.plugin.facid3.domain.ObjectFactory;
+import com.windsor.node.plugin.facid3.domain.OrganizationIdentifierDataType;
+import com.windsor.node.plugin.facid3.domain.OrganizationIdentityDataType;
+import com.windsor.node.plugin.facid3.domain.StateCodeListIdentifierDataType;
+import com.windsor.node.plugin.facid3.domain.StateIdentityDataType;
 
-import com.windsor.node.plugin.facid3.domain.generated.AddressPostalCodeDataType;
-import com.windsor.node.plugin.facid3.domain.generated.AffiliateDataType;
-import com.windsor.node.plugin.facid3.domain.generated.CountryCodeListIdentifierDataType;
-import com.windsor.node.plugin.facid3.domain.generated.CountryIdentityDataType;
-import com.windsor.node.plugin.facid3.domain.generated.IndividualIdentifierDataType;
-import com.windsor.node.plugin.facid3.domain.generated.IndividualIdentityDataType;
-import com.windsor.node.plugin.facid3.domain.generated.MailingAddressDataType;
-import com.windsor.node.plugin.facid3.domain.generated.ObjectFactory;
-import com.windsor.node.plugin.facid3.domain.generated.OrganizationIdentifierDataType;
-import com.windsor.node.plugin.facid3.domain.generated.OrganizationIdentityDataType;
-import com.windsor.node.plugin.facid3.domain.generated.StateCodeListIdentifierDataType;
-import com.windsor.node.plugin.facid3.domain.generated.StateIdentityDataType;
-
-public class AffiliateDataTypeRowMapper implements RowMapper
+public class AffiliateDataTypeRowMapper implements RowMapper<AffiliateDataType>
 {
     private AffiliateDataTypeDao affiliateDataTypeDao;
     public AffiliateDataTypeRowMapper(AffiliateDataTypeDao affiliateDataTypeDao)
@@ -27,8 +25,7 @@ public class AffiliateDataTypeRowMapper implements RowMapper
         setAffiliateDataTypeDao(affiliateDataTypeDao);
     }
 
-    @Override
-	public Object mapRow(ResultSet rs, int rowNum) throws SQLException
+    public AffiliateDataType mapRow(ResultSet rs, int rowNum) throws SQLException
     {
         ObjectFactory fact = new ObjectFactory();
         AffiliateDataType affiliateDataType = fact.createAffiliateDataType();

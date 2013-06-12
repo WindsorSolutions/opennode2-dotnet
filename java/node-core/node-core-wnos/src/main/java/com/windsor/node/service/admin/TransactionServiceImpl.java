@@ -31,7 +31,6 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.windsor.node.service.admin;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -120,7 +119,7 @@ public class TransactionServiceImpl extends BaseService implements
     /**
      * get Called from the workers
      */
-    public List get(CommonTransactionStatusCode status, NodeVisit visit) {
+    public List<NodeTransaction> get(CommonTransactionStatusCode status, NodeVisit visit) {
         return transactionDao.get(status, NodeMethodType.Any);
     }
 
@@ -197,7 +196,7 @@ public class TransactionServiceImpl extends BaseService implements
      * @param status
      * @return
      */
-    public List getRequests(CommonTransactionStatusCode status) {
+    public List<DataRequest> getRequests(CommonTransactionStatusCode status) {//FIXME Dead code?
 
         if (status == null) {
             throw new RuntimeException("CommonTransactionStatusCode Not Set");
@@ -214,7 +213,7 @@ public class TransactionServiceImpl extends BaseService implements
      * @param type
      * @return
      */
-    public List getRequests(CommonTransactionStatusCode status, RequestType type) {
+    public List<DataRequest> getRequests(CommonTransactionStatusCode status, RequestType type) {//FIXME Dead code?
 
         if (status == null) {
             throw new RuntimeException("CommonTransactionStatusCode Not Set");
@@ -273,7 +272,7 @@ public class TransactionServiceImpl extends BaseService implements
      *            content
      * @return
      */
-    public List getTransactions(CommonTransactionStatusCode status,
+    /*public List<NodeTransaction> getTransactions(CommonTransactionStatusCode status,
             boolean withDocs) {
 
         if (status == null) {
@@ -287,18 +286,17 @@ public class TransactionServiceImpl extends BaseService implements
             return transactionDao.get(status, NodeMethodType.Any);
         } else {
 
-            List tranList = transactionDao.getSubmittedDocumentTransactions();
+            List<NodeTransaction> tranList = transactionDao.getSubmittedDocumentTransactions();
 
-            List resultList = new ArrayList();
+            List<List<Document>> resultList = new ArrayList();
 
             for (int i = 0; i < tranList.size(); i++) {
 
                 // geta transaction
-                NodeTransaction tran = (NodeTransaction) tranList.get(i);
+                NodeTransaction tran = tranList.get(i);
 
                 // get all dao docs for this tran
-                resultList.add(transactionDao.getDocuments(tran.getId(), false,
-                        withDocs));
+                resultList.add(transactionDao.getDocuments(tran.getId(), false, withDocs));
 
             } // for trans
 
@@ -306,13 +304,13 @@ public class TransactionServiceImpl extends BaseService implements
 
         } // with docs
 
-    }
+    }*/
 
-    public List getByMethodType(NodeMethodType method, NodeVisit visit) {
+    public List<NodeTransaction> getByMethodType(NodeMethodType method, NodeVisit visit) {
 
         validateByRole(visit, SystemRoleType.Program);
 
-        List resultList = transactionDao.get(method);
+        List<NodeTransaction> resultList = transactionDao.get(method);
         return resultList;
     }
 
@@ -378,6 +376,15 @@ public class TransactionServiceImpl extends BaseService implements
 
     }
 
+    public NodeTransaction getNodeTransactionByIdWithAllData(String transactionId, NodeVisit visit)
+    {
+        if(StringUtils.isBlank(transactionId))
+        {
+            throw new IllegalArgumentException("transactionId Not Set");
+        }
+        return getTransaction(transactionId, false, true, true);
+    }
+
     /**
      * saveRequest
      * 
@@ -396,6 +403,7 @@ public class TransactionServiceImpl extends BaseService implements
      * @param flowId
      * @param createdById
      * @return
+     * @deprecated
      */
     public NodeTransaction makeTransaction(String flowId, String createdById) {
 
@@ -410,6 +418,7 @@ public class TransactionServiceImpl extends BaseService implements
      * @param createdById
      * @param networkId
      * @return
+     * @deprecated
      */
     public NodeTransaction makeTransaction(String flowId, String createdById,
             String networkId) {

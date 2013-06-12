@@ -2,18 +2,15 @@ package com.windsor.node.plugin.facid3.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import org.springframework.jdbc.core.RowMapper;
+import com.windsor.node.plugin.facid3.domain.FacilityNAICSDataType;
+import com.windsor.node.plugin.facid3.domain.FacilityNAICSPrimaryIndicatorDataType;
+import com.windsor.node.plugin.facid3.domain.ObjectFactory;
 
-import com.windsor.node.plugin.facid3.domain.generated.FacilityNAICSDataType;
-import com.windsor.node.plugin.facid3.domain.generated.FacilityNAICSPrimaryIndicatorDataType;
-import com.windsor.node.plugin.facid3.domain.generated.ObjectFactory;
-
-public class FacilityNaicsDataTypeRowMapper implements RowMapper
+public class FacilityNaicsDataTypeRowMapper implements RowMapper<FacilityNAICSDataType>
 {
 
-    @Override
-	public Object mapRow(ResultSet rs, int rowNum) throws SQLException
+    public FacilityNAICSDataType mapRow(ResultSet rs, int rowNum) throws SQLException
     {
         ObjectFactory fact = new ObjectFactory();
         FacilityNAICSDataType facilityNaics = fact.createFacilityNAICSDataType();

@@ -31,17 +31,9 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.windsor.node.common.domain;
 
-/**
- * We take this non-standard approach to a Java 5 enum type for backward
- * compatilbility with earlier versions based on
- * org.apache.commons.lang.enums.Enum.
- * 
- * @author jniski
- * 
- */
 public enum EndpointVersionType {
 
-    UNDEFINED("Undefined"), EN11("EN11"), EN20("EN2.0");
+    UNDEFINED("Undefined"), EN11("EN11"), EN20("EN2.0"), EN21("EN2.1"), ENREST("ENREST");
 
     private static final long serialVersionUID = 2;
 
@@ -67,6 +59,14 @@ public enum EndpointVersionType {
         else if(EN20.toString().equalsIgnoreCase(s))
         {
             version = EN20;
+        }
+        else if(EN21.toString().equalsIgnoreCase(s))
+        {
+            version = EN21;
+        }
+        else if(ENREST.toString().equalsIgnoreCase(s))
+        {
+            version = ENREST;
         }
         else
         {

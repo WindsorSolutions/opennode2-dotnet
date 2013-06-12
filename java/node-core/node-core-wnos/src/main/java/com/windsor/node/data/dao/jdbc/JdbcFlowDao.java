@@ -35,11 +35,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.List;
-
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.jdbc.core.RowMapper;
-
 import com.windsor.node.common.domain.DataFlow;
 import com.windsor.node.data.dao.FlowDao;
 import com.windsor.node.data.dao.ScheduleDao;
@@ -49,8 +46,8 @@ import com.windsor.node.service.helper.IdGenerator;
 import com.windsor.node.util.DateUtil;
 import com.windsor.node.util.FormatUtil;
 
-public class JdbcFlowDao extends BaseJdbcDao implements FlowDao,
-        InitializingBean {
+public class JdbcFlowDao extends BaseJdbcDao implements FlowDao
+{
 
     protected static final String SQL_SELECT = "SELECT Id, InfoUrl, Contact, "
             + "IsProtected, ModifiedBy, ModifiedOn, Code, Description FROM NFlow ";
@@ -182,10 +179,9 @@ public class JdbcFlowDao extends BaseJdbcDao implements FlowDao,
     /**
      * get
      */
-    public List<?> get() {
-
-        return getJdbcTemplate().query(SQL_SELECT_ORDER_BY_CODE,
-                new FlowMapper());
+    public List<DataFlow> get()
+    {
+        return getJdbcTemplate().query(SQL_SELECT_ORDER_BY_CODE, new FlowMapper());
     }
 
     @SuppressWarnings("unchecked")
@@ -198,7 +194,6 @@ public class JdbcFlowDao extends BaseJdbcDao implements FlowDao,
      * 
      * @see com.windsor.node.data.dao.FlowDao#getProtectedFlows()
      */
-    @SuppressWarnings("unchecked")
     public List<DataFlow> getSecuredFlows() {
 
         return (List<DataFlow>) getJdbcTemplate().query(SQL_SELECT_PROTECTED,
@@ -210,7 +205,6 @@ public class JdbcFlowDao extends BaseJdbcDao implements FlowDao,
      * 
      * @see com.windsor.node.data.dao.FlowDao#getProtectedFlows()
      */
-    @SuppressWarnings("unchecked")
     public List<DataFlow> getUnsecuredFlows() {
 
         return (List<DataFlow>) getJdbcTemplate().query(SQL_SELECT_UNPROTECTED,
@@ -223,9 +217,9 @@ public class JdbcFlowDao extends BaseJdbcDao implements FlowDao,
      * @author mchmarny
      * 
      */
-    private class FlowMapper implements RowMapper {
+    private class FlowMapper implements RowMapper<DataFlow> {
 
-        public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+        public DataFlow mapRow(ResultSet rs, int rowNum) throws SQLException {
 
             DataFlow obj = new DataFlow();
 

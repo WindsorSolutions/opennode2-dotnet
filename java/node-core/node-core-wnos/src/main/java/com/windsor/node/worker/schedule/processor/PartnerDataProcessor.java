@@ -191,7 +191,7 @@ public class PartnerDataProcessor implements InitializingBean {
                 info.add(new ActivityEntry("Updating transaction..."));
 
                 logger.debug("Updating transaction");
-                transaction.setNetworkId(solicitTranId);
+                //transaction.setNetworkId(solicitTranId);//FIXME verify removing this is correct!!!!!!!!!!!
                 transactionDao.save(transaction);
             }
 

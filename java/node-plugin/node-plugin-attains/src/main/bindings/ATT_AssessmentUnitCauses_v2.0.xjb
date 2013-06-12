@@ -4,8 +4,7 @@
     jaxb:extensionBindingPrefixes="hj orm" > 
     <jaxb:bindings schemaLocation="../xsd/2/0/ATT_AssessmentUnitCauses_v2.0.xsd">
         <jaxb:bindings node="//xsd:complexType[@name='AssessmentUnitCausesDataType']">
-            <hj:ignored>
-            </hj:ignored>
+            <hj:ignored />
         </jaxb:bindings>
         <jaxb:bindings node="//xsd:complexType[@name='AssessmentUnitCauseDetailsDataType']">
             <hj:entity>
@@ -65,6 +64,21 @@
             <hj:generated-id name="Dbid">
                 <orm:column name="TMD_LS_DTLS_ID"/>
             </hj:generated-id>
+        </jaxb:bindings>
+        <jaxb:bindings node="//xsd:element[@ref='att:OtherPointSourceID']">
+            <hj:basic>
+                <orm:column name="OTHER_PT_SRC_ID" />
+            </hj:basic>
+        </jaxb:bindings>
+        <jaxb:bindings node="//xsd:element[@ref='att:TMDLCompletionDate']">
+            <hj:basic>
+                <orm:column name="TMDL_COMP_DATE" />
+            </hj:basic>
+        </jaxb:bindings>
+        <jaxb:bindings node="//xsd:element[@ref='att:ActionDate']">
+            <hj:basic>
+                <orm:column name="ACT_DATE" />
+            </hj:basic>
         </jaxb:bindings>
     </jaxb:bindings>
 </jaxb:bindings>

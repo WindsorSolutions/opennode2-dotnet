@@ -5,7 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
+import com.windsor.node.common.domain.EndpointVersionType;
 import com.windsor.node.common.domain.NodeTransaction;
+import com.windsor.node.common.util.ByIndexOrNameMap;
 import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
 
 public abstract class BaseFacIdGetFacilityService extends BaseFacIdPlugin
@@ -110,14 +112,183 @@ public abstract class BaseFacIdGetFacilityService extends BaseFacIdPlugin
             // error condition? no params may be valid
         }
 
-        // These don't currently come in named, which makes them hard for the rest of the system
+        // These don't always currently come in named, which makes them hard for the rest of the system
         // to deal with, so solve that here by putting them in a map with the PluginServiceParameterDescriptor
         // names as the keys
         Map<String, Object> params = new HashMap<String, Object>();
-        String[] args = transaction.getRequest().getParameterValues();
-        // Standard Environmental Interest Type is pipe delimited and only restricted to 60 total characters
-        if(args.length >= 1 && StringUtils.isNotBlank(args[0]))
+        if(transaction.getRequest().getParameters().get(FACILITY_SITE_IDENTIFIER.getName()) != null
+                        || (EndpointVersionType.EN21.equals(transaction.getEndpointVersion()) || EndpointVersionType.ENREST.equals(transaction.getEndpointVersion())))
+        {//then params are named
+            params = getParametersEn21(transaction);
+        }
+        else
+        {//use ordered params
+            params = getParametersEn11(transaction);
+        }
+
+        return params;
+    }
+
+    private Map<String, Object> getParametersEn21(NodeTransaction transaction)
+    {
+        Map<String, Object> params = new HashMap<String, Object>();
+        ByIndexOrNameMap namedParams = transaction.getRequest().getParameters();
+
+        if(namedParams.get(STANDARD_ENVIRONMENTAL_INTEREST_TYPE.getName()) != null)
+        {// Standard Environmental Interest Type is pipe delimited and only restricted to 60 total characters
+            String eiType = (String)namedParams.get(STANDARD_ENVIRONMENTAL_INTEREST_TYPE.getName());
+            List<String> eiTypeList = new ArrayList<String>();
+            String[] split = eiType.split("\\|");
+            for(int i = 0; i < split.length; i++)
+            {
+                eiTypeList.add(split[i]);
+            }
+            params.put(STANDARD_ENVIRONMENTAL_INTEREST_TYPE.getName(), eiTypeList);
+        }
+        if(namedParams.get(ZIP_CODE.getName()) != null)
         {
+            String zipCode = (String)namedParams.get(ZIP_CODE.getName());
+            List<String> zipCodeList = new ArrayList<String>();
+            String[] split = zipCode.split("\\|");
+            for(int i = 0; i < split.length; i++)
+            {
+                zipCodeList.add(split[i]);
+            }
+            params.put(ZIP_CODE.getName(), zipCodeList);
+        }
+        if(namedParams.get(TRIBAL_LAND_CODE.getName()) != null)
+        {
+            String tribalLandCode = (String)namedParams.get(TRIBAL_LAND_CODE.getName());
+            if(!"N".equalsIgnoreCase(tribalLandCode) && !"Y".equalsIgnoreCase(tribalLandCode))
+            {
+                logger.error("Tribal Land Code must be Y or N, if it is provided, was \"" + tribalLandCode + "\".");
+                throw new RuntimeException("Tribal Land Code must be Y or N, if it is provided, was \"" + tribalLandCode + "\".");
+            }
+            params.put(TRIBAL_LAND_CODE.getName(), tribalLandCode);
+        }
+        if(namedParams.get(FEDERAL_FACILITY.getName()) != null)
+        {
+            String federalFacility = (String)namedParams.get(FEDERAL_FACILITY.getName());
+            if(!"N".equalsIgnoreCase(federalFacility) && !"Y".equalsIgnoreCase(federalFacility))
+            {
+                logger.error("Federal Facility must be Y or N, if it is provided, was \"" + federalFacility + "\".");
+                throw new RuntimeException("Federal Facility must be Y or N, if it is provided, was \"" + federalFacility + "\".");
+            }
+            params.put(FEDERAL_FACILITY.getName(), federalFacility);
+        }
+        if(namedParams.get(FACILITY_NAME.getName()) != null)
+        {
+            String facilityName = (String)namedParams.get(FACILITY_NAME.getName());
+            if(facilityName.length() > 80)
+            {
+                logger.error("Facility Name must not exceed 80 characters, was  \"" + facilityName.length() + "\" characters.");
+                throw new RuntimeException("Facility Name must not exceed 80 characters, was  \"" + facilityName.length() + "\" characters.");
+            }
+            params.put(FACILITY_NAME.getName(), facilityName);
+        }
+        if(namedParams.get(FACILITY_STATUS.getName()) != null)
+        {
+            String facilityStatus = (String)namedParams.get(FACILITY_STATUS.getName());
+            //vague param, refers to Active or Inactive but doesn't give values
+            params.put(FACILITY_STATUS.getName(), facilityStatus);
+        }
+        if(namedParams.get(SIC_CODE.getName()) != null)
+        {
+            String sicCode = (String)namedParams.get(SIC_CODE.getName());
+            List<String> sicCodeList = new ArrayList<String>();
+            String[] split = sicCode.split("\\|");
+            for(int i = 0; i < split.length; i++)
+            {
+                sicCodeList.add(split[i]);
+            }
+            params.put(SIC_CODE.getName(), sicCodeList);
+        }
+        if(namedParams.get(NAICS_CODE.getName()) != null)
+        {
+            String naicsCode = (String)namedParams.get(NAICS_CODE.getName());
+            List<String> naicsCodeList = new ArrayList<String>();
+            String[] split = naicsCode.split("\\|");
+            for(int i = 0; i < split.length; i++)
+            {
+                naicsCodeList.add(split[i]);
+            }
+            params.put(NAICS_CODE.getName(), naicsCodeList);
+        }
+        if(namedParams.get(CITY_NAME.getName()) != null)
+        {
+            String cityName = (String)namedParams.get(CITY_NAME.getName());
+            List<String> cityNameList = new ArrayList<String>();
+            String[] split = cityName.split("\\|");
+            for(int i = 0; i < split.length; i++)
+            {
+                cityNameList.add(split[i]);
+            }
+            params.put(CITY_NAME.getName(), cityNameList);
+        }
+        if(namedParams.get(STATE.getName()) != null)
+        {
+            String state = (String)namedParams.get(STATE.getName());
+            List<String> stateList = new ArrayList<String>();
+            String[] split = state.split("\\|");
+            for(int i = 0; i < split.length; i++)
+            {
+                stateList.add(split[i]);
+            }
+            params.put(STATE.getName(), stateList);
+        }
+        if(namedParams.get(COUNTY_NAME.getName()) != null)
+        {
+            String countyName = (String)namedParams.get(COUNTY_NAME.getName());
+            List<String> countyNameList = new ArrayList<String>();
+            String[] split = countyName.split("\\|");
+            for(int i = 0; i < split.length; i++)
+            {
+                countyNameList.add(split[i]);
+            }
+            params.put(COUNTY_NAME.getName(), countyNameList);
+        }
+        if(namedParams.get(N_BOUNDING_LAT.getName()) != null 
+                        && namedParams.get(S_BOUNDING_LAT.getName()) != null 
+                        && namedParams.get(E_BOUNDING_LONG.getName()) != null
+                        && namedParams.get(W_BOUNDING_LONG.getName()) != null)
+        {// Take care of bounding coords args, all 4 are required to do the search, must be numeric
+            String nBoundingLat = (String)namedParams.get(N_BOUNDING_LAT.getName());
+            String sBoundingLat = (String)namedParams.get(S_BOUNDING_LAT.getName());
+            String eBoundingLong = (String)namedParams.get(E_BOUNDING_LONG.getName());
+            String wBoundingLong = (String)namedParams.get(W_BOUNDING_LONG.getName());
+
+            try
+            {
+                params.put(N_BOUNDING_LAT.getName(), new Double(nBoundingLat));
+                params.put(S_BOUNDING_LAT.getName(), new Double(sBoundingLat));
+                params.put(E_BOUNDING_LONG.getName(), new Double(eBoundingLong));
+                params.put(W_BOUNDING_LONG.getName(), new Double(wBoundingLong));
+            }
+            catch(NumberFormatException e)
+            {
+                logger.error("If any bounding coords are included, they must all be included and must all be numeric, the following inputs failed this requirement:  " +
+                                " North Bounding Lat: " + nBoundingLat +
+                                " South Bounding Lat: " + sBoundingLat +
+                                " East Bounding Long: " + eBoundingLong +
+                                " West Bounding Long: " + wBoundingLong);
+                throw new RuntimeException("If any bounding coords are included, they must all be included and must all be numeric, the following inputs failed this requirement:  " +
+                                " North Bounding Lat: " + nBoundingLat +
+                                " South Bounding Lat: " + sBoundingLat +
+                                " East Bounding Long: " + eBoundingLong +
+                                " West Bounding Long: " + wBoundingLong);
+            }
+        }
+
+        return params;
+    }
+
+    private Map<String, Object> getParametersEn11(NodeTransaction transaction)
+    {
+        Map<String, Object> params = new HashMap<String, Object>();
+
+        String[] args = transaction.getRequest().getParameterValues();
+        if(args.length >= 1 && StringUtils.isNotBlank(args[0]))
+        {// Standard Environmental Interest Type is pipe delimited and only restricted to 60 total characters
             String eiType = args[0];
             List<String> eiTypeList = new ArrayList<String>();
             String[] split = eiType.split("\\|");
@@ -247,10 +418,10 @@ public abstract class BaseFacIdGetFacilityService extends BaseFacIdPlugin
             catch(NumberFormatException e)
             {
                 logger.error("If any bounding coords are included, they must all be included and must all be numeric, the following inputs failed this requirement:  " +
-                        		" North Bounding Lat: " + nBoundingLat +
-                        		" South Bounding Lat: " + sBoundingLat +
-                        		" East Bounding Long: " + eBoundingLong +
-                        		" West Bounding Long: " + wBoundingLong);
+                                " North Bounding Lat: " + nBoundingLat +
+                                " South Bounding Lat: " + sBoundingLat +
+                                " East Bounding Long: " + eBoundingLong +
+                                " West Bounding Long: " + wBoundingLong);
                 throw new RuntimeException("If any bounding coords are included, they must all be included and must all be numeric, the following inputs failed this requirement:  " +
                                 " North Bounding Lat: " + nBoundingLat +
                                 " South Bounding Lat: " + sBoundingLat +

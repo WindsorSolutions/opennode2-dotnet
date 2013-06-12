@@ -4,8 +4,7 @@
     jaxb:extensionBindingPrefixes="hj orm" > 
     <jaxb:bindings schemaLocation="../xsd/2/0/ATT_StateLocations_v2.0.xsd">
         <jaxb:bindings node="//xsd:complexType[@name='StateLocationsDataType']">
-            <hj:ignored>
-            </hj:ignored>
+            <hj:ignored />
         </jaxb:bindings>
         <jaxb:bindings node="//xsd:complexType[@name='StateLocationDetailsDataType']">
             <hj:entity>
@@ -15,5 +14,54 @@
                 <orm:column name="STATE_LOC_DTLS_ID"/>
             </hj:generated-id>
         </jaxb:bindings>
+        <!-- <jaxb:bindings node="//xsd:complexType[@name='StateLocationsDataType']">
+            <jaxb:bindings node=".//xsd:complexType[@name='StateLocationDetailsDataType']">
+                <hj:entity>
+                    <orm:table name="OWIR_STATE_LOC_DTLS"/>
+                </hj:entity>
+                <hj:generated-id name="Dbid">
+                    <orm:column name="STATE_LOC_DTLS_ID"/>
+                </hj:generated-id>
+            </jaxb:bindings>
+        </jaxb:bindings> -->
+        
+        <!-- <jaxb:bindings node="//xsd:complexType[@name='StateLocationsDataType']">
+            <hj:ignored />
+        </jaxb:bindings>
+        <jaxb:bindings node="//xsd:complexType[@name='StateLocationDetailsDataType']">
+            <hj:entity>
+                <orm:table name="OWIR_STATE_LOC_DTLS"/>
+            </hj:entity>
+            <hj:generated-id name="Dbid">
+                <orm:column name="STATE_LOC_DTLS_ID"/>
+            </hj:generated-id>
+            <hj:many-to-one target-entity="com.windsor.node.plugin.attains.generated.StateAssessmentDetailsDataType" >
+                <orm:join-column name="STATE_ASMT_DTLS_ID" />
+            </hj:many-to-one>
+        </jaxb:bindings> -->
+        <!-- <jaxb:bindings node="//xsd:element[@ref='att:StateLocationDetails']">
+            <hj:many-to-one>
+                <orm:join-column name="STATE_ASMT_DTLS_ID" referenced-column-name="STATE_ASMT_DTLS_ID" insertable="false" updatable="false"/>
+            </hj:many-to-one>
+        </jaxb:bindings> -->
+       <!--  <jaxb:bindings node="//xsd:complexType[@name='StateLocationsDataType']">
+            <hj:embeddable />
+        </jaxb:bindings>
+        <jaxb:bindings node="//xsd:complexType[@name='StateLocationDetailsDataType']">
+            <hj:entity>
+                <orm:table name="OWIR_STATE_LOC_DTLS"/>
+            </hj:entity>
+            <hj:generated-id name="Dbid">
+                <orm:column name="STATE_LOC_DTLS_ID"/>
+            </hj:generated-id>
+        </jaxb:bindings> -->
+        <!-- <jaxb:bindings node="//xsd:complexType[@name='StateLocationsDataType']//xsd:complexType">
+            <hj:entity>
+                <orm:table name="OWIR_STATE_LOC_DTLS"/>
+            </hj:entity>
+            <hj:generated-id name="Dbid">
+                <orm:column name="STATE_LOC_DTLS_ID"/>
+            </hj:generated-id>
+        </jaxb:bindings> -->
     </jaxb:bindings>
 </jaxb:bindings>

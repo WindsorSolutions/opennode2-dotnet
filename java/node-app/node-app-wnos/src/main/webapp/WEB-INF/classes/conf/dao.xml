@@ -40,6 +40,7 @@
 	</bean>
 
 	<bean id="scheduleDao" class="com.windsor.node.data.dao.jdbc.JdbcScheduleDao">
+        <property name="activityDao" ref="activityDao" />
 		<property name="dataSource" ref="jdbcDataSource" />
 		<property name="idGenerator" ref="idGenerator" />
 	</bean>

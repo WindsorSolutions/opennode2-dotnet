@@ -39,11 +39,7 @@
 
                 <td class="label" width="50" style="text-align: right; vertical-align: top;">Provider:</td>
                 <td class="ctrl">
-                <spring:bind path="command.providerType">
-                    <input type="text" name="providerType" class="textbox findDataSource" 
-                    maxlength="53" value="<c:out value="${status.value}" />">
-                    <span class="error" <c:if test="${status.errorMessage == \"\"}">style="display:none;"</c:if> ><c:out value="${status.errorMessage}" /></span>
-                </spring:bind>
+                    <form:select path="command.providerType" items="${jdbcProviderTypes}" cssClass="select" />
                 </td>
             </tr>
 

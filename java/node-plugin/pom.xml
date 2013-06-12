@@ -34,9 +34,18 @@
 	</modules>
 	<properties>
 		<node.plugin.name>${project.artifact.artifactId}</node.plugin.name>
+        <hyperjaxb3.schemaDirectory>${basedir}/src/main/xsd</hyperjaxb3.schemaDirectory>
+        <node.plugin.description>No Description Provided</node.plugin.description>
+        <node.plugin.help.text>No Help Text Provided</node.plugin.help.text>
 	</properties>
 	<build>
 		<finalName>${node.plugin.name}</finalName>
+        <resources>
+            <resource>
+                <directory>${project.basedir}/src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
 		<testResources>
 			<testResource>
 				<directory>${project.basedir}/src/test/resources</directory>
@@ -67,10 +76,11 @@
 							<arg>-Xannotate</arg>
 							<arg>-Xinheritance</arg>
 						</args>
+                        <debug>true</debug>
 						<variant>jpa2</variant>
 						<extension>true</extension>
 						<bindingDirectory>${basedir}/src/main/bindings</bindingDirectory>
-						<schemaDirectory>${basedir}/src/main/xsd</schemaDirectory>
+						<schemaDirectory>${hyperjaxb3.schemaDirectory}</schemaDirectory>
 					</configuration>
 					<dependencies>
 						<dependency>
@@ -82,17 +92,21 @@
 				</plugin>
 				<plugin>
 					<artifactId>maven-compiler-plugin</artifactId>
-					<version>2.3</version>
+                    <!-- <version>2.3</version> -->
+					<version>3.1</version>
 					<configuration>
-						<source>1.6</source>
-						<target>1.6</target>
+						<!-- <source>1.6</source>
+						<target>1.6</target> -->
+                        <source>1.7</source>
+                        <target>1.7</target>
 						<compilerArgument>-proc:none</compilerArgument>
 					</configuration>
 				</plugin>
 				<plugin>
 					<groupId>org.bsc.maven</groupId>
 					<artifactId>maven-processor-plugin</artifactId>
-					<version>2.0.7</version>
+					<!-- <version>2.0.7</version> -->
+                    <version>2.2.1</version>
 					<executions>
 						<execution>
 							<id>process</id>
@@ -119,7 +133,7 @@
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>build-helper-maven-plugin</artifactId>
-					<version>1.7</version>
+					<version>1.8</version>
 					<executions>
 						<execution>
 							<id>add-source</id>

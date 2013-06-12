@@ -56,8 +56,10 @@ import com.windsor.node.admin.util.AdminConstants;
 import com.windsor.node.admin.util.SideBarUtils;
 import com.windsor.node.admin.util.SiteTabUtils;
 import com.windsor.node.admin.util.VisitUtils;
+import com.windsor.node.common.domain.DataFlow;
 import com.windsor.node.common.domain.DataService;
 import com.windsor.node.common.domain.NodeVisit;
+import com.windsor.node.common.domain.PluginServiceImplementorDescriptor;
 import com.windsor.node.common.domain.ServiceRequestAuthorizationType;
 import com.windsor.node.common.domain.ServiceType;
 import com.windsor.node.common.service.admin.ConfigService;
@@ -168,9 +170,9 @@ public class EditServiceController extends BaseSimpleFormController implements
 
     }
 
-    protected Map getReferenceData(HttpServletRequest request, NodeVisit visit) {
-
-        Map model = new HashMap();
+    protected Map getReferenceData(HttpServletRequest request, NodeVisit visit)
+    {
+        Map<String, Object> model = new HashMap<String, Object>();
         model.put(AdminConstants.VISIT_KEY, visit);
 
         // Set the selected tab
@@ -189,7 +191,6 @@ public class EditServiceController extends BaseSimpleFormController implements
         model.put("globalArgs", configService.getList(visit));
 
         return model;
-
     }
 
     protected Map referenceData(HttpServletRequest request) throws Exception {
@@ -205,6 +206,18 @@ public class EditServiceController extends BaseSimpleFormController implements
 
         Map modelHolder = new HashMap();
         modelHolder.put(AdminConstants.MODEL_KEY, getReferenceData(request, visit));
+        String serviceId = request.getParameter("id");
+        String flowId = request.getParameter("fid");
+        if(StringUtils.isBlank(flowId) && StringUtils.isNotBlank(serviceId))
+        {
+            DataService service = flowService.getService(serviceId, visit);
+            flowId = service.getFlowId();
+        }
+        if(StringUtils.isNotBlank(flowId))
+        {
+            DataFlow dataFlow = flowService.getDataFlow(flowId, visit);
+            modelHolder.put("pluginServiceImplementorDescriptors", getPluginServiceImplementorDescriptors(dataFlow));
+        }
         return modelHolder;
 
     }
@@ -228,14 +241,16 @@ public class EditServiceController extends BaseSimpleFormController implements
 
         String flowId = ServletRequestUtils.getStringParameter(request, "fid");
         logger.debug("flowId from request: " + flowId);
+        
 
-        if (StringUtils.isBlank(flowId) && StringUtils.isBlank(serviceId)) {
-            throw new IllegalArgumentException(
-                    "Either flowId or serviceId must be present in request");
+        if (StringUtils.isBlank(flowId) && StringUtils.isBlank(serviceId))
+        {
+            throw new IllegalArgumentException("Either flowId or serviceId must be present in request");
         }
 
         DataServiceForm serviceForm = new DataServiceForm();
-        DataService service;
+        DataService service = null;
+        DataFlow dataFlow = null;
 
         try {
             if (StringUtils.isNotBlank(serviceId)) {
@@ -243,9 +258,7 @@ public class EditServiceController extends BaseSimpleFormController implements
                 logger.debug("Getting DataService with id " + serviceId
                         + " from request");
                 service = flowService.getService(serviceId, visit);
-
-                logger.debug("getting flowId from DataService");
-                flowId = service.getFlowId();
+                dataFlow = flowService.getDataFlow(service.getFlowId(), visit);
 
                 if (ServletRequestUtils.getStringParameter(request, "new") != null) {
                     logger.debug("New service, defaulting to isActive=true");
@@ -253,7 +266,7 @@ public class EditServiceController extends BaseSimpleFormController implements
                 }
 
             } else {
-
+                dataFlow = flowService.getDataFlow(flowId, visit);
                 logger.debug("creating new DataService");
                 service = new DataService();
                 service.setFlowId(flowId);
@@ -263,36 +276,38 @@ public class EditServiceController extends BaseSimpleFormController implements
             serviceForm.setService(service);
 
             logger.debug("adding Implementer list to DataServiceForm");
-            serviceForm.setImplementers(getImplementers(flowId, visit));
+            serviceForm.setImplementers(getImplementers(dataFlow, visit));
 
             logger.debug("adding Flow/Exchange Name list to DataServiceForm");
-            serviceForm.setFlowName(flowService.getDataFlow(flowId, visit)
-                    .getName());
+            serviceForm.setFlowName(dataFlow.getName());
 
             logger.debug("serviceForm: " + serviceForm);
 
-        } catch (Exception ex) {
-
+        }
+        catch (Exception ex)
+        {
             logger.error(ex.getMessage(), ex);
-
             request.setAttribute(AdminConstants.ERROR_KEY, ex.getMessage());
         }
-
         return serviceForm;
-
     }
 
-    private List getImplementers(String flowId, NodeVisit visit) {
+    private List<String> getImplementers(DataFlow dataFlow, NodeVisit visit) {
 
-        logger.debug("Getting implementers for: " + flowId);
+        logger.debug("Getting implementers for: " + dataFlow.getId());
 
-        List implementers = flowService
-                .getFlowPluginImplementors(flowId, visit);
+        List<String> implementers = flowService.getFlowPluginImplementors(dataFlow.getId(), visit);
 
         logger.debug(AdminConstants.FOUND + implementers.size());
         logger.debug("Implementer list: " + implementers);
 
         return implementers;
+    }
+
+    private List<PluginServiceImplementorDescriptor> getPluginServiceImplementorDescriptors(DataFlow dataFlow)
+    {
+        List<PluginServiceImplementorDescriptor> descriptors = flowService.getPluginServiceImplementorDescriptors(dataFlow);
+        return descriptors;
     }
 
     public void setFlowService(FlowService flowService) {

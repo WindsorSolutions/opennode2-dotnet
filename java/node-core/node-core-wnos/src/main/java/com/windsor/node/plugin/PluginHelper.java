@@ -33,10 +33,11 @@ package com.windsor.node.plugin;
 
 import java.io.File;
 import java.util.List;
-
 import com.windsor.node.common.domain.DataFlow;
 import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.NodeVisit;
+import com.windsor.node.common.domain.PluginMetaData;
+import com.windsor.node.common.domain.PluginServiceImplementorDescriptor;
 import com.windsor.node.common.domain.ProcessContentResult;
 
 public interface PluginHelper {
@@ -82,4 +83,7 @@ public interface PluginHelper {
 
     WnosClassLoader getClassLoader();
 
+    PluginMetaData getPluginMetaData(DataFlow flow);
+
+    List<PluginServiceImplementorDescriptor> getPluginServiceImplementorDescriptors(DataFlow flow);
 }

@@ -50,6 +50,7 @@ public class Activity extends AuditableIdentity {
     private String userName;
     private String flowName;
     private String webMethod;
+    private String operation;
 
     public Activity() {
         this.entries = new ArrayList<ActivityEntry>();
@@ -145,6 +146,16 @@ public class Activity extends AuditableIdentity {
         rtsb.setAppendStatics(false);
         rtsb.setAppendTransients(false);
         return rtsb.toString();
+    }
+
+    public String getOperation()
+    {
+        return operation;
+    }
+
+    public void setOperation(String operation)
+    {
+        this.operation = operation;
     }
 
 }

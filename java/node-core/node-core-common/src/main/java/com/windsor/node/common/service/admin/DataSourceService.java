@@ -59,7 +59,7 @@ public interface DataSourceService {
      * 
      * @return List<DataProviderInfo>
      */
-    List getDataProviders(NodeVisit visit);
+    List<DataProviderInfo> getDataProviders(NodeVisit visit);
 
     /**
      * getById

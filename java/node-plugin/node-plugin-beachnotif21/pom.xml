@@ -10,7 +10,7 @@
     <packaging>jar</packaging>
     <name>Node Plugin - Beach Notification v2.1</name>
     <properties>
-        <node.plugin.name>BeachNotif21</node.plugin.name>
+        <node.plugin.name>beachnotif21</node.plugin.name>
         <node.plugin.build.number>00</node.plugin.build.number>
     </properties>
     <build>

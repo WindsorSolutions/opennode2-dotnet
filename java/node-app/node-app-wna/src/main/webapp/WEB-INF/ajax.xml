@@ -17,6 +17,7 @@
 		<property name="accountService" ref="accountService" />
 	</bean>
 
+    <!-- TODO deprecated, dead config, verify and remove -->
 	<bean name="/ajax/datasources.htm"
 		class="com.windsor.node.admin.ajax.InMemoryDataAutocompleteController">
 		<property name="defaultMax" value="10" />
@@ -28,7 +29,6 @@
 		</property>
         <property name="list">
             <list>
-                <value>com.ibm.db2.jcc.DB2Driver</value>
                 <value>net.sourceforge.jtds.jdbc.Driver</value>
                 <value>com.microsoft.sqlserver.jdbc.SQLServerDriver</value>
                 <value>com.mysql.jdbc.Driver</value>

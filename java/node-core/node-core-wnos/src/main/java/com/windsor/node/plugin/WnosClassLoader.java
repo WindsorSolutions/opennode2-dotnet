@@ -33,6 +33,8 @@ package com.windsor.node.plugin;
 
 import java.io.File;
 import java.util.List;
+import com.windsor.node.common.domain.PluginMetaData;
+import com.windsor.node.common.domain.PluginServiceImplementorDescriptor;
 
 public interface WnosClassLoader {
 
@@ -53,4 +55,7 @@ public interface WnosClassLoader {
      */
     List<String> getBasePluginImplementors(File rootDir);
 
+    PluginMetaData getPluginMetaData(File pluginVersionDir);
+
+    List<PluginServiceImplementorDescriptor> getPluginServiceImplementorDescriptors(File pluginVersionDir);
 }

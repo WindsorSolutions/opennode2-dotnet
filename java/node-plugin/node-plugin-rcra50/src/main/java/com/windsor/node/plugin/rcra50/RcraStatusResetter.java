@@ -38,6 +38,7 @@ import javax.sql.DataSource;
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
 import com.windsor.node.common.domain.DataServiceRequestParameter;
 import com.windsor.node.common.domain.NodeTransaction;
+import com.windsor.node.common.domain.PluginServiceImplementorDescriptor;
 import com.windsor.node.common.domain.ProcessContentResult;
 import com.windsor.node.common.domain.ServiceType;
 import com.windsor.node.plugin.rcra50.dao.RcraStatusDao;
@@ -48,6 +49,21 @@ import com.windsor.node.plugin.rcra50.dao.RcraStatusDao;
  * while leaving the submission history intact.
  */
 public class RcraStatusResetter extends BaseRcra50Plugin {
+
+    private static final PluginServiceImplementorDescriptor PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR = new PluginServiceImplementorDescriptor();
+
+    static
+    {
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setName("RcraStatusResetter");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setDescription("Attempts to reset the CDXPROCESSINGSTATUS locally so another submission can be sent.  Can fail if transaction is hung at CDX.");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setClassName(RcraStatusResetter.class.getCanonicalName());
+    }
+
+    @Override
+    public PluginServiceImplementorDescriptor getPluginServiceImplementorDescription()
+    {
+        return PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR;
+    }
 
     public RcraStatusResetter() {
 

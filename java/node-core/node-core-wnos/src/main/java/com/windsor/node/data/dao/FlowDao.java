@@ -35,7 +35,7 @@ import java.util.List;
 
 import com.windsor.node.common.domain.DataFlow;
 
-public interface FlowDao extends DeletableDao, ListableDao {
+public interface FlowDao extends DeletableDao, ListableDao<DataFlow> {
 
     DataFlow save(DataFlow instance);
 

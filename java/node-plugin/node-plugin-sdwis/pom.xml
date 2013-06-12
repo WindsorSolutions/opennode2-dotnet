@@ -10,7 +10,7 @@
     <packaging>jar</packaging>
     <name>Node Plugin - SDWIS</name>
     <properties>
-        <node.plugin.name>SDWIS</node.plugin.name>
+        <node.plugin.name>sdwis</node.plugin.name>
         <node.plugin.build.number>00</node.plugin.build.number>
     </properties>
     <build>

@@ -2,32 +2,32 @@ package com.windsor.node.plugin.facid3.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeConstants;
 import javax.xml.datatype.DatatypeFactory;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.RowMapper;
+import com.windsor.node.plugin.facid3.domain.AddressPostalCodeDataType;
+import com.windsor.node.plugin.facid3.domain.CountryCodeListIdentifierDataType;
+import com.windsor.node.plugin.facid3.domain.CountryIdentityDataType;
+import com.windsor.node.plugin.facid3.domain.CountyCodeListIdentifierDataType;
+import com.windsor.node.plugin.facid3.domain.CountyIdentityDataType;
+import com.windsor.node.plugin.facid3.domain.DataSourceDataType;
+import com.windsor.node.plugin.facid3.domain.FacilityDataType;
+import com.windsor.node.plugin.facid3.domain.FacilitySiteDataType;
+import com.windsor.node.plugin.facid3.domain.FacilitySiteIdentifierDataType;
+import com.windsor.node.plugin.facid3.domain.FacilitySiteIdentityDataType;
+import com.windsor.node.plugin.facid3.domain.FacilitySiteTypeCodeListIdentifierDataType;
+import com.windsor.node.plugin.facid3.domain.LocationAddressDataType;
+import com.windsor.node.plugin.facid3.domain.MailingAddressDataType;
+import com.windsor.node.plugin.facid3.domain.ObjectFactory;
+import com.windsor.node.plugin.facid3.domain.StateCodeListIdentifierDataType;
+import com.windsor.node.plugin.facid3.domain.StateIdentityDataType;
 
-import com.windsor.node.plugin.facid3.domain.generated.AddressPostalCodeDataType;
-import com.windsor.node.plugin.facid3.domain.generated.CountryCodeListIdentifierDataType;
-import com.windsor.node.plugin.facid3.domain.generated.CountryIdentityDataType;
-import com.windsor.node.plugin.facid3.domain.generated.CountyCodeListIdentifierDataType;
-import com.windsor.node.plugin.facid3.domain.generated.CountyIdentityDataType;
-import com.windsor.node.plugin.facid3.domain.generated.DataSourceDataType;
-import com.windsor.node.plugin.facid3.domain.generated.FacilityDataType;
-import com.windsor.node.plugin.facid3.domain.generated.FacilitySiteDataType;
-import com.windsor.node.plugin.facid3.domain.generated.FacilitySiteIdentifierDataType;
-import com.windsor.node.plugin.facid3.domain.generated.FacilitySiteIdentityDataType;
-import com.windsor.node.plugin.facid3.domain.generated.FacilitySiteTypeCodeListIdentifierDataType;
-import com.windsor.node.plugin.facid3.domain.generated.LocationAddressDataType;
-import com.windsor.node.plugin.facid3.domain.generated.MailingAddressDataType;
-import com.windsor.node.plugin.facid3.domain.generated.ObjectFactory;
-import com.windsor.node.plugin.facid3.domain.generated.StateCodeListIdentifierDataType;
-import com.windsor.node.plugin.facid3.domain.generated.StateIdentityDataType;
-
-public class FacilityDataTypeRowMapper implements RowMapper
+public class FacilityDataTypeRowMapper implements RowMapper<FacilityDataType>
 {
     protected Logger logger = LoggerFactory.getLogger(getClass());
     private FacilityDataTypeDao facilityDataTypeDao;
@@ -41,8 +41,7 @@ public class FacilityDataTypeRowMapper implements RowMapper
         setAffiliationListDataTypeDao(affiliationListDataTypeDao);
     }
 
-    @Override
-	public Object mapRow(ResultSet rs, int rowNum) throws SQLException
+    public FacilityDataType mapRow(ResultSet rs, int rowNum) throws SQLException
     {
         ObjectFactory fact = new ObjectFactory();
         DatatypeFactory datatypeFactory = null;
@@ -193,7 +192,9 @@ public class FacilityDataTypeRowMapper implements RowMapper
         dataSource.setOriginatingPartnerName(rs.getString("ORIG_PART_NAME"));
         if(rs.getString("LAST_UPDT_DATE") != null && datatypeFactory != null)
         {
-            dataSource.setLastUpdatedDate(rs.getDate("LAST_UPDT_DATE"));
+            GregorianCalendar cal = new GregorianCalendar();
+            cal.setTime(rs.getDate("LAST_UPDT_DATE"));
+            dataSource.setLastUpdatedDate(datatypeFactory.newXMLGregorianCalendarDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DAY_OF_MONTH), DatatypeConstants.FIELD_UNDEFINED));
         }
         // BEGIN SC:Facility SIC
         facility.setSICList(getFacilityDataTypeDao().loadSicListByFacilityId(rs.getString("FAC_ID")));

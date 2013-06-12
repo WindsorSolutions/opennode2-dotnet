@@ -35,11 +35,11 @@ import java.util.List;
 
 import com.windsor.node.common.domain.DataProviderInfo;
 
-public interface ConnectionDao extends DeletableDao, ListableDao {
+public interface ConnectionDao extends DeletableDao, ListableDao<DataProviderInfo> {
 
     DataProviderInfo save(DataProviderInfo instance);
 
-    List getBySerivceId(String id);
+    List<DataProviderInfo> getBySerivceId(String id);
 
     DataProviderInfo get(String id);
 

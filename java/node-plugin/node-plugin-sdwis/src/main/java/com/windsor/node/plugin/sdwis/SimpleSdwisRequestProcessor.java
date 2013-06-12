@@ -40,6 +40,7 @@ import com.windsor.node.common.domain.CommonTransactionStatusCode;
 import com.windsor.node.common.domain.DataServiceRequestParameter;
 import com.windsor.node.common.domain.NodeMethodType;
 import com.windsor.node.common.domain.NodeTransaction;
+import com.windsor.node.common.domain.PluginServiceImplementorDescriptor;
 import com.windsor.node.common.domain.ProcessContentResult;
 import com.windsor.node.common.domain.ServiceType;
 import com.windsor.node.common.util.NodeClientService;
@@ -57,6 +58,21 @@ public class SimpleSdwisRequestProcessor extends BaseWnosPlugin {
 
     public static final String SERVICE_NAME = "SDWIS";
     public static final String ARG_TARGET_ENDPOINT_URL = "targetEndpointUrl";
+
+    private static final PluginServiceImplementorDescriptor PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR = new PluginServiceImplementorDescriptor();
+
+    static
+    {
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setName("SimpleSdwisRequestProcessor");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setDescription("In addition to relaying a SDWIS submission, this implementer also contains additional functionality to route the submission file for use by the HERE data exchange. See the HERE Flow Configuration Document for more information.");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setClassName(SimpleSdwisRequestProcessor.class.getCanonicalName());
+    }
+
+    @Override
+    public PluginServiceImplementorDescriptor getPluginServiceImplementorDescription()
+    {
+        return PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR;
+    }
 
     public SimpleSdwisRequestProcessor() {
 

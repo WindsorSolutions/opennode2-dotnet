@@ -62,6 +62,12 @@ public final class DateUtil {
     private DateUtil() {
     }
 
+    public static Timestamp getNextWeekday()
+    {
+        GregorianCalendar gc  = new GregorianCalendar();
+        return null;
+    }
+
     public static Timestamp getTimestamp() {
         return new Timestamp(System.currentTimeMillis());
     }

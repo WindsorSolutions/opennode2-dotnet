@@ -36,7 +36,8 @@ import java.util.Map;
 import com.windsor.node.common.domain.DataFlow;
 import com.windsor.node.common.domain.DataService;
 import com.windsor.node.common.domain.NodeVisit;
-import com.windsor.node.common.domain.ScheduleArgument;
+import com.windsor.node.common.domain.PluginMetaData;
+import com.windsor.node.common.domain.PluginServiceImplementorDescriptor;
 
 public interface FlowService {
 
@@ -113,6 +114,15 @@ public interface FlowService {
     DataFlow getDataFlow(String flowId, NodeVisit visit);
 
     /**
+     * Find the DataFlow by name
+     * 
+     * @param flowName String The name of the flow
+     * @param visit NodeVisit for this operation
+     * @return DataFlow matching
+     */
+    DataFlow getDataFlowByName(String flowName, NodeVisit visit);
+
+    /**
      * 
      * @param visit
      * @param loadDataServices
@@ -133,4 +143,8 @@ public interface FlowService {
      * @return
      */
     List<?> getPluginParameterDescriptors(DataFlow flow, DataService dataService);
+
+    PluginMetaData getPluginMetaData(DataFlow flow);
+
+    List<PluginServiceImplementorDescriptor> getPluginServiceImplementorDescriptors(DataFlow flow);
 }

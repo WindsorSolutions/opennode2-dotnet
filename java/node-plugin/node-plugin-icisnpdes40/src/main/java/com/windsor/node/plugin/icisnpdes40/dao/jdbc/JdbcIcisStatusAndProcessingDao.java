@@ -1,10 +1,8 @@
 package com.windsor.node.plugin.icisnpdes40.dao.jdbc;
 
 import java.sql.Types;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 import javax.persistence.EntityManager;
 import javax.sql.DataSource;

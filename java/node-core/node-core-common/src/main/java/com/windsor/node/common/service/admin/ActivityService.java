@@ -55,7 +55,7 @@ public interface ActivityService {
      * @param visit
      * @return List<Activity>
      */
-    List search(ActivitySearchCriteria search, NodeVisit visit);
+    List<Activity> search(ActivitySearchCriteria search, NodeVisit visit);
 
     /**
      * @param visit

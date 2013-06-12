@@ -33,6 +33,7 @@ package com.windsor.node.plugin;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.lang.reflect.Modifier;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -40,11 +41,15 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.zip.ZipEntry;
-
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.windsor.node.common.PluginMetaDataFactory;
+import com.windsor.node.common.domain.PluginMetaData;
+import com.windsor.node.common.domain.PluginServiceImplementorDescriptor;
+import com.windsor.node.common.exception.WinNodeException;
+import com.windsor.node.data.dao.SelfDescribingPluginServiceImplementor;
 
 public class PluginClassLoader implements WnosClassLoader {
 
@@ -166,6 +171,7 @@ public class PluginClassLoader implements WnosClassLoader {
 
         List<String> matches = new ArrayList<String>();
 
+        URLClassLoader ucl = null;
         try {
             // List all the types in the jar file that is passed in as a
             // parameter
@@ -178,7 +184,7 @@ public class PluginClassLoader implements WnosClassLoader {
             zf = new java.util.zip.ZipFile(jarFilePath);
             e = zf.entries();
 
-            URLClassLoader ucl = new URLClassLoader(urls, BaseWnosPlugin.class
+            ucl = new URLClassLoader(urls, BaseWnosPlugin.class
                     .getClassLoader());
 
             while (e.hasMoreElements()) {
@@ -216,25 +222,141 @@ public class PluginClassLoader implements WnosClassLoader {
         } catch (Exception pluginEx) {
             logger.error(pluginEx.getMessage(), pluginEx);
         }
+        finally
+        {
+            /*if(ucl != null)
+            {
+                try
+                {
+                    ucl.close();
+                }
+                catch(IOException e)
+                {
+                    logger.error("Unable to close URLClassLoader due to following IOException, this has a high likelihood of creating a memory/classloader leak", e);
+                }
+            }*/
+        }
 
         return matches;
+    }
+
+    @Override
+    public PluginMetaData getPluginMetaData(File pluginVersionDir)
+    {
+        if(pluginVersionDir == null)
+        {
+            throw new IllegalArgumentException("Parameter File pluginVersionDir for method getPluginMetaData(...) cannot be null.");
+        }
+        String[] files = pluginVersionDir.list(new JarFilter());
+        String jarName = null;
+        PluginMetaData data = null;
+        if(files != null && files.length == 1)
+        {
+            jarName = files[0];
+            PluginMetaDataFactory fact = (PluginMetaDataFactory)getClassInstanceFromJar(pluginVersionDir.getAbsolutePath() + File.separator + jarName,
+                                                                                        "com.windsor.node.plugin.common.PluginMetaDataFactoryImpl");
+            if(fact != null)
+            {
+                data = fact.createPluginMetaData();
+            }
+        }
+        return data;
+    }
+
+    @Override
+    public List<PluginServiceImplementorDescriptor> getPluginServiceImplementorDescriptors(File pluginVersionDir)
+    {
+        if(pluginVersionDir == null)
+        {
+            throw new IllegalArgumentException("Parameter File pluginVersionDir for method getPluginMetaData(...) cannot be null.");
+        }
+        List<PluginServiceImplementorDescriptor> implementorDescriptors = new ArrayList<PluginServiceImplementorDescriptor>();
+
+        URLClassLoader ucl = null;
+        try
+        {
+            String[] files = pluginVersionDir.list(new JarFilter());
+            File jarFile = null;
+            if(files != null && files.length == 1)
+            {
+                jarFile = new File(pluginVersionDir + File.separator + files[0]);
+            }
+            else
+            {
+                throw new WinNodeException("Plugin Jar file did not exist in directory:  " + pluginVersionDir.getAbsolutePath());
+            }
+            
+            URL[] urls = new URL[1];
+            Enumeration<? extends ZipEntry> enumerationOfJarClasses = null;
+            java.util.zip.ZipFile zf = null;
+
+            urls[0] = jarFile.toURI().toURL();
+            zf = new java.util.zip.ZipFile(jarFile);
+            enumerationOfJarClasses = zf.entries();
+
+            ucl = new URLClassLoader(urls, BaseWnosPlugin.class.getClassLoader());
+
+            while (enumerationOfJarClasses.hasMoreElements())
+            {
+                java.util.zip.ZipEntry ze = (java.util.zip.ZipEntry) enumerationOfJarClasses.nextElement();
+                if (!ze.isDirectory())
+                {
+                    String className = jarToClassName(ze.getName());
+                    if (StringUtils.isNotBlank(className))
+                    {
+                        logger.debug("Loading:  " + className);
+                        Class<?> c = ucl.loadClass(className);
+                        if(SelfDescribingPluginServiceImplementor.class.isAssignableFrom(c) && !Modifier.isAbstract(c.getModifiers()))
+                        {
+                            logger.debug("Adding:  " + className);
+                            implementorDescriptors.add(((SelfDescribingPluginServiceImplementor)c.newInstance()).getPluginServiceImplementorDescription());
+                        }
+
+                    }
+                }
+            }
+            if (zf != null)
+            {
+                zf.close();
+            }
+
+        } catch (Exception pluginEx)
+        {
+            logger.error(pluginEx.getMessage(), pluginEx);
+        }
+        finally
+        {
+            /*if(ucl != null)
+            {
+                try
+                {
+                    ucl.close();
+                }
+                catch(IOException e)
+                {
+                    logger.error("Unable to close URLClassLoader due to following IOException, this has a high likelihood of creating a memory/classloader leak", e);
+                }
+            }*/
+        }
+        return implementorDescriptors;
     }
 
     private Object getClassInstanceFromJar(String jarFilePath,
             String fullyQualifiedClassName) {
 
+        URLClassLoader ucl = null;
+        java.util.zip.ZipFile zf = null;
         try {
             // List all the classes in the jar that is passed in
             URL[] urls = new URL[1];
             Enumeration<? extends ZipEntry> e = null;
-            java.util.zip.ZipFile zf = null;
 
             //quick fix that avoids issues with illegal characters, java.io.File class' toURL() was deprecated anyway
             urls[0] = new File(jarFilePath).toURI().toURL();
             zf = new java.util.zip.ZipFile(jarFilePath);
             e = zf.entries();
 
-            URLClassLoader ucl = new URLClassLoader(urls, BaseWnosPlugin.class
+            ucl = new URLClassLoader(urls, BaseWnosPlugin.class
                     .getClassLoader());
 
             while (e.hasMoreElements()) {
@@ -244,28 +366,46 @@ public class PluginClassLoader implements WnosClassLoader {
 
                     String className = jarToClassName(ze.getName());
 
-                    logger.debug("Searching: " + fullyQualifiedClassName);
-                    logger.debug("Found    : " + className);
+                    logger.debug("Searching:  " + fullyQualifiedClassName);
+                    logger.debug("Found:  " + className);
 
-                    if (StringUtils.isNotBlank(className)
-                            && fullyQualifiedClassName
-                                    .equalsIgnoreCase(className)) {
-
-                        logger.debug("Loading    : " + className);
+                    if(StringUtils.isNotBlank(className) && fullyQualifiedClassName.equalsIgnoreCase(className))
+                    {
+                        logger.debug("Class matched request, loading class:  " + className);
 
                         Class<?> c = ucl.loadClass(className);
                         return c.newInstance();
-
                     }
                 }
             }
 
-            if (zf != null) {
-                zf.close();
-            }
-
         } catch (Exception pluginEx) {
             logger.error(pluginEx.getMessage(), pluginEx);
+        }
+        finally
+        {
+            if (zf != null)
+            {
+                try
+                {
+                    zf.close();
+                }
+                catch(IOException e)
+                {
+                    logger.error("Unable to close java.util.zip.ZipFile due to following IOException, this has a high likelihood of creating a memory/classloader leak", e);
+                }
+            }
+            /*if(ucl != null)
+            {
+                try
+                {
+                    ucl.close();
+                }
+                catch(IOException e)
+                {
+                    logger.error("Unable to close URLClassLoader due to following IOException, this has a high likelihood of creating a memory/classloader leak", e);
+                }
+            }*/
         }
 
         return null;
@@ -283,8 +423,7 @@ public class PluginClassLoader implements WnosClassLoader {
             return null;
         }
 
-        return jarEntry.substring(0, idxClass).replace('/', '.').replace('\\',
-                '.');
+        return jarEntry.substring(0, idxClass).replace('/', '.').replace('\\', '.');
     }
 
     /**
@@ -300,5 +439,4 @@ public class PluginClassLoader implements WnosClassLoader {
         }
 
     }
-
 }

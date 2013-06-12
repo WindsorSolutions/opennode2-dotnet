@@ -5,22 +5,37 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.time.DateUtils;
-
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
 import com.windsor.node.common.domain.NodeTransaction;
+import com.windsor.node.common.domain.PluginServiceImplementorDescriptor;
 import com.windsor.node.common.domain.ProcessContentResult;
+import com.windsor.node.common.util.ByIndexOrNameMap;
 import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
-import com.windsor.node.plugin.facid3.domain.generated.AffiliateListDataType;
-import com.windsor.node.plugin.facid3.domain.generated.FacilityDataType;
-import com.windsor.node.plugin.facid3.domain.generated.FacilityDetailsDataType;
-import com.windsor.node.plugin.facid3.domain.generated.FacilityListDataType;
-import com.windsor.node.plugin.facid3.domain.generated.ObjectFactory;
+import com.windsor.node.plugin.facid3.domain.AffiliateListDataType;
+import com.windsor.node.plugin.facid3.domain.FacilityDataType;
+import com.windsor.node.plugin.facid3.domain.FacilityDetailsDataType;
+import com.windsor.node.plugin.facid3.domain.FacilityListDataType;
+import com.windsor.node.plugin.facid3.domain.ObjectFactory;
 
 public class GetFacility extends BaseFacIdGetFacilityService
 {
+    private static final PluginServiceImplementorDescriptor PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR = new PluginServiceImplementorDescriptor();
+
+    static
+    {
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setName("GetFacility");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setDescription("Full set of parameters, also including Change Date, and returning a payload based on the full schema.");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setClassName(GetFacility.class.getCanonicalName());
+    }
+
+    @Override
+    public PluginServiceImplementorDescriptor getPluginServiceImplementorDescription()
+    {
+        return PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR;
+    }
+
     @Override
     public List<PluginServiceParameterDescriptor> getParameters()
     {
@@ -30,7 +45,7 @@ public class GetFacility extends BaseFacIdGetFacilityService
     }
 
     /**
-     * This process implementer currently will not work when Solicited on the 2.1 endpoint with named parameters that are
+     * This process implementer currently will not work when Solicited on the 2.1 endpoint with named parameters that are 
      * out of the default order.  An updated implementer that fixes this issue will soon be deployed.
      */
     @Override
@@ -78,27 +93,55 @@ public class GetFacility extends BaseFacIdGetFacilityService
     protected Map<String, Object> validateAndLoadParameters(NodeTransaction transaction)
     {
         Map<String, Object> params = super.validateAndLoadParameters(transaction);
-        String[] args = transaction.getRequest().getParameterValues();
-        if(args.length >= 16)
-        {
-            String changeDate  = args[15];
-            Date parsedChangeDate = null;
-            try
+        if(transaction.getRequest().getParameters().get(CHANGE_DATE.getName()) != null)
+        {//then params are named
+            ByIndexOrNameMap namedParams = transaction.getRequest().getParameters();
+            if(namedParams.get(CHANGE_DATE.getName()) != null)
             {
-                parsedChangeDate = DateUtils.parseDate(changeDate, new String[]{"yyyy/MM/dd", "yyyy-MM-dd"});
+                String changeDate  = (String)namedParams.get(CHANGE_DATE.getName());
+                Date parsedChangeDate = null;
+                try
+                {
+                    parsedChangeDate = DateUtils.parseDate(changeDate, new String[]{"yyyy/MM/dd", "yyyy-MM-dd"});
+                }
+                catch(ParseException e)
+                {
+                    logger.error("Unparseable date passed in for Change Date:  " + changeDate);
+                    throw new RuntimeException("Unparseable date passed in for Change Date:  " + changeDate);
+                }
+                if(parsedChangeDate == null)
+                {
+                    logger.error("Change Date is required but null was passed.");
+                    throw new RuntimeException("Change Date is required but null was passed.");
+                }
+                params.put(CHANGE_DATE.getName(), parsedChangeDate);
             }
-            catch(ParseException e)
-            {
-                logger.error("Unparseable date passed in for Change Date:  " + changeDate);
-                throw new RuntimeException("Unparseable date passed in for Change Date:  " + changeDate);
-            }
-            if(parsedChangeDate == null)
-            {
-                logger.error("Change Date is required but null was passed.");
-                throw new RuntimeException("Change Date is required but null was passed.");
-            }
-            params.put(CHANGE_DATE.getName(), parsedChangeDate);
         }
+        else
+        {//use ordered params
+            String[] args = transaction.getRequest().getParameterValues();
+            if(args.length >= 16)
+            {
+                String changeDate  = args[15];
+                Date parsedChangeDate = null;
+                try
+                {
+                    parsedChangeDate = DateUtils.parseDate(changeDate, new String[]{"yyyy/MM/dd", "yyyy-MM-dd"});
+                }
+                catch(ParseException e)
+                {
+                    logger.error("Unparseable date passed in for Change Date:  " + changeDate);
+                    throw new RuntimeException("Unparseable date passed in for Change Date:  " + changeDate);
+                }
+                if(parsedChangeDate == null)
+                {
+                    logger.error("Change Date is required but null was passed.");
+                    throw new RuntimeException("Change Date is required but null was passed.");
+                }
+                params.put(CHANGE_DATE.getName(), parsedChangeDate);
+            }
+        }
+        
         return params;
     }
 

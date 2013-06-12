@@ -16,8 +16,7 @@
             </hj:generated-id>
         </jaxb:bindings>
         <jaxb:bindings node="//xsd:complexType[@name='SourcesDataType']">
-            <hj:ignored>
-            </hj:ignored>
+            <hj:ignored />
         </jaxb:bindings>
         <jaxb:bindings node="//xsd:complexType[@name='SourceDetailsDataType']">
             <hj:entity>

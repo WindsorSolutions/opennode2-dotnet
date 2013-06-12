@@ -57,11 +57,17 @@ public class ScheduledItem extends AuditableIdentity {
     private String lastExecutionInfo;
     private Timestamp lastExecutedOn;
     private Timestamp nextRunOn;
-    private ScheduleFrequencyType frequencyType = ScheduleFrequencyType.Once;
+    private ScheduleFrequencyType frequencyType = ScheduleFrequencyType.Never;
     private int frequency = 0;
     private boolean active = true;
     private boolean runNow = false;
     private ScheduleExecuteStatus executeStatus = ScheduleExecuteStatus.Success;
+
+    //Added on 2013-04-30
+    private Activity lastExecutionActivity;
+    private String sourceFlow;
+    private String targetFlow;
+    private String targetOperation;
 
     /**
      * Map of service id's & names associated with a flow id.
@@ -204,6 +210,10 @@ public class ScheduledItem extends AuditableIdentity {
 
     public void setFrequencyType(ScheduleFrequencyType frequencyType) {
         this.frequencyType = frequencyType;
+        if(this.frequencyType == ScheduleFrequencyType.Never)
+        {
+            setNextRunOn(null);
+        }
     }
 
     public int getFrequency() {
@@ -251,7 +261,11 @@ public class ScheduledItem extends AuditableIdentity {
                         nextRunOn).append("frequencyType", frequencyType)
                 .append("frequency", frequency).append("active", active)
                 .append("runNow", runNow)
-                .append("executeStatus", executeStatus).toString();
+                .append("executeStatus", executeStatus)
+                .append("lastExecutionActivity", lastExecutionActivity)
+                .append("sourceFlow", sourceFlow)
+                .append("targetFlow", targetFlow)
+                .append("targetOperation", targetOperation).toString();
     }
 
     public int hashCode() {
@@ -267,6 +281,7 @@ public class ScheduledItem extends AuditableIdentity {
                         lastExecutionInfo).append(lastExecutedOn).append(
                         nextRunOn).append(frequencyType).append(frequency)
                 .append(active).append(runNow).append(executeStatus)
+                .append(lastExecutionActivity).append(sourceFlow).append(targetFlow).append(targetOperation)
                 .toHashCode();
     }
 
@@ -293,6 +308,10 @@ public class ScheduledItem extends AuditableIdentity {
                 frequencyType, item.frequencyType).append(frequency,
                 item.frequency).append(active, item.active).append(runNow,
                 item.runNow).append(executeStatus, item.executeStatus)
+                .append(lastExecutionActivity, item.lastExecutionActivity)
+                .append(sourceFlow, item.sourceFlow)
+                .append(targetFlow, item.targetFlow)
+                .append(targetOperation, item.targetOperation)
                 .isEquals();
     }
 
@@ -312,5 +331,45 @@ public class ScheduledItem extends AuditableIdentity {
     public void setScheduleArguments(List<ScheduleArgument> scheduleArguments)
     {
         this.scheduleArguments = scheduleArguments;
+    }
+
+    public String getSourceFlow()
+    {
+        return sourceFlow;
+    }
+
+    public void setSourceFlow(String sourceFlow)
+    {
+        this.sourceFlow = sourceFlow;
+    }
+
+    public String getTargetFlow()
+    {
+        return targetFlow;
+    }
+
+    public void setTargetFlow(String targetFlow)
+    {
+        this.targetFlow = targetFlow;
+    }
+
+    public String getTargetOperation()
+    {
+        return targetOperation;
+    }
+
+    public void setTargetOperation(String targetOperation)
+    {
+        this.targetOperation = targetOperation;
+    }
+
+    public Activity getLastExecutionActivity()
+    {
+        return lastExecutionActivity;
+    }
+
+    public void setLastExecutionActivity(Activity lastExecutionActivity)
+    {
+        this.lastExecutionActivity = lastExecutionActivity;
     }
 }

@@ -33,7 +33,7 @@ package com.windsor.node.data.dao;
 
 import java.util.List;
 
-public interface ListableDao
+public interface ListableDao<T>
 {
-    List<?> get();
+    List<T> get();
 }

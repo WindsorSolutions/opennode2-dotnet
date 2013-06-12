@@ -79,6 +79,8 @@ public class TransactionDownloadController extends AbstractController
             oldPartner.setVersion(trans.getNetworkEndpointVersion());
             NodeClientService ncl = getNodeClientFactory().makeAndConfigure(oldPartner);
             //reset these but don't save, gets around the silly download functionality in the client
+            //To past self: Wish I'd described specifically what silly functionality I meant...
+            //TODO Tell future self what functionality specifically was being worked around.
             trans.setDocuments(new ArrayList<Document>());
             downloadTrans = ncl.download(trans);
             //now zip up and save all the downloads

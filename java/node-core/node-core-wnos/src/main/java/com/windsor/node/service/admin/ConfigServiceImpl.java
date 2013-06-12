@@ -110,7 +110,7 @@ public class ConfigServiceImpl extends BaseService implements ConfigService,
     /**
      * getDatabases
      */
-    public List getDataProviders(NodeVisit visit) {
+    public List<DataProviderInfo> getDataProviders(NodeVisit visit) {
 
         // Make sure the user performing that action has admin rights
         validateByRole(visit, SystemRoleType.Admin);
@@ -228,7 +228,7 @@ public class ConfigServiceImpl extends BaseService implements ConfigService,
     //
     // }
 
-    public List getList(NodeVisit visit) {
+    public List<ConfigItem> getList(NodeVisit visit) {
 
         // Make sure the user performing that action has admin rights
         validateByRole(visit, SystemRoleType.Admin);
@@ -251,7 +251,7 @@ public class ConfigServiceImpl extends BaseService implements ConfigService,
         logger.debug("Clearing CONFS");
         CONFS.clear();
         logger.debug("Getting config items from DB");
-        List configItems = configDao.get();
+        List<ConfigItem> configItems = configDao.get();
 
         logger.debug("Loading CONFS items");
         for (int i = 0; i < configItems.size(); i++) {

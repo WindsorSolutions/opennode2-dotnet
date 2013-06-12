@@ -216,7 +216,6 @@ public class JdbcFlowSecurityDao extends BaseJdbcDao implements FlowSecurityDao 
         return b;
     }
 
-    @SuppressWarnings("unchecked")
     public List<AuthorizationRequest> getPendingRequests() {
 
         List<AuthorizationRequest> pendingRequests = null;
@@ -241,7 +240,6 @@ public class JdbcFlowSecurityDao extends BaseJdbcDao implements FlowSecurityDao 
         return pendingRequests;
     }
 
-    @SuppressWarnings("unchecked")
     private List<FlowRequest> getFlowRequests(String authReqId) {
 
         validateStringArg(authReqId);
@@ -348,9 +346,9 @@ public class JdbcFlowSecurityDao extends BaseJdbcDao implements FlowSecurityDao 
         // CHECKSTYLE:ON
     }
 
-    private class AuthorizationRequestMapper implements RowMapper {
+    private class AuthorizationRequestMapper implements RowMapper<AuthorizationRequest> {
 
-        public Object mapRow(ResultSet rs, int i) throws SQLException {
+        public AuthorizationRequest mapRow(ResultSet rs, int i) throws SQLException {
 
             AuthorizationRequest req = new AuthorizationRequest();
 
@@ -379,9 +377,9 @@ public class JdbcFlowSecurityDao extends BaseJdbcDao implements FlowSecurityDao 
         }
     }
 
-    private class FlowRequestMapper implements RowMapper {
+    private class FlowRequestMapper implements RowMapper<FlowRequest> {
 
-        public Object mapRow(ResultSet rs, int i) throws SQLException {
+        public FlowRequest mapRow(ResultSet rs, int i) throws SQLException {
 
             FlowRequest req = new FlowRequest();
             req.setId(rs.getString("Id"));

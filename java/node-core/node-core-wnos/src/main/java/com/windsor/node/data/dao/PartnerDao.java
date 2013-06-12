@@ -33,7 +33,7 @@ package com.windsor.node.data.dao;
 
 import com.windsor.node.common.domain.PartnerIdentity;
 
-public interface PartnerDao extends DeletableDao, ListableDao {
+public interface PartnerDao extends DeletableDao, ListableDao<PartnerIdentity> {
 
     PartnerIdentity save(PartnerIdentity instance);
 

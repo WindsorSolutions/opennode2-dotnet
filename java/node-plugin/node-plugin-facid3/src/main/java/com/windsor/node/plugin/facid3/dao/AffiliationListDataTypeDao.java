@@ -4,13 +4,11 @@ import java.sql.Types;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
-
-import com.windsor.node.plugin.facid3.domain.generated.AffiliationListDataType;
-import com.windsor.node.plugin.facid3.domain.generated.FacilityAffiliationDataType;
-import com.windsor.node.plugin.facid3.domain.generated.ObjectFactory;
+import com.windsor.node.plugin.facid3.domain.AffiliationListDataType;
+import com.windsor.node.plugin.facid3.domain.FacilityAffiliationDataType;
+import com.windsor.node.plugin.facid3.domain.ObjectFactory;
 
 public class AffiliationListDataTypeDao extends JdbcDaoSupport
 {
@@ -34,8 +32,7 @@ public class AffiliationListDataTypeDao extends JdbcDaoSupport
         }
         ObjectFactory fact = new ObjectFactory();
         AffiliationListDataType affiliationList = fact.createAffiliationListDataType();
-        @SuppressWarnings("unchecked")
-        List<FacilityAffiliationDataType> results = getJdbcTemplate()
+        List<FacilityAffiliationDataType> results = (List<FacilityAffiliationDataType>)getJdbcTemplate()
                         .query(loadAffiliationListByEnvironmentalInterestIdSql, new Object[]{environmentalInterestId},
                                new int[]{Types.VARCHAR}, new FacilityAffiliationDataTypeRowMapper(getAffiliationIds()));
         affiliationList.getFacilityAffiliation().addAll(results);
@@ -54,8 +51,7 @@ public class AffiliationListDataTypeDao extends JdbcDaoSupport
         }
         ObjectFactory fact = new ObjectFactory();
         AffiliationListDataType affiliationList = fact.createAffiliationListDataType();
-        @SuppressWarnings("unchecked")
-        List<FacilityAffiliationDataType> results = getJdbcTemplate()
+        List<FacilityAffiliationDataType> results = (List<FacilityAffiliationDataType>)getJdbcTemplate()
                         .query(loadAffiliationListByFacilityIdSql, new Object[]{facilityId},
                                new int[]{Types.VARCHAR}, new FacilityAffiliationDataTypeRowMapper(getAffiliationIds()));
         affiliationList.getFacilityAffiliation().addAll(results);

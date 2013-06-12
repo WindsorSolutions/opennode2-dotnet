@@ -42,10 +42,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.RowMapper;
 import com.windsor.node.common.domain.CommonContentType;
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
+import com.windsor.node.common.domain.DataFlow;
 import com.windsor.node.common.domain.Document;
 import com.windsor.node.common.domain.EndpointVersionType;
 import com.windsor.node.common.domain.NodeMethodType;
 import com.windsor.node.common.domain.NodeTransaction;
+import com.windsor.node.common.domain.NodeVisit;
 import com.windsor.node.common.domain.PartnerIdentity;
 import com.windsor.node.common.domain.ScheduledItem;
 import com.windsor.node.common.domain.ScheduledItemSourceType;
@@ -199,7 +201,7 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao
             instance.setId(UUIDGenerator.makeId());
         }
 
-        int count = getJdbcTemplate().queryForInt(SQL_DOC_ID_EXISTS, new Object[] {instance.getId()}, new int[] {Types.VARCHAR});
+        int count = getJdbcTemplate().queryForObject(SQL_DOC_ID_EXISTS, new Object[] {instance.getId()}, new int[] {Types.VARCHAR}, Integer.class);
         if(count > 0)
         {
             logger.warn("Warning, document exists, cannot insert new document for Transaction Id: " + transactionId
@@ -274,27 +276,22 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao
     /**
      * get
      */
-    @SuppressWarnings("unchecked")
     public List<NodeTransaction> get(CommonTransactionStatusCode status, NodeMethodType method) {
 
         validateObjectArg(status, "CommonTransactionStatusCode");
         validateObjectArg(method, "NodeMethodType");
 
-        return (List<NodeTransaction>)getJdbcTemplate().query(SQL_SELECT_STATUS_N_METHOD,
-                new Object[] { status.name(), method.getType() },
-                new TransactionMapper());
+        return getJdbcTemplate().query(SQL_SELECT_STATUS_N_METHOD, new Object[]{status.name(), method.getType()}, new TransactionMapper());
     }
 
     /**
      * getByMethodType
      */
-    @SuppressWarnings("unchecked")
     public List<NodeTransaction> get(NodeMethodType method) {
 
         validateObjectArg(method, "NodeMethodType");
 
-        return (List<NodeTransaction>)getJdbcTemplate().query(SQL_SELECT_N_METHOD,
-                new Object[] { method.getType() }, new TransactionMapper());
+        return getJdbcTemplate().query(SQL_SELECT_N_METHOD, new Object[]{method.getType()}, new TransactionMapper());
     }
 
     public NodeTransaction getNextReceived(NodeMethodType method) {
@@ -332,18 +329,14 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao
     /**
      * getSubmittedDocumentTransactions
      */
-    @SuppressWarnings("unchecked")
     public List<NodeTransaction> getSubmittedDocumentTransactions() {
 
-        return (List<NodeTransaction>)getJdbcTemplate().query(SQL_SELECT_STATUS_DOCS,
-                new Object[] { CommonTransactionStatusCode.Received.name() },
-                new TransactionMapper());
+        return getJdbcTemplate().query(SQL_SELECT_STATUS_DOCS, new Object[]{CommonTransactionStatusCode.Received.name()}, new TransactionMapper());
     }
 
     /**
      * getDocuments
      */
-    @SuppressWarnings("unchecked")
     public List<Document> getDocuments(String transactionId,
             boolean useNetworkId, boolean loadDocContent) {
 
@@ -371,8 +364,7 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao
             adjustedId = transactionId;
         }
 
-        return (List<Document>) getJdbcTemplate().query(sql,
-                new Object[] { adjustedId }, new DocumentMapper());
+        return getJdbcTemplate().query(sql, new Object[]{adjustedId}, new DocumentMapper());
     }
 
     /**
@@ -400,41 +392,34 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao
                 new DocumentMapper());
     }
 
-    /**
-     * make
-     * @deprecated
-     */
-    public NodeTransaction make(String flowId, String createdById,
-            NodeMethodType method, CommonTransactionStatusCode status) {
-
-        if (StringUtils.isBlank(flowId)) {
-            throw new RuntimeException("Null flowId");
+    public NodeTransaction make(DataFlow dataFlow, NodeVisit visit, NodeMethodType callingMethodType, CommonTransactionStatusCode initialStatus)
+    {
+        if(dataFlow == null || StringUtils.isBlank(dataFlow.getId()))
+        {
+            throw new IllegalArgumentException("Argument DataFlow dataFlow of function make(...) was either null or invalid.");
         }
-
-        if (StringUtils.isBlank(createdById)) {
-            throw new RuntimeException("Null createdById");
+        if(visit == null || visit.getUserAccount() == null || StringUtils.isBlank(visit.getUserAccount().getId()))
+        {
+            throw new IllegalArgumentException("Argument NodeVisit visit of function make(...) was either null or invalid.");
         }
-
-        if (method == null) {
-            throw new RuntimeException("Null method");
+        if(callingMethodType == null)
+        {
+            throw new IllegalArgumentException("Argument NodeMethodType callingMethodType of function make(...) cannot be null.");
         }
-
-        if (status == null) {
-            throw new RuntimeException("Null status");
+        if(initialStatus == null)
+        {
+            throw new IllegalArgumentException("Argument CommonTransactionStatusCode initialStatus of function make(...) cannot be null.");
         }
 
         NodeTransaction tran = new NodeTransaction();
 
         tran.setId(UUIDGenerator.makeId());
-        tran.setFlow(flowDao.get(flowId));
-        tran.setNetworkId(tran.getId());
-        tran.setStatus(new TransactionStatus(tran.getNetworkId(), status,
-                "Transaction Created"));
-        tran.setModifiedById(createdById);
-        tran.setWebMethod(method);
+        tran.setFlow(dataFlow);
+        tran.setStatus(new TransactionStatus(initialStatus, "Transaction Created"));
+        tran.setModifiedById(visit.getUserAccount().getId());
+        tran.setWebMethod(callingMethodType);
 
         return save(tran);
-
     }
 
     public NodeTransaction make(ScheduledItem schedule, NodeMethodType method, CommonTransactionStatusCode status)
@@ -463,8 +448,8 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao
         NodeTransaction tran = new NodeTransaction();
         tran.setId(UUIDGenerator.makeId());
         tran.setFlow(flowDao.get(schedule.getFlowId()));
-        tran.setNetworkId(tran.getId());
-        tran.setStatus(new TransactionStatus(tran.getNetworkId(), status, "Transaction Created"));
+        //tran.setNetworkId(tran.getId());//FIXME this seems bogus, there is no network id unless it's from the network
+        tran.setStatus(new TransactionStatus(status, "Transaction Created"));
         tran.setModifiedById(schedule.getModifiedById());
         tran.setWebMethod(method);
         //TODO set EndpointVersion, no use yet as no functionality that would set it makes use of the updated function, will fix the function to work for non schedules
@@ -516,7 +501,7 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao
     {
         if(transaction != null && StringUtils.isNotBlank(transaction.getId()))
         {
-            int count = getJdbcTemplate().queryForInt(SQL_ID_EXISTS, new Object[] {transaction.getId()}, new int[]{Types.VARCHAR});
+            int count = getJdbcTemplate().queryForObject(SQL_ID_EXISTS, new Object[] {transaction.getId()}, new int[]{Types.VARCHAR}, Integer.class);
             if(count > 0)
             {
                 return true;
@@ -715,9 +700,9 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao
     /**
      * get
      */
-    @SuppressWarnings("unchecked")
-    public List<NodeTransaction> get() {
-        return (List<NodeTransaction>)getJdbcTemplate().query(SQL_SELECT_ALL, new TransactionMapper());
+    public List<NodeTransaction> get()
+    {
+        return getJdbcTemplate().query(SQL_SELECT_ALL, new TransactionMapper());
     }
 
     /**
@@ -726,9 +711,9 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao
      * @author mchmarny
      * 
      */
-    private class TransactionMapper implements RowMapper {
+    private class TransactionMapper implements RowMapper<NodeTransaction> {
 
-        public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+        public NodeTransaction mapRow(ResultSet rs, int rowNum) throws SQLException {
 
             NodeTransaction transaction = new NodeTransaction();
 
@@ -777,9 +762,9 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao
      * @author mchmarny
      * 
      */
-    private class DocumentMapper implements RowMapper
+    private class DocumentMapper implements RowMapper<Document>
     {
-        public Object mapRow(ResultSet rs, int rowNum) throws SQLException
+        public Document mapRow(ResultSet rs, int rowNum) throws SQLException
         {
             Document obj = new Document();
 
@@ -787,7 +772,7 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao
 
             obj.setId(rs.getString("Id"));
             obj.setDocumentName(rs.getString("DocumentName"));
-            obj.setType(CommonContentType.valueOf(rs.getString("DocumentType")));
+            obj.setType(CommonContentType.fromString(rs.getString("DocumentType")));
             obj.setDocumentId(rs.getString("DocumentId"));
             obj.setDocumentStatus((CommonTransactionStatusCode)CommonTransactionStatusCodeConverter.convert(rs.getString("Status")));
             obj.setDocumentStatusDetail(rs.getString("StatusDetail"));

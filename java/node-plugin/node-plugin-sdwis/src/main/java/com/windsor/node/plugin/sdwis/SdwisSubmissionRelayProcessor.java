@@ -61,6 +61,7 @@ import com.windsor.node.common.domain.NodeMethodType;
 import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.PaginationIndicator;
 import com.windsor.node.common.domain.PartnerIdentity;
+import com.windsor.node.common.domain.PluginServiceImplementorDescriptor;
 import com.windsor.node.common.domain.ProcessContentResult;
 import com.windsor.node.common.domain.ServiceType;
 import com.windsor.node.common.util.NodeClientService;
@@ -104,6 +105,21 @@ public class SdwisSubmissionRelayProcessor extends BaseWnosPlugin {
     private String submitPassword;
     private String submitUserName;
     private DualEndpointNodeClientFactory clientFactory;
+
+    private static final PluginServiceImplementorDescriptor PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR = new PluginServiceImplementorDescriptor();
+
+    static
+    {
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setName("SdwisSubmissionRelayProcessor");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setDescription("A simple service designed to relay a SDWIS submission received from FedRep to CDX.");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setClassName(SdwisSubmissionRelayProcessor.class.getCanonicalName());
+    }
+
+    @Override
+    public PluginServiceImplementorDescriptor getPluginServiceImplementorDescription()
+    {
+        return PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR;
+    }
 
     public SdwisSubmissionRelayProcessor() {
 

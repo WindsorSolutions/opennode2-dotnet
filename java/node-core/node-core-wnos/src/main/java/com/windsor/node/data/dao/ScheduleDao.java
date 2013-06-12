@@ -36,7 +36,7 @@ import java.sql.Timestamp;
 import com.windsor.node.common.domain.ScheduleExecuteStatus;
 import com.windsor.node.common.domain.ScheduledItem;
 
-public interface ScheduleDao extends DeletableDao, ListableDao {
+public interface ScheduleDao extends DeletableDao, ListableDao<ScheduledItem> {
 
     ScheduledItem save(ScheduledItem instance);
 
@@ -46,8 +46,10 @@ public interface ScheduleDao extends DeletableDao, ListableDao {
 
     ScheduledItem getForNextExec();
 
+    @Deprecated
     void setRun(String id, Timestamp time);
 
+    @Deprecated
     void setRunInfo(String id, String scheduleInfo,
             ScheduleExecuteStatus success);
 

@@ -7,24 +7,39 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
-
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
 import com.windsor.node.common.domain.NodeTransaction;
+import com.windsor.node.common.domain.PluginServiceImplementorDescriptor;
 import com.windsor.node.common.domain.ProcessContentResult;
 import com.windsor.node.common.util.ByIndexOrNameMap;
 import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
-import com.windsor.node.plugin.facid3.domain.generated.AffiliateListDataType;
-import com.windsor.node.plugin.facid3.domain.generated.FacilityDataType;
-import com.windsor.node.plugin.facid3.domain.generated.FacilityDetailsDataType;
-import com.windsor.node.plugin.facid3.domain.generated.FacilityListDataType;
-import com.windsor.node.plugin.facid3.domain.generated.ObjectFactory;
+import com.windsor.node.plugin.facid3.domain.AffiliateListDataType;
+import com.windsor.node.plugin.facid3.domain.FacilityDataType;
+import com.windsor.node.plugin.facid3.domain.FacilityDetailsDataType;
+import com.windsor.node.plugin.facid3.domain.FacilityListDataType;
+import com.windsor.node.plugin.facid3.domain.ObjectFactory;
 
 public class GetFacilityByChangeDate extends BaseFacIdGetFacilityService
 {
+
+    private static final PluginServiceImplementorDescriptor PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR = new PluginServiceImplementorDescriptor();
+
+    static
+    {
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setName("GetFacilityByChangeDate");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setDescription("Used to support the creation and maintenance of a replica set of facility data across Partners (i.e., data synchronization).");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setClassName(GetFacilityByChangeDate.class.getCanonicalName());
+    }
+
+    @Override
+    public PluginServiceImplementorDescriptor getPluginServiceImplementorDescription()
+    {
+        return PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR;
+    }
+
     @Override
     public List<PluginServiceParameterDescriptor> getParameters()
     {

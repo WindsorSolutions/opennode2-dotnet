@@ -44,11 +44,14 @@ import com.windsor.node.common.domain.ScheduleFrequencyType;
 import com.windsor.node.common.domain.ScheduledItem;
 import com.windsor.node.common.domain.ScheduledItemSourceType;
 import com.windsor.node.common.domain.ScheduledItemTargetType;
+import com.windsor.node.data.dao.ActivityDao;
 import com.windsor.node.data.dao.ScheduleDao;
 import com.windsor.node.util.DateUtil;
 import com.windsor.node.util.FormatUtil;
 
 public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
+
+    private ActivityDao activityDao;
 
     /**
      * SQL SELECT statement for this table
@@ -72,10 +75,11 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
      * queries
      */
     private static final String SQL_SELECT = "SELECT Id, Name, FlowId, StartOn, EndOn, "
-            + "SourceType, SourceId, SourceOperation, TargetType, TargetId, "
-            + "LastExecutionInfo, LastExecutedOn, NextRun, FrequencyType, "
-            + "Frequency, ModifiedBy, ModifiedOn, IsActive, "
-            + "IsRunNow, ExecuteStatus FROM NSchedule ";
+            + " SourceType, SourceId, SourceOperation, TargetType, TargetId, "
+            + " LastExecutionInfo, LastExecutedOn, NextRun, FrequencyType, "
+            + " Frequency, ModifiedBy, ModifiedOn, IsActive, "
+            + " IsRunNow, ExecuteStatus, SourceFlow, TargetFlow, TargetOperation, "
+            + " LastExecuteActivityId FROM NSchedule ";
 
     private static final String SQL_SELECT_ID = SQL_SELECT + " WHERE Id = ? ";
 
@@ -94,8 +98,8 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
     private static final String SQL_INSERT = "INSERT INTO NSchedule ( Name, FlowId, StartOn, EndOn, "
             + "SourceType, SourceId, SourceOperation, TargetType, TargetId, LastExecutionInfo, "
             + "LastExecutedOn, NextRun, FrequencyType, Frequency, ModifiedBy, ModifiedOn, IsActive, "
-            + "IsRunNow, ExecuteStatus, Id ) "
-            + "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
+            + "IsRunNow, ExecuteStatus, SourceFlow, TargetFlow, TargetOperation, LastExecuteActivityId, Id) "
+            + "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
 
     /**
      * SQL UPDATE statement for this table
@@ -103,14 +107,17 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
     private static final String SQL_UPDATE = "UPDATE NSchedule SET Name = ?, FlowId = ?, "
             + " StartOn = ?, EndOn = ?, SourceType = ?, SourceId = ?, SourceOperation = ?, "
             + " TargetType = ?, TargetId = ?, LastExecutionInfo = ?, LastExecutedOn = ?, "
-            + "NextRun = ?, FrequencyType = ?, Frequency = ?, ModifiedBy = ?, ModifiedOn = ?, "
-            + "IsActive = ?, IsRunNow = ?, ExecuteStatus = ? WHERE Id = ?";
+            + " NextRun = ?, FrequencyType = ?, Frequency = ?, ModifiedBy = ?, ModifiedOn = ?, "
+            + " IsActive = ?, IsRunNow = ?, ExecuteStatus = ?, SourceFlow = ?, "
+            + " TargetFlow = ?, TargetOperation = ?, LastExecuteActivityId = ? WHERE Id = ?";
 
     /**
      * SQL UPDATE statement for this table
      */
+    @Deprecated
     private static final String SQL_UPDATE_NEXT = "UPDATE NSchedule SET NextRun = ?, IsRunNow = 'N' WHERE Id = ?";
 
+    @Deprecated
     private static final String SQL_UPDATE_INFO = "UPDATE NSchedule SET LastExecutedOn = ?, LastExecutionInfo = ?, "
             + "ExecuteStatus = ?, IsRunNow = 'N' WHERE Id = ?";
 
@@ -135,6 +142,7 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
                 new Object[] { id }, new ScheduleMapper());
     }
 
+    @Deprecated
     public void setRunInfo(String scheduleId, String info,
             ScheduleExecuteStatus executeStatus) {
 
@@ -168,6 +176,7 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
     /**
      * setRun
      */
+    @Deprecated
     public void setRun(String scheduleId, Timestamp time) {
 
         if (StringUtils.isBlank(scheduleId)) {
@@ -230,7 +239,7 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
     private Object[] scheduleToFieldArray(ScheduledItem instance) {
 
         // CHECKSTYLE:OFF
-        Object[] args = new Object[20];
+        Object[] args = new Object[24];
 
         // Name
         args[0] = instance.getName();
@@ -270,8 +279,17 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
         args[17] = FormatUtil.toYNFromBoolean(instance.isRunNow());
         // ExecuteStatus
         args[18] = instance.getExecuteStatus().name();
-        // id
-        args[19] = instance.getId();
+
+        args[19] = instance.getSourceFlow();//SourceFlow
+        args[20] = instance.getTargetFlow();//TargetFlow
+        args[21] = instance.getTargetOperation();//TargetOperation
+        if(instance.getLastExecutionActivity() != null)
+        {
+            args[22] = instance.getLastExecutionActivity().getId();//LastExecuteActivityId
+        }
+
+        //id
+        args[23] = instance.getId();
 
         return args;
     }
@@ -280,7 +298,7 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
 
         // CHECKSTYLE:OFF
 
-        int[] types = new int[20];
+        int[] types = new int[24];
         // Name
         types[0] = Types.VARCHAR;
         // FlowId
@@ -319,8 +337,14 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
         types[17] = Types.VARCHAR;
         // ExecuteStatus
         types[18] = Types.VARCHAR;
+
+        types[19] = Types.VARCHAR;//SourceFlow
+        types[20] = Types.VARCHAR;//TargetFlow
+        types[21] = Types.VARCHAR;//TargetOperation
+        types[22] = Types.VARCHAR;//LastExecuteActivityId
+
         // Id
-        types[19] = Types.VARCHAR;
+        types[23] = Types.VARCHAR;
         // CHECKSTYLE:ON
 
         return types;
@@ -399,7 +423,8 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
         delete(SQL_DELETE_FLOW, id);
     }
 
-    public List<?> get() {
+    public List<ScheduledItem> get()
+    {
         return getJdbcTemplate().query(SQL_SELECT_ALL, new ScheduleMapper());
     }
 
@@ -450,9 +475,9 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
      * @author mchmarny
      * 
      */
-    private class ScheduleMapper implements RowMapper {
+    private class ScheduleMapper implements RowMapper<ScheduledItem> {
 
-        public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+        public ScheduledItem mapRow(ResultSet rs, int rowNum) throws SQLException {
 
             ScheduledItem item = new ScheduledItem();
 
@@ -477,9 +502,8 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
             item.setSourceOperation(rs.getString("SourceOperation"));
 
             // SourceArgs, changed this to be an actual object, this was very hard to work with beforehand.
-            @SuppressWarnings("unchecked")
-            List<ScheduleArgument> args = (List<ScheduleArgument>)getList(SQL_SELECT_ARG, rs.getString("Id"), new RowMapper(){
-                public Object mapRow(ResultSet rs, int rowNum) throws SQLException
+            List<ScheduleArgument> args = getJdbcTemplate().query(SQL_SELECT_ARG, new Object[] {rs.getString("Id")}, new RowMapper<ScheduleArgument>(){
+                public ScheduleArgument mapRow(ResultSet rs, int rowNum) throws SQLException
                 {
                     ScheduleArgument arg = new ScheduleArgument();
                     arg.setId(rs.getString("Id"));
@@ -537,8 +561,7 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
             item.setNextRunOn(rs.getTimestamp("NextRun"));
 
             // FrequencyType
-            item.setFrequencyType((ScheduleFrequencyType) ScheduleFrequencyType
-                    .valueOf(rs.getString("FrequencyType")));
+            item.setFrequencyType(ScheduleFrequencyType.valueOf(rs.getString("FrequencyType")));
 
             // Frequency
             item.setFrequency(rs.getInt("Frequency"));
@@ -555,10 +578,29 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
             item.setExecuteStatus((ScheduleExecuteStatus) ScheduleExecuteStatus
                     .valueOf(rs.getString("ExecuteStatus")));
 
+            item.setSourceFlow(rs.getString("SourceFlow"));
+            item.setTargetFlow(rs.getString("TargetFlow"));
+            item.setTargetOperation(rs.getString("TargetOperation"));
+            String LastExecuteActivityId = rs.getString("LastExecuteActivityId");
+            if(StringUtils.isNotBlank(LastExecuteActivityId))
+            {
+                item.setLastExecutionActivity(getActivityDao().get(LastExecuteActivityId));
+            }
+
             return item;
 
         }
 
+    }
+
+    public ActivityDao getActivityDao()
+    {
+        return activityDao;
+    }
+
+    public void setActivityDao(ActivityDao activityDao)
+    {
+        this.activityDao = activityDao;
     }
 
 }

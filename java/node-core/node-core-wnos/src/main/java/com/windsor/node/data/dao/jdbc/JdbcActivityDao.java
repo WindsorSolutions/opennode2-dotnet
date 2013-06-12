@@ -60,7 +60,7 @@ public class JdbcActivityDao extends BaseJdbcDao implements ActivityDao {
      */
     private static final String SQL_SELECT = "SELECT L.Id, L.ActivityType, "
             + "L.TransactionId, L.IP, A.NAASAccount AS ModifiedBy, "
-            + "A.Id as ModifiedById, L.ModifiedOn, T.WebMethod, F.Code As FlowCode "
+            + "A.Id as ModifiedById, L.ModifiedOn, COALESCE(L.WebMethod, T.WebMethod) AS WebMethod, F.Code As FlowCode "
             + "FROM NActivity L JOIN NAccount A ON A.Id = L.ModifiedBy "
             + "LEFT JOIN NTransaction T ON L.TransactionId = T.Id "
             + "LEFT JOIN NFlow F ON T.FlowId = F.Id " + "WHERE L.Id = ?  ";
@@ -71,7 +71,7 @@ public class JdbcActivityDao extends BaseJdbcDao implements ActivityDao {
      */
     private static final String SQL_SEARCH = "SELECT L.Id, L.ActivityType, "
             + "L.TransactionId, L.IP, A.NAASAccount AS ModifiedBy, "
-            + "A.Id as ModifiedById, L.ModifiedOn, T.WebMethod, F.Code As FlowCode "
+            + "A.Id as ModifiedById, L.ModifiedOn, COALESCE(L.WebMethod, T.WebMethod) AS WebMethod, F.Code As FlowCode "
             + "FROM NActivity L JOIN NAccount A ON A.Id = L.ModifiedBy "
             + "LEFT JOIN NTransaction T ON L.TransactionId = T.Id "
             + "LEFT JOIN NFlow F ON T.FlowId = F.Id "
@@ -81,7 +81,7 @@ public class JdbcActivityDao extends BaseJdbcDao implements ActivityDao {
      * SQL INSERT statement for this table
      */
     private static final String SQL_INSERT = "INSERT INTO NActivity "
-            + "( Id, ActivityType, TransactionId, IP, ModifiedBy, ModifiedOn ) VALUES ( ?, ?, ?, ?, ?, ? )";
+            + "( Id, ActivityType, TransactionId, IP, ModifiedBy, ModifiedOn, WebMethod, FlowName, Operation ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ? )";
 
     /**
      * All finder methods in this class use this SELECT constant to build their
@@ -92,7 +92,7 @@ public class JdbcActivityDao extends BaseJdbcDao implements ActivityDao {
     /**
      * SQL INSERT statement for this table
      */
-    private static final String SQL_INSERT_DETAIL = "INSERT INTO NActivityDetail ( Id, ActivityId, Detail, ModifiedOn ) VALUES ( ?, ?, ?, ? )";
+    private static final String SQL_INSERT_DETAIL = "INSERT INTO NActivityDetail ( Id, ActivityId, Detail, ModifiedOn, OrderIndex ) VALUES ( ?, ?, ?, ?, ? )";
 
     /**
      * Lookup SQL TransactionId
@@ -164,24 +164,31 @@ public class JdbcActivityDao extends BaseJdbcDao implements ActivityDao {
         try {
 
             String objId = idGenerator.createId();
+            instance.setId(objId);
 
             // Id, ActivityType, TransactionId, IP, ModifiedBy, ModifiedOn
 
-            Object[] args = new Object[6];
-            args[0] = objId;
+            Object[] args = new Object[9];
+            args[0] = instance.getId();
             args[1] = instance.getType().name();
             args[2] = instance.getTransactionId();
             args[3] = instance.getIp();
             args[4] = instance.getModifiedById();
             args[5] = DateUtil.getTimestamp();
+            args[6] = instance.getWebMethod();
+            args[7] = instance.getFlowName();
+            args[8] = instance.getOperation();
 
-            int[] types = new int[6];
+            int[] types = new int[9];
             types[0] = Types.VARCHAR;
             types[1] = Types.VARCHAR;
             types[2] = Types.VARCHAR;
             types[3] = Types.VARCHAR;
             types[4] = Types.VARCHAR;
             types[5] = Types.TIMESTAMP;
+            types[6] = Types.VARCHAR;
+            types[7] = Types.VARCHAR;
+            types[8] = Types.VARCHAR;
 
             printourArgs(args);
 
@@ -190,18 +197,19 @@ public class JdbcActivityDao extends BaseJdbcDao implements ActivityDao {
             getJdbcTemplate().update(SQL_INSERT, args, types);
 
             // Insert Detail
-            Object[] args2 = new Object[4];
+            Object[] args2 = new Object[5];
 
-            int[] types2 = new int[4];
+            int[] types2 = new int[5];
             types2[0] = Types.VARCHAR;
             types2[1] = Types.VARCHAR;
             types2[2] = Types.VARCHAR;
             types2[3] = Types.TIMESTAMP;
+            types2[4] = Types.NUMERIC;
 
             // For each detail
-            for (Iterator it = instance.getEntries().iterator(); it.hasNext();) {
+            for (Iterator<ActivityEntry> it = instance.getEntries().iterator(); it.hasNext();) {
 
-                ActivityEntry entry = (ActivityEntry) it.next();
+                ActivityEntry entry = it.next();
 
                 logger.debug("entry: " + entry);
 
@@ -221,9 +229,10 @@ public class JdbcActivityDao extends BaseJdbcDao implements ActivityDao {
                     }
 
                     args2[0] = idGenerator.createId();
-                    args2[1] = objId;
+                    args2[1] = instance.getId();
                     args2[2] = msgDetail;
                     args2[3] = entry.getModifiedOn();
+                    args2[4] = entry.getOrderIndex();
 
                     printourArgs(args2);
 
@@ -284,7 +293,7 @@ public class JdbcActivityDao extends BaseJdbcDao implements ActivityDao {
     /**
      * search
      */
-    public List search(ActivitySearchCriteria instance) {
+    public List<Activity> search(ActivitySearchCriteria instance) {
 
         validateObjectArg(instance, "ActivitySearchCriteria");
 
@@ -301,7 +310,7 @@ public class JdbcActivityDao extends BaseJdbcDao implements ActivityDao {
 
         String sql = SQL_SEARCH;
 
-        ArrayList args = new ArrayList();
+        ArrayList<Object> args = new ArrayList<Object>();
 
         args.add(instance.getCreatedFrom());
         args.add(instance.getCreatedTo());
@@ -365,9 +374,9 @@ public class JdbcActivityDao extends BaseJdbcDao implements ActivityDao {
      * @author mchmarny
      * 
      */
-    private class ActivityDetailMapper implements RowMapper {
+    private class ActivityDetailMapper implements RowMapper<ActivityEntry> {
 
-        public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+        public ActivityEntry mapRow(ResultSet rs, int rowNum) throws SQLException {
 
             ActivityEntry obj = new ActivityEntry();
 
@@ -382,9 +391,9 @@ public class JdbcActivityDao extends BaseJdbcDao implements ActivityDao {
 
     }
 
-    private class ChartItemMapper implements RowMapper {
+    private class ChartItemMapper implements RowMapper<ChartItem> {
 
-        public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+        public ChartItem mapRow(ResultSet rs, int rowNum) throws SQLException {
 
             ChartItem item = new ChartItem();
 
@@ -403,9 +412,9 @@ public class JdbcActivityDao extends BaseJdbcDao implements ActivityDao {
      * @author mchmarny
      * 
      */
-    private class ActivityMapper implements RowMapper {
+    private class ActivityMapper implements RowMapper<Activity> {
 
-        public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+        public Activity mapRow(ResultSet rs, int rowNum) throws SQLException {
 
             Activity obj = new Activity();
 

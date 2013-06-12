@@ -605,7 +605,7 @@ public class AccountServiceImpl extends BaseService implements AccountService,
     /**
      * get
      */
-    public List getLocalUsers(boolean includeInactive, NodeVisit visit) {
+    public List<UserAccount> getLocalUsers(boolean includeInactive, NodeVisit visit) {
 
         // Make sure the user performing that action has admin rights
         validateByRole(visit, SystemRoleType.Program);
@@ -633,7 +633,7 @@ public class AccountServiceImpl extends BaseService implements AccountService,
     /**
      * getNAASUsers
      */
-    public List getNAASUsers(NodeVisit visit) {
+    public List<UserAccount> getNAASUsers(NodeVisit visit) {
         // Make sure the user performing that action has admin rights
         validateByRole(visit, SystemRoleType.Admin);
         logger.debug("Getting naas account list");
@@ -643,7 +643,7 @@ public class AccountServiceImpl extends BaseService implements AccountService,
     /**
      * setSimpleNAASPolicies
      */
-    public void setSimpleNAASPolicies(String username, List policies,
+    public void setSimpleNAASPolicies(String username, List<UserAccessPolicy> policies,
             NodeVisit visit) {
 
         // Make sure the user performing that action has admin rights
@@ -664,7 +664,7 @@ public class AccountServiceImpl extends BaseService implements AccountService,
 
             for (int i = 0; i < policies.size(); i++) {
 
-                UserAccessPolicy policy = (UserAccessPolicy) policies.get(i);
+                UserAccessPolicy policy = policies.get(i);
 
                 logger.debug("Policy: " + policy);
 
@@ -710,13 +710,12 @@ public class AccountServiceImpl extends BaseService implements AccountService,
         // Validate the flow grant if the flow is not null
         if (StringUtils.isNotBlank(flowId)) {
 
-            List userPolicies = policyDao.getByUserAccountId(account.getId());
+            List<UserAccessPolicy> userPolicies = policyDao.getByUserAccountId(account.getId());
 
             boolean hasGrantPolicy = false;
             for (int i = 0; i < userPolicies.size(); i++) {
 
-                UserAccessPolicy policy = (UserAccessPolicy) userPolicies
-                        .get(i);
+                UserAccessPolicy policy = userPolicies.get(i);
 
                 if (policy.getPolicyType() == ServiceRequestAuthorizationType.Flow
                         && policy.getTypeQualifier().equalsIgnoreCase(flowId)
@@ -744,7 +743,7 @@ public class AccountServiceImpl extends BaseService implements AccountService,
     public void setNAASPolicy(String username, UserAccessPolicy policy,
             NodeVisit visit) {
 
-        List policies = new ArrayList();
+        List<UserAccessPolicy> policies = new ArrayList<UserAccessPolicy>();
         policies.add(policy);
 
         setSimpleNAASPolicies(username, policies, visit);

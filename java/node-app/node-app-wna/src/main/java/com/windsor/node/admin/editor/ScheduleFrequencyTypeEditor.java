@@ -40,7 +40,7 @@ public class ScheduleFrequencyTypeEditor extends ClassEditor {
 
     public void setAsText(String text) throws IllegalArgumentException {
         if (StringUtils.isBlank(text)) {
-            setValue(ScheduleFrequencyType.Once);
+            setValue(ScheduleFrequencyType.Never);
         } else {
 
             try {

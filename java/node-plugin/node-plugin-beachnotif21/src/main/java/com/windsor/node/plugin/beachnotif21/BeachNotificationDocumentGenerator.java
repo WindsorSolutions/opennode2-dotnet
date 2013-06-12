@@ -37,13 +37,15 @@ import java.util.List;
 import javax.sql.DataSource;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
-import org.springframework.beans.factory.InitializingBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.windsor.node.common.domain.CommonContentType;
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
 import com.windsor.node.common.domain.DataServiceRequestParameter;
 import com.windsor.node.common.domain.Document;
 import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.PaginationIndicator;
+import com.windsor.node.common.domain.PluginServiceImplementorDescriptor;
 import com.windsor.node.common.domain.ProcessContentResult;
 import com.windsor.node.common.domain.ServiceType;
 import com.windsor.node.conf.NAASConfig;
@@ -56,17 +58,25 @@ import com.windsor.node.service.helper.IdGenerator;
 import com.windsor.node.service.helper.settings.SettingServiceProvider;
 
 public class BeachNotificationDocumentGenerator extends BaseWnosPlugin
-        implements InitializingBean {
-
+{
     public static final String SERVICE_NAME = "GetBeachesData_v2.1";
 
     private static final String OUTFILE_BASE_NAME = "GetBeachesData_v2.1";
     private static final String TEMPLATE_NAME = "BEACH_NOTIF_21.vm";
+    protected Logger logger = LoggerFactory.getLogger(BeachNotificationDocumentGenerator.class);
+    private static final PluginServiceImplementorDescriptor PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR = new PluginServiceImplementorDescriptor();
 
     private SettingServiceProvider settingService;
     private IdGenerator idGenerator;
     private VelocityHelper velocityHelper = new JdbcVelocityHelper();
     private BeachNotificationDao beachNotificationDao;
+
+    static
+    {
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setName("BeachNotificationDocumentGenerator");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setDescription("Generates an XML file conforming to the Beach Notification v2.1 schema using the data in the staging database. Only Beach Activities where SENTTOEPA=\"N\" will be present in the generated file.");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setClassName(BeachNotificationDocumentGenerator.class.getCanonicalName());
+    }
 
     public BeachNotificationDocumentGenerator() {
         super();
@@ -104,13 +114,19 @@ public class BeachNotificationDocumentGenerator extends BaseWnosPlugin
                     "Unable to obtain SettingServiceProvider");
         }
 
-        beachNotificationDao = new BeachNotificationDao((DataSource) getDataSources().get(ARG_DS_SOURCE));
+        beachNotificationDao = new BeachNotificationDao(getDataSources().get(ARG_DS_SOURCE));
         if(beachNotificationDao == null)
         {
             throw new RuntimeException("Unable to obtain BeachNotificationDao");
         }
-
     }
+
+    @Override
+    public PluginServiceImplementorDescriptor getPluginServiceImplementorDescription()
+    {
+        return PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR;
+    }
+
 
     /*
      * (non-Javadoc)

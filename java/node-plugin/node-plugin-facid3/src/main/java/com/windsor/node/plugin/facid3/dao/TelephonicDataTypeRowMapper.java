@@ -2,16 +2,13 @@ package com.windsor.node.plugin.facid3.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import org.springframework.jdbc.core.RowMapper;
+import com.windsor.node.plugin.facid3.domain.ObjectFactory;
+import com.windsor.node.plugin.facid3.domain.TelephonicDataType;
 
-import com.windsor.node.plugin.facid3.domain.generated.ObjectFactory;
-import com.windsor.node.plugin.facid3.domain.generated.TelephonicDataType;
-
-public class TelephonicDataTypeRowMapper implements RowMapper
+public class TelephonicDataTypeRowMapper implements RowMapper<TelephonicDataType>
 {
-    @Override
-	public Object mapRow(ResultSet rs, int rowNum) throws SQLException
+    public TelephonicDataType mapRow(ResultSet rs, int rowNum) throws SQLException
     {
         ObjectFactory fact = new ObjectFactory();
         TelephonicDataType telephonic = fact.createTelephonicDataType();

@@ -11,7 +11,7 @@
     <name>Node Core - Common WNOS Library</name>
     <dependencies>
         <dependency>
-            <groupId>${project.groupId}</groupId>
+            <groupId>com.windsor.node.core</groupId>
             <artifactId>node-core-common</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -44,16 +44,20 @@
             <artifactId>commons-codec</artifactId>
         </dependency>
         <dependency>
-            <groupId>commons-lang</groupId>
-            <artifactId>commons-lang</artifactId>
-        </dependency>
-        <dependency>
             <groupId>javax.activation</groupId>
             <artifactId>activation</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring</artifactId>
+            <artifactId>spring-webmvc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
         </dependency>
         <dependency>
             <groupId>org.safehaus.jug</groupId>
@@ -170,6 +174,12 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!-- Velocity is the final hold out on this, even the newer 1.7 version requires old commons-lang instead of commons-lang3 -->
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6</version>
+        </dependency>
         <dependency>
             <groupId>javax.xml</groupId>
             <artifactId>jaxrpc-api</artifactId>
@@ -221,16 +231,6 @@
             <groupId>com.oracle</groupId>
             <artifactId>ojdbc5_g</artifactId>
             <version>11.1.0.7.0-Production</version>
-        </dependency>
-        <dependency>
-            <groupId>com.ibm</groupId>
-            <artifactId>db2jcc</artifactId>
-            <version>db2jcc_1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.ibm</groupId>
-            <artifactId>db2jcc_license_cu</artifactId>
-            <version>db2jcc_license_cu_1.0</version>
         </dependency>
         <!--
             Be aware, with your checkout of the Resources folder, you have acquired the MS license for this driver.

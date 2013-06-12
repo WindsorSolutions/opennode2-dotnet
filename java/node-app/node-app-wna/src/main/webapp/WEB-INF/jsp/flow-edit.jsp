@@ -1,7 +1,5 @@
 <%@ include file="/WEB-INF/jsp/_head.jsp"%>
 
-
-
 <table id="contentTable">
 	<tr>
 		<td id="sidebarPane" align="left"><%@ include
@@ -25,9 +23,8 @@
 
 
 			<tr>
-				<td class="label" width="5%" style="text-align: right; vertical-align: top;"><img alt=""
-					src="img/page_java.gif"
-					style="border: 0; vertical-align: middle; padding-right: 3px;" />Name:</td>
+				<td class="label" width="5%" style="text-align: right; vertical-align: top;"><img src="img/help.png"
+                    alt="Help" style="border: 0; vertical-align: middle; padding-right: 3px;" onclick="showHelp('helpText')" />Name:</td>
 				<td class="ctrl" width="95%">
 				
 					<spring:bind path="command.id">
@@ -55,14 +52,15 @@
 									value="<c:out value="${status.value}" />" />
 								<span class="error" <c:if test="${status.errorMessage == \"\"}">style="display:none;"</c:if> ><c:out value="${status.errorMessage}" /></span>
 							</spring:bind>
-				
 						</c:otherwise>
 					
 					</c:choose>
-					
 				
 				</td>
 			</tr>
+            <tr>
+                <td colspan="2"><div id="helpText" style="display:none"><c:out value="${pluginMetaData.helpText}" /></div></td>
+            </tr>
 
 			<tr>
 				<td class="label" width="5%" style="text-align: right; vertical-align: top;">Contact:</td>
@@ -101,6 +99,27 @@
 				</td>
 			</tr>
 
+            <tr>
+                <td class="label" colspan="2" style="text-align: left; vertical-align: top;">Latest Uploaded Plugin Data</td>
+            <tr>
+                <td class="label" width="5%" style="text-align: right; vertical-align: top;">Plugin Name:</td>
+                <td class="ctrl" width="95%"><c:out value="${pluginMetaData.name}" /></td>
+            </tr>
+
+            <tr>
+                <td class="label" width="5%" style="text-align: right; vertical-align: top;">Plugin Full Name:</td>
+                <td class="ctrl" width="95%"><c:out value="${pluginMetaData.fullName}" /></td>
+            </tr>
+
+            <tr>
+                <td class="label" width="5%" style="text-align: right; vertical-align: top;">Plugin Description:</td>
+                <td class="ctrl" width="95%"><c:out value="${pluginMetaData.description}" /></td>
+            </tr>
+
+            <tr>
+                <td class="label" width="5%" style="text-align: right; vertical-align: top;">Plugin Version:</td>
+                <td class="ctrl" width="95%"><c:out value="${pluginMetaData.version}" /></td>
+            </tr>
 
 
 			<tr>
@@ -128,5 +147,11 @@
 	</tr>
 
 </table>
+<script type="text/javascript">  
+function showHelp(id) {
+    $("#" + id).slideToggle();
+}
+
+</script>
 
 <%@ include file="/WEB-INF/jsp/_foot.jsp"%>

@@ -10,25 +10,14 @@
     <packaging>jar</packaging>
     <name>Node Plugin - FacID v3.0</name>
     <properties>
-        <node.plugin.name>FacID3</node.plugin.name>
-        <node.plugin.build.number>00</node.plugin.build.number>
+        <node.plugin.name>facid3</node.plugin.name>
+        <node.plugin.build.number>06</node.plugin.build.number>
     </properties>
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.jvnet.hyperjaxb3</groupId>
-                <artifactId>maven-hyperjaxb3-plugin</artifactId>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.windsor.node.util.hyperjaxb3</groupId>
-                        <artifactId>node-util-hyperjaxb3-facid</artifactId>
-                        <version>${project.version}</version>
-                    </dependency>
-                </dependencies>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>

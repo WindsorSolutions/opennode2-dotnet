@@ -33,7 +33,9 @@ package com.windsor.node.admin.config;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -190,6 +192,11 @@ public class ConfigConnController extends BaseSimpleFormController implements Co
             modelHolder = new HashMap<String, Object>();
             modelHolder.put(AdminConstants.MODEL_KEY, getReferenceData(request, visit));
         }
+        List<String> jdbcProviderTypes = new ArrayList<String>();
+        jdbcProviderTypes.add("com.mysql.jdbc.Driver");
+        jdbcProviderTypes.add("oracle.jdbc.OracleDriver");
+        jdbcProviderTypes.add("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        modelHolder.put("jdbcProviderTypes", jdbcProviderTypes);
         return modelHolder;
     }
 

@@ -83,9 +83,17 @@ public interface TransactionService {
     NodeTransaction get(String transactionId, NodeVisit visit);
 
     /**
+     * 
+     * @param transactionId Internal transactionId
+     * @param visit
+     * @return
+     */
+    NodeTransaction getNodeTransactionByIdWithAllData(String transactionId, NodeVisit visit);
+
+    /**
      * @param type
      * @param visit
      * @return
      */
-    List getByMethodType(NodeMethodType method, NodeVisit visit);
+    List<NodeTransaction> getByMethodType(NodeMethodType method, NodeVisit visit);
 }

@@ -41,6 +41,7 @@ function runScheduleNow(elementId, checkOnly)
             var result = json.status;
             var lastExecutedOn = json.lastExecutedOn;
             var lastRunInfo = json.lastRunInfo;
+            var lastExecutionTransactionId = json.lastExecutionTransactionId;
             if(result == "Running")
             {
                 $("#" + elementId).removeClass("readyToRun");
@@ -61,6 +62,10 @@ function runScheduleNow(elementId, checkOnly)
                 {
                 	$("#" + elementId + "LastExecutionInfoStyleTag").removeClass("error");
                 	$("#" + elementId + "FlagTag").html('<img title="OK" src="img/flag_green.gif" alt="OK" align="middle" style="border-width: 0px;" />');
+                }
+                if(lastExecutionTransactionId != null && lastExecutionTransactionId != "")
+                {
+                    $("#viewTransactionDetailSpan" + elementId).empty().html('<a href="tran.htm?id=' + lastExecutionTransactionId + '"><img border="0" alt="View Transaction Detail" src="img/zoom.png"></img></a>');
                 }
             }
        }
@@ -143,7 +148,9 @@ function runScheduleNow(elementId, checkOnly)
                             src="img/application_form_edit.png" alt="Edit"
                             style="border-width: 0px; float:right"
                             onclick="location.href='schedule-edit.htm?id=<c:out value="${schedule.id}" />'" />
+
                         <span id="<c:out value="${schedule.id}" />" class="readyToRun" onclick="runScheduleNow('<c:out value="${schedule.id}" />');" style="float:right;" alt="Run Schedule Now" title="Run Schedule Now"></span>
+                        <span id="viewTransactionDetailSpan<c:out value="${schedule.id}" />" class="viewTransactionDetailSpan" style="float:right;" alt="View Transaction Detail" title="View Transaction Detail"><c:if test="${schedule.lastExecutionActivity ne null and schedule.lastExecutionActivity.transactionId ne null}"><a href="tran.htm?id=<c:out value='${schedule.lastExecutionActivity.transactionId}' />"><img border="0" alt="View Transaction Detail" src="img/zoom.png"></img></a></c:if></span>
                     </td>
                 </tr>
 

@@ -42,10 +42,6 @@ import com.windsor.node.util.DateUtil;
 
 public final class ScheduleUtil {
 
-    /**
-     * 
-     */
-    private static final String ADDED = "Added ";
     private static Logger logger = LoggerFactory.getLogger(ScheduleUtil.class);
 
     private ScheduleUtil() {
@@ -68,6 +64,12 @@ public final class ScheduleUtil {
      * @return Timestamp for the next run, possibly null
      */
     public static Timestamp calculateNextRun(ScheduledItem schedule) {
+
+        //short cut, if the schedule is set to execute Never it will never run, enhancement, 2013-04-26
+        if(schedule.getFrequencyType() == ScheduleFrequencyType.Never)
+        {
+            return null;
+        }
 
         Timestamp next = null;
 
@@ -106,42 +108,37 @@ public final class ScheduleUtil {
 
             switch (schedule.getFrequencyType()) {
             case Minutes:
-                next = new Timestamp(DateUtil.getNextNMinute(last, frequency)
-                        .getTime());
+                next = new Timestamp(DateUtil.getNextNMinute(last, frequency).getTime());
 
-                logger.debug(ADDED + frequency + " minute(s), next run is: "
-                        + next);
+                logger.debug("Added " + frequency + " minute(s), next run is: " + next);
                 break;
 
             case Hours:
-                next = new Timestamp(DateUtil.getNextNHour(last, frequency)
-                        .getTime());
+                next = new Timestamp(DateUtil.getNextNHour(last, frequency).getTime());
 
-                logger.debug(ADDED + frequency + " hour(s), next run is: "
-                        + next);
+                logger.debug("Added " + frequency + " hour(s), next run is: " + next);
                 break;
             case Days:
-                next = new Timestamp(DateUtil.getNextNDay(last, frequency)
-                        .getTime());
+                next = new Timestamp(DateUtil.getNextNDay(last, frequency).getTime());
 
-                logger.debug(ADDED + frequency + " day(s), next run is: "
-                        + next);
+                logger.debug("Added " + frequency + " day(s), next run is: " + next);
                 break;
 
             case Weeks:
-                next = new Timestamp(DateUtil.getNextNWeek(last, frequency)
-                        .getTime());
+                next = new Timestamp(DateUtil.getNextNWeek(last, frequency).getTime());
 
-                logger.debug(ADDED + frequency + " day(s), next run is: "
-                        + next);
+                logger.debug("Added " + frequency + " day(s), next run is: " + next);
                 break;
 
             case Months:
-                next = new Timestamp(DateUtil.getNextNMonth(last, frequency)
-                        .getTime());
+                next = new Timestamp(DateUtil.getNextNMonth(last, frequency).getTime());
 
-                logger.debug(ADDED + frequency + " month(s), next run is: "
-                        + next);
+                logger.debug("Added " + frequency + " month(s), next run is: " + next);
+                break;
+            case Weekdays:
+                next = DateUtil.getNextWeekday();
+
+                logger.debug("Added " + frequency + " weekdays, next run is: " + next);
                 break;
             default:
 

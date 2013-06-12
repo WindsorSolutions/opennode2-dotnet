@@ -1,22 +1,36 @@
 package com.windsor.node.plugin.facid3;
 
 import java.util.List;
-
 import org.apache.commons.io.FilenameUtils;
-
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
 import com.windsor.node.common.domain.NodeTransaction;
+import com.windsor.node.common.domain.PluginServiceImplementorDescriptor;
 import com.windsor.node.common.domain.ProcessContentResult;
-import com.windsor.node.plugin.facid3.domain.generated.FacilityInterestDataType;
-import com.windsor.node.plugin.facid3.domain.generated.FacilityInterestSummaryDataType;
-import com.windsor.node.plugin.facid3.domain.generated.FacilityInterestSummaryListDataType;
-import com.windsor.node.plugin.facid3.domain.generated.ObjectFactory;
+import com.windsor.node.plugin.facid3.domain.FacilityInterestDataType;
+import com.windsor.node.plugin.facid3.domain.FacilityInterestSummaryDataType;
+import com.windsor.node.plugin.facid3.domain.FacilityInterestSummaryListDataType;
+import com.windsor.node.plugin.facid3.domain.ObjectFactory;
 
 public class GetFacilityInterest extends BaseFacIdGetFacilityService
 {
 
+    private static final PluginServiceImplementorDescriptor PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR = new PluginServiceImplementorDescriptor();
+
+    static
+    {
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setName("GetFacilityInterest");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setDescription("Full set of parameters but returning a payload of summary facility and environmental interest data (FacilityInterest) rather than the full schema, to aid in performance.");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setClassName(GetFacilityInterest.class.getCanonicalName());
+    }
+
+    @Override
+    public PluginServiceImplementorDescriptor getPluginServiceImplementorDescription()
+    {
+        return PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR;
+    }
+
     /**
-     * This process implementer currently will not work when Solicited on the 2.1 endpoint with named parameters that are
+     * This process implementer currently will not work when Solicited on the 2.1 endpoint with named parameters that are 
      * out of the default order.  An updated implementer that fixes this issue will soon be deployed.
      */
     @Override

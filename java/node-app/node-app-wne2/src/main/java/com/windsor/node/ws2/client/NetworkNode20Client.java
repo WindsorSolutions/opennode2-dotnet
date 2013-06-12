@@ -332,7 +332,7 @@ public class NetworkNode20Client implements NodeClientService {
                 if (nodeDoc.getDocumentFormat() != null
                         && StringUtils.isNotBlank(nodeDoc.getDocumentFormat()
                                 .getValue())) {
-                    doc.setType(CommonContentType.valueOf(nodeDoc.getDocumentFormat().getValue()));
+                    doc.setType(CommonContentType.fromString(nodeDoc.getDocumentFormat().getValue()));
                 }
 
                 transaction.getDocuments().add(doc);

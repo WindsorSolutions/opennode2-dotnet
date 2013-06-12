@@ -35,7 +35,7 @@ import java.util.Map;
 
 import com.windsor.node.common.domain.ConfigItem;
 
-public interface ConfigDao extends DeletableDao, ListableDao {
+public interface ConfigDao extends DeletableDao, ListableDao<ConfigItem> {
 
     ConfigItem insert(ConfigItem instance);
 

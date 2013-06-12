@@ -33,7 +33,7 @@ package com.windsor.node.common.domain;
 
 public enum ScheduleFrequencyType {
 
-    Once, Minutes, Hours, Days, Weeks, Months;
+    Never, Once, Minutes, Hours, Days, Weekdays, Weeks, Months;
 
     private static final long serialVersionUID = 3;
 

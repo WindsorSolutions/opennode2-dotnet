@@ -48,15 +48,15 @@ public class DataRequest extends AuditableIdentity {
     private String transactionId;
     private RequestType type;
     private UserAccount requestor;
-    private List recipients;
-    private Map notifications;
+    private List<String> recipients;
+    private Map<String, Object> notifications;//FIXME this map seems to be used for <String, String> either <Object, WnosTransactionNotificationType> or <String, WnosTransactionNotificationType>
     private PaginationIndicator paging;
     private String flowName;
 
     public DataRequest() {
         parameters = new ByIndexOrNameMap();
-        recipients = new ArrayList();
-        notifications = new HashMap();
+        recipients = new ArrayList<String>();
+        notifications = new HashMap<String, Object>();
         paging = new PaginationIndicator(0, -1, true);
     }
 
@@ -118,19 +118,19 @@ public class DataRequest extends AuditableIdentity {
         this.requestor = requestor;
     }
 
-    public List getRecipients() {
+    public List<String> getRecipients() {
         return recipients;
     }
 
-    public void setRecipients(List recipients) {
+    public void setRecipients(List<String> recipients) {
         this.recipients = recipients;
     }
 
-    public Map getNotifications() {
+    public Map<String, Object> getNotifications() {
         return notifications;
     }
 
-    public void setNotifications(Map notifications) {
+    public void setNotifications(Map<String, Object> notifications) {
         this.notifications = notifications;
     }
 

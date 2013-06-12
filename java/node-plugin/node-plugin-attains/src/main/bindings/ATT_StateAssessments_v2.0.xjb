@@ -4,6 +4,36 @@
     jaxb:extensionBindingPrefixes="hj orm" > 
     <jaxb:bindings schemaLocation="../xsd/2/0/ATT_StateAssessments_v2.0.xsd">
         <jaxb:bindings node="//xsd:complexType[@name='StateAssessmentsDataType']">
+            <hj:ignored/>
+        </jaxb:bindings>
+        <jaxb:bindings node="//xsd:complexType[@name='StateAssessmentDetailsDataType']">
+            <hj:entity>
+                <orm:table name="OWIR_STATE_ASMT_DTLS" />
+            </hj:entity>
+            <hj:generated-id name="Dbid">
+                <orm:column name="STATE_ASMT_DTLS_ID"/>
+            </hj:generated-id>
+            <!-- <jaxb:bindings node=".//xsd:complexType[@name='att:StateLocations']">
+                <hj:many-to-one>
+                    <orm:join-table name="OWIR_STATE_LOC_DTLS" />
+                    <orm:join-column name="STATE_ASMT_DTLS_ID" />
+                </hj:many-to-one>
+            </jaxb:bindings> -->
+        </jaxb:bindings>
+        <!-- <jaxb:bindings node="//xsd:element[@ref='att:StateLocations']">
+            <hj:one-to-many>
+                <orm:join-column name="STATE_ASMT_DTLS_ID" referenced-column-name="STATE_ASMT_DTLS_ID" insertable="false" updatable="false"/>
+            </hj:one-to-many>
+        </jaxb:bindings> -->
+        <!-- <jaxb:bindings node="//xsd:complexType[@name='StateAssessmentsDataType']//xsd:complexType[@name='StateAssessmentDetailsDataType']">
+            <hj:entity>
+                <orm:table name="OWIR_STATE_ASMT_DTLS" />
+            </hj:entity>
+            <hj:generated-id name="Dbid">
+                <orm:column name="STATE_ASMT_DTLS_ID"/>
+            </hj:generated-id>
+        </jaxb:bindings> -->
+        <!-- <jaxb:bindings node="//xsd:complexType[@name='StateAssessmentsDataType']">
             <hj:ignored>
             </hj:ignored>
         </jaxb:bindings>
@@ -14,16 +44,37 @@
             <hj:generated-id name="Dbid">
                 <orm:column name="STATE_ASMT_DTLS_ID"/>
             </hj:generated-id>
+        </jaxb:bindings> -->
+        <jaxb:bindings schemaLocation="http://www.exchangenetwork.net/schema/SC/SC_StateIdentity_v2.0.xsd">
+            <jaxb:bindings node="//xsd:complexType[@name='StateIdentityDataType']">
+                <hj:embeddable />
+            </jaxb:bindings>
+            <!-- <jaxb:bindings node="//xsd:element[@ref='StateCode']">
+                <hj:basic>
+                    <orm:column name="STATE_CODE" />
+                </hj:basic>
+            </jaxb:bindings>
+            <jaxb:bindings node="//xsd:element[@ref='StateName']">
+                <hj:basic>
+                    <orm:column name="STATE_NAME" />
+                </hj:basic>
+            </jaxb:bindings> -->
+        </jaxb:bindings>
+        <jaxb:bindings schemaLocation="http://www.exchangenetwork.net/schema/SC/SC_SimpleContent_v2.0.xsd">
+            <jaxb:bindings node="//xsd:complexType[@name='StateCodeListIdentifierDataType']">
+                <hj:embeddable />
+            </jaxb:bindings>
+            <!-- <jaxb:bindings node="//xsd:complexType[@name='StateCodeListIdentifierDataType/xsd:attribute[@name='CodeListVersionIdentifier']">
+                <hj:basic>
+                    <orm:column name="CODE_LIST_VERS_IDEN" />
+                </hj:basic>
+            </jaxb:bindings> -->
+            <!-- <jaxb:bindings node="//xsd:attribute[@ref='CodeListVersionAgencyIdentifier']">
+                <hj:basic>
+                    <orm:column name="CODE_LIST_VERS_AGN_IDEN" />
+                </hj:basic>
+            </jaxb:bindings> -->
         </jaxb:bindings>
     </jaxb:bindings>
-    <jaxb:bindings schemaLocation="http://www.exchangenetwork.net/schema/SC/SC_StateIdentity_v2.0.xsd">
-        <jaxb:bindings node="//xsd:complexType[@name='StateIdentityDataType']">
-            <hj:embeddable />
-        </jaxb:bindings>
-    </jaxb:bindings>
-    <jaxb:bindings schemaLocation="http://www.exchangenetwork.net/schema/SC/SC_SimpleContent_v2.0.xsd">
-        <jaxb:bindings node="//xsd:complexType[@name='StateCodeListIdentifierDataType']">
-            <hj:embeddable />
-        </jaxb:bindings>
-    </jaxb:bindings>
+    
 </jaxb:bindings>

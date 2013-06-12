@@ -32,19 +32,18 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.windsor.node.data.dao;
 
 import java.util.List;
-
 import com.windsor.node.common.domain.NotificationType;
+import com.windsor.node.common.domain.UserFlowNotification;
 
-public interface NotificationDao extends ListableDao {
+public interface NotificationDao extends ListableDao<UserFlowNotification> {
 
-    void save(String accountId, List notifications); // List of
-                                                     // UserFlowNotification
+    void save(String accountId, List<UserFlowNotification> notifications);
 
-    List getByAccountId(String id);
+    List<UserFlowNotification> getByAccountId(String id);
 
-    List getByFlowId(String id);
+    List<UserFlowNotification> getByFlowId(String id);
 
-    List getByFlowIdAndType(String id, NotificationType type);
+    List<String> getByFlowIdAndType(String id, NotificationType type);
 
     void deleteByUserId(String id);
 

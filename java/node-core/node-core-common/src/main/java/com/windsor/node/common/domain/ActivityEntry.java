@@ -45,6 +45,7 @@ public class ActivityEntry implements Serializable {
     private static final long serialVersionUID = 1;
     private Date modifiedOn;
     private String message;
+    private Integer orderIndex;
 
     public ActivityEntry() {
     }
@@ -107,6 +108,16 @@ public class ActivityEntry implements Serializable {
 
     public void setModifiedOn(Date modifiedOn) {
         this.modifiedOn = modifiedOn;
+    }
+
+    public Integer getOrderIndex()
+    {
+        return orderIndex;
+    }
+
+    public void setOrderIndex(Integer orderIndex)
+    {
+        this.orderIndex = orderIndex;
     }
 
 }

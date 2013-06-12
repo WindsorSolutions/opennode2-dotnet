@@ -8,10 +8,11 @@
     </parent>
     <artifactId>node-plugin-attains</artifactId>
     <packaging>jar</packaging>
-    <name>Node Plugin - ATTAINS</name>
+    <name>Node Plugin - OWIR-ATT (ATTAINS)</name>
     <properties>
         <node.plugin.name>attains</node.plugin.name>
-        <node.plugin.build.number>00</node.plugin.build.number>
+        <node.plugin.build.number>01</node.plugin.build.number>
+        <hyperjaxb3.schemaDirectory>${basedir}/src/main/xsd/2</hyperjaxb3.schemaDirectory>
     </properties>
     <build>
         <finalName>${node.plugin.name}</finalName>
@@ -20,17 +21,47 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
             </plugin>
-            <plugin>
+            <!-- <plugin>
                 <groupId>org.jvnet.hyperjaxb3</groupId>
                 <artifactId>maven-hyperjaxb3-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <args>
+                        <arg>-Xannotate</arg>
+                        <arg>-Xinheritance</arg>
+                        <arg>-Xnamespace-prefix</arg>
+                    </args>
+                    <debug>true</debug>
+                    <variant>jpa2</variant>
+                    <extension>true</extension>
+                    <bindingDirectory>${basedir}/src/main/bindings</bindingDirectory>
+                    <schemaDirectory>${hyperjaxb3.schemaDirectory}</schemaDirectory>
+                </configuration>
                 <dependencies>
                     <dependency>
                         <groupId>com.windsor.node.util.hyperjaxb3</groupId>
-                        <artifactId>node-util-hyperjaxb3-icisnpdes</artifactId>
+                        <artifactId>node-util-hyperjaxb3-core</artifactId>
                         <version>${project.version}</version>
                     </dependency>
+                    <dependency>
+                        <groupId>com.windsor.node.util.hyperjaxb3</groupId>
+                        <artifactId>node-util-hyperjaxb3-attains</artifactId>
+                        <version>${project.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.jvnet.jaxb2_commons</groupId>
+                        <artifactId>jaxb2-namespace-prefix</artifactId>
+                        <version>1.1</version>
+                    </dependency>
                 </dependencies>
-            </plugin>
+            </plugin> -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>

@@ -3,6 +3,7 @@ package com.windsor.node.plugin.wqx;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.windsor.node.common.domain.PluginServiceImplementorDescriptor;
 import com.windsor.node.common.domain.ServiceType;
 import com.windsor.node.plugin.common.xml.stream.ElementWriter;
 import com.windsor.node.plugin.wqx.domain.Component;
@@ -16,10 +17,22 @@ import com.windsor.node.plugin.wqx.service.AbstractSubmittingWqxService;
 import com.windsor.node.plugin.wqx.service.ScheduleParameters;
 import com.windsor.node.plugin.wqx.xml.DeleteXmlOutputStreamWriter;
 
-/**
- *
- */
 public class Delete extends AbstractSubmittingWqxService<List<DeleteComponentIdentifier>, DeleteComponentIdentifier> {
+
+    private static final PluginServiceImplementorDescriptor PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR = new PluginServiceImplementorDescriptor();
+
+    static
+    {
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setName("Delete");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setDescription("Reads from the WQX_DELETE staging table and prepares the data in XML format to perform the deletion of data in WQX.");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setClassName(Delete.class.getCanonicalName());
+    }
+
+    @Override
+    public PluginServiceImplementorDescriptor getPluginServiceImplementorDescription()
+    {
+        return PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR;
+    }
 
     private final DeleteComponentIdentifierObjectFactory objectFactory = new DeleteComponentIdentifierObjectFactory();
 

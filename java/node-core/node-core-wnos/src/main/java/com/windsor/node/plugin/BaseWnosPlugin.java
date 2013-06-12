@@ -53,6 +53,7 @@ import com.windsor.node.common.domain.ServiceType;
 import com.windsor.node.common.util.NodeClientService;
 import com.windsor.node.data.dao.ParameterSpecifiedPlugin;
 import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
+import com.windsor.node.data.dao.SelfDescribingPluginServiceImplementor;
 import com.windsor.node.service.helper.NodePartnerProvider;
 import com.windsor.node.service.helper.NotificationHelper;
 import com.windsor.node.service.helper.ServiceFactory;
@@ -68,7 +69,7 @@ import com.windsor.node.service.helper.client.DualEndpointNodeClientFactory;
  * </p>
  * 
  */
-public abstract class BaseWnosPlugin implements InitializingBean, ParameterSpecifiedPlugin {
+public abstract class BaseWnosPlugin implements InitializingBean, ParameterSpecifiedPlugin, SelfDescribingPluginServiceImplementor {
 
     public static final String ARG_ADD_HEADER = "Add Header";
 
@@ -113,7 +114,6 @@ public abstract class BaseWnosPlugin implements InitializingBean, ParameterSpeci
         configurationArguments = new TreeMap<String, String>();
         dataSources = new TreeMap<String, DataSource>();
         supportedPluginTypes = new ArrayList<ServiceType>();
-
     }
 
     public abstract List<PluginServiceParameterDescriptor> getParameters();
@@ -358,9 +358,9 @@ public abstract class BaseWnosPlugin implements InitializingBean, ParameterSpeci
             throw new RuntimeException(NULL_TRANSACTION + " creator");
         }
 
-        if (StringUtils.isBlank(transaction.getNetworkId())) {
+        /*if (StringUtils.isBlank(transaction.getNetworkId())) {
             throw new RuntimeException(NULL_TRANSACTION + " network Id");
-        }
+        }*/
 
         if (transaction.getRequest() == null) {
             throw new RuntimeException(NULL_REQUEST);

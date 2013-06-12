@@ -48,6 +48,6 @@ public interface ActivityDao {
 
     void make(Activity instance);
 
-    List search(ActivitySearchCriteria instance);
+    List<Activity> search(ActivitySearchCriteria instance);
 
 }

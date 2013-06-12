@@ -44,7 +44,8 @@ import com.windsor.node.common.domain.DataProviderInfo;
 import com.windsor.node.common.domain.DataService;
 import com.windsor.node.common.domain.NamedSystemConfigItem;
 import com.windsor.node.common.domain.NodeVisit;
-import com.windsor.node.common.domain.ScheduleArgument;
+import com.windsor.node.common.domain.PluginMetaData;
+import com.windsor.node.common.domain.PluginServiceImplementorDescriptor;
 import com.windsor.node.common.domain.ServiceType;
 import com.windsor.node.common.domain.SystemRoleType;
 import com.windsor.node.common.exception.WinNodeException;
@@ -104,10 +105,20 @@ public class FlowServiceImpl extends BaseService implements FlowService,
 
     }
 
+    public PluginMetaData getPluginMetaData(DataFlow flow)
+    {
+        return pluginHelper.getPluginMetaData(flow);
+    }
+
+    @Override
+    public List<PluginServiceImplementorDescriptor> getPluginServiceImplementorDescriptors(DataFlow flow)
+    {
+        return pluginHelper.getPluginServiceImplementorDescriptors(flow);
+    }
+
     /**
      * getFlows
      */
-    @SuppressWarnings("unchecked")
     public List<DataFlow> getFlows(NodeVisit visit, boolean loadDataServices) {
 
         List<DataFlow> flows = (List<DataFlow>) flowDao.get();
@@ -232,6 +243,15 @@ public class FlowServiceImpl extends BaseService implements FlowService,
             throw new RuntimeException("flowId argument not set.");
         }
         return flowDao.get(flowId);
+    }
+
+    public DataFlow getDataFlowByName(String flowName, NodeVisit visit)
+    {
+        if(StringUtils.isBlank(flowName))
+        {
+            throw new RuntimeException("flowName argument not set.");
+        }
+        return flowDao.getByCode(flowName);
     }
 
     public Map<String, String> getActiveServiceMap() {

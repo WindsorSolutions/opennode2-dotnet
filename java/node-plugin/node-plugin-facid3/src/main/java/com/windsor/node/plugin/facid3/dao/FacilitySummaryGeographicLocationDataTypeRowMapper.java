@@ -1,26 +1,25 @@
 package com.windsor.node.plugin.facid3.dao;
 
+import java.math.BigInteger;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.RowMapper;
+import com.windsor.node.plugin.facid3.domain.DirectPositionType;
+import com.windsor.node.plugin.facid3.domain.FacilitySummaryGeographicLocationDataType;
+import com.windsor.node.plugin.facid3.domain.MeasureDataType;
+import com.windsor.node.plugin.facid3.domain.MeasureUnitCodeListIdentifierDataType;
+import com.windsor.node.plugin.facid3.domain.MeasureUnitDataType;
+import com.windsor.node.plugin.facid3.domain.MethodIdentifierCodeListIdentifierDataType;
+import com.windsor.node.plugin.facid3.domain.ObjectFactory;
+import com.windsor.node.plugin.facid3.domain.PointType;
+import com.windsor.node.plugin.facid3.domain.ReferenceMethodDataType;
+import com.windsor.node.plugin.facid3.domain.ResultQualifierCodeListIdentifierDataType;
+import com.windsor.node.plugin.facid3.domain.ResultQualifierDataType;
 
-import com.windsor.node.plugin.facid3.domain.generated.DirectPositionType;
-import com.windsor.node.plugin.facid3.domain.generated.FacilitySummaryGeographicLocationDataType;
-import com.windsor.node.plugin.facid3.domain.generated.MeasureDataType;
-import com.windsor.node.plugin.facid3.domain.generated.MeasureUnitCodeListIdentifierDataType;
-import com.windsor.node.plugin.facid3.domain.generated.MeasureUnitDataType;
-import com.windsor.node.plugin.facid3.domain.generated.MethodIdentifierCodeListIdentifierDataType;
-import com.windsor.node.plugin.facid3.domain.generated.ObjectFactory;
-import com.windsor.node.plugin.facid3.domain.generated.PointType;
-import com.windsor.node.plugin.facid3.domain.generated.ReferenceMethodDataType;
-import com.windsor.node.plugin.facid3.domain.generated.ResultQualifierCodeListIdentifierDataType;
-import com.windsor.node.plugin.facid3.domain.generated.ResultQualifierDataType;
-
-public class FacilitySummaryGeographicLocationDataTypeRowMapper implements RowMapper
+public class FacilitySummaryGeographicLocationDataTypeRowMapper implements RowMapper<FacilitySummaryGeographicLocationDataType>
 {
     protected Logger logger = LoggerFactory.getLogger(getClass());
     private FacilityDataTypeDao facilityDataTypeDao;
@@ -30,8 +29,7 @@ public class FacilitySummaryGeographicLocationDataTypeRowMapper implements RowMa
         setFacilityDataTypeDao(facilityDataTypeDao);
     }
 
-    @Override
-	public Object mapRow(ResultSet rs, int rowNum) throws SQLException
+    public FacilitySummaryGeographicLocationDataType mapRow(ResultSet rs, int rowNum) throws SQLException
     {
         ObjectFactory fact = new ObjectFactory();
         FacilitySummaryGeographicLocationDataType facilitySummaryGeographicLocation = fact.createFacilitySummaryGeographicLocationDataType();
@@ -41,7 +39,7 @@ public class FacilitySummaryGeographicLocationDataTypeRowMapper implements RowMa
         //point.setId(rs.getString(""));//?
         if(StringUtils.isNumeric(rs.getString("SRS_DIM")))
         {
-            point.setSrsDimension(rs.getString("SRS_DIM"));
+            point.setSrsDimension(new BigInteger(rs.getString("SRS_DIM")));
         }
         else
         {

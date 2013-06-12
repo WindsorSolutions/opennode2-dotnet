@@ -53,6 +53,7 @@ import com.windsor.node.admin.util.SiteTabUtils;
 import com.windsor.node.admin.util.VisitUtils;
 import com.windsor.node.common.domain.DataFlow;
 import com.windsor.node.common.domain.NodeVisit;
+import com.windsor.node.common.domain.PluginMetaData;
 import com.windsor.node.common.domain.UserAccount;
 import com.windsor.node.common.service.admin.AccountService;
 import com.windsor.node.common.service.admin.FlowService;
@@ -180,9 +181,18 @@ public class EditFlowController extends BaseSimpleFormController implements
             return null;
         }
 
+        String flowId = ServletRequestUtils.getStringParameter(request, "id");
+        DataFlow flow = new DataFlow();
+        PluginMetaData pluginMetaData = null;
+        if (StringUtils.isNotBlank(flowId)) {
+            flow = flowService.getDataFlow(flowId, visit);
+            pluginMetaData = flowService.getPluginMetaData(flow);
+        }
+
         Map modelHolder = new HashMap();
         modelHolder.put(AdminConstants.MODEL_KEY, getReferenceData(
                 request, visit));
+        modelHolder.put("pluginMetaData", pluginMetaData);
         return modelHolder;
 
     }

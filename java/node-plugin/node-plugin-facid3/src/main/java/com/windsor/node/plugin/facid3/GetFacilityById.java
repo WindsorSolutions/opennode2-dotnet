@@ -5,22 +5,38 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
-
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
 import com.windsor.node.common.domain.NodeTransaction;
+import com.windsor.node.common.domain.PluginServiceImplementorDescriptor;
 import com.windsor.node.common.domain.ProcessContentResult;
+import com.windsor.node.common.util.ByIndexOrNameMap;
 import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
-import com.windsor.node.plugin.facid3.domain.generated.AffiliateListDataType;
-import com.windsor.node.plugin.facid3.domain.generated.FacilityDataType;
-import com.windsor.node.plugin.facid3.domain.generated.FacilityDetailsDataType;
-import com.windsor.node.plugin.facid3.domain.generated.FacilityListDataType;
-import com.windsor.node.plugin.facid3.domain.generated.ObjectFactory;
+import com.windsor.node.plugin.facid3.domain.AffiliateListDataType;
+import com.windsor.node.plugin.facid3.domain.FacilityDataType;
+import com.windsor.node.plugin.facid3.domain.FacilityDetailsDataType;
+import com.windsor.node.plugin.facid3.domain.FacilityListDataType;
+import com.windsor.node.plugin.facid3.domain.ObjectFactory;
 
 public class GetFacilityById extends BaseFacIdGetFacilityService
 {
+
+    private static final PluginServiceImplementorDescriptor PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR = new PluginServiceImplementorDescriptor();
+
+    static
+    {
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setName("GetFacilityById");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setDescription("Get detailed facility data for one facility.");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setClassName(GetFacilityById.class.getCanonicalName());
+    }
+
+    @Override
+    public PluginServiceImplementorDescriptor getPluginServiceImplementorDescription()
+    {
+        return PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR;
+    }
+
     @Override
     public List<PluginServiceParameterDescriptor> getParameters()
     {
@@ -35,7 +51,7 @@ public class GetFacilityById extends BaseFacIdGetFacilityService
     }
 
     /**
-     * This process implementer currently will not work when Solicited on the 2.1 endpoint with named parameters that are
+     * This process implementer currently will not work when Solicited on the 2.1 endpoint with named parameters that are 
      * out of the default order.  An updated implementer that fixes this issue will soon be deployed.
      */
     @Override
@@ -88,6 +104,21 @@ public class GetFacilityById extends BaseFacIdGetFacilityService
         }
 
         Map<String, Object> params = new HashMap<String, Object>();
+        if(transaction.getRequest().getParameters().get(FACILITY_SITE_IDENTIFIER.getName()) != null)
+        {//then params are named
+            params = getParametersEn21(transaction);
+        }
+        else
+        {//use ordered params
+            params = getParametersEn11(transaction);
+        }
+
+        return params;
+    }
+
+    private Map<String, Object> getParametersEn11(NodeTransaction transaction)
+    {
+        Map<String, Object> params = new HashMap<String, Object>();
         String[] args = transaction.getRequest().getParameterValues();
         if(args.length >= 1 && StringUtils.isNotBlank(args[0]))
         {
@@ -110,6 +141,40 @@ public class GetFacilityById extends BaseFacIdGetFacilityService
         if(args.length >= 3 && StringUtils.isNotBlank(args[2]))
         {
             params.put(INFO_SYSTEM_ACORNYM_NAME.getName(), args[2]);
+        }
+        else
+        {
+            logger.error("Information System Acronym Name parameter cannot be null or empty.");
+            throw new RuntimeException("Information System Acronym Name parameter cannot be null or empty.");
+        }
+        return params;
+    }
+
+    private Map<String, Object> getParametersEn21(NodeTransaction transaction)
+    {
+        Map<String, Object> params = new HashMap<String, Object>();
+        ByIndexOrNameMap namedParams = transaction.getRequest().getParameters();
+        if(namedParams.get(FACILITY_SITE_IDENTIFIER.getName()) != null)
+        {
+            params.put(FACILITY_SITE_IDENTIFIER.getName(), namedParams.get(FACILITY_SITE_IDENTIFIER.getName()));
+        }
+        else
+        {
+            logger.error("Facility Site Identifier parameter cannot be null or empty.");
+            throw new RuntimeException("Facility Site Identifier parameter cannot be null or empty.");
+        }
+        if(namedParams.get(ORIGINATING_PARTNER_NAME.getName()) != null)
+        {
+            params.put(ORIGINATING_PARTNER_NAME.getName(), namedParams.get(ORIGINATING_PARTNER_NAME.getName()));
+        }
+        else
+        {
+            logger.error("Originating Partner Name parameter cannot be null or empty.");
+            throw new RuntimeException("Originating Partner Name parameter cannot be null or empty.");
+        }
+        if(namedParams.get(INFO_SYSTEM_ACORNYM_NAME.getName()) != null)
+        {
+            params.put(INFO_SYSTEM_ACORNYM_NAME.getName(), namedParams.get(INFO_SYSTEM_ACORNYM_NAME.getName()));
         }
         else
         {

@@ -519,7 +519,7 @@
 
     function loadArgList()
     {
-    	$("#sourceTypeArgs").html("");
+    	$("#sourceTypeArgs").empty();
     	var flowId = $("#flowId option:selected").val();
     	var serviceId = $("#sourceServiceList option:selected").val();
     	var scheduleId = "<c:out value='${command.id}' />";
@@ -555,6 +555,8 @@
         switch($("#frequencyType").val())
         {
         
+            case 'Never':
+            case 'Weekdays':
             case 'Once':
                 $("#endOn").val($("#startOn").val());
                 $("#frequencyNum").val("0");

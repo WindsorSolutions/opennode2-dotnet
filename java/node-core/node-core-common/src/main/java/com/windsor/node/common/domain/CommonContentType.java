@@ -56,14 +56,17 @@ public enum CommonContentType implements Serializable
     public static CommonContentType fromString(String value)
     {
         CommonContentType type = null;
-        type = CommonContentType.valueOf(value);
-        if(type == null && CommonContentType.Flat.getType().equalsIgnoreCase(value))
+        if(CommonContentType.Flat.getType().equalsIgnoreCase(value))
         {
             type = CommonContentType.Flat;
         }
-        if(type == null && CommonContentType.BIN.getType().equalsIgnoreCase(value))
+        else if(CommonContentType.BIN.getType().equalsIgnoreCase(value))
         {
             type = CommonContentType.BIN;
+        }
+        else
+        {
+            type = CommonContentType.valueOf(value);
         }
         return type;
     }

@@ -7,6 +7,7 @@ import javax.persistence.PersistenceException;
 
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
 import com.windsor.node.common.domain.NodeTransaction;
+import com.windsor.node.common.domain.PluginServiceImplementorDescriptor;
 import com.windsor.node.common.domain.ProcessContentResult;
 import com.windsor.node.common.domain.ServiceType;
 import com.windsor.node.common.util.NodeClientService;
@@ -26,6 +27,21 @@ import com.windsor.node.plugin.wqx.service.ScheduleParameters;
 public class GetStatus extends AbstractWqxService {
 
     private static final int PARAM_INDEX_SUBMISSION_PARTNER_NAME = 1;
+
+    private static final PluginServiceImplementorDescriptor PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR = new PluginServiceImplementorDescriptor();
+
+    static
+    {
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setName("GetStatus");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setDescription("The GetStatus service will retrieve the status all outstanding Received or Pending submissions from CDX and update the status in the node’s data repository.");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setClassName(GetStatus.class.getCanonicalName());
+    }
+
+    @Override
+    public PluginServiceImplementorDescriptor getPluginServiceImplementorDescription()
+    {
+        return PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR;
+    }
 
     @Override
     protected ServiceType supportsServiceType() {

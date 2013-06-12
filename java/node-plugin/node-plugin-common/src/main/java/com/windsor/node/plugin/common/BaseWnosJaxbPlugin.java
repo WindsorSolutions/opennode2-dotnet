@@ -19,33 +19,53 @@ import com.windsor.node.plugin.common.domain.DocumentHeaderType;
 import com.windsor.node.plugin.common.domain.DocumentPayloadType;
 import com.windsor.node.plugin.common.domain.ExchangeNetworkDocumentType;
 import com.windsor.node.plugin.common.domain.ObjectFactory;
+import com.windsor.node.service.helper.id.UUIDGenerator;
 
 public abstract class BaseWnosJaxbPlugin extends BaseWnosPlugin
 {
+    public static final String ARG_HEADER_DOCUMENT_TITLE = "Document Title";
+    public static final String ARG_HEADER_KEYWORDS = "Keywords";
     protected Logger logger = LoggerFactory.getLogger(BaseWnosJaxbPlugin.class);
 
     protected JAXBElement<?> processHeaderDirectives(JAXBElement<?> jaxbElement, String docId, String operation, NodeTransaction transaction)
     {
-        String addHeader = (String)getConfigValueAsString(ARG_ADD_HEADER, false);
-        if(!"true".equalsIgnoreCase(addHeader))
+        return processHeaderDirectives(jaxbElement, docId, operation, transaction, Boolean.FALSE);
+    }
+
+    protected JAXBElement<?> processHeaderDirectives(JAXBElement<?> jaxbElement, String docId, String operation, NodeTransaction transaction, Boolean forceHeaderUse)
+    {
+        String addHeader = getConfigValueAsStringNoFail(ARG_ADD_HEADER);
+        if(!"true".equalsIgnoreCase(addHeader) && !forceHeaderUse)
         {
             return jaxbElement;
         }
         ObjectFactory fact = new ObjectFactory();
         ExchangeNetworkDocumentType exchangeNetworkDocumentType = fact.createExchangeNetworkDocumentType();
-        exchangeNetworkDocumentType.setId(docId);
+        exchangeNetworkDocumentType.setId(UUIDGenerator.makeId());
 
         DocumentHeaderType documentHeader = fact.createDocumentHeaderType();
         exchangeNetworkDocumentType.setHeader(documentHeader);
-        String authorName = (String)getConfigValueAsString(ARG_HEADER_AUTHOR, false);
+        String authorName = getConfigValueAsStringNoFail(ARG_HEADER_AUTHOR);
         documentHeader.setAuthorName((StringUtils.isNotBlank(authorName) ? authorName: ""));
-        String contactInfo = (String)getConfigValueAsString(ARG_HEADER_CONTACT_INFO, false);
+        String contactInfo = getConfigValueAsStringNoFail(ARG_HEADER_CONTACT_INFO);
         documentHeader.setSenderContact((StringUtils.isNotBlank(contactInfo) ? contactInfo: ""));
-        String orgName = (String)getConfigValueAsString(ARG_HEADER_ORG_NAME, false);
+        String orgName = getConfigValueAsStringNoFail(ARG_HEADER_ORG_NAME);
+        String payloadName = getConfigValueAsStringNoFail(ARG_HEADER_PAYLOAD_OP);
+        String documentTitle = getConfigValueAsStringNoFail(ARG_HEADER_DOCUMENT_TITLE);
+        String keywords = getConfigValueAsStringNoFail(ARG_HEADER_KEYWORDS);
         documentHeader.setOrganizationName((StringUtils.isNotBlank(orgName) ? orgName: ""));
-        /*String payloadOp = (String)getConfigValueAsString(ARG_HEADER_PAYLOAD_OP, false);
-        documentHeader.setSenderContact((StringUtils.isNotBlank(payloadOp) ? payloadOp: ""));*/
-        documentHeader.setDocumentTitle(operation + docId);
+        if(StringUtils.isNotBlank(documentTitle))
+        {
+            documentHeader.setDocumentTitle(documentTitle);
+        }
+        else
+        {
+            documentHeader.setDocumentTitle(operation + docId);
+        }
+        if(StringUtils.isNotBlank(keywords))
+        {
+            documentHeader.setKeywords(keywords);
+        }
         documentHeader.setCreationDateTime(getDocumentCreationDateTime());
         documentHeader.setDataFlowName(transaction.getRequest().getFlowName());
         documentHeader.setDataServiceName(transaction.getRequest().getService().getName());
@@ -53,7 +73,10 @@ public abstract class BaseWnosJaxbPlugin extends BaseWnosPlugin
         DocumentPayloadType documentPayloadType = fact.createDocumentPayloadType();
         exchangeNetworkDocumentType.getPayload().add(documentPayloadType);
         documentPayloadType.setId(docId);
-        documentPayloadType.setOperation(operation);
+        if(StringUtils.isNotBlank(payloadName))
+        {
+            documentPayloadType.setOperation(payloadName);
+        }
         documentPayloadType.setAny(jaxbElement);
 
         return fact.createDocument(exchangeNetworkDocumentType);
@@ -93,5 +116,26 @@ public abstract class BaseWnosJaxbPlugin extends BaseWnosPlugin
         Marshaller m = context.createMarshaller();
         m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
         m.marshal(document, new FileOutputStream(pathname));
+    }
+
+    public String getConfigValueAsStringNoFail(String key)
+    {
+
+        if(StringUtils.isBlank(key))
+        {
+            return null;
+        }
+        logger.debug("Looking for: " + key);
+        if(!getConfigurationArguments().containsKey(key))
+        {
+            return null;
+        }
+
+        String value = (String)getConfigurationArguments().get(key);
+        if(StringUtils.isBlank(value))
+        {
+            return null;
+        }
+        return value;
     }
 }

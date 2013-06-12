@@ -116,7 +116,7 @@ public interface AccountService {
      * @param visit
      * @return
      */
-    List getLocalUsers(boolean includeInactive, NodeVisit visit);
+    List<UserAccount> getLocalUsers(boolean includeInactive, NodeVisit visit);
 
     /**
      * Lists all Users
@@ -124,7 +124,7 @@ public interface AccountService {
      * @param visit
      * @return
      */
-    List getNAASUsers(NodeVisit visit);
+    List<UserAccount> getNAASUsers(NodeVisit visit);
 
     /**
      * Returns a complete list of active users

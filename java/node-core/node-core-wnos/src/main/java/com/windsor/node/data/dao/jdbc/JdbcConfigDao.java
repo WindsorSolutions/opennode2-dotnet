@@ -136,7 +136,7 @@ public class JdbcConfigDao extends BaseJdbcDao implements ConfigDao {
     /**
      * get
      */
-    public List get() {
+    public List<ConfigItem> get() {
 
         return getJdbcTemplate().query(SQL_SELECT, new ConfigItemMapper());
 
@@ -154,9 +154,9 @@ public class JdbcConfigDao extends BaseJdbcDao implements ConfigDao {
 
     }
 
-    private class ConfigItemMapper implements RowMapper {
+    private class ConfigItemMapper implements RowMapper<ConfigItem> {
 
-        public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+        public ConfigItem mapRow(ResultSet rs, int rowNum) throws SQLException {
 
             ConfigItem obj = new ConfigItem();
 

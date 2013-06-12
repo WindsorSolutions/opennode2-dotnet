@@ -197,6 +197,11 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
             NodeClientFactory clientFactory = (NodeClientFactory)getServiceFactory().makeService(NodeClientFactory.class);
             NodeClientService client = clientFactory.makeAndConfigure(partner);
             TransactionStatus statusResult = client.getStatus(originalTransaction.getNetworkId());
+            if(statusResult != null)
+            {
+                //2013-02-13 need to set the SUBM_TRANSACTION_STAT every time
+                icisWorkflow.setSubmissionTransactionStatus(statusResult.toString());
+            }
 
             if (CommonTransactionStatusCode.Failed.equals(statusResult.getStatus())) {
                 icisWorkflow.setWorkflowStatus(CommonTransactionStatusCode.Failed.toString());

@@ -18,242 +18,118 @@
 
 			<jaxb:serializable uid="1" />
 
-			<!-- date/time mappings -->
-
-			<!-- <xjc:javaType name="java.util.Date" xmlType="xsd:date"
-				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.DateAdapter" />
-
-			<xjc:javaType name="java.util.Date" xmlType="xsd:dateTime"
-				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.DateTimeAdapter" />
-
-			<xjc:javaType name="java.util.Date" xmlType="icis:DateType"
-				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.DateAdapter" />
-
-			integer mappings
-
-			<xjc:javaType name="java.lang.Integer" xmlType="icis:NonNegativeIntegerMin1Max2Type"
-				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.IntegerAdapter" />
-
-			<xjc:javaType name="java.lang.Integer" xmlType="icis:NonNegativeIntegerMin1Max3Type"
-				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.IntegerAdapter" />
-
-			<xjc:javaType name="java.lang.Integer" xmlType="icis:NonNegativeIntegerMin1Max4Type"
-				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.IntegerAdapter" />
-
-			<xjc:javaType name="java.lang.Integer" xmlType="icis:NonNegativeIntegerMin1Max5Type"
-				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.IntegerAdapter" />
-
-			<xjc:javaType name="java.lang.Integer" xmlType="icis:IntegerMin1Max6Type"
-				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.IntegerAdapter" />
-
-			<xjc:javaType name="java.lang.Integer" xmlType="icis:NonNegativeIntegerMin1Max6Type"
-				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.IntegerAdapter" />
-
-			<xjc:javaType name="java.lang.Integer" xmlType="icis:NonNegativeIntegerMin1Max7Type"
-				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.IntegerAdapter" />
-
-			<xjc:javaType name="java.lang.Integer" xmlType="icis:NonNegativeIntegerMin1Max8Type"
-				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.IntegerAdapter" />
-
-			<xjc:javaType name="java.lang.Integer" xmlType="icis:NonNegativeIntegerMin1Max9Type"
-				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.IntegerAdapter" />
-
-			<xjc:javaType name="java.lang.Integer" xmlType="icis:NonNegativeIntegerMin1Max10Type"
-				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.IntegerAdapter" />
-
-			<xjc:javaType name="java.lang.Integer" xmlType="icis:NonNegativeIntegerSansPositiveSignMin1Max10Type"
-				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.IntegerAdapter" />
-
-			<xjc:javaType name="java.lang.Integer" xmlType="icis:Integer2FixedRange01To12Type"
-				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.TwoDigitIntegerAdapter" />
-
-			<xjc:javaType name="java.lang.Integer" xmlType="icis:IntegerRange1To12Type"
-				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.IntegerAdapter" />
-
-			<xjc:javaType name="java.lang.Integer" xmlType="icis:NonNegativeIntegerMin1Max15Type"
-				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.IntegerAdapter" />
-
-			<xjc:javaType name="java.lang.Integer" xmlType="icis:Integer2FixedRange01To60Type"
-				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.TwoDigitIntegerAdapter" />
-
-			<xjc:javaType name="java.lang.Integer" xmlType="icis:Integer2FixedRange01To99Type"
-				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.TwoDigitIntegerAdapter" />
-
-			<xjc:javaType name="java.lang.Integer" xmlType="icis:IntegerRange0To1000Type"
-				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.IntegerAdapter" />
-
-			<xjc:javaType name="java.lang.Integer" xmlType="icis:IntegerRange1970To2099Type"
-				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.IntegerAdapter" />
-
-			<xjc:javaType name="java.lang.Integer" xmlType="icis:IntegerRange1To99999Type"
-				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.IntegerAdapter" />
-
-			decimal mappings
-
-			Decimal6FloatinType is actually mapped as a *char in the DB
-
-			<xjc:javaType name="java.lang.Double" xmlType="icis:Decimal6FloatingType" adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.DoubleAdapter" 
-				/>
-
-			<xjc:javaType name="java.math.BigDecimal" xmlType="icis:NonNegativeDecimal4FloatingType"
-				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.Decimal4FloatingTypeAdapter" />
-
-			<xjc:javaType name="java.math.BigDecimal" xmlType="icis:NonNegativeDecimal8FloatingType"
-				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.Decimal8FloatingTypeAdapter" />
-
-			<xjc:javaType name="java.math.BigDecimal" xmlType="icis:Decimal10FloatingType"
-				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.Decimal10FloatingTypeAdapter" />
-
-			<xjc:javaType name="java.math.BigDecimal" xmlType="icis:Decimal11FloatingType"
-				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.Decimal11FloatingTypeAdapter" />
-
-			<xjc:javaType name="java.math.BigDecimal" xmlType="icis:DecimalRange0To999.9Type"
-				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.OneDigitPrecisionAdapter" />
-
-			<xjc:javaType name="java.math.BigDecimal" xmlType="icis:DecimalRange0To999.99Type"
-				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.TwoDigitPrecisionAdapter" />
-
-			<xjc:javaType name="java.math.BigDecimal" xmlType="icis:DecimalRange0To9999.99Type"
-				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.TwoDigitPrecisionAdapter" />
-
-			<xjc:javaType name="java.math.BigDecimal" xmlType="icis:DecimalRange0To999999999999.99Type"
-				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.TwoDigitPrecisionAdapter" />
-
-			unions
-
-			The reason we have to explicitly map this to a String is that it is an xsd:union in the schema 
-				and unions aren't handled too well (see http://weblogs.java.net/blog/kohsuke/archive/2006/03/handling_union.html). 
-				If we don't explicitly map this, we end up with a List<String> type.
-
-			<xjc:javaType name="java.lang.String" xmlType="icis:Decimal8FloatingType"
-				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter" />
-
-			enums
-
-			These enum values contain dashes which can't be easily represented in Java, so we just map them 
-				to Strings.
-
-			<xjc:javaType name="java.lang.String" xmlType="icis:NumericReportTextType"
-				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter" />
+            <xjc:javaType name="java.lang.Integer" xmlType="xsd:gYear"
+                adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.GYearToIntegerAdapter" />
 
 			<xjc:javaType name="java.lang.String" xmlType="icis:ScheduleViolationCodeType"
 				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter" /> -->
+            <xjc:javaType name="java.lang.String" xmlType="att:StringYesNoDataType"
+                adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter" />
+            <xjc:javaType name="java.lang.String" xmlType="att:TrophicStatusDataType"
+                adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter" />
+            <xjc:javaType name="java.lang.String" xmlType="att:CategoryReportFlagDataType"
+                adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter" />
+            <xjc:javaType name="java.lang.String" xmlType="att:StringYNDataType"
+                adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter" />
+            <xjc:javaType name="java.lang.String" xmlType="att:TrendDataType"
+                adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter" />
+            <xjc:javaType name="java.lang.String" xmlType="att:WaterTypeDataType"
+                adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter" />
+            <xjc:javaType name="java.lang.String" xmlType="att:AttainmentDescriptionDataType"
+                adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter" />
+            <xjc:javaType name="java.lang.String" xmlType="att:TMDLPriorityDataType"
+                adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter" />
+            <xjc:javaType name="java.lang.String" xmlType="att:PurposeDataType"
+                adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter" />
+            <xjc:javaType name="java.lang.String" xmlType="att:AssessmentConfidenceDataType"
+                adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter" />
+            <xjc:javaType name="java.lang.String" xmlType="att:AssessmentTypeTypeDataType"
+                adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter" />
+            <xjc:javaType name="java.lang.String" xmlType="att:ConfidenceDataType"
+                adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter" />
+            <xjc:javaType name="java.lang.String" xmlType="att:DelistingReasonDataType"
+                adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter" />
 
 		</jaxb:globalBindings>
 
 		<hj:persistence>
 			<hj:default-generated-id name="Dbid" transient="true" javaType="java.lang.String" />
+            <hj:default-one-to-many>
+                <orm:join-table/>
+            </hj:default-one-to-many>
 
-			<!-- <hj:default-single-property type="icis:ActiveInactiveType">
-				<hj:basic>
-					<orm:column length="1" column-definition="char(1)" />
-				</hj:basic>
-			</hj:default-single-property>
-			<hj:default-single-property type="icis:EstimatedMeasuredType">
-				<hj:basic>
-					<orm:column length="1" column-definition="char(1)" />
-				</hj:basic>
-			</hj:default-single-property>
-			<hj:default-single-property type="icis:LeadPartyType">
-				<hj:basic>
-					<orm:column length="1" column-definition="char(1)" />
-				</hj:basic>
-			</hj:default-single-property>
-			<hj:default-single-property type="icis:LimitSetType">
-				<hj:basic>
-					<orm:column length="1" column-definition="char(1)" />
-				</hj:basic>
-			</hj:default-single-property>
-			<hj:default-single-property type="icis:NumericReportViolationCodeType">
-				<hj:basic>
-					<orm:column length="1" column-definition="char(1)" />
-				</hj:basic>
-			</hj:default-single-property>
-			<hj:default-single-property type="icis:PassFailIndicatorType">
-				<hj:basic>
-					<orm:column length="1" column-definition="char(1)" />
-				</hj:basic>
-			</hj:default-single-property>
-			<hj:default-single-property type="icis:PrecipitationFormType">
-				<hj:basic>
-					<orm:column length="1" column-definition="char(1)" />
-				</hj:basic>
-			</hj:default-single-property>
-			<hj:default-single-property type="icis:PretreatmentProgramRequiredIndicatorType">
-				<hj:basic>
-					<orm:column length="1" column-definition="char(1)" />
-				</hj:basic>
-			</hj:default-single-property>
-			<hj:default-single-property type="icis:SamplingBasisType">
-				<hj:basic>
-					<orm:column length="1" column-definition="char(1)" />
-				</hj:basic>
-			</hj:default-single-property>
-			<hj:default-single-property type="icis:StateFederalJointType">
-				<hj:basic>
-					<orm:column length="1" column-definition="char(1)" />
-				</hj:basic>
-			</hj:default-single-property>
-			<hj:default-single-property type="icis:String1FixedType">
-				<hj:basic>
-					<orm:column length="1" column-definition="char(1)" />
-				</hj:basic>
-			</hj:default-single-property>
-			<hj:default-single-property type="icis:TransactionType">
-				<hj:basic>
-					<orm:column length="1" column-definition="char(1)" />
-				</hj:basic>
-			</hj:default-single-property>
-			<hj:default-single-property type="icis:WetDryType">
-				<hj:basic>
-					<orm:column length="1" column-definition="char(1)" />
-				</hj:basic>
-			</hj:default-single-property>
-			<hj:default-single-property type="icis:YesNoIndicatorType">
-				<hj:basic>
-					<orm:column length="1" column-definition="char(1)" />
-				</hj:basic>
-			</hj:default-single-property>
-			<hj:default-single-property type="icis:YesNoIndicatorTypeBase">
-				<hj:basic>
-					<orm:column length="1" column-definition="char(1)" />
-				</hj:basic>
-			</hj:default-single-property>
-			<hj:default-single-property type="icis:String2FixedType">
-				<hj:basic>
-					<orm:column length="2" column-definition="char(2)" />
-				</hj:basic>
-			</hj:default-single-property>
-			<hj:default-single-property type="icis:String2FixedTypeBase">
-				<hj:basic>
-					<orm:column length="2" column-definition="char(2)" />
-				</hj:basic>
-			</hj:default-single-property>
-			<hj:default-single-property type="icis:String3FixedTypeBase">
-				<hj:basic>
-					<orm:column length="3" column-definition="char(3)" />
-				</hj:basic>
-			</hj:default-single-property>
-			<hj:default-single-property type="icis:SICType">
-				<hj:basic>
-					<orm:column length="4" column-definition="char(4)" />
-				</hj:basic>
-			</hj:default-single-property>
-			<hj:default-single-property type="icis:NAICSType">
-				<hj:basic>
-					<orm:column length="6" column-definition="char(6)" />
-				</hj:basic>
-			</hj:default-single-property>
-			<hj:default-single-property type="icis:String9FixedTypeBase">
-				<hj:basic>
-					<orm:column length="9" column-definition="char(9)" />
-				</hj:basic>
-			</hj:default-single-property>
-			<hj:default-single-property type="icis:String9FixedType">
-				<hj:basic>
-					<orm:column length="9" column-definition="char(9)" />
-				</hj:basic>
-			</hj:default-single-property> -->
+            <hj:default-single-property type="att:StringYesNoDataType">
+                <hj:basic>
+                    <orm:column length="3" column-definition="char(3)" />
+                </hj:basic>
+            </hj:default-single-property>
+
+            <hj:default-single-property type="att:TrophicStatusDataType">
+                <hj:basic>
+                    <orm:column length="14" column-definition="char(14)" />
+                </hj:basic>
+            </hj:default-single-property>
+
+            <hj:default-single-property type="att:CategoryReportFlagDataType">
+                <hj:basic>
+                    <orm:column length="14" column-definition="char(14)" />
+                </hj:basic>
+            </hj:default-single-property>
+            
+            <hj:default-single-property type="att:StringYNDataType">
+                <hj:basic>
+                    <orm:column length="1" column-definition="1" />
+                </hj:basic>
+            </hj:default-single-property>
+
+            <hj:default-single-property type="att:TrendDataType">
+                <hj:basic>
+                    <orm:column length="11" column-definition="11" />
+                </hj:basic>
+            </hj:default-single-property>
+
+            <hj:default-single-property type="att:WaterTypeDataType">
+                <hj:basic>
+                    <orm:column length="19" column-definition="19" />
+                </hj:basic>
+            </hj:default-single-property>
+
+            <hj:default-single-property type="att:AttainmentDescriptionDataType">
+                <hj:basic>
+                    <orm:column length="23" column-definition="23" />
+                </hj:basic>
+            </hj:default-single-property>
+
+            <hj:default-single-property type="att:TMDLPriorityDataType">
+                <hj:basic>
+                    <orm:column length="6" column-definition="6" />
+                </hj:basic>
+            </hj:default-single-property>
+            <hj:default-single-property type="att:PurposeDataType">
+                <hj:basic>
+                    <orm:column length="6" column-definition="6" />
+                </hj:basic>
+            </hj:default-single-property>
+            <hj:default-single-property type="att:AssessmentConfidenceDataType">
+                <hj:basic>
+                    <orm:column length="9" column-definition="9" />
+                </hj:basic>
+            </hj:default-single-property>
+            <hj:default-single-property type="att:AssessmentTypeTypeDataType">
+                <hj:basic>
+                    <orm:column length="27" column-definition="27" />
+                </hj:basic>
+            </hj:default-single-property>
+            <hj:default-single-property type="att:ConfidenceDataType">
+                <hj:basic>
+                    <orm:column length="6" column-definition="6" />
+                </hj:basic>
+            </hj:default-single-property>
+            <hj:default-single-property type="att:DelistingReasonDataType">
+                <hj:basic>
+                    <orm:column length="100" column-definition="100" />
+                </hj:basic>
+            </hj:default-single-property>
 
 		</hj:persistence>
 

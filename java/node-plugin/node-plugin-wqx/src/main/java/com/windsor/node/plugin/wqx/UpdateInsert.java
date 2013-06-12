@@ -3,6 +3,7 @@ package com.windsor.node.plugin.wqx;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.windsor.node.common.domain.PluginServiceImplementorDescriptor;
 import com.windsor.node.common.domain.ServiceType;
 import com.windsor.node.plugin.common.xml.stream.ElementWriter;
 import com.windsor.node.plugin.wqx.domain.Header;
@@ -23,13 +24,24 @@ import com.windsor.node.plugin.wqx.service.AbstractSubmittingWqxService;
 import com.windsor.node.plugin.wqx.service.ScheduleParameters;
 import com.windsor.node.plugin.wqx.xml.UpdateInsertXmlOutputStreamWriter;
 
-/**
- *
- *
- */
 public class UpdateInsert extends AbstractSubmittingWqxService {
 
     private final ObjectFactory objectFactory = new ObjectFactory();
+
+    private static final PluginServiceImplementorDescriptor PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR = new PluginServiceImplementorDescriptor();
+
+    static
+    {
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setName("UpdateInsert");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setDescription("Reads data from the WQX staging database and prepares the data in XML format for delivery for Insert/Update into WQX.");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setClassName(UpdateInsert.class.getCanonicalName());
+    }
+
+    @Override
+    public PluginServiceImplementorDescriptor getPluginServiceImplementorDescription()
+    {
+        return PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR;
+    }
 
     @Override
     protected ServiceType supportsServiceType() {

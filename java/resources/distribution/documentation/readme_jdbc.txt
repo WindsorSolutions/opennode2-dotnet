@@ -7,7 +7,7 @@ OpenNode2 for Java supports four database platforms:
 - MySQL
 
 .jar files are included in wnos.war (in WEB-INF/lib) for Oracle (ojdbc5_g-11.1.0.7.0-Production.jar), 
-DB2 (db2jcc-db2jcc_1.0.jar and db2jcc_license_cu-db2jcc_license_cu_1.0.jar), and MySQL (mysql-connector-java-5.1.5.jar).
+and MySQL (mysql-connector-java-5.1.5.jar).
 
 Microsoft's licensing terms allow us to redistribute its JDBC driver provided you receive the license_English.rtf file 
 (found in the same directory as this readme_jdbc.txt file) containing "MICROSOFT SOFTWARE LICENSE TERMS" for the driver,

@@ -6,23 +6,38 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
-
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
 import com.windsor.node.common.domain.NodeTransaction;
+import com.windsor.node.common.domain.PluginServiceImplementorDescriptor;
 import com.windsor.node.common.domain.ProcessContentResult;
 import com.windsor.node.common.util.ByIndexOrNameMap;
 import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
-import com.windsor.node.plugin.facid3.domain.generated.FacilityIndexDataType;
-import com.windsor.node.plugin.facid3.domain.generated.FacilitySummaryDataType;
-import com.windsor.node.plugin.facid3.domain.generated.FacilitySummaryListDataType;
-import com.windsor.node.plugin.facid3.domain.generated.ObjectFactory;
+import com.windsor.node.plugin.facid3.domain.FacilityIndexDataType;
+import com.windsor.node.plugin.facid3.domain.FacilitySummaryDataType;
+import com.windsor.node.plugin.facid3.domain.FacilitySummaryListDataType;
+import com.windsor.node.plugin.facid3.domain.ObjectFactory;
 
 public class GetDeletedFacilityByChangeDate extends BaseFacIdPlugin
 {
+
+    private static final PluginServiceImplementorDescriptor PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR = new PluginServiceImplementorDescriptor();
+
+    static
+    {
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setName("GetDeletedFacilityByChangeDate");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setDescription("This uses the FacilityIndex schema to return of basic identification data about each facility that has been deleted. This would only be used if a Partner is maintaining a replica set of facility data.");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setClassName(GetDeletedFacilityByChangeDate.class.getCanonicalName());
+    }
+
+    @Override
+    public PluginServiceImplementorDescriptor getPluginServiceImplementorDescription()
+    {
+        return PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR;
+    }
+
     @Override
     public List<PluginServiceParameterDescriptor> getParameters()
     {

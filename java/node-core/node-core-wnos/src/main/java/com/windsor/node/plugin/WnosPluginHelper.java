@@ -35,20 +35,20 @@ import java.io.File;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
-
 import com.windsor.node.common.domain.DataFlow;
 import com.windsor.node.common.domain.DataProviderInfo;
 import com.windsor.node.common.domain.DataService;
 import com.windsor.node.common.domain.NamedSystemConfigItem;
 import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.NodeVisit;
+import com.windsor.node.common.domain.PluginMetaData;
+import com.windsor.node.common.domain.PluginServiceImplementorDescriptor;
 import com.windsor.node.common.domain.ProcessContentResult;
 import com.windsor.node.conf.NOSConfig;
 import com.windsor.node.data.dao.ConfigDao;
@@ -396,8 +396,9 @@ public class WnosPluginHelper implements PluginHelper, InitializingBean {
 
         logger.debug("Flow: " + flow);
 
-        if (flow == null || StringUtils.isBlank(flow.getName())) {
-            throw new RuntimeException("Null flow name");
+        if (flow == null || StringUtils.isBlank(flow.getName()))
+        {
+            throw new IllegalArgumentException("Parameter DataFlow flow cannot be null or have an empty name.");
         }
 
         File pluginVersionDir = getPluginContentDir(flow);
@@ -405,6 +406,33 @@ public class WnosPluginHelper implements PluginHelper, InitializingBean {
 
         return classLoader.getBasePluginImplementors(pluginVersionDir);
 
+    }
+
+    public PluginMetaData getPluginMetaData(DataFlow flow)
+    {
+        logger.debug("Flow: " + flow);
+        if (flow == null || StringUtils.isBlank(flow.getName()))
+        {
+            throw new IllegalArgumentException("Parameter DataFlow flow cannot be null or have an empty name.");
+        }
+        File pluginVersionDir = getPluginContentDir(flow);
+        logger.debug("pluginVersionDir: " + pluginVersionDir);
+
+        return classLoader.getPluginMetaData(pluginVersionDir);
+    }
+
+    @Override
+    public List<PluginServiceImplementorDescriptor> getPluginServiceImplementorDescriptors(DataFlow flow)
+    {
+        logger.debug("Flow: " + flow);
+        if (flow == null || StringUtils.isBlank(flow.getName()))
+        {
+            throw new IllegalArgumentException("Parameter DataFlow flow cannot be null or have an empty name.");
+        }
+        File pluginVersionDir = getPluginContentDir(flow);
+        logger.debug("pluginVersionDir: " + pluginVersionDir);
+
+        return classLoader.getPluginServiceImplementorDescriptors(pluginVersionDir);
     }
 
     public void setNosConfig(NOSConfig nosConfig) {

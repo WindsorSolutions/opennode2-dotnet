@@ -33,12 +33,14 @@ package com.windsor.node.data.dao;
 
 import java.util.List;
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
+import com.windsor.node.common.domain.DataFlow;
 import com.windsor.node.common.domain.Document;
 import com.windsor.node.common.domain.NodeMethodType;
 import com.windsor.node.common.domain.NodeTransaction;
+import com.windsor.node.common.domain.NodeVisit;
 import com.windsor.node.common.domain.ScheduledItem;
 
-public interface TransactionDao extends DeletableDao, ListableDao {
+public interface TransactionDao extends DeletableDao, ListableDao<NodeTransaction> {
 
     /**
      * @param transaction
@@ -47,15 +49,14 @@ public interface TransactionDao extends DeletableDao, ListableDao {
     NodeTransaction save(NodeTransaction transaction);
 
     /**
-     * @param flowId
-     * @param createdById
-     * @param method
-     * @param status
+     * 
+     * @param dataFlow
+     * @param visit
+     * @param callingMethodType
+     * @param initialStatus
      * @return
-     * @deprecated
      */
-    NodeTransaction make(String flowId, String createdById,
-            NodeMethodType method, CommonTransactionStatusCode status);
+    NodeTransaction make(DataFlow dataFlow, NodeVisit visit, NodeMethodType callingMethodType, CommonTransactionStatusCode initialStatus);
 
     /**
      * 
@@ -69,22 +70,22 @@ public interface TransactionDao extends DeletableDao, ListableDao {
     /**
      * @param id
      * @param useNetworkId
-     * @return
+     * @return List<NodeTransaction>
      */
     NodeTransaction get(String id, boolean useNetworkId);
 
     /**
      * @param status
      * @param method
-     * @return
+     * @return List<NodeTransaction>
      */
-    List get(CommonTransactionStatusCode status, NodeMethodType method);
+    List<NodeTransaction> get(CommonTransactionStatusCode status, NodeMethodType method);
 
     /**
      * @param method
      * @return
      */
-    List get(NodeMethodType method);
+    List<NodeTransaction> get(NodeMethodType method);
 
     /**
      * @param method
@@ -138,5 +139,5 @@ public interface TransactionDao extends DeletableDao, ListableDao {
     /**
      * @return
      */
-    List getSubmittedDocumentTransactions();
+    List<NodeTransaction> getSubmittedDocumentTransactions();
 }

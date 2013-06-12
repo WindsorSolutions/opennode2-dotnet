@@ -114,7 +114,7 @@ public class JdbcConnectionDao extends BaseJdbcDao implements ConnectionDao {
      * 
      * @return List of type <DataProviderInfo>
      */
-    public List get() {
+    public List<DataProviderInfo> get() {
 
         return getJdbcTemplate().query(SQL_SELECT_ALL, new DataSourceMapper());
 
@@ -132,7 +132,7 @@ public class JdbcConnectionDao extends BaseJdbcDao implements ConnectionDao {
     /**
      * getBySerivceId
      */
-    public List getBySerivceId(String serviceId) {
+    public List<DataProviderInfo> getBySerivceId(String serviceId) {
 
         validateStringArg(serviceId);
         return getJdbcTemplate().query(SQL_SELECT_SERVICE,
@@ -140,9 +140,9 @@ public class JdbcConnectionDao extends BaseJdbcDao implements ConnectionDao {
 
     }
 
-    private class ServiceConnectionMapper implements RowMapper {
+    private class ServiceConnectionMapper implements RowMapper<DataProviderInfo> {
 
-        public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+        public DataProviderInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
 
             DataProviderInfo obj = new DataProviderInfo();
 
@@ -164,9 +164,9 @@ public class JdbcConnectionDao extends BaseJdbcDao implements ConnectionDao {
      * @author mchmarny
      * 
      */
-    private class DataSourceMapper implements RowMapper {
+    private class DataSourceMapper implements RowMapper<DataProviderInfo> {
 
-        public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+        public DataProviderInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
 
             DataProviderInfo obj = new DataProviderInfo();
 

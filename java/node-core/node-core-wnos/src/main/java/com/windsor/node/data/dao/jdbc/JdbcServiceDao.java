@@ -387,7 +387,6 @@ public class JdbcServiceDao extends BaseJdbcDao implements ServiceDao,
      * 
      * @see com.windsor.node.data.dao.ServiceDao#getByFlowId(java.lang.String)
      */
-    @SuppressWarnings("unchecked")
     public List<DataService> getByFlowId(String id) {
 
         validateStringArg(id);
@@ -416,10 +415,9 @@ public class JdbcServiceDao extends BaseJdbcDao implements ServiceDao,
 
         validateStringArg(id);
 
-        return getMap(SQL_SELECT_ID_AND_NAME_LIST_BY_FLOW, id, false);
+        return getStringMap(SQL_SELECT_ID_AND_NAME_LIST_BY_FLOW, id, false);
     }
 
-    @SuppressWarnings("unchecked")
     private List<NamedSystemConfigItem> getServiceArgs(String serviceId) {
 
         validateStringArg(serviceId);
@@ -428,18 +426,15 @@ public class JdbcServiceDao extends BaseJdbcDao implements ServiceDao,
                 new Object[] { serviceId }, new ServiceArgMapper(serviceId));
     }
 
-    @SuppressWarnings("unchecked")
     public List<DataService> get() {
         return getJdbcTemplate().query(SQL_SELECT_ALL, new ServiceMapper());
     }
 
-    @SuppressWarnings("unchecked")
     public List<DataService> getServicesForEnds2() {
         return getJdbcTemplate().query(SQL_SELECT_WITH_FLOW_NAME,
                 new ServiceMapper());
     }
 
-    @SuppressWarnings("unchecked")
     public List<DataService> getActiveByImplementor(String implementorName) {
 
         validateStringArg(implementorName);
@@ -452,7 +447,7 @@ public class JdbcServiceDao extends BaseJdbcDao implements ServiceDao,
      * Maps a database row to a DataService instance.
      * 
      */
-    private class ServiceMapper implements RowMapper {
+    private class ServiceMapper implements RowMapper<DataService> {
 
         /*
          * (non-Javadoc)
@@ -462,7 +457,7 @@ public class JdbcServiceDao extends BaseJdbcDao implements ServiceDao,
          * int)
          */
         @SuppressWarnings("unchecked")
-        public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+        public DataService mapRow(ResultSet rs, int rowNum) throws SQLException {
 
             DataService obj = new DataService();
 
@@ -493,7 +488,7 @@ public class JdbcServiceDao extends BaseJdbcDao implements ServiceDao,
      * NamedSystemConfigItem} instance.
      * 
      */
-    private class ServiceArgMapper implements RowMapper {
+    private class ServiceArgMapper implements RowMapper<NamedSystemConfigItem> {
 
         private String serviceId;
 
@@ -511,7 +506,7 @@ public class JdbcServiceDao extends BaseJdbcDao implements ServiceDao,
          * org.springframework.jdbc.core.RowMapper#mapRow(java.sql.ResultSet,
          * int)
          */
-        public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+        public NamedSystemConfigItem mapRow(ResultSet rs, int rowNum) throws SQLException {
 
             NamedSystemConfigItem obj = new NamedSystemConfigItem();
 

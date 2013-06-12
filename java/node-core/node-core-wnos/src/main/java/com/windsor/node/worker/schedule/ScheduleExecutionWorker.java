@@ -122,8 +122,7 @@ public class ScheduleExecutionWorker extends NodeWorker implements ScheduleItemE
         if (!ScheduleExecutionHelper.shouldWeRunHere(getMachineId(),
                 getExecutionMachineName())) {
 
-            logger
-                    .debug("Configured executionMachineName does not match machineId, schedule will not run.");
+            logger.warn("Configured executionMachineName does not match machineId, schedule will not run.");
 
         } else {
 
@@ -147,7 +146,10 @@ public class ScheduleExecutionWorker extends NodeWorker implements ScheduleItemE
                     processSchedule(schedule);
 
                     logger.debug("Updating next run: " + next);
-                    scheduleDao.setRun(schedule.getId(), next);
+                    //scheduleDao.setRun(schedule.getId(), next);
+                    schedule.setRunNow(false);
+                    schedule.setNextRunOn(next);
+                    scheduleDao.save(schedule);
                 }
 
             } catch (Exception ex) {
@@ -297,8 +299,10 @@ public class ScheduleExecutionWorker extends NodeWorker implements ScheduleItemE
             {
                 logEntry.addEntry("Notification Sent");
             }
-            scheduleDao.setRunInfo(schedule.getId(), getScheduleInfo(logEntry,
-                    true), ScheduleExecuteStatus.Success);
+            /*scheduleDao.setRunInfo(schedule.getId(), getScheduleInfo(logEntry,
+                    true), ScheduleExecuteStatus.Success);*/
+            schedule.setLastExecutionInfo(getScheduleInfo(logEntry, true));
+            schedule.setExecuteStatus(ScheduleExecuteStatus.Success);
 
         } catch (Exception ex) {
 
@@ -313,11 +317,15 @@ public class ScheduleExecutionWorker extends NodeWorker implements ScheduleItemE
                         CommonTransactionStatusCode.Failed);
             }
 
-            scheduleDao.setRunInfo(schedule.getId(), getScheduleInfo(logEntry,
-                    false), ScheduleExecuteStatus.Failure);
+            /*scheduleDao.setRunInfo(schedule.getId(), getScheduleInfo(logEntry,
+                    false), ScheduleExecuteStatus.Failure);*/
+            schedule.setLastExecutionInfo(getScheduleInfo(logEntry, false));
+            schedule.setExecuteStatus(ScheduleExecuteStatus.Failure);
 
         } finally {
             getActivityService().insert(logEntry);
+            schedule.setLastExecutionActivity(logEntry);
+            scheduleDao.save(schedule);
         }
     }
 

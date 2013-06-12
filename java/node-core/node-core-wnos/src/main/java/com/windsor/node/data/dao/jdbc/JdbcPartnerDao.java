@@ -172,7 +172,7 @@ public class JdbcPartnerDao extends BaseJdbcDao implements PartnerDao,
     /**
      * get
      */
-    public List get() {
+    public List<PartnerIdentity> get() {
         return getJdbcTemplate().query(SQL_SELECT_ALL, new PartnerMapper());
     }
 
@@ -182,9 +182,9 @@ public class JdbcPartnerDao extends BaseJdbcDao implements PartnerDao,
      * @author mchmarny
      * 
      */
-    private class PartnerMapper implements RowMapper {
+    private class PartnerMapper implements RowMapper<PartnerIdentity> {
 
-        public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+        public PartnerIdentity mapRow(ResultSet rs, int rowNum) throws SQLException {
 
             PartnerIdentity obj = new PartnerIdentity();
 

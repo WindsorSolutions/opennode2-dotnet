@@ -94,7 +94,7 @@ public class ActivityServiceImpl extends BaseService implements
     /**
      * search
      */
-    public List search(ActivitySearchCriteria instance, NodeVisit visit) {
+    public List<Activity> search(ActivitySearchCriteria instance, NodeVisit visit) {
 
         if (instance == null) {
             throw new IllegalArgumentException(

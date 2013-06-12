@@ -89,11 +89,10 @@ import com.windsor.node.plugin.common.velocity.TemplateHelper;
 public class JdbcTemplateHelper extends TemplateHelper {
 
     public static enum DbType {
-        Oracle, DB2, MSSQL, MySQL, Unrecognized
+        Oracle, MSSQL, MySQL, Unrecognized
     };
 
     private static final String ORACLE = "oracle";
-    private static final String IBM_DB2 = "ibm db2";
     private static final String MS_SQL = "microsoft sql server";
     private static final String MY_SQL = "mysql";
 
@@ -134,7 +133,7 @@ public class JdbcTemplateHelper extends TemplateHelper {
     /**
      * Infer database vendor/type from the JDBC driver name.
      * 
-     * @return one of Oracle, DB2, MSSQL, MySQL, or Unrecognized
+     * @return one of Oracle, MSSQL, MySQL, or Unrecognized
      */
     public DbType getDbType() {
 
@@ -159,10 +158,6 @@ public class JdbcTemplateHelper extends TemplateHelper {
 
                 type = DbType.Oracle;
 
-            } else if (StringUtils.containsIgnoreCase(driverName, IBM_DB2)) {
-
-                type = DbType.DB2;
-
             } else if (StringUtils.containsIgnoreCase(driverName, MS_SQL)) {
 
                 type = DbType.MSSQL;
@@ -185,7 +180,7 @@ public class JdbcTemplateHelper extends TemplateHelper {
      * 
      * <p>
      * Essentially a workaround for Oracle's default date format. Tested with
-     * MySql, SqlServer, DB2, and Oracle.
+     * MySql, SqlServer, and Oracle.
      * </p>
      * 
      * @param dateString
@@ -261,10 +256,6 @@ public class JdbcTemplateHelper extends TemplateHelper {
         else if(getDbType().equals(DbType.MySQL))
         {
             output = "#[[ STR_TO_DATE('" + output + "', '%Y-%m-%d') ]]#";
-        }
-        else if(getDbType().equals(DbType.DB2))
-        {
-            output = " #[[TO_DATE('" + output + "', 'YYYY-MM-DD') ]]#";
         }
         else
         {

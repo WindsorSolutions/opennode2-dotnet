@@ -143,13 +143,14 @@ public class ContentServiceImpl extends BaseService implements ContentService,
      * .node.common.domain.EndpointVisit,
      * com.windsor.node.common.domain.ComplexContent)
      */
-    public List download(EndpointVisit visit, ComplexContent content) {
+    public List<Document> download(EndpointVisit visit, ComplexContent content) {
 
         if (visit == null) {
             throw new RuntimeException("Null visit");
         }
 
         Activity logEntry = makeNewActivity(ActivityType.Audit, visit);
+        logEntry.setWebMethod(NodeMethodType.Download.toString());
 
         try {
 
@@ -162,6 +163,14 @@ public class ContentServiceImpl extends BaseService implements ContentService,
 
             NodeTransaction tran = transactionDao.get(content
                     .getTransactionId(), true);
+            if(tran != null && tran.getFlow() != null)
+            {
+                logEntry.setFlowName(tran.getFlow().getName());
+            }
+            if(tran != null)
+            {
+                logEntry.setOperation(tran.getOperation());
+            }
 
             if (tran == null) {
                 throw new RuntimeException(
@@ -287,6 +296,7 @@ public class ContentServiceImpl extends BaseService implements ContentService,
         }
 
         Activity logEntry = makeNewActivity(ActivityType.Audit, visit);
+        logEntry.setWebMethod(NodeMethodType.GetServices.toString());
         logEntry.addEntry("GetServices invoked");
 
         SimpleContent content = null;
@@ -353,6 +363,7 @@ public class ContentServiceImpl extends BaseService implements ContentService,
         }
 
         Activity logEntry = makeNewActivity(ActivityType.Audit, visit);
+        logEntry.setWebMethod(NodeMethodType.GetServices.toString());
 
         try {
 
@@ -404,6 +415,7 @@ public class ContentServiceImpl extends BaseService implements ContentService,
         }
 
         Activity logEntry = makeNewActivity(ActivityType.Audit, visit);
+        logEntry.setWebMethod(NodeMethodType.Submit.toString());
 
         try {
 
@@ -414,6 +426,14 @@ public class ContentServiceImpl extends BaseService implements ContentService,
 
             // FLOW
             DataFlow flow = flowDao.getByCode(content.getFlow().getFlowName());
+            if(flow != null)
+            {
+                logEntry.setFlowName(flow.getName());
+            }
+            if(content != null && content.getFlow() != null)
+            {
+                logEntry.setOperation(content.getFlow().getOperation());
+            }
 
             if (flow == null) {
                 throw new IllegalArgumentException("Invalid flow: "
@@ -483,9 +503,7 @@ public class ContentServiceImpl extends BaseService implements ContentService,
             NodeTransaction tran = null;
 
             if (StringUtils.isBlank(content.getTransactionId())) {
-                tran = transactionDao.make(flow.getId(), account.getId(),
-                        NodeMethodType.Submit,
-                        CommonTransactionStatusCode.Received);
+                tran = transactionDao.make(flow, visit, NodeMethodType.Submit, CommonTransactionStatusCode.Received);
             } else {
                 tran = transactionDao.get(content.getTransactionId(), true);
                 if (tran == null) {

@@ -76,7 +76,7 @@ public class JdbcAccountDao extends BaseJdbcDao implements AccountDao {
             + "WHERE IsActive = ? " + ORDER_BY_NAAS;
 
     private static final String SQL_SELECT_BY_NAAS = SQL_SELECT
-            + "WHERE NAASAccount = ?";
+            + "WHERE UPPER(NAASAccount) = ?";
 
     private static final String SQL_INSERT = "INSERT INTO NAccount (NAASAccount,"
             + "IsActive,SystemRole,ModifiedBy,ModifiedOn, Affiliation, Id) VALUES "
@@ -237,7 +237,6 @@ public class JdbcAccountDao extends BaseJdbcDao implements AccountDao {
     /**
      * get list of all users
      */
-    @SuppressWarnings("unchecked")
     public List<UserAccount> get(boolean includeInactive, boolean loadPolicies) {
 
         if (includeInactive) {
@@ -251,7 +250,6 @@ public class JdbcAccountDao extends BaseJdbcDao implements AccountDao {
 
     }
 
-    @SuppressWarnings("unchecked")
     public List<UserAccount> get(String nodeId, boolean includeInactive) {
 
         validateStringArg(nodeId);
@@ -290,7 +288,7 @@ public class JdbcAccountDao extends BaseJdbcDao implements AccountDao {
         logger.debug("Looking for NAAS Account: " + naasAccount);
 
         account = (UserAccount) queryForObject(SQL_SELECT_BY_NAAS,
-                new Object[] { naasAccount }, new UserAccountMapper(true));
+                new Object[] { naasAccount.toUpperCase() }, new UserAccountMapper(true));
 
         logger.debug("Retrieved UserAccount: " + account);
 
@@ -311,7 +309,7 @@ public class JdbcAccountDao extends BaseJdbcDao implements AccountDao {
 
     }
 
-    private class UserAccountMapper implements RowMapper {
+    private class UserAccountMapper implements RowMapper<UserAccount> {
 
         private final boolean loadPolicies;
 
@@ -319,7 +317,7 @@ public class JdbcAccountDao extends BaseJdbcDao implements AccountDao {
             this.loadPolicies = loadPolicies;
         }
 
-        public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+        public UserAccount mapRow(ResultSet rs, int rowNum) throws SQLException {
 
             UserAccount obj = new UserAccount();
             String accountId = rs.getString("Id");
@@ -353,7 +351,6 @@ public class JdbcAccountDao extends BaseJdbcDao implements AccountDao {
      * 
      * @return a list of UserAccounts representing active administrators
      */
-    @SuppressWarnings("unchecked")
     protected List<UserAccount> getActiveAdmins() {
 
         List<UserAccount> activeAdmins = getJdbcTemplate().query(

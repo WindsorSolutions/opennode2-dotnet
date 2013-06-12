@@ -105,7 +105,7 @@ public class JdbcNotificationDao extends BaseJdbcDao implements
     /**
      * getByFlowIdAndType
      */
-    public List getByFlowIdAndType(String id, NotificationType type) {
+    public List<String> getByFlowIdAndType(String id, NotificationType type) {
 
         validateStringArg(id);
         validateObjectArg(type, "NotificationType");
@@ -124,7 +124,7 @@ public class JdbcNotificationDao extends BaseJdbcDao implements
     /**
      * getByAccountId
      */
-    public List getByAccountId(String id) {
+    public List<UserFlowNotification> getByAccountId(String id) {
 
         validateStringArg(id);
 
@@ -136,7 +136,7 @@ public class JdbcNotificationDao extends BaseJdbcDao implements
     /**
      * getByFlowId
      */
-    public List getByFlowId(String id) {
+    public List<UserFlowNotification> getByFlowId(String id) {
 
         validateStringArg(id);
 
@@ -147,7 +147,7 @@ public class JdbcNotificationDao extends BaseJdbcDao implements
     /**
      * save
      */
-    public void save(String accountId, List notifications) {
+    public void save(String accountId, List<UserFlowNotification> notifications) {
 
         validateStringArg(accountId);
         validateObjectArg(notifications, "Notifications");
@@ -156,8 +156,7 @@ public class JdbcNotificationDao extends BaseJdbcDao implements
 
         for (int i = 0; i < notifications.size(); i++) {
 
-            UserFlowNotification instance = (UserFlowNotification) notifications
-                    .get(i);
+            UserFlowNotification instance = notifications.get(i);
 
             logger.debug("Saving Notifcation: " + instance);
 
@@ -208,7 +207,7 @@ public class JdbcNotificationDao extends BaseJdbcDao implements
     /**
      * get
      */
-    public List get() {
+    public List<UserFlowNotification> get() {
 
         return getJdbcTemplate().query(SQL_SELECT, new NotificationMapper());
 
@@ -219,9 +218,9 @@ public class JdbcNotificationDao extends BaseJdbcDao implements
      * @author mchmarny
      * 
      */
-    private class NotificationMapper implements RowMapper {
+    private class NotificationMapper implements RowMapper<UserFlowNotification> {
 
-        public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+        public UserFlowNotification mapRow(ResultSet rs, int rowNum) throws SQLException {
 
             UserFlowNotification obj = new UserFlowNotification();
 

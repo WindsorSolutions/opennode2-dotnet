@@ -11,13 +11,25 @@
     <name>Node Plugin - WQX</name>
     <properties>
         <node.plugin.name>wqx</node.plugin.name>
-        <node.plugin.build.number>05</node.plugin.build.number>
+        <node.plugin.build.number>06</node.plugin.build.number>
     </properties>
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>default-testCompile</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>testCompile</goal>
+                        </goals>
+                        <configuration>
+                            <skip>true</skip>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

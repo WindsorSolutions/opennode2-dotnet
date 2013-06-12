@@ -1,5 +1,22 @@
 <%@ include file="/WEB-INF/jsp/_head.jsp"%>
+<script type="text/javascript">
+$(document).ready(function() {
+    var implementorsMap = new Object();
+    <c:forEach items="${pluginServiceImplementorDescriptors}" var="descriptor" varStatus="status">
+    implementorsMap['<c:out value="${descriptor.name}" />'] = '<c:out value="${descriptor.description}" />';
+    </c:forEach>
 
+    var splitClassName = $(".jqServiceimplementingClassName option:selected").text().split(".");
+    var selectedClassName = splitClassName[splitClassName.length - 1].trim();
+    $("#implementorDescriptionSpan").text(implementorsMap[selectedClassName]);
+
+    $(".jqServiceimplementingClassName").change(function(){
+        var splitClassName = $(".jqServiceimplementingClassName option:selected").text().split(".");
+        var selectedClassName = splitClassName[splitClassName.length - 1].trim();
+        $("#implementorDescriptionSpan").text(implementorsMap[selectedClassName]);
+    });
+});
+</script>
 <table id="contentTable">
 	<tr>
 		<td id="sidebarPane" align="left">
@@ -58,7 +75,7 @@
 				<td class="ctrl" width="95%">
                     <spring:bind path="command.service.implementingClassName">
 					<select id="<c:out value="${status.expression}" />" name="<c:out value="${status.expression}" />"
-						style="vertical-align: middle; width: 96%;">
+						style="vertical-align: middle; width: 96%;" class="jqServiceimplementingClassName">
 						<option value="" /></option>
 						<c:forEach var="implementer" items="${command.implementers}"
 							varStatus="rowSatus">
@@ -74,6 +91,10 @@
                    </spring:bind>
 				</td>
 			</tr>
+            <tr>
+                <td class="label" width="5%" style="text-align: right; vertical-align: top;">Implementer Description:</td>
+                <td class="ctrl" width="95%"><span id="implementorDescriptionSpan"></span></td>
+            </td>
 			
 			<c:if test="${ (command.service.id != null) && (command.service.id != \"\") }">
 	            <!-- TYPES -->

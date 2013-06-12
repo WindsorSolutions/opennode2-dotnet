@@ -1,33 +1,34 @@
 package com.windsor.node.plugin.facid3.dao;
 
+import java.math.BigInteger;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeConstants;
 import javax.xml.datatype.DatatypeFactory;
-
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.RowMapper;
+import com.windsor.node.plugin.facid3.domain.CoordinateDataSourceCodeListIdentifierDataType;
+import com.windsor.node.plugin.facid3.domain.CoordinateDataSourceDataType;
+import com.windsor.node.plugin.facid3.domain.DirectPositionType;
+import com.windsor.node.plugin.facid3.domain.FacilityGeographicLocationDescriptionDataType;
+import com.windsor.node.plugin.facid3.domain.GeographicReferencePointDataType;
+import com.windsor.node.plugin.facid3.domain.MeasureDataType;
+import com.windsor.node.plugin.facid3.domain.MeasureUnitCodeListIdentifierDataType;
+import com.windsor.node.plugin.facid3.domain.MeasureUnitDataType;
+import com.windsor.node.plugin.facid3.domain.MethodIdentifierCodeListIdentifierDataType;
+import com.windsor.node.plugin.facid3.domain.ObjectFactory;
+import com.windsor.node.plugin.facid3.domain.PointType;
+import com.windsor.node.plugin.facid3.domain.ReferenceMethodDataType;
+import com.windsor.node.plugin.facid3.domain.ReferencePointCodeListIdentifierDataType;
+import com.windsor.node.plugin.facid3.domain.ResultQualifierCodeListIdentifierDataType;
+import com.windsor.node.plugin.facid3.domain.ResultQualifierDataType;
 
-import com.windsor.node.plugin.facid3.domain.generated.CoordinateDataSourceCodeListIdentifierDataType;
-import com.windsor.node.plugin.facid3.domain.generated.CoordinateDataSourceDataType;
-import com.windsor.node.plugin.facid3.domain.generated.DirectPositionType;
-import com.windsor.node.plugin.facid3.domain.generated.FacilityGeographicLocationDescriptionDataType;
-import com.windsor.node.plugin.facid3.domain.generated.GeographicReferencePointDataType;
-import com.windsor.node.plugin.facid3.domain.generated.MeasureDataType;
-import com.windsor.node.plugin.facid3.domain.generated.MeasureUnitCodeListIdentifierDataType;
-import com.windsor.node.plugin.facid3.domain.generated.MeasureUnitDataType;
-import com.windsor.node.plugin.facid3.domain.generated.MethodIdentifierCodeListIdentifierDataType;
-import com.windsor.node.plugin.facid3.domain.generated.ObjectFactory;
-import com.windsor.node.plugin.facid3.domain.generated.PointType;
-import com.windsor.node.plugin.facid3.domain.generated.ReferenceMethodDataType;
-import com.windsor.node.plugin.facid3.domain.generated.ReferencePointCodeListIdentifierDataType;
-import com.windsor.node.plugin.facid3.domain.generated.ResultQualifierCodeListIdentifierDataType;
-import com.windsor.node.plugin.facid3.domain.generated.ResultQualifierDataType;
-
-public class FacilityGeographicLocationDescriptionDataTypeRowMapper implements RowMapper
+public class FacilityGeographicLocationDescriptionDataTypeRowMapper implements RowMapper<FacilityGeographicLocationDescriptionDataType>
 {
     protected Logger logger = LoggerFactory.getLogger(getClass());
     FacilityDataTypeDao facilityDataTypeDao;
@@ -37,8 +38,7 @@ public class FacilityGeographicLocationDescriptionDataTypeRowMapper implements R
         setFacilityDataTypeDao(facilityDataTypeDao);
     }
 
-    @Override
-	public Object mapRow(ResultSet rs, int rowNum) throws SQLException
+    public FacilityGeographicLocationDescriptionDataType mapRow(ResultSet rs, int rowNum) throws SQLException
     {
         ObjectFactory fact = new ObjectFactory();
         FacilityGeographicLocationDescriptionDataType geoLoc = fact.createFacilityGeographicLocationDescriptionDataType();
@@ -48,7 +48,7 @@ public class FacilityGeographicLocationDescriptionDataTypeRowMapper implements R
         //point.setId(rs.getString(""));//?
         if(StringUtils.isNumeric(rs.getString("SRS_DIM")))
         {
-            point.setSrsDimension(rs.getString("SRS_DIM"));
+            point.setSrsDimension(new BigInteger(rs.getString("SRS_DIM")));
         }
         else
         {
@@ -86,7 +86,7 @@ public class FacilityGeographicLocationDescriptionDataTypeRowMapper implements R
         geoLoc.setLocationCommentsText(rs.getString("LOC_COMM_TEXT"));
         if(StringUtils.isNumeric(rs.getString("SRC_MAP_SCALE_NUM")))
         {
-            geoLoc.setSourceMapScaleNumber(rs.getString("SRC_MAP_SCALE_NUM"));
+            geoLoc.setSourceMapScaleNumber(new BigInteger(rs.getString("SRC_MAP_SCALE_NUM")));
         }
         DatatypeFactory datatypeFactory;
         try
@@ -94,7 +94,9 @@ public class FacilityGeographicLocationDescriptionDataTypeRowMapper implements R
             datatypeFactory = DatatypeFactory.newInstance();
             if(rs.getString("DATA_COLL_DATE") != null)
             {
-                geoLoc.setDataCollectionDate(rs.getDate("DATA_COLL_DATE"));
+                GregorianCalendar cal = new GregorianCalendar();
+                cal.setTime(rs.getDate("DATA_COLL_DATE"));
+                geoLoc.setDataCollectionDate(datatypeFactory.newXMLGregorianCalendarDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DAY_OF_MONTH), DatatypeConstants.FIELD_UNDEFINED));
             }
         }
         catch(DatatypeConfigurationException e)

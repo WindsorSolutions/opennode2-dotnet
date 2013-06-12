@@ -56,8 +56,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3.www._2005._05.xmlmime.ContentType_type0;
 
-import sun.misc.BASE64Decoder;
-
 import com.windsor.node.common.domain.CommonContentType;
 import com.windsor.node.common.domain.Document;
 import com.windsor.node.common.util.CommonContentAndFormatConverter;
@@ -210,9 +208,13 @@ public class NodeUtil {
             if (content.getFormat() == DocumentFormatType.ZIP) {
                 resultDoc.setType(CommonContentType.ZIP);
 
+                
                 // Decode from base64 first in order to keep it clean.
-                resultDoc.setContent(new BASE64Decoder().decodeBuffer(content
-                        .getExtraElement().getText()));
+                if(content.getExtraElement().getText() != null)
+                {
+                    resultDoc.setContent(org.apache.commons.codec.binary.Base64.decodeBase64(content
+                        .getExtraElement().getText().getBytes()));
+                }
 
             } else {
                 resultDoc.setType(CommonContentType.XML);

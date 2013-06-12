@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
 import com.windsor.node.common.domain.NodeTransaction;
+import com.windsor.node.common.domain.PluginServiceImplementorDescriptor;
 import com.windsor.node.common.domain.ProcessContentResult;
 import com.windsor.node.common.domain.ServiceType;
 import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
@@ -16,6 +17,21 @@ import com.windsor.node.plugin.wqx.service.ScheduleParameters;
  * Type: TASK
  */
 public class ClearPendingSubmissions extends AbstractWqxService {
+
+    private static final PluginServiceImplementorDescriptor PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR = new PluginServiceImplementorDescriptor();
+
+    static
+    {
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setName("ClearPendingSubmissions");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setDescription("Resets the CDXPROCESSINGSTATUS column of the WQX_SUBMISSIONHISTORY table, so that the next run can set a status of \"Pending\" if it needs to while leaving the submission history intact");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setClassName(ClearPendingSubmissions.class.getCanonicalName());
+    }
+
+    @Override
+    public PluginServiceImplementorDescriptor getPluginServiceImplementorDescription()
+    {
+        return PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR;
+    }
 
     @Override
     protected ServiceType supportsServiceType() {

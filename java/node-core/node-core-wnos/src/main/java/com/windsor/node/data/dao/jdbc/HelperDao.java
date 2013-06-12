@@ -49,14 +49,7 @@ public class HelperDao extends BaseJdbcDao {
         logger.debug(sql);
         if(args != null)
         {
-            if(args != null)
-            {
-                logger.debug(args.toString());
-            }
-            else
-            {
-                logger.debug("null");
-            }
+            logger.debug(args.toString());
         }
 
         if (types != null && types.length > 0 && args != null

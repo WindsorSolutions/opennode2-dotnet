@@ -45,8 +45,8 @@ public interface RequestDao extends DeletableDao {
 
     DataRequest getByTransactionId(String id);
 
-    List get(CommonTransactionStatusCode status);
+    List<DataRequest> get(CommonTransactionStatusCode status);
 
-    List get(CommonTransactionStatusCode status, RequestType type);
+    List<DataRequest> get(CommonTransactionStatusCode status, RequestType type);
 
 }

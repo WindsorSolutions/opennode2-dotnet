@@ -32,6 +32,7 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.windsor.node.plugin.rcra50;
 
 import com.windsor.node.common.domain.NodeTransaction;
+import com.windsor.node.common.domain.PluginServiceImplementorDescriptor;
 import com.windsor.node.common.domain.ProcessContentResult;
 
 public class HazardousWasteCMESubmission extends BaseRcra50XmlPlugin
@@ -42,6 +43,21 @@ public class HazardousWasteCMESubmission extends BaseRcra50XmlPlugin
     public static final String TEMPLATE_NAME = "CME5.vm";
 
     private static final String OUTFILEBASE_NAME = "RCRA50-GetCMEData";
+
+    private static final PluginServiceImplementorDescriptor PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR = new PluginServiceImplementorDescriptor();
+
+    static
+    {
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setName("HazardousWasteCMESubmission");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setDescription("Reads RCRA CME data from the RCRA staging database and prepares the data in XML format for delivery.");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setClassName(HazardousWasteCMESubmission.class.getCanonicalName());
+    }
+
+    @Override
+    public PluginServiceImplementorDescriptor getPluginServiceImplementorDescription()
+    {
+        return PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR;
+    }
 
     public HazardousWasteCMESubmission()
     {

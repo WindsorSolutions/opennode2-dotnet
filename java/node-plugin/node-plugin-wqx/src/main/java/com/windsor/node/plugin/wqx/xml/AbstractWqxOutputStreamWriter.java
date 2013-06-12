@@ -7,7 +7,7 @@ import javax.xml.bind.DatatypeConverter;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import com.windsor.node.plugin.common.xml.stream.ElementStreamWriter;
 import com.windsor.node.plugin.common.xml.stream.ElementWriterException;

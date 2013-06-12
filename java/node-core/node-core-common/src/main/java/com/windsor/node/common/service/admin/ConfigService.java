@@ -69,5 +69,5 @@ public interface ConfigService extends DataSourceService {
      * @return
      */
     // Map get(NodeVisit visit);
-    List getList(NodeVisit visit);
+    List<ConfigItem> getList(NodeVisit visit);
 }

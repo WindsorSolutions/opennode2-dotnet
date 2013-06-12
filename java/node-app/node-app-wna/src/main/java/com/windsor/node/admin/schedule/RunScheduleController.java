@@ -38,8 +38,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.windsor.node.admin.ajax.JsonAjaxController;
 import com.windsor.node.admin.util.VisitUtils;
+import com.windsor.node.common.domain.Activity;
 import com.windsor.node.common.domain.NodeVisit;
 import com.windsor.node.common.domain.ScheduledItem;
+import com.windsor.node.common.service.admin.ActivityService;
 import com.windsor.node.common.service.admin.ScheduleService;
 import com.windsor.node.worker.schedule.ScheduleItemExecutionService;
 
@@ -86,6 +88,14 @@ public class RunScheduleController extends JsonAjaxController
         else
         {
             json.put("lastExecutedOn", "");
+        }
+        if(schedule.getLastExecutionActivity() != null && schedule.getLastExecutionActivity().getTransactionId() != null)
+        {
+            json.put("lastExecutionTransactionId", schedule.getLastExecutionActivity().getTransactionId());
+        }
+        else
+        {
+            json.put("lastExecutionTransactionId", "");
         }
         return json;
     }
