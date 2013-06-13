@@ -595,6 +595,10 @@ namespace Windsor.Commons.Core
         }
         public static List<string> SplitAndReallyRemoveEmptyEntries(string stringToSplit, params char[] separators)
         {
+            if (string.IsNullOrEmpty(stringToSplit))
+            {
+                return new List<string>();
+            }
             stringToSplit = stringToSplit.Trim();
             if (string.IsNullOrEmpty(stringToSplit))
             {

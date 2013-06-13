@@ -1,7 +1,10 @@
 
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Data.Common;
+using DevExpress.Data.Filtering;
 using DevExpress.Xpo;
 using DevExpress.Xpo.DB;
 using DevExpress.Xpo.Metadata;
@@ -11,7 +14,8 @@ namespace Windsor.Commons.DeveloperExpress.Xpo
 {
     public class XpoServerCollectionSource : XPServerCollectionSource
     {
-        public XpoServerCollectionSource(DbConnection connection, XPClassInfo classInfo, ReflectionDictionary reflectionDictionary)
+        public XpoServerCollectionSource(DbConnection connection, XPClassInfo classInfo, ReflectionDictionary reflectionDictionary,
+                                         IList<string> displayColumnNames)
             : base()
         {
             IDataLayer dataLayer = null;
@@ -35,6 +39,11 @@ namespace Windsor.Commons.DeveloperExpress.Xpo
                 this.AllowEdit = false;
                 this.AllowNew = false;
                 this.AllowRemove = false;
+
+                if (!CollectionUtils.IsNullOrEmpty(displayColumnNames))
+                {
+                    DisplayableProperties = StringUtils.Join(";", displayColumnNames);
+                }
             }
             catch (Exception)
             {
@@ -45,6 +54,10 @@ namespace Windsor.Commons.DeveloperExpress.Xpo
                 DisposableBase.SafeDispose(dataLayer);
                 DisposableBase.SafeDispose(session);
             }
+        }
+        public int GetTotalRowCount()
+        {
+            return (this as IListSource).GetList().Count;
         }
         protected override void Dispose(bool disposing)
         {
