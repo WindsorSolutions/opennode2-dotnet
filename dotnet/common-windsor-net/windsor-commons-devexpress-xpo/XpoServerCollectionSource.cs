@@ -1,5 +1,6 @@
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -57,7 +58,11 @@ namespace Windsor.Commons.DeveloperExpress.Xpo
         }
         public int GetTotalRowCount()
         {
-            return (this as IListSource).GetList().Count;
+            return this.GetList().Count;
+        }
+        public IList GetList()
+        {
+            return (this as IListSource).GetList();
         }
         protected override void Dispose(bool disposing)
         {
