@@ -10,7 +10,7 @@
     <packaging>jar</packaging>
     <name>Node Plugin - RCRA v5.0</name>
     <properties>
-        <node.plugin.name>RCRA50</node.plugin.name>
+        <node.plugin.name>rcra50</node.plugin.name>
         <node.plugin.build.number>00</node.plugin.build.number>
     </properties>
     <build>

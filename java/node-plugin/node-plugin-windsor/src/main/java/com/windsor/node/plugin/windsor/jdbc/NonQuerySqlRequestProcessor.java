@@ -44,6 +44,7 @@ import com.windsor.node.common.domain.CommonTransactionStatusCode;
 import com.windsor.node.common.domain.DataServiceRequestParameter;
 import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.PaginationIndicator;
+import com.windsor.node.common.domain.PluginServiceImplementorDescriptor;
 import com.windsor.node.common.domain.ProcessContentResult;
 import com.windsor.node.common.domain.ServiceType;
 import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
@@ -58,6 +59,21 @@ public class NonQuerySqlRequestProcessor extends BaseWnosPlugin {
      * runtime argument names
      */
     public static final String ARG_SQL = "Sql Query";
+
+    private static final PluginServiceImplementorDescriptor PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR = new PluginServiceImplementorDescriptor();
+
+    static
+    {
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setName("NonQuerySqlRequestProcessor");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setDescription("Windsor utility method to execute a stored procedure (generally an ETL execution), access should be restricted.");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setClassName(NonQuerySqlRequestProcessor.class.getCanonicalName());
+    }
+
+    @Override
+    public PluginServiceImplementorDescriptor getPluginServiceImplementorDescription()
+    {
+        return PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR;
+    }
 
     public NonQuerySqlRequestProcessor() {
         super();

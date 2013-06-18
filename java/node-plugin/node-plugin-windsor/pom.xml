@@ -10,7 +10,7 @@
     <packaging>jar</packaging>
     <name>Node Plugin - Windsor</name>
     <properties>
-        <node.plugin.name>Windsor</node.plugin.name>
+        <node.plugin.name>windsor</node.plugin.name>
         <node.plugin.build.number>00</node.plugin.build.number>
     </properties>
     <build>

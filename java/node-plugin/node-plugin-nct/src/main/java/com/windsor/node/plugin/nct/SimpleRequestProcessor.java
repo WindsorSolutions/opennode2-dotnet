@@ -51,6 +51,7 @@ import com.windsor.node.common.domain.Document;
 import com.windsor.node.common.domain.NodeMethodType;
 import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.PaginationIndicator;
+import com.windsor.node.common.domain.PluginServiceImplementorDescriptor;
 import com.windsor.node.common.domain.ProcessContentResult;
 import com.windsor.node.common.domain.RequestType;
 import com.windsor.node.common.domain.ServiceType;
@@ -87,6 +88,21 @@ public class SimpleRequestProcessor extends BaseWnosPlugin {
     private IdGenerator idGenerator;
     private CompressionService compressionService;
     private String resultFilePathBase;
+
+    private static final PluginServiceImplementorDescriptor PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR = new PluginServiceImplementorDescriptor();
+
+    static
+    {
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setName("SimpleRequestProcessor");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setDescription("Performs a simple Node transaction of the requested type (e.g. Solict, Submit, Query, etc.).");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setClassName(SimpleRequestProcessor.class.getCanonicalName());
+    }
+
+    @Override
+    public PluginServiceImplementorDescriptor getPluginServiceImplementorDescription()
+    {
+        return PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR;
+    }
 
     public SimpleRequestProcessor() {
 

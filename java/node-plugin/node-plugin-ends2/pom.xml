@@ -10,7 +10,7 @@
     <packaging>jar</packaging>
     <name>Node Plugin - ENDS v2.0</name>
     <properties>
-        <node.plugin.name>ENDS2</node.plugin.name>
+        <node.plugin.name>ends2</node.plugin.name>
         <node.plugin.build.number>00</node.plugin.build.number>
     </properties>
     <build>

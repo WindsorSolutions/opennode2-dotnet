@@ -32,6 +32,7 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.windsor.node.plugin.eis12;
 
 import com.windsor.node.common.domain.NodeTransaction;
+import com.windsor.node.common.domain.PluginServiceImplementorDescriptor;
 import com.windsor.node.common.domain.ProcessContentResult;
 
 public class EISGetNonroadEmissions extends BaseEisXmlPlugin {
@@ -42,6 +43,21 @@ public class EISGetNonroadEmissions extends BaseEisXmlPlugin {
     public static final String TEMPLATE_NAME = "NonroadMobile.vm";
 
     private static final String OUTFILEBASE_NAME = "EISNonroadEmissions";
+
+    private static final PluginServiceImplementorDescriptor PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR = new PluginServiceImplementorDescriptor();
+
+    static
+    {
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setName("EISGetNonroadEmissions");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setDescription("EISGetNonroadEmissions");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setClassName(EISGetNonroadEmissions.class.getCanonicalName());
+    }
+
+    @Override
+    public PluginServiceImplementorDescriptor getPluginServiceImplementorDescription()
+    {
+        return PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR;
+    }
 
     public EISGetNonroadEmissions() {
 

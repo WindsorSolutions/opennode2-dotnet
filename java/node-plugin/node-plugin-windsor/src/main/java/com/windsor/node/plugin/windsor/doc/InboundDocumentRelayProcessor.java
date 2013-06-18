@@ -42,6 +42,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
 import com.windsor.node.common.domain.DataServiceRequestParameter;
 import com.windsor.node.common.domain.NodeTransaction;
+import com.windsor.node.common.domain.PluginServiceImplementorDescriptor;
 import com.windsor.node.common.domain.ProcessContentResult;
 import com.windsor.node.common.domain.ServiceType;
 import com.windsor.node.common.util.NodeClientService;
@@ -57,6 +58,21 @@ import com.windsor.node.service.helper.settings.SettingServiceProvider;
 public class InboundDocumentRelayProcessor extends BaseWnosPlugin {
 
     public static final String ARG_TARGET_ENDPOINT_URL = "targetEndpointUrl";
+
+    private static final PluginServiceImplementorDescriptor PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR = new PluginServiceImplementorDescriptor();
+
+    static
+    {
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setName("InboundDocumentRelayProcessor");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setDescription("Windsor utility method to relay a submitted document to another endpoint, access should be restricted.");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setClassName(InboundDocumentRelayProcessor.class.getCanonicalName());
+    }
+
+    @Override
+    public PluginServiceImplementorDescriptor getPluginServiceImplementorDescription()
+    {
+        return PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR;
+    }
 
     public InboundDocumentRelayProcessor() {
 

@@ -21,12 +21,8 @@
 			alt="Chart: Transaction Type Overview"
 			style="border-width: 0px; height: 150px; width: 400px;" />
 		</td>
-		<td rowspan="2" valign="top">
-		<c:forEach items="${model.feeds}" var="item">
-			<c:set var="feed" value="${item}" scope="request" />
-			<jsp:include page="rss/feed.jsp"></jsp:include>
-			<br>
-		</c:forEach>
+		<td valign="top">
+            <jsp:include page="heartbeat.jsp"></jsp:include>
 		</td>
 	</tr>
 	<tr>
@@ -37,6 +33,13 @@
 			alt="Chart: Most Active Users"
 			style="border-width: 0px; height: 150px; width: 400px;" />
 		</td>
+        <td valign="top">
+        <c:forEach items="${model.feeds}" var="item">
+            <c:set var="feed" value="${item}" scope="request" />
+            <jsp:include page="rss/feed.jsp"></jsp:include>
+            <br>
+        </c:forEach>
+        </td>
 	</tr>
 	<tr>
 	    <td colspan="2">

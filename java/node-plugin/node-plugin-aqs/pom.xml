@@ -10,7 +10,7 @@
     <packaging>jar</packaging>
     <name>Node Plugin - AQS</name>
     <properties>
-        <node.plugin.name>AQS</node.plugin.name>
+        <node.plugin.name>aqs</node.plugin.name>
         <node.plugin.build.number>00</node.plugin.build.number>
     </properties>
     <build>

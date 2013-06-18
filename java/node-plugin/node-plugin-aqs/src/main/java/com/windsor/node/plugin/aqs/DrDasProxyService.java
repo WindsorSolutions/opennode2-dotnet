@@ -45,6 +45,7 @@ import com.windsor.node.common.domain.DataServiceRequestParameter;
 import com.windsor.node.common.domain.Document;
 import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.PaginationIndicator;
+import com.windsor.node.common.domain.PluginServiceImplementorDescriptor;
 import com.windsor.node.common.domain.ProcessContentResult;
 import com.windsor.node.common.domain.RequestType;
 import com.windsor.node.common.domain.ServiceType;
@@ -162,6 +163,21 @@ public class DrDasProxyService extends BaseWnosPlugin {
     public static final PluginServiceParameterDescriptor SCHEMA_VERSION = new PluginServiceParameterDescriptor("SchemaVersion",
                     PluginServiceParameterDescriptor.TYPE_STRING, Boolean.TRUE,
                     "The version of the schema to be used to organize the returned data.  Used internally to DEC only and set by the Plug In.");
+
+    private static final PluginServiceImplementorDescriptor PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR = new PluginServiceImplementorDescriptor();
+
+    static
+    {
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setName("DrDasProxyService");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setDescription("DaDas proxy service, will submit AQS files created by DrDas to CDX.");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setClassName(DrDasProxyService.class.getCanonicalName());
+    }
+
+    @Override
+    public PluginServiceImplementorDescriptor getPluginServiceImplementorDescription()
+    {
+        return PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR;
+    }
 
     public DrDasProxyService() {
 

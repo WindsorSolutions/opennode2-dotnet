@@ -47,6 +47,7 @@ import com.windsor.node.common.domain.CommonTransactionStatusCode;
 import com.windsor.node.common.domain.DataServiceRequestParameter;
 import com.windsor.node.common.domain.Document;
 import com.windsor.node.common.domain.NodeTransaction;
+import com.windsor.node.common.domain.PluginServiceImplementorDescriptor;
 import com.windsor.node.common.domain.ProcessContentResult;
 import com.windsor.node.common.domain.ServiceType;
 import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
@@ -64,6 +65,21 @@ public class InboundDocumentProcessor extends BaseWnosPlugin {
     public static final String PATH_QUALIFIER_NONE = "";
     public static final String PATH_QUALIFIER_TRAN = "TRAN";
     public static final String PATH_QUALIFIER_USER = "USER";
+
+    private static final PluginServiceImplementorDescriptor PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR = new PluginServiceImplementorDescriptor();
+
+    static
+    {
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setName("InboundDocumentProcessor");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setDescription("Windsor utility method to store a submitted document to a directory location, access should be restricted.");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setClassName(InboundDocumentProcessor.class.getCanonicalName());
+    }
+
+    @Override
+    public PluginServiceImplementorDescriptor getPluginServiceImplementorDescription()
+    {
+        return PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR;
+    }
 
     public InboundDocumentProcessor() {
 

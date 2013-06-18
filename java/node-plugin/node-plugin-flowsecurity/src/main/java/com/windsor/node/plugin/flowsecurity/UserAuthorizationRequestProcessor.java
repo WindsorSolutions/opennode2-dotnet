@@ -44,6 +44,7 @@ import com.windsor.node.common.domain.CommonTransactionStatusCode;
 import com.windsor.node.common.domain.DataServiceRequestParameter;
 import com.windsor.node.common.domain.Document;
 import com.windsor.node.common.domain.NodeTransaction;
+import com.windsor.node.common.domain.PluginServiceImplementorDescriptor;
 import com.windsor.node.common.domain.ProcessContentResult;
 import com.windsor.node.common.domain.ServiceType;
 import com.windsor.node.common.domain.UserAccount;
@@ -81,6 +82,21 @@ public class UserAuthorizationRequestProcessor extends BaseWnosPlugin {
     private SettingServiceProvider settingService;
     private IdGenerator idGenerator;
     private NAASConfig naasConfig;
+
+    private static final PluginServiceImplementorDescriptor PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR = new PluginServiceImplementorDescriptor();
+
+    static
+    {
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setName("UserAuthorizationRequestProcessor");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setDescription("Handles Request Authorizations for protected Flows.");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setClassName(UserAuthorizationRequestProcessor.class.getCanonicalName());
+    }
+
+    @Override
+    public PluginServiceImplementorDescriptor getPluginServiceImplementorDescription()
+    {
+        return PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR;
+    }
 
     public UserAuthorizationRequestProcessor() {
 

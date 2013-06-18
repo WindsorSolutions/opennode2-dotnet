@@ -51,9 +51,8 @@ public class ETLStoredProcedure extends StoredProcedure {
      * @throws DataAccessException
      *             when execution fails.
      */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     public String execute() throws DataAccessException {
-        Map<String, String> out = super.execute(new HashMap());
-        return out.get(OUT_WORKFLOW_ID);
+        Map<String, Object> out = super.execute(new HashMap<String, Object>());
+        return (String)out.get(OUT_WORKFLOW_ID);
     }
 }

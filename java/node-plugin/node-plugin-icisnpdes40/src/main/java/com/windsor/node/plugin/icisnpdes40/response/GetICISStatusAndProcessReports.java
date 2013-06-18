@@ -21,6 +21,7 @@ import com.windsor.node.common.domain.DataServiceRequestParameter;
 import com.windsor.node.common.domain.Document;
 import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.PartnerIdentity;
+import com.windsor.node.common.domain.PluginServiceImplementorDescriptor;
 import com.windsor.node.common.domain.ProcessContentResult;
 import com.windsor.node.common.domain.ServiceType;
 import com.windsor.node.common.domain.TransactionStatus;
@@ -72,6 +73,21 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
     private ResultsParser resultsParser;
     private SettingServiceProvider settingService;
     private EntityManagerFactory emf;
+
+    private static final PluginServiceImplementorDescriptor PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR = new PluginServiceImplementorDescriptor();
+
+    static
+    {
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setName("GetICISStatusAndProcessReports");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setDescription("Check the status of an ICIS submission and (if appropriate) download and process the response reports.");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setClassName(GetICISStatusAndProcessReports.class.getCanonicalName());
+    }
+
+    @Override
+    public PluginServiceImplementorDescriptor getPluginServiceImplementorDescription()
+    {
+        return PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR;
+    }
 
     public GetICISStatusAndProcessReports() {
         setPublishForEN11(true);

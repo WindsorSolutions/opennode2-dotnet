@@ -10,7 +10,7 @@
     <packaging>jar</packaging>
     <name>Node Plugin - Flow Security</name>
     <properties>
-        <node.plugin.name>FlowSecurity</node.plugin.name>
+        <node.plugin.name>flowsecurity</node.plugin.name>
         <node.plugin.build.number>00</node.plugin.build.number>
     </properties>
     <build>

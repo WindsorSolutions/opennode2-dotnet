@@ -10,7 +10,7 @@
     <packaging>jar</packaging>
     <name>Node Plugin - Map Force Bridge</name>
     <properties>
-        <node.plugin.name>MapForceBridge</node.plugin.name>
+        <node.plugin.name>mapforcebridge</node.plugin.name>
         <node.plugin.build.number>00</node.plugin.build.number>
     </properties>
     <build>

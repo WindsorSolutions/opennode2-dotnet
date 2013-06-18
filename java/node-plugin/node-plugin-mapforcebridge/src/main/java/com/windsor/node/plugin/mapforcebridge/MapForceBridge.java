@@ -50,6 +50,7 @@ import com.windsor.node.common.domain.DataServiceRequestParameter;
 import com.windsor.node.common.domain.Document;
 import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.PaginationIndicator;
+import com.windsor.node.common.domain.PluginServiceImplementorDescriptor;
 import com.windsor.node.common.domain.ProcessContentResult;
 import com.windsor.node.common.domain.RequestType;
 import com.windsor.node.common.domain.ServiceType;
@@ -78,6 +79,21 @@ public class MapForceBridge extends BaseWnosPlugin implements InitializingBean {
     private IdGenerator idGenerator;
     private CompressionService compressionService;
     private DataSource dataSource;
+
+    private static final PluginServiceImplementorDescriptor PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR = new PluginServiceImplementorDescriptor();
+
+    static
+    {
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setName("MapForceBridge");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setDescription("Creates a document based on the generated MapForce mapping jar file included with the distribution.");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setClassName(MapForceBridge.class.getCanonicalName());
+    }
+
+    @Override
+    public PluginServiceImplementorDescriptor getPluginServiceImplementorDescription()
+    {
+        return PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR;
+    }
 
     public MapForceBridge() {
 

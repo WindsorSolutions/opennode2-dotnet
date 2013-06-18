@@ -32,6 +32,7 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.windsor.node.plugin.eis12;
 
 import com.windsor.node.common.domain.NodeTransaction;
+import com.windsor.node.common.domain.PluginServiceImplementorDescriptor;
 import com.windsor.node.common.domain.ProcessContentResult;
 
 public class EISGetEventEmissions extends BaseEisXmlPlugin {
@@ -42,6 +43,21 @@ public class EISGetEventEmissions extends BaseEisXmlPlugin {
     public static final String TEMPLATE_NAME = "Event.vm";
 
     private static final String OUTFILEBASE_NAME = "EISEventEmissions";
+
+    private static final PluginServiceImplementorDescriptor PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR = new PluginServiceImplementorDescriptor();
+
+    static
+    {
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setName("EISGetEventEmissions");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setDescription("EISGetEventEmissions");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setClassName(EISGetEventEmissions.class.getCanonicalName());
+    }
+
+    @Override
+    public PluginServiceImplementorDescriptor getPluginServiceImplementorDescription()
+    {
+        return PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR;
+    }
 
     public EISGetEventEmissions() {
 

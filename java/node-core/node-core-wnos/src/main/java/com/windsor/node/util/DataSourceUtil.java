@@ -90,7 +90,12 @@ public final class DataSourceUtil {
         {
             bds.setValidationQuery("select 1");
         }
+        if(sourceInfo.getProviderType().equalsIgnoreCase("com.mysql.jdbc.Driver"))
+        {
+            //MySql has some max_allowed_packet setting which it is desireable to increase for sessions that include saving large XML files
+            bds.addConnectionProperty("max_allowed_packet", "1000000000");
+            //Doesn't seem effective on mysql server 5.1
+        }
         return (DataSource) bds;
     }
-
 }

@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.persistence.EntityManager;
 
 import com.windsor.node.common.domain.ActivityEntry;
+import com.windsor.node.common.domain.PluginServiceImplementorDescriptor;
 import com.windsor.node.common.domain.ProcessContentResult;
 import com.windsor.node.plugin.icisnpdes40.dao.PayloadOperationDao;
 import com.windsor.node.plugin.icisnpdes40.dao.jdbc.PayloadOperationDaoJdbc;
@@ -64,6 +65,21 @@ import com.windsor.node.plugin.icisnpdes40.generated.SingleEventViolationData;
 import com.windsor.node.plugin.icisnpdes40.generated.UnpermittedFacilityData;
 
 public class PerformICISSubmission extends AbstractIcisNpdesSubmission {
+
+    private static final PluginServiceImplementorDescriptor PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR = new PluginServiceImplementorDescriptor();
+
+    static
+    {
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setName("PerformICISSubmission");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setDescription("Perform submission of the various ICIS payloads.");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setClassName(PerformICISSubmission.class.getCanonicalName());
+    }
+
+    @Override
+    public PluginServiceImplementorDescriptor getPluginServiceImplementorDescription()
+    {
+        return PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR;
+    }
 
     /**
      * Returns a {@link List} of {@link PayloadData} objects. The list of

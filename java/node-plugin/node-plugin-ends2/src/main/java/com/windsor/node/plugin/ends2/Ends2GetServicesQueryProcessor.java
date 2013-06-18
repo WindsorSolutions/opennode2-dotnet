@@ -53,6 +53,7 @@ import com.windsor.node.common.domain.DataServiceRequestParameter;
 import com.windsor.node.common.domain.Document;
 import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.PaginationIndicator;
+import com.windsor.node.common.domain.PluginServiceImplementorDescriptor;
 import com.windsor.node.common.domain.ProcessContentResult;
 import com.windsor.node.common.domain.ServiceType;
 import com.windsor.node.common.domain.SimpleContent;
@@ -139,6 +140,21 @@ public class Ends2GetServicesQueryProcessor extends BaseWnosPlugin implements
     private String endpointUrl;
     private String tempFilePath;
     private String tempFileName;
+
+    private static final PluginServiceImplementorDescriptor PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR = new PluginServiceImplementorDescriptor();
+
+    static
+    {
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setName("Ends2GetServicesQueryProcessor");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setDescription("ENDS2 Query processor, will generate ENDS2 data based on Query.");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setClassName(Ends2GetServicesQueryProcessor.class.getCanonicalName());
+    }
+
+    @Override
+    public PluginServiceImplementorDescriptor getPluginServiceImplementorDescription()
+    {
+        return PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR;
+    }
 
     public Ends2GetServicesQueryProcessor() {
 

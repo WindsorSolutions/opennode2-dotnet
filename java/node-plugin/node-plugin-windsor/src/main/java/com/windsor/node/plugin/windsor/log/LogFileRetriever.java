@@ -46,6 +46,7 @@ import com.windsor.node.common.domain.DataServiceRequestParameter;
 import com.windsor.node.common.domain.Document;
 import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.PaginationIndicator;
+import com.windsor.node.common.domain.PluginServiceImplementorDescriptor;
 import com.windsor.node.common.domain.ProcessContentResult;
 import com.windsor.node.common.domain.ServiceType;
 import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
@@ -58,6 +59,21 @@ public class LogFileRetriever extends BaseWnosPlugin {
     public static final String SERVICE_NAME = "RetrieveNodeLogs";
     public static final String ARCHIVE_NAME = "node_logs";
     public static final String TIMESTAMP_FORMAT = "dd-MMM-yyyy_hh.mm.a_z";
+
+    private static final PluginServiceImplementorDescriptor PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR = new PluginServiceImplementorDescriptor();
+
+    static
+    {
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setName("LogFileRetriever");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setDescription("Windsor utility method to retrieve log files, access should be restricted.");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setClassName(LogFileRetriever.class.getCanonicalName());
+    }
+
+    @Override
+    public PluginServiceImplementorDescriptor getPluginServiceImplementorDescription()
+    {
+        return PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR;
+    }
 
     public LogFileRetriever() {
         super();
