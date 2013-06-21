@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Drawing;
 using System.IO;
@@ -24,10 +25,30 @@ namespace Windsor.Commons.DeveloperExpress
         }
         public static bool ShowDetailedErrorMessages = false;
 
-        public static void SelectSkin(string skinName)
+        private static CaseInsensitiveDictionary<string> s_AllowedSkinNames;
+        public static void SetAllowedSkinNames(StringCollection skinNames)
         {
+            if (skinNames != null)
+            {
+                s_AllowedSkinNames = new CaseInsensitiveDictionary<string>(CollectionUtils.Count(skinNames));
+                foreach (string skinName in skinNames)
+                {
+                    s_AllowedSkinNames[skinName] = skinName;
+                }
+            }
+            else
+            {
+                s_AllowedSkinNames = null;
+            }
+        }
+
+        public static void SelectSkin(string skinName, string defaultSkinName)
+        {
+            if ((s_AllowedSkinNames != null) && !s_AllowedSkinNames.ContainsKey(skinName))
+            {
+                skinName = defaultSkinName;
+            }
             string selectedSkinName = SkinManager.Default.GetValidSkinName(skinName);
-            //UserLookAndFeel.Default.SetSkinStyle("DevExpress Style");
             if (UserLookAndFeel.Default.SkinName != selectedSkinName)
             {
                 UserLookAndFeel.Default.SkinName = selectedSkinName;
@@ -518,10 +539,17 @@ namespace Windsor.Commons.DeveloperExpress
         {
             comboBox.Properties.Items.Clear();
             comboBox.Properties.Items.BeginUpdate();
+            List<string> names = new List<string>();
             foreach (SkinContainer skinContainer in SkinManager.Default.Skins)
             {
-                comboBox.Properties.Items.Add(skinContainer.SkinName);
+                if ((s_AllowedSkinNames != null) && !s_AllowedSkinNames.ContainsKey(skinContainer.SkinName))
+                {
+                    continue;
+                }
+                names.Add(skinContainer.SkinName);
             }
+            names.Sort();
+            comboBox.Properties.Items.AddRange(names);
             comboBox.Properties.Items.EndUpdate();
             comboBox.EditValue = UserLookAndFeel.Default.SkinName;
             comboBox.EditValueChanged += SelectedComboBoxEditSkinIndexChanged;
@@ -529,7 +557,7 @@ namespace Windsor.Commons.DeveloperExpress
         private static void SelectedComboBoxEditSkinIndexChanged(object sender, EventArgs e)
         {
             ComboBoxEdit comboBox = (ComboBoxEdit)sender;
-            GuiUtils.SelectSkin(comboBox.SelectedItem.ToString());
+            GuiUtils.SelectSkin(comboBox.SelectedItem.ToString(), null);
         }
         public static string HandleChooseFolderComboBox(ComboBoxEdit comboBox, ButtonPressedEventArgs args,
                                                         bool showNewFolderBtn, string description,
@@ -609,6 +637,26 @@ namespace Windsor.Commons.DeveloperExpress
             Color c = currentSkin.TranslateColor(SystemColors.GrayText);
             Skin skin = GetCurrentCommonSkin();
             return skin.Colors["ControlText"];
+        }
+        public static void DecimalEditValueChanging(object sender, DevExpress.XtraEditors.Controls.ChangingEventArgs e)
+        {
+            string newValue = (e.NewValue != null) ? e.NewValue.ToString().Trim() : string.Empty;
+            decimal value = 0;
+            e.Cancel = !string.IsNullOrEmpty(newValue) && !decimal.TryParse(newValue, out value);
+            if (!e.Cancel)
+            {
+                e.NewValue = value.ToStringNoTrailingZeros();
+            }
+        }
+        public static void PositiveIntEditValueChanging(object sender, DevExpress.XtraEditors.Controls.ChangingEventArgs e)
+        {
+            string newValue = (e.NewValue != null) ? e.NewValue.ToString().Trim() : string.Empty;
+            int value = 0;
+            e.Cancel = !string.IsNullOrEmpty(newValue) && !int.TryParse(newValue, out value) && (value >= 0);
+            if (!e.Cancel)
+            {
+                e.NewValue = value.ToString();
+            }
         }
     }
 }

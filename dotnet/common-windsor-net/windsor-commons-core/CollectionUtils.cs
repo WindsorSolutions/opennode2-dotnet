@@ -41,6 +41,7 @@ using System.Reflection;
 using System.Diagnostics;
 using System.Threading;
 using System.Runtime.Serialization;
+using System.Data.Linq;
 
 namespace Windsor.Commons.Core
 {
@@ -1127,6 +1128,20 @@ namespace Windsor.Commons.Core
                 }
             }
             return lookup;
+        }
+        public static void AddRangeAllowNull<T>(this EntitySet<T> entity, IEnumerable<T> collection) where T : class
+        {
+            if (collection != null)
+            {
+                entity.AddRange(collection);
+            }
+        }
+        public static void AddRangeAllowNull<T>(this List<T> entity, IEnumerable<T> collection)
+        {
+            if (collection != null)
+            {
+                entity.AddRange(collection);
+            }
         }
     }
 }

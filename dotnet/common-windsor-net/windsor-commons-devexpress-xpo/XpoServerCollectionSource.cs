@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.Common;
+using System.Text;
 using DevExpress.Data.Filtering;
 using DevExpress.Xpo;
 using DevExpress.Xpo.DB;
@@ -16,7 +17,7 @@ namespace Windsor.Commons.DeveloperExpress.Xpo
     public class XpoServerCollectionSource : XPServerCollectionSource
     {
         public XpoServerCollectionSource(DbConnection connection, XPClassInfo classInfo, ReflectionDictionary reflectionDictionary,
-                                         IList<string> displayColumnNames)
+                                         IList<string> displayColumnNames, CaseInsensitiveDictionary<string> filterColumnNamesAndValues)
             : base()
         {
             IDataLayer dataLayer = null;
@@ -45,6 +46,27 @@ namespace Windsor.Commons.DeveloperExpress.Xpo
                 {
                     DisplayableProperties = StringUtils.Join(";", displayColumnNames);
                 }
+                if (!CollectionUtils.IsNullOrEmpty(filterColumnNamesAndValues))
+                {
+                    ICollection<XPMemberInfo> properties = GetPublicInstanceProperties();
+                    StringBuilder fixedFilterString = new StringBuilder();
+                    foreach (XPMemberInfo property in properties)
+                    {
+                        string valueString;
+                        if (filterColumnNamesAndValues.TryGetValue(property.Name, out valueString))
+                        {
+                            if (fixedFilterString.Length > 0)
+                            {
+                                fixedFilterString.Append(" AND ");
+                            }
+                            fixedFilterString.AppendFormat("[{0}] = '{1}'", property.Name, valueString);
+                        }
+                    }
+                    if (fixedFilterString.Length > 0)
+                    {
+                        FixedFilterString = fixedFilterString.ToString();
+                    }
+                }
             }
             catch (Exception)
             {
@@ -59,6 +81,10 @@ namespace Windsor.Commons.DeveloperExpress.Xpo
         public int GetTotalRowCount()
         {
             return this.GetList().Count;
+        }
+        public ICollection<XPMemberInfo> GetPublicInstanceProperties()
+        {
+            return ObjectClassInfo.OwnMembers;
         }
         public IList GetList()
         {

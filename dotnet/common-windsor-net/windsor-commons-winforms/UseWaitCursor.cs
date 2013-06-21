@@ -14,13 +14,14 @@ namespace Windsor.Commons.WinForms
     public class UseWaitCursor : DisposableBase
     {
         private static List<UseWaitCursor> s_CurrentUseWaitCursors = new List<UseWaitCursor>();
+        private Dictionary<Form, Cursor> m_InitialFormCursors = new Dictionary<Form, Cursor>();
 
         public UseWaitCursor()
         {
             s_CurrentUseWaitCursors.Add(this);
             foreach (Form form in Application.OpenForms)
             {
-                form.UseWaitCursor = true;
+                m_InitialFormCursors[form] = form.Cursor;
                 form.Cursor = Cursors.WaitCursor;
             }
         }
@@ -30,8 +31,12 @@ namespace Windsor.Commons.WinForms
             {
                 foreach (Form form in Application.OpenForms)
                 {
-                    form.UseWaitCursor = false;
-                    form.Cursor = Cursors.Arrow;
+                    Cursor cursor;
+                    if (!m_InitialFormCursors.TryGetValue(form, out cursor))
+                    {
+                        cursor = Cursors.Arrow;
+                    }
+                    form.Cursor = cursor;
                 }
                 s_CurrentUseWaitCursors.Remove(this);
             }

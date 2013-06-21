@@ -21,16 +21,19 @@ namespace Windsor.Commons.DeveloperExpress.Xpo
             }
         }
         public static XpoServerCollectionSource GetDataSourceForDatabaseView(DbConnection connection, string viewName,
-                                                                             string primaryKeyName, IList<string> displayColumnNames)
+                                                                             string primaryKeyName, IList<string> displayColumnNames,
+                                                                             CaseInsensitiveDictionary<string> filterColumnNamesAndValues)
         {
             DataTable table = GetTableSchema(connection, viewName);
 
             ReflectionDictionary reflectionDictionary;
-            XPClassInfo classInfo = GetDynamicClassInfoFromTable(table, primaryKeyName, displayColumnNames, out reflectionDictionary);
+            XPClassInfo classInfo;
+            displayColumnNames = GetDynamicClassInfoFromTable(table, primaryKeyName, displayColumnNames,
+                                                              filterColumnNamesAndValues, out classInfo,
+                                                              out reflectionDictionary);
 
             XpoServerCollectionSource xpSource = new XpoServerCollectionSource(connection, classInfo, reflectionDictionary,
-                                                                               displayColumnNames);
-
+                                                                               displayColumnNames, filterColumnNamesAndValues);
             return xpSource;
         }
         private static DataTable GetTableSchema(DbConnection connection, string viewName)
@@ -67,11 +70,12 @@ namespace Windsor.Commons.DeveloperExpress.Xpo
             }
             return table;
         }
-        private static XPClassInfo GetDynamicClassInfoFromTable(DataTable table, string primaryKeyName, IList<string> displayColumnNames,
-                                                                out ReflectionDictionary reflectionDictionary)
+        private static IList<string> GetDynamicClassInfoFromTable(DataTable table, string primaryKeyName, IList<string> displayColumnNames,
+                                                                  CaseInsensitiveDictionary<string> filterColumnNamesAndValues, out XPClassInfo classInfo,
+                                                                  out ReflectionDictionary reflectionDictionary)
         {
             reflectionDictionary = new ReflectionDictionary();
-            XPClassInfo classInfo =
+            classInfo =
                 new XPDataObjectClassInfo(reflectionDictionary.GetClassInfo(typeof(DynamicXpoObject)), table.TableName);
             DataColumn primaryKeyColumn = null;
             if (string.IsNullOrEmpty(primaryKeyName))
@@ -96,6 +100,16 @@ namespace Windsor.Commons.DeveloperExpress.Xpo
             }
             if (CollectionUtils.IsNullOrEmpty(displayColumnNames))
             {
+                // Add all columns from the view, ignoring filterColumnNames as displayable, if found
+                if (!CollectionUtils.IsNullOrEmpty(filterColumnNamesAndValues))
+                {
+                    displayColumnNames = new List<string>(table.Columns.Count);
+                }
+                else
+                {
+                    displayColumnNames = null;
+                }
+                bool foundAnyFilterColumns = false;
                 foreach (DataColumn col in table.Columns)
                 {
                     if (col == primaryKeyColumn)
@@ -106,22 +120,33 @@ namespace Windsor.Commons.DeveloperExpress.Xpo
                     {
                         classInfo.CreateMember(col.ColumnName, col.DataType);
                     }
+                    if (displayColumnNames != null)
+                    {
+                        if (filterColumnNamesAndValues.ContainsKey(col.ColumnName))
+                        {
+                            foundAnyFilterColumns = true;
+                        }
+                        else
+                        {
+                            displayColumnNames.Add(col.ColumnName);
+                        }
+                    }
                 }
+                return foundAnyFilterColumns ? displayColumnNames : null;
             }
             else
             {
                 bool addedPrimaryKeyCol = false;
+                List<string> notFoundFilterColumnNames = null;
+
+                if (!CollectionUtils.IsNullOrEmpty(filterColumnNamesAndValues))
+                {
+                    notFoundFilterColumnNames = new List<string>(filterColumnNamesAndValues.Keys);
+                }
+
                 foreach (string colName in displayColumnNames)
                 {
-                    DataColumn foundColumn = null;
-                    foreach (DataColumn col in table.Columns)
-                    {
-                        if (string.Equals(col.ColumnName, colName, StringComparison.OrdinalIgnoreCase))
-                        {
-                            foundColumn = col;
-                            break;
-                        }
-                    }
+                    DataColumn foundColumn = FindColumn(table, colName);
                     if (foundColumn == null)
                     {
                         throw new ArgException("The display column named \"{0}\" could not be found in the view \"{1}\"",
@@ -136,14 +161,52 @@ namespace Windsor.Commons.DeveloperExpress.Xpo
                     {
                         classInfo.CreateMember(foundColumn.ColumnName, foundColumn.DataType);
                     }
+                    RemoveNameFromList(notFoundFilterColumnNames, foundColumn.ColumnName);
                 }
                 if (!addedPrimaryKeyCol)
                 {
                     classInfo.CreateMember(primaryKeyColumn.ColumnName, primaryKeyColumn.DataType, new KeyAttribute());
+                    RemoveNameFromList(notFoundFilterColumnNames, primaryKeyColumn.ColumnName);
+                }
+                if (!CollectionUtils.IsNullOrEmpty(notFoundFilterColumnNames))
+                {
+                    for (int i = notFoundFilterColumnNames.Count - 1; i >= 0; --i)
+                    {
+                        string colName = notFoundFilterColumnNames[i];
+                        DataColumn foundColumn = FindColumn(table, colName);
+                        if (foundColumn != null)
+                        {
+                            classInfo.CreateMember(foundColumn.ColumnName, foundColumn.DataType);
+                            notFoundFilterColumnNames.RemoveAt(i);
+                        }
+                    }
+                }
+                return displayColumnNames;
+            }
+        }
+        private static void RemoveNameFromList(List<string> list, string name)
+        {
+            if (list != null)
+            {
+                int index = CollectionUtils.IndexOf(list, name, StringComparison.OrdinalIgnoreCase);
+                if (index >= 0)
+                {
+                    list.RemoveAt(index);
                 }
             }
-
-            return classInfo;
+        }
+        private static DataColumn FindColumn(DataTable table, string name)
+        {
+            DataColumn foundColumn = null;
+            foreach (DataColumn col in table.Columns)
+            {
+                if (string.Equals(col.ColumnName, name, StringComparison.OrdinalIgnoreCase))
+                {
+                    foundColumn = col;
+                    break;
+                }
+            }
+            return foundColumn;
         }
     }
 }

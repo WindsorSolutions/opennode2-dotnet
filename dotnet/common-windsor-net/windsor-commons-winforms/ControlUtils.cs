@@ -40,11 +40,11 @@ namespace Windsor.Commons.WinForms
             int x = (containerControl.Width - controlToCenter.Width) / 2;
             int y = (containerControl.Height - controlToCenter.Height) / 2;
             controlToCenter.Location = new Point(x, y);
-        } 
+        }
         public static Rectangle GetChildControlsBoundingBox(Control parent)
         {
             int top = int.MaxValue, left = int.MaxValue, bottom = int.MinValue, right = int.MinValue;
-            
+
             foreach (Control control in parent.Controls)
             {
                 if (control.Visible)
@@ -200,7 +200,7 @@ namespace Windsor.Commons.WinForms
         }
         public static bool SetDeepChildText(Control parent, string childName, string text)
         {
-            foreach(Control control in parent.Controls)
+            foreach (Control control in parent.Controls)
             {
                 if (control.Name == childName)
                 {
@@ -210,7 +210,7 @@ namespace Windsor.Commons.WinForms
             }
             foreach (Control control in parent.Controls)
             {
-                if ( SetDeepChildText(control, childName, text))
+                if (SetDeepChildText(control, childName, text))
                 {
                     return true;
                 }

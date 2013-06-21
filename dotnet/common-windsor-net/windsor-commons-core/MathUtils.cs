@@ -292,9 +292,19 @@ namespace Windsor.Commons.Core
             double pt3 = x22 - x21;
             double pt4 = y22 - y21;
 
-            double angle = ((pt1 * pt3) + (pt2 * pt4))/((Math.Sqrt(pt1*pt1 + pt2*pt2)) * (Math.Sqrt(pt3*pt3 + pt4*pt4)));
+            double angle = ((pt1 * pt3) + (pt2 * pt4)) / ((Math.Sqrt(pt1 * pt1 + pt2 * pt2)) * (Math.Sqrt(pt3 * pt3 + pt4 * pt4)));
             double result = Math.Acos(angle) * 180 / Math.PI;
             return result;
+        }
+        public const string NO_TRAILING_ZEROS = "0.############";
+        public static string ToStringNoTrailingZeros(this decimal value)
+        {
+            return value.ToString(NO_TRAILING_ZEROS);
+        }
+        public const string INT_COMMA_FORMAT = "N0";
+        public static string ToStringWithCommas(this int value)
+        {
+            return value.ToString(INT_COMMA_FORMAT);
         }
     }
 }
