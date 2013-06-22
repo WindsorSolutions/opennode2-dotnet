@@ -266,7 +266,39 @@ namespace Windsor.Commons.Core
         /// This works around an issue in .NET where Type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | 
         /// BindingFlags.Instance) does not return private, inherited fields!
         /// </summary>
+        public static T GetPublicOrPrivateFieldOrPropertyValue<T>(object obj, string fieldOrPropertyName, bool declaredOnly)
+        {
+            return (T)GetPublicOrPrivateFieldOrPropertyValue(obj, fieldOrPropertyName, declaredOnly);
+        }
+        public static object GetPublicOrPrivateFieldOrPropertyValue(object obj, string fieldOrPropertyName, bool declaredOnly)
+        {
+            BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
+            if (declaredOnly)
+            {
+                flags |= BindingFlags.DeclaredOnly;
+            }
+            PropertyInfo propInfo = obj.GetType().GetProperty(fieldOrPropertyName, flags);
+            if (propInfo != null)
+            {
+                return propInfo.GetValue(obj, null);
+            }
+            FieldInfo fieldInfo = GetFieldByName(obj.GetType(), fieldOrPropertyName, declaredOnly);
+            if (fieldInfo != null)
+            {
+                return fieldInfo.GetValue(obj);
+            }
+            throw new ArgumentException(string.Format("The property or field {0} was not found for the object {1}",
+                                                      fieldOrPropertyName, obj.GetType().FullName));
+        }
+        /// <summary>
+        /// This works around an issue in .NET where Type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | 
+        /// BindingFlags.Instance) does not return private, inherited fields!
+        /// </summary>
         public static FieldInfo GetFieldByName(Type inType, string fieldName)
+        {
+            return GetFieldByName(inType, fieldName, false);
+        }
+        public static FieldInfo GetFieldByName(Type inType, string fieldName, bool declaredOnly)
         {
             List<FieldInfo> fieldInfoList = new List<FieldInfo>();
             Type curType = inType;
@@ -277,6 +309,10 @@ namespace Windsor.Commons.Core
                 if (fieldInfo != null)
                 {
                     return fieldInfo;
+                }
+                if (declaredOnly)
+                {
+                    break;
                 }
                 curType = curType.BaseType;
             } while (curType != null);

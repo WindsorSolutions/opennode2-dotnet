@@ -641,22 +641,22 @@ namespace Windsor.Commons.DeveloperExpress
         public static void DecimalEditValueChanging(object sender, DevExpress.XtraEditors.Controls.ChangingEventArgs e)
         {
             string newValue = (e.NewValue != null) ? e.NewValue.ToString().Trim() : string.Empty;
-            decimal value = 0;
-            e.Cancel = !string.IsNullOrEmpty(newValue) && !decimal.TryParse(newValue, out value);
-            if (!e.Cancel)
+            if (string.IsNullOrEmpty(newValue))
             {
-                e.NewValue = value.ToStringNoTrailingZeros();
+                return;
             }
+            decimal value;
+            e.Cancel = !decimal.TryParse(newValue, out value);
         }
         public static void PositiveIntEditValueChanging(object sender, DevExpress.XtraEditors.Controls.ChangingEventArgs e)
         {
             string newValue = (e.NewValue != null) ? e.NewValue.ToString().Trim() : string.Empty;
-            int value = 0;
-            e.Cancel = !string.IsNullOrEmpty(newValue) && !int.TryParse(newValue, out value) && (value >= 0);
-            if (!e.Cancel)
+            if (string.IsNullOrEmpty(newValue))
             {
-                e.NewValue = value.ToString();
+                return;
             }
+            int value;
+            e.Cancel = !int.TryParse(newValue, out value) || (value < 0);
         }
     }
 }
