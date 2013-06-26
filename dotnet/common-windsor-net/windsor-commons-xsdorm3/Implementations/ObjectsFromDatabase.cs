@@ -107,7 +107,7 @@ namespace Windsor.Commons.XsdOrm3.Implementations
                     IAfterLoadFromDatabase afterLoadFromDatabase = obj as IAfterLoadFromDatabase;
                     if (afterLoadFromDatabase != null)
                     {
-                        afterLoadFromDatabase.AfterLoadFromDatabase();
+                        afterLoadFromDatabase.AfterLoadFromDatabase(baseDao);
                     }
                 }
 

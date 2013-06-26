@@ -105,6 +105,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Transactions" />
@@ -246,6 +247,10 @@
     <ProjectReference Include="..\..\..\common-windsor-net\windsor-commons-xsdorm2\Windsor.Commons.XsdOrm2.csproj">
       <Project>{DA9F525D-A2D8-469C-B7D7-1CD14173DD57}</Project>
       <Name>Windsor.Commons.XsdOrm2</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\common-windsor-net\windsor-commons-xsdorm3\Windsor.Commons.XsdOrm3.csproj">
+      <Project>{be1dd2b4-bdc9-45a6-a8f4-6f7629a1d5f7}</Project>
+      <Name>Windsor.Commons.XsdOrm3</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\common-windsor-net\windsor-commons-xsdorm\Windsor.Commons.XsdOrm.csproj">
       <Project>{8A62B9FD-50DC-4712-9237-ADE3CDC0A3D4}</Project>

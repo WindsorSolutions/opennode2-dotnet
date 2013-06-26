@@ -79,7 +79,7 @@ namespace Windsor.Commons.XsdOrm3
 
     public interface IBeforeSaveToDatabase
     {
-        void BeforeSaveToDatabase();
+        void BeforeSaveToDatabase(SpringBaseDao baseDao);
     }
     public interface ISaveInfoProvider
     {

@@ -51,7 +51,7 @@ namespace Windsor.Commons.XsdOrm3
     }
     public interface IAfterLoadFromDatabase
     {
-        void AfterLoadFromDatabase();
+        void AfterLoadFromDatabase(SpringBaseDao baseDao);
     }
 
     [Serializable]

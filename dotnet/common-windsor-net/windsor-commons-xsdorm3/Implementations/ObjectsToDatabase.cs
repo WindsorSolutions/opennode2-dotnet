@@ -246,7 +246,7 @@ namespace Windsor.Commons.XsdOrm3.Implementations
             IBeforeSaveToDatabase beforeSaveToDatabase = objectToSave as IBeforeSaveToDatabase;
             if (beforeSaveToDatabase != null)
             {
-                beforeSaveToDatabase.BeforeSaveToDatabase();
+                beforeSaveToDatabase.BeforeSaveToDatabase(baseDao);
             }
 
             Dictionary<string, int> insertRowCounts = new Dictionary<string, int>();
@@ -330,7 +330,7 @@ namespace Windsor.Commons.XsdOrm3.Implementations
                         IBeforeSaveToDatabase beforeSaveToDatabase = objectToSave as IBeforeSaveToDatabase;
                         if (beforeSaveToDatabase != null)
                         {
-                            beforeSaveToDatabase.BeforeSaveToDatabase();
+                            beforeSaveToDatabase.BeforeSaveToDatabase(baseDao);
                         }
 
                         ColumnCachedValues cachedValues = new ColumnCachedValues();
