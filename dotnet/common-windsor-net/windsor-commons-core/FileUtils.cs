@@ -228,6 +228,28 @@ namespace Windsor.Commons.Core
             } while (index > 0);
             return sb.ToString();
         }
+        public static string ReplaceInvalidFilenameChars(string fileName, string replacementString)
+        {
+            char[] invalidChars = Path.GetInvalidFileNameChars();
+            int index = fileName.IndexOfAny(invalidChars);
+            if (index < 0)
+            {
+                return fileName;    // No invalid characters
+            }
+            StringBuilder sb = new StringBuilder(fileName);
+            do
+            {
+                sb.Remove(index, 1);
+                sb.Insert(index, replacementString);
+                index += replacementString.Length;
+                if (index >= (fileName.Length - 1))
+                {
+                    break;
+                }
+                index = fileName.IndexOfAny(invalidChars, index);
+            } while (index > 0);
+            return sb.ToString();
+        }
         public static void CreatePathToFile(string filePath)
         {
             string parentPath = Path.GetDirectoryName(filePath);
