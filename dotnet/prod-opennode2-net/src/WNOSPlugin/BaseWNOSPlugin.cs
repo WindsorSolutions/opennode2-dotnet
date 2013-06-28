@@ -1562,8 +1562,25 @@ namespace Windsor.Node2008.WNOSPlugin
                 xmlSchemaResourceName = "xml_schema.xml_schema.zip";
             }
 
-            AppendAuditLogEvent("Verifying xml schema validation source files ...");
-            string xmlSchemaFolder = ExtractZippedResourceToTempFolder(xmlSchemaResourceName);
+            ISettingsProvider settingsProvider;
+            GetServiceImplementation(out settingsProvider);
+
+            ICompressionHelper compressionHelper;
+            GetServiceImplementation(out compressionHelper);
+
+            string qualifiedResourceName = this.GetType().Namespace + "." + xmlSchemaResourceName;
+
+            return ValidateXmlFile(xmlFilePath, this.GetType().Assembly, qualifiedResourceName, xmlSchemaRootFileName,
+                                   settingsProvider.TempFolderPath, this, compressionHelper);
+        }
+
+        public static string ValidateXmlFile(string xmlFilePath, Assembly xmlSchemaZippedResourceAssembly, string xmlSchemaZippedQualifiedResourceName,
+                                             string xmlSchemaRootFileName, string tempFolderPath, IAppendAuditLogEvent appendAuditLogEvent,
+                                             ICompressionHelper compressionHelper)
+        {
+            appendAuditLogEvent.AppendAuditLogEvent("Verifying xml schema validation source files ...");
+            string xmlSchemaFolder = ExtractZippedResourceToTempFolder(xmlSchemaZippedResourceAssembly, xmlSchemaZippedQualifiedResourceName,
+                                                                       tempFolderPath, compressionHelper);
 
             if (string.IsNullOrEmpty(xmlSchemaRootFileName))
             {
@@ -1575,28 +1592,25 @@ namespace Windsor.Node2008.WNOSPlugin
                 if (!File.Exists(xmlSchemaRootFilePath))
                 {
                     throw new FileNotFoundException(string.Format("The root xml schema file \"{0}\" was not found in the schema validation resource \"{1}\"",
-                                                                  xmlSchemaRootFileName, xmlSchemaResourceName));
+                                                                  xmlSchemaRootFileName, xmlSchemaZippedQualifiedResourceName));
                 }
-                AppendAuditLogEvent("Xml schema validation source files verified");
+                appendAuditLogEvent.AppendAuditLogEvent("Xml schema validation source files verified");
 
-                AppendAuditLogEvent("Validating xml document against the xml schema ...");
+                appendAuditLogEvent.AppendAuditLogEvent("Validating xml document against the xml schema ...");
 
-                ISettingsProvider settingsProvider;
-                GetServiceImplementation(out settingsProvider);
-
-                string errorsFileFolderPath = settingsProvider.NewTempFolderPath();
+                string errorsFileFolderPath = Path.Combine(tempFolderPath, Guid.NewGuid().ToString());
                 string errorsFilePath = Path.Combine(errorsFileFolderPath, "Validation Errors.txt");
 
                 XmlValidationUtils xmlValidator = new XmlValidationUtils(true);
 
                 if (!xmlValidator.Validate(xmlFilePath, xmlSchemaRootFilePath, errorsFilePath))
                 {
-                    AppendAuditLogEvent("The xml document failed to validate against the xml schema");
+                    appendAuditLogEvent.AppendAuditLogEvent("The xml document failed to validate against the xml schema");
                     return errorsFilePath;
                 }
                 else
                 {
-                    AppendAuditLogEvent("The xml document is valid according to the xml schema");
+                    appendAuditLogEvent.AppendAuditLogEvent("The xml document is valid according to the xml schema");
                     return null;
                 }
             }
@@ -1628,10 +1642,32 @@ namespace Windsor.Node2008.WNOSPlugin
                                                                           bool attachXmlFileToTransactionIfError)
         {
             string validationErrorsFile = ValidateXmlFile(xmlFilePath, xmlSchemaResourceName, xmlSchemaRootFileName);
+
             if (validationErrorsFile == null)
             {
                 return; // File is valid
             }
+            AttachValidationErrorsAndXmlFileToTransaction(validationErrorsFile, xmlFilePath, transactionId,
+                                                          attachXmlFileToTransactionIfError);
+        }
+        /// <summary>
+        /// Attempts to validate an xml file against an xml schema resource.  If the file is invalid,
+        /// the method returns false and attaches a text file containing the validation errors to the input
+        /// transaction.  If the file is valid, the method returns true.
+        /// </summary>
+        protected virtual void AttachValidationErrorsAndXmlFileToTransaction(string validationErrorsFile, string xmlFilePath, string transactionId,
+                                                                             bool attachXmlFileToTransactionIfError)
+        {
+            AttachValidationErrorsAndXmlFileToTransaction(validationErrorsFile, xmlFilePath, transactionId, attachXmlFileToTransactionIfError, true);
+        }
+        /// <summary>
+        /// Attempts to validate an xml file against an xml schema resource.  If the file is invalid,
+        /// the method returns false and attaches a text file containing the validation errors to the input
+        /// transaction.  If the file is valid, the method returns true.
+        /// </summary>
+        protected virtual void AttachValidationErrorsAndXmlFileToTransaction(string validationErrorsFile, string xmlFilePath, string transactionId,
+                                                                             bool attachXmlFileToTransactionIfError, bool throwValidationError)
+        {
             try
             {
                 string errorsFileName = Path.GetFileName(validationErrorsFile);
@@ -1669,8 +1705,11 @@ namespace Windsor.Node2008.WNOSPlugin
                                         errorsFileName, transactionId, ExceptionUtils.ToShortString(e));
                     throw;
                 }
-                throw new InvalidDataException(string.Format("The generated xml document is not valid according to the xml schema.  Review the \"{0}\" file for a summary of the validation errors",
-                                                             Path.GetFileNameWithoutExtension(errorsFileName)));
+                if (throwValidationError)
+                {
+                    throw new InvalidDataException(string.Format("The generated xml document is not valid according to the xml schema.  Review the \"{0}\" file for a summary of the validation errors",
+                                                                 Path.GetFileNameWithoutExtension(errorsFileName)));
+                }
             }
             catch (Exception)
             {
@@ -1762,18 +1801,23 @@ namespace Windsor.Node2008.WNOSPlugin
         }
         protected virtual string ExtractZippedResourceToTempFolder(string resourceName)
         {
-            string qualifiedResourceName = this.GetType().Namespace + "." + resourceName;
-            Assembly assembly = this.GetType().Assembly;
-            string folderName = qualifiedResourceName + "." + AssemblyUtils.GetAssemblyFileVersion(assembly);
-            folderName = FileUtils.ReplaceInvalidFilenameChars(folderName, '_');
-
             ISettingsProvider settingsProvider;
             GetServiceImplementation(out settingsProvider);
 
             ICompressionHelper compressionHelper;
             GetServiceImplementation(out compressionHelper);
 
-            string folderPath = Path.Combine(settingsProvider.TempFolderPath, folderName);
+            string qualifiedResourceName = this.GetType().Namespace + "." + resourceName;
+            return ExtractZippedResourceToTempFolder(this.GetType().Assembly, qualifiedResourceName, settingsProvider.TempFolderPath,
+                                                     compressionHelper);
+        }
+        private static string ExtractZippedResourceToTempFolder(Assembly resourceAssembly, string qualifiedResourceName,
+                                                                string tempFolderPath, ICompressionHelper compressionHelper)
+        {
+            string folderName = qualifiedResourceName + "." + AssemblyUtils.GetAssemblyFileVersion(resourceAssembly);
+            folderName = FileUtils.ReplaceInvalidFilenameChars(folderName, '_');
+
+            string folderPath = Path.Combine(tempFolderPath, folderName);
 
             using (Mutex mutex = AcquireMutex(folderName, 60))
             {
@@ -1782,12 +1826,12 @@ namespace Windsor.Node2008.WNOSPlugin
                     return folderPath;
                 }
 
-                Stream resourceStream = assembly.GetManifestResourceStream(qualifiedResourceName);
+                Stream resourceStream = resourceAssembly.GetManifestResourceStream(qualifiedResourceName);
 
                 if (resourceStream == null)
                 {
-                    throw new ArgumentException(string.Format("Failed to load zipped resource \"{0}\" from the plugin",
-                                                              resourceName));
+                    throw new ArgumentException(string.Format("Failed to load resource \"{0}\" from the assembly \"{1}\"",
+                                                              qualifiedResourceName, resourceAssembly.FullName));
                 }
                 using (resourceStream)
                 {
@@ -1797,7 +1841,7 @@ namespace Windsor.Node2008.WNOSPlugin
 
             return folderPath;
         }
-        protected virtual Mutex AcquireMutex(string uniqueName, int timeoutInSeconds)
+        private static Mutex AcquireMutex(string uniqueName, int timeoutInSeconds)
         {
             bool isAcquired;
             Mutex mutex = new Mutex(true, uniqueName, out isAcquired);
