@@ -79,6 +79,11 @@ namespace Windsor.Commons.XsdOrm3.Implementations
             ConstructTableMappings(rootType, mappingAttributesType);
         }
 
+        public Type RootMappingType
+        {
+            get;
+            protected set;
+        }
         protected Table CreateValueTypeChildTable(Type objType, MemberInfo objMemberInfo, string objMemberName, IDictionary<string, Table> tables,
                                                   Table foreignKeyTable)
         {
@@ -1173,6 +1178,7 @@ namespace Windsor.Commons.XsdOrm3.Implementations
             {
                 mappingAttributesType = rootType;
             }
+            RootMappingType = rootType;
             m_NameReplacements = ConstructNameReplacements(mappingAttributesType);
             m_DefaultStringDbValues = GetDefaultDbStringValues(mappingAttributesType);
             m_ElementNamePostfixToLength = GetElementNamePostfixToLength(mappingAttributesType);

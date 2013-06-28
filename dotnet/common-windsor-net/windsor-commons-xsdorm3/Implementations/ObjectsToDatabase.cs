@@ -246,7 +246,7 @@ namespace Windsor.Commons.XsdOrm3.Implementations
             IBeforeSaveToDatabase beforeSaveToDatabase = objectToSave as IBeforeSaveToDatabase;
             if (beforeSaveToDatabase != null)
             {
-                beforeSaveToDatabase.BeforeSaveToDatabase(baseDao);
+                beforeSaveToDatabase.BeforeSaveToDatabase(this, baseDao, mappingContext);
             }
 
             Dictionary<string, int> insertRowCounts = new Dictionary<string, int>();
@@ -285,19 +285,33 @@ namespace Windsor.Commons.XsdOrm3.Implementations
         {
             return SaveToDatabase<T>(objectsToSave, baseDao, deleteAllBeforeSave, mappingAttributesType, true);
         }
-        protected virtual Dictionary<string, int> SaveToDatabase<T>(IEnumerable<T> objectsToSave, SpringBaseDao baseDao,
-                                                                    bool deleteAllBeforeSave, Type mappingAttributesType,
-                                                                    bool checkToBuildDatabase)
+        public virtual Dictionary<string, int> SaveToDatabase<T>(IEnumerable<T> objectsToSave, SpringBaseDao baseDao,
+                                                                 bool deleteAllBeforeSave, Type mappingAttributesType,
+                                                                 bool checkToBuildDatabase)
         {
             Type objectToSaveType = typeof(T);
             MappingContext mappingContext = MappingContext.GetMappingContext(objectToSaveType, mappingAttributesType);
 
-            if (checkToBuildDatabase)
+            return SaveToDatabase<T>(objectsToSave, baseDao, deleteAllBeforeSave, mappingContext, checkToBuildDatabase);
+        }
+        public virtual Dictionary<string, int> SaveToDatabase<T>(IEnumerable<T> objectsToSave, SpringBaseDao baseDao,
+                                                                 bool deleteAllBeforeSave, IMappingContext mappingContext,
+                                                                 bool checkToBuildDatabase)
+        {
+            MappingContext mappingContextSupported = mappingContext as MappingContext;
+            if (mappingContextSupported == null)
             {
-                BuildDatabase(objectToSaveType, baseDao, mappingContext);
+                throw new ArgException("Custom IMappingContexts are not allow for this method call");
             }
 
-            return SaveToDatabase(objectsToSave, baseDao, deleteAllBeforeSave, mappingContext);
+            Type objectToSaveType = typeof(T);
+
+            if (checkToBuildDatabase)
+            {
+                BuildDatabase(objectToSaveType, baseDao, mappingContextSupported);
+            }
+
+            return SaveToDatabase(objectsToSave, baseDao, deleteAllBeforeSave, mappingContextSupported);
         }
 
         public virtual Dictionary<string, int> SaveToDatabase(IEnumerable objectsToSave, SpringBaseDao baseDao,
@@ -330,7 +344,7 @@ namespace Windsor.Commons.XsdOrm3.Implementations
                         IBeforeSaveToDatabase beforeSaveToDatabase = objectToSave as IBeforeSaveToDatabase;
                         if (beforeSaveToDatabase != null)
                         {
-                            beforeSaveToDatabase.BeforeSaveToDatabase(baseDao);
+                            beforeSaveToDatabase.BeforeSaveToDatabase(this, baseDao, mappingContext);
                         }
 
                         ColumnCachedValues cachedValues = new ColumnCachedValues();

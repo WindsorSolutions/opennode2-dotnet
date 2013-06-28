@@ -47,5 +47,9 @@ namespace Windsor.Commons.XsdOrm3
         object GetPrimaryKeyValueForObject(object obj);
         string GetPrimaryKeyNameForType(Type objectType);
         IList<string> GetPrimaryKeyNamesForType(Type objectType);
+        Type RootMappingType
+        {
+            get;
+        }
     }
 }

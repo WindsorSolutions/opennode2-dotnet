@@ -66,6 +66,13 @@ namespace Windsor.Commons.XsdOrm3
         Dictionary<string, int> SaveToDatabase<T>(IEnumerable<T> objectsToSave, SpringBaseDao baseDao,
                                                   bool deleteAllBeforeSave, Type mappingAttributesType);
 
+        Dictionary<string, int> SaveToDatabase<T>(IEnumerable<T> objectsToSave, SpringBaseDao baseDao,
+                                                  bool deleteAllBeforeSave, Type mappingAttributesType,
+                                                  bool checkToBuildDatabase);
+        Dictionary<string, int> SaveToDatabase<T>(IEnumerable<T> objectsToSave, SpringBaseDao baseDao,
+                                                  bool deleteAllBeforeSave, IMappingContext mappingContext,
+                                                  bool checkToBuildDatabase);
+
         int DeleteAllFromDatabase(Type objectType, SpringBaseDao baseDao, Type mappingAttributesType);
 
         int DeleteAllFromDatabase(Type objectType, Type mappingAttributesType);
@@ -79,7 +86,7 @@ namespace Windsor.Commons.XsdOrm3
 
     public interface IBeforeSaveToDatabase
     {
-        void BeforeSaveToDatabase(SpringBaseDao baseDao);
+        void BeforeSaveToDatabase(IObjectsToDatabase objectsToDatabase, SpringBaseDao baseDao, IMappingContext mappingContext);
     }
     public interface ISaveInfoProvider
     {

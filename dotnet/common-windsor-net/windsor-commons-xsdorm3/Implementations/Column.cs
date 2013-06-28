@@ -444,6 +444,24 @@ namespace Windsor.Commons.XsdOrm3.Implementations
                 }
             }
         }
+        public override object GetInsertColumnValue(object parentOfObjectToSave, object objectToSave, ColumnCachedValues cachedValues)
+        {
+            object pkGuid = base.GetInsertColumnValue(parentOfObjectToSave, objectToSave, cachedValues);
+            ExceptionUtils.ThrowIfNull(pkGuid, "pkGuid");
+            if (cachedValues != null)
+            {
+                cachedValues.ObjectToPrimaryKeyMap[objectToSave] = pkGuid;
+            }
+            return pkGuid;
+        }
+        public override void SetSelectColumnValue<T>(T objectToSet, object value, ColumnCachedValues cachedValues)
+        {
+            base.SetSelectColumnValue(objectToSet, value, cachedValues);
+            if (cachedValues != null)
+            {
+                cachedValues.ObjectToPrimaryKeyMap[objectToSet] = value;
+            }
+        }
     }
 
     public class GuidPrimaryKeyColumn : PrimaryKeyColumn
@@ -482,6 +500,7 @@ namespace Windsor.Commons.XsdOrm3.Implementations
         }
         public override void SetSelectColumnValue<T>(T objectToSet, object value, ColumnCachedValues cachedValues)
         {
+            DebugUtils.AssertDebuggerBreak(cachedValues != null);
             cachedValues.ObjectToPrimaryKeyMap[objectToSet] = value;
         }
     }
