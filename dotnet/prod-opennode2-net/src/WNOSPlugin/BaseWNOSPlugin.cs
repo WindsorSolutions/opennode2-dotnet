@@ -1671,11 +1671,11 @@ namespace Windsor.Node2008.WNOSPlugin
             try
             {
                 string errorsFileName = Path.GetFileName(validationErrorsFile);
-                string xmlFileName = Path.GetFileName(xmlFilePath);
                 IDocumentManager documentManager;
                 GetServiceImplementation(out documentManager);
                 if (attachXmlFileToTransactionIfError)
                 {
+                    string xmlFileName = Path.GetFileName(xmlFilePath);
                     try
                     {
                         AppendAuditLogEvent("Attaching xml file \"{0}\" to transaction \"{1}\"",
