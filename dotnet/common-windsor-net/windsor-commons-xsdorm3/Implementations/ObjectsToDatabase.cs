@@ -970,7 +970,6 @@ namespace Windsor.Commons.XsdOrm3.Implementations
             if (tableOfObjectToSave.PopulateSaveValues(command, isUpdate, parentOfObjectToSave, parentTable, objectToSave,
                                                        cachedValues))
             {
-                DebugUtils.AssertDebuggerBreak(command.Parameters.Count == tableOfObjectToSave.AllColumns.Count);
                 try
                 {
                     command.ExecuteNonQuery();
