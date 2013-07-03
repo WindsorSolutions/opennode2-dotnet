@@ -1660,6 +1660,38 @@ namespace Windsor.Node2008.WNOSPlugin
         {
             AttachValidationErrorsAndXmlFileToTransaction(validationErrorsFile, xmlFilePath, transactionId, attachXmlFileToTransactionIfError, true);
         }
+        protected virtual void AttachSubmissionValidationSuccessFileToTransaction(string transactionId, string documentName, string message)
+        {
+            if (string.IsNullOrEmpty(documentName))
+            {
+                documentName = "Validation Success.txt";
+            }
+            if (string.IsNullOrEmpty(message))
+            {
+                message = "The submission file successfully validated against the xml schema.";
+            }
+
+            try
+            {
+                AppendAuditLogEvent("Attaching validation successful file \"{0}\" to transaction \"{1}\"",
+                                    documentName, transactionId);
+
+                IDocumentManager documentManager;
+                GetServiceImplementation(out documentManager);
+
+                Document validationDoc = new Document(documentName, CommonContentType.Flat, UTF8Encoding.Default.GetBytes(message));
+                validationDoc.DontAutoCompress = true;
+                documentManager.AddDocument(transactionId, CommonTransactionStatusCode.Completed,
+                                            null, validationDoc);
+            }
+            catch (Exception e)
+            {
+                AppendAuditLogEvent("Failed to attach validation successful file \"{0}\" to transaction \"{1}\" with exception: {2}",
+                                    documentName, transactionId, ExceptionUtils.ToShortString(e));
+                throw;
+            }
+        }
+
         /// <summary>
         /// Attempts to validate an xml file against an xml schema resource.  If the file is invalid,
         /// the method returns false and attaches a text file containing the validation errors to the input

@@ -370,4 +370,43 @@ namespace Windsor.Commons.NodeDomain
             return ReflectionUtils.GetPublicPropertiesString(this);
         }
     }
+    [Serializable]
+    public class ByIndexOrNameStringDictionary : ByIndexOrNameDictionary<string>
+    {
+        public ByIndexOrNameStringDictionary(EndpointVersionType endpointType) :
+            base(endpointType)
+        {
+        }
+        public ByIndexOrNameStringDictionary(bool isByName) :
+            base(isByName)
+        {
+        }
+        public void AddIfNonNull(string name, int index, string value)
+        {
+            if (IsByName)
+            {
+                if (!string.IsNullOrEmpty(value))
+                {
+                    Add(name, value);
+                }
+            }
+            else
+            {
+                while (Count < (index + 1))
+                {
+                    Add(string.Empty);
+                }
+                this[index] = value;
+            }
+        }
+        public void AddIfNonNull(string name, int index, DateTime? value)
+        {
+            string valueToAdd = null;
+            if (value.HasValue)
+            {
+                valueToAdd = value.Value.ToString();
+            }
+            AddIfNonNull(name, index, valueToAdd);
+        }
+    }
 }

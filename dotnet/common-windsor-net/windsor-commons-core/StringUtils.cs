@@ -165,6 +165,21 @@ namespace Windsor.Commons.Core
             text = text.Trim();
             return string.IsNullOrEmpty(text) ? null : text;
         }
+        public static string AppendPeriod(this string text)
+        {
+            if ((text != null) && (text.Length > 1) && (text[text.Length - 1] != '.'))
+            {
+                if ((text[text.Length - 1] == '\"') && text[text.Length - 2] != '.')
+                {
+                    text = text.Substring(0, text.Length - 1) + ".\"";
+                }
+                else
+                {
+                    text += ".";
+                }
+            }
+            return text;
+        }
         /// <summary>
         /// Return the character index of findChar within text, starting from the end of text
         /// and working backwards until the n-th occurance is found (specified by 1-based lastNthCount).

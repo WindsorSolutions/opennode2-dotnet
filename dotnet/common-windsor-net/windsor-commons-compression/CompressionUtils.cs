@@ -313,6 +313,10 @@ namespace Windsor.Commons.Compression
             {
                 using (FileStream fileStream = File.OpenRead(sourceFilePath))
                 {
+                    if (string.IsNullOrEmpty(sourceFileNameInZip))
+                    {
+                        sourceFileNameInZip = Path.GetFileName(sourceFilePath);
+                    }
                     zip.AddFileStream(sourceFileNameInZip, string.Empty, fileStream);
                     zip.Save();
                 }
