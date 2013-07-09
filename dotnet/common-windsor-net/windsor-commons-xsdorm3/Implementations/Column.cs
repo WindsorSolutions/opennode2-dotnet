@@ -444,6 +444,18 @@ namespace Windsor.Commons.XsdOrm3.Implementations
                 }
             }
         }
+        protected override object GetActualMemberValue(object instance)
+        {
+            object value = base.GetActualMemberValue(instance);
+            if (value == null)
+            {
+                if ((ColumnSize >= 36) && (ColumnType.HasValue && (ColumnType.Value == DbType.AnsiString)))
+                {
+                    value = StringUtils.CreateSequentialGuid();
+                }
+            }
+            return value;
+        }
         public override object GetInsertColumnValue(object parentOfObjectToSave, object objectToSave, ColumnCachedValues cachedValues)
         {
             object pkGuid = base.GetInsertColumnValue(parentOfObjectToSave, objectToSave, cachedValues);
