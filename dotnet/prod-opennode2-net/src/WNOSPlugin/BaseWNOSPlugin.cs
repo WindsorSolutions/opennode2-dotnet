@@ -1740,7 +1740,7 @@ namespace Windsor.Node2008.WNOSPlugin
                 if (throwValidationError)
                 {
                     throw new InvalidDataException(string.Format("The generated xml document is not valid according to the xml schema.  Review the \"{0}\" file for a summary of the validation errors",
-                                                                 Path.GetFileNameWithoutExtension(errorsFileName)));
+                                                                 Path.GetFileName(errorsFileName)));
                 }
             }
             catch (Exception)
