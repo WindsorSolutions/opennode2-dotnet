@@ -143,7 +143,7 @@ namespace Windsor.Node2008.WNOSConnector.Provider
         {
             return GetFault(endpointVersion, code, string.Format(format, args));
         }
-        
+
         public SoapException GetFault(EndpointVersionType endpointVersion, ENExceptionCodeType code, string descr)
         {
 
@@ -193,7 +193,7 @@ namespace Windsor.Node2008.WNOSConnector.Provider
                 "description",
                 namespaceUri);
 
-            desc.InnerText = string.Format("{0}{1}{2}", code.ToString(), Environment.NewLine, descr);
+            desc.InnerText = descr;
             details.AppendChild(desc);
 
             // Append the two child elements to the detail node.
@@ -208,25 +208,26 @@ namespace Windsor.Node2008.WNOSConnector.Provider
             }
 
             //Throw the exception.
-  
+
             SoapException soapException =
                 new SoapException(descr, SoapException.ServerFaultCode, errorUri, node);
             soapException.HelpLink = code.ToString();
             return soapException;
         }
-        
+
         /// <summary>
         /// Remove confidential information from an exception message for public
-		/// display.
+        /// display.
         /// </summary>
-		public static string CleanseExceptionMessage(Exception ex)
-		{
-			if ( ex is DataAccessException ) {
-				return string.Format("A database exception of type \"{0}\" occurred.",
-									 ex.GetType().Name);
-			}
-			return ex.Message;
-		}
+        public static string CleanseExceptionMessage(Exception ex)
+        {
+            if (ex is DataAccessException)
+            {
+                return string.Format("A database exception of type \"{0}\" occurred.",
+                                     ex.GetType().Name);
+            }
+            return ex.Message;
+        }
 
         #endregion
 
@@ -235,16 +236,28 @@ namespace Windsor.Node2008.WNOSConnector.Provider
 
         public string DefaultErrorDescription
         {
-            get { return _defaultErrorDescription; }
-            set { _defaultErrorDescription = value; }
+            get
+            {
+                return _defaultErrorDescription;
+            }
+            set
+            {
+                _defaultErrorDescription = value;
+            }
         }
 
 
 
         public string DefaultErrorCode
         {
-            get { return _defaultErrorCode; }
-            set { _defaultErrorCode = value; }
+            get
+            {
+                return _defaultErrorCode;
+            }
+            set
+            {
+                _defaultErrorCode = value;
+            }
         }
 
         #endregion
