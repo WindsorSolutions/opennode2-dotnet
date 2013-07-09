@@ -68,6 +68,6 @@ using Windsor.Node2008.WNOSPlugin;
 // by using the '*' as shown below:
 [assembly: AssemblyVersion(AssemblyInfo.cAssemblyVersion)]
 [assembly: AssemblyFileVersion(AssemblyInfo.cAssemblyFileVersion)]
-[assembly: PluginDefaultFlowAttribute("WQX")]
+[assembly: PluginDefaultFlowAttribute("WQX,WQX_DEMO")]
 [assembly: PluginPackageNameAttribute("WQX 2.0")]
 [assembly: PluginSqlDdlFilePaths(@"WQX\2.0\staging_schema_ddl\WQX_2.0-SQL-DDL.sql,WQX\2.0\staging_schema_ddl\WQX_2.0-ORA-DDL.sql")]

@@ -56,6 +56,7 @@ namespace Windsor.Commons.DeveloperExpress
         }
         private static string WrapMessage(string message)
         {
+            message = message.AppendPeriod();
             return message;
         }
         public static string DefaultDontShowMessageBoxAgainText
