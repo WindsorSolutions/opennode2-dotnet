@@ -1210,9 +1210,12 @@ namespace Windsor.Commons.XsdOrm3.Implementations
                 {
                     m_AdditionalCreateIndexAttributesEx.Add((AdditionalCreateIndexAttributeEx)mappingAttribute);
                 }
-                else if (mappingAttribute is AdditionalTopLevelTypeAttribute)
+                else if (mappingAttribute is AdditionalTopLevelTypesAttribute)
                 {
-                    m_AdditionalTopLevelTypes.Add(((AdditionalTopLevelTypeAttribute)mappingAttribute).AdditionalType);
+                    foreach (Type type in ((AdditionalTopLevelTypesAttribute)mappingAttribute).AdditionalTypes)
+                    {
+                        m_AdditionalTopLevelTypes.Add(type);
+                    }
                 }
             }
             m_Tables = new Dictionary<string, Table>();

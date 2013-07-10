@@ -324,24 +324,24 @@ namespace Windsor.Commons.XsdOrm3
         }
     }
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Assembly, AllowMultiple = true)]
-    public class AdditionalTopLevelTypeAttribute : MappingAttribute
+    public class AdditionalTopLevelTypesAttribute : MappingAttribute
     {
-        public AdditionalTopLevelTypeAttribute(Type type)
+        public AdditionalTopLevelTypesAttribute(params Type[] types)
         {
-            m_AdditionalType = type;
+            m_AdditionalTypes = types;
         }
         public override string GetShortDescription()
         {
-            return string.Format("{0}: {1}", this.GetType().Name, m_AdditionalType.Name);
+            return string.Format("{0} Types", m_AdditionalTypes.Length.ToString());
         }
-        public Type AdditionalType
+        public Type[] AdditionalTypes
         {
             get
             {
-                return m_AdditionalType;
+                return m_AdditionalTypes;
             }
         }
-        private Type m_AdditionalType;
+        private Type[] m_AdditionalTypes;
     }
 
     public abstract class BaseAppliedAttribute : MappingAttribute
