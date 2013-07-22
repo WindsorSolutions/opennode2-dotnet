@@ -323,6 +323,16 @@ namespace Windsor.Commons.XsdOrm3.Implementations
         }
         public override object GetSetMemberValue(object value)
         {
+            // Bug workaround for Spring
+
+            if ((value != null) && ((value is string) || (value is char)))
+            {
+                string valueString = value.ToString();
+                if ((valueString.Length == 0) || (valueString == "\0"))
+                {
+                    value = null;
+                }
+            }
             if (value is DBNull)
             {
                 value = null;
