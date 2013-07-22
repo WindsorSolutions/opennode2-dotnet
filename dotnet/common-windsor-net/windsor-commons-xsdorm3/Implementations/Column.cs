@@ -323,8 +323,7 @@ namespace Windsor.Commons.XsdOrm3.Implementations
         }
         public override object GetSetMemberValue(object value)
         {
-            // Bug workaround for Spring
-
+            // Bug workaround for Spring:
             if ((value != null) && ((value is string) || (value is char)))
             {
                 string valueString = value.ToString();
@@ -339,7 +338,7 @@ namespace Windsor.Commons.XsdOrm3.Implementations
             }
             else if (m_IsDbBoolString)
             {
-                if (string.Equals(value.ToString(), "N", StringComparison.InvariantCultureIgnoreCase))
+                if (((value == null) && (m_IsSpecifiedMemberInfo == null)) || string.Equals(value.ToString(), "N", StringComparison.InvariantCultureIgnoreCase))
                 {
                     value = false;
                 }
@@ -371,15 +370,18 @@ namespace Windsor.Commons.XsdOrm3.Implementations
             }
             else if (m_IsTimeType)
             {
-                if (m_MemberType == typeof(string))
+                if (value != null)
                 {
-                    DateTime existingValue = (DateTime)value;
-                    value = existingValue.ToString("HH:mm:ss");
-                }
-                else
-                {
-                    DateTime existingValue = (DateTime)value;
-                    value = new DateTime(1900, 1, 1, existingValue.Hour, existingValue.Minute, existingValue.Second);
+                    if (m_MemberType == typeof(string))
+                    {
+                        DateTime existingValue = (DateTime)value;
+                        value = existingValue.ToString("HH:mm:ss");
+                    }
+                    else
+                    {
+                        DateTime existingValue = (DateTime)value;
+                        value = new DateTime(1900, 1, 1, existingValue.Hour, existingValue.Minute, existingValue.Second);
+                    }
                 }
             }
             else if (m_IsCustomXmlStringFormatType)
