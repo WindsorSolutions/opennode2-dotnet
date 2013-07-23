@@ -144,6 +144,19 @@ namespace Windsor.Commons.WinForms
             GetAllDeepChildrenOfType(parent, list);
             return CollectionUtils.IsNullOrEmpty(list) ? null : list[0];
         }
+        public delegate void ForEachControlDelegate<T>(T control);
+        public static void ForEachDeepChildOfType<T>(Control parent, ForEachControlDelegate<T> callback) where T : class
+        {
+            foreach (Control control in parent.Controls)
+            {
+                T rtnControl = control as T;
+                if (rtnControl != null)
+                {
+                    callback(rtnControl);
+                }
+                ForEachDeepChildOfType<T>(control, callback);
+            }
+        }
         public static Rectangle GetControlBoundsInParent(Control control, Control parent)
         {
             Rectangle bounds = control.Bounds;
@@ -198,6 +211,7 @@ namespace Windsor.Commons.WinForms
                 GetAllDeepChildrenOfType<T>(control, list);
             }
         }
+
         public static bool SetDeepChildText(Control parent, string childName, string text)
         {
             foreach (Control control in parent.Controls)

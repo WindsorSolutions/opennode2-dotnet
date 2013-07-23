@@ -167,13 +167,13 @@ namespace Windsor.Commons.Core
         }
         public static string AppendPeriod(this string text)
         {
-            if ((text != null) && (text.Length > 1) && (text[text.Length - 1] != '.'))
+            if ((text != null) && (text.Length > 1) && !char.IsPunctuation(text[text.Length - 1]))
             {
-                if ((text[text.Length - 1] == '\"') && text[text.Length - 2] != '.')
+                if ((text[text.Length - 1] == '\"') && !char.IsPunctuation(text[text.Length - 2]))
                 {
                     text = text.Substring(0, text.Length - 1) + ".\"";
                 }
-                else
+                else if (!char.IsControl(text[text.Length - 1]))
                 {
                     text += ".";
                 }

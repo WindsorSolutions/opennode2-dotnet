@@ -181,7 +181,7 @@ namespace Windsor.Commons.DeveloperExpress
             {
                 messageFormat = string.Format(messageFormat, args);
             }
-            messageFormat += Environment.NewLine + " ";
+            messageFormat += Environment.NewLine;
             if (string.IsNullOrEmpty(dontShowAgainText))
             {
                 dontShowAgainText = DefaultDontShowMessageBoxAgainText;
@@ -196,7 +196,7 @@ namespace Windsor.Commons.DeveloperExpress
             {
                 messageFormat = string.Format(messageFormat, args);
             }
-            messageFormat += Environment.NewLine + " ";
+            messageFormat += Environment.NewLine;
             return (XTRA_MSG_BOX.Show(owner, WrapMessage(messageFormat), Application.ProductName + " Question",
                                       MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes);
         }
@@ -206,7 +206,7 @@ namespace Windsor.Commons.DeveloperExpress
             {
                 messageFormat = string.Format(messageFormat, args);
             }
-            messageFormat += Environment.NewLine + " ";
+            messageFormat += Environment.NewLine;
             return XTRA_MSG_BOX.Show(owner, WrapMessage(messageFormat), Application.ProductName + " Question",
                                        MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
         }
@@ -217,7 +217,7 @@ namespace Windsor.Commons.DeveloperExpress
             {
                 messageFormat = string.Format(messageFormat, args);
             }
-            messageFormat += Environment.NewLine + " ";
+            messageFormat += Environment.NewLine;
             string dontShowAgainText = DefaultDontShowMessageBoxAgainText;
             return XTRA_MSG_BOX.Show(owner, WrapMessage(messageFormat), Application.ProductName + " Question",
                                        MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question,
@@ -229,7 +229,7 @@ namespace Windsor.Commons.DeveloperExpress
             {
                 messageFormat = string.Format(messageFormat, args);
             }
-            messageFormat += Environment.NewLine + " ";
+            messageFormat += Environment.NewLine;
             return (XTRA_MSG_BOX.Show(owner, WrapMessage(messageFormat), Application.ProductName + " Warning",
                                         MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes);
         }
@@ -240,7 +240,7 @@ namespace Windsor.Commons.DeveloperExpress
             {
                 messageFormat = string.Format(messageFormat, args);
             }
-            messageFormat += Environment.NewLine + " ";
+            messageFormat += Environment.NewLine;
             string dontShowAgainText = DefaultDontShowMessageBoxAgainText;
             return (XTRA_MSG_BOX.Show(owner, WrapMessage(messageFormat), Application.ProductName + " Warning",
                                         MessageBoxButtons.YesNo, MessageBoxIcon.Warning,
