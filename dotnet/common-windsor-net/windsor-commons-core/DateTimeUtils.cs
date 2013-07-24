@@ -43,7 +43,7 @@ namespace Windsor.Commons.Core
         }
         public static DateTime EndOfDay(DateTime date)
         {
-            return new DateTime(date.Year, date.Month, date.Day, 23, 59, 59, 999);
+            return new DateTime(date.Year, date.Month, date.Day, 23, 59, 59, 0);
         }
     }
 }
