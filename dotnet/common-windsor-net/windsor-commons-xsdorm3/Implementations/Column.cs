@@ -463,7 +463,7 @@ namespace Windsor.Commons.XsdOrm3.Implementations
             {
                 if ((ColumnSize >= 36) && (ColumnType.HasValue && (ColumnType.Value == DbType.AnsiString)))
                 {
-                    value = StringUtils.CreateSequentialGuid();
+                    value = StringUtils.CreateSequentialGuid().ToUpper();
                 }
             }
             return value;
@@ -505,14 +505,14 @@ namespace Windsor.Commons.XsdOrm3.Implementations
             if (Utils.IsValidColumnType(objectToSave.GetType()))
             {
                 // This is a virtual table for string[], int[], enum[], etc.
-                pkGuid = StringUtils.CreateSequentialGuid();
+                pkGuid = StringUtils.CreateSequentialGuid().ToUpper();
             }
             else
             {
                 ExceptionUtils.ThrowIfNull(cachedValues, "cachedValues");
                 if (!cachedValues.ObjectToPrimaryKeyMap.TryGetValue(objectToSave, out pkGuid))
                 {
-                    pkGuid = StringUtils.CreateSequentialGuid();
+                    pkGuid = StringUtils.CreateSequentialGuid().ToUpper();
                     cachedValues.ObjectToPrimaryKeyMap[objectToSave] = pkGuid;
                 }
                 else
