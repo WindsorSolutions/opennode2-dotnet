@@ -192,13 +192,23 @@ namespace Windsor.Commons.DeveloperExpress
         }
         public static bool QuestionMessageBox(IWin32Window owner, string messageFormat, params object[] args)
         {
+            return QuestionMessageBox(owner, MessageBoxButtons.YesNo, messageFormat, args);
+        }
+        public static bool QuestionMessageBoxOkCancel(IWin32Window owner, string messageFormat, params object[] args)
+        {
+            return QuestionMessageBox(owner, MessageBoxButtons.OKCancel, messageFormat, args);
+        }
+        private static bool QuestionMessageBox(IWin32Window owner, MessageBoxButtons buttons, string messageFormat,
+                                              params object[] args)
+        {
             if (!CollectionUtils.IsNullOrEmpty(args))
             {
                 messageFormat = string.Format(messageFormat, args);
             }
             messageFormat += Environment.NewLine;
+            DialogResult positiveResponse = (buttons == MessageBoxButtons.YesNo) ? DialogResult.Yes : DialogResult.OK;
             return (XTRA_MSG_BOX.Show(owner, WrapMessage(messageFormat), Application.ProductName + " Question",
-                                      MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes);
+                                      buttons, MessageBoxIcon.Question) == positiveResponse);
         }
         public static DialogResult YesNoCancelMessageBox(IWin32Window owner, string messageFormat, params object[] args)
         {

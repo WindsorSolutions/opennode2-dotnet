@@ -244,6 +244,18 @@ namespace Windsor.Commons.Core
             for (int i = 0; i < m_ColumnNames.Length; ++i)
             {
                 string columnName = m_ColumnNames[i].ToUpper();
+                if (string.IsNullOrEmpty(columnName))
+                {
+                    if (i > 0)
+                    {
+                        throw new InvalidDataException(string.Format("The file contains an empty column header name at column: \"{0}\" just after column \"{1}\"",
+                                                                     (i + 1).ToString(), m_ColumnNames[i - 1]));
+                    }
+                    else
+                    {
+                        throw new InvalidDataException("The file contains an empty column header name at the first column.");
+                    }
+                }
                 if (m_ColumnNameToIndexMap.ContainsKey(columnName))
                 {
                     throw new InvalidDataException(string.Format("The file contains duplicate column headers: \"{0}.\"  Column headers are case-insensitive",
