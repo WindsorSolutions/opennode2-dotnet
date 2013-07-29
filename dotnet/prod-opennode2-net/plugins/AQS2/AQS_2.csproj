@@ -76,6 +76,7 @@
     </Compile>
     <Compile Include="AQSCommonUtils.cs" />
     <Compile Include="AQSExtractAndSubmission.cs" />
+    <Compile Include="AQSGetDataFromDatabase.cs" />
     <Compile Include="AQSGetRawData.cs" />
     <Compile Include="Data.cs" />
     <Compile Include="ExecuteAQSRawDataImport.cs" />

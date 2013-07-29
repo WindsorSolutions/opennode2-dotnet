@@ -31,26 +31,6 @@ POSSIBILITY OF SUCH DAMAGE.
 */
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.Collections;
-using System.Text;
-using System.Data;
-using System.Data.Common;
-using System.Reflection;
-using System.IO;
-using Spring.Data.Generic;
-using Spring.Context;
-using Spring.Context.Support;
-using Spring.Objects.Factory;
-using Common.Logging;
-using Spring.Data.Common;
-using Windsor.Node2008.WNOSUtility;
-using Windsor.Node2008.WNOSProviders;
-using Windsor.Node2008.WNOSDomain;
-using Windsor.Commons.Core;
-using Windsor.Commons.Logging;
-using Windsor.Commons.Spring;
 
 namespace Windsor.Node2008.WNOSPlugin
 {
