@@ -28,7 +28,7 @@ public class GetDeletedFacilityByChangeDate extends BaseFacIdPlugin
     static
     {
         PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setName("GetDeletedFacilityByChangeDate");
-        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setDescription("This uses the FacilityIndex schema to return of basic identification data about each facility that has been deleted. This would only be used if a Partner is maintaining a replica set of facility data.");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setDescription("This service uses the FacilityIndex schema to return of basic identification data about each facility that has been deleted. This would only be used if a Partner is maintaining a replica set of facility data.");
         PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setClassName(GetDeletedFacilityByChangeDate.class.getCanonicalName());
     }
 

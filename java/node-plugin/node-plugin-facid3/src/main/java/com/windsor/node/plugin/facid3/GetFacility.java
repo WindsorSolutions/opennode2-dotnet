@@ -26,7 +26,7 @@ public class GetFacility extends BaseFacIdGetFacilityService
     static
     {
         PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setName("GetFacility");
-        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setDescription("Full set of parameters, also including Change Date, and returning a payload based on the full schema.");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setDescription("This service supports a full set of parameters, also including Change Date, and returning a payload based on the full schema.");
         PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setClassName(GetFacility.class.getCanonicalName());
     }
 

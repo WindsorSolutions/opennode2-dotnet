@@ -27,7 +27,7 @@ public class GetFacilityById extends BaseFacIdGetFacilityService
     static
     {
         PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setName("GetFacilityById");
-        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setDescription("Get detailed facility data for one facility.");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setDescription("Get detailed facility data for one facility based on Facility ID.");
         PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setClassName(GetFacilityById.class.getCanonicalName());
     }
 

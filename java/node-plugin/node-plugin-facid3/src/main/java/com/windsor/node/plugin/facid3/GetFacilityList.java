@@ -19,7 +19,7 @@ public class GetFacilityList extends BaseFacIdGetFacilityService
     static
     {
         PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setName("GetFacilityList");
-        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setDescription("Full set of parameters but returning on the lightest payload (FacilityIndex) to aid in performance.");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setDescription("This service supports a full set of query parameters but returns a light payload (FacilityIndex) to aid in performance.");
         PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setClassName(GetFacilityList.class.getCanonicalName());
     }
 
