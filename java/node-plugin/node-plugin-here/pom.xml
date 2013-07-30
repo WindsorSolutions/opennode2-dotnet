@@ -12,6 +12,8 @@
     <properties>
         <node.plugin.name>here</node.plugin.name>
         <node.plugin.build.number>00</node.plugin.build.number>
+        <node.plugin.description>Provides services to serve XML data to emergency responders utilizing the HERE Client software. See http://herenetwork.org and the HERE plugin installation guide for more information.</node.plugin.description>
+        <node.plugin.help.text>Homeland Emergency Response Exchange</node.plugin.help.text>
     </properties>
     <build>
         <plugins>

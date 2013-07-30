@@ -12,6 +12,8 @@
     <properties>
         <node.plugin.name>ends2</node.plugin.name>
         <node.plugin.build.number>00</node.plugin.build.number>
+        <node.plugin.description>Publishes a list of exchanges and services supported by this node. Can be used ad hoc by network partners to discover node capabilities or to populate the EPA Exchange Network Discovery Service (ENDS) system.</node.plugin.description>
+        <node.plugin.help.text>No Help Text Provided</node.plugin.help.text>
     </properties>
     <build>
         <plugins>

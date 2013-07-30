@@ -12,6 +12,8 @@
     <properties>
         <node.plugin.name>flowsecurity</node.plugin.name>
         <node.plugin.build.number>00</node.plugin.build.number>
+        <node.plugin.description>Provides services to OpenNode2 Admin Security Manager for managing new account requests from external users. This plugin is required to support the Homeland Emergency Response Exchange (HERE) and should be installed in conjunction with the HERE plugin.</node.plugin.description>
+        <node.plugin.help.text>Flow Security Plugin</node.plugin.help.text>
     </properties>
     <build>
         <plugins>

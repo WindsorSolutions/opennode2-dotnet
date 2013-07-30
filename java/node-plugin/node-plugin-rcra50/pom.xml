@@ -12,6 +12,8 @@
     <properties>
         <node.plugin.name>rcra50</node.plugin.name>
         <node.plugin.build.number>00</node.plugin.build.number>
+        <node.plugin.description>Submits hazardous waste data to EPAs RCRAInfo System. Data to be submitted must be loaded into the staging tables that accompany this plugin.</node.plugin.description>
+        <node.plugin.help.text>Resource Conservation and Recovery Act (RCRA) Data Exchange</node.plugin.help.text>
     </properties>
     <build>
         <plugins>

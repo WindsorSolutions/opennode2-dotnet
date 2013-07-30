@@ -8,10 +8,12 @@
     </parent>
     <artifactId>node-plugin-mapforcebridge</artifactId>
     <packaging>jar</packaging>
-    <name>Node Plugin - Map Force Bridge</name>
+    <name>Node Plugin - MapForce Bridge</name>
     <properties>
         <node.plugin.name>mapforcebridge</node.plugin.name>
         <node.plugin.build.number>00</node.plugin.build.number>
+        <node.plugin.description>Provides an interface between Altova MapForce generated Java code and OpenNode2. See OpenNode2 MapForce Bridge documentation for usage details.</node.plugin.description>
+        <node.plugin.help.text>No Help Description Provided</node.plugin.help.text>
     </properties>
     <build>
         <plugins>

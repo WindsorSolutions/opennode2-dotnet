@@ -12,6 +12,8 @@
     <properties>
         <node.plugin.name>facid3</node.plugin.name>
         <node.plugin.build.number>06</node.plugin.build.number>
+        <node.plugin.description>Allows network partners to query for facilities of environmental interest. Facility data must be loaded into the staging tables that accompany this plugin.</node.plugin.description>
+        <node.plugin.help.text>Facility Identification Data Exchange</node.plugin.help.text>
     </properties>
     <build>
         <plugins>

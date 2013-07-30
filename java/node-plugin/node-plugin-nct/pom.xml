@@ -12,6 +12,8 @@
     <properties>
         <node.plugin.name>nct</node.plugin.name>
         <node.plugin.build.number>00</node.plugin.build.number>
+        <node.plugin.description>Provides node capability compliance testing functions using the published Node Certification Test (NCT) data exchange protocols.</node.plugin.description>
+        <node.plugin.help.text>Node Certification Test Exchange</node.plugin.help.text>
     </properties>
     <build>
         <plugins>

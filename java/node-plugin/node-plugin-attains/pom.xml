@@ -12,6 +12,8 @@
     <properties>
         <node.plugin.name>attains</node.plugin.name>
         <node.plugin.build.number>01</node.plugin.build.number>
+        <node.plugin.description>Submits Clean Water Act Section 303(d)/305(b) Integrated Report (IR) data to EPA. Data to be submitted must be loaded into the staging tables that accompany this plugin.</node.plugin.description>
+        <node.plugin.help.text>No Help Text Provided</node.plugin.help.text>
         <hyperjaxb3.schemaDirectory>${basedir}/src/main/xsd/2</hyperjaxb3.schemaDirectory>
     </properties>
     <build>

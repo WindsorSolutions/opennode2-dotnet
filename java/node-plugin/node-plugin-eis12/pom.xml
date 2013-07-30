@@ -12,6 +12,8 @@
     <properties>
         <node.plugin.name>eis12</node.plugin.name>
         <node.plugin.build.number>00</node.plugin.build.number>
+        <node.plugin.description>Submits summarized air emissions data to EPAs Emissions Inventory System (EIS). Data to be submitted must be loaded into the staging tables that accompany this plugin.</node.plugin.description>
+        <node.plugin.help.text>No Help Text Provided</node.plugin.help.text>
     </properties>
     <build>
         <plugins>
