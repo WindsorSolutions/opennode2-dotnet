@@ -1,3 +1,4 @@
+#define INCLUDE_SEPARATE_ZIPPED_PLUGINS
 #region License
 /*
 Copyright (c) 2009, The Environmental Council of the States (ECOS)
@@ -135,20 +136,24 @@ namespace CopyPlugins
             File.Copy(pluginPath, pdbPluginPath, true);
             if (CreateZipPackages && !string.IsNullOrEmpty(packageName))
             {
-                DotNetZipHelper zipHelper = new DotNetZipHelper();
+                //DotNetZipHelper zipHelper = new DotNetZipHelper();
                 string pluginParentDir = Path.GetDirectoryName(Path.GetDirectoryName(dllPluginPath));
                 string zipFilePath = Path.Combine(PackagesFolderPath, flowName + "_Plugin.zip");
                 if (File.Exists(zipFilePath))
+                {
                     File.Delete(zipFilePath);
+                }
                 string versionMinusSvnVersion = fileVersion.Substring(0, fileVersion.LastIndexOf('.'));
                 string packageFileName = string.Format("DotNET {0} Plugin v{1}.zip", packageName, versionMinusSvnVersion);
                 packageFileName = AdjustDeploymentName(packageFileName);
                 string packageFilePath = Path.Combine(PackagesFolderPath, packageFileName);
                 if (File.Exists(packageFilePath))
+                {
                     File.Delete(packageFilePath);
+                }
                 try
                 {
-                    zipHelper.CompressFiles(zipFilePath, new string[] { dllPluginPath, pdbPluginPath });
+                    //zipHelper.CompressFiles(zipFilePath, new string[] { dllPluginPath, pdbPluginPath });
                     List<string> packageFiles = new List<string>();
                     packageFiles.Add(zipFilePath);
                     string flowSqlPath = Path.Combine(Path.Combine(BuildFolderPath, "Sql"), flowName);
@@ -173,7 +178,7 @@ namespace CopyPlugins
                             File.Copy(sqlFilePath, sqlDestPath, true);
                         }
                     });
-                    zipHelper.CompressFiles(packageFilePath, packageFiles);
+                    //zipHelper.CompressFiles(packageFilePath, packageFiles);
                 }
                 catch (Exception)
                 {
