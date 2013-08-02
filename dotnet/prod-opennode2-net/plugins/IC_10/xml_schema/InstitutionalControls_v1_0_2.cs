@@ -269,8 +269,7 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
         , "INSTRUMENT", "INSTR"
         , "RECURRING", "RECUR"
         , "ENGINEERING", "ENGR"
-        , "CONTAMINANT", "CONTMNT"
-        , "RESTRICTION", "RESTRCT"
+        , "CONTAMINANT", "CNTMNT"
         , "REGISTRY", "REG"
         , "DEFINITION", "DEF"
         , "SUBSTANCE", "SUBST"
@@ -288,8 +287,10 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
         , "TYPE_CODE", "CODE"
         , "COORD_DATA", "COORD"
         , "RESTRICTION", "RSTRCT"
+        , "RESTRICTIVE", "RSTRCT"
         , "RESTRICT", "RSTRCT"
         , "RESULT", "RSLT"
+        , "COUNTY", "CNTY"
 )]
 
     [DefaultElementNamePostfixLengthsAttribute(
