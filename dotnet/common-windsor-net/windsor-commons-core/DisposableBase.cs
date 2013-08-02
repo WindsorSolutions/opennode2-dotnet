@@ -90,24 +90,24 @@ namespace Windsor.Commons.Core
 
         ~DisposableBase()
         {
-            #if DEBUG
-            if (!IsDisposed)
-            {
-                Assembly entryAssembly = null;
-                try
-                {
-                    entryAssembly = Assembly.GetEntryAssembly();
-                    if (entryAssembly == null)
-                    {
-                        entryAssembly = Assembly.GetExecutingAssembly();
-                    }
-                }
-                catch (Exception)
-                {
-                }
-                //DebugUtils.CheckDebuggerBreak();
-            }
-            #endif // DEBUG
+#if DEBUG
+            //if (!IsDisposed)
+            //{
+            //    Assembly entryAssembly = null;
+            //    try
+            //    {
+            //        entryAssembly = Assembly.GetEntryAssembly();
+            //        if (entryAssembly == null)
+            //        {
+            //            entryAssembly = Assembly.GetExecutingAssembly();
+            //        }
+            //    }
+            //    catch (Exception)
+            //    {
+            //    }
+            //    //DebugUtils.CheckDebuggerBreak();
+            //}
+#endif // DEBUG
 
             // Do not re-create Dispose clean-up code here.
             // Calling Dispose(false) is optimal in terms of

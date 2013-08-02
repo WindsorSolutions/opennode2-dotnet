@@ -37,6 +37,8 @@ using System.Web;
 using System.Web.Security;
 using System.Web.SessionState;
 using System.IO;
+using System.Web.UI;
+using Windsor.Commons.Core;
 
 namespace Windsor.Commons.AspNet
 {
@@ -55,7 +57,10 @@ namespace Windsor.Commons.AspNet
         public static string PhysicalApplicationPath
         {
             //get { return HttpContext.Current.Request.PhysicalApplicationPath; }
-            get { return HttpRuntime.AppDomainAppPath; }
+            get
+            {
+                return HttpRuntime.AppDomainAppPath;
+            }
         }
         public static string ThemesPhysicalApplicationPath
         {
@@ -78,6 +83,30 @@ namespace Windsor.Commons.AspNet
         {
             eventTarget = HttpContext.Current.Request.Params.Get("__EVENTTARGET");
             eventArgument = HttpContext.Current.Request.Params.Get("__EVENTARGUMENT");
+        }
+        public static IList<T> GetAllDeepChildrenOfType<T>(Control parent) where T : Control
+        {
+            List<T> list = new List<T>();
+            GetAllDeepChildrenOfType(parent, list);
+            return list;
+        }
+        public static T GetFirstDeepChildOfType<T>(Control parent) where T : Control
+        {
+            List<T> list = new List<T>();
+            GetAllDeepChildrenOfType(parent, list);
+            return CollectionUtils.IsNullOrEmpty(list) ? null : list[0];
+        }
+        private static void GetAllDeepChildrenOfType<T>(Control parent, List<T> list) where T : Control
+        {
+            foreach (Control control in parent.Controls)
+            {
+                T rtnControl = control as T;
+                if (rtnControl != null)
+                {
+                    list.Add(rtnControl);
+                }
+                GetAllDeepChildrenOfType<T>(control, list);
+            }
         }
     }
 }
