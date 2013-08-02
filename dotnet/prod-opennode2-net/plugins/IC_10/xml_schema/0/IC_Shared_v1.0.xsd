@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:IC="http://www.exchangenetwork.net/schema/IC/1 http://www.exchangenetwork.net/schema/IC/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:annotation>
+		<xsd:documentation>
+	        Schema Name:IC_Shared_v1.0.xsd
+	        Current Version Available At: http://www.exchangenetwork.net/
+	        Description:Simple Content file for Institutional Control simple types and data elements.
+	        Developed by: Windsor Solutions, Inc.
+	        Point of Contact: ECOS
+	        Last Modified by: Windsor Solutions, Inc.
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:simpleType name="InstrumentIdentifierDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="InstrumentNameDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="InstrumentCategoryCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Proprietary"/>
+			<xsd:enumeration value="Government"/>
+			<xsd:enumeration value="Informational"/>
+			<xsd:enumeration value="Enforcement"/>
+			<xsd:enumeration value="Engineering Control"/>
+			<xsd:enumeration value="Other"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="OtherInstrumentCategoryTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="InstrumentTypeCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Restrictive Covenant"/>
+			<xsd:enumeration value="Deed Restriction of Unspecified Type"/>
+			<xsd:enumeration value="Local Ordinance"/>
+			<xsd:enumeration value="Subdivision Regulation"/>
+			<xsd:enumeration value="Advisory - Agricultural"/>
+			<xsd:enumeration value="Advisory - Drinking Water"/>
+			<xsd:enumeration value="Advisory - Fishing"/>
+			<xsd:enumeration value="Advisory - Food"/>
+			<xsd:enumeration value="Advisory - Health"/>
+			<xsd:enumeration value="Advisory - Swimming"/>
+			<xsd:enumeration value="Advisory - Unspecified Type"/>
+			<xsd:enumeration value="Other"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="OtherInstrumentTypeTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="InstrumentLegalDescriptionTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="ObjectiveTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="MediaTypeCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Air"/>
+			<xsd:enumeration value="Debris"/>
+			<xsd:enumeration value="Ground Water"/>
+			<xsd:enumeration value="Leachate"/>
+			<xsd:enumeration value="Liquid Waste"/>
+			<xsd:enumeration value="Residuals"/>
+			<xsd:enumeration value="Sediment"/>
+			<xsd:enumeration value="Sludge"/>
+			<xsd:enumeration value="Soil"/>
+			<xsd:enumeration value="Solid Waste"/>
+			<xsd:enumeration value="Subsurface Soil"/>
+			<xsd:enumeration value="Surface Soil"/>
+			<xsd:enumeration value="Surface Water"/>
+			<xsd:enumeration value="Other"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="OtherMediaTypeTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="LocationIdentifierDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="AffiliationTypeCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Obligee"/>
+			<xsd:enumeration value="Owner"/>
+			<xsd:enumeration value="Occupant"/>
+			<xsd:enumeration value="Agency"/>
+			<xsd:enumeration value="Compliance"/>
+			<xsd:enumeration value="Other"/>
+			<xsd:enumeration value="Unknown"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="OtherAffiliationTypeTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="RecurringEventIdentifierDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="EventNameDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="EventTypeCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Assessment"/>
+			<xsd:enumeration value="Implementation"/>
+			<xsd:enumeration value="Land Activity or Use Monitoring"/>
+			<xsd:enumeration value="Remote Monitoring"/>
+			<xsd:enumeration value="Field Inspection"/>
+			<xsd:enumeration value="Notice"/>
+			<xsd:enumeration value="Enforcement"/>
+			<xsd:enumeration value="Maintenance"/>
+			<xsd:enumeration value="Termination"/>
+			<xsd:enumeration value="Property Transfer"/>
+			<xsd:enumeration value="Operational Status Change"/>
+			<xsd:enumeration value="Other"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="OtherEventTypeTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="EventDescriptionTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="EventFrequencyMeasureDataType">
+		<xsd:restriction base="xsd:integer"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="EventFrequencyUnitCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Hours"/>
+			<xsd:enumeration value="Days"/>
+			<xsd:enumeration value="Weeks"/>
+			<xsd:enumeration value="Months"/>
+			<xsd:enumeration value="Years"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="EventFrequencyStartDateDataType">
+		<xsd:restriction base="xsd:date"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="EventFrequencyEndDateDataType">
+		<xsd:restriction base="xsd:date"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="EventDateQualifierCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Planned"/>
+			<xsd:enumeration value="Actual"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="EventTriggerTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="EventStartDateDataType">
+		<xsd:restriction base="xsd:date"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="EventStartTimeDataType">
+		<xsd:restriction base="xsd:time"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="EventEndDateDataType">
+		<xsd:restriction base="xsd:date"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="EventEndTimeDataType">
+		<xsd:restriction base="xsd:time"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="EventStatusTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="LandParcelNamingSchemaDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="LandParcelSourceDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="LandParcelIdentifierDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="EngineeringControlNameDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="EngineeringControlDescriptionTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="EngineeringControlTypeCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Vapor Mitigation System"/>
+			<xsd:enumeration value="Treatment System"/>
+			<xsd:enumeration value="Soil or Vegetative Cap"/>
+			<xsd:enumeration value="Sheet Piling or Slurry Wall"/>
+			<xsd:enumeration value="Paved or Concrete Cap"/>
+			<xsd:enumeration value="Liner System"/>
+			<xsd:enumeration value="Leachate Collection System"/>
+			<xsd:enumeration value="Landfill Gas System"/>
+			<xsd:enumeration value="Interceptor Wells or Trench"/>
+			<xsd:enumeration value="Ground Water Recovery"/>
+			<xsd:enumeration value="Building"/>
+			<xsd:enumeration value="Other"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="OtherEngineeringControlTypeTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="EngineeringControlModeCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Active"/>
+			<xsd:enumeration value="Passive"/>
+			<xsd:enumeration value="Unknown"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="AffiliateIdentifierDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="ResourceNameDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="ResourceDescriptionTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="ResourceCategoryTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="ResourceTypeTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="UseRestrictionTypeCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Restrict Excavation"/>
+			<xsd:enumeration value="Restrict Residential Use"/>
+			<xsd:enumeration value="Restrict Building Construction or Use"/>
+			<xsd:enumeration value="Restrict Sensitive Land Use"/>
+			<xsd:enumeration value="Restrict Groundwater Use"/>
+			<xsd:enumeration value="Restrict Surface Water Use"/>
+			<xsd:enumeration value="Restrict Food Production"/>
+			<xsd:enumeration value="Restrict Other"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="UseRestrictionTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="UseRestrictionStartDateDataType">
+		<xsd:restriction base="xsd:date"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="UseRestrictionEndDateDataType">
+		<xsd:restriction base="xsd:date"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="OriginatingPartnerNameDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="InformationSystemAcronymNameDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="LastUpdatedDateDataType">
+		<xsd:restriction base="xsd:date"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="ChemicalCategoryCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Asbestos"/>
+			<xsd:enumeration value="Inorganic Non-Metallic"/>
+			<xsd:enumeration value="Inorganic Metals"/>
+			<xsd:enumeration value="PAH - Polynuclear Aromatic Hydrocarbons"/>
+			<xsd:enumeration value="PCB - Polychlorinated Byphenols"/>
+			<xsd:enumeration value="Pesticides"/>
+			<xsd:enumeration value="Petroleum"/>
+			<xsd:enumeration value="Phenols"/>
+			<xsd:enumeration value="Radioactive"/>
+			<xsd:enumeration value="SVOCs - Semi Volatile Organic Compounds"/>
+			<xsd:enumeration value="TPH - Total Petroleum Hydrocarbons"/>
+			<xsd:enumeration value="VOCs - Volatile Organic Compounds"/>
+			<xsd:enumeration value="Unknown"/>
+			<xsd:enumeration value="Other"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="OtherChemicalCategoryTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:element name="InstrumentIdentifier" type="InstrumentIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>A unique identifier assigned to an administrative measure and/or legal mechanism that establishes a specific set of land or resource use restrictions.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="InstrumentName" type="InstrumentNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>The name assigned to an administrative measure and/or legal mechanism that establishes a specific set of land or resource use restrictions.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="InstrumentCategoryCode" type="InstrumentCategoryCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The major IC classification to which an administrative measure and/or legal mechanism that establishes aspecific set of land or resource use restrictions belongs.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OtherInstrumentCategoryText" type="OtherInstrumentCategoryTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>A text description of the instrument category when "Other" is selected for the Instrument Category Code.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="InstrumentTypeCode" type="InstrumentTypeCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The type of administrative measure and/or legal mechanism that establishes a specific set of land or resource use restrictions.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OtherInstrumentTypeText" type="OtherInstrumentTypeTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>A text description of the instrument type when "Other" is selected for the Instrument Type Code.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="InstrumentLegalDescriptionText" type="InstrumentLegalDescriptionTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>The legal description of an IC.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ObjectiveText" type="ObjectiveTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>The text describing the intended goal of an IC in minimizing the potential for human exposure to remaining contamination and/or protecting the integrity of an engineering control by limiting land or resource use in a particular media.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MediaTypeCode" type="MediaTypeCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The name of the major environmental component contaminated and addressed by the language of the IC instrument.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OtherMediaTypeText" type="OtherMediaTypeTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>A text description of the media type when "Other" is selected for the Media Type Code.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="LandParcelNamingSchema" type="LandParcelNamingSchemaDataType">
+		<xsd:annotation>
+			<xsd:documentation>Identifies the parcel schema.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="LandParcelSource" type="LandParcelSourceDataType">
+		<xsd:annotation>
+			<xsd:documentation>Identifies the jurisitiction that generated the parcel value, typically a county tax assessor office.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="LandParcelIdentifier" type="LandParcelIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>Parcel value compliant with parcel schema typically referred to as a Parcel Identification Number (PIN) or Assessors Parcel Number (APN)</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="EngineeringControlName" type="EngineeringControlNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>The name assigned to a physical technology implemented to minimize the potential for human exposure to contamination by means of control or remediation.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="EngineeringControlDescriptionText" type="EngineeringControlDescriptionTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>A description of the engineering control.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="EngineeringControlTypeCode" type="EngineeringControlTypeCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The type of engineering control.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OtherEngineeringControlTypeText" type="OtherEngineeringControlTypeTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>A text description of the engineering control type when "Other" is selected for the Engineering Control Type Code.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="EngineeringControlModeCode" type="EngineeringControlModeCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates whether an engineering control is an active or passive system.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="AffiliateIdentifier" type="AffiliateIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>A unique identifier prescribed to a person or organization.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ResourceName" type="ResourceNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>A name given to the resource.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ResourceDescriptionText" type="ResourceDescriptionTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>An account of the content of the resource.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ResourceCategoryText" type="ResourceCategoryTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>The major classification to which a resource belongs.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ResourceTypeText" type="ResourceTypeTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>The nature or genre of the content of the resource.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="LocationIdentifier" type="LocationIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>A unique identifier used to uniquely identify a location.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="AffiliationTypeCode" type="AffiliationTypeCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The type of affiliation between a person or organization and an IC Instrument or Event.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OtherAffiliationTypeText" type="OtherAffiliationTypeTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>A text description of the affiliation type when "Other" is selected for the Affiliation Type Code.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="RecurringEventIdentifier" type="RecurringEventIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>A unique identifier assigned to a recurring event.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="EventName" type="EventNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>The name given to an occurrence or action taking place on a specific date or over a period of time.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="EventTypeCode" type="EventTypeCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The type of occurrence or action taking place on a specific date or overa period of time.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OtherEventTypeText" type="OtherEventTypeTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>A text description of the event type when "Other" is selected for the Event Type Code.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="EventDescriptionText" type="EventDescriptionTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>A text description of the event.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="EventFrequencyMeasure" type="EventFrequencyMeasureDataType">
+		<xsd:annotation>
+			<xsd:documentation>The number denoting the time interval between a series of recurring events.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="EventFrequencyUnitCode" type="EventFrequencyUnitCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The unit of measure associated with a time interval between a series of events allotted to take place.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="EventFrequencyStartDate" type="EventFrequencyStartDateDataType">
+		<xsd:annotation>
+			<xsd:documentation>The date a recurring event started or is scheduled to start.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="EventFrequencyEndDate" type="EventFrequencyEndDateDataType">
+		<xsd:annotation>
+			<xsd:documentation>The date a recurring event ended or is scheduled to end.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="EventTriggerText" type="EventTriggerTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Describes the condition that would cause the event to occur.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="EventStartDate" type="EventStartDateDataType">
+		<xsd:annotation>
+			<xsd:documentation>The date an event started or is planned to start.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="EventStartTime" type="EventStartTimeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The time of day an event started or is planned to start.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="EventEndDate" type="EventEndDateDataType">
+		<xsd:annotation>
+			<xsd:documentation>The date an event ended or is planned to end.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="EventEndTime" type="EventEndTimeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The time of day an event ended or is planned to end.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="EventDateQualifierCode" type="EventDateQualifierCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The qualifier that specifies the meaning of the date that the event has taken or will take place.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="EventStatusText" type="EventStatusTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>An attribute for describing the status of the event.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="UseRestrictionTypeCode" type="UseRestrictionTypeCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The type of land or resource use specifically prohibited or restricted by the language of the IC instrument.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="UseRestrictionText" type="UseRestrictionTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Describes a land or resource use specifically prohibited or restricted by the language of the IC instrument.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="UseRestrictionStartDate" type="UseRestrictionStartDateDataType">
+		<xsd:annotation>
+			<xsd:documentation>The date when a use restriction takes effect.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="UseRestrictionEndDate" type="UseRestrictionEndDateDataType">
+		<xsd:annotation>
+			<xsd:documentation>The date when a use restriction is lifted.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OriginatingPartnerName" type="OriginatingPartnerNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>The name of the partner that provided the data.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="InformationSystemAcronymName" type="InformationSystemAcronymNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>The abbreviated name that represents the name of an information management system for an environmental program.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="LastUpdatedDate" type="LastUpdatedDateDataType">
+		<xsd:annotation>
+			<xsd:documentation>A value corresponding to the date the data was added to the source system or the date the partner last recorded a change to the data.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ChemicalCategoryCode" type="ChemicalCategoryCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>A category that characterizes the type of chemical substance.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OtherChemicalCategoryText" type="OtherChemicalCategoryTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>A text description of the chemical category when "Other" is selected for the Chemical Category Code.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:IC="http://www.exchangenetwork.net/schema/IC/1" targetNamespace="http://www.exchangenetwork.net/schema/IC/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:include schemaLocation="IC_InstrumentList_v1.0.xsd"/>
+	<xsd:include schemaLocation="IC_ICLocationList_v1.0.xsd"/>
+	<xsd:include schemaLocation="IC_AffiliateList_v1.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+	        Schema Name: IC_v1.0.xsd
+	        Current Version Available At: http://www.exchangenetwork.net
+	        Description: The root message schema for Institutional Controls data.
+	        Developed by: Windsor Solutions, Inc.
+	        Point of Contact: ECOS
+	        Last Modified by: Windsor Solutions, Inc.
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="InstitutionalControlsDocument" type="IC:InstitutionalControlsDocumentDataType">
+		<xsd:annotation>
+			<xsd:documentation>The root message schema for Institutional Controls data.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:key name="LocationKey">
+			<xsd:selector xpath="IC:ICLocationList/IC:ICLocation"/>
+			<xsd:field xpath="IC:LocationIdentifier"/>
+		</xsd:key>
+		<xsd:keyref name="InstrumentLocationForeignKey" refer="IC:LocationKey">
+			<xsd:selector xpath="IC:InstrumentList/IC:Instrument/IC:InstrumentLocation"/>
+			<xsd:field xpath="IC:LocationIdentifier"/>
+		</xsd:keyref>
+		<xsd:keyref name="UseRestrictionLocationForeignKey" refer="IC:LocationKey">
+			<xsd:selector xpath="IC:InstrumentList/IC:Instrument/IC:UseRestriction/IC:UseRestrictionLocation"/>
+			<xsd:field xpath="IC:LocationIdentifier"/>
+		</xsd:keyref>
+		<xsd:keyref name="EngineeringControlLocationForeignKey" refer="IC:LocationKey">
+			<xsd:selector xpath="IC:InstrumentList/IC:Instrument/IC:EngineeringControl/IC:EngineeringControlLocation"/>
+			<xsd:field xpath="IC:LocationIdentifier"/>
+		</xsd:keyref>
+		<xsd:keyref name="ResourceLocationForeignKey" refer="IC:LocationKey">
+			<xsd:selector xpath="IC:InstrumentList/IC:Instrument/IC:Resource/IC:ResourceLocation"/>
+			<xsd:field xpath="IC:LocationIdentifier"/>
+		</xsd:keyref>
+		<xsd:keyref name="RecurringEventLocationForeignKey" refer="IC:LocationKey">
+			<xsd:selector xpath="IC:InstrumentList/IC:Instrument/IC:RecurringEvent/IC:RecurringEventLocation"/>
+			<xsd:field xpath="IC:LocationIdentifier"/>
+		</xsd:keyref>
+		<xsd:keyref name="EventLocationForeignKey" refer="IC:LocationKey">
+			<xsd:selector xpath="IC:InstrumentList/IC:Instrument/IC:Event/IC:EventLocation"/>
+			<xsd:field xpath="IC:LocationIdentifier"/>
+		</xsd:keyref>
+		<xsd:key name="AffiliateKey">
+			<xsd:selector xpath="IC:AffiliateList/IC:Affiliate"/>
+			<xsd:field xpath="IC:AffiliateIdentifier"/>
+		</xsd:key>
+		<xsd:keyref name="InstrumentAffiliateForeignKey" refer="IC:AffiliateKey">
+			<xsd:selector xpath="IC:InstrumentList/IC:Instrument/IC:InstrumentAffiliate"/>
+			<xsd:field xpath="IC:AffiliateIdentifier"/>
+		</xsd:keyref>
+		<xsd:keyref name="EventAffiliateForeignKey" refer="IC:AffiliateKey">
+			<xsd:selector xpath="IC:InstrumentList/IC:Instrument/IC:Event/IC:EventAffiliate"/>
+			<xsd:field xpath="IC:AffiliateIdentifier"/>
+		</xsd:keyref>
+		<xsd:key name="RecurringEventKey">
+			<xsd:selector xpath="IC:InstrumentList/IC:Instrument/IC:RecurringEvent"/>
+			<xsd:field xpath="IC:RecurringEventIdentifier"/>
+		</xsd:key>
+		<xsd:keyref name="EventRecurringEventForeignKey" refer="IC:RecurringEventKey">
+			<xsd:selector xpath="IC:InstrumentList/IC:Instrument/IC:Event"/>
+			<xsd:field xpath="IC:RecurringEventIdentifier"/>
+		</xsd:keyref>
+	</xsd:element>
+	<xsd:complexType name="InstitutionalControlsDocumentDataType">
+		<xsd:sequence>
+			<xsd:element ref="IC:InstrumentList"/>
+			<xsd:element ref="IC:ICLocationList"/>
+			<xsd:element ref="IC:AffiliateList" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

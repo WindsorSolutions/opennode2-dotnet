@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+	<xsd:include schemaLocation="SC_FacilitySiteType_v2.0.xsd"/>
+	<xsd:include schemaLocation="SC_SimpleContent_v2.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+        Schema Name  : SC_FacilitySiteIdentity_v2.0.xsd
+        Schema Identification : F.01
+        Current Version Available At :  http://www.exchangenetwork.net/schema/SC
+        Description   : 	Basic information used by an organization to identify a facility or site.
+        Application   :   Exchange Network Shared Schema Component
+        Developed by  : 	 Core Reference Model (CRM) Workgroup
+        Point of Contact :   Douglas Timms, enfoTech &amp; Consulting, Inc.
+        Last Modified by :   Ross &amp; Associates - April 17, 2006 (from SSCv1.1: targetNamespace declaration removed, to conform with Exchange Network namespace decision v1.11)
+</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="FacilitySiteIdentityDataType">
+		<xsd:sequence>
+			<xsd:element ref="FacilitySiteIdentifier" minOccurs="0"/>
+			<xsd:element ref="FacilitySiteName" minOccurs="0"/>
+			<xsd:element ref="FacilitySiteType" minOccurs="0"/>
+			<xsd:element ref="FederalFacilityIndicator" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="FacilitySiteIdentity" type="FacilitySiteIdentityDataType">
+		<xsd:annotation>
+			<xsd:documentation>Basic information used by an organization to identify a facility or site.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>
