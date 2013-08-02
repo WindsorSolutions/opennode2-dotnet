@@ -71,3 +71,4 @@ using Windsor.Commons.AssemblyInfo;
 [assembly: PluginDefaultFlowAttribute("P2R")]
 [assembly: PluginPackageNameAttribute("P2R 1.0")]
 [assembly: PluginSqlDdlFilePaths(@"P2R\1.0\staging_schema_ddl\P2R_1.0-SQL-DDL.sql,P2R\1.0\staging_schema_ddl\P2R_1.0-ORA-DDL.sql")]
+[assembly: PublicPluginAttribute()]

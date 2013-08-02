@@ -51,3 +51,4 @@ using Windsor.Commons.AssemblyInfo;
 [assembly: AssemblyFileVersion(AssemblyInfo.cAssemblyFileVersion)]
 [assembly: PluginDefaultFlowAttribute("PNWWQX")]
 [assembly: PluginPackageNameAttribute("PNWWQX 1.3")]
+[assembly: PublicPluginAttribute()]

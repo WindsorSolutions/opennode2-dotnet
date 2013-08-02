@@ -71,3 +71,4 @@ using Windsor.Node2008.WNOSPlugin;
 [assembly: PluginDefaultFlowAttribute("UIC")]
 [assembly: PluginPackageNameAttribute("UIC 2.0")]
 [assembly: PluginSqlDdlFilePaths(@"UIC\2.0\staging_schema_ddl\UIC_2.0-SQL-DDL.sql,UIC\2.0\staging_schema_ddl\UIC_2.0-ORA-DDL.sql")]
+[assembly: PublicPluginAttribute()]

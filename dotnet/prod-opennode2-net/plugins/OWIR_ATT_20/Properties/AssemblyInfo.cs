@@ -71,3 +71,4 @@ using Windsor.Node2008.WNOSPlugin;
 [assembly: PluginDefaultFlowAttribute("OWIR-ATT_v2.0")]
 [assembly: PluginPackageNameAttribute("ATTAINS 2.0")]
 [assembly: PluginSqlDdlFilePaths(@"OWIR_ATT\2.0\staging_schema_ddl\OWIR_ATT_2.0-SQL-DDL.sql,OWIR_ATT\2.0\staging_schema_ddl\OWIR_ATT_2.0-ORA-DDL.sql")]
+[assembly: PublicPluginAttribute()]

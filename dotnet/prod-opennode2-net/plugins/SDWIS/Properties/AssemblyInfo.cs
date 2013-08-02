@@ -71,3 +71,4 @@ using Windsor.Node2008.WNOSPlugin;
 [assembly: AssemblyFileVersion(AssemblyInfo.cAssemblyFileVersion)]
 [assembly: PluginDefaultFlowAttribute("SDWIS")]
 [assembly: PluginPackageNameAttribute("SDWIS 2.0")]
+[assembly: PublicPluginAttribute()]

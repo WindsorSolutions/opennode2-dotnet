@@ -52,3 +52,4 @@ using Windsor.Commons.AssemblyInfo;
 [assembly: PluginDefaultFlowAttribute("FRS")]
 [assembly: PluginPackageNameAttribute("FRS 2.3")]
 [assembly: PluginSqlDdlFilePaths(@"FRS\2.3\staging_schema_ddl\FRS_2.3-SQL-DDL.sql,FRS\2.3\staging_schema_ddl\FRS_2.3-ORA-DDL.sql")]
+[assembly: PublicPluginAttribute()]

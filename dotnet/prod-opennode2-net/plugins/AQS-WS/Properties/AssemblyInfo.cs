@@ -51,6 +51,7 @@ using Windsor.Commons.AssemblyInfo;
 [assembly: AssemblyFileVersion(AssemblyInfo.cAssemblyFileVersion)]
 [assembly: PluginDefaultFlowAttribute("AQS-DrDas")]
 [assembly: PluginPackageNameAttribute("AQS-DrDas 2.2a")]
+[assembly: PublicPluginAttribute()]
 
 
 

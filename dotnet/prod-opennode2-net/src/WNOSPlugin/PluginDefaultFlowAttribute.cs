@@ -56,14 +56,18 @@ namespace Windsor.Node2008.WNOSPlugin
     {
         private List<string> _defaultFlowNames;
 
-        public PluginDefaultFlowAttribute(string commaSeparatedListOfFlowNames) {
+        public PluginDefaultFlowAttribute(string commaSeparatedListOfFlowNames)
+        {
             _defaultFlowNames =
                 StringUtils.SplitAndReallyRemoveEmptyEntries(commaSeparatedListOfFlowNames, ',');
         }
 
         public IList<string> DefaultFlowNames
         {
-            get { return _defaultFlowNames; }
+            get
+            {
+                return _defaultFlowNames;
+            }
         }
     }
     [AttributeUsage(AttributeTargets.Assembly)]
@@ -77,12 +81,22 @@ namespace Windsor.Node2008.WNOSPlugin
         }
         public string Name
         {
-            get { return _name; }
-            set { _name = value; }
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                _name = value;
+            }
         }
     }
     [AttributeUsage(AttributeTargets.Assembly)]
     public class StandardPluginAttribute : Attribute
+    {
+    }
+    [AttributeUsage(AttributeTargets.Assembly)]
+    public class PublicPluginAttribute : Attribute
     {
     }
     [AttributeUsage(AttributeTargets.Assembly)]
@@ -97,8 +111,14 @@ namespace Windsor.Node2008.WNOSPlugin
         }
         public List<string> FilePaths
         {
-            get { return _filePaths; }
-            set { _filePaths = value; }
+            get
+            {
+                return _filePaths;
+            }
+            set
+            {
+                _filePaths = value;
+            }
         }
     }
 }

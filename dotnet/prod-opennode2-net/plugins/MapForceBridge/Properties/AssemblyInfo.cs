@@ -70,3 +70,4 @@ using Windsor.Node2008.WNOSPlugin;
 [assembly: AssemblyFileVersion(AssemblyInfo.cAssemblyFileVersion)]
 [assembly: PluginDefaultFlowAttribute("MapForceBridge")]
 [assembly: PluginPackageNameAttribute("MapForceBridge 1.0")]
+[assembly: PublicPluginAttribute()]

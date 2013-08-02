@@ -70,3 +70,4 @@ using Windsor.Node2008.WNOSPlugin;
 [assembly: AssemblyFileVersion(AssemblyInfo.cAssemblyFileVersion)]
 [assembly: PluginDefaultFlowAttribute("AQS_AirVision")]
 [assembly: PluginPackageNameAttribute("AQS_AirVision 2.2a")]
+[assembly: PublicPluginAttribute()]

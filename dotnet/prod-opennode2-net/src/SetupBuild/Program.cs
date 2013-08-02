@@ -71,11 +71,11 @@ namespace CopyPlugins
                     Directory.CreateDirectory(PackagesFolderPath);
                 }
 
+                CreateDefaultFolders(trunkFolder);
+
                 CopyPluginsToBuildFolder(trunkFolder);
 
                 CopyConfigFilesToBuildFolder(trunkFolder);
-
-                CreateDefaultFolders(trunkFolder);
 
                 if (CreateZipPackages)
                 {
@@ -114,6 +114,17 @@ namespace CopyPlugins
         static void CopyPlugin(string flowName, string packageName, string fileVersion,
                                string pluginPath, string wnosPluginFolder, List<string> sqlDdlFilePaths)
         {
+            if (CreateZipPackages)
+            {
+                Assembly loadedAssembly = Assembly.LoadFile(pluginPath);
+                Attribute[] standardPluginAttributes = Attribute.GetCustomAttributes(loadedAssembly, typeof(StandardPluginAttribute));
+                Attribute[] publicPluginAttributes = Attribute.GetCustomAttributes(loadedAssembly, typeof(PublicPluginAttribute));
+                bool isDeployPlugin = (standardPluginAttributes.Length != 0) || (publicPluginAttributes.Length != 0);
+                if (!isDeployPlugin)
+                {
+                    return;
+                }
+            }
             FileUtils.SafeDeleteDirectory(wnosPluginFolder);
             Directory.CreateDirectory(wnosPluginFolder);
             pluginPath = Path.ChangeExtension(pluginPath, ".dll");
@@ -140,6 +151,7 @@ namespace CopyPlugins
                     zipHelper.CompressFiles(zipFilePath, new string[] { dllPluginPath, pdbPluginPath });
                     List<string> packageFiles = new List<string>();
                     packageFiles.Add(zipFilePath);
+                    string flowSqlPath = Path.Combine(Path.Combine(BuildFolderPath, "Sql"), flowName);
                     CollectionUtils.ForEach(sqlDdlFilePaths, delegate(string filePath)
                     {
                         string sqlFilePath = Path.Combine(DBScriptsParentFolderPath, filePath);
@@ -153,6 +165,12 @@ namespace CopyPlugins
                         else
                         {
                             packageFiles.Add(sqlFilePath);
+                            if (!Directory.Exists(flowSqlPath))
+                            {
+                                Directory.CreateDirectory(flowSqlPath);
+                            }
+                            string sqlDestPath = Path.Combine(flowSqlPath, Path.GetFileName(sqlFilePath));
+                            File.Copy(sqlFilePath, sqlDestPath, true);
                         }
                     });
                     zipHelper.CompressFiles(packageFilePath, packageFiles);
@@ -325,10 +343,11 @@ namespace CopyPlugins
                 try
                 {
                     Assembly loadedAssembly = Assembly.LoadFile(pluginFilePath);
-                    Attribute[] customAttributes = Attribute.GetCustomAttributes(loadedAssembly, typeof(StandardPluginAttribute));
-                    if (!CollectionUtils.IsNullOrEmpty(customAttributes))
+                    Attribute[] standardPluginAttributes = Attribute.GetCustomAttributes(loadedAssembly, typeof(StandardPluginAttribute));
+                    Attribute[] publicPluginAttributes = Attribute.GetCustomAttributes(loadedAssembly, typeof(PublicPluginAttribute));
+                    if (!CollectionUtils.IsNullOrEmpty(standardPluginAttributes) || !CollectionUtils.IsNullOrEmpty(publicPluginAttributes))
                     {
-                        // This is a standard plugin that is included with the default deployment package
+                        // This is a standard or public plugin that is included with the default deployment package
                         string includeFolder = Path.GetDirectoryName(pluginFilePath);
                         string zipFolderName = includeFolder.Substring(includeFolder.LastIndexOf("Plugins\\", StringComparison.InvariantCultureIgnoreCase));
                         zipHelper.CompressDirectory(zipFile, includeFolder, zipFolderName);

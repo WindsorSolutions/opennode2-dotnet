@@ -70,3 +70,4 @@ using Windsor.Node2008.WNOSPlugin;
 [assembly: AssemblyFileVersion(AssemblyInfo.cAssemblyFileVersion)]
 [assembly: PluginDefaultFlowAttribute("Flow-Security")]
 [assembly: StandardPluginAttribute()]
+[assembly: PublicPluginAttribute()]

@@ -71,3 +71,4 @@ using Windsor.Node2008.WNOSPlugin;
 [assembly: PluginDefaultFlowAttribute("FacID_v3.0")]
 [assembly: PluginPackageNameAttribute("FacID 3.0")]
 [assembly: PluginSqlDdlFilePaths(@"FACID\3.0\staging_schema_ddl\FACID_3.0-SQL-DDL.sql,FACID\3.0\staging_schema_ddl\FACID_3.0-ORA-DDL.sql")]
+[assembly: PublicPluginAttribute()]

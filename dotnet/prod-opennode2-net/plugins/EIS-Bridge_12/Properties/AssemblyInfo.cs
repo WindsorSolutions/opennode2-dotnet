@@ -70,3 +70,4 @@ using Windsor.Node2008.WNOSPlugin;
 [assembly: AssemblyFileVersion(AssemblyInfo.cAssemblyFileVersion)]
 [assembly: PluginDefaultFlowAttribute("EIS-Bridge")]
 [assembly: PluginPackageNameAttribute("EIS-Bridge 1.2")]
+[assembly: PublicPluginAttribute()]

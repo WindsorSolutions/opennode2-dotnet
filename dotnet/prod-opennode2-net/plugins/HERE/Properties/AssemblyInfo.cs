@@ -71,3 +71,4 @@ using Windsor.Commons.AssemblyInfo;
 [assembly: PluginDefaultFlowAttribute("HERE-CAFO,HERE-DELETE,HERE-FRS,HERE-TIER2,HERE-TANKS,HERE-FACID,HERE-WQX,HERE-WQX-DELETE,HERE")]
 [assembly: PluginPackageNameAttribute("HERE 2.0")]
 [assembly: PluginSqlDdlFilePaths(@"HERE\1.0\staging_schema_ddl\HERE_1.0-SQL-DDL.sql,HERE\1.0\staging_schema_ddl\HERE_1.0-ORA-DDL.sql")]
+[assembly: PublicPluginAttribute()]

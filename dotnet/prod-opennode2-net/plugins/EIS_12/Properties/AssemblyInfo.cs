@@ -71,3 +71,4 @@ using Windsor.Node2008.WNOSPlugin;
 [assembly: PluginDefaultFlowAttribute("EIS_V1_0")]
 [assembly: PluginPackageNameAttribute("EIS 1.2")]
 [assembly: PluginSqlDdlFilePaths(@"EIS\1.2\staging_schema_ddl\EIS_1.2-SQL-DDL.sql,EIS\1.2\staging_schema_ddl\EIS_1.2-ORA-DDL.sql")]
+[assembly: PublicPluginAttribute()]

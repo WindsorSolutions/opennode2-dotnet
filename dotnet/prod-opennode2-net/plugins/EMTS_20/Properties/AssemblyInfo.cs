@@ -70,3 +70,4 @@ using Windsor.Node2008.WNOSPlugin;
 [assembly: AssemblyFileVersion(AssemblyInfo.cAssemblyFileVersion)]
 [assembly: PluginDefaultFlowAttribute("EMTS_20")]
 [assembly: PluginPackageNameAttribute("EMTS 2.0")]
+[assembly: PublicPluginAttribute()]
