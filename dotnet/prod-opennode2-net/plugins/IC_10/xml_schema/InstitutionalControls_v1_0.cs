@@ -1890,8 +1890,7 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "integer", Order = 5)]
         [System.ComponentModel.DescriptionAttribute("The number denoting the time interval between a series of recurring events.")]
-        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string EventFrequencyMeasure;
+        public int EventFrequencyMeasure;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
@@ -2544,8 +2543,7 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
         [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 1)]
         [System.ComponentModel.DescriptionAttribute("The number that represents the proportional distance on the ground for one unit o" +
             "f measure on the map or photo.")]
-        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string SourceMapScaleNumber;
+        public int SourceMapScaleNumber;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
