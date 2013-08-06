@@ -454,7 +454,8 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
 
         /// <remarks/>
         [System.Xml.Serialization.XmlTextAttribute()]
-        public string Value;
+        [System.Xml.Serialization.XmlElementAttribute("Value")]// TSM
+        public string AddressPostalCodeValue;
     }
 
     /// <remarks/>
@@ -736,15 +737,18 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string CodeListVersionIdentifier;
+        [System.Xml.Serialization.XmlElementAttribute("CodeListVersionIdentifier")]// TSM
+        public string CountryCodeListVersionIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string CodeListVersionAgencyIdentifier;
+        [System.Xml.Serialization.XmlElementAttribute("CodeListVersionAgencyIdentifier")]// TSM
+        public string CountryCodeListVersionAgencyIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlTextAttribute()]
-        public string Value;
+        [System.Xml.Serialization.XmlElementAttribute("Value")]// TSM
+        public string CountryCodeListIdentifierValue;
     }
 
     /// <remarks/>
@@ -756,15 +760,18 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string CodeListVersionIdentifier;
+        [System.Xml.Serialization.XmlElementAttribute("CodeListVersionIdentifier")]// TSM
+        public string CountyCodeListVersionIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string CodeListVersionAgencyIdentifier;
+        [System.Xml.Serialization.XmlElementAttribute("CodeListVersionAgencyIdentifier")]// TSM
+        public string CountyCodeListVersionAgencyIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlTextAttribute()]
-        public string Value;
+        [System.Xml.Serialization.XmlElementAttribute("Value")]// TSM
+        public string CountyCodeListIdentifierValue;
     }
 
     /// <remarks/>
@@ -1284,15 +1291,18 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string CodeListVersionIdentifier;
+        [System.Xml.Serialization.XmlElementAttribute("CodeListVersionIdentifier")]// TSM
+        public string StateCodeListVersionIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string CodeListVersionAgencyIdentifier;
+        [System.Xml.Serialization.XmlElementAttribute("CodeListVersionAgencyIdentifier")]// TSM
+        public string StateCodeListVersionAgencyIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlTextAttribute()]
-        public string Value;
+        [System.Xml.Serialization.XmlElementAttribute("Value")]// TSM
+        public string StateCodeListIdentifierValue;
     }
 
     /// <remarks/>

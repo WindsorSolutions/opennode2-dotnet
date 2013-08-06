@@ -24,7 +24,7 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
         , "WATER", "WTR"
         , "ASSOCIATED", "ASSC"
         , "IDENTIFICATION", "IDFN"
-        , "IDENTIFIER", "IDFR"
+        , "IDENTIFIER", "IDEN"
         , "FEDERAL", "FEDR"
         , "RESPONSE", "RSPN"
         , "COMMENTS", "CMNTS"
@@ -265,7 +265,7 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
         , "CONTROLS", "CNTRLS"
         , "CONTROL", "CNTRL"
         , "OBJECTIVE", "OBJTV"
-        , "RESOURCE", "RESC"
+        , "RESOURCE", "RSRC"
         , "INSTRUMENT", "INSTR"
         , "RECURRING", "RECUR"
         , "ENGINEERING", "ENGR"
@@ -322,6 +322,25 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
 
     [AppliedAttribute(typeof(EnvelopeType), "Items", typeof(DbIgnoreAttribute))]
     [AppliedAttribute(typeof(EnvelopeType), "ItemsElementName", typeof(DbIgnoreAttribute))]
+
+    [AppliedAttribute(typeof(LocationAddress), "StateIdentity", typeof(SameTableAttribute))]
+    [AppliedAttribute(typeof(LocationAddress), "AddressPostalCode", typeof(SameTableAttribute))]
+    [AppliedAttribute(typeof(LocationAddress), "CountryIdentity", typeof(SameTableAttribute))]
+    [AppliedAttribute(typeof(LocationAddress), "CountyIdentity", typeof(SameTableAttribute))]
+
+    [AppliedAttribute(typeof(MailingAddress), "StateIdentity", typeof(SameTableAttribute))]
+    [AppliedAttribute(typeof(MailingAddress), "AddressPostalCode", typeof(SameTableAttribute))]
+    [AppliedAttribute(typeof(MailingAddress), "CountryIdentity", typeof(SameTableAttribute))]
+
+    [AppliedAttribute(typeof(Instrument), "DataSource", typeof(SameTableAttribute))]
+
+    [AppliedAttribute(typeof(Resource), "ElectronicAddress", typeof(SameTableAttribute))]
+
+    [AppliedAttribute(typeof(StateIdentity), "StateCodeListIdentifier", typeof(SameTableAttribute))]
+
+    [AppliedAttribute(typeof(CountryIdentity), "CountryCodeListIdentifier", typeof(SameTableAttribute))]
+
+    [AppliedAttribute(typeof(CountyIdentity), "CountyCodeListIdentifier", typeof(SameTableAttribute))]
 
     public partial class MappingAttributes
     {

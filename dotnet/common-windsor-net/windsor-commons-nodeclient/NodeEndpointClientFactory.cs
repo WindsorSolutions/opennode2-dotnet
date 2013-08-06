@@ -149,7 +149,7 @@ namespace Windsor.Commons.NodeClient
             }
             if (client == null)
             {
-                throw new ArgumentException(string.Format("The NAAS user \"{0}\" failed to authenticate against the node endpoint \"{1}\".  Please check that the NAAS user's passwords have been entered correctly.",
+                throw new ArgumentException(string.Format("The NAAS user \"{0}\" failed to authenticate against the node endpoint \"{1}\".  Please check that the NAAS user's username and password have been entered correctly.",
                                                           username, targetEndpointUrl));
             }
             return client;
