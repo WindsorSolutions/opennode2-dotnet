@@ -717,15 +717,18 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string CodeListVersionIdentifier;
+        [System.Xml.Serialization.XmlElementAttribute("CodeListVersionIdentifier")]// TSM
+        public string CoordinateDataSourceCodeListVersionIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string CodeListVersionAgencyIdentifier;
+        [System.Xml.Serialization.XmlElementAttribute("CodeListVersionAgencyIdentifier")]// TSM
+        public string CoordinateDataSourceCodeListVersionAgencyIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlTextAttribute()]
-        public string Value;
+        [System.Xml.Serialization.XmlElementAttribute("Value")]// TSM
+        public string CoordinateDataSourceValue;
     }
 
     /// <remarks/>
@@ -853,7 +856,8 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
 
         /// <remarks/>
         [System.Xml.Serialization.XmlTextAttribute()]
-        public string Value;
+        [System.Xml.Serialization.XmlElementAttribute("Value")]// TSM
+        public string FacilitySiteIdentifierValue;
     }
 
     /// <remarks/>
@@ -865,15 +869,18 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string CodeListVersionIdentifier;
+        [System.Xml.Serialization.XmlElementAttribute("CodeListVersionIdentifier")]// TSM
+        public string FacilitySiteTypeCodeListVersionIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string CodeListVersionAgencyIdentifier;
+        [System.Xml.Serialization.XmlElementAttribute("CodeListVersionAgencyIdentifier")]// TSM
+        public string FacilitySiteTypeCodeListVersionAgencyIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlTextAttribute()]
-        public string Value;
+        [System.Xml.Serialization.XmlElementAttribute("Value")]// TSM
+        public string FacilitySiteTypeCodeListIdentifierValue;
     }
 
     /// <remarks/>
@@ -963,7 +970,8 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
 
         /// <remarks/>
         [System.Xml.Serialization.XmlTextAttribute()]
-        public string Value;
+        [System.Xml.Serialization.XmlElementAttribute("Value")]// TSM
+        public string IndividualIdentifierValue;
     }
 
     /// <remarks/>
@@ -1002,40 +1010,92 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IC/1")]
     [System.Xml.Serialization.XmlRootAttribute("MeasureUnitCodeListIdentifier", Namespace = "http://www.exchangenetwork.net/schema/IC/1", IsNullable = false)]
-    public partial class MeasureUnitCodeListIdentifier
+    public partial class HorizontalAccuracyMeasureUnitCodeListIdentifier
     {
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string CodeListVersionIdentifier;
+        [System.Xml.Serialization.XmlElementAttribute("CodeListVersionIdentifier")]// TSM
+        public string HorizontalAccuracyMeasureUnitCodeListVersionIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string CodeListVersionAgencyIdentifier;
+        [System.Xml.Serialization.XmlElementAttribute("CodeListVersionAgencyIdentifier")]// TSM
+        public string HorizontalAccuracyMeasureUnitCodeListVersionAgencyIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlTextAttribute()]
-        public string Value;
+        [System.Xml.Serialization.XmlElementAttribute("Value")]// TSM
+        public string HorizontalAccuracyMeasureUnitValue;
     }
 
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IC/1")]
     [System.Xml.Serialization.XmlRootAttribute("MethodIdentifierCodeListIdentifier", Namespace = "http://www.exchangenetwork.net/schema/IC/1", IsNullable = false)]
-    public partial class MethodIdentifierCodeListIdentifier
+    public partial class HorizontalCollectionMethodIdentifierCodeListIdentifier
     {
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string CodeListVersionIdentifier;
+        [System.Xml.Serialization.XmlElementAttribute("CodeListVersionIdentifier")]// TSM
+        public string HorizontalCollectionMethodCodeListVersionIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string CodeListVersionAgencyIdentifier;
+        [System.Xml.Serialization.XmlElementAttribute("CodeListVersionAgencyIdentifier")]// TSM
+        public string HorizontalCollectionMethodCodeListVersionAgencyIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlTextAttribute()]
-        public string Value;
+        [System.Xml.Serialization.XmlElementAttribute("Value")]// TSM
+        public string HorizontalCollectionMethodValue;
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IC/1")]
+    [System.Xml.Serialization.XmlRootAttribute("MethodIdentifierCodeListIdentifier", Namespace = "http://www.exchangenetwork.net/schema/IC/1", IsNullable = false)]
+    public partial class VerticalCollectionMethodIdentifierCodeListIdentifier
+    {
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.Xml.Serialization.XmlElementAttribute("CodeListVersionIdentifier")]// TSM
+        public string VerticalCollectionMethodCodeListVersionIdentifier;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.Xml.Serialization.XmlElementAttribute("CodeListVersionAgencyIdentifier")]// TSM
+        public string VerticalCollectionMethodCodeListVersionAgencyIdentifier;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlTextAttribute()]
+        [System.Xml.Serialization.XmlElementAttribute("Value")]// TSM
+        public string VerticalCollectionMethodValue;
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IC/1")]
+    [System.Xml.Serialization.XmlRootAttribute("MethodIdentifierCodeListIdentifier", Namespace = "http://www.exchangenetwork.net/schema/IC/1", IsNullable = false)]
+    public partial class VerificationMethodIdentifierCodeListIdentifier
+    {
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.Xml.Serialization.XmlElementAttribute("CodeListVersionIdentifier")]// TSM
+        public string VerificationMethodCodeListVersionIdentifier;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.Xml.Serialization.XmlElementAttribute("CodeListVersionAgencyIdentifier")]// TSM
+        public string VerificationMethodCodeListVersionAgencyIdentifier;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlTextAttribute()]
+        [System.Xml.Serialization.XmlElementAttribute("Value")]// TSM
+        public string VerificationMethodValue;
     }
 
     /// <remarks/>
@@ -1084,7 +1144,8 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
 
         /// <remarks/>
         [System.Xml.Serialization.XmlTextAttribute()]
-        public string Value;
+        [System.Xml.Serialization.XmlElementAttribute("Value")]// TSM
+        public string OrganizationIdentifierValue;
     }
 
     /// <remarks/>
@@ -1175,20 +1236,23 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IC/1")]
     [System.Xml.Serialization.XmlRootAttribute("ReferencePointCodeListIdentifier", Namespace = "http://www.exchangenetwork.net/schema/IC/1", IsNullable = false)]
-    public partial class ReferencePointCodeListIdentifier
+    public partial class GeographicReferencePointCodeListIdentifier // TSM
     {
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string CodeListVersionIdentifier;
+        [System.Xml.Serialization.XmlElementAttribute("CodeListVersionIdentifier")]// TSM
+        public string GeographicReferencePointCodeListVersionIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string CodeListVersionAgencyIdentifier;
+        [System.Xml.Serialization.XmlElementAttribute("CodeListVersionAgencyIdentifier")]// TSM
+        public string GeographicReferencePointCodeListVersionAgencyIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlTextAttribute()]
-        public string Value;
+        [System.Xml.Serialization.XmlElementAttribute("Value")]// TSM
+        public string GeographicReferencePointValue;
     }
 
     /// <remarks/>
@@ -1231,20 +1295,23 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IC/1")]
     [System.Xml.Serialization.XmlRootAttribute("ResultQualifierCodeListIdentifier", Namespace = "http://www.exchangenetwork.net/schema/IC/1", IsNullable = false)]
-    public partial class ResultQualifierCodeListIdentifier
+    public partial class HorizontalAccuracyResultQualifierCodeListIdentifier
     {
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string CodeListVersionIdentifier;
+        [System.Xml.Serialization.XmlElementAttribute("CodeListVersionIdentifier")]// TSM
+        public string HorizontalAccuracyResultQualifierCodeListVersionIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string CodeListVersionAgencyIdentifier;
+        [System.Xml.Serialization.XmlElementAttribute("CodeListVersionAgencyIdentifier")]// TSM
+        public string HorizontalAccuracyResultQualifierCodeListVersionAgencyIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlTextAttribute()]
-        public string Value;
+        [System.Xml.Serialization.XmlElementAttribute("Value")]// TSM
+        public string HorizontalAccuracyResultQualifierValue;
     }
 
     /// <remarks/>
@@ -2147,65 +2214,56 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IC/1")]
-    [System.Xml.Serialization.XmlRootAttribute("InstrumentList", Namespace = "http://www.exchangenetwork.net/schema/IC/1", IsNullable = false)]
-    public partial class InstrumentListDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Instrument", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Describes an instututional control or non-engineered instrument.")]
-        public Instrument[] Instrument;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IC/1")]
     [System.Xml.Serialization.XmlRootAttribute("MeasureUnit", Namespace = "http://www.exchangenetwork.net/schema/IC/1", IsNullable = false)]
-    public partial class MeasureUnit
+    public partial class HorizontalAccuracyMeasureUnit // TSM
     {
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [System.ComponentModel.DescriptionAttribute("The code that represents the unit for measuring the item.")]
-        public string MeasureUnitCode;
+        [System.Xml.Serialization.XmlElementAttribute("MeasureUnitCode")]// TSM
+        public string HorizontalAccuracyMeasureUnitCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [System.ComponentModel.DescriptionAttribute("A designator specifying the code set used to provide a measurement unit code. Can" +
             " be used to identify the URL of a source that defines the set of currently appro" +
             "ved permitted values.")]
-        public MeasureUnitCodeListIdentifier MeasureUnitCodeListIdentifier;
+        public HorizontalAccuracyMeasureUnitCodeListIdentifier MeasureUnitCodeListIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [System.ComponentModel.DescriptionAttribute("A description of the unit of measure code.")]
-        public string MeasureUnitName;
+        [System.Xml.Serialization.XmlElementAttribute("MeasureUnitName")]// TSM
+        public string HorizontalAccuracyMeasureUnitName;
     }
 
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IC/1")]
     [System.Xml.Serialization.XmlRootAttribute("ResultQualifier", Namespace = "http://www.exchangenetwork.net/schema/IC/1", IsNullable = false)]
-    public partial class ResultQualifier
+    public partial class HorizontalAccuracyResultQualifier
     {
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [System.ComponentModel.DescriptionAttribute("A code used to identify any qualifying issues that affect the results.")]
-        public string ResultQualifierCode;
+        [System.Xml.Serialization.XmlElementAttribute("ResultQualifierCode")]// TSM
+        public string HorizontalAccuracyResultQualifierCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [System.ComponentModel.DescriptionAttribute("A designator specifying the code set used to provide a result qualifier code. Can" +
             " be used to identify the URL of a source that defines the set of currently appro" +
             "ved permitted values.")]
-        public ResultQualifierCodeListIdentifier ResultQualifierCodeListIdentifier;
+        public HorizontalAccuracyResultQualifierCodeListIdentifier ResultQualifierCodeListIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [System.ComponentModel.DescriptionAttribute("A description of the result code of any qualifying issues that affect the results" +
             ".")]
-        public string ResultQualifierName;
+        [System.Xml.Serialization.XmlElementAttribute("ResultQualifierName")]// TSM
+        public string HorizontalAccuracyResultQualifierName;
     }
 
     /// <remarks/>
@@ -2219,23 +2277,25 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [System.ComponentModel.DescriptionAttribute("The recorded dimension, capacity, quality, or amount of something ascertained by " +
             "measuring or observing.")]
-        public string MeasureValue;
+        [System.Xml.Serialization.XmlElementAttribute("MeasureValue")]// TSM
+        public string HorizontalAccuracyMeasureValue;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [System.ComponentModel.DescriptionAttribute("A designator and associated metadata used to identify a unit of measurement.")]
-        public MeasureUnit MeasureUnit;
+        public HorizontalAccuracyMeasureUnit MeasureUnit;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [System.ComponentModel.DescriptionAttribute("The precision of the recorded value.")]
-        public string MeasurePrecisionText;
+        [System.Xml.Serialization.XmlElementAttribute("MeasurePrecisionText")]// TSM
+        public string HorizontalAccuracyMeasurePrecisionText;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [System.ComponentModel.DescriptionAttribute("A designator and associated metadata used to identify any qualifying issues that " +
             "affect results.")]
-        public ResultQualifier ResultQualifier;
+        public HorizontalAccuracyResultQualifier ResultQualifier;
     }
 
     /// <remarks/>
@@ -2248,30 +2308,114 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [System.ComponentModel.DescriptionAttribute("The identification number or code assigned by the method publisher.")]
-        public string MethodIdentifierCode;
+        [System.Xml.Serialization.XmlElementAttribute("MethodIdentifierCode")]// TSM
+        public string HorizontalCollectionMethodIdentifierCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [System.ComponentModel.DescriptionAttribute("A designator specifying the code set used to provide a reference method code. Can" +
             " be used to identify the URL of a source that defines the set of currently appro" +
             "ved permitted values.")]
-        public MethodIdentifierCodeListIdentifier MethodIdentifierCodeListIdentifier;
+        public HorizontalCollectionMethodIdentifierCodeListIdentifier MethodIdentifierCodeListIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [System.ComponentModel.DescriptionAttribute("The title of the method that appears on the method from the organization that pub" +
             "lished it.")]
-        public string MethodName;
+        [System.Xml.Serialization.XmlElementAttribute("MethodName")]// TSM
+        public string HorizontalCollectionMethodName;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [System.ComponentModel.DescriptionAttribute("A brief summary that provides general information about the method.")]
-        public string MethodDescriptionText;
+        [System.Xml.Serialization.XmlElementAttribute("MethodDescriptionText")]// TSM
+        public string HorizontalCollectionMethodDescriptionText;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
         [System.ComponentModel.DescriptionAttribute("Text that identifies any deviations from the published method reference.")]
-        public string MethodDeviationsText;
+        [System.Xml.Serialization.XmlElementAttribute("MethodDeviationsText")]// TSM
+        public string HorizontalCollectionMethodDeviationsText;
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IC/1")]
+    [System.Xml.Serialization.XmlRootAttribute("ReferenceMethod", Namespace = "http://www.exchangenetwork.net/schema/IC/1", IsNullable = false)]
+    public partial class VerticalCollectionMethod
+    {
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [System.ComponentModel.DescriptionAttribute("The identification number or code assigned by the method publisher.")]
+        [System.Xml.Serialization.XmlElementAttribute("MethodIdentifierCode")]// TSM
+        public string VerticalCollectionMethodIdentifierCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        [System.ComponentModel.DescriptionAttribute("A designator specifying the code set used to provide a reference method code. Can" +
+            " be used to identify the URL of a source that defines the set of currently appro" +
+            "ved permitted values.")]
+        public VerticalCollectionMethodIdentifierCodeListIdentifier MethodIdentifierCodeListIdentifier;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
+        [System.ComponentModel.DescriptionAttribute("The title of the method that appears on the method from the organization that pub" +
+            "lished it.")]
+        [System.Xml.Serialization.XmlElementAttribute("MethodName")]// TSM
+        public string VerticalCollectionMethodName;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
+        [System.ComponentModel.DescriptionAttribute("A brief summary that provides general information about the method.")]
+        [System.Xml.Serialization.XmlElementAttribute("MethodDescriptionText")]// TSM
+        public string VerticalCollectionMethodDescriptionText;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
+        [System.ComponentModel.DescriptionAttribute("Text that identifies any deviations from the published method reference.")]
+        [System.Xml.Serialization.XmlElementAttribute("MethodDeviationsText")]// TSM
+        public string VerticalCollectionMethodDeviationsText;
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IC/1")]
+    [System.Xml.Serialization.XmlRootAttribute("ReferenceMethod", Namespace = "http://www.exchangenetwork.net/schema/IC/1", IsNullable = false)]
+    public partial class VerificationMethod
+    {
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [System.ComponentModel.DescriptionAttribute("The identification number or code assigned by the method publisher.")]
+        [System.Xml.Serialization.XmlElementAttribute("MethodIdentifierCode")]// TSM
+        public string VerificationMethodIdentifierCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        [System.ComponentModel.DescriptionAttribute("A designator specifying the code set used to provide a reference method code. Can" +
+            " be used to identify the URL of a source that defines the set of currently appro" +
+            "ved permitted values.")]
+        public VerificationMethodIdentifierCodeListIdentifier MethodIdentifierCodeListIdentifier;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
+        [System.ComponentModel.DescriptionAttribute("The title of the method that appears on the method from the organization that pub" +
+            "lished it.")]
+        [System.Xml.Serialization.XmlElementAttribute("MethodName")]// TSM
+        public string VerificationMethodName;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
+        [System.ComponentModel.DescriptionAttribute("A brief summary that provides general information about the method.")]
+        [System.Xml.Serialization.XmlElementAttribute("MethodDescriptionText")]// TSM
+        public string VerificationMethodDescriptionText;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
+        [System.ComponentModel.DescriptionAttribute("Text that identifies any deviations from the published method reference.")]
+        [System.Xml.Serialization.XmlElementAttribute("MethodDeviationsText")]// TSM
+        public string VerificationMethodDeviationsText;
     }
 
     /// <remarks/>
@@ -2292,7 +2436,7 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
         [System.ComponentModel.DescriptionAttribute("A designator specifying the code set used to provide a geographic reference point" +
             " code. Can be used to identify the URL of a source that defines the set of curre" +
             "ntly approved permitted values.")]
-        public ReferencePointCodeListIdentifier ReferencePointCodeListIdentifier;
+        public GeographicReferencePointCodeListIdentifier ReferencePointCodeListIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
@@ -2385,104 +2529,6 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IC/1")]
-    [System.Xml.Serialization.XmlRootAttribute("GeographicLocationDescription", Namespace = "http://www.exchangenetwork.net/schema/IC/1", IsNullable = false)]
-    public partial class GeographicLocationDescriptionDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("The measure of the angular distance on a meridian north or south of the equator.")]
-        public string LatitudeMeasure;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
-        [System.ComponentModel.DescriptionAttribute("The measure of the angular distance on a meridian east or west of the prime merid" +
-            "ian.")]
-        public string LongitudeMeasure;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 2)]
-        [System.ComponentModel.DescriptionAttribute("The number that represents the proportional distance on the ground for one unit o" +
-            "f measure on the map or photo.")]
-        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string SourceMapScaleNumber;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
-        [System.ComponentModel.DescriptionAttribute("The measure of the accuracy of the latitude and longitude coordinates.")]
-        public HorizontalAccuracyMeasure HorizontalAccuracyMeasure;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
-        [System.ComponentModel.DescriptionAttribute("Information that describes the method used to determine the latitude and longitud" +
-            "e coordinates for a point on the earth.")]
-        public HorizontalCollectionMethod HorizontalCollectionMethod;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
-        [System.ComponentModel.DescriptionAttribute("A designator and associated metadata used to identify a geographic reference poin" +
-            "t.")]
-        public GeographicReferencePoint GeographicReferencePoint;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
-        [System.ComponentModel.DescriptionAttribute("Information that describes the reference datum used in determining latitude and l" +
-            "ongitude coordinates.")]
-        public HorizontalReferenceDatum HorizontalReferenceDatum;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 7)]
-        [System.ComponentModel.DescriptionAttribute("The calendar date when data were collected.")]
-        public System.DateTime DataCollectionDate;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool DataCollectionDateSpecified;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
-        [System.ComponentModel.DescriptionAttribute("The text that provides additional information about the geographic coordinates.")]
-        public string LocationCommentsText;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
-        [System.ComponentModel.DescriptionAttribute("The measure of elevation (i.e. the altitude) above or below are reference datum.")]
-        public HorizontalAccuracyMeasure VerticalMeasure;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 10)]
-        [System.ComponentModel.DescriptionAttribute("Information that describes the method used to collect the vertical measure(i.e., " +
-            "the altitude) of a reference point.")]
-        public HorizontalCollectionMethod VerticalCollectionMethod;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
-        [System.ComponentModel.DescriptionAttribute("Information that describes the reference datum used to determine the vertical mea" +
-            "sure (i.e., the altitude).")]
-        public HorizontalReferenceDatum VerticalReferenceDatum;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 12)]
-        [System.ComponentModel.DescriptionAttribute("Information that describes the method or process used to verify the latitude and " +
-            "longitude coordinates.")]
-        public HorizontalCollectionMethod VerificationMethod;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 13)]
-        [System.ComponentModel.DescriptionAttribute("A designator and associated metadata used to identify a data source of coordinate" +
-            " data.")]
-        public CoordinateDataSource CoordinateDataSource;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 14)]
-        [System.ComponentModel.DescriptionAttribute("A designator and associated metadata used to identify a geometric entity represen" +
-            "ted by one point or a sequence of points.")]
-        public GeometricType GeometricType;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IC/1")]
     [System.Xml.Serialization.XmlRootAttribute("ICGeographicLocationDescription", Namespace = "http://www.exchangenetwork.net/schema/IC/1", IsNullable = false)]
     public partial class ICGeographicLocationDescriptionDataType
     {
@@ -2536,13 +2582,13 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
         [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
         [System.ComponentModel.DescriptionAttribute("Information that describes the method used to collect the vertical measure(i.e., " +
             "the altitude) of a reference point.")]
-        public HorizontalCollectionMethod VerticalCollectionMethod;
+        public VerticalCollectionMethod VerticalCollectionMethod;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
         [System.ComponentModel.DescriptionAttribute("Information that describes the method or process used to verify the latitude and " +
             "longitude coordinates.")]
-        public HorizontalCollectionMethod VerificationMethod;
+        public VerificationMethod VerificationMethod;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
@@ -3160,20 +3206,6 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IC/1")]
-    [System.Xml.Serialization.XmlRootAttribute("ICLocationList", Namespace = "http://www.exchangenetwork.net/schema/IC/1", IsNullable = false)]
-    public partial class ICLocationListDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("ICLocation", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("A physical location or area defined by a geographic area description, tax parcel," +
-            " or facility address.")]
-        public ICLocation[] ICLocation;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IC/1")]
     [System.Xml.Serialization.XmlRootAttribute("IndividualIdentity", Namespace = "http://www.exchangenetwork.net/schema/IC/1", IsNullable = false)]
     public partial class IndividualIdentityDataType
     {
@@ -3325,34 +3357,6 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IC/1")]
-    [System.Xml.Serialization.XmlRootAttribute("TelephonicList", Namespace = "http://www.exchangenetwork.net/schema/IC/1", IsNullable = false)]
-    public partial class TelephonicListDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Telephonic", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("An identification of a telephone connection.")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public Telephonic[] Telephonic;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IC/1")]
-    [System.Xml.Serialization.XmlRootAttribute("ElectronicAddressList", Namespace = "http://www.exchangenetwork.net/schema/IC/1", IsNullable = false)]
-    public partial class ElectronicAddressListDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("ElectronicAddress", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("A location within a system of worldwide electronic communication where a computer" +
-            " user can access information or receive electronic mail.")]
-        public ElectronicAddress[] ElectronicAddress;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IC/1")]
     [System.Xml.Serialization.XmlRootAttribute("Affiliate", Namespace = "http://www.exchangenetwork.net/schema/IC/1", IsNullable = false)]
     public partial class Affiliate
     {
@@ -3389,19 +3393,6 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IC/1")]
-    [System.Xml.Serialization.XmlRootAttribute("AffiliateList", Namespace = "http://www.exchangenetwork.net/schema/IC/1", IsNullable = false)]
-    public partial class AffiliateListDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Affiliate", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Describes an individual or organization.")]
-        public Affiliate[] Affiliate;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IC/1")]
     [System.Xml.Serialization.XmlRootAttribute("InstitutionalControlsDocument", Namespace = "http://www.exchangenetwork.net/schema/IC/1", IsNullable = false)]
     public partial class InstitutionalControlsDocumentDataType
     {
@@ -3425,120 +3416,5 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
         [System.Xml.Serialization.XmlArrayItemAttribute("Affiliate", IsNullable = false)]
         [System.ComponentModel.DescriptionAttribute("A container for one or more individuals or organizations.")]
         public Affiliate[] AffiliateList;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.opengis.net/gml")]
-    [System.Xml.Serialization.XmlRootAttribute("CircleByCenterPoint", Namespace = "http://www.opengis.net/gml", IsNullable = false)]
-    public partial class CircleByCenterPointType : ArcByCenterPointType
-    {
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(CircleByCenterPointType))]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.opengis.net/gml")]
-    [System.Xml.Serialization.XmlRootAttribute("ArcByCenterPoint", Namespace = "http://www.opengis.net/gml", IsNullable = false)]
-    public partial class ArcByCenterPointType : AbstractCurveSegmentType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("pos", Order = 0)]
-        public pos Item;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
-        public radius radius;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public interpolation interpolation;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool interpolationSpecified;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "integer")]
-        public string numArc;
-
-        public ArcByCenterPointType()
-        {
-            this.interpolation = interpolation.circularArcCenterPointWithRadius;
-            this.numArc = "1";
-        }
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.opengis.net/gml")]
-    public partial class radius : MeasureType
-    {
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.opengis.net/gml")]
-    public partial class MeasureType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "anyURI")]
-        public string uom;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlTextAttribute()]
-        public double Value;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.opengis.net/gml")]
-    public enum interpolation
-    {
-
-        /// <remarks/>
-        linear,
-
-        /// <remarks/>
-        geodesic,
-
-        /// <remarks/>
-        circularArc3Points,
-
-        /// <remarks/>
-        circularArc2PointWithBulge,
-
-        /// <remarks/>
-        circularArcCenterPointWithRadius,
-
-        /// <remarks/>
-        elliptical,
-
-        /// <remarks/>
-        clothoid,
-
-        /// <remarks/>
-        conic,
-
-        /// <remarks/>
-        polynomialSpline,
-
-        /// <remarks/>
-        cubicSpline,
-
-        /// <remarks/>
-        rationalSpline,
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ArcByCenterPointType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(CircleByCenterPointType))]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.opengis.net/gml")]
-    [System.Xml.Serialization.XmlRootAttribute("_CurveSegment", Namespace = "http://www.opengis.net/gml", IsNullable = false)]
-    public abstract partial class AbstractCurveSegmentType
-    {
     }
 }

@@ -3,9 +3,14 @@ using Windsor.Commons.XsdOrm2;
 namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
 {
     [DefaultTableNamePrefixAttribute("IC")]
+    [DefaultDecimalPrecision(19, 14)]
     [RemovePostfixNamesFromTableAndColumnNamesAttribute("Data", "Details", "Code")]
     [NameReplacementsAttribute(
         "TRANSACTION_HEADER", ""
+        , "TYPE_CODE", "CODE"
+        , "TYPE_CODE_LIST", "LST"
+        , "CODE_LIST", "LST"
+        , "COORD_DATA", "COORD"
         , "INSTITUTIONAL", "INSTL"
         , "VIOLATION_KEY_ELEMENTS", "VIOLATION_ELEMENTS"
         , "STORM_WATER", "SW"
@@ -80,7 +85,7 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
         , "CONGRESSIONAL", "CONGR"
         , "CONSTRUCTION", "CNST"
         , "LATITUDE", "LAT"
-        , "LONGITUDE", "LONG"
+        , "LONGITUDE", "LON"
         , "CLASSIFICATION", "CLASS"
         , "PROGRAMS", "PROGS"
         , "PROGRAM", "PROG"
@@ -88,7 +93,8 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
         , "AFFILIATE", "AFFIL"
         , "INDIVIDUAL", "INDVL"
         , "ELECTRONIC", "ELEC"
-        , "TELEPHONE", "TELEPH"
+        , "TELEPHONE", "TELE"
+        , "TELEPHONIC", "TELE"
         , "EXTENSION", "EXT"
         , "REFERENCE", "REF"
         , "COLLECTION", "COLL"
@@ -252,7 +258,7 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
         , "INCINERATOR", "INCIN"
         , "POLICY", "PLCY"
         , "TREATMENT", "TRTMNT"
-        , "AGENCY", "AGNCY"
+        , "AGENCY", "AGCY"
         , "SOURCES", "SRCS"
         , "SOURCE", "SRC"
         , "FUNDING", "FUND"
@@ -262,14 +268,14 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
         , "MANURE", "MNUR"
         , "ANNUAL", "ANNUL"
         , "DOCUMENT", "DOC"
-        , "CONTROLS", "CNTRLS"
-        , "CONTROL", "CNTRL"
+        , "CONTROLS", "CTRLS"
+        , "CONTROL", "CTRL"
         , "OBJECTIVE", "OBJTV"
         , "RESOURCE", "RSRC"
         , "INSTRUMENT", "INSTR"
-        , "RECURRING", "RECUR"
+        , "RECURRING", "RECR"
         , "ENGINEERING", "ENGR"
-        , "CONTAMINANT", "CNTMNT"
+        , "CONTAMINANT", "CNTMT"
         , "REGISTRY", "REG"
         , "DEFINITION", "DEF"
         , "SUBSTANCE", "SUBST"
@@ -277,20 +283,20 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
         , "INFORMATION", "INFO"
         , "SYSTEM", "INFO"
         , "QUALIFIER", "QUAL"
-        , "TELEPHONIC", "TELE"
         , "VERSION", "VERS"
         , "IDENTITY", "IDTY"
-        , "ACRONYM", "ACRNYM"
+        , "ACRONYM", "ACNYM"
         , "COUNTRY", "CNTRY"
         , "LIST", "LST"
         , "SITE", "SITE"
-        , "TYPE_CODE", "CODE"
-        , "COORD_DATA", "COORD"
-        , "RESTRICTION", "RSTRCT"
-        , "RESTRICTIVE", "RSTRCT"
-        , "RESTRICT", "RSTRCT"
+        , "RESTRICTION", "RSTCT"
+        , "RESTRICTIVE", "RSTCT"
+        , "RESTRICT", "RSTCT"
         , "RESULT", "RSLT"
         , "COUNTY", "CNTY"
+        , "ACCURACY", "ACCY"
+        , "VERIFICATION", "VERIF"
+        , "POINT", "PT"
 )]
 
     [DefaultElementNamePostfixLengthsAttribute(
@@ -307,7 +313,7 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
                     "NumberText", "20",
                     "Indicator", "50",
                     "IndividualFullName", "255",
-                    "srsName", "1024",
+                    "srsName", "255",
                     "doubleList", "4000"
     )]
 
@@ -341,6 +347,45 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
     [AppliedAttribute(typeof(CountryIdentity), "CountryCodeListIdentifier", typeof(SameTableAttribute))]
 
     [AppliedAttribute(typeof(CountyIdentity), "CountyCodeListIdentifier", typeof(SameTableAttribute))]
+
+    [AppliedAttribute(typeof(FacilitySiteIdentity), "FacilitySiteIdentifier", typeof(SameTableAttribute))]
+
+    [AppliedAttribute(typeof(FacilitySiteIdentity), "FacilitySiteType", typeof(SameTableAttribute))]
+
+    [AppliedAttribute(typeof(FacilityDataType), "FacilitySiteIdentity", typeof(SameTableAttribute))]
+    [AppliedAttribute(typeof(FacilityDataType), "LocationAddress", typeof(SameTableAttribute))]
+
+    [AppliedAttribute(typeof(ICGeographicLocationDescriptionDataType), "HorizontalAccuracyMeasure", typeof(SameTableAttribute))]
+    [AppliedAttribute(typeof(ICGeographicLocationDescriptionDataType), "HorizontalCollectionMethod", typeof(SameTableAttribute))]
+    [AppliedAttribute(typeof(ICGeographicLocationDescriptionDataType), "GeographicReferencePoint", typeof(SameTableAttribute))]
+    [AppliedAttribute(typeof(ICGeographicLocationDescriptionDataType), "VerticalCollectionMethod", typeof(SameTableAttribute))]
+    [AppliedAttribute(typeof(ICGeographicLocationDescriptionDataType), "VerificationMethod", typeof(SameTableAttribute))]
+    [AppliedAttribute(typeof(ICGeographicLocationDescriptionDataType), "CoordinateDataSource", typeof(SameTableAttribute))]
+
+    [AppliedAttribute(typeof(HorizontalAccuracyMeasure), "MeasureUnit", typeof(SameTableAttribute))]
+    [AppliedAttribute(typeof(HorizontalAccuracyMeasure), "ResultQualifier", typeof(SameTableAttribute))]
+
+    [AppliedAttribute(typeof(HorizontalAccuracyMeasureUnit), "MeasureUnitCodeListIdentifier", typeof(SameTableAttribute))]
+
+    [AppliedAttribute(typeof(HorizontalAccuracyResultQualifier), "ResultQualifierCodeListIdentifier", typeof(SameTableAttribute))]
+
+    [AppliedAttribute(typeof(HorizontalCollectionMethod), "MethodIdentifierCodeListIdentifier", typeof(SameTableAttribute))]
+
+    [AppliedAttribute(typeof(GeographicReferencePoint), "ReferencePointCodeListIdentifier", typeof(SameTableAttribute))]
+
+    [AppliedAttribute(typeof(CoordinateDataSource), "CoordinateDataSourceCodeListIdentifier", typeof(SameTableAttribute))]
+
+    [AppliedAttribute(typeof(VerticalCollectionMethod), "MethodIdentifierCodeListIdentifier", typeof(SameTableAttribute))]
+
+    [AppliedAttribute(typeof(VerificationMethod), "MethodIdentifierCodeListIdentifier", typeof(SameTableAttribute))]
+
+    [AppliedAttribute(typeof(Affiliate), "MailingAddress", typeof(SameTableAttribute))]
+    [AppliedAttribute(typeof(Affiliate), "IndividualIdentity", typeof(SameTableAttribute))]
+    [AppliedAttribute(typeof(Affiliate), "OrganizationIdentity", typeof(SameTableAttribute))]
+
+    [AppliedAttribute(typeof(IndividualIdentityDataType), "IndividualIdentifier", typeof(SameTableAttribute))]
+
+    [AppliedAttribute(typeof(OrganizationIdentityDataType), "OrganizationIdentifier", typeof(SameTableAttribute))]
 
     public partial class MappingAttributes
     {
@@ -389,30 +434,82 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
     public partial class ICGeographicLocationDescriptionDataType
     {
         [XmlIgnore] // Before/AfterSaveToDatabase
-        public EnvelopeType Envelope;
+        public string srsName;
 
         [XmlIgnore] // Before/AfterSaveToDatabase
-        public LineString LineString;
+        public int srsDimension;
 
         [XmlIgnore] // Before/AfterSaveToDatabase
-        public pos Point;
+        public bool srsDimensionSpecified;
 
-        //[XmlIgnore] // Before/AfterSaveToDatabase
-        public Polygon Polygon;
+        [XmlIgnore] // Before/AfterSaveToDatabase
+        public decimal PointLatitude;
+
+        [XmlIgnore] // Before/AfterSaveToDatabase
+        public bool PointLatitudeSpecified;
+
+        [XmlIgnore] // Before/AfterSaveToDatabase
+        public decimal PointLongitude;
+
+        [XmlIgnore] // Before/AfterSaveToDatabase
+        public bool PointLongitudeSpecified;
+
+        [XmlIgnore] // Before/AfterSaveToDatabase
+        public decimal EnvelopeUpperLatitude;
+
+        [XmlIgnore] // Before/AfterSaveToDatabase
+        public bool EnvelopeUpperLatitudeSpecified;
+
+        [XmlIgnore] // Before/AfterSaveToDatabase
+        public decimal EnvelopeUpperLongitude;
+
+        [XmlIgnore] // Before/AfterSaveToDatabase
+        public bool EnvelopeUpperLongitudeSpecified;
+
+        [XmlIgnore] // Before/AfterSaveToDatabase
+        public decimal EnvelopeLowerLatitude;
+
+        [XmlIgnore] // Before/AfterSaveToDatabase
+        public bool EnvelopeLowerLatitudeSpecified;
+
+        [XmlIgnore] // Before/AfterSaveToDatabase
+        public decimal EnvelopeLowerLongitude;
+
+        [XmlIgnore] // Before/AfterSaveToDatabase
+        public bool EnvelopeLowerLongitudeSpecified;
+
+        [XmlIgnore] // Before/AfterSaveToDatabase
+        public decimal LineStartLatitude;
+
+        [XmlIgnore] // Before/AfterSaveToDatabase
+        public bool LineStartLatitudeSpecified;
+
+        [XmlIgnore] // Before/AfterSaveToDatabase
+        public decimal LineStartLongitude;
+
+        [XmlIgnore] // Before/AfterSaveToDatabase
+        public bool LineStartLongitudeSpecified;
+
+        [XmlIgnore] // Before/AfterSaveToDatabase
+        public decimal LineEndLatitude;
+
+        [XmlIgnore] // Before/AfterSaveToDatabase
+        public bool LineEndLatitudeSpecified;
+
+        [XmlIgnore] // Before/AfterSaveToDatabase
+        public decimal LineEndLongitude;
+
+        [XmlIgnore] // Before/AfterSaveToDatabase
+        public bool LineEndLongitudeSpecified;
+
+        [XmlIgnore] // Before/AfterSaveToDatabase
+        public LatitudeLongitudePoint[] Polygon;
     }
 
-    public partial class EnvelopeType
+    public partial class LatitudeLongitudePoint
     {
-        [XmlIgnore] // Before/AfterSaveToDatabase
-        public pos LowerCorner;
+        public decimal Latitude;
 
-        [XmlIgnore] // Before/AfterSaveToDatabase
-        public pos UpperCorner;
-    }
-    public partial class LineString : posList
-    {
-    }
-    public partial class Polygon : posList
-    {
+        public decimal Longitude;
     }
 }

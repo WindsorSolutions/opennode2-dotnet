@@ -39,7 +39,7 @@ using System.Xml.Serialization;
 using System.ComponentModel;
 using Windsor.Commons.Core;
 
-namespace Windsor.Commons.XsdOrm2.Implementations 
+namespace Windsor.Commons.XsdOrm2.Implementations
 {
     public class SameTableElementInfo : MemberInfoWrapper
     {
@@ -132,7 +132,8 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                 do
                 {
                     ParentToMemberChain.Add(nextSameTableElementInfo);
-                    nextSameTableElementInfo = sameTableElementInfo.ParentSameTableElementInfo;
+                    //TSM: Bug fix: nextSameTableElementInfo = sameTableElementInfo.ParentSameTableElementInfo;
+                    nextSameTableElementInfo = nextSameTableElementInfo.ParentSameTableElementInfo;
                 } while (nextSameTableElementInfo != null);
                 ParentToMemberChain.Reverse();
             }
