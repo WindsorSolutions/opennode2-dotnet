@@ -352,6 +352,8 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
 
     [AppliedAttribute(typeof(FacilitySiteIdentity), "FacilitySiteType", typeof(SameTableAttribute))]
 
+    [AppliedAttribute(typeof(FacilitySiteType), "FacilitySiteTypeCodeListIdentifier", typeof(SameTableAttribute))]
+
     [AppliedAttribute(typeof(FacilityDataType), "FacilitySiteIdentity", typeof(SameTableAttribute))]
     [AppliedAttribute(typeof(FacilityDataType), "LocationAddress", typeof(SameTableAttribute))]
 
@@ -407,15 +409,19 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
     public partial class IndividualIdentityDataType
     {
         [XmlIgnore] // Before/AfterSaveToDatabase
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSize(50)]
         public string FirstName;
 
         [XmlIgnore] // Before/AfterSaveToDatabase
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSize(100)]
         public string IndividualFullName;
 
         [XmlIgnore] // Before/AfterSaveToDatabase
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSize(50)]
         public string LastName;
 
         [XmlIgnore] // Before/AfterSaveToDatabase
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSize(50)]
         public string MiddleName;
     }
 
@@ -503,13 +509,15 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
         public bool LineEndLongitudeSpecified;
 
         [XmlIgnore] // Before/AfterSaveToDatabase
-        public LatitudeLongitudePoint[] Polygon;
+        public LatitudeLongitudePolygon[] Polygon;
     }
 
-    public partial class LatitudeLongitudePoint
+    public partial class LatitudeLongitudePolygon
     {
+        [DbNotNull()]
         public decimal Latitude;
 
+        [DbNotNull()]
         public decimal Longitude;
     }
 }

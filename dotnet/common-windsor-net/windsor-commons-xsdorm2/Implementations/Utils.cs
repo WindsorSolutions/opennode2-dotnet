@@ -46,15 +46,16 @@ namespace Windsor.Commons.XsdOrm2.Implementations
 {
     public static class Utils
     {
+        public const int MAX_DEFAULT_CHARS = 80;
         public const char NAME_SEPARATOR_CHAR = '_';
         public static readonly string NAME_SEPARATOR = new string(NAME_SEPARATOR_CHAR, 1);
         public static readonly string[] NAME_SEPARATOR_ARRAY = new string[] { NAME_SEPARATOR };
         public static readonly char[] VOWLES = new char[] { 'A', 'E', 'I', 'O', 'U' };
         public static readonly string ID_NAME_POSTIFX = NAME_SEPARATOR + "ID";
-        public const int MAX_COLUMN_NAME_CHARS = 30;
         public static readonly int MAX_TABLE_NAME_CHARS = MAX_COLUMN_NAME_CHARS - ID_NAME_POSTIFX.Length;
-        public const int MAX_CONSTRAINT_NAME_CHARS = 30;
-        public const int MAX_INDEX_NAME_CHARS = 30;
+        public const int MAX_COLUMN_NAME_CHARS = MAX_DEFAULT_CHARS;
+        public const int MAX_CONSTRAINT_NAME_CHARS = MAX_DEFAULT_CHARS;
+        public const int MAX_INDEX_NAME_CHARS = MAX_DEFAULT_CHARS;
         public const int GUID_NUM_CHARS = 36;
 
         public static string ColumnPath(string tableName, string columnName)
@@ -453,7 +454,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                     members.AddRange(fields);
                 }
                 curType = curType.BaseType;
-            } 
+            }
             while (curType != null);
             members.Reverse();
             return members;

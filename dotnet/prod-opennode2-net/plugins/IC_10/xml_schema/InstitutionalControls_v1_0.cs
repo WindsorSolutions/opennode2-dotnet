@@ -455,6 +455,7 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
         /// <remarks/>
         [System.Xml.Serialization.XmlTextAttribute()]
         [System.Xml.Serialization.XmlElementAttribute("Value")]// TSM
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSize(25)]
         public string AddressPostalCodeValue;
     }
 
@@ -966,11 +967,13 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSize(50)]
         public string IndividualIdentifierContext;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlTextAttribute()]
         [System.Xml.Serialization.XmlElementAttribute("Value")]// TSM
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSize(50)]
         public string IndividualIdentifierValue;
     }
 
@@ -1140,6 +1143,7 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSize(50)]
         public string OrganizationIdentifierContext;
 
         /// <remarks/>
@@ -1529,6 +1533,7 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
         [System.ComponentModel.DescriptionAttribute("The abbreviated name that represents the name of an information management system" +
             " for an environmental program.")]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSize(50)]
         public string InformationSystemAcronymName;
 
         /// <remarks/>
@@ -1551,6 +1556,7 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
         [System.ComponentModel.DescriptionAttribute("The name assigned to a physical technology implemented to minimize the potential " +
             "for human exposure to contamination by means of control or remediation.")]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSize(50)]
         public string EngineeringControlName;
 
         /// <remarks/>
@@ -1639,6 +1645,7 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [System.ComponentModel.DescriptionAttribute("A name given to the resource.")]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSize(50)]
         public string ResourceName;
 
         /// <remarks/>
@@ -1649,6 +1656,7 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [System.ComponentModel.DescriptionAttribute("The nature or genre of the content of the resource.")]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSize(50)]
         public string ResourceTypeText;
 
         /// <remarks/>
@@ -1760,6 +1768,7 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
         [System.ComponentModel.DescriptionAttribute("An attribute for describing the status of the event.")]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSize(50)]
         public string EventStatusText;
 
         /// <remarks/>
@@ -2036,6 +2045,7 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
         [System.ComponentModel.DescriptionAttribute("The name assigned to an administrative measure and/or legal mechanism that establ" +
             "ishes a specific set of land or resource use restrictions.")]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSize(255)]
         public string InstrumentName;
 
         /// <remarks/>
@@ -2984,6 +2994,7 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [System.ComponentModel.DescriptionAttribute("A name used to identify a principal administrative subdivision of the United Stat" +
             "es, Canada, or Mexico.")]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSize(50)]
         public string StateName;
     }
 
@@ -3009,6 +3020,7 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [System.ComponentModel.DescriptionAttribute("A name used to identify a primary geopolitical unit of the world.")]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSize(50)]
         public string CountryName;
     }
 
@@ -3034,6 +3046,7 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [System.ComponentModel.DescriptionAttribute("A description of the county code.")]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSize(50)]
         public string CountyName;
     }
 
@@ -3216,11 +3229,13 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [System.ComponentModel.DescriptionAttribute("The title held by a person in an organization.")]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSize(50)]
         public string IndividualTitleText;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [System.ComponentModel.DescriptionAttribute("The text that describes the title that precedes an individual\'s name.")]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSize(50)]
         public string NamePrefixText;
 
         /// <remarks/>
@@ -3239,6 +3254,7 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
         [System.ComponentModel.DescriptionAttribute("Additional title that indicates lineage or professional title.")]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSize(50)]
         public string NameSuffixText;
     }
 
@@ -3282,6 +3298,7 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [System.ComponentModel.DescriptionAttribute("The legal designator (i.e. formal name) of an organization.")]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSize(255)]
         public string OrganizationFormalName;
     }
 
@@ -3308,6 +3325,7 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [System.ComponentModel.DescriptionAttribute("The name of the city, town, or village where the mail is delivered.")]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSize(50)]
         public string MailingAddressCityName;
 
         /// <remarks/>
@@ -3343,6 +3361,7 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [System.ComponentModel.DescriptionAttribute("The name that describes a telephone number type.")]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSize(50)]
         public string TelephoneNumberTypeName;
 
         /// <remarks/>
