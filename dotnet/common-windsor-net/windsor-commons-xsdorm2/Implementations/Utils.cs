@@ -46,7 +46,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
 {
     public static class Utils
     {
-        public const int MAX_DEFAULT_CHARS = 80;
+        public const int MAX_DEFAULT_CHARS = 30;
         public const char NAME_SEPARATOR_CHAR = '_';
         public static readonly string NAME_SEPARATOR = new string(NAME_SEPARATOR_CHAR, 1);
         public static readonly string[] NAME_SEPARATOR_ARRAY = new string[] { NAME_SEPARATOR };

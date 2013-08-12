@@ -75,9 +75,12 @@
       <Link>AssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AQSCommonUtils.cs" />
+    <Compile Include="AqsDeserializeCsv.cs" />
     <Compile Include="AQSExtractAndSubmission.cs" />
     <Compile Include="AQSGetDataFromDatabase.cs" />
     <Compile Include="AQSGetRawData.cs" />
+    <Compile Include="AQSPersistDataToDatabase.cs" />
+    <Compile Include="CsvFileImporter.cs" />
     <Compile Include="Data.cs" />
     <Compile Include="ExecuteAQSRawDataImport.cs" />
     <Compile Include="GetAQSRawDataInsertByDate.cs" />

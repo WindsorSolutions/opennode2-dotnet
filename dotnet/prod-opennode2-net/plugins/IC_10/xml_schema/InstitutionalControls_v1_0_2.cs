@@ -7,8 +7,13 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
     [RemovePostfixNamesFromTableAndColumnNamesAttribute("Data", "Details", "Code")]
     [NameReplacementsAttribute(
         "TRANSACTION_HEADER", ""
-        , "TYPE_CODE", "CODE"
+        , "HORIZONTAL_ACCURACY", "HORZ"
+        , "RESULT_QUALIFIER_CODE_LIST", "LST"
+        , "RESULT_QUALIFIER_LIST_AGENCY", "LST"
+        , "TYPE_CODE_LIST_VERSION", "LST"
         , "TYPE_CODE_LIST", "LST"
+        , "TYPE_CODE", "CODE"
+        , "CODE_LIST_VERSION", "LST"
         , "CODE_LIST", "LST"
         , "COORD_DATA", "COORD"
         , "INSTITUTIONAL", "INSTL"
@@ -273,6 +278,7 @@ namespace Windsor.Node2008.WNOSPlugin.InstitutionalControls_10
         , "OBJECTIVE", "OBJTV"
         , "RESOURCE", "RSRC"
         , "INSTRUMENT", "INSTR"
+        , "METHOD", "METH"
         , "RECURRING", "RECR"
         , "ENGINEERING", "ENGR"
         , "CONTAMINANT", "CNTMT"

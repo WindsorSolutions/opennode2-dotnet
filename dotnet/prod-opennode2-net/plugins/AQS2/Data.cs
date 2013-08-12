@@ -161,10 +161,10 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
                         "WHERE S.AQS_MONITOR_ID_FK = {4}";
                     break;
 
- 
-               case Tables.MonitorObjectiveInformation:
 
-                    sql = "SELECT S.AQS_MONITOR_OBJ_INFO_PK, S.MONITOR_OBJ_ID, S.ACTION_CD, S.URBAN_AREA_REP_CD, S.METRO_SA_REP_CD, " + 
+                case Tables.MonitorObjectiveInformation:
+
+                    sql = "SELECT S.AQS_MONITOR_OBJ_INFO_PK, S.MONITOR_OBJ_ID, S.ACTION_CD, S.URBAN_AREA_REP_CD, S.METRO_SA_REP_CD, " +
                           "S.COVE_BS_REP_CD, S.COMBINED_SA_REP_CD " +
                         "FROM AQS_MONITOR_OBJ_INFO S  " +
                         "WHERE S.AQS_MONITOR_ID_FK = {4}";
@@ -200,7 +200,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
                     break;
 
 
-               case Tables.TransactionRawCompositeInformation:
+                case Tables.TransactionRawCompositeInformation:
 
                     sql = "SELECT DISTINCT R.AQS_RAW_COMP_INFO_PK, R.ACTION_CD, R.OBSERVATION_YEAR, R.COMP_PERIOD_CD, " +
                         "R.SAMPLES_COUNT, R.COMP_SMPL_VALUE, R.UNCERTAINTY_VALUE " +
@@ -214,7 +214,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
                     break;
 
 
-               case Tables.TransactionRawAccuracyInformation:
+                case Tables.TransactionRawAccuracyInformation:
 
                     sql = "SELECT DISTINCT R.AQS_RAW_ACCU_INFO_PK, R.ACTION_CD, R.ACCU_AUDIT_ID_NUM, R.AUDIT_YEAR, " +
                         "R.QTR_REP_CD, R.ACCU_DATE, R.AUDIT_TYPE_ID, R.LOCAL_STAND_ID, R.AUDIT_CLASS_ID, " +
@@ -231,7 +231,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
                     break;
 
 
-               case Tables.TransactionBlankInformation:
+                case Tables.TransactionBlankInformation:
 
                     sql = "SELECT DISTINCT R.AQS_BLANK_INFO_PK, R.ACTION_CD, R.SMPL_COLL_START_DATE, R.SMPL_COLL_START_TIME, " +
                         "R.BLANK_TYPE_CD, R.UNCERTAINTY_VALUE, R.NULL_DATA_CD, R.DATA_VALIDITY_CD, R.DATA_APPROVAL_IND, " +
@@ -246,7 +246,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
                     break;
 
 
-               case Tables.TransactionAnnualSummaryInformation:
+                case Tables.TransactionAnnualSummaryInformation:
 
                     sql = "SELECT DISTINCT R.AQS_ANNUAL_SUM_INFO_PK, R.ACTION_CD, R.SUM_YEAR, R.EXCEP_DATA_TYPE_CD, " +
                         "R.OBSERVATION_COUNT, R.EVENTS_COUNT, R.HIGH_SMPL_VALUE, R.HIGH_SMPL_DATE, R.HIGH_SMPL_TIME, " +
@@ -266,7 +266,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
                     break;
 
 
-               case Tables.QualifierCode:
+                case Tables.QualifierCode:
 
                     sql = "SELECT DISTINCT AQS_RES_QUAL_CD_PK, RES_QUAL_CD " +
                         "FROM AQS_RES_QUAL_CD  " +
@@ -274,7 +274,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
                     break;
 
 
-               case Tables.CompositeInformationQualifierCode:
+                case Tables.CompositeInformationQualifierCode:
 
                     sql = "SELECT DISTINCT AQS_COMP_RES_QUAL_CD_PK, RES_QUAL_CD " +
                         "FROM AQS_COMP_RES_QUAL_CD  " +
@@ -282,7 +282,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
                     break;
 
 
-               case Tables.BlankQualifierCode:
+                case Tables.BlankQualifierCode:
 
                     sql = "SELECT DISTINCT AQS_BLANK_RES_QUAL_CD_PK, RES_QUAL_CD " +
                         "FROM AQS_BLANK_RES_QUAL_CD  " +
@@ -290,7 +290,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
                     break;
 
 
-               default:
+                default:
                     throw new ApplicationException("Invalid Table Selection.");
             }
 
