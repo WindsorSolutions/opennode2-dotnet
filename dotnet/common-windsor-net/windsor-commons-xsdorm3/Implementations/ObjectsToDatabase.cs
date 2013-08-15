@@ -477,19 +477,23 @@ namespace Windsor.Commons.XsdOrm3.Implementations
             }
             // Wait for database to be fully created
             long timeoutTicks = DateTime.Now.Ticks + TimeSpan.FromSeconds(CREATE_DATABASE_WAIT_SECONDS).Ticks;
+            bool success = false;
             do
             {
-                try
+                Exception exception = baseDao.CheckConnection();
+                if (exception == null)
                 {
-                    return GetCurrentDatabaseTableSchemas(tables, baseDao);
-                }
-                catch (DataAccessException)
-                {
+                    success = true;
+                    break;
                 }
                 Thread.Sleep(300);
             }
             while (timeoutTicks > DateTime.Now.Ticks);
-            throw new CannotGetAdoConnectionException();
+            if (!success)
+            {
+                throw new CannotGetAdoConnectionException();
+            }
+            return GetCurrentDatabaseTableSchemas(tables, baseDao);
         }
         protected virtual bool TestDbConnection(string connectionString)
         {
