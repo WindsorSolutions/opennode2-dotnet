@@ -191,6 +191,26 @@ namespace Windsor.Commons.WinForms
             }
             return null;
         }
+        public static T GetDeepChildWithText<T>(Control parent, string text) where T : Control
+        {
+            foreach (Control control in parent.Controls)
+            {
+                T rtnControl = control as T;
+                if (rtnControl != null)
+                {
+                    if (rtnControl.Text == text)
+                    {
+                        return rtnControl;
+                    }
+                }
+                T foundControl = GetDeepChildWithText<T>(control, text);
+                if (foundControl != null)
+                {
+                    return foundControl;
+                }
+            }
+            return null;
+        }
         public static char GetSystemPasswordChar()
         {
             using (TextBox textBox = new TextBox())

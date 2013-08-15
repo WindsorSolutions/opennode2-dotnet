@@ -47,6 +47,7 @@ using Spring.Data;
 using Spring.Transaction;
 using Spring.Data.Support;
 using Spring.Dao;
+using System.Data.SqlClient;
 
 namespace Windsor.Commons.XsdOrm3.Implementations
 {
@@ -103,7 +104,7 @@ namespace Windsor.Commons.XsdOrm3.Implementations
         public virtual void BuildDatabase(Type objectToSaveType, SpringBaseDao baseDao, MappingContext mappingContext)
         {
             bool createdDatabase;
-            IDictionary<string, DataTable> tableSchemas =
+            IDictionary<string, DataTableSchema> tableSchemas =
                 BuildDatabase(mappingContext.Tables, baseDao, out createdDatabase);
 
             BuildTables(tableSchemas, mappingContext, baseDao, createdDatabase);
@@ -357,7 +358,7 @@ namespace Windsor.Commons.XsdOrm3.Implementations
             });
             return insertRowCounts;
         }
-        protected virtual Dictionary<string, DataTable>
+        protected virtual Dictionary<string, DataTableSchema>
             GetCurrentDatabaseTableSchemas(IDictionary<string, Table> tables, SpringBaseDao baseDao)
         {
             // TODO: Could optimize this to use a single connection for all tables
@@ -365,25 +366,67 @@ namespace Windsor.Commons.XsdOrm3.Implementations
             {
                 return null;
             }
-            Dictionary<string, DataTable> rtnTables = new Dictionary<string, DataTable>(tables.Count);
-            foreach (string tableName in tables.Keys)
+            Dictionary<string, DataTableSchema> rtnTables = new Dictionary<string, DataTableSchema>(tables.Count);
+            ////if (baseDao.IsSqlServerDatabase)
+            ////{
+            using (var connection = baseDao.DbProvider.CreateConnection())
             {
-                string cmdText = string.Format("SELECT * FROM {0} WHERE 1 = 0", tableName);
-                try
+                connection.Open();
+                using (var command = baseDao.DbProvider.CreateCommand())
                 {
-                    DataTable dataTable = new DataTable();
-                    baseDao.FillTable(dataTable, cmdText);
-                    rtnTables.Add(tableName, dataTable);
-                }
-                catch (Exception)
-                {
-                    rtnTables.Add(tableName, null);
+                    command.Connection = connection;
+                    foreach (string tableName in tables.Keys)
+                    {
+                        string cmdText = string.Format("SELECT * FROM {0} WHERE 1 = 0", tableName);
+                        try
+                        {
+                            command.CommandText = cmdText;
+                            using (var reader = command.ExecuteReader(CommandBehavior.KeyInfo))
+                            {
+                                DataTable schemaTable = reader.GetSchemaTable();
+                                if (schemaTable != null)
+                                {
+                                    rtnTables.Add(tableName, new DataTableSchema(schemaTable));
+                                }
+                                else
+                                {
+                                    rtnTables.Add(tableName, new DataTableSchema(schemaTable));
+                                }
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            if (!baseDao.IsSqlServerDatabase)
+                            {
+                                DebugUtils.CheckDebuggerBreak();    // Not sure if GetSchemaTable() works on ORA, need to check here
+                            }
+                            rtnTables.Add(tableName, null);
+                        }
+                    }
                 }
             }
+            ////}
+            ////else
+            ////{
+            ////    foreach (string tableName in tables.Keys)
+            ////    {
+            ////        string cmdText = string.Format("SELECT * FROM {0} WHERE 1 = 0", tableName);
+            ////        try
+            ////        {
+            ////            DataTable dataTable = new DataTable();
+            ////            baseDao.FillTable(dataTable, cmdText);
+            ////            rtnTables.Add(tableName, dataTable);
+            ////        }
+            ////        catch (Exception)
+            ////        {
+            ////            rtnTables.Add(tableName, null);
+            ////        }
+            ////    }
+            ////}
             return rtnTables;
         }
-        protected virtual Dictionary<string, DataTable> BuildDatabase(IDictionary<string, Table> tables,
-                                                                      SpringBaseDao baseDao, out bool createdDatabase)
+        protected virtual Dictionary<string, DataTableSchema> BuildDatabase(IDictionary<string, Table> tables,
+                                                                            SpringBaseDao baseDao, out bool createdDatabase)
         {
             createdDatabase = false;
             ConnectionTxPair connectionTxPairToUse = null;
@@ -471,7 +514,7 @@ namespace Windsor.Commons.XsdOrm3.Implementations
                 return false;
             }
         }
-        protected virtual void BuildTables(IDictionary<string, DataTable> existingTableSchemas,
+        protected virtual void BuildTables(IDictionary<string, DataTableSchema> existingTableSchemas,
                                            MappingContext mappingContext,
                                            SpringBaseDao baseDao, bool createdDatabase)
         {
@@ -490,7 +533,7 @@ namespace Windsor.Commons.XsdOrm3.Implementations
             foreach (Table table in tables.Values)
             {
                 ICollection<Column> columns = table.AllColumns;
-                DataTable tableSchema = existingTableSchemas[table.TableName];
+                DataTableSchema tableSchema = existingTableSchemas[table.TableName];
                 if (tableSchema == null)
                 {
                     bool firstColumn = true;
@@ -515,13 +558,25 @@ namespace Windsor.Commons.XsdOrm3.Implementations
                     // This table is in the database, check columns
                     foreach (Column column in columns)
                     {
-                        DataColumn columnSchema = tableSchema.Columns[column.ColumnName];
+                        DataTableSchema.IDataColumnSchema columnSchema = tableSchema.TryGetColumn(column.ColumnName);
                         if (columnSchema == null)
                         {
                             // Column does not exist
                             string addString = GetAddColumnString(column, mappingContext, baseDao, primaryKeyCommands, postCommands,
                                                                   descriptionColumns, indexNames);
                             sqlString.Append(string.Format("ALTER TABLE {0} ADD {1} {2} ", table.TableName, addString, commandSeparator));
+                        }
+                        else if (!column.IsPrimaryKey && !column.IsForeignKey)
+                        {
+                            if ((columnSchema.DataType == typeof(string)) && column.ColumnType.HasValue &&
+                                 Utils.IsStringColumnType(column.ColumnType.Value))
+                            {
+                                if ((columnSchema.ColumnSize > 0) && (column.ColumnSize > 0) && (column.ColumnSize > columnSchema.ColumnSize))
+                                {
+                                    string addString = GetAddColumnString(column, mappingContext, baseDao, null, null, null, null);
+                                    sqlString.Append(string.Format("ALTER TABLE {0} ALTER COLUMN {1} {2} ", table.TableName, addString, commandSeparator));
+                                }
+                            }
                         }
                     }
                 }
@@ -763,54 +818,66 @@ namespace Windsor.Commons.XsdOrm3.Implementations
 
             if (column.IsPrimaryKey && (column == column.Table.PrimaryKey))
             {
-                PrimaryKeyColumn primaryKeyColumn = (PrimaryKeyColumn)column;
-                string pkName = Utils.GetPrimaryKeyConstraintName(primaryKeyColumn, mappingContext.ShortenNamesByRemovingVowelsFirst,
-                                                                  mappingContext.FixShortenNameBreakBug, mappingContext.DefaultTableNamePrefix);
-                pkName = CheckDatabaseNameDoesNotExist(pkName, dbNames);
-                string pkColumnNames = primaryKeyColumn.ColumnName;
-                CollectionUtils.ForEach(column.Table.AdditionalPrimaryKeyColumns, delegate(PrimaryKeyColumn addPkColumn)
+                if (primaryKeyCommands != null)
                 {
-                    pkColumnNames += "," + addPkColumn.ColumnName;
-                });
-                string cmd = string.Format("ALTER TABLE {0} ADD CONSTRAINT {1} PRIMARY KEY ({2})",
-                                           primaryKeyColumn.Table.TableName, pkName, pkColumnNames);
-                primaryKeyCommands.Add(cmd);
+                    PrimaryKeyColumn primaryKeyColumn = (PrimaryKeyColumn)column;
+                    string pkName = Utils.GetPrimaryKeyConstraintName(primaryKeyColumn, mappingContext.ShortenNamesByRemovingVowelsFirst,
+                                                                      mappingContext.FixShortenNameBreakBug, mappingContext.DefaultTableNamePrefix);
+                    pkName = CheckDatabaseNameDoesNotExist(pkName, dbNames);
+                    string pkColumnNames = primaryKeyColumn.ColumnName;
+                    CollectionUtils.ForEach(column.Table.AdditionalPrimaryKeyColumns, delegate(PrimaryKeyColumn addPkColumn)
+                    {
+                        pkColumnNames += "," + addPkColumn.ColumnName;
+                    });
+                    string cmd = string.Format("ALTER TABLE {0} ADD CONSTRAINT {1} PRIMARY KEY ({2})",
+                                               primaryKeyColumn.Table.TableName, pkName, pkColumnNames);
+                    primaryKeyCommands.Add(cmd);
+                }
             }
             else if (column.IsForeignKey)
             {
-                ForeignKeyColumn foreignKeyColumn = (ForeignKeyColumn)column;
-                string fkName = Utils.GetForeignKeyConstraintName(foreignKeyColumn, mappingContext.ShortenNamesByRemovingVowelsFirst,
-                                                                  mappingContext.FixShortenNameBreakBug, mappingContext.DefaultTableNamePrefix);
-                fkName = CheckDatabaseNameDoesNotExist(fkName, dbNames);
-                string cmd = string.Format("ALTER TABLE {0} ADD CONSTRAINT {1} FOREIGN KEY ({2}) REFERENCES {3}({4})",
-                                           foreignKeyColumn.Table.TableName, fkName, foreignKeyColumn.ColumnName,
-                                           foreignKeyColumn.ForeignTable.TableName, foreignKeyColumn.ForeignTable.PrimaryKey.ColumnName);
-                if (foreignKeyColumn.DeleteRule != DeleteRule.None)
+                if (postCommands != null)
                 {
-                    cmd += (foreignKeyColumn.DeleteRule == DeleteRule.Cascade) ? " ON DELETE CASCADE" : " ON DELETE SET NULL";
-                }
+                    ForeignKeyColumn foreignKeyColumn = (ForeignKeyColumn)column;
+                    string fkName = Utils.GetForeignKeyConstraintName(foreignKeyColumn, mappingContext.ShortenNamesByRemovingVowelsFirst,
+                                                                      mappingContext.FixShortenNameBreakBug, mappingContext.DefaultTableNamePrefix);
+                    fkName = CheckDatabaseNameDoesNotExist(fkName, dbNames);
+                    string cmd = string.Format("ALTER TABLE {0} ADD CONSTRAINT {1} FOREIGN KEY ({2}) REFERENCES {3}({4})",
+                                               foreignKeyColumn.Table.TableName, fkName, foreignKeyColumn.ColumnName,
+                                               foreignKeyColumn.ForeignTable.TableName, foreignKeyColumn.ForeignTable.PrimaryKey.ColumnName);
+                    if (foreignKeyColumn.DeleteRule != DeleteRule.None)
+                    {
+                        cmd += (foreignKeyColumn.DeleteRule == DeleteRule.Cascade) ? " ON DELETE CASCADE" : " ON DELETE SET NULL";
+                    }
 
-                postCommands.Add(cmd);
-                string indexName = Utils.GetIndexName(foreignKeyColumn, mappingContext.ShortenNamesByRemovingVowelsFirst,
-                                                      mappingContext.FixShortenNameBreakBug, mappingContext.DefaultTableNamePrefix);
-                indexName = CheckDatabaseNameDoesNotExist(indexName, dbNames);
-                cmd = string.Format("CREATE INDEX {0} ON {1}({2})", indexName,
-                                    foreignKeyColumn.Table.TableName, foreignKeyColumn.ColumnName);
-                postCommands.Add(cmd);
+                    postCommands.Add(cmd);
+                    string indexName = Utils.GetIndexName(foreignKeyColumn, mappingContext.ShortenNamesByRemovingVowelsFirst,
+                                                          mappingContext.FixShortenNameBreakBug, mappingContext.DefaultTableNamePrefix);
+                    indexName = CheckDatabaseNameDoesNotExist(indexName, dbNames);
+                    cmd = string.Format("CREATE INDEX {0} ON {1}({2})", indexName,
+                                        foreignKeyColumn.Table.TableName, foreignKeyColumn.ColumnName);
+                    postCommands.Add(cmd);
+                }
             }
             else if (column.IsIndexable != IndexableType.None)
             {
-                string indexName = Utils.GetIndexName(column, mappingContext.ShortenNamesByRemovingVowelsFirst,
-                                                      mappingContext.FixShortenNameBreakBug, mappingContext.DefaultTableNamePrefix);
-                indexName = CheckDatabaseNameDoesNotExist(indexName, dbNames);
-                string uniqueString = (column.IsIndexable == IndexableType.UniqueIndexable) ? "UNIQUE" : "";
-                string cmd = string.Format("CREATE {0} INDEX {1} ON {2}({3})", uniqueString, indexName,
-                                           column.Table.TableName, column.ColumnName);
-                postCommands.Add(cmd);
+                if (postCommands != null)
+                {
+                    string indexName = Utils.GetIndexName(column, mappingContext.ShortenNamesByRemovingVowelsFirst,
+                                                          mappingContext.FixShortenNameBreakBug, mappingContext.DefaultTableNamePrefix);
+                    indexName = CheckDatabaseNameDoesNotExist(indexName, dbNames);
+                    string uniqueString = (column.IsIndexable == IndexableType.UniqueIndexable) ? "UNIQUE" : "";
+                    string cmd = string.Format("CREATE {0} INDEX {1} ON {2}({3})", uniqueString, indexName,
+                                               column.Table.TableName, column.ColumnName);
+                    postCommands.Add(cmd);
+                }
             }
             if (!string.IsNullOrEmpty(column.ColumnDescription))
             {
-                descriptionColumns.Add(column);
+                if (descriptionColumns != null)
+                {
+                    descriptionColumns.Add(column);
+                }
             }
             return rtnVal;
         }
@@ -1095,5 +1162,61 @@ namespace Windsor.Commons.XsdOrm3.Implementations
             return _baseDao;
         }
         private SpringBaseDao _baseDao;
+
+        protected class DataTableSchema
+        {
+            public interface IDataColumnSchema
+            {
+                Type DataType
+                {
+                    get;
+                }
+                int ColumnSize
+                {
+                    get;
+                }
+            }
+            public DataTableSchema(DataTable tableSchema)
+            {
+                _tableSchema = tableSchema;
+            }
+            public IDataColumnSchema TryGetColumn(string columnName)
+            {
+                // See http://msdn.microsoft.com/en-us/library/system.data.sqlclient.sqldatareader.getschematable%28v=VS.100%29.aspx
+                foreach (DataRow row in _tableSchema.Rows)
+                {
+                    if (string.Equals((string)row["ColumnName"], columnName, StringComparison.OrdinalIgnoreCase))
+                    {
+                        return new DataColumnSchema(row);
+                    }
+                }
+                return null;
+            }
+
+            private DataTable _tableSchema;
+
+            protected class DataColumnSchema : IDataColumnSchema
+            {
+                public DataColumnSchema(DataRow dataRow)
+                {
+                    _dataRow = dataRow;
+                }
+                public Type DataType
+                {
+                    get
+                    {
+                        return (Type)_dataRow["DataType"];
+                    }
+                }
+                public int ColumnSize
+                {
+                    get
+                    {
+                        return (int)_dataRow["ColumnSize"];
+                    }
+                }
+                private DataRow _dataRow;
+            }
+        }
     }
 }
