@@ -329,6 +329,7 @@ namespace Windsor.Commons.XsdOrm3.Implementations
                 DbFixedColumnSizeAttribute dbFixedColumnSizeAttribute = null;
                 DbColumnTypeAttribute dbColumnTypeAttribute = null;
                 DbColumnScaleAttribute dbColumnScaleAttribute = null;
+                DbDefaultValueAttribute dbDefaultValueAttribute = null;
                 Column newColumn = null;
                 SameTableElementInfo newSameTableElementInfo = null;
                 foreach (MappingAttribute mappingAttribute in attributes)
@@ -498,6 +499,12 @@ namespace Windsor.Commons.XsdOrm3.Implementations
                         dbNoLoadAttribute = noLoadAttribute;
                         continue;
                     }
+                    DbDefaultValueAttribute defaultValueAttribute = mappingAttribute as DbDefaultValueAttribute;
+                    if (defaultValueAttribute != null)
+                    {
+                        dbDefaultValueAttribute = defaultValueAttribute;
+                        continue;
+                    }
                 }
                 if (dbNotNullAttribute != null)
                 {
@@ -586,6 +593,13 @@ namespace Windsor.Commons.XsdOrm3.Implementations
                     {
                         throw new MappingException("The member \"{0}\" of the class \"{1}\" has a DbNoLoadAttribute attribute applied to it, but it is not a database column.",
                                                    member.Name, objType.FullName);
+                    }
+                }
+                if (dbDefaultValueAttribute != null)
+                {
+                    if (newColumn != null)
+                    {
+                        newColumn.DefaultValue = dbDefaultValueAttribute.DefaultValue;
                     }
                 }
             }
@@ -1604,6 +1618,13 @@ namespace Windsor.Commons.XsdOrm3.Implementations
             else if (appliedAttribute.MappedAttributeType == typeof(DbNotNullAttribute))
             {
                 mappingAttribute = new DbNotNullAttribute();
+            }
+            else if (appliedAttribute.MappedAttributeType == typeof(DbDefaultValueAttribute))
+            {
+                int count = CollectionUtils.Count(appliedAttribute.Args);
+                ExceptionUtils.ThrowIfFalse(count == 1);
+                object defaultValue = appliedAttribute.Args[0];
+                mappingAttribute = new DbDefaultValueAttribute(defaultValue);
             }
             else
             {

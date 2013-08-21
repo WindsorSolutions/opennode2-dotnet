@@ -241,6 +241,11 @@ namespace Windsor.Commons.XsdOrm3.Implementations
                 m_ColumnDescription = value;
             }
         }
+        public object DefaultValue
+        {
+            get;
+            set;
+        }
         public virtual object GetInsertColumnValue(object parentOfObjectToSave, object objectToSave, ColumnCachedValues cachedValues)
         {
             object value = null;

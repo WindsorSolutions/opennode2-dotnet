@@ -820,6 +820,10 @@ namespace Windsor.Commons.XsdOrm3.Implementations
                 GetColumnSqlDataTypeCreateString(mappingContext, column, baseDao),
                 column.IsNullable ? string.Empty : " NOT NULL");
 
+            if (column.DefaultValue != null)
+            {
+                rtnVal += " DEFAULT " + column.DefaultValue.ToString();
+            }
             if (column.IsPrimaryKey && (column == column.Table.PrimaryKey))
             {
                 if (primaryKeyCommands != null)

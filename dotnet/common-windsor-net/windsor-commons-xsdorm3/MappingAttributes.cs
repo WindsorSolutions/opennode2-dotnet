@@ -904,6 +904,23 @@ namespace Windsor.Commons.XsdOrm3
         }
     }
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
+    public class DbDefaultValueAttribute : MappingAttribute
+    {
+        public DbDefaultValueAttribute(object defaultValue)
+        {
+            DefaultValue = defaultValue;
+        }
+        public override string GetShortDescription()
+        {
+            return "DefaultValue";
+        }
+        public object DefaultValue
+        {
+            get;
+            set;
+        }
+    }
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
     public class DbMaxColumnSizeAttribute : MappingAttribute
     {
         public DbMaxColumnSizeAttribute(int size)
