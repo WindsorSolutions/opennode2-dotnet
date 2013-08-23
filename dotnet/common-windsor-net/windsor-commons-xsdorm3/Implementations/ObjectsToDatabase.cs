@@ -575,7 +575,8 @@ namespace Windsor.Commons.XsdOrm3.Implementations
                             if ((columnSchema.DataType == typeof(string)) && column.ColumnType.HasValue &&
                                  Utils.IsStringColumnType(column.ColumnType.Value))
                             {
-                                if ((columnSchema.ColumnSize > 0) && (column.ColumnSize > 0) && (column.ColumnSize > columnSchema.ColumnSize))
+                                if (((columnSchema.ColumnSize > 0) && (column.ColumnSize > 0) && (column.ColumnSize > columnSchema.ColumnSize)) ||
+                                    ((columnSchema.AllowDBNull != column.IsNullable) && column.IsNullable))
                                 {
                                     string addString = GetAddColumnString(column, mappingContext, baseDao, null, null, null, null);
                                     sqlString.Append(string.Format("ALTER TABLE {0} ALTER COLUMN {1} {2} ", table.TableName, addString, commandSeparator));
@@ -901,7 +902,14 @@ namespace Windsor.Commons.XsdOrm3.Implementations
                     }
                     else
                     {
-                        return string.Format("CHARACTER VARYING({0})", column.ColumnSize);
+                        if (column.ColumnSize == int.MaxValue)
+                        {
+                            return string.Format("CHARACTER VARYING(MAX)", column.ColumnSize);
+                        }
+                        else
+                        {
+                            return string.Format("CHARACTER VARYING({0})", column.ColumnSize);
+                        }
                     }
                 case DbType.AnsiStringFixedLength:
                     return string.Format("CHARACTER({0})", column.ColumnSize);
@@ -914,7 +922,14 @@ namespace Windsor.Commons.XsdOrm3.Implementations
                     }
                     else
                     {
-                        return string.Format("NATIONAL CHARACTER VARYING({0})", column.ColumnSize);
+                        if (column.ColumnSize == int.MaxValue)
+                        {
+                            return string.Format("NATIONAL CHARACTER VARYING(MAX)", column.ColumnSize);
+                        }
+                        else
+                        {
+                            return string.Format("NATIONAL CHARACTER VARYING({0})", column.ColumnSize);
+                        }
                     }
                 case DbType.StringFixedLength:
                     return string.Format("NATIONAL CHARACTER({0})", column.ColumnSize);
@@ -1183,6 +1198,10 @@ namespace Windsor.Commons.XsdOrm3.Implementations
                 {
                     get;
                 }
+                bool AllowDBNull
+                {
+                    get;
+                }
             }
             public DataTableSchema(DataTable tableSchema)
             {
@@ -1221,6 +1240,13 @@ namespace Windsor.Commons.XsdOrm3.Implementations
                     get
                     {
                         return (int)_dataRow["ColumnSize"];
+                    }
+                }
+                public bool AllowDBNull
+                {
+                    get
+                    {
+                        return (bool)_dataRow["AllowDBNull"];
                     }
                 }
                 private DataRow _dataRow;
