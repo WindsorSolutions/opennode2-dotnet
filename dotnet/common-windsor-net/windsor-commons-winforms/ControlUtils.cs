@@ -219,7 +219,7 @@ namespace Windsor.Commons.WinForms
                 return textBox.PasswordChar;
             }
         }
-        private static void GetAllDeepChildrenOfType<T>(Control parent, List<T> list) where T : Control
+        public static void GetAllDeepChildrenOfType<T>(Control parent, List<T> list) where T : Control
         {
             foreach (Control control in parent.Controls)
             {

@@ -37,7 +37,42 @@ namespace Windsor.Commons.DeveloperExpress
             }
         }
 
-        public void AssociateControls(BaseEdit control1, BaseEdit control2, params BaseEdit[] moreControls)
+        public void AssociateControls(Control control1, Control control2, params Control[] moreControls)
+        {
+            List<BaseEdit> controls = new List<BaseEdit>(2 + moreControls.Length);
+            BaseEdit baseEdit = control1 as BaseEdit;
+            if (baseEdit != null)
+            {
+                controls.Add(baseEdit);
+            }
+            else
+            {
+                ControlUtils.GetAllDeepChildrenOfType<BaseEdit>(control1, controls);
+            }
+            baseEdit = control2 as BaseEdit;
+            if (baseEdit != null)
+            {
+                controls.Add(baseEdit);
+            }
+            else
+            {
+                ControlUtils.GetAllDeepChildrenOfType<BaseEdit>(control2, controls);
+            }
+            CollectionUtils.ForEach(moreControls, delegate(Control control)
+            {
+                baseEdit = control as BaseEdit;
+                if (baseEdit != null)
+                {
+                    controls.Add(baseEdit);
+                }
+                else
+                {
+                    ControlUtils.GetAllDeepChildrenOfType<BaseEdit>(control, controls);
+                }
+            });
+            AssociateControls(controls);
+        }
+        public void AssociateEditControls(BaseEdit control1, BaseEdit control2, params BaseEdit[] moreControls)
         {
             if (m_AssociatedControls == null)
             {
