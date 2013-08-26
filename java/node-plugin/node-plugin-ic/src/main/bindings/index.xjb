@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+    xmlns:namespace="http://jaxb2-commons.dev.java.net/namespace-prefix" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+    jaxb:extensionBindingPrefixes="hj orm namespace">
+
+    <jaxb:bindings schemaLocation="../xsd/1/index.xsd" node="/xsd:schema">
+        <jaxb:schemaBindings>
+            <jaxb:package name="com.windsor.node.plugin.ic.generated" />
+        </jaxb:schemaBindings>
+
+        <namespace:prefix name="IC" />
+
+        <jaxb:globalBindings generateIsSetMethod="true" localScoping="toplevel">
+            <jaxb:serializable uid="1" />
+
+            <xjc:javaType name="java.lang.Integer" xmlType="xsd:gYear"
+                adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.GYearToIntegerAdapter" />
+                <!-- Probably don't need this -->
+            <!-- <xjc:javaType name="java.sql.Timestamp" xmlType="xsd:gYear"
+                adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.TimestampAdapter" /> -->
+
+            <!-- 
+            <xjc:javaType name="java.lang.String" xmlType="att:StringYesNoDataType"
+                adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter" />
+            <xjc:javaType name="java.lang.String" xmlType="att:TrophicStatusDataType"
+                adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter" />
+            <xjc:javaType name="java.lang.String" xmlType="att:CategoryReportFlagDataType"
+                adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter" />
+            <xjc:javaType name="java.lang.String" xmlType="att:StringYNDataType"
+                adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter" />
+            <xjc:javaType name="java.lang.String" xmlType="att:TrendDataType"
+                adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter" />
+            <xjc:javaType name="java.lang.String" xmlType="att:WaterTypeDataType"
+                adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter" />
+            <xjc:javaType name="java.lang.String" xmlType="att:AttainmentDescriptionDataType"
+                adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter" />
+            <xjc:javaType name="java.lang.String" xmlType="att:TMDLPriorityDataType"
+                adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter" />
+            <xjc:javaType name="java.lang.String" xmlType="att:PurposeDataType"
+                adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter" />
+            <xjc:javaType name="java.lang.String" xmlType="att:AssessmentConfidenceDataType"
+                adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter" />
+            <xjc:javaType name="java.lang.String" xmlType="att:AssessmentTypeTypeDataType"
+                adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter" />
+            <xjc:javaType name="java.lang.String" xmlType="att:ConfidenceDataType"
+                adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter" />
+            <xjc:javaType name="java.lang.String" xmlType="att:DelistingReasonDataType"
+                adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter" />
+            -->
+            
+        </jaxb:globalBindings>
+
+        <hj:persistence>
+            <hj:default-generated-id name="Dbid" transient="true" javaType="java.lang.String" />
+            <hj:default-one-to-many>
+                <orm:join-table/>
+            </hj:default-one-to-many>
+
+            <!-- <hj:default-single-property type="att:StringYesNoDataType">
+                <hj:basic>
+                    <orm:column length="3" column-definition="char(3)" />
+                </hj:basic>
+            </hj:default-single-property>
+
+            <hj:default-single-property type="att:TrophicStatusDataType">
+                <hj:basic>
+                    <orm:column length="14" column-definition="char(14)" />
+                </hj:basic>
+            </hj:default-single-property>
+
+            <hj:default-single-property type="att:CategoryReportFlagDataType">
+                <hj:basic>
+                    <orm:column length="14" column-definition="char(14)" />
+                </hj:basic>
+            </hj:default-single-property>
+            
+            <hj:default-single-property type="att:StringYNDataType">
+                <hj:basic>
+                    <orm:column length="1" column-definition="1" />
+                </hj:basic>
+            </hj:default-single-property>
+
+            <hj:default-single-property type="att:TrendDataType">
+                <hj:basic>
+                    <orm:column length="11" column-definition="11" />
+                </hj:basic>
+            </hj:default-single-property>
+
+            <hj:default-single-property type="att:WaterTypeDataType">
+                <hj:basic>
+                    <orm:column length="19" column-definition="19" />
+                </hj:basic>
+            </hj:default-single-property>
+
+            <hj:default-single-property type="att:AttainmentDescriptionDataType">
+                <hj:basic>
+                    <orm:column length="23" column-definition="23" />
+                </hj:basic>
+            </hj:default-single-property>
+
+            <hj:default-single-property type="att:TMDLPriorityDataType">
+                <hj:basic>
+                    <orm:column length="6" column-definition="6" />
+                </hj:basic>
+            </hj:default-single-property>
+            <hj:default-single-property type="att:PurposeDataType">
+                <hj:basic>
+                    <orm:column length="6" column-definition="6" />
+                </hj:basic>
+            </hj:default-single-property>
+            <hj:default-single-property type="att:AssessmentConfidenceDataType">
+                <hj:basic>
+                    <orm:column length="9" column-definition="9" />
+                </hj:basic>
+            </hj:default-single-property>
+            <hj:default-single-property type="att:AssessmentTypeTypeDataType">
+                <hj:basic>
+                    <orm:column length="27" column-definition="27" />
+                </hj:basic>
+            </hj:default-single-property>
+            <hj:default-single-property type="att:ConfidenceDataType">
+                <hj:basic>
+                    <orm:column length="6" column-definition="6" />
+                </hj:basic>
+            </hj:default-single-property>
+            <hj:default-single-property type="att:DelistingReasonDataType">
+                <hj:basic>
+                    <orm:column length="100" column-definition="100" />
+                </hj:basic>
+            </hj:default-single-property> -->
+
+        </hj:persistence>
+
+    </jaxb:bindings>
+
+</jaxb:bindings>

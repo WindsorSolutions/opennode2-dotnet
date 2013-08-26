@@ -1,0 +1,775 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+    xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance" xmlns:annox="http://annox.dev.java.net"
+    jaxb:extensionBindingPrefixes="hj orm inheritance annox"> 
+    <jaxb:bindings schemaLocation="../xsd/1/0/IC_v1.0.xsd">
+        <jaxb:bindings node="//xsd:complexType[@name='InstitutionalControlsDocumentDataType']">
+            <hj:entity>
+                <orm:table name="IC_INSTL_CTRLS_DOC"/>
+            </hj:entity>
+            <hj:generated-id name="Dbid">
+                <orm:column name="IC_INSTL_CTRLS_DOC_ID"/>
+            </hj:generated-id>
+        </jaxb:bindings>
+
+        <!-- 
+        <jaxb:bindings node="//xsd:complexType[@name='AssessmentUnitDetailsDataType']">
+            <hj:entity>
+                <orm:table name="OWIR_ASMT_UNIT_DTLS"/>
+            </hj:entity>
+            <hj:generated-id name="Dbid">
+                <orm:column name="ASMT_UNIT_DTLS_ID"/>
+            </hj:generated-id>
+        </jaxb:bindings>
+        <jaxb:bindings node="//xsd:element[@ref='att:ID305b']">
+            <hj:basic>
+                <orm:column name="ID_305B" />
+            </hj:basic>
+        </jaxb:bindings>
+        <jaxb:bindings node="//xsd:element[@ref='att:MonitoringScheduledYear']">
+            <hj:basic>
+                <orm:column name="MONTR_SCHD_YEAR" />
+            </hj:basic>
+        </jaxb:bindings> -->
+    </jaxb:bindings>
+
+    <jaxb:bindings schemaLocation="../xsd/1/0/IC_InstrumentList_v1.0.xsd">
+        <jaxb:bindings node="//xsd:complexType[@name='InstrumentListDataType']">
+            <hj:ignored />
+        </jaxb:bindings>
+    </jaxb:bindings>
+    <jaxb:bindings schemaLocation="../xsd/1/0/IC_ICLocationList_v1.0.xsd">
+        <jaxb:bindings node="//xsd:complexType[@name='ICLocationListDataType']">
+            <hj:ignored />
+        </jaxb:bindings>
+    </jaxb:bindings>
+    <jaxb:bindings schemaLocation="../xsd/1/0/IC_AffiliateList_v1.0.xsd">
+        <jaxb:bindings node="//xsd:complexType[@name='AffiliateListDataType']">
+            <hj:ignored />
+        </jaxb:bindings>
+    </jaxb:bindings>
+
+    <jaxb:bindings schemaLocation="../xsd/1/0/IC_Instrument_v1.0.xsd">
+        <jaxb:bindings node="//xsd:complexType[@name='InstrumentDataType']">
+            <hj:entity>
+                <orm:table name="IC_INSTR"/>
+            </hj:entity>
+            <hj:generated-id name="Dbid">
+                <orm:column name="IC_INSTR_ID"/>
+            </hj:generated-id>
+            <jaxb:bindings node="//xsd:element[@ref='IC:InstrumentLocation']">
+                <!-- <annox:annotate>
+                    <annox:annotate annox:class="org.hibernate.annotations.NotFound" action="IGNORE" />
+                </annox:annotate> -->
+                <hj:one-to-many>
+                    <orm:join-table name="IC_INSTR_LOC">
+                        <orm:join-column name="IC_INSTR_ID" referenced-column-name="IC_INSTR_ID" /><!--  insertable="false" updatable="false" -->
+                        <orm:inverse-join-column name="IC_INSTR_ID" />
+                    </orm:join-table>
+                </hj:one-to-many>
+            </jaxb:bindings>
+            <jaxb:bindings node="//xsd:element[@ref='IC:UseRestriction']">
+                <hj:one-to-many>
+                    <orm:join-table name="IC_USE_RSTCT">
+                        <orm:join-column name="IC_INSTR_ID" referenced-column-name="IC_INSTR_ID" />
+                        <orm:inverse-join-column name="IC_INSTR_ID" />
+                    </orm:join-table>
+                </hj:one-to-many>
+            </jaxb:bindings>
+            <jaxb:bindings node="//xsd:element[@ref='IC:Contaminant']">
+                <hj:one-to-many>
+                    <orm:join-table name="IC_CNTMT">
+                        <orm:join-column name="IC_INSTR_ID" referenced-column-name="IC_INSTR_ID" />
+                        <orm:inverse-join-column name="IC_INSTR_ID" />
+                    </orm:join-table>
+                </hj:one-to-many>
+            </jaxb:bindings>
+            <jaxb:bindings node="//xsd:element[@ref='IC:EngineeringControl']">
+                <hj:one-to-many>
+                    <orm:join-table name="IC_ENGR_CTRL">
+                        <orm:join-column name="IC_INSTR_ID" referenced-column-name="IC_INSTR_ID" />
+                        <orm:inverse-join-column name="IC_INSTR_ID" />
+                    </orm:join-table>
+                </hj:one-to-many>
+            </jaxb:bindings>
+            <jaxb:bindings node="//xsd:element[@ref='IC:MediaTypeCode']">
+                <hj:element-collection>
+                    <orm:collection-table name="IC_MEDIA_TYPE">
+                        <orm:join-column name="IC_INSTR_ID" />
+                    </orm:collection-table>
+                    <orm:column name="MEDIA_CODE" />
+                </hj:element-collection>
+            </jaxb:bindings>
+            <jaxb:bindings node="//xsd:element[@ref='IC:ObjectiveText']">
+                <hj:element-collection>
+                    <orm:collection-table name="IC_OBJTV_TXT">
+                        <orm:join-column name="IC_INSTR_ID" />
+                    </orm:collection-table>
+                    <orm:column name="OBJTV_TXT" />
+                </hj:element-collection>
+            </jaxb:bindings>
+            <jaxb:bindings node="//xsd:element[@ref='IC:InstrumentAffiliate']">
+                <hj:one-to-many>
+                    <orm:join-table name="IC_INSTR_AFFIL">
+                        <orm:join-column name="IC_INSTR_ID" referenced-column-name="IC_INSTR_ID" />
+                        <orm:inverse-join-column name="IC_INSTR_ID" />
+                    </orm:join-table>
+                </hj:one-to-many>
+            </jaxb:bindings>
+            <jaxb:bindings node="//xsd:element[@ref='IC:Resource']">
+                <hj:one-to-many>
+                    <orm:join-table name="IC_RSRC">
+                        <orm:join-column name="IC_INSTR_ID" referenced-column-name="IC_INSTR_ID" />
+                        <orm:inverse-join-column name="IC_INSTR_ID" />
+                    </orm:join-table>
+                </hj:one-to-many>
+            </jaxb:bindings>
+            <jaxb:bindings node="//xsd:element[@ref='IC:RecurringEvent']">
+                <hj:one-to-many>
+                    <orm:join-table name="IC_RECR_EVT">
+                        <orm:join-column name="IC_INSTR_ID" referenced-column-name="IC_INSTR_ID" />
+                        <orm:inverse-join-column name="IC_INSTR_ID" />
+                    </orm:join-table>
+                </hj:one-to-many>
+            </jaxb:bindings>
+            <jaxb:bindings node="//xsd:element[@ref='IC:Event']">
+                <hj:one-to-many>
+                    <orm:join-table name="IC_EVT">
+                        <orm:join-column name="IC_INSTR_ID" referenced-column-name="IC_INSTR_ID" />
+                        <orm:inverse-join-column name="IC_INSTR_ID" />
+                    </orm:join-table>
+                </hj:one-to-many>
+            </jaxb:bindings>
+        </jaxb:bindings>
+        <jaxb:bindings schemaLocation="../xsd/1/0/IC_DataSource_v1.0.xsd">
+            <jaxb:bindings node="//xsd:complexType[@name='DataSourceDataType']">
+                <hj:embeddable />
+            </jaxb:bindings>
+            <jaxb:bindings node="//xsd:element[@ref='IC:LastUpdatedDate']">
+                <hj:basic>
+                    <orm:column name="LAST_UPDATED_DATE" />
+                </hj:basic>
+            </jaxb:bindings>
+        </jaxb:bindings>
+        <jaxb:bindings node="//xsd:complexType[@name='InstrumentLocationDataType']">
+            <hj:entity>
+                <orm:table name="IC_INSTR_LOC"/>
+            </hj:entity>
+            <hj:generated-id name="Dbid">
+                <orm:column name="IC_INSTR_LOC_ID"/>
+            </hj:generated-id>
+        </jaxb:bindings>
+
+        <jaxb:bindings node="//xsd:complexType[@name='InstrumentAffiliateDataType']">
+            <hj:entity>
+                <orm:table name="IC_INSTR_AFFIL"/>
+            </hj:entity>
+            <hj:generated-id name="Dbid">
+                <orm:column name="IC_INSTR_AFFIL_ID"/>
+            </hj:generated-id>
+            <jaxb:bindings node="//xsd:element[@ref='IC:AffiliationStartDate']">
+                <hj:basic>
+                    <orm:column name="AFFIL_START_DATE" />
+                </hj:basic>
+            </jaxb:bindings>
+            <jaxb:bindings node="//xsd:element[@ref='IC:AffiliationEndDate']">
+                <hj:basic>
+                    <orm:column name="AFFIL_END_DATE" />
+                </hj:basic>
+            </jaxb:bindings>
+            <jaxb:bindings node="//xsd:element[@ref='IC:AffiliationTypeCode']">
+                <hj:element-collection>
+                    <orm:collection-table name="IC_AFFIL_TYPE">
+                        <orm:join-column name="IC_INSTR_AFFIL_ID" />
+                    </orm:collection-table>
+                    <orm:column name="AFFIL_CODE" />
+                </hj:element-collection>
+            </jaxb:bindings>
+        </jaxb:bindings>
+    </jaxb:bindings>
+
+    <jaxb:bindings schemaLocation="../xsd/1/0/IC_UseRestriction_v1.0.xsd">
+        <jaxb:bindings node="//xsd:complexType[@name='UseRestrictionDataType']">
+            <hj:entity>
+                <orm:table name="IC_USE_RSTCT"/>
+            </hj:entity>
+            <hj:generated-id name="Dbid">
+                <orm:column name="IC_USE_RSTCT_ID"/>
+            </hj:generated-id>
+            <jaxb:bindings node="//xsd:element[@ref='IC:UseRestrictionLocation']">
+                <hj:one-to-many>
+                    <orm:join-table name="IC_USE_RSTCT_LOC">
+                        <orm:join-column name="IC_USE_RSTCT_ID" referenced-column-name="IC_USE_RSTCT_ID" />
+                        <orm:inverse-join-column name="IC_USE_RSTCT_ID" />
+                    </orm:join-table>
+                </hj:one-to-many>
+            </jaxb:bindings>
+            <jaxb:bindings node="//xsd:element[@ref='IC:UseRestrictionTypeCode']">
+                <hj:basic>
+                    <orm:column name="USE_RSTCT_CODE" />
+                </hj:basic>
+            </jaxb:bindings>
+            <jaxb:bindings node="//xsd:element[@ref='IC:UseRestrictionStartDate']">
+                <hj:basic>
+                    <orm:column name="USE_RSTCT_START_DATE" />
+                </hj:basic>
+            </jaxb:bindings>
+            <jaxb:bindings node="//xsd:element[@ref='IC:UseRestrictionEndDate']">
+                <hj:basic>
+                    <orm:column name="USE_RSTCT_END_DATE" />
+                </hj:basic>
+            </jaxb:bindings>
+        </jaxb:bindings>
+        <jaxb:bindings node="//xsd:complexType[@name='UseRestrictionLocationDataType']">
+            <hj:entity>
+                <orm:table name="IC_USE_RSTCT_LOC"/>
+            </hj:entity>
+            <hj:generated-id name="Dbid">
+                <orm:column name="IC_USE_RSTCT_LOC_ID"/>
+            </hj:generated-id>
+        </jaxb:bindings>
+    </jaxb:bindings>
+
+    <jaxb:bindings schemaLocation="../xsd/1/0/IC_Contaminant_v1.0.xsd">
+        <jaxb:bindings node="//xsd:complexType[@name='ContaminantDataType']">
+            <hj:entity>
+                <orm:table name="IC_CNTMT"/>
+            </hj:entity>
+            <hj:generated-id name="Dbid">
+                <orm:column name="IC_CNTMT_ID"/>
+            </hj:generated-id>
+        </jaxb:bindings>
+    </jaxb:bindings>
+
+    <jaxb:bindings schemaLocation="../xsd/1/0/IC_EngineeringControl_v1.0.xsd">
+        <jaxb:bindings node="//xsd:complexType[@name='EngineeringControlDataType']">
+            <hj:entity>
+                <orm:table name="IC_ENGR_CTRL"/>
+            </hj:entity>
+            <hj:generated-id name="Dbid">
+                <orm:column name="IC_ENGR_CTRL_ID"/>
+            </hj:generated-id>
+
+            <jaxb:bindings node="//xsd:element[@ref='IC:EngineeringControlLocation']">
+                <hj:one-to-many>
+                    <orm:join-table name="IC_ENGR_CTRL_LOC">
+                        <orm:join-column name="IC_ENGR_CTRL_ID" referenced-column-name="IC_ENGR_CTRL_ID" />
+                        <orm:inverse-join-column name="IC_ENGR_CTRL_ID" />
+                    </orm:join-table>
+                </hj:one-to-many>
+            </jaxb:bindings>
+        </jaxb:bindings>
+        <jaxb:bindings node="//xsd:element[@ref='IC:EngineeringControlTypeCode']">
+            <hj:basic>
+                <orm:column name="ENGR_CTRL_CODE" />
+            </hj:basic>
+        </jaxb:bindings>
+        <jaxb:bindings node="//xsd:complexType[@name='EngineeringControlLocationDataType']">
+            <hj:entity>
+                <orm:table name="IC_ENGR_CTRL_LOC"/>
+            </hj:entity>
+            <hj:generated-id name="Dbid">
+                <orm:column name="IC_ENGR_CTRL_LOC_ID"/>
+            </hj:generated-id>
+        </jaxb:bindings>
+    </jaxb:bindings>
+
+    <jaxb:bindings schemaLocation="../xsd/1/0/IC_Resource_v1.0.xsd">
+        <jaxb:bindings node="//xsd:complexType[@name='ResourceDataType']">
+            <hj:entity>
+                <orm:table name="IC_RSRC"/>
+            </hj:entity>
+            <hj:generated-id name="Dbid">
+                <orm:column name="IC_RSRC_ID"/>
+            </hj:generated-id>
+            <jaxb:bindings node="//xsd:element[@ref='IC:ResourceTypeText']">
+                <hj:basic>
+                    <orm:column name="RSRC_TYPE_TXT" />
+                </hj:basic>
+            </jaxb:bindings>
+            <jaxb:bindings schemaLocation="../xsd/1/0/SC_ElectronicAddress_v2.0.xsd">
+                <jaxb:bindings node="//xsd:complexType[@name='ElectronicAddressDataType']">
+                    <hj:embeddable />
+                </jaxb:bindings>
+            </jaxb:bindings>
+            <jaxb:bindings node="//xsd:element[@ref='IC:ResourceLocation']">
+                <hj:one-to-many>
+                    <orm:join-table name="IC_RSRC_LOC">
+                        <orm:join-column name="IC_RSRC_ID" referenced-column-name="IC_RSRC_ID" />
+                        <orm:inverse-join-column name="IC_RSRC_ID" />
+                    </orm:join-table>
+                </hj:one-to-many>
+            </jaxb:bindings>
+            <jaxb:bindings node="//xsd:complexType[@name='ResourceLocationDataType']">
+                <hj:entity>
+                    <orm:table name="IC_RSRC_LOC"/>
+                </hj:entity>
+                <hj:generated-id name="Dbid">
+                    <orm:column name="IC_RSRC_LOC_ID"/>
+                </hj:generated-id>
+            </jaxb:bindings>
+        </jaxb:bindings>
+    </jaxb:bindings>
+
+    <jaxb:bindings schemaLocation="../xsd/1/0/IC_RecurringEvent_v1.0.xsd">
+        <jaxb:bindings node="//xsd:complexType[@name='RecurringEventDataType']">
+            <hj:entity>
+                <orm:table name="IC_RECR_EVT"/>
+            </hj:entity>
+            <hj:generated-id name="Dbid">
+                <orm:column name="IC_RECR_EVT_ID"/>
+            </hj:generated-id>
+            <jaxb:bindings node="//xsd:element[@ref='IC:EventTypeCode']">
+                <hj:basic>
+                    <orm:column name="EVT_CODE" />
+                </hj:basic>
+            </jaxb:bindings>
+            <jaxb:bindings node="//xsd:element[@ref='IC:EventFrequencyStartDate']">
+                <hj:basic>
+                    <orm:column name="EVT_FREQ_START_DATE" />
+                </hj:basic>
+            </jaxb:bindings>
+            <jaxb:bindings node="//xsd:element[@ref='IC:EventFrequencyEndDate']">
+                <hj:basic>
+                    <orm:column name="EVT_FREQ_END_DATE" />
+                </hj:basic>
+            </jaxb:bindings>
+            <jaxb:bindings node="//xsd:element[@ref='IC:RecurringEventLocation']">
+                <hj:one-to-many>
+                    <orm:join-table name="IC_RECR_EVT_LOC">
+                        <orm:join-column name="IC_RECR_EVT_ID" referenced-column-name="IC_RECR_EVT_ID" />
+                        <orm:inverse-join-column name="IC_RECR_EVT_ID" />
+                    </orm:join-table>
+                </hj:one-to-many>
+            </jaxb:bindings>
+        </jaxb:bindings>
+        <jaxb:bindings node="//xsd:complexType[@name='RecurringEventLocationDataType']">
+            <hj:entity>
+                <orm:table name="IC_RECR_EVT_LOC"/>
+            </hj:entity>
+            <hj:generated-id name="Dbid">
+                <orm:column name="IC_RECR_EVT_LOC_ID"/>
+            </hj:generated-id>
+        </jaxb:bindings>
+    </jaxb:bindings>
+
+    <jaxb:bindings schemaLocation="../xsd/1/0/IC_Event_v1.0.xsd">
+        <jaxb:bindings node="//xsd:complexType[@name='EventDataType']">
+            <hj:entity>
+                <orm:table name="IC_EVT"/>
+            </hj:entity>
+            <hj:generated-id name="Dbid">
+                <orm:column name="IC_EVT_ID"/>
+            </hj:generated-id>
+            <jaxb:bindings node="//xsd:element[@ref='IC:EventTypeCode']">
+                <hj:basic>
+                    <orm:column name="EVT_CODE" />
+                </hj:basic>
+            </jaxb:bindings>
+            <jaxb:bindings node="//xsd:element[@ref='IC:EventStartDate']">
+                <hj:basic>
+                    <orm:column name="EVT_START_DATE" />
+                </hj:basic>
+            </jaxb:bindings>
+            <jaxb:bindings node="//xsd:element[@ref='IC:EventEndDate']">
+                <hj:basic>
+                    <orm:column name="EVT_END_DATE" />
+                </hj:basic>
+            </jaxb:bindings>
+            <jaxb:bindings node="//xsd:element[@ref='IC:EventStartTime']">
+                <hj:basic>
+                    <orm:column name="EVT_START_TIME" />
+                </hj:basic>
+            </jaxb:bindings>
+            <jaxb:bindings node="//xsd:element[@ref='IC:EventEndTime']">
+                <hj:basic>
+                    <orm:column name="EVT_END_TIME" />
+                </hj:basic>
+            </jaxb:bindings>
+            <jaxb:bindings node="//xsd:element[@ref='IC:EventLocation']">
+                <hj:one-to-many>
+                    <orm:join-table name="IC_EVT_LOC">
+                        <orm:join-column name="IC_EVT_ID" referenced-column-name="IC_EVT_ID" />
+                        <orm:inverse-join-column name="IC_EVT_ID" />
+                    </orm:join-table>
+                </hj:one-to-many>
+            </jaxb:bindings>
+            <jaxb:bindings node="//xsd:element[@ref='IC:Resource']">
+                <hj:one-to-many>
+                    <orm:join-table name="IC_RSRC">
+                        <orm:join-column name="IC_EVT_ID" referenced-column-name="IC_EVT_ID" />
+                        <orm:inverse-join-column name="IC_EVT_ID" />
+                    </orm:join-table>
+                </hj:one-to-many>
+            </jaxb:bindings>
+            <jaxb:bindings node="//xsd:element[@ref='IC:EventAffiliate']">
+                <hj:one-to-many>
+                    <orm:join-table name="IC_EVT_AFFIL">
+                        <orm:join-column name="IC_EVT_ID" referenced-column-name="IC_EVT_ID" />
+                        <orm:inverse-join-column name="IC_EVT_ID" />
+                    </orm:join-table>
+                </hj:one-to-many>
+            </jaxb:bindings>
+        </jaxb:bindings>
+        <jaxb:bindings node="//xsd:complexType[@name='EventLocationDataType']">
+            <hj:entity>
+                <orm:table name="IC_EVT_LOC"/>
+            </hj:entity>
+            <hj:generated-id name="Dbid">
+                <orm:column name="IC_EVT_LOC_ID"/>
+            </hj:generated-id>
+        </jaxb:bindings>
+        <jaxb:bindings node="//xsd:complexType[@name='EventAffiliateDataType']">
+            <hj:entity>
+                <orm:table name="IC_EVT_AFFIL"/>
+            </hj:entity>
+            <hj:generated-id name="Dbid">
+                <orm:column name="IC_EVT_AFFIL_ID"/>
+            </hj:generated-id>
+            <jaxb:bindings node="//xsd:element[@ref='IC:AffiliationTypeCode']">
+                <hj:element-collection>
+                    <orm:collection-table name="IC_AFFIL_TYPE">
+                        <orm:join-column name="IC_EVT_AFFIL_ID" />
+                    </orm:collection-table>
+                    <orm:column name="AFFIL_CODE" />
+                </hj:element-collection>
+            </jaxb:bindings>
+            <jaxb:bindings node="//xsd:element[@ref='IC:AffiliationStartDate']">
+                <hj:basic>
+                    <orm:column name="AFFIL_START_DATE" />
+                </hj:basic>
+            </jaxb:bindings>
+            <jaxb:bindings node="//xsd:element[@ref='IC:AffiliationEndDate']">
+                <hj:basic>
+                    <orm:column name="AFFIL_END_DATE" />
+                </hj:basic>
+            </jaxb:bindings>
+        </jaxb:bindings>
+    </jaxb:bindings>
+
+    <jaxb:bindings schemaLocation="../xsd/1/0/IC_Affiliate_v1.0.xsd">
+        <jaxb:bindings node="//xsd:complexType[@name='AffiliateDataType']">
+            <hj:entity>
+                <orm:table name="IC_AFFIL"/>
+            </hj:entity>
+            <hj:generated-id name="Dbid">
+                <orm:column name="IC_AFFIL_ID"/>
+            </hj:generated-id>
+        </jaxb:bindings>
+        <jaxb:bindings schemaLocation="../xsd/1/0/IC_TelephonicList_v1.0.xsd">
+            <jaxb:bindings node="//xsd:complexType[@name='TelephonicListDataType']">
+                <hj:embeddable />
+                <jaxb:bindings node="//xsd:element[@ref='IC:Telephonic']">
+                    <hj:one-to-many>
+                        <orm:join-table name="IC_TELE">
+                            <orm:join-column name="IC_AFFIL_ID" referenced-column-name="IC_AFFIL_ID" />
+                            <orm:inverse-join-column name="IC_AFFIL_ID" />
+                        </orm:join-table>
+                    </hj:one-to-many>
+                </jaxb:bindings>
+            </jaxb:bindings>
+            <!-- <jaxb:bindings schemaLocation="../xsd/1/0/SC_Telephonic_v2.0.xsd">
+                <jaxb:bindings node="//xsd:complexType[@name='TelephonicDataType']">
+                    <hj:entity>
+                        <orm:table name="IC_TELE"/>
+                    </hj:entity>
+                    <hj:generated-id name="Dbid">
+                        <orm:column name="IC_TELE_ID"/>
+                    </hj:generated-id>
+                </jaxb:bindings>
+            </jaxb:bindings> -->
+            <jaxb:bindings schemaLocation="../xsd/1/0/SC_Telephonic_v2.0.xsd">
+                <jaxb:bindings node="//xsd:complexType[@name='TelephonicDataType']">
+                    <hj:embeddable />
+                </jaxb:bindings>
+            </jaxb:bindings>
+        </jaxb:bindings>
+        <jaxb:bindings schemaLocation="../xsd/1/0/IC_ElectronicAddressList_v1.0.xsd">
+            <jaxb:bindings node="//xsd:complexType[@name='ElectronicAddressListDataType']">
+                <hj:embeddable />
+                <jaxb:bindings node="//xsd:element[@ref='IC:ElectronicAddress']">
+                    <hj:one-to-many>
+                        <orm:join-table name="IC_ELEC_ADDR">
+                            <orm:join-column name="IC_AFFIL_ID" referenced-column-name="IC_AFFIL_ID" />
+                            <orm:inverse-join-column name="IC_AFFIL_ID" />
+                        </orm:join-table>
+                    </hj:one-to-many>
+                </jaxb:bindings>
+            </jaxb:bindings>
+            <!-- <jaxb:bindings schemaLocation="../xsd/1/0/SC_ElectronicAddress_v2.0.xsd">
+                <jaxb:bindings node="//xsd:complexType[@name='ElectronicAddressDataType']">
+                    <hj:entity>
+                        <orm:table name="IC_ELEC_ADDR"/>
+                    </hj:entity>
+                    <hj:generated-id name="Dbid">
+                        <orm:column name="IC_ELEC_ADDR_ID"/>
+                    </hj:generated-id>
+                </jaxb:bindings>
+            </jaxb:bindings> -->
+        </jaxb:bindings>
+        <jaxb:bindings schemaLocation="../xsd/1/0/SC_IndividualIdentity_v2.0.xsd">
+            <jaxb:bindings node="//xsd:complexType[@name='IndividualIdentityDataType']">
+                <hj:embeddable />
+            </jaxb:bindings>
+            <!-- <jaxb:bindings node="//xsd:element[@ref='IndividualIdentifier']">
+                <hj:basic>
+                    <orm:column name="ORG_IDEN_VALUE" />
+                </hj:basic>
+            </jaxb:bindings> -->
+            <!-- <jaxb:bindings node="//xsd:element[@ref='IC:IndividualIdentifier']">
+                <hj:basic access="embeddable">
+                    <orm:column name="ORG_IDEN_VALUE" />
+                </hj:basic>
+            </jaxb:bindings> -->
+        </jaxb:bindings>
+        <jaxb:bindings schemaLocation="../xsd/1/0/SC_SimpleContent_v2.0.xsd">
+            <jaxb:bindings node="//xsd:complexType[@name='IndividualIdentifierDataType']">
+                <hj:embeddable />
+            </jaxb:bindings>
+        </jaxb:bindings>
+        <!-- <jaxb:bindings node="//xsd:element[@ref='IndividualIdentity']/xsd:element[@ref='IndividualIdentifier']">
+            <hj:basic>
+                <orm:column name="ORG_IDEN_VALUE" />
+            </hj:basic>
+        </jaxb:bindings> -->
+        <jaxb:bindings schemaLocation="../xsd/1/0/SC_OrganizationIdentity_v2.0.xsd">
+            <jaxb:bindings node="//xsd:complexType[@name='OrganizationIdentityDataType']">
+                <hj:embeddable />
+            </jaxb:bindings>
+        </jaxb:bindings>
+        <jaxb:bindings schemaLocation="../xsd/1/0/SC_SimpleContent_v2.0.xsd">
+            <jaxb:bindings node="//xsd:complexType[@name='OrganizationIdentifierDataType']">
+                <hj:embeddable />
+            </jaxb:bindings>
+        </jaxb:bindings>
+        <jaxb:bindings schemaLocation="../xsd/1/0/SC_MailingAddress_v2.0.xsd">
+            <jaxb:bindings node="//xsd:complexType[@name='MailingAddressDataType']">
+                <hj:embeddable />
+            </jaxb:bindings>
+        </jaxb:bindings>
+        <jaxb:bindings schemaLocation="../xsd/1/0/SC_SimpleContent_v2.0.xsd">
+            <jaxb:bindings node="//xsd:complexType[@name='AddressPostalCodeDataType']">
+                <hj:embeddable />
+            </jaxb:bindings>
+            <jaxb:bindings node="//xsd:complexType[@name='StateCodeListIdentifierDataType']">
+                <hj:embeddable />
+            </jaxb:bindings>
+            <jaxb:bindings node="//xsd:complexType[@name='CountryCodeListIdentifierDataType']">
+                <hj:embeddable />
+            </jaxb:bindings>
+        </jaxb:bindings>
+        <jaxb:bindings schemaLocation="../xsd/1/0/SC_StateIdentity_v2.0.xsd">
+            <jaxb:bindings node="//xsd:complexType[@name='StateIdentityDataType']">
+                <hj:embeddable />
+            </jaxb:bindings>
+        </jaxb:bindings>
+        <jaxb:bindings schemaLocation="../xsd/1/0/SC_CountryIdentity_v2.0.xsd">
+            <jaxb:bindings node="//xsd:complexType[@name='CountryIdentityDataType']">
+                <hj:embeddable />
+            </jaxb:bindings>
+        </jaxb:bindings>
+    </jaxb:bindings>
+
+    <jaxb:bindings schemaLocation="../xsd/1/0/IC_ICLocation_v1.0.xsd">
+        <jaxb:bindings node="//xsd:complexType[@name='ICLocationDataType']">
+            <hj:entity>
+                <orm:table name="IC_LOC"/>
+            </hj:entity>
+            <hj:generated-id name="Dbid">
+                <orm:column name="IC_LOC_ID"/>
+            </hj:generated-id>
+            <jaxb:bindings node="//xsd:element[@ref='IC:LandParcel']">
+                <hj:one-to-one>
+                    <orm:join-table name="IC_LAND_PARCEL">
+                        <orm:join-column name="IC_LOC_ID" referenced-column-name="IC_LOC_ID" />
+                        <orm:inverse-join-column name="IC_LOC_ID" />
+                    </orm:join-table>
+                </hj:one-to-one>
+            </jaxb:bindings>
+            <jaxb:bindings node="//xsd:element[@ref='IC:Facility']">
+                <hj:one-to-one>
+                    <orm:join-table name="IC_FAC">
+                        <orm:join-column name="IC_LOC_ID" referenced-column-name="IC_LOC_ID" />
+                        <orm:inverse-join-column name="IC_LOC_ID" />
+                    </orm:join-table>
+                </hj:one-to-one>
+            </jaxb:bindings>
+            <jaxb:bindings node="//xsd:element[@ref='IC:ICGeographicLocationDescription']">
+                <hj:one-to-one>
+                    <orm:join-table name="IC_GEO_LOC_DESC">
+                        <orm:join-column name="IC_LOC_ID" referenced-column-name="IC_LOC_ID" />
+                        <orm:inverse-join-column name="IC_LOC_ID" />
+                    </orm:join-table>
+                </hj:one-to-one>
+            </jaxb:bindings>
+        </jaxb:bindings>
+        <jaxb:bindings schemaLocation="../xsd/1/0/IC_LandParcel_v1.0.xsd">
+            <jaxb:bindings node="//xsd:complexType[@name='LandParcelDataType']">
+                <hj:entity>
+                    <orm:table name="IC_LAND_PARCEL"/>
+                </hj:entity>
+                <hj:generated-id name="Dbid">
+                    <orm:column name="IC_LAND_PARCEL_ID"/>
+                </hj:generated-id>
+            </jaxb:bindings>
+        </jaxb:bindings>
+        <jaxb:bindings schemaLocation="../xsd/1/0/IC_Facility_v1.0.xsd">
+            <jaxb:bindings node="//xsd:complexType[@name='FacilityDataType']">
+                <hj:entity>
+                    <orm:table name="IC_FAC"/>
+                </hj:entity>
+                <hj:generated-id name="Dbid">
+                    <orm:column name="IC_FAC_ID"/>
+                </hj:generated-id>
+            </jaxb:bindings>
+        </jaxb:bindings>
+        <jaxb:bindings schemaLocation="../xsd/1/0/SC_FacilitySiteIdentity_v2.0.xsd">
+            <jaxb:bindings node="//xsd:complexType[@name='FacilitySiteIdentityDataType']">
+                <hj:embeddable />
+            </jaxb:bindings>
+        </jaxb:bindings>
+        <jaxb:bindings schemaLocation="../xsd/1/0/SC_FacilitySiteType_v2.0.xsd">
+            <jaxb:bindings node="//xsd:complexType[@name='FacilitySiteDataType']">
+                <hj:embeddable />
+            </jaxb:bindings>
+        </jaxb:bindings>
+        <jaxb:bindings schemaLocation="../xsd/1/0/SC_SimpleContent_v2.0.xsd">
+            <jaxb:bindings node="//xsd:complexType[@name='FacilitySiteIdentifierDataType']">
+                <hj:embeddable />
+            </jaxb:bindings>
+            <jaxb:bindings node="//xsd:complexType[@name='FacilitySiteTypeCodeListIdentifierDataType']">
+                <hj:embeddable />
+            </jaxb:bindings>
+            <jaxb:bindings node="//xsd:complexType[@name='CountyCodeListIdentifierDataType']">
+                <hj:embeddable />
+            </jaxb:bindings>
+        </jaxb:bindings>
+        <jaxb:bindings schemaLocation="../xsd/1/0/SC_LocationAddress_v2.0.xsd">
+            <jaxb:bindings node="//xsd:complexType[@name='LocationAddressDataType']">
+                <hj:embeddable />
+            </jaxb:bindings>
+        </jaxb:bindings>
+        <jaxb:bindings schemaLocation="../xsd/1/0/SC_CountyIdentity_v2.0.xsd">
+            <jaxb:bindings node="//xsd:complexType[@name='CountyIdentityDataType']">
+                <hj:embeddable />
+            </jaxb:bindings>
+        </jaxb:bindings>
+        <jaxb:bindings schemaLocation="../xsd/1/0/IC_GeographicLocationDescription_v1.0.xsd">
+            <jaxb:bindings node="//xsd:complexType[@name='ICGeographicLocationDescriptionDataType']">
+                <hj:entity>
+                    <orm:table name="IC_GEO_LOC_DESC"/>
+                </hj:entity>
+                <hj:generated-id name="Dbid">
+                    <orm:column name="IC_GEO_LOC_DESC_ID"/>
+                </hj:generated-id>
+            </jaxb:bindings>
+            <jaxb:bindings node="//xsd:element[@ref='IC:DataCollectionDate']">
+                <hj:basic>
+                    <orm:column name="DATA_COLL_DATE" />
+                </hj:basic>
+            </jaxb:bindings>
+            <!-- <jaxb:bindings node="//xsd:element[@ref='gml:Point']">
+                <hj:one-to-one>
+                    <orm:join-table name="IC_LAT_LON_POLYGON">
+                        <orm:join-column name="IC_GEO_LOC_DESC_ID" referenced-column-name="IC_GEO_LOC_DESC_ID" />
+                        <orm:inverse-join-column name="IC_GEO_LOC_DESC_ID" />
+                    </orm:join-table>
+                </hj:one-to-one>
+            </jaxb:bindings> -->
+            <!-- <jaxb:bindings node="//xsd:element[@ref='gml:LineString']">
+                <hj:one-to-many>
+                    <orm:join-table name="IC_LAT_LON_POLYGON">
+                        <orm:join-column name="IC_GEO_LOC_DESC_ID" referenced-column-name="IC_GEO_LOC_DESC_ID" />
+                        <orm:inverse-join-column name="IC_GEO_LOC_DESC_ID" />
+                    </orm:join-table>
+                </hj:one-to-many>
+            </jaxb:bindings>
+            <jaxb:bindings node="//xsd:element[@ref='gml:Polygon']">
+                <hj:one-to-many>
+                    <orm:join-table name="IC_LAT_LON_POLYGON">
+                        <orm:join-column name="IC_GEO_LOC_DESC_ID" referenced-column-name="IC_GEO_LOC_DESC_ID" />
+                        <orm:inverse-join-column name="IC_GEO_LOC_DESC_ID" />
+                    </orm:join-table>
+                </hj:one-to-many>
+            </jaxb:bindings>
+            <jaxb:bindings node="//xsd:element[@ref='gml:Envelope']">
+                <hj:one-to-many>
+                    <orm:join-table name="IC_LAT_LON_POLYGON">
+                        <orm:join-column name="IC_GEO_LOC_DESC_ID" referenced-column-name="IC_GEO_LOC_DESC_ID" />
+                        <orm:inverse-join-column name="IC_GEO_LOC_DESC_ID" />
+                    </orm:join-table>
+                </hj:one-to-many>
+            </jaxb:bindings> -->
+            <jaxb:bindings schemaLocation="../xsd/1/0/SC_Measure_v2.0.xsd">
+                <jaxb:bindings node="//xsd:complexType[@name='MeasureDataType']">
+                    <hj:embeddable />
+                </jaxb:bindings>
+                <jaxb:bindings schemaLocation="../xsd/1/0/SC_MeasureUnit_v2.0.xsd">
+                    <jaxb:bindings node="//xsd:complexType[@name='MeasureUnitDataType']">
+                        <hj:embeddable />
+                    </jaxb:bindings>
+                </jaxb:bindings>
+                <jaxb:bindings schemaLocation="../xsd/1/0/SC_ResultQualifier_v2.0.xsd">
+                    <jaxb:bindings node="//xsd:complexType[@name='ResultQualifierDataType']">
+                        <hj:embeddable />
+                    </jaxb:bindings>
+                </jaxb:bindings>
+                <jaxb:bindings schemaLocation="../xsd/1/0/SC_SimpleContent_v2.0.xsd">
+                    <jaxb:bindings node="//xsd:complexType[@name='MeasureUnitCodeListIdentifierDataType']">
+                        <hj:embeddable />
+                    </jaxb:bindings>
+                    <jaxb:bindings node="//xsd:complexType[@name='ResultQualifierCodeListIdentifierDataType']">
+                        <hj:embeddable />
+                    </jaxb:bindings>
+                </jaxb:bindings>
+            </jaxb:bindings>
+            <jaxb:bindings schemaLocation="../xsd/1/0/SC_ReferenceMethod_v2.0.xsd">
+                <jaxb:bindings node="//xsd:complexType[@name='ReferenceMethodDataType']">
+                    <hj:embeddable />
+                </jaxb:bindings>
+                <jaxb:bindings schemaLocation="../xsd/1/0/SC_SimpleContent_v2.0.xsd">
+                    <jaxb:bindings node="//xsd:complexType[@name='MethodIdentifierCodeListIdentifierDataType']">
+                        <hj:embeddable />
+                    </jaxb:bindings>
+                </jaxb:bindings>
+            </jaxb:bindings>
+            <jaxb:bindings schemaLocation="../xsd/1/0/SC_GeographicReferencePoint_v2.0.xsd">
+                <jaxb:bindings node="//xsd:complexType[@name='GeographicReferencePointDataType']">
+                    <hj:embeddable />
+                </jaxb:bindings>
+                <jaxb:bindings schemaLocation="../xsd/1/0/SC_SimpleContent_v2.0.xsd">
+                    <jaxb:bindings node="//xsd:complexType[@name='ReferencePointCodeListIdentifierDataType']">
+                        <hj:embeddable />
+                    </jaxb:bindings>
+                    <jaxb:bindings node="//xsd:complexType[@name='CoordinateDataSourceCodeListIdentifierDataType']">
+                        <hj:embeddable />
+                    </jaxb:bindings>
+                </jaxb:bindings>
+            </jaxb:bindings>
+            <jaxb:bindings schemaLocation="../xsd/1/0/gmlgeorss.xsd">
+                <jaxb:bindings node="//xsd:complexType[@name='LineStringType']">
+                    <hj:ignored />
+                </jaxb:bindings>
+                <jaxb:bindings node="//xsd:complexType[@name='PolygonType']">
+                    <hj:ignored />
+                </jaxb:bindings>
+                <jaxb:bindings node="//xsd:complexType[@name='EnvelopeType']">
+                    <hj:ignored />
+                </jaxb:bindings>
+                <jaxb:bindings node="//xsd:complexType[@name='PointType']">
+                    <hj:ignored />
+                </jaxb:bindings>
+                <jaxb:bindings node="//xsd:complexType[@name='DirectPositionType']">
+                    <hj:ignored />
+                </jaxb:bindings>
+            </jaxb:bindings>
+            <jaxb:bindings schemaLocation="../xsd/1/0/SC_CoordinateDataSource_v2.0.xsd">
+                <jaxb:bindings node="//xsd:complexType[@name='CoordinateDataSourceDataType']">
+                    <hj:embeddable />
+                </jaxb:bindings>
+            </jaxb:bindings>
+        </jaxb:bindings>
+    </jaxb:bindings>
+
+</jaxb:bindings>

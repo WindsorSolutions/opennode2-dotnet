@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:IC="http://www.exchangenetwork.net/schema/IC/1" targetNamespace="http://www.exchangenetwork.net/schema/IC/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:include schemaLocation="IC_Shared_v1.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+			Schema Name: IC_DataSource_v1.0.xsd
+			Current Version Available At: http://www.exchangenetwork.net/
+			Description: A description of the partner who originally provided the information, the acronym representing
+			Developed by: Windsor Solutions, Inc.
+	        Point of Contact: ECOS
+	        Last Modified by: Windsor Solutions, Inc.
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="DataSource" type="IC:DataSourceDataType">
+		<xsd:annotation>
+			<xsd:documentation>A description of the partner who originally provided the information, the acronym representing the source system and the date the information was last updated in the source system.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="DataSourceDataType">
+		<xsd:sequence>
+			<xsd:element ref="IC:OriginatingPartnerName"/>
+			<xsd:element ref="IC:InformationSystemAcronymName"/>
+			<xsd:element ref="IC:LastUpdatedDate"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

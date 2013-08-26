@@ -1,0 +1,92 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.windsor.node.plugin</groupId>
+        <artifactId>node-plugin</artifactId>
+        <version>2.07-SNAPSHOT</version>
+    </parent>
+    <artifactId>node-plugin-ic</artifactId>
+    <packaging>jar</packaging>
+    <name>Node Plugin - IC - Institutional Controls</name>
+    <properties>
+        <node.plugin.name>ic</node.plugin.name>
+        <node.plugin.build.number>00</node.plugin.build.number>
+        <hyperjaxb3.schemaDirectory>${basedir}/src/main/xsd/1</hyperjaxb3.schemaDirectory>
+    </properties>
+    <build>
+        <finalName>${node.plugin.name}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+            </plugin>
+
+            <!-- <plugin>
+                <groupId>org.jvnet.hyperjaxb3</groupId>
+                <artifactId>maven-hyperjaxb3-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <args>
+                        <arg>-Xannotate</arg>
+                        <arg>-Xinheritance</arg>
+                        <arg>-Xnamespace-prefix</arg>
+                    </args>
+                    <debug>true</debug>
+                    <variant>jpa2</variant>
+                    <extension>true</extension>
+                    <bindingDirectory>${basedir}/src/main/bindings</bindingDirectory>
+                    <schemaDirectory>${hyperjaxb3.schemaDirectory}</schemaDirectory>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.windsor.node.util.hyperjaxb3</groupId>
+                        <artifactId>node-util-hyperjaxb3-core</artifactId>
+                        <version>${project.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>com.windsor.node.util.hyperjaxb3</groupId>
+                        <artifactId>node-util-hyperjaxb3-ic</artifactId>
+                        <version>${project.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.jvnet.jaxb2_commons</groupId>
+                        <artifactId>jaxb2-namespace-prefix</artifactId>
+                        <version>1.1</version>
+                    </dependency>
+                </dependencies>
+            </plugin> -->
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+    <dependencies>
+        <dependency>
+            <groupId>com.windsor.node.plugin</groupId>
+            <artifactId>node-plugin-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.windsor.node.plugin</groupId>
+            <artifactId>node-plugin-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified" version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:include schemaLocation="SC_SimpleContent_v2.0.xsd" />
+    <xsd:include schemaLocation="SC_MeasureUnit_v2.0.xsd" />
+    <xsd:include schemaLocation="SC_ResultQualifier_v2.0.xsd" />
+    <xsd:annotation>
+        <xsd:documentation>
+	        Schema Name  : SC_Measure_v2.0.xsd
+	        Schema Identification : ESAR.01
+	        Current Version Available At :  http://www.exchangenetwork.net/schema/SC
+	        Description   : 	Identifies the value and the associated units of measure for measuring the observation or analytical result value.
+	        Application   :   Exchange Network Shared Schema Component
+	        Developed by  : 	 Core Reference Model (CRM) Workgroup
+	        Point of Contact :   Douglas Timms, enfoTech &amp; Consulting, Inc.
+	        Last Modified by :   Ross &amp; Associates - April 17, 2006 (from SSCv1.1: targetNamespace declaration removed, to conform with Exchange Network namespace decision v1.11)
+		</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType name="MeasureDataType">
+        <xsd:sequence>
+            <xsd:element minOccurs="0" ref="MeasureValue" />
+            <xsd:element minOccurs="0" ref="MeasureUnit" />
+            <xsd:element minOccurs="0" ref="MeasurePrecisionText" />
+            <xsd:element minOccurs="0" ref="ResultQualifier" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="Measure" type="MeasureDataType">
+        <xsd:annotation>
+            <xsd:documentation>Identifies the value and the associated units of measure for measuring the observation or analytical result value.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+</xsd:schema>
