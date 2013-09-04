@@ -24,6 +24,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.jvnet.jaxb2_commons.lang.Equals;
 import org.jvnet.jaxb2_commons.lang.EqualsStrategy;
 import org.jvnet.jaxb2_commons.lang.HashCode;
@@ -32,6 +33,7 @@ import org.jvnet.jaxb2_commons.lang.JAXBEqualsStrategy;
 import org.jvnet.jaxb2_commons.lang.JAXBHashCodeStrategy;
 import org.jvnet.jaxb2_commons.locator.ObjectLocator;
 import org.jvnet.jaxb2_commons.locator.util.LocatorUtils;
+import com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter;
 
 
 /**
@@ -72,7 +74,8 @@ public class ContaminantDataType
 
     private final static long serialVersionUID = 1L;
     @XmlElement(name = "ChemicalCategoryCode", required = true)
-    protected ChemicalCategoryCodeDataType chemicalCategoryCode;
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String chemicalCategoryCode;
     @XmlElement(name = "OtherChemicalCategoryText")
     protected String otherChemicalCategoryText;
     @XmlElement(name = "CASRegistryNumber")
@@ -92,8 +95,7 @@ public class ContaminantDataType
      */
     @Basic
     @Column(name = "CHEM_CATG_CODE", length = 255)
-    @Enumerated(EnumType.STRING)
-    public ChemicalCategoryCodeDataType getChemicalCategoryCode() {
+    public String getChemicalCategoryCode() {
         return chemicalCategoryCode;
     }
 
@@ -105,7 +107,7 @@ public class ContaminantDataType
      *     {@link ChemicalCategoryCodeDataType }
      *     
      */
-    public void setChemicalCategoryCode(ChemicalCategoryCodeDataType value) {
+    public void setChemicalCategoryCode(String value) {
         this.chemicalCategoryCode = value;
     }
 
@@ -185,7 +187,7 @@ public class ContaminantDataType
      *     
      */
     @Basic
-    @Column(name = "CHEM_SUB_DEF_TXT", length = 255)
+    @Column(name = "CHEM_SUBST_DEF_TXT", length = 255)
     public String getChemicalSubstanceDefinitionText() {
         return chemicalSubstanceDefinitionText;
     }
@@ -242,9 +244,9 @@ public class ContaminantDataType
         }
         final ContaminantDataType that = ((ContaminantDataType) object);
         {
-            ChemicalCategoryCodeDataType lhsChemicalCategoryCode;
+            String lhsChemicalCategoryCode;
             lhsChemicalCategoryCode = this.getChemicalCategoryCode();
-            ChemicalCategoryCodeDataType rhsChemicalCategoryCode;
+            String rhsChemicalCategoryCode;
             rhsChemicalCategoryCode = that.getChemicalCategoryCode();
             if (!strategy.equals(LocatorUtils.property(thisLocator, "chemicalCategoryCode", lhsChemicalCategoryCode), LocatorUtils.property(thatLocator, "chemicalCategoryCode", rhsChemicalCategoryCode), lhsChemicalCategoryCode, rhsChemicalCategoryCode)) {
                 return false;
@@ -288,7 +290,7 @@ public class ContaminantDataType
     public int hashCode(ObjectLocator locator, HashCodeStrategy strategy) {
         int currentHashCode = 1;
         {
-            ChemicalCategoryCodeDataType theChemicalCategoryCode;
+            String theChemicalCategoryCode;
             theChemicalCategoryCode = this.getChemicalCategoryCode();
             currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "chemicalCategoryCode", theChemicalCategoryCode), currentHashCode, theChemicalCategoryCode);
         }

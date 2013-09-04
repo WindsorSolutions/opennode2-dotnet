@@ -16,13 +16,10 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -33,6 +30,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.datatype.XMLGregorianCalendar;
 import org.jvnet.hyperjaxb3.xml.bind.annotation.adapters.XMLGregorianCalendarAsDate;
 import org.jvnet.hyperjaxb3.xml.bind.annotation.adapters.XMLGregorianCalendarAsTime;
@@ -45,6 +43,7 @@ import org.jvnet.jaxb2_commons.lang.JAXBEqualsStrategy;
 import org.jvnet.jaxb2_commons.lang.JAXBHashCodeStrategy;
 import org.jvnet.jaxb2_commons.locator.ObjectLocator;
 import org.jvnet.jaxb2_commons.locator.util.LocatorUtils;
+import com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter;
 
 
 /**
@@ -107,7 +106,8 @@ public class EventDataType
     @XmlElement(name = "EventName", required = true)
     protected String eventName;
     @XmlElement(name = "EventTypeCode")
-    protected EventTypeCodeDataType eventTypeCode;
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String eventTypeCode;
     @XmlElement(name = "OtherEventTypeText")
     protected String otherEventTypeText;
     @XmlElement(name = "EventDescriptionText")
@@ -121,7 +121,8 @@ public class EventDataType
     @XmlElement(name = "EventEndTime")
     protected XMLGregorianCalendar eventEndTime;
     @XmlElement(name = "EventDateQualifierCode")
-    protected EventDateQualifierCodeDataType eventDateQualifierCode;
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String eventDateQualifierCode;
     @XmlElement(name = "EventStatusText")
     protected String eventStatusText;
     @XmlElement(name = "RecurringEventIdentifier")
@@ -175,9 +176,8 @@ public class EventDataType
      *     
      */
     @Basic
-    @Column(name = "EVT_CODE", length = 255)
-    @Enumerated(EnumType.STRING)
-    public EventTypeCodeDataType getEventTypeCode() {
+    @Column(name = "EVT_CODE", columnDefinition = "31", length = 31)
+    public String getEventTypeCode() {
         return eventTypeCode;
     }
 
@@ -189,7 +189,7 @@ public class EventDataType
      *     {@link EventTypeCodeDataType }
      *     
      */
-    public void setEventTypeCode(EventTypeCodeDataType value) {
+    public void setEventTypeCode(String value) {
         this.eventTypeCode = value;
     }
 
@@ -389,9 +389,8 @@ public class EventDataType
      *     
      */
     @Basic
-    @Column(name = "EVT_DATE_QUAL_CODE", length = 255)
-    @Enumerated(EnumType.STRING)
-    public EventDateQualifierCodeDataType getEventDateQualifierCode() {
+    @Column(name = "EVT_DATE_QUAL_CODE", columnDefinition = "7", length = 7)
+    public String getEventDateQualifierCode() {
         return eventDateQualifierCode;
     }
 
@@ -403,7 +402,7 @@ public class EventDataType
      *     {@link EventDateQualifierCodeDataType }
      *     
      */
-    public void setEventDateQualifierCode(EventDateQualifierCodeDataType value) {
+    public void setEventDateQualifierCode(String value) {
         this.eventDateQualifierCode = value;
     }
 
@@ -496,14 +495,18 @@ public class EventDataType
      * 
      * 
      */
-    @OneToMany(targetEntity = ResourceDataType.class, cascade = {
+    /*@OneToMany(targetEntity = ResourceDataType.class, cascade = {
         CascadeType.ALL
     })
     @JoinTable(name = "IC_RSRC", joinColumns = {
         @JoinColumn(name = "IC_EVT_ID", referencedColumnName = "IC_EVT_ID")
     }, inverseJoinColumns = {
         @JoinColumn(name = "IC_EVT_ID")
+    })*/
+    @OneToMany(targetEntity = ResourceDataType.class, cascade = {
+        CascadeType.ALL
     })
+    @JoinColumn(name = "IC_EVT_ID")
     public List<ResourceDataType> getResource() {
         if (resource == null) {
             resource = new ArrayList<ResourceDataType>();
@@ -550,14 +553,18 @@ public class EventDataType
      * 
      * 
      */
-    @OneToMany(targetEntity = EventLocationDataType.class, cascade = {
+    /*@OneToMany(targetEntity = EventLocationDataType.class, cascade = {
         CascadeType.ALL
     })
     @JoinTable(name = "IC_EVT_LOC", joinColumns = {
         @JoinColumn(name = "IC_EVT_ID", referencedColumnName = "IC_EVT_ID")
     }, inverseJoinColumns = {
         @JoinColumn(name = "IC_EVT_ID")
+    })*/
+    @OneToMany(targetEntity = EventLocationDataType.class, cascade = {
+        CascadeType.ALL
     })
+    @JoinColumn(name = "IC_EVT_ID")
     public List<EventLocationDataType> getEventLocation() {
         if (eventLocation == null) {
             eventLocation = new ArrayList<EventLocationDataType>();
@@ -604,14 +611,18 @@ public class EventDataType
      * 
      * 
      */
-    @OneToMany(targetEntity = EventAffiliateDataType.class, cascade = {
+    /*@OneToMany(targetEntity = EventAffiliateDataType.class, cascade = {
         CascadeType.ALL
     })
     @JoinTable(name = "IC_EVT_AFFIL", joinColumns = {
         @JoinColumn(name = "IC_EVT_ID", referencedColumnName = "IC_EVT_ID")
     }, inverseJoinColumns = {
         @JoinColumn(name = "IC_EVT_ID")
+    })*/
+    @OneToMany(targetEntity = EventAffiliateDataType.class, cascade = {
+        CascadeType.ALL
     })
+    @JoinColumn(name = "IC_EVT_ID")
     public List<EventAffiliateDataType> getEventAffiliate() {
         if (eventAffiliate == null) {
             eventAffiliate = new ArrayList<EventAffiliateDataType>();
@@ -724,9 +735,9 @@ public class EventDataType
             }
         }
         {
-            EventTypeCodeDataType lhsEventTypeCode;
+            String lhsEventTypeCode;
             lhsEventTypeCode = this.getEventTypeCode();
-            EventTypeCodeDataType rhsEventTypeCode;
+            String rhsEventTypeCode;
             rhsEventTypeCode = that.getEventTypeCode();
             if (!strategy.equals(LocatorUtils.property(thisLocator, "eventTypeCode", lhsEventTypeCode), LocatorUtils.property(thatLocator, "eventTypeCode", rhsEventTypeCode), lhsEventTypeCode, rhsEventTypeCode)) {
                 return false;
@@ -787,9 +798,9 @@ public class EventDataType
             }
         }
         {
-            EventDateQualifierCodeDataType lhsEventDateQualifierCode;
+            String lhsEventDateQualifierCode;
             lhsEventDateQualifierCode = this.getEventDateQualifierCode();
-            EventDateQualifierCodeDataType rhsEventDateQualifierCode;
+            String rhsEventDateQualifierCode;
             rhsEventDateQualifierCode = that.getEventDateQualifierCode();
             if (!strategy.equals(LocatorUtils.property(thisLocator, "eventDateQualifierCode", lhsEventDateQualifierCode), LocatorUtils.property(thatLocator, "eventDateQualifierCode", rhsEventDateQualifierCode), lhsEventDateQualifierCode, rhsEventDateQualifierCode)) {
                 return false;
@@ -856,7 +867,7 @@ public class EventDataType
             currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "eventName", theEventName), currentHashCode, theEventName);
         }
         {
-            EventTypeCodeDataType theEventTypeCode;
+            String theEventTypeCode;
             theEventTypeCode = this.getEventTypeCode();
             currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "eventTypeCode", theEventTypeCode), currentHashCode, theEventTypeCode);
         }
@@ -891,7 +902,7 @@ public class EventDataType
             currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "eventEndTime", theEventEndTime), currentHashCode, theEventEndTime);
         }
         {
-            EventDateQualifierCodeDataType theEventDateQualifierCode;
+            String theEventDateQualifierCode;
             theEventDateQualifierCode = this.getEventDateQualifierCode();
             currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "eventDateQualifierCode", theEventDateQualifierCode), currentHashCode, theEventDateQualifierCode);
         }

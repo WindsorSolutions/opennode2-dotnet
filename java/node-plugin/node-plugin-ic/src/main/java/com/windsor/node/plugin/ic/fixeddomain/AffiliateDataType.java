@@ -10,7 +10,6 @@ package com.windsor.node.plugin.ic.fixeddomain;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.AssociationOverride;
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Basic;
@@ -22,7 +21,6 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -212,7 +210,7 @@ public class AffiliateDataType
         return (electronicAddressList != null ? electronicAddressList.getElectronicAddress() : null);
     }
 
-    public void setsetElectronicAddressDataTypes(List<ElectronicAddressDataType> list)
+    public void setElectronicAddressDataTypes(List<ElectronicAddressDataType> list)
     {
         if(electronicAddressList == null)
         {
@@ -331,15 +329,15 @@ public class AffiliateDataType
         @AttributeOverride(name = "stateIdentity.stateCode", column = @Column(name = "ST_CODE", length = 255)),
         @AttributeOverride(name = "stateIdentity.stateName", column = @Column(name = "ST_NAME", length = 255)),
         @AttributeOverride(name = "stateIdentity.stateCodeListIdentifier.value", column = @Column(name = "ST_LST_IDEN_VALUE", length = 255)),
-        @AttributeOverride(name = "stateIdentity.stateCodeListIdentifier.codeListVersionIdentifier", column = @Column(name = "CODE_LST_IDEN", length = 255)),
-        @AttributeOverride(name = "stateIdentity.stateCodeListIdentifier.codeListVersionAgencyIdentifier", column = @Column(name = "CODE_LST_AGENCY_IDEN", length = 255)),
+        @AttributeOverride(name = "stateIdentity.stateCodeListIdentifier.codeListVersionIdentifier", column = @Column(name = "ST_LST_IDEN", length = 255)),
+        @AttributeOverride(name = "stateIdentity.stateCodeListIdentifier.codeListVersionAgencyIdentifier", column = @Column(name = "ST_LST_AGCY_IDEN", length = 255)),
         @AttributeOverride(name = "addressPostalCode.value", column = @Column(name = "ADDR_POSTAL_CODE_VALUE", length = 255)),
         @AttributeOverride(name = "addressPostalCode.addressPostalCodeContext", column = @Column(name = "ADDR_POSTAL_CODE_CNTXT", length = 255)),
         @AttributeOverride(name = "countryIdentity.countryCode", column = @Column(name = "CNTRY_CODE", length = 255)),
         @AttributeOverride(name = "countryIdentity.countryName", column = @Column(name = "CNTRY_NAME", length = 255)),
         @AttributeOverride(name = "countryIdentity.countryCodeListIdentifier.value", column = @Column(name = "CNTRY_LST_IDEN_VALUE", length = 255)),
-        @AttributeOverride(name = "countryIdentity.countryCodeListIdentifier.codeListVersionIdentifier", column = @Column(name = "CODE_LST_IDEN", length = 255)),
-        @AttributeOverride(name = "countryIdentity.countryCodeListIdentifier.codeListVersionAgencyIdentifier", column = @Column(name = "CODE_LST_AGENCY_IDEN", length = 255))
+        @AttributeOverride(name = "countryIdentity.countryCodeListIdentifier.codeListVersionIdentifier", column = @Column(name = "CNTRY_LST_IDEN", length = 255)),
+        @AttributeOverride(name = "countryIdentity.countryCodeListIdentifier.codeListVersionAgencyIdentifier", column = @Column(name = "CNTRY_LST_AGCY_IDEN", length = 255))
     })
     public MailingAddressDataType getMailingAddress() {
         return mailingAddress;

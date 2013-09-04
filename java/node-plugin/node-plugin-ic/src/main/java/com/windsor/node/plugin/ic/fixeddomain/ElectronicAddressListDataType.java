@@ -14,7 +14,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -85,14 +84,18 @@ public class ElectronicAddressListDataType
      * 
      * 
      */
-    @OneToMany(targetEntity = ElectronicAddressDataType.class, cascade = {
+    /*@OneToMany(targetEntity = ElectronicAddressDataType.class, cascade = {
         CascadeType.ALL
     })
     @JoinTable(name = "IC_ELEC_ADDR", joinColumns = {
         @JoinColumn(name = "IC_AFFIL_ID", referencedColumnName = "IC_AFFIL_ID")
     }, inverseJoinColumns = {
         @JoinColumn(name = "IC_AFFIL_ID")
+    })*/
+    @OneToMany(targetEntity = ElectronicAddressDataType.class, cascade = {
+        CascadeType.ALL
     })
+    @JoinColumn(name = "IC_AFFIL_ID")
     public List<ElectronicAddressDataType> getElectronicAddress() {
         if (electronicAddress == null) {
             electronicAddress = new ArrayList<ElectronicAddressDataType>();

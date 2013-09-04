@@ -88,7 +88,7 @@ public class FacilityDataType
         @AttributeOverride(name = "federalFacilityIndicator", column = @Column(name = "FEDR_FAC_IND", length = 255)),
         @AttributeOverride(name = "facilitySiteIdentifier.value", column = @Column(name = "FAC_SITE_IDEN_VALUE", length = 255)),
         @AttributeOverride(name = "facilitySiteIdentifier.facilitySiteIdentifierContext", column = @Column(name = "FAC_SITE_IDEN_CNTXT", length = 255)),
-        @AttributeOverride(name = "facilitySiteType.facilitySiteTypeCode", column = @Column(name = "FAC_SITE_TYPE_CODE", length = 255)),
+        @AttributeOverride(name = "facilitySiteType.facilitySiteTypeCode", column = @Column(name = "FAC_SITE_CODE", length = 255)),
         @AttributeOverride(name = "facilitySiteType.facilitySiteTypeName", column = @Column(name = "FAC_SITE_TYPE_NAME", length = 255)),
         @AttributeOverride(name = "facilitySiteType.facilitySiteTypeCodeListIdentifier.value", column = @Column(name = "FAC_SITE_LST_IDEN_VALUE", length = 255)),
         @AttributeOverride(name = "facilitySiteType.facilitySiteTypeCodeListIdentifier.codeListVersionIdentifier", column = @Column(name = "FAC_SITE_LST_IDEN", length = 255)),

@@ -11,22 +11,6 @@ package com.windsor.node.plugin.ic.fixeddomain;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Date;
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -96,9 +80,6 @@ import org.jvnet.jaxb2_commons.locator.util.LocatorUtils;
     "coordinateDataSource",
     "geometricType"
 })
-@Entity(name = "GeographicLocationDescriptionDataType")
-@Table(name = "IC_GEOGRAPHIC_LOC_DESC_DATA_TYPE")
-@Inheritance(strategy = InheritanceType.JOINED)
 public class GeographicLocationDescriptionDataType
     implements Serializable, Equals, HashCode
 {
@@ -145,8 +126,6 @@ public class GeographicLocationDescriptionDataType
      *     {@link String }
      *     
      */
-    @Basic
-    @Column(name = "LATITUDE_MEAS", length = 255)
     public String getLatitudeMeasure() {
         return latitudeMeasure;
     }
@@ -163,7 +142,6 @@ public class GeographicLocationDescriptionDataType
         this.latitudeMeasure = value;
     }
 
-    @Transient
     public boolean isSetLatitudeMeasure() {
         return (this.latitudeMeasure!= null);
     }
@@ -176,8 +154,6 @@ public class GeographicLocationDescriptionDataType
      *     {@link String }
      *     
      */
-    @Basic
-    @Column(name = "LONGITUDE_MEAS", length = 255)
     public String getLongitudeMeasure() {
         return longitudeMeasure;
     }
@@ -194,7 +170,6 @@ public class GeographicLocationDescriptionDataType
         this.longitudeMeasure = value;
     }
 
-    @Transient
     public boolean isSetLongitudeMeasure() {
         return (this.longitudeMeasure!= null);
     }
@@ -207,8 +182,6 @@ public class GeographicLocationDescriptionDataType
      *     {@link BigInteger }
      *     
      */
-    @Basic
-    @Column(name = "SRC_MAP_SCALE_NUM", precision = 20, scale = 0)
     public BigInteger getSourceMapScaleNumber() {
         return sourceMapScaleNumber;
     }
@@ -225,7 +198,6 @@ public class GeographicLocationDescriptionDataType
         this.sourceMapScaleNumber = value;
     }
 
-    @Transient
     public boolean isSetSourceMapScaleNumber() {
         return (this.sourceMapScaleNumber!= null);
     }
@@ -238,21 +210,6 @@ public class GeographicLocationDescriptionDataType
      *     {@link MeasureDataType }
      *     
      */
-    @Embedded
-    @AttributeOverrides({
-        @AttributeOverride(name = "measureValue", column = @Column(name = "MEAS_VALUE", length = 255)),
-        @AttributeOverride(name = "measurePrecisionText", column = @Column(name = "MEAS_PRECISION_TXT", length = 255)),
-        @AttributeOverride(name = "measureUnit.measureUnitCode", column = @Column(name = "MEAS_UNIT_CODE", length = 255)),
-        @AttributeOverride(name = "measureUnit.measureUnitName", column = @Column(name = "MEAS_UNIT_NAME", length = 255)),
-        @AttributeOverride(name = "measureUnit.measureUnitCodeListIdentifier.value", column = @Column(name = "VALUE", length = 255)),
-        @AttributeOverride(name = "measureUnit.measureUnitCodeListIdentifier.codeListVersionIdentifier", column = @Column(name = "CODE_LST_IDEN", length = 255)),
-        @AttributeOverride(name = "measureUnit.measureUnitCodeListIdentifier.codeListVersionAgencyIdentifier", column = @Column(name = "CODE_LST_AGENCY_IDEN", length = 255)),
-        @AttributeOverride(name = "resultQualifier.resultQualifierCode", column = @Column(name = "RESULT_QUAL_CODE", length = 255)),
-        @AttributeOverride(name = "resultQualifier.resultQualifierName", column = @Column(name = "RESULT_QUAL_NAME", length = 255)),
-        @AttributeOverride(name = "resultQualifier.resultQualifierCodeListIdentifier.value", column = @Column(name = "VALUE", length = 255)),
-        @AttributeOverride(name = "resultQualifier.resultQualifierCodeListIdentifier.codeListVersionIdentifier", column = @Column(name = "CODE_LST_IDEN", length = 255)),
-        @AttributeOverride(name = "resultQualifier.resultQualifierCodeListIdentifier.codeListVersionAgencyIdentifier", column = @Column(name = "CODE_LST_AGENCY_IDEN", length = 255))
-    })
     public MeasureDataType getHorizontalAccuracyMeasure() {
         return horizontalAccuracyMeasure;
     }
@@ -269,7 +226,6 @@ public class GeographicLocationDescriptionDataType
         this.horizontalAccuracyMeasure = value;
     }
 
-    @Transient
     public boolean isSetHorizontalAccuracyMeasure() {
         return (this.horizontalAccuracyMeasure!= null);
     }
@@ -282,16 +238,6 @@ public class GeographicLocationDescriptionDataType
      *     {@link ReferenceMethodDataType }
      *     
      */
-    @Embedded
-    @AttributeOverrides({
-        @AttributeOverride(name = "methodIdentifierCode", column = @Column(name = "METHOD_IDEN_CODE", length = 255)),
-        @AttributeOverride(name = "methodName", column = @Column(name = "METHOD_NAME", length = 255)),
-        @AttributeOverride(name = "methodDescriptionText", column = @Column(name = "METHOD_DESC_TXT", length = 255)),
-        @AttributeOverride(name = "methodDeviationsText", column = @Column(name = "METHOD_DEVIATIONS_TXT", length = 255)),
-        @AttributeOverride(name = "methodIdentifierCodeListIdentifier.value", column = @Column(name = "VALUE", length = 255)),
-        @AttributeOverride(name = "methodIdentifierCodeListIdentifier.codeListVersionIdentifier", column = @Column(name = "CODE_LST_IDEN", length = 255)),
-        @AttributeOverride(name = "methodIdentifierCodeListIdentifier.codeListVersionAgencyIdentifier", column = @Column(name = "CODE_LST_AGENCY_IDEN", length = 255))
-    })
     public ReferenceMethodDataType getHorizontalCollectionMethod() {
         return horizontalCollectionMethod;
     }
@@ -308,7 +254,6 @@ public class GeographicLocationDescriptionDataType
         this.horizontalCollectionMethod = value;
     }
 
-    @Transient
     public boolean isSetHorizontalCollectionMethod() {
         return (this.horizontalCollectionMethod!= null);
     }
@@ -321,14 +266,6 @@ public class GeographicLocationDescriptionDataType
      *     {@link GeographicReferencePointDataType }
      *     
      */
-    @Embedded
-    @AttributeOverrides({
-        @AttributeOverride(name = "geographicReferencePointCode", column = @Column(name = "GEOGRAPHIC_REFERENCE_POINT_CODE", length = 255)),
-        @AttributeOverride(name = "geographicReferencePointName", column = @Column(name = "GEOGRAPHIC_REFERENCE_POINT_NAME", length = 255)),
-        @AttributeOverride(name = "referencePointCodeListIdentifier.value", column = @Column(name = "VALUE", length = 255)),
-        @AttributeOverride(name = "referencePointCodeListIdentifier.codeListVersionIdentifier", column = @Column(name = "CODE_LST_IDEN", length = 255)),
-        @AttributeOverride(name = "referencePointCodeListIdentifier.codeListVersionAgencyIdentifier", column = @Column(name = "CODE_LST_AGENCY_IDEN", length = 255))
-    })
     public GeographicReferencePointDataType getGeographicReferencePoint() {
         return geographicReferencePoint;
     }
@@ -345,7 +282,6 @@ public class GeographicLocationDescriptionDataType
         this.geographicReferencePoint = value;
     }
 
-    @Transient
     public boolean isSetGeographicReferencePoint() {
         return (this.geographicReferencePoint!= null);
     }
@@ -358,10 +294,6 @@ public class GeographicLocationDescriptionDataType
      *     {@link GeographicReferenceDatumDataType }
      *     
      */
-    @OneToOne(targetEntity = GeographicReferenceDatumDataType.class, cascade = {
-        CascadeType.ALL
-    })
-    @JoinColumn(name = "GEOGRAPHIC_LOC_DESC_DATA_TYPE_ID")
     public GeographicReferenceDatumDataType getHorizontalReferenceDatum() {
         return horizontalReferenceDatum;
     }
@@ -378,7 +310,6 @@ public class GeographicLocationDescriptionDataType
         this.horizontalReferenceDatum = value;
     }
 
-    @Transient
     public boolean isSetHorizontalReferenceDatum() {
         return (this.horizontalReferenceDatum!= null);
     }
@@ -391,7 +322,6 @@ public class GeographicLocationDescriptionDataType
      *     {@link XMLGregorianCalendar }
      *     
      */
-    @Transient
     public XMLGregorianCalendar getDataCollectionDate() {
         return dataCollectionDate;
     }
@@ -408,7 +338,6 @@ public class GeographicLocationDescriptionDataType
         this.dataCollectionDate = value;
     }
 
-    @Transient
     public boolean isSetDataCollectionDate() {
         return (this.dataCollectionDate!= null);
     }
@@ -421,8 +350,6 @@ public class GeographicLocationDescriptionDataType
      *     {@link String }
      *     
      */
-    @Basic
-    @Column(name = "LOC_CMNTS_TXT", length = 255)
     public String getLocationCommentsText() {
         return locationCommentsText;
     }
@@ -439,7 +366,6 @@ public class GeographicLocationDescriptionDataType
         this.locationCommentsText = value;
     }
 
-    @Transient
     public boolean isSetLocationCommentsText() {
         return (this.locationCommentsText!= null);
     }
@@ -452,21 +378,6 @@ public class GeographicLocationDescriptionDataType
      *     {@link MeasureDataType }
      *     
      */
-    @Embedded
-    @AttributeOverrides({
-        @AttributeOverride(name = "measureValue", column = @Column(name = "MEAS_VALUE", length = 255)),
-        @AttributeOverride(name = "measurePrecisionText", column = @Column(name = "MEAS_PRECISION_TXT", length = 255)),
-        @AttributeOverride(name = "measureUnit.measureUnitCode", column = @Column(name = "MEAS_UNIT_CODE", length = 255)),
-        @AttributeOverride(name = "measureUnit.measureUnitName", column = @Column(name = "MEAS_UNIT_NAME", length = 255)),
-        @AttributeOverride(name = "measureUnit.measureUnitCodeListIdentifier.value", column = @Column(name = "VALUE", length = 255)),
-        @AttributeOverride(name = "measureUnit.measureUnitCodeListIdentifier.codeListVersionIdentifier", column = @Column(name = "CODE_LST_IDEN", length = 255)),
-        @AttributeOverride(name = "measureUnit.measureUnitCodeListIdentifier.codeListVersionAgencyIdentifier", column = @Column(name = "CODE_LST_AGENCY_IDEN", length = 255)),
-        @AttributeOverride(name = "resultQualifier.resultQualifierCode", column = @Column(name = "RESULT_QUAL_CODE", length = 255)),
-        @AttributeOverride(name = "resultQualifier.resultQualifierName", column = @Column(name = "RESULT_QUAL_NAME", length = 255)),
-        @AttributeOverride(name = "resultQualifier.resultQualifierCodeListIdentifier.value", column = @Column(name = "VALUE", length = 255)),
-        @AttributeOverride(name = "resultQualifier.resultQualifierCodeListIdentifier.codeListVersionIdentifier", column = @Column(name = "CODE_LST_IDEN", length = 255)),
-        @AttributeOverride(name = "resultQualifier.resultQualifierCodeListIdentifier.codeListVersionAgencyIdentifier", column = @Column(name = "CODE_LST_AGENCY_IDEN", length = 255))
-    })
     public MeasureDataType getVerticalMeasure() {
         return verticalMeasure;
     }
@@ -483,7 +394,6 @@ public class GeographicLocationDescriptionDataType
         this.verticalMeasure = value;
     }
 
-    @Transient
     public boolean isSetVerticalMeasure() {
         return (this.verticalMeasure!= null);
     }
@@ -496,16 +406,6 @@ public class GeographicLocationDescriptionDataType
      *     {@link ReferenceMethodDataType }
      *     
      */
-    @Embedded
-    @AttributeOverrides({
-        @AttributeOverride(name = "methodIdentifierCode", column = @Column(name = "METHOD_IDEN_CODE", length = 255)),
-        @AttributeOverride(name = "methodName", column = @Column(name = "METHOD_NAME", length = 255)),
-        @AttributeOverride(name = "methodDescriptionText", column = @Column(name = "METHOD_DESC_TXT", length = 255)),
-        @AttributeOverride(name = "methodDeviationsText", column = @Column(name = "METHOD_DEVIATIONS_TXT", length = 255)),
-        @AttributeOverride(name = "methodIdentifierCodeListIdentifier.value", column = @Column(name = "VALUE", length = 255)),
-        @AttributeOverride(name = "methodIdentifierCodeListIdentifier.codeListVersionIdentifier", column = @Column(name = "CODE_LST_IDEN", length = 255)),
-        @AttributeOverride(name = "methodIdentifierCodeListIdentifier.codeListVersionAgencyIdentifier", column = @Column(name = "CODE_LST_AGENCY_IDEN", length = 255))
-    })
     public ReferenceMethodDataType getVerticalCollectionMethod() {
         return verticalCollectionMethod;
     }
@@ -522,7 +422,6 @@ public class GeographicLocationDescriptionDataType
         this.verticalCollectionMethod = value;
     }
 
-    @Transient
     public boolean isSetVerticalCollectionMethod() {
         return (this.verticalCollectionMethod!= null);
     }
@@ -535,10 +434,6 @@ public class GeographicLocationDescriptionDataType
      *     {@link GeographicReferenceDatumDataType }
      *     
      */
-    @OneToOne(targetEntity = GeographicReferenceDatumDataType.class, cascade = {
-        CascadeType.ALL
-    })
-    @JoinColumn(name = "GEOGRAPHIC_LOC_DESC_DATA_TYPE_ID")
     public GeographicReferenceDatumDataType getVerticalReferenceDatum() {
         return verticalReferenceDatum;
     }
@@ -555,7 +450,6 @@ public class GeographicLocationDescriptionDataType
         this.verticalReferenceDatum = value;
     }
 
-    @Transient
     public boolean isSetVerticalReferenceDatum() {
         return (this.verticalReferenceDatum!= null);
     }
@@ -568,16 +462,6 @@ public class GeographicLocationDescriptionDataType
      *     {@link ReferenceMethodDataType }
      *     
      */
-    @Embedded
-    @AttributeOverrides({
-        @AttributeOverride(name = "methodIdentifierCode", column = @Column(name = "METHOD_IDEN_CODE", length = 255)),
-        @AttributeOverride(name = "methodName", column = @Column(name = "METHOD_NAME", length = 255)),
-        @AttributeOverride(name = "methodDescriptionText", column = @Column(name = "METHOD_DESC_TXT", length = 255)),
-        @AttributeOverride(name = "methodDeviationsText", column = @Column(name = "METHOD_DEVIATIONS_TXT", length = 255)),
-        @AttributeOverride(name = "methodIdentifierCodeListIdentifier.value", column = @Column(name = "VALUE", length = 255)),
-        @AttributeOverride(name = "methodIdentifierCodeListIdentifier.codeListVersionIdentifier", column = @Column(name = "CODE_LST_IDEN", length = 255)),
-        @AttributeOverride(name = "methodIdentifierCodeListIdentifier.codeListVersionAgencyIdentifier", column = @Column(name = "CODE_LST_AGENCY_IDEN", length = 255))
-    })
     public ReferenceMethodDataType getVerificationMethod() {
         return verificationMethod;
     }
@@ -594,7 +478,6 @@ public class GeographicLocationDescriptionDataType
         this.verificationMethod = value;
     }
 
-    @Transient
     public boolean isSetVerificationMethod() {
         return (this.verificationMethod!= null);
     }
@@ -607,14 +490,6 @@ public class GeographicLocationDescriptionDataType
      *     {@link CoordinateDataSourceDataType }
      *     
      */
-    @Embedded
-    @AttributeOverrides({
-        @AttributeOverride(name = "coordinateDataSourceCode", column = @Column(name = "COORDINATE_DATA_SRC_CODE", length = 255)),
-        @AttributeOverride(name = "coordinateDataSourceName", column = @Column(name = "COORDINATE_DATA_SRC_NAME", length = 255)),
-        @AttributeOverride(name = "coordinateDataSourceCodeListIdentifier.value", column = @Column(name = "VALUE", length = 255)),
-        @AttributeOverride(name = "coordinateDataSourceCodeListIdentifier.codeListVersionIdentifier", column = @Column(name = "CODE_LST_IDEN", length = 255)),
-        @AttributeOverride(name = "coordinateDataSourceCodeListIdentifier.codeListVersionAgencyIdentifier", column = @Column(name = "CODE_LST_AGENCY_IDEN", length = 255))
-    })
     public CoordinateDataSourceDataType getCoordinateDataSource() {
         return coordinateDataSource;
     }
@@ -631,7 +506,6 @@ public class GeographicLocationDescriptionDataType
         this.coordinateDataSource = value;
     }
 
-    @Transient
     public boolean isSetCoordinateDataSource() {
         return (this.coordinateDataSource!= null);
     }
@@ -644,10 +518,6 @@ public class GeographicLocationDescriptionDataType
      *     {@link GeometricTypeDataType }
      *     
      */
-    @OneToOne(targetEntity = GeometricTypeDataType.class, cascade = {
-        CascadeType.ALL
-    })
-    @JoinColumn(name = "GEOGRAPHIC_LOC_DESC_DATA_TYPE_ID")
     public GeometricTypeDataType getGeometricType() {
         return geometricType;
     }
@@ -664,7 +534,6 @@ public class GeographicLocationDescriptionDataType
         this.geometricType = value;
     }
 
-    @Transient
     public boolean isSetGeometricType() {
         return (this.geometricType!= null);
     }
@@ -677,8 +546,6 @@ public class GeographicLocationDescriptionDataType
      *     {@link String }
      *     
      */
-    @Id
-    @Column(name = "GEOGRAPHIC_LOC_DESC_DATA_TYPE_ID")
     public String getDbid() {
         return dbid;
     }
@@ -695,9 +562,6 @@ public class GeographicLocationDescriptionDataType
         this.dbid = value;
     }
 
-    @Basic
-    @Column(name = "DATA_COLL_DATE_ITEM")
-    @Temporal(TemporalType.DATE)
     public Date getDataCollectionDateItem() {
         return XmlAdapterUtils.unmarshall(XMLGregorianCalendarAsDate.class, this.getDataCollectionDate());
     }

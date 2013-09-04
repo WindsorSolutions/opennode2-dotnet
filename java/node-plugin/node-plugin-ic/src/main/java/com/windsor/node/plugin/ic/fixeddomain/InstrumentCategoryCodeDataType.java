@@ -52,6 +52,7 @@ public enum InstrumentCategoryCodeDataType {
 
     InstrumentCategoryCodeDataType(String v) {
         value = v;
+        
     }
 
     public String value() {
@@ -67,4 +68,13 @@ public enum InstrumentCategoryCodeDataType {
         throw new IllegalArgumentException(v);
     }
 
+    /*public static InstrumentCategoryCodeDataType valueOf(String v)
+    {
+        for (InstrumentCategoryCodeDataType c: InstrumentCategoryCodeDataType.values()) {
+            if (c.value.equals(v)) {
+                return c;
+            }
+        }
+        throw new IllegalArgumentException(v);
+    }*/
 }

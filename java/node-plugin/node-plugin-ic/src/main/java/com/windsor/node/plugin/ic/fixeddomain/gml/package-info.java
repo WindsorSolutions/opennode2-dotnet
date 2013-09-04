@@ -6,6 +6,6 @@
 //
 
 @javax.xml.bind.annotation.XmlSchema(namespace = "http://www.opengis.net/gml", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED, xmlns = {
-    @javax.xml.bind.annotation.XmlNs(namespaceURI = "http://www.opengis.net/gml", prefix = "")
+    @javax.xml.bind.annotation.XmlNs(namespaceURI = "http://www.opengis.net/gml", prefix = "gml")
 })
 package com.windsor.node.plugin.ic.fixeddomain.gml;

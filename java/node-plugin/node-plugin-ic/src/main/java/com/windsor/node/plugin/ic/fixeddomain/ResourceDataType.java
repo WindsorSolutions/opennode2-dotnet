@@ -22,7 +22,6 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -194,11 +193,12 @@ public class ResourceDataType
      *     {@link ElectronicAddressDataType }
      *     
      */
-    @Embedded
+    /*@Embedded
     @AttributeOverrides({
         @AttributeOverride(name = "electronicAddressText", column = @Column(name = "ELEC_ADDR_TXT", length = 255)),
         @AttributeOverride(name = "electronicAddressTypeName", column = @Column(name = "ELEC_ADDR_TYPE_NAME", length = 255))
-    })
+    })*/
+    @Transient
     public ElectronicAddressDataType getElectronicAddress() {
         return electronicAddress;
     }
@@ -218,6 +218,52 @@ public class ResourceDataType
     @Transient
     public boolean isSetElectronicAddress() {
         return (this.electronicAddress!= null);
+    }
+
+    @Basic
+    @Column(name = "ELEC_ADDR_TXT", length = 255)
+    public String getElectronicAddressText() {
+        if(electronicAddress != null)
+        {
+            return getElectronicAddress().getElectronicAddressText();
+        }
+        return null;
+    }
+    public void setElectronicAddressText(String value) {
+        if(electronicAddress == null)
+        {
+            ObjectFactory fact = new ObjectFactory();
+            setElectronicAddress(fact.createElectronicAddressDataType());
+        }
+        getElectronicAddress().setElectronicAddressText(value);
+    }
+
+    @Transient
+    public boolean isSetElectronicAddressText() {
+        return (electronicAddress != null && electronicAddress.getElectronicAddressText() != null);
+    }
+
+    @Basic
+    @Column(name = "ELEC_ADDR_TYPE_NAME", length = 255)
+    public String getElectronicAddressTypeName() {
+        if(electronicAddress != null)
+        {
+            return getElectronicAddress().getElectronicAddressTypeName();
+        }
+        return null;
+    }
+    public void setElectronicAddressTypeName(String value) {
+        if(electronicAddress == null)
+        {
+            ObjectFactory fact = new ObjectFactory();
+            setElectronicAddress(fact.createElectronicAddressDataType());
+        }
+        getElectronicAddress().setElectronicAddressTypeName(value);
+    }
+
+    @Transient
+    public boolean isSetElectronicAddressTypeName() {
+        return (electronicAddress != null && electronicAddress.getElectronicAddressTypeName() != null);
     }
 
     /**
@@ -242,14 +288,18 @@ public class ResourceDataType
      * 
      * 
      */
-    @OneToMany(targetEntity = ResourceLocationDataType.class, cascade = {
+    /*@OneToMany(targetEntity = ResourceLocationDataType.class, cascade = {
         CascadeType.ALL
     })
     @JoinTable(name = "IC_RSRC_LOC", joinColumns = {
         @JoinColumn(name = "IC_RSRC_ID", referencedColumnName = "IC_RSRC_ID")
     }, inverseJoinColumns = {
         @JoinColumn(name = "IC_RSRC_ID")
+    })*/
+    @OneToMany(targetEntity = ResourceLocationDataType.class, cascade = {
+        CascadeType.ALL
     })
+    @JoinColumn(name = "IC_RSRC_ID")
     public List<ResourceLocationDataType> getResourceLocation() {
         if (resourceLocation == null) {
             resourceLocation = new ArrayList<ResourceLocationDataType>();

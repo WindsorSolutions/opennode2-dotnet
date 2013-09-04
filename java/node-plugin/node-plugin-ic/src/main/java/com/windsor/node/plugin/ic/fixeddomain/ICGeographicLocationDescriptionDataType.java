@@ -9,17 +9,24 @@
 package com.windsor.node.plugin.ic.fixeddomain;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.PostLoad;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -30,6 +37,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.datatype.XMLGregorianCalendar;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.jvnet.hyperjaxb3.xml.bind.annotation.adapters.XMLGregorianCalendarAsDate;
 import org.jvnet.hyperjaxb3.xml.bind.annotation.adapters.XmlAdapterUtils;
 import org.jvnet.jaxb2_commons.lang.Equals;
@@ -40,8 +49,12 @@ import org.jvnet.jaxb2_commons.lang.JAXBEqualsStrategy;
 import org.jvnet.jaxb2_commons.lang.JAXBHashCodeStrategy;
 import org.jvnet.jaxb2_commons.locator.ObjectLocator;
 import org.jvnet.jaxb2_commons.locator.util.LocatorUtils;
+import com.windsor.node.plugin.ic.fixeddomain.gml.AbstractRingPropertyType;
+import com.windsor.node.plugin.ic.fixeddomain.gml.DirectPositionListType;
+import com.windsor.node.plugin.ic.fixeddomain.gml.DirectPositionType;
 import com.windsor.node.plugin.ic.fixeddomain.gml.EnvelopeType;
 import com.windsor.node.plugin.ic.fixeddomain.gml.LineStringType;
+import com.windsor.node.plugin.ic.fixeddomain.gml.LinearRingType;
 import com.windsor.node.plugin.ic.fixeddomain.gml.PointType;
 import com.windsor.node.plugin.ic.fixeddomain.gml.PolygonType;
 
@@ -131,6 +144,282 @@ public class ICGeographicLocationDescriptionDataType
     protected CoordinateDataSourceDataType coordinateDataSource;
     @XmlTransient
     protected String dbid;
+    @XmlTransient
+    protected List<LatLong> latLongPolygons;
+
+    @OneToMany(targetEntity = LatLong.class, cascade = {
+        CascadeType.ALL
+    })
+    @JoinColumn(name = "IC_GEO_LOC_DESC_ID")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    public List<LatLong> getLatLongPolygons()
+    {
+        if(latLongPolygons == null)
+        {
+            latLongPolygons = new ArrayList<LatLong>();
+        }
+        return latLongPolygons;
+    }
+
+    public void setLatLongPolygons(List<LatLong> latLongPolygons)
+    {
+        this.latLongPolygons = latLongPolygons;
+    }
+
+    @PostLoad
+    public void postLoad()
+    {
+        com.windsor.node.plugin.ic.fixeddomain.gml.ObjectFactory fact = new com.windsor.node.plugin.ic.fixeddomain.gml.ObjectFactory();
+
+        if(ptLat != null && ptLon != null)//Then it is a PointType
+        {
+            PointType p = fact.createPointType();
+            DirectPositionType pos = fact.createDirectPositionType();
+            p.setPos(pos);
+    
+            p.setSrsDimension(getSrsDimension());
+            p.setSrsName(getSrsName());
+            //p.setId("id?");
+    
+            //pos.setSrsDimension(getSrsDimension());
+            //pos.setSrsName(getSrsName());
+            List<Double> values = new ArrayList<Double>();
+            values.add(getPtLon().doubleValue());
+            values.add(getPtLat().doubleValue());
+            pos.setValue(values);
+
+            setPoint(p);
+        }
+
+        if(envelopeLowerLat != null && envelopeLowerLon != null && envelopeUpperLat != null && envelopeUpperLon != null)//Then EnvelopeType
+        {
+            EnvelopeType e = fact.createEnvelopeType();
+            DirectPositionType upperCornerPos = fact.createDirectPositionType();
+            DirectPositionType lowerCornerPos = fact.createDirectPositionType();
+            e.setSrsDimension(getSrsDimension());
+            e.setSrsName(getSrsName());
+
+            upperCornerPos.setSrsDimension(getSrsDimension());
+            upperCornerPos.setSrsName(getSrsName());
+            List<Double> values = new ArrayList<Double>();
+            values.add(getEnvelopeUpperLon().doubleValue());
+            values.add(getEnvelopeUpperLat().doubleValue());
+            upperCornerPos.setValue(values);
+            e.setUpperCorner(upperCornerPos);
+
+            lowerCornerPos.setSrsDimension(getSrsDimension());
+            lowerCornerPos.setSrsName(getSrsName());
+            values = new ArrayList<Double>();
+            values.add(getEnvelopeUpperLon().doubleValue());
+            values.add(getEnvelopeUpperLat().doubleValue());
+            lowerCornerPos.setValue(values);
+            e.setLowerCorner(lowerCornerPos);
+
+            setEnvelope(e);
+        }
+
+        if(lineStartLat != null && lineStartLon != null && lineEndLat != null && lineEndLon != null)//Then LineStringType
+        {
+            LineStringType l = fact.createLineStringType();
+            DirectPositionListType pl = fact.createDirectPositionListType();
+            l.setSrsDimension(getSrsDimension());
+            l.setSrsName(getSrsName());
+            //l.setId("id?");
+            l.setPosList(pl);
+
+            //pl.setDbid("id?");
+            pl.setCount(new BigInteger("2"));//Is this what this refers to?
+            //pl.setSrsDimension(getSrsDimension());
+            //pl.setSrsName(getSrsName());
+
+            List<Double> values = new ArrayList<Double>();
+            values.add(getLineStartLat().doubleValue());
+            values.add(getLineStartLon().doubleValue());
+            values.add(getLineEndLat().doubleValue());
+            values.add(getLineEndLon().doubleValue());
+            pl.setValue(values);
+
+            setLineString(l);
+        }
+
+        if(getLatLongPolygons() != null && getLatLongPolygons().size() > 0)
+        {
+            PolygonType p = fact.createPolygonType();
+            AbstractRingPropertyType r = fact.createAbstractRingPropertyType();
+            LinearRingType l = fact.createLinearRingType();
+            DirectPositionListType d = fact.createDirectPositionListType();
+            p.setSrsDimension(getSrsDimension());
+            p.setSrsName(getSrsName());
+            //p.setId("id?");
+
+            p.setExterior(r);
+            //r.setRingName("ring name?");
+            r.setRing(fact.createLinearRing(l));
+
+            List<Double> values = new ArrayList<Double>();
+            for(int i = 0; i < getLatLongPolygons().size(); i++)
+            {
+                if(getLatLongPolygons().get(i) != null && getLatLongPolygons().get(i).getLattitude() != null
+                                && getLatLongPolygons().get(i).getLongitude() != null)
+                {
+                    values.add(getLatLongPolygons().get(i).getLattitude().doubleValue());
+                    values.add(getLatLongPolygons().get(i).getLongitude().doubleValue());
+                }
+            }
+            d.setValue(values);
+            l.setPosList(d);
+
+            setPolygon(p);
+        }
+    }
+
+    //Data for some of the polygon types that were collapsed into the IC_GEO_LOC_DESC table
+
+    @XmlTransient
+    protected String srsName;
+    @XmlTransient
+    protected BigInteger srsDimension;
+    @XmlTransient
+    protected BigDecimal ptLat;
+    @XmlTransient
+    protected BigDecimal ptLon;
+    @XmlTransient
+    protected BigDecimal envelopeUpperLat;
+    @XmlTransient
+    protected BigDecimal envelopeUpperLon;
+    @XmlTransient
+    protected BigDecimal envelopeLowerLat;
+    @XmlTransient
+    protected BigDecimal envelopeLowerLon;
+    @XmlTransient
+    protected BigDecimal lineStartLat;
+    @XmlTransient
+    protected BigDecimal lineStartLon;
+    @XmlTransient
+    protected BigDecimal lineEndLat;
+    @XmlTransient
+    protected BigDecimal lineEndLon;
+
+    @Basic
+    @Column(name="SRS_NAME")
+    public String getSrsName()
+    {
+        return srsName;
+    }
+    public void setSrsName(String srsName)
+    {
+        this.srsName = srsName;
+    }
+    @Basic
+    @Column(name="SRS_DIMENSION")
+    public BigInteger getSrsDimension()
+    {
+        return srsDimension;
+    }
+    public void setSrsDimension(BigInteger srsDimension)
+    {
+        this.srsDimension = srsDimension;
+    }
+    @Basic
+    @Column(name="PT_LAT")
+    public BigDecimal getPtLat()
+    {
+        return ptLat;
+    }
+    public void setPtLat(BigDecimal ptLat)
+    {
+        this.ptLat = ptLat;
+    }
+    @Basic
+    @Column(name="PT_LON")
+    public BigDecimal getPtLon()
+    {
+        return ptLon;
+    }
+    public void setPtLon(BigDecimal ptLon)
+    {
+        this.ptLon = ptLon;
+    }
+    @Basic
+    @Column(name="ENVELOPE_UPPER_LAT")
+    public BigDecimal getEnvelopeUpperLat()
+    {
+        return envelopeUpperLat;
+    }
+    public void setEnvelopeUpperLat(BigDecimal envelopeUpperLat)
+    {
+        this.envelopeUpperLat = envelopeUpperLat;
+    }
+    @Basic
+    @Column(name="ENVELOPE_UPPER_LON")
+    public BigDecimal getEnvelopeUpperLon()
+    {
+        return envelopeUpperLon;
+    }
+    public void setEnvelopeUpperLon(BigDecimal envelopeUpperLon)
+    {
+        this.envelopeUpperLon = envelopeUpperLon;
+    }
+    @Basic
+    @Column(name="ENVELOPE_LOWER_LAT")
+    public BigDecimal getEnvelopeLowerLat()
+    {
+        return envelopeLowerLat;
+    }
+    public void setEnvelopeLowerLat(BigDecimal envelopeLowerLat)
+    {
+        this.envelopeLowerLat = envelopeLowerLat;
+    }
+    @Basic
+    @Column(name="ENVELOPE_LOWER_LON")
+    public BigDecimal getEnvelopeLowerLon()
+    {
+        return envelopeLowerLon;
+    }
+    public void setEnvelopeLowerLon(BigDecimal envelopeLowerLon)
+    {
+        this.envelopeLowerLon = envelopeLowerLon;
+    }
+    @Basic
+    @Column(name="LINE_START_LAT")
+    public BigDecimal getLineStartLat()
+    {
+        return lineStartLat;
+    }
+    public void setLineStartLat(BigDecimal lineStartLat)
+    {
+        this.lineStartLat = lineStartLat;
+    }
+    @Basic
+    @Column(name="LINE_START_LON")
+    public BigDecimal getLineStartLon()
+    {
+        return lineStartLon;
+    }
+    public void setLineStartLon(BigDecimal lineStartLon)
+    {
+        this.lineStartLon = lineStartLon;
+    }
+    @Basic
+    @Column(name="LINE_END_LAT")
+    public BigDecimal getLineEndLat()
+    {
+        return lineEndLat;
+    }
+    public void setLineEndLat(BigDecimal lineEndLat)
+    {
+        this.lineEndLat = lineEndLat;
+    }
+    @Basic
+    @Column(name="LINE_END_LON")
+    public BigDecimal getLineEndLon()
+    {
+        return lineEndLon;
+    }
+    public void setLineEndLon(BigDecimal lineEndLon)
+    {
+        this.lineEndLon = lineEndLon;
+    }
 
     /**
      * Gets the value of the point property.

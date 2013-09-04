@@ -20,8 +20,6 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -35,6 +33,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.jvnet.jaxb2_commons.lang.Equals;
 import org.jvnet.jaxb2_commons.lang.EqualsStrategy;
 import org.jvnet.jaxb2_commons.lang.HashCode;
@@ -43,6 +42,7 @@ import org.jvnet.jaxb2_commons.lang.JAXBEqualsStrategy;
 import org.jvnet.jaxb2_commons.lang.JAXBHashCodeStrategy;
 import org.jvnet.jaxb2_commons.locator.ObjectLocator;
 import org.jvnet.jaxb2_commons.locator.util.LocatorUtils;
+import com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter;
 
 
 /**
@@ -119,11 +119,13 @@ public class InstrumentDataType
     @XmlElement(name = "InstrumentName", required = true)
     protected String instrumentName;
     @XmlElement(name = "InstrumentCategoryCode")
-    protected InstrumentCategoryCodeDataType instrumentCategoryCode;
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String instrumentCategoryCode;
     @XmlElement(name = "OtherInstrumentCategoryText")
     protected String otherInstrumentCategoryText;
     @XmlElement(name = "InstrumentTypeCode")
-    protected InstrumentTypeCodeDataType instrumentTypeCode;
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String instrumentTypeCode;
     @XmlElement(name = "OtherInstrumentTypeText")
     protected String otherInstrumentTypeText;
     @XmlElement(name = "InstrumentLegalDescriptionText")
@@ -133,7 +135,8 @@ public class InstrumentDataType
     @XmlElement(name = "ObjectiveText")
     protected List<String> objectiveText;
     @XmlElement(name = "MediaTypeCode")
-    protected List<MediaTypeCodeDataType> mediaTypeCode;
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected List<String> mediaTypeCode;
     @XmlElement(name = "OtherMediaTypeText")
     protected String otherMediaTypeText;
     @XmlElement(name = "UseRestriction")
@@ -164,7 +167,7 @@ public class InstrumentDataType
     @Embedded
     @AttributeOverrides({
         @AttributeOverride(name = "originatingPartnerName", column = @Column(name = "ORIG_PARTNER_NAME", length = 255)),
-        @AttributeOverride(name = "informationSystemAcronymName", column = @Column(name = "INFO_SYSTEM_ACRONYM_NAME", length = 255)),
+        @AttributeOverride(name = "informationSystemAcronymName", column = @Column(name = "INFO_SYSTM_ACNYM_NAME", length = 255)),
         @AttributeOverride(name = "lastUpdatedDateItem", column = @Column(name = "LAST_UPDATED_DATE"))
     })
     public DataSourceDataType getDataSource() {
@@ -259,9 +262,8 @@ public class InstrumentDataType
      *     
      */
     @Basic
-    @Column(name = "INSTR_CATG_CODE", length = 255)
-    @Enumerated(EnumType.STRING)
-    public InstrumentCategoryCodeDataType getInstrumentCategoryCode() {
+    @Column(name = "INSTR_CATG_CODE", columnDefinition = "19", length = 19)
+    public String getInstrumentCategoryCode() {
         return instrumentCategoryCode;
     }
 
@@ -273,7 +275,7 @@ public class InstrumentDataType
      *     {@link InstrumentCategoryCodeDataType }
      *     
      */
-    public void setInstrumentCategoryCode(InstrumentCategoryCodeDataType value) {
+    public void setInstrumentCategoryCode(String value) {
         this.instrumentCategoryCode = value;
     }
 
@@ -322,9 +324,8 @@ public class InstrumentDataType
      *     
      */
     @Basic
-    @Column(name = "INSTR_TYPE_CODE", length = 255)
-    @Enumerated(EnumType.STRING)
-    public InstrumentTypeCodeDataType getInstrumentTypeCode() {
+    @Column(name = "INSTR_CODE", columnDefinition = "36", length = 36)
+    public String getInstrumentTypeCode() {
         return instrumentTypeCode;
     }
 
@@ -336,7 +337,7 @@ public class InstrumentDataType
      *     {@link InstrumentTypeCodeDataType }
      *     
      */
-    public void setInstrumentTypeCode(InstrumentTypeCodeDataType value) {
+    public void setInstrumentTypeCode(String value) {
         this.instrumentTypeCode = value;
     }
 
@@ -429,14 +430,18 @@ public class InstrumentDataType
      * 
      * 
      */
-    @OneToMany(targetEntity = InstrumentLocationDataType.class, cascade = {
+    /*@OneToMany(targetEntity = InstrumentLocationDataType.class, cascade = {
         CascadeType.ALL
     })
     @JoinTable(name = "IC_INSTR_LOC", joinColumns = {
         @JoinColumn(name = "IC_INSTR_ID", referencedColumnName = "IC_INSTR_ID")
     }, inverseJoinColumns = {
         @JoinColumn(name = "IC_INSTR_ID")
+    })*/
+    @OneToMany(targetEntity = InstrumentLocationDataType.class, cascade = {
+        CascadeType.ALL
     })
+    @JoinColumn(name = "IC_INSTR_ID")
     public List<InstrumentLocationDataType> getInstrumentLocation() {
         if (instrumentLocation == null) {
             instrumentLocation = new ArrayList<InstrumentLocationDataType>();
@@ -535,14 +540,13 @@ public class InstrumentDataType
      * 
      */
     @ElementCollection
-    @Column(name = "MEDIA_CODE", length = 255)
-    @Enumerated(EnumType.STRING)
+    @Column(name = "MEDIA_CODE", columnDefinition = "15", length = 15)
     @CollectionTable(name = "IC_MEDIA_TYPE", joinColumns = {
         @JoinColumn(name = "IC_INSTR_ID")
     })
-    public List<MediaTypeCodeDataType> getMediaTypeCode() {
+    public List<String> getMediaTypeCode() {
         if (mediaTypeCode == null) {
-            mediaTypeCode = new ArrayList<MediaTypeCodeDataType>();
+            mediaTypeCode = new ArrayList<String>();
         }
         return this.mediaTypeCode;
     }
@@ -551,7 +555,7 @@ public class InstrumentDataType
      * 
      * 
      */
-    public void setMediaTypeCode(List<MediaTypeCodeDataType> mediaTypeCode) {
+    public void setMediaTypeCode(List<String> mediaTypeCode) {
         this.mediaTypeCode = mediaTypeCode;
     }
 
@@ -617,14 +621,18 @@ public class InstrumentDataType
      * 
      * 
      */
-    @OneToMany(targetEntity = UseRestrictionDataType.class, cascade = {
+   /* @OneToMany(targetEntity = UseRestrictionDataType.class, cascade = {
         CascadeType.ALL
     })
     @JoinTable(name = "IC_USE_RSTCT", joinColumns = {
         @JoinColumn(name = "IC_INSTR_ID", referencedColumnName = "IC_INSTR_ID")
     }, inverseJoinColumns = {
         @JoinColumn(name = "IC_INSTR_ID")
+    })*/
+    @OneToMany(targetEntity = UseRestrictionDataType.class, cascade = {
+        CascadeType.ALL
     })
+    @JoinColumn(name = "IC_INSTR_ID")
     public List<UseRestrictionDataType> getUseRestriction() {
         if (useRestriction == null) {
             useRestriction = new ArrayList<UseRestrictionDataType>();
@@ -671,14 +679,18 @@ public class InstrumentDataType
      * 
      * 
      */
-    @OneToMany(targetEntity = ContaminantDataType.class, cascade = {
+    /*@OneToMany(targetEntity = ContaminantDataType.class, cascade = {
         CascadeType.ALL
     })
     @JoinTable(name = "IC_CNTMT", joinColumns = {
         @JoinColumn(name = "IC_INSTR_ID", referencedColumnName = "IC_INSTR_ID")
     }, inverseJoinColumns = {
         @JoinColumn(name = "IC_INSTR_ID")
+    })*/
+    @OneToMany(targetEntity = ContaminantDataType.class, cascade = {
+        CascadeType.ALL
     })
+    @JoinColumn(name = "IC_INSTR_ID")
     public List<ContaminantDataType> getContaminant() {
         if (contaminant == null) {
             contaminant = new ArrayList<ContaminantDataType>();
@@ -725,14 +737,18 @@ public class InstrumentDataType
      * 
      * 
      */
-    @OneToMany(targetEntity = EngineeringControlDataType.class, cascade = {
+    /*@OneToMany(targetEntity = EngineeringControlDataType.class, cascade = {
         CascadeType.ALL
     })
     @JoinTable(name = "IC_ENGR_CTRL", joinColumns = {
         @JoinColumn(name = "IC_INSTR_ID", referencedColumnName = "IC_INSTR_ID")
     }, inverseJoinColumns = {
         @JoinColumn(name = "IC_INSTR_ID")
+    })*/
+    @OneToMany(targetEntity = EngineeringControlDataType.class, cascade = {
+        CascadeType.ALL
     })
+    @JoinColumn(name = "IC_INSTR_ID")
     public List<EngineeringControlDataType> getEngineeringControl() {
         if (engineeringControl == null) {
             engineeringControl = new ArrayList<EngineeringControlDataType>();
@@ -779,14 +795,18 @@ public class InstrumentDataType
      * 
      * 
      */
-    @OneToMany(targetEntity = InstrumentAffiliateDataType.class, cascade = {
+    /*@OneToMany(targetEntity = InstrumentAffiliateDataType.class, cascade = {
         CascadeType.ALL
     })
     @JoinTable(name = "IC_INSTR_AFFIL", joinColumns = {
         @JoinColumn(name = "IC_INSTR_ID", referencedColumnName = "IC_INSTR_ID")
     }, inverseJoinColumns = {
         @JoinColumn(name = "IC_INSTR_ID")
+    })*/
+    @OneToMany(targetEntity = InstrumentAffiliateDataType.class, cascade = {
+        CascadeType.ALL
     })
+    @JoinColumn(name = "IC_INSTR_ID")
     public List<InstrumentAffiliateDataType> getInstrumentAffiliate() {
         if (instrumentAffiliate == null) {
             instrumentAffiliate = new ArrayList<InstrumentAffiliateDataType>();
@@ -833,14 +853,18 @@ public class InstrumentDataType
      * 
      * 
      */
-    @OneToMany(targetEntity = ResourceDataType.class, cascade = {
+    /*@OneToMany(targetEntity = ResourceDataType.class, cascade = {
         CascadeType.ALL
     })
     @JoinTable(name = "IC_RSRC", joinColumns = {
         @JoinColumn(name = "IC_INSTR_ID", referencedColumnName = "IC_INSTR_ID")
     }, inverseJoinColumns = {
         @JoinColumn(name = "IC_INSTR_ID")
+    })*/
+    @OneToMany(targetEntity = ResourceDataType.class, cascade = {
+        CascadeType.ALL
     })
+    @JoinColumn(name = "IC_INSTR_ID")
     public List<ResourceDataType> getResource() {
         if (resource == null) {
             resource = new ArrayList<ResourceDataType>();
@@ -887,14 +911,18 @@ public class InstrumentDataType
      * 
      * 
      */
-    @OneToMany(targetEntity = RecurringEventDataType.class, cascade = {
+    /*@OneToMany(targetEntity = RecurringEventDataType.class, cascade = {
         CascadeType.ALL
     })
     @JoinTable(name = "IC_RECR_EVT", joinColumns = {
         @JoinColumn(name = "IC_INSTR_ID", referencedColumnName = "IC_INSTR_ID")
     }, inverseJoinColumns = {
         @JoinColumn(name = "IC_INSTR_ID")
+    })*/
+    @OneToMany(targetEntity = RecurringEventDataType.class, cascade = {
+        CascadeType.ALL
     })
+    @JoinColumn(name = "IC_INSTR_ID")
     public List<RecurringEventDataType> getRecurringEvent() {
         if (recurringEvent == null) {
             recurringEvent = new ArrayList<RecurringEventDataType>();
@@ -941,14 +969,18 @@ public class InstrumentDataType
      * 
      * 
      */
-    @OneToMany(targetEntity = EventDataType.class, cascade = {
+    /*@OneToMany(targetEntity = EventDataType.class, cascade = {
         CascadeType.ALL
     })
     @JoinTable(name = "IC_EVT", joinColumns = {
         @JoinColumn(name = "IC_INSTR_ID", referencedColumnName = "IC_INSTR_ID")
     }, inverseJoinColumns = {
         @JoinColumn(name = "IC_INSTR_ID")
+    })*/
+    @OneToMany(targetEntity = EventDataType.class, cascade = {
+        CascadeType.ALL
     })
+    @JoinColumn(name = "IC_INSTR_ID")
     public List<EventDataType> getEvent() {
         if (event == null) {
             event = new ArrayList<EventDataType>();
@@ -1035,9 +1067,9 @@ public class InstrumentDataType
             }
         }
         {
-            InstrumentCategoryCodeDataType lhsInstrumentCategoryCode;
+            String lhsInstrumentCategoryCode;
             lhsInstrumentCategoryCode = this.getInstrumentCategoryCode();
-            InstrumentCategoryCodeDataType rhsInstrumentCategoryCode;
+            String rhsInstrumentCategoryCode;
             rhsInstrumentCategoryCode = that.getInstrumentCategoryCode();
             if (!strategy.equals(LocatorUtils.property(thisLocator, "instrumentCategoryCode", lhsInstrumentCategoryCode), LocatorUtils.property(thatLocator, "instrumentCategoryCode", rhsInstrumentCategoryCode), lhsInstrumentCategoryCode, rhsInstrumentCategoryCode)) {
                 return false;
@@ -1053,9 +1085,9 @@ public class InstrumentDataType
             }
         }
         {
-            InstrumentTypeCodeDataType lhsInstrumentTypeCode;
+            String lhsInstrumentTypeCode;
             lhsInstrumentTypeCode = this.getInstrumentTypeCode();
-            InstrumentTypeCodeDataType rhsInstrumentTypeCode;
+            String rhsInstrumentTypeCode;
             rhsInstrumentTypeCode = that.getInstrumentTypeCode();
             if (!strategy.equals(LocatorUtils.property(thisLocator, "instrumentTypeCode", lhsInstrumentTypeCode), LocatorUtils.property(thatLocator, "instrumentTypeCode", rhsInstrumentTypeCode), lhsInstrumentTypeCode, rhsInstrumentTypeCode)) {
                 return false;
@@ -1098,9 +1130,9 @@ public class InstrumentDataType
             }
         }
         {
-            List<MediaTypeCodeDataType> lhsMediaTypeCode;
+            List<String> lhsMediaTypeCode;
             lhsMediaTypeCode = (this.isSetMediaTypeCode()?this.getMediaTypeCode():null);
-            List<MediaTypeCodeDataType> rhsMediaTypeCode;
+            List<String> rhsMediaTypeCode;
             rhsMediaTypeCode = (that.isSetMediaTypeCode()?that.getMediaTypeCode():null);
             if (!strategy.equals(LocatorUtils.property(thisLocator, "mediaTypeCode", lhsMediaTypeCode), LocatorUtils.property(thatLocator, "mediaTypeCode", rhsMediaTypeCode), lhsMediaTypeCode, rhsMediaTypeCode)) {
                 return false;
@@ -1204,7 +1236,7 @@ public class InstrumentDataType
             currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "instrumentName", theInstrumentName), currentHashCode, theInstrumentName);
         }
         {
-            InstrumentCategoryCodeDataType theInstrumentCategoryCode;
+            String theInstrumentCategoryCode;
             theInstrumentCategoryCode = this.getInstrumentCategoryCode();
             currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "instrumentCategoryCode", theInstrumentCategoryCode), currentHashCode, theInstrumentCategoryCode);
         }
@@ -1214,7 +1246,7 @@ public class InstrumentDataType
             currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "otherInstrumentCategoryText", theOtherInstrumentCategoryText), currentHashCode, theOtherInstrumentCategoryText);
         }
         {
-            InstrumentTypeCodeDataType theInstrumentTypeCode;
+            String theInstrumentTypeCode;
             theInstrumentTypeCode = this.getInstrumentTypeCode();
             currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "instrumentTypeCode", theInstrumentTypeCode), currentHashCode, theInstrumentTypeCode);
         }
@@ -1239,7 +1271,7 @@ public class InstrumentDataType
             currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "objectiveText", theObjectiveText), currentHashCode, theObjectiveText);
         }
         {
-            List<MediaTypeCodeDataType> theMediaTypeCode;
+            List<String> theMediaTypeCode;
             theMediaTypeCode = (this.isSetMediaTypeCode()?this.getMediaTypeCode():null);
             currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "mediaTypeCode", theMediaTypeCode), currentHashCode, theMediaTypeCode);
         }

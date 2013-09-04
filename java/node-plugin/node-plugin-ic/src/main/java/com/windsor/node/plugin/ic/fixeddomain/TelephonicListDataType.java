@@ -85,14 +85,18 @@ public class TelephonicListDataType
      * 
      * 
      */
-    @OneToMany(targetEntity = TelephonicDataType.class, cascade = {
+    /*@OneToMany(targetEntity = TelephonicDataType.class, cascade = {
         CascadeType.ALL
     })
     @JoinTable(name = "IC_TELE", joinColumns = {
         @JoinColumn(name = "IC_AFFIL_ID", referencedColumnName = "IC_AFFIL_ID")
     }, inverseJoinColumns = {
         @JoinColumn(name = "IC_AFFIL_ID")
+    })*/
+    @OneToMany(targetEntity = TelephonicDataType.class, cascade = {
+        CascadeType.ALL
     })
+    @JoinColumn(name = "IC_AFFIL_ID")
     public List<TelephonicDataType> getTelephonic() {
         if (telephonic == null) {
             telephonic = new ArrayList<TelephonicDataType>();

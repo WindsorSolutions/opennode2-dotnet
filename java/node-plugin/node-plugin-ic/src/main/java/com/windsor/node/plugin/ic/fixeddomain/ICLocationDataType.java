@@ -9,16 +9,17 @@
 package com.windsor.node.plugin.ic.fixeddomain;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -26,6 +27,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.jvnet.jaxb2_commons.lang.Equals;
 import org.jvnet.jaxb2_commons.lang.EqualsStrategy;
 import org.jvnet.jaxb2_commons.lang.HashCode;
@@ -125,16 +128,49 @@ public class ICLocationDataType
      *     {@link LandParcelDataType }
      *     
      */
-    @OneToOne(targetEntity = LandParcelDataType.class, cascade = {
+    /*@OneToOne(targetEntity = LandParcelDataType.class, cascade = {
         CascadeType.ALL
     })
     @JoinTable(name = "IC_LAND_PARCEL", joinColumns = {
         @JoinColumn(name = "IC_LOC_ID", referencedColumnName = "IC_LOC_ID")
     }, inverseJoinColumns = {
         @JoinColumn(name = "IC_LOC_ID")
+    })*/
+    /*@OneToOne(targetEntity = LandParcelDataType.class, cascade = {
+        CascadeType.ALL
     })
+    @JoinColumn(name = "IC_LOC_ID")*/
+    /*@OneToOne(targetEntity = LandParcelDataType.class, optional=true, fetch=FetchType.EAGER)
+    @JoinColumn(name="IC_LOC_ID", unique=true, nullable=false, updatable=false)*/
+    /*@OneToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name = "IC_LOC_ID")*/
+    @Transient
     public LandParcelDataType getLandParcel() {
+        /*if(landParcel == null && getLandParcels() != null && getLandParcels().size() == 1)
+        {
+            landParcel = getLandParcels().get(0);
+        }*/
         return landParcel;
+    }
+
+    @XmlTransient
+    protected List<LandParcelDataType> landParcels;
+    @OneToMany(/*fetch=FetchType.EAGER,*/ targetEntity = LandParcelDataType.class, cascade = {
+        CascadeType.ALL
+    })
+    @JoinColumn(name = "IC_LOC_ID")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    public List<LandParcelDataType> getLandParcels()
+    {
+        return landParcels;
+    }
+    public void setLandParcels(List<LandParcelDataType> v)
+    {
+        if(v != null && v.size() == 1)
+        {
+            landParcel = v.get(0);
+        }
+        landParcels = v;
     }
 
     /**
@@ -162,16 +198,41 @@ public class ICLocationDataType
      *     {@link FacilityDataType }
      *     
      */
-    @OneToOne(targetEntity = FacilityDataType.class, cascade = {
+    /*@OneToOne(targetEntity = FacilityDataType.class, cascade = {
         CascadeType.ALL
     })
     @JoinTable(name = "IC_FAC", joinColumns = {
         @JoinColumn(name = "IC_LOC_ID", referencedColumnName = "IC_LOC_ID")
     }, inverseJoinColumns = {
         @JoinColumn(name = "IC_LOC_ID")
+    })*/
+    /*@OneToOne(targetEntity = FacilityDataType.class, cascade = {
+        CascadeType.ALL
     })
+    @JoinColumn(name = "IC_LOC_ID")*/
+    @Transient
     public FacilityDataType getFacility() {
         return facility;
+    }
+
+    @XmlTransient
+    protected List<FacilityDataType> facilities;
+    @OneToMany(/*fetch=FetchType.EAGER,*/ targetEntity = FacilityDataType.class, cascade = {
+        CascadeType.ALL
+    })
+    @JoinColumn(name = "IC_LOC_ID")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    public List<FacilityDataType> getFacilities()
+    {
+        return facilities;
+    }
+    public void setFacilities(List<FacilityDataType> v)
+    {
+        if(v != null && v.size() == 1)
+        {
+            facility = v.get(0);
+        }
+        facilities = v;
     }
 
     /**
@@ -199,16 +260,41 @@ public class ICLocationDataType
      *     {@link ICGeographicLocationDescriptionDataType }
      *     
      */
-    @OneToOne(targetEntity = ICGeographicLocationDescriptionDataType.class, cascade = {
+    /*@OneToOne(targetEntity = ICGeographicLocationDescriptionDataType.class, cascade = {
         CascadeType.ALL
     })
     @JoinTable(name = "IC_GEO_LOC_DESC", joinColumns = {
         @JoinColumn(name = "IC_LOC_ID", referencedColumnName = "IC_LOC_ID")
     }, inverseJoinColumns = {
         @JoinColumn(name = "IC_LOC_ID")
+    })*/
+    /*@OneToOne(targetEntity = ICGeographicLocationDescriptionDataType.class, cascade = {
+        CascadeType.ALL
     })
+    @JoinColumn(name = "IC_LOC_ID")*/
+    @Transient
     public ICGeographicLocationDescriptionDataType getICGeographicLocationDescription() {
         return icGeographicLocationDescription;
+    }
+
+    @XmlTransient
+    protected List<ICGeographicLocationDescriptionDataType> icGeographicLocationDescriptions;
+    @OneToMany(/*fetch=FetchType.EAGER,*/ targetEntity = ICGeographicLocationDescriptionDataType.class, cascade = {
+        CascadeType.ALL
+    })
+    @JoinColumn(name = "IC_LOC_ID")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    public List<ICGeographicLocationDescriptionDataType> getICGeographicLocationDescriptions()
+    {
+        return icGeographicLocationDescriptions;
+    }
+    public void setICGeographicLocationDescriptions(List<ICGeographicLocationDescriptionDataType> v)
+    {
+        if(v != null && v.size() == 1)
+        {
+            icGeographicLocationDescription = v.get(0);
+        }
+        icGeographicLocationDescriptions = v;
     }
 
     /**

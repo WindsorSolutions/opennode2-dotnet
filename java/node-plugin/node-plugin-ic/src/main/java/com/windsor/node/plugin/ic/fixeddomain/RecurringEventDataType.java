@@ -17,13 +17,10 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -34,6 +31,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.datatype.XMLGregorianCalendar;
 import org.jvnet.hyperjaxb3.xml.bind.annotation.adapters.XMLGregorianCalendarAsDate;
 import org.jvnet.hyperjaxb3.xml.bind.annotation.adapters.XmlAdapterUtils;
@@ -45,6 +43,7 @@ import org.jvnet.jaxb2_commons.lang.JAXBEqualsStrategy;
 import org.jvnet.jaxb2_commons.lang.JAXBHashCodeStrategy;
 import org.jvnet.jaxb2_commons.locator.ObjectLocator;
 import org.jvnet.jaxb2_commons.locator.util.LocatorUtils;
+import com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter;
 
 
 /**
@@ -103,7 +102,8 @@ public class RecurringEventDataType
     @XmlElement(name = "EventName", required = true)
     protected String eventName;
     @XmlElement(name = "EventTypeCode")
-    protected EventTypeCodeDataType eventTypeCode;
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String eventTypeCode;
     @XmlElement(name = "OtherEventTypeText")
     protected String otherEventTypeText;
     @XmlElement(name = "EventDescriptionText")
@@ -111,7 +111,8 @@ public class RecurringEventDataType
     @XmlElement(name = "EventFrequencyMeasure")
     protected BigInteger eventFrequencyMeasure;
     @XmlElement(name = "EventFrequencyUnitCode")
-    protected EventFrequencyUnitCodeDataType eventFrequencyUnitCode;
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String eventFrequencyUnitCode;
     @XmlElement(name = "EventFrequencyStartDate")
     protected XMLGregorianCalendar eventFrequencyStartDate;
     @XmlElement(name = "EventFrequencyEndDate")
@@ -194,9 +195,8 @@ public class RecurringEventDataType
      *     
      */
     @Basic
-    @Column(name = "EVT_CODE", length = 255)
-    @Enumerated(EnumType.STRING)
-    public EventTypeCodeDataType getEventTypeCode() {
+    @Column(name = "EVT_CODE", columnDefinition = "31", length = 31)
+    public String getEventTypeCode() {
         return eventTypeCode;
     }
 
@@ -208,7 +208,7 @@ public class RecurringEventDataType
      *     {@link EventTypeCodeDataType }
      *     
      */
-    public void setEventTypeCode(EventTypeCodeDataType value) {
+    public void setEventTypeCode(String value) {
         this.eventTypeCode = value;
     }
 
@@ -319,9 +319,8 @@ public class RecurringEventDataType
      *     
      */
     @Basic
-    @Column(name = "EVT_FREQ_UNIT_CODE", length = 255)
-    @Enumerated(EnumType.STRING)
-    public EventFrequencyUnitCodeDataType getEventFrequencyUnitCode() {
+    @Column(name = "EVT_FREQ_UNIT_CODE", columnDefinition = "6", length = 6)
+    public String getEventFrequencyUnitCode() {
         return eventFrequencyUnitCode;
     }
 
@@ -333,7 +332,7 @@ public class RecurringEventDataType
      *     {@link EventFrequencyUnitCodeDataType }
      *     
      */
-    public void setEventFrequencyUnitCode(EventFrequencyUnitCodeDataType value) {
+    public void setEventFrequencyUnitCode(String value) {
         this.eventFrequencyUnitCode = value;
     }
 
@@ -455,14 +454,18 @@ public class RecurringEventDataType
      * 
      * 
      */
-    @OneToMany(targetEntity = RecurringEventLocationDataType.class, cascade = {
+    /*@OneToMany(targetEntity = RecurringEventLocationDataType.class, cascade = {
         CascadeType.ALL
     })
     @JoinTable(name = "IC_RECR_EVT_LOC", joinColumns = {
         @JoinColumn(name = "IC_RECR_EVT_ID", referencedColumnName = "IC_RECR_EVT_ID")
     }, inverseJoinColumns = {
         @JoinColumn(name = "IC_RECR_EVT_ID")
+    })*/
+    @OneToMany(targetEntity = RecurringEventLocationDataType.class, cascade = {
+        CascadeType.ALL
     })
+    @JoinColumn(name = "IC_RECR_EVT_ID")
     public List<RecurringEventLocationDataType> getRecurringEventLocation() {
         if (recurringEventLocation == null) {
             recurringEventLocation = new ArrayList<RecurringEventLocationDataType>();
@@ -562,9 +565,9 @@ public class RecurringEventDataType
             }
         }
         {
-            EventTypeCodeDataType lhsEventTypeCode;
+            String lhsEventTypeCode;
             lhsEventTypeCode = this.getEventTypeCode();
-            EventTypeCodeDataType rhsEventTypeCode;
+            String rhsEventTypeCode;
             rhsEventTypeCode = that.getEventTypeCode();
             if (!strategy.equals(LocatorUtils.property(thisLocator, "eventTypeCode", lhsEventTypeCode), LocatorUtils.property(thatLocator, "eventTypeCode", rhsEventTypeCode), lhsEventTypeCode, rhsEventTypeCode)) {
                 return false;
@@ -598,9 +601,9 @@ public class RecurringEventDataType
             }
         }
         {
-            EventFrequencyUnitCodeDataType lhsEventFrequencyUnitCode;
+            String lhsEventFrequencyUnitCode;
             lhsEventFrequencyUnitCode = this.getEventFrequencyUnitCode();
-            EventFrequencyUnitCodeDataType rhsEventFrequencyUnitCode;
+            String rhsEventFrequencyUnitCode;
             rhsEventFrequencyUnitCode = that.getEventFrequencyUnitCode();
             if (!strategy.equals(LocatorUtils.property(thisLocator, "eventFrequencyUnitCode", lhsEventFrequencyUnitCode), LocatorUtils.property(thatLocator, "eventFrequencyUnitCode", rhsEventFrequencyUnitCode), lhsEventFrequencyUnitCode, rhsEventFrequencyUnitCode)) {
                 return false;
@@ -663,7 +666,7 @@ public class RecurringEventDataType
             currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "eventName", theEventName), currentHashCode, theEventName);
         }
         {
-            EventTypeCodeDataType theEventTypeCode;
+            String theEventTypeCode;
             theEventTypeCode = this.getEventTypeCode();
             currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "eventTypeCode", theEventTypeCode), currentHashCode, theEventTypeCode);
         }
@@ -683,7 +686,7 @@ public class RecurringEventDataType
             currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "eventFrequencyMeasure", theEventFrequencyMeasure), currentHashCode, theEventFrequencyMeasure);
         }
         {
-            EventFrequencyUnitCodeDataType theEventFrequencyUnitCode;
+            String theEventFrequencyUnitCode;
             theEventFrequencyUnitCode = this.getEventFrequencyUnitCode();
             currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "eventFrequencyUnitCode", theEventFrequencyUnitCode), currentHashCode, theEventFrequencyUnitCode);
         }

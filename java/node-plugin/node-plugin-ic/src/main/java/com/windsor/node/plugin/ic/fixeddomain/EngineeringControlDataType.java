@@ -15,13 +15,10 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -30,6 +27,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.jvnet.jaxb2_commons.lang.Equals;
 import org.jvnet.jaxb2_commons.lang.EqualsStrategy;
 import org.jvnet.jaxb2_commons.lang.HashCode;
@@ -38,6 +36,7 @@ import org.jvnet.jaxb2_commons.lang.JAXBEqualsStrategy;
 import org.jvnet.jaxb2_commons.lang.JAXBHashCodeStrategy;
 import org.jvnet.jaxb2_commons.locator.ObjectLocator;
 import org.jvnet.jaxb2_commons.locator.util.LocatorUtils;
+import com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter;
 
 
 /**
@@ -86,11 +85,13 @@ public class EngineeringControlDataType
     @XmlElement(name = "EngineeringControlDescriptionText")
     protected String engineeringControlDescriptionText;
     @XmlElement(name = "EngineeringControlTypeCode")
-    protected EngineeringControlTypeCodeDataType engineeringControlTypeCode;
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String engineeringControlTypeCode;
     @XmlElement(name = "OtherEngineeringControlTypeText")
     protected String otherEngineeringControlTypeText;
     @XmlElement(name = "EngineeringControlModeCode")
-    protected EngineeringControlModeCodeDataType engineeringControlModeCode;
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String engineeringControlModeCode;
     @XmlElement(name = "EngineeringControlLocation")
     protected List<EngineeringControlLocationDataType> engineeringControlLocation;
     @XmlTransient
@@ -167,9 +168,8 @@ public class EngineeringControlDataType
      *     
      */
     @Basic
-    @Column(name = "ENGR_CTRL_CODE", length = 255)
-    @Enumerated(EnumType.STRING)
-    public EngineeringControlTypeCodeDataType getEngineeringControlTypeCode() {
+    @Column(name = "ENGR_CTRL_CODE", columnDefinition = "27", length = 27)
+    public String getEngineeringControlTypeCode() {
         return engineeringControlTypeCode;
     }
 
@@ -181,7 +181,7 @@ public class EngineeringControlDataType
      *     {@link EngineeringControlTypeCodeDataType }
      *     
      */
-    public void setEngineeringControlTypeCode(EngineeringControlTypeCodeDataType value) {
+    public void setEngineeringControlTypeCode(String value) {
         this.engineeringControlTypeCode = value;
     }
 
@@ -231,8 +231,7 @@ public class EngineeringControlDataType
      */
     @Basic
     @Column(name = "ENGR_CTRL_MODE_CODE", length = 255)
-    @Enumerated(EnumType.STRING)
-    public EngineeringControlModeCodeDataType getEngineeringControlModeCode() {
+    public String getEngineeringControlModeCode() {
         return engineeringControlModeCode;
     }
 
@@ -244,7 +243,7 @@ public class EngineeringControlDataType
      *     {@link EngineeringControlModeCodeDataType }
      *     
      */
-    public void setEngineeringControlModeCode(EngineeringControlModeCodeDataType value) {
+    public void setEngineeringControlModeCode(String value) {
         this.engineeringControlModeCode = value;
     }
 
@@ -275,14 +274,18 @@ public class EngineeringControlDataType
      * 
      * 
      */
-    @OneToMany(targetEntity = EngineeringControlLocationDataType.class, cascade = {
+    /*@OneToMany(targetEntity = EngineeringControlLocationDataType.class, cascade = {
         CascadeType.ALL
     })
     @JoinTable(name = "IC_ENGR_CTRL_LOC", joinColumns = {
         @JoinColumn(name = "IC_ENGR_CTRL_ID", referencedColumnName = "IC_ENGR_CTRL_ID")
     }, inverseJoinColumns = {
         @JoinColumn(name = "IC_ENGR_CTRL_ID")
+    })*/
+    @OneToMany(targetEntity = EngineeringControlLocationDataType.class, cascade = {
+        CascadeType.ALL
     })
+    @JoinColumn(name = "IC_ENGR_CTRL_ID")
     public List<EngineeringControlLocationDataType> getEngineeringControlLocation() {
         if (engineeringControlLocation == null) {
             engineeringControlLocation = new ArrayList<EngineeringControlLocationDataType>();
@@ -360,9 +363,9 @@ public class EngineeringControlDataType
             }
         }
         {
-            EngineeringControlTypeCodeDataType lhsEngineeringControlTypeCode;
+            String lhsEngineeringControlTypeCode;
             lhsEngineeringControlTypeCode = this.getEngineeringControlTypeCode();
-            EngineeringControlTypeCodeDataType rhsEngineeringControlTypeCode;
+            String rhsEngineeringControlTypeCode;
             rhsEngineeringControlTypeCode = that.getEngineeringControlTypeCode();
             if (!strategy.equals(LocatorUtils.property(thisLocator, "engineeringControlTypeCode", lhsEngineeringControlTypeCode), LocatorUtils.property(thatLocator, "engineeringControlTypeCode", rhsEngineeringControlTypeCode), lhsEngineeringControlTypeCode, rhsEngineeringControlTypeCode)) {
                 return false;
@@ -378,9 +381,9 @@ public class EngineeringControlDataType
             }
         }
         {
-            EngineeringControlModeCodeDataType lhsEngineeringControlModeCode;
+            String lhsEngineeringControlModeCode;
             lhsEngineeringControlModeCode = this.getEngineeringControlModeCode();
-            EngineeringControlModeCodeDataType rhsEngineeringControlModeCode;
+            String rhsEngineeringControlModeCode;
             rhsEngineeringControlModeCode = that.getEngineeringControlModeCode();
             if (!strategy.equals(LocatorUtils.property(thisLocator, "engineeringControlModeCode", lhsEngineeringControlModeCode), LocatorUtils.property(thatLocator, "engineeringControlModeCode", rhsEngineeringControlModeCode), lhsEngineeringControlModeCode, rhsEngineeringControlModeCode)) {
                 return false;
@@ -416,7 +419,7 @@ public class EngineeringControlDataType
             currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "engineeringControlDescriptionText", theEngineeringControlDescriptionText), currentHashCode, theEngineeringControlDescriptionText);
         }
         {
-            EngineeringControlTypeCodeDataType theEngineeringControlTypeCode;
+            String theEngineeringControlTypeCode;
             theEngineeringControlTypeCode = this.getEngineeringControlTypeCode();
             currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "engineeringControlTypeCode", theEngineeringControlTypeCode), currentHashCode, theEngineeringControlTypeCode);
         }
@@ -426,7 +429,7 @@ public class EngineeringControlDataType
             currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "otherEngineeringControlTypeText", theOtherEngineeringControlTypeText), currentHashCode, theOtherEngineeringControlTypeText);
         }
         {
-            EngineeringControlModeCodeDataType theEngineeringControlModeCode;
+            String theEngineeringControlModeCode;
             theEngineeringControlModeCode = this.getEngineeringControlModeCode();
             currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "engineeringControlModeCode", theEngineeringControlModeCode), currentHashCode, theEngineeringControlModeCode);
         }

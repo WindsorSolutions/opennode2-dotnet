@@ -11,16 +11,11 @@ package com.windsor.node.plugin.ic.fixeddomain;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.Table;
+import javax.persistence.Embeddable;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 import org.jvnet.jaxb2_commons.lang.Equals;
 import org.jvnet.jaxb2_commons.lang.EqualsStrategy;
@@ -57,10 +52,8 @@ import org.jvnet.jaxb2_commons.locator.util.LocatorUtils;
     "electronicAddressText",
     "electronicAddressTypeName"
 })
-@Entity(name = "ElectronicAddressDataType")
-@Table(name = "IC_ELEC_ADDR")
-@Inheritance(strategy = InheritanceType.JOINED)
-public class ElectronicAddressDataType
+@Embeddable
+public class EmbeddedElectronicAddressDataType
     implements Serializable, Equals, HashCode
 {
 
@@ -69,8 +62,6 @@ public class ElectronicAddressDataType
     protected String electronicAddressText;
     @XmlElement(name = "ElectronicAddressTypeName")
     protected String electronicAddressTypeName;
-    @XmlTransient
-    protected String dbid;
 
     /**
      * Gets the value of the electronicAddressText property.
@@ -112,7 +103,7 @@ public class ElectronicAddressDataType
      *     
      */
     @Basic
-    @Column(name = "ELEC_ADDR_TYPE_NAME", length = 255)
+    @Column(name = "ELEC_ADDR_TYPE_NAME", length = 8)
     public String getElectronicAddressTypeName() {
         return electronicAddressTypeName;
     }
@@ -134,40 +125,14 @@ public class ElectronicAddressDataType
         return (this.electronicAddressTypeName!= null);
     }
 
-    /**
-     * 
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    @Id
-    @Column(name = "IC_ELEC_ADDR_ID")
-    public String getDbid() {
-        return dbid;
-    }
-
-    /**
-     * 
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setDbid(String value) {
-        this.dbid = value;
-    }
-
     public boolean equals(ObjectLocator thisLocator, ObjectLocator thatLocator, Object object, EqualsStrategy strategy) {
-        if (!(object instanceof ElectronicAddressDataType)) {
+        if (!(object instanceof EmbeddedElectronicAddressDataType)) {
             return false;
         }
         if (this == object) {
             return true;
         }
-        final ElectronicAddressDataType that = ((ElectronicAddressDataType) object);
+        final EmbeddedElectronicAddressDataType that = ((EmbeddedElectronicAddressDataType) object);
         {
             String lhsElectronicAddressText;
             lhsElectronicAddressText = this.getElectronicAddressText();

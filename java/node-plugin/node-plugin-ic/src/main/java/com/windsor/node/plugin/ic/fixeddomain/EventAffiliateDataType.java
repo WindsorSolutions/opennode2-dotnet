@@ -17,8 +17,6 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -32,6 +30,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.datatype.XMLGregorianCalendar;
 import org.jvnet.hyperjaxb3.xml.bind.annotation.adapters.XMLGregorianCalendarAsDate;
 import org.jvnet.hyperjaxb3.xml.bind.annotation.adapters.XmlAdapterUtils;
@@ -43,6 +42,7 @@ import org.jvnet.jaxb2_commons.lang.JAXBEqualsStrategy;
 import org.jvnet.jaxb2_commons.lang.JAXBHashCodeStrategy;
 import org.jvnet.jaxb2_commons.locator.ObjectLocator;
 import org.jvnet.jaxb2_commons.locator.util.LocatorUtils;
+import com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter;
 
 
 /**
@@ -87,7 +87,8 @@ public class EventAffiliateDataType
     @XmlElement(name = "AffiliateIdentifier", required = true)
     protected String affiliateIdentifier;
     @XmlElement(name = "AffiliationTypeCode", required = true)
-    protected List<AffiliationTypeCodeDataType> affiliationTypeCode;
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected List<String> affiliationTypeCode;
     @XmlElement(name = "OtherAffiliationTypeText")
     protected String otherAffiliationTypeText;
     @XmlElement(name = "AffiliationStartDate")
@@ -151,14 +152,13 @@ public class EventAffiliateDataType
      * 
      */
     @ElementCollection
-    @Column(name = "AFFIL_CODE", length = 255)
-    @Enumerated(EnumType.STRING)
+    @Column(name = "AFFIL_CODE", columnDefinition = "10", length = 10)
     @CollectionTable(name = "IC_AFFIL_TYPE", joinColumns = {
         @JoinColumn(name = "IC_EVT_AFFIL_ID")
     })
-    public List<AffiliationTypeCodeDataType> getAffiliationTypeCode() {
+    public List<String> getAffiliationTypeCode() {
         if (affiliationTypeCode == null) {
-            affiliationTypeCode = new ArrayList<AffiliationTypeCodeDataType>();
+            affiliationTypeCode = new ArrayList<String>();
         }
         return this.affiliationTypeCode;
     }
@@ -167,7 +167,7 @@ public class EventAffiliateDataType
      * 
      * 
      */
-    public void setAffiliationTypeCode(List<AffiliationTypeCodeDataType> affiliationTypeCode) {
+    public void setAffiliationTypeCode(List<String> affiliationTypeCode) {
         this.affiliationTypeCode = affiliationTypeCode;
     }
 
@@ -337,9 +337,9 @@ public class EventAffiliateDataType
             }
         }
         {
-            List<AffiliationTypeCodeDataType> lhsAffiliationTypeCode;
+            List<String> lhsAffiliationTypeCode;
             lhsAffiliationTypeCode = (this.isSetAffiliationTypeCode()?this.getAffiliationTypeCode():null);
-            List<AffiliationTypeCodeDataType> rhsAffiliationTypeCode;
+            List<String> rhsAffiliationTypeCode;
             rhsAffiliationTypeCode = (that.isSetAffiliationTypeCode()?that.getAffiliationTypeCode():null);
             if (!strategy.equals(LocatorUtils.property(thisLocator, "affiliationTypeCode", lhsAffiliationTypeCode), LocatorUtils.property(thatLocator, "affiliationTypeCode", rhsAffiliationTypeCode), lhsAffiliationTypeCode, rhsAffiliationTypeCode)) {
                 return false;
@@ -388,7 +388,7 @@ public class EventAffiliateDataType
             currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "affiliateIdentifier", theAffiliateIdentifier), currentHashCode, theAffiliateIdentifier);
         }
         {
-            List<AffiliationTypeCodeDataType> theAffiliationTypeCode;
+            List<String> theAffiliationTypeCode;
             theAffiliationTypeCode = (this.isSetAffiliationTypeCode()?this.getAffiliationTypeCode():null);
             currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "affiliationTypeCode", theAffiliationTypeCode), currentHashCode, theAffiliationTypeCode);
         }

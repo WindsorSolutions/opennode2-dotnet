@@ -75,7 +75,19 @@ public class LandParcelDataType
     protected String landParcelIdentifier;
     @XmlTransient
     protected String dbid;
+    /*@XmlTransient
+    public ICLocationDataType parent;
+    @OneToOne(mappedBy="landParcel")
+    public ICLocationDataType getParent()
+    {
+        return parent;
+    }
+    public void setParent(ICLocationDataType v)
+    {
+        parent = v;
+    }*/
 
+    
     /**
      * Gets the value of the landParcelNamingSchema property.
      * 
