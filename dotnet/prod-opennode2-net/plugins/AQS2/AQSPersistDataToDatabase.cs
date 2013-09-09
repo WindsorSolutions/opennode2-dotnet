@@ -113,7 +113,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
                 int siteID;
                 using (System.Data.DataTable dt = new System.Data.DataTable())
                 {
-                    _baseDao.FillTableFromStoredProc(dt, "FacilitySiteUpsert", argNames.ToString(), args.ToArray());
+                    _baseDao.FillTableFromStoredProc(dt, "aqs_FacilitySiteUpsert", argNames.ToString(), args.ToArray());
                     siteID = (int)dt.Rows[0]["AQS_SITE_ID_PK"];
                 }
                 foreach (MonitorListType monitor in site.MonitorList)
@@ -146,7 +146,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
                     int monitorID;
                     using (System.Data.DataTable dt = new System.Data.DataTable())
                     {
-						_baseDao.FillTableFromStoredProc(dt, "MonitorUpsert", argNames.ToString(), args.ToArray());
+						_baseDao.FillTableFromStoredProc(dt, "aqs_MonitorUpsert", argNames.ToString(), args.ToArray());
                         monitorID = (int)dt.Rows[0]["AQS_MONITOR_ID_PK"];
                     }
 
@@ -180,7 +180,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
                         int protocolID;
                         using (System.Data.DataTable dt = new System.Data.DataTable())
                         {
-                            _baseDao.FillTableFromStoredProc(dt, "TransactionProtocolInsertIfNotExist", argNames.ToString(), args.ToArray());
+                            _baseDao.FillTableFromStoredProc(dt, "aqs_TransactionProtocolUpsert", argNames.ToString(), args.ToArray());
                             protocolID = (int)dt.Rows[0]["AQS_TRANS_PROTOCOL_PK"];
                         }
                         foreach (RawResultsType result in datum.Items)
@@ -211,7 +211,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
                                 }
                                 args.Add(result.RawValueDetails.Items[i]);
                             }
-                            _baseDao.DoStoredProcWithArgs("RawResultUpsert", argNames.ToString(), args);
+                            _baseDao.DoStoredProcWithArgs("aqs_RawResultUpsert", argNames.ToString(), args);
                         }
                     }
                 }

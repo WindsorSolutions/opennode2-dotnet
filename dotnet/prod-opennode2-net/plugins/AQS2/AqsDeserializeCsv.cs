@@ -87,7 +87,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
                 System.Data.DataTable siteValues = new System.Data.DataTable();
                 try
                 {
-                    _baseDao.FillTableFromStoredProc(siteValues, "getSiteValues", "template", format);
+                    _baseDao.FillTableFromStoredProc(siteValues, "aqs_getSiteValues", "template", format);
                     var site = siteValues.Rows[0];
 					var geographicItems=new List<object>();
 					var geographicItemNames=new List<ItemsChoiceType1>();
@@ -469,7 +469,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
         {
             //windsor.commons.spring.springbasedao is a morass of spaghetti that doesn't make a lot of sense to me.
             System.Data.DataTable mappingValues = new System.Data.DataTable();
-            _baseDao.FillTableFromStoredProc(mappingValues, "getColumnMappings", "template", format);
+            _baseDao.FillTableFromStoredProc(mappingValues, "aqs_getColumnMappings", "template", format);
 
             var columnMappings = new AqsRawResults(_baseDao, _action, format);
 
@@ -494,7 +494,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
             System.Data.DataTable mappingValues = new System.Data.DataTable();
 
             var map = new AqsRawResults(_baseDao, _action, format);
-            if (_baseDao.FillTableFromStoredProc(mappingValues, "getValueMappings", "") > 0)
+            if (_baseDao.FillTableFromStoredProc(mappingValues, "aqs_getValueMappings", "") > 0)
             {
                 var valueMap = new Dictionary<string, string>();
 
