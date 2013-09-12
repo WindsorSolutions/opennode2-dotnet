@@ -21,6 +21,7 @@ import com.windsor.node.common.domain.Document;
 import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.ProcessContentResult;
 import com.windsor.node.common.domain.RequestType;
+import com.windsor.node.common.exception.WinNodeException;
 import com.windsor.node.data.dao.PartnerDao;
 import com.windsor.node.data.dao.TransactionDao;
 import com.windsor.node.data.dao.jdbc.JdbcPartnerDao;
@@ -66,39 +67,40 @@ public abstract class AbstractICPlugin extends BaseWnosJaxbPlugin implements Ser
         ProcessContentResult result = new ProcessContentResult();
         result.setSuccess(false);
         result.setStatus(CommonTransactionStatusCode.Failed);
-        result.getAuditEntries().add(new ActivityEntry("Starting IC GetICDataByChangeDate processing."));
-    
+        result.getAuditEntries().add(new ActivityEntry("Starting IC processing."));
+
         try
         {
             validateFlowState(transaction, result);
-    
+
             //Assemble the 3 lists, Instrument, Affiliation, and Locations (the real pain)
             List<InstrumentDataType> instruments = createInstrumentPayload(transaction);
             ObjectFactory fact = new ObjectFactory();
             InstrumentListDataType instrumentListDataType = fact.createInstrumentListDataType();
             instrumentListDataType.setInstrument(instruments);
-    
+
             List<AffiliateDataType> affiliates = createAffiliatePayload(transaction);
             AffiliateListDataType affiliateListDataType = fact.createAffiliateListDataType();
             affiliateListDataType.setAffiliate(affiliates);
-    
+
             List<ICLocationDataType> locations = createLocationPayload(transaction);
             ICLocationListDataType icLocationListDataType = fact.createICLocationListDataType();
             icLocationListDataType.setICLocation(locations);
-    
+
             InstitutionalControlsDocumentDataType institutionalControlsDocumentDataType = fact.createInstitutionalControlsDocumentDataType();
             institutionalControlsDocumentDataType.setInstrumentList(instrumentListDataType);
             institutionalControlsDocumentDataType.setAffiliateList(affiliateListDataType);
             institutionalControlsDocumentDataType.setICLocationList(icLocationListDataType);
-    
+
             JAXBElement<?> jaxbElement = fact.createInstitutionalControlsDocument(institutionalControlsDocumentDataType);
-    
+
             String docId = getIdGenerator().createId();
             String tempFilePath = makeTemporaryFilename(docId);
             jaxbElement = processHeaderDirectives(jaxbElement, docId, transaction.getOperation(), transaction);
             writeDocument(jaxbElement, tempFilePath);
             Document doc = makeDocument(transaction.getRequest().getType(), docId, tempFilePath);
             transaction.getDocuments().add(doc);
+            result.getDocuments().add(doc);
         }
         catch(Exception e)
         {
@@ -106,7 +108,12 @@ public abstract class AbstractICPlugin extends BaseWnosJaxbPlugin implements Ser
             PrintWriter pw = new PrintWriter(sw);
             e.printStackTrace(pw);
             result.getAuditEntries().add(new ActivityEntry("Error during IC processing: \n" + sw.toString()));
-            return result;
+            //return result;
+            if(WinNodeException.class.isAssignableFrom(e.getClass()))
+            {
+                throw (WinNodeException)e;
+            }
+            throw new WinNodeException(e);
         }
         finally
         {
@@ -116,11 +123,11 @@ public abstract class AbstractICPlugin extends BaseWnosJaxbPlugin implements Ser
             }
             getTransactionDao().save(transaction);
         }
-    
+
         result.getAuditEntries().add(new ActivityEntry("Successfully completed IC processing. Exiting."));
         result.setSuccess(true);
         result.setStatus(CommonTransactionStatusCode.Completed);
-    
+
         return result;
     }
 
@@ -129,7 +136,7 @@ public abstract class AbstractICPlugin extends BaseWnosJaxbPlugin implements Ser
         Document doc = new Document();
         doc.setDocumentId(documentId);
         doc.setId(documentId);
-    
+
         if(!RequestType.Query.equals(requestType))
         {
             String zippedFilePath = getZipService().zip(absolutefilePath);
@@ -150,15 +157,15 @@ public abstract class AbstractICPlugin extends BaseWnosJaxbPlugin implements Ser
     public void afterPropertiesSet()
     {
         super.afterPropertiesSet();
-    
+
         DataSource dataSource = getDataSources().get(ARG_DS_SOURCE);
-    
+
         setSettingService((SettingServiceProvider)getServiceFactory().makeService(SettingServiceProvider.class));
         setIdGenerator((IdGenerator)getServiceFactory().makeService(IdGenerator.class));
         setZipService((CompressionService) getServiceFactory().makeService(ZipCompressionService.class));
         setTransactionDao((TransactionDao)getServiceFactory().makeService(JdbcTransactionDao.class));
         setPartnerDao((PartnerDao)getServiceFactory().makeService(JdbcPartnerDao.class));
-    
+
         setEmf(ICEntityManagerFactory.initEntityManagerFactory(dataSource));
         setIcDao(new JdbcICDao(dataSource));
     }
@@ -179,12 +186,15 @@ public abstract class AbstractICPlugin extends BaseWnosJaxbPlugin implements Ser
         {
             return new ArrayList<ICLocationDataType>();
         }
-    
-        //FIXME will only support up to 1000 ids, make loop
+
+        //FIXME will likely only support up to 1000 ids, make loop
         /*TypedQuery<ICLocationDataType> query = getEmf().createEntityManager()
                         .createQuery("FROM " + ICLocationDataType.class.getSimpleName() + " where dbid in (:listOfIds) ",
                                      ICLocationDataType.class);
         query.setParameter("listOfIds", ids);*/
+        // FIXME TypedQuery doesn't work because of Hibernate's inability to create an EntityManager with a reference to
+        // a particular classloader, this breaks things like OSGI and loading plugins in a child classloader (which
+        // OpenNode2 does), open a ticket or look for a workaround
         Query query = getEmf().createEntityManager()
                               .createQuery("select loc FROM " + ICLocationDataType.class.getSimpleName()
                                                            + " loc where loc.dbid in (:listOfIds) ");//left join fetch loc.landParcel
@@ -192,7 +202,7 @@ public abstract class AbstractICPlugin extends BaseWnosJaxbPlugin implements Ser
         //query.setParameter("listOfIds", "IC_LOC_1");
         @SuppressWarnings("unchecked")
         List<ICLocationDataType> results = query.getResultList();
-    
+
         return results;
     }
 
@@ -206,8 +216,8 @@ public abstract class AbstractICPlugin extends BaseWnosJaxbPlugin implements Ser
         {
             return new ArrayList<AffiliateDataType>();
         }
-    
-        //FIXME will only support up to 1000 ids, make loop
+
+        //FIXME will likely only support up to 1000 ids, make loop
         /*TypedQuery<AffiliateDataType> query = getEmf().createEntityManager()
                         .createQuery("FROM " + AffiliateDataType.class.getSimpleName() + " where dbid in (:listOfIds) ",
                                      AffiliateDataType.class);
@@ -217,7 +227,7 @@ public abstract class AbstractICPlugin extends BaseWnosJaxbPlugin implements Ser
         query.setParameter("listOfIds", ids);
         @SuppressWarnings("unchecked")
         List<AffiliateDataType> results = query.getResultList();
-    
+
         return results;
     }
 
@@ -231,8 +241,8 @@ public abstract class AbstractICPlugin extends BaseWnosJaxbPlugin implements Ser
         {
             return new ArrayList<InstrumentDataType>();
         }
-    
-        //FIXME will only support up to 1000 ids, make loop
+
+        //FIXME will likely only support up to 1000 ids, make loop
         /*TypedQuery<InstrumentDataType> query = getEmf().createEntityManager()
                         .createQuery("FROM " + InstrumentDataType.class.getSimpleName() + " where dbid in (:listOfIds) ",
                                      InstrumentDataType.class);
@@ -242,7 +252,7 @@ public abstract class AbstractICPlugin extends BaseWnosJaxbPlugin implements Ser
         query.setParameter("listOfIds", ids);
         @SuppressWarnings("unchecked")
         List<InstrumentDataType> results = (List<InstrumentDataType>)query.getResultList();
-    
+
         return results;
     }
 

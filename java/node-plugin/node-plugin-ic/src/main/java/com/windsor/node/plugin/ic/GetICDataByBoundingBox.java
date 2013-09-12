@@ -93,6 +93,21 @@ public class GetICDataByBoundingBox extends AbstractICPlugin
         {
             params = getOrderedParameters(transaction);
         }
+        if(transaction.getRequest() != null && transaction.getRequest().getPaging() != null)
+        {
+            if(transaction.getRequest().getPaging().getStart() > 0)
+            {
+                params.put("rowId", new Integer(transaction.getRequest().getPaging().getStart()));
+            }
+            if(transaction.getRequest().getPaging().getCount() > 0)
+            {
+                params.put("maxRows", new Integer(transaction.getRequest().getPaging().getCount()));
+                if(params.get("rowId") == null)//if there's a maxRows and no rowId, simply consider rowId to be the first row
+                {
+                    params.put("rowId", new Integer(1));
+                }
+            }
+        }
         return params;
     }
 
@@ -111,7 +126,7 @@ public class GetICDataByBoundingBox extends AbstractICPlugin
             catch(NumberFormatException e)
             {
                 logger.error("Unparseable date passed in for Bounding Coordinate North:  " + param);
-                throw new RuntimeException("Unparseable date passed in for Bounding Coordinate North:  " + param);
+                throw new WinNodeException("Unparseable date passed in for Bounding Coordinate North:  " + param);
             }
             params.put(BOUNDING_COORDINATE_NORTH.getName(), decimal);
 
@@ -123,7 +138,7 @@ public class GetICDataByBoundingBox extends AbstractICPlugin
             catch(NumberFormatException e)
             {
                 logger.error("Unparseable date passed in for Bounding Coordinate South:  " + param);
-                throw new RuntimeException("Unparseable date passed in for Bounding Coordinate South:  " + param);
+                throw new WinNodeException("Unparseable date passed in for Bounding Coordinate South:  " + param);
             }
             params.put(BOUNDING_COORDINATE_SOUTH.getName(), decimal);
 
@@ -135,7 +150,7 @@ public class GetICDataByBoundingBox extends AbstractICPlugin
             catch(NumberFormatException e)
             {
                 logger.error("Unparseable date passed in for Bounding Coordinate West:  " + param);
-                throw new RuntimeException("Unparseable date passed in for Bounding Coordinate West:  " + param);
+                throw new WinNodeException("Unparseable date passed in for Bounding Coordinate West:  " + param);
             }
             params.put(BOUNDING_COORDINATE_WEST.getName(), decimal);
 
@@ -147,7 +162,7 @@ public class GetICDataByBoundingBox extends AbstractICPlugin
             catch(NumberFormatException e)
             {
                 logger.error("Unparseable date passed in for Bounding Coordinate East:  " + param);
-                throw new RuntimeException("Unparseable date passed in for Bounding Coordinate East:  " + param);
+                throw new WinNodeException("Unparseable date passed in for Bounding Coordinate East:  " + param);
             }
             params.put(BOUNDING_COORDINATE_EAST.getName(), decimal);
         }
@@ -182,7 +197,7 @@ public class GetICDataByBoundingBox extends AbstractICPlugin
             catch(NumberFormatException e)
             {
                 logger.error("Unparseable date passed in for Bounding Coordinate North:  " + param);
-                throw new RuntimeException("Unparseable date passed in for Bounding Coordinate North:  " + param);
+                throw new WinNodeException("Unparseable date passed in for Bounding Coordinate North:  " + param);
             }
             params.put(BOUNDING_COORDINATE_NORTH.getName(), decimal);
         }
@@ -197,7 +212,7 @@ public class GetICDataByBoundingBox extends AbstractICPlugin
             catch(NumberFormatException e)
             {
                 logger.error("Unparseable date passed in for Bounding Coordinate South:  " + param);
-                throw new RuntimeException("Unparseable date passed in for Bounding Coordinate South:  " + param);
+                throw new WinNodeException("Unparseable date passed in for Bounding Coordinate South:  " + param);
             }
             params.put(BOUNDING_COORDINATE_SOUTH.getName(), decimal);
         }
@@ -212,7 +227,7 @@ public class GetICDataByBoundingBox extends AbstractICPlugin
             catch(NumberFormatException e)
             {
                 logger.error("Unparseable date passed in for Bounding Coordinate West:  " + param);
-                throw new RuntimeException("Unparseable date passed in for Bounding Coordinate West:  " + param);
+                throw new WinNodeException("Unparseable date passed in for Bounding Coordinate West:  " + param);
             }
             params.put(BOUNDING_COORDINATE_WEST.getName(), decimal);
         }
@@ -227,7 +242,7 @@ public class GetICDataByBoundingBox extends AbstractICPlugin
             catch(NumberFormatException e)
             {
                 logger.error("Unparseable date passed in for Bounding Coordinate East:  " + param);
-                throw new RuntimeException("Unparseable date passed in for Bounding Coordinate East:  " + param);
+                throw new WinNodeException("Unparseable date passed in for Bounding Coordinate East:  " + param);
             }
             params.put(BOUNDING_COORDINATE_EAST.getName(), decimal);
         }

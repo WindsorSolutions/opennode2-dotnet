@@ -77,6 +77,21 @@ public class GetICDataByChangeDate extends AbstractICPlugin
         {
             params = getOrderedParameters(transaction);
         }
+        if(transaction.getRequest() != null && transaction.getRequest().getPaging() != null)
+        {
+            if(transaction.getRequest().getPaging().getStart() > 0)
+            {
+                params.put("rowId", new Integer(transaction.getRequest().getPaging().getStart()));
+            }
+            if(transaction.getRequest().getPaging().getCount() > 0)
+            {
+                params.put("maxRows", new Integer(transaction.getRequest().getPaging().getCount()));
+                if(params.get("rowId") == null)//if there's a maxRows and no rowId, simply consider rowId to be the first row
+                {
+                    params.put("rowId", new Integer(1));
+                }
+            }
+        }
         return params;
     }
 
@@ -102,7 +117,7 @@ public class GetICDataByChangeDate extends AbstractICPlugin
         else
         {
             logger.error("Change Date is required but null was passed.");
-            throw new RuntimeException("Change Date is required but null was passed.");
+            throw new WinNodeException("Change Date is required but null was passed.");
         }
         return params;
     }
@@ -122,7 +137,7 @@ public class GetICDataByChangeDate extends AbstractICPlugin
             catch(ParseException e)
             {
                 logger.error("Unparseable date passed in for Change Date:  " + changeDate);
-                throw new RuntimeException("Unparseable date passed in for Change Date:  " + changeDate);
+                throw new WinNodeException("Unparseable date passed in for Change Date:  " + changeDate);
             }
             params.put(CHANGE_DATE.getName(), parsedChangeDate);
         }

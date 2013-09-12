@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -19,11 +20,11 @@ import com.windsor.node.plugin.ic.dao.ICDao;
 
 public class JdbcICDao extends JdbcDaoSupport implements ICDao
 {
-    private String instrumentIdsByCriteriaSql = "select DISTINCT inst.IC_INSTR_ID from IC_INSTR inst "
-                    + " inner join IC_INSTR_LOC il on il.IC_INSTR_ID = inst.IC_INSTR_ID "
-                    + " inner join IC_LOC loc on loc.LOC_IDEN = il.LOC_IDEN "
-                    + " inner join IC_FAC fac on fac.IC_LOC_ID = fac.IC_LOC_ID "
-                    + " inner join IC_USE_RSTCT use on use.IC_INSTR_ID = inst.IC_INSTR_ID "
+    private String instrumentIdsByCriteriaSql = "select inst.IC_INSTR_ID from IC_INSTR inst "
+                    + " left join IC_INSTR_LOC il on il.IC_INSTR_ID = inst.IC_INSTR_ID "
+                    + " left join IC_LOC loc on loc.LOC_IDEN = il.LOC_IDEN "
+                    + " left join IC_FAC fac on fac.IC_LOC_ID = loc.IC_LOC_ID "
+                    + " left join IC_USE_RSTCT use on use.IC_INSTR_ID = inst.IC_INSTR_ID "
                     + " where 1=1 ";
     private String affiliateIdsByCriteriaSql = "select affil.IC_AFFIL_ID from IC_INSTR inst "
                     + " inner join IC_INSTR_AFFIL ia on ia.IC_INSTR_ID = inst.IC_INSTR_ID "
@@ -33,6 +34,8 @@ public class JdbcICDao extends JdbcDaoSupport implements ICDao
                     + " inner join IC_INSTR_LOC il on il.IC_INSTR_ID = inst.IC_INSTR_ID "
                     + " inner join IC_LOC loc on loc.LOC_IDEN = il.LOC_IDEN "
                     + " where 1=1 ";
+
+    private String orderBySql = " ORDER BY inst.INSTR_IDEN ";
 
     private String instrumentIdsByBoundingBoxSelect = "SELECT inst.IC_INSTR_ID FROM IC_INSTR inst ";
     private String instrumentIdsByBoundingBoxSelectPolygon = "SELECT inst.IC_INSTR_ID, poly.lat, poly.lon FROM IC_INSTR inst ";
@@ -108,9 +111,14 @@ public class JdbcICDao extends JdbcDaoSupport implements ICDao
             addInClause((List<String>)params.get(GetICDataByParameters.USE_RESTRICTION_TYPE_CODE.getName()), sql, sqlParams, sqlTypes,
                         "use.USE_RSTCT_CODE", Types.VARCHAR);
         }
+
+        sql.append(orderBySql);
+
         List<String> matches = getJdbcTemplate().queryForList(sql.toString(),
                                                               sqlParams.toArray(),
                                                               createIntArray(sqlTypes), String.class);
+        //easy way to get "DISTINCT" while retaining order and not having to select the ORDER BY clause
+        matches = new ArrayList<String>(new LinkedHashSet<String>(matches));
 
         List<String> geoLocationIdMathes = new ArrayList<String>();
 
@@ -136,6 +144,33 @@ public class JdbcICDao extends JdbcDaoSupport implements ICDao
             }
         }
 
+        //Now apply maxRows and rowId requests, doing it in SQL and database agnostically is a nightmare compared to this.
+        if(params.get("rowId") != null && params.get("maxRows") == null)
+        {
+            Integer rowId = new Integer((Integer)params.get("rowId") - 1);//reduce by one so it's a 0 based count to match the List
+            List<String> restrictedMatches = new ArrayList<String>();
+            if(rowId <= intersectionMatches.size())
+            {
+                restrictedMatches.add(intersectionMatches.get(rowId));
+                intersectionMatches = restrictedMatches;
+            }
+        }
+        if(params.get("maxRows") != null)
+        {
+            Integer rowId = new Integer((Integer)params.get("rowId") - 1);//reduce by one so it's a 0 based count to match the List
+            Integer maxRows = new Integer((Integer)params.get("maxRows") - 1);//reduce by one so it's a 0 based count to match the List
+            List<String> restrictedMatches = new ArrayList<String>();
+            if((rowId+maxRows) <= intersectionMatches.size())
+            {
+                for(int i = rowId; i <= maxRows; i++)
+                {
+                    restrictedMatches.add(intersectionMatches.get(i));
+                }
+                intersectionMatches = restrictedMatches;
+            }
+                
+        }
+
         return intersectionMatches;
     }
 
@@ -151,7 +186,7 @@ public class JdbcICDao extends JdbcDaoSupport implements ICDao
 
     private void addInClause(List<String> matches, StringBuffer sql, List<Object> sqlParams, List<Integer> sqlTypes, String fieldName, int argumentType)
     {
-        StringBuffer inClause = new StringBuffer();
+       /* StringBuffer inClause = new StringBuffer();
         for(int i = 0; i < matches.size(); i++)
         {
             if(inClause.length() > 0)
@@ -160,9 +195,27 @@ public class JdbcICDao extends JdbcDaoSupport implements ICDao
             }
             else
             {
-                inClause.append(" AND ").append(fieldName).append(" in (");
+                inClause.append(" AND ").append(fieldName).append(" like (");
             }
             inClause.append("?");
+            sqlParams.add(matches.get(i));
+            sqlTypes.add(argumentType);
+        }
+        inClause.append(") ");
+        sql.append(inClause);*/
+        //Since this has to work with wildcards, an IN clause will not work
+        StringBuffer inClause = new StringBuffer();
+        for(int i = 0; i < matches.size(); i++)
+        {
+            if(inClause.length() > 0)
+            {
+                inClause.append(" OR ");
+            }
+            else
+            {
+                inClause.append(" AND ").append(" (");
+            }
+            inClause.append(fieldName).append(" LIKE ").append("?");
             sqlParams.add(matches.get(i));
             sqlTypes.add(argumentType);
         }
@@ -233,10 +286,9 @@ public class JdbcICDao extends JdbcDaoSupport implements ICDao
         {
             addInClause(instrumentIds, sql, sqlParams, sqlTypes, "inst.IC_INSTR_ID", Types.VARCHAR);
         }
-        ///DOOOOO THIS?????????/
         else
         {
-            //sql.append(" AND 1=0 ");
+            return new ArrayList<String>();//If there are no instruments there are no locations or affiliates either
         }
 
         List<String> matches = getJdbcTemplate().queryForList(sql.toString(),
@@ -266,6 +318,10 @@ public class JdbcICDao extends JdbcDaoSupport implements ICDao
         if(instrumentIds != null && instrumentIds.size() > 0)
         {
             addInClause(instrumentIds, sql, sqlParams, sqlTypes, "inst.IC_INSTR_ID", Types.VARCHAR);
+        }
+        else
+        {
+            return new ArrayList<String>();//If there are no instruments there are no locations or affiliates either
         }
 
         List<String> matches = getJdbcTemplate().queryForList(sql.toString(),
