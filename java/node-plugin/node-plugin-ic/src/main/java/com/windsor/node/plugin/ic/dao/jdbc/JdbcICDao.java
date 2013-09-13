@@ -151,7 +151,10 @@ public class JdbcICDao extends JdbcDaoSupport implements ICDao
             List<String> restrictedMatches = new ArrayList<String>();
             if(rowId <= intersectionMatches.size())
             {
-                restrictedMatches.add(intersectionMatches.get(rowId));
+                for(int i = rowId; i < intersectionMatches.size(); i++)
+                {
+                    restrictedMatches.add(intersectionMatches.get(i));
+                }
                 intersectionMatches = restrictedMatches;
             }
         }
@@ -162,7 +165,7 @@ public class JdbcICDao extends JdbcDaoSupport implements ICDao
             List<String> restrictedMatches = new ArrayList<String>();
             if((rowId+maxRows) <= intersectionMatches.size())
             {
-                for(int i = rowId; i <= maxRows; i++)
+                for(int i = rowId; i <= (rowId+maxRows); i++)
                 {
                     restrictedMatches.add(intersectionMatches.get(i));
                 }
