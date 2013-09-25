@@ -125,9 +125,13 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
                         "WHERE {0} {1} " +
                             "M.SMPL_COLL_START_DATE >= '{2}' " +
                             "AND M.SMPL_COLL_START_DATE <= '{3}' " +
-                            "AND " + actionCodesQuery + " " +
-                            "AND O.AQS_SITE_ID_FK = {4}";
-                    break;
+                            "AND " + actionCodesQuery + " ";
+
+					if (!string.IsNullOrEmpty(pk))
+					{
+						sql+="AND O.AQS_SITE_ID_FK = {4}";
+					}
+					break;
 
 
                 case Tables.TransactionProtocolDetails:
@@ -293,7 +297,6 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
                 default:
                     throw new ApplicationException("Invalid Table Selection.");
             }
-
 
             string siteIDSql = "";
 

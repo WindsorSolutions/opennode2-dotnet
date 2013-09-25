@@ -47,7 +47,6 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
         protected const string DESTINATION_PROVIDER_KEY = "Data Destination";
 
         protected const string PARAM_CSV_FILE_PATH = "CSV File Path";
-        protected const string PARAM_AQS_ACTION_TYPE = "AQS Action Type";
         protected const string PARAM_MAPPING_TEMPLATE_NAME = "Mapping Template Name";
         protected const string PARAM_CLEAR_AQS_METADATA = "Clear AQS Metadata";
 
@@ -57,7 +56,6 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
         protected DataRequest _dataRequest;
 
         protected string _csvFilePath;
-        protected AqsDeserializeCsv.ActionType _aqsActionType;
         protected string _mappingTemplateName;
         protected bool _clearMetadata = true;
 
@@ -90,15 +88,12 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
             AppendAuditLogEvent("Validating request: {0}", _dataRequest);
 
             GetParameter(_dataRequest, PARAM_CSV_FILE_PATH, 0, out _csvFilePath);
-            string actionTypeName;
-            GetParameter(_dataRequest, PARAM_AQS_ACTION_TYPE, 1, out actionTypeName);
-            _aqsActionType = EnumUtils.ParseEnum<AqsDeserializeCsv.ActionType>(actionTypeName);
             GetParameter(_dataRequest, PARAM_MAPPING_TEMPLATE_NAME, 2, out _mappingTemplateName);
             TryGetParameter(_dataRequest, PARAM_CLEAR_AQS_METADATA, 3, ref _clearMetadata);
 
-            AppendAuditLogEvent("Validated request with parameters: {0} = {1}, {2} = {3}, {4} = {5}, {6} = {7}",
-                                PARAM_CSV_FILE_PATH, _csvFilePath, PARAM_AQS_ACTION_TYPE, _aqsActionType,
-                                PARAM_MAPPING_TEMPLATE_NAME, _mappingTemplateName, PARAM_CLEAR_AQS_METADATA, _clearMetadata);
+            AppendAuditLogEvent("Validated request with parameters: {0} = {1}, {2} = {3}, {4} = {5}",
+                                PARAM_CSV_FILE_PATH, _csvFilePath, PARAM_MAPPING_TEMPLATE_NAME, _mappingTemplateName, 
+                                PARAM_CLEAR_AQS_METADATA, _clearMetadata);
         }
         protected virtual void DoImport()
         {
@@ -106,7 +101,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
 
             try
             {
-                AqsDeserializeCsv cdr = new AqsDeserializeCsv(_baseDao, _aqsActionType);
+                AqsDeserializeCsv cdr = new AqsDeserializeCsv(_baseDao);
 
                 AppendAuditLogEvent("Generating AQS data from CSV file \"{0}\" ...", _csvFilePath);
                 AirQualitySubmissionType data =

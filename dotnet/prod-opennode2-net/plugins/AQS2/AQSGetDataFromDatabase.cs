@@ -246,7 +246,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
 
                 DataTable dtMonitorID =
                     Data.GetDataTable(_baseDao, Data.Tables.MonitorIdentifierDetails, _startDate, _endDate,
-                                      _siteId, _countyCode, fac.SiteIdentifierDetails.FacilitySiteIdentifier.Value, _commaSeparatedActionCodes);
+                                      fac.SiteIdentifierDetails.FacilitySiteIdentifier.Value, _countyCode, _siteId, _commaSeparatedActionCodes);
 
                 if ((dtMonitorID != null))
                 {

@@ -33,6 +33,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI5
         protected ICompressionHelper _compressionHelper;
         protected IDocumentManager _documentManager;
         protected ISettingsProvider _settingsProvider;
+        protected int _commandTimeoutInSeconds = 20 * 60;
 
         protected SpringBaseDao _baseDao;
         protected string _postProcessingStoredProcName; // "TRI_PROCESSPOST_TRI_LOADER"
@@ -141,7 +142,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI5
                     AppendAuditLogEvent("Storing TRI data into database");
 
                     TRIData triDataLoader = new TRIData();
-                    triDataLoader.Load(data, _baseDao, _deleteExistingDataBeforeInsert);
+                    triDataLoader.Load(data, _baseDao, _deleteExistingDataBeforeInsert, _commandTimeoutInSeconds);
 
                     AppendAuditLogEvent("Stored TRI data into database");
                 }

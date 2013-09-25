@@ -23,43 +23,43 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
             rawResults
         }
 
-        public enum ActionType
-        {
-            insert = 0,
-            update = 1,
-            delete = 2
-        }
+		//public enum ActionType
+		//{
+		//	insert = 0,
+		//	update = 1,
+		//	delete = 2
+		//}
 
-        public AqsDeserializeCsv(Windsor.Commons.Spring.SpringBaseDao baseDao, ActionType action)
+        public AqsDeserializeCsv(Windsor.Commons.Spring.SpringBaseDao baseDao)//, ActionType action)
         {
             _baseDao = baseDao;
-            _action = action;
+            //_action = action;
         }
 
         private Windsor.Commons.Spring.SpringBaseDao _baseDao;
-        private ActionType _action;
+       // private ActionType _action;
 
         private class AqsRawResults : Dictionary<string, Mapper>, IAbstractHeader<AirQualitySubmissionType>
         {
             private AirQualitySubmissionType _result = new AirQualitySubmissionType();
             private FacilitySiteListType _currentSite;
             private Windsor.Commons.Spring.SpringBaseDao _baseDao;
-            private ActionType _action;
+            //private ActionType _action;
             private string _format;
             private IDictionary<string, MonitorListType> _monitorList = new Dictionary<string, MonitorListType>();
             private IDictionary<string, RawDataListType> _rawDataList = new Dictionary<string, RawDataListType>();
             private IDictionary<string, RawResultsType> _rawDataResultsList = new Dictionary<string, RawResultsType>();
 
-            public AqsRawResults(Windsor.Commons.Spring.SpringBaseDao baseDao, ActionType action, string format)
+            public AqsRawResults(Windsor.Commons.Spring.SpringBaseDao baseDao, string format)// ActionType action,
                 : base()
             {
                 _baseDao = baseDao;
-                _action = action;
+                //_action = action;
                 _format = format;
                 LoadSites(format);
             }
 
-            public AqsRawResults(IList<string> columns, Windsor.Commons.Spring.SpringBaseDao baseDao, ActionType action, string format)
+            public AqsRawResults(IList<string> columns, Windsor.Commons.Spring.SpringBaseDao baseDao, string format)// ActionType action,
                 : base()
             {
                 foreach (string column in columns)
@@ -76,7 +76,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
 									:c);
                 }
                 _baseDao = baseDao;
-                _action = action;
+                //_action = action;
                 _format = format;
                 LoadSites(format);
             }
@@ -190,7 +190,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
 								VerticalMeasure=site["VERTICAL_MEASURE"] as string,
 								VerticalMethodCode=site["VERTICAL_MTHD_CD"] as string
 							},
-							ActionCode="I"
+							ActionCode=site["ACTION_CD"] as string
 						},
 						SiteIdentifierDetails=new SiteIdentifierDetailsType()
 						{
@@ -209,27 +209,27 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
                 }
             }
 
-            private void LoadSites(string format)
-            {
-                IList<FacilitySiteListType> sites;
-                if (_action == ActionType.insert || _action == ActionType.update)
-                {
-                    AQSGetDataFromDatabase aqsDb = new AQSGetDataFromDatabase(_baseDao, false, new DateTime(1900, 01, 01), DateTime.Now, null, null, "I, U");
-                    sites = aqsDb.GetFacilityList();
+			private void LoadSites(string format)
+			{
+				//IList<FacilitySiteListType> sites;
+				//if (_action == ActionType.insert || _action == ActionType.update)
+				//{
+				//AQSGetDataFromDatabase aqsDb=new AQSGetDataFromDatabase(_baseDao, false, new DateTime(1900, 01, 01), DateTime.Now, null, null, "I, U");
+				//sites=aqsDb.GetFacilityList();
 
-                    _currentSite = GetDefaultSite(format);//defaults to Insert
+				_currentSite=GetDefaultSite(format);//defaults to Insert
 
-                    if (sites.Where(s => s.SiteIdentifierDetails.FacilitySiteIdentifier == _currentSite.SiteIdentifierDetails.FacilitySiteIdentifier).FirstOrDefault() != null)
-                    {
-                        _currentSite.BasicSiteInformation.ActionCode = "U";
-                    }
-                }
-                _result.FacilitySiteList = new FacilitySiteListType[1] { _currentSite };
-            }
+				//if (sites.Where(s => s.SiteIdentifierDetails.FacilitySiteIdentifier == _currentSite.SiteIdentifierDetails.FacilitySiteIdentifier).FirstOrDefault() != null)
+				//{
+				//	_currentSite.BasicSiteInformation.ActionCode = "U";
+				//}
+				//}
+				_result.FacilitySiteList=new FacilitySiteListType[1] { _currentSite };
+			}
 
             public IAbstractHeader<AirQualitySubmissionType> Materialize(IAbstractHeader<AirQualitySubmissionType> concrete)
             {
-                var materializedFormat = new AqsRawResults(_baseDao, _action, _format);
+                var materializedFormat = new AqsRawResults(_baseDao, _format);//_action,
                 foreach (string destinationColumn in Keys)
                 {
                     if (concrete.ContainsKey(destinationColumn))
@@ -256,7 +256,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
                     MonitorListType monitor = new MonitorListType();
                     monitor.BasicMonitoringInformation = new BasicMonitoringInformationType();
 					//Don't delete monitors, since they may have results from other files.
-					monitor.BasicMonitoringInformation.ActionCode=_action==ActionType.insert?"I":"U";
+					monitor.BasicMonitoringInformation.ActionCode=unmap("MONITOR.ACTION_CD");
 					monitor.BasicMonitoringInformation.ApplicableNAAQSIndicator=unmap("APPLICABLE_NAAQS_IND");
 					monitor.BasicMonitoringInformation.CommunityMonitoringZoneCode=unmap("CMNTY_MONITOR_ZONE");
 					monitor.BasicMonitoringInformation.DominantSourceText=unmap("DOMINANT_SCR_TXT");
@@ -321,7 +321,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
                 if (!_rawDataResultsList.ContainsKey(resultKey))
                 {
                     RawResultsType result = new RawResultsType();
-					result.ActionCode=Enum.GetName(typeof(ActionType), _action).Substring(0, 1).ToUpper();
+					result.ActionCode=unmap("RESULT.ACTION_CD");//Enum.GetName(typeof(ActionType), _action).Substring(0, 1).ToUpper();
                     result.SampleCollectionStartDate = startDate;
                     result.SampleCollectionStartTime = startTime;
                     result.RawValueDetails = new RawValueDetailsType();
@@ -459,7 +459,9 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
 					columns.Add("VERTICAL_MEASURE");
 					columns.Add("VERTICAL_MTHD_CD");
 					columns.Add("WORST_SITE_TYPE_CD");
-					return new AqsRawResults(columns, _baseDao, _action, format);
+					columns.Add("MONITOR.ACTION_CD");
+					columns.Add("RESULT.ACTION_CD");
+					return new AqsRawResults(columns, _baseDao, format);// _action,
 				default:
 					throw new ArgumentOutOfRangeException("Unknown file type.");
 			}
@@ -471,7 +473,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
             System.Data.DataTable mappingValues = new System.Data.DataTable();
             _baseDao.FillTableFromStoredProc(mappingValues, "aqs_getColumnMappings", "template", format);
 
-            var columnMappings = new AqsRawResults(_baseDao, _action, format);
+            var columnMappings = new AqsRawResults(_baseDao, format);// _action,
 
             foreach (System.Data.DataRow row in mappingValues.Rows)
             {
@@ -493,7 +495,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
             //using stored proc for consistency with getColumnMappings
             System.Data.DataTable mappingValues = new System.Data.DataTable();
 
-            var map = new AqsRawResults(_baseDao, _action, format);
+            var map = new AqsRawResults(_baseDao, format);// _action,
             if (_baseDao.FillTableFromStoredProc(mappingValues, "aqs_getValueMappings", "") > 0)
             {
                 var valueMap = new Dictionary<string, string>();

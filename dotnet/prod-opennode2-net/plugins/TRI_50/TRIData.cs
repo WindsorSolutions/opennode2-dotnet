@@ -80,7 +80,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI5
 
         #region IInitializingObject Members
 
-        public void Init(SpringBaseDao baseDao)
+        public void Init(SpringBaseDao baseDao, int commandTimeoutInSeconds)
         {
             string connectionString = baseDao.DbProvider.ConnectionString;
             _db = baseDao.IsSqlServerDatabase ?
@@ -102,6 +102,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI5
             {
                 TRIDBTableType tableType = (TRIDBTableType)Enum.Parse(typeof(TRIDBTableType), table);
                 DbCommand cmd = GetCommand(tableType);
+                cmd.CommandTimeout = commandTimeoutInSeconds;
                 _dbCommands.Add(tableType, cmd);
             }
         }
@@ -253,8 +254,15 @@ namespace Windsor.Node2008.WNOSPlugin.TRI5
                 LOG.Info(string.Format("{0}: {1}", i, cmd.Parameters[i].Value));
             }
 
-            LOG.Info("ExecutingNonQuery");
-            cmd.ExecuteNonQuery();
+            try
+            {
+                LOG.Info("ExecutingNonQuery");
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
 
         }
 
@@ -345,7 +353,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI5
         }
 
 
-        public void Load(TRIDataType triObjectInstance, SpringBaseDao baseDao, bool deleteExistingDataBeforeInsert)
+        public void Load(TRIDataType triObjectInstance, SpringBaseDao baseDao, bool deleteExistingDataBeforeInsert, int commandTimeoutInSeconds)
         {
 
             if (triObjectInstance == null)
@@ -366,9 +374,9 @@ namespace Windsor.Node2008.WNOSPlugin.TRI5
             {
                 Dictionary<string, string> subList = new Dictionary<string, string>();
 
-                using (TransactionScope scope = new TransactionScope())
+                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, TimeSpan.FromSeconds(commandTimeoutInSeconds)))
                 {
-                    Init(baseDao);
+                    Init(baseDao, commandTimeoutInSeconds);
 
                     foreach (SubmissionDataType submit in triObjectInstance.Submission)
                     {

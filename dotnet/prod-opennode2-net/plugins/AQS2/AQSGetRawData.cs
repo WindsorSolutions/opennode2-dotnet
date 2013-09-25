@@ -64,6 +64,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
         protected string _commaSeparatedActionCodes;
         protected string _dataFilePath;
         protected bool _clearMetadataBeforeRun = true;
+        protected VersionType _aqsSchemaVersionType;
 
         public AQSGetRawData()
         {
@@ -84,6 +85,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
                                                           _countyCode, _commaSeparatedActionCodes);
 
             AirQualitySubmissionType data = dataProvider.GetAirQualityData(this);
+            data.Version = _aqsSchemaVersionType;
 
             AppendAuditLogEvent("Generating submission file from results");
 
@@ -102,6 +104,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
                                                           _countyCode, _commaSeparatedActionCodes);
 
             AirQualitySubmissionType data = dataProvider.GetAirQualityData(this);
+            data.Version = _aqsSchemaVersionType;
 
             AppendAuditLogEvent("Generating serialized xml results for query");
 
@@ -120,6 +123,23 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
         protected override void LazyInit()
         {
             base.LazyInit();
+
+            if (_aqsSchemaVersion == _validVersionValues[0])
+            {
+                _aqsSchemaVersionType = VersionType.Item20;
+            }
+            else if (_aqsSchemaVersion == _validVersionValues[1])
+            {
+                _aqsSchemaVersionType = VersionType.Item21;
+            }
+            else if (_aqsSchemaVersion == _validVersionValues[2])
+            {
+                _aqsSchemaVersionType = VersionType.Item22;
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
 
             GetServiceImplementation(out _requestManager);
             GetServiceImplementation(out _serializationHelper);

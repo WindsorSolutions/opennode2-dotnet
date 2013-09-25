@@ -74,6 +74,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQSCommon
         protected ICompressionHelper _compressionHelper;
         protected ISerializationHelper _serializationHelper;
         protected IDocumentManager _documentManager;
+        protected string[] _validVersionValues = new string[] { "2.0", "2.1", "2.2" };
 
         public AQSBaseHeaderPlugin()
         {
@@ -99,12 +100,17 @@ namespace Windsor.Node2008.WNOSPlugin.AQSCommon
 
             GetConfigParameter(CONFIG_PARAM_ADD_HEADER, true, out _addHeader);
 
+            _aqsSchemaVersion = ValidateNonEmptyConfigParameter(CONFIG_PARAM_AQS_SCHEMA_VERSION);
+            if (!CollectionUtils.Contains(_validVersionValues, _aqsSchemaVersion, StringComparison.CurrentCulture))
+            {
+                throw new ArgumentException(string.Format("The config parameter \"{0}\" must be one of the following values: {1}",
+                                                          CONFIG_PARAM_AQS_SCHEMA_VERSION, StringUtils.Join(", ", _validVersionValues)));
+            }
+
             if (_addHeader)
             {
                 _aqsUserId = ValidateNonEmptyConfigParameter(CONFIG_PARAM_AQS_USER_ID);
                 _aqsScreeningGroup = ValidateNonEmptyConfigParameter(CONFIG_PARAM_AQS_SCREENING_GROUP);
-                _aqsSchemaVersion = ValidateNonEmptyConfigParameter(CONFIG_PARAM_AQS_SCHEMA_VERSION);
-
                 TryGetConfigParameter(CONFIG_PARAM_AUTHOR, ref _author);
                 TryGetConfigParameter(CONFIG_PARAM_ORGANIZATION, ref _organization);
                 TryGetConfigParameter(CONFIG_PARAM_SENDER_ADDRESS, ref _senderAddress);
@@ -203,6 +209,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQSCommon
                     if (!string.IsNullOrEmpty(_aqsSchemaVersion))
                     {
                         _headerDocumentHelper.AddPropery("AQS.SchemaVersion", _aqsSchemaVersion);
+
                     }
                     _headerDocumentHelper.AddPropery("AQS.PayloadType", "XML");
 
