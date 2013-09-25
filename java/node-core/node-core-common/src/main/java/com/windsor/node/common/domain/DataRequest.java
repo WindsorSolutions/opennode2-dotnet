@@ -33,11 +33,10 @@ package com.windsor.node.common.domain;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-
 import com.windsor.node.common.util.ByIndexOrNameMap;
 
 public class DataRequest extends AuditableIdentity {
@@ -68,6 +67,25 @@ public class DataRequest extends AuditableIdentity {
 
     public String[] getParameterValues() {
         return parameters.toValueStringArray();
+    }
+
+    //FIXME really the ByIndexOrName object has to go, good workaround for now, ScheduleArgument doesn't belong here, but works
+    public List<ScheduleArgument> getParametersArray() {
+        if(parameters != null && parameters.values() != null)
+        {
+            List<ScheduleArgument> params = new ArrayList<ScheduleArgument>();
+            Map<String, Object> values = parameters.getMap();
+            Iterator<String> it = values.keySet().iterator();
+            while(it.hasNext())
+            {
+                ScheduleArgument arg = new ScheduleArgument();
+                arg.setArgumentKey(it.next());
+                arg.setArgumentValue((String)values.get(arg.getArgumentKey()));
+                params.add(arg);
+            }
+            return params;
+        }
+        return null;
     }
 
     public String getFlowName() {

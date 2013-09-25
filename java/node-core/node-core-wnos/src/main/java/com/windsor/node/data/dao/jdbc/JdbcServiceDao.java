@@ -456,30 +456,27 @@ public class JdbcServiceDao extends BaseJdbcDao implements ServiceDao,
          * org.springframework.jdbc.core.RowMapper#mapRow(java.sql.ResultSet,
          * int)
          */
-        @SuppressWarnings("unchecked")
-        public DataService mapRow(ResultSet rs, int rowNum) throws SQLException {
-
+        public DataService mapRow(ResultSet rs, int rowNum) throws SQLException
+        {
             DataService obj = new DataService();
 
             obj.setId(rs.getString("Id"));
             obj.setName(rs.getString("Name"));
             obj.setFlowId(rs.getString("FlowId"));
             obj.setActive(FormatUtil.toBooleanFromYN(rs.getString("IsActive")));
-            obj.setType((ServiceType) ServiceType.fromString(rs
-                    .getString("ServiceType")));
+            obj.setType((ServiceType) ServiceType.fromString(rs.getString("ServiceType")));
             obj.setImplementingClassName(rs.getString("Implementor"));
             obj.setArgs(getServiceArgs(rs.getString("Id")));
             obj.setDataSources(connectionDao.getBySerivceId(obj.getId()));
             obj.setModifiedById(rs.getString("ModifiedBy"));
             obj.setModifiedOn(rs.getTimestamp("ModifiedOn"));
 
-            if (containsColumnNamed(rs, "Code")) {
+            if (containsColumnNamed(rs, "Code"))
+            {
                 obj.setFlowName(rs.getString("Code"));
             }
-
             return obj;
         }
-
     }
 
     /**

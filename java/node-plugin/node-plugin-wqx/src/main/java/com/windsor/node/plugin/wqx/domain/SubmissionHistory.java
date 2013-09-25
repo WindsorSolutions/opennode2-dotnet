@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity(name = "SubmissionHistory")
-@Table(name = "WQX_SubmissionHistory")
+@Table(name = "WQX_SUBMISSIONHISTORY")
 public class SubmissionHistory {
 
     @Id

@@ -4,14 +4,14 @@
     <parent>
         <groupId>com.windsor.node.plugin</groupId>
         <artifactId>node-plugin</artifactId>
-        <version>2.07-SNAPSHOT</version>
+        <version>2.08</version>
     </parent>
     <artifactId>node-plugin-wqx</artifactId>
     <packaging>jar</packaging>
     <name>Node Plugin - WQX</name>
     <properties>
         <node.plugin.name>wqx</node.plugin.name>
-        <node.plugin.build.number>06</node.plugin.build.number>
+        <node.plugin.build.number>00</node.plugin.build.number>
         <node.plugin.description>Submits water quality sampling and result data to EPA's Water Quality Exchang (WQX) System. Data must be loaded into the staging tables that accompany this plugin.</node.plugin.description>
         <node.plugin.help.text>Water Quality Exchange (WQX) Data Exchange</node.plugin.help.text>
     </properties>

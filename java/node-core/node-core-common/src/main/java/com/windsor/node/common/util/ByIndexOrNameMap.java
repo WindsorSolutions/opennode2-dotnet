@@ -75,6 +75,11 @@ public class ByIndexOrNameMap implements Serializable {
         }
     }
 
+    public Map<String, Object> getMap()
+    {
+        return map;
+    }
+
     public ByIndexOrNameMap(Map<String, Object> keyValueMap) {
         this.setMap(keyValueMap);
     }

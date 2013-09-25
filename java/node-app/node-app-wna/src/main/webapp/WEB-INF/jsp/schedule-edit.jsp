@@ -176,6 +176,7 @@
                                        <c:set var="sourceTypeName" value="${command.sourceType}" />
                                     </c:otherwise>
                                 </c:choose>
+                                <!-- Data Source, aka sourceType -->
                                 <spring:bind path="command.sourceType">
                                     
                                     <table cellpadding="1" cellspacing="1">
@@ -217,6 +218,7 @@
                                     </table>
                                     <span class="error" <c:if test="${status.errorMessage == ''}">style="display:none;"</c:if> ><c:out value="${status.errorMessage}" /></span>
                                 </spring:bind>
+                                <!-- /Data Source, aka sourceType -->
 
                                 <c:choose>
                                     <c:when test="${sourceTypeName == 'File'}">
@@ -273,7 +275,7 @@
                                 <!-- SERVICE DROP-DOWN -->
                                 <div id="sourceTypeS" style="display:<c:out value="${sourceTypeS}"/>;" > 
                                 <select id="sourceServiceList" name="serviceList" 
-                                    onchange="$('#sourceCommonId').val(this.options[selectedIndex].value); loadArgList();"  
+                                    onchange="$('#sourceCommonId').val(this.options[selectedIndex].value); loadLocalArgList();"  
                                     style="width:96%;">
                                     <c:choose>
                                         <c:when test="${command.flowId == null || command.flowId ==''}">
@@ -483,13 +485,13 @@
                         onclick="return confirm('Are you sure you want to delete this schedule?');"
                         class="button" />
 
-                    <input id="saveAndRunNow" type="submit" name="now" 
+                    <%-- <input id="saveAndRunNow" type="submit" name="now" 
                         <c:if test="${command.active == null || command.active == '' }">
                             <c:out value='disabled="true"' />
                         </c:if>
                         onclick="return setRunNowAndSave()" 
                         value="Save and Run Now" 
-                        class="button" />
+                        class="button" /> --%>
                         
                     <spring:bind path="command.runNow">
                         <input type="hidden" name="_<c:out value="${status.expression}"/>">
@@ -510,20 +512,58 @@
 	$(document).ready(function()
 	{
 		setFrequencyLogic();
-		loadArgList();
+		<c:if test="${sourceTypeName == 'LocalService'}">
+		loadLocalArgList();
+		</c:if>
+        <c:if test="${sourceTypeName == 'WebServiceSolicit' || sourceTypeName == 'WebServiceQuery'}">
+        loadRemoteArgList();
+        </c:if>
 		<c:if test="${command.id != null && command.id != '' }">
         //existing ScheduledItem, disable some features
         $("#flowId").attr('disabled', 'disabled');
         </c:if>
 	});
 
-    function loadArgList()
+    function loadLocalArgList()
     {
     	$("#sourceTypeArgs").empty();
     	var flowId = $("#flowId option:selected").val();
     	var serviceId = $("#sourceServiceList option:selected").val();
     	var scheduleId = "<c:out value='${command.id}' />";
         $("#sourceTypeArgs").load("arg-list.htm?flowId=" + flowId + "&serviceId=" + serviceId + "&scheduleId=" + scheduleId);
+    }
+
+    function loadRemoteArgList()
+    {
+        $("#sourceTypeArgs").empty();
+        var scheduleId = "<c:out value='${command.id}' />";
+        $("#sourceTypeArgs").load("arg-list-remote.htm?scheduleId=" + scheduleId, function(){
+            $("#addParameterPlus").click(function()
+            {
+                //figure out how many existing arguments there are
+                var newIndexCount = $(".scheduleArgumentDiv").size();
+                //alert(newIndexCount);
+                //since index is 0 based and length is 1 based counting, adding 1 and removing 1 results in the same value
+                var newDiv = '<div id="scheduleArgumentDiv' + newIndexCount + '"  class="scheduleArgumentDiv" data-index="' + newIndexCount + '">';
+                newDiv += '<span style="vertical-align:bottom;">';
+                newDiv += '<input id="scheduleArguments[' + newIndexCount + '].argumentKey" name="scheduleArguments[' + newIndexCount + '].argumentKey" size="20" maxlength="255" >';
+                newDiv += '<input id="scheduleArguments[' + newIndexCount + '].argumentValue" name="scheduleArguments[' + newIndexCount + '].argumentValue" size="30" maxlength="1024" >';
+                newDiv += '\n<img class="deleteParameterX" alt="Delete Parameter" src="img/red-x.png">';
+                newDiv += '</span>';
+                newDiv += '</div>';
+                //alert(newDiv);
+                $("#scheduleArgumentsContainerDiv").append(newDiv);
+            });
+            $(".deleteParameterX").click(function()
+            {
+                var scheduleArgumentDiv = $(this).parents(".scheduleArgumentDiv");
+                var index = scheduleArgumentDiv.attr("data-index");
+                scheduleArgumentDiv.empty();
+                var newDiv = '<input type="hidden" id="scheduleArguments[' + index + '].argumentKey" name="scheduleArguments[' + index + '].argumentKey" value=" " >';
+                newDiv += '<input type="hidden" id="scheduleArguments[' + index + '].argumentValue" name="scheduleArguments[' + index + '].argumentValue" value=" " >';
+                scheduleArgumentDiv.append(newDiv);
+            });
+        });
     }
 
     function clearArgList()
@@ -628,6 +668,7 @@
         
         $("input[@name='targetType']").attr('disabled', false);
         $("input[@name='targetType']").attr('checked', false);
+        $("#sourceTypeArgs").empty();
         
         switch(sourceType){
         
@@ -637,6 +678,7 @@
                 $("#sourceArgsLabel").show();
                 $("#fromLabel").show().html("Service:");
                 $("#fromValueCtrl").show();
+                loadLocalArgList();
                 break;
             
             case 2:
@@ -648,6 +690,7 @@
                 $("#sourceOperation").show();
                 $("#fromValueCtrl").show();
                 $("input[@name='targetType']").attr('disabled', true);
+                loadRemoteArgList();
                 break;
                 
             case 3:
@@ -658,6 +701,7 @@
                 $("#sourceOperationLabel").show();
                 $("#sourceOperation").show();
                 $("#fromValueCtrl").show();
+                loadRemoteArgList();
                 break;
                 
             case 4:

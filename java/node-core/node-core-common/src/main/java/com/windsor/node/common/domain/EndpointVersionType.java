@@ -33,7 +33,8 @@ package com.windsor.node.common.domain;
 
 public enum EndpointVersionType {
 
-    UNDEFINED("Undefined"), EN11("EN11"), EN20("EN2.0"), EN21("EN2.1"), ENREST("ENREST");
+    UNDEFINED("Undefined"), EN11("EN11"), EN21("EN2.1"), ENREST("ENREST");
+    //EN20("EN2.0")
 
     private static final long serialVersionUID = 2;
 
@@ -55,10 +56,6 @@ public enum EndpointVersionType {
         if(EN11.toString().equalsIgnoreCase(s))
         {
             version = EN11;
-        }
-        else if(EN20.toString().equalsIgnoreCase(s))
-        {
-            version = EN20;
         }
         else if(EN21.toString().equalsIgnoreCase(s))
         {

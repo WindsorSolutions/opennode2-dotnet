@@ -80,6 +80,20 @@ select[disabled] {
 	color: #FFFFFF
 	}
 
+.greentext {
+    color:#99CC33;
+    font-family:Verdana, Helvetica, Arial, sans-serif;
+    font-size:12px;
+    font-weight:bold;
+    }
+
+.redtext {
+    color:red;
+    font-family:Verdana, Helvetica, Arial, sans-serif;
+    font-size:12px;
+    font-weight:bold;
+    }
+
 .userInfo {
 	width: 800px;
 	text-align: right;
@@ -512,6 +526,7 @@ td.label{
 	font-family: Verdana, Helvetica, Arial, sans-serif;
 	margin: 5px;
 	vertical-align:middle;
+	cursor: pointer;
 }
 
 .button[disabled] {

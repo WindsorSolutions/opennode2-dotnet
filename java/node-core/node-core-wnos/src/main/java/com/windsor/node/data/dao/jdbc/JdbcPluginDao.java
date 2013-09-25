@@ -61,8 +61,8 @@ public class JdbcPluginDao extends BaseJdbcDao implements PluginDao,
                 flowId, flowId }, new SimpleStringMapper());
     }
 
-    private class SimpleStringMapper implements RowMapper {
-        public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+    private class SimpleStringMapper implements RowMapper<String> {
+        public String mapRow(ResultSet rs, int rowNum) throws SQLException {
             return rs.getString("Id");
         }
     }

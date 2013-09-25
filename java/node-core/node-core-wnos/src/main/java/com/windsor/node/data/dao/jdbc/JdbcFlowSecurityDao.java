@@ -207,8 +207,8 @@ public class JdbcFlowSecurityDao extends BaseJdbcDao implements FlowSecurityDao 
 
         boolean b = false;
 
-        if (getJdbcTemplate().queryForInt(SQL_COUNT_PENDING_BY_NASS_ID,
-                new Object[] { naasUserName }) > 0) {
+        if (getJdbcTemplate().queryForObject(SQL_COUNT_PENDING_BY_NASS_ID,
+                new Object[] { naasUserName }, Integer.class) > 0) {
 
             b = true;
         }

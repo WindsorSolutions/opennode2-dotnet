@@ -4,14 +4,14 @@
     <parent>
         <groupId>com.windsor.node.plugin</groupId>
         <artifactId>node-plugin</artifactId>
-        <version>2.07-SNAPSHOT</version>
+        <version>2.08</version>
     </parent>
     <artifactId>node-plugin-ic</artifactId>
     <packaging>jar</packaging>
     <name>Node Plugin - IC - Institutional Controls</name>
     <properties>
         <node.plugin.name>ic</node.plugin.name>
-        <node.plugin.build.number>00</node.plugin.build.number>
+        <node.plugin.build.number>01</node.plugin.build.number>
         <hyperjaxb3.schemaDirectory>${basedir}/src/main/xsd/1</hyperjaxb3.schemaDirectory>
     </properties>
     <build>

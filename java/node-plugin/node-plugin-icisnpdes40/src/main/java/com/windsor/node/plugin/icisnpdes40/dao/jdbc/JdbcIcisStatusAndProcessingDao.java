@@ -39,8 +39,8 @@ public class JdbcIcisStatusAndProcessingDao extends JdbcDaoSupport implements Ic
     @Override
     public int countPendingWorkflows()
     {
-        return getJdbcTemplate().queryForInt(SQL_COUNT_PENDING_WORKFLOWS ,
-                                             new Object[]{CommonTransactionStatusCode.Pending}, new int[]{Types.VARCHAR});
+        return getJdbcTemplate().queryForObject(SQL_COUNT_PENDING_WORKFLOWS ,
+                                             new Object[]{CommonTransactionStatusCode.Pending}, new int[]{Types.VARCHAR}, Integer.class);
     }
 
     /* (non-Javadoc)

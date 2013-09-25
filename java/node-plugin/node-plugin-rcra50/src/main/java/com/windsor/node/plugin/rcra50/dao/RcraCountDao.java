@@ -36,6 +36,6 @@ public class RcraCountDao extends BaseJdbcDao
     {
         //checkDaoConfig();
         logger.debug("running query: " + getSubmissionCountSql());
-        return getJdbcTemplate().queryForInt(getSubmissionCountSql());
+        return getJdbcTemplate().queryForObject(getSubmissionCountSql(), Integer.class);
     }
 }

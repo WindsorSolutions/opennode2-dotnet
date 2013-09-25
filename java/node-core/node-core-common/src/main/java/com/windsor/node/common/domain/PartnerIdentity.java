@@ -43,7 +43,7 @@ public class PartnerIdentity extends AuditableIdentity {
     private static final long serialVersionUID = 2;
     private String name;
     private URL url;
-    private EndpointVersionType version = EndpointVersionType.EN20;
+    private EndpointVersionType version = EndpointVersionType.EN21;
 
     public PartnerIdentity() {
     }

@@ -15,7 +15,7 @@
         <c:if test="${error != null}">
             <div class="error"><c:out value="${error}"></c:out></div>
         </c:if>
-        <span class="note"><c:out value="${connectionMessage}" /></span>
+        <span class="greentext"><c:out value="${connectionMessage}" /></span>
 
         <form method="post" action="config-conn.htm">
         <spring:bind path="command.id">

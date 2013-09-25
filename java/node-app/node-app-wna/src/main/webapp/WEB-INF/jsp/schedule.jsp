@@ -56,12 +56,12 @@ function runScheduleNow(elementId, checkOnly)
                 if(result == "Failure")
                 {
                 	$("#" + elementId + "LastExecutionInfoStyleTag").addClass("error");
-                    $("#" + elementId + "FlagTag").html('<img title="ERROR" src="img/flag_red.gif" alt="ERROR" align="middle" style="border-width: 0px;"  />');
+                    $("#" + elementId + "FlagTag").html('<img style="border: 0; vertical-align: middle; padding-right: 3px;" title="Error" alt="Error" src="img/exclamation.png">');
                 }
                 if(result == "Success")
                 {
                 	$("#" + elementId + "LastExecutionInfoStyleTag").removeClass("error");
-                	$("#" + elementId + "FlagTag").html('<img title="OK" src="img/flag_green.gif" alt="OK" align="middle" style="border-width: 0px;" />');
+                	$("#" + elementId + "FlagTag").html('<img style="border: 0; vertical-align: middle; padding-right: 3px;" title="Information" alt="Information" src="img/accept.png">');
                 }
                 if(lastExecutionTransactionId != null && lastExecutionTransactionId != "")
                 {
@@ -90,7 +90,7 @@ function runScheduleNow(elementId, checkOnly)
         </c:if>
 
         <div style="clear: both; text-align: right; margin-bottom: 10px">
-        <input type="button" name="cmdNew" value="Add" class="button"
+        <input type="button" name="cmdNew" value="Add Schedule" class="button"
             onclick="location.href='schedule-edit.htm'" style="width: 85px" /></div>
 
         <c:forEach var="flow" items="${model.flows}" varStatus="flowStatus">
@@ -121,13 +121,15 @@ function runScheduleNow(elementId, checkOnly)
                     <td id="<c:out value="${schedule.id}" />FlagTag" align="center">
 	                    <c:choose>
 	                        <c:when test="${schedule.executeStatus == 'Success'}">
-	                            <img title="OK" src="img/flag_green.gif" alt="OK" align="middle" style="border-width: 0px;" />
+	                            <!-- <img title="OK" src="img/flag_green.gif" alt="OK" align="middle" style="border-width: 0px;" /> -->
+                                <img style="border: 0; vertical-align: middle; padding-right: 3px;" title="Information" alt="Information" src="img/accept.png">
 	                        </c:when>
 	                        <c:when test="${schedule.executeStatus == 'Running'}">
 	                            <img title="RUNNING" src="img/flag_white.gif" alt="RUNNING" align="middle" style="border-width: 0px;" />
 	                        </c:when>
 	                        <c:otherwise>
-	                            <img title="ERROR" src="img/flag_red.gif" alt="ERROR" align="middle" style="border-width: 0px;"  />
+	                           <!--  <img title="ERROR" src="img/flag_red.gif" alt="ERROR" align="middle" style="border-width: 0px;"  /> -->
+                               <img style="border: 0; vertical-align: middle; padding-right: 3px;" title="Error" alt="Error" src="img/exclamation.png">
 	                        </c:otherwise>
 	                    </c:choose>
                     </td>

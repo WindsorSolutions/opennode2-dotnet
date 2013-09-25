@@ -87,7 +87,7 @@ function goto(searchValue){
 
 
 				<div style="clear: both; text-align: right; margin-bottom: 10px">
-				<input type="button" name="cmdNew" value="Add" class="button"
+				<input type="button" name="cmdNew" value="Add User" class="button"
 					onclick="location.href='account-new.htm'" /></div>
 
 				<c:if test="${model.localUsers != null}">

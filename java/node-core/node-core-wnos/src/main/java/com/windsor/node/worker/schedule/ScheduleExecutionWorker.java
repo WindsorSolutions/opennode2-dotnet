@@ -32,9 +32,8 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.windsor.node.worker.schedule;
 
 import java.sql.Timestamp;
-
+import java.util.Date;
 import org.springframework.beans.factory.InitializingBean;
-
 import com.windsor.node.common.domain.Activity;
 import com.windsor.node.common.domain.ActivityEntry;
 import com.windsor.node.common.domain.ActivityType;
@@ -325,6 +324,7 @@ public class ScheduleExecutionWorker extends NodeWorker implements ScheduleItemE
         } finally {
             getActivityService().insert(logEntry);
             schedule.setLastExecutionActivity(logEntry);
+            schedule.setLastExecutedOn(new Timestamp(new Date().getTime()));
             scheduleDao.save(schedule);
         }
     }

@@ -38,5 +38,9 @@
             <outputDirectory>applications</outputDirectory>
             <source>../node-app-wnos/target/wnos.war</source>
         </file>
+        <file>
+            <outputDirectory>applications</outputDirectory>
+            <source>../node-app-wnrest/target/wnrest.war</source>
+        </file>
     </files>
 </assembly>

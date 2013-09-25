@@ -161,6 +161,10 @@ public class PartnerDataProcessor implements InitializingBean {
                 info.add(new ActivityEntry("Saving document..."));
 
                 transaction.getDocuments().add(doc);
+                if(request != null && request.getService() != null)
+                {
+                    transaction.setOperation(request.getService().getName());
+                }
                 transactionDao.save(transaction);
 
             } else if (requestType == ScheduledItemSourceType.WebServiceSolicit) {
@@ -184,14 +188,18 @@ public class PartnerDataProcessor implements InitializingBean {
                 TransactionStatus status = clientService.solicit(request);
                 String solicitTranId = status.getTransactionId();
 
-                info.add(new ActivityEntry("Remote transaction Id: "
-                        + solicitTranId));
+                info.add(new ActivityEntry("Remote transaction Id: " + solicitTranId));
                 logger.debug("Result Tran Id: " + solicitTranId);
 
                 info.add(new ActivityEntry("Updating transaction..."));
 
                 logger.debug("Updating transaction");
-                //transaction.setNetworkId(solicitTranId);//FIXME verify removing this is correct!!!!!!!!!!!
+                //In retrospect removing the next line does not seem correct, calling Node needs a way to ask for files from remote node, it's their transaction id 
+                transaction.setNetworkId(solicitTranId);
+                if(request != null && request.getService() != null)
+                {
+                    transaction.setOperation(request.getService().getName());
+                }
                 transactionDao.save(transaction);
             }
 

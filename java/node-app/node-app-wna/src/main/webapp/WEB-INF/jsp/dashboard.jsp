@@ -51,4 +51,44 @@
 	</tr>
 </table>
 
+<script type="text/javascript">
+    $(document).ready(function()
+    {
+        var data = $.ajax({url: "heartbeat.htm", cache:false, dataType: "json",
+            success: function(json, textStatus)
+            {
+                var greenCheck = '<img style="border: 0; vertical-align: middle; padding-right: 3px;" title="Information" alt="Information" src="img/accept.png">';
+                var redBang = '<img style="border: 0; vertical-align: middle; padding-right: 3px;" title="Error" alt="Error" src="img/exclamation.png">';
+                
+                if("success" == json.wneresult)
+                {
+                    $("#wne-endpoint").html(greenCheck + "v1.1:  " + json.wneendpoint);
+                }
+                else
+                {
+                    $("#wne-endpoint").html(redBang + "v1.1:  " + json.wneendpoint);
+                }
+
+                if("success" == json.wne2result)
+                {
+                    $("#wne2-endpoint").html(greenCheck + "v2.1:  " + json.wne2endpoint);
+                }
+                else
+                {
+                    $("#wne2-endpoint").html(redBang + "v2.1:  " + json.wne2endpoint);
+                }
+
+                if("success" == json.wnrestresult)
+                {
+                    $("#wnrest-endpoint").html(greenCheck + "REST:  " + json.wnrestendpoint);
+                }
+                else
+                {
+                    $("#wnrest-endpoint").html(redBang + "REST:  " + json.wnrestendpoint);
+                }
+            }
+        });
+    });
+</script>
+
 <%@ include file="/WEB-INF/jsp/_foot.jsp"%>

@@ -142,6 +142,7 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao
 
     private static final String SQL_ID_EXISTS = "select count(*) from NTransaction where id = ?";
     private static final String SQL_DOC_ID_EXISTS = "select count(*) from NDocument where id = ?";
+    private static final String SQL_DOC_NAME_EXISTS_FOR_TRANSACTION_ID = "select count(*) from NDocument where TransactionId = ? and DocumentName = ?";
 
     /**
      * SQL INSERT statement for this table
@@ -209,6 +210,15 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao
             return instance;
             /*throw new DocumentExistsException("Error, document exists, cannot insert new document for Transaction Id: " + transactionId
                             + " and document name: " + instance.getDocumentName());*/
+        }
+        count = getJdbcTemplate().queryForObject(SQL_DOC_NAME_EXISTS_FOR_TRANSACTION_ID,
+                                              new Object[]{transactionId, instance.getDocumentName()},
+                                              new int[]{Types.VARCHAR, Types.VARCHAR}, Integer.class);
+        if(count > 0)
+        {
+            logger.warn("Warning, document name exists for transactionId, cannot insert new document for Transaction Id: " + transactionId
+                            + " and document name: " + instance.getDocumentName() + ".  This document will be discarded.");
+            return instance;
         }
 
         Object[] args = new Object[8];

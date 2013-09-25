@@ -38,6 +38,7 @@ import org.springframework.beans.factory.InitializingBean;
 import com.windsor.node.common.domain.EndpointVersionType;
 import com.windsor.node.common.domain.NAASAccount;
 import com.windsor.node.common.domain.PartnerIdentity;
+import com.windsor.node.common.exception.WinNodeException;
 import com.windsor.node.common.util.NodeClientService;
 import com.windsor.node.conf.NAASConfig;
 import com.windsor.node.conf.NOSConfig;
@@ -97,13 +98,13 @@ public class NodeClientFactory implements InitializingBean,
             client.configure(partner.getUrl(), nosConfig
                     .getWebServiceEndpoint1(), credentials, nosConfig
                     .getTempDir());
-        } else if (partner.getVersion() == EndpointVersionType.EN20) {
+        } else if (partner.getVersion() == EndpointVersionType.EN21) {
             client = client20;
             client.configure(partner.getUrl(), nosConfig
                     .getWebServiceEndpoint2(), credentials, nosConfig
                     .getTempDir());
         } else {
-            throw new RuntimeException("Invalid endpoint version number");
+            throw new WinNodeException("Invalid endpoint version number");
         }
 
         return client;

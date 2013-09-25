@@ -70,7 +70,7 @@ public class JdbcIcisWorkflowDao extends JdbcDaoSupport implements IcisWorkflowD
      */
     @Override
     public int countPendingWorkflows() {
-        return getJdbcTemplate().queryForInt(SQL_COUNT_PENDING_WORKFLOWS, null);
+        return getJdbcTemplate().queryForObject(SQL_COUNT_PENDING_WORKFLOWS, null, Integer.class);
     }
 
     /* (non-Javadoc)

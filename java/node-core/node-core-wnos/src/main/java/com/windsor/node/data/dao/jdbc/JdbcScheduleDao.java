@@ -37,6 +37,7 @@ import java.sql.Timestamp;
 import java.sql.Types;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.jdbc.core.RowMapper;
 import com.windsor.node.common.domain.ScheduleArgument;
 import com.windsor.node.common.domain.ScheduleExecuteStatus;
@@ -515,9 +516,10 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
             if(args != null)
             {
                 //handle missing arg keys
+                //FIXME LazyList may eliminate the need for this crufty loop
                 for(int i = 0, y = 0; i < args.size(); i++, y++)
                 {
-                    while(y != Integer.parseInt(args.get(i).getArgumentKey()))
+                    while(NumberUtils.isNumber(args.get(i).getArgumentKey()) && y != Integer.parseInt(args.get(i).getArgumentKey()))
                     {
                         ScheduleArgument newArg = new ScheduleArgument();
                         String newKey = "" + (y);

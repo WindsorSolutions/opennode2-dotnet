@@ -40,7 +40,7 @@
        <property name="contentService" ref="contentService" />
        <property name="securityService" ref="securityService" />
        <property name="transactionService" ref="transactionService" />
-       <property name="nodePingReadyMessage" value="OpenNode2 Java v${node.version}" />
+       <property name="nodePingReadyMessage" value="OpenNode2 Java v${project.version}" />
        <property name="requestIPHeaderProperty" ref="requestIPHeaderProperty" />
     </bean>
 

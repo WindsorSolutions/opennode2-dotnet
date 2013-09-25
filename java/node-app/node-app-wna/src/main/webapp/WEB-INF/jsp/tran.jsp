@@ -12,11 +12,11 @@
         <p style="clear: both;" />
 
         <div style="clear: both; text-align: right; margin-bottom: 10px">
-        <c:if test="${model.tran.networkEndpointUrl != null}">
+        <c:if test="${model.tran.networkEndpointUrl != null && model.tran.status.status == 'Completed'}">
             <input type="button" id="downloadButton" value="Download" class="button" style="width:120px" 
                 onclick="window.location.href='download.htm?transactionId=<c:out value="${model.tran.id}" />'" />
         </c:if>
-        <c:if test="${model.tran.networkEndpointUrl != null}">
+        <c:if test="${model.tran.networkEndpointUrl != null  && model.tran.networkId != null}">
             <input type="button" id="getStatusButton" value="Get Status" class="button"  style="width:120px" 
                 onclick="window.location.href='getStatus.htm?transactionId=<c:out value="${model.tran.id}" />'" />
         </c:if>
@@ -30,20 +30,15 @@
 
                 <table id="formTable" width="750" cellpadding="2" cellspacing="0">
 
-                            <tr style="background-color: #83ACCA; color:#FFF;">
-                <td colspan="2"><strong>Transaction Details</strong></td>
-            </tr>
+                    <tr style="background-color: #83ACCA; color:#FFF;">
+                        <td colspan="2"><strong>Transaction Details</strong></td>
+                    </tr>
 
                     <tr>
                         <td class="label" width="50" style="text-align: right; vertical-align: top;">Transaction Id:</td>
                         <td class="ctrl"><c:out value="${model.tran.id}" /></td>
                     </tr>
-                    
-                    <tr>
-                        <td class="label" width="50" style="text-align: right; vertical-align: top;">Network Id:</td>
-                        <td class="ctrl"><c:out value="${model.tran.networkId}" /></td>
-                    </tr>
-                    
+
                     <tr>
                         <td class="label" width="50" style="text-align: right; vertical-align: top;">Current Status:</td>
                         <td class="ctrl"><c:out value="${model.tran.status.status}" /></td>
@@ -64,11 +59,12 @@
                     <tr>
                         <td class="label" width="50" style="text-align: right; vertical-align: top;">Exchange:</td>
                         <td class="ctrl">
-                        <c:if test="${model.tran.flow.secured}"><img 
-                            alt="Protected flow: requires a policy in addition to the NAAS token" 
-                            src="img/icon_padlock.gif" 
-                            style="border: 0; vertical-align: middle; padding-right: 3px;" />
-                        </c:if><c:out value="${model.tran.flow.name}" /></td>
+                            <c:if test="${model.tran.flow.secured}">
+                                <img alt="Protected flow: requires a policy in addition to the NAAS token" 
+                                src="img/icon_padlock.gif" style="border: 0; vertical-align: middle; padding-right: 3px;" />
+                            </c:if>
+                            <c:out value="${model.tran.flow.name}" />
+                        </td>
                     </tr>
 
                     <%-- <c:if test="${model.tran.operation != null}"> --%>
@@ -85,16 +81,17 @@
 
                     <tr>
                         <td class="label" width="50" style="text-align: right; vertical-align: top;">Last Modified On:</td>
-                        <td class="ctrl"><fmt:formatDate type="both" dateStyle="long" 
-                        timeStyle="long" value="${model.tran.modifiedOn}" />
+                        <td class="ctrl">
+                            <fmt:formatDate type="both" dateStyle="long" timeStyle="long" value="${model.tran.modifiedOn}" />
                         </td>
                     </tr>
 
+
                     <c:if test="${model.tran.request != null}">
 
-                            <tr style="background-color: #83ACCA; color:#FFF;">
-                <td colspan="2"><strong>Request Details</strong></td>
-            </tr>
+                        <tr style="background-color: #83ACCA; color:#FFF;">
+                            <td colspan="2"><strong>Request Details</strong></td>
+                        </tr>
 
                         <tr>
                             <td class="label" width="50" style="text-align: right; vertical-align: top;">Name:</td>
@@ -128,20 +125,18 @@
                         <tr>
                             <td class="label" width="50" style="text-align: right; vertical-align: top;">Arguments:</td>
                             <td class="ctrl"><ul>
-                                <c:forEach var="arg" 
-                                           items="${model.tran.request.parameterValues}" 
-                                           varStatus="argStatus">
+                                <c:forEach var="arg" items="${model.tran.request.parametersArray}" varStatus="argStatus">
                                     <li>
-                                        <c:out value="${arg}" />
+                                        <c:out value="${arg.argumentKey}" />:&nbsp;&nbsp;&nbsp;<c:out value="${arg.argumentValue}" />
                                     </li>
                                 </c:forEach>
                             </ul>
                             </td>
                         </tr>
                         </c:if>
-                        
-                        
-                        
+
+
+
                         <c:if test="${model.tran.request.recipients != null}">
                         <tr>
                             <td class="label" width="50" style="text-align: right; vertical-align: top;">Recipients:</td>
@@ -197,6 +192,29 @@
                             </c:forEach>
                             </table>
                         </td>
+                    </tr>
+                    </c:if>
+
+                    <c:if test="${model.tran.networkId  != null || model.tran.networkEndpointUrl  != null}">
+                    <tr style="background-color: #83ACCA; color:#FFF;">
+                        <td colspan="2"><strong>Network Details</strong></td>
+                    </tr>
+                    <tr>
+                        <td class="label" width="50" style="text-align: right; vertical-align: top;">Endpoint Transaction Id:</td>
+                        <c:if test="${model.tran.networkId  != null}">
+                        <td class="ctrl"><c:out value="${model.tran.networkId}" /></td>
+                        </c:if>
+                        <c:if test="${model.tran.networkId  == null}">
+                        <td class="ctrl">None</td>
+                        </c:if>
+                    </tr>
+                    <tr>
+                        <td class="label" width="50" style="text-align: right; vertical-align: top;">Remote Url:</td>
+                        <td class="ctrl"><c:out value="${model.tran.networkEndpointUrl}" /></td>
+                    </tr>
+                    <tr>
+                        <td class="label" width="50" style="text-align: right; vertical-align: top;">Endpoint Version:</td>
+                        <td class="ctrl"><c:out value="${model.tran.networkEndpointVersion}" /></td>
                     </tr>
                     </c:if>
 

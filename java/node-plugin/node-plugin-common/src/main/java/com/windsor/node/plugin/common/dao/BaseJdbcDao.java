@@ -173,14 +173,14 @@ public abstract class BaseJdbcDao extends JdbcDaoSupport {
         return value;
     }
 
-    protected int countRowsStringKey(String value, String column,
+    /*protected int countRowsStringKey(String value, String column,
             String tableName) {
 
         String sql = "select count(*) from " + tableName + " where " + column
                 + " = '" + value + APOS;
 
-        return getJdbcTemplate().queryForInt(sql);
+        return getJdbcTemplate().queryForObject(sql, Integer.class);
 
-    }
+    }*/
 
 }

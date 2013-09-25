@@ -4,14 +4,14 @@
     <parent>
         <groupId>com.windsor.node.plugin</groupId>
         <artifactId>node-plugin</artifactId>
-        <version>2.07-SNAPSHOT</version>
+        <version>2.08</version>
     </parent>
     <artifactId>node-plugin-facid3</artifactId>
     <packaging>jar</packaging>
     <name>Node Plugin - FacID v3.0</name>
     <properties>
         <node.plugin.name>facid3</node.plugin.name>
-        <node.plugin.build.number>06</node.plugin.build.number>
+        <node.plugin.build.number>00</node.plugin.build.number>
         <node.plugin.description>Allows network partners to query for facilities of environmental interest. Facility data must be loaded into the staging tables that accompany this plugin.</node.plugin.description>
         <node.plugin.help.text>Facility Identification Data Exchange</node.plugin.help.text>
     </properties>

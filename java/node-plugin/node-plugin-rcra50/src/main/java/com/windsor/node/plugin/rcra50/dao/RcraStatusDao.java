@@ -269,9 +269,7 @@ public class RcraStatusDao extends BaseJdbcDao {
         checkDaoConfig();
 
         logger.debug(SQL + SQL_COUNT_PENDING_BY_OPERATION_TYPE);
-        return getJdbcTemplate().queryForInt(
-                SQL_COUNT_PENDING_BY_OPERATION_TYPE,
-                new Object[] { operationType.toString() });
+        return getJdbcTemplate().queryForObject(SQL_COUNT_PENDING_BY_OPERATION_TYPE, new Object[]{operationType.toString()}, Integer.class);
     }
 
 }

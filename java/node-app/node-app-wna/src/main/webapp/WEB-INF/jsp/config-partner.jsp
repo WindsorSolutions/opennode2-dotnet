@@ -16,7 +16,7 @@
 			<div class="error"><c:out value="${error}"></c:out></div>
 		</c:if>
         <c:if test="${pingResult ne 'error'}">
-            <span class="note"><c:out value="${pingResult}" /></span>
+            <span class="greentext"><c:out value="${pingResult}" /></span>
         </c:if>
 		<form method="post" action="config-partner.htm">
 

@@ -102,13 +102,11 @@ public class JdbcUserAccessPolicyDao extends BaseJdbcDao implements
                 new Object[] { id }, new UserAccessPolicyMapper());
     }
 
-    @SuppressWarnings("unchecked")
-    public List<UserAccessPolicy> getByUserAccountId(String accountId) {
+    public List<UserAccessPolicy> getByUserAccountId(String accountId)
+    {
         validateStringArg(accountId);
         logger.debug("Getting UserAccessPolicies for AccountId: " + accountId);
-        return (List<UserAccessPolicy>) getJdbcTemplate().query(
-                SQL_SELECT_BY_ACCOUNT_ID, new Object[] { accountId },
-                new UserAccessPolicyMapper());
+        return getJdbcTemplate().query(SQL_SELECT_BY_ACCOUNT_ID, new Object[] { accountId }, new UserAccessPolicyMapper());
     }
 
     public UserAccessPolicy save(UserAccessPolicy instance) {
@@ -153,25 +151,22 @@ public class JdbcUserAccessPolicyDao extends BaseJdbcDao implements
         delete(SQL_DELETE_BY_ACCOUNT_ID, accountId);
     }
 
-    private class UserAccessPolicyMapper implements RowMapper {
-
-        public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
-
+    private class UserAccessPolicyMapper implements RowMapper<UserAccessPolicy>
+    {
+        public UserAccessPolicy mapRow(ResultSet rs, int rowNum) throws SQLException
+        {
             UserAccessPolicy obj = new UserAccessPolicy();
             obj.setId(rs.getString("Id"));
             obj.setAccountId(rs.getString("AccountId"));
-            obj
-                    .setPolicyType(ServiceRequestAuthorizationType.valueOf(rs.getString("PolicyType")));
+            obj.setPolicyType(ServiceRequestAuthorizationType.valueOf(rs.getString("PolicyType")));
             obj.setTypeQualifier(rs.getString("Qualifier"));
-            obj.setAllowed(FormatUtil
-                    .toBooleanFromYN(rs.getString("IsAllowed")));
+            obj.setAllowed(FormatUtil.toBooleanFromYN(rs.getString("IsAllowed")));
             obj.setModifiedById(rs.getString("ModifiedBy"));
             obj.setModifiedOn(rs.getTimestamp("ModifiedOn"));
 
             logger.debug("UserAccessPolicyMapper: " + obj);
 
             return obj;
-
         }
     }
 }

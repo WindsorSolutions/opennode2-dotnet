@@ -136,6 +136,23 @@
         </property>
     </bean>
 
+    <bean name="/heartbeat.htm" class="com.windsor.node.admin.ajax.HeartbeatAjaxController">
+        <property name="externalAdminUrl" value="${url.external.admin}" />
+        <property name="nodeClientFactory" ref="nodeClientFactory" />
+        <property name="partnerService" ref="partnerService" />
+        <property name="remoteFileResourceHelper">
+            <bean class="com.windsor.node.service.helper.web.SimpleRemoteFileResourceHelper">
+                <property name="settingProvider">
+                    <bean class="com.windsor.node.service.helper.settings.SettingServiceProvider">
+                        <property name="tempDir" value="${path.temp.dir}" />
+                        <property name="logDir" value="${path.log.dir}" />
+                    </bean>
+                </property>
+            </bean>
+        </property>
+    </bean>
+    
+
     <bean name="/exit.htm" class="com.windsor.node.admin.ExitController">
     </bean>
 

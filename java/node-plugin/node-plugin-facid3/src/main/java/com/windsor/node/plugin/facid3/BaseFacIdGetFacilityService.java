@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import com.windsor.node.common.domain.EndpointVersionType;
 import com.windsor.node.common.domain.NodeTransaction;
+import com.windsor.node.common.exception.WinNodeException;
 import com.windsor.node.common.util.ByIndexOrNameMap;
 import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
 
@@ -271,7 +272,7 @@ public abstract class BaseFacIdGetFacilityService extends BaseFacIdPlugin
                                 " South Bounding Lat: " + sBoundingLat +
                                 " East Bounding Long: " + eBoundingLong +
                                 " West Bounding Long: " + wBoundingLong);
-                throw new RuntimeException("If any bounding coords are included, they must all be included and must all be numeric, the following inputs failed this requirement:  " +
+                throw new WinNodeException("If any bounding coords are included, they must all be included and must all be numeric, the following inputs failed this requirement:  " +
                                 " North Bounding Lat: " + nBoundingLat +
                                 " South Bounding Lat: " + sBoundingLat +
                                 " East Bounding Long: " + eBoundingLong +

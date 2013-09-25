@@ -120,12 +120,12 @@ public class JdbcICDao extends JdbcDaoSupport implements ICDao
         //easy way to get "DISTINCT" while retaining order and not having to select the ORDER BY clause
         matches = new ArrayList<String>(new LinkedHashSet<String>(matches));
 
-        List<String> geoLocationIdMathes = new ArrayList<String>();
+        List<String> geoLocationIdMatches = new ArrayList<String>();
 
         List<String> intersectionMatches = new ArrayList<String>();
         if(params.get(GetICDataByBoundingBox.BOUNDING_COORDINATE_NORTH.getName()) != null)
         {
-            geoLocationIdMathes = findInstrumentIdsByBoundingBox(params);
+            geoLocationIdMatches = findInstrumentIdsByBoundingBox(params);
         }
         else
         {
@@ -133,11 +133,11 @@ public class JdbcICDao extends JdbcDaoSupport implements ICDao
         }
 
         //Do an intersection of all matches
-        if(geoLocationIdMathes != null && geoLocationIdMathes.size() > 0)
+        if(geoLocationIdMatches != null && geoLocationIdMatches.size() > 0)
         {
             for(int i = 0; i < matches.size(); i++)
             {
-                if(geoLocationIdMathes.contains(matches.get(i)))
+                if(geoLocationIdMatches.contains(matches.get(i)))
                 {
                     intersectionMatches.add(matches.get(i));
                 }

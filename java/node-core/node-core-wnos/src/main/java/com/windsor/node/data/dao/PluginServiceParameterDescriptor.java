@@ -10,6 +10,8 @@ public class PluginServiceParameterDescriptor implements Serializable
     public final static String TYPE_LONG = "java.lang.Long";
     public final static String TYPE_DATE = "java.util.Date";
     public final static String TYPE_BOOLEAN = "java.lang.Boolean";
+    public final static String TYPE_DECIMAL = "java.lang.BigDecimal";
+
     private String name;
     private String type = PluginServiceParameterDescriptor.TYPE_UNDEFINED;
     private Boolean required = Boolean.TRUE;

@@ -21,8 +21,6 @@
             <xjc:javaType name="java.lang.Integer" xmlType="xsd:gYear"
                 adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.GYearToIntegerAdapter" />
 
-			<xjc:javaType name="java.lang.String" xmlType="icis:ScheduleViolationCodeType"
-				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter" /> -->
             <xjc:javaType name="java.lang.String" xmlType="att:StringYesNoDataType"
                 adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.StringAdapter" />
             <xjc:javaType name="java.lang.String" xmlType="att:TrophicStatusDataType"

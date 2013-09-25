@@ -162,7 +162,7 @@ public class ContentServiceImpl extends BaseService implements ContentService,
             logger.debug("Getting transaction: " + content.getTransactionId());
 
             NodeTransaction tran = transactionDao.get(content
-                    .getTransactionId(), true);
+                    .getTransactionId(), false);
             if(tran != null && tran.getFlow() != null)
             {
                 logEntry.setFlowName(tran.getFlow().getName());
@@ -207,7 +207,7 @@ public class ContentServiceImpl extends BaseService implements ContentService,
                 logEntry
                         .addEntry("Getting all documents for this transaction: "
                                 + tran.getNetworkId());
-                docs = transactionDao.getDocuments(tran.getNetworkId(), true,
+                docs = transactionDao.getDocuments(tran.getId(), false,
                         true);
             } else {
                 // if docs specified than get only the one we need
@@ -442,9 +442,9 @@ public class ContentServiceImpl extends BaseService implements ContentService,
 
             logEntry.addEntry("Flow: {0}", new Object[] { flow.getName() });
 
-            // OPERATION - only for 2.0 endpoint
+            // OPERATION - only for 2.1 endpoint
             DataService submitProcessingService = null;
-            if (visit.getEndpointVersion().equals(EndpointVersionType.EN20)
+            if (visit.getEndpointVersion().equals(EndpointVersionType.EN21)
                     && StringUtils.isNotBlank(content.getFlow().getOperation())) {
 
                 logEntry.addEntry("Operation: {0}", new Object[] { content

@@ -14,6 +14,7 @@ import com.windsor.node.common.domain.CommonTransactionStatusCode;
 import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.PluginServiceImplementorDescriptor;
 import com.windsor.node.common.domain.ProcessContentResult;
+import com.windsor.node.common.exception.WinNodeException;
 import com.windsor.node.common.util.ByIndexOrNameMap;
 import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
 import com.windsor.node.plugin.facid3.domain.AffiliateListDataType;
@@ -138,7 +139,7 @@ public class GetFacilityByChangeDate extends BaseFacIdGetFacilityService
             catch(ParseException e)
             {
                 logger.error("Unparseable date passed in for Change Date:  " + changeDate);
-                throw new RuntimeException("Unparseable date passed in for Change Date:  " + changeDate);
+                throw new WinNodeException("Unparseable date passed in for Change Date:  " + changeDate);
             }
             params.put(CHANGE_DATE.getName(), parsedChangeDate);
         }
@@ -180,7 +181,7 @@ public class GetFacilityByChangeDate extends BaseFacIdGetFacilityService
         else
         {
             logger.error(CHANGE_DATE.getName() + " is required but null was passed.");
-            throw new RuntimeException(CHANGE_DATE.getName() + " is required but null was passed.");
+            throw new WinNodeException(CHANGE_DATE.getName() + " is required but null was passed.");
         }
         if(StringUtils.isNotEmpty((String)namedParams.get(ORIGINATING_PARTNER_NAME.getName())))
         {

@@ -47,9 +47,11 @@ import com.windsor.node.common.domain.DataService;
 import com.windsor.node.common.domain.NamedSystemConfigItem;
 import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.NodeVisit;
+import com.windsor.node.common.domain.PaginationIndicator;
 import com.windsor.node.common.domain.PluginMetaData;
 import com.windsor.node.common.domain.PluginServiceImplementorDescriptor;
 import com.windsor.node.common.domain.ProcessContentResult;
+import com.windsor.node.common.exception.WinNodeException;
 import com.windsor.node.conf.NOSConfig;
 import com.windsor.node.data.dao.ConfigDao;
 import com.windsor.node.data.dao.PluginDao;
@@ -225,21 +227,21 @@ public class WnosPluginHelper implements PluginHelper, InitializingBean {
     /**
      * ProcessContentResult
      */
-    public ProcessContentResult processTransaction(NodeTransaction transaction) {
-
+    public ProcessContentResult processTransaction(NodeTransaction transaction)
+    {
         logger.debug("Processing transaction: " + transaction);
 
-        if (transaction == null) {
+        if(transaction == null)
+        {
             throw new IllegalArgumentException("Transaction not set");
         }
 
         DataFlow flow = transaction.getFlow();
         logger.debug("Flow: " + flow);
 
-        if (transaction.getRequest() == null
-                || transaction.getRequest().getService() == null) {
-            throw new RuntimeException(
-                    "This transaction should have never been tagged for processing!");
+        if(transaction.getRequest() == null || transaction.getRequest().getService() == null)
+        {
+            throw new WinNodeException("This transaction should have never been tagged for processing!");
         }
 
         DataService service = transaction.getRequest().getService();
@@ -248,29 +250,27 @@ public class WnosPluginHelper implements PluginHelper, InitializingBean {
 
         // use reflection to get an instance of the base plugin
         // implementation
-        BaseWnosPlugin processor = getWnosPlugin(flow, service
-                .getImplementingClassName());
+        BaseWnosPlugin processor = getWnosPlugin(flow, service.getImplementingClassName());
         logger.debug("processor: " + processor);
 
         // Connections
         logger.debug("Setting data sources");
-        if (transaction.getRequest().getService().getDataSources() != null) {
-            for (Iterator<?> it = transaction.getRequest().getService()
-                    .getDataSources().iterator(); it.hasNext();) {
-
-                DataProviderInfo provider = (DataProviderInfo) it.next();
-
+        if(transaction.getRequest().getService().getDataSources() != null)
+        {
+            for(Iterator<?> it = transaction.getRequest().getService().getDataSources().iterator(); it.hasNext();)
+            {
+                DataProviderInfo provider = (DataProviderInfo)it.next();
                 logger.debug("DataProviderInfo: " + provider);
 
-                if (processor.getDataSources().containsKey(provider.getCode())) {
-
+                if(processor.getDataSources().containsKey(provider.getCode()))
+                {
                     logger.debug("Setting");
 
                     processor.getDataSources().remove(provider.getCode());
-                    processor.getDataSources().put(provider.getCode(),
-                            DataSourceUtil.makeBasicDataSource(provider));
-
-                } else {
+                    processor.getDataSources().put(provider.getCode(), DataSourceUtil.makeBasicDataSource(provider));
+                }
+                else
+                {
                     logger.debug("Not found");
                 }
             }
@@ -283,58 +283,47 @@ public class WnosPluginHelper implements PluginHelper, InitializingBean {
 
         // Args
         logger.debug("Looping through service args");
-        if (transaction.getRequest().getService().getArgs() != null) {
-            for (Iterator<?> it = transaction.getRequest().getService()
-                    .getArgs().iterator(); it.hasNext();) {
-
-                NamedSystemConfigItem arg = (NamedSystemConfigItem) it.next();
+        if(transaction.getRequest().getService().getArgs() != null)
+        {
+            for(Iterator<?> it = transaction.getRequest().getService().getArgs().iterator(); it.hasNext();)
+            {
+                NamedSystemConfigItem arg = (NamedSystemConfigItem)it.next();
 
                 logger.debug("Checking plugin for argument: " + arg.getKey());
 
-                if (processor.getConfigurationArguments().containsKey(
-                        arg.getKey())) {
-
+                if(processor.getConfigurationArguments().containsKey(arg.getKey()))
+                {
                     String pluginArgKey = arg.getKey();
                     String pluginArgVal = null;
-                    String configArgValue = (String) arg.getValue();
+                    String configArgValue = (String)arg.getValue();
 
                     logger.debug("Found, removing: " + pluginArgKey);
                     processor.getConfigurationArguments().remove(pluginArgKey);
 
                     logger.debug("Is the service arg a global value");
-                    if (arg.isGlobal()) {
-
-                        logger.debug("Setting from globals using key: "
-                                + configArgValue);
-
-                        if (globalSystemArgs.containsKey(configArgValue)) {
-
-                            pluginArgVal = (String) globalSystemArgs
-                                    .get(configArgValue);
+                    if(arg.isGlobal())
+                    {
+                        logger.debug("Setting from globals using key: " + configArgValue);
+                        if(globalSystemArgs.containsKey(configArgValue))
+                        {
+                            pluginArgVal = (String)globalSystemArgs.get(configArgValue);
                             logger.debug("Found global val: " + pluginArgVal);
-
-                        } else {
-                            logger.error("Global variable no longer exists: "
-                                    + configArgValue);
-                            logger
-                                    .error("Sign of invalid database constraints: Service_Args FK");
-                            throw new IllegalArgumentException(
-                                    "Service is configured with an invalid global variable.");
                         }
-
-                    } else {
-
+                        else
+                        {
+                            logger.error("Global variable no longer exists: " + configArgValue);
+                            logger.error("Sign of invalid database constraints: Service_Args FK");
+                            throw new IllegalArgumentException("Service is configured with an invalid global variable.");
+                        }
+                    }
+                    else
+                    {
                         logger.debug("Setting raw");
                         pluginArgVal = configArgValue;
                     }
-
-                    logger.info("Setting: [" + pluginArgKey + "] = "
-                            + pluginArgVal);
-                    processor.getConfigurationArguments().put(pluginArgKey,
-                            pluginArgVal);
-
+                    logger.info("Setting: [" + pluginArgKey + "] = " + pluginArgVal);
+                    processor.getConfigurationArguments().put(pluginArgKey, pluginArgVal);
                 }
-
             }
         }
 
@@ -353,10 +342,17 @@ public class WnosPluginHelper implements PluginHelper, InitializingBean {
         // This will throw an exception if not all the required args are set
         processor.afterPropertiesSet();
 
-        logger.debug("Plugin configured. Processing transaction: "
-                + transaction);
+        logger.debug("Plugin configured. Processing transaction: " + transaction);
 
-        return processor.process(transaction);
+        ProcessContentResult result = processor.process(transaction);
+        //So plugins no longer have to set this
+        if(result != null && result.getPaginatedContentIndicator() == null)
+        {
+            result.setPaginatedContentIndicator(new PaginationIndicator(transaction.getRequest().getPaging().getStart(), transaction.getRequest()
+                                                                                                                                    .getPaging()
+                                                                                                                                    .getCount(), true));
+        }
+        return result;
 
     }
 

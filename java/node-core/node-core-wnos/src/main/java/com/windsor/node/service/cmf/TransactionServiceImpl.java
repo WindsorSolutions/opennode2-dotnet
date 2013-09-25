@@ -59,6 +59,7 @@ import com.windsor.node.common.domain.RequestType;
 import com.windsor.node.common.domain.ServiceType;
 import com.windsor.node.common.domain.TransactionStatus;
 import com.windsor.node.common.domain.UserAccount;
+import com.windsor.node.common.exception.WinNodeException;
 import com.windsor.node.common.service.cmf.TransactionService;
 import com.windsor.node.data.dao.FlowDao;
 import com.windsor.node.data.dao.PartnerDao;
@@ -275,14 +276,14 @@ public class TransactionServiceImpl extends BaseService implements
             logEntry.addEntry(
                     GET_STATUS_REQUEST_FROM_0_BY_1_FOR_TRANSACTION_ID_2,
                     new Object[] { visit.getIp(), account.getNaasUserName(),
-                            tran.getNetworkId() });
+                            tran.getId() });
 
             logEntry.addEntry("Results: {0}", new Object[] { tran.getStatus(),
-                    tran.getNetworkId() });
+                    tran.getId() });
 
             TransactionStatus status = new TransactionStatus();
 
-            status.setTransactionId(tran.getNetworkId());
+            status.setTransactionId(tran.getId());
             status.setStatus(tran.getStatus().getStatus());
             status.setDescription(tran.getStatus().getDescription());
 
@@ -360,14 +361,14 @@ public class TransactionServiceImpl extends BaseService implements
             tran.setCreator(account);
 
             logEntry.addEntry("Transaction: {0}", new Object[] { tran
-                    .getNetworkId() });
+                    .getId() });
 
             logEntry.setTransactionId(tran.getId());
 
             logEntry.addEntry(
                     GET_STATUS_REQUEST_FROM_0_BY_1_FOR_TRANSACTION_ID_2,
                     new Object[] { visit.getIp(), account.getNaasUserName(),
-                            tran.getNetworkId() });
+                            tran.getId() });
 
             logEntry.addEntry("Notification Name {0} ({1})", new Object[] {
                     notification.getFlowName(), notification.getUri() });
@@ -427,7 +428,7 @@ public class TransactionServiceImpl extends BaseService implements
             notificationHelper.sendNotifs(tran);
 
             TransactionStatus status = new TransactionStatus();
-            status.setTransactionId(tran.getNetworkId());
+            status.setTransactionId(tran.getId());
             status.setDescription("Received notification with "
                     + tran.getDocuments().size() + " documents");
             status.setStatus(CommonTransactionStatusCode.Received);
@@ -454,32 +455,31 @@ public class TransactionServiceImpl extends BaseService implements
     /**
      * query
      */
-    public ProcessContentResult query(EndpointVisit visit, DataRequest request) {
-
-        if (visit == null) {
+    public ProcessContentResult query(EndpointVisit visit, DataRequest request)
+    {
+        if(visit == null)
+        {
             throw new RuntimeException(NULL_VISIT);
         }
-
-        if (request == null) {
+        if(request == null)
+        {
             throw new RuntimeException(NULL_REQUEST);
         }
-
-        if (request.getService() == null) {
+        if(request.getService() == null)
+        {
             throw new RuntimeException(NULL_SERVICE);
         }
 
         Activity logEntry = makeNewActivity(ActivityType.Audit, visit);
         logEntry.setWebMethod(NodeMethodType.Query.toString());
-
         NodeTransaction tran = null;
 
-        try {
-
-            LogableNodeTransaction info = processRequest(visit, request,
-                    new LogableNodeTransaction(logEntry, ServiceType.QUERY));
+        try
+        {
+            LogableNodeTransaction info = processRequest(visit, request, new LogableNodeTransaction(logEntry, ServiceType.QUERY));
 
             tran = info.getTransaction();
-            //FIXME this will most likely set these to null, check if these should be set for Query and to what
+            // FIXME this will most likely set these to null, check if these should be set for Query and to what
             if(tran != null && tran.getFlow() != null)
             {
                 logEntry.setFlowName(tran.getFlow().getName());
@@ -492,52 +492,46 @@ public class TransactionServiceImpl extends BaseService implements
             logEntry = info.getActivity();
             logEntry.setTransactionId(tran.getId());
 
-            ProcessContentResult queryResult = pluginHelper
-                    .processTransaction(tran);
+            ProcessContentResult queryResult = pluginHelper.processTransaction(tran);
 
-            if (queryResult == null) {
+            if(queryResult == null)
+            {
                 throw new RuntimeException(NULL_RESULT_FROM_THE_PLUGIN);
             }
             if(tran != null)
             {
-                //set the networkId, since Solicits will actually need one.
-                //tran.setNetworkId(UUIDGenerator.makeId());
                 if(tran.getStatus() != null)
                 {
-                    //FIXME verify valid fix for removing dummy, placeholder networkId creation
                     tran.getStatus().setTransactionId(tran.getId());
                 }
             }
-
             return queryResult;
-
-        } catch (Exception ex) {
-
+        }
+        catch(Exception ex)
+        {
             logger.debug(ex.getMessage());
-
             logEntry.setType(ActivityType.Error);
             logEntry.addEntry(ex.getMessage());
-
-            if (tran != null) {
-                transactionDao.updateStatus(tran.getId(),
-                        CommonTransactionStatusCode.Failed);
+            if(tran != null)
+            {
+                transactionDao.updateStatus(tran.getId(), CommonTransactionStatusCode.Failed);
             }
-
             throw new RuntimeException(ERROR_PREFIX + ex.getMessage(), ex);
-
-        } finally {
+        }
+        finally
+        {
             getActivityDao().make(logEntry);
             transactionDao.save(tran);
         }
-
     }
 
     /**
      * solicit
      */
-    public TransactionStatus solicit(EndpointVisit visit, DataRequest request) {
-
-        if (visit == null) {
+    public TransactionStatus solicit(EndpointVisit visit, DataRequest request)
+    {
+        if(visit == null)
+        {
             throw new RuntimeException(VISIT_OBJECT_NOT_SET);
         }
 
@@ -545,24 +539,18 @@ public class TransactionServiceImpl extends BaseService implements
         logEntry.setWebMethod(NodeMethodType.Solicit.toString());
 
         NodeTransaction tran = null;
+        try
+        {
+            LogableNodeTransaction info = processRequest(visit, request, new LogableNodeTransaction(logEntry, ServiceType.SOLICIT));
 
-        try {
-
-            LogableNodeTransaction info = processRequest(visit, request,
-                    new LogableNodeTransaction(logEntry, ServiceType.SOLICIT));
-
-            if (request.getRecipients() != null
-                    && request.getRecipients().size() > 0) {
-
+            if(request.getRecipients() != null && request.getRecipients().size() > 0)
+            {
                 logEntry.addEntry("Saving Recipients");
-
-                for (int i = 0; i < request.getRecipients().size(); i++) {
-
-                    String uri = (String) request.getRecipients().get(i);
-
-                    if (StringUtils.isNotBlank(uri)
-                            && uri.trim().toLowerCase().startsWith("http")) {
-
+                for(int i = 0; i < request.getRecipients().size(); i++)
+                {
+                    String uri = (String)request.getRecipients().get(i);
+                    if(StringUtils.isNotBlank(uri) && uri.trim().toLowerCase().startsWith("http"))
+                    {
                         logEntry.addEntry("Partner: " + uri);
 
                         PartnerIdentity partner = new PartnerIdentity();
@@ -576,7 +564,6 @@ public class TransactionServiceImpl extends BaseService implements
                         partner.setId(null);
 
                         partnerDao.saveIfNew(partner);
-
                     }
                 }
             }
@@ -590,7 +577,7 @@ public class TransactionServiceImpl extends BaseService implements
                     tran.getStatus().setTransactionId(tran.getId());
                 }
             }
-            //TODO check this actually populates
+            // TODO check this actually populates
             if(tran != null && tran.getFlow() != null)
             {
                 logEntry.setFlowName(tran.getFlow().getName());
@@ -602,21 +589,20 @@ public class TransactionServiceImpl extends BaseService implements
 
             return tran.getStatus();
 
-        } catch (Exception ex) {
-
+        }
+        catch(Exception ex)
+        {
             logger.debug(ex.getMessage(), ex);
-
             logEntry.setType(ActivityType.Error);
             logEntry.addEntry(ex.getMessage());
-
-            if (tran != null) {
-                transactionDao.updateStatus(tran.getId(),
-                        CommonTransactionStatusCode.Failed);
+            if(tran != null)
+            {
+                transactionDao.updateStatus(tran.getId(), CommonTransactionStatusCode.Failed);
             }
-
-            throw new RuntimeException(ERROR_PREFIX + ex.getMessage(), ex);
-
-        } finally {
+            throw new WinNodeException(ERROR_PREFIX + ex.getMessage(), ex);
+        }
+        finally
+        {
             getActivityDao().make(logEntry);
             transactionDao.save(tran);
         }
@@ -629,80 +615,78 @@ public class TransactionServiceImpl extends BaseService implements
      * 
      **************************************************************************/
     private LogableNodeTransaction processRequest(EndpointVisit visit,
-            DataRequest request, LogableNodeTransaction info) {
-
-        if (visit == null) {
+            DataRequest request, LogableNodeTransaction info)
+    {
+        if(visit == null)
+        {
             throw new RuntimeException(VISIT_OBJECT_NOT_SET);
         }
-
-        if (request == null) {
+        if(request == null)
+        {
             throw new IllegalArgumentException("Request argument not set.");
         }
 
         NodeTransaction tran = null;
 
-        try {
-
+        try
+        {
             // SERVICE
             logger.debug("Getting service from request: " + request);
-            request.setService(serviceDao.getByServiceName(request.getService()
-                    .getName()));
+            request.setService(serviceDao.getByServiceName(request.getService().getName()));
 
-            if (request.getService() == null) {
-                throw new RuntimeException(
-                        "Unable to find a service with that name.");
+            if(request.getService() == null)
+            {
+                throw new RuntimeException("Unable to find a service with that name.");
             }
 
-            if (!request.getService().isActive()) {
+            if(!request.getService().isActive())
+            {
                 throw new RuntimeException("Service is currently inactive.");
             }
 
             logger.debug("Service Type: " + request.getService().getType());
             logger.debug("Info Type: " + info.getType());
 
-            if (info.getType() == ServiceType.EXECUTE) {
-
-                if (request.getService().getType() != ServiceType.EXECUTE) {
-                    throw new RuntimeException(SERVICE_DOES_NOT_SUPPORT
-                            + ServiceType.EXECUTE);
+            if(info.getType() == ServiceType.EXECUTE)
+            {
+                if(request.getService().getType() != ServiceType.EXECUTE)
+                {
+                    throw new RuntimeException(SERVICE_DOES_NOT_SUPPORT + ServiceType.EXECUTE);
                 }
-
-            } else if (info.getType() == ServiceType.QUERY) {
-
-                if (request.getService().getType() != ServiceType.QUERY
-                        && request.getService().getType() != ServiceType.QUERY_OR_SOLICIT
-                        && request.getService().getType() != ServiceType.QUERY_OR_SOLICIT_OR_EXECUTE) {
-                    throw new RuntimeException(SERVICE_DOES_NOT_SUPPORT
-                            + ServiceType.QUERY);
+            }
+            else if(info.getType() == ServiceType.QUERY)
+            {
+                if(request.getService().getType() != ServiceType.QUERY && request.getService().getType() != ServiceType.QUERY_OR_SOLICIT
+                                && request.getService().getType() != ServiceType.QUERY_OR_SOLICIT_OR_EXECUTE)
+                {
+                    throw new RuntimeException(SERVICE_DOES_NOT_SUPPORT + ServiceType.QUERY);
                 }
-
-            } else if (info.getType() == ServiceType.SOLICIT) {
-
-                if (request.getService().getType() != ServiceType.SOLICIT
-                        && request.getService().getType() != ServiceType.QUERY_OR_SOLICIT
-                        && request.getService().getType() != ServiceType.QUERY_OR_SOLICIT_OR_EXECUTE) {
-                    throw new RuntimeException(SERVICE_DOES_NOT_SUPPORT
-                            + ServiceType.SOLICIT);
+            }
+            else if(info.getType() == ServiceType.SOLICIT)
+            {
+                if(request.getService().getType() != ServiceType.SOLICIT && request.getService().getType() != ServiceType.QUERY_OR_SOLICIT
+                                && request.getService().getType() != ServiceType.QUERY_OR_SOLICIT_OR_EXECUTE)
+                {
+                    throw new RuntimeException(SERVICE_DOES_NOT_SUPPORT + ServiceType.SOLICIT);
                 }
-
-            } else {
-
-                throw new RuntimeException("Unrecognized Service Type: "
-                        + request.getService().getType());
-
+            }
+            else
+            {
+                throw new RuntimeException("Unrecognized Service Type: " + request.getService().getType());
             }
 
             DataFlow flow = flowDao.get(request.getService().getFlowId());
 
-            if (flow == null) {
-                throw new RuntimeException("Unable to flow by this Id: "
-                        + request.getService().getFlowId());
+            if (flow == null)
+            {
+                throw new RuntimeException("Unable to flow by this Id: " + request.getService().getFlowId());
             }
 
             // VISIT
             UserAccount account = visit.getUserAccount();
 
-            if (flow.isSecured()) {
+            if (flow.isSecured())
+            {
                 accountService.validateAccess(account, flow.getId());
             }
 
@@ -711,37 +695,29 @@ public class TransactionServiceImpl extends BaseService implements
 
             info.getActivity().setModifiedById(account.getId());
 
-            info.getActivity().addEntry("Query request from {0} by {1}.",
-                    new Object[] { visit.getIp(), account.getNaasUserName() });
+            info.getActivity().addEntry("Query request from {0} by {1}.", new Object[] { visit.getIp(), account.getNaasUserName() });
 
-            info.getActivity().addEntry(
-                    "Service:{0} Parameters:{1} Paging:{2}.",
-                    new Object[] { request.getService().getName(),
-                            request.getParameters(), request.getPaging() });
+            info.getActivity().addEntry("Service:{0} Parameters:{1} Paging:{2}.",
+                                        new Object[]{request.getService().getName(), request.getParameters(), request.getPaging()});
 
             // TRAN
-            logger.debug("Getting transaction for: " + flow.getName()
-                    + " and user Id: " + request.getModifiedById());
+            logger.debug("Getting transaction for: " + flow.getName() + " and user Id: " + request.getModifiedById());
 
-            if (info.getType() == ServiceType.QUERY) {
-
+            if(info.getType() == ServiceType.QUERY)
+            {
                 tran = transactionDao.make(flow, visit, NodeMethodType.Query, CommonTransactionStatusCode.Processed);
-
                 notificationHelper.sendQueries(request);
-
                 request.setType(RequestType.Query);
-
-            } else {
-
+            }
+            else
+            {
                 tran = transactionDao.make(flow, visit, NodeMethodType.Solicit, CommonTransactionStatusCode.Received);
-
                 notificationHelper.sendSolicits(request);
-
                 request.setType(RequestType.Solicit);
-
             }
 
-            if (tran == null) {
+            if(tran == null)
+            {
                 throw new RuntimeException("Unable to create a transaction");
             }
 
@@ -759,19 +735,18 @@ public class TransactionServiceImpl extends BaseService implements
 
             request = requestDao.save(request);
 
-            info.getActivity().addEntry("Request: {0} ",
-                    new Object[] { request.getService() });
+            info.getActivity().addEntry("Request: {0} ", new Object[]{request.getService()});
 
-            info.getActivity().addEntry("Global Transaction Id: {0} ",
-                    new Object[] { tran.getNetworkId() });
+            info.getActivity().addEntry("Global Transaction Id: {0} ", new Object[]{tran.getId()});
 
             logger.debug("tran: " + tran);
 
             info.setTransaction(tran);
 
             return info;
-
-        } catch (Exception ex) {
+        }
+        catch(Exception ex)
+        {
             String msg = "Error while saving request: " + ex.getMessage();
             logger.error(msg, ex);
             throw new RuntimeException(msg, ex);

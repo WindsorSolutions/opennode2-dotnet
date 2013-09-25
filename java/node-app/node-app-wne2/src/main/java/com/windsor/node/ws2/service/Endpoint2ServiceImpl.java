@@ -935,16 +935,14 @@ public class Endpoint2ServiceImpl extends BaseEndpoint2Service implements
             DataRequest dataRequest = new DataRequest();
             dataRequest.setService(new DataService(query18.getRequest()));
             logger.debug("Getting parameters...");
-            dataRequest
-                    .setParameters(createParameters(query18.getParameters()));
+            dataRequest.setParameters(createParameters(query18.getParameters()));
 
             dataRequest.setPaging(new PaginationIndicator());
             dataRequest.getPaging().setStart(query18.getRowId().intValue());
             dataRequest.getPaging().setCount(query18.getMaxRows().intValue());
 
             logger.debug("Sending request: " + dataRequest);
-            ProcessContentResult wnosResult = transactionService.query(visit,
-                    dataRequest);
+            ProcessContentResult wnosResult = transactionService.query(visit, dataRequest);
 
             logger.debug("Result: " + wnosResult);
 
@@ -963,24 +961,19 @@ public class Endpoint2ServiceImpl extends BaseEndpoint2Service implements
 
                 ResultSetType responseType = new ResultSetType();
 
-                logger.debug("Setting ResultSetType.rowId to "
-                        + BigInteger.valueOf(wnosResult
-                                .getPaginatedContentIndicator().getStart()));
-                responseType.setRowId(BigInteger.valueOf(wnosResult
-                        .getPaginatedContentIndicator().getStart()));
+                logger.debug("Setting ResultSetType.rowId to " + BigInteger.valueOf(wnosResult.getPaginatedContentIndicator().getStart()));
 
-                logger.debug("Setting ResultSetType.rowCount to "
-                        + BigInteger.valueOf(wnosResult
+                responseType.setRowId(BigInteger.valueOf(wnosResult.getPaginatedContentIndicator().getStart()));
+
+                logger.debug("Setting ResultSetType.rowCount to " + BigInteger.valueOf(wnosResult
                                 .getPaginatedContentIndicator().getCount()));
-                responseType.setRowCount(BigInteger.valueOf(wnosResult
-                        .getPaginatedContentIndicator().getCount()));
 
-                logger.debug("Setting ResultSetType.lastSet to "
-                        + wnosResult.getPaginatedContentIndicator().isLast());
-                responseType.setLastSet(wnosResult
-                        .getPaginatedContentIndicator().isLast());
-                responseType.setResults(NodeUtil.getGenericXmlType(doc
-                        .getType(), doc.getContent()));
+                responseType.setRowCount(BigInteger.valueOf(wnosResult.getPaginatedContentIndicator().getCount()));
+
+                logger.debug("Setting ResultSetType.lastSet to " + wnosResult.getPaginatedContentIndicator().isLast());
+
+                responseType.setLastSet(wnosResult.getPaginatedContentIndicator().isLast());
+                responseType.setResults(NodeUtil.getGenericXmlType(doc.getType(), doc.getContent()));
 
                 QueryResponse response = new QueryResponse();
 

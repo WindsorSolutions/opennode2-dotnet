@@ -369,7 +369,7 @@ public class NetworkNode20Client implements NodeClientService {
         try {
 
             logger.debug("Invoking authenticate...");
-            logger.debug("TransactionId: " + transactionId);
+            logger.debug("Network Transaction Id: " + transactionId);
 
             GetStatus request = new GetStatus();
             request.setSecurityToken(authenticate());
@@ -591,8 +591,7 @@ public class NetworkNode20Client implements NodeClientService {
             NotificationURIType notifType = new NotificationURIType();
             notifType.setNotificationType(NotificationTypeCode.All);
             notifType.setString(localEndpointUrl);
-            submitRequest
-                    .setNotificationURI(new NotificationURIType[] { notifType });
+            submitRequest.setNotificationURI(new NotificationURIType[] { notifType });
 
             for (int d = 0; d < transaction.getDocuments().size(); d++) {
                 Document doc = (Document) transaction.getDocuments().get(d);
@@ -655,13 +654,15 @@ public class NetworkNode20Client implements NodeClientService {
     /**
      * solicit
      */
-    public TransactionStatus solicit(DataRequest request) {
-
-        if (request == null) {
+    public TransactionStatus solicit(DataRequest request)
+    {
+        if(request == null)
+        {
             throw new RuntimeException("Null request");
         }
 
-        try {
+        try
+        {
 
             logger.debug("Invoking solicit...");
             logger.debug("Request: " + request);
@@ -671,43 +672,43 @@ public class NetworkNode20Client implements NodeClientService {
             solicitReq.setSecurityToken(authenticate());
             solicitReq.setRequest(request.getService().getName());
 
-            if (request.getParameters() != null) {
+            if(request.getParameters() != null)
+            {
                 ByIndexOrNameMap map = request.getParameters();
                 logger.debug("Params: " + map);
-                for (Iterator<String> it = map.keySet().iterator(); it.hasNext();) {
-
-                    String key = (String) it.next();
-
+                for(Iterator<String> it = map.keySet().iterator(); it.hasNext();)
+                {
+                    String key = (String)it.next();
                     ParameterType queryParam = new ParameterType();
-
                     queryParam.setParameterName(key);
-                    queryParam.setString((String) map.get(key));
-
+                    queryParam.setString((String)map.get(key));
                     solicitReq.addParameters(queryParam);
                 }
             }
 
-            if (request.getRecipients() != null) {
+            if(request.getRecipients() != null)
+            {
                 logger.debug("Recipients: " + request.getRecipients());
-                for (int i = 0; i < request.getRecipients().size(); i++) {
-                    solicitReq.addRecipient((String) request.getRecipients()
-                            .get(i));
+                for(int i = 0; i < request.getRecipients().size(); i++)
+                {
+                    solicitReq.addRecipient((String)request.getRecipients().get(i));
                 }
             }
 
-            if (request.getNotifications() != null) {
+            if(request.getNotifications() != null)
+            {
                 logger.debug("Notifications: " + request.getNotifications());
 
                 int mapsize = request.getNotifications().size();
-                Iterator notifPairs = request.getNotifications().entrySet()
-                        .iterator();
-                for (int i = 0; i < mapsize; i++) {
-                    Map.Entry entry = (Map.Entry) notifPairs.next();
+                Iterator notifPairs = request.getNotifications().entrySet().iterator();
+                for(int i = 0; i < mapsize; i++)
+                {
+                    Map.Entry entry = (Map.Entry)notifPairs.next();
 
                     NotificationURIType notif = new NotificationURIType();
 
                     notif.setNotificationType(NotificationTypeCode.All);
-                    notif.setString((String) entry.getKey());
+                    notif.setString((String)entry.getKey());
 
                     solicitReq.addNotificationURI(notif);
                 }
@@ -715,31 +716,30 @@ public class NetworkNode20Client implements NodeClientService {
 
             logger.debug("Soliciting...");
             NetworkNode2Stub stub = getStub("Solicit");
-            //stub._getServiceClient().getOptions().setAction("Solicit");
+            // stub._getServiceClient().getOptions().setAction("Solicit");
             stub._getServiceClient().getOptions().setProperty(Constants.Configuration.ENABLE_MTOM, Constants.VALUE_TRUE);
             SolicitResponse response = stub.Solicit(solicitReq);
-            /*SolicitResponse response = getStub("Solicit").Solicit(solicitReq);*/
+            /* SolicitResponse response = getStub("Solicit").Solicit(solicitReq); */
 
-            if (response == null || response.getSolicitResponse() == null) {
+            if(response == null || response.getSolicitResponse() == null)
+            {
                 throw new RuntimeException("Empty response returned");
             }
 
             logger.debug("Parsing response...");
-            TransactionStatus status = new TransactionStatus(response
-                    .getSolicitResponse().getTransactionId());
-            status.setDescription(response.getSolicitResponse()
-                    .getStatusDetail());
+            TransactionStatus status = new TransactionStatus(response.getSolicitResponse().getTransactionId());
+            status.setDescription(response.getSolicitResponse().getStatusDetail());
             status.setStatus(CommonTransactionStatusCode.Received);
             logger.debug("Status: " + status);
 
             return status;
 
-        } catch (Exception ex) {
-            logger.error(ex.getMessage(), ex);
-            throw new RuntimeException("Error while soliciting: "
-                    + appendExceptionDetail(ex));
         }
-
+        catch(Exception ex)
+        {
+            logger.error(ex.getMessage(), ex);
+            throw new RuntimeException("Error while soliciting: " + appendExceptionDetail(ex));
+        }
     }
 
     public String nodePing(String hello)
