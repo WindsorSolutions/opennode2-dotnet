@@ -18,7 +18,7 @@
 		<!-- Plugin modules -->
 		<module>node-plugin-aqs</module>
         <module>node-plugin-attains</module>
-		<module>node-plugin-beachnotif21</module>
+		<module>node-plugin-beachnotif22</module>
 		<module>node-plugin-eis12</module>
 		<module>node-plugin-ends2</module>
 		<module>node-plugin-facid3</module>
