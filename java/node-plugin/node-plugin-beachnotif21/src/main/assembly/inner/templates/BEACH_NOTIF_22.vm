@@ -6,7 +6,7 @@ $helper.startStopWatch()
     xmlns="http://www.exchangenetwork.net/schema/BEACHES/2" 
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 #foreach($orgId in $helper.getList("SELECT ID FROM NOTIF_ORGANIZATION", "id"))
-#set ($orgdetail = $helper.getObject("SELECT DISTINCT M.*, O.*, E.*, T.*, P.*, A.*, S.*, C.* FROM NOTIF_ORGANIZATIONMAILINGADDR M JOIN NOTIF_ORGANIZATION O ON (O.ID = M.ORGANIZATION_ID) LEFT JOIN NOTIF_ORGELECTRONICADDR E ON (E.ORGANIZATION_ID = O.ID) LEFT JOIN NOTIF_ORGANIZATIONTELEPHONE T ON (T.ORGANIZATION_ID = O.ID) LEFT JOIN NOTIF_PERSON P ON (P.ORGANIZATION_ID = O.ID) LEFT JOIN NOTIF_PERSONMAILINGADDRESS A ON (A.PERSON_ID = P.ID) LEFT JOIN NOTIF_PERSONELECTRONICADDRESS S ON (S.PERSON_ID = P.ID) LEFT JOIN NOTIF_PERSONTELEPHONE C ON (C.PERSON_ID = P.ID) WHERE O.ID = ? ", $orgId))
+#set ($orgdetail = $helper.getObject("SELECT DISTINCT M.*, O.*, E.*, T.*, P.*, A.*, S.*, C.*, SC.* FROM NOTIF_ORGANIZATIONMAILINGADDR M JOIN NOTIF_ORGANIZATION O ON (O.ID = M.ORGANIZATION_ID) LEFT JOIN NOTIF_ORGELECTRONICADDR E ON (E.ORGANIZATION_ID = O.ID) LEFT JOIN NOTIF_ORGANIZATIONTELEPHONE T ON (T.ORGANIZATION_ID = O.ID) LEFT JOIN NOTIF_PERSON P ON (P.ORGANIZATION_ID = O.ID) LEFT JOIN NOTIF_PERSONMAILINGADDRESS A ON (A.PERSON_ID = P.ID) LEFT JOIN NOTIF_PERSONELECTRONICADDRESS S ON (S.PERSON_ID = P.ID) LEFT JOIN NOTIF_PERSONTELEPHONE C ON (C.PERSON_ID = P.ID) LEFT JOIN NOTIF_STATECONTACT SC ON (SC.ORGANIZATION_ID = O.ID) WHERE O.ID = ? ", $orgId))
     <OrganizationDetail>
 #if($orgdetail.organizationidentifier)
         <OrganizationIdentifier>$orgdetail.organizationidentifier</OrganizationIdentifier>
@@ -180,10 +180,19 @@ $helper.startStopWatch()
             </PersonTelephoneDetail>
 #end
         </OrganizationPersonDetail>
+        <OrganizationStateContactDetail>
+            <ContactNameDetail>
+                <ContactFirstName>$orgdetail.firstname</ContactFirstName>
+                <ContactLastName>$orgdetail.lastName</ContactLastName>
+            </ContactNameDetail>
+            <ContactAgencyName>$orgdetail.agencyname</ContactAgencyName>
+            <ContactTelephoneNumberText>$orgdetail.telephonenumber</ContactTelephoneNumberText>
+            <ContactElectronicAddressText>$orgdetail.electronicaddr</ContactElectronicAddressText>
+        </OrganizationStateContactDetail>
     </OrganizationDetail>
 #set ($totalRecCount = $velocityCount)$helper.print("Total Organizations: $totalRecCount")#end##foreach($orgId in $helper.getList("SELECT ID FROM NOTIF_ORGANIZATION", "id"))
 #foreach($beachid in $helper.getList("SELECT ID FROM NOTIF_BEACH ORDER BY BEACHIDENTIFIER", "id"))
-#set ($beach = $helper.getObject("SELECT DISTINCT B.*, P.* FROM NOTIF_BEACH B LEFT JOIN NOTIF_BEACHPOLLUTION P ON (P.BEACH_ID = B.ID) WHERE B.ID = ? ", $beachid)) 
+#set ($beach = $helper.getObject("SELECT DISTINCT B.*, P.*, BC.* FROM NOTIF_BEACH B LEFT JOIN NOTIF_BEACHPOLLUTION P ON (P.BEACH_ID = B.ID) LEFT JOIN NOTIF_BEACHCRITERION BC ON (BC.BEACH_ID = B.ID) WHERE B.ID = ? ", $beachid)) 
     <BeachDetail>
 #if($beach.beachidentifier)
         <BeachIdentifier>$beach.beachidentifier</BeachIdentifier>
@@ -257,6 +266,10 @@ $helper.startStopWatch()
 #end
             </BeachSwimSeasonLengthDetail>
 #end
+            <ReportingFrequencyDetail>
+                <ReportingFrequencyMeasure>$beach.reportingfrequencymeasure</ReportingFrequencyMeasure>
+                <ReportingFrequencyUnitOfMeasureCode>$beach.reportingfrequnitofmeasure</ReportingFrequencyUnitOfMeasureCode>
+            </ReportingFrequencyDetail>
 #if(($beach.swimseasonfrequencymeasure)||($beach.offseasonfrequencymeasure)||($beach.monitoringfrequnitofmeasure)||($beach.monitoredirregularly)||($beach.monitoredirregularlycomment))
             <MonitoringFrequencyDetail>
 #if($beach.swimseasonfrequencymeasure)
@@ -294,6 +307,18 @@ $helper.startStopWatch()
 #if($beach.beachactbeachindicator)
             <BeachActBeachIndicator>$beach.beachactbeachindicator</BeachActBeachIndicator>
 #end
+            <BeachDormantIndicator>$beach.beachdormantindicator</BeachDormantIndicator>
+            <BeachCriterionDetail>
+                <IndicatorName>$beach.indicatorname</IndicatorName>
+                <WaterTypeName>$beach.watertypename</WaterTypeName>
+                <CriterionMeasure>
+                    <MeasureTypeName>$beach.measuretypename</MeasureTypeName>
+                    <MeasureValue>$beach.measurevalue</MeasureValue>
+                    <MeasureUnitCode>$beach.measureunitcode</MeasureUnitCode>
+                </CriterionMeasure>
+                <CriterionComment>$beach.criterioncomment</CriterionComment>
+            </BeachCriterionDetail>
+            <BeachWebsite>$beach.beachwebsite</BeachWebsite>
         </BeachAttributeDetail>
 #end
 #foreach($activity in $helper.getData("SELECT DISTINCT A.*, R.*, S.*, I.* FROM NOTIF_BEACHACTIVITY A  LEFT JOIN NOTIF_ACTIVITYREASON R ON (R.ACTIVITY_ID = A.ID) LEFT JOIN NOTIF_ACTIVITYSOURCE S ON (S.ACTIVITY_ID = A.ID) LEFT JOIN NOTIF_ACTIVITYINDICATOR I ON (I.ACTIVITY_ID = A.ID) WHERE A.BEACH_ID = ? AND A.SENTTOEPA = 'N'", $beachid)) 

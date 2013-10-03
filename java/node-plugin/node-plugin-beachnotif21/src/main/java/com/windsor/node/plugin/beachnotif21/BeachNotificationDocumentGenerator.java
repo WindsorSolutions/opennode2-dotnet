@@ -59,10 +59,10 @@ import com.windsor.node.service.helper.settings.SettingServiceProvider;
 
 public class BeachNotificationDocumentGenerator extends BaseWnosPlugin
 {
-    public static final String SERVICE_NAME = "GetBeachesData_v2.1";
+    public static final String SERVICE_NAME = "GetBeachesData_v2.2";
 
-    private static final String OUTFILE_BASE_NAME = "GetBeachesData_v2.1";
-    private static final String TEMPLATE_NAME = "BEACH_NOTIF_21.vm";
+    private static final String OUTFILE_BASE_NAME = "GetBeachesData_v2.2";
+    private static final String TEMPLATE_NAME = "BEACH_NOTIF_22.vm";
     protected Logger logger = LoggerFactory.getLogger(BeachNotificationDocumentGenerator.class);
     private static final PluginServiceImplementorDescriptor PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR = new PluginServiceImplementorDescriptor();
 

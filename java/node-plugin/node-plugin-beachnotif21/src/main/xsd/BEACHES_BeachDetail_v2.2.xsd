@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns:bch="http://www.exchangenetwork.net/schema/BEACHES/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/BEACHES/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.1">
+<xsd:schema xmlns:bch="http://www.exchangenetwork.net/schema/BEACHES/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/BEACHES/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.2">
 	<xsd:annotation>
 		<xsd:documentation>
-			Schema Name: Beach Detail v2.1
+			Schema Name: Beach Detail v2.2
 			Current Version Available At: http://www.exchangenetwork.net/exchanges/water/beach_notif.htm 
 			Description: Schema used to describe all information about a beach.
 			Application: PRAWN
@@ -13,14 +13,15 @@
 					20061108 - Revised to follow EPA/Exchange Network Guidelines
 					20070821 - Revised to upgrade to version 2.0 of the schema
 					20080825 - Revised to upgrade to version 2.1 of the schema
+					20111003 - Revised to upgrade to version 2.2 of the schema
 		</xsd:documentation>
 	</xsd:annotation>
-	<xsd:include schemaLocation="BEACHES_Shared_v2.1.xsd"/>
-	<xsd:include schemaLocation="BEACHES_ProgramInterest_v2.1.xsd"/>
-	<xsd:include schemaLocation="BEACHES_AttributeDetail_v2.1.xsd"/>
-	<xsd:include schemaLocation="BEACHES_ActivityDetail_v2.1.xsd"/>
-	<xsd:include schemaLocation="BEACHES_RoleDetail_v2.1.xsd"/>
-	<xsd:include schemaLocation="BEACHES_CoordinateDetail_v2.1.xsd"/>
+	<xsd:include schemaLocation="BEACHES_Shared_v2.2.xsd"/>
+	<xsd:include schemaLocation="BEACHES_ProgramInterest_v2.2.xsd"/>
+	<xsd:include schemaLocation="BEACHES_AttributeDetail_v2.2.xsd"/>
+	<xsd:include schemaLocation="BEACHES_ActivityDetail_v2.2.xsd"/>
+	<xsd:include schemaLocation="BEACHES_RoleDetail_v2.2.xsd"/>
+	<xsd:include schemaLocation="BEACHES_CoordinateDetail_v2.2.xsd"/>
 	<xsd:complexType name="BeachDetailDataType">
 		<xsd:sequence>
 			<xsd:element ref="bch:BeachIdentifier"/>

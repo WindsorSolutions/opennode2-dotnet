@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsd:schema xmlns:bch="http://www.exchangenetwork.net/schema/BEACHES/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/BEACHES/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.1">
+<xsd:schema xmlns:bch="http://www.exchangenetwork.net/schema/BEACHES/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/BEACHES/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.2">
 	<xsd:annotation>
 		<xsd:documentation>
-			Schema Name: Shared v2.1
+			Schema Name: Shared v2.2
 			Current Version Available At: http://www.exchangenetwork.net/exchanges/water/beach_notif.htm 
 			Description: Schema used to declare all elements, simple data types and elementary complex data types.
 			Application: PRAWN
@@ -13,6 +13,7 @@
 					20061108 - Revised to follow EPA/Exchange Network Guidelines
 					20070821 - Revised to upgrade to version 2.0 of the schema
 					20080825 - Revised to upgrade to version 2.1 of the schema
+					20111003 - Revised to upgrade to version 2.2 of the schema
 		</xsd:documentation>
 	</xsd:annotation>
 	<xsd:simpleType name="Char2">
@@ -145,6 +146,20 @@
 			<xsd:enumeration value="MONTHS"/>
 		</xsd:restriction>
 	</xsd:simpleType>
+	<xsd:complexType name="ReportingFrequencyDetailDataType">
+		<xsd:sequence>
+			<xsd:element ref="bch:ReportingFrequencyMeasure"/>
+			<xsd:element ref="bch:ReportingFrequencyUnitOfMeasureCode"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="ReportingFrequencyUnitOfMeasureCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="PER_DAY"/>
+			<xsd:enumeration value="PER_WEEK"/>
+			<xsd:enumeration value="PER_MONTH"/>
+			<xsd:enumeration value="PER_YEAR"/>
+		</xsd:restriction>
+	</xsd:simpleType>
 	<xsd:complexType name="MonitoringFrequencyDetailDataType">
 		<xsd:sequence>
 			<xsd:element ref="bch:SwimSeasonFrequencyMeasure"/>
@@ -178,6 +193,7 @@
 	<xsd:simpleType name="BeachPollutionSourceCodeDataType">
 		<xsd:restriction base="xsd:string">
 			<xsd:enumeration value="AGRICULTURAL"/>
+			<xsd:enumeration value="ALGAE"/>
 			<xsd:enumeration value="BOAT"/>
 			<xsd:enumeration value="CAFO"/>
 			<xsd:enumeration value="CSO"/>
@@ -200,6 +216,47 @@
 	<xsd:simpleType name="PollutionSourcesUninvestigatedIndicatorDataType">
 		<xsd:restriction base="xsd:boolean">
 			<xsd:pattern value="(true|1)"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="BeachCriterionDetailDataType">
+		<xsd:sequence>
+			<xsd:element ref="bch:IndicatorName"/>
+			<xsd:element ref="bch:WaterTypeName"/>
+			<xsd:element ref="bch:CriterionMeasure"/>
+			<xsd:element ref="bch:CriterionComment" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="IndicatorNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="ENTEROCOCCI"/>
+			<xsd:enumeration value="FECAL"/>
+			<xsd:enumeration value="TOTAL"/>
+			<xsd:enumeration value="E.COLI"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="WaterTypeNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="MARINE"/>
+			<xsd:enumeration value="FRESH"/>
+			<xsd:enumeration value="BOTH"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="CriterionMeasureDataType">
+		<xsd:sequence>
+			<xsd:element ref="bch:MeasureTypeName"/>
+			<xsd:element ref="bch:MeasureValue"/>
+			<xsd:element ref="bch:MeasureUnitCode"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="MeasureTypeNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="WQS"/>
+			<xsd:enumeration value="GM"/>
+			<xsd:enumeration value="SSM"/>
+			<xsd:enumeration value="CFU"/>
+			<xsd:enumeration value="STV"/>
+			<xsd:enumeration value="qPCR"/>
+			<xsd:enumeration value="CCE"/>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="IntNumber1">
@@ -233,6 +290,7 @@
 	<xsd:simpleType name="ActivitySourceDataType">
 		<xsd:restriction base="xsd:string">
 			<xsd:enumeration value="AGRICULTURAL"/>
+			<xsd:enumeration value="ALGAE"/>
 			<xsd:enumeration value="BOAT"/>
 			<xsd:enumeration value="CAFO"/>
 			<xsd:enumeration value="CSO"/>
@@ -296,6 +354,8 @@
 			<xsd:enumeration value="LAKE_ERIE"/>
 			<xsd:enumeration value="LAKE_ONTR"/>
 			<xsd:enumeration value="INLAND"/>
+			<xsd:enumeration value="LNG_ISL_SND"/>
+			<xsd:enumeration value="CHSPK_BAY"/>
 			<xsd:enumeration value=""/>
 			<xsd:enumeration value=""/>
 		</xsd:restriction>
@@ -479,6 +539,31 @@
 			<xsd:documentation>The unique code that identifies each a person</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
+	<xsd:element name="ContactFirstName" type="bch:Char50">
+		<xsd:annotation>
+			<xsd:documentation>The first name of the state contact</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ContactLastName" type="bch:Char50">
+		<xsd:annotation>
+			<xsd:documentation>The last name of the state contact</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ContactAgencyName" type="bch:Char60">
+		<xsd:annotation>
+			<xsd:documentation>Details the name of the state contact's agency being described</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ContactTelephoneNumberText" type="bch:TelephoneNumberDataType">
+		<xsd:annotation>
+			<xsd:documentation>The state contact's telephone number being described (Must include "-".  ex: xxx-xxx-xxxx)</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ContactElectronicAddressText" type="bch:Char255">
+		<xsd:annotation>
+			<xsd:documentation>The state contact's electronic address being described</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
 	<xsd:element name="BeachRoleStatusIndicator" type="bch:StatusDataType">
 		<xsd:annotation>
 			<xsd:documentation>Indicates whether the role is ACTIVE or INACTIVE</xsd:documentation>
@@ -614,6 +699,11 @@
 			<xsd:documentation>True if the beach qualifies as a BEACH Act beach.  False in any other case</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
+	<xsd:element name="BeachDormantIndicator" type="xsd:boolean">
+		<xsd:annotation>
+			<xsd:documentation>True if the beach qualifies as a dormant beach.  False in any other case</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
 	<xsd:element name="BeachPollutionSourceDescription" type="bch:Char255">
 		<xsd:annotation>
 			<xsd:documentation>A short description of the pollution source</xsd:documentation>
@@ -644,6 +734,16 @@
 			<xsd:documentation>The number that represents the length of the swim season</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
+	<xsd:element name="ReportingFrequencyMeasure" type="bch:Number14">
+		<xsd:annotation>
+			<xsd:documentation>The number that represents the reporting length</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ReportingFrequencyUnitOfMeasureCode" type="bch:ReportingFrequencyUnitOfMeasureCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The unit of time that is used for the measurements</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
 	<xsd:element name="MonitoredIrregularly" type="xsd:boolean">
 		<xsd:annotation>
 			<xsd:documentation>True if a beach is sporadically monitored.  False in any other case</xsd:documentation>
@@ -652,6 +752,11 @@
 	<xsd:element name="MonitoredIrregularlyComment" type="bch:Char255">
 		<xsd:annotation>
 			<xsd:documentation>Any comments about the monitoring frequency of the beach.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ReportingFrequencyDetail" type="bch:ReportingFrequencyDetailDataType">
+		<xsd:annotation>
+			<xsd:documentation>The frequency the beach is reported</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:element name="MonitoringFrequencyDetail" type="bch:MonitoringFrequencyDetailDataType">
@@ -690,6 +795,51 @@
 	<xsd:element name="ExtentUnitOfMeasureCode" type="bch:DistanceUnitOfMeasureCodeDataType">
 		<xsd:annotation>
 			<xsd:documentation>The unit of measurement</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="BeachCriterionDetail" type="bch:BeachCriterionDetailDataType">
+		<xsd:annotation>
+			<xsd:documentation>The exceedence that may or may not trigger a beach activity</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="IndicatorName" type="bch:IndicatorNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>The name of the criterion name</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="WaterTypeName" type="bch:WaterTypeNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>The water type in which the criterion was tested</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CriterionMeasure" type="bch:CriterionMeasureDataType">
+		<xsd:annotation>
+			<xsd:documentation>The criterion measure detail</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MeasureTypeName" type="bch:MeasureTypeNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>The type measure done on the criterion</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MeasureValue" type="bch:Number14">
+		<xsd:annotation>
+			<xsd:documentation>The number that represents the criterion measure</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MeasureUnitCode" type="bch:Char12">
+		<xsd:annotation>
+			<xsd:documentation>The units that the criterion was measured</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CriterionComment" type="bch:Char255">
+		<xsd:annotation>
+			<xsd:documentation>A short comment on the criterion. Can also contain a URL on how the State decides to issue an advisory or closure</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="BeachWebsite" type="bch:Char255">
+		<xsd:annotation>
+			<xsd:documentation>The state specified website</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:element name="OrganizationIdentifier" type="bch:Char12">
