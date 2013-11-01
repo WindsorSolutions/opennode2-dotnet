@@ -118,7 +118,7 @@
         in ~/.m2/settings.xml) and be rebuilt to avoid editing deployed war files after the fact -->
         <node.home>/var/opennode2_home</node.home>
         <!-- version number to use in the wnos and plugin distribution zip filenames -->
-        <node.dist.version>2.08</node.dist.version>
+        <node.dist.version>2.08_01</node.dist.version>
     </properties>
     <build>
         <pluginManagement>

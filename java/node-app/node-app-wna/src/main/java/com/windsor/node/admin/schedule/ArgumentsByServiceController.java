@@ -30,6 +30,7 @@ POSSIBILITY OF SUCH DAMAGE.
  */
 package com.windsor.node.admin.schedule;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -93,7 +94,19 @@ public class ArgumentsByServiceController extends AbstractController implements 
                 List<PluginServiceParameterDescriptor> params = (List<PluginServiceParameterDescriptor>)getFlowService().getPluginParameterDescriptors(dataFlow, service);
                 if(schedule != null)
                 {
-                    model.put("parameterValues", schedule.getScheduleArguments());
+                    if(schedule.getScheduleArguments().size() == 0 || schedule.getScheduleArguments().get(0).getArgumentKey().equalsIgnoreCase("000"))
+                    {//number ordered arguments, old style, quick fix to preserve backward compat for now
+                        model.put("parameterValues", schedule.getScheduleArguments());
+                    }
+                    else
+                    {
+                        List<String> names = new ArrayList<String>();
+                        for(int i = 0; params != null && i < params.size(); i++)
+                        {
+                            names.add(params.get(i).getName());
+                        }
+                        model.put("parameterValues", schedule.getScheduleArgumentsByNameOrder(names));
+                    }
                 }
                 if(params != null)
                 {

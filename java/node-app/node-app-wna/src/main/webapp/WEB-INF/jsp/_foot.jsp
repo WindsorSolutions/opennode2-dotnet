@@ -11,7 +11,7 @@
         <!-- <div style="float: right; width: 50%; text-align: right;">Support:&nbsp;
         <a href="mailto:<fmt:message key="adminSupportEmail" />">Node Administrator</a>
         </div> -->
-        <p>Version: ${project.version}, ${build.profile} profile</p>
+        <p>Version: ${node.dist.version}, ${dist.name} profile</p>
     </div>
 </div>
 </body>

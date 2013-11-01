@@ -59,13 +59,16 @@ public class NonQuerySqlRequestProcessor extends BaseWnosPlugin {
      * runtime argument names
      */
     public static final String ARG_SQL = "Sql Query";
+    private SimpleNonQueryExecutor simpleNonQueryExecutor;
 
     private static final PluginServiceImplementorDescriptor PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR = new PluginServiceImplementorDescriptor();
 
     static
     {
         PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setName("NonQuerySqlRequestProcessor");
-        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setDescription("Windsor utility method to execute a stored procedure (generally an ETL execution), access should be restricted.");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setDescription("Windsor utility method to execute a stored procedure (generally an ETL execution),"
+                        + " access should be restricted as this service allows very raw access to the database, ensure the user for the JDBC"
+                        + " connection string also has limited database access.");
         PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setClassName(NonQuerySqlRequestProcessor.class.getCanonicalName());
     }
 
@@ -98,19 +101,6 @@ public class NonQuerySqlRequestProcessor extends BaseWnosPlugin {
      */
     public void afterPropertiesSet() {
         super.afterPropertiesSet();
-
-        debug("Validating data sources");
-
-        // make sure the run time args are set
-        if (getDataSources() == null) {
-            throw new RuntimeException("Data sources not set");
-        }
-
-        // make sure the source data source is set
-        if (!getDataSources().containsKey(ARG_DS_SOURCE)) {
-            throw new RuntimeException("Source data source not set");
-        }
-
         debug("Validating runtime args");
 
         // make sure the run time args are set
@@ -122,8 +112,23 @@ public class NonQuerySqlRequestProcessor extends BaseWnosPlugin {
             throw new RuntimeException(ARG_SQL + " not set");
         }
 
-        debug("Plugin validated");
+        debug("Validating data sources");
 
+        // make sure the run time args are set
+        if (getDataSources() == null) {
+            throw new RuntimeException("Data sources not set");
+        }
+        // make sure the source data source is set
+        if (!getDataSources().containsKey(ARG_DS_SOURCE))
+        {
+            throw new RuntimeException("Data source not set");
+        }
+        simpleNonQueryExecutor = new SimpleNonQueryExecutor();
+        DataSource dataSource = (DataSource) getDataSources().get(ARG_DS_SOURCE);
+        debug("Data Source: " + dataSource);
+        simpleNonQueryExecutor.setDataSource(dataSource);
+
+        debug("Plugin validated");
     }
 
     /**
@@ -140,7 +145,6 @@ public class NonQuerySqlRequestProcessor extends BaseWnosPlugin {
         try {
 
             /*
-             * 
              * ARGUMENTS
              */
             result.getAuditEntries()
@@ -148,20 +152,16 @@ public class NonQuerySqlRequestProcessor extends BaseWnosPlugin {
             validateTransaction(transaction);
 
             result.getAuditEntries().add(makeEntry("Acquiring arguments..."));
-            DataSource dataSource = (DataSource) getDataSources().get(
-                    ARG_DS_SOURCE);
-            debug("Data Source: " + dataSource);
-
+            
             String sql = getRequiredConfigValueAsString(ARG_SQL);
             result.getAuditEntries().add(
                     makeEntry("Sql Query: " + sql));
 
             /*
-             * 
              * EXECUTE
              */
             result.getAuditEntries().add(makeEntry("Executing request..."));
-            new SimpleNonQueryExecutor().executeSql(dataSource, sql);
+            simpleNonQueryExecutor.executeSql(sql);
 
             result.setPaginatedContentIndicator(new PaginationIndicator(
                     transaction.getRequest().getPaging().getStart(),

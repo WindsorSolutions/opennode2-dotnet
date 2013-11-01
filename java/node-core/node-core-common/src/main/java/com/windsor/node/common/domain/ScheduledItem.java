@@ -86,6 +86,38 @@ public class ScheduledItem extends AuditableIdentity {
         this.scheduleArguments = new ArrayList<ScheduleArgument>();
     }
 
+    // TODO this is a bit of a work around as named arguments don't get ordered as they should coming out of the
+    // database, allows Controllers to fix this for display, determine whether there is a better solution
+    public List<ScheduleArgument> getScheduleArgumentsByNameOrder(List<String> names)
+    {
+        if(names == null || names.size() < scheduleArguments.size())
+        {
+            throw new IllegalArgumentException("ScheduledItem method getScheduleArgumentsByNameOrder param List<String> names did not match the scheduleArguments List.");
+        }
+        List<ScheduleArgument> orderedList = new ArrayList<ScheduleArgument>();
+        for(int i = 0; i < names.size(); i++)
+        {
+            String currentName = names.get(i);
+            boolean found = false;
+            for(int j = 0; j < scheduleArguments.size(); j++)
+            {
+                if(currentName.equalsIgnoreCase(scheduleArguments.get(j).getArgumentKey()))
+                {
+                    orderedList.add(scheduleArguments.get(j));
+                    found = true;
+                }
+            }
+            if(!found)
+            {
+                ScheduleArgument blankArg = new ScheduleArgument();
+                blankArg.setArgumentKey(currentName);
+                blankArg.setArgumentValue("");
+                orderedList.add(blankArg);
+            }
+        }
+        return orderedList;
+    }
+
     public String getName() {
         return name;
     }

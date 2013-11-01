@@ -11,6 +11,15 @@
     <name>Node Application - Web Node Endpoint REST</name>
     <build>
         <finalName>wnrest</finalName>
+        <resources>
+            <resource>
+                <directory>${wnrest.extra.resources.location}</directory>
+            </resource>
+            <resource>
+                <directory>${project.basedir}/src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
     </build>
     <dependencies>
         <dependency>

@@ -11,7 +11,7 @@
     <name>Node Plugin - Beach Notification v2.2</name>
     <properties>
         <node.plugin.name>beachnotif22</node.plugin.name>
-        <node.plugin.build.number>03</node.plugin.build.number>
+        <node.plugin.build.number>07</node.plugin.build.number>
         <node.plugin.description>Submits beach advisory notification data to EPA as required by BEACH Act reporting requirements. Data to be submitted must be loaded into the staging tables that accompany this plugin.</node.plugin.description>
         <node.plugin.help.text>Beach Notification Data Exchange</node.plugin.help.text>
     </properties>

@@ -31,8 +31,6 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.windsor.node.plugin.windsor.jdbc;
 
-import javax.sql.DataSource;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
@@ -52,18 +50,18 @@ public class SimpleNonQueryExecutor extends JdbcDaoSupport {
      * @param dataSource
      * @param sql
      */
-    public void executeSql(DataSource dataSource, String sql) {
-
-        try {
-            setDataSource(dataSource);
+    public void executeSql(String sql)
+    {
+        try
+        {
             logger.debug("SQL: " + sql);
             getJdbcTemplate().execute(fixSql(sql));
-        } catch (Exception ex) {
-            logger.error(ex.getMessage(), ex);
-            throw new RuntimeException("Error while obtaining data: "
-                    + ex.getMessage(), ex);
         }
-
+        catch(Exception ex)
+        {
+            logger.error(ex.getMessage(), ex);
+            throw new RuntimeException("Error while obtaining data: " + ex.getMessage(), ex);
+        }
     }
 
     /**

@@ -68,11 +68,11 @@ public abstract class AbstractSubmittingWqxService<L extends List<T>, T> extends
 
         List<PluginServiceParameterDescriptor> params = new ArrayList<PluginServiceParameterDescriptor>();
 
-        params.add(ORG_ID);                     // available @ index = 0
-        params.add(USE_SUBMISSION_HISTORY);     // available @ index = 1
-        params.add(START_DATE);                 // available @ index = 2
-        params.add(END_DATE);                   // available @ index = 3
-        params.add(SUBMISSION_PARTNER_NAME);    // available @ index = 4
+        params.add(ORG_ID);
+        params.add(USE_SUBMISSION_HISTORY);
+        params.add(START_DATE);
+        params.add(END_DATE);
+        params.add(SUBMISSION_PARTNER_NAME);
         return params;
     }
 

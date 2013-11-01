@@ -416,7 +416,7 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
 
                     workflow.setSubmissionDate(new Date());
                     workflow.setSubmissionTransactionId(submissionTransactionId);
-                    workflow.setSubmissionTransactionStatus("Pending");
+                    workflow.setSubmissionTransactionStatus(CommonTransactionStatusCode.Pending.name());
                     workflow.setSubmissionStatusDate(new Date());
                     workflow.setWorkflowStatusMessage("The ICIS data has been submitted");
 
