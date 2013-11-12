@@ -53,6 +53,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI5
         protected const string CONFIG_DATA_SOURCE = "Data Source";
 
         protected const string PARAM_MAX_NUMBER_OF_FILES_TO_GENERATE = "MaxFilesToGenerate";
+        protected const string PARAM_SCALE_PERCENTAGE = "ScalePercentage";
 
         protected const string ID_COLUMN_NAME = "ID";
         protected const string VW_TRI_FILE_CSV_DEFINITION_NAME = "VW_TRI_FILE_CSV_DEFINITION";
@@ -70,6 +71,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI5
         List<VW_TRI_PDF_METADATA> _pdfMetadataList;
         List<string> _csvColumnNames;
         int _maxFilesToGenerate = int.MaxValue;
+        int _scalePercentage = 100;
 
         public TRIPDFGenerator()
         {
@@ -127,6 +129,14 @@ namespace Windsor.Node2008.WNOSPlugin.TRI5
             {
                 AppendAuditLogEvent("Maximum number of files to generate: {0}", _maxFilesToGenerate.ToString());
             }
+            if (TryGetParameter(_dataRequest, PARAM_SCALE_PERCENTAGE, 1, ref _scalePercentage))
+            {
+                if ((_scalePercentage < 20) || (_scalePercentage > 200))
+                {
+                    throw new ArgumentException("The \"{0}\" parameter must be between 20 and 200", PARAM_SCALE_PERCENTAGE);
+                }
+                AppendAuditLogEvent("Scaling percentage: {0}", _scalePercentage.ToString());
+            }
         }
         protected virtual void GeneratePDF(VW_TRI_PDF_METADATA metadata, int currentFileIndex, int maxFileIndex)
         {
@@ -148,8 +158,12 @@ namespace Windsor.Node2008.WNOSPlugin.TRI5
 
                 // See http://madalgo.au.dk/~jakobt/wkhtmltoxdoc/wkhtmltopdf-0.9.9-doc.html for command line params
 
-                string commandParams = string.Format("-s Letter -O Portrait -q \"{0}\" \"{1}\"",
-                                                     documentUri, outputPDFFilePath);
+                string commandParams = "-s Letter -O Portrait -q ";
+                if (_scalePercentage != 100)
+                {
+                    commandParams += string.Format("--zoom {0} ", ((float)_scalePercentage / 100f).ToString());
+                }
+                commandParams += string.Format("\"{0}\" \"{1}\"", documentUri, outputPDFFilePath);
 
                 int retryAttempts = 2;
                 do
