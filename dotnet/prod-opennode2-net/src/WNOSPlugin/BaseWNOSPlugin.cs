@@ -289,6 +289,20 @@ namespace Windsor.Node2008.WNOSPlugin
             }
             return folderPath;
         }
+        protected string ValidateHttpUrlConfigParameter(string key, int timeoutInSeconds)
+        {
+            string url = ValidateNonEmptyConfigParameter(key);
+            try
+            {
+                NetworkUtils.VerifyHttpUrl(url, timeoutInSeconds);
+            }
+            catch(Exception ex)
+            {
+                throw new ArgumentException(string.Format("An attempt was made to ping the web server at location \"{0}\", but an error was returned: \"{1}\"",
+                                                          url, ExceptionUtils.GetDeepExceptionMessageOnly(ex)));
+            }
+            return url;
+        }
         protected SpringBaseDao ValidateDBProvider(string key)
         {
             return ValidateDBProvider(key, null);

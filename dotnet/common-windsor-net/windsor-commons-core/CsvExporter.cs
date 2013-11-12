@@ -6,6 +6,7 @@ using System.IO;
 using System.Text;
 using System.Reflection;
 using System.Data.Common;
+using System.Data;
 
 namespace Windsor.Commons.Core
 {
@@ -61,7 +62,7 @@ namespace Windsor.Commons.Core
                 throw;
             }
         }
-        public static string ExportCsvToTempFile(ICollection<string> columnNames, DbDataReader reader, string baseExportFileName)
+        public static string ExportCsvToTempFile(ICollection<string> columnNames, IDataReader reader, string baseExportFileName)
         {
             string tempFilePath = GetTempCsvFilePath(baseExportFileName);
 
@@ -69,7 +70,7 @@ namespace Windsor.Commons.Core
 
             return tempFilePath;
         }
-        public static void ExportCsv(ICollection<string> columnNames, DbDataReader reader, string filePath)
+        public static void ExportCsv(ICollection<string> columnNames, IDataReader reader, string filePath)
         {
             FileUtils.SafeDeleteFile(filePath);
 
@@ -78,7 +79,17 @@ namespace Windsor.Commons.Core
                 ExportCsv(columnNames, reader, fs);
             }
         }
-        public static void ExportCsv(ICollection<string> columnNames, DbDataReader reader, Stream stream)
+        // Assumes reader.Read() has already been called to write a single row
+        public static void ExportSingleCsvRow(ICollection<string> columnNames, IDataReader reader, string filePath)
+        {
+            FileUtils.SafeDeleteFile(filePath);
+
+            using (FileStream fs = File.OpenWrite(filePath))
+            {
+                ExportSingleCsvRow(columnNames, reader, fs);
+            }
+        }
+        public static void ExportCsv(ICollection<string> columnNames, IDataReader reader, Stream stream)
         {
             try
             {
@@ -93,16 +104,52 @@ namespace Windsor.Commons.Core
                     object[] fieldValues = new object[columnNames.Count];
                     while (reader.Read())
                     {
-                        reader.GetValues(fieldValues);
-                        isFirst = true;
-                        foreach (object rowValue in fieldValues)
-                        {
-                            ExportCsvValue(rowValue, writer, ref isFirst);
-                        }
-                        writer.WriteLine();
+                        ExportCsvRow(reader, writer, fieldValues);
                     }
                     writer.Flush();
                 }
+            }
+            catch (Exception)
+            {
+                DebugUtils.CheckDebuggerBreak();
+                throw;
+            }
+        }
+        // Assumes reader.Read() has already been called to write a single row
+        public static void ExportSingleCsvRow(ICollection<string> columnNames, IDataReader reader, Stream stream)
+        {
+            try
+            {
+                using (StreamWriter writer = new StreamWriter(stream, Encoding.UTF8, 1024 * 64))
+                {
+                    bool isFirst = true;
+                    foreach (string columnName in columnNames)
+                    {
+                        ExportCsvValue(columnName, writer, ref isFirst);
+                    }
+                    writer.WriteLine();
+                    object[] fieldValues = new object[columnNames.Count];
+                    ExportCsvRow(reader, writer, fieldValues);
+                    writer.Flush();
+                }
+            }
+            catch (Exception)
+            {
+                DebugUtils.CheckDebuggerBreak();
+                throw;
+            }
+        }
+        private static void ExportCsvRow(IDataReader reader, StreamWriter writer, object[] fieldValueStorage)
+        {
+            try
+            {
+                reader.GetValues(fieldValueStorage);
+                bool isFirst = true;
+                foreach (object rowValue in fieldValueStorage)
+                {
+                    ExportCsvValue(rowValue, writer, ref isFirst);
+                }
+                writer.WriteLine();
             }
             catch (Exception)
             {

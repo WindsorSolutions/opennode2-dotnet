@@ -234,6 +234,24 @@ namespace Windsor.Commons.Core
             }
             return false;
         }
+        public static void VerifyHttpUrl(string url, int timeoutInSeconds)
+        {
+            //Creating the HttpWebRequest
+            HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
+            request.Timeout = timeoutInSeconds * 1000;
+            //Setting the Request method HEAD, you can also use GET too.
+            request.Method = "HEAD";
+            //Getting the Web Response.
+            using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
+            {
+                //Returns TURE if the Status code == 200
+                if (response.StatusCode != HttpStatusCode.OK)
+                {
+                    throw new ArgumentException(string.Format("The web server at location \"{0}\" returned an invalid status code: \"{1}\"",
+                                                              url, response.StatusCode.ToString()));
+                }
+            }
+        }
         private static IPAddress GetIpConfigAddress(string ipConfigStdOut, string addressName)
         {
             try

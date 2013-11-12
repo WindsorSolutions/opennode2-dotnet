@@ -97,7 +97,7 @@ namespace Windsor.Commons.Spring
             }
             _adoDaoSupport = new AdoDaoSupport();
             _adoDaoSupport.AdoTemplate = new AdoTemplate(dbProvider);
-            _adoDaoSupport.AdoTemplate.CommandTimeout = 300;    //??
+            _adoDaoSupport.AdoTemplate.CommandTimeout = 300; // Default
             if (dataReaderWrapperType != null)
             {
                 _adoDaoSupport.AdoTemplate.DataReaderWrapperType = dataReaderWrapperType;
@@ -740,6 +740,22 @@ namespace Windsor.Commons.Spring
                 sb.Append(column.ColumnName);
             }
             return sb.ToString();
+        }
+        public List<string> GetTableColumnNames(string tableName)
+        {
+            DataTable table = GetTableColumns(tableName);
+
+            var list = new List<string>();
+
+            if ((table == null) || (table.Columns == null) || (table.Columns.Count == 0))
+            {
+                return list;
+            }
+            foreach (DataColumn column in table.Columns)
+            {
+                list.Add(column.ColumnName);
+            }
+            return list;
         }
 
         public void DoInsert(string tableName, string semicolonSeparatedColumnNames, params object[] values)
