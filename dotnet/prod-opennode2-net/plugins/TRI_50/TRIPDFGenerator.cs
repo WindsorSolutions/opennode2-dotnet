@@ -36,6 +36,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
 using Windsor.Commons.Core;
 using Windsor.Commons.Spring;
 using Windsor.Node2008.WNOSDomain;
@@ -51,6 +52,8 @@ namespace Windsor.Node2008.WNOSPlugin.TRI5
 
         protected const string CONFIG_DATA_SOURCE = "Data Source";
 
+        protected const string PARAM_MAX_NUMBER_OF_FILES_TO_GENERATE = "MaxFilesToGenerate";
+
         protected const string ID_COLUMN_NAME = "ID";
         protected const string VW_TRI_FILE_CSV_DEFINITION_NAME = "VW_TRI_FILE_CSV_DEFINITION";
         protected const string VW_TRI_PDF_METADATA_NAME = "VW_TRI_PDF_METADATA";
@@ -63,10 +66,10 @@ namespace Windsor.Node2008.WNOSPlugin.TRI5
         protected string _outputFolderPath;
         protected string _viewerBaseUri;
         protected string _pdfGeneratorExePath;
-        protected int _commandTimeoutInSeconds = 20 * 60;
         protected SpringBaseDao _baseDao;
         List<VW_TRI_PDF_METADATA> _pdfMetadataList;
         List<string> _csvColumnNames;
+        int _maxFilesToGenerate = int.MaxValue;
 
         public TRIPDFGenerator()
         {
@@ -99,9 +102,10 @@ namespace Windsor.Node2008.WNOSPlugin.TRI5
 
             _pdfGeneratorExePath = ExtractPDFGeneratorExe();
 
+            int currentFileIndex = 1, maxFileIndex = _pdfMetadataList.Count;
             foreach (var metadata in _pdfMetadataList)
             {
-                GeneratePDF(metadata);
+                GeneratePDF(metadata, currentFileIndex++, maxFileIndex);
             }
 
         }
@@ -118,10 +122,16 @@ namespace Windsor.Node2008.WNOSPlugin.TRI5
         {
             AppendAuditLogEvent("Loading request with id \"{0}\"", requestId);
             _dataRequest = _requestManager.GetDataRequest(requestId);
+
+            if (TryGetParameter(_dataRequest, PARAM_MAX_NUMBER_OF_FILES_TO_GENERATE, 0, ref _maxFilesToGenerate))
+            {
+                AppendAuditLogEvent("Maximum number of files to generate: {0}", _maxFilesToGenerate.ToString());
+            }
         }
-        protected virtual void GeneratePDF(VW_TRI_PDF_METADATA metadata)
+        protected virtual void GeneratePDF(VW_TRI_PDF_METADATA metadata, int currentFileIndex, int maxFileIndex)
         {
-            AppendAuditLogEvent("Starting PDF generation for file \"{0}\"", metadata.PDFFilename);
+            AppendAuditLogEvent("*** Starting PDF generation for file \"{0}\" ({1} of {2} total files)",
+                                metadata.PDFFilename, currentFileIndex.ToString(), maxFileIndex.ToString());
             string outputPDFFilePath = null, outputCSVFilePath = null;
             string app_GeneratedPDF_ID = StringUtils.CreateSequentialGuid();
             try
@@ -136,40 +146,61 @@ namespace Windsor.Node2008.WNOSPlugin.TRI5
                 outputPDFFilePath = Path.Combine(_outputFolderPath, metadata.PDFFilename);
                 outputCSVFilePath = Path.Combine(_outputFolderPath, metadata.CSVFilename);
 
-                // Delete files if they already exist since they need to be regenerated anyway:
-                FileUtils.SafeDeleteFile(outputPDFFilePath);
-                FileUtils.SafeDeleteFile(outputCSVFilePath);
-
                 // See http://madalgo.au.dk/~jakobt/wkhtmltoxdoc/wkhtmltopdf-0.9.9-doc.html for command line params
 
                 string commandParams = string.Format("-s Letter -O Portrait -q \"{0}\" \"{1}\"",
                                                      documentUri, outputPDFFilePath);
 
-                using (Process process = new Process())
+                int retryAttempts = 2;
+                do
                 {
-                    process.StartInfo.FileName = _pdfGeneratorExePath;
-                    process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-
-                    process.StartInfo.Arguments = commandParams;
-
-                    process.Start();
-
-                    if (!process.WaitForExit(5 * 60 * 1000))
+                    try
                     {
-                        try
+                        // Delete files if they already exist since they need to be regenerated anyway:
+                        FileUtils.SafeDeleteFile(outputPDFFilePath);
+                        FileUtils.SafeDeleteFile(outputCSVFilePath);
+
+                        using (Process process = new Process())
                         {
-                            process.Kill();
+                            process.StartInfo.FileName = _pdfGeneratorExePath;
+                            process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+
+                            process.StartInfo.Arguments = commandParams;
+
+                            process.Start();
+
+                            if (!process.WaitForExit(5 * 60 * 1000))
+                            {
+                                try
+                                {
+                                    process.Kill();
+                                }
+                                catch (Exception)
+                                {
+                                }
+                                throw new ArgumentException("The PDF generation process did not finish in a reasonable amount of time, so the process has been aborted.");
+                            }
+                            if (process.ExitCode != 0)
+                            {
+                                throw new ArgumentException(string.Format("The PDF generation process exited with an error code: {0}.", process.ExitCode.ToString()));
+                            }
                         }
-                        catch(Exception)
+                        if (!File.Exists(outputPDFFilePath))
                         {
+                            throw new ArgumentException("The PDF generation process did not produce an output file, aborting export!");
                         }
-                        throw new ArgumentException("The PDF generation process did not finish in a reasonable amount of time, so the process has been aborted.");
+                        break;
                     }
-                    if (process.ExitCode != 0)
+                    catch (Exception ex2)
                     {
-                        throw new ArgumentException("The PDF generation process exited with an error code: {0}.", process.ExitCode.ToString());
-                    }                
-                }
+                        if (retryAttempts > 0)
+                        {
+                            AppendAuditLogEvent("The PDF generation process failed, will pause then retry again.  Error: {0}",
+                                                ExceptionUtils.GetDeepExceptionMessage(ex2));
+                            Thread.Sleep(TimeSpan.FromSeconds(10));
+                        }
+                    }
+                } while (retryAttempts-- > 0);
 
                 string columnNamesString = StringUtils.Join(";", _csvColumnNames);
                 _baseDao.DoSimpleQueryWithRowCallbackDelegate(VW_TRI_FILE_CSV_DEFINITION_NAME, ID_COLUMN_NAME, metadata.ID, columnNamesString,
@@ -178,20 +209,27 @@ namespace Windsor.Node2008.WNOSPlugin.TRI5
                         CsvExporter.ExportSingleCsvRow(_csvColumnNames, reader, outputCSVFilePath);
                     });
 
+                if (!File.Exists(outputCSVFilePath))
+                {
+                    throw new ArgumentException("The CSV generation process did not produce an output file, aborting export!");
+                }
+                
                 _baseDao.DoSimpleInsertOrUpdateOne(App_GeneratedPDF_NAME, "repId;repType", new object[] { metadata.repId, metadata.repType },
                                                    "App_GeneratedPDF_ID;repId;repType;Filename;IsGenerated;ErrorMsg", app_GeneratedPDF_ID,
                                                    metadata.repId, metadata.repType, outputPDFFilePath, true, null);
 
-                AppendAuditLogEvent("Successfully finished PDF generation for file \"{0}\"", metadata.PDFFilename);
+                AppendAuditLogEvent("*** Successfully finished PDF generation for file \"{0}\" ({1} of {2} total files)",
+                                    metadata.PDFFilename, currentFileIndex.ToString(), maxFileIndex.ToString());
 
             }
             catch (Exception ex)
             {
                 FileUtils.SafeDeleteFile(outputPDFFilePath);
                 FileUtils.SafeDeleteFile(outputCSVFilePath);
-                string errorMessage = string.Format("Failed PDF generation for file \"{0}\" with error: {1}",
-                                                    metadata.PDFFilename, ExceptionUtils.GetDeepExceptionMessage(ex));
-                AppendAuditLogEvent(errorMessage);
+                string errorMessage = string.Format("Failed PDF generation for file \"{0}\" ({1} of {2} total files) with error: {3}",
+                                                    metadata.PDFFilename, currentFileIndex.ToString(), maxFileIndex.ToString(),
+                                                    ExceptionUtils.GetDeepExceptionMessage(ex));
+                AppendAuditLogEvent("*** " + errorMessage);
                 if (errorMessage.Length > 4000)
                 {
                     errorMessage = errorMessage.Substring(0, 4000);
@@ -289,8 +327,17 @@ namespace Windsor.Node2008.WNOSPlugin.TRI5
             }
             else
             {
-                AppendAuditLogEvent("Found {0} PDF generation metadata records in the view \"{1}\"",
-                                    list.Count.ToString(), VW_TRI_PDF_METADATA_NAME);
+                if ((_maxFilesToGenerate < int.MaxValue) && (list.Count > _maxFilesToGenerate))
+                {
+                    AppendAuditLogEvent("Found {0} PDF generation metadata records in the view \"{1}\", but the number of files processed will be limited to the maximum number specified of {2} ...",
+                                        list.Count.ToString(), VW_TRI_PDF_METADATA_NAME, _maxFilesToGenerate.ToString());
+                    list.RemoveRange(_maxFilesToGenerate, list.Count - _maxFilesToGenerate);
+                }
+                else
+                {
+                    AppendAuditLogEvent("Found {0} PDF generation metadata records in the view \"{1}\" ...",
+                                        list.Count.ToString(), VW_TRI_PDF_METADATA_NAME);
+                }
             }
             return list;
         }
