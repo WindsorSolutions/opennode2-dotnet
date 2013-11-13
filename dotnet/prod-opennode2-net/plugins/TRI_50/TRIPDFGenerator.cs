@@ -54,6 +54,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI5
 
         protected const string PARAM_MAX_NUMBER_OF_FILES_TO_GENERATE = "MaxFilesToGenerate";
         protected const string PARAM_SCALE_PERCENTAGE = "ScalePercentage";
+        protected const string PARAM_PAGE_TYPE = "PageType";
 
         protected const string ID_COLUMN_NAME = "ID";
         protected const string VW_TRI_FILE_CSV_DEFINITION_NAME = "VW_TRI_FILE_CSV_DEFINITION";
@@ -72,6 +73,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI5
         List<string> _csvColumnNames;
         int _maxFilesToGenerate = int.MaxValue;
         int _scalePercentage = 100;
+        string _pageType = "Letter";
 
         public TRIPDFGenerator()
         {
@@ -137,6 +139,23 @@ namespace Windsor.Node2008.WNOSPlugin.TRI5
                 }
                 AppendAuditLogEvent("Scaling percentage: {0}", _scalePercentage.ToString());
             }
+            string pageType = null;
+            if (TryGetParameter(_dataRequest, PARAM_PAGE_TYPE, 2, ref pageType))
+            {
+                if (string.Equals(pageType, "Letter", StringComparison.OrdinalIgnoreCase))
+                {
+                    _pageType = "Letter";
+                }
+                else if (string.Equals(pageType, "Legal", StringComparison.OrdinalIgnoreCase))
+                {
+                    _pageType = "Legal";
+                }
+                else
+                {
+                    throw new ArgumentException("The \"{0}\" parameter must be either \"Letter\" or \"Legal\"", PARAM_PAGE_TYPE);
+                }
+                AppendAuditLogEvent("Page type: {0}", _pageType);
+            }
         }
         protected virtual void GeneratePDF(VW_TRI_PDF_METADATA metadata, int currentFileIndex, int maxFileIndex)
         {
@@ -158,7 +177,9 @@ namespace Windsor.Node2008.WNOSPlugin.TRI5
 
                 // See http://madalgo.au.dk/~jakobt/wkhtmltoxdoc/wkhtmltopdf-0.9.9-doc.html for command line params
 
-                string commandParams = "-s Letter -O Portrait -q ";
+                string commandParams = "-O Portrait -q --disable-external-links --disable-internal-links ";
+
+                commandParams += string.Format("-s {0} ", _pageType);
                 if (_scalePercentage != 100)
                 {
                     commandParams += string.Format("--zoom {0} ", ((float)_scalePercentage / 100f).ToString());
