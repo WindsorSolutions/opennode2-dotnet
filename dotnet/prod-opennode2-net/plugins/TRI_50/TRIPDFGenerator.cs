@@ -241,7 +241,8 @@ namespace Windsor.Node2008.WNOSPlugin.TRI5
                 _baseDao.DoSimpleQueryWithRowCallbackDelegate(VW_TRI_FILE_CSV_DEFINITION_NAME, ID_COLUMN_NAME, metadata.ID, columnNamesString,
                     delegate(IDataReader reader)
                     {
-                        CsvExporter.ExportSingleCsvRow(_csvColumnNames, reader, outputCSVFilePath);
+                        //CsvExporter.ExportSingleCsvRow(_csvColumnNames, reader, true, outputCSVFilePath);
+                        CsvExporter.ExportSingleCsvRow(reader, true, outputCSVFilePath);
                     });
 
                 if (!File.Exists(outputCSVFilePath))

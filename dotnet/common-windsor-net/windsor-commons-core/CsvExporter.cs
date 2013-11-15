@@ -40,7 +40,7 @@ namespace Windsor.Commons.Core
                     bool isFirst = true;
                     foreach (PropertyInfo property in properties)
                     {
-                        ExportCsvValue(property.Name, writer, ref isFirst);
+                        ExportCsvValue(property.Name, writer, false, ref isFirst);
                     }
                     writer.WriteLine();
                     foreach (object obj in queryable)
@@ -49,7 +49,7 @@ namespace Windsor.Commons.Core
                         foreach (PropertyInfo property in properties)
                         {
                             var value = property.GetValue(obj, null);
-                            ExportCsvValue(value, writer, ref isFirst);
+                            ExportCsvValue(value, writer, false, ref isFirst);
                         }
                         writer.WriteLine();
                     }
@@ -62,34 +62,44 @@ namespace Windsor.Commons.Core
                 throw;
             }
         }
-        public static string ExportCsvToTempFile(ICollection<string> columnNames, IDataReader reader, string baseExportFileName)
+        public static string ExportCsvToTempFile(ICollection<string> columnNames, IDataReader reader, bool alwaysQuoteValues, string baseExportFileName)
         {
             string tempFilePath = GetTempCsvFilePath(baseExportFileName);
 
-            ExportCsv(columnNames, reader, tempFilePath);
+            ExportCsv(columnNames, reader, alwaysQuoteValues, tempFilePath);
 
             return tempFilePath;
         }
-        public static void ExportCsv(ICollection<string> columnNames, IDataReader reader, string filePath)
+        public static void ExportCsv(ICollection<string> columnNames, IDataReader reader, bool alwaysQuoteValues, string filePath)
         {
             FileUtils.SafeDeleteFile(filePath);
 
             using (FileStream fs = File.OpenWrite(filePath))
             {
-                ExportCsv(columnNames, reader, fs);
+                ExportCsv(columnNames, reader, alwaysQuoteValues, fs);
             }
         }
         // Assumes reader.Read() has already been called to write a single row
-        public static void ExportSingleCsvRow(ICollection<string> columnNames, IDataReader reader, string filePath)
+        public static void ExportSingleCsvRow(ICollection<string> columnNames, IDataReader reader, bool alwaysQuoteValues, string filePath)
         {
             FileUtils.SafeDeleteFile(filePath);
 
             using (FileStream fs = File.OpenWrite(filePath))
             {
-                ExportSingleCsvRow(columnNames, reader, fs);
+                ExportSingleCsvRow(columnNames, reader, alwaysQuoteValues, fs);
             }
         }
-        public static void ExportCsv(ICollection<string> columnNames, IDataReader reader, Stream stream)
+        // Assumes reader.Read() has already been called to write a single row
+        public static void ExportSingleCsvRow(IDataReader reader, bool alwaysQuoteValues, string filePath)
+        {
+            FileUtils.SafeDeleteFile(filePath);
+
+            using (FileStream fs = File.OpenWrite(filePath))
+            {
+                ExportSingleCsvRow(reader, alwaysQuoteValues, fs);
+            }
+        }
+        public static void ExportCsv(ICollection<string> columnNames, IDataReader reader, bool alwaysQuoteValues, Stream stream)
         {
             try
             {
@@ -98,13 +108,13 @@ namespace Windsor.Commons.Core
                     bool isFirst = true;
                     foreach (string columnName in columnNames)
                     {
-                        ExportCsvValue(columnName, writer, ref isFirst);
+                        ExportCsvValue(columnName, writer, false, ref isFirst);
                     }
                     writer.WriteLine();
                     object[] fieldValues = new object[columnNames.Count];
                     while (reader.Read())
                     {
-                        ExportCsvRow(reader, writer, fieldValues);
+                        ExportCsvRow(reader, alwaysQuoteValues, writer, fieldValues);
                     }
                     writer.Flush();
                 }
@@ -116,20 +126,14 @@ namespace Windsor.Commons.Core
             }
         }
         // Assumes reader.Read() has already been called to write a single row
-        public static void ExportSingleCsvRow(ICollection<string> columnNames, IDataReader reader, Stream stream)
+        public static void ExportSingleCsvRow(IDataReader reader, bool alwaysQuoteValues, Stream stream)
         {
             try
             {
                 using (StreamWriter writer = new StreamWriter(stream, Encoding.UTF8, 1024 * 64))
                 {
-                    bool isFirst = true;
-                    foreach (string columnName in columnNames)
-                    {
-                        ExportCsvValue(columnName, writer, ref isFirst);
-                    }
-                    writer.WriteLine();
-                    object[] fieldValues = new object[columnNames.Count];
-                    ExportCsvRow(reader, writer, fieldValues);
+                    object[] fieldValues = new object[reader.FieldCount];
+                    ExportCsvRow(reader, alwaysQuoteValues, writer, fieldValues);
                     writer.Flush();
                 }
             }
@@ -139,7 +143,31 @@ namespace Windsor.Commons.Core
                 throw;
             }
         }
-        private static void ExportCsvRow(IDataReader reader, StreamWriter writer, object[] fieldValueStorage)
+        // Assumes reader.Read() has already been called to write a single row
+        public static void ExportSingleCsvRow(ICollection<string> columnNames, IDataReader reader, bool alwaysQuoteValues, Stream stream)
+        {
+            try
+            {
+                using (StreamWriter writer = new StreamWriter(stream, Encoding.UTF8, 1024 * 64))
+                {
+                    bool isFirst = true;
+                    foreach (string columnName in columnNames)
+                    {
+                        ExportCsvValue(columnName, writer, false, ref isFirst);
+                    }
+                    writer.WriteLine();
+                    object[] fieldValues = new object[columnNames.Count];
+                    ExportCsvRow(reader, alwaysQuoteValues, writer, fieldValues);
+                    writer.Flush();
+                }
+            }
+            catch (Exception)
+            {
+                DebugUtils.CheckDebuggerBreak();
+                throw;
+            }
+        }
+        private static void ExportCsvRow(IDataReader reader, bool alwaysQuoteValues, StreamWriter writer, object[] fieldValueStorage)
         {
             try
             {
@@ -147,7 +175,7 @@ namespace Windsor.Commons.Core
                 bool isFirst = true;
                 foreach (object rowValue in fieldValueStorage)
                 {
-                    ExportCsvValue(rowValue, writer, ref isFirst);
+                    ExportCsvValue(rowValue, writer, alwaysQuoteValues, ref isFirst);
                 }
                 writer.WriteLine();
             }
@@ -165,7 +193,7 @@ namespace Windsor.Commons.Core
             string tempFilePath = Path.Combine(parentFolderPath, fileName);
             return tempFilePath;
         }
-        public static void ExportCsvValue(object value, StreamWriter writer, ref bool isFirst)
+        public static void ExportCsvValue(object value, StreamWriter writer, bool alwaysQuoteValues, ref bool isFirst)
         {
             string valueString;
             if (value == null)
@@ -175,28 +203,35 @@ namespace Windsor.Commons.Core
             else
             {
                 valueString = value.ToString();
-                bool needsWrapping = false;
-                if (valueString.Contains('\"'))
+                if (alwaysQuoteValues)
                 {
-                    valueString = valueString.Replace("\"", "\"\"");
-                    needsWrapping = true;
+                    valueString = string.Format("\"{0}\"", valueString);
                 }
-                if (!needsWrapping)
+                else
                 {
-                    foreach (char charValue in valueString)
+                    bool needsWrapping = false;
+                    if (valueString.Contains('\"'))
                     {
-                        bool invalidChar = (charValue == ',') ||
-                            !(char.IsLetterOrDigit(charValue) || (charValue == ' ') || char.IsPunctuation(charValue) || char.IsSymbol(charValue));
-                        if ( invalidChar )
+                        valueString = valueString.Replace("\"", "\"\"");
+                        needsWrapping = true;
+                    }
+                    if (!needsWrapping)
+                    {
+                        foreach (char charValue in valueString)
                         {
-                            needsWrapping = true;
-                            break;
+                            bool invalidChar = (charValue == ',') ||
+                                !(char.IsLetterOrDigit(charValue) || (charValue == ' ') || char.IsPunctuation(charValue) || char.IsSymbol(charValue));
+                            if (invalidChar)
+                            {
+                                needsWrapping = true;
+                                break;
+                            }
                         }
                     }
-                }
-                if (needsWrapping)
-                {
-                    valueString = "\"" + valueString + "\"";
+                    if (needsWrapping)
+                    {
+                        valueString = string.Format("\"{0}\"", valueString);
+                    }
                 }
             }
             if (isFirst)
