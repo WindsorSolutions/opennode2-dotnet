@@ -4,14 +4,14 @@
     <parent>
         <groupId>com.windsor.node.plugin</groupId>
         <artifactId>node-plugin</artifactId>
-        <version>2.08</version>
+        <version>2.09-SNAPSHOT</version>
     </parent>
     <artifactId>node-plugin-icisnpdes40</artifactId>
     <packaging>jar</packaging>
     <name>Node Plugin - ICIS NPDES v4.1</name>
     <properties>
         <node.plugin.name>icisnpdes40</node.plugin.name>
-        <node.plugin.build.number>01</node.plugin.build.number>
+        <node.plugin.build.number>00</node.plugin.build.number>
         <node.plugin.description>Submits data to EPA ICIS-NPDES System. Data to be submitted must be loaded into the staging tables that accompany this plugin.</node.plugin.description>
         <node.plugin.help.text>Integrated Compliance Information System - NPDES Plugin</node.plugin.help.text>
     </properties>

@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.windsor.node.app</groupId>
         <artifactId>node-app</artifactId>
-        <version>2.08</version>
+        <version>2.09-SNAPSHOT</version>
     </parent>
     <artifactId>node-app-assemble</artifactId>
     <packaging>pom</packaging>
@@ -24,7 +24,7 @@
                         <inherited>false</inherited>
                         <configuration>
                             <appendAssemblyId>false</appendAssemblyId>
-                            <finalName>java_OpenNode2_v${node.dist.version}_${dist.name}</finalName>
+                            <finalName>java_OpenNode2_v${node.dist.version}${node.dist.patch.version}_${dist.name}</finalName>
                             <outputDirectory>${project.parent.basedir}/../dist</outputDirectory>
                             <descriptors>
                                 <descriptor>src/main/assembly/assembly.xml</descriptor>
