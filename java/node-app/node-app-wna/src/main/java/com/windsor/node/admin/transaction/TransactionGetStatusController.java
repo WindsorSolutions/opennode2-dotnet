@@ -68,9 +68,12 @@ public class TransactionGetStatusController extends AbstractController
             oldPartner.setUrl(trans.getNetworkEndpointUrl());
             oldPartner.setVersion(trans.getNetworkEndpointVersion());
             NodeClientService ncl = getNodeClientFactory().makeAndConfigure(oldPartner);
+
+            //remote call
             TransactionStatus status = ncl.getStatus(trans.getNetworkId());
-            //TODO fix this service to have an actual save method
-            getTransactionService().update(transactionId, status.getStatus(), visit);
+
+            trans.setStatus(status);
+            getTransactionService().save(trans, visit);
         }
         return new ModelAndView("redirect:tran.htm?id=" + transactionId);
     }

@@ -425,7 +425,7 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao
 
         tran.setId(UUIDGenerator.makeId());
         tran.setFlow(dataFlow);
-        tran.setStatus(new TransactionStatus(initialStatus, "Transaction Created"));
+        tran.setStatus(new TransactionStatus(tran.getId(), initialStatus, "Transaction Created"));
         tran.setModifiedById(visit.getUserAccount().getId());
         tran.setWebMethod(callingMethodType);
 
@@ -459,9 +459,10 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao
         tran.setId(UUIDGenerator.makeId());
         tran.setFlow(flowDao.get(schedule.getFlowId()));
         //tran.setNetworkId(tran.getId());//FIXME this seems bogus, there is no network id unless it's from the network
-        tran.setStatus(new TransactionStatus(status, "Transaction Created"));
+        tran.setStatus(new TransactionStatus(tran.getId(), status, "Transaction Created"));
         tran.setModifiedById(schedule.getModifiedById());
         tran.setWebMethod(method);
+        tran.setOperation(schedule.getSourceOperation());
         //TODO set EndpointVersion, no use yet as no functionality that would set it makes use of the updated function, will fix the function to work for non schedules
         if(schedule.getSourceType() == ScheduledItemSourceType.WebServiceQuery
                         || schedule.getSourceType() == ScheduledItemSourceType.WebServiceSolicit)

@@ -394,7 +394,7 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
 
                 getTransactionDao().save(transaction);
 
-                sendEmailsToContacts(transaction, result);
+                sendEmailsToContacts(transaction, result, responseZipDoc);
             }
             catch(Exception e)
             {
@@ -496,7 +496,13 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
         return responseZipDoc;
     }
 
-    private void sendEmailsToContacts(NodeTransaction transaction, ProcessContentResult result) {
+    private void sendEmailsToContacts(NodeTransaction transaction, ProcessContentResult result, Document responseZipDoc)
+    {
+        List<Document> attachments = new ArrayList<Document>();
+        if(responseZipDoc != null)
+        {
+            attachments.add(responseZipDoc);
+        }
 
         String allEmails = getConfigValueAsString(SERVICE_PARAM_NOTIFICATION_EMAIL_ADDRS.getName(), false);
 
@@ -508,7 +514,7 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
 
             for(int i = 0; i < emails.length; i++) {
 
-                getNotificationHelper().sendTransactionStatusUpdate(transaction, emails[i], transaction.getFlow().getName());
+                getNotificationHelper().sendTransactionStatusUpdate(transaction, emails[i], transaction.getFlow().getName(), attachments);
             }
 
             result.getAuditEntries().add(new ActivityEntry("Sent email notifications."));

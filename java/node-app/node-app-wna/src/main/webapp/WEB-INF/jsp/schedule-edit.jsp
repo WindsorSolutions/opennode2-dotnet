@@ -274,9 +274,7 @@
 
                                 <!-- SERVICE DROP-DOWN -->
                                 <div id="sourceTypeS" style="display:<c:out value="${sourceTypeS}"/>;" > 
-                                <select id="sourceServiceList" name="serviceList" 
-                                    onchange="$('#sourceCommonId').val(this.options[selectedIndex].value); loadLocalArgList();"  
-                                    style="width:96%;">
+                                <select id="sourceServiceList" name="serviceList" style="width:96%;">
                                     <c:choose>
                                         <c:when test="${command.flowId == null || command.flowId ==''}">
                                             <option value=""></option>
@@ -522,6 +520,11 @@
         //existing ScheduledItem, disable some features
         $("#flowId").attr('disabled', 'disabled');
         </c:if>
+        $("#sourceServiceList").change(function()
+	    {
+	        loadLocalArgList();
+	        $('#sourceCommonId').val(this.options[selectedIndex].value);
+	    });
 	});
 
     function loadLocalArgList()
@@ -542,7 +545,6 @@
             {
                 //figure out how many existing arguments there are
                 var newIndexCount = $(".scheduleArgumentDiv").size();
-                //alert(newIndexCount);
                 //since index is 0 based and length is 1 based counting, adding 1 and removing 1 results in the same value
                 var newDiv = '<div id="scheduleArgumentDiv' + newIndexCount + '"  class="scheduleArgumentDiv" data-index="' + newIndexCount + '">';
                 newDiv += '<span style="vertical-align:bottom;">';
@@ -551,7 +553,6 @@
                 newDiv += '\n<img class="deleteParameterX" alt="Delete Parameter" src="img/red-x.png">';
                 newDiv += '</span>';
                 newDiv += '</div>';
-                //alert(newDiv);
                 $("#scheduleArgumentsContainerDiv").append(newDiv);
             });
             $(".deleteParameterX").click(function()

@@ -557,7 +557,7 @@ public class ContentServiceImpl extends BaseService implements ContentService,
             // mapped, than save the request for processing
             if (submitProcessingService != null) {
 
-                // Savew Request
+                // Save Request
                 DataRequest submitProcessingRequest = new DataRequest();
                 submitProcessingRequest.setModifiedById(account.getId());
                 submitProcessingRequest.setNotifications(content
@@ -572,7 +572,8 @@ public class ContentServiceImpl extends BaseService implements ContentService,
             }
 
             TransactionStatus status = new TransactionStatus();
-            status.setTransactionId(tran.getNetworkId());
+            //status.setTransactionId(tran.getNetworkId());
+            status.setTransactionId(tran.getId());
             status.setDescription("Received " + content.getDocuments().size()
                     + " documents");
             status.setStatus(CommonTransactionStatusCode.Received);

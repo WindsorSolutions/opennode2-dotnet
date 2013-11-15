@@ -32,8 +32,9 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.windsor.node.service.helper;
 
 import java.io.File;
-
+import java.util.List;
 import com.windsor.node.common.domain.DataRequest;
+import com.windsor.node.common.domain.Document;
 import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.ScheduledItem;
 import com.windsor.node.common.domain.UserAccount;
@@ -65,5 +66,7 @@ public interface NotificationHelper {
 
     void sendTransactionStatusUpdate(NodeTransaction transaction,
             String emailAddress, String dataFlowName);
+    void sendTransactionStatusUpdate(NodeTransaction transaction,
+            String emailAddress, String dataFlowName, List<Document> attachments);
 
 }

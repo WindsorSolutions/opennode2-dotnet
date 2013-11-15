@@ -19,6 +19,7 @@
 			</list>
 		</property>
         <property name="idGenerator" ref="idGenerator" />
+        <property name="accountService" ref="accountService" />
 	</bean>
 
 

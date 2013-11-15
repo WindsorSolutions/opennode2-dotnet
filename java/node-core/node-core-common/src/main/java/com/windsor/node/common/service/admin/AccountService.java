@@ -32,8 +32,8 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.windsor.node.common.service.admin;
 
 import java.util.List;
-
 import com.windsor.node.common.domain.AuthenticationRequest;
+import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.NodeVisit;
 import com.windsor.node.common.domain.UserAccount;
 
@@ -141,5 +141,12 @@ public interface AccountService {
      * @param visit
      */
     void delete(UserAccount instance, NodeVisit visit);
+
+    /**
+     * Validates a user's access to a Flow
+     * @param visit
+     * @param transaction
+     */
+    void validateAccess(NodeVisit visit, NodeTransaction transaction);
 
 }

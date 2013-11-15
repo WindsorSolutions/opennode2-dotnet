@@ -32,10 +32,8 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.windsor.node.service.admin;
 
 import java.util.List;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
-
 import com.windsor.node.common.domain.Activity;
 import com.windsor.node.common.domain.ActivityType;
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
@@ -49,6 +47,7 @@ import com.windsor.node.common.domain.RequestType;
 import com.windsor.node.common.domain.SystemRoleType;
 import com.windsor.node.common.domain.TransactionStatus;
 import com.windsor.node.common.domain.UserAccount;
+import com.windsor.node.common.service.admin.AccountService;
 import com.windsor.node.common.service.admin.TransactionService;
 import com.windsor.node.data.dao.FlowDao;
 import com.windsor.node.data.dao.RequestDao;
@@ -64,6 +63,7 @@ public class TransactionServiceImpl extends BaseService implements
     private RequestDao requestDao;
     private String[] permittedDocumentTypes;
     private IdGenerator idGenerator;
+    private AccountService accountService;
 
     public void afterPropertiesSet() {
 
@@ -146,9 +146,7 @@ public class TransactionServiceImpl extends BaseService implements
     }
 
     /**
-     * @see com.windsor.node.common.service.admin.TransactionService#update(java.lang.String,
-     *      com.windsor.node.common.domain.CommonTransactionStatusCode,
-     *      com.windsor.node.common.domain.NodeVisit)
+     * @deprecated Use <code>save(NodeTransaction transaction, NodeVisit visit)</code> instead
      */
     public void update(String transactionId,
             CommonTransactionStatusCode status, NodeVisit visit) {
@@ -188,6 +186,24 @@ public class TransactionServiceImpl extends BaseService implements
             getActivityDao().make(logEntry);
         }
 
+    }
+
+    @Override
+    public void save(NodeTransaction transaction, NodeVisit visit)
+    {
+        if (transaction == null)
+        {
+            throw new IllegalArgumentException("NodeTransaction transaction cannot be null.");
+        }
+        if(visit == null)
+        {
+            throw new IllegalArgumentException("NodeVisit visit cannot be null.");
+        }
+
+        validateByRole(visit, SystemRoleType.Authed);
+        getAccountService().validateAccess(visit, transaction);
+
+        getTransactionDao().save(transaction);
     }
 
     /**
@@ -312,6 +328,11 @@ public class TransactionServiceImpl extends BaseService implements
 
         List<NodeTransaction> resultList = transactionDao.get(method);
         return resultList;
+    }
+
+    public TransactionDao getTransactionDao()
+    {
+        return transactionDao;
     }
 
     /**
@@ -481,6 +502,16 @@ public class TransactionServiceImpl extends BaseService implements
 
     public void setIdGenerator(IdGenerator idGenerator) {
         this.idGenerator = idGenerator;
+    }
+
+    public AccountService getAccountService()
+    {
+        return accountService;
+    }
+
+    public void setAccountService(AccountService accountService)
+    {
+        this.accountService = accountService;
     }
 
 }

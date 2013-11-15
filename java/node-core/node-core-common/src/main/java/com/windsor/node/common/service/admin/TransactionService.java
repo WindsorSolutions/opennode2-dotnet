@@ -46,6 +46,7 @@ public interface TransactionService {
      * @param transactionId
      * @param status
      * @param visit
+     * @deprecated Use a save method instead
      */
     void update(String transactionId, CommonTransactionStatusCode status,
             NodeVisit visit);
@@ -96,4 +97,12 @@ public interface TransactionService {
      * @return
      */
     List<NodeTransaction> getByMethodType(NodeMethodType method, NodeVisit visit);
+
+    /**
+     * Save the NodeTransaction object
+     * 
+     * @param trans
+     * @param visit
+     */
+    void save(NodeTransaction trans, NodeVisit visit);
 }

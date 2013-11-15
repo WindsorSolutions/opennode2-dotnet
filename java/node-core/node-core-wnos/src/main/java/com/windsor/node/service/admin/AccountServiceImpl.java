@@ -33,13 +33,12 @@ package com.windsor.node.service.admin;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
-
 import com.windsor.node.common.domain.Activity;
 import com.windsor.node.common.domain.ActivityType;
 import com.windsor.node.common.domain.AuthenticationRequest;
+import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.NodeVisit;
 import com.windsor.node.common.domain.ServiceRequestAuthorizationType;
 import com.windsor.node.common.domain.SystemRoleType;
@@ -686,6 +685,23 @@ public class AccountServiceImpl extends BaseService implements AccountService,
             getActivityDao().make(logEntry);
         }
 
+    }
+
+    public void validateAccess(NodeVisit visit, NodeTransaction transaction)
+    {
+        if(visit == null)
+        {
+            throw new IllegalArgumentException("NodeVisit visit for method validateAccess cannot be null.");
+        }
+        if(transaction == null)
+        {
+            throw new IllegalArgumentException("NodeTransaction transaction for method validateAccess cannot be null.");
+        }
+        else if(transaction.getFlow() == null)
+        {
+            throw new IllegalArgumentException("DataFlow member flow of NodeTransaction transaction for method validateAccess cannot be null.");
+        }
+        validateAccess(visit.getUserAccount(), transaction.getFlow().getId());
     }
 
     public void validateAccess(UserAccount account, String flowId) {

@@ -11,3 +11,13 @@
                                         </option>
                                     </c:forEach>
                                 </select>
+<script type="text/javascript">
+    $(document).ready(function()
+    {
+        $("#sourceServiceList").change(function()
+        {
+            loadLocalArgList();
+            $('#sourceCommonId').val(this.options[selectedIndex].value);
+        });
+    });
+</script>

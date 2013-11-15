@@ -31,21 +31,25 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.windsor.node.service.helper.email;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.InputStream;
 import java.rmi.RemoteException;
+import java.util.List;
 import java.util.Map;
-
 import javax.mail.internet.MimeMessage;
-
 import org.apache.commons.lang3.StringUtils;
+import org.apache.velocity.app.VelocityEngine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.ui.velocity.VelocityEngineUtils;
+import com.windsor.node.common.domain.Document;
+import com.windsor.node.common.exception.WinNodeException;
 
 public class EmailMessagePreparator implements InitializingBean,
         MimeMessagePreparator {
@@ -65,6 +69,7 @@ public class EmailMessagePreparator implements InitializingBean,
     private Map data;
 
     private File attachment;
+    private List<Document> attachments;
 
     public void configure(String to, Map data) {
         this.to = to;
@@ -76,6 +81,12 @@ public class EmailMessagePreparator implements InitializingBean,
         this.to = to;
         this.data = data;
         this.attachment = attachment;
+    }
+
+    public void configure(String to, Map data, List<Document> attachments) {
+        this.to = to;
+        this.data = data;
+        this.attachments = attachments;
     }
 
     /**
@@ -110,27 +121,42 @@ public class EmailMessagePreparator implements InitializingBean,
      * @throws Exception
      *             during runtime
      */
-    public void prepare(MimeMessage msg) throws Exception {
+    public void prepare(MimeMessage msg) throws Exception
+    {
 
         MimeMessageHelper helper = null;
-        try {
+        try
+        {
 
-            helper = new MimeMessageHelper(msg, attachment != null);
+            boolean isAttachments = attachment != null || (attachments != null && attachments.size() > 0);
+            helper = new MimeMessageHelper(msg, isAttachments);
 
             helper.setFrom(from);
             helper.setTo(to);
             helper.setSubject(subject);
 
-            helper.setText(VelocityEngineUtils.mergeTemplateIntoString(
-                    velocityEngine, template, data), true);
+            //TODO Set UTF-8 encoding for the new 3rd param (1 based counting) to get rid of deprecated 
+            helper.setText(VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, template, data), true);
 
-            if (attachment != null) {
-                helper.addAttachment(attachment.getName(),
-                        new FileSystemResource(attachment));
+            if(attachment != null)
+            {
+                helper.addAttachment(attachment.getName(), new FileSystemResource(attachment));
             }
-
-        } catch (Exception ex) {
-
+            if(attachments != null && attachments.size() > 0)
+            {
+                for(int i = 0; i < attachments.size(); i++)
+                {
+                    Document document = attachments.get(i);
+                    if(document != null)
+                    {
+                        ByteArrayResource resource = new ByteArrayResource(document.getContent());
+                        helper.addAttachment(document.getDocumentName(), resource);
+                    }
+                }
+            }
+        }
+        catch(Exception ex)
+        {
             logger.error("Error while preparing message: " + ex.getMessage());
             if(helper != null)
             {
@@ -138,11 +164,8 @@ public class EmailMessagePreparator implements InitializingBean,
             }
             logger.error(ex.getMessage(), ex);
 
-            throw new RuntimeException("Error while preparing message: "
-                    + ex.getMessage(), ex);
-
+            throw new WinNodeException("Error while preparing message: " + ex.getMessage(), ex);
         }
-
     }
 
     public void setVelocityEngine(VelocityEngine velocityEngine) {

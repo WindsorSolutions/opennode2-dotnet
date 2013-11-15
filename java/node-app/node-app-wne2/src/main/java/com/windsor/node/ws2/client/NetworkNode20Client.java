@@ -605,6 +605,10 @@ public class NetworkNode20Client implements NodeClientService {
             if (transaction.getWebMethod() == NodeMethodType.Solicit) {
                 transactionIdToSubmit = transaction.getNetworkId();
             }
+            else
+            {
+                //transactionIdToSubmit = transaction.getId();
+            }
 
             submitRequest.setTransactionId(transactionIdToSubmit);
 

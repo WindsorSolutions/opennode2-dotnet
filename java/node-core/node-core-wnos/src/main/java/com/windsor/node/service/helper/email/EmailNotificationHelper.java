@@ -37,15 +37,14 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-
 import com.windsor.node.common.domain.DataRequest;
+import com.windsor.node.common.domain.Document;
 import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.NotificationType;
 import com.windsor.node.common.domain.ScheduledItem;
@@ -594,14 +593,22 @@ public class EmailNotificationHelper implements InitializingBean,
 
     }
 
+    @Override
+    public void sendTransactionStatusUpdate(NodeTransaction transaction,
+            String emailAddress, String dataFlowName)
+    {
+        sendTransactionStatusUpdate(transaction, emailAddress, dataFlowName, null);
+    }
+
     /**
      * sendTransactionStatusUpdate
      *
      * @param tran
      */
+    //TODO fix to include actual DataFlow object rather than name
     @Override
     public void sendTransactionStatusUpdate(NodeTransaction transaction,
-            String emailAddress, String dataFlowName) {
+            String emailAddress, String dataFlowName, List<Document> attachments) {
 
         Map data = new HashMap();
 
@@ -613,7 +620,7 @@ public class EmailNotificationHelper implements InitializingBean,
 
         logger.debug("to: " + emailAddress);
 
-        transactionStatusPreparator.configure(emailAddress, data);
+        transactionStatusPreparator.configure(emailAddress, data, attachments);
 
         try {
             sender.send(transactionStatusPreparator);
