@@ -91,12 +91,12 @@ namespace Windsor.Node2008.WNOSPlugin.TRI5
 
             _pdfMetadataList = GetPDFMetadataList();
 
-            _csvColumnNames = GetCSVColumnNames();
-
             if (CollectionUtils.IsNullOrEmpty(_pdfMetadataList))
             {
                 return;
             }
+
+            _csvColumnNames = GetCSVColumnNames();
 
             _viewerBaseUri = ValidateHttpUrlConfigParameter(CONFIG_TRI_VIEWER_BASE_URL, 15);
             if (_viewerBaseUri.EndsWith("/"))
@@ -359,7 +359,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI5
                 });
             if (list.Count == 0)
             {
-                AppendAuditLogEvent("The view \"{0}\" did not contain any records", VW_TRI_PDF_METADATA_NAME);
+                AppendAuditLogEvent("The view \"{0}\" did not contain any records, this process will exit.", VW_TRI_PDF_METADATA_NAME);
             }
             else
             {

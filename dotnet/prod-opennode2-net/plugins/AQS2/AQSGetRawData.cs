@@ -50,6 +50,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
         protected const string PARAM_END_DATE_KEY = "EndDate";
         protected const string PARAM_SITE_ID_KEY = "SiteID";
         protected const string PARAM_COUNTY_CODE_KEY = "CountyCode";
+        protected const string PARAM_INCLUDE_RAW_RESULTS_ONLY_KEY = "IncludeRawResultsOnly";
 
         protected IRequestManager _requestManager;
         protected ITransactionManager _transactionManager;
@@ -64,6 +65,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
         protected string _commaSeparatedActionCodes;
         protected string _dataFilePath;
         protected bool _clearMetadataBeforeRun = true;
+        protected bool _includeRawResultsOnly;
         protected VersionType _aqsSchemaVersionType;
 
         public AQSGetRawData()
@@ -82,7 +84,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
             PrepareToGetData();
 
             var dataProvider = new AQSGetDataFromDatabase(_baseDao, _clearMetadataBeforeRun, _startDate, _endDate, _siteId,
-                                                          _countyCode, _commaSeparatedActionCodes);
+                                                          _countyCode, _commaSeparatedActionCodes, !_includeRawResultsOnly);
 
             AirQualitySubmissionType data = dataProvider.GetAirQualityData(this);
             data.Version = _aqsSchemaVersionType;
@@ -101,7 +103,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
             PrepareToGetData();
 
             var dataProvider = new AQSGetDataFromDatabase(_baseDao, _clearMetadataBeforeRun, _startDate, _endDate, _siteId,
-                                                          _countyCode, _commaSeparatedActionCodes);
+                                                          _countyCode, _commaSeparatedActionCodes, !_includeRawResultsOnly);
 
             AirQualitySubmissionType data = dataProvider.GetAirQualityData(this);
             data.Version = _aqsSchemaVersionType;
@@ -165,10 +167,12 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
             GetParameter(_dataRequest, PARAM_END_DATE_KEY, 1, out _endDate);
             TryGetParameter(_dataRequest, PARAM_SITE_ID_KEY, 2, ref _siteId);
             TryGetParameter(_dataRequest, PARAM_COUNTY_CODE_KEY, 3, ref _countyCode);
+            TryGetParameter(_dataRequest, PARAM_INCLUDE_RAW_RESULTS_ONLY_KEY, 4, ref _includeRawResultsOnly);
 
-            AppendAuditLogEvent("Validated request with parameters: {0} = {1}, {2} = {3}, {4} = {5}, {6} = {7}",
+            AppendAuditLogEvent("Validated request with parameters: {0} = {1}, {2} = {3}, {4} = {5}, {6} = {7}, {8} = {9}",
                                       PARAM_START_DATE_KEY, _startDate, PARAM_END_DATE_KEY, _endDate,
-                                      PARAM_SITE_ID_KEY, _siteId, PARAM_COUNTY_CODE_KEY, _countyCode);
+                                      PARAM_SITE_ID_KEY, _siteId, PARAM_COUNTY_CODE_KEY, _countyCode,
+                                      PARAM_INCLUDE_RAW_RESULTS_ONLY_KEY, _includeRawResultsOnly);
         }
         /// <summary>
         /// Return the Query, Solicit, or Execute data service parameters for specified data service.

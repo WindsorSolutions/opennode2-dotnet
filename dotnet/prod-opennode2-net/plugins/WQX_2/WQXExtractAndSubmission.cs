@@ -199,6 +199,12 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                 }
             }
 
+            if (_useSubmissionHistoryTable && (_startDate.HasValue || _endDate.HasValue || _lastUpdateDate.HasValue))
+            {
+                AppendAuditLogEvent("One or more schedule date-type parameters were specified for this service, so the WQX submission history table updating functionality has been disabled...");
+                _useSubmissionHistoryTable = false;
+            }
+
             AppendAuditLogEvent("Schedule parameters: {0} ({1}), {2} ({3}), {4} ({5}), {6} ({7})",
                                 EnumUtils.ToDescription(ExecuteWQXExtract.ScheduleParams.OrgId), _orgId,
                                 EnumUtils.ToDescription(ExecuteWQXExtract.ScheduleParams.ProjectId), _projectId ?? "Not specified",
@@ -221,10 +227,15 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                     ExecuteWQXExtract.DoExtract(this, _baseDao, _storedProcName, _commandTimeout, _orgId, _startDate, _endDate);
                     _scheduleRunDate = DateTime.Now;
                 }
-                else
+                else if (!string.IsNullOrEmpty(_projectId))
                 {
                     _scheduleRunDate =
                         ExecuteWQXExtract.DoExtract(this, _baseDao, _storedProcName, _commandTimeout, _orgId, _projectId);
+                }
+                else
+                {
+                    ExecuteWQXExtract.DoExtract(this, _baseDao, _storedProcName, _commandTimeout, _orgId, null, null);
+                    _scheduleRunDate = DateTime.Now;
                 }
             }
             else

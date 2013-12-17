@@ -45,11 +45,12 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
         private string _siteId;
         private string _countyCode;
         private string _commaSeparatedActionCodes;
+		private bool _includeBasicInfo;
 
 
         public AQSGetDataFromDatabase(SpringBaseDao baseDao, bool clearMetadataBeforeRun,
                                       DateTime startDate, DateTime endDate, string siteId,
-                                      string countyCode, string commaSeparatedActionCodes)
+									  string countyCode, string commaSeparatedActionCodes, bool includeBasicInfo)
         {
             _baseDao = baseDao;
             _clearMetadataBeforeRun = clearMetadataBeforeRun;
@@ -58,6 +59,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
             _siteId = siteId;
             _countyCode = countyCode;
             _commaSeparatedActionCodes = commaSeparatedActionCodes;
+			_includeBasicInfo=includeBasicInfo;
         }
 
         public List<FacilitySiteListType> GetFacilityList()
@@ -96,129 +98,130 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
                         SetListsIfNotEmpty(valueList, valueQualifierList, ref fac.SiteIdentifierDetails.Items,
                                            ref fac.SiteIdentifierDetails.ItemsElementName);
                     }
+					if (_includeBasicInfo)
+					{
+						fac.BasicSiteInformation=new BasicSiteInformationType();
+						if (dr.IsNull("ACTION_CD"))
+						{
+							// Default hard-coded value for original NV plugin
+							fac.BasicSiteInformation.ActionCode="I";
+						}
+						else
+						{
+							fac.BasicSiteInformation.ActionCode=Util.ToStr(dr["ACTION_CD"]);
+						}
 
-                    fac.BasicSiteInformation = new BasicSiteInformationType();
-                    if (dr.IsNull("ACTION_CD"))
-                    {
-                        // Default hard-coded value for original NV plugin
-                        fac.BasicSiteInformation.ActionCode = "I";
-                    }
-                    else
-                    {
-                        fac.BasicSiteInformation.ActionCode = Util.ToStr(dr["ACTION_CD"]);
-                    }
+						fac.BasicSiteInformation.FacilitySiteDetails=new FacilitySiteDetailsType();
+						fac.BasicSiteInformation.FacilitySiteDetails.SupportAgencyCode=Util.ToStr(dr["SUPPORT_AGENCY_CD"]);
+						fac.BasicSiteInformation.FacilitySiteDetails.LocationAddressText=Util.ToStr(dr["LOC_ADDR_TEXT"]);
+						fac.BasicSiteInformation.FacilitySiteDetails.CityCode=Util.ToStr(dr["CITY_CD"]);
+						fac.BasicSiteInformation.FacilitySiteDetails.AddressPostalCode=new AddressPostalCodeDataType();
+						fac.BasicSiteInformation.FacilitySiteDetails.AddressPostalCode.Value=Util.ToStr(dr["POSTAL_CODE"]);
+						fac.BasicSiteInformation.FacilitySiteDetails.LocalIdentifier=Util.ToStr(dr["LOCAL_ID"]);
+						fac.BasicSiteInformation.FacilitySiteDetails.LocalName=Util.ToStr(dr["LOCAL_NAME"]);
+						fac.BasicSiteInformation.FacilitySiteDetails.LocalRegionCode=Util.ToStr(dr["LOCAL_REGION_CD"]);
+						fac.BasicSiteInformation.FacilitySiteDetails.UrbanAreaCode=Util.ToStr(dr["URBAN_AREA_CD"]);
+						fac.BasicSiteInformation.FacilitySiteDetails.AQCRCode=Util.ToStr(dr["AQCR_CD"]);
+						fac.BasicSiteInformation.FacilitySiteDetails.LandUseIdentifier=Util.ToStr(dr["LAND_USE_ID"]);
+						fac.BasicSiteInformation.FacilitySiteDetails.LocationSettingIdentifier=Util.ToStr(dr["LOC_SETTING_ID"]);
+						fac.BasicSiteInformation.FacilitySiteDetails.SiteEstablishedDate=Util.ToStr(dr["SITE_EST_DATE"]);
+						fac.BasicSiteInformation.FacilitySiteDetails.SiteTerminatedDate=Util.ToStr(dr["SITE_TERM_DATE"]);
+						fac.BasicSiteInformation.FacilitySiteDetails.CongressionalDistrictCode=Util.ToStr(dr["CONG_DIST_CODE"]);
+						fac.BasicSiteInformation.FacilitySiteDetails.CensusBlockCode=Util.ToStr(dr["CENSUS_BLOCK_CD"]);
+						fac.BasicSiteInformation.FacilitySiteDetails.CensusBlockGroupCode=Util.ToStr(dr["CENSUS_BLOCK_GRP_CD"]);
+						fac.BasicSiteInformation.FacilitySiteDetails.CensusTractCode=Util.ToStr(dr["CENSUS_TRACT_CD"]);
+						fac.BasicSiteInformation.FacilitySiteDetails.ClassIAreaCode=Util.ToStr(dr["CLASS_AREA_CD"]);
+						fac.BasicSiteInformation.FacilitySiteDetails.HQEvaluationDate=Util.ToStr(dr["HQ_EVAL_DATE"]);
+						fac.BasicSiteInformation.FacilitySiteDetails.RegionalEvaluationDate=Util.ToStr(dr["REG_EVAL_DATE"]);
+						fac.BasicSiteInformation.FacilitySiteDetails.DirectionFromCityCode=Util.ToStr(dr["DIR_FROM_CITY_CD"]);
+						fac.BasicSiteInformation.FacilitySiteDetails.DistanceFromCityMeasure=Util.ToStr(dr["DIST_FROM_CITY_MSR"]);
+						fac.BasicSiteInformation.FacilitySiteDetails.MetSiteIdentifier=Util.ToStr(dr["MET_SITE_ID"]);
+						fac.BasicSiteInformation.FacilitySiteDetails.MetSiteTypeCode=Util.ToStr(dr["MET_SITE_TYPE_CD"]);
+						fac.BasicSiteInformation.FacilitySiteDetails.DistanceToMetSiteMeasure=Util.ToStr(dr["DIST_TO_MET_SITE_MSR"]);
+						fac.BasicSiteInformation.FacilitySiteDetails.DirectionToMetSiteCode=Util.ToStr(dr["DIR_TO_MET_SITE_CODE"]);
 
-                    fac.BasicSiteInformation.FacilitySiteDetails = new FacilitySiteDetailsType();
-                    fac.BasicSiteInformation.FacilitySiteDetails.SupportAgencyCode = Util.ToStr(dr["SUPPORT_AGENCY_CD"]);
-                    fac.BasicSiteInformation.FacilitySiteDetails.LocationAddressText = Util.ToStr(dr["LOC_ADDR_TEXT"]);
-                    fac.BasicSiteInformation.FacilitySiteDetails.CityCode = Util.ToStr(dr["CITY_CD"]);
-                    fac.BasicSiteInformation.FacilitySiteDetails.AddressPostalCode = new AddressPostalCodeDataType();
-                    fac.BasicSiteInformation.FacilitySiteDetails.AddressPostalCode.Value = Util.ToStr(dr["POSTAL_CODE"]);
-                    fac.BasicSiteInformation.FacilitySiteDetails.LocalIdentifier = Util.ToStr(dr["LOCAL_ID"]);
-                    fac.BasicSiteInformation.FacilitySiteDetails.LocalName = Util.ToStr(dr["LOCAL_NAME"]);
-                    fac.BasicSiteInformation.FacilitySiteDetails.LocalRegionCode = Util.ToStr(dr["LOCAL_REGION_CD"]);
-                    fac.BasicSiteInformation.FacilitySiteDetails.UrbanAreaCode = Util.ToStr(dr["URBAN_AREA_CD"]);
-                    fac.BasicSiteInformation.FacilitySiteDetails.AQCRCode = Util.ToStr(dr["AQCR_CD"]);
-                    fac.BasicSiteInformation.FacilitySiteDetails.LandUseIdentifier = Util.ToStr(dr["LAND_USE_ID"]);
-                    fac.BasicSiteInformation.FacilitySiteDetails.LocationSettingIdentifier = Util.ToStr(dr["LOC_SETTING_ID"]);
-                    fac.BasicSiteInformation.FacilitySiteDetails.SiteEstablishedDate = Util.ToStr(dr["SITE_EST_DATE"]);
-                    fac.BasicSiteInformation.FacilitySiteDetails.SiteTerminatedDate = Util.ToStr(dr["SITE_TERM_DATE"]);
-                    fac.BasicSiteInformation.FacilitySiteDetails.CongressionalDistrictCode = Util.ToStr(dr["CONG_DIST_CODE"]);
-                    fac.BasicSiteInformation.FacilitySiteDetails.CensusBlockCode = Util.ToStr(dr["CENSUS_BLOCK_CD"]);
-                    fac.BasicSiteInformation.FacilitySiteDetails.CensusBlockGroupCode = Util.ToStr(dr["CENSUS_BLOCK_GRP_CD"]);
-                    fac.BasicSiteInformation.FacilitySiteDetails.CensusTractCode = Util.ToStr(dr["CENSUS_TRACT_CD"]);
-                    fac.BasicSiteInformation.FacilitySiteDetails.ClassIAreaCode = Util.ToStr(dr["CLASS_AREA_CD"]);
-                    fac.BasicSiteInformation.FacilitySiteDetails.HQEvaluationDate = Util.ToStr(dr["HQ_EVAL_DATE"]);
-                    fac.BasicSiteInformation.FacilitySiteDetails.RegionalEvaluationDate = Util.ToStr(dr["REG_EVAL_DATE"]);
-                    fac.BasicSiteInformation.FacilitySiteDetails.DirectionFromCityCode = Util.ToStr(dr["DIR_FROM_CITY_CD"]);
-                    fac.BasicSiteInformation.FacilitySiteDetails.DistanceFromCityMeasure = Util.ToStr(dr["DIST_FROM_CITY_MSR"]);
-                    fac.BasicSiteInformation.FacilitySiteDetails.MetSiteIdentifier = Util.ToStr(dr["MET_SITE_ID"]);
-                    fac.BasicSiteInformation.FacilitySiteDetails.MetSiteTypeCode = Util.ToStr(dr["MET_SITE_TYPE_CD"]);
-                    fac.BasicSiteInformation.FacilitySiteDetails.DistanceToMetSiteMeasure = Util.ToStr(dr["DIST_TO_MET_SITE_MSR"]);
-                    fac.BasicSiteInformation.FacilitySiteDetails.DirectionToMetSiteCode = Util.ToStr(dr["DIR_TO_MET_SITE_CODE"]);
+						if (fac.BasicSiteInformation.FacilitySiteDetails.AddressPostalCode.Value==null)
+						{
+							fac.BasicSiteInformation.FacilitySiteDetails.AddressPostalCode=null;
+						}
+						if (( fac.BasicSiteInformation.FacilitySiteDetails.SupportAgencyCode==null )&&
+							 ( fac.BasicSiteInformation.FacilitySiteDetails.LocationAddressText==null )&&
+							 ( fac.BasicSiteInformation.FacilitySiteDetails.CityCode==null )&&
+							 ( fac.BasicSiteInformation.FacilitySiteDetails.AddressPostalCode==null )&&
+							 ( fac.BasicSiteInformation.FacilitySiteDetails.LocalIdentifier==null )&&
+							 ( fac.BasicSiteInformation.FacilitySiteDetails.LocalName==null )&&
+							 ( fac.BasicSiteInformation.FacilitySiteDetails.LocalRegionCode==null )&&
+							 ( fac.BasicSiteInformation.FacilitySiteDetails.UrbanAreaCode==null )&&
+							 ( fac.BasicSiteInformation.FacilitySiteDetails.AQCRCode==null )&&
+							 ( fac.BasicSiteInformation.FacilitySiteDetails.LandUseIdentifier==null )&&
+							 ( fac.BasicSiteInformation.FacilitySiteDetails.LocationSettingIdentifier==null )&&
+							 ( fac.BasicSiteInformation.FacilitySiteDetails.SiteEstablishedDate==null )&&
+							 ( fac.BasicSiteInformation.FacilitySiteDetails.SiteTerminatedDate==null )&&
+							 ( fac.BasicSiteInformation.FacilitySiteDetails.CongressionalDistrictCode==null )&&
+							 ( fac.BasicSiteInformation.FacilitySiteDetails.CensusBlockCode==null )&&
+							 ( fac.BasicSiteInformation.FacilitySiteDetails.CensusBlockGroupCode==null )&&
+							 ( fac.BasicSiteInformation.FacilitySiteDetails.CensusTractCode==null )&&
+							 ( fac.BasicSiteInformation.FacilitySiteDetails.ClassIAreaCode==null )&&
+							 ( fac.BasicSiteInformation.FacilitySiteDetails.HQEvaluationDate==null )&&
+							 ( fac.BasicSiteInformation.FacilitySiteDetails.RegionalEvaluationDate==null )&&
+							 ( fac.BasicSiteInformation.FacilitySiteDetails.DirectionFromCityCode==null )&&
+							 ( fac.BasicSiteInformation.FacilitySiteDetails.DistanceFromCityMeasure==null )&&
+							 ( fac.BasicSiteInformation.FacilitySiteDetails.MetSiteIdentifier==null )&&
+							 ( fac.BasicSiteInformation.FacilitySiteDetails.MetSiteTypeCode==null )&&
+							 ( fac.BasicSiteInformation.FacilitySiteDetails.DistanceToMetSiteMeasure==null )&&
+							 ( fac.BasicSiteInformation.FacilitySiteDetails.DirectionToMetSiteCode==null ))
+						{
+							fac.BasicSiteInformation.FacilitySiteDetails=null;
+						}
 
-                    if (fac.BasicSiteInformation.FacilitySiteDetails.AddressPostalCode.Value == null)
-                    {
-                        fac.BasicSiteInformation.FacilitySiteDetails.AddressPostalCode = null;
-                    }
-                    if ((fac.BasicSiteInformation.FacilitySiteDetails.SupportAgencyCode == null) &&
-                         (fac.BasicSiteInformation.FacilitySiteDetails.LocationAddressText == null) &&
-                         (fac.BasicSiteInformation.FacilitySiteDetails.CityCode == null) &&
-                         (fac.BasicSiteInformation.FacilitySiteDetails.AddressPostalCode == null) &&
-                         (fac.BasicSiteInformation.FacilitySiteDetails.LocalIdentifier == null) &&
-                         (fac.BasicSiteInformation.FacilitySiteDetails.LocalName == null) &&
-                         (fac.BasicSiteInformation.FacilitySiteDetails.LocalRegionCode == null) &&
-                         (fac.BasicSiteInformation.FacilitySiteDetails.UrbanAreaCode == null) &&
-                         (fac.BasicSiteInformation.FacilitySiteDetails.AQCRCode == null) &&
-                         (fac.BasicSiteInformation.FacilitySiteDetails.LandUseIdentifier == null) &&
-                         (fac.BasicSiteInformation.FacilitySiteDetails.LocationSettingIdentifier == null) &&
-                         (fac.BasicSiteInformation.FacilitySiteDetails.SiteEstablishedDate == null) &&
-                         (fac.BasicSiteInformation.FacilitySiteDetails.SiteTerminatedDate == null) &&
-                         (fac.BasicSiteInformation.FacilitySiteDetails.CongressionalDistrictCode == null) &&
-                         (fac.BasicSiteInformation.FacilitySiteDetails.CensusBlockCode == null) &&
-                         (fac.BasicSiteInformation.FacilitySiteDetails.CensusBlockGroupCode == null) &&
-                         (fac.BasicSiteInformation.FacilitySiteDetails.CensusTractCode == null) &&
-                         (fac.BasicSiteInformation.FacilitySiteDetails.ClassIAreaCode == null) &&
-                         (fac.BasicSiteInformation.FacilitySiteDetails.HQEvaluationDate == null) &&
-                         (fac.BasicSiteInformation.FacilitySiteDetails.RegionalEvaluationDate == null) &&
-                         (fac.BasicSiteInformation.FacilitySiteDetails.DirectionFromCityCode == null) &&
-                         (fac.BasicSiteInformation.FacilitySiteDetails.DistanceFromCityMeasure == null) &&
-                         (fac.BasicSiteInformation.FacilitySiteDetails.MetSiteIdentifier == null) &&
-                         (fac.BasicSiteInformation.FacilitySiteDetails.MetSiteTypeCode == null) &&
-                         (fac.BasicSiteInformation.FacilitySiteDetails.DistanceToMetSiteMeasure == null) &&
-                         (fac.BasicSiteInformation.FacilitySiteDetails.DirectionToMetSiteCode == null))
-                    {
-                        fac.BasicSiteInformation.FacilitySiteDetails = null;
-                    }
+						fac.BasicSiteInformation.GeographicMonitoringLocation=new GeographicMonitoringLocationType();
+						{
+							List<object> valueList=null;
+							List<ItemsChoiceType1> valueQualifierList=null;
+							AddToListsIfNotEmpty(Util.ToStr(dr["LATITUDE"]), ItemsChoiceType1.LatitudeMeasure,
+												 ref valueList, ref valueQualifierList);
+							AddToListsIfNotEmpty(Util.ToStr(dr["LONGITUDE"]), ItemsChoiceType1.LongitudeMeasure,
+												 ref valueList, ref valueQualifierList);
+							AddToListsIfNotEmpty(Util.ToStr(dr["UTM_ZONE_CD"]), ItemsChoiceType1.UTMZoneCode,
+												 ref valueList, ref valueQualifierList);
+							AddToListsIfNotEmpty(Util.ToStr(dr["UTM_EASTING"]), ItemsChoiceType1.UTMEastingMeasure,
+												 ref valueList, ref valueQualifierList);
+							AddToListsIfNotEmpty(Util.ToStr(dr["UTM_NORTHING"]), ItemsChoiceType1.UTMNorthingMeasure,
+												 ref valueList, ref valueQualifierList);
+							SetListsIfNotEmpty(valueList, valueQualifierList, ref fac.BasicSiteInformation.GeographicMonitoringLocation.Items,
+											   ref fac.BasicSiteInformation.GeographicMonitoringLocation.ItemsElementName);
+						}
+						fac.BasicSiteInformation.GeographicMonitoringLocation.HorizontalCollectionMethodCode=Util.ToStr(dr["HORIZ_COL_MTHD"]);
+						fac.BasicSiteInformation.GeographicMonitoringLocation.HorizontalReferenceDatumName=Util.ToStr(dr["HORIZ_REF_DATUM"]);
+						fac.BasicSiteInformation.GeographicMonitoringLocation.SourceMapScaleNumber=Util.ToStr(dr["SRC_MAP_SCALE_NBR"]);
+						fac.BasicSiteInformation.GeographicMonitoringLocation.HorizontalAccuracyMeasure=Util.ToStr(dr["HORIZONTAL_ACCURACY"]);
+						fac.BasicSiteInformation.GeographicMonitoringLocation.VerticalMeasure=Util.ToStr(dr["VERTICAL_MEASURE"]);
+						fac.BasicSiteInformation.GeographicMonitoringLocation.VerticalMethodCode=Util.ToStr(dr["VERTICAL_MTHD_CD"]);
+						fac.BasicSiteInformation.GeographicMonitoringLocation.VerticalDatumIdentifier=Util.ToStr(dr["VERTICAL_DATUM_ID"]);
+						fac.BasicSiteInformation.GeographicMonitoringLocation.VerticalAccuracyMeasure=Util.ToStr(dr["VERTICAL_ACCR_MSR"]);
+						fac.BasicSiteInformation.GeographicMonitoringLocation.TimeZoneName=Util.ToStr(dr["TIME_ZONE_NAME"]);
 
-                    fac.BasicSiteInformation.GeographicMonitoringLocation = new GeographicMonitoringLocationType();
-                    {
-                        List<object> valueList = null;
-                        List<ItemsChoiceType1> valueQualifierList = null;
-                        AddToListsIfNotEmpty(Util.ToStr(dr["LATITUDE"]), ItemsChoiceType1.LatitudeMeasure,
-                                             ref valueList, ref valueQualifierList);
-                        AddToListsIfNotEmpty(Util.ToStr(dr["LONGITUDE"]), ItemsChoiceType1.LongitudeMeasure,
-                                             ref valueList, ref valueQualifierList);
-                        AddToListsIfNotEmpty(Util.ToStr(dr["UTM_ZONE_CD"]), ItemsChoiceType1.UTMZoneCode,
-                                             ref valueList, ref valueQualifierList);
-                        AddToListsIfNotEmpty(Util.ToStr(dr["UTM_EASTING"]), ItemsChoiceType1.UTMEastingMeasure,
-                                             ref valueList, ref valueQualifierList);
-                        AddToListsIfNotEmpty(Util.ToStr(dr["UTM_NORTHING"]), ItemsChoiceType1.UTMNorthingMeasure,
-                                             ref valueList, ref valueQualifierList);
-                        SetListsIfNotEmpty(valueList, valueQualifierList, ref fac.BasicSiteInformation.GeographicMonitoringLocation.Items,
-                                           ref fac.BasicSiteInformation.GeographicMonitoringLocation.ItemsElementName);
-                    }
-                    fac.BasicSiteInformation.GeographicMonitoringLocation.HorizontalCollectionMethodCode = Util.ToStr(dr["HORIZ_COL_MTHD"]);
-                    fac.BasicSiteInformation.GeographicMonitoringLocation.HorizontalReferenceDatumName = Util.ToStr(dr["HORIZ_REF_DATUM"]);
-                    fac.BasicSiteInformation.GeographicMonitoringLocation.SourceMapScaleNumber = Util.ToStr(dr["SRC_MAP_SCALE_NBR"]);
-                    fac.BasicSiteInformation.GeographicMonitoringLocation.HorizontalAccuracyMeasure = Util.ToStr(dr["HORIZONTAL_ACCURACY"]);
-                    fac.BasicSiteInformation.GeographicMonitoringLocation.VerticalMeasure = Util.ToStr(dr["VERTICAL_MEASURE"]);
-                    fac.BasicSiteInformation.GeographicMonitoringLocation.VerticalMethodCode = Util.ToStr(dr["VERTICAL_MTHD_CD"]);
-                    fac.BasicSiteInformation.GeographicMonitoringLocation.VerticalDatumIdentifier = Util.ToStr(dr["VERTICAL_DATUM_ID"]);
-                    fac.BasicSiteInformation.GeographicMonitoringLocation.VerticalAccuracyMeasure = Util.ToStr(dr["VERTICAL_ACCR_MSR"]);
-                    fac.BasicSiteInformation.GeographicMonitoringLocation.TimeZoneName = Util.ToStr(dr["TIME_ZONE_NAME"]);
+						if (( fac.BasicSiteInformation.GeographicMonitoringLocation.Items==null )&&
+							( fac.BasicSiteInformation.GeographicMonitoringLocation.HorizontalCollectionMethodCode==null )&&
+							( fac.BasicSiteInformation.GeographicMonitoringLocation.HorizontalReferenceDatumName==null )&&
+							( fac.BasicSiteInformation.GeographicMonitoringLocation.SourceMapScaleNumber==null )&&
+							( fac.BasicSiteInformation.GeographicMonitoringLocation.HorizontalAccuracyMeasure==null )&&
+							( fac.BasicSiteInformation.GeographicMonitoringLocation.VerticalMeasure==null )&&
+							( fac.BasicSiteInformation.GeographicMonitoringLocation.VerticalMethodCode==null )&&
+							( fac.BasicSiteInformation.GeographicMonitoringLocation.VerticalDatumIdentifier==null )&&
+							( fac.BasicSiteInformation.GeographicMonitoringLocation.VerticalAccuracyMeasure==null )&&
+							( fac.BasicSiteInformation.GeographicMonitoringLocation.TimeZoneName==null ))
+						{
+							fac.BasicSiteInformation.GeographicMonitoringLocation=null;
+						}
 
-                    if ((fac.BasicSiteInformation.GeographicMonitoringLocation.Items == null) &&
-                        (fac.BasicSiteInformation.GeographicMonitoringLocation.HorizontalCollectionMethodCode == null) &&
-                        (fac.BasicSiteInformation.GeographicMonitoringLocation.HorizontalReferenceDatumName == null) &&
-                        (fac.BasicSiteInformation.GeographicMonitoringLocation.SourceMapScaleNumber == null) &&
-                        (fac.BasicSiteInformation.GeographicMonitoringLocation.HorizontalAccuracyMeasure == null) &&
-                        (fac.BasicSiteInformation.GeographicMonitoringLocation.VerticalMeasure == null) &&
-                        (fac.BasicSiteInformation.GeographicMonitoringLocation.VerticalMethodCode == null) &&
-                        (fac.BasicSiteInformation.GeographicMonitoringLocation.VerticalDatumIdentifier == null) &&
-                        (fac.BasicSiteInformation.GeographicMonitoringLocation.VerticalAccuracyMeasure == null) &&
-                        (fac.BasicSiteInformation.GeographicMonitoringLocation.TimeZoneName == null))
-                    {
-                        fac.BasicSiteInformation.GeographicMonitoringLocation = null;
-                    }
-
-                    if ((fac.BasicSiteInformation.ActionCode == null) &&
-                         (fac.BasicSiteInformation.FacilitySiteDetails == null) &&
-                         (fac.BasicSiteInformation.GeographicMonitoringLocation == null))
-                    {
-                        fac.BasicSiteInformation = null;
-                    }
-
+						if (( fac.BasicSiteInformation.ActionCode==null )&&
+							 ( fac.BasicSiteInformation.FacilitySiteDetails==null )&&
+							 ( fac.BasicSiteInformation.GeographicMonitoringLocation==null ))
+						{
+							fac.BasicSiteInformation=null;
+						}
+					}
                     arSiteID.Add(fac);
 
                 }
@@ -259,164 +262,166 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
                         ml.MonitorIdentifierDetails.SubstanceIdentifier = new SubstanceIdentifierDataType();
                         ml.MonitorIdentifierDetails.SubstanceIdentifier.Value = Util.ToStr(drMonitorID["SUBST_ID"]);
                         ml.MonitorIdentifierDetails.SubstanceOccurrenceCode = Util.ToStr(drMonitorID["SUBST_OCCURENCE_CD"]);
+						
+						if (_includeBasicInfo)
+						{
+							ml.BasicMonitoringInformation=new BasicMonitoringInformationType();
+							if (string.IsNullOrEmpty(_commaSeparatedActionCodes))
+							{
+								// Default hard-coded value for original NV plugin
+								ml.BasicMonitoringInformation.ActionCode="I";
+							}
+							else
+							{
+								ml.BasicMonitoringInformation.ActionCode=Util.ToStr(drMonitorID["ACTION_CD"]);
+							}
+							ml.BasicMonitoringInformation.ProjectClassCode=Util.ToStr(drMonitorID["PROJECT_CLASS_CD"]);
+							ml.BasicMonitoringInformation.DominantSourceText=Util.ToStr(drMonitorID["DOMINANT_SCR_TXT"]);
+							ml.BasicMonitoringInformation.MeasurementScaleIdentifier=Util.ToStr(drMonitorID["MEASUREMENT_SCALE_ID"]);
+							ml.BasicMonitoringInformation.OpenPathIdentifier=Util.ToStr(drMonitorID["OPEN_PATH_ID"]);
+							ml.BasicMonitoringInformation.ProbeLocationCode=Util.ToStr(drMonitorID["PROBE_LOC_CODE"]);
+							ml.BasicMonitoringInformation.ProbeHeightMeasure=Util.ToStr(drMonitorID["PROBE_HEIGHT_MSR"]);
+							ml.BasicMonitoringInformation.HorizontalDistanceMeasure=Util.ToStr(drMonitorID["HORIZ_DIST_MSR"]);
+							ml.BasicMonitoringInformation.VerticalDistanceMeasure=Util.ToStr(drMonitorID["VERT_DIST_MSR"]);
+							ml.BasicMonitoringInformation.SurrogateIndicator=Util.ToStr(drMonitorID["SURROGATE_IND"]);
+							ml.BasicMonitoringInformation.UnrestrictedAirFlowIndicator=Util.ToStr(drMonitorID["UNRESTR_AIR_FLOW_IND"]);
+							ml.BasicMonitoringInformation.SampleResidenceTime=Util.ToStr(drMonitorID["SAMPLE_RESID_TIME"]);
+							ml.BasicMonitoringInformation.WorstSiteTypeCode=Util.ToStr(drMonitorID["WORST_SITE_TYPE_CD"]);
+							ml.BasicMonitoringInformation.ApplicableNAAQSIndicator=Util.ToStr(drMonitorID["APPLICABLE_NAAQS_IND"]);
+							ml.BasicMonitoringInformation.SpatialAverageIndicator=Util.ToStr(drMonitorID["SPACIAL_AVG_IND"]);
+							ml.BasicMonitoringInformation.ScheduleExemptionIndicator=Util.ToStr(drMonitorID["SCHED_EXEMPT_IND"]);
+							ml.BasicMonitoringInformation.CommunityMonitoringZoneCode=Util.ToStr(drMonitorID["CMNTY_MONITOR_ZONE"]);
+							ml.BasicMonitoringInformation.MonitorCloseDate=Util.ToStr(drMonitorID["MONITOR_CLOSE_DATE"]);
 
-                        ml.BasicMonitoringInformation = new BasicMonitoringInformationType();
-                        if (string.IsNullOrEmpty(_commaSeparatedActionCodes))
-                        {
-                            // Default hard-coded value for original NV plugin
-                            ml.BasicMonitoringInformation.ActionCode = "I";
-                        }
-                        else
-                        {
-                            ml.BasicMonitoringInformation.ActionCode = Util.ToStr(drMonitorID["ACTION_CD"]);
-                        }
-                        ml.BasicMonitoringInformation.ProjectClassCode = Util.ToStr(drMonitorID["PROJECT_CLASS_CD"]);
-                        ml.BasicMonitoringInformation.DominantSourceText = Util.ToStr(drMonitorID["DOMINANT_SCR_TXT"]);
-                        ml.BasicMonitoringInformation.MeasurementScaleIdentifier = Util.ToStr(drMonitorID["MEASUREMENT_SCALE_ID"]);
-                        ml.BasicMonitoringInformation.OpenPathIdentifier = Util.ToStr(drMonitorID["OPEN_PATH_ID"]);
-                        ml.BasicMonitoringInformation.ProbeLocationCode = Util.ToStr(drMonitorID["PROBE_LOC_CODE"]);
-                        ml.BasicMonitoringInformation.ProbeHeightMeasure = Util.ToStr(drMonitorID["PROBE_HEIGHT_MSR"]);
-                        ml.BasicMonitoringInformation.HorizontalDistanceMeasure = Util.ToStr(drMonitorID["HORIZ_DIST_MSR"]);
-                        ml.BasicMonitoringInformation.VerticalDistanceMeasure = Util.ToStr(drMonitorID["VERT_DIST_MSR"]);
-                        ml.BasicMonitoringInformation.SurrogateIndicator = Util.ToStr(drMonitorID["SURROGATE_IND"]);
-                        ml.BasicMonitoringInformation.UnrestrictedAirFlowIndicator = Util.ToStr(drMonitorID["UNRESTR_AIR_FLOW_IND"]);
-                        ml.BasicMonitoringInformation.SampleResidenceTime = Util.ToStr(drMonitorID["SAMPLE_RESID_TIME"]);
-                        ml.BasicMonitoringInformation.WorstSiteTypeCode = Util.ToStr(drMonitorID["WORST_SITE_TYPE_CD"]);
-                        ml.BasicMonitoringInformation.ApplicableNAAQSIndicator = Util.ToStr(drMonitorID["APPLICABLE_NAAQS_IND"]);
-                        ml.BasicMonitoringInformation.SpatialAverageIndicator = Util.ToStr(drMonitorID["SPACIAL_AVG_IND"]);
-                        ml.BasicMonitoringInformation.ScheduleExemptionIndicator = Util.ToStr(drMonitorID["SCHED_EXEMPT_IND"]);
-                        ml.BasicMonitoringInformation.CommunityMonitoringZoneCode = Util.ToStr(drMonitorID["CMNTY_MONITOR_ZONE"]);
-                        ml.BasicMonitoringInformation.MonitorCloseDate = Util.ToStr(drMonitorID["MONITOR_CLOSE_DATE"]);
+							// TODO ml.BasicMonitoringInformation.PollutantAreaCode
 
-                        // TODO ml.BasicMonitoringInformation.PollutantAreaCode
+							if (( ml.BasicMonitoringInformation.ActionCode==null )&&( ml.BasicMonitoringInformation.ProjectClassCode==null )&&
+								( ml.BasicMonitoringInformation.DominantSourceText==null )&&( ml.BasicMonitoringInformation.MeasurementScaleIdentifier==null )&&
 
-                        if ((ml.BasicMonitoringInformation.ActionCode == null) && (ml.BasicMonitoringInformation.ProjectClassCode == null) &&
-                            (ml.BasicMonitoringInformation.DominantSourceText == null) && (ml.BasicMonitoringInformation.MeasurementScaleIdentifier == null) &&
+								( ml.BasicMonitoringInformation.OpenPathIdentifier==null )&&( ml.BasicMonitoringInformation.ProbeLocationCode==null )&&
+								( ml.BasicMonitoringInformation.ProbeHeightMeasure==null )&&( ml.BasicMonitoringInformation.HorizontalDistanceMeasure==null )&&
+								( ml.BasicMonitoringInformation.VerticalDistanceMeasure==null )&&( ml.BasicMonitoringInformation.SurrogateIndicator==null )&&
+								( ml.BasicMonitoringInformation.UnrestrictedAirFlowIndicator==null )&&( ml.BasicMonitoringInformation.SampleResidenceTime==null )&&
 
-                            (ml.BasicMonitoringInformation.OpenPathIdentifier == null) && (ml.BasicMonitoringInformation.ProbeLocationCode == null) &&
-                            (ml.BasicMonitoringInformation.ProbeHeightMeasure == null) && (ml.BasicMonitoringInformation.HorizontalDistanceMeasure == null) &&
-                            (ml.BasicMonitoringInformation.VerticalDistanceMeasure == null) && (ml.BasicMonitoringInformation.SurrogateIndicator == null) &&
-                            (ml.BasicMonitoringInformation.UnrestrictedAirFlowIndicator == null) && (ml.BasicMonitoringInformation.SampleResidenceTime == null) &&
+								( ml.BasicMonitoringInformation.WorstSiteTypeCode==null )&&( ml.BasicMonitoringInformation.ApplicableNAAQSIndicator==null )&&
+								( ml.BasicMonitoringInformation.SpatialAverageIndicator==null )&&( ml.BasicMonitoringInformation.ScheduleExemptionIndicator==null )&&
+								( ml.BasicMonitoringInformation.CommunityMonitoringZoneCode==null )&&( ml.BasicMonitoringInformation.MonitorCloseDate==null )&&
+								( ml.BasicMonitoringInformation.PollutantAreaCode==null ))
+							{
+								ml.BasicMonitoringInformation=null;
+							}
 
-                            (ml.BasicMonitoringInformation.WorstSiteTypeCode == null) && (ml.BasicMonitoringInformation.ApplicableNAAQSIndicator == null) &&
-                            (ml.BasicMonitoringInformation.SpatialAverageIndicator == null) && (ml.BasicMonitoringInformation.ScheduleExemptionIndicator == null) &&
-                            (ml.BasicMonitoringInformation.CommunityMonitoringZoneCode == null) && (ml.BasicMonitoringInformation.MonitorCloseDate == null) &&
-                            (ml.BasicMonitoringInformation.PollutantAreaCode == null))
-                        {
-                            ml.BasicMonitoringInformation = null;
-                        }
+							DataTable dtSamplingPeriodList=null;
+							dtSamplingPeriodList=Data.GetDataTable(_baseDao, Data.Tables.MonitorSamplingPeriod, _startDate, _endDate,
+																	 _siteId, _countyCode, Util.ToStr(drMonitorID["AQS_MONITOR_ID_PK"]),
+																	 _commaSeparatedActionCodes);
+							if (( dtSamplingPeriodList!=null ))
+							{
+								List<MonitorSamplingPeriodType> sampleDataList=new List<MonitorSamplingPeriodType>();
+								foreach (DataRow drSampleData in dtSamplingPeriodList.Rows)
+								{
 
-                        DataTable dtSamplingPeriodList = null;
-                        dtSamplingPeriodList = Data.GetDataTable(_baseDao, Data.Tables.MonitorSamplingPeriod, _startDate, _endDate,
-                                                                 _siteId, _countyCode, Util.ToStr(drMonitorID["AQS_MONITOR_ID_PK"]),
-                                                                 _commaSeparatedActionCodes);
-                        if ((dtSamplingPeriodList != null))
-                        {
-                            List<MonitorSamplingPeriodType> sampleDataList = new List<MonitorSamplingPeriodType>();
-                            foreach (DataRow drSampleData in dtSamplingPeriodList.Rows)
-                            {
-
-                                MonitorSamplingPeriodType sampleData = new MonitorSamplingPeriodType();
-                                sampleData.SamplingBeginDate = Util.ToStr(drSampleData["SAMPLING_BEGIN_DATE"]);
-                                sampleData.SamplingEndDate = Util.ToStr(drSampleData["SAMPLING_END_DATE"]);
-                                sampleDataList.Add(sampleData);
-                            }
-                            ml.MonitorSamplingPeriod = sampleDataList.Count > 0 ? sampleDataList.ToArray() : null;
-                        }
+									MonitorSamplingPeriodType sampleData=new MonitorSamplingPeriodType();
+									sampleData.SamplingBeginDate=Util.ToStr(drSampleData["SAMPLING_BEGIN_DATE"]);
+									sampleData.SamplingEndDate=Util.ToStr(drSampleData["SAMPLING_END_DATE"]);
+									sampleDataList.Add(sampleData);
+								}
+								ml.MonitorSamplingPeriod=sampleDataList.Count>0?sampleDataList.ToArray():null;
+							}
 
 
 
-                        DataTable dtSamplingSchList = null;
-                        dtSamplingSchList = Data.GetDataTable(_baseDao, Data.Tables.MonitorSamplingSchedule, _startDate, _endDate,
-                                                                 _siteId, _countyCode, Util.ToStr(drMonitorID["AQS_MONITOR_ID_PK"]),
-                                                                 _commaSeparatedActionCodes);
-                        if ((dtSamplingSchList != null))
-                        {
-                            List<MonitorSamplingScheduleType> sampleDataList = new List<MonitorSamplingScheduleType>();
-                            foreach (DataRow drSampleData in dtSamplingSchList.Rows)
-                            {
+							DataTable dtSamplingSchList=null;
+							dtSamplingSchList=Data.GetDataTable(_baseDao, Data.Tables.MonitorSamplingSchedule, _startDate, _endDate,
+																	 _siteId, _countyCode, Util.ToStr(drMonitorID["AQS_MONITOR_ID_PK"]),
+																	 _commaSeparatedActionCodes);
+							if (( dtSamplingSchList!=null ))
+							{
+								List<MonitorSamplingScheduleType> sampleDataList=new List<MonitorSamplingScheduleType>();
+								foreach (DataRow drSampleData in dtSamplingSchList.Rows)
+								{
 
-                                MonitorSamplingScheduleType sampleData = new MonitorSamplingScheduleType();
-                                if (string.IsNullOrEmpty(_commaSeparatedActionCodes))
-                                {
-                                    // Default hard-coded value for original NV plugin
-                                    sampleData.ActionCode = "I";
-                                }
-                                else
-                                {
-                                    sampleData.ActionCode = Util.ToStr(drSampleData["ACTION_CD"]);
-                                }
-                                sampleData.FrequencyCode = Util.ToStr(drSampleData["FREQUENCY_CD"]);
-                                sampleData.RCFBeginDate = Util.ToStr(drSampleData["RCF_BEGIN_DATE"]);
-                                sampleData.RCFEndDate = Util.ToStr(drSampleData["RCF_END_DATE"]);
-                                sampleData.RCFJanuaryCode = Util.ToStr(drSampleData["RCF_JAN_CD"]);
-                                sampleData.RCFFebruaryCode = Util.ToStr(drSampleData["RCF_FEB_CD"]);
-                                sampleData.RCFMarchCode = Util.ToStr(drSampleData["RCF_MAR_CD"]);
-                                sampleData.RCFAprilCode = Util.ToStr(drSampleData["RCF_APR_CD"]);
-                                sampleData.RCFMayCode = Util.ToStr(drSampleData["RCR_MAY_CD"]);
-                                sampleData.RCFJuneCode = Util.ToStr(drSampleData["RCR_JUN_CD"]);
-                                sampleData.RCFJulyCode = Util.ToStr(drSampleData["RCR_JUL_CD"]);
-                                sampleData.RCFAugustCode = Util.ToStr(drSampleData["RCR_AUG_CD"]);
-                                sampleData.RCFSeptemberCode = Util.ToStr(drSampleData["RCR_SEP_CD"]);
-                                sampleData.RCFOctoberCode = Util.ToStr(drSampleData["RCR_OCT_CD"]);
-                                sampleData.RCFNovemberCode = Util.ToStr(drSampleData["RCR_NOV_CD"]);
-                                sampleData.RCFDecemberCode = Util.ToStr(drSampleData["RCR_DEC_CD"]);
-                                sampleDataList.Add(sampleData);
-                            }
-                            ml.MonitorSamplingSchedule = sampleDataList.Count > 0 ? sampleDataList.ToArray() : null;
-                        }
+									MonitorSamplingScheduleType sampleData=new MonitorSamplingScheduleType();
+									if (string.IsNullOrEmpty(_commaSeparatedActionCodes))
+									{
+										// Default hard-coded value for original NV plugin
+										sampleData.ActionCode="I";
+									}
+									else
+									{
+										sampleData.ActionCode=Util.ToStr(drSampleData["ACTION_CD"]);
+									}
+									sampleData.FrequencyCode=Util.ToStr(drSampleData["FREQUENCY_CD"]);
+									sampleData.RCFBeginDate=Util.ToStr(drSampleData["RCF_BEGIN_DATE"]);
+									sampleData.RCFEndDate=Util.ToStr(drSampleData["RCF_END_DATE"]);
+									sampleData.RCFJanuaryCode=Util.ToStr(drSampleData["RCF_JAN_CD"]);
+									sampleData.RCFFebruaryCode=Util.ToStr(drSampleData["RCF_FEB_CD"]);
+									sampleData.RCFMarchCode=Util.ToStr(drSampleData["RCF_MAR_CD"]);
+									sampleData.RCFAprilCode=Util.ToStr(drSampleData["RCF_APR_CD"]);
+									sampleData.RCFMayCode=Util.ToStr(drSampleData["RCR_MAY_CD"]);
+									sampleData.RCFJuneCode=Util.ToStr(drSampleData["RCR_JUN_CD"]);
+									sampleData.RCFJulyCode=Util.ToStr(drSampleData["RCR_JUL_CD"]);
+									sampleData.RCFAugustCode=Util.ToStr(drSampleData["RCR_AUG_CD"]);
+									sampleData.RCFSeptemberCode=Util.ToStr(drSampleData["RCR_SEP_CD"]);
+									sampleData.RCFOctoberCode=Util.ToStr(drSampleData["RCR_OCT_CD"]);
+									sampleData.RCFNovemberCode=Util.ToStr(drSampleData["RCR_NOV_CD"]);
+									sampleData.RCFDecemberCode=Util.ToStr(drSampleData["RCR_DEC_CD"]);
+									sampleDataList.Add(sampleData);
+								}
+								ml.MonitorSamplingSchedule=sampleDataList.Count>0?sampleDataList.ToArray():null;
+							}
 
-                        DataTable dtObjectiveInformationList = null;
-                        dtObjectiveInformationList =
-                            Data.GetDataTable(_baseDao, Data.Tables.MonitorObjectiveInformation, _startDate, _endDate,
-                                              _siteId, _countyCode, Util.ToStr(drMonitorID["AQS_MONITOR_ID_PK"]),
-                                              _commaSeparatedActionCodes);
-                        if ((dtObjectiveInformationList != null))
-                        {
-                            List<MonitorObjectiveInformationType> informationDataList = new List<MonitorObjectiveInformationType>();
-                            foreach (DataRow drInformationData in dtObjectiveInformationList.Rows)
-                            {
+							DataTable dtObjectiveInformationList=null;
+							dtObjectiveInformationList=
+								Data.GetDataTable(_baseDao, Data.Tables.MonitorObjectiveInformation, _startDate, _endDate,
+												  _siteId, _countyCode, Util.ToStr(drMonitorID["AQS_MONITOR_ID_PK"]),
+												  _commaSeparatedActionCodes);
+							if (( dtObjectiveInformationList!=null ))
+							{
+								List<MonitorObjectiveInformationType> informationDataList=new List<MonitorObjectiveInformationType>();
+								foreach (DataRow drInformationData in dtObjectiveInformationList.Rows)
+								{
 
-                                MonitorObjectiveInformationType informationData = new MonitorObjectiveInformationType();
-                                if (string.IsNullOrEmpty(_commaSeparatedActionCodes))
-                                {
-                                    // Default hard-coded value for original NV plugin
-                                    informationData.ActionCode = "I";
-                                }
-                                else
-                                {
-                                    informationData.ActionCode = Util.ToStr(drInformationData["ACTION_CD"]);
-                                }
-                                informationData.MonitorObjectiveIdentifier = Util.ToStr(drInformationData["MONITOR_OBJ_ID"]);
-                                {
-                                    List<string> valueList = null;
-                                    List<ItemChoiceType> valueQualifierList = null;
-                                    AddToListsIfNotEmpty(Util.ToStr(drInformationData["URBAN_AREA_REP_CD"]), ItemChoiceType.UrbanAreaRepresentedCode,
-                                                         ref valueList, ref valueQualifierList);
-                                    AddToListsIfNotEmpty(Util.ToStr(drInformationData["METRO_SA_REP_CD"]), ItemChoiceType.MSARepresentedCode,
-                                                         ref valueList, ref valueQualifierList);
-                                    AddToListsIfNotEmpty(Util.ToStr(drInformationData["COVE_BS_REP_CD"]), ItemChoiceType.CBSARepresentedCode,
-                                                         ref valueList, ref valueQualifierList);
-                                    AddToListsIfNotEmpty(Util.ToStr(drInformationData["COMBINED_SA_REP_CD"]), ItemChoiceType.CSARepresentedCode,
-                                                         ref valueList, ref valueQualifierList);
-                                    if (valueList == null)
-                                    {
-                                        throw new ArgumentException(string.Format("No item values specified for table AQS_MONITOR_OBJ_INFO where AQS_MONITOR_OBJ_INFO_PK = '{0}'",
-                                                                    Util.ToStr(drInformationData["AQS_MONITOR_OBJ_INFO_PK"])));
-                                    }
-                                    if (valueList.Count > 1)
-                                    {
-                                        throw new ArgumentException(string.Format("Too many item values specified for table AQS_MONITOR_OBJ_INFO where AQS_MONITOR_OBJ_INFO_PK = '{0}'",
-                                                                    Util.ToStr(drInformationData["AQS_MONITOR_OBJ_INFO_PK"])));
-                                    }
-                                    informationData.Item = valueList[0];
-                                    informationData.ItemElementName = valueQualifierList[0];
-                                }
-                                informationDataList.Add(informationData);
-                            }
-                            ml.MonitorObjectiveInformation = informationDataList.Count > 0 ? informationDataList.ToArray() : null;
-                        }
-
+									MonitorObjectiveInformationType informationData=new MonitorObjectiveInformationType();
+									if (string.IsNullOrEmpty(_commaSeparatedActionCodes))
+									{
+										// Default hard-coded value for original NV plugin
+										informationData.ActionCode="I";
+									}
+									else
+									{
+										informationData.ActionCode=Util.ToStr(drInformationData["ACTION_CD"]);
+									}
+									informationData.MonitorObjectiveIdentifier=Util.ToStr(drInformationData["MONITOR_OBJ_ID"]);
+									{
+										List<string> valueList=null;
+										List<ItemChoiceType> valueQualifierList=null;
+										AddToListsIfNotEmpty(Util.ToStr(drInformationData["URBAN_AREA_REP_CD"]), ItemChoiceType.UrbanAreaRepresentedCode,
+															 ref valueList, ref valueQualifierList);
+										AddToListsIfNotEmpty(Util.ToStr(drInformationData["METRO_SA_REP_CD"]), ItemChoiceType.MSARepresentedCode,
+															 ref valueList, ref valueQualifierList);
+										AddToListsIfNotEmpty(Util.ToStr(drInformationData["COVE_BS_REP_CD"]), ItemChoiceType.CBSARepresentedCode,
+															 ref valueList, ref valueQualifierList);
+										AddToListsIfNotEmpty(Util.ToStr(drInformationData["COMBINED_SA_REP_CD"]), ItemChoiceType.CSARepresentedCode,
+															 ref valueList, ref valueQualifierList);
+										if (valueList==null)
+										{
+											throw new ArgumentException(string.Format("No item values specified for table AQS_MONITOR_OBJ_INFO where AQS_MONITOR_OBJ_INFO_PK = '{0}'",
+																		Util.ToStr(drInformationData["AQS_MONITOR_OBJ_INFO_PK"])));
+										}
+										if (valueList.Count>1)
+										{
+											throw new ArgumentException(string.Format("Too many item values specified for table AQS_MONITOR_OBJ_INFO where AQS_MONITOR_OBJ_INFO_PK = '{0}'",
+																		Util.ToStr(drInformationData["AQS_MONITOR_OBJ_INFO_PK"])));
+										}
+										informationData.Item=valueList[0];
+										informationData.ItemElementName=valueQualifierList[0];
+									}
+									informationDataList.Add(informationData);
+								}
+								ml.MonitorObjectiveInformation=informationDataList.Count>0?informationDataList.ToArray():null;
+							}
+						}
                         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
                         //Raw Data List
                         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -436,7 +441,6 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
 
                                 RawDataListType rawData = new RawDataListType();
                                 rawData.TransactionProtocolDetails = new TransactionProtocolDetailsType();
-
 #if V_2_2
                                 {
                                     List<object> valueList = null;
