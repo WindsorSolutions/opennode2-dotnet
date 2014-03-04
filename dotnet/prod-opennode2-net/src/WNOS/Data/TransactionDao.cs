@@ -791,6 +791,14 @@ namespace Windsor.Node2008.WNOS.Data
                                               networkEndpointUrl, networkFlowName, networkFlowOperation,
                                               networkStatusDetail, null);
         }
+        public void SetNetworkIdAndEndpointUserId(string transactionId, string networkId, EndpointVersionType networkEndpointVersion,
+                                                  string networkEndpointUrl, string networkFlowName, string networkFlowOperation,
+                                                  string networkStatusDetail, string targetEndpointUserId)
+        {
+            SetNetworkEndpointTransactionInfo(transactionId, networkId, networkEndpointVersion,
+                                              networkEndpointUrl, networkFlowName, networkFlowOperation,
+                                              networkStatusDetail, null, targetEndpointUserId);
+        }
         public void SetNetworkEndpointTransactionInfo(string transactionId, string networkId, EndpointVersionType networkEndpointVersion,
                                                       string networkEndpointUrl, string networkFlowName, string networkFlowOperation,
                                                       string endpointUsername)
@@ -800,25 +808,29 @@ namespace Windsor.Node2008.WNOS.Data
         }
         protected void SetNetworkEndpointTransactionInfo(string transactionId, string networkId, EndpointVersionType networkEndpointVersion,
                                                          string networkEndpointUrl, string networkFlowName, string networkFlowOperation,
-                                                         string networkStatusDetail, string endpointUsername)
+                                                         string networkStatusDetail, string endpointUsername, string targetEndpointUserId = null)
         {
             object version =
                 (networkEndpointVersion == EndpointVersionType.Undefined) ? (object)null : (object)networkEndpointVersion.ToString();
-            if (!string.IsNullOrEmpty(endpointUsername))
+            if (!string.IsNullOrEmpty(endpointUsername) || !string.IsNullOrEmpty(targetEndpointUserId))
             {
                 if (!AccountDao.AreEndpointUsersEnabled)
                 {
                     throw new ArgException("Internal error: the node is trying to save endpoint user info, but the node metadata database has not been upgraded to support this feature.  Please upgrade your node metadata database to the latest version.");
                 }
-                UserAccount userAccount = AccountDao.GetEndpointUserByName(endpointUsername);
-                if (userAccount == null)
+                if (string.IsNullOrEmpty(targetEndpointUserId))
                 {
-                    throw new ArgException("The node could not find the endpoint user \"{0}\", so information related to the network transaction could not be saved.");
+                    UserAccount userAccount = AccountDao.GetEndpointUserByName(endpointUsername);
+                    if (userAccount == null)
+                    {
+                        throw new ArgException("The node could not find the endpoint user \"{0}\", so information related to the network transaction could not be saved.");
+                    }
+                    targetEndpointUserId = userAccount.Id;
                 }
                 DoSimpleUpdateOne(TABLE_NAME, "Id", transactionId,
                                   "NetworkId;NetworkEndpointVersion;NetworkEndpointUrl;NetworkEndpointStatusDetail;NetworkEndpointUser", networkId,
                                   version, networkEndpointUrl, MakeNetworkStatusDetail(networkFlowName, networkFlowOperation,
-                                  networkStatusDetail), userAccount.Id);
+                                  networkStatusDetail), targetEndpointUserId);
             }
             else
             {

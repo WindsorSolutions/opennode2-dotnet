@@ -62,9 +62,13 @@ namespace Windsor.Node2008.WNOSProviders
                           string networkEndpointUrl, string networkFlowName, string networkFlowOperation,
                           string networkStatusDetail);
 
+        void SetNetworkIdAndEndpointUserId(string transactionId, string networkId, EndpointVersionType networkEndpointVersion,
+                                           string networkEndpointUrl, string networkFlowName, string networkFlowOperation,
+                                           string networkStatusDetail, string targetEndpointUserId);
+
         void SetNetworkIdStatus(string transactionId, CommonTransactionStatusCode statusCode);
         /// <summary>
-        /// Get the network id of the specified transaction, null if the tranaction is not valid, or an empty
+        /// Get the network id of the specified transaction, null if the transaction is not valid, or an empty
         /// string if there isn't a network id associated with this transaction.
         /// </summary>
         string GetNetworkId(string transactionId);

@@ -572,8 +572,9 @@ namespace Windsor.Node2008.WNOS.Server
                 LogActivity(activity, "Submitted target documents to partner \"{0}\" at url \"{1}\" for flow \"{2}\" with returned transaction id \"{3}\"",
                             partner.Name, partner.Url, scheduledItem.TargetFlow, transactionId);
 
-                _transactionManager.SetNetworkId(transactionStatus.Id, transactionId, endpointVersion,
-                                                 endpointUrl, networkFlowName, networkFlowOperation);
+                _transactionManager.SetNetworkIdAndEndpointUserId(transactionStatus.Id, transactionId, endpointVersion,
+                                                                  endpointUrl, networkFlowName, networkFlowOperation,
+                                                                  null, scheduledItem.TargetEndpointUser);
             }
             else
             {

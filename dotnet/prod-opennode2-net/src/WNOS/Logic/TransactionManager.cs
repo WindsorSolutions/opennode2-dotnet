@@ -831,6 +831,13 @@ namespace Windsor.Node2008.WNOS.Logic
             _transactionDao.SetNetworkId(transactionId, networkId, networkEndpointVersion, networkEndpointUrl,
                                          networkFlowName, networkFlowOperation, networkStatusDetail);
         }
+        public void SetNetworkIdAndEndpointUserId(string transactionId, string networkId, EndpointVersionType networkEndpointVersion,
+                                                  string networkEndpointUrl, string networkFlowName, string networkFlowOperation,
+                                                  string networkStatusDetail, string targetEndpointUserId)
+        {
+            _transactionDao.SetNetworkIdAndEndpointUserId(transactionId, networkId, networkEndpointVersion, networkEndpointUrl,
+                                                          networkFlowName, networkFlowOperation, networkStatusDetail, targetEndpointUserId);
+        }
         public string GetNetworkId(string transactionId)
         {
             return _transactionDao.GetNetworkId(transactionId);

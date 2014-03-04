@@ -90,6 +90,9 @@ namespace Windsor.Node2008.WNOS.Data
                           string networkEndpointUrl, string networkFlowName, string networkFlowOperation, string networkStatusDetail);
         void SetNetworkId(string transactionId, string networkId, EndpointVersionType networkEndpointVersion,
                           string networkEndpointUrl, string networkFlowName, string networkFlowOperation);
+        void SetNetworkIdAndEndpointUserId(string transactionId, string networkId, EndpointVersionType networkEndpointVersion,
+                                           string networkEndpointUrl, string networkFlowName, string networkFlowOperation,
+                                           string networkStatusDetail, string targetEndpointUserId);
         void SetNetworkEndpointTransactionInfo(string transactionId, string networkId, EndpointVersionType networkEndpointVersion,
                                                string networkEndpointUrl, string networkFlowName, string networkFlowOperation,
                                                string endpointUsername);
