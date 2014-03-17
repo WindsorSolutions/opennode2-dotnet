@@ -92,6 +92,7 @@
     <Compile Include="TRIData.cs" />
     <Compile Include="TRIPDFGenerator.cs" />
     <Compile Include="TRISubmissionProcessor.cs" />
+    <Compile Include="TRISubmissionProcessorToFile.cs" />
     <Compile Include="TRISubmitProxy.cs" />
     <Compile Include="XmlUtill.cs" />
     <Compile Include="xml_schema\TRIManifest.cs" />
