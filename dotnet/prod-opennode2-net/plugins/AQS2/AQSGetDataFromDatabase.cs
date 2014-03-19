@@ -44,13 +44,14 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
         private DateTime _endDate;
         private string _siteId;
         private string _countyCode;
-        private string _commaSeparatedActionCodes;
+		private string _commaSeparatedActionCodes;
 		private bool _includeBasicInfo;
+		private bool _useImportedDateDate;
 
-
+        // Filter by imported date
         public AQSGetDataFromDatabase(SpringBaseDao baseDao, bool clearMetadataBeforeRun,
                                       DateTime startDate, DateTime endDate, string siteId,
-									  string countyCode, string commaSeparatedActionCodes, bool includeBasicInfo)
+									  string countyCode, string commaSeparatedActionCodes, bool includeBasicInfo = true, bool useImportedDateDate=false)
         {
             _baseDao = baseDao;
             _clearMetadataBeforeRun = clearMetadataBeforeRun;
@@ -60,13 +61,14 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
             _countyCode = countyCode;
             _commaSeparatedActionCodes = commaSeparatedActionCodes;
 			_includeBasicInfo=includeBasicInfo;
+			_useImportedDateDate=useImportedDateDate;
         }
 
         public List<FacilitySiteListType> GetFacilityList()
         {
             DataTable dtSiteID =
                 Data.GetDataTable(_baseDao, Data.Tables.SiteIdentifierDetails, _startDate, _endDate,
-                                  _siteId, _countyCode, string.Empty, _commaSeparatedActionCodes);
+								  _siteId, _countyCode, string.Empty, _commaSeparatedActionCodes, _useImportedDateDate);
 
             List<FacilitySiteListType> arSiteID = new List<FacilitySiteListType>();
             //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -249,7 +251,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
 
                 DataTable dtMonitorID =
                     Data.GetDataTable(_baseDao, Data.Tables.MonitorIdentifierDetails, _startDate, _endDate,
-                                      fac.SiteIdentifierDetails.FacilitySiteIdentifier.Value, _countyCode, _siteId, _commaSeparatedActionCodes);
+									  fac.SiteIdentifierDetails.FacilitySiteIdentifier.Value, _countyCode, _siteId, _commaSeparatedActionCodes, _useImportedDateDate);
 
                 if ((dtMonitorID != null))
                 {
@@ -314,7 +316,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
 							DataTable dtSamplingPeriodList=null;
 							dtSamplingPeriodList=Data.GetDataTable(_baseDao, Data.Tables.MonitorSamplingPeriod, _startDate, _endDate,
 																	 _siteId, _countyCode, Util.ToStr(drMonitorID["AQS_MONITOR_ID_PK"]),
-																	 _commaSeparatedActionCodes);
+																	 _commaSeparatedActionCodes, _useImportedDateDate);
 							if (( dtSamplingPeriodList!=null ))
 							{
 								List<MonitorSamplingPeriodType> sampleDataList=new List<MonitorSamplingPeriodType>();
@@ -334,7 +336,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
 							DataTable dtSamplingSchList=null;
 							dtSamplingSchList=Data.GetDataTable(_baseDao, Data.Tables.MonitorSamplingSchedule, _startDate, _endDate,
 																	 _siteId, _countyCode, Util.ToStr(drMonitorID["AQS_MONITOR_ID_PK"]),
-																	 _commaSeparatedActionCodes);
+																	 _commaSeparatedActionCodes, _useImportedDateDate);
 							if (( dtSamplingSchList!=null ))
 							{
 								List<MonitorSamplingScheduleType> sampleDataList=new List<MonitorSamplingScheduleType>();
@@ -375,7 +377,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
 							dtObjectiveInformationList=
 								Data.GetDataTable(_baseDao, Data.Tables.MonitorObjectiveInformation, _startDate, _endDate,
 												  _siteId, _countyCode, Util.ToStr(drMonitorID["AQS_MONITOR_ID_PK"]),
-												  _commaSeparatedActionCodes);
+												  _commaSeparatedActionCodes, _useImportedDateDate);
 							if (( dtObjectiveInformationList!=null ))
 							{
 								List<MonitorObjectiveInformationType> informationDataList=new List<MonitorObjectiveInformationType>();
@@ -429,7 +431,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
                         DataTable dtRawDataList = null;
                         dtRawDataList = Data.GetDataTable(_baseDao, Data.Tables.TransactionProtocolDetails, _startDate, _endDate,
                                                           _siteId, _countyCode, Util.ToStr(drMonitorID["AQS_MONITOR_ID_PK"]),
-                                                          _commaSeparatedActionCodes);
+														  _commaSeparatedActionCodes, _useImportedDateDate);
 
                         if ((dtRawDataList != null))
                         {
@@ -527,7 +529,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
         {
             DataTable dtRawResults = null;
             dtRawResults = Data.GetDataTable(_baseDao, Data.Tables.TransactionRawResultDetails, _startDate, _endDate,
-                                             _siteId, _countyCode, transProtocolPk, _commaSeparatedActionCodes);
+                                             _siteId, _countyCode, transProtocolPk, _commaSeparatedActionCodes, _useImportedDateDate);
 
             if ((dtRawResults != null))
             {
@@ -585,7 +587,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
                     DataTable dtQC = null;
                     dtQC = Data.GetDataTable(_baseDao, Data.Tables.QualifierCode, _startDate, _endDate,
                                              _siteId, _countyCode, Util.ToStr(drResult["AQS_RAW_RES_PK"]),
-                                             _commaSeparatedActionCodes);
+											 _commaSeparatedActionCodes, _useImportedDateDate);
 
                     if ((dtQC != null))
                     {
@@ -614,7 +616,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
         {
             DataTable dtRawResults = null;
             dtRawResults = Data.GetDataTable(_baseDao, Data.Tables.TransactionRawPrecisionInformation, _startDate, _endDate,
-                                             _siteId, _countyCode, transProtocolPk, _commaSeparatedActionCodes);
+											 _siteId, _countyCode, transProtocolPk, _commaSeparatedActionCodes, _useImportedDateDate);
 
             if ((dtRawResults != null))
             {
@@ -654,7 +656,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
         {
             DataTable dtRawResults = null;
             dtRawResults = Data.GetDataTable(_baseDao, Data.Tables.TransactionRawCompositeInformation, _startDate, _endDate,
-                                             _siteId, _countyCode, transProtocolPk, _commaSeparatedActionCodes);
+                                             _siteId, _countyCode, transProtocolPk, _commaSeparatedActionCodes, _useImportedDateDate);
 
             if ((dtRawResults != null))
             {
@@ -684,7 +686,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
                     DataTable dtQC = null;
                     dtQC = Data.GetDataTable(_baseDao, Data.Tables.CompositeInformationQualifierCode, _startDate, _endDate,
                                              _siteId, _countyCode, Util.ToStr(drResult["AQS_RAW_COMP_INFO_PK"]),
-                                             _commaSeparatedActionCodes);
+											 _commaSeparatedActionCodes, _useImportedDateDate);
 
                     if ((dtQC != null))
                     {
@@ -707,7 +709,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
         {
             DataTable dtRawResults = null;
             dtRawResults = Data.GetDataTable(_baseDao, Data.Tables.TransactionRawAccuracyInformation, _startDate, _endDate,
-                                             _siteId, _countyCode, transProtocolPk, _commaSeparatedActionCodes);
+                                             _siteId, _countyCode, transProtocolPk, _commaSeparatedActionCodes, _useImportedDateDate);
 
             if ((dtRawResults != null))
             {
@@ -766,7 +768,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
         {
             DataTable dtRawResults = null;
             dtRawResults = Data.GetDataTable(_baseDao, Data.Tables.TransactionBlankInformation, _startDate, _endDate,
-                                             _siteId, _countyCode, transProtocolPk, _commaSeparatedActionCodes);
+											 _siteId, _countyCode, transProtocolPk, _commaSeparatedActionCodes, _useImportedDateDate);
 
             if ((dtRawResults != null))
             {
@@ -820,7 +822,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
                     DataTable dtQC = null;
                     dtQC = Data.GetDataTable(_baseDao, Data.Tables.BlankQualifierCode, _startDate, _endDate,
                                              _siteId, _countyCode, Util.ToStr(drResult["AQS_BLANK_INFO_PK"]),
-                                             _commaSeparatedActionCodes);
+											 _commaSeparatedActionCodes, _useImportedDateDate);
 
                     if ((dtQC != null))
                     {
@@ -849,7 +851,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
         {
             DataTable dtRawResults = null;
             dtRawResults = Data.GetDataTable(_baseDao, Data.Tables.TransactionAnnualSummaryInformation, _startDate, _endDate,
-                                             _siteId, _countyCode, transProtocolPk, _commaSeparatedActionCodes);
+											 _siteId, _countyCode, transProtocolPk, _commaSeparatedActionCodes, _useImportedDateDate);
 
             if ((dtRawResults != null))
             {

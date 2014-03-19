@@ -82,7 +82,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
         }
 
         public static DataTable GetDataTable(SpringBaseDao baseDao, Tables tableType, DateTime startDate, DateTime endDate,
-                                             string siteNumber, string countyNumber, string pk, string commaSeparatedActionCodes)
+											 string siteNumber, string countyNumber, string pk, string commaSeparatedActionCodes, bool useImportedDateDate = false)
         {
             string sql = null;
 
@@ -105,10 +105,8 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
 
                         "FROM AQS_SITE_ID S " +
                         "INNER JOIN AQS_METADATA M ON S.AQS_SITE_ID_PK = M.AQS_SITE_ID_PK " +
-                        "WHERE {0} {1} " +
-                            "M.SMPL_COLL_START_DATE >= '{2}' " +
-                            "AND M.SMPL_COLL_START_DATE <= '{3}' " +
-                            "AND " + actionCodesQuery;
+                        "WHERE {0} {1} {2} {3} " +
+                            actionCodesQuery;
                     break;
 
 
@@ -122,10 +120,8 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
                         "M.FACILITY_SITE_ID " +
                         "FROM AQS_MONITOR_ID O  " +
                         "INNER JOIN AQS_METADATA M ON O.AQS_MONITOR_ID_PK = M.AQS_MONITOR_ID_PK " +
-                        "WHERE {0} {1} " +
-                            "M.SMPL_COLL_START_DATE >= '{2}' " +
-                            "AND M.SMPL_COLL_START_DATE <= '{3}' " +
-                            "AND " + actionCodesQuery + " ";
+                        "WHERE {0} {1} {2} {3} " +
+                            actionCodesQuery + " ";
 
 					if (!string.IsNullOrEmpty(pk))
 					{
@@ -140,10 +136,8 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
                         "T.METHOD_ID_CD, T.MEASURE_UNIT_CD, T.ALTERNATE_MDL_VALUE  " +
                         "FROM AQS_TRANS_PROTOCOL T  " +
                         "INNER JOIN AQS_METADATA M ON T.AQS_TRANS_PROTOCOL_PK = M.AQS_TRANS_PROTOCOL_PK " +
-                        "WHERE {0} {1} " +
-                            "M.SMPL_COLL_START_DATE >= '{2}' " +
-                            "AND M.SMPL_COLL_START_DATE <= '{3}' " +
-                            "AND " + actionCodesQuery + " " +
+                        "WHERE {0} {1} {2} {3} " +
+                            actionCodesQuery + " " +
                             "AND T.AQS_MONITOR_ID_FK = {4}";
                     break;
 
@@ -181,10 +175,8 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
                         "R.UNCERTAINTY_VALUE, R.NULL_DATA_CD, R.DATA_VALIDITY_CD, R.DATA_APPROVAL_IND " +
                         "FROM AQS_RAW_RES R " +
                         "INNER JOIN AQS_METADATA M ON R.AQS_RAW_RES_PK = M.AQS_RAW_RES_PK " +
-                        "WHERE {0} {1} " +
-                            "M.SMPL_COLL_START_DATE >= '{2}' " +
-                            "AND M.SMPL_COLL_START_DATE <= '{3}' " +
-                            "AND " + actionCodesQuery + " " +
+                        "WHERE {0} {1} {2} {3} " +
+                            actionCodesQuery + " " +
                             "AND R.AQS_TRANS_PROTOCOL_FK = {4}";
                     break;
 
@@ -196,10 +188,8 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
                         "R.COL_POC_ID_NUM, R.PREC_SMPL_ID, R.AUDIT_AGENCY_CD " +
                         "FROM AQS_RAW_PREC_INFO R " +
                         "INNER JOIN AQS_METADATA M ON R.AQS_RAW_PREC_INFO_PK = M.AQS_RAW_RES_PK " +
-                        "WHERE {0} {1} " +
-                            "M.SMPL_COLL_START_DATE >= '{2}' " +
-                            "AND M.SMPL_COLL_START_DATE <= '{3}' " +
-                            "AND " + actionCodesQuery + " " +
+                        "WHERE {0} {1} {2} {3} " +
+                            actionCodesQuery + " " +
                             "AND R.AQS_TRANS_PROTOCOL_FK = {4}";
                     break;
 
@@ -210,10 +200,8 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
                         "R.SAMPLES_COUNT, R.COMP_SMPL_VALUE, R.UNCERTAINTY_VALUE " +
                         "FROM AQS_RAW_COMP_INFO R " +
                         "INNER JOIN AQS_METADATA M ON R.AQS_RAW_COMP_INFO_PK = M.AQS_RAW_RES_PK " +
-                        "WHERE {0} {1} " +
-                            "M.SMPL_COLL_START_DATE >= '{2}' " +
-                            "AND M.SMPL_COLL_START_DATE <= '{3}' " +
-                            "AND " + actionCodesQuery + " " +
+                        "WHERE {0} {1} {2} {3} " +
+                            actionCodesQuery + " " +
                             "AND R.AQS_TRANS_PROTOCOL_FK = {4}";
                     break;
 
@@ -227,10 +215,8 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
                         "R.LVL4_ACT_VALUE, R.LVL4_IND_VALUE, R.LVL5_ACT_VALUE, R.LVL5_IND_VALUE, R.ZERO_SPAN_VALUE " +
                         "FROM AQS_RAW_ACCU_INFO R " +
                         "INNER JOIN AQS_METADATA M ON R.AQS_RAW_ACCU_INFO_PK = M.AQS_RAW_RES_PK " +
-                        "WHERE {0} {1} " +
-                            "M.SMPL_COLL_START_DATE >= '{2}' " +
-                            "AND M.SMPL_COLL_START_DATE <= '{3}' " +
-                            "AND " + actionCodesQuery + " " +
+                        "WHERE {0} {1} {2} {3} " +
+                            actionCodesQuery + " " +
                             "AND R.AQS_TRANS_PROTOCOL_FK = {4}";
                     break;
 
@@ -242,10 +228,8 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
                         "R.MEASURE_VALUE " +
                         "FROM AQS_BLANK_INFO R " +
                         "INNER JOIN AQS_METADATA M ON R.AQS_BLANK_INFO_PK = M.AQS_RAW_RES_PK " +
-                        "WHERE {0} {1} " +
-                            "M.SMPL_COLL_START_DATE >= '{2}' " +
-                            "AND M.SMPL_COLL_START_DATE <= '{3}' " +
-                            "AND " + actionCodesQuery + " " +
+                        "WHERE {0} {1} {2} {3} " +
+                            actionCodesQuery + " " +
                             "AND R.AQS_TRANS_PROTOCOL_FK = {4}";
                     break;
 
@@ -262,10 +246,8 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
                         "R.BELOW_HALF_MDL_COUNT " +
                         "FROM AQS_ANNUAL_SUM_INFO R " +
                         "INNER JOIN AQS_METADATA M ON R.AQS_ANNUAL_SUM_INFO_PK = M.AQS_RAW_RES_PK " +
-                        "WHERE {0} {1} " +
-                            "M.SMPL_COLL_START_DATE >= '{2}' " +
-                            "AND M.SMPL_COLL_START_DATE <= '{3}' " +
-                            "AND " + actionCodesQuery + " " +
+                        "WHERE {0} {1} {2} {3} " +
+                            actionCodesQuery + " " +
                             "AND R.AQS_TRANS_PROTOCOL_FK = {4}";
                     break;
 
@@ -312,8 +294,21 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
                 countyIDSql = string.Format("M.COUNTY_CD = '{0}' AND ", countyNumber);
             }
 
-            sql = string.Format(sql, siteIDSql, countyIDSql, startDate.ToString(cDbDateFormatString),
-                                endDate.ToString(cDbDateFormatString), pk);
+			string startDateSql="";
+			string endDateSql = "";
+
+			if (useImportedDateDate)
+			{
+				startDateSql=string.Format("CAST(M.IMPORTED_DATE AS DATETIME) >= '{0}' AND ", startDate.ToString(cDbDateFormatString));
+				endDateSql=string.Format("M.IMPORTED_DATE <= '{0}' AND ", endDate.ToString(cDbDateFormatString));
+			}
+			else
+			{
+                startDateSql=string.Format("M.SMPL_COLL_START_DATE >= '{0}' AND ", startDate.ToString(cDbDateFormatString));
+                endDateSql=string.Format("M.SMPL_COLL_START_DATE <= '{0}' AND " ,endDate.ToString(cDbDateFormatString));
+			}
+
+			sql=string.Format(sql, siteIDSql, countyIDSql, startDateSql, endDateSql, pk);
 
             return baseDao.FillTable(sql);
         }
