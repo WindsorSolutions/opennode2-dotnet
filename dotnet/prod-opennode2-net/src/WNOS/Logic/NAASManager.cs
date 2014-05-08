@@ -902,7 +902,7 @@ namespace Windsor.Node2008.WNOS.Logic
             set
             {
                 _usermgrClient = value;
-                //TestGetUserInfo();
+                TestGetUserInfo();
             }
         }
         public IObjectCacheDao ObjectCacheDao
@@ -919,19 +919,16 @@ namespace Windsor.Node2008.WNOS.Logic
         private void TestGetUserInfo()
         {
             NAAS_USRMGR.GetUserList getUserList = new NAAS_USRMGR.GetUserList();
-            getUserList.adminName = "lsuydam@svt.org";
-            getUserList.credential = "CDXwqxls11";
+            getUserList.adminName = "nodeadmin@windsorsolutions.com";
+            getUserList.credential = "";
             getUserList.domain = _usermgrRuntimeCredentialDomain;
             getUserList.rowId = "0";
             getUserList.maxRows = "-1";
-            getUserList.userId = "NDEQ.DEQNODE@NEBRASKA.GOV".ToLower();
-            //getUserList.userId = "ted@windsorsolutions.com";
-            getUserList.userId = "Ndeq.Deqnode@NEBRASKA.GOV";
             getUserList.status = string.Empty;
             getUserList.affiliate = string.Empty;
 
-            getUserList.userId = "Morgan.leibrandt@nebraska.gov";
-            getUserList.userId = "Morgan.leibrandt@nebraska.gov".ToLower();
+            //getUserList.userId = "netnode.prod@cgifederal.com";
+            getUserList.userId = "netnode.test@cgifederal.com";
 
             NAAS_USRMGR.GetUserListResponse response = _usermgrClient.GetUserList(getUserList);
             if (CollectionUtils.IsNullOrEmpty(response.@return))

@@ -264,6 +264,21 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
     , "LOCAL", "LOC"
     , "MANURE", "MNUR"
     , "ANNUAL", "ANNUL"
+
+    , "STRATEGY", "STRGY"
+    , "CONTACT", "CNTCT"
+    , "RESULTS", "RSLTS"
+    , "RESOLVED", "RSLVD"
+    , "RESOLVED", "RSLVD"
+    , "POLLUTANTS", "POLUTS"
+    , "SENSITIVE", "SENS"
+    , "REASON", "RSN"
+    , "REMOVED", "RMVD"
+    , "CONDITIONS", "CONDS"
+    , "CONDUCTOR", "CNDCTR"
+    , "OTHER", "OTHR"
+    , "STACK", "STCK"
+    , "TEST", "TST"
 )]
 
     [DefaultElementNamePostfixLengthsAttribute(
@@ -926,19 +941,19 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
     ////    [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4000)]
     ////    public string WorkflowStatusMessage;
     ////}
-    ////[Serializable]
-    ////public class RemoveTrailingZerosDecimal : CustomXmlStringFormatType<decimal>
-    ////{
-    ////    public RemoveTrailingZerosDecimal()
-    ////    {
-    ////    }
-    ////    public RemoveTrailingZerosDecimal(decimal value)
-    ////        : base(value)
-    ////    {
-    ////    }
-    ////    public override string GetXmlString()
-    ////    {
-    ////        return Value.ToString("G29");
-    ////    }
-    ////}
+    [Serializable]
+    public class RemoveTrailingZerosDecimal : CustomXmlStringFormatType<decimal>
+    {
+        public RemoveTrailingZerosDecimal()
+        {
+        }
+        public RemoveTrailingZerosDecimal(decimal value)
+            : base(value)
+        {
+        }
+        public override string GetXmlString()
+        {
+            return Value.ToString("G29");
+        }
+    }
 }

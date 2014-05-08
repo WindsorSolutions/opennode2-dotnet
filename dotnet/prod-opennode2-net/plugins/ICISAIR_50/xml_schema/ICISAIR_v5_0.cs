@@ -78,12 +78,14 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 10)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string StartDateOfContactAssociation;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate StartDateOfContactAssociation;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string EndDateOfContactAssociation;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate EndDateOfContactAssociation;
     }
 
     /// <remarks/>
@@ -144,27 +146,28 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string StartDateOfContactAssociation;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate StartDateOfContactAssociation;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string EndDateOfContactAssociation;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate EndDateOfContactAssociation;
     }
 
-    // TSM
-    ///// <remarks/>
-    //[System.SerializableAttribute()]
-    //[System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    //[System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
-    //public partial class FacilityContact
-    //{
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    public partial class FacilityContact
+    {
 
-    //    /// <remarks/>
-    //    [System.Xml.Serialization.XmlElementAttribute("Contact", Order = 0)]
-    //    [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-    //    public Contact[] Contact;
-    //}
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("Contact", Order = 0)]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        public Contact[] Contact;
+    }
 
     /// <remarks/>
     [System.SerializableAttribute()]
@@ -290,7 +293,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string HorizontalAccuracyMeasure;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 HorizontalAccuracyMeasure;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
@@ -315,7 +319,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string SourceMapScaleNumber;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 SourceMapScaleNumber;
     }
 
     /// <remarks/>
@@ -441,7 +446,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 10)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string FacilityCongressionalDistrictNumber;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 FacilityCongressionalDistrictNumber;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("FacilityClassification", Order = 11)]
@@ -544,7 +550,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayAttribute(Order = 31)]
         [System.Xml.Serialization.XmlArrayItemAttribute(IsNullable = false)]
-        public Address[] FacilityAddress;
+        public FacilityAddress[] FacilityAddress;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 32)]
@@ -555,7 +561,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
     [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
-    public partial class Address
+    public partial class FacilityAddress
     {
 
         /// <remarks/>
@@ -631,12 +637,14 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 14)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string StartDateOfAddressAssociation;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate StartDateOfAddressAssociation;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 15)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string EndDateOfAddressAssociation;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate EndDateOfAddressAssociation;
     }
 
     /// <remarks/>
@@ -649,7 +657,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Address", Order = 0)]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public Address[] Address;
+        public FacilityAddress[] Address;
     }
 
     /// <remarks/>
@@ -662,7 +670,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Address", Order = 0)]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public Address[] Address;
+        public FacilityAddress[] Address;
     }
 
     /// <remarks/>
@@ -742,19 +750,19 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         public string ElectronicAddressText;
     }
 
+    /// <remarks/>
     // TSM
-    ///// <remarks/>
-    //[System.SerializableAttribute()]
-    //[System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    //[System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
-    //public partial class FacilityAddress
-    //{
+    ////[System.SerializableAttribute()]
+    ////[System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    ////[System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    ////public partial class FacilityAddress
+    ////{
 
-    //    /// <remarks/>
-    //    [System.Xml.Serialization.XmlElementAttribute("Address", Order = 0)]
-    //    [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-    //    public FacilityAddress[] Address;
-    //}
+    ////    /// <remarks/>
+    ////    [System.Xml.Serialization.XmlElementAttribute("Address", Order = 0)]
+    ////    [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+    ////    public FacilityAddress[] Address;
+    ////}
 
     /// <remarks/>
     [System.SerializableAttribute()]
@@ -766,7 +774,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Address", Order = 0)]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public Address[] Address;
+        public FacilityAddress[] Address;
     }
 
     /// <remarks/>
@@ -779,7 +787,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Address", Order = 0)]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public Address[] Address;
+        public FacilityAddress[] Address;
     }
 
     /// <remarks/>
@@ -792,7 +800,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Address", Order = 0)]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public Address[] Address;
+        public FacilityAddress[] Address;
     }
 
     /// <remarks/>
@@ -805,7 +813,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Address", Order = 0)]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public Address[] Address;
+        public FacilityAddress[] Address;
     }
 
     /// <remarks/>
@@ -1001,7 +1009,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 1)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string AirCMSMinimumFrequency;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 AirCMSMinimumFrequency;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 2)]
@@ -1089,7 +1098,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string ComplianceMonitoringStartDate;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate ComplianceMonitoringStartDate;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("ComplianceInspectionTypeCode", Order = 3)]
@@ -1104,7 +1114,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("NationalPrioritiesCode", Order = 5)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string[] NationalPrioritiesCode;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32[] NationalPrioritiesCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
@@ -1118,17 +1129,20 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string ComplianceMonitoringPlannedStartDate;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate ComplianceMonitoringPlannedStartDate;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string ComplianceMonitoringPlannedEndDate;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate ComplianceMonitoringPlannedEndDate;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("RegionalPriorityCode", Order = 9)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string[] RegionalPriorityCode;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 RegionalPriorityCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 10)]
@@ -1158,7 +1172,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("AirPollutantCode", Order = 15)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string[] AirPollutantCode;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 AirPollutantCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 16)]
@@ -1187,12 +1202,14 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 20)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string InspectionUserDefinedField4;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate InspectionUserDefinedField4;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 21)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string InspectionUserDefinedField5;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate InspectionUserDefinedField5;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 22)]
@@ -1265,12 +1282,14 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string StackTestReportReceivedDate;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate StackTestReportReceivedDate;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string TestResultsReviewedDate;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate TestResultsReviewedDate;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("TestResultsData", Order = 8)]
@@ -1288,7 +1307,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string AirTestedPollutantCode;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 AirTestedPollutantCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
@@ -1303,7 +1323,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string AllowableValue;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 AllowableValue;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
@@ -1313,7 +1334,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string ActualResult;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 ActualResult;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
@@ -1366,7 +1388,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string AchievedDate;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate AchievedDate;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("ProgramsViolatedCode", Order = 4)]
@@ -1406,12 +1429,14 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string InformalEAUserDefinedField4;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate InformalEAUserDefinedField4;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 12)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string InformalEAUserDefinedField5;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate InformalEAUserDefinedField5;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 13)]
@@ -1446,7 +1471,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("AirPollutantCode", Order = 19)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string[] AirPollutantCode;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 AirPollutantCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 20)]
@@ -1454,16 +1480,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         public string StateSectionsViolatedText;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 21)]
-        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
-        public AirActiveCMSPlanIndicator SensitiveDataIndicator;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool SensitiveDataIndicatorSpecified;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("SensitiveComments", Order = 22)]
+        [System.Xml.Serialization.XmlElementAttribute("SensitiveComments", Order = 21)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4000)]
         public string[] SensitiveComments;
     }
@@ -1512,7 +1529,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(25)]
-        public string AirDACombinedOrSupersededByEAID;
+        public string AirDACombinedSupersededEAID;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
@@ -1537,12 +1554,14 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string FormalEAUserDefinedField4;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate FormalEAUserDefinedField4;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 12)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string FormalEAUserDefinedField5;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate FormalEAUserDefinedField5;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 13)]
@@ -1581,12 +1600,18 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("AirPollutantCode", Order = 20)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string[] AirPollutantCode;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 AirPollutantCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("InspectionCommentText", Order = 21)]
+        [System.Xml.Serialization.XmlElementAttribute("EnforcementActionCommentText", Order = 21)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4000)]
-        public string[] InspectionCommentText;
+        public string[] EnforcementActionCommentText;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("SensitiveComments", Order = 22)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4000)]
+        public string[] SensitiveComments;
     }
 
     /// <remarks/>
@@ -1614,7 +1639,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string FinalOrderIdentifier;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 FinalOrderIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
@@ -1629,18 +1655,21 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string FinalOrderIssuedEnteredDate;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate FinalOrderIssuedEnteredDate;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string AirEnforcementActionResolvedDate;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate AirResolvedDate;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("17", "2")]
-        public string CashCivilPenaltyRequiredAmount;
+        // TSM
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_40.RemoveTrailingZerosDecimal CashCivilPenaltyRequiredAmount;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
@@ -1677,12 +1706,14 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string MilestonePlannedDate;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate MilestonePlannedDate;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string MilestoneActualDate;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate MilestoneActualDate;
     }
 
     /// <remarks/>
@@ -1788,7 +1819,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 15)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string FacilityCongressionalDistrictNumber;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 FacilityCongressionalDistrictNumber;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 16)]
@@ -1849,7 +1881,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayAttribute(Order = 28)]
         [System.Xml.Serialization.XmlArrayItemAttribute(IsNullable = false)]
-        public Address[] FacilityAddress;
+        public FacilityAddress[] FacilityAddress;
     }
 
     /// <remarks/>
@@ -1887,12 +1919,14 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string PortableSourceStartDate;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate PortableSourceStartDate;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string PortableSourceEndDate;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate PortableSourceEndDate;
     }
 
     /// <remarks/>
@@ -1911,7 +1945,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 1)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string AirPollutantsCode;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 AirPollutantsCode;
     }
 
     /// <remarks/>
@@ -2118,7 +2153,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string ComplianceMonitoringStartDate;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate ComplianceMonitoringStartDate;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
@@ -2128,7 +2164,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("NationalPrioritiesCode", Order = 3)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string[] NationalPrioritiesCode;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 NationalPrioritiesCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
@@ -2142,17 +2179,20 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string ComplianceMonitoringPlannedStartDate;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate ComplianceMonitoringPlannedStartDate;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string ComplianceMonitoringPlannedEndDate;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate ComplianceMonitoringPlannedEndDate;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("RegionalPriorityCode", Order = 7)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string[] RegionalPriorityCode;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 RegionalPriorityCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
@@ -2182,7 +2222,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("AirPollutantCode", Order = 13)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string[] AirPollutantCode;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 AirPollutantCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 14)]
@@ -2211,12 +2252,14 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 18)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string InspectionUserDefinedField4;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate InspectionUserDefinedField4;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 19)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string InspectionUserDefinedField5;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate InspectionUserDefinedField5;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 20)]
@@ -2231,12 +2274,14 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 22)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string CertificationPeriodStartDate;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate CertificationPeriodStartDate;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 23)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string CertificationPeriodEndDate;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate CertificationPeriodEndDate;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 24)]
@@ -2278,7 +2323,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string TVACCReviewedDate;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate TVACCReviewedDate;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
@@ -2408,7 +2454,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string ComplianceMonitoringStartDate;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate ComplianceMonitoringStartDate;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("ComplianceInspectionTypeCode", Order = 4)]
@@ -2433,7 +2480,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string ComplianceMonitoringAgencyCode;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 ComplianceMonitoringAgencyCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("ProgramCode", Order = 9)]
@@ -2476,17 +2524,20 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 15)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string NumberDaysPhysicallyConductingActivity;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 NumberDaysPhysicallyConductingActivity;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 16)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string NumberHoursPhysicallyConductingActivity;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 NumberHoursPhysicallyConductingActivity;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 17)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string ComplianceMonitoringActionOutcomeCode;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 ComplianceMonitoringActionOutcomeCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 18)]
@@ -2496,7 +2547,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("NationalPrioritiesCode", Order = 19)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string[] NationalPrioritiesCode;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 NationalPrioritiesCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 20)]
@@ -2539,12 +2591,14 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 26)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string InspectionUserDefinedField4;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate InspectionUserDefinedField4;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 27)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string InspectionUserDefinedField5;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate InspectionUserDefinedField5;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 28)]
@@ -2617,7 +2671,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string FinalOrderIdentifier;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 FinalOrderIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
@@ -2627,7 +2682,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 3)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string ComplianceScheduleNumber;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 ComplianceScheduleNumber;
     }
 
     /// <remarks/>
@@ -2646,7 +2702,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string FinalOrderIdentifier;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 FinalOrderIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
@@ -2656,7 +2713,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 3)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string ComplianceScheduleNumber;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 ComplianceScheduleNumber;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
@@ -2692,7 +2750,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 2)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string CSOEventID;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 CSOEventID;
     }
 
     /// <remarks/>
@@ -2761,7 +2820,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "integer", Order = 6)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string LimitSeasonNumber;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 LimitSeasonNumber;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
@@ -2814,7 +2874,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string AchievedDate;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate AchievedDate;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("ProgramsViolatedCode", Order = 4)]
@@ -2854,12 +2915,14 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string InformalEAUserDefinedField4;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate InformalEAUserDefinedField4;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 12)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string InformalEAUserDefinedField5;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate InformalEAUserDefinedField5;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 13)]
@@ -2969,12 +3032,14 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string FormalEAUserDefinedField4;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate FormalEAUserDefinedField4;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 12)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string FormalEAUserDefinedField5;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate FormalEAUserDefinedField5;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 13)]
@@ -3010,7 +3075,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string FinalOrderIdentifier;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 FinalOrderIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
@@ -3025,12 +3091,14 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string FinalOrderIssuedEnteredDate;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate FinalOrderIssuedEnteredDate;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string NPDESClosedDate;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate NPDESClosedDate;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
@@ -3041,7 +3109,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("17", "2")]
-        public string CashCivilPenaltyRequiredAmount;
+        // TSM
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_40.RemoveTrailingZerosDecimal CashCivilPenaltyRequiredAmount;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
@@ -3078,12 +3147,14 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string MilestonePlannedDate;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate MilestonePlannedDate;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string MilestoneActualDate;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate MilestoneActualDate;
     }
 
     /// <remarks/>
@@ -3147,7 +3218,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string ComplianceMonitoringStartDate;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate ComplianceMonitoringStartDate;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("ComplianceInspectionTypeCode", Order = 7)]
@@ -3172,7 +3244,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string ComplianceMonitoringAgencyCode;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 ComplianceMonitoringAgencyCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("ProgramCode", Order = 12)]
@@ -3210,17 +3283,20 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 17)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string NumberDaysPhysicallyConductingActivity;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 NumberDaysPhysicallyConductingActivity;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 18)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string NumberHoursPhysicallyConductingActivity;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 NumberHoursPhysicallyConductingActivity;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 19)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string ComplianceMonitoringActionOutcomeCode;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 ComplianceMonitoringActionOutcomeCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 20)]
@@ -3230,7 +3306,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("NationalPrioritiesCode", Order = 21)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string[] NationalPrioritiesCode;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 NationalPrioritiesCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 22)]
@@ -3273,12 +3350,14 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 28)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string InspectionUserDefinedField4;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate InspectionUserDefinedField4;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 29)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string InspectionUserDefinedField5;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate InspectionUserDefinedField5;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 30)]
@@ -3302,12 +3381,14 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 34)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string ComplianceMonitoringPlannedStartDate;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate ComplianceMonitoringPlannedStartDate;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 35)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string ComplianceMonitoringPlannedEndDate;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate ComplianceMonitoringPlannedEndDate;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 36)]
@@ -3327,7 +3408,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("RegionalPriorityCode", Order = 39)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string[] RegionalPriorityCode;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 RegionalPriorityCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("SICCode", Order = 40)]
@@ -3398,17 +3480,20 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("CorrectiveActionCode", Order = 4)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string[] CorrectiveActionCode;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 CorrectiveActionCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("AirPollutantCode", Order = 5)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string[] AirPollutantCode;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 AirPollutantCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("WaterPollutantCode", Order = 6)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string[] WaterPollutantCode;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 WaterPollutantCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
@@ -3437,12 +3522,14 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string SubactivityPlannedDate;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate SubactivityPlannedDate;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string SubactivityDate;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate SubactivityDate;
     }
 
     /// <remarks/>
@@ -3502,12 +3589,14 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string StackTestReportReceivedDate;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate StackTestReportReceivedDate;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public string TestResultsReviewedDate;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate TestResultsReviewedDate;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("TestResultsData", Order = 6)]
@@ -3533,7 +3622,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 2)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string NarrativeConditionNumber;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 NarrativeConditionNumber;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
@@ -3580,7 +3670,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "integer", Order = 5)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string LimitSeasonNumber;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 LimitSeasonNumber;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 6)]
@@ -3666,7 +3757,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "integer", Order = 5)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string LimitSeasonNumber;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 LimitSeasonNumber;
     }
 
     /// <remarks/>
@@ -3689,7 +3781,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "integer", Order = 2)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string LimitSeasonNumber;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 LimitSeasonNumber;
     }
 
     /// <remarks/>
@@ -3707,7 +3800,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 1)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string NarrativeConditionNumber;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 NarrativeConditionNumber;
     }
 
     /// <remarks/>
@@ -3742,7 +3836,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 1)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string NarrativeConditionNumber;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 NarrativeConditionNumber;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
@@ -3909,7 +4004,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 2)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string SSOEventID;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 SSOEventID;
     }
 
     /// <remarks/>
@@ -3948,7 +4044,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 2)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string StormWaterEventID;
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 StormWaterEventID;
     }
 
     /// <remarks/>
@@ -3978,11 +4075,13 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()] // TSM
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()] // TSM
         public AirPollutants AirPollutants;
     }
 
@@ -4064,6 +4163,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         [System.Xml.Serialization.XmlElementAttribute("AirDAComplianceMonitoringData", typeof(AirDAComplianceMonitoringData), Order = 0)]
         [System.Xml.Serialization.XmlElementAttribute("AirDAEnforcementActionMilestoneData", typeof(AirDAEnforcementActionMilestoneData), Order = 0)]
         [System.Xml.Serialization.XmlElementAttribute("AirDAFormalEnforcementActionData", typeof(AirDAFormalEnforcementActionData), Order = 0)]
+        //**
         [System.Xml.Serialization.XmlElementAttribute("AirDAInformalEnforcementActionData", typeof(AirDAInformalEnforcementActionData), Order = 0)]
         [System.Xml.Serialization.XmlElementAttribute("AirFacilityData", typeof(AirFacilityData), Order = 0)]
         [System.Xml.Serialization.XmlElementAttribute("AirPollutantsData", typeof(AirPollutantsData), Order = 0)]
@@ -4085,10 +4185,12 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()] // TSM
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()] // TSM
         public AirComplianceMonitoringStrategy AirComplianceMonitoringStrategy;
     }
 
@@ -4101,10 +4203,12 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()] // TSM
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()] // TSM
         public AirDAComplianceMonitoring AirDAComplianceMonitoring;
     }
 
@@ -4117,10 +4221,12 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()] // TSM
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()] // TSM
         public AirDAEnforcementActionMilestone AirDAEnforcementActionMilestone;
     }
 
@@ -4133,10 +4239,12 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()] // TSM
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()] // TSM
         public AirDAFormalEnforcementAction AirDAFormalEnforcementAction;
     }
 
@@ -4149,10 +4257,12 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()] // TSM
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()] // TSM
         public AirDAInformalEnforcementAction AirDAInformalEnforcementAction;
     }
 
@@ -4165,10 +4275,12 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()] // TSM
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()] // TSM
         public AirFacility AirFacility;
     }
 
@@ -4181,10 +4293,12 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()] // TSM
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()] // TSM
         public AirPrograms AirPrograms;
     }
 
@@ -4197,10 +4311,12 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()] // TSM
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()] // TSM
         public AirTVACC AirTVACC;
     }
 
@@ -4236,5 +4352,149 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
 
         /// <remarks/>
         AirTVACCSubmission,
+
+        /// <remarks/>
+        BasicPermitSubmission,
+
+        /// <remarks/>
+        BiosolidsPermitSubmission,
+
+        /// <remarks/>
+        BiosolidsProgramReportSubmission,
+
+        /// <remarks/>
+        CAFOAnnualReportSubmission,
+
+        /// <remarks/>
+        CAFOPermitSubmission,
+
+        /// <remarks/>
+        ComplianceMonitoringLinkageSubmission,
+
+        /// <remarks/>
+        ComplianceMonitoringSubmission,
+
+        /// <remarks/>
+        ComplianceScheduleSubmission,
+
+        /// <remarks/>
+        CopyMGPLimitSetSubmission,
+
+        /// <remarks/>
+        CSOEventReportSubmission,
+
+        /// <remarks/>
+        CSOPermitSubmission,
+
+        /// <remarks/>
+        DischargeMonitoringReportSubmission,
+
+        /// <remarks/>
+        DMRProgramReportLinkageSubmission,
+
+        /// <remarks/>
+        DMRViolationSubmission,
+
+        /// <remarks/>
+        EffluentTradePartnerSubmission,
+
+        /// <remarks/>
+        EnforcementActionMilestoneSubmission,
+
+        /// <remarks/>
+        EnforcementActionViolationLinkageSubmission,
+
+        /// <remarks/>
+        FederalComplianceMonitoringSubmission,
+
+        /// <remarks/>
+        FinalOrderViolationLinkageSubmission,
+
+        /// <remarks/>
+        FormalEnforcementActionSubmission,
+
+        /// <remarks/>
+        GeneralPermitSubmission,
+
+        /// <remarks/>
+        HistoricalPermitScheduleEventsSubmission,
+
+        /// <remarks/>
+        InformalEnforcementActionSubmission,
+
+        /// <remarks/>
+        LimitSetSubmission,
+
+        /// <remarks/>
+        LimitsSubmission,
+
+        /// <remarks/>
+        LocalLimitsProgramReportSubmission,
+
+        /// <remarks/>
+        MasterGeneralPermitSubmission,
+
+        /// <remarks/>
+        NarrativeConditionScheduleSubmission,
+
+        /// <remarks/>
+        ParameterLimitsSubmission,
+
+        /// <remarks/>
+        PermitReissuanceSubmission,
+
+        /// <remarks/>
+        PermittedFeatureSubmission,
+
+        /// <remarks/>
+        PermitTerminationSubmission,
+
+        /// <remarks/>
+        PermitTrackingEventSubmission,
+
+        /// <remarks/>
+        POTWPermitSubmission,
+
+        /// <remarks/>
+        PretreatmentPerformanceSummarySubmission,
+
+        /// <remarks/>
+        PretreatmentPermitSubmission,
+
+        /// <remarks/>
+        ScheduleEventViolationSubmission,
+
+        /// <remarks/>
+        SingleEventViolationSubmission,
+
+        /// <remarks/>
+        SSOAnnualReportSubmission,
+
+        /// <remarks/>
+        SSOEventReportSubmission,
+
+        /// <remarks/>
+        SSOMonthlyEventReportSubmission,
+
+        /// <remarks/>
+        SWConstructionPermitSubmission,
+
+        /// <remarks/>
+        SWEventReportSubmission,
+
+        /// <remarks/>
+        SWIndustrialPermitSubmission,
+
+        /// <remarks/>
+        SWMS4LargePermitSubmission,
+
+        /// <remarks/>
+        SWMS4ProgramReportSubmission,
+
+        /// <remarks/>
+        SWMS4SmallPermitSubmission,
+
+        /// <remarks/>
+        UnpermittedFacilitySubmission,
     }
 }
