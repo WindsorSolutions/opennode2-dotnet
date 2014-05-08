@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:icis="http://www.exchangenetwork.net/schema/icis/4" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/icis/4" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5">
+	<xsd:include schemaLocation="ICIS_KeyElements_v5.0.xsd"/>
+	<xsd:include schemaLocation="ICIS_Contact_v5.0.xsd"/>
+	<!--<xsd:include schemaLocation="ICIS_CAFO_v5.0.xsd"/>
+	<xsd:include schemaLocation="ICIS_CSO_v5.0.xsd"/>
+	<xsd:include schemaLocation="ICIS_Pretreatment_v5.0.xsd"/>
+	<xsd:include schemaLocation="ICIS_LocalLimitsProgramReport_v5.0.xsd"/>
+	<xsd:include schemaLocation="ICIS_SSO_v5.0.xsd"/>
+	<xsd:include schemaLocation="ICIS_SW_v5.0.xsd"/>
+	<xsd:include schemaLocation="ICIS_SWIndustrialPermit_v5.0.xsd"/>-->
+	<xsd:include schemaLocation="ICIS_SICNAICS_v5.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>Schema Name: ICIS_ComplianceMonitoring_v5.0.xsd</xsd:documentation>
+		<xsd:documentation>Current Version Available: C:\ICISSchemas\SchemasVersion5.0</xsd:documentation>
+		<xsd:documentation>Description: ICIS-NPDES compliance monitoring element data input format</xsd:documentation>
+		<xsd:documentation>Application: ICIS-NPDES</xsd:documentation>
+		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
+		<xsd:documentation>Point of Contact: EPA/Alison Kittle</xsd:documentation>
+		<xsd:documentation>Data Written: July 2006</xsd:documentation>
+		<xsd:documentation>Last Date Modified: 2012-10-10</xsd:documentation>
+	</xsd:annotation>
+	<!--<xsd:element name="BiomonitoringInspectionMethod" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="CAFOInspection" type="icis:CAFOInspection"/>
+	<xsd:element name="CAFOInspectionViolationTypeCode" type="icis:StringMin1Max3Type"/>-->
+	<xsd:element name="ComplianceInspectionTypeCode" type="icis:StringMin1Max3TypeBase"/>
+	<xsd:element name="ComplianceMonitoring" type="icis:ComplianceMonitoring"/>
+	<xsd:element name="ComplianceMonitoringActionOutcomeCode" type="icis:NonNegativeIntegerMin1Max2Type"/>
+	<xsd:element name="ComplianceMonitoringActionReasonCode" type="icis:StringMin1Max3TypeBase"/>
+	<xsd:element name="ComplianceMonitoringActivityName" type="icis:StringMin1Max100Type"/>
+	<xsd:element name="ComplianceMonitoringAgencyCode" type="icis:NonNegativeIntegerMin1Max5Type"/>
+	<xsd:element name="ComplianceMonitoringAgencyTypeCode" type="icis:StringMin1Max3TypeBase"/>
+	<xsd:element name="ComplianceMonitoringStartDate" type="icis:DateType"/>
+	<!--<xsd:element name="CSOInspection" type="icis:CSOInspection"/>-->
+	<xsd:element name="EPAAssistanceIndicator" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="InspectionCommentText" type="icis:StringMin1Max4000Type"/>
+	<xsd:element name="InspectionRatingCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="InspectionUserDefinedField1" type="icis:YesNoIndicatorTypeBase"/>
+	<xsd:element name="InspectionUserDefinedField2" type="icis:StringMin1Max50Type"/>
+	<xsd:element name="InspectionUserDefinedField3" type="icis:StringMin1Max50Type"/>
+	<xsd:element name="InspectionUserDefinedField4" type="icis:DateType"/>
+	<xsd:element name="InspectionUserDefinedField5" type="icis:DateType"/>
+	<xsd:element name="InspectionUserDefinedField6" type="icis:StringMin1Max4000Type"/>
+	<xsd:element name="JointInspectionReasonCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="LeadParty" type="icis:LeadPartyType"/>
+	<xsd:element name="MultimediaIndicator" type="icis:YesNoIndicatorTypeBase"/>
+	<xsd:element name="NationalPrioritiesCode" type="icis:NonNegativeIntegerMin1Max5Type"/>
+	<xsd:element name="NumberDaysPhysicallyConductingActivity" type="icis:NonNegativeIntegerMin1Max10Type"/>
+	<xsd:element name="NumberHoursPhysicallyConductingActivity" type="icis:NonNegativeIntegerMin1Max10Type"/>
+	<!--<xsd:element name="PretreatmentInspection" type="icis:PretreatmentInspection"/>-->
+	<xsd:element name="ProgramCode" type="icis:StringMin1Max9TypeBase"/>
+	<!--<xsd:element name="SSOInspection" type="icis:SSOInspection"/>
+	<xsd:element name="StormWaterConstructionInspection" type="icis:StormWaterConstructionInspection"/>
+	<xsd:element name="StormWaterNonConstructionInspection" type="icis:StormWaterNonConstructionInspection"/>
+	<xsd:element name="StormWaterConstructionNonConstructionInspections" type="icis:StormWaterConstructionNonConstructionInspections"/>
+	<xsd:element name="StormWaterUnpermittedConstructionInspection" type="icis:StormWaterUnpermittedConstructionInspection"/>
+	<xsd:element name="StormWaterConstructionIndustrialInspection" type="icis:StormWaterConstructionIndustrialInspection"/>
+	<xsd:element name="StormWaterMS4Inspection" type="icis:StormWaterMS4Inspection"/>
+	<xsd:element name="SWPPPEvaluationBasisCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="SWPPPEvaluationDate" type="icis:DateType"/>
+	<xsd:element name="SWPPPEvaluationDescriptionText" type="icis:StringMin1Max4000Type"/>-->
+	<xsd:element name="StateFederalJointIndicator" type="icis:StateFederalJointType"/>
+	<xsd:element name="StateStatuteViolatedName" type="icis:StringMin1Max100Type"/>
+	<xsd:complexType name="ComplianceMonitoringData">
+		<xsd:sequence>
+			<xsd:element ref="icis:TransactionHeader"/>
+			<xsd:element ref="icis:ComplianceMonitoring"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ComplianceMonitoring">
+		<xsd:complexContent>
+			<xsd:extension base="icis:ComplianceMonitoringKeyElements">
+				<xsd:sequence>
+					<xsd:element ref="icis:PermitIdentifier" minOccurs="0"/>
+					<xsd:element ref="icis:ComplianceMonitoringCategoryCode" minOccurs="0"/>
+					<xsd:element ref="icis:ComplianceMonitoringDate" minOccurs="0"/>
+					<xsd:element ref="icis:ComplianceMonitoringStartDate" minOccurs="0"/>
+					<xsd:element ref="icis:ComplianceInspectionTypeCode" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="icis:ComplianceMonitoringActivityName" minOccurs="0"/>
+					<!--<xsd:element ref="icis:BiomonitoringInspectionMethod" minOccurs="0"/>-->
+					<xsd:element ref="icis:ComplianceMonitoringActionReasonCode" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="icis:ComplianceMonitoringAgencyTypeCode" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="icis:ComplianceMonitoringAgencyCode" minOccurs="0"/>
+					<xsd:element ref="icis:ProgramCode" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="icis:StateStatuteViolatedName" minOccurs="0"/>
+					<xsd:element ref="icis:EPAAssistanceIndicator" minOccurs="0"/>
+					<xsd:element ref="icis:StateFederalJointIndicator" minOccurs="0"/>
+					<xsd:element ref="icis:JointInspectionReasonCode" minOccurs="0"/>
+					<xsd:element ref="icis:LeadParty" minOccurs="0"/>
+					<xsd:element ref="icis:NumberDaysPhysicallyConductingActivity" minOccurs="0"/>
+					<xsd:element ref="icis:NumberHoursPhysicallyConductingActivity" minOccurs="0"/>
+					<xsd:element ref="icis:ComplianceMonitoringActionOutcomeCode" minOccurs="0"/>
+					<xsd:element ref="icis:InspectionRatingCode" minOccurs="0"/>
+					<xsd:element ref="icis:NationalPrioritiesCode" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="icis:MultimediaIndicator" minOccurs="0"/>
+					<xsd:element ref="icis:FederalFacilityIndicator" minOccurs="0"/>
+					<xsd:element ref="icis:FederalFacilityIndicatorComment" minOccurs="0"/>
+					<xsd:element ref="icis:InspectionUserDefinedField1" minOccurs="0"/>
+					<xsd:element ref="icis:InspectionUserDefinedField2" minOccurs="0"/>
+					<xsd:element ref="icis:InspectionUserDefinedField3" minOccurs="0"/>
+					<xsd:element ref="icis:InspectionUserDefinedField4" minOccurs="0"/>
+					<xsd:element ref="icis:InspectionUserDefinedField5" minOccurs="0"/>
+					<xsd:element ref="icis:InspectionUserDefinedField6" minOccurs="0"/>
+					<xsd:element ref="icis:InspectionCommentText" minOccurs="0"/>
+					<xsd:element ref="icis:InspectionContact" minOccurs="0"/>
+					<!--<xsd:element ref="icis:CAFOInspection" minOccurs="0"/>
+					<xsd:element ref="icis:CSOInspection" minOccurs="0"/>
+					<xsd:element ref="icis:PretreatmentInspection" minOccurs="0"/>
+					<xsd:element ref="icis:SSOInspection" minOccurs="0"/>
+					<xsd:choice>
+						<xsd:element ref="icis:StormWaterConstructionInspection" minOccurs="0"/>
+						<xsd:element ref="icis:StormWaterNonConstructionInspection" minOccurs="0"/>
+						<xsd:element ref="icis:StormWaterConstructionNonConstructionInspections" minOccurs="0"/>
+					</xsd:choice>
+					<xsd:element ref="icis:StormWaterMS4Inspection" minOccurs="0"/>-->
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!--<xsd:complexType name="CAFOInspection">
+		<xsd:sequence>
+			<xsd:group ref="icis:CAFOInspectionClassificationGroup" minOccurs="0"/>
+			<xsd:element ref="icis:DischargesDuringYearProductionAreaIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:AnimalType" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:group ref="icis:ConfinementContainmentGroup" minOccurs="0"/>
+			<xsd:group ref="icis:DrainageApplicationGroup" minOccurs="0"/>
+			<xsd:group ref="icis:AnimalNMPLitterGroup" minOccurs="0"/>
+			<xsd:group ref="icis:NMPDetailsGroup" minOccurs="0"/>
+			<xsd:group ref="icis:EMSGroup" minOccurs="0"/>
+			<xsd:element ref="icis:LandApplicationBMP" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:group ref="icis:CapacityGroup" minOccurs="0"/>
+			<xsd:element ref="icis:CAFOInspectionViolationTypeCode" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CSOInspection">
+		<xsd:sequence>
+			<xsd:element ref="icis:CSOEventDate" minOccurs="0"/>
+			<xsd:group ref="icis:CSOOverflowEventGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PretreatmentInspection">
+		<xsd:sequence>
+			<xsd:group ref="icis:PretreatmentDataGroup" minOccurs="0"/>
+			<xsd:element ref="icis:LocalLimits" minOccurs="0"/>
+			<xsd:element ref="icis:RemovalCredits" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SSOInspection">
+		<xsd:sequence>
+			<xsd:element ref="icis:SSOEventDate" minOccurs="0"/>
+			<xsd:group ref="icis:SSOOverflowEventGroup" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="StormWaterConstructionInspection">
+		<xsd:sequence>
+			<xsd:element ref="icis:StormWaterUnpermittedConstructionInspection" minOccurs="0"/>
+			<xsd:element ref="icis:StormWaterConstructionIndustrialInspection" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="StormWaterNonConstructionInspection">
+		<xsd:sequence>
+			<xsd:element ref="icis:StormWaterUnpermittedConstructionInspection" minOccurs="0"/>
+			<xsd:element ref="icis:StormWaterConstructionIndustrialInspection" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="StormWaterConstructionNonConstructionInspections">
+		<xsd:sequence>
+			<xsd:element ref="icis:StormWaterUnpermittedConstructionInspection" minOccurs="0"/>
+			<xsd:element ref="icis:StormWaterConstructionIndustrialInspection" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="StormWaterUnpermittedConstructionInspection">
+		<xsd:sequence>
+			<xsd:group ref="icis:StormWaterConstructionInspectionGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="StormWaterConstructionIndustrialInspection">
+		<xsd:sequence>
+			<xsd:element ref="icis:SWPPPEvaluationBasisCode" minOccurs="0"/>
+			<xsd:element ref="icis:SWPPPEvaluationDate" minOccurs="0"/>
+			<xsd:element ref="icis:SWPPPEvaluationDescriptionText" minOccurs="0"/>
+			<xsd:element ref="icis:NoExposureAuthorizationDate" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="StormWaterMS4Inspection">
+		<xsd:sequence>
+			<xsd:group ref="icis:StormWaterFundingGroup" minOccurs="0"/>
+			<xsd:group ref="icis:StormWaterFundingSourceGroup" minOccurs="0"/>
+			<xsd:group ref="icis:StormWaterMS4OutfallEstimateGroup" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>-->
+</xsd:schema>

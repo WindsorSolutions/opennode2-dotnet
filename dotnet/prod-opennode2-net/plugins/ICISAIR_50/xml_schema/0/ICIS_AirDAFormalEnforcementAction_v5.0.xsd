@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:icis="http://www.exchangenetwork.net/schema/icis/4" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/icis/4" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5">
+	<xsd:include schemaLocation="ICIS_KeyElements_v5.0.xsd"/>
+	<xsd:include schemaLocation="ICIS_EnforcementAction_v5.0.xsd"/>
+	<xsd:include schemaLocation="ICIS_FormalEnforcementAction_v5.0.xsd"/>
+	<xsd:include schemaLocation="ICIS_AirDAComplianceMonitoring_v5.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>Schema Name: ICIS_AirDAFormalEnforcementAction_v5.0.xsd</xsd:documentation>
+		<xsd:documentation>Current Version Available: C:\ICISSchemas\SchemasVersion5.0</xsd:documentation>
+		<xsd:documentation>Description: ICIS-Air Delegated Agency formal enforcement action data input format</xsd:documentation>
+		<xsd:documentation>Application: ICIS-Air</xsd:documentation>
+		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
+		<xsd:documentation>Point of Contact: EPA/Alison Kittle</xsd:documentation>
+		<xsd:documentation>Data Written: December 2013</xsd:documentation>
+		<xsd:documentation>Last Date Modified: 2013-12-20</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="AirDACombinedSupersededEAID" type="icis:StringMin1Max25Type"/>
+	<xsd:element name="EnforcementActionCommentText" type="icis:StringMin1Max4000Type"/>
+	<xsd:element name="AirDAFinalOrder" type="icis:AirDAFinalOrder"/>
+	<xsd:element name="AirDAFormalEnforcementAction" type="icis:AirDAFormalEnforcementAction"/>
+	<xsd:element name="AirResolvedDate" type="icis:DateType"/>
+	<xsd:element name="FinalOrderAirFacilityIdentifier" type="icis:String18FixedTypeBase"/>
+	
+	<xsd:complexType name="AirDAFormalEnforcementActionData">
+		<xsd:sequence>
+			<xsd:element ref="icis:TransactionHeader"/>
+			<xsd:element ref="icis:AirDAFormalEnforcementAction"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AirDAFormalEnforcementAction">
+		<xsd:complexContent>
+			<xsd:extension base="icis:AirDAEnforcementActionKeyElements">
+				<xsd:sequence>
+					<xsd:element ref="icis:AirFacilityIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="icis:EnforcementActionName" minOccurs="0"/>
+					<xsd:element ref="icis:Forum" minOccurs="0"/>
+					<xsd:element ref="icis:EnforcementActionTypeCode" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="icis:ProgramsViolatedCode" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="icis:ResolutionTypeCode" minOccurs="0"/>
+					<xsd:element ref="icis:AirDACombinedSupersededEAID" minOccurs="0"/>
+					<xsd:element ref="icis:ReasonDeletingRecord" minOccurs="0"/>
+					<xsd:element ref="icis:FormalEAUserDefinedField1" minOccurs="0"/>
+					<xsd:element ref="icis:FormalEAUserDefinedField2" minOccurs="0"/>
+					<xsd:element ref="icis:FormalEAUserDefinedField3" minOccurs="0"/>
+					<xsd:element ref="icis:FormalEAUserDefinedField4" minOccurs="0"/>
+					<xsd:element ref="icis:FormalEAUserDefinedField5" minOccurs="0"/>
+					<xsd:element ref="icis:FormalEAUserDefinedField6" minOccurs="0"/>
+					<xsd:element ref="icis:AirDAFinalOrder" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="icis:LeadAgencyCode" minOccurs="0"/>
+					<xsd:element ref="icis:EnforcementAgencyTypeCode" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="icis:EnforcementAgencyName" minOccurs="0"/>
+					<xsd:element ref="icis:EnforcementActionGovernmentContact" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="icis:OtherAgencyInitiativeText" minOccurs="0"/>
+					<xsd:element ref="icis:AirPollutantCode" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="icis:EnforcementActionCommentText" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="icis:SensitiveComments" minOccurs="0" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="AirDAFinalOrder">
+		<xsd:sequence>
+			<xsd:element ref="icis:FinalOrderIdentifier"/>
+			<xsd:element ref="icis:FinalOrderTypeCode" minOccurs="0"/>
+			<xsd:element ref="icis:FinalOrderAirFacilityIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="icis:FinalOrderIssuedEnteredDate" minOccurs="0"/>
+			<xsd:element ref="icis:AirResolvedDate" minOccurs="0"/>
+			<xsd:element ref="icis:CashCivilPenaltyRequiredAmount" minOccurs="0"/>
+			<xsd:element ref="icis:OtherComments" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:icis="http://www.exchangenetwork.net/schema/icis/4" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/icis/4" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5">
+	<xsd:include schemaLocation="ICIS_Contact_v5.0.xsd"/>
+	<xsd:include schemaLocation="ICIS_Common_v5.0.xsd"/>
+	<xsd:include schemaLocation="ICIS_Facility_v5.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>Schema Name: ICIS_Address_v5.0.xsd</xsd:documentation>
+		<xsd:documentation>Current Version Available: C:\ICISSchemas\SchemasVersion5.0</xsd:documentation>
+		<xsd:documentation>Description: ICIS-NPDES address data input format for global use</xsd:documentation>
+		<xsd:documentation>Application: ICIS-NPDES</xsd:documentation>
+		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
+		<xsd:documentation>Point of Contact: EPA/Alison Kittle</xsd:documentation>
+		<xsd:documentation>Data Written: July 2006</xsd:documentation>
+		<xsd:documentation>Last Date Modified: 2012-10-10</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="Address" type="icis:Address"/>
+	<xsd:element name="BiosolidsPermitAddress" type="icis:BiosolidsPermitAddress"/>
+	<xsd:element name="CAFOAddress" type="icis:CAFOAddress"/>
+	<xsd:element name="LocationAddressCityCode" type="icis:StringMin1Max12TypeBase"/>
+	<xsd:element name="CountyName" type="icis:StringMin1Max35Type"/>
+	<xsd:element name="DivisionName" type="icis:StringMin1Max50Type"/>
+	<xsd:element name="EffluentTradePartnerAddress" type="icis:EffluentTradePartnerAddress"/>
+	<xsd:element name="EffluentTradePartnerTelephone" type="icis:Telephone"/>
+	<xsd:element name="FacilityAddress" type="icis:FacilityAddress"/>
+	<xsd:element name="FacilityDescription" type="icis:StringMin1Max250Type"/>
+	<xsd:element name="EndDateOfAddressAssociation" type="icis:DateType"/>
+	<xsd:element name="LCONCode" type="icis:StringMin1Max3TypeBase"/>
+	<xsd:element name="LocalityName" type="icis:StringMin1Max60TypeBase"/>
+	<xsd:element name="LocationAddressText" type="icis:StringMin1Max50TypeBase"/>
+	<xsd:element name="LocationCountryCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="LocationName" type="icis:StringMin1Max60Type"/>
+	<xsd:element name="LocationProvince" type="icis:StringMin1Max35Type"/>
+	<xsd:element name="LocationStateCode" type="icis:String2FixedTypeBase"/>
+	<xsd:element name="LocationZipCode" type="icis:StringMin1Max14TypeBase"/>
+	<xsd:element name="MailingAddressCityName" type="icis:StringMin1Max30Type"/>
+	<xsd:element name="MailingAddressCountryCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="MailingAddressStateCode" type="icis:String2FixedType"/>
+	<xsd:element name="MailingAddressText" type="icis:StringMin1Max50Type"/>
+	<xsd:element name="MailingAddressZipCode" type="icis:StringMin1Max14Type"/>
+	<xsd:element name="PermitAddress" type="icis:PermitAddress"/>
+	<xsd:element name="PretreatmentAddress" type="icis:PretreatmentAddress"/>
+	<xsd:element name="SiteOwnerAddress" type="icis:SiteOwnerAddress"/>
+	<xsd:element name="StartDateOfAddressAssociation" type="icis:DateType"/>
+	<xsd:element name="StormWaterAddress" type="icis:StormWaterAddress"/>
+	<xsd:element name="SupplementalAddressText" type="icis:StringMin1Max50Type"/>
+	<xsd:element name="SupplementalLocationText" type="icis:StringMin1Max50Type"/>
+	<xsd:complexType name="Address">
+		<xsd:sequence>
+			<xsd:element ref="icis:AffiliationTypeText"/>
+			<xsd:element ref="icis:OrganizationFormalName"/>
+			<xsd:element ref="icis:OrganizationDUNSNumber" minOccurs="0"/>
+			<xsd:element ref="icis:MailingAddressText"/>
+			<xsd:element ref="icis:SupplementalAddressText" minOccurs="0"/>
+			<xsd:element ref="icis:MailingAddressCityName"/>
+			<xsd:element ref="icis:MailingAddressStateCode"/>
+			<xsd:element ref="icis:MailingAddressZipCode"/>
+			<xsd:element ref="icis:CountyName" minOccurs="0"/>
+			<xsd:element ref="icis:MailingAddressCountryCode" minOccurs="0"/>
+			<xsd:element ref="icis:DivisionName" minOccurs="0"/>
+			<xsd:element ref="icis:LocationProvince" minOccurs="0"/>
+			<xsd:element ref="icis:Telephone" minOccurs="0" maxOccurs="3"/>
+			<xsd:element ref="icis:ElectronicAddressText" minOccurs="0"/>
+			<xsd:element ref="icis:StartDateOfAddressAssociation" minOccurs="0"/>
+			<xsd:element ref="icis:EndDateOfAddressAssociation" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="AirFacilityLocationAddressGroup">
+		<xsd:sequence>
+			<xsd:element ref="icis:FacilitySiteName" minOccurs="0"/>
+			<xsd:element ref="icis:LocationAddressText" minOccurs="0"/>
+			<xsd:element ref="icis:SupplementalLocationText" minOccurs="0"/>
+			<xsd:element ref="icis:LocationAddressCityCode" minOccurs="0"/>
+			<xsd:element ref="icis:LocationStateCode" minOccurs="0"/>
+			<xsd:element ref="icis:LocationZipCode" minOccurs="0"/>
+			<xsd:element ref="icis:LCONCode" minOccurs="0"/>
+			<xsd:element ref="icis:TribalLandCode" minOccurs="0"/>
+			<xsd:element ref="icis:FacilityDescription" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="EffluentTradePartnerAddress">
+		<xsd:sequence>
+			<xsd:element ref="icis:OrganizationFormalName" minOccurs="0"/>
+			<xsd:element ref="icis:OrganizationDUNSNumber" minOccurs="0"/>
+			<xsd:element ref="icis:LocationName" minOccurs="0"/>
+			<xsd:element ref="icis:MailingAddressText" minOccurs="0"/>
+			<xsd:element ref="icis:SupplementalAddressText" minOccurs="0"/>
+			<xsd:element ref="icis:MailingAddressCityName" minOccurs="0"/>
+			<xsd:element ref="icis:MailingAddressCountryCode" minOccurs="0"/>
+			<xsd:element ref="icis:LocationProvince" minOccurs="0"/>
+			<xsd:element ref="icis:MailingAddressStateCode" minOccurs="0"/>
+			<xsd:element ref="icis:MailingAddressZipCode" minOccurs="0"/>
+			<xsd:element ref="icis:CountyName" minOccurs="0"/>
+			<xsd:element ref="icis:DivisionName" minOccurs="0"/>
+			<xsd:element ref="icis:EffluentTradePartnerTelephone" minOccurs="0" maxOccurs="3"/>
+			<xsd:element ref="icis:ElectronicAddressText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="FacilityAddress">
+		<xsd:sequence>
+			<xsd:element ref="icis:Address" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="FacilityLocationAddressGroup">
+		<xsd:sequence>
+			<xsd:element ref="icis:FacilitySiteName" minOccurs="0"/>
+			<xsd:element ref="icis:LocationAddressText" minOccurs="0"/>
+			<xsd:element ref="icis:SupplementalLocationText" minOccurs="0"/>
+			<xsd:element ref="icis:LocalityName" minOccurs="0"/>
+			<xsd:element ref="icis:LocationStateCode" minOccurs="0"/>
+			<xsd:element ref="icis:LocationZipCode" minOccurs="0"/>
+			<xsd:element ref="icis:LocationCountryCode" minOccurs="0"/>
+			<xsd:element ref="icis:OrganizationDUNSNumber" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="BiosolidsPermitAddress">
+		<xsd:sequence>
+			<xsd:element ref="icis:Address" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CAFOAddress">
+		<xsd:sequence>
+			<xsd:element ref="icis:Address" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PermitAddress">
+		<xsd:sequence>
+			<xsd:element ref="icis:Address" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PretreatmentAddress">
+		<xsd:sequence>
+			<xsd:element ref="icis:Address" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SiteOwnerAddress">
+		<xsd:sequence>
+			<xsd:element ref="icis:Address" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="StormWaterAddress">
+		<xsd:sequence>
+			<xsd:element ref="icis:Address" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>
