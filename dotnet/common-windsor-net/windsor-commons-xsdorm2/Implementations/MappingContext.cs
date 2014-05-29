@@ -483,7 +483,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                     {
                         if (canSetColumnsNotNull)
                         {
-                            newSameTableElementInfo.NotNull = true;
+                            newSameTableElementInfo.CanSetColumnsNotNull = true;
                         }
                     }
                     if (newColumn != null)
@@ -498,7 +498,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                 {
                     if (newSameTableElementInfo != null)
                     {
-                        newSameTableElementInfo.NotNull = false;
+                        newSameTableElementInfo.CanSetColumnsNotNull = false;
                     }
                     if (newColumn != null)
                     {
@@ -604,7 +604,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                 {
                     ConstructTableMappings(childSameTableElementInfo.ValueType, childSameTableElementInfo.MemberInfo, null,
                                            currentTable, childSameTableElementInfo,
-                                           tables, childSameTableElementInfo.NotNull, currentTable);
+                                           tables, childSameTableElementInfo.CanSetColumnsNotNull, currentTable);
                 }
             }
             if (relationMembers != null)

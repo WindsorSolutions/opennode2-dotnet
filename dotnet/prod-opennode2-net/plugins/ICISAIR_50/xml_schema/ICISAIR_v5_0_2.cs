@@ -279,6 +279,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
     , "OTHER", "OTHR"
     , "STACK", "STCK"
     , "TEST", "TST"
+    , "AIR", ""
 )]
 
     [DefaultElementNamePostfixLengthsAttribute(
@@ -299,55 +300,19 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
                     "srsName", "255"
     )]
 
-    ////[AppliedAttribute(typeof(DischargeMonitoringReport), "Items", typeof(DbIgnoreAttribute))]
-    ////[AppliedAttribute(typeof(DischargeMonitoringReport), "ItemsElementName", typeof(DbIgnoreAttribute))]
-
     public partial class MappingAttributes
     {
     }
 
-    ////[AdditionalCreateIndexAttribute("ICS_BASIC_PRMT", "PRMT_IDENT", true)]
-    ////[AdditionalCreateIndexAttribute("ICS_BS_PRMT", "PRMT_IDENT", true)]
-    ////[AdditionalCreateIndexAttribute("ICS_CAFO_PRMT", "PRMT_IDENT", true)]
-    ////[AdditionalCreateIndexAttribute("ICS_CSO_PRMT", "PRMT_IDENT", true)]
-    ////[AdditionalCreateIndexAttribute("ICS_GNRL_PRMT", "PRMT_IDENT", true)]
-    ////[AdditionalCreateIndexAttribute("ICS_POTW_PRMT", "PRMT_IDENT", true)]
-    ////[AdditionalCreateIndexAttribute("ICS_PRETR_PRMT", "PRMT_IDENT", true)]
-    ////[AdditionalCreateIndexAttribute("ICS_SW_CNST_PRMT", "PRMT_IDENT", true)]
-    ////[AdditionalCreateIndexAttribute("ICS_SW_INDST_PRMT", "PRMT_IDENT", true)]
-    ////[AdditionalCreateIndexAttribute("ICS_SWMS_4_LARGE_PRMT", "PRMT_IDENT", true)]
-    ////[AdditionalCreateIndexAttribute("ICS_SWMS_4_SMALL_PRMT", "PRMT_IDENT", true)]
-    ////[AdditionalCreateIndexAttribute("ICS_UNPRMT_FAC", "PRMT_IDENT", true)]
-    ////[AdditionalCreateIndexAttribute("ICS_CMPL_MON", "PRMT_IDENT, CMPL_MON_CATG_CODE, CMPL_MON_DATE", true)]
-    ////[AdditionalCreateIndexAttribute("ICS_CMPL_MON_LNK", "PRMT_IDENT, CMPL_MON_CATG_CODE, CMPL_MON_DATE", true)]
-    ////[AdditionalCreateIndexAttribute("ICS_PRMT_TRACK_EVT", "PRMT_IDENT, PRMT_TRACK_EVT_CODE, PRMT_TRACK_EVT_DATE", true)]
-    ////[AdditionalCreateIndexAttribute("ICS_CSO_EVT_REP", "PRMT_IDENT, CSO_EVT_DATE", true)]
-    ////[AdditionalCreateIndexAttribute("ICS_SW_EVT_REP", "PRMT_IDENT, DATE_STRM_EVT_SMPL", true)]
-    ////[AdditionalCreateIndexAttribute("ICS_HIST_PRMT_SCHD_EVTS", "PRMT_IDENT, PRMT_EFFECTIVE_DATE, NARR_COND_NUM, SCHD_EVT_CODE, SCHD_DATE", true)]
-    ////[AdditionalCreateIndexAttribute("ICS_PRMT_FEATR", "PRMT_IDENT, PRMT_FEATR_IDENT", true)]
-    ////[AdditionalCreateIndexAttribute("ICS_LMT_SET", "PRMT_IDENT, PRMT_FEATR_IDENT, LMT_SET_DESIGNATOR", true)]
-    ////[AdditionalCreateIndexAttribute("ICS_DSCH_MON_REP", "PRMT_IDENT, PRMT_FEATR_IDENT, LMT_SET_DESIGNATOR, MON_PERIOD_END_DATE", true)]
-    ////[AdditionalCreateIndexAttribute("ICS_DMR_PROG_REP_LNK", "PRMT_IDENT, PRMT_FEATR_IDENT, LMT_SET_DESIGNATOR, MON_PERIOD_END_DATE", true)]
-    ////[AdditionalCreateIndexAttribute("ICS_DMR_VIOL", "PRMT_IDENT, PRMT_FEATR_IDENT, LMT_SET_DESIGNATOR, MON_PERIOD_END_DATE, PARAM_CODE, MON_SITE_DESC_CODE, LMT_SEASON_NUM, NUM_REP_CODE, NUM_REP_VIOL_CODE", true)]
-    ////[AdditionalCreateIndexAttribute("ICS_PARAM_LMTS", "PRMT_IDENT, PRMT_FEATR_IDENT, LMT_SET_DESIGNATOR, PARAM_CODE, MON_SITE_DESC_CODE, LMT_SEASON_NUM", true)]
-    ////[AdditionalCreateIndexAttribute("ICS_LMTS", "PRMT_IDENT, PRMT_FEATR_IDENT, LMT_SET_DESIGNATOR, PARAM_CODE, MON_SITE_DESC_CODE, LMT_SEASON_NUM, LMT_START_DATE, LMT_END_DATE", true)]
-    ////[AdditionalCreateIndexAttribute("ICS_EFFLU_TRADE_PRTNER", "PRMT_IDENT, PRMT_FEATR_IDENT, LMT_SET_DESIGNATOR, PARAM_CODE, MON_SITE_DESC_CODE, LMT_SEASON_NUM, LMT_START_DATE, LMT_END_DATE, LMT_MOD_EFFECTIVE_DATE, TRADE_ID", true)]
-    ////[AdditionalCreateIndexAttribute("ICS_CAFO_ANNUL_REP", "PRMT_IDENT, PRMT_AUTH_REP_RCVD_DATE", true)]
-    ////[AdditionalCreateIndexAttribute("ICS_LOC_LMTS_PROG_REP", "PRMT_IDENT, PRMT_AUTH_REP_RCVD_DATE", true)]
-    ////[AdditionalCreateIndexAttribute("ICS_PRETR_PERF_SUMM", "PRMT_IDENT, PRETR_PERF_SUMM_END_DATE", true)]
-    ////[AdditionalCreateIndexAttribute("ICS_BS_PROG_REP", "PRMT_IDENT, REP_COVERAGE_END_DATE", true)]
-    ////[AdditionalCreateIndexAttribute("ICS_SNGL_EVT_VIOL", "PRMT_IDENT, SNGL_EVT_VIOL_CODE, SNGL_EVT_VIOL_DATE", true)]
-    ////[AdditionalCreateIndexAttribute("ICS_SSO_ANNUL_REP", "PRMT_IDENT, SSO_ANNUL_REP_RCVD_DATE", true)]
-    ////[AdditionalCreateIndexAttribute("ICS_SSO_EVT_REP", "PRMT_IDENT, SSO_EVT_DATE", true)]
-    ////[AdditionalCreateIndexAttribute("ICS_SSO_MONTHLY_EVT_REP", "PRMT_IDENT, SSO_MONTHLY_REP_RCVD_DATE", true)]
-    ////[AdditionalCreateIndexAttribute("ICS_SWMS_4_PROG_REP", "PRMT_IDENT, SW_MS_4_REP_RCVD_DATE", true)]
-    ////[AdditionalCreateIndexAttribute("ICS_PRMT_REISSU", "PRMT_IDENT, PRMT_ISSUE_DATE", true)]
-    ////[AdditionalCreateIndexAttribute("ICS_PRMT_TERM", "PRMT_IDENT", true)]
-    ////[AdditionalCreateIndexAttribute("ICS_FRML_ENFRC_ACTN", "ENFRC_ACTN_IDENT", true)]
-    ////[AdditionalCreateIndexAttribute("ICS_INFRML_ENFRC_ACTN", "ENFRC_ACTN_IDENT", true)]
-    ////[AdditionalCreateIndexAttribute("ICS_CMPL_SCHD", "ENFRC_ACTN_IDENT, FINAL_ORDER_IDENT, PRMT_IDENT, CMPL_SCHD_NUM", true)]
-    ////[AdditionalCreateIndexAttribute("ICS_ENFRC_ACTN_MILESTONE", "ENFRC_ACTN_IDENT,MILESTONE_TYPE_CODE", true)]
-    ////[AdditionalCreateIndexAttribute("ICS_NARR_COND_SCHD", "PRMT_IDENT, NARR_COND_NUM", true)]
+    [AdditionalCreateIndexAttribute("ICA_CMPL_MON_STRGY", "FAC_IDENT", true)]
+    [AdditionalCreateIndexAttribute("ICA_DA_CMPL_MON", "CMPL_MON_IDENT", true)]
+    [AdditionalCreateIndexAttribute("ICA_DA_ENFRC_ACTN_MILESTONE", "DA_ENFRC_ACTN_IDENT, MILESTONE_TYPE_CODE", true)]
+    [AdditionalCreateIndexAttribute("ICA_DA_FRML_ENFRC_ACTN", "DA_ENFRC_ACTN_IDENT", true)]
+    [AdditionalCreateIndexAttribute("ICA_DA_INFRML_ENFRC_ACTN", "DA_ENFRC_ACTN_IDENT", true)]
+    [AdditionalCreateIndexAttribute("ICA_FAC", "FAC_IDENT", true)]
+    [AdditionalCreateIndexAttribute("ICA_POLUTS", "FAC_IDENT, POLUTS_CODE", true)]
+    [AdditionalCreateIndexAttribute("ICA_PROGS", "FAC_IDENT, PROG_CODE", true)]
+    [AdditionalCreateIndexAttribute("ICA_TVACC", "CMPL_MON_IDENT", true)]
 
     public partial class Payload : IAfterLoadFromDatabase, IBeforeSaveToDatabase
     {

@@ -991,6 +991,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(18)]
+        [Windsor.Commons.XsdOrm2.DbNotNull] // TSM
         public string AirFacilityIdentifier;
     }
 
@@ -1068,6 +1069,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(25)]
+        [Windsor.Commons.XsdOrm2.DbNotNull] // TSM
         public string ComplianceMonitoringIdentifier;
     }
 
@@ -1142,7 +1144,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         [System.Xml.Serialization.XmlElementAttribute("RegionalPriorityCode", Order = 9)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
         // TSM
-        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 RegionalPriorityCode;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32[] RegionalPriorityCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 10)]
@@ -1173,7 +1175,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         [System.Xml.Serialization.XmlElementAttribute("AirPollutantCode", Order = 15)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
         // TSM
-        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 AirPollutantCode;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32[] AirPollutantCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 16)]
@@ -1360,6 +1362,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(25)]
+        [Windsor.Commons.XsdOrm2.DbNotNull] // TSM
         public string AirDAEnforcementActionIdentifier;
     }
 
@@ -1472,7 +1475,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         [System.Xml.Serialization.XmlElementAttribute("AirPollutantCode", Order = 19)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
         // TSM
-        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 AirPollutantCode;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32[] AirPollutantCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 20)]
@@ -1601,7 +1604,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         [System.Xml.Serialization.XmlElementAttribute("AirPollutantCode", Order = 20)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
         // TSM
-        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 AirPollutantCode;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32[] AirPollutantCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("EnforcementActionCommentText", Order = 21)]
@@ -1688,11 +1691,13 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(25)]
+        [Windsor.Commons.XsdOrm2.DbNotNull] // TSM
         public string AirDAEnforcementActionIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(5)]
+        [Windsor.Commons.XsdOrm2.DbNotNull] // TSM
         public string MilestoneTypeCode;
     }
 
@@ -1727,6 +1732,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(18)]
+        [Windsor.Commons.XsdOrm2.DbNotNull] // TSM
         public string AirFacilityIdentifier;
     }
 
@@ -1940,11 +1946,13 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(18)]
+        [Windsor.Commons.XsdOrm2.DbNotNull] // TSM
         public string AirFacilityIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 1)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
+        [Windsor.Commons.XsdOrm2.DbNotNull] // TSM
         // TSM
         public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 AirPollutantsCode;
     }
@@ -1967,10 +1975,12 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()] // TSM
         public AirPollutantEPAClassificationData AirPollutantEPAClassificationData;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()] // TSM
         public AirPollutantDAClassificationData AirPollutantDAClassificationData;
     }
 
@@ -2047,11 +2057,13 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(18)]
+        [Windsor.Commons.XsdOrm2.DbNotNull] // TSM
         public string AirFacilityIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(9)]
+        [Windsor.Commons.XsdOrm2.DbNotNull] // TSM
         public string AirProgramCode;
     }
 
@@ -2069,6 +2081,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()] // TSM
         public AirProgramOperatingStatusData AirProgramOperatingStatusData;
 
         /// <remarks/>
@@ -2132,6 +2145,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(25)]
+        [Windsor.Commons.XsdOrm2.DbNotNull] // TSM
         public string ComplianceMonitoringIdentifier;
     }
 
@@ -2165,7 +2179,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         [System.Xml.Serialization.XmlElementAttribute("NationalPrioritiesCode", Order = 3)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
         // TSM
-        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 NationalPrioritiesCode;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32[] NationalPrioritiesCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
@@ -2192,7 +2206,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         [System.Xml.Serialization.XmlElementAttribute("RegionalPriorityCode", Order = 7)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
         // TSM
-        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 RegionalPriorityCode;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32[] RegionalPriorityCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
@@ -2202,6 +2216,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
         [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(18)]
+        [Windsor.Commons.XsdOrm2.DbNotNull] // TSM
         public string AirFacilityIdentifier;
 
         /// <remarks/>
@@ -2223,7 +2238,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         [System.Xml.Serialization.XmlElementAttribute("AirPollutantCode", Order = 13)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
         // TSM
-        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 AirPollutantCode;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32[] AirPollutantCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 14)]
@@ -2423,6 +2438,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(25)]
+        [Windsor.Commons.XsdOrm2.DbNotNull] // TSM
         public string ComplianceMonitoringIdentifier;
     }
 
@@ -2548,7 +2564,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         [System.Xml.Serialization.XmlElementAttribute("NationalPrioritiesCode", Order = 19)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
         // TSM
-        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 NationalPrioritiesCode;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32[] NationalPrioritiesCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 20)]
@@ -3134,6 +3150,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(5)]
+        [Windsor.Commons.XsdOrm2.DbNotNull] // TSM
         public string MilestoneTypeCode;
     }
 
@@ -3168,6 +3185,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(25)]
+        [Windsor.Commons.XsdOrm2.DbNotNull] // TSM
         public string ComplianceMonitoringIdentifier;
     }
 
@@ -3307,7 +3325,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         [System.Xml.Serialization.XmlElementAttribute("NationalPrioritiesCode", Order = 21)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
         // TSM
-        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 NationalPrioritiesCode;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32[] NationalPrioritiesCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 22)]
@@ -3409,7 +3427,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         [System.Xml.Serialization.XmlElementAttribute("RegionalPriorityCode", Order = 39)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
         // TSM
-        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 RegionalPriorityCode;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32[] RegionalPriorityCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("SICCode", Order = 40)]
@@ -3481,19 +3499,19 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         [System.Xml.Serialization.XmlElementAttribute("CorrectiveActionCode", Order = 4)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
         // TSM
-        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 CorrectiveActionCode;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32[] CorrectiveActionCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("AirPollutantCode", Order = 5)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
         // TSM
-        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 AirPollutantCode;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32[] AirPollutantCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("WaterPollutantCode", Order = 6)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
         // TSM
-        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 WaterPollutantCode;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32[] WaterPollutantCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 7)]

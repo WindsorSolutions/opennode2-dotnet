@@ -105,7 +105,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
             return text;
         }
         public Type ValueType;
-        public bool NotNull = false;
+        public bool CanSetColumnsNotNull = true;
         public Table ParentTable;
         public SameTableElementInfo ParentSameTableElementInfo;
         private List<Column> m_DataColumns = new List<Column>();

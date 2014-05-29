@@ -902,7 +902,6 @@ namespace Windsor.Node2008.WNOS.Logic
             set
             {
                 _usermgrClient = value;
-                TestGetUserInfo();
             }
         }
         public IObjectCacheDao ObjectCacheDao
@@ -914,33 +913,6 @@ namespace Windsor.Node2008.WNOS.Logic
             set
             {
                 _objectCacheDao = value;
-            }
-        }
-        private void TestGetUserInfo()
-        {
-            NAAS_USRMGR.GetUserList getUserList = new NAAS_USRMGR.GetUserList();
-            getUserList.adminName = "nodeadmin@windsorsolutions.com";
-            getUserList.credential = "";
-            getUserList.domain = _usermgrRuntimeCredentialDomain;
-            getUserList.rowId = "0";
-            getUserList.maxRows = "-1";
-            getUserList.status = string.Empty;
-            getUserList.affiliate = string.Empty;
-
-            //getUserList.userId = "netnode.prod@cgifederal.com";
-            getUserList.userId = "netnode.test@cgifederal.com";
-
-            NAAS_USRMGR.GetUserListResponse response = _usermgrClient.GetUserList(getUserList);
-            if (CollectionUtils.IsNullOrEmpty(response.@return))
-            {
-                return;
-            }
-            foreach (NAAS_USRMGR.UserAccountType userAcct in response.@return)
-            {
-                if (string.Equals(userAcct.userId, getUserList.userId, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    return;
-                }
             }
         }
     }
