@@ -268,7 +268,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
             }
             else if (m_IsTenDigitDateString)
             {
-                value = ((DateTime)value).ToString("yyyy-MM-dd");
+                value = DateTime.Parse(value.ToString()).ToString("yyyy-MM-dd");
             }
             else if (m_IsTimeType)
             {
@@ -279,22 +279,14 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                 }
                 else
                 {
-                    DateTime existingValue = (DateTime)value;
+                    DateTime existingValue = DateTime.Parse(value.ToString());
                     value = new DateTime(1900, 1, 1, existingValue.Hour, existingValue.Minute, existingValue.Second);
                 }
             }
             else if ((m_ColumnType == DbType.DateTime) || (m_ColumnType == DbType.Date))
             {
-                if (m_MemberType == typeof(string))
-                {
                     DateTime dateTime = DateTime.Parse(value.ToString());
                     return MakeValidDbDateTime(dateTime);
-                }
-                else
-                {
-                    DateTime dateTime = (DateTime)value;
-                    return MakeValidDbDateTime(dateTime);
-                }
             }
             return value;
         }
@@ -356,12 +348,12 @@ namespace Windsor.Commons.XsdOrm2.Implementations
             {
                 if (m_MemberType == typeof(string))
                 {
-                    DateTime existingValue = (DateTime)value;
+                    DateTime existingValue = DateTime.Parse(value.ToString());
                     value = existingValue.ToString("HH:mm:ss");
                 }
                 else
                 {
-                    DateTime existingValue = (DateTime)value;
+                    DateTime existingValue = DateTime.Parse(value.ToString());
                     value = new DateTime(1900, 1, 1, existingValue.Hour, existingValue.Minute, existingValue.Second);
                 }
             }
