@@ -11,7 +11,7 @@
     <name>Node Plugin - WQX</name>
     <properties>
         <node.plugin.name>wqx</node.plugin.name>
-        <node.plugin.build.number>00</node.plugin.build.number>
+        <node.plugin.build.number>01</node.plugin.build.number>
         <node.plugin.description>Submits water quality sampling and result data to EPA's Water Quality Exchang (WQX) System. Data must be loaded into the staging tables that accompany this plugin.</node.plugin.description>
         <node.plugin.help.text>Water Quality Exchange (WQX) Data Exchange</node.plugin.help.text>
     </properties>

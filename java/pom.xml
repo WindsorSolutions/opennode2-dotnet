@@ -109,7 +109,11 @@
             .
         -->
         <!-- <springframework.version>2.5.6.SEC03</springframework.version> -->
-        <springframework.version>3.2.2.RELEASE</springframework.version>
+        <!-- <springframework.version>3.2.2.RELEASE</springframework.version> -->
+        <!-- <springframework.version>4.0.3.RELEASE</springframework.version> -->
+        <springframework.version>3.2.8.RELEASE</springframework.version>
+        <!-- upgrade to Spring 3.2.8 or 4.0.3? -->
+        <hibernate.version>4.3.5.Final</hibernate.version>
         <commons.beanutils.version>1.8.3</commons.beanutils.version>
         <!-- The default node.home property, will be filtered into the build XML config files 
         and can be overridden if necessary.  An example might be a build that will be deployed on the 
@@ -294,12 +298,24 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>4.1.6.Final</version>
+            <version>${hibernate.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.javassist</groupId>
+                    <artifactId>javassist</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
-            <version>4.1.6.Final</version>
+            <version>${hibernate.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.javassist</groupId>
+                    <artifactId>javassist</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>xalan</groupId>

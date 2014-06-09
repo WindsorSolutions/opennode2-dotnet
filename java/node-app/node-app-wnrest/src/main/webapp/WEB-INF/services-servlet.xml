@@ -8,6 +8,9 @@
     <context:annotation-config/>
 
     <context:component-scan base-package="com.windsor.node.web" />
+    <context:component-scan base-package="com.mangofactory.swagger.controllers"/>
+    <context:component-scan base-package="com.mangofactory.swagger.configuration"/>
+    
 
     <context:property-placeholder location="classpath:environment.properties,file:${node.home}/conf/nos.properties"/>
 

@@ -65,8 +65,7 @@ import com.windsor.node.util.DataSourceUtil;
 public class WnosPluginHelper implements PluginHelper, InitializingBean {
 
     /** Logger for this class and subclasses */
-    private final Logger logger = LoggerFactory
-            .getLogger(WnosPluginHelper.class);
+    private final Logger logger = LoggerFactory.getLogger(WnosPluginHelper.class);
 
     private NOSConfig nosConfig;
     private WnosClassLoader classLoader;
@@ -359,30 +358,30 @@ public class WnosPluginHelper implements PluginHelper, InitializingBean {
     /**
      * getWnosPlugin
      */
-    public BaseWnosPlugin getWnosPlugin(DataFlow flow,
-            String implementingClassName) {
-
+    public BaseWnosPlugin getWnosPlugin(DataFlow flow, String implementingClassName)
+    {
+        //2014-04-07 Hopefully this class won't need rewriting, changing classloader to cache plugin by version
         logger.debug("Implementor: " + implementingClassName);
         logger.debug("Flow: " + flow);
 
-        if (flow == null || StringUtils.isBlank(flow.getName())) {
+        if(flow == null || StringUtils.isBlank(flow.getName()))
+        {
             throw new RuntimeException("Null flow name");
         }
 
-        if (StringUtils.isBlank(implementingClassName)) {
+        if(StringUtils.isBlank(implementingClassName))
+        {
             throw new IllegalArgumentException("Null implementingClassName");
         }
 
         File pluginVersionDir = getPluginContentDir(flow);
         logger.debug("pluginVersionDir: " + pluginVersionDir);
 
-        BaseWnosPlugin result = (BaseWnosPlugin) classLoader.getPluginInstance(
-                pluginVersionDir, implementingClassName);
+        BaseWnosPlugin result = (BaseWnosPlugin) classLoader.getPluginInstance(pluginVersionDir, implementingClassName);
 
         result.setPluginSourceDir(pluginVersionDir);
 
         return result;
-
     }
 
     /**

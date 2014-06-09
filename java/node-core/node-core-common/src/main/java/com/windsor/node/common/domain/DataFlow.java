@@ -72,6 +72,9 @@ public class DataFlow extends AuditableIdentity {
     /** A flag indicating whether access to this Flow is restricted. */
     private boolean secured;
 
+    /** indicates at least one plugin implementation has been uploaded   */
+    private Boolean pluginExists = Boolean.FALSE;
+
     /** Default constructor. */
     public DataFlow() {
         services = new ArrayList<DataService>();
@@ -214,7 +217,7 @@ public class DataFlow extends AuditableIdentity {
         }
         return new HashCodeBuilder(n, n + 2).appendSuper(super.hashCode())
                 .append(infoUrl).append(contactUserId).append(name).append(
-                        description).append(services).append(secured)
+                        description).append(services).append(secured).append(pluginExists)
                 .toHashCode();
     }
 
@@ -236,7 +239,17 @@ public class DataFlow extends AuditableIdentity {
                 infoUrl, flow.infoUrl)
                 .append(contactUserId, flow.contactUserId).append(name,
                         flow.name).append(description, flow.description)
-                .append(services, flow.services).append(secured, flow.secured)
+                .append(services, flow.services).append(secured, flow.secured).append(pluginExists, flow.pluginExists)
                 .isEquals();
+    }
+
+    public Boolean getPluginExists()
+    {
+        return pluginExists;
+    }
+
+    public void setPluginExists(Boolean pluginExists)
+    {
+        this.pluginExists = pluginExists;
     }
 }

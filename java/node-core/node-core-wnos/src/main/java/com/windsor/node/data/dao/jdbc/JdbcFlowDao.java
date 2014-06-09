@@ -49,8 +49,11 @@ import com.windsor.node.util.FormatUtil;
 public class JdbcFlowDao extends BaseJdbcDao implements FlowDao
 {
 
-    protected static final String SQL_SELECT = "SELECT Id, InfoUrl, Contact, "
-            + "IsProtected, ModifiedBy, ModifiedOn, Code, Description FROM NFlow ";
+    /*protected static final String SQL_SELECT = "SELECT Id, InfoUrl, Contact, "
+            + "IsProtected, ModifiedBy, ModifiedOn, Code, Description FROM NFlow ";*/
+    protected static final String SQL_SELECT_WITH_COUNT = "SELECT NFlow.Id, NFlow.InfoUrl, NFlow.Contact, "
+            + " NFlow.IsProtected, NFlow.ModifiedBy, NFlow.ModifiedOn, NFlow.Code, NFlow.Description,"
+            + " (SELECT COUNT(DISTINCT NPlugin.id)  from NPlugin where NFlow.id = NPlugin.FlowId) AS NumPluginsUploaded FROM NFlow ";
 
     protected static final String SQL_SELECT_NAMES = "SELECT Code FROM NFlow ORDER BY Code ";
 
@@ -58,19 +61,19 @@ public class JdbcFlowDao extends BaseJdbcDao implements FlowDao
 
     protected static final String SQL_SELECT_CODE_EXISTS = "SELECT COUNT(*) FROM NFlow WHERE Code = ? ";
 
-    protected static final String SQL_SELECT_ID = SQL_SELECT + "WHERE Id = ? ";
+    protected static final String SQL_SELECT_ID = SQL_SELECT_WITH_COUNT + "WHERE NFlow.Id = ? ";
 
-    protected static final String SQL_SELECT_NAME = SQL_SELECT
-            + "WHERE Code = ? ";
+    protected static final String SQL_SELECT_NAME = SQL_SELECT_WITH_COUNT
+            + "WHERE NFlow.Code = ? ";
 
-    protected static final String SQL_SELECT_PROTECTED = SQL_SELECT
-            + " WHERE IsProtected = 'Y' ORDER BY Code ";
+    protected static final String SQL_SELECT_PROTECTED = SQL_SELECT_WITH_COUNT
+            + " WHERE NFlow.IsProtected = 'Y' ORDER BY NFlow.Code ";
 
-    protected static final String SQL_SELECT_UNPROTECTED = SQL_SELECT
-            + " WHERE IsProtected = 'N' ORDER BY Code ";
+    protected static final String SQL_SELECT_UNPROTECTED = SQL_SELECT_WITH_COUNT
+            + " WHERE NFlow.IsProtected = 'N' ORDER BY NFlow.Code ";
 
-    protected static final String SQL_SELECT_ORDER_BY_CODE = SQL_SELECT
-            + "ORDER BY Code ";
+    protected static final String SQL_SELECT_ORDER_BY_CODE = SQL_SELECT_WITH_COUNT
+            + "ORDER BY NFlow.Code ";
 
     /**
      * SQL INSERT statement for this table
@@ -221,20 +224,29 @@ public class JdbcFlowDao extends BaseJdbcDao implements FlowDao
 
         public DataFlow mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-            DataFlow obj = new DataFlow();
+            DataFlow dataFlow = new DataFlow();
 
-            obj.setId(rs.getString("Id"));
-            obj.setInfoUrl(rs.getString("InfoUrl"));
-            obj.setContactUserId(rs.getString("Contact"));
-            obj.setSecured(FormatUtil.toBooleanFromYN(rs
+            dataFlow.setId(rs.getString("Id"));
+            dataFlow.setInfoUrl(rs.getString("InfoUrl"));
+            dataFlow.setContactUserId(rs.getString("Contact"));
+            dataFlow.setSecured(FormatUtil.toBooleanFromYN(rs
                     .getString("IsProtected")));
-            obj.setModifiedById(rs.getString("ModifiedBy"));
-            obj.setModifiedOn(rs.getTimestamp("ModifiedOn"));
-            obj.setName(rs.getString("Code"));
-            obj.setDescription(rs.getString("Description"));
-            obj.setServices(serviceDao.getByFlowId(obj.getId()));
+            dataFlow.setModifiedById(rs.getString("ModifiedBy"));
+            dataFlow.setModifiedOn(rs.getTimestamp("ModifiedOn"));
+            dataFlow.setName(rs.getString("Code"));
+            dataFlow.setDescription(rs.getString("Description"));
+            dataFlow.setServices(serviceDao.getByFlowId(dataFlow.getId()));
+            int numPlugins = rs.getInt("NumPluginsUploaded");
+            if(numPlugins == 0)
+            {
+                dataFlow.setPluginExists(Boolean.FALSE);
+            }
+            else
+            {
+                dataFlow.setPluginExists(Boolean.TRUE);
+            }
 
-            return obj;
+            return dataFlow;
 
         }
 

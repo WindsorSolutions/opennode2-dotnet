@@ -50,7 +50,7 @@ public class DataRequest extends AuditableIdentity {
     private List<String> recipients;
     private Map<String, Object> notifications;//FIXME this map seems to be used for <String, String> either <Object, WnosTransactionNotificationType> or <String, WnosTransactionNotificationType>
     private PaginationIndicator paging;
-    private String flowName;
+    private String flowName;//FIXME should be a Flow object, not a "name"
 
     public DataRequest() {
         parameters = new ByIndexOrNameMap();

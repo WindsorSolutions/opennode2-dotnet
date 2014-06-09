@@ -90,11 +90,12 @@ public class JdbcServiceDao extends BaseJdbcDao implements ServiceDao,
      * Base &quot;select&quot; statement.
      */
     private static final String SQL_SELECT = "SELECT Id, Name, FlowId, IsActive, ServiceType, "
-            + "Implementor, AuthLevel, ModifiedBy, ModifiedOn FROM NService ";
+            + "Implementor, AuthLevel, ModifiedBy, ModifiedOn, PublishFlags, AuthRequired FROM NService ";
 
     /**
      * For ENDS2 support.
      */
+    //FIXME fix where clause join to be join
     private static final String SQL_SELECT_WITH_FLOW_NAME = "SELECT s.Id, s.Name, s.FlowId, s.IsActive, s.ServiceType, "
             + "s.Implementor, s.AuthLevel, s.ModifiedBy, s.ModifiedOn, f.Code FROM NService s, NFlow f "
             + "WHERE s.IsActive = 'Y' AND f.Id = s.FlowId ORDER BY f.Code, s.Name";
@@ -145,15 +146,15 @@ public class JdbcServiceDao extends BaseJdbcDao implements ServiceDao,
      * Insert a new DataService
      */
     private static final String SQL_INSERT = "INSERT INTO NService ( Name, FlowId, IsActive, "
-            + "ServiceType, Implementor, AuthLevel, ModifiedBy, ModifiedOn, Id ) VALUES "
-            + "( ?, ?, ?, ?, ?, ?, ?, ?, ? )";
+            + "ServiceType, Implementor, AuthLevel, ModifiedBy, ModifiedOn, PublishFlags, AuthRequired, Id) VALUES "
+            + "( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
 
     /**
      * Update an existing DataService for a given DataService id.
      */
     private static final String SQL_UPDATE = "UPDATE NService SET Name = ?, FlowId = ?, "
             + "IsActive = ?, ServiceType = ?, Implementor = ?, AuthLevel = ?, ModifiedBy = ?, "
-            + "ModifiedOn = ? WHERE Id = ?";
+            + "ModifiedOn = ?, PublishFlags = ?, AuthRequired = ? WHERE Id = ?";
 
     /**
      * Delete an existing DataService for a given DataService id.
@@ -321,7 +322,7 @@ public class JdbcServiceDao extends BaseJdbcDao implements ServiceDao,
             throw new RuntimeException("Null service name");
         }
 
-        Object[] args = new Object[9];
+        Object[] args = new Object[11];
 
         args[0] = instance.getName();
         args[1] = instance.getFlowId();
@@ -331,9 +332,11 @@ public class JdbcServiceDao extends BaseJdbcDao implements ServiceDao,
         args[5] = ServiceRequestAuthorizationType.Basic.getType();
         args[6] = instance.getModifiedById();
         args[7] = DateUtil.getTimestamp();
-        args[8] = instance.getId();
+        args[8] = null;
+        args[9] = (instance.getAuthRequired() ? "Y" : "N");
+        args[10] = instance.getId();
 
-        int[] types = new int[9];
+        int[] types = new int[11];
         types[0] = Types.VARCHAR;
         types[1] = Types.VARCHAR;
         types[2] = Types.VARCHAR;
@@ -343,6 +346,8 @@ public class JdbcServiceDao extends BaseJdbcDao implements ServiceDao,
         types[6] = Types.VARCHAR;
         types[7] = Types.TIMESTAMP;
         types[8] = Types.VARCHAR;
+        types[9] = Types.VARCHAR;
+        types[10] = Types.VARCHAR;
 
         printourArgs(args);
 
@@ -458,24 +463,26 @@ public class JdbcServiceDao extends BaseJdbcDao implements ServiceDao,
          */
         public DataService mapRow(ResultSet rs, int rowNum) throws SQLException
         {
-            DataService obj = new DataService();
+            DataService service = new DataService();
 
-            obj.setId(rs.getString("Id"));
-            obj.setName(rs.getString("Name"));
-            obj.setFlowId(rs.getString("FlowId"));
-            obj.setActive(FormatUtil.toBooleanFromYN(rs.getString("IsActive")));
-            obj.setType((ServiceType) ServiceType.fromString(rs.getString("ServiceType")));
-            obj.setImplementingClassName(rs.getString("Implementor"));
-            obj.setArgs(getServiceArgs(rs.getString("Id")));
-            obj.setDataSources(connectionDao.getBySerivceId(obj.getId()));
-            obj.setModifiedById(rs.getString("ModifiedBy"));
-            obj.setModifiedOn(rs.getTimestamp("ModifiedOn"));
+            service.setId(rs.getString("Id"));
+            service.setName(rs.getString("Name"));
+            service.setFlowId(rs.getString("FlowId"));
+            service.setActive(FormatUtil.toBooleanFromYN(rs.getString("IsActive")));
+            service.setType((ServiceType) ServiceType.fromString(rs.getString("ServiceType")));
+            service.setImplementingClassName(rs.getString("Implementor"));
+            service.setArgs(getServiceArgs(rs.getString("Id")));
+            service.setDataSources(connectionDao.getBySerivceId(service.getId()));
+            service.setModifiedById(rs.getString("ModifiedBy"));
+            service.setModifiedOn(rs.getTimestamp("ModifiedOn"));
+            service.setAuthRequired(FormatUtil.toBooleanFromYN(rs.getString("AuthRequired")));
+            
 
             if (containsColumnNamed(rs, "Code"))
             {
-                obj.setFlowName(rs.getString("Code"));
+                service.setFlowName(rs.getString("Code"));
             }
-            return obj;
+            return service;
         }
     }
 
@@ -534,12 +541,13 @@ public class JdbcServiceDao extends BaseJdbcDao implements ServiceDao,
 
     }
 
-    public void setConnectionDao(ConnectionDao connectionDao) {
+    public void setConnectionDao(ConnectionDao connectionDao)
+    {
         this.connectionDao = connectionDao;
     }
 
-    public void setIdGenerator(IdGenerator idGenerator) {
+    public void setIdGenerator(IdGenerator idGenerator)
+    {
         this.idGenerator = idGenerator;
     }
-
 }

@@ -26,7 +26,7 @@
         <property name="notificationHelper" ref="mailHelper" />
     </bean>
 
-    <bean id="classLoader" class="com.windsor.node.plugin.PluginClassLoader" />
+    <bean id="classLoader" class="com.windsor.node.plugin.CachingPluginClassLoader" />
         
     <bean id="serviceFactory" class="com.windsor.node.plugin.PluginServiceProvider">
         <property name="configLocations">

@@ -1,0 +1,1 @@
+alter table NService add (AuthRequired varchar2(1) null);

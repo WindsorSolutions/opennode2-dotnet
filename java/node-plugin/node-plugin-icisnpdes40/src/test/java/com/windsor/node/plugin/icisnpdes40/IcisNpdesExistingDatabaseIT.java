@@ -75,9 +75,11 @@ import com.windsor.node.plugin.icisnpdes40.generated.SingleEventViolationData;
 import com.windsor.node.plugin.icisnpdes40.generated.UnpermittedFacilityData;
 import com.windsor.node.plugin.test.AbstractExistingDbIT;
 
-public class IcisNpdesExistingDatabaseIT extends AbstractExistingDbIT {
+public class IcisNpdesExistingDatabaseIT //extends AbstractExistingDbIT
+{
 
-	private static final String SCHEMA_ROOT_PATH = SCHEMA_DIR + "/index.xsd";
+    //FIXME replace with non-IT test
+	/*private static final String SCHEMA_ROOT_PATH = SCHEMA_DIR + "/index.xsd";
 
 	@Override
 	protected String getRootEntityPackage() {
@@ -171,10 +173,10 @@ public class IcisNpdesExistingDatabaseIT extends AbstractExistingDbIT {
 			if (klass != null) {
 				final String klassName = klass.getSimpleName();
 
-				/**
+				*//**
 				 * Use the class name to create a JPQL select statement and then
 				 * get the results.
-				 */
+				 *//*
 				final List<?> list = getEntityManager().createQuery(
 						"select ls from " + klassName
 								+ " ls where ls.transactionHeader.transactionType is not null")
@@ -220,6 +222,6 @@ public class IcisNpdesExistingDatabaseIT extends AbstractExistingDbIT {
 		final ValidationResult result = validator.validate(new FileInputStream(xmlPath));
 		Assert.assertFalse(result.hasErrors());
 
-	}
+	}*/
 
 }

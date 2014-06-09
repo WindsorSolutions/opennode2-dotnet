@@ -32,6 +32,7 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.windsor.node.data.dao;
 
 import java.util.List;
+
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
 import com.windsor.node.common.domain.DataFlow;
 import com.windsor.node.common.domain.Document;
@@ -104,8 +105,26 @@ public interface TransactionDao extends DeletableDao, ListableDao<NodeTransactio
      * @param transactionId
      * @param documentId
      * @return
+     * @deprecated
      */
+    @Deprecated
     Document getDocument(String transactionId, String documentId);
+
+    /**
+     * Replacement for Document getDocument(String transactionId, String documentId)
+     * @param transactionId
+     * @param documentId
+     * @return
+     */
+    Document getDocumentByTransactionIdAndDocumentId(String transactionId, String documentId);
+
+    /**
+     * documentId the NDocument DocumentId field value, not the id PK field 
+     * @param transactionId
+     * @param id NDocument id PK field value 
+     * @return
+     */
+    Document getDocumentByTransactionIdAndId(String transactionId, String id);
 
     /**
      * getDocumentByName

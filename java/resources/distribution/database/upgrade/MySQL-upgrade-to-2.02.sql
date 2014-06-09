@@ -26,6 +26,7 @@ alter table NSchedule add column LastExecuteActivityId varchar(50) NULL;
 
 alter table NService add column PublishFlags varchar(50) NULL;
 
+alter table NTransaction modify NetworkId varchar(255) NULL;
 alter table NTransaction add column EndpointVersion varchar(50) NULL;
 alter table NTransaction add column NetworkEndpointVersion varchar(50) NULL;
 alter table NTransaction add column NetworkEndpointUrl varchar(500) NULL;

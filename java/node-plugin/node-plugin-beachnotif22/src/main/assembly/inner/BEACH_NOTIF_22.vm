@@ -407,27 +407,6 @@ $helper.startStopWatch()
         </BeachActivityDetail>
 #end
 #end##foreach($activity in $helper.getObject("SELECT DISTINCT A.*, R.*, S.*, I.* FROM NOTIF_BEACHACTIVITY A  LEFT JOIN NOTIF_ACTIVITYREASON R ON (R.ACTIVITY_ID = A.ID) LEFT JOIN NOTIF_ACTIVITYSOURCE S ON (S.ACTIVITY_ID = A.ID) LEFT JOIN NOTIF_ACTIVITYINDICATOR I ON (I.ACTIVITY_ID = A.ID) WHERE A.BEACH_ID = ? AND A.SENTTOEPA = 'N'", $beachid))
-#foreach($roleid in $helper.getList("SELECT ID FROM NOTIF_PERSONBEACHROLE R WHERE R.BEACH_ID = ? ", $beachid, "id"))
-#foreach($beachrole in $helper.getData("SELECT B.BEACHIDENTIFIER, PBR.ROLETYPECODE, PBR.ROLEEFFECTIVEDATE, PBR.ROLESTATUS, O.ORGANIZATIONIDENTIFIER, P.PERSONIDENTIFIER FROM NOTIF_BEACH B LEFT JOIN NOTIF_PERSONBEACHROLE PBR ON (PBR.BEACH_ID = B.ID) LEFT JOIN NOTIF_PERSON P ON (PBR.PERSON_ID = P.ID) LEFT JOIN NOTIF_ORGANIZATION O ON (P.ORGANIZATION_ID = O.ID) WHERE PBR.ID = ? ", $roleid))
-#if(($beachrole.roletypecode)||($beachrole.organizationidentifier)||($beachrole.personidentifier)||($beachrole.roleeffectivedate)||($beachrole.rolestatus))
-        <BeachRoleDetail>
-#if($beachrole.roletypecode)
-            <BeachRoleTypeCode>$beachrole.roletypecode</BeachRoleTypeCode>
-#end
-#if($beachrole.organizationidentifier)
-            <BeachRoleOrganizationIdentifier>$beachrole.organizationidentifier</BeachRoleOrganizationIdentifier>
-#end
-#if($beachrole.personidentifier)
-            <BeachRolePersonIdentifier>$beachrole.personidentifier</BeachRolePersonIdentifier>
-#end
-#if($beachrole.roleeffectivedate)
-            <BeachRoleEffectiveDate>$beachrole.roleeffectivedate</BeachRoleEffectiveDate>
-#end
-#if($beachrole.rolestatus)
-            <BeachRoleStatusIndicator>$beachrole.rolestatus</BeachRoleStatusIndicator>
-#end
-        </BeachRoleDetail>
-#end#end#end##if...##foreach.....
 
 #foreach($roleid in $helper.getList("SELECT ID FROM NOTIF_ORGANIZATIONBEACHROLE R WHERE R.BEACH_ID = ? ", $beachid, "id"))
 #foreach($beachrole in $helper.getData("SELECT B1.BEACHIDENTIFIER, OBR.ROLETYPECODE, OBR.ROLEEFFECTIVEDATE, OBR.ROLESTATUS, O1.ORGANIZATIONIDENTIFIER, NULL AS PERSONIDENTIFIER FROM NOTIF_BEACH B1 JOIN NOTIF_ORGANIZATIONBEACHROLE OBR ON (OBR.BEACH_ID = B1.ID) JOIN NOTIF_ORGANIZATION O1 ON (OBR.organization_id = O1.ID) WHERE OBR.ID = ? ", $roleid))
@@ -450,6 +429,27 @@ $helper.startStopWatch()
 #end
         </BeachRoleDetail>
 #end#end#end## 2nd BeacheRoleDetail
+#foreach($roleid in $helper.getList("SELECT ID FROM NOTIF_PERSONBEACHROLE R WHERE R.BEACH_ID = ? ", $beachid, "id"))
+#foreach($beachrole in $helper.getData("SELECT B.BEACHIDENTIFIER, PBR.ROLETYPECODE, PBR.ROLEEFFECTIVEDATE, PBR.ROLESTATUS, O.ORGANIZATIONIDENTIFIER, P.PERSONIDENTIFIER FROM NOTIF_BEACH B LEFT JOIN NOTIF_PERSONBEACHROLE PBR ON (PBR.BEACH_ID = B.ID) LEFT JOIN NOTIF_PERSON P ON (PBR.PERSON_ID = P.ID) LEFT JOIN NOTIF_ORGANIZATION O ON (P.ORGANIZATION_ID = O.ID) WHERE PBR.ID = ? ", $roleid))
+#if(($beachrole.roletypecode)||($beachrole.organizationidentifier)||($beachrole.personidentifier)||($beachrole.roleeffectivedate)||($beachrole.rolestatus))
+        <BeachRoleDetail>
+#if($beachrole.roletypecode)
+            <BeachRoleTypeCode>$beachrole.roletypecode</BeachRoleTypeCode>
+#end
+#if($beachrole.organizationidentifier)
+            <BeachRoleOrganizationIdentifier>$beachrole.organizationidentifier</BeachRoleOrganizationIdentifier>
+#end
+#if($beachrole.personidentifier)
+            <BeachRolePersonIdentifier>$beachrole.personidentifier</BeachRolePersonIdentifier>
+#end
+#if($beachrole.roleeffectivedate)
+            <BeachRoleEffectiveDate>$beachrole.roleeffectivedate</BeachRoleEffectiveDate>
+#end
+#if($beachrole.rolestatus)
+            <BeachRoleStatusIndicator>$beachrole.rolestatus</BeachRoleStatusIndicator>
+#end
+        </BeachRoleDetail>
+#end#end#end##if...##foreach.....
 #if((($beach.startlatmeasure)&&($beach.startlongmeasure))||(($beach.endlatmeasure)&&($beach.endlongmeasure)))
         <BeachCoordinateDetail>
 #if(($beach.startlatmeasure)&&($beach.startlongmeasure))

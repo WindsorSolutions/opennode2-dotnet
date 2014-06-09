@@ -36,10 +36,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.RowMapper;
+
 import com.windsor.node.common.domain.CommonContentType;
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
 import com.windsor.node.common.domain.DataFlow;
@@ -123,9 +125,11 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao
     private static final String SQL_SELECT_DOC_NO_CONTENT = "SELECT Id, DocumentName, DocumentType, "
             + "DocumentId, Status, StatusDetail FROM NDocument WHERE TransactionId = ? ";
 
-    //FIXME the actual DocumentId field is never passed, only Id, this never finds the file when the two do not match
     private static final String SQL_SELECT_DOC_ID = SQL_SELECT_DOC_WITH_CONTENT
             + " AND DocumentId = ? ";
+
+    private static final String SQL_SELECT_DOC_PK_ID = SQL_SELECT_DOC_WITH_CONTENT
+            + " AND id = ? ";
 
     private static final String SQL_SELECT_DOC_NAME = SQL_SELECT_DOC_WITH_CONTENT
             + " AND UPPER(DocumentName) = ? ";
@@ -378,15 +382,36 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao
     }
 
     /**
-     * getDocuments
+     * @deprecated
      */
-    public Document getDocument(String transactionId, String documentId) {
+    @Deprecated
+    public Document getDocument(String transactionId, String documentId)
+    {
+        return getDocumentByTransactionIdAndDocumentId(transactionId, documentId);
+    }
+
+    /**
+     * @param documentId the NDocument id PK value, not the DocumentId field                
+     */
+    public Document getDocumentByTransactionIdAndDocumentId(String transactionId, String documentId) {
 
         validateStringArg(transactionId);
         validateStringArg(documentId);
 
         return (Document) queryForObject(SQL_SELECT_DOC_ID, new Object[] {
                 transactionId, documentId }, new DocumentMapper());
+    }
+
+    /**
+     * @param documentId the NDocument DocumentId field value, not the id PK field                
+     */
+    public Document getDocumentByTransactionIdAndId(String transactionId, String id) {
+
+        validateStringArg(transactionId);
+        validateStringArg(id);
+
+        return (Document) queryForObject(SQL_SELECT_DOC_PK_ID, new Object[] {
+                transactionId, id }, new DocumentMapper());
     }
 
     /**
@@ -495,7 +520,10 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao
      */
     public NodeTransaction save(NodeTransaction transaction) {
 
-        validateObjectArg(transaction, "NodeTransaction");
+        if(transaction == null)
+        {
+            throw new IllegalArgumentException("Method save argument NodeTransaction transaction cannot be null.");
+        }
 
         if(StringUtils.isBlank(transaction.getId()) || !currentDatabaseRecord(transaction))
         {

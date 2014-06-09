@@ -135,7 +135,7 @@
         <property name="idGenerator" ref="uuidGenerator" />
     </bean>
 
-	<bean id="jdbcDataSource" class="org.apache.commons.dbcp.BasicDataSource"
+	<!-- <bean id="jdbcDataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
 		<property name="driverClassName" value="${jdbc.driverClassName}" />
 		<property name="url" value="${jdbc.url}" />
@@ -152,7 +152,25 @@
         <property name="numTestsPerEvictionRun" value="5"/>
         <property name="minEvictableIdleTimeMillis" value="300000" />
         <property name="validationQuery" value="select count(1) from NAccount"/>
-	</bean>
+	</bean> -->
+
+    <bean id="jdbcDataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="shutdown">
+        <constructor-arg>
+            <bean class="com.zaxxer.hikari.HikariConfig">
+                <constructor-arg>
+                    <props>
+                        <prop key="dataSource.URL">${jdbc.url}</prop>
+                        <prop key="dataSource.user">${jdbc.username}</prop>
+                        <prop key="dataSource.password">${jdbc.password}</prop>
+                    </props>
+                </constructor-arg>
+                <property name="dataSourceClassName" value="${jdbc.dataSourceClassName}" />
+                <property name="connectionTestQuery" value="select count(1) from NAccount" />
+                <!-- <property name="autoCommit" value="false" /> -->
+                <property name="poolName" value="springHikariCP" />
+            </bean>
+        </constructor-arg>
+    </bean>
 	<!-- END DAOs -->
 
 	<!--  Node Client & supporting beans -->
@@ -269,7 +287,7 @@
         <!-- FIXME add notificationHelper mailHelper -->
     </bean>
 
-    <bean id="classLoader" class="com.windsor.node.plugin.PluginClassLoader" />
+    <bean id="classLoader" class="com.windsor.node.plugin.CachingPluginClassLoader" />
     <bean id="serviceFactory" class="com.windsor.node.service.helper.NoOpServiceFactory" />
     <!--  END Support for ENDS2 plugin to load other plugin implementors -->
 

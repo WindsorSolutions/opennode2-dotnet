@@ -1,28 +1,17 @@
 package com.windsor.node.plugin.wqx;
 
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.GregorianCalendar;
 import java.util.List;
-
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
-
-import org.junit.Ignore;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;
-
 import com.windsor.node.plugin.test.XmlUtils;
 import com.windsor.node.plugin.wqx.domain.generated.ActivityDataType;
 import com.windsor.node.plugin.wqx.domain.generated.ActivityDescriptionDataType;
@@ -31,7 +20,6 @@ import com.windsor.node.plugin.wqx.domain.generated.MonitoringLocationDataType;
 import com.windsor.node.plugin.wqx.domain.generated.MonitoringLocationGeospatialDataType;
 import com.windsor.node.plugin.wqx.domain.generated.MonitoringLocationIdentityDataType;
 import com.windsor.node.plugin.wqx.domain.generated.OrganizationDataType;
-import com.windsor.node.plugin.wqx.domain.generated.OrganizationDataType_;
 import com.windsor.node.plugin.wqx.domain.generated.OrganizationDescriptionDataType;
 import com.windsor.node.plugin.wqx.domain.generated.ProjectDataType;
 import com.windsor.node.plugin.wqx.domain.generated.ResultDataType;
@@ -213,7 +201,7 @@ public class WqxTempDbIT extends AbstractWqxTempDbIT {
 	}
 
 	public void metamodelTest() {
-		final CriteriaBuilder builder = getEntityManager().getCriteriaBuilder();
+		/*final CriteriaBuilder builder = getEntityManager().getCriteriaBuilder();
 		final CriteriaQuery<OrganizationDataType> query = builder
 				.createQuery(OrganizationDataType.class);
 		final Root<OrganizationDataType> root = query.from(OrganizationDataType.class);
@@ -222,7 +210,7 @@ public class WqxTempDbIT extends AbstractWqxTempDbIT {
 		query.where(condition);
 		final TypedQuery<OrganizationDataType> tq = getEntityManager().createQuery(query);
 		final OrganizationDataType org = tq.getSingleResult();
-		assertNotNull(org);
+		assertNotNull(org);*/
 	}
 
 	public void resultTest() {

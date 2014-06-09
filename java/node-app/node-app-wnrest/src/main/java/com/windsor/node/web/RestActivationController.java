@@ -15,8 +15,10 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
@@ -29,6 +31,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 import com.windsor.node.common.domain.CommonContentType;
 import com.windsor.node.common.domain.DataFlow;
 import com.windsor.node.common.domain.DataRequest;
@@ -48,7 +51,10 @@ import com.windsor.node.common.util.ByIndexOrNameMap;
 import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
 import com.windsor.node.service.helper.id.UUIDGenerator;
 import com.windsor.node.web.exception.RestException;
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
 
+@Api(value = "OpenNode2 REST Endpoint API")
 @Controller
 public class RestActivationController implements Serializable
 {
@@ -91,6 +97,8 @@ public class RestActivationController implements Serializable
         return null;
     }
 
+    @ApiOperation(value = "perform a NodePing as defined in the EN2 spec.", response = String.class, notes = "Will retuned the standard ready response,"
+                    + "including OpenNode2 version.")
     @RequestMapping(value="/NodePing", method=RequestMethod.GET, produces={"text/plain;charset=UTF-8", "application/xml;charset=UTF-8"})
     public String nodePing(Writer out) throws IOException
     {
@@ -410,6 +418,7 @@ public class RestActivationController implements Serializable
         DataRequest dataRequest = new DataRequest();
         dataRequest.setService(dataService);
         dataRequest.setParameters(paramMap);
+        dataRequest.setFlowName(dataFlow.getName());
         return dataRequest;
     }
 

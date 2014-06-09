@@ -140,6 +140,8 @@ public class DataService extends AuditableIdentity {
      */
     private List<DataServiceRequestParameter> requestParams;
 
+    private Boolean authRequired = Boolean.TRUE;
+
     /**
      * Default Constructor.
      */
@@ -356,6 +358,26 @@ public class DataService extends AuditableIdentity {
 
     public void setRequestParams(List<DataServiceRequestParameter> requestParams) {
         this.requestParams = requestParams;
+    }
+
+    public Boolean getAuthRequired()
+    {
+        return authRequired;
+    }
+
+    public void setAuthRequired(Boolean authRequired)
+    {
+        this.authRequired = authRequired;
+    }
+
+    public Boolean getNoAuthRequired()
+    {
+        return !authRequired;
+    }
+
+    public void setNoAuthRequired(Boolean noAuthRequired)
+    {
+        this.authRequired = !noAuthRequired;
     }
 
 }

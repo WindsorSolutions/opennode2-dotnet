@@ -31,20 +31,26 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.windsor.node.util;
 
+import java.util.Map;
+import java.util.Properties;
+import java.util.TreeMap;
+
 import javax.sql.DataSource;
 
-import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.windsor.node.common.domain.DataProviderInfo;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 
 public final class DataSourceUtil {
 
     //private static final Logger LOGGER = LoggerFactory.getLogger(DataSourceUtil.class);
 
     private static final String PROVIDER_NOT_SET = "Provider is not set";
+    private static final Map<String, DataSource> dataSourceCache = new TreeMap<String, DataSource>();
 
     private DataSourceUtil() {
     }
@@ -63,7 +69,7 @@ public final class DataSourceUtil {
             throw new RuntimeException(PROVIDER_NOT_SET);
         }
 
-        BasicDataSource bds = new BasicDataSource();
+        /*BasicDataSource bds = new BasicDataSource();
         LOGGER.debug("Driver Class Name: " + sourceInfo.getProviderType());
         bds.setDriverClassName(sourceInfo.getProviderType());
         LOGGER.debug("Url: " + sourceInfo.getConnectionString());
@@ -96,6 +102,82 @@ public final class DataSourceUtil {
             bds.addConnectionProperty("max_allowed_packet", "1000000000");
             //Doesn't seem effective on mysql server 5.1
         }
-        return (DataSource) bds;
+        return (DataSource) bds;*/
+
+        /*        <property name="url">
+            <value>${jdbc.url}</value>
+        </property>
+        <property name="dataSource.user">
+            <value>${jdbc.username}</value>
+        </property>
+        <property name="dataSource.password">
+            <value>${jdbc.password}</value>
+        </property>
+        <property name="dataSource.autoCommit" value="false" />
+        <property name="poolName" value="springHikariCP" />
+        <property name="dataSource.connectionTestQuery" value="select count(1) from NAccount"/>
+*/
+        //Only create this if it's not cached.
+        String dataSourceKey = generateDataSourceKey(sourceInfo);
+        HikariDataSource ds = (HikariDataSource)dataSourceCache.get(dataSourceKey);
+        if(ds == null)
+        {
+            ds = generateNewDataSource(sourceInfo);
+            dataSourceCache.put(dataSourceKey, ds);
+        }
+        return ds;
+    }
+
+    private static String generateDataSourceKey(DataProviderInfo sourceInfo)
+    {
+        StringBuffer sb = new StringBuffer();
+        sb.append(sourceInfo.getCode()).append(sourceInfo.getProviderType()).append(sourceInfo.getConnectionString());
+        return sb.toString();
+    }
+
+    private static HikariDataSource generateNewDataSource(DataProviderInfo sourceInfo)
+    {
+        Properties props = new Properties();
+        props.put("dataSource.URL", sourceInfo.getConnectionString());
+
+        if(sourceInfo.getProviderType().equalsIgnoreCase("com.mysql.jdbc.Driver"))
+        {
+            props.put("dataSource.cachePrepStmts", Boolean.TRUE);
+            props.put("dataSource.prepStmtCacheSize", 250);
+            props.put("dataSource.prepStmtCacheSqlLimit", 2048);
+            props.put("dataSource.useServerPrepStmts", Boolean.TRUE);
+        }
+
+        HikariConfig config = new HikariConfig(props);
+
+        if(sourceInfo.getProviderType().equalsIgnoreCase("oracle.jdbc.OracleDriver"))
+        {
+            config.setConnectionTestQuery("select 1 from dual");
+        }
+        else
+        {
+            config.setConnectionTestQuery("select 1");
+        }
+
+        //set datasource
+        //oracle.jdbc.pool.OracleConnectionPoolDataSource or oracle.jdbc.pool.OracleDataSource
+        //com.mysql.jdbc.jdbc2.optional.MysqlConnectionPoolDataSource extends com.mysql.jdbc.jdbc2.optional.MysqlDataSource
+        //com.microsoft.sqlserver.jdbc.SQLServerConnectionPoolDataSource or com.microsoft.sqlserver.jdbc.SQLServerDataSource
+        if(sourceInfo.getProviderType().equalsIgnoreCase("oracle.jdbc.OracleDriver"))
+        {
+            config.setDataSourceClassName("oracle.jdbc.pool.OracleDataSource");
+        }
+        else if(sourceInfo.getProviderType().equalsIgnoreCase("com.mysql.jdbc.Driver"))
+        {
+            //config.setDataSourceClassName("com.mysql.jdbc.jdbc2.optional.MysqlDataSource");
+            config.setDataSourceClassName("com.mysql.jdbc.jdbc2.optional.MysqlConnectionPoolDataSource");
+        }
+        else if(sourceInfo.getProviderType().equalsIgnoreCase("com.microsoft.sqlserver.jdbc.SQLServerDriver"))
+        {
+            config.setDataSourceClassName("com.microsoft.sqlserver.jdbc.SQLServerConnectionPoolDataSource");
+        }
+
+        HikariDataSource ds = new HikariDataSource(config);
+        return ds;
     }
 }

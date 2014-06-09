@@ -90,9 +90,12 @@ public class TransactionServiceImpl extends BaseService implements
         }
     }
 
+    //FIXME Lava?
     /**
      * downloadContent
+     * @deprecated
      */
+    @Deprecated
     public byte[] downloadContent(String transactionID, String documentID,
             NodeVisit visit) {
 
@@ -201,7 +204,7 @@ public class TransactionServiceImpl extends BaseService implements
         }
 
         validateByRole(visit, SystemRoleType.Authed);
-        getAccountService().validateAccess(visit, transaction);
+        //getAccountService().validateAccess(visit, transaction);
 
         getTransactionDao().save(transaction);
     }
@@ -247,7 +250,7 @@ public class TransactionServiceImpl extends BaseService implements
      * getDocument returns fully populated document including the content
      * 
      * @param transactionId
-     * @param documentId
+     * @param documentId NDocument.id not NDocument.DocumentId
      * @param useNetworkId
      * @return
      */
@@ -269,7 +272,7 @@ public class TransactionServiceImpl extends BaseService implements
                     "Unable to find a transaction with this id");
         }
 
-        Document doc = transactionDao.getDocument(tran.getId(), documentId);
+        Document doc = transactionDao.getDocumentByTransactionIdAndId(tran.getId(), documentId);
 
         if (doc == null) {
             throw new RuntimeException("Unable to find a document with this id");

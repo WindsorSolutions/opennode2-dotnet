@@ -136,7 +136,7 @@ public final class ScheduleUtil {
                 logger.debug("Added " + frequency + " month(s), next run is: " + next);
                 break;
             case Weekdays:
-                next = DateUtil.getNextWeekday();
+                next = DateUtil.getNextWeekday(last);
 
                 logger.debug("Added " + frequency + " weekdays, next run is: " + next);
                 break;

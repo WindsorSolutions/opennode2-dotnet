@@ -115,6 +115,14 @@ $(document).ready(function() {
 					   </span>
 					</spring:bind></td>
 				</tr>
+
+                <tr>
+                    <td class="label" width="5%" style="text-align: right; vertical-align: top;"><label for="noAuthRequired">No Auth Required:</label></td>
+                    <td class="ctrl" width="95%">
+                        <form:checkbox id="noAuthRequired" style="vertical-align: middle;" path="command.service.noAuthRequired" />
+                        &nbsp;Making service No Auth Required will make it available to unauthenticated users (Note: No Auth Required does not override a Flow marked Protected, if this service's Flow is marked Protected, this flag will not take effect.)
+                    </td>
+                </tr>
 				
 				<tr>
 					<td class="label" width="5%" style="text-align: right; vertical-align: top;"><label for="Active">Active:</label></td>

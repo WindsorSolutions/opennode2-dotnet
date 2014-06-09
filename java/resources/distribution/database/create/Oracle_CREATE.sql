@@ -193,6 +193,7 @@ CREATE TABLE NService (
 	Implementor	varchar2(500) NOT NULL,
 	AuthLevel  	varchar2(50) NOT NULL,
 	PublishFlags VARCHAR2(50) NULL,
+	AuthRequired varchar2(1) NULL,
 	ModifiedBy 	varchar2(50) NOT NULL,
 	ModifiedOn 	date NOT NULL 
 	)

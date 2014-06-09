@@ -62,10 +62,40 @@ public final class DateUtil {
     private DateUtil() {
     }
 
-    public static Timestamp getNextWeekday()
+    public static Timestamp getNextWeekday(Date lastRun)
     {
+        GregorianCalendar lastGc  = new GregorianCalendar();
+        lastGc.setTime(lastRun);
         GregorianCalendar gc  = new GregorianCalendar();
-        return null;
+        gc.setTime(new Date());
+        int dayOfWeek = gc.get(Calendar.DAY_OF_WEEK);
+        if(Calendar.MONDAY == dayOfWeek || Calendar.TUESDAY == dayOfWeek || Calendar.WEDNESDAY == dayOfWeek || Calendar.THURSDAY == dayOfWeek)
+        {
+            //Then add one day
+            gc.set(Calendar.DAY_OF_YEAR, (gc.get(Calendar.DAY_OF_YEAR) + 1));
+        }
+        else if(Calendar.FRIDAY == dayOfWeek)
+        {
+            //Then add three days
+            gc.set(Calendar.DAY_OF_YEAR, (gc.get(Calendar.DAY_OF_YEAR) + 3));
+        }
+        else if(Calendar.SATURDAY == dayOfWeek)
+        {
+            //Then add two days
+            gc.set(Calendar.DAY_OF_YEAR, (gc.get(Calendar.DAY_OF_YEAR) + 2));
+        }
+        else if(Calendar.SUNDAY == dayOfWeek)
+        {
+            //Then add one day, technically could be added to first if clause for brevity, here for clarity
+            gc.set(Calendar.DAY_OF_YEAR, (gc.get(Calendar.DAY_OF_YEAR) + 1));
+        }
+
+        //set the time to match the last time, prevent time drift, fixed 2014-03-07
+        gc.set(Calendar.HOUR_OF_DAY, lastGc.get(Calendar.HOUR_OF_DAY));
+        gc.set(Calendar.MINUTE, lastGc.get(Calendar.MINUTE));
+        gc.set(Calendar.SECOND, lastGc.get(Calendar.SECOND));
+
+        return new Timestamp(gc.getTimeInMillis());
     }
 
     public static Timestamp getTimestamp() {

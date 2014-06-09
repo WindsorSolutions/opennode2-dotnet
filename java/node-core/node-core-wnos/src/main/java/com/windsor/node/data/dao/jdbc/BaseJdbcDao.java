@@ -467,11 +467,14 @@ public class BaseJdbcDao extends JdbcDaoSupport {
      * 
      * @param instance
      * @param typeName
+     * @deprecated
      */
-    protected void validateObjectArg(Object instance, String typeName) {
-        if (instance == null) {
-            throw new IllegalArgumentException("Argument " + typeName
-                    + " instance cannot be null.");
+    //FIXME Remove this method, it effectively obfuscates what is happening and makes the code less readable in favor of saving a few keystrokes
+    protected void validateObjectArg(Object instance, String typeName)
+    {
+        if (instance == null)
+        {
+            throw new IllegalArgumentException("Argument " + typeName + " instance cannot be null.");
         }
     }
 

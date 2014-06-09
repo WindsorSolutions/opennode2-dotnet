@@ -94,17 +94,23 @@
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
         </dependency>
-        <dependency>
+        <!-- <dependency>
             <groupId>commons-dbcp</groupId>
             <artifactId>commons-dbcp</artifactId>
             <version>1.2.2</version>
             <exclusions>
                 <exclusion>
-                    <groupId>commons-pool</groupId>
                     <artifactId>commons-pool</artifactId>
+                    <groupId>commons-pool</groupId>
                 </exclusion>
             </exclusions>
+        </dependency> -->
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>1.3.3</version>
         </dependency>
+        <!-- Minimum javassist version required by HikariCP -->
         <dependency>
             <groupId>commons-digester</groupId>
             <artifactId>commons-digester</artifactId>

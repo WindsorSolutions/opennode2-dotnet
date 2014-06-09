@@ -1,4 +1,4 @@
- 
+
     function findPosX(obj)
     {
       var curleft = 0;
@@ -34,20 +34,20 @@
 
 
     function getDateTimeSettings(cal){
-    
+
        var winWidth = 250;
        var winHeight = 200;
-    
+
        var imgLeft = findPosX(cal);
        var imgTop = findPosY(cal) + (winWidth / 2);
-       
-       //alert("loc: " + imgLeft + "; " + imgTop);
-       
-	    return 'width=' + winWidth + ',height=' + winHeight
-		    + ',top=' + imgTop + ',left=' + imgLeft
-		    + ',scrollbars=no,location=no,directories=no,status=no,menubar=no,toolbar=no,resizable=yes';
-    }
-        
 
-    
-    
+       //alert("loc: " + imgLeft + "; " + imgTop);
+
+        return 'width=' + winWidth + ',height=' + winHeight
+            + ',top=' + imgTop + ',left=' + imgLeft
+            + ',scrollbars=no,location=no,directories=no,status=no,menubar=no,toolbar=no,resizable=yes';
+    }
+
+
+
+

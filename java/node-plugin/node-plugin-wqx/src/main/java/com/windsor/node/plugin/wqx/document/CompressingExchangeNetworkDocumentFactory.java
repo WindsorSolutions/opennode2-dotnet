@@ -62,7 +62,7 @@ public class CompressingExchangeNetworkDocumentFactory implements ExchangeNetwor
     }
 
     private String zipFolderAbsolutePath() {
-        return zipService.getTempDir() + File.separator + nodeTransaction.getNetworkId();
+        return zipService.getTempDir() + File.separator + nodeTransaction.getId();
     }
 
     private String zipFileName() {

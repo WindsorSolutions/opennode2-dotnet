@@ -177,6 +177,7 @@ CREATE TABLE NService (
 	Implementor	varchar(500) NOT NULL,
 	AuthLevel  	varchar(50) NOT NULL,
 	PublishFlags VARCHAR(50) NULL,
+	AuthRequired varchar2(1) NULL,
 	ModifiedBy 	varchar(50) NOT NULL,
 	ModifiedOn 	datetime NOT NULL 
 	);

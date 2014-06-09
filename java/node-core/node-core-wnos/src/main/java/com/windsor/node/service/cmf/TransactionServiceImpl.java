@@ -521,7 +521,10 @@ public class TransactionServiceImpl extends BaseService implements
         finally
         {
             getActivityDao().make(logEntry);
-            transactionDao.save(tran);
+            if(tran != null)
+            {
+                transactionDao.save(tran);
+            }
         }
     }
 
@@ -604,7 +607,10 @@ public class TransactionServiceImpl extends BaseService implements
         finally
         {
             getActivityDao().make(logEntry);
-            transactionDao.save(tran);
+            if(tran != null)
+            {
+                transactionDao.save(tran);
+            }
         }
 
     }

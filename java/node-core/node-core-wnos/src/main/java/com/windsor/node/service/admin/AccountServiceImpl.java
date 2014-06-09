@@ -704,6 +704,8 @@ public class AccountServiceImpl extends BaseService implements AccountService,
         validateAccess(visit.getUserAccount(), transaction.getFlow().getId());
     }
 
+    // FIXME This should take a DataFlow object and it should check to make sure the user is not an Admin (automatically
+    // granted access) and that the DataFlow is actually restricted before doing its thing. 
     public void validateAccess(UserAccount account, String flowId) {
 
         logger.debug("account: " + account);

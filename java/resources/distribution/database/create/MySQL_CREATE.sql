@@ -169,6 +169,8 @@ CREATE TABLE NService (
     ServiceType varchar(128) NOT NULL,
     Implementor varchar(500) NOT NULL,
     AuthLevel   varchar(50) NOT NULL,
+    PublishFlags varchar(50) NULL,
+    AuthRequired varchar(1) NULL,
     ModifiedBy  varchar(50) NOT NULL,
     ModifiedOn  datetime NOT NULL 
     ) ENGINE=InnoDB;
@@ -190,7 +192,7 @@ CREATE TABLE NServiceConn (
 CREATE TABLE NTransaction ( 
     Id                          varchar(50) NOT NULL,
     FlowId                      varchar(50) NOT NULL,
-    NetworkId                   varchar(255) NOT NULL,
+    NetworkId                   varchar(255) NULL,
     Status                      varchar(50) NOT NULL,
     ModifiedBy                  varchar(50) NOT NULL,
     ModifiedOn                  datetime NOT NULL,

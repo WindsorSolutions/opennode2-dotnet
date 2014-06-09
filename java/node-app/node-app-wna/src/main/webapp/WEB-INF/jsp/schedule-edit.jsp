@@ -21,9 +21,7 @@
         <form method="post" action="schedule-edit.htm">
 
             <spring:bind path="command.id">
-                <input type="hidden" 
-                       name="<c:out value="${status.expression}" />" 
-                       value="<c:out value="${status.value}" />" />
+                <input type="hidden" name="<c:out value="${status.expression}" />" value="<c:out value="${status.value}" />" />
             </spring:bind>
 
         <table id="formTable" width="100%" cellpadding="2" cellspacing="0">     
@@ -32,8 +30,7 @@
                 <td class="label" width="5%" style="text-align: right; vertical-align: top;">Name:</td>
                 <td class="ctrl" width="95%">
                 <spring:bind path="command.name">
-                    <input type="text"
-                           name="<c:out value="${status.expression}" />" 
+                    <input type="text"  name="<c:out value="${status.expression}" />" 
                            value="<c:out value="${status.value}" />" class="textbox" maxlength="50" />
                            <span class="error" <c:if test="${status.errorMessage == ''}">style="display:none;"</c:if> ><c:out value="${status.errorMessage}" /></span>
                 </spring:bind>
@@ -89,7 +86,7 @@
                         </tr>
                         <tr>
                             <td valign="top">
-                            <spring:bind path="command.startOn">
+                            <%--<spring:bind path="command.startOn">
                                 <input id="startOn" 
                                        type="text" 
                                        name="<c:out value="${status.expression}" />" 
@@ -100,17 +97,19 @@
                                        style="width:130px;" 
                                        readonly  />
                                 <span class="error" <c:if test="${status.errorMessage == ''}">style="display:none;"</c:if> ><c:out value="${status.errorMessage}" /></span>
-                            </spring:bind>
+                            </spring:bind>--%>
+                                <form:input id="startOn" path="command.startOn" type="text" size="20" maxlength="20" cssClass="cal" cssStyle="width:130px;" readonly="true" />
                             </td>
                             <td></td>
                             <td valign="top">
-                            <spring:bind path="command.endOn">
+                            <%--<spring:bind path="command.endOn">
                                 <input id="endOn" type="text" name="<c:out value="${status.expression}" />" 
                                     size="20" maxlength="20"
                                 value="<c:out value="${status.value}" />" class="cal" 
                                     style="width:130px;" readonly  />
                                 <span class="error" <c:if test="${status.errorMessage == ''}">style="display:none;"</c:if> ><c:out value="${status.errorMessage}" /></span>
-                            </spring:bind>
+                            </spring:bind>--%>
+                                <form:input id="endOn" path="command.endOn" type="text" size="20" maxlength="20" cssClass="cal" cssStyle="width:130px;" readonly="true" />
                             </td>
                             
                         </tr>
@@ -596,8 +595,12 @@
         switch($("#frequencyType").val())
         {
         
-            case 'Never':
             case 'Weekdays':
+                $("#frequencyNum").val("0");
+                $("#frequencyNum").attr("disabled", "disabled");
+                $("#frequencyNum").addClass("disabledInput");
+                break;
+            case 'Never':
             case 'Once':
                 $("#endOn").val($("#startOn").val());
                 $("#frequencyNum").val("0");
@@ -605,6 +608,7 @@
                 $("#frequencyNum").addClass("disabledInput");
                 break;
                 //the following will fall through
+            case 'Minutes':
             case 'Hours':
             case 'Days':
             case 'Weeks':

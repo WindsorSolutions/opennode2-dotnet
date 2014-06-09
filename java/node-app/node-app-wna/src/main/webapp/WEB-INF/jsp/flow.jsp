@@ -36,6 +36,7 @@
                                 <td width="93%">
 								    <strong><a href="flow-edit.htm?id=<c:out value="${flow.id}" />" class="whitetext"><c:out value="${flow.name}" /></strong>
 									<c:if test="${flow.secured == true}">&nbsp;(Protected)</c:if></a>
+                                    <c:if test="${flow.pluginExists == false}">&nbsp;<span style="color:darkred; font-weight:bold">(No Plugin Uploaded)</span></c:if></a>
 								</td>
 								<td width="5%" align="right">
 									<input type="image"
@@ -58,7 +59,8 @@
 								    <img alt="" src="img/icon_world_dynamic.gif"
 									   style="border: 0; vertical-align: middle; padding-right: 3px;" />
 									<strong><a href="service-edit.htm?id=<c:out value="${srv.id}" />" class="blacktext"><c:out value="${srv.name}" /></strong>&nbsp;
-									(<c:out value="${srv.type}" /><c:if test="${srv.active == false}">&nbsp;[disabled]</c:if>)</a>
+									(<c:out value="${srv.type}" /><c:if test="${srv.active == false}">&nbsp;[disabled]</c:if>)
+                                    <c:if test="${srv.noAuthRequired}">&nbsp;[<span style="color: darkorange; font-weight: bold">No Auth Required</span>]</c:if></a>
 								</td>
 								<td width="5%" align="right">
 								    <input type="image"
