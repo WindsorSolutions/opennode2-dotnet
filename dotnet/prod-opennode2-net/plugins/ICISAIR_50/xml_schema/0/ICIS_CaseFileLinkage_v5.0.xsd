@@ -14,7 +14,6 @@
 	</xsd:annotation>
 	<xsd:element name="CaseFileLinkage" type="icis:CaseFileLinkage"/>
 	<xsd:element name="LinkageCaseFile" type="icis:LinkageCaseFile"/>
-
 	<xsd:complexType name="CaseFileLinkageData">
 		<xsd:sequence>
 			<xsd:element ref="icis:TransactionHeader"/>
@@ -27,7 +26,7 @@
 				<xsd:choice>
 					<xsd:element ref="icis:LinkageCaseFile"/>
 					<xsd:element ref="icis:LinkageAirDAEnforcementAction"/>
-					<xsd:element ref="icis:LinkageEnforcementAction"/>
+					<!--<xsd:element ref="icis:LinkageEnforcementAction"/>-->
 					<xsd:element ref="icis:LinkageComplianceMonitoring"/>
 				</xsd:choice>
 			</xsd:extension>

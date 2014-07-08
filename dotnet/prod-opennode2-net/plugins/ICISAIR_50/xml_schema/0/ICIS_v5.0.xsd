@@ -100,9 +100,9 @@
 			<xsd:element name="CaseFileLinkageData" type="icis:CaseFileLinkageData" maxOccurs="unbounded"/>
 			<!--<xsd:element name="CAFOAnnualReportData" type="icis:CAFOAnnualReportData" maxOccurs="unbounded"/>
 			<xsd:element name="CAFOPermitData" type="icis:CAFOPermitData" maxOccurs="unbounded"/>
-			<xsd:element name="ComplianceMonitoringData" type="icis:ComplianceMonitoringData" maxOccurs="unbounded"/>
+			<xsd:element name="ComplianceMonitoringData" type="icis:ComplianceMonitoringData" maxOccurs="unbounded"/>-->
 			<xsd:element name="ComplianceMonitoringLinkageData" type="icis:ComplianceMonitoringLinkageData" maxOccurs="unbounded"/>
-			<xsd:element name="ComplianceScheduleData" type="icis:ComplianceScheduleData" maxOccurs="unbounded"/>
+			<!--<xsd:element name="ComplianceScheduleData" type="icis:ComplianceScheduleData" maxOccurs="unbounded"/>
 			<xsd:element name="CopyMGPLimitSetData" type="icis:CopyMGPLimitSetData" maxOccurs="unbounded"/>
 			<xsd:element name="CSOEventReportData" type="icis:CSOEventReportData" maxOccurs="unbounded"/>
 			<xsd:element name="CSOPermitData" type="icis:CSOPermitData" maxOccurs="unbounded"/>

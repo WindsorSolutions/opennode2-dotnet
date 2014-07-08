@@ -13,7 +13,6 @@
 		<xsd:documentation>Last Date Modified: 2014-05-12</xsd:documentation>
 	</xsd:annotation>
 	<xsd:element name="AirDAEnforcementActionLinkage" type="icis:AirDAEnforcementActionLinkage"/>
-
 	<xsd:complexType name="AirDAEnforcementActionLinkageData">
 		<xsd:sequence>
 			<xsd:element ref="icis:TransactionHeader"/>
@@ -23,10 +22,10 @@
 	<xsd:complexType name="AirDAEnforcementActionLinkage">
 		<xsd:complexContent>
 			<xsd:extension base="icis:AirDAEnforcementActionKeyElements">
-				<xsd:choice>
+				<xsd:sequence>
 					<xsd:element ref="icis:LinkageAirDAEnforcementAction"/>
-					<xsd:element ref="icis:LinkageEnforcementAction"/>
-				</xsd:choice>
+					<!--<xsd:element ref="icis:LinkageEnforcementAction"/>-->
+				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>

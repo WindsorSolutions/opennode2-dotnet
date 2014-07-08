@@ -1065,7 +1065,6 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         [System.Xml.Serialization.XmlElementAttribute("LinkageAirDAEnforcementAction", typeof(LinkageAirDAEnforcementAction), Order = 0)]
         [System.Xml.Serialization.XmlElementAttribute("LinkageCaseFile", typeof(LinkageCaseFile), Order = 0)]
         [System.Xml.Serialization.XmlElementAttribute("LinkageComplianceMonitoring", typeof(LinkageComplianceMonitoring), Order = 0)]
-        [System.Xml.Serialization.XmlElementAttribute("LinkageEnforcementAction", typeof(LinkageEnforcementAction), Order = 0)]
         public object Item;
     }
 
@@ -1108,19 +1107,6 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(25)]
         [Windsor.Commons.XsdOrm2.DbNotNull] // TSM
         public string ComplianceMonitoringIdentifier;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
-    public partial class LinkageEnforcementAction
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(20)]
-        public string EnforcementActionIdentifier;
     }
 
     /// <remarks/>
@@ -1666,6 +1652,18 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4000)]
         public string OtherComments;
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    public partial class AirDAEnforcementActionLinkage : AirDAEnforcementActionKeyElements
+    {
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        public LinkageAirDAEnforcementAction LinkageAirDAEnforcementAction;
     }
 
     /// <remarks/>
@@ -2711,6 +2709,45 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlRootAttribute("StateFederalJointIndicator", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    public enum StateFederalJointIndicator
+    {
+
+        /// <remarks/>
+        S,
+
+        /// <remarks/>
+        E,
+
+        /// <remarks/>
+        J,
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlEnumAttribute("*")]
+        Item,
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlRootAttribute("LeadParty", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    public enum LeadParty
+    {
+
+        /// <remarks/>
+        E,
+
+        /// <remarks/>
+        S,
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlEnumAttribute("*")]
+        Item,
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
     [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
     public partial class InspectionConclusionDataSheet
     {
@@ -3326,45 +3363,6 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         [System.Xml.Serialization.XmlArrayAttribute(Order = 30)]
         [System.Xml.Serialization.XmlArrayItemAttribute(IsNullable = false)]
         public Contact[] InspectionContact;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute("StateFederalJointIndicator", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
-    public enum StateFederalJointIndicator
-    {
-
-        /// <remarks/>
-        S,
-
-        /// <remarks/>
-        E,
-
-        /// <remarks/>
-        J,
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlEnumAttribute("*")]
-        Item,
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute("LeadParty", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
-    public enum LeadParty
-    {
-
-        /// <remarks/>
-        E,
-
-        /// <remarks/>
-        S,
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlEnumAttribute("*")]
-        Item,
     }
 
     /// <remarks/>
@@ -4336,6 +4334,19 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
     [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    public partial class LinkageEnforcementAction
+    {
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(20)]
+        public string EnforcementActionIdentifier;
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
     public partial class AirPollutantsData
     {
 
@@ -4438,6 +4449,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         [System.Xml.Serialization.XmlElementAttribute("AirProgramsData", typeof(AirProgramsData), Order = 0)]
         [System.Xml.Serialization.XmlElementAttribute("AirTVACCData", typeof(AirTVACCData), Order = 0)]
         [System.Xml.Serialization.XmlElementAttribute("CaseFileLinkageData", typeof(CaseFileLinkageData), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("ComplianceMonitoringLinkageData", typeof(ComplianceMonitoringLinkageData), Order = 0)]
         public object[] Items;
 
         /// <remarks/>
@@ -4466,6 +4478,24 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    public partial class AirDACaseFileData
+    {
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()] // TSM
+        public TransactionHeader TransactionHeader;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()] // TSM
+        public AirDACaseFile AirDACaseFile;
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
     public partial class AirDAComplianceMonitoringData
     {
 
@@ -4479,6 +4509,24 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [Windsor.Commons.XsdOrm2.SameTableAttribute()] // TSM
         public AirDAComplianceMonitoring AirDAComplianceMonitoring;
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    public partial class AirDAEnforcementActionLinkageData
+    {
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()] // TSM
+        public TransactionHeader TransactionHeader;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()] // TSM
+        public AirDAEnforcementActionLinkage AirDAEnforcementActionLinkage;
     }
 
     /// <remarks/>
@@ -4587,6 +4635,42 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [Windsor.Commons.XsdOrm2.SameTableAttribute()] // TSM
         public AirTVACC AirTVACC;
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    public partial class CaseFileLinkageData
+    {
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()] // TSM
+        public TransactionHeader TransactionHeader;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()] // TSM
+        public CaseFileLinkage CaseFileLinkage;
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    public partial class ComplianceMonitoringLinkageData
+    {
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()] // TSM
+        public TransactionHeader TransactionHeader;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()] // TSM
+        public ComplianceMonitoringLinkage ComplianceMonitoringLinkage;
     }
 
     /// <remarks/>
@@ -4774,72 +4858,5 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
 
         /// <remarks/>
         UnpermittedFacilitySubmission,
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
-    public partial class AirDAEnforcementActionLinkage : AirDAEnforcementActionKeyElements
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("LinkageAirDAEnforcementAction", typeof(LinkageAirDAEnforcementAction), Order = 0)]
-        [System.Xml.Serialization.XmlElementAttribute("LinkageEnforcementAction", typeof(LinkageEnforcementAction), Order = 0)]
-        public object Item;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    public partial class CaseFileLinkageData
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        [Windsor.Commons.XsdOrm2.SameTableAttribute()] // TSM
-        public TransactionHeader TransactionHeader;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
-        [Windsor.Commons.XsdOrm2.SameTableAttribute()] // TSM
-        public CaseFileLinkage CaseFileLinkage;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    public partial class AirDAEnforcementActionLinkageData
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        [Windsor.Commons.XsdOrm2.SameTableAttribute()] // TSM
-        public TransactionHeader TransactionHeader;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
-        [Windsor.Commons.XsdOrm2.SameTableAttribute()] // TSM
-        public AirDAEnforcementActionLinkage AirDAEnforcementActionLinkage;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    public partial class AirDACaseFileData
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        [Windsor.Commons.XsdOrm2.SameTableAttribute()] // TSM
-        public TransactionHeader TransactionHeader;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
-        [Windsor.Commons.XsdOrm2.SameTableAttribute()] // TSM
-        public AirDACaseFile AirDACaseFile;
     }
 }
