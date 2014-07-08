@@ -264,7 +264,6 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
     , "LOCAL", "LOC"
     , "MANURE", "MNUR"
     , "ANNUAL", "ANNUL"
-
     , "STRATEGY", "STRGY"
     , "CONTACT", "CNTCT"
     , "RESULTS", "RSLTS"
@@ -280,6 +279,28 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
     , "STACK", "STCK"
     , "TEST", "TST"
     , "AIR", ""
+    , "EXCEEDANCE", "EXCEED"
+    , "EXCURSION", "EXCURS"
+    , "OPERATING", "OPER"
+    , "PORTABLE", "PORT"
+    , "PRIMARY", "PRI"
+    , "GEOMETRIC", "GEOM"
+    , "UNIFORM", "UNIFM"
+    , "RESOURCE", "RSRC"
+    , "REGISTRATION", "REG"
+    , "BUSINESS", "BUSNSS"
+    , "OWNERSHIP", "OWNER"
+    , "DEFINED", "DEF"
+    , "RECORD", "REC"
+    , "DELETING" , "DEL"
+    , "SECTIONS", "SECTS"
+    , "SECTION", "SECT"
+    , "COMBINED", "COMB"
+    , "MILESTONE", "MILSTN"
+    , "ADVISEMENT", "ADVISE"
+    , "CHANGE", "CHNG"
+    , "SUPERSEDED", "SPRSED"
+    , "CHANGING", "CHNG"
 )]
 
     [DefaultElementNamePostfixLengthsAttribute(
@@ -306,7 +327,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
 
     [AdditionalCreateIndexAttribute("ICA_CMPL_MON_STRGY", "FAC_IDENT", true)]
     [AdditionalCreateIndexAttribute("ICA_DA_CMPL_MON", "CMPL_MON_IDENT", true)]
-    [AdditionalCreateIndexAttribute("ICA_DA_ENFRC_ACTN_MILESTONE", "DA_ENFRC_ACTN_IDENT, MILESTONE_TYPE_CODE", true)]
+    [AdditionalCreateIndexAttribute("ICA_DA_ENFRC_ACTN_MILSTN", "DA_ENFRC_ACTN_IDENT, MILSTN_TYPE_CODE", true)]
     [AdditionalCreateIndexAttribute("ICA_DA_FRML_ENFRC_ACTN", "DA_ENFRC_ACTN_IDENT", true)]
     [AdditionalCreateIndexAttribute("ICA_DA_INFRML_ENFRC_ACTN", "DA_ENFRC_ACTN_IDENT", true)]
     [AdditionalCreateIndexAttribute("ICA_FAC", "FAC_IDENT", true)]

@@ -15,7 +15,6 @@
 		<xsd:documentation>Last Date Modified: 2012-10-10</xsd:documentation>
 	</xsd:annotation>
 	<xsd:element name="AirDAComplianceMonitoring" type="icis:AirDAComplianceMonitoring"/>
-	<xsd:element name="OtherAgencyInitiativeText" type="icis:StringMin1Max200Type"/>
 	<xsd:element name="AirStackTestData" type="icis:AirStackTestData"/>
 	<xsd:element name="StackIdentifier" type="icis:StringMin1Max100Type"/>
 	<xsd:element name="StackTestStatusCode" type="icis:StringMin1Max3Type"/>
@@ -44,7 +43,7 @@
 	</xsd:complexType>
 	<xsd:complexType name="AirDAComplianceMonitoring">
 		<xsd:complexContent>
-			<xsd:extension base="icis:AirDAComplianceMonitoringKeyElements">
+			<xsd:extension base="icis:ComplianceMonitoringKeyElements">
 				<xsd:sequence>
 					<xsd:element ref="icis:ComplianceMonitoringActivityTypeCode" minOccurs="0"/>
 					<xsd:element ref="icis:ComplianceMonitoringDate" minOccurs="0"/>
@@ -72,7 +71,7 @@
 					<xsd:element ref="icis:InspectionContact" minOccurs="0"/>
 					<xsd:element ref="icis:InspectionGovernmentContact" minOccurs="0" maxOccurs="unbounded"/>
 					<xsd:element ref="icis:InspectionCommentText" minOccurs="0" maxOccurs="unbounded"/>
-					<xsd:element ref="icis:SensitiveComments" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="icis:SensitiveCommentText" minOccurs="0" maxOccurs="unbounded"/>
 					<xsd:element ref="icis:AirStackTestData" minOccurs="0"/>
 				</xsd:sequence>
 			</xsd:extension>

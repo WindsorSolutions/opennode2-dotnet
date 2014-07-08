@@ -19,7 +19,6 @@
 	<xsd:element name="EnforcementActionGovernmentContact" type="icis:EnforcementActionGovernmentContact"/>
 	<xsd:element name="FacilityContact" type="icis:FacilityContact"/>
 	<xsd:element name="FirstName" type="icis:StringMin1Max30Type"/>
-	<xsd:element name="GovernmentContact" type="icis:GovernmentContact"/>
 	<xsd:element name="IndividualTitleText" type="icis:StringMin1Max40Type"/>
 	<xsd:element name="InspectionContact" type="icis:InspectionContact"/>
 	<xsd:element name="InspectionGovernmentContact" type="icis:InspectionGovernmentContact"/>

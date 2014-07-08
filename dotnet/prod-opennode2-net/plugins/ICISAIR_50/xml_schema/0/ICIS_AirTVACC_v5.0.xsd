@@ -34,7 +34,7 @@
 	</xsd:complexType>
 	<xsd:complexType name="AirTVACC">
 		<xsd:complexContent>
-			<xsd:extension base="icis:AirTVACCKeyElements">
+			<xsd:extension base="icis:ComplianceMonitoringKeyElements">
 				<xsd:sequence>
 					<xsd:element ref="icis:ComplianceMonitoringDate" minOccurs="0"/>
 					<xsd:element ref="icis:ComplianceMonitoringStartDate" minOccurs="0"/>
@@ -65,7 +65,7 @@
 					<xsd:element ref="icis:InspectionContact" minOccurs="0"/>
 					<xsd:element ref="icis:InspectionGovernmentContact" minOccurs="0" maxOccurs="unbounded"/>
 					<xsd:element ref="icis:InspectionCommentText" minOccurs="0" maxOccurs="unbounded"/>
-					<xsd:element ref="icis:SensitiveComments" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="icis:SensitiveCommentText" minOccurs="0" maxOccurs="unbounded"/>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>

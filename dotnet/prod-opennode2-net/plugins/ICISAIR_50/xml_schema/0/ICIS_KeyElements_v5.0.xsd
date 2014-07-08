@@ -13,13 +13,12 @@
 		<xsd:documentation>Last Date Modified: 2012-10-10</xsd:documentation>
 	</xsd:annotation>
 	<xsd:element name="AirComplianceMonitoringStrategyKeyElements" type="icis:AirComplianceMonitoringStrategyKeyElements"/>
-	<xsd:element name="AirDAComplianceMonitoringKeyElements" type="icis:AirDAComplianceMonitoringKeyElements"/>
+	<xsd:element name="CaseFileKeyElements" type="icis:CaseFileKeyElements"/>
 	<xsd:element name="AirDAEnforcementActionKeyElements" type="icis:AirDAEnforcementActionKeyElements"/>
 	<xsd:element name="AirDAEnforcementActionMilestoneKeyElements" type="icis:AirDAEnforcementActionMilestoneKeyElements"/>
 	<xsd:element name="AirFacilityKeyElements" type="icis:AirFacilityKeyElements"/>
 	<xsd:element name="AirPollutantsKeyElements" type="icis:AirPollutantsKeyElements"/>
 	<xsd:element name="AirProgramsKeyElements" type="icis:AirProgramsKeyElements"/>
-	<xsd:element name="AirTVACCKeyElements" type="icis:AirTVACCKeyElements"/>
 	<xsd:element name="BasicPermitKeyElements" type="icis:BasicPermitKeyElements"/>
 	<xsd:element name="BiosolidsProgramReportKeyElements" type="icis:BiosolidsProgramReportKeyElements"/>
 	<xsd:element name="CAFOAnnualProgramReportKeyElements" type="icis:CAFOAnnualProgramReportKeyElements"/>
@@ -33,7 +32,6 @@
 	<xsd:element name="EffluentTradePartnerKeyElements" type="icis:ComplianceScheduleKeyElements"/>
 	<xsd:element name="EnforcementActionKeyElements" type="icis:EnforcementActionKeyElements"/>
 	<xsd:element name="EnforcementActionMilestoneKeyElements" type="icis:EnforcementActionMilestoneKeyElements"/>
-	<xsd:element name="FederalComplianceMonitoringKeyElements" type="icis:FederalComplianceMonitoringKeyElements"/>
 	<xsd:element name="HistoricalPermitScheduleKeyElements" type="icis:HistoricalPermitScheduleKeyElements"/>
 	<xsd:element name="LimitKeyElements" type="icis:LimitKeyElements"/>
 	<xsd:element name="LimitSetKeyElements" type="icis:LimitSetKeyElements"/>
@@ -64,16 +62,7 @@
             <xsd:group ref="icis:AirComplianceMonitoringStrategyKeyElementsGroup"/>
         </xsd:sequence> 
 	</xsd:complexType>
-	<xsd:group name="AirDAComplianceMonitoringKeyElementsGroup">
-		<xsd:sequence>
-			<xsd:element ref="icis:ComplianceMonitoringIdentifier"/>
-		</xsd:sequence>
-	</xsd:group>
-	<xsd:complexType name="AirDAComplianceMonitoringKeyElements">
-		<xsd:sequence>
-			<xsd:group ref="icis:AirDAComplianceMonitoringKeyElementsGroup"/>
-		</xsd:sequence>
-	</xsd:complexType>
+	
 	<xsd:group name="AirDAEnforcementActionKeyElementsGroup">
 		<xsd:sequence>
 			<xsd:element ref="icis:AirDAEnforcementActionIdentifier"/>
@@ -127,16 +116,7 @@
 			<xsd:group ref="icis:AirProgramsKeyElementsGroup"/>
 		</xsd:sequence>
 	</xsd:complexType>
-	<xsd:group name="AirTVACCKeyElementsGroup">
-		<xsd:sequence>
-			<xsd:element ref="icis:ComplianceMonitoringIdentifier"/>
-		</xsd:sequence>
-	</xsd:group>
-	<xsd:complexType name="AirTVACCKeyElements">
-		<xsd:sequence>
-			<xsd:group ref="icis:AirTVACCKeyElementsGroup"/>
-		</xsd:sequence>
-	</xsd:complexType>
+	
 	<xsd:group name="BasicPermitKeyElementsGroup">
 		<xsd:sequence>
 			<xsd:element ref="icis:PermitIdentifier"/>
@@ -167,6 +147,16 @@
 	<xsd:complexType name="CAFOAnnualProgramReportKeyElements">
 		<xsd:sequence>
 			<xsd:group ref="icis:CAFOAnnualProgramReportKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="CaseFileKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:element ref="icis:CaseFileIdentifier"/>
+		</xsd:sequence>
+	</xsd:group>	
+	<xsd:complexType name="CaseFileKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:CaseFileKeyElementsGroup"/>
 		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:group name="ComplianceMonitoringKeyElementsGroup">
@@ -299,16 +289,7 @@
 			<xsd:group ref="icis:EnforcementActionMilestoneKeyElementsGroup"/>
 		</xsd:sequence>
 	</xsd:complexType>
-	<xsd:group name="FederalComplianceMonitoringKeyElementsGroup">
-		<xsd:sequence>
-			<xsd:element ref="icis:ComplianceMonitoringIdentifier"/>
-		</xsd:sequence>
-	</xsd:group>
-	<xsd:complexType name="FederalComplianceMonitoringKeyElements">
-		<xsd:sequence>
-			<xsd:group ref="icis:FederalComplianceMonitoringKeyElementsGroup"/>
-		</xsd:sequence>
-	</xsd:complexType>
+	
 	<xsd:group name="HistoricalPermitScheduleKeyElementsGroup">
 		<xsd:sequence>
 			<xsd:group ref="icis:BasicPermitKeyElementsGroup"/>

@@ -35,7 +35,6 @@
 	<xsd:element name="DeficiencyCommunicatedFacilityIndicator" type="icis:YesNoIndicatorType"/>
 	<xsd:element name="FacilityActionObservedIndicator" type="icis:YesNoIndicatorType"/>
 	<xsd:element name="CorrectiveActionCode" type="icis:NonNegativeIntegerMin1Max5Type"/>
-	<xsd:element name="AirPollutantCode" type="icis:NonNegativeIntegerMin1Max10Type"/>
 	<xsd:element name="WaterPollutantCode" type="icis:NonNegativeIntegerMin1Max10Type"/>
 	<xsd:element name="NationalPolicyGeneralAssistanceIndicator" type="icis:YesNoIndicatorType"/>
 	<xsd:element name="NationalPolicySiteSpecificAssistanceIndicator" type="icis:YesNoIndicatorType"/>
@@ -56,7 +55,7 @@
 	</xsd:complexType>
 	<xsd:complexType name="FederalComplianceMonitoring">
 		<xsd:complexContent>
-			<xsd:extension base="icis:FederalComplianceMonitoringKeyElements">
+			<xsd:extension base="icis:ComplianceMonitoringKeyElements">
 				<xsd:sequence>
 					<xsd:element ref="icis:ProgramSystemAcronym" minOccurs="0"/>
 					<xsd:element ref="icis:ProgramSystemIdentifier" minOccurs="0"/>

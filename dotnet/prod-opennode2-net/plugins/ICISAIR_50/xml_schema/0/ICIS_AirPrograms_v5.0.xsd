@@ -12,7 +12,6 @@
 		<xsd:documentation>Last Date Modified: 2012-10-10</xsd:documentation>
 	</xsd:annotation>
 	<xsd:element name="AirPrograms" type="icis:AirPrograms"/>
-	<xsd:element name="OtherProgramDescriptionText" type="icis:StringMin1Max100Type"/>
 	<xsd:element name="AirProgramOperatingStatusCode" type="icis:StringMin1Max5Type"/>
 	<xsd:element name="AirProgramOperatingStatusData" type="icis:AirProgramOperatingStatusData"/>
 	<xsd:element name="AirProgramOperatingStatusStartDate" type="xsd:date"/>

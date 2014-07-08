@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema xmlns:icis="http://www.exchangenetwork.net/schema/icis/4" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/icis/4" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5">
 	<xsd:include schemaLocation="ICIS_AirComplianceMonitoringStrategy_v5.0.xsd"/>
+	<xsd:include schemaLocation="ICIS_AirDACaseFile_v5.0.xsd"/>
 	<xsd:include schemaLocation="ICIS_AirDAComplianceMonitoring_v5.0.xsd"/>
+	<xsd:include schemaLocation="ICIS_AirDAEnforcementActionLinkage_v5.0.xsd"/>
 	<xsd:include schemaLocation="ICIS_AirDAEnforcementActionMilestone_v5.0.xsd"/>
 	<xsd:include schemaLocation="ICIS_AirDAFormalEnforcementAction_v5.0.xsd"/>
 	<xsd:include schemaLocation="ICIS_AirDAInformalEnforcementAction_v5.0.xsd"/>
@@ -11,13 +13,14 @@
 	<xsd:include schemaLocation="ICIS_AirTVACC_v5.0.xsd"/>
 	<!--<xsd:include schemaLocation="ICIS_BasicPermit_v5.0.xsd"/>
 	<xsd:include schemaLocation="ICIS_BiosolidsPermit_v5.0.xsd"/>
-	<xsd:include schemaLocation="ICIS_BiosolidsProgramReport_v5.0.xsd"/>
-	<xsd:include schemaLocation="ICIS_CAFOAnnualReport_v5.0.xsd"/>
+	<xsd:include schemaLocation="ICIS_BiosolidsProgramReport_v5.0.xsd"/>-->
+	<xsd:include schemaLocation="ICIS_CaseFileLinkage_v5.0.xsd"/>
+	<!--<xsd:include schemaLocation="ICIS_CAFOAnnualReport_v5.0.xsd"/>
 	<xsd:include schemaLocation="ICIS_CAFOPermit_v5.0.xsd"/>-->
 	<xsd:include schemaLocation="ICIS_Common_v5.0.xsd"/>
 	<xsd:include schemaLocation="ICIS_ComplianceMonitoring_v5.0.xsd"/>
-	<!--<xsd:include schemaLocation="ICIS_ComplianceMonitoringLinkage_v5.0.xsd"/>
-	<xsd:include schemaLocation="ICIS_ComplianceSchedule_v5.0.xsd"/>
+	<xsd:include schemaLocation="ICIS_ComplianceMonitoringLinkage_v5.0.xsd"/>
+	<!--<xsd:include schemaLocation="ICIS_ComplianceSchedule_v5.0.xsd"/>
 	<xsd:include schemaLocation="ICIS_CopyMGPLimitSet_v5.0.xsd"/>
 	<xsd:include schemaLocation="ICIS_CSOEventReport_v5.0.xsd"/>
 	<xsd:include schemaLocation="ICIS_CSOPermit_v5.0.xsd"/>
@@ -81,7 +84,9 @@
 	<xsd:complexType name="PayloadData">
 		<xsd:choice>
 			<xsd:element name="AirComplianceMonitoringStrategyData" type="icis:AirComplianceMonitoringStrategyData" maxOccurs="unbounded"/>
+			<xsd:element name="AirDACaseFileData" type="icis:AirDACaseFileData" maxOccurs="unbounded"/>
 			<xsd:element name="AirDAComplianceMonitoringData" type="icis:AirDAComplianceMonitoringData" maxOccurs="unbounded"/>
+			<xsd:element name="AirDAEnforcementActionLinkageData" type="icis:AirDAEnforcementActionLinkageData" maxOccurs="unbounded"/>
 			<xsd:element name="AirDAEnforcementActionMilestoneData" type="icis:AirDAEnforcementActionMilestoneData" maxOccurs="unbounded"/>
 			<xsd:element name="AirDAFormalEnforcementActionData" type="icis:AirDAFormalEnforcementActionData" maxOccurs="unbounded"/>
 			<xsd:element name="AirDAInformalEnforcementActionData" type="icis:AirDAInformalEnforcementActionData" maxOccurs="unbounded"/>
@@ -91,8 +96,9 @@
 			<xsd:element name="AirTVACCData" type="icis:AirTVACCData" maxOccurs="unbounded"/>
 			<!--<xsd:element name="BasicPermitData" type="icis:BasicPermitData" maxOccurs="unbounded"/>
 			<xsd:element name="BiosolidsPermitData" type="icis:BiosolidsPermitData" maxOccurs="unbounded"/>
-			<xsd:element name="BiosolidsProgramReportData" type="icis:BiosolidsProgramReportData" maxOccurs="unbounded"/>
-			<xsd:element name="CAFOAnnualReportData" type="icis:CAFOAnnualReportData" maxOccurs="unbounded"/>
+			<xsd:element name="BiosolidsProgramReportData" type="icis:BiosolidsProgramReportData" maxOccurs="unbounded"/>-->
+			<xsd:element name="CaseFileLinkageData" type="icis:CaseFileLinkageData" maxOccurs="unbounded"/>
+			<!--<xsd:element name="CAFOAnnualReportData" type="icis:CAFOAnnualReportData" maxOccurs="unbounded"/>
 			<xsd:element name="CAFOPermitData" type="icis:CAFOPermitData" maxOccurs="unbounded"/>
 			<xsd:element name="ComplianceMonitoringData" type="icis:ComplianceMonitoringData" maxOccurs="unbounded"/>
 			<xsd:element name="ComplianceMonitoringLinkageData" type="icis:ComplianceMonitoringLinkageData" maxOccurs="unbounded"/>
@@ -143,7 +149,9 @@
 	<xsd:simpleType name="OperationType">
 		<xsd:restriction base="xsd:string">
 			<xsd:enumeration value="AirComplianceMonitoringStrategySubmission"/>
+			<xsd:enumeration value="AirDACaseFileSubmission"/>
 			<xsd:enumeration value="AirDAComplianceMonitoringSubmission"/>
+			<xsd:enumeration value="AirDAEnforcementActionLinkageSubmission"/>
 			<xsd:enumeration value="AirDAEnforcementActionMilestoneSubmission"/>
 			<xsd:enumeration value="AirDAFormalEnforcementActionSubmission"/>
 			<xsd:enumeration value="AirDAInformalEnforcementActionSubmission"/>
@@ -154,6 +162,7 @@
 			<xsd:enumeration value="BasicPermitSubmission"/>
 			<xsd:enumeration value="BiosolidsPermitSubmission"/>
 			<xsd:enumeration value="BiosolidsProgramReportSubmission"/>
+			<xsd:enumeration value="CaseFileLinkageSubmission"/>
 			<xsd:enumeration value="CAFOAnnualReportSubmission"/>
 			<xsd:enumeration value="CAFOPermitSubmission"/>
 			<xsd:enumeration value="ComplianceMonitoringLinkageSubmission"/>

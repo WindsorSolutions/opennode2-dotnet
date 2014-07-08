@@ -37,6 +37,7 @@
 	<xsd:element name="MailingAddressStateCode" type="icis:String2FixedType"/>
 	<xsd:element name="MailingAddressText" type="icis:StringMin1Max50Type"/>
 	<xsd:element name="MailingAddressZipCode" type="icis:StringMin1Max14Type"/>
+	<xsd:element name="OrganizationDUNSNumber" type="icis:String9FixedType"/>
 	<xsd:element name="PermitAddress" type="icis:PermitAddress"/>
 	<xsd:element name="PretreatmentAddress" type="icis:PretreatmentAddress"/>
 	<xsd:element name="SiteOwnerAddress" type="icis:SiteOwnerAddress"/>

@@ -49,7 +49,7 @@
 					<xsd:element ref="icis:OtherAgencyInitiativeText" minOccurs="0"/>
 					<xsd:element ref="icis:AirPollutantCode" minOccurs="0" maxOccurs="unbounded"/>
 					<xsd:element ref="icis:StateSectionsViolatedText" minOccurs="0"/>
-					<xsd:element ref="icis:SensitiveComments" maxOccurs="unbounded"/>					
+					<xsd:element ref="icis:SensitiveCommentText" minOccurs="0" maxOccurs="unbounded"/>					
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>

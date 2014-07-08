@@ -17,12 +17,14 @@
 	<xsd:element name="AffiliationTypeText" type="icis:StringMin1Max3Type"/>
 	<xsd:element name="AirDAEnforcementActionIdentifier" type="icis:StringMin7Max25TypeBase"/>
 	<xsd:element name="AirFacilityIdentifier" type="icis:String18FixedTypeBase"/>
-	<xsd:element name="ComplianceMonitoringIdentifier" type="icis:StringMin7Max25TypeBase"/>
+	<xsd:element name="AirPollutantCode" type="icis:NonNegativeIntegerMin1Max10Type"/>
 	<xsd:element name="AirPollutantsCode" type="icis:NonNegativeIntegerMin1Max10TypeBase"/>
 	<xsd:element name="AirProgramCode" type="icis:StringMin1Max9TypeBase"/>
+	<xsd:element name="CaseFileIdentifier" type="icis:StringMin7Max25TypeBase"/>
 	<xsd:element name="Comments" type="icis:StringMin1Max4000Type"/>
 	<xsd:element name="ComplianceMonitoringCategoryCode" type="icis:StringMin1Max3TypeBase"/>
 	<xsd:element name="ComplianceMonitoringActivityTypeCode" type="icis:ComplianceMonitoringActivityTypeCodeType"/>
+	<xsd:element name="ComplianceMonitoringIdentifier" type="icis:StringMin7Max25TypeBase"/>
 	<xsd:element name="ComplianceMonitoringDate" type="xsd:date"/>
 	<xsd:element name="ComplianceScheduleNumber" type="icis:IntegerRange1To999TypeBase"/>
 	<xsd:element name="ComplianceSchedulePenaltyAmount" type="icis:DecimalRange0To999999999999.99Type"/>
@@ -53,8 +55,9 @@
 	<xsd:element name="NumericConditionQuantity" type="icis:Decimal8FloatingType"/>
 	<xsd:element name="NumericReportCode" type="icis:NumericReportTextType"/>
 	<xsd:element name="NumericReportViolationCode" type="icis:NumericReportViolationCodeType"/>
-	<xsd:element name="OrganizationDUNSNumber" type="icis:String9FixedType"/>
 	<xsd:element name="OrganizationFormalName" type="icis:StringMin1Max80Type"/>
+	<xsd:element name="OtherAgencyInitiativeText" type="icis:StringMin1Max200Type"/>
+	<xsd:element name="OtherProgramDescriptionText" type="icis:StringMin1Max100Type"/>
 	<xsd:element name="ParameterCode" type="icis:StringMin1Max5TypeBase"/>
 	<xsd:element name="PermitEffectiveDate" type="xsd:date"/>
 	<xsd:element name="PermitExpirationDate" type="xsd:date"/>
@@ -66,12 +69,10 @@
 	<xsd:element name="PermitTrackingEventCode" type="icis:StringMin1Max3TypeBase"/>
 	<xsd:element name="PermitTrackingEventDate" type="xsd:date"/>
 	<xsd:element name="PretreatmentPerformanceSummaryEndDate" type="xsd:date"/>
-	<xsd:element name="ProgramsViolatedCode" type="icis:StringMin1Max9TypeBase"/>
 	<xsd:element name="ProgramSystemAcronym" type="icis:StringMin1Max20TypeBase"/>
 	<xsd:element name="ProgramSystemIdentifier" type="icis:StringMin1Max30TypeBase"/>
-	<xsd:element name="ReasonDeletingRecord" type="icis:StringMin1Max500Type"/>
 	<xsd:element name="ReportCoverageEndDate" type="xsd:date"/>
-	<xsd:element name="SensitiveComments" type="icis:StringMin1Max4000Type"/>
+	<xsd:element name="SensitiveCommentText" type="icis:StringMin1Max4000Type"/>
 	<xsd:element name="ScheduleDate" type="xsd:date"/>
 	<xsd:element name="ScheduleEventCode" type="icis:StringMin1Max5TypeBase"/>
 	<xsd:element name="ScheduleViolationCode" type="icis:ScheduleViolationCodeType"/>
