@@ -1051,6 +1051,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(25)]
+        [Windsor.Commons.XsdOrm2.DbNotNull] // TSM
         public string CaseFileIdentifier;
     }
 
@@ -1092,6 +1093,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(25)]
+        [Windsor.Commons.XsdOrm2.DbNotNull] // TSM
         public string CaseFileIdentifier;
     }
 

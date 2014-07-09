@@ -335,6 +335,11 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
     [AdditionalCreateIndexAttribute("ICA_PROGS", "FAC_IDENT, PROG_CODE", true)]
     [AdditionalCreateIndexAttribute("ICA_TVACC", "CMPL_MON_IDENT", true)]
 
+    [AdditionalCreateIndexAttribute("ICA_DA_CASE_FILE", "CASE_FILE_IDENT", true)]
+    [AdditionalCreateIndexAttribute("ICA_DA_ENFRC_ACTN_LNK", "DA_ENFRC_ACTN_IDENT", true)]
+    [AdditionalCreateIndexAttribute("ICA_CASE_FILE_LNK", "CASE_FILE_IDENT", true)]
+    [AdditionalCreateIndexAttribute("ICA_CMPL_MON_LNK", "CMPL_MON_IDENT", true)]
+
     public partial class Payload : IAfterLoadFromDatabase, IBeforeSaveToDatabase
     {
         public virtual void AfterLoadFromDatabase()
