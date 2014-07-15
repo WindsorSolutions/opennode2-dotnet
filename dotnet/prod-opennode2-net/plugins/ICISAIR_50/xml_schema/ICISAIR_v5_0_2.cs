@@ -344,47 +344,42 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
     {
         public virtual void AfterLoadFromDatabase()
         {
-            //CollectionUtils.ForEach(Items, delegate(object item)
-            //{
-            //    IAfterLoadFromDatabase afterLoadFromDatabase = item as IAfterLoadFromDatabase;
-            //    if (afterLoadFromDatabase != null)
-            //    {
-            //        afterLoadFromDatabase.AfterLoadFromDatabase();
-            //    }
-            //});
+            CollectionUtils.ForEach(Items, delegate(object item)
+            {
+                IAfterLoadFromDatabase afterLoadFromDatabase = item as IAfterLoadFromDatabase;
+                if (afterLoadFromDatabase != null)
+                {
+                    afterLoadFromDatabase.AfterLoadFromDatabase();
+                }
+            });
         }
         public virtual void BeforeSaveToDatabase()
         {
-            //CollectionUtils.ForEach(Items, delegate(object item)
-            //{
-            //    IBeforeSaveToDatabase beforeSaveToDatabase = item as IBeforeSaveToDatabase;
-            //    if (beforeSaveToDatabase != null)
-            //    {
-            //        beforeSaveToDatabase.BeforeSaveToDatabase();
-            //    }
-            //});
+            CollectionUtils.ForEach(Items, delegate(object item)
+            {
+                IBeforeSaveToDatabase beforeSaveToDatabase = item as IBeforeSaveToDatabase;
+                if (beforeSaveToDatabase != null)
+                {
+                    beforeSaveToDatabase.BeforeSaveToDatabase();
+                }
+            });
         }
-        ////    public static IDictionary<string, DbAppendSelectWhereClause> GetDefaultSelectClauses(SpringBaseDao dao)
-        ////    {
-        ////        string[] transactionTypeTableNames = new string[]
-        ////        {
-        ////            "ICS_BASIC_PRMT", "ICS_BS_PRMT", "ICS_BS_PROG_REP", "ICS_CAFO_ANNUL_REP", "ICS_CAFO_PRMT", "ICS_CMPL_MON", "ICS_CMPL_MON_LNK",
-        ////            "ICS_CMPL_SCHD", "ICS_CSO_EVT_REP", "ICS_CSO_PRMT", "ICS_DMR_PROG_REP_LNK", "ICS_DMR_VIOL", "ICS_DSCH_MON_REP",
-        ////            "ICS_EFFLU_TRADE_PRTNER", "ICS_ENFRC_ACTN_MILESTONE", "ICS_ENFRC_ACTN_VIOL_LNK", "ICS_FINAL_ORDER_VIOL_LNK",
-        ////            "ICS_FRML_ENFRC_ACTN", "ICS_GNRL_PRMT", "ICS_HIST_PRMT_SCHD_EVTS", "ICS_INFRML_ENFRC_ACTN", "ICS_LMT_SET", "ICS_LMTS",
-        ////            "ICS_LOC_LMTS_PROG_REP", "ICS_MASTER_GNRL_PRMT", "ICS_NARR_COND_SCHD", "ICS_PARAM_LMTS", "ICS_POTW_PRMT", "ICS_PRETR_PERF_SUMM",
-        ////            "ICS_PRETR_PRMT", "ICS_PRMT_FEATR", "ICS_PRMT_REISSU", "ICS_PRMT_TERM", "ICS_PRMT_TRACK_EVT", "ICS_SCHD_EVT_VIOL",
-        ////            "ICS_SNGL_EVT_VIOL", "ICS_SSO_ANNUL_REP", "ICS_SSO_EVT_REP", "ICS_SSO_MONTHLY_EVT_REP", "ICS_SW_CNST_PRMT", "ICS_SW_EVT_REP",
-        ////            "ICS_SW_INDST_PRMT", "ICS_SWMS_4_LARGE_PRMT", "ICS_SWMS_4_PROG_REP", "ICS_SWMS_4_SMALL_PRMT", "ICS_UNPRMT_FAC", 
-        ////        };
+        public static IDictionary<string, DbAppendSelectWhereClause> GetDefaultSelectClauses(SpringBaseDao dao)
+        {
+            string[] transactionTypeTableNames = new string[]
+                {
+                    "ICA_CASE_FILE_LNK", "ICA_CMPL_MON_LNK", "ICA_CMPL_MON_STRGY", "ICA_DA_CASE_FILE", "ICA_DA_CMPL_MON", 
+                    "ICA_DA_ENFRC_ACTN_LNK", "ICA_DA_ENFRC_ACTN_MILSTN", "ICA_DA_FRML_ENFRC_ACTN", "ICA_DA_INFRML_ENFRC_ACTN", 
+                    "ICA_FAC", "ICA_POLUTS", "ICA_PROGS", "ICA_TVACC"
+                };
 
-        ////        Dictionary<string, DbAppendSelectWhereClause> selectClauses = new Dictionary<string, DbAppendSelectWhereClause>(60);
-        ////        foreach (string tableName in transactionTypeTableNames)
-        ////        {
-        ////            selectClauses.Add(tableName, new DbAppendSelectWhereClause("TRANSACTION_TYPE IS NOT NULL", null));
-        ////        }
-        ////        return selectClauses;
-        ////    }
+            Dictionary<string, DbAppendSelectWhereClause> selectClauses = new Dictionary<string, DbAppendSelectWhereClause>(60);
+            foreach (string tableName in transactionTypeTableNames)
+            {
+                selectClauses.Add(tableName, new DbAppendSelectWhereClause("TRANSACTION_TYPE IS NOT NULL", null));
+            }
+            return selectClauses;
+        }
     }
     ////public partial class DischargeMonitoringReportData : IAfterLoadFromDatabase, IBeforeSaveToDatabase
     ////{
@@ -495,443 +490,532 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
     ////    public string SourceSystemIdentifier;
     ////}
 
-    ////[Serializable]
-    ////public partial class SubmissionResultsDataType
-    ////{
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-    ////    [System.ComponentModel.DescriptionAttribute("The type of the submission.")]
-    ////    [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-    ////    [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(50)]
-    ////    public string SubmissionTypeName;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
-    ////    [System.ComponentModel.DescriptionAttribute("The type of transaction that was sent in the submission.")]
-    ////    [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-    ////    [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
-    ////    public SubmissionTransactionTypeCodeDataType TransactionType;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
-    ////    [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(9)]
-    ////    public string PermitIdentifier;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
-    ////    [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(9)]
-    ////    public string PermitIdentifier2;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
-    ////    [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4)]
-    ////    public string PermittedFeatureIdentifier;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
-    ////    [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(2)]
-    ////    public string LimitSetDesignator;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 6)]
-    ////    public System.DateTime MonitoringPeriodEndDate;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlIgnoreAttribute()]
-    ////    public bool MonitoringPeriodEndDateSpecified;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
-    ////    [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(5)]
-    ////    public string ParameterCode;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
-    ////    [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
-    ////    public string MonitoringSiteDescriptionCode;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(DataType = "integer", Order = 9)]
-    ////    [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-    ////    public string LimitSeasonNumber;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 10)]
-    ////    public System.DateTime LimitStartDate;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlIgnoreAttribute()]
-    ////    public bool LimitStartDateSpecified;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 11)]
-    ////    public System.DateTime LimitEndDate;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlIgnoreAttribute()]
-    ////    public bool LimitEndDateSpecified;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(Order = 12)]
-    ////    [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-    ////    public string LimitModificationEffectiveDate;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(Order = 13)]
-    ////    [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(30)]
-    ////    public string TradeID;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(Order = 14)]
-    ////    [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
-    ////    public string ComplianceMonitoringCategoryCode;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(Order = 15)]
-    ////    [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
-    ////    public string ComplianceMonitoringCategoryCode2;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 16)]
-    ////    public System.DateTime ComplianceMonitoringDate;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlIgnoreAttribute()]
-    ////    public bool ComplianceMonitoringDateSpecified;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 17)]
-    ////    public System.DateTime ComplianceMonitoringDate2;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlIgnoreAttribute()]
-    ////    public bool ComplianceMonitoringDate2Specified;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 18)]
-    ////    public System.DateTime CSOEventDate;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlIgnoreAttribute()]
-    ////    public bool CSOEventDateSpecified;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 19)]
-    ////    public System.DateTime DateStormEventSampled;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlIgnoreAttribute()]
-    ////    public bool DateStormEventSampledSpecified;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 20)]
-    ////    public System.DateTime PermitIssueDate;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlIgnoreAttribute()]
-    ////    public bool PermitIssueDateSpecified;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 21)]
-    ////    public System.DateTime PermitEffectiveDate;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlIgnoreAttribute()]
-    ////    public bool PermitEffectiveDateSpecified;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(Order = 22)]
-    ////    [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
-    ////    public string PermitTrackingEventCode;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 23)]
-    ////    public System.DateTime PermitTrackingEventDate;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlIgnoreAttribute()]
-    ////    public bool PermitTrackingEventDateSpecified;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 24)]
-    ////    [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-    ////    public string NarrativeConditionNumber;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(Order = 25)]
-    ////    [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(5)]
-    ////    public string ScheduleEventCode;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 26)]
-    ////    public System.DateTime ScheduleDate;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlIgnoreAttribute()]
-    ////    public bool ScheduleDateSpecified;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(Order = 27)]
-    ////    [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(2)]
-    ////    public NumericReportTextType NumericReportCode;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlIgnoreAttribute()]
-    ////    public bool NumericReportCodeSpecified;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(Order = 28)]
-    ////    [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
-    ////    public NumericReportViolationCodeType NumericReportViolationCode;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlIgnoreAttribute()]
-    ////    public bool NumericReportViolationCodeSpecified;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 29)]
-    ////    public System.DateTime PermittingAuthorityReportReceivedDate;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlIgnoreAttribute()]
-    ////    public bool PermittingAuthorityReportReceivedDateSpecified;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 30)]
-    ////    public System.DateTime PretreatmentPerformanceSummaryEndDate;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlIgnoreAttribute()]
-    ////    public bool PretreatmentPerformanceSummaryEndDateSpecified;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 31)]
-    ////    public System.DateTime ReportCoverageEndDate;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlIgnoreAttribute()]
-    ////    public bool ReportCoverageEndDateSpecified;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(Order = 32)]
-    ////    [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(5)]
-    ////    public string SingleEventViolationCode;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 33)]
-    ////    public System.DateTime SingleEventViolationDate;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlIgnoreAttribute()]
-    ////    public bool SingleEventViolationDateSpecified;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 34)]
-    ////    public System.DateTime SSOAnnualReportReceivedDate;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlIgnoreAttribute()]
-    ////    public bool SSOAnnualReportReceivedDateSpecified;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 35)]
-    ////    public System.DateTime SSOEventDate;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlIgnoreAttribute()]
-    ////    public bool SSOEventDateSpecified;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 36)]
-    ////    public System.DateTime SSOMonthlyReportReceivedDate;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlIgnoreAttribute()]
-    ////    public bool SSOMonthlyReportReceivedDateSpecified;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 37)]
-    ////    public System.DateTime StormWaterMS4ReportReceivedDate;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlIgnoreAttribute()]
-    ////    public bool StormWaterMS4ReportReceivedDateSpecified;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(Order = 38)]
-    ////    [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(20)]
-    ////    public string EnforcementActionIdentifier;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(Order = 39)]
-    ////    [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(20)]
-    ////    public string EnforcementActionIdentifier2;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(Order = 40)]
-    ////    [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-    ////    public string FinalOrderIdentifier;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(Order = 41)]
-    ////    [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-    ////    public string FinalOrderIdentifier2;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 42)]
-    ////    [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-    ////    public string ComplianceScheduleNumber;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(Order = 43)]
-    ////    [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(5)]
-    ////    public string MilestoneTypeCode;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(Order = 44)]
-    ////    [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
-    ////    public string ScheduleViolationCode;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(Order = 45)]
-    ////    [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-    ////    public string EventId;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(Order = 46)]
-    ////    [System.ComponentModel.DescriptionAttribute("An Service Provider (e.g., ICIS-NPDES) specific error code that uniquely identifi" +
-    ////        "es a type of error, information or warning.")]
-    ////    [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(6)]
-    ////    public string ResultCode;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(Order = 47)]
-    ////    [System.ComponentModel.DescriptionAttribute("The type of error, information or warning that is being returned.")]
-    ////    [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(11)]
-    ////    public ResultTypeCodeDataType ResultTypeCode;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlIgnoreAttribute()]
-    ////    public bool ResultTypeCodeSpecified;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(Order = 48)]
-    ////    [System.ComponentModel.DescriptionAttribute("A human readable description on an error, information or warning.")]
-    ////    [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4000)]
-    ////    public string ResultDescription;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(Order = 49)]
-    ////    [System.ComponentModel.DescriptionAttribute("The transaction id of the submission.")]
-    ////    [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-    ////    [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(50)]
-    ////    public string SubmissionTransactionId;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(DataType = "dateTime", Order = 50)]
-    ////    [System.ComponentModel.DescriptionAttribute("The date and time when this row was created.")]
-    ////    [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-    ////    public System.DateTime CreatedDateTime;
-    ////}
-
-    ////[Serializable]
-    ////public class SubmissionResultList
-    ////{
-    ////    [System.Xml.Serialization.XmlElementAttribute("SubmissionResult", Order = 8)]
-    ////    public SubmissionResultsDataType[] SubmissionResult;
-    ////}
-
-    ////[Serializable]
-    ////public enum ResultTypeCodeDataType
-    ////{
-    ////    Error,
-    ////    Information,
-    ////    Warning,
-    ////    Accepted,
-    ////}
-
-    ////[Serializable]
-    ////public enum TransactionStatusCode
-    ////{
-    ////    Unknown,
-    ////    Received,
-    ////    Processing,
-    ////    Pending,
-    ////    Failed,
-    ////    Cancelled,
-    ////    Approved,
-    ////    Processed,
-    ////    Completed,
-    ////}
-
-    ////[Serializable]
-    ////public partial class SubmissionTrackingDataType
-    ////{
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(DataType = "dateTime", Order = 0)]
-    ////    public System.DateTime ETLCompletionDateTime;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlIgnoreAttribute()]
-    ////    public bool ETLCompletionDateTimeSpecified;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(DataType = "dateTime", Order = 1)]
-    ////    public System.DateTime DETChangeCompletionDateTime;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlIgnoreAttribute()]
-    ////    public bool DETChangeCompletionDateTimeSpecified;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(DataType = "dateTime", Order = 2)]
-    ////    public System.DateTime SubmissionDateTime;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlIgnoreAttribute()]
-    ////    public bool SubmissionDateTimeSpecified;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
-    ////    [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(50)]
-    ////    public string SubmissionTransactionId;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
-    ////    [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(10)]
-    ////    public TransactionStatusCode SubmissionTransactionStatus;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlIgnoreAttribute()]
-    ////    public bool SubmissionTransactionStatusSpecified;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(DataType = "dateTime", Order = 5)]
-    ////    public System.DateTime SubmissionStatusDateTime;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlIgnoreAttribute()]
-    ////    public bool SubmissionStatusDateTimeSpecified;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(DataType = "dateTime", Order = 6)]
-    ////    public System.DateTime ResponseParseDateTime;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlIgnoreAttribute()]
-    ////    public bool ResponseParseDateTimeSpecified;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
-    ////    [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(10)]
-    ////    [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-    ////    public TransactionStatusCode WorkflowStatus;
-
-    ////    /// <remarks/>
-    ////    [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
-    ////    [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4000)]
-    ////    public string WorkflowStatusMessage;
-    ////}
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/NetDMR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("SubmissionResponse", Namespace = "http://www.exchangenetwork.net/schema/NetDMR/1", IsNullable = false)]
+    public partial class SubmissionResponseDataType
+    {
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [System.ComponentModel.DescriptionAttribute("An Exchange Network transaction ID issued by a Exchange Network Node.")]
+        public string TransactionIdentifier;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 1)]
+        [System.ComponentModel.DescriptionAttribute("The date something was submitted.")]
+        public System.DateTime SubmissionDate;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 2)]
+        [System.ComponentModel.DescriptionAttribute("The date something was created.")]
+        public System.DateTime CreationDate;
+
+        /// <remarks/>
+        //[System.Xml.Serialization.XmlArrayAttribute(Order = 3)]
+        //[System.Xml.Serialization.XmlArrayItemAttribute("SubmissionError", IsNullable = false)]
+        //[System.ComponentModel.DescriptionAttribute("Wraps a group of SubmissionError elements. ")]
+        //public SubmissionErrorDataType[] SubmissionErrors;
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlRootAttribute("SubmissionTransactionTypeCode", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    public enum SubmissionTransactionTypeCodeDataType
+    {
+
+        /// <remarks/>
+        C,
+
+        /// <remarks/>
+        D,
+
+        /// <remarks/>
+        N,
+
+        /// <remarks/>
+        R,
+
+        /// <remarks/>
+        X,
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlRootAttribute("NumericReportCode", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    public enum NumericReportTextType
+    {
+
+        /// <remarks/>
+        Q1,
+
+        /// <remarks/>
+        Q2,
+
+        /// <remarks/>
+        C1,
+
+        /// <remarks/>
+        C2,
+
+        /// <remarks/>
+        C3,
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlRootAttribute("NumericReportViolationCode", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    public enum NumericReportViolationCodeType
+    {
+
+        /// <remarks/>
+        D,
+
+        /// <remarks/>
+        E,
+    }
+
+    [Serializable]
+    public partial class SubmissionResultsDataType
+    {
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [System.ComponentModel.DescriptionAttribute("The type of the submission.")]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(50)]
+        public string SubmissionTypeName;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        [System.ComponentModel.DescriptionAttribute("The type of transaction that was sent in the submission.")]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
+        public SubmissionTransactionTypeCodeDataType TransactionType;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
+        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(9)]
+        public string PermitIdentifier;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
+        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(9)]
+        public string PermitIdentifier2;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4)]
+        public string PermittedFeatureIdentifier;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(2)]
+        public string LimitSetDesignator;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 6)]
+        public System.DateTime MonitoringPeriodEndDate;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool MonitoringPeriodEndDateSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(5)]
+        public string ParameterCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
+        public string MonitoringSiteDescriptionCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "integer", Order = 9)]
+        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
+        public string LimitSeasonNumber;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 10)]
+        public System.DateTime LimitStartDate;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool LimitStartDateSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 11)]
+        public System.DateTime LimitEndDate;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool LimitEndDateSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 12)]
+        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
+        public string LimitModificationEffectiveDate;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 13)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(30)]
+        public string TradeID;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 14)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
+        public string ComplianceMonitoringCategoryCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 15)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
+        public string ComplianceMonitoringCategoryCode2;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 16)]
+        public System.DateTime ComplianceMonitoringDate;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ComplianceMonitoringDateSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 17)]
+        public System.DateTime ComplianceMonitoringDate2;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ComplianceMonitoringDate2Specified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 18)]
+        public System.DateTime CSOEventDate;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool CSOEventDateSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 19)]
+        public System.DateTime DateStormEventSampled;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool DateStormEventSampledSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 20)]
+        public System.DateTime PermitIssueDate;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool PermitIssueDateSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 21)]
+        public System.DateTime PermitEffectiveDate;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool PermitEffectiveDateSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 22)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
+        public string PermitTrackingEventCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 23)]
+        public System.DateTime PermitTrackingEventDate;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool PermitTrackingEventDateSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 24)]
+        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
+        public string NarrativeConditionNumber;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 25)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(5)]
+        public string ScheduleEventCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 26)]
+        public System.DateTime ScheduleDate;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ScheduleDateSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 27)]
+        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(2)]
+        public NumericReportTextType NumericReportCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool NumericReportCodeSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 28)]
+        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
+        public NumericReportViolationCodeType NumericReportViolationCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool NumericReportViolationCodeSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 29)]
+        public System.DateTime PermittingAuthorityReportReceivedDate;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool PermittingAuthorityReportReceivedDateSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 30)]
+        public System.DateTime PretreatmentPerformanceSummaryEndDate;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool PretreatmentPerformanceSummaryEndDateSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 31)]
+        public System.DateTime ReportCoverageEndDate;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ReportCoverageEndDateSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 32)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(5)]
+        public string SingleEventViolationCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 33)]
+        public System.DateTime SingleEventViolationDate;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool SingleEventViolationDateSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 34)]
+        public System.DateTime SSOAnnualReportReceivedDate;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool SSOAnnualReportReceivedDateSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 35)]
+        public System.DateTime SSOEventDate;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool SSOEventDateSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 36)]
+        public System.DateTime SSOMonthlyReportReceivedDate;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool SSOMonthlyReportReceivedDateSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 37)]
+        public System.DateTime StormWaterMS4ReportReceivedDate;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool StormWaterMS4ReportReceivedDateSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 38)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(20)]
+        public string EnforcementActionIdentifier;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 39)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(20)]
+        public string EnforcementActionIdentifier2;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 40)]
+        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
+        public string FinalOrderIdentifier;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 41)]
+        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
+        public string FinalOrderIdentifier2;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 42)]
+        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
+        public string ComplianceScheduleNumber;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 43)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(5)]
+        public string MilestoneTypeCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 44)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
+        public string ScheduleViolationCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 45)]
+        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
+        public string EventId;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 46)]
+        [System.ComponentModel.DescriptionAttribute("An Service Provider (e.g., ICIS-NPDES) specific error code that uniquely identifi" +
+            "es a type of error, information or warning.")]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(6)]
+        public string ResultCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 47)]
+        [System.ComponentModel.DescriptionAttribute("The type of error, information or warning that is being returned.")]
+        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(11)]
+        public ResultTypeCodeDataType ResultTypeCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ResultTypeCodeSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 48)]
+        [System.ComponentModel.DescriptionAttribute("A human readable description on an error, information or warning.")]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4000)]
+        public string ResultDescription;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 49)]
+        [System.ComponentModel.DescriptionAttribute("The transaction id of the submission.")]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(50)]
+        public string SubmissionTransactionId;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "dateTime", Order = 50)]
+        [System.ComponentModel.DescriptionAttribute("The date and time when this row was created.")]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        public System.DateTime CreatedDateTime;
+    }
+
+    [Serializable]
+    public class SubmissionResultList
+    {
+        [System.Xml.Serialization.XmlElementAttribute("SubmissionResult", Order = 8)]
+        public SubmissionResultsDataType[] SubmissionResult;
+    }
+
+    [Serializable]
+    public enum ResultTypeCodeDataType
+    {
+        Error,
+        Information,
+        Warning,
+        Accepted,
+    }
+
+    [Serializable]
+    public enum TransactionStatusCode
+    {
+        Unknown,
+        Received,
+        Processing,
+        Pending,
+        Failed,
+        Cancelled,
+        Approved,
+        Processed,
+        Completed,
+    }
+
+    [Serializable]
+    public partial class SubmissionTrackingDataType
+    {
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "dateTime", Order = 0)]
+        public System.DateTime ETLCompletionDateTime;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ETLCompletionDateTimeSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "dateTime", Order = 1)]
+        public System.DateTime DETChangeCompletionDateTime;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool DETChangeCompletionDateTimeSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "dateTime", Order = 2)]
+        public System.DateTime SubmissionDateTime;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool SubmissionDateTimeSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(50)]
+        public string SubmissionTransactionId;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(10)]
+        public TransactionStatusCode SubmissionTransactionStatus;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool SubmissionTransactionStatusSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "dateTime", Order = 5)]
+        public System.DateTime SubmissionStatusDateTime;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool SubmissionStatusDateTimeSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "dateTime", Order = 6)]
+        public System.DateTime ResponseParseDateTime;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ResponseParseDateTimeSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(10)]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        public TransactionStatusCode WorkflowStatus;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4000)]
+        public string WorkflowStatusMessage;
+    }
+
     [Serializable]
     public class RemoveTrailingZerosDecimal : CustomXmlStringFormatType<decimal>
     {

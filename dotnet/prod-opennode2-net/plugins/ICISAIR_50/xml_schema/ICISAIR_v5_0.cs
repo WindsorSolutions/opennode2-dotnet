@@ -1648,7 +1648,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("17", "2")]
         // TSM
-        public Windsor.Node2008.WNOSPlugin.ICISNPDES_40.RemoveTrailingZerosDecimal CashCivilPenaltyRequiredAmount;
+        public Windsor.Node2008.WNOSPlugin.ICISAIR_50.RemoveTrailingZerosDecimal CashCivilPenaltyRequiredAmount;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
@@ -3822,7 +3822,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("17", "2")]
         // TSM
-        public Windsor.Node2008.WNOSPlugin.ICISNPDES_40.RemoveTrailingZerosDecimal CashCivilPenaltyRequiredAmount;
+        public Windsor.Node2008.WNOSPlugin.ICISAIR_50.RemoveTrailingZerosDecimal CashCivilPenaltyRequiredAmount;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
