@@ -54,7 +54,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
 
         protected static readonly ILogEx LOG = LogManagerEx.GetLogger(MethodBase.GetCurrentMethod());
 
-        protected const string p_pk_param_name = "p_ics_subm_track_id";
+        protected const string p_pk_param_name = "p_ica_subm_track_id";
 
         protected IRequestManager _requestManager;
 

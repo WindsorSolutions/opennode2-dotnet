@@ -195,68 +195,72 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
                         foreach (object item in datum.Items)
                         {
 							var result = item as RawResultsType;
-							if (result != null)
-							{
-								args = new List<object>();
-								argNames = new System.Text.StringBuilder("ACTION_CD;AQS_TRANS_PROTOCOL_FK;DATA_APPROVAL_IND;DATA_VALIDITY_CD;SMPL_COLL_START_DATE;SMPL_COLL_START_TIME");
-								args.Add(result.ActionCode);
-								args.Add(protocolID);
-								args.Add(result.RawValueDetails.DataApprovalIndicator);
-								args.Add(result.RawValueDetails.DataValidityCode);
-								args.Add(result.SampleCollectionStartDate);
-								args.Add(result.SampleCollectionStartTime);
-								for (int i = result.RawValueDetails.Items.Length; i-- > 0; )
-								{
-									switch (result.RawValueDetails.ItemsElementName[i])
-									{
-										case ItemsChoiceType3.MeasureValue:
-											argNames.Append(';').Append("MEASURE_VALUE");
-											break;
-										case ItemsChoiceType3.NullDataCode:
-											argNames.Append(';').Append("NULL_DATA_CD");
-											break;
-										case ItemsChoiceType3.UncertaintyValue:
-											argNames.Append(';').Append("UNCERTAINTY_VALUE");
-											break;
-										default:
-											continue;
-									}
-									args.Add(result.RawValueDetails.Items[i]);
-								}
-								_baseDao.DoStoredProcWithArgs("aqs_RawResultUpsert", argNames.ToString(), args);
-							}
-                            var blankResult = item as BlankInformationType;
-                            if (blankResult != null)
-							{
-								args = new List<object>();
-								argNames = new System.Text.StringBuilder("ACTION_CD;AQS_TRANS_PROTOCOL_FK;DATA_APPROVAL_IND;DATA_VALIDITY_CD;SMPL_COLL_START_DATE;SMPL_COLL_START_TIME");
-                                args.Add(blankResult.ActionCode);
-								args.Add(protocolID);
-                                args.Add(blankResult.RawValueDetails.DataApprovalIndicator);
-                                args.Add(blankResult.RawValueDetails.DataValidityCode);
-                                args.Add(blankResult.SampleCollectionStartDate);
-                                args.Add(blankResult.SampleCollectionStartTime);
-                                for (int i = blankResult.RawValueDetails.Items.Length; i-- > 0; )
-								{
-                                    switch (blankResult.RawValueDetails.ItemsElementName[i])
-									{
-										case ItemsChoiceType3.MeasureValue:
-											argNames.Append(';').Append("MEASURE_VALUE");
-											break;
-										case ItemsChoiceType3.NullDataCode:
-											argNames.Append(';').Append("NULL_DATA_CD");
-											break;
-										case ItemsChoiceType3.UncertaintyValue:
-											argNames.Append(';').Append("UNCERTAINTY_VALUE");
-											break;
-										default:
-											continue;
-									}
-                                    args.Add(blankResult.RawValueDetails.Items[i]);
-								}
-								_baseDao.DoStoredProcWithArgs("aqs_RawResultUpsert", argNames.ToString(), args);
-							}
-
+                            if (result != null)
+                            {
+                                args = new List<object>();
+                                argNames = new System.Text.StringBuilder("ACTION_CD;AQS_TRANS_PROTOCOL_FK;DATA_APPROVAL_IND;DATA_VALIDITY_CD;SMPL_COLL_START_DATE;SMPL_COLL_START_TIME");
+                                args.Add(result.ActionCode);
+                                args.Add(protocolID);
+                                args.Add(result.RawValueDetails.DataApprovalIndicator);
+                                args.Add(result.RawValueDetails.DataValidityCode);
+                                args.Add(result.SampleCollectionStartDate);
+                                args.Add(result.SampleCollectionStartTime);
+                                for (int i = result.RawValueDetails.Items.Length; i-- > 0; )
+                                {
+                                    switch (result.RawValueDetails.ItemsElementName[i])
+                                    {
+                                        case ItemsChoiceType3.MeasureValue:
+                                            argNames.Append(';').Append("MEASURE_VALUE");
+                                            break;
+                                        case ItemsChoiceType3.NullDataCode:
+                                            argNames.Append(';').Append("NULL_DATA_CD");
+                                            break;
+                                        case ItemsChoiceType3.UncertaintyValue:
+                                            argNames.Append(';').Append("UNCERTAINTY_VALUE");
+                                            break;
+                                        default:
+                                            continue;
+                                    }
+                                    args.Add(result.RawValueDetails.Items[i]);
+                                }
+                                _baseDao.DoStoredProcWithArgs("aqs_RawResultUpsert", argNames.ToString(), args);
+                            }
+                            else
+                            {
+                                var blankResult = item as BlankInformationType;
+                                if (blankResult != null)
+                                {
+                                    args = new List<object>();
+                                    argNames = new System.Text.StringBuilder("ACTION_CD;AQS_TRANS_PROTOCOL_FK;DATA_APPROVAL_IND;DATA_VALIDITY_CD;SMPL_COLL_START_DATE;SMPL_COLL_START_TIME");
+                                    args.Add(blankResult.ActionCode);
+                                    args.Add(protocolID);
+                                    args.Add(blankResult.RawValueDetails.DataApprovalIndicator);
+                                    args.Add(blankResult.RawValueDetails.DataValidityCode);
+                                    args.Add(blankResult.SampleCollectionStartDate);
+                                    args.Add(blankResult.SampleCollectionStartTime);
+                                    for (int i = blankResult.RawValueDetails.Items.Length; i-- > 0; )
+                                    {
+                                        switch (blankResult.RawValueDetails.ItemsElementName[i])
+                                        {
+                                            case ItemsChoiceType3.MeasureValue:
+                                                argNames.Append(';').Append("MEASURE_VALUE");
+                                                break;
+                                            case ItemsChoiceType3.NullDataCode:
+                                                argNames.Append(';').Append("NULL_DATA_CD");
+                                                break;
+                                            case ItemsChoiceType3.UncertaintyValue:
+                                                argNames.Append(';').Append("UNCERTAINTY_VALUE");
+                                                break;
+                                            default:
+                                                continue;
+                                        }
+                                        args.Add(blankResult.RawValueDetails.Items[i]);
+                                    }
+                                    argNames.Append(';').Append("BLANK_TYPE_CD");
+                                    args.Add(blankResult.BlankTypeCode);
+                                    _baseDao.DoStoredProcWithArgs("aqs_BlankResultUpsert", argNames.ToString(), args);
+                                }
+                            }
                         }
                     }
                 }

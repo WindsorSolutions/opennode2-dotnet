@@ -95,6 +95,10 @@ namespace Windsor.Commons.Core
         {
             return Math.Cos(DegreesToRadians(degrees));
         }
+        public static int PinToMinMax(int value, int min, int max)
+        {
+            return (value > max) ? max : (value < min) ? min : value;
+        }
         public static float PinToMinMax(float value, float min, float max)
         {
             return (value > max) ? max : (value < min) ? min : value;

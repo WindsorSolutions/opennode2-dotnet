@@ -285,8 +285,8 @@ namespace Windsor.Commons.XsdOrm2.Implementations
             }
             else if ((m_ColumnType == DbType.DateTime) || (m_ColumnType == DbType.Date))
             {
-                    DateTime dateTime = DateTime.Parse(value.ToString());
-                    return MakeValidDbDateTime(dateTime);
+                DateTime dateTime = DateTime.Parse(value.ToString());
+                return MakeValidDbDateTime(dateTime);
             }
             return value;
         }
@@ -308,74 +308,82 @@ namespace Windsor.Commons.XsdOrm2.Implementations
         }
         public override object GetSetMemberValue(object value)
         {
-            if (value is DBNull)
+            try
             {
-                value = null;
-            }
-            else if (m_IsDbBoolString)
-            {
-                if (string.Equals(value.ToString(), "N", StringComparison.InvariantCultureIgnoreCase))
+                if (value is DBNull)
                 {
-                    value = false;
+                    value = null;
                 }
-                else if (string.Equals(value.ToString(), "Y", StringComparison.InvariantCultureIgnoreCase))
+                else if (m_IsDbBoolString)
                 {
-                    value = true;
-                }
-                else
-                {
-                    throw new MappingException("Invalid boolean string valid specified (\"{0}\") for column: {1}",
-                                               value, this.ToString());
-                }
-            }
-            else if (m_IsDecimalString)
-            {
-                if (value != null)
-                {
-                    string valueStr = value.ToString();
-                    ;
-                    if (valueStr.IndexOf('.') > 0)
+                    if (string.Equals(value.ToString(), "N", StringComparison.InvariantCultureIgnoreCase))
                     {
-                        valueStr = valueStr.TrimEnd('0').TrimEnd('.');
+                        value = false;
                     }
-                    value = valueStr;
-                }
-            }
-            else if (m_IsTenDigitDateString)
-            {
-            }
-            else if (m_IsTimeType)
-            {
-                if (m_MemberType == typeof(string))
-                {
-                    DateTime existingValue = DateTime.Parse(value.ToString());
-                    value = existingValue.ToString("HH:mm:ss");
-                }
-                else
-                {
-                    DateTime existingValue = DateTime.Parse(value.ToString());
-                    value = new DateTime(1900, 1, 1, existingValue.Hour, existingValue.Minute, existingValue.Second);
-                }
-            }
-            else if (m_IsCustomXmlStringFormatType)
-            {
-                if (value != null)
-                {
-                    CustomXmlStringFormatTypeBase newValue = (CustomXmlStringFormatTypeBase)Activator.CreateInstance(m_MemberType);
-                    try
+                    else if (string.Equals(value.ToString(), "Y", StringComparison.InvariantCultureIgnoreCase))
                     {
-                        newValue.SetValue(value);
+                        value = true;
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        throw new ArgException("Failed to convert the database value \"{0}\" of type \"{1}\" to type \"{2}\" for column \"{3}.{4}\" with exception: {5}",
-                                               value, value.GetType().Name, m_MemberType.Name, this.Table.TableName,
-                                               this.ColumnName, ExceptionUtils.GetDeepExceptionMessage(ex));
+                        throw new MappingException("Invalid boolean string valid specified (\"{0}\") for column: {1}",
+                                                   value, this.ToString());
                     }
-                    value = newValue;
                 }
+                else if (m_IsDecimalString)
+                {
+                    if (value != null)
+                    {
+                        string valueStr = value.ToString();
+                        ;
+                        if (valueStr.IndexOf('.') > 0)
+                        {
+                            valueStr = valueStr.TrimEnd('0').TrimEnd('.');
+                        }
+                        value = valueStr;
+                    }
+                }
+                else if (m_IsTenDigitDateString)
+                {
+                }
+                else if (m_IsTimeType)
+                {
+                    if (m_MemberType == typeof(string))
+                    {
+                        DateTime existingValue = DateTime.Parse(value.ToString());
+                        value = existingValue.ToString("HH:mm:ss");
+                    }
+                    else
+                    {
+                        DateTime existingValue = DateTime.Parse(value.ToString());
+                        value = new DateTime(1900, 1, 1, existingValue.Hour, existingValue.Minute, existingValue.Second);
+                    }
+                }
+                else if (m_IsCustomXmlStringFormatType)
+                {
+                    if (value != null)
+                    {
+                        CustomXmlStringFormatTypeBase newValue = (CustomXmlStringFormatTypeBase)Activator.CreateInstance(m_MemberType);
+                        try
+                        {
+                            newValue.SetValue(value);
+                        }
+                        catch (Exception ex)
+                        {
+                            throw new ArgException("Failed to convert the database value \"{0}\" of type \"{1}\" to type \"{2}\" for column \"{3}.{4}\" with exception: {5}",
+                                                   value, value.GetType().Name, m_MemberType.Name, this.Table.TableName,
+                                                   this.ColumnName, ExceptionUtils.GetDeepExceptionMessage(ex));
+                        }
+                        value = newValue;
+                    }
+                }
+                return base.GetSetMemberValue(value);
             }
-            return base.GetSetMemberValue(value);
+            catch (Exception e)
+            {
+                throw new MappingException(e, "Failed to parse the value for database column {0}.{1} with error: {2}",
+                                           this.Table.TableName, this.ColumnName, ExceptionUtils.GetDeepExceptionMessageOnly(e));
+            }
         }
         protected Table m_Table;
         protected string m_ColumnName;

@@ -162,8 +162,9 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                             }
                             catch (Exception e)
                             {
-                                throw new MappingException(e, "Failed to convert value \"{0}\" to enum type \"{1}\" for member \"{2}\"",
-                                                           value, m_MemberType.FullName, MemberName);
+                                throw new MappingException(e, "Failed to convert value \"{0}\" to enum type \"{1}\" for member \"{2}\".  The value must be one of {3}",
+                                                           value, m_MemberType.FullName, MemberName, StringUtils.JoinCommaEnglish(Enum.GetNames(m_MemberType), true, 
+                                                           StringUtils.JoinCommaEnglishJoinType.Or));
                             }
                         }
                         else

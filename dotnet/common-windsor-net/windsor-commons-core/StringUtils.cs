@@ -95,10 +95,23 @@ namespace Windsor.Commons.Core
         /// </summary>
         public static string JoinCommaEnglish<T>(IEnumerable<T> values, bool encloseValuesInQuotes)
         {
+            return JoinCommaEnglish<T>(values, encloseValuesInQuotes, JoinCommaEnglishJoinType.And);
+        }
+        public enum JoinCommaEnglishJoinType
+        {
+            And,
+            Or
+        }
+        /// <summary>
+        /// Join the input string values using a comma separator and English grammar.
+        /// </summary>
+        public static string JoinCommaEnglish<T>(IEnumerable<T> values, bool encloseValuesInQuotes, JoinCommaEnglishJoinType joinType)
+        {
             if (CollectionUtils.IsNullOrEmpty(values))
             {
                 return string.Empty;
             }
+            string joinString = joinType == JoinCommaEnglishJoinType.And ? "and" : "or";
             int numValues = CollectionUtils.Count(values);
             StringBuilder sb = new StringBuilder(encloseValuesInQuotes ? "\"" : string.Empty);
             int currentIndex = 0;
@@ -110,22 +123,22 @@ namespace Windsor.Commons.Core
                     {
                         if (encloseValuesInQuotes)
                         {
-                            sb.Append("\" and \"");
+                            sb.AppendFormat("\" {0} \"", joinString);
                         }
                         else
                         {
-                            sb.Append(" and ");
+                            sb.AppendFormat(" {0} ", joinString);
                         }
                     }
                     else if (currentIndex == (numValues - 1))
                     {
                         if (encloseValuesInQuotes)
                         {
-                            sb.Append(",\" and \"");
+                            sb.AppendFormat(",\" {0} \"", joinString);
                         }
                         else
                         {
-                            sb.Append(", and ");
+                            sb.AppendFormat(", {0} ", joinString);
                         }
                     }
                     else

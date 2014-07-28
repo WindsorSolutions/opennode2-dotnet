@@ -42,10 +42,10 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
 {
     public static class SubmissionTrackingTableHelper
     {
-        private static string TABLE_NAME = "ICS_SUBM_TRACK";
+        private static string TABLE_NAME = "ICA_SUBM_TRACK";
         private static string LOAD_COLUMNS = "ETL_CMPL_DATE_TIME;DET_CHANGE_CMPL_DATE_TIME;SUBM_DATE_TIME;SUBM_TRANSACTION_ID;SUBM_TRANSACTION_STAT;SUBM_STAT_DATE_TIME;RSPN_PARSE_DATE_TIME;WORKFLOW_STAT;WORKFLOW_STAT_MESSAGE";
         private static string UPDATE_COLUMNS = "SUBM_DATE_TIME;SUBM_TRANSACTION_ID;SUBM_TRANSACTION_STAT;SUBM_STAT_DATE_TIME;RSPN_PARSE_DATE_TIME;WORKFLOW_STAT;WORKFLOW_STAT_MESSAGE";
-        private static string PK_COLUMN = "ICS_SUBM_TRACK_ID";
+        private static string PK_COLUMN = "ICA_SUBM_TRACK_ID";
         private static readonly string FINISHED_STATUS_IN_CLAUSE;
 
         static SubmissionTrackingTableHelper()

@@ -275,7 +275,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         }
         protected virtual string TransformResponseFile40(string responseFilePath)
         {
-            return TransformXmlFile(responseFilePath, "xml_schema.MappingMapToSubmissionResults50.zip", "MappingMapToSubmissionResults.xslt");
+            return TransformXmlFile(responseFilePath, "xml_schema.MappingMapToSubmissionResults50.zip", "MappingMapToICA_SubmissionResults.xslt");
         }
         protected virtual void DoEmailNotifications(Windsor.Node2008.WNOSDomain.Document zipResponseDocument, string localTransactionId)
         {
