@@ -925,7 +925,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        // TSM [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
         public TransactionType TransactionType;
 
@@ -989,7 +989,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         public string AirCMSSourceCategoryCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 1)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
         // TSM
         public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 AirCMSMinimumFrequency;
@@ -1319,7 +1319,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate HPVDesignationRemovalDate;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 10)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 10)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
         // TSM
         public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 ClaimsNumber;
@@ -1865,7 +1865,12 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 26)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()] // TSM
         public PortableSourceData PortableSourceData;
+
+        // TSM
+        [System.Xml.Serialization.XmlIgnore]
+        public PortableSource[] PortableSource;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayAttribute(Order = 27)]
@@ -1887,12 +1892,13 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        // TSM [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
         public AirActiveCMSPlanIndicator PortableSourceIndicator;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("PortableSource", Order = 1)]
+        [Windsor.Commons.XsdOrm2.DbIgnore] // TSM
         public PortableSource[] PortableSource;
     }
 
@@ -1938,7 +1944,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         public string AirFacilityIdentifier;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 1)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
         // TSM
         public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 AirPollutantsCode;
@@ -3392,7 +3398,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         public string PermitIdentifier;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 3)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
         // TSM
         public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 ComplianceScheduleNumber;
@@ -3423,7 +3429,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         public string PermitIdentifier;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 3)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
         // TSM
         public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 ComplianceScheduleNumber;
@@ -3460,7 +3466,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         public System.DateTime CSOEventDate;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 2)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
         // TSM
         public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 CSOEventID;
@@ -3887,7 +3893,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         public System.DateTime PermitEffectiveDate;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 2)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
         // TSM
         public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 NarrativeConditionNumber;
@@ -4065,7 +4071,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         public string PermitIdentifier;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 1)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
         // TSM
         public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 NarrativeConditionNumber;
@@ -4101,7 +4107,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         public string PermitIdentifier;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 1)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
         // TSM
         public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 NarrativeConditionNumber;
@@ -4269,7 +4275,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         public System.DateTime SSOEventDate;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 2)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
         // TSM
         public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 SSOEventID;
@@ -4309,7 +4315,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         public System.DateTime DateStormEventSampled;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 2)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
         // TSM
         public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 StormWaterEventID;

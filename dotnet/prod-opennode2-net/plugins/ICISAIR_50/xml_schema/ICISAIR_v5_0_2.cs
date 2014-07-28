@@ -381,6 +381,27 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
             return selectClauses;
         }
     }
+    public partial class AirFacility : IAfterLoadFromDatabase, IBeforeSaveToDatabase
+    {
+        public virtual void AfterLoadFromDatabase()
+        {
+            if (!CollectionUtils.IsNullOrEmpty(PortableSource))
+            {
+                if (PortableSourceData == null)
+                {
+                    PortableSourceData = new PortableSourceData();
+                }
+                PortableSourceData.PortableSource = PortableSource;
+            }
+        }
+        public virtual void BeforeSaveToDatabase()
+        {
+            if ((PortableSourceData != null) && !CollectionUtils.IsNullOrEmpty(PortableSourceData.PortableSource))
+            {
+                PortableSource = PortableSourceData.PortableSource;
+            }
+        }
+    }
     ////public partial class DischargeMonitoringReportData : IAfterLoadFromDatabase, IBeforeSaveToDatabase
     ////{
     ////    public virtual void AfterLoadFromDatabase()

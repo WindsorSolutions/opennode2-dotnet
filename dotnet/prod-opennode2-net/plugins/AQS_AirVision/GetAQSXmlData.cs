@@ -64,6 +64,9 @@ namespace Windsor.Node2008.WNOSPlugin.AQSAirVision
         protected const string PARAM_SITE_CODE = "SiteCode";
         protected const string PARAM_PARAMETER_CODE = "ParameterCode";
         protected const string PARAM_DURATION_CODE = "DurationCode";
+        protected const string PARAM_OCCURRENCE_CODE = "OccurrenceCode";
+        protected const string PARAM_STATE_CODE = "StateCode";
+        protected const string PARAM_COUNTY_TRIBAL_CODE = "CountyTribalCode";
 
         protected const string PARAM_START_TIME = "StartTime";
         protected const string PARAM_END_TIME = "EndTime";
@@ -139,10 +142,17 @@ namespace Windsor.Node2008.WNOSPlugin.AQSAirVision
             List<PipedParameter<string>> siteCodes = TryGetPipedParameters<string>(_dataRequest, PARAM_SITE_CODE, paramIndex++);
             List<PipedParameter<string>> parameterCodes = TryGetPipedParameters<string>(_dataRequest, PARAM_PARAMETER_CODE, paramIndex++);
             List<PipedParameter<string>> durationCodes = TryGetPipedParameters<string>(_dataRequest, PARAM_DURATION_CODE, paramIndex++);
+            List<PipedParameter<string>> occurrenceCodes = TryGetPipedParameters<string>(_dataRequest, PARAM_OCCURRENCE_CODE, paramIndex++);
+            List<PipedParameter<string>> stateCodes = TryGetPipedParameters<string>(_dataRequest, PARAM_STATE_CODE, paramIndex++);
+            List<PipedParameter<string>> countyTribalCodes = TryGetPipedParameters<string>(_dataRequest, PARAM_COUNTY_TRIBAL_CODE, paramIndex++);
+            
             int maxTagCount = CollectionUtils.Count(agencyCodes);
             maxTagCount = Math.Max(maxTagCount, CollectionUtils.Count(siteCodes));
             maxTagCount = Math.Max(maxTagCount, CollectionUtils.Count(parameterCodes));
             maxTagCount = Math.Max(maxTagCount, CollectionUtils.Count(durationCodes));
+            maxTagCount = Math.Max(maxTagCount, CollectionUtils.Count(occurrenceCodes));
+            maxTagCount = Math.Max(maxTagCount, CollectionUtils.Count(stateCodes));
+            maxTagCount = Math.Max(maxTagCount, CollectionUtils.Count(countyTribalCodes));
             if (maxTagCount > 0)
             {
                 List<AQSParameterTag> tags = new List<AQSParameterTag>(maxTagCount);
@@ -169,6 +179,31 @@ namespace Windsor.Node2008.WNOSPlugin.AQSAirVision
                     {
                         setAny = true;
                         tag.DurationCode = durationCodes[i].Value;
+                    }
+                    if (CollectionUtils.Count(occurrenceCodes) > i)
+                    {
+                        string strValue = occurrenceCodes[i].Value;
+                        if (!string.IsNullOrEmpty(strValue))
+                        {
+                            int occurrenceCode;
+                            if (!int.TryParse(strValue, out occurrenceCode))
+                            {
+                                throw new ArgException("An occurrence code was specified that cannot be parsed as an integer: {0}", strValue);
+                            }
+                            setAny = true;
+                            tag.ParameterOccurrenceCode = occurrenceCode;
+                            tag.ParameterOccurrenceCodeSpecified = true;
+                        }
+                    }
+                    if (CollectionUtils.Count(stateCodes) > i)
+                    {
+                        setAny = true;
+                        tag.StateCode = stateCodes[i].Value;
+                    }
+                    if (CollectionUtils.Count(countyTribalCodes) > i)
+                    {
+                        setAny = true;
+                        tag.CountyTribalCode = countyTribalCodes[i].Value;
                     }
                     if (setAny)
                     {

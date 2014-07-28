@@ -382,7 +382,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
             catch (Exception e)
             {
                 throw new MappingException(e, "Failed to parse the value for database column {0}.{1} with error: {2}",
-                                           this.Table.TableName, this.ColumnName, ExceptionUtils.GetDeepExceptionMessageOnly(e));
+                                           this.Table.TableName, this.ColumnName, e.Message);
             }
         }
         protected Table m_Table;

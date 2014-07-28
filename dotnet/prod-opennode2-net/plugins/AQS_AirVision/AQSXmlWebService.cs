@@ -241,6 +241,11 @@ namespace Windsor.Node2008.WNOSPlugin.AQSAirVision
         [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
         public string AgencyCode;
 
+        // NEW
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
+        public string CountyTribalCode;
+
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
         public string DurationCode;
@@ -249,9 +254,24 @@ namespace Windsor.Node2008.WNOSPlugin.AQSAirVision
         [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
         public string ParameterCode;
 
+        // NEW
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
+        public System.Nullable<int> ParameterOccurrenceCode;
+
+        // NEW
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ParameterOccurrenceCodeSpecified;
+
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
         public string SiteCode;
+
+        // NEW
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
+        public string StateCode;
     }
 
     /// <remarks/>
@@ -268,6 +288,16 @@ namespace Windsor.Node2008.WNOSPlugin.AQSAirVision
         [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
         public string AgencyCode;
 
+        // NEW
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
+        public string CountyTribalCode;
+
+        // NEW
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
+        public string CountyTribalDescription;
+
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
         public string ParameterCode;
@@ -276,6 +306,16 @@ namespace Windsor.Node2008.WNOSPlugin.AQSAirVision
         [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
         public string ParameterName;
 
+        // NEW
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
+        public System.Nullable<int> ParameterOccurrenceCode;
+
+        // NEW
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ParameterOccurrenceCodeSpecified;
+
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
         public string SiteCode;
@@ -283,6 +323,16 @@ namespace Windsor.Node2008.WNOSPlugin.AQSAirVision
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
         public string SiteName;
+
+        // NEW
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
+        public string StateAbbreviation;
+
+        // NEW
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
+        public string StateCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
