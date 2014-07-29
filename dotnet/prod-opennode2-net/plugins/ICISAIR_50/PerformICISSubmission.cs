@@ -1,3 +1,4 @@
+#define XML_LOAD_ONLY
 #region License
 /*
 Copyright (c) 2009, The Environmental Council of the States (ECOS)
@@ -97,6 +98,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         {
             ProcessTaskInit(requestId);
 
+#if !XML_LOAD_ONLY
+
             _submissionTrackingDataType = SubmissionTrackingTableHelper.GetActiveSubmissionTrackingElement(_stagingDao, out _submissionTrackingDataTypePK);
 
             if (_submissionTrackingDataType == null)
@@ -124,15 +127,17 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
                                     _submissionTrackingDataTypePK);
                 return;
             }
-
+#endif // !XML_LOAD_ONLY
             try
             {
+#if !XML_LOAD_ONLY
                 // Attempt to run the ETL to populate staging tables
                 if (!DoExtract())
                 {
                     return;
                 }
                 DebugUtils.AssertDebuggerBreak(_submissionTrackingDataTypePK != null);
+#endif // !XML_LOAD_ONLY
 
                 // Attempt to load the submission file from staging
                 string submitFilePath;
@@ -141,6 +146,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
                     return;
                 }
 
+#if !XML_LOAD_ONLY
                 // Attempt to submit file
                 string submitTransactionId;
                 if (!DoSubmission(submitFilePath, out submitTransactionId))
@@ -155,7 +161,14 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
                 _submissionTrackingDataType.SubmissionDateTimeSpecified = true;
                 _submissionTrackingDataType.SubmissionTransactionId = submitTransactionId;
                 SubmissionTrackingTableHelper.Update(_stagingDao, _submissionTrackingDataTypePK, _submissionTrackingDataType);
+#endif // !XML_LOAD_ONLY
             }
+#if XML_LOAD_ONLY
+            catch (Exception)
+            {
+                throw;
+            }
+#else // XML_LOAD_ONLY
             catch (Exception ex)
             {
                 if (_submissionTrackingDataTypePK != null)
@@ -166,6 +179,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
                 }
                 throw;
             }
+#endif // !XML_LOAD_ONLY
         }
         protected virtual bool DoXmlLoad(out string submitFilePath)
         {
@@ -189,6 +203,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
                 }
             }
 
+#if !XML_LOAD_ONLY
             if (CollectionUtils.IsNullOrEmpty(payloads))
             {
                 _submissionTrackingDataType.WorkflowStatus = TransactionStatusCode.Completed;
@@ -197,6 +212,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
                 SubmissionTrackingTableHelper.Update(_stagingDao, _submissionTrackingDataTypePK, _submissionTrackingDataType);
                 return false;
             }
+#endif // !XML_LOAD_ONLY
 
             AppendAuditLogEvent("The following ICIS payload(s) were loaded from the database: {0}", GetPayloadsDescription(payloads));
 

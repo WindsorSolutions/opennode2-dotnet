@@ -428,7 +428,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         [System.Xml.Serialization.XmlElementAttribute(Order = 10)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
         // TSM
-        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 FacilityCongressionalDistrictNumber;
+        public Windsor.Commons.XsdOrm2.SingleLeadingZeroInt32 FacilityCongressionalDistrictNumber;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("FacilityClassification", Order = 11)]
@@ -925,7 +925,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        // TSM [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        // TSM [Windsor.Commons.XsdOrm2.DbNotNullAttribute()] //???
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
         public TransactionType TransactionType;
 
@@ -1814,7 +1815,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         [System.Xml.Serialization.XmlElementAttribute(Order = 15)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
         // TSM
-        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 FacilityCongressionalDistrictNumber;
+        public Windsor.Commons.XsdOrm2.SingleLeadingZeroInt32 FacilityCongressionalDistrictNumber;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 16)]
@@ -1863,9 +1864,17 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         [System.Xml.Serialization.XmlElementAttribute(Order = 25)]
         public AirGeographicCoordinateData AirGeographicCoordinateData;
 
+        [System.Xml.Serialization.XmlIgnore]
+        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
+        public AirActiveCMSPlanIndicator PortableSourceIndicator;
+
+        [System.Xml.Serialization.XmlIgnore]
+        public bool PortableSourceIndicatorSpecified;
+
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 26)]
-        [Windsor.Commons.XsdOrm2.SameTableAttribute()] // TSM
+        [Windsor.Commons.XsdOrm2.DbIgnore] // TSM
+        // TSM
         public PortableSourceData PortableSourceData;
 
         // TSM
@@ -2071,8 +2080,22 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         public string OtherProgramDescriptionText;
 
         /// <remarks/>
+        [System.Xml.Serialization.XmlIgnore]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(5)]
+        public string AirProgramOperatingStatusCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnore]
+        public System.DateTime AirProgramOperatingStatusStartDate;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnore]
+        public bool AirProgramOperatingStatusStartDateSpecified;
+
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
-        [Windsor.Commons.XsdOrm2.SameTableAttribute()] // TSM
+        [Windsor.Commons.XsdOrm2.DbIgnore] // TSM
         public AirProgramOperatingStatusData AirProgramOperatingStatusData;
 
         /// <remarks/>
@@ -4461,7 +4484,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         public object[] Items;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.Xml.Serialization.XmlAttributeAttribute("Operation")]
         public Operation Operation;
     }
 

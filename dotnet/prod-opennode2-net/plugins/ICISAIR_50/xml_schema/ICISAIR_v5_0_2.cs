@@ -363,6 +363,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
                     beforeSaveToDatabase.BeforeSaveToDatabase();
                 }
             });
+            // Fricken .NET deserializer is simply not working with xml attributes!
+            this.Operation = GetOperation(Items);
         }
         public static IDictionary<string, DbAppendSelectWhereClause> GetDefaultSelectClauses(SpringBaseDao dao)
         {
@@ -380,25 +382,116 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
             }
             return selectClauses;
         }
+        public static Operation GetOperation(object[] items)
+        {
+            if (!CollectionUtils.IsNullOrEmpty(items))
+            {
+               Type t = items[0].GetType();
+               if (t == typeof(AirComplianceMonitoringStrategyData))
+               {
+                   return Operation.AirComplianceMonitoringStrategySubmission;
+               }
+               else if (t == typeof(AirDACaseFileData))
+               {
+                   return Operation.AirDACaseFileSubmission;
+               }
+               else if (t == typeof(AirDAComplianceMonitoringData))
+               {
+                   return Operation.AirDAComplianceMonitoringSubmission;
+               }
+               else if (t == typeof(AirDAEnforcementActionLinkageData))
+               {
+                   return Operation.AirDAEnforcementActionLinkageSubmission;
+               }
+               else if (t == typeof(AirDAEnforcementActionMilestoneData))
+               {
+                   return Operation.AirDAEnforcementActionMilestoneSubmission;
+               }
+               else if (t == typeof(AirDAFormalEnforcementActionData))
+               {
+                   return Operation.AirDAFormalEnforcementActionSubmission;
+               }
+               else if (t == typeof(AirDAInformalEnforcementActionData))
+               {
+                   return Operation.AirDAInformalEnforcementActionSubmission;
+               }
+               else if (t == typeof(AirFacilityData))
+               {
+                   return Operation.AirFacilitySubmission;
+               }
+               else if (t == typeof(AirPollutantsData))
+               {
+                   return Operation.AirPollutantsSubmission;
+               }
+               else if (t == typeof(AirProgramsData))
+               {
+                   return Operation.AirProgramsSubmission;
+               }
+               else if (t == typeof(AirTVACCData))
+               {
+                   return Operation.AirTVACCSubmission;
+               }
+               else if (t == typeof(CaseFileLinkageData))
+               {
+                   return Operation.CaseFileLinkageSubmission;
+               }
+               else if (t == typeof(ComplianceMonitoringLinkageData))
+               {
+                   return Operation.ComplianceMonitoringLinkageSubmission;
+               }
+            }
+            return Operation.AirComplianceMonitoringStrategySubmission;
+        }
     }
-    public partial class AirFacility : IAfterLoadFromDatabase, IBeforeSaveToDatabase
+    public partial class AirFacilityData : IAfterLoadFromDatabase, IBeforeSaveToDatabase
     {
         public virtual void AfterLoadFromDatabase()
         {
-            if (!CollectionUtils.IsNullOrEmpty(PortableSource))
+            if (AirFacility != null)
             {
-                if (PortableSourceData == null)
+                if (!CollectionUtils.IsNullOrEmpty(AirFacility.PortableSource) || AirFacility.PortableSourceIndicatorSpecified)
                 {
-                    PortableSourceData = new PortableSourceData();
+                    if (AirFacility.PortableSourceData == null)
+                    {
+                        AirFacility.PortableSourceData = new PortableSourceData();
+                    }
+                    AirFacility.PortableSourceData.PortableSource = AirFacility.PortableSource;
+                    AirFacility.PortableSourceData.PortableSourceIndicator = AirFacility.PortableSourceIndicator;
                 }
-                PortableSourceData.PortableSource = PortableSource;
             }
         }
         public virtual void BeforeSaveToDatabase()
         {
-            if ((PortableSourceData != null) && !CollectionUtils.IsNullOrEmpty(PortableSourceData.PortableSource))
+            if ((AirFacility != null) && (AirFacility.PortableSourceData != null))
             {
-                PortableSource = PortableSourceData.PortableSource;
+                AirFacility.PortableSourceIndicator = AirFacility.PortableSourceData.PortableSourceIndicator;
+                AirFacility.PortableSourceIndicatorSpecified = true;
+                AirFacility.PortableSource = AirFacility.PortableSourceData.PortableSource;
+            }
+        }
+    }
+    public partial class AirProgramsData : IAfterLoadFromDatabase, IBeforeSaveToDatabase
+    {
+        public virtual void AfterLoadFromDatabase()
+        {
+            if (AirPrograms != null)
+            {
+                if (AirPrograms.AirProgramOperatingStatusData == null)
+                {
+                    AirPrograms.AirProgramOperatingStatusData = new AirProgramOperatingStatusData();
+                }
+                AirPrograms.AirProgramOperatingStatusData.AirProgramOperatingStatusCode = AirPrograms.AirProgramOperatingStatusCode;
+                AirPrograms.AirProgramOperatingStatusData.AirProgramOperatingStatusStartDate = AirPrograms.AirProgramOperatingStatusStartDate;
+                AirPrograms.AirProgramOperatingStatusData.AirProgramOperatingStatusStartDateSpecified = AirPrograms.AirProgramOperatingStatusStartDateSpecified;
+            }
+        }
+        public virtual void BeforeSaveToDatabase()
+        {
+            if ((AirPrograms != null) && (AirPrograms.AirProgramOperatingStatusData != null))
+            {
+                AirPrograms.AirProgramOperatingStatusCode = AirPrograms.AirProgramOperatingStatusData.AirProgramOperatingStatusCode;
+                AirPrograms.AirProgramOperatingStatusStartDate = AirPrograms.AirProgramOperatingStatusData.AirProgramOperatingStatusStartDate;
+                AirPrograms.AirProgramOperatingStatusStartDateSpecified = AirPrograms.AirProgramOperatingStatusData.AirProgramOperatingStatusStartDateSpecified;
             }
         }
     }
