@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns:icis="http://www.exchangenetwork.net/schema/icis/4" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/icis/4" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5">
+<xsd:schema xmlns:icis="http://www.exchangenetwork.net/schema/icis/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/icis/5" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5">
 	<xsd:include schemaLocation="ICIS_KeyElements_v5.0.xsd"/>
 	<xsd:include schemaLocation="ICIS_EnforcementAction_v5.0.xsd"/>
 	<xsd:include schemaLocation="ICIS_ComplianceMonitoring_v5.0.xsd"/>
