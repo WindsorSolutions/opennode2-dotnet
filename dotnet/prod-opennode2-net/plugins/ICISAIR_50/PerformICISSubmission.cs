@@ -1,4 +1,4 @@
-#define XML_LOAD_ONLY
+//#define XML_LOAD_ONLY
 #region License
 /*
 Copyright (c) 2009, The Environmental Council of the States (ECOS)
@@ -49,7 +49,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
     [Serializable]
     public class PerformICISSubmission : ExecuteICISExtract
     {
-        public const string ICIS_FLOW_NAME = "ICIS-NPDES";
+        public const string ICIS_FLOW_NAME = "ICIS-AIR";
         public const string ICIS_SUBMISSION_XML_FILENAME = "ICISSubmission.xml";
         public const string ICIS_SUBMISSION_ZIP_FILENAME = "ICISSubmission.zip";
 
