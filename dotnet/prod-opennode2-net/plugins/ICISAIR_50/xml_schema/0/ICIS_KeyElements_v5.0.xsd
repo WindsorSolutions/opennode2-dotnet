@@ -51,6 +51,7 @@
 	<xsd:element name="SSOEventReportKeyElements" type="icis:SSOEventReportKeyElements"/>
 	<xsd:element name="SSOMonthlyEventReportKeyElements" type="icis:SSOMonthlyEventReportKeyElements"/>
 	<xsd:element name="SWEventReportKeyElements" type="icis:SWEventReportKeyElements"/>
+	<xsd:element name="SWIndustrialAnnualReportKeyElements" type="icis:SWIndustrialAnnualReportKeyElements"/>
 	<xsd:element name="SWMS4ProgramReportKeyElements" type="icis:SWMS4ProgramReportKeyElements"/>
 	<xsd:group name="AirComplianceMonitoringStrategyKeyElementsGroup">
         <xsd:sequence>
@@ -522,6 +523,17 @@
 	<xsd:complexType name="SWEventReportKeyElements">
 		<xsd:sequence>
 			<xsd:group ref="icis:SWEventReportKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="SWIndustrialAnnualReportKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:group ref="icis:BasicPermitKeyElementsGroup"/>
+			<xsd:element ref="icis:IndustrialStormWaterAnnualReportReceivedDate"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="SWIndustrialAnnualReportKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:SWIndustrialAnnualReportKeyElementsGroup"/>
 		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:group name="SWMS4ProgramReportKeyElementsGroup">

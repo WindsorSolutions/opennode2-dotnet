@@ -458,15 +458,59 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
                     AirFacility.PortableSourceData.PortableSource = AirFacility.PortableSource;
                     AirFacility.PortableSourceData.PortableSourceIndicator = AirFacility.PortableSourceIndicator;
                 }
+                List<string> items = null;
+                List<ItemsElementName> itemsElementNames = null;
+                if (!string.IsNullOrEmpty(AirFacility.LocalityName))
+                {
+                    CollectionUtils.Add(AirFacility.LocalityName, ref items);
+                    CollectionUtils.Add(ItemsElementName.LocalityName, ref itemsElementNames);
+                }
+                if (!string.IsNullOrEmpty(AirFacility.LocationAddressCityCode))
+                {
+                    CollectionUtils.Add(AirFacility.LocationAddressCityCode, ref items);
+                    CollectionUtils.Add(ItemsElementName.LocationAddressCityCode, ref itemsElementNames);
+                }
+                if (!string.IsNullOrEmpty(AirFacility.LocationAddressCountyCode))
+                {
+                    CollectionUtils.Add(AirFacility.LocationAddressCountyCode, ref items);
+                    CollectionUtils.Add(ItemsElementName.LocationAddressCountyCode, ref itemsElementNames);
+                }
+                if (items != null)
+                {
+                    AirFacility.Items = items.ToArray();
+                    AirFacility.ItemsElementName = itemsElementNames.ToArray();
+                }
             }
         }
         public virtual void BeforeSaveToDatabase()
         {
-            if ((AirFacility != null) && (AirFacility.PortableSourceData != null))
+            if (AirFacility != null)
             {
-                AirFacility.PortableSourceIndicator = AirFacility.PortableSourceData.PortableSourceIndicator;
-                AirFacility.PortableSourceIndicatorSpecified = true;
-                AirFacility.PortableSource = AirFacility.PortableSourceData.PortableSource;
+                if (AirFacility.PortableSourceData != null)
+                {
+                    AirFacility.PortableSourceIndicator = AirFacility.PortableSourceData.PortableSourceIndicator;
+                    AirFacility.PortableSourceIndicatorSpecified = true;
+                    AirFacility.PortableSource = AirFacility.PortableSourceData.PortableSource;
+                }
+                if (!CollectionUtils.IsNullOrEmpty(AirFacility.Items) && !CollectionUtils.IsNullOrEmpty(AirFacility.ItemsElementName) &&
+                    (AirFacility.Items.Length == AirFacility.ItemsElementName.Length))
+                {
+                    for (int i = 0; i < AirFacility.ItemsElementName.Length; ++i)
+                    {
+                        switch (AirFacility.ItemsElementName[i])
+                        {
+                            case ItemsElementName.LocalityName:
+                                AirFacility.LocalityName = AirFacility.Items[i];
+                                break;
+                            case ItemsElementName.LocationAddressCityCode:
+                                AirFacility.LocationAddressCityCode = AirFacility.Items[i];
+                                break;
+                            case ItemsElementName.LocationAddressCountyCode:
+                                AirFacility.LocationAddressCountyCode = AirFacility.Items[i];
+                                break;
+                        }
+                    }
+                }
             }
         }
     }
@@ -634,8 +678,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute("SubmissionTransactionTypeCode", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute("SubmissionTransactionTypeCode", Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public enum SubmissionTransactionTypeCodeDataType
     {
 
@@ -657,8 +701,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute("NumericReportCode", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute("NumericReportCode", Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public enum NumericReportTextType
     {
 
@@ -680,8 +724,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute("NumericReportViolationCode", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute("NumericReportViolationCode", Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public enum NumericReportViolationCodeType
     {
 

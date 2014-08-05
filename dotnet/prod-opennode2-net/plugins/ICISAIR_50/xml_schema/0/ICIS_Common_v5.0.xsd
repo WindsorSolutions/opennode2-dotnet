@@ -28,6 +28,7 @@
 	<xsd:element name="ComplianceMonitoringDate" type="xsd:date"/>
 	<xsd:element name="ComplianceScheduleNumber" type="icis:IntegerRange1To999TypeBase"/>
 	<xsd:element name="ComplianceSchedulePenaltyAmount" type="icis:DecimalRange0To999999999999.99Type"/>
+	<xsd:element name="ComplianceScheduleType" type="icis:ComplianceScheduleFlagType"/>
 	<xsd:element name="CSOEventDate" type="xsd:date"/>
 	<xsd:element name="CSOEventID" type="icis:IntegerRange1To99TypeBase"/>
 	<xsd:element name="DateStormEventSampled" type="xsd:date"/>
@@ -38,6 +39,7 @@
 	<xsd:element name="FederalFacilityIndicator" type="icis:StringMin1Max3Type"/>
 	<xsd:element name="FederalFacilityIndicatorComment" type="icis:StringMin1Max4000Type"/>
 	<xsd:element name="FederalStatuteCode" type="icis:StringMin1Max6TypeBase"/>
+	<xsd:element name="IndustrialStormWaterAnnualReportReceivedDate" type="xsd:date"/>
 	<xsd:element name="LeadAgencyCode" type="icis:StringMin1Max3Type"/>
 	<xsd:element name="LimitEndDate" type="xsd:date"/>
 	<xsd:element name="LimitModificationEffectiveDate" type="icis:DateType"/>
@@ -152,6 +154,16 @@
 	</xsd:simpleType>
 	<xsd:simpleType name="String4FixedType">
 		<xsd:union memberTypes="icis:String4FixedTypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="String5FixedTypeBase">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="5"/>
+			<xsd:maxLength value="5"/>
+			<xsd:pattern value="[^\*]*"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="String5FixedType">
+		<xsd:union memberTypes="icis:String5FixedTypeBase icis:AsteriskType"/>
 	</xsd:simpleType>
 	<xsd:simpleType name="String6FixedTypeBase">
 		<xsd:restriction base="xsd:string">
@@ -469,6 +481,12 @@
 		<xsd:restriction base="xsd:string">
 			<xsd:minLength value="1"/>
 			<xsd:maxLength value="300"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max304Type">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="304"/>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="StringMin1Max315Type">
@@ -1067,6 +1085,12 @@
 			<xsd:enumeration value="INS"/>
 			<xsd:enumeration value="INV"/>
 			<xsd:enumeration value="OSR"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ComplianceScheduleFlagType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="A"/>
+			<xsd:enumeration value="J"/>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="DateType">

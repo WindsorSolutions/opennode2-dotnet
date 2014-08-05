@@ -16,7 +16,6 @@
 	<xsd:element name="Address" type="icis:Address"/>
 	<xsd:element name="BiosolidsPermitAddress" type="icis:BiosolidsPermitAddress"/>
 	<xsd:element name="CAFOAddress" type="icis:CAFOAddress"/>
-	<xsd:element name="LocationAddressCityCode" type="icis:StringMin1Max12TypeBase"/>
 	<xsd:element name="CountyName" type="icis:StringMin1Max35Type"/>
 	<xsd:element name="DivisionName" type="icis:StringMin1Max50Type"/>
 	<xsd:element name="EffluentTradePartnerAddress" type="icis:EffluentTradePartnerAddress"/>
@@ -27,6 +26,8 @@
 	<xsd:element name="LCONCode" type="icis:StringMin1Max3TypeBase"/>
 	<xsd:element name="LocalityName" type="icis:StringMin1Max60TypeBase"/>
 	<xsd:element name="LocationAddressText" type="icis:StringMin1Max50TypeBase"/>
+	<xsd:element name="LocationAddressCityCode" type="icis:StringMin1Max12TypeBase"/>
+	<xsd:element name="LocationAddressCountyCode" type="icis:String5FixedType"/>
 	<xsd:element name="LocationCountryCode" type="icis:StringMin1Max3Type"/>
 	<xsd:element name="LocationName" type="icis:StringMin1Max60Type"/>
 	<xsd:element name="LocationProvince" type="icis:StringMin1Max35Type"/>
@@ -70,7 +71,10 @@
 			<xsd:element ref="icis:FacilitySiteName" minOccurs="0"/>
 			<xsd:element ref="icis:LocationAddressText" minOccurs="0"/>
 			<xsd:element ref="icis:SupplementalLocationText" minOccurs="0"/>
-			<xsd:element ref="icis:LocationAddressCityCode" minOccurs="0"/>
+			<xsd:choice>
+				<xsd:group ref="icis:CityPlusCountyCodeGroup" minOccurs="0"/>
+				<xsd:group ref="icis:CityCodeGroup" minOccurs="0"/>
+			</xsd:choice>
 			<xsd:element ref="icis:LocationStateCode" minOccurs="0"/>
 			<xsd:element ref="icis:LocationZipCode" minOccurs="0"/>
 			<xsd:element ref="icis:LCONCode" minOccurs="0"/>
@@ -106,11 +110,25 @@
 			<xsd:element ref="icis:FacilitySiteName" minOccurs="0"/>
 			<xsd:element ref="icis:LocationAddressText" minOccurs="0"/>
 			<xsd:element ref="icis:SupplementalLocationText" minOccurs="0"/>
-			<xsd:element ref="icis:LocalityName" minOccurs="0"/>
+			<xsd:choice>
+				<xsd:group ref="icis:CityPlusCountyCodeGroup" minOccurs="0"/>
+				<xsd:group ref="icis:CityCodeGroup" minOccurs="0"/>
+			</xsd:choice>
 			<xsd:element ref="icis:LocationStateCode" minOccurs="0"/>
 			<xsd:element ref="icis:LocationZipCode" minOccurs="0"/>
 			<xsd:element ref="icis:LocationCountryCode" minOccurs="0"/>
 			<xsd:element ref="icis:OrganizationDUNSNumber" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="CityPlusCountyCodeGroup">
+		<xsd:sequence>
+			<xsd:element ref="icis:LocalityName"/>
+			<xsd:element ref="icis:LocationAddressCountyCode" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="CityCodeGroup">
+		<xsd:sequence>
+			<xsd:element ref="icis:LocationAddressCityCode"/>
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:complexType name="BiosolidsPermitAddress">
