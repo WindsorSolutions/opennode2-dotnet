@@ -784,7 +784,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         public string MilestoneTypeCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 8)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
         public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 AirPollutantsCode;
 
