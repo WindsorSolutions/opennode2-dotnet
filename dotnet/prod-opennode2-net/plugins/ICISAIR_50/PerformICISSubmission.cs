@@ -49,7 +49,6 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
     [Serializable]
     public class PerformICISSubmission : ExecuteICISExtract
     {
-        public const string ICIS_FLOW_NAME = "ICIS-AIR";
         public const string ICIS_SUBMISSION_XML_FILENAME = "ICISSubmission.xml";
         public const string ICIS_SUBMISSION_ZIP_FILENAME = "ICISSubmission.zip";
 
@@ -62,6 +61,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         protected const string CONFIG_PARAM_VALIDATE_XML = "Validate Xml (true or false)";
         protected const string CONFIG_PARAM_USER_ID = "ICIS User Id";
         protected const string CONFIG_PARAM_NOTIFY_EMAILS = "Notification Emails (semicolon separated)";
+        protected const string CONFIG_PARAM_ICIS_FLOW_NAME = "ICIS Flow Name";
 
         protected string _author;
         protected string _organization;
@@ -70,6 +70,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         protected IList<string> _notificationEmails;
         protected PartnerIdentity _submissionPartner;
         protected bool _validateXml = true;
+        protected string _flowName = "ICIS-AIR";
 
         protected SpringBaseDao _stagingDao;
         protected SubmissionTrackingDataType _submissionTrackingDataType;
@@ -93,6 +94,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
             ConfigurationArguments[CONFIG_PARAM_VALIDATE_XML] = null;
             ConfigurationArguments[CONFIG_PARAM_USER_ID] = null;
             ConfigurationArguments[CONFIG_PARAM_NOTIFY_EMAILS] = null;
+            ConfigurationArguments[CONFIG_PARAM_ICIS_FLOW_NAME] = null;
         }
         public override void ProcessTask(string requestId)
         {
@@ -272,7 +274,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
                 AppendAuditLogEvent("Submitting ICIS document to partner \"{0}\"", _submissionPartner.Name);
 
                 submitTransactionId =
-                    SubmitFileToPartner(_dataRequest.TransactionId, _submissionPartner, ICIS_FLOW_NAME, null, submitFilePath);
+                    SubmitFileToPartner(_dataRequest.TransactionId, _submissionPartner, _flowName, null, submitFilePath);
             }
             finally
             {
@@ -371,6 +373,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
             {
                 _notificationEmails = StringUtils.SplitAndReallyRemoveEmptyEntries(notificationEmails, ';');
             }
+
+            TryGetConfigParameter(CONFIG_PARAM_ICIS_FLOW_NAME, ref _flowName);
 
             TryGetConfigParameter(CONFIG_PARAM_VALIDATE_XML, ref _validateXml);
 
