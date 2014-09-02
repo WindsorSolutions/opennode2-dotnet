@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:icis="http://www.exchangenetwork.net/schema/icis/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/icis/5" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5">
+	
+	<xsd:include schemaLocation="ICIS_KeyElements_v5.0.xsd"/>
+	<xsd:include schemaLocation="ICIS_Biosolids_v5.0.xsd"/>
+	
+	<xsd:annotation>
+		<xsd:documentation>Schema Name: ICIS_BiosolidsProgramReport_v5.0.xsd</xsd:documentation>
+		<xsd:documentation>Current Version Available: http://www.exchangenetwork.net/schema/icis/5</xsd:documentation>
+		<xsd:documentation>Description: ICIS-NPDES biosolid program report data input format</xsd:documentation>
+		<xsd:documentation>Application: ICIS-NPDES</xsd:documentation>
+		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
+		<xsd:documentation>Point of Contact: EPA/Alison Kittle</xsd:documentation>
+		<xsd:documentation>Data Written: July 2006</xsd:documentation>
+		<xsd:documentation>Last Date Modified: 2014-10-27</xsd:documentation>
+	</xsd:annotation>
+	
+	<xsd:element name="AnnualLoadingBiosolidDMT" type="icis:NonNegativeIntegerMin1Max5Type"/>
+	<xsd:element name="AnnualLoadingBiosolidGallons" type="icis:NonNegativeIntegerMin1Max5Type"/>
+	<xsd:element name="AnnualLoadingNutrientNitrogen" type="icis:NonNegativeIntegerMin1Max8Type"/>
+	<xsd:element name="AnnualLoadingNutrientPhosphorous" type="icis:NonNegativeIntegerMin1Max8Type"/>
+	<xsd:element name="AnnualLoadingParameterDate" type="icis:DateType"/>
+	<xsd:element name="BiosolidsProgramReport" type="icis:BiosolidsProgramReport"/>
+	<xsd:element name="BiosolidsReportComments" type="icis:StringMin1Max4000Type"/>
+	<xsd:element name="NumberOfReportUnits" type="icis:Integer2FixedRange01To12Type"/>
+	<xsd:element name="TotalNumberCodisposalViolations" type="icis:NonNegativeIntegerMin1Max4Type"/>
+	<xsd:element name="TotalNumberDistributionMarketingViolations" type="icis:NonNegativeIntegerMin1Max4Type"/>
+	<xsd:element name="TotalNumberIncineratorViolations" type="icis:NonNegativeIntegerMin1Max4Type"/>
+	<xsd:element name="TotalNumberLandApplicationViolations" type="icis:NonNegativeIntegerMin1Max4Type"/>
+	<xsd:element name="TotalNumberOtherSludgeViolations" type="icis:NonNegativeIntegerMin1Max4Type"/>
+	<xsd:element name="TotalNumberSludgeRelatedManagementPracticeViolations" type="icis:NonNegativeIntegerMin1Max4Type"/>
+	<xsd:element name="TotalNumberSurfaceDisposalViolations" type="icis:NonNegativeIntegerMin1Max4Type"/>
+	
+	<xsd:complexType name="BiosolidsProgramReportData">
+		<xsd:sequence>
+			<xsd:element ref="icis:TransactionHeader"/>
+			<xsd:element ref="icis:BiosolidsProgramReport"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="BiosolidsProgramReport">
+		<xsd:complexContent>
+			<xsd:extension base="icis:BiosolidsProgramReportKeyElements">
+				<xsd:sequence>
+					<xsd:element ref="icis:NumberOfReportUnits" minOccurs="0"/>
+					<xsd:group ref="icis:BiosolidsAmountGroup" minOccurs="0"/>
+					<xsd:element ref="icis:AnnualLoadingParameterDate" minOccurs="0"/>
+					<xsd:element ref="icis:AnnualLoadingBiosolidGallons" minOccurs="0"/>
+					<xsd:element ref="icis:AnnualLoadingBiosolidDMT" minOccurs="0"/>
+					<xsd:element ref="icis:AnnualLoadingNutrientNitrogen" minOccurs="0"/>
+					<xsd:element ref="icis:AnnualLoadingNutrientPhosphorous" minOccurs="0"/>
+					<xsd:element ref="icis:TotalNumberLandApplicationViolations" minOccurs="0"/>
+					<xsd:element ref="icis:TotalNumberIncineratorViolations" minOccurs="0"/>
+					<xsd:element ref="icis:TotalNumberDistributionMarketingViolations" minOccurs="0"/>
+					<xsd:element ref="icis:TotalNumberSludgeRelatedManagementPracticeViolations" minOccurs="0"/>
+					<xsd:element ref="icis:TotalNumberSurfaceDisposalViolations" minOccurs="0"/>
+					<xsd:element ref="icis:TotalNumberOtherSludgeViolations" minOccurs="0"/>
+					<xsd:element ref="icis:TotalNumberCodisposalViolations" minOccurs="0"/>
+					<xsd:element ref="icis:BiosolidsReportComments" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+</xsd:schema>
