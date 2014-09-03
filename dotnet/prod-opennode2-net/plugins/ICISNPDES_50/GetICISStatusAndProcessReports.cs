@@ -200,7 +200,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
             AppendAuditLogEvent("Loading response document content ...");
 
             AppendAuditLogEvent("Transforming accepted response file ...");
-            string responseAcceptedTransformedFilePath = TransformResponseFile40(responseAcceptedFilePath);
+            string responseAcceptedTransformedFilePath = TransformResponseFile50(responseAcceptedFilePath);
             SubmissionResultList acceptedList = _serializationHelper.Deserialize<SubmissionResultList>(responseAcceptedTransformedFilePath);
 #if INCLUDE_TEST_SUBMIT_PROCESSOR
             if (DebugUtils.IsDebugging)
@@ -216,7 +216,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 #endif // INCLUDE_TEST_SUBMIT_PROCESSOR
 
             AppendAuditLogEvent("Transforming rejected response file ...");
-            string responseRejectedTransformedFilePath = TransformResponseFile40(responseRejectedFilePath);
+            string responseRejectedTransformedFilePath = TransformResponseFile50(responseRejectedFilePath);
             SubmissionResultList rejectedList = _serializationHelper.Deserialize<SubmissionResultList>(responseRejectedTransformedFilePath);
 #if INCLUDE_TEST_SUBMIT_PROCESSOR
             if (DebugUtils.IsDebugging)
@@ -273,9 +273,9 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
             return true;
         }
-        protected virtual string TransformResponseFile40(string responseFilePath)
+        protected virtual string TransformResponseFile50(string responseFilePath)
         {
-            return TransformXmlFile(responseFilePath, "xml_schema.MappingMapToSubmissionResults40.zip", "MappingMapToSubmissionResults.xslt");
+            return TransformXmlFile(responseFilePath, "xml_schema.MappingMapToSubmissionResults50.zip", "MappingMapToSubmissionResults.xslt");
         }
         protected virtual void DoEmailNotifications(Windsor.Node2008.WNOSDomain.Document zipResponseDocument, string localTransactionId)
         {

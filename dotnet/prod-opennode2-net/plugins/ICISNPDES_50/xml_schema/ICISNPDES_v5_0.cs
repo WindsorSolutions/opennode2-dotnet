@@ -5,8 +5,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class BiosolidsPermitContact
     {
 
@@ -17,8 +17,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class Contact
     {
 
@@ -88,8 +88,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class Telephone
     {
 
@@ -112,8 +112,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class CAFOContact
     {
 
@@ -124,8 +124,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class EnforcementActionGovernmentContact
     {
 
@@ -153,8 +153,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class FacilityContact
     {
 
@@ -165,8 +165,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class GovernmentContact
     {
 
@@ -184,8 +184,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class InspectionContact
     {
 
@@ -196,8 +196,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class InspectionGovernmentContact
     {
 
@@ -215,8 +215,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class PermitContact
     {
 
@@ -227,8 +227,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class PretreatmentContact
     {
 
@@ -239,8 +239,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class SiteOwnerContact
     {
 
@@ -251,8 +251,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class StormWaterContact
     {
 
@@ -263,8 +263,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class Address
     {
 
@@ -351,8 +351,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class BiosolidsPermitAddress
     {
 
@@ -363,8 +363,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class CAFOAddress
     {
 
@@ -375,8 +375,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class EffluentTradePartnerAddress
     {
 
@@ -452,8 +452,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class FacilityAddress
     {
 
@@ -464,8 +464,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class PermitAddress
     {
 
@@ -476,8 +476,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class PretreatmentAddress
     {
 
@@ -488,8 +488,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class SiteOwnerAddress
     {
 
@@ -500,8 +500,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class StormWaterAddress
     {
 
@@ -512,8 +512,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute("ComplianceMonitoringActivityTypeCode", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute("ComplianceMonitoringActivityTypeCode", Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public enum ComplianceMonitoringActivityTypeCodeType
     {
 
@@ -532,8 +532,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute("ComplianceScheduleType", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute("ComplianceScheduleType", Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public enum ComplianceScheduleFlagType
     {
 
@@ -546,8 +546,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public enum LimitSetType
     {
 
@@ -560,8 +560,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute("NumericReportCode", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute("NumericReportCode", Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public enum NumericReportTextType
     {
 
@@ -583,8 +583,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute("NumericReportViolationCode", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute("NumericReportViolationCode", Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public enum NumericReportViolationCodeType
     {
 
@@ -597,8 +597,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute("ScheduleViolationCode", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute("ScheduleViolationCode", Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public enum ScheduleViolationCodeType
     {
 
@@ -611,8 +611,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute("name", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute("name", Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public enum nameType
     {
 
@@ -626,8 +626,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class Property
     {
 
@@ -645,8 +645,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class TransactionHeader
     {
 
@@ -666,8 +666,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public enum TransactionType
     {
 
@@ -758,19 +758,21 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(SingleEventViolation))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(SingleEventsViolation))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(LinkageSingleEvent))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ComplianceMonitoringKeyElements))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ComplianceMonitoring))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(LinkageStateComplianceMonitoring))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ComplianceMonitoringLinkage))]
+    //I don't think these are needed because ComplianceMonitoring and ComplianceMonitoringLinkage no longer use PermitIdentifier as part of their key
+    //[System.Xml.Serialization.XmlIncludeAttribute(typeof(ComplianceMonitoringKeyElements))]
+    //[System.Xml.Serialization.XmlIncludeAttribute(typeof(ComplianceMonitoring))]
+    //[System.Xml.Serialization.XmlIncludeAttribute(typeof(LinkageStateComplianceMonitoring))]
+    //[System.Xml.Serialization.XmlIncludeAttribute(typeof(ComplianceMonitoringLinkage))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(CAFOAnnualProgramReportKeyElements))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(LinkageCAFOAnnualReport))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(CAFOAnnualReport))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(BiosolidsProgramReportKeyElements))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(LinkageBiosolidsReport))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(BiosolidsProgramReport))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SWIndustrialAnnualReport))]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class BasicPermitKeyElements
     {
 
@@ -785,8 +787,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class UnpermittedFacility : BasicPermitKeyElements
     {
 
@@ -970,8 +972,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class SICCodeDetails
     {
 
@@ -990,8 +992,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class NAICSCodeDetails
     {
 
@@ -1010,8 +1012,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class GeographicCoordinates
     {
 
@@ -1068,8 +1070,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class SWMS4SmallPermit : BasicPermitKeyElements
     {
 
@@ -1228,8 +1230,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute("MajorOutfallEstimatedMeasureIndicator", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute("MajorOutfallEstimatedMeasureIndicator", Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public enum EstimatedMeasuredType
     {
 
@@ -1246,8 +1248,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class GPCFConstructionWaiver
     {
 
@@ -1299,8 +1301,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class SWConstructionPermit : BasicPermitKeyElements
     {
 
@@ -1385,8 +1387,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class GPCFNoticeOfIntent
     {
 
@@ -1413,8 +1415,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class GPCFNoticeOfTermination
     {
 
@@ -1441,8 +1443,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class SWMS4LargePermit : BasicPermitKeyElements
     {
 
@@ -1577,8 +1579,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class PretreatmentPermit : BasicPermitKeyElements
     {
 
@@ -1619,8 +1621,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute("PretreatmentProgramRequiredIndicatorCode", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute("PretreatmentProgramRequiredIndicatorCode", Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public enum PretreatmentProgramRequiredIndicatorType
     {
 
@@ -1642,8 +1644,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class POTWPermit : BasicPermitKeyElements
     {
 
@@ -1664,8 +1666,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class SatelliteCollectionSystem
     {
 
@@ -1684,8 +1686,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class PermitTermination : BasicPermitKeyElements
     {
 
@@ -1697,8 +1699,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class PermitReissuance : BasicPermitKeyElements
     {
 
@@ -1720,8 +1722,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class MasterGeneralPermit : BasicPermitKeyElements
     {
 
@@ -1848,8 +1850,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class OtherPermits
     {
 
@@ -1872,8 +1874,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class AssociatedPermit
     {
 
@@ -1892,8 +1894,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class GeneralPermit : BasicPermitKeyElements
     {
 
@@ -2102,8 +2104,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute("PermitStatusCode", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute("PermitStatusCode", Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public enum PermitStatusCodeType
     {
 
@@ -2113,8 +2115,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class Facility
     {
 
@@ -2140,81 +2142,91 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(5)]
+        public string LocationAddressCountyCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(12)]
+        public string LocationAddressCityCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
         [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(2)]
         public string LocationStateCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(14)]
         public string LocationZipCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
         public string LocationCountryCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
         [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(9)]
         public string OrganizationDUNSNumber;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 10)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(12)]
         public string StateFacilityIdentifier;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(5)]
         public string StateRegionCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 10)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 12)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
         public Windsor.Commons.XsdOrm2.SingleLeadingZeroInt32 FacilityCongressionalDistrictNumber;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("FacilityClassification", Order = 11)]
+        [System.Xml.Serialization.XmlElementAttribute("FacilityClassification", Order = 13)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
         public string[] FacilityClassification;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("PolicyCode", Order = 12)]
+        [System.Xml.Serialization.XmlElementAttribute("PolicyCode", Order = 14)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
         public string[] PolicyCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("OriginatingProgramsCode", Order = 13)]
+        [System.Xml.Serialization.XmlElementAttribute("OriginatingProgramsCode", Order = 15)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(9)]
         public string[] OriginatingProgramsCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 14)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 16)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
         public string FacilityTypeOfOwnershipCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 15)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 17)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(12)]
         public string FederalFacilityIdentificationNumber;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 16)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 18)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(5)]
         public string FederalAgencyCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 17)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 19)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4)]
         public string TribalLandCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 18)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 20)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(50)]
         public string ConstructionProjectName;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 19)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 21)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("9", "7")]
         public Windsor.Node2008.WNOSPlugin.ICISNPDES_50.RemoveTrailingZerosDecimal ConstructionProjectLatitudeMeasure;
@@ -2224,7 +2236,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
         public bool ConstructionProjectLatitudeMeasureSpecified;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 20)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 22)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("10", "7")]
         public Windsor.Node2008.WNOSPlugin.ICISNPDES_50.RemoveTrailingZerosDecimal ConstructionProjectLongitudeMeasure;
@@ -2234,67 +2246,67 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
         public bool ConstructionProjectLongitudeMeasureSpecified;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("SICCodeDetails", Order = 21)]
+        [System.Xml.Serialization.XmlElementAttribute("SICCodeDetails", Order = 23)]
         public SICCodeDetails[] SICCodeDetails;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("NAICSCodeDetails", Order = 22)]
+        [System.Xml.Serialization.XmlElementAttribute("NAICSCodeDetails", Order = 24)]
         public NAICSCodeDetails[] NAICSCodeDetails;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 23)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 25)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(50)]
         public string SectionTownshipRange;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 24)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 26)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4000)]
         public string FacilityComments;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 25)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 27)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(30)]
         public string FacilityUserDefinedField1;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 26)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 28)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(30)]
         public string FacilityUserDefinedField2;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 27)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 29)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(30)]
         public string FacilityUserDefinedField3;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 28)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 30)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(30)]
         public string FacilityUserDefinedField4;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 29)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 31)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(30)]
         public string FacilityUserDefinedField5;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order = 30)]
+        [System.Xml.Serialization.XmlArrayAttribute(Order = 32)]
         [System.Xml.Serialization.XmlArrayItemAttribute(IsNullable = false)]
         public Contact[] FacilityContact;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order = 31)]
+        [System.Xml.Serialization.XmlArrayAttribute(Order = 33)]
         [System.Xml.Serialization.XmlArrayItemAttribute(IsNullable = false)]
         public Address[] FacilityAddress;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 32)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 34)]
         public GeographicCoordinates GeographicCoordinates;
     }
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class ComplianceTrackingStatus
     {
 
@@ -2316,8 +2328,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute("LimitSetStatusIndicator", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute("LimitSetStatusIndicator", Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public enum ActiveInactiveType
     {
 
@@ -2334,8 +2346,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class CSOPermit : BasicPermitKeyElements
     {
 
@@ -2360,8 +2372,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class SWIndustrialPermit : BasicPermitKeyElements
     {
 
@@ -2402,31 +2414,79 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
-        public GPCFNoticeOfIntent GPCFNoticeOfIntent;
+        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 IndustrialActivitySize;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(100)]
+        public string WebAddressURL;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4000)]
+        public string ActivitiesExposedSWText; 
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 10)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4000)]
+        public string AssociatedPollutantsText;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4000)]
+        public string ControlMeasuresText;
+ 
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 12)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4000)]
+        public string ScheduleControlMeasuresText;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 13)]
+        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
+        public YesNoIndicatorTypeBase TierTwoIndicator;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool TierTwoIndicatorSpecified;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 14)]
+        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
+        public YesNoIndicatorTypeBase TierThreeIndicator;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool TierThreeIndicatorSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 15)]
+        public GPCFNoticeOfIntent GPCFNoticeOfIntent;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 16)]
         public GPCFNoticeOfTermination GPCFNoticeOfTermination;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 17)]
         public GPCFNoExposure GPCFNoExposure;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order = 10)]
+        [System.Xml.Serialization.XmlArrayAttribute(Order = 18)]
         [System.Xml.Serialization.XmlArrayItemAttribute(IsNullable = false)]
         public Contact[] StormWaterContact;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order = 11)]
+        [System.Xml.Serialization.XmlArrayAttribute(Order = 19)]
         [System.Xml.Serialization.XmlArrayItemAttribute(IsNullable = false)]
         public Address[] StormWaterAddress;
     }
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class GPCFNoExposure
     {
 
@@ -2459,17 +2519,12 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
         [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
         public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 PavedRoofSize;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
-        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 IndustrialActivitySize;
     }
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class CAFOPermit : BasicPermitKeyElements
     {
 
@@ -2602,8 +2657,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class AnimalType : ReportedAnimalType
     {
 
@@ -2621,8 +2676,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnimalType))]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class ReportedAnimalType
     {
 
@@ -2645,8 +2700,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class ManureLitterProcessedWastewaterStorage
     {
 
@@ -2674,8 +2729,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class Containment
     {
 
@@ -2698,8 +2753,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class LandApplicationBMP
     {
 
@@ -2717,8 +2772,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class BiosolidsPermit : BasicPermitKeyElements
     {
 
@@ -2810,8 +2865,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class BasicPermit : BasicPermitKeyElements
     {
 
@@ -3025,8 +3080,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class ProgramInspectionKeyElements : BasicPermitKeyElements
     {
 
@@ -3045,8 +3100,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(PermitTrackingEvent))]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class PermitTrackingEventKeyElements : BasicPermitKeyElements
     {
 
@@ -3064,8 +3119,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class PermitTrackingEvent : PermitTrackingEventKeyElements
     {
 
@@ -3078,8 +3133,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(PermittedFeature))]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class PermittedFeatureKeyElements : BasicPermitKeyElements
     {
 
@@ -3092,8 +3147,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class PermittedFeature : PermittedFeatureKeyElements
     {
 
@@ -3149,73 +3204,91 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
+        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
+        public YesNoIndicatorTypeBase ImpairedWaterIndicator;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ImpairedWaterIndicatorSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
+        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
+        public YesNoIndicatorTypeBase TMDLCompletedIndicator;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool TMDLCompletedIndicatorSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 10)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(30)]
         public string PermittedFeatureUserDefinedDataElement1;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(30)]
         public string PermittedFeatureUserDefinedDataElement2;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 10)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 12)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
         public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 FieldSize;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 13)]
         [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
         public string IsSiteOwnByFacility;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 12)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 14)]
         [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
         public string IsSystemLinedWithLeachate;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 13)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 15)]
         [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
         public string DoesUnitHaveDailyCover;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 14)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 16)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
         public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 PropertyBoundaryDistance;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 15)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 17)]
         [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
         public string IsRequiredNitrateGroundWater;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 16)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 18)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
         public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 WellNumber;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 17)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 19)]
         public GeographicCoordinates GeographicCoordinates;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 18)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 20)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(200)]
         public string SourcePermittedFeatureDetailText;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order = 19)]
+        [System.Xml.Serialization.XmlArrayAttribute(Order = 21)]
         [System.Xml.Serialization.XmlArrayItemAttribute(IsNullable = false)]
         public Contact[] SiteOwnerContact;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order = 20)]
+        [System.Xml.Serialization.XmlArrayAttribute(Order = 22)]
         [System.Xml.Serialization.XmlArrayItemAttribute(IsNullable = false)]
         public Address[] SiteOwnerAddress;
     }
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class PermitScheduleEventViolationKeyElements : BasicPermitKeyElements
     {
 
@@ -3244,8 +3317,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(ParameterLimits))]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class ParameterLimitKeyElements : BasicPermitKeyElements
     {
 
@@ -3282,8 +3355,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class ParameterLimits : ParameterLimitKeyElements
     {
 
@@ -3294,8 +3367,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class Limit
     {
 
@@ -3420,8 +3493,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute("LimitSetMonthsApplicable", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute("LimitSetMonthsApplicable", Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public enum MonthTextType
     {
 
@@ -3467,8 +3540,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute("AcceptanceHauledDomesticWastes", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute("AcceptanceHauledDomesticWastes", Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public enum YesNoIndicatorTypeBase
     {
 
@@ -3481,8 +3554,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class NumericCondition
     {
 
@@ -3519,8 +3592,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(LimitSet))]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class LimitSetKeyElements : BasicPermitKeyElements
     {
 
@@ -3539,8 +3612,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class LimitSet : LimitSetKeyElements
     {
 
@@ -3590,8 +3663,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class LimitSetStatus
     {
 
@@ -3615,8 +3688,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class LimitSetSchedule
     {
 
@@ -3661,8 +3734,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Limits))]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class LimitKeyElements : BasicPermitKeyElements
     {
 
@@ -3709,8 +3782,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class Limits : LimitKeyElements
     {
 
@@ -3826,8 +3899,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(HistoricalPermitScheduleEvents))]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class HistoricalPermitScheduleKeyElements : BasicPermitKeyElements
     {
 
@@ -3855,8 +3928,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class HistoricalPermitScheduleEvents : HistoricalPermitScheduleKeyElements
     {
 
@@ -3894,8 +3967,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(EffluentTradePartner))]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute("EffluentTradePartnerReportIdentifier", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute("EffluentTradePartnerReportIdentifier", Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class EffluentTradePartnerKeyElements : BasicPermitKeyElements
     {
 
@@ -3952,8 +4025,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class EffluentTradePartner : EffluentTradePartnerKeyElements
     {
 
@@ -3993,8 +4066,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(DMRViolation))]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class DMRViolationKeyElements : BasicPermitKeyElements
     {
 
@@ -4048,8 +4121,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class DMRViolation : DMRViolationKeyElements
     {
 
@@ -4078,8 +4151,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(LinkageSWMS4Report))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(SWMS4ProgramReport))]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class SWMS4ProgramReportKeyElements : BasicPermitKeyElements
     {
 
@@ -4091,16 +4164,16 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class LinkageSWMS4Report : SWMS4ProgramReportKeyElements
     {
     }
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class SWMS4ProgramReport : SWMS4ProgramReportKeyElements
     {
 
@@ -4172,8 +4245,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(SSOMonthlyEventReport))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(LinkageSSOMonthlyEventReport))]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class SSOMonthlyEventReportKeyElements : BasicPermitKeyElements
     {
 
@@ -4185,8 +4258,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class SSOMonthlyEventReport : SSOMonthlyEventReportKeyElements
     {
 
@@ -4213,8 +4286,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class LinkageSSOMonthlyEventReport : SSOMonthlyEventReportKeyElements
     {
     }
@@ -4223,8 +4296,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(SSOEventReport))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(LinkageSSOEventReport))]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class SSOEventReportKeyElements : BasicPermitKeyElements
     {
 
@@ -4244,8 +4317,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class SSOEventReport : SSOEventReportKeyElements
     {
 
@@ -4320,8 +4393,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class SSOSystemComponent
     {
 
@@ -4339,8 +4412,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class SSOSteps
     {
 
@@ -4358,8 +4431,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class LinkageSSOEventReport : SSOEventReportKeyElements
     {
     }
@@ -4368,8 +4441,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(SSOAnnualReport))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(LinkageSSOAnnualReport))]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class SSOAnnualReportKeyElements : BasicPermitKeyElements
     {
 
@@ -4380,9 +4453,24 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
     }
 
     /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SWIndustrialAnnualReport))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(LinkageSWIndustrialAnnualReport))]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
+    public partial class SWIndustrialAnnualReportKeyElements : BasicPermitKeyElements
+    {
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 0)]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        public System.DateTime IndustrialStormWaterAnnualReportReceivedDate;
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class SSOAnnualReport : SSOAnnualReportKeyElements
     {
 
@@ -4404,9 +4492,44 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
+    public partial class SWIndustrialAnnualReport : SWIndustrialAnnualReportKeyElements
+    {
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4000)]
+        public string FacilityInspectionSummaryText;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4000)]
+        public string VisualAssessmentSummaryText;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4000)]
+        public string NoFurtherReductionSummaryText;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4000)]
+        public string CorrectiveActionSummaryText;
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class LinkageSSOAnnualReport : SSOAnnualReportKeyElements
+    {
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
+    public partial class LinkageSWIndustrialAnnualReport : SWIndustrialAnnualReportKeyElements
     {
     }
 
@@ -4414,8 +4537,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(LinkagePretreatmentPerformanceReport))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(PretreatmentPerformanceSummary))]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class PretreatmentPerformanceSummaryReportKeyElements : BasicPermitKeyElements
     {
 
@@ -4427,16 +4550,16 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class LinkagePretreatmentPerformanceReport : PretreatmentPerformanceSummaryReportKeyElements
     {
     }
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class PretreatmentPerformanceSummary : PretreatmentPerformanceSummaryReportKeyElements
     {
 
@@ -4680,8 +4803,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class LocalLimits
     {
 
@@ -4703,8 +4826,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class RemovalCredits
     {
 
@@ -4728,8 +4851,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(LinkageLocalLimitsReport))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(LocalLimitsProgramReport))]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class LocalLimitsProgramReportKeyElements : BasicPermitKeyElements
     {
 
@@ -4743,16 +4866,16 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class LinkageLocalLimitsReport : LocalLimitsProgramReportKeyElements
     {
     }
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class LocalLimitsProgramReport : LocalLimitsProgramReportKeyElements
     {
 
@@ -4769,8 +4892,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(CSOEventReport))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(LinkageCSOEventReport))]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class CSOEventReportKeyElements : BasicPermitKeyElements
     {
 
@@ -4789,8 +4912,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class CSOEventReport : CSOEventReportKeyElements
     {
 
@@ -4871,8 +4994,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute("DryOrWetWeatherIndicator", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute("DryOrWetWeatherIndicator", Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public enum WetDryType
     {
 
@@ -4889,8 +5012,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class LinkageCSOEventReport : CSOEventReportKeyElements
     {
     }
@@ -4899,8 +5022,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(LinkageSWEventReport))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(SWEventReport))]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class SWEventReportKeyElements : BasicPermitKeyElements
     {
         /// <remarks/>
@@ -4918,16 +5041,16 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class LinkageSWEventReport : SWEventReportKeyElements
     {
     }
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class SWEventReport : SWEventReportKeyElements
     {
 
@@ -5016,8 +5139,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute("SamplingBasisIndicator", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute("SamplingBasisIndicator", Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public enum SamplingBasisType
     {
 
@@ -5034,8 +5157,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute("PrecipitationForm", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute("PrecipitationForm", Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public enum PrecipitationFormType
     {
 
@@ -5056,8 +5179,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(DMRProgramReportLinkage))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(DischargeMonitoringReport))]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class DischargeMonitoringReportKeyElements : BasicPermitKeyElements
     {
 
@@ -5081,8 +5204,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class DischargeMonitoringReportParameterViolation : DischargeMonitoringReportKeyElements
     {
 
@@ -5107,16 +5230,16 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class DischargeMonitoringReportViolation : DischargeMonitoringReportKeyElements
     {
     }
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class DMRProgramReportLinkage : DischargeMonitoringReportKeyElements
     {
 
@@ -5130,8 +5253,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class LinkageBiosolidsReport : BiosolidsProgramReportKeyElements
     {
     }
@@ -5140,8 +5263,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(LinkageBiosolidsReport))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(BiosolidsProgramReport))]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class BiosolidsProgramReportKeyElements : BasicPermitKeyElements
     {
 
@@ -5153,8 +5276,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class BiosolidsProgramReport : BiosolidsProgramReportKeyElements
     {
 
@@ -5296,8 +5419,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class DischargeMonitoringReport : DischargeMonitoringReportKeyElements
     {
 
@@ -5377,8 +5500,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class ReportParameter : ParameterKeyElements
     {
 
@@ -5414,8 +5537,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class NumericReport
     {
 
@@ -5452,8 +5575,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(ReportParameter))]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class ParameterKeyElements
     {
 
@@ -5478,7 +5601,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IncludeInSchema = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IncludeInSchema = false)]
     public enum ItemsChoiceType
     {
 
@@ -5494,8 +5617,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class LandApplicationSite
     {
 
@@ -5567,8 +5690,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class SurfaceDisposalSite
     {
 
@@ -5635,8 +5758,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class Incinerator
     {
 
@@ -5653,8 +5776,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class CoDisposalSite
     {
 
@@ -5684,8 +5807,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute("PaintFilterTestResult", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute("PaintFilterTestResult", Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public enum PassFailIndicatorType
     {
 
@@ -5705,8 +5828,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(PermitSchedule))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(PermitScheduleViolation))]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class PermitScheduleKeyElements : BasicPermitKeyElements
     {
 
@@ -5719,8 +5842,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class NarrativeCondition : PermitScheduleKeyElements
     {
 
@@ -5741,8 +5864,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class PermitScheduleEvent : PermitScheduleEventKeyElements
     {
 
@@ -5780,8 +5903,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(PermitScheduleEvent))]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class PermitScheduleEventKeyElements
     {
 
@@ -5799,8 +5922,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class PermitSchedule : PermitScheduleKeyElements
     {
 
@@ -5821,8 +5944,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class PermitScheduleViolation : PermitScheduleKeyElements
     {
 
@@ -5843,8 +5966,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(SingleEventsViolation))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(LinkageSingleEvent))]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class SingleEventKeyElements : BasicPermitKeyElements
     {
 
@@ -5862,8 +5985,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class SingleEventViolation : SingleEventKeyElements
     {
 
@@ -5930,16 +6053,16 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class SingleEventsViolation : SingleEventKeyElements
     {
     }
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class LinkageSingleEvent : SingleEventKeyElements
     {
     }
@@ -5949,27 +6072,20 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(LinkageStateComplianceMonitoring))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(ComplianceMonitoringLinkage))]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
-    public partial class ComplianceMonitoringKeyElements : BasicPermitKeyElements
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
+    public partial class ComplianceMonitoringKeyElements
     {
-
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
-        public string ComplianceMonitoringCategoryCode;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 1)]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public System.DateTime ComplianceMonitoringDate;
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(25)]
+        public string ComplianceMonitoringIdentifier;
     }
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class ComplianceMonitoring : ComplianceMonitoringKeyElements
     {
 
@@ -6163,8 +6279,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute("StateFederalJointIndicator", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute("StateFederalJointIndicator", Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public enum StateFederalJointType
     {
 
@@ -6184,8 +6300,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute("LeadParty", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute("LeadParty", Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public enum LeadPartyType
     {
 
@@ -6202,8 +6318,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class CAFOInspection
     {
 
@@ -6335,8 +6451,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute("DischargesDuringYearProductionAreaIndicator", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute("DischargesDuringYearProductionAreaIndicator", Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public enum DischargesFromProductionAreaType
     {
 
@@ -6359,8 +6475,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class CSOInspection
     {
 
@@ -6444,8 +6560,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class PretreatmentInspection
     {
 
@@ -6689,8 +6805,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class SSOInspection
     {
 
@@ -6773,8 +6889,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class StormWaterConstructionInspection
     {
 
@@ -6789,8 +6905,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class StormWaterUnpermittedConstructionInspection
     {
 
@@ -6821,8 +6937,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class ProjectType
     {
 
@@ -6840,8 +6956,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class StormWaterConstructionIndustrialInspection
     {
 
@@ -6868,8 +6984,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class StormWaterConstructionNonConstructionInspections
     {
 
@@ -6884,8 +7000,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class StormWaterNonConstructionInspection
     {
 
@@ -6900,8 +7016,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class StormWaterMS4Inspection
     {
 
@@ -6961,16 +7077,16 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class LinkageStateComplianceMonitoring : ComplianceMonitoringKeyElements
     {
     }
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class ComplianceMonitoringLinkage : ComplianceMonitoringKeyElements
     {
 
@@ -6994,8 +7110,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class LinkageCAFOAnnualReport : CAFOAnnualProgramReportKeyElements
     {
     }
@@ -7004,8 +7120,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(LinkageCAFOAnnualReport))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(CAFOAnnualReport))]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class CAFOAnnualProgramReportKeyElements : BasicPermitKeyElements
     {
 
@@ -7017,8 +7133,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class CAFOAnnualReport : CAFOAnnualProgramReportKeyElements
     {
 
@@ -7073,8 +7189,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class LinkageEnforcementAction : EnforcementActionKeyElements
     {
     }
@@ -7086,8 +7202,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(EnforcementActionViolationLinkage))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(LinkageEnforcementAction))]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class EnforcementActionKeyElements
     {
 
@@ -7100,8 +7216,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class InformalEnforcementAction : EnforcementActionKeyElements
     {
 
@@ -7197,8 +7313,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class EnforcementAgency
     {
 
@@ -7217,8 +7333,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class FormalEnforcementAction : EnforcementActionKeyElements
     {
 
@@ -7327,8 +7443,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute("Forum", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute("Forum", Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public enum ForumType
     {
 
@@ -7341,8 +7457,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class FinalOrder
     {
 
@@ -7394,8 +7510,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class FinalOrderViolationLinkage : EnforcementActionKeyElements
     {
 
@@ -7415,8 +7531,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class ComplianceScheduleViolation : ComplianceScheduleKeyElements
     {
 
@@ -7437,8 +7553,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(ComplianceSchedule))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(ComplianceScheduleEventViolationKeyElements))]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class ComplianceScheduleKeyElements
     {
 
@@ -7468,8 +7584,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class ComplianceSchedule : ComplianceScheduleKeyElements
     {
 
@@ -7490,8 +7606,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class ComplianceScheduleEvent : ComplianceScheduleEventKeyElements
     {
 
@@ -7539,8 +7655,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(ComplianceScheduleEvent))]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute("ComplianceScheduleEventIdentifier", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute("ComplianceScheduleEventIdentifier", Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class ComplianceScheduleEventKeyElements
     {
 
@@ -7558,8 +7674,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class ComplianceScheduleEventViolationKeyElements : ComplianceScheduleKeyElements
     {
 
@@ -7582,8 +7698,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class EnforcementActionViolationLinkage : EnforcementActionKeyElements
     {
 
@@ -7598,8 +7714,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class LinkageFederalComplianceMonitoring : FederalComplianceMonitoringKeyElements
     {
     }
@@ -7608,8 +7724,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(FederalComplianceMonitoring))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(LinkageFederalComplianceMonitoring))]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class FederalComplianceMonitoringKeyElements
     {
 
@@ -7651,8 +7767,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class FederalComplianceMonitoring : FederalComplianceMonitoringKeyElements
     {
 
@@ -7897,8 +8013,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class InspectionConclusionDataSheet
     {
 
@@ -7950,8 +8066,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class Subactivity
     {
 
@@ -7974,8 +8090,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class Citation
     {
 
@@ -8000,8 +8116,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Milestone))]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class EnforcementActionMilestoneKeyElements
     {
 
@@ -8020,8 +8136,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class Milestone : EnforcementActionMilestoneKeyElements
     {
 
@@ -8039,8 +8155,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(ScheduleEventViolation))]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class ScheduleEventViolationKeyElements
     {
 
@@ -8052,8 +8168,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class ScheduleEventViolation : ScheduleEventViolationKeyElements
     {
 
@@ -8070,8 +8186,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute("AcceptedReport", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute("AcceptedReport", Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class AcceptedReportDataType
     {
 
@@ -8100,8 +8216,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute("InformationTypeCode", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute("InformationTypeCode", Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public enum InformationTypeCodeDataType
     {
 
@@ -8114,8 +8230,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute("ErrorReport", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute("ErrorReport", Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class ErrorReportDataType
     {
 
@@ -8143,8 +8259,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute("ErrorTypeCode", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute("ErrorTypeCode", Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public enum ErrorTypeCodeDataType
     {
 
@@ -8154,8 +8270,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute("FileErrorReport", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute("FileErrorReport", Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class FileErrorReportDataType
     {
 
@@ -8176,8 +8292,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute("SubmissionTransactionTypeCode", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute("SubmissionTransactionTypeCode", Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public enum SubmissionTransactionTypeCodeDataType
     {
 
@@ -8199,8 +8315,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute("TransactionTypeTotals", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute("TransactionTypeTotals", Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class TransactionTypeTotalsDataType
     {
 
@@ -8230,8 +8346,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute("SubmissionErrorKey", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute("SubmissionErrorKey", Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class SubmissionErrorKeyDataType
     {
 
@@ -8288,7 +8404,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IncludeInSchema = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IncludeInSchema = false)]
     public enum ItemChoiceType
     {
 
@@ -8462,8 +8578,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute("SubmissionError", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute("SubmissionError", Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class SubmissionErrorDataType
     {
 
@@ -8481,8 +8597,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute("SubmissionErrors", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute("SubmissionErrors", Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class SubmissionErrorsDataType
     {
 
@@ -8494,8 +8610,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute("SubmissionAcceptedKey", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute("SubmissionAcceptedKey", Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class SubmissionAcceptedKeyDataType
     {
 
@@ -8552,7 +8668,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IncludeInSchema = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IncludeInSchema = false)]
     public enum ItemChoiceType1
     {
 
@@ -8726,8 +8842,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute("SubmissionAccepted", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute("SubmissionAccepted", Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class SubmissionAcceptedDataType
     {
 
@@ -8745,8 +8861,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute("SubmissionsAccepted", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute("SubmissionsAccepted", Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class SubmissionsAcceptedDataType
     {
 
@@ -8759,8 +8875,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute("SubmissionSummary", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute("SubmissionSummary", Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class SubmissionSummaryDataType
     {
 
@@ -8795,8 +8911,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute("FileSubmissionErrors", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute("FileSubmissionErrors", Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class FileSubmissionErrorsDataType
     {
 
@@ -8808,8 +8924,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute("FileSubmissionError", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute("FileSubmissionError", Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class FileSubmissionErrorDataType
     {
 
@@ -8821,8 +8937,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute("SubmissionResponse", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute("SubmissionResponse", Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class SubmissionResponseDataType
     {
 
@@ -8858,8 +8974,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute("SubmittingParty", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute("SubmittingParty", Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class SubmittingPartyDataType
     {
 
@@ -8901,8 +9017,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute("SubmissionType", Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute("SubmissionType", Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class SubmissionTypeDataType
     {
 
@@ -8922,8 +9038,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
     public partial class Document
     {
 
@@ -8938,7 +9054,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class HeaderData
     {
 
@@ -8987,7 +9103,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class PayloadData
     {
         //TSM:
@@ -9036,6 +9152,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
         [System.Xml.Serialization.XmlElementAttribute("SSOMonthlyEventReportData", typeof(SSOMonthlyEventReportData), Order = 0)]
         [System.Xml.Serialization.XmlElementAttribute("SWConstructionPermitData", typeof(SWConstructionPermitData), Order = 0)]
         [System.Xml.Serialization.XmlElementAttribute("SWEventReportData", typeof(SWEventReportData), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("SWIndustrialAnnualReportData", typeof(SWIndustrialAnnualReportData), Order = 0)]
         [System.Xml.Serialization.XmlElementAttribute("SWIndustrialPermitData", typeof(SWIndustrialPermitData), Order = 0)]
         [System.Xml.Serialization.XmlElementAttribute("SWMS4LargePermitData", typeof(SWMS4LargePermitData), Order = 0)]
         [System.Xml.Serialization.XmlElementAttribute("SWMS4ProgramReportData", typeof(SWMS4ProgramReportData), Order = 0)]
@@ -9053,7 +9170,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class BasicPermitData : MainElementBase
     {
 
@@ -9072,7 +9189,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class BiosolidsPermitData : MainElementBase
     {
 
@@ -9092,7 +9209,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class BiosolidsProgramReportData : MainElementBase
     {
 
@@ -9112,7 +9229,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class CAFOAnnualReportData : MainElementBase
     {
 
@@ -9132,7 +9249,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class CAFOPermitData : MainElementBase
     {
 
@@ -9152,7 +9269,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class CSOEventReportData : MainElementBase
     {
 
@@ -9172,7 +9289,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class CSOPermitData : MainElementBase
     {
 
@@ -9192,7 +9309,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class ComplianceMonitoringData : MainElementBase
     {
 
@@ -9212,7 +9329,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class ComplianceMonitoringLinkageData : MainElementBase
     {
 
@@ -9234,7 +9351,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class ComplianceScheduleData : MainElementBase
     {
 
@@ -9254,7 +9371,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class DMRProgramReportLinkageData : MainElementBase
     {
 
@@ -9277,7 +9394,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class DMRViolationData : MainElementBase
     {
 
@@ -9297,7 +9414,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class DischargeMonitoringReportData : MainElementBase
     {
 
@@ -9317,7 +9434,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class EffluentTradePartnerData : MainElementBase
     {
 
@@ -9337,7 +9454,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class EnforcementActionMilestoneData : MainElementBase
     {
 
@@ -9357,7 +9474,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class EnforcementActionViolationLinkageData : MainElementBase
     {
 
@@ -9379,7 +9496,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class FederalComplianceMonitoringData : MainElementBase
     {
 
@@ -9399,7 +9516,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class FinalOrderViolationLinkageData : MainElementBase
     {
 
@@ -9421,7 +9538,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class FormalEnforcementActionData : MainElementBase
     {
 
@@ -9441,7 +9558,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class GeneralPermitData : MainElementBase
     {
 
@@ -9461,7 +9578,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class HistoricalPermitScheduleEventsData : MainElementBase
     {
 
@@ -9481,7 +9598,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class InformalEnforcementActionData : MainElementBase
     {
 
@@ -9501,7 +9618,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class LimitSetData : MainElementBase
     {
 
@@ -9521,7 +9638,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class LimitsData : MainElementBase
     {
 
@@ -9541,7 +9658,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class LocalLimitsProgramReportData : MainElementBase
     {
 
@@ -9561,7 +9678,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class MasterGeneralPermitData : MainElementBase
     {
 
@@ -9581,7 +9698,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class NarrativeConditionScheduleData : MainElementBase
     {
 
@@ -9601,7 +9718,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class POTWPermitData : MainElementBase
     {
 
@@ -9621,7 +9738,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class ParameterLimitsData : MainElementBase
     {
 
@@ -9641,7 +9758,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class PermitReissuanceData : MainElementBase
     {
 
@@ -9661,7 +9778,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class PermitTerminationData : MainElementBase
     {
 
@@ -9681,7 +9798,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class PermitTrackingEventData : MainElementBase
     {
 
@@ -9701,7 +9818,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class PermittedFeatureData : MainElementBase
     {
 
@@ -9721,7 +9838,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class PretreatmentPerformanceSummaryData : MainElementBase
     {
 
@@ -9741,7 +9858,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class PretreatmentPermitData : MainElementBase
     {
 
@@ -9761,7 +9878,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class SSOAnnualReportData : MainElementBase
     {
 
@@ -9780,7 +9897,26 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    public partial class SWIndustrialAnnualReportData : MainElementBase
+    {
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        public TransactionHeader TransactionHeader;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        public SWIndustrialAnnualReport SWIndustrialAnnualReport;
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class SSOEventReportData : MainElementBase
     {
 
@@ -9800,7 +9936,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class SSOMonthlyEventReportData : MainElementBase
     {
 
@@ -9820,7 +9956,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class SWConstructionPermitData : MainElementBase
     {
 
@@ -9840,7 +9976,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class SWEventReportData : MainElementBase
     {
 
@@ -9860,7 +9996,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class SWIndustrialPermitData : MainElementBase
     {
 
@@ -9880,7 +10016,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class SWMS4LargePermitData : MainElementBase
     {
 
@@ -9900,7 +10036,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class SWMS4ProgramReportData : MainElementBase
     {
 
@@ -9920,7 +10056,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class SWMS4SmallPermitData : MainElementBase
     {
 
@@ -9940,7 +10076,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class ScheduleEventViolationData : MainElementBase
     {
 
@@ -9960,7 +10096,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class SingleEventViolationData : MainElementBase
     {
 
@@ -9980,7 +10116,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public partial class UnpermittedFacilityData : MainElementBase
     {
 
@@ -10000,7 +10136,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/4")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public enum OperationType
     {
 

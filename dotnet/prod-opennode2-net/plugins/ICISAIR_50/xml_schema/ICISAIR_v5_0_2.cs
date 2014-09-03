@@ -11,7 +11,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
     [DefaultTableNamePrefixAttribute("ICA")]
     [RemovePostfixNamesFromTableAndColumnNamesAttribute("Data", "Details", "Code")]
     [NameReplacementsAttribute(
-      "TRANSACTION_HEADER", ""
+        "TRANSACTION_HEADER", ""
     , "VIOLATION_KEY_ELEMENTS", "VIOLATION_ELEMENTS"
     , "STORM_WATER", "SW"
     , "BIOSOLIDS", "BS"
@@ -301,7 +301,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
     , "CHANGE", "CHNG"
     , "SUPERSEDED", "SPRSED"
     , "CHANGING", "CHNG"
-)]
+    )]
 
     [DefaultElementNamePostfixLengthsAttribute(
                     "Text", "255",

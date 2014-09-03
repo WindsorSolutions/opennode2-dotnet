@@ -457,31 +457,31 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate EndDateOfAddressAssociation;
     }
 
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
-    public partial class BiosolidsPermitAddress
-    {
+    ///// <remarks/>
+    //[System.SerializableAttribute()]
+    //[System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    //[System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
+    //public partial class BiosolidsPermitAddress
+    //{
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Address", Order = 0)]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public FacilityAddress[] Address;
-    }
+    //    /// <remarks/>
+    //    [System.Xml.Serialization.XmlElementAttribute("Address", Order = 0)]
+    //    [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+    //    public FacilityAddress[] Address;
+    //}
 
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
-    public partial class CAFOAddress
-    {
+    ///// <remarks/>
+    //[System.SerializableAttribute()]
+    //[System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    //[System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
+    //public partial class CAFOAddress
+    //{
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Address", Order = 0)]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public FacilityAddress[] Address;
-    }
+    //    /// <remarks/>
+    //    [System.Xml.Serialization.XmlElementAttribute("Address", Order = 0)]
+    //    [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+    //    public FacilityAddress[] Address;
+    //}
 
     /// <remarks/>
     [System.SerializableAttribute()]
@@ -560,12 +560,11 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         public string ElectronicAddressText;
     }
 
-    /// <remarks/>
-    //TSM
+    ///// <remarks/>
     //[System.SerializableAttribute()]
     //[System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     //[System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
-    //public partial class FacilityAddress
+    //public partial class AirFacilityAddress
     //{
 
     //    /// <remarks/>
@@ -574,57 +573,57 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
     //    public FacilityAddress[] Address;
     //}
 
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
-    public partial class PermitAddress
-    {
+    ///// <remarks/>
+    //[System.SerializableAttribute()]
+    //[System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    //[System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
+    //public partial class PermitAddress
+    //{
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Address", Order = 0)]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public FacilityAddress[] Address;
-    }
+    //    /// <remarks/>
+    //    [System.Xml.Serialization.XmlElementAttribute("Address", Order = 0)]
+    //    [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+    //    public FacilityAddress[] Address;
+    //}
 
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
-    public partial class PretreatmentAddress
-    {
+    ///// <remarks/>
+    //[System.SerializableAttribute()]
+    //[System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    //[System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
+    //public partial class PretreatmentAddress
+    //{
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Address", Order = 0)]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public FacilityAddress[] Address;
-    }
+    //    /// <remarks/>
+    //    [System.Xml.Serialization.XmlElementAttribute("Address", Order = 0)]
+    //    [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+    //    public FacilityAddress[] Address;
+    //}
 
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
-    public partial class SiteOwnerAddress
-    {
+    ///// <remarks/>
+    //[System.SerializableAttribute()]
+    //[System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    //[System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
+    //public partial class SiteOwnerAddress
+    //{
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Address", Order = 0)]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public FacilityAddress[] Address;
-    }
+    //    /// <remarks/>
+    //    [System.Xml.Serialization.XmlElementAttribute("Address", Order = 0)]
+    //    [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+    //    public FacilityAddress[] Address;
+    //}
 
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
-    public partial class StormWaterAddress
-    {
+    ///// <remarks/>
+    //[System.SerializableAttribute()]
+    //[System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    //[System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
+    //public partial class StormWaterAddress
+    //{
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Address", Order = 0)]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public FacilityAddress[] Address;
-    }
+    //    /// <remarks/>
+    //    [System.Xml.Serialization.XmlElementAttribute("Address", Order = 0)]
+    //    [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+    //    public FacilityAddress[] Address;
+    //}
 
     /// <remarks/>
     [System.SerializableAttribute()]
@@ -1738,7 +1737,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayAttribute(Order = 29)]
-        [System.Xml.Serialization.XmlArrayItemAttribute(IsNullable = false)]
+        [System.Xml.Serialization.XmlArrayItemAttribute(IsNullable = false, ElementName="Address")]
         public FacilityAddress[] FacilityAddress;
     }
 

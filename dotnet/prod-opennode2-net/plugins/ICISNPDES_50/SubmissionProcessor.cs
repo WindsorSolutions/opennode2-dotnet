@@ -154,7 +154,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
                 }
 
                 AppendAuditLogEvent("Deserializing document data to ICIS data");
-                XmlReader reader = new NamespaceSpecifiedXmlTextReader("http://www.exchangenetwork.net/schema/icis/4", tempXmlFilePath);
+                XmlReader reader = new NamespaceSpecifiedXmlTextReader("http://www.exchangenetwork.net/schema/icis/5", tempXmlFilePath);
                 Windsor.Node2008.WNOSPlugin.ICISNPDES_50.Document data =
                     _serializationHelper.Deserialize<Windsor.Node2008.WNOSPlugin.ICISNPDES_50.Document>(reader);
 
