@@ -1,14 +1,12 @@
 <?xml version="1.0"?>
 <xsd:schema xmlns:icis="http://www.exchangenetwork.net/schema/icis/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/icis/5" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5">
 	<xsd:annotation>
-		<xsd:documentation>
-            Schema Name : ICIS_ResponseFileSubmissionAcceptedKey_v5.0.xsd
-            Current Version Available: C:\ICISSchemas\SchemasVersion5.0
-            Description : Component SubmissionAcceptedKey provides the options for uniquely identifying the part of the submission that was accepted. 
-    		Developed by : ICIS Full Batch IPT
-    		Point of Contact : Won Lee, U.S. EPA
-			Last Date Modified: 2012-10-10
-        </xsd:documentation>
+		<xsd:documentation>Schema Name : ICIS_ResponseFileSubmissionAcceptedKey_v5.0.xsd</xsd:documentation>
+        <xsd:documentation>Current Version Available: http://www.exchangenetwork.net/schema/icis/5</xsd:documentation>
+        <xsd:documentation>Description : Component SubmissionAcceptedKey provides the options for uniquely identifying the part of the submission that was accepted.</xsd:documentation> 
+    	<xsd:documentation>Developed by : ICIS Full Batch IPT</xsd:documentation>
+    	<xsd:documentation>Point of Contact : Won Lee, U.S. EPA</xsd:documentation>
+		<xsd:documentation>Last Date Modified: 2014-10-27</xsd:documentation>
 	</xsd:annotation>
 	<xsd:include schemaLocation="ICIS_ResponseFileShared_v5.0.xsd"/>
 	<xsd:element name="SubmissionAcceptedKey" type="icis:SubmissionAcceptedKeyDataType">

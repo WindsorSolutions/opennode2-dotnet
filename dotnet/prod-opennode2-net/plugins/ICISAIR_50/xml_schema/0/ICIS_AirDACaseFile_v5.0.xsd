@@ -5,13 +5,13 @@
 	<xsd:include schemaLocation="ICIS_FederalComplianceMonitoring_v5.0.xsd"/>
 	<xsd:annotation>
 		<xsd:documentation>Schema Name: ICIS_AirDACaseFile_v5.0.xsd</xsd:documentation>
-		<xsd:documentation>Current Version Available: C:\ICISSchemas\SchemasVersion5.0</xsd:documentation>
+		<xsd:documentation>Current Version Available: http://www.exchangenetwork.net/schema/icis/5</xsd:documentation>
 		<xsd:documentation>Description: ICIS-Air case file data input format</xsd:documentation>
 		<xsd:documentation>Application: ICIS-Air</xsd:documentation>
 		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
 		<xsd:documentation>Point of Contact: EPA/Alison Kittle</xsd:documentation>
 		<xsd:documentation>Data Written: March 2014</xsd:documentation>
-		<xsd:documentation>Last Date Modified: 2014-03-31</xsd:documentation>
+		<xsd:documentation>Last Date Modified: 2014-10-27</xsd:documentation>
 	</xsd:annotation>
 	<xsd:element name="AirDACaseFile" type="icis:AirDACaseFile"/>
 	<xsd:element name="CaseFileName" type="icis:StringMin1Max100Type"/>

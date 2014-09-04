@@ -59,19 +59,20 @@
 	<xsd:include schemaLocation="ICIS_SWConstructionPermit_v5.0.xsd"/>
 	<xsd:include schemaLocation="ICIS_SWEventReport_v5.0.xsd"/>
 	<xsd:include schemaLocation="ICIS_SWIndustrialPermit_v5.0.xsd"/>
+	<xsd:include schemaLocation="ICIS_SWIndustrialAnnualReport_v5.0.xsd"/>
 	<xsd:include schemaLocation="ICIS_SWMS4LargePermit_v5.0.xsd"/>
 	<xsd:include schemaLocation="ICIS_SWMS4ProgramReport_v5.0.xsd"/>
 	<xsd:include schemaLocation="ICIS_SWMS4SmallPermit_v5.0.xsd"/>
 	<xsd:include schemaLocation="ICIS_UnpermittedFacility_v5.0.xsd"/>-->
 	<xsd:annotation>
 		<xsd:documentation>Schema Name: ICIS_v5.0.xsd</xsd:documentation>
-		<xsd:documentation>Current Version Available: C:\ICISSchemas\SchemasVersion5.0</xsd:documentation>
+		<xsd:documentation>Current Version Available: http://www.exchangenetwork.net/schema/icis/5</xsd:documentation>
 		<xsd:documentation>Description: ICIS-NPDES main schema</xsd:documentation>
 		<xsd:documentation>Application: ICIS-NPDES</xsd:documentation>
 		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
 		<xsd:documentation>Point of Contact: EPA/Alison Kittle</xsd:documentation>
 		<xsd:documentation>Data Written: July 2006</xsd:documentation>
-		<xsd:documentation>Last Date Modified: 2012-10-10</xsd:documentation>
+		<xsd:documentation>Last Date Modified: 2014-10-27</xsd:documentation>
 	</xsd:annotation>
 	<xsd:element name="Document">
 		<xsd:complexType>
@@ -138,6 +139,7 @@
 			<xsd:element name="SSOMonthlyEventReportData" type="icis:SSOMonthlyEventReportData" maxOccurs="unbounded"/>
 			<xsd:element name="SWConstructionPermitData" type="icis:SWConstructionPermitData" maxOccurs="unbounded"/>
 			<xsd:element name="SWEventReportData" type="icis:SWEventReportData" maxOccurs="unbounded"/>
+			<xsd:element name="SWIndustrialAnnualReportData" type="icis:SWIndustrialAnnualReportData" maxOccurs="unbounded"/>
 			<xsd:element name="SWIndustrialPermitData" type="icis:SWIndustrialPermitData" maxOccurs="unbounded"/>
 			<xsd:element name="SWMS4LargePermitData" type="icis:SWMS4LargePermitData" maxOccurs="unbounded"/>
 			<xsd:element name="SWMS4ProgramReportData" type="icis:SWMS4ProgramReportData" maxOccurs="unbounded"/>
@@ -159,15 +161,15 @@
 			<xsd:enumeration value="AirPollutantsSubmission"/>
 			<xsd:enumeration value="AirProgramsSubmission"/>
 			<xsd:enumeration value="AirTVACCSubmission"/>
-			<xsd:enumeration value="BasicPermitSubmission"/>
+			<!--<xsd:enumeration value="BasicPermitSubmission"/>
 			<xsd:enumeration value="BiosolidsPermitSubmission"/>
-			<xsd:enumeration value="BiosolidsProgramReportSubmission"/>
+			<xsd:enumeration value="BiosolidsProgramReportSubmission"/>-->
 			<xsd:enumeration value="CaseFileLinkageSubmission"/>
-			<xsd:enumeration value="CAFOAnnualReportSubmission"/>
-			<xsd:enumeration value="CAFOPermitSubmission"/>
+			<!--<xsd:enumeration value="CAFOAnnualReportSubmission"/>
+			<xsd:enumeration value="CAFOPermitSubmission"/>-->
 			<xsd:enumeration value="ComplianceMonitoringLinkageSubmission"/>
 			<xsd:enumeration value="ComplianceMonitoringSubmission"/>
-			<xsd:enumeration value="ComplianceScheduleSubmission"/>
+			<!--<xsd:enumeration value="ComplianceScheduleSubmission"/>
 			<xsd:enumeration value="CopyMGPLimitSetSubmission"/>
 			<xsd:enumeration value="CSOEventReportSubmission"/>
 			<xsd:enumeration value="CSOPermitSubmission"/>
@@ -203,11 +205,12 @@
 			<xsd:enumeration value="SSOMonthlyEventReportSubmission"/>
 			<xsd:enumeration value="SWConstructionPermitSubmission"/>
 			<xsd:enumeration value="SWEventReportSubmission"/>
+			<xsd:enumeration value="SWIndustrialAnnualReportSubmission"/>
 			<xsd:enumeration value="SWIndustrialPermitSubmission"/>
 			<xsd:enumeration value="SWMS4LargePermitSubmission"/>
 			<xsd:enumeration value="SWMS4ProgramReportSubmission"/>
 			<xsd:enumeration value="SWMS4SmallPermitSubmission"/>
-			<xsd:enumeration value="UnpermittedFacilitySubmission"/>
+			<xsd:enumeration value="UnpermittedFacilitySubmission"/>-->
 		</xsd:restriction>
 	</xsd:simpleType>
 </xsd:schema>

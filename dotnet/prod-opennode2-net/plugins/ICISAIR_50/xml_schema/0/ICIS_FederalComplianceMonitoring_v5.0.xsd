@@ -14,13 +14,13 @@
 	<xsd:include schemaLocation="ICIS_SICNAICS_v5.0.xsd"/>
 	<xsd:annotation>
 		<xsd:documentation>Schema Name: ICIS_FederalComplianceMonitoring_v5.0.xsd</xsd:documentation>
-		<xsd:documentation>Current Version Available: C:\ICISSchemas\SchemasVersion5.0</xsd:documentation>
+		<xsd:documentation>Current Version Available: http://www.exchangenetwork.net/schema/icis/5</xsd:documentation>
 		<xsd:documentation>Description: ICIS-NPDES federal compliance monitoring data input format</xsd:documentation>
 		<xsd:documentation>Application: ICIS-NPDES</xsd:documentation>
 		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
 		<xsd:documentation>Point of Contact: EPA/Alison Kittle</xsd:documentation>
 		<xsd:documentation>Data Written: July 2006</xsd:documentation>
-		<xsd:documentation>Last Date Modified: 2012-10-10</xsd:documentation>
+		<xsd:documentation>Last Date Modified: 2014-10-27</xsd:documentation>
 	</xsd:annotation>
 	<xsd:element name="FederalComplianceMonitoring" type="icis:FederalComplianceMonitoring"/>
 	<xsd:element name="ComplianceMonitoringPlannedStartDate" type="icis:DateType"/>
@@ -58,11 +58,11 @@
 			<xsd:extension base="icis:ComplianceMonitoringKeyElements">
 				<xsd:sequence>
 					<xsd:element ref="icis:ProgramSystemAcronym" minOccurs="0"/>
-					<xsd:element ref="icis:ProgramSystemIdentifier" minOccurs="0"/>
-					<xsd:element ref="icis:FederalStatuteCode" minOccurs="0"/>
-					<xsd:element ref="icis:ComplianceMonitoringActivityTypeCode" minOccurs="0"/>
-					<xsd:element ref="icis:ComplianceMonitoringCategoryCode" minOccurs="0"/>
-					<xsd:element ref="icis:ComplianceMonitoringDate" minOccurs="0"/>
+            		<xsd:element ref="icis:ProgramSystemIdentifier" minOccurs="0"/>
+            		<xsd:element ref="icis:FederalStatuteCode" minOccurs="0"/>
+            		<xsd:element ref="icis:ComplianceMonitoringActivityTypeCode" minOccurs="0"/>
+            		<xsd:element ref="icis:ComplianceMonitoringCategoryCode" minOccurs="0"/>
+            		<xsd:element ref="icis:ComplianceMonitoringDate" minOccurs="0"/> 
 					<xsd:element ref="icis:ComplianceMonitoringStartDate" minOccurs="0"/>
 					<xsd:element ref="icis:ComplianceInspectionTypeCode" minOccurs="0" maxOccurs="unbounded"/>
 					<xsd:element ref="icis:ComplianceMonitoringActivityName" minOccurs="0"/>

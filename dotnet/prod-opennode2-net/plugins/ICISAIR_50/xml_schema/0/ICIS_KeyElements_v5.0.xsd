@@ -4,16 +4,15 @@
 	<xsd:include schemaLocation="ICIS_Header_v5.0.xsd"/>
 	<xsd:annotation>
 		<xsd:documentation>Schema Name: ICIS_KeyElements_v5.0.xsd</xsd:documentation>
-		<xsd:documentation>Current Version Available: C:\ICISSchemas\SchemasVersion5.0</xsd:documentation>
+		<xsd:documentation>Current Version Available: http://www.exchangenetwork.net/schema/icis/5</xsd:documentation>
 		<xsd:documentation>Description: ICIS-NPDES key elements data input format</xsd:documentation>
 		<xsd:documentation>Application: ICIS-NPDES</xsd:documentation>
 		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
 		<xsd:documentation>Point of Contact: EPA/Alison Kittle</xsd:documentation>
 		<xsd:documentation>Data Written: July 2006</xsd:documentation>
-		<xsd:documentation>Last Date Modified: 2012-10-10</xsd:documentation>
+		<xsd:documentation>Last Date Modified: 2014-10-27</xsd:documentation>
 	</xsd:annotation>
 	<xsd:element name="AirComplianceMonitoringStrategyKeyElements" type="icis:AirComplianceMonitoringStrategyKeyElements"/>
-	<xsd:element name="CaseFileKeyElements" type="icis:CaseFileKeyElements"/>
 	<xsd:element name="AirDAEnforcementActionKeyElements" type="icis:AirDAEnforcementActionKeyElements"/>
 	<xsd:element name="AirDAEnforcementActionMilestoneKeyElements" type="icis:AirDAEnforcementActionMilestoneKeyElements"/>
 	<xsd:element name="AirFacilityKeyElements" type="icis:AirFacilityKeyElements"/>
@@ -22,6 +21,7 @@
 	<xsd:element name="BasicPermitKeyElements" type="icis:BasicPermitKeyElements"/>
 	<xsd:element name="BiosolidsProgramReportKeyElements" type="icis:BiosolidsProgramReportKeyElements"/>
 	<xsd:element name="CAFOAnnualProgramReportKeyElements" type="icis:CAFOAnnualProgramReportKeyElements"/>
+	<xsd:element name="CaseFileKeyElements" type="icis:CaseFileKeyElements"/>
 	<xsd:element name="ComplianceMonitoringKeyElements" type="icis:ComplianceMonitoringKeyElements"/>
 	<xsd:element name="ComplianceScheduleKeyElements" type="icis:ComplianceScheduleKeyElements"/>
 	<xsd:element name="ComplianceScheduleEventKeyElements" type="icis:ComplianceScheduleKeyElements"/>

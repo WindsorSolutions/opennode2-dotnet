@@ -1206,89 +1206,94 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(100)]
+        public string OtherProgramDescriptionText;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(50)]
         public string FileNumber;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(500)]
         public string ReasonDeletingRecord;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("InformalEACommentText", Order = 7)]
+        [System.Xml.Serialization.XmlElementAttribute("InformalEACommentText", Order = 8)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4000)]
         public string[] InformalEACommentText;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
         [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
         public string InformalEAUserDefinedField1;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 10)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(50)]
         public string InformalEAUserDefinedField2;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 10)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(50)]
         public string InformalEAUserDefinedField3;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
-        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        // TSM
-        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate InformalEAUserDefinedField4;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 12)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
         // TSM
-        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate InformalEAUserDefinedField5;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate InformalEAUserDefinedField4;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 13)]
+        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate InformalEAUserDefinedField5;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 14)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4000)]
         public string InformalEAUserDefinedField6;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 14)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 15)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
         public string LeadAgencyCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("EnforcementAgencyTypeCode", Order = 15)]
+        [System.Xml.Serialization.XmlElementAttribute("EnforcementAgencyTypeCode", Order = 16)]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
         public string[] EnforcementAgencyTypeCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 16)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 17)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(100)]
         public string EnforcementAgencyName;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("EnforcementActionGovernmentContact", Order = 17)]
+        [System.Xml.Serialization.XmlElementAttribute("EnforcementActionGovernmentContact", Order = 18)]
         public EnforcementActionGovernmentContact[] EnforcementActionGovernmentContact;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 18)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 19)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(200)]
         public string OtherAgencyInitiativeText;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("AirPollutantCode", Order = 19)]
+        [System.Xml.Serialization.XmlElementAttribute("AirPollutantCode", Order = 20)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
         // TSM
         public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32[] AirPollutantCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 20)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 21)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(50)]
         public string StateSectionsViolatedText;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("SensitiveCommentText", Order = 21)]
+        [System.Xml.Serialization.XmlElementAttribute("SensitiveCommentText", Order = 22)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4000)]
         public string[] SensitiveCommentText;
     }
@@ -1331,93 +1336,98 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(100)]
+        public string OtherProgramDescriptionText;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
         public string ResolutionTypeCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(25)]
         public string AirDACombinedSupersededEAID;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(500)]
         public string ReasonDeletingRecord;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
         [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
         public string FormalEAUserDefinedField1;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 10)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(50)]
         public string FormalEAUserDefinedField2;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 10)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(50)]
         public string FormalEAUserDefinedField3;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
-        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        // TSM
-        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate FormalEAUserDefinedField4;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 12)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
         // TSM
-        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate FormalEAUserDefinedField5;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate FormalEAUserDefinedField4;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 13)]
+        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
+        // TSM
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate FormalEAUserDefinedField5;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 14)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4000)]
         public string FormalEAUserDefinedField6;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("AirDAFinalOrder", Order = 14)]
+        [System.Xml.Serialization.XmlElementAttribute("AirDAFinalOrder", Order = 15)]
         public AirDAFinalOrder[] AirDAFinalOrder;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 15)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 16)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
         public string LeadAgencyCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("EnforcementAgencyTypeCode", Order = 16)]
+        [System.Xml.Serialization.XmlElementAttribute("EnforcementAgencyTypeCode", Order = 17)]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
         public string[] EnforcementAgencyTypeCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 17)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 18)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(100)]
         public string EnforcementAgencyName;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("EnforcementActionGovernmentContact", Order = 18)]
+        [System.Xml.Serialization.XmlElementAttribute("EnforcementActionGovernmentContact", Order = 19)]
         public EnforcementActionGovernmentContact[] EnforcementActionGovernmentContact;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 19)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 20)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(200)]
         public string OtherAgencyInitiativeText;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("AirPollutantCode", Order = 20)]
+        [System.Xml.Serialization.XmlElementAttribute("AirPollutantCode", Order = 21)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
         // TSM
         public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32[] AirPollutantCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("EnforcementActionCommentText", Order = 21)]
+        [System.Xml.Serialization.XmlElementAttribute("EnforcementActionCommentText", Order = 22)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4000)]
         public string[] EnforcementActionCommentText;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("SensitiveCommentText", Order = 22)]
+        [System.Xml.Serialization.XmlElementAttribute("SensitiveCommentText", Order = 23)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4000)]
         public string[] SensitiveCommentText;
     }
