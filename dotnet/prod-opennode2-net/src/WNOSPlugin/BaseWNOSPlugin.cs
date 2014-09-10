@@ -1593,13 +1593,14 @@ namespace Windsor.Node2008.WNOSPlugin
                                              ICompressionHelper compressionHelper)
         {
             appendAuditLogEvent.AppendAuditLogEvent("Verifying xml schema validation source files ...");
-            string xmlSchemaFolder = ExtractZippedResourceToTempFolder(xmlSchemaZippedResourceAssembly, xmlSchemaZippedQualifiedResourceName,
-                                                                       tempFolderPath, compressionHelper);
-
             if (string.IsNullOrEmpty(xmlSchemaRootFileName))
             {
                 xmlSchemaRootFileName = "index.xsd";
             }
+
+            string xmlSchemaFolder = ExtractZippedResourceToTempFolder(xmlSchemaZippedResourceAssembly, xmlSchemaZippedQualifiedResourceName,
+                                                                       tempFolderPath, compressionHelper, xmlSchemaRootFileName);
+
             string xmlSchemaRootFilePath = Path.Combine(xmlSchemaFolder, xmlSchemaRootFileName);
             try
             {
@@ -1855,10 +1856,11 @@ namespace Windsor.Node2008.WNOSPlugin
 
             string qualifiedResourceName = this.GetType().Namespace + "." + resourceName;
             return ExtractZippedResourceToTempFolder(this.GetType().Assembly, qualifiedResourceName, settingsProvider.TempFolderPath,
-                                                     compressionHelper);
+                                                     compressionHelper, null);
         }
         private static string ExtractZippedResourceToTempFolder(Assembly resourceAssembly, string qualifiedResourceName,
-                                                                string tempFolderPath, ICompressionHelper compressionHelper)
+                                                                string tempFolderPath, ICompressionHelper compressionHelper,
+                                                                string checkRootFileName)
         {
             string folderName = qualifiedResourceName + "." + AssemblyUtils.GetAssemblyFileVersion(resourceAssembly);
             folderName = FileUtils.ReplaceInvalidFilenameChars(folderName, '_');
@@ -1869,7 +1871,18 @@ namespace Windsor.Node2008.WNOSPlugin
             {
                 if (Directory.Exists(folderPath) && FileUtils.DirectoryContainsFiles(folderPath))
                 {
-                    return folderPath;
+                    if (!StringUtils.IsNullOrEmpty(checkRootFileName))
+                    {
+                        string checkRootFilePath = Path.Combine(folderPath, checkRootFileName);
+                        if (File.Exists(checkRootFilePath))
+                        {
+                            return folderPath;
+                        }
+                    }
+                    else
+                    {
+                        return folderPath;
+                    }
                 }
 
                 Stream resourceStream = resourceAssembly.GetManifestResourceStream(qualifiedResourceName);
