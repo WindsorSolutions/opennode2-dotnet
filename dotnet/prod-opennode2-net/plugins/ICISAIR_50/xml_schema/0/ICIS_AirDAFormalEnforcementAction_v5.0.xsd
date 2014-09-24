@@ -19,7 +19,7 @@
 	<xsd:element name="AirDAFinalOrder" type="icis:AirDAFinalOrder"/>
 	<xsd:element name="AirDAFormalEnforcementAction" type="icis:AirDAFormalEnforcementAction"/>
 	<xsd:element name="AirResolvedDate" type="icis:DateType"/>
-	<xsd:element name="FinalOrderAirFacilityIdentifier" type="icis:String18FixedTypeBase"/>
+	<xsd:element name="FinalOrderAirFacilityIdentifier" type="icis:StringMin6Max18TypeBase"/>
 	
 	<xsd:complexType name="AirDAFormalEnforcementActionData">
 		<xsd:sequence>

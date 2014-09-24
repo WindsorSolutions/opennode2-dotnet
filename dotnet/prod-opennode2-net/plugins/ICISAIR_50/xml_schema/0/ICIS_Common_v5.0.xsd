@@ -16,7 +16,7 @@
 	</xsd:annotation>
 	<xsd:element name="AffiliationTypeText" type="icis:StringMin1Max3Type"/>
 	<xsd:element name="AirDAEnforcementActionIdentifier" type="icis:StringMin7Max25TypeBase"/>
-	<xsd:element name="AirFacilityIdentifier" type="icis:String18FixedTypeBase"/>
+	<xsd:element name="AirFacilityIdentifier" type="icis:StringMin6Max18TypeBase"/>
 	<xsd:element name="AirPollutantCode" type="icis:NonNegativeIntegerMin1Max10Type"/>
 	<xsd:element name="AirPollutantsCode" type="icis:NonNegativeIntegerMin1Max10TypeBase"/>
 	<xsd:element name="AirProgramCode" type="icis:StringMin1Max9TypeBase"/>
@@ -533,6 +533,12 @@
 	</xsd:simpleType>
 	<xsd:simpleType name="StringMin3Max30Type">
 		<xsd:union memberTypes="icis:StringMin3Max30TypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin6Max18TypeBase">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="6"/>
+			<xsd:maxLength value="18"/>
+		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="StringMin7Max10TypeBase">
 		<xsd:restriction base="xsd:string">

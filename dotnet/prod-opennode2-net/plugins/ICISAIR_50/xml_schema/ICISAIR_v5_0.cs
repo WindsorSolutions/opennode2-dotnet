@@ -140,6 +140,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(100)]
         public string ElectronicAddressText;
 
@@ -197,6 +198,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(100)]
         public string ElectronicAddressText;
     }
@@ -382,6 +384,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(80)]
         public string OrganizationFormalName;
 
@@ -392,6 +395,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(50)]
         public string MailingAddressText;
 
@@ -402,16 +406,19 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(30)]
         public string MailingAddressCityName;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
         [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(2)]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public string MailingAddressStateCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(14)]
         public string MailingAddressZipCode;
 
@@ -800,7 +807,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(18)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(18)]
         [Windsor.Commons.XsdOrm2.DbNotNull] // TSM
         public string AirFacilityIdentifier;
     }
@@ -959,8 +966,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
-        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(18)]
-        [Windsor.Commons.XsdOrm2.DbNotNull] // TSM
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(18)]
+        //[Windsor.Commons.XsdOrm2.DbNotNull] // TSM //Actually this is nullable in the schema in this class BGR
         public string AirFacilityIdentifier;
 
         /// <remarks/>
@@ -1180,7 +1187,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("AirFacilityIdentifier", Order = 0)]
-        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(18)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(18)]
         public string[] AirFacilityIdentifier;
 
         /// <remarks/>
@@ -1307,7 +1314,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("AirFacilityIdentifier", Order = 0)]
-        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(18)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(18)]
         public string[] AirFacilityIdentifier;
 
         /// <remarks/>
@@ -1467,7 +1474,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("FinalOrderAirFacilityIdentifier", Order = 2)]
-        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(18)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(18)]
         public string[] FinalOrderAirFacilityIdentifier;
 
         /// <remarks/>
@@ -1558,7 +1565,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(18)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(18)]
         [Windsor.Commons.XsdOrm2.DbNotNull] // TSM
         public string AirFacilityIdentifier;
     }
@@ -1826,12 +1833,13 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(18)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(18)]
         [Windsor.Commons.XsdOrm2.DbNotNull] // TSM
         public string AirFacilityIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
         // TSM
         public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 AirPollutantsCode;
@@ -1934,7 +1942,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(18)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(18)]
         [Windsor.Commons.XsdOrm2.DbNotNull] // TSM
         public string AirFacilityIdentifier;
 
@@ -2158,7 +2166,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
-        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(18)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(18)]
         [Windsor.Commons.XsdOrm2.DbNotNull] // TSM
         public string AirFacilityIdentifier;
 
@@ -2939,7 +2947,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("AirFacilityIdentifier", Order = 11)]
-        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(18)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(18)]
         public string[] AirFacilityIdentifier;
 
         /// <remarks/>

@@ -1866,6 +1866,7 @@ namespace Windsor.Node2008.WNOSPlugin
             folderName = FileUtils.ReplaceInvalidFilenameChars(folderName, '_');
 
             string folderPath = Path.Combine(tempFolderPath, folderName);
+            folderPath = Path.Combine(folderPath, Guid.NewGuid().GetHashCode().ToString());
 
             using (Mutex mutex = AcquireMutex(folderName, 60))
             {
