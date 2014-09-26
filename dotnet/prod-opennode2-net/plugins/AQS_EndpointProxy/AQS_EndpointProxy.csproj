@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E1201256-C635-42A3-8381-303A4654BC16}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Windsor.Node2008.WNOSPlugin.AQS_EndpointProxy</RootNamespace>
+    <AssemblyName>Windsor.Node2008.WNOSPlugin.AQS_EndpointProxy</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Common.Logging">
+      <HintPath>..\..\..\common-windsor-net\lib\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\..\common-windsor-net\windsor-commons-assemblyinfo\AssemblyInfo.cs">
+      <Link>AssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProxySubmissionRelayProcessor.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\common-windsor-net\windsor-commons-core\Windsor.Commons.Core.csproj">
+      <Project>{fe8a985a-f050-4475-b3d6-4e95ee87cf40}</Project>
+      <Name>Windsor.Commons.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\common-windsor-net\windsor-commons-logging\Windsor.Commons.Logging.csproj">
+      <Project>{c201fd80-438c-4252-9655-b3e26f75a5aa}</Project>
+      <Name>Windsor.Commons.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\common-windsor-net\windsor-commons-nodeclient\Windsor.Commons.NodeClient.csproj">
+      <Project>{e5b7fb63-fd4f-488f-a620-8e61849bb79a}</Project>
+      <Name>Windsor.Commons.NodeClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\common-windsor-net\windsor-commons-nodedomain\Windsor.Commons.NodeDomain.csproj">
+      <Project>{d5374478-b3c9-4920-93fb-0fa5c2afa446}</Project>
+      <Name>Windsor.Commons.NodeDomain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\WNOSDomain\WNOSDomain.csproj">
+      <Project>{0ad3d68f-4a02-4080-bff2-8ad1bab259aa}</Project>
+      <Name>WNOSDomain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\WNOSPlugin\WNOSPlugin.csproj">
+      <Project>{ff0bcee5-858f-4dc9-8b7b-51ffb2aa6b70}</Project>
+      <Name>WNOSPlugin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\WNOSProviders\WNOSProviders.csproj">
+      <Project>{d95c862b-ffdc-4936-8835-b0d8db421b20}</Project>
+      <Name>WNOSProviders</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
