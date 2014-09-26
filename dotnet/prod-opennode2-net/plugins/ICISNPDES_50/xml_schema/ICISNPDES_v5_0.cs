@@ -1411,6 +1411,16 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
         public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate CompleteNOIReceivedDate;
+
+        /// <remarks>Added in ICIS v5.0</remarks>
+        [System.Xml.Serialization.XmlElementAttribute("SubsectorCodePlusDescription", Order = 4)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(304)]
+        public string[] SubsectorCodePlusDescription;
+
+        /// <remarks>Added in ICIS v5.0</remarks>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
+        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
+        public string FederalCERCLADischargeIndicator;
     }
 
     /// <remarks/>
@@ -1439,16 +1449,6 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_50
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
         public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate NOTReceivedDate;
-
-        /// <remarks>Added in ICIS v5.0</remarks>
-        [System.Xml.Serialization.XmlElementAttribute("SubsectorCodePlusDescription", Order = 4)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(304)]
-        public string[] SubsectorCodePlusDescription;
-
-        /// <remarks>Added in ICIS v5.0</remarks>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
-        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
-        public string FederalCERCLADischargeIndicator;
     }
 
     /// <remarks/>
