@@ -70,4 +70,5 @@ using Windsor.Node2008.WNOSPlugin;
 [assembly: AssemblyFileVersion(AssemblyInfo.cAssemblyFileVersion)]
 [assembly: PluginDefaultFlowAttribute("EMTS_30")]
 [assembly: PluginPackageNameAttribute("EMTS 3.0")]
+[assembly: PluginSqlDdlFilePaths(@"EMTS\3.0\staging_schema_ddl\EMTS_3.0-SQL-DDL.sql,EMTS\3.0\staging_schema_ddl\EMTS_3.0-ORA-DDL.sql")]
 [assembly: PublicPluginAttribute()]

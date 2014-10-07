@@ -139,6 +139,7 @@ namespace Windsor.Node2008.WNOSPlugin.EMTS_30
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [System.ComponentModel.DescriptionAttribute("The renewable fuel code for the batch as defined in Part M Section 80.1426.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(4)]
+        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         public string FuelCode;
 
         /// <remarks/>
@@ -245,6 +246,7 @@ namespace Windsor.Node2008.WNOSPlugin.EMTS_30
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [System.ComponentModel.DescriptionAttribute("The renewable fuel code for the batch as defined in Part M Section 80.1426.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(4)]
+        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         public string FuelCode;
 
         /// <remarks/>
@@ -344,6 +346,7 @@ namespace Windsor.Node2008.WNOSPlugin.EMTS_30
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
         [System.ComponentModel.DescriptionAttribute("The renewable fuel code for the batch as defined in Part M Section 80.1426.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(4)]
+        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         public string FuelCode;
 
         /// <remarks/>
@@ -351,6 +354,7 @@ namespace Windsor.Node2008.WNOSPlugin.EMTS_30
         [System.ComponentModel.DescriptionAttribute("A code that indicates whether the RIN is transacting as an assigned RIN or a sepa" +
             "rated RIN.")]
         [Windsor.Commons.XsdOrm.DbColumnTypeAttribute("Int32")]
+        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         public string AssignmentCode;
 
         /// <remarks/>
@@ -476,6 +480,7 @@ namespace Windsor.Node2008.WNOSPlugin.EMTS_30
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
         [System.ComponentModel.DescriptionAttribute("The renewable fuel code for the batch as defined in Part M Section 80.1426.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(4)]
+        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         public string FuelCode;
 
         /// <remarks/>
@@ -483,6 +488,7 @@ namespace Windsor.Node2008.WNOSPlugin.EMTS_30
         [System.ComponentModel.DescriptionAttribute("A code that indicates whether the RIN is transacting as an assigned RIN or a sepa" +
             "rated RIN.")]
         [Windsor.Commons.XsdOrm.DbColumnTypeAttribute("Int32")]
+        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         public string AssignmentCode;
 
         /// <remarks/>
@@ -592,6 +598,7 @@ namespace Windsor.Node2008.WNOSPlugin.EMTS_30
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [System.ComponentModel.DescriptionAttribute("The renewable fuel code for the batch as defined in Part M Section 80.1426.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(4)]
+        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         public string FuelCode;
 
         /// <remarks/>
@@ -599,6 +606,7 @@ namespace Windsor.Node2008.WNOSPlugin.EMTS_30
         [System.ComponentModel.DescriptionAttribute("A code that indicates whether the RIN is transacting as an assigned RIN or a sepa" +
             "rated RIN.")]
         [Windsor.Commons.XsdOrm.DbColumnTypeAttribute("Int32")]
+        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         public string AssignmentCode;
 
         /// <remarks/>
@@ -681,6 +689,7 @@ namespace Windsor.Node2008.WNOSPlugin.EMTS_30
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [System.ComponentModel.DescriptionAttribute("The renewable fuel code for the batch as defined in Part M Section 80.1426.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(4)]
+        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         public string FuelCode;
 
         /// <remarks/>
@@ -688,6 +697,7 @@ namespace Windsor.Node2008.WNOSPlugin.EMTS_30
         [System.ComponentModel.DescriptionAttribute("A code that indicates whether the RIN is transacting as an assigned RIN or a sepa" +
             "rated RIN.")]
         [Windsor.Commons.XsdOrm.DbColumnTypeAttribute("Int32")]
+        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         public string AssignmentCode;
 
         /// <remarks/>
@@ -733,6 +743,7 @@ namespace Windsor.Node2008.WNOSPlugin.EMTS_30
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [System.ComponentModel.DescriptionAttribute("The renewable fuel code for the batch as defined in Part M Section 80.1426.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(4)]
+        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         public string FuelCode;
 
         /// <remarks/>
@@ -740,6 +751,7 @@ namespace Windsor.Node2008.WNOSPlugin.EMTS_30
         [System.ComponentModel.DescriptionAttribute("A code that indicates whether the RIN is transacting as an assigned RIN or a sepa" +
             "rated RIN.")]
         [Windsor.Commons.XsdOrm.DbColumnTypeAttribute("Int32")]
+        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         public string AssignmentCode;
 
         /// <remarks/>
