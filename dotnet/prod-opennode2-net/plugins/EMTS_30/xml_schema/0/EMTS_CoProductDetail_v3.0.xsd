@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:emts="http://www.exchangenetwork.net/schema/emts/3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/emts/3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="3.0">
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name: EMTS_CoProductDetail_v3.0.xsd
+        Description: Identifies the co-products generated from the renewable fuel produced.
+        Developed by: SRA International, Inc.
+        Point of Contact: Jeff Heatwole
+        </xsd:documentation>
+	</xsd:annotation>
+	<xsd:include schemaLocation="EMTS_SimpleContent_v3.0.xsd"/>
+	<xsd:complexType name="CoProductDetailDataType">
+		<xsd:sequence minOccurs="0">
+			<xsd:element ref="emts:CoProductCode"/>
+			<xsd:element ref="emts:CoProductDetailCommentText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="CoProductDetail" type="emts:CoProductDetailDataType"/>
+</xsd:schema>

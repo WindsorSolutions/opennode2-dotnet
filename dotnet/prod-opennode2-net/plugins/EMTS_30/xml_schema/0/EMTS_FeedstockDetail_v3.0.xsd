@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:emts="http://www.exchangenetwork.net/schema/emts/3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/emts/3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="3.0">
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name: EMTS_FeedstockDetail_v3.0.xsd
+        Description: Identifies the Feedstock used to create the renewable fuel.
+        Developed by: SRA International, Inc.
+        Point of Contact: Jeff Heatwole
+        </xsd:documentation>
+	</xsd:annotation>
+	<xsd:include schemaLocation="EMTS_SimpleContent_v3.0.xsd"/>
+	<xsd:complexType name="FeedstockDetailDataType">
+		<xsd:sequence>
+			<xsd:element ref="emts:FeedstockCode"/>
+			<xsd:element ref="emts:RenewableBiomassIndicator"/>
+			<xsd:element ref="emts:FeedstockQuantity"/>
+			<xsd:element ref="emts:FeedstockMeasureCode"/>
+			<xsd:element ref="emts:FeedstockDetailCommentText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="FeedstockDetail" type="emts:FeedstockDetailDataType"/>
+</xsd:schema>

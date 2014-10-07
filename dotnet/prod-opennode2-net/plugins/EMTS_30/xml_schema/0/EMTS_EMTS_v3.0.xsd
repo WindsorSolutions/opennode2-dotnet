@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:emts="http://www.exchangenetwork.net/schema/emts/3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/emts/3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="3.0">
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name: EMTS_EMTS_v3.0.xsd
+        Current Version Available At:
+        Description: 
+        Developed by: SRA International, Inc.
+        Point of Contact: Jeff Heatwole
+        </xsd:documentation>
+	</xsd:annotation>
+	<xsd:include schemaLocation="EMTS_SimpleContent_v3.0.xsd"/>
+	<xsd:include schemaLocation="EMTS_GenerateTransactionDetail_v3.0.xsd"/>
+	<xsd:include schemaLocation="EMTS_SeparateTransactionDetail_v3.0.xsd"/>
+	<xsd:include schemaLocation="EMTS_SellTransactionDetail_v3.0.xsd"/>
+	<xsd:include schemaLocation="EMTS_BuyTransactionDetail_v3.0.xsd"/>
+	<xsd:include schemaLocation="EMTS_RetireTransactionDetail_v3.0.xsd"/>
+    <xsd:include schemaLocation="EMTS_LockTransactionDetail_v3.0.xsd"/>
+    <xsd:include schemaLocation="EMTS_UnlockTransactionDetail_v3.0.xsd"/>
+	<xsd:complexType name="EMTSDataType">
+		<xsd:sequence>
+			<xsd:element ref="emts:UserLoginText"/>
+			<xsd:element ref="emts:SubmittalCreationDate"/>
+			<xsd:element ref="emts:OrganizationIdentifier"/>
+			<xsd:element ref="emts:SubmittalCommentText" minOccurs="0"/>
+			<xsd:element ref="emts:GenerateTransactionDetail" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="emts:SeparateTransactionDetail" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="emts:SellTransactionDetail" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="emts:BuyTransactionDetail" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="emts:RetireTransactionDetail" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="emts:LockTransactionDetail" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="emts:UnlockTransactionDetail" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="EMTS" type="emts:EMTSDataType"/>
+</xsd:schema>

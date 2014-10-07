@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:emts="http://www.exchangenetwork.net/schema/emts/3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/emts/3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="3.0">
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name: EMTS_SupportingDocumentDetail_v3.0.xsd
+        Description: Identifies the user defined information regarding supporting document identifiers for a transaction.
+        Developed by: SRA International, Inc.
+        Point of Contact: Jeff Heatwole
+        </xsd:documentation>
+	</xsd:annotation>
+	<xsd:include schemaLocation="EMTS_SimpleContent_v3.0.xsd"/>
+	<xsd:complexType name="SupportingDocumentDetailDataType">
+		<xsd:sequence>
+			<xsd:element ref="emts:SupportingDocumentText"/>
+			<xsd:element ref="emts:SupportingDocumentNumberText"/>
+		</xsd:sequence>
+	</xsd:complexType>
+    <xsd:element name="GenerateSupportingDocumentDetail" type="emts:SupportingDocumentDetailDataType"/>
+	<xsd:element name="BuySupportingDocumentDetail" type="emts:SupportingDocumentDetailDataType"/>
+	<xsd:element name="SellSupportingDocumentDetail" type="emts:SupportingDocumentDetailDataType"/>
+	<xsd:element name="RetireSupportingDocumentDetail" type="emts:SupportingDocumentDetailDataType"/>
+	<xsd:element name="SeparateSupportingDocumentDetail" type="emts:SupportingDocumentDetailDataType"/>
+    <xsd:element name="PublicSupportingDocumentDetail" type="emts:SupportingDocumentDetailDataType"/>
+</xsd:schema>

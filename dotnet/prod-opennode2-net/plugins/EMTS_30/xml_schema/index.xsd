@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/emts/3"
+            elementFormDefault="qualified" attributeFormDefault="unqualified" version="3.0">
+	<xsd:include schemaLocation="0/EMTS_EMTS_v3.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name  : index.xsd
+        Current Version Available At : http://www.exchangenetwork.net/schema/emts/3/0/EMTS_EMTS_v3.0.xsd
+        Description   :    Index Schema used for EMTS data flow.
+        Developed by  :    SRA International, Inc.
+        Point of Contact : Jeff Heatwole
+        </xsd:documentation>
+	</xsd:annotation>
+</xsd:schema>
