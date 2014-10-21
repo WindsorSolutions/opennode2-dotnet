@@ -298,10 +298,10 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
                     string attachmentPath = tempFilePath;
                     string attachmentName = zipResponseDocument.DocumentName;
 
-                    string subject = string.Format("ICIS-NPDES Submission Processing Report");
+                    string subject = string.Format("ICIS-AIR Submission Processing Report");
                     string message =
-                        string.Format("This email is to notify you that OpenNode2 has received and successfully processed submission results data from ICIS-NPDES.{0}{0}" +
-                                      "The attached documents were returned from ICIS-NPDES in connection with the most recent submission.", Environment.NewLine);
+                        string.Format("This email is to notify you that OpenNode2 has received and successfully processed submission results data from ICIS-AIR.{0}{0}" +
+                                      "The attached documents were returned from ICIS-AIR in connection with the most recent submission.", Environment.NewLine);
 
                     _notificationManager.DoScheduleNotifications(transactionStatus, notificationEmails, subject, _dataRequest.Service.Name,
                                                                     attachmentPath, attachmentName, message);
