@@ -70,5 +70,5 @@ using Windsor.Node2008.WNOSPlugin;
 [assembly: AssemblyFileVersion(AssemblyInfo.cAssemblyFileVersion)]
 [assembly: PluginDefaultFlowAttribute("ICIS-NPDES")]
 [assembly: PluginPackageNameAttribute("ICIS-NPDES 5.0")]
-[assembly: PluginSqlDdlFilePaths(@"ICIS\5.0\staging_schema_ddl\ICS_5.0_SQL.zip,ICIS\5.0\staging_schema_ddl\ICS_5.0_ORA.zip,ICIS\5.0\staging_schema_ddl\ICS_5.0_MYSQL.zip")]
+[assembly: PluginSqlDdlFilePaths(@"ICIS\5.0\staging_schema_ddl\ICS_5.0_SQL.zip,ICIS\5.0\staging_schema_ddl\ICS_5.0_ORA.zip")]
 [assembly: PublicPluginAttribute()]
