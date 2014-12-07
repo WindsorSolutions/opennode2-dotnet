@@ -152,6 +152,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
 
             bool isVirtualObjectTable = tableOfObjectsToLoad.IsVirtualTable;
             bool isCustomXmlStringFormatTypeTable = false;
+
             if (isVirtualObjectTable)
             {
                 isCustomXmlStringFormatTypeTable = tableOfObjectsToLoad.TableRootType.IsSubclassOf(typeof(CustomXmlStringFormatTypeBase));
@@ -162,7 +163,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                 while (reader.Read())
                 {
                     int readerIndex = 0;
-                    object pk = null, fk = null;
+                    object pk = null, fk = null, pkKey = null, fkKey = null;
                     bool skip = false;
                     bool anyObjectToSetFieldsWereSet = false;
                     Column pkColumn = null, fkColumn = null;
@@ -181,6 +182,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
 
                             if (column.IsPrimaryKey)
                             {
+                                pkKey = value + "_" + tableOfObjectsToLoad.TableName;
                                 pkColumn = column;
                                 pk = value;
                             }
@@ -188,6 +190,8 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                             {
                                 if (value != null)
                                 {
+
+                                    fkKey = value + "_" + ((ForeignKeyColumn)column).ForeignTable.TableName;
                                     if (fkColumn != null)
                                     {
                                         if (pk != null)
@@ -201,7 +205,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                                                                    column.Table.TableName);
                                         }
                                     }
-                                    if (!parentPKToObjectMap.ContainsKey(value))
+                                    if (!parentPKToObjectMap.ContainsKey(fkKey))
                                     {
                                         // This object has no parent, assume we skip it
                                         skip = true;
@@ -269,6 +273,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                                                        pkColumn.Table.TableName, pk.ToString());
                             }
                             fk = pk;
+                            fkKey = pkKey;
                         }
                         LoadSameTableInstances(objectToSet, tableOfObjectsToLoad.ChildSameTableElements, cachedValues, reader,
                                                ref readerIndex, ref anyObjectToSetFieldsWereSet);
@@ -288,10 +293,10 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                         anyInstanceFieldsWereSetMap = new Dictionary<object, bool>();
                     }
                     IList listInstance;
-                    if (!list.TryGetValue(fk, out listInstance))
+                    if (!list.TryGetValue(fkKey, out listInstance))
                     {
                         listInstance = (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(tableOfObjectsToLoad.TableRootType));
-                        list.Add(fk, listInstance);
+                        list.Add(fkKey, listInstance);
                     }
                     try
                     {
@@ -303,7 +308,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                     }
                     if (!isVirtualObjectTable)
                     {
-                        pkToObjectMap.Add(pk, objectToSet);
+                        pkToObjectMap.Add(pkKey, objectToSet);
                         anyInstanceFieldsWereSetMap.Add(objectToSet, anyObjectToSetFieldsWereSet);
                     }
                 }
