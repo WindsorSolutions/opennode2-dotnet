@@ -234,8 +234,8 @@ namespace Windsor.Node2008.WNOSPlugin.AQSAirVision
             TryGetParameter(_dataRequest, PARAM_SEND_ONLY_QA_DATA, paramIndex++, ref arguments.SendOnlyQAData);
             arguments.CompressPayload = true;
 
-            byte[] argumentBytes = _serializationHelper.SerializeWithLineBreaks(arguments);
-            File.WriteAllBytes(@"D:\Download\Query.xml", argumentBytes);
+            //byte[] argumentBytes = _serializationHelper.SerializeWithLineBreaks(arguments);
+            //File.WriteAllBytes(@"D:\Download\Query.xml", argumentBytes);
             //Document doc = new Document("RequestArguments.xml", CommonContentType.XML, argumentBytes);
             //doc.DontAutoCompress = true;
             //_documentManager.AddDocument(_dataRequest.TransactionId, CommonTransactionStatusCode.Completed,
