@@ -341,7 +341,7 @@
 	</xsd:simpleType>
 	<xsd:simpleType name="MethodDescriptionTextDataType">
 		<xsd:restriction base="xsd:string">
-			<xsd:maxLength value="500"/>
+			<xsd:maxLength value="4000"/>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="MethodIdentifierDataType">
@@ -399,7 +399,7 @@
 	</xsd:simpleType>
 	<xsd:simpleType name="MonitoringLocationDescriptionTextDataType">
 		<xsd:restriction base="xsd:string">
-			<xsd:maxLength value="1999"/>
+			<xsd:maxLength value="4000"/>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="MonitoringLocationIdentifierDataType">
@@ -470,7 +470,7 @@
 	</xsd:simpleType>
 	<xsd:simpleType name="ProjectDescriptionTextDataType">
 		<xsd:restriction base="xsd:string">
-			<xsd:maxLength value="1999"/>
+			<xsd:maxLength value="4000"/>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="ProjectIdentifierDataType">
@@ -554,7 +554,7 @@
 	</xsd:simpleType>
 	<xsd:simpleType name="ResultParticleSizeBasisTextDataType">
 		<xsd:restriction base="xsd:string">
-			<xsd:maxLength value="15"/>
+			<xsd:maxLength value="40"/>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="ResultSampleFractionTextDataType">
@@ -623,7 +623,7 @@
 	<xsd:simpleType name="SampleTransportStorageDescriptionDataType">
 		<xsd:restriction base="xsd:string">
 			<xsd:minLength value="1"/>
-			<xsd:maxLength value="250"/>
+			<xsd:maxLength value="4000"/>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="SamplingComponentNameDataType">
