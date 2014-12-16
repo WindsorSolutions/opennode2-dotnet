@@ -85,29 +85,39 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
         }
         public void ProcessSubmit(string transactionId)
         {
-            LazyInit();
-
-            if (_authorizedWqxUsers != null)
+            try
             {
-                _submitUsername = _transactionManager.GetTransactionUsername(transactionId);
-                if (string.IsNullOrEmpty(_submitUsername))
+                LazyInit();
+
+                if (_authorizedWqxUsers != null)
                 {
-                    throw new ArgumentException("A Submit username is not associated with the transaction");
+                    _submitUsername = _transactionManager.GetTransactionUsername(transactionId);
+                    if (string.IsNullOrEmpty(_submitUsername))
+                    {
+                        throw new ArgumentException("A Submit username is not associated with the transaction");
+                    }
                 }
+
+                IList<string> documentIds = _documentManager.GetDocumentIds(transactionId);
+
+                if (CollectionUtils.IsNullOrEmpty(documentIds))
+                {
+                    AppendAuditLogEvent("Didn't find any submit documents to process.");
+                    return;
+                }
+                AppendAuditLogEvent("Found {0} submit documents to process.", documentIds.Count.ToString());
+
+                foreach (string docId in documentIds)
+                {
+                    ProcessSubmitDocument(transactionId, docId);
+                }
+                
+                GenerateExecutionLogAndAttachToTransaction(transactionId, null);
             }
-
-            IList<string> documentIds = _documentManager.GetDocumentIds(transactionId);
-
-            if (CollectionUtils.IsNullOrEmpty(documentIds))
+            catch (Exception ex)
             {
-                AppendAuditLogEvent("Didn't find any submit documents to process.");
-                return;
-            }
-            AppendAuditLogEvent("Found {0} submit documents to process.", documentIds.Count.ToString());
-
-            foreach (string docId in documentIds)
-            {
-                ProcessSubmitDocument(transactionId, docId);
+                GenerateExecutionLogAndAttachToTransaction(transactionId, ex);
+                throw;
             }
         }
         protected override void LazyInit()
