@@ -1,3 +1,4 @@
+#define DONT_USE_AUTH_FILE
 #region License
 /*
 Copyright (c) 2009, The Environmental Council of the States (ECOS)
@@ -115,9 +116,12 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
 
         private void LoadWQXAuthorizationFile()
         {
+#if DONT_USE_AUTH_FILE
+#else // DONT_USE_AUTH_FILE
             string filePath = null;
             TryGetConfigParameter(AUTHORIZATION_FILE_PATH_KEY, ref filePath);
             _authorizedWqxUsers = WQXBaseAuthorizationPlugin.LoadWQXAuthorizationFile(this, filePath);
+#endif // DONT_USE_AUTH_FILE
         }
         
         /// <summary>
@@ -177,7 +181,47 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
             selectClauses.Add("WQX_ORGANIZATION",
                 new DbAppendSelectWhereClause(_baseDao, "ORGID = ?", _organizationIdentifier));
 
-            if (_activityStartDate == DateTime.MinValue)
+            if ((_wqxStartDate != DateTime.MinValue) && (_wqxEndDate != DateTime.MinValue))
+            {
+                if (_wqxStartDate > _wqxEndDate)
+                {
+                    throw new ArgException("The query start date parameter must be less than or equal to the end date parameter");
+                }
+                AppendAuditLogEvent("Querying WQX data with OrgId \"{0}\", StartDate \"{1}\", and EndDate \"{1}\" ...",
+                                    _organizationIdentifier, _wqxStartDate, _wqxEndDate);
+
+                string activityElementSelect = "(ACTIVITYSTARTDATE >= ?) AND (ACTIVITYSTARTDATE <= ?) AND PARENTID IN (SELECT RECORDID FROM WQX_ORGANIZATION WHERE ORGID = ?)";
+                string activityRecordIdsSelect = "SELECT RECORDID FROM WQX_ACTIVITY WHERE " + activityElementSelect;
+
+                string biologicalElementSelect = "(INDEXCALCULATEDDATE >= ?) AND (INDEXCALCULATEDDATE <= ?) AND PARENTID IN (SELECT RECORDID FROM WQX_ORGANIZATION WHERE ORGID = ?)";
+                string biologicalRecordIdsSelect = "SELECT RECORDID FROM WQX_BIOLOGICALHABITATINDEX WHERE " + biologicalElementSelect;
+                
+                string projectElementSelect =
+                    string.Format("RECORDID IN (SELECT PROJECTPARENTID FROM WQX_PROJECTACTIVITY WHERE ACTIVITYPARENTID IN ({0}))",
+                                  activityRecordIdsSelect);
+                string activityGroupElementSelect =
+                    string.Format("RECORDID IN (SELECT ACTIVITYGROUPPARENTID FROM WQX_ACTIVITYACTIVITYGROUP WHERE ACTIVITYPARENTID IN ({0}))",
+                                  activityRecordIdsSelect);
+                string monitoringLocationElementSelect =
+                    string.Format("((MONITORINGLOCATIONID IN (SELECT MONLOCID FROM WQX_ACTIVITY WHERE {0})) OR (MONITORINGLOCATIONID IN (SELECT MONLOCID FROM WQX_BIOLOGICALHABITATINDEX WHERE {1})))",
+                                  activityElementSelect, biologicalElementSelect);
+                string resultElementSelect =
+                    string.Format("PARENTID IN ({0})", activityRecordIdsSelect);
+                selectClauses.Add("WQX_ACTIVITY",
+                    new DbAppendSelectWhereClause(_baseDao, activityElementSelect, _wqxStartDate, _wqxEndDate, _organizationIdentifier));
+                selectClauses.Add("WQX_PROJECT",
+                    new DbAppendSelectWhereClause(_baseDao, projectElementSelect, _wqxStartDate, _wqxEndDate, _organizationIdentifier));
+                selectClauses.Add("WQX_ACTIVITYGROUP",
+                    new DbAppendSelectWhereClause(_baseDao, activityGroupElementSelect, _wqxStartDate, _wqxEndDate, _organizationIdentifier));
+                selectClauses.Add("WQX_MONITORINGLOCATION",
+                    new DbAppendSelectWhereClause(_baseDao, monitoringLocationElementSelect, _wqxStartDate, _wqxEndDate, _organizationIdentifier,
+                                                  _wqxStartDate, _wqxEndDate, _organizationIdentifier));
+                selectClauses.Add("WQX_BIOLOGICALHABITATINDEX",
+                    new DbAppendSelectWhereClause(_baseDao, biologicalElementSelect, _wqxStartDate, _wqxEndDate, _organizationIdentifier));
+                selectClauses.Add("WQX_RESULT",
+                   new DbAppendSelectWhereClause(_baseDao, resultElementSelect, _wqxStartDate, _wqxEndDate, _organizationIdentifier));
+            }
+            else if (_activityStartDate == DateTime.MinValue)
             {
                 AppendAuditLogEvent("Querying WQX data with OrgId \"{0}\" and WQXUpdateDate \"{1}\" ...", _organizationIdentifier, _wqxUpdateDate);
 

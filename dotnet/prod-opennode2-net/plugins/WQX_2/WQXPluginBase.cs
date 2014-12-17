@@ -126,6 +126,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
         protected const string PARAM_WQX_UPDATE_DATE_KEY = "WQXUpdateDate";
         protected const string PARAM_ACTIVITY_START_DATE_KEY = "ActivityStartDate";
         protected const string PARAM_VALIDATE_XML_KEY = "ValidateXml";
+        protected const string PARAM_WQX_START_DATE_KEY = "StartDate";
+        protected const string PARAM_WQX_END_DATE_KEY = "EndDate";
 
         protected IRequestManager _requestManager;
         protected ISerializationHelper _serializationHelper;
@@ -147,6 +149,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
         protected IdProvider _idProvider;
         protected bool _addHeader = true;
         protected bool _validateXml;
+        protected DateTime _wqxStartDate = DateTime.MinValue;
+        protected DateTime _wqxEndDate = DateTime.MinValue;
         internal WQXPluginMapper _wqxPluginMapper;
 
         // Data stores:
@@ -238,6 +242,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
             TryGetParameter(_dataRequest, PARAM_ADD_HEADER_KEY, 3, ref _addHeader);
             TryGetParameter(_dataRequest, PARAM_USE_SUBMISSION_HISTORY_TABLE_KEY, 4, ref _useSubmissionHistoryTable);
             TryGetParameter(_dataRequest, PARAM_VALIDATE_XML_KEY, 5, ref _validateXml);
+            TryGetParameter(_dataRequest, PARAM_WQX_START_DATE_KEY, 6, ref _wqxStartDate);
+            TryGetParameter(_dataRequest, PARAM_WQX_END_DATE_KEY, 7, ref _wqxEndDate);
 
             if (_epaPartnerNode == null)
             {
@@ -255,7 +261,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
         {
             publishFlags = DataServicePublishFlags.DoNotPublish;
             List<TypedParameter> list = new List<TypedParameter>(2);
-            list.Add(new TypedParameter("OrganizationIdentifier", "The indentifier of the organization for which data will be returned", true, typeof(string), true));
+            list.Add(new TypedParameter("OrganizationIdentifier", "The identifier of the organization for which data will be returned", true, typeof(string), true));
             list.Add(new TypedParameter("WQXUpdateDate", "Data will be returned that has been updated since this date", false, typeof(DateTime), true));
             list.Add(new TypedParameter("AddHeader", "True to add an exchange header to the returned data, false otherwise", false, typeof(bool), true));
             list.Add(new TypedParameter("UseSubmissionHistoryTable", "True to use the submission history table during processing", false, typeof(bool), false));
