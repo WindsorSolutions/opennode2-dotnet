@@ -37,13 +37,12 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
 
             selectClauses.Add("WQX_ORGANIZATION",
                 new DbAppendSelectWhereClause(baseDao, "ORGID = ?", organizationIdentifier));
-
-
+            
             List<WQXDataType> dataList = objectsFromDatabase.LoadFromDatabase<WQXDataType>(baseDao, selectClauses);
 
-            if (CollectionUtils.IsNullOrEmpty(dataList))
+            if (CollectionUtils.IsNullOrEmpty(dataList) || dataList.Count == 0)
             {
-                return new WQXDataType();
+                return null;
             }
             else if (dataList.Count > 1)
             {
@@ -52,11 +51,11 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
             else
             {
                 WQXDataType data = dataList[0];
-                appendAuditLogEvent.AppendAuditLogEvent("Found {0} Projects, {1} Activities, {2} Biological Habitat Indexes, {3} Monitoring Locations, {4} Activity Groups, and {5} Results that matched the query",
+                appendAuditLogEvent.AppendAuditLogEvent("Found {0} Projects, {1} Monitoring Locations, {2} Biological Habitat Indexes, {3} Activities, {4} Activity Groups, and {5} Results that matched the query",
                                     CollectionUtils.Count(data.Organization.Project).ToString(),
-                                    CollectionUtils.Count(data.Organization.Activity).ToString(),
+                                    CollectionUtils.Count(data.Organization.MonitoringLocation).ToString(),                                    
                                     CollectionUtils.Count(data.Organization.BiologicalHabitatIndex).ToString(),
-                                    CollectionUtils.Count(data.Organization.MonitoringLocation).ToString(),
+                                    CollectionUtils.Count(data.Organization.Activity).ToString(),
                                     CollectionUtils.Count(data.Organization.ActivityGroup).ToString(),
                                     TotalResultCount(data).ToString());
                 return data;
@@ -72,7 +71,10 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
             validationErrorsFile = null;
 
             WQXDataType wqx = GenerateWqxQueryFromDatabase(appendAuditLogEvent, objectsFromDatabase, baseDao, queryOrganizationIdentifier);
-            
+
+            if (wqx == null)
+                return null;
+
             appendAuditLogEvent.AppendAuditLogEvent("Generating WQX xml file from query results ...");
             string tempFolderPath = Path.Combine(sysTempFolderPath, Guid.NewGuid().ToString());
 
