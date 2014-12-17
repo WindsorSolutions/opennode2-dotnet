@@ -1,4 +1,4 @@
-#define DONT_USE_AUTH_FILE
+//#define DONT_USE_AUTH_FILE
 #region License
 /*
 Copyright (c) 2009, The Environmental Council of the States (ECOS)
