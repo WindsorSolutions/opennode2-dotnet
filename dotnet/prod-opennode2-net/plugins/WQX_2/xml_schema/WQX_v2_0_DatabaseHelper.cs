@@ -102,12 +102,13 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
                 try
                 {
                     appendAuditLogEvent.AppendAuditLogEvent("Writing attachment files to temp folder ...");
-
                     DatabaseHelper.WriteAttachmentFilesToFolder(baseDao, wqx, tempFolderPath);
+                    appendAuditLogEvent.AppendAuditLogEvent("Wrote attachment files to temp folder.");
 
                     appendAuditLogEvent.AppendAuditLogEvent("Compressing WQX xml data file and attachments ...");
-
                     compressionHelper.CompressDirectory(zipXmlFilePath, tempFolderPath);
+                    appendAuditLogEvent.AppendAuditLogEvent("Compressed WQX xml data file and attachments.");
+
                 }
                 catch (Exception)
                 {
@@ -132,113 +133,160 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
         {
             OrganizationDataType org = data.Organization;
 
-            CollectionUtils.ForEach(org.Activity, delegate(ActivityDataType activity)
-            {
-                if (activity.AttachedBinaryObject != null)
+            if (org.Activity != null) {
+
+                CollectionUtils.ForEach(org.Activity, delegate(ActivityDataType activity)
                 {
-                    CollectionUtils.ForEach(activity.AttachedBinaryObject, delegate(ActivityAttachedBinaryObjectDataType attachment)
+                    if (activity.AttachedBinaryObject != null)
                     {
-
-                        if (string.IsNullOrEmpty(attachment.BinaryObjectFileName))
+                        CollectionUtils.ForEach(activity.AttachedBinaryObject, delegate(ActivityAttachedBinaryObjectDataType attachment)
                         {
-                            throw new ArgException("An attachment for the activity \"{0}\" with id \"{1}\" does not have an attachment name.",
-                                                        activity.ActivityDescription, activity.RecordId);
-                        }
-                        string fileName = MakeEmbeddedNameForAttachedFile(activity.RecordId, attachment.BinaryObjectFileName);
-                        string filePath = Path.Combine(folderPath, fileName);
-                        if (File.Exists(filePath))
-                        {
-                            throw new ArgException("Failed to write the attachment \"{0}\" for the activity \"{1}\" with id \"{2}\" because another file with the same name already exists in the temporary folder: \"{3}\"",
-                                                   attachment.BinaryObjectFileName, activity.ActivityDescription, activity.RecordId, filePath);
-                        }
-                        byte[] content = null;
-                        baseDao.DoJDBCQueryWithRowCallbackDelegate("SELECT BINARYOBJECTCONTENT FROM WQX_ACTATTACHEDBINARYOBJECT WHERE PARENTID = ? AND BINARYOBJECTFILE = ?",
-                                                     delegate(IDataReader dataReader)
-                                                     {
-                                                         content = (byte[])dataReader.GetValue(0);
-                                                     }, activity.RecordId, attachment.BinaryObjectFileName);
 
-                        if (content == null)
-                        {
-                            throw new ArgException("Failed to load attachment content for the file \"{0}\" from the database for the activity \"{1}\" with id \"{2}\"",
-                                                   attachment.BinaryObjectFileName, activity.ActivityDescription, activity.RecordId);
-                        }
-                        File.WriteAllBytes(filePath, content);
-                    });
-                }
-            }); 
+                            if (string.IsNullOrEmpty(attachment.BinaryObjectFileName))
+                            {
+                                throw new ArgException("An attachment for the activity \"{0}\" with id \"{1}\" does not have an attachment name.",
+                                                            activity.ActivityDescription, activity.RecordId);
+                            }
+                            string fileName = MakeEmbeddedNameForAttachedFile(activity.RecordId, attachment.BinaryObjectFileName);
+                            string filePath = Path.Combine(folderPath, fileName);
+                            if (File.Exists(filePath))
+                            {
+                                throw new ArgException("Failed to write the attachment \"{0}\" for the activity \"{1}\" with id \"{2}\" because another file with the same name already exists in the temporary folder: \"{3}\"",
+                                                       attachment.BinaryObjectFileName, activity.ActivityDescription, activity.RecordId, filePath);
+                            }
+                            byte[] content = null;
+                            baseDao.DoJDBCQueryWithRowCallbackDelegate("SELECT BINARYOBJECTCONTENT FROM WQX_ACTATTACHEDBINARYOBJECT WHERE PARENTID = ? AND BINARYOBJECTFILE = ?",
+                                                         delegate(IDataReader dataReader)
+                                                         {
+                                                             content = (byte[])dataReader.GetValue(0);
+                                                         }, activity.RecordId, attachment.BinaryObjectFileName);
 
-            CollectionUtils.ForEach(org.Project, delegate(ProjectDataType project)
+                            if (content == null)
+                            {
+                                throw new ArgException("Failed to load attachment content for the file \"{0}\" from the database for the activity \"{1}\" with id \"{2}\"",
+                                                       attachment.BinaryObjectFileName, activity.ActivityDescription, activity.RecordId);
+                            }
+                            File.WriteAllBytes(filePath, content);
+
+                            if (activity.Result != null)
+                            {
+                                foreach (ResultDataType result in activity.Result)
+                                {
+                                    if (result.AttachedBinaryObject != null)
+                                    {
+                                        foreach (ResultAttachedBinaryObjectDataType resultAttachment in result.AttachedBinaryObject)
+                                        {
+                                            if (string.IsNullOrEmpty(attachment.BinaryObjectFileName))
+                                            {
+                                                throw new ArgException("An attachment for the result \"{0}\" with id \"{1}\" does not have an attachment name.",
+                                                                            result.ResultDescription, result.RecordId);
+                                            }
+                                            fileName = MakeEmbeddedNameForAttachedFile(result.RecordId, resultAttachment.BinaryObjectFileName);
+                                            filePath = Path.Combine(folderPath, fileName);
+                                            if (File.Exists(filePath))
+                                            {
+                                                throw new ArgException("Failed to write the attachment \"{0}\" for the result \"{1}\" with id \"{2}\" because another file with the same name already exists in the temporary folder: \"{3}\"",
+                                                                        resultAttachment.BinaryObjectFileName, result.ResultDescription, result.RecordId, filePath);
+                                            }
+                                            content = null;
+                                            baseDao.DoJDBCQueryWithRowCallbackDelegate("SELECT BINARYOBJECTCONTENT FROM WQX_RESULTATTACHEDBINARYOBJECT WHERE PARENTID = ? AND BINARYOBJECTFILE = ?",
+                                                                            delegate(IDataReader dataReader)
+                                                                            {
+                                                                                content = (byte[])dataReader.GetValue(0);
+                                                                            }, result.RecordId, resultAttachment.BinaryObjectFileName);
+
+                                            if (content == null)
+                                            {
+                                                throw new ArgException("Failed to load attachment content for the file \"{0}\" from the database for the result \"{1}\" with id \"{2}\"",
+                                                                        resultAttachment.BinaryObjectFileName, result.ResultDescription, result.RecordId);
+                                            }
+                                            File.WriteAllBytes(filePath, content);
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                    }
+                });
+            };
+
+            if (org.Project != null)
             {
-                if (project.AttachedBinaryObject != null)
+                CollectionUtils.ForEach(org.Project, delegate(ProjectDataType project)
                 {
-                    CollectionUtils.ForEach(project.AttachedBinaryObject, delegate(ProjectAttachedBinaryObjectDataType attachment)
+                    if (project.AttachedBinaryObject != null)
                     {
-
-                        if (string.IsNullOrEmpty(attachment.BinaryObjectFileName))
+                        CollectionUtils.ForEach(project.AttachedBinaryObject, delegate(ProjectAttachedBinaryObjectDataType attachment)
                         {
-                            throw new ArgException("An attachment for the project \"{0}\" with id \"{1}\" does not have an attachment name.",
-                                                        project.ProjectName, project.ProjectIdentifier);
-                        }
-                        string fileName = MakeEmbeddedNameForAttachedFile(project.ProjectIdentifier, attachment.BinaryObjectFileName);
-                        string filePath = Path.Combine(folderPath, fileName);
-                        if (File.Exists(filePath))
-                        {
-                            throw new ArgException("Failed to write the attachment \"{0}\" for the project \"{1}\" with id \"{2}\" because another file with the same name already exists in the temporary folder: \"{3}\"",
-                                                    attachment.BinaryObjectFileName, project.ProjectName, project.ProjectIdentifier, filePath);
-                        }
-                        byte[] content = null;
-                        baseDao.DoJDBCQueryWithRowCallbackDelegate("SELECT BINARYOBJECTCONTENT FROM WQX_PROJATTACHEDBINARYOBJECT WHERE PARENTID = ? AND BINARYOBJECTFILE = ?",
-                                                        delegate(IDataReader dataReader)
-                                                        {
-                                                            content = (byte[])dataReader.GetValue(0);
-                                                        }, project.ProjectIdentifier, attachment.BinaryObjectFileName);
 
-                        if (content == null)
-                        {
-                            throw new ArgException("Failed to load attachment content for the file \"{0}\" from the database for the project \"{1}\" with id \"{2}\"",
-                                                    attachment.BinaryObjectFileName, project.ProjectName, project.ProjectIdentifier);
-                        }
-                        File.WriteAllBytes(filePath, content);
-                    });
-                }
-            });
+                            if (string.IsNullOrEmpty(attachment.BinaryObjectFileName))
+                            {
+                                throw new ArgException("An attachment for the project \"{0}\" with id \"{1}\" does not have an attachment name.",
+                                                            project.ProjectName, project.ProjectIdentifier);
+                            }
+                            string fileName = MakeEmbeddedNameForAttachedFile(project.ProjectIdentifier, attachment.BinaryObjectFileName);
+                            string filePath = Path.Combine(folderPath, fileName);
+                            if (File.Exists(filePath))
+                            {
+                                throw new ArgException("Failed to write the attachment \"{0}\" for the project \"{1}\" with id \"{2}\" because another file with the same name already exists in the temporary folder: \"{3}\"",
+                                                        attachment.BinaryObjectFileName, project.ProjectName, project.ProjectIdentifier, filePath);
+                            }
+                            byte[] content = null;
+                            baseDao.DoJDBCQueryWithRowCallbackDelegate("SELECT BINARYOBJECTCONTENT FROM WQX_PROJATTACHEDBINARYOBJECT WHERE PARENTID = ? AND BINARYOBJECTFILE = ?",
+                                                            delegate(IDataReader dataReader)
+                                                            {
+                                                                content = (byte[])dataReader.GetValue(0);
+                                                            }, project.ProjectIdentifier, attachment.BinaryObjectFileName);
 
-            CollectionUtils.ForEach(org.MonitoringLocation, delegate(MonitoringLocationDataType monitoringLocation)
+                            if (content == null)
+                            {
+                                throw new ArgException("Failed to load attachment content for the file \"{0}\" from the database for the project \"{1}\" with id \"{2}\"",
+                                                        attachment.BinaryObjectFileName, project.ProjectName, project.ProjectIdentifier);
+                            }
+                            File.WriteAllBytes(filePath, content);
+                        });
+                    }
+                });
+            }
+
+            if (org.MonitoringLocation != null)
             {
-                if (monitoringLocation.AttachedBinaryObject != null)
+                CollectionUtils.ForEach(org.MonitoringLocation, delegate(MonitoringLocationDataType monitoringLocation)
                 {
-                    CollectionUtils.ForEach(monitoringLocation.AttachedBinaryObject, delegate(MonitoringLocationAttachedBinaryObjectDataType attachment)
+                    if (monitoringLocation.AttachedBinaryObject != null)
                     {
+                        CollectionUtils.ForEach(monitoringLocation.AttachedBinaryObject, delegate(MonitoringLocationAttachedBinaryObjectDataType attachment)
+                        {
 
-                        if (string.IsNullOrEmpty(attachment.BinaryObjectFileName))
-                        {
-                            throw new ArgException("An attachment for the monitoring location \"{0}\" with id \"{1}\" does not have an attachment name.",
-                                                        monitoringLocation.WellInformation, monitoringLocation.RecordId);
-                        }
-                        string fileName = MakeEmbeddedNameForAttachedFile(monitoringLocation.RecordId, attachment.BinaryObjectFileName);
-                        string filePath = Path.Combine(folderPath, fileName);
-                        if (File.Exists(filePath))
-                        {
-                            throw new ArgException("Failed to write the attachment \"{0}\" for the monitoring location \"{1}\" with id \"{2}\" because another file with the same name already exists in the temporary folder: \"{3}\"",
-                                                   attachment.BinaryObjectFileName, monitoringLocation.WellInformation, monitoringLocation.RecordId, filePath);
-                        }
-                        byte[] content = null;
-                        baseDao.DoJDBCQueryWithRowCallbackDelegate("SELECT BINARYOBJECTCONTENT FROM WQX_MONLOCATTACHEDBINARYOBJECT WHERE PARENTID = ? AND BINARYOBJECTFILE = ?",
-                                                     delegate(IDataReader dataReader)
-                                                     {
-                                                         content = (byte[])dataReader.GetValue(0);
-                                                     }, monitoringLocation.RecordId, attachment.BinaryObjectFileName);
+                            if (string.IsNullOrEmpty(attachment.BinaryObjectFileName))
+                            {
+                                throw new ArgException("An attachment for the monitoring location \"{0}\" with id \"{1}\" does not have an attachment name.",
+                                                            monitoringLocation.WellInformation, monitoringLocation.RecordId);
+                            }
+                            string fileName = MakeEmbeddedNameForAttachedFile(monitoringLocation.RecordId, attachment.BinaryObjectFileName);
+                            string filePath = Path.Combine(folderPath, fileName);
+                            if (File.Exists(filePath))
+                            {
+                                throw new ArgException("Failed to write the attachment \"{0}\" for the monitoring location \"{1}\" with id \"{2}\" because another file with the same name already exists in the temporary folder: \"{3}\"",
+                                                       attachment.BinaryObjectFileName, monitoringLocation.WellInformation, monitoringLocation.RecordId, filePath);
+                            }
+                            byte[] content = null;
+                            baseDao.DoJDBCQueryWithRowCallbackDelegate("SELECT BINARYOBJECTCONTENT FROM WQX_MONLOCATTACHEDBINARYOBJECT WHERE PARENTID = ? AND BINARYOBJECTFILE = ?",
+                                                         delegate(IDataReader dataReader)
+                                                         {
+                                                             content = (byte[])dataReader.GetValue(0);
+                                                         }, monitoringLocation.RecordId, attachment.BinaryObjectFileName);
 
-                        if (content == null)
-                        {
-                            throw new ArgException("Failed to load attachment content for the file \"{0}\" from the database for the monitoring location \"{1}\" with id \"{2}\"",
-                                                   attachment.BinaryObjectFileName, monitoringLocation.WellInformation, monitoringLocation.RecordId);
-                        }
-                        File.WriteAllBytes(filePath, content);
-                    });
-                }
-            }); 
+                            if (content == null)
+                            {
+                                throw new ArgException("Failed to load attachment content for the file \"{0}\" from the database for the monitoring location \"{1}\" with id \"{2}\"",
+                                                       attachment.BinaryObjectFileName, monitoringLocation.WellInformation, monitoringLocation.RecordId);
+                            }
+                            File.WriteAllBytes(filePath, content);
+                        });
+                    }
+                });
+            }
             
         }
 
@@ -262,7 +310,372 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
             return count;
         }
 
+        public static WQXDataType GenerateWqxObjectsFromSubmissionFile(IAppendAuditLogEvent appendAuditLogEvent, string submissionFilePath,
+                                                               string sysTempFolderPath, ISerializationHelper serializationHelper,
+                                                               ICompressionHelper compressionHelper, out string attachmentsFolderPath)
+        {
+            string validationErrorsFile;
+            return GenerateWqxObjectsFromSubmissionFile(appendAuditLogEvent, submissionFilePath, sysTempFolderPath, null, null, null,
+                                                        serializationHelper, compressionHelper, out attachmentsFolderPath,
+                                                        out validationErrorsFile);
+        }
+        public static WQXDataType GenerateWqxObjectsFromSubmissionFile(IAppendAuditLogEvent appendAuditLogEvent, string submissionFilePath,
+                                                               string sysTempFolderPath, Assembly xmlSchemaZippedResourceAssembly,
+                                                               string xmlSchemaZippedQualifiedResourceName, string xmlSchemaRootFileName,
+                                                               ISerializationHelper serializationHelper, ICompressionHelper compressionHelper,
+                                                               out string attachmentsFolderPath, out string validationErrorsFile)
+        {
+            WQXDataType data = null;
+            attachmentsFolderPath = null;
+            string wqxFilePath = null;
+            validationErrorsFile = null;            
+
+            try
+            {
+                attachmentsFolderPath = Path.Combine(sysTempFolderPath, Guid.NewGuid().ToString());
+                Directory.CreateDirectory(attachmentsFolderPath);
+
+                appendAuditLogEvent.AppendAuditLogEvent("Decompressing the WQX data to a temporary folder ...");
+                try
+                {
+                    compressionHelper.UncompressDirectory(submissionFilePath, attachmentsFolderPath);
+                }
+                catch (Exception ex)
+                {
+                    throw new ArgException("An error occurred decompressing the WQX data: {0}", ExceptionUtils.GetDeepExceptionMessage(ex));
+                }
+                string[] xmlFiles = Directory.GetFiles(attachmentsFolderPath, "*.xml");
+                if (xmlFiles.Length == 0)
+                {
+                    throw new ArgException("Failed to locate an WQX xml file in the WQX data");
+                }
+                else if (xmlFiles.Length > 1)
+                {
+                    throw new ArgException("More than one xml file was found in the WQX data");
+                }
+                wqxFilePath = xmlFiles[0];
+
+                if (!string.IsNullOrEmpty(xmlSchemaZippedQualifiedResourceName))
+                {
+                    validationErrorsFile =
+                        BaseWNOSPlugin.ValidateXmlFile(wqxFilePath, xmlSchemaZippedResourceAssembly, xmlSchemaZippedQualifiedResourceName,
+                                                       xmlSchemaRootFileName, sysTempFolderPath, appendAuditLogEvent, compressionHelper);
+
+                    if (validationErrorsFile != null)
+                    {
+                        FileUtils.SafeDeleteDirectory(attachmentsFolderPath);
+                        return null;
+                    }
+                }
+
+                appendAuditLogEvent.AppendAuditLogEvent("Deserializing the WQX data xml file ...");
+                try
+                {
+                    data = serializationHelper.Deserialize<WQXDataType>(wqxFilePath);
+                }
+                catch (Exception ex)
+                {
+                    appendAuditLogEvent.AppendAuditLogEvent("Failed to deserialize the WQX data xml file: {0}", ExceptionUtils.GetDeepExceptionMessage(ex));
+                    throw;
+                }
+                if (data == null)
+                {
+                    appendAuditLogEvent.AppendAuditLogEvent("The WQX data does not contain any organizations, so no elements will be stored in the database.");
+                    return null;
+                }
+                else
+                {
+                    //TODO: check submit data flag
+                    //foreach(ActivityDataType activity in data.Organization.Activity)
+                    //{ 
+                    //}
+
+                    //foreach(BiologicalHabitatIndexDataType biological in data.Organization.BiologicalHabitatIndex)
+                    //{ }
+                }
+            }
+            catch (Exception)
+            {
+                FileUtils.SafeDeleteDirectory(attachmentsFolderPath);
+                throw;
+            }
+            finally
+            {
+                FileUtils.SafeDeleteFile(wqxFilePath);
+            }
+            
+            return data;
+        }
+
+        public static void DeleteFromStagingTables(SpringBaseDao baseDao)
+        {
+            int count = baseDao.DoJDBCExecuteNonQuery("	DELETE FROM WQX_RESULTDETECTQUANTLIMIT WHERE 1=1 ");
+                count = baseDao.DoJDBCExecuteNonQuery("	DELETE FROM WQX_RESULTATTACHEDBINARYOBJECT WHERE 1=1 ");
+                count = baseDao.DoJDBCExecuteNonQuery("	DELETE FROM WQX_LABSAMPLEPREP WHERE 1=1 ");
+                count = baseDao.DoJDBCExecuteNonQuery("	DELETE FROM WQX_RESULT WHERE 1=1 ");
+                count = baseDao.DoJDBCExecuteNonQuery("	DELETE FROM WQX_PROJECTACTIVITY WHERE 1=1 ");
+                count = baseDao.DoJDBCExecuteNonQuery("	DELETE FROM WQX_ACTATTACHEDBINARYOBJECT WHERE 1=1 ");
+                count = baseDao.DoJDBCExecuteNonQuery("	DELETE FROM WQX_ACTIVITYACTIVITYGROUP WHERE 1=1 ");
+                count = baseDao.DoJDBCExecuteNonQuery("	DELETE FROM WQX_ACTIVITYCONDUCTINGORG WHERE 1=1 ");
+                count = baseDao.DoJDBCExecuteNonQuery("	DELETE FROM WQX_ACTIVITYGROUP WHERE 1=1 ");
+                count = baseDao.DoJDBCExecuteNonQuery("	DELETE FROM WQX_ACTIVITYMETRIC WHERE 1=1 ");
+                count = baseDao.DoJDBCExecuteNonQuery("	DELETE FROM WQX_ACTIVITY WHERE 1=1 ");
+                count = baseDao.DoJDBCExecuteNonQuery("	DELETE FROM WQX_BIOLOGICALHABITATINDEX WHERE 1=1 ");
+                count = baseDao.DoJDBCExecuteNonQuery("	DELETE FROM WQX_PROJECTMONLOC WHERE 1=1 ");
+                count = baseDao.DoJDBCExecuteNonQuery("	DELETE FROM WQX_PROJATTACHEDBINARYOBJECT WHERE 1=1 ");
+                count = baseDao.DoJDBCExecuteNonQuery("	DELETE FROM WQX_PROJECT WHERE 1=1 ");
+                count = baseDao.DoJDBCExecuteNonQuery("	DELETE FROM WQX_MONLOCATTACHEDBINARYOBJECT WHERE 1=1 ");
+                count = baseDao.DoJDBCExecuteNonQuery("	DELETE FROM WQX_ALTMONLOC WHERE 1=1 ");
+                count = baseDao.DoJDBCExecuteNonQuery("	DELETE FROM WQX_MONITORINGLOCATION WHERE 1=1 ");
+                count = baseDao.DoJDBCExecuteNonQuery("	DELETE FROM WQX_ORGADDRESS WHERE 1=1 ");
+                count = baseDao.DoJDBCExecuteNonQuery("	DELETE FROM WQX_TELEPHONIC WHERE 1=1 ");
+                count = baseDao.DoJDBCExecuteNonQuery("	DELETE FROM WQX_ELECTRONICADDRESS WHERE 1=1 ");
+                count = baseDao.DoJDBCExecuteNonQuery("	DELETE FROM WQX_DELETES WHERE 1=1 ");
+                count = baseDao.DoJDBCExecuteNonQuery("	DELETE FROM WQX_ORGANIZATION WHERE 1=1 ");
+        }
+
+        //public static void DeleteOrganizationFromDatabase(string organizationId, SpringBaseDao baseDao)
+        //{
+        //    //TODO: Delete data from existing non-WQX tables?
+        //}
+
+        public static string StoreWqxDataToDatabase(IAppendAuditLogEvent appendAuditLogEvent, WQXDataType data, IObjectsToDatabase objectsToDatabase,
+                                                    SpringBaseDao baseDao, string attachmentsFolderPath)
+        {
+            appendAuditLogEvent.AppendAuditLogEvent("Storing WQX data into the database ...");
+
+            string countsString = string.Empty;
+
+            baseDao.TransactionTemplate.Execute(delegate(Spring.Transaction.ITransactionStatus status)
+            {
+                OrganizationDataType org = data.Organization;
+
+                //appendAuditLogEvent.AppendAuditLogEvent("Replacing existing WQX data in database for organization \"{0}\" ...", org.OrganizationDescription.OrganizationFormalName);
+                
+                //DeleteOrganizationFromDatabase(org.OrganizationDescription.OrganizationIdentifier, baseDao);
+
+                appendAuditLogEvent.AppendAuditLogEvent("Storing WQX data into database for organization \"{0}\" ...", org.OrganizationDescription.OrganizationFormalName);
+
+                appendAuditLogEvent.AppendAuditLogEvent(DatabaseHelper.GetWqxOrgCountsString(org));
+
+                Dictionary<string, int> insertCounts = objectsToDatabase.SaveToDatabase(data, baseDao);
+
+                DatabaseHelper.StoreAttachmentFilesFromFolder(objectsToDatabase, baseDao, data.Organization, attachmentsFolderPath);
+
+                countsString += string.Format("Stored WQX data for organization \"{0}\" into the database with the following table row counts:{1}{2}",
+                                                  org.OrganizationDescription.OrganizationFormalName, Environment.NewLine, CreateTableRowCountsString(insertCounts));
+
+                appendAuditLogEvent.AppendAuditLogEvent(countsString);
+                
+                return null;
+            });
+            return countsString;
+        }
+
+        public static void StoreAttachmentFilesFromFolder(IObjectsToDatabase objectsToDatabase, SpringBaseDao baseDao, OrganizationDataType data, string folderPath)
+        {
+            if (data.Activity != null)
+            {
+                foreach (ActivityDataType activity in data.Activity)
+                {
+                    if (activity.AttachedBinaryObject != null)
+                    {
+                        foreach (AttachedBinaryObjectDataType attachment in activity.AttachedBinaryObject)
+                        {
+                            if (string.IsNullOrEmpty(attachment.BinaryObjectFileName))
+                            {
+                                throw new ArgException("An attachment for the activity \"{0}\" with id \"{1}\" does not have an attachment name.",
+                                                        activity.ActivityDescription, activity.RecordId);
+                            }
+
+                            string fileName = MakeEmbeddedNameForAttachedFile(activity.RecordId, attachment.BinaryObjectFileName);
+                            string filePath = Path.Combine(folderPath, fileName);
+                            if (!File.Exists(filePath))
+                            {
+                                throw new ArgException("Failed to locate an attachment with the name \"{0}\" for the activity \"{1}\" with id \"{2}\" in the temporary folder: \"{3}\"",
+                                                       fileName, activity.ActivityDescription, activity.RecordId, filePath);
+                            }
+
+                            byte[] content = File.ReadAllBytes(filePath);
+
+                            int updateCount = baseDao.DoJDBCExecuteNonQuery("UPDATE WQX_ACTATTACHEDBINARYOBJECT SET BINARYOBJECTCONTENT = ? WHERE RECORDID = ? AND BINARYOBJECTFILE = ?",
+                                                                            content, activity.RecordId, fileName);
+                            if (updateCount == 0)
+                            {
+                                throw new ArgException("Failed to update the content for an attachment with the name \"{0}\" for the activity \"{1}\" with id \"{2}\"",
+                                                        fileName, activity.ActivityDescription, activity.RecordId);
+                            }
+
+                            if (activity.Result != null)
+                            {
+                                foreach (ResultDataType result in activity.Result)
+                                {
+                                    foreach (ResultAttachedBinaryObjectDataType resultAttachment in result.AttachedBinaryObject)
+                                    {
+                                        if (string.IsNullOrEmpty(resultAttachment.BinaryObjectFileName))
+                                        {
+                                            throw new ArgException("An attachment for the result \"{0}\" with id \"{1}\" does not have an attachment name.",
+                                                                    result.ResultDescription, result.RecordId);
+                                        }
+
+                                        fileName = MakeEmbeddedNameForAttachedFile(result.RecordId, resultAttachment.BinaryObjectFileName);
+                                        filePath = Path.Combine(folderPath, fileName);
+                                        if (!File.Exists(filePath))
+                                        {
+                                            throw new ArgException("Failed to locate an attachment with the name \"{0}\" for the result \"{1}\" with id \"{2}\" in the temporary folder: \"{3}\"",
+                                                                   fileName, result.ResultDescription, result.RecordId, filePath);
+                                        }
+
+                                        content = File.ReadAllBytes(filePath);
+
+                                        updateCount = baseDao.DoJDBCExecuteNonQuery("UPDATE WQX_RESULTATTACHEDBINARYOBJECT SET BINARYOBJECTCONTENT = ? WHERE RECORDID = ? AND BINARYOBJECTFILE = ?",
+                                                                                        content, result.RecordId, fileName);
+                                        if (updateCount == 0)
+                                        {
+                                            throw new ArgException("Failed to update the content for an attachment with the name \"{0}\" for the result \"{1}\" with id \"{2}\"",
+                                                                    fileName, result.ResultDescription, result.RecordId);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (data.MonitoringLocation != null)
+            {
+                foreach (MonitoringLocationDataType monitoringLocation in data.MonitoringLocation)
+                {
+                    if (monitoringLocation.AttachedBinaryObject != null)
+                    {
+                        foreach (AttachedBinaryObjectDataType attachment in monitoringLocation.AttachedBinaryObject)
+                        {
+                            if (string.IsNullOrEmpty(attachment.BinaryObjectFileName))
+                            {
+                                throw new ArgException("An attachment for the monitoring location \"{0}\" with id \"{1}\" does not have an attachment name.",
+                                                        monitoringLocation.WellInformation, monitoringLocation.RecordId);
+                            }
+
+                            string fileName = MakeEmbeddedNameForAttachedFile(monitoringLocation.RecordId, attachment.BinaryObjectFileName);
+                            string filePath = Path.Combine(folderPath, fileName);
+                            if (!File.Exists(filePath))
+                            {
+                                throw new ArgException("Failed to locate an attachment with the name \"{0}\" for the monitoring location \"{1}\" with id \"{2}\" in the temporary folder: \"{3}\"",
+                                                       fileName, monitoringLocation.WellInformation, monitoringLocation.RecordId, filePath);
+                            }
+
+                            byte[] content = File.ReadAllBytes(filePath);
+
+                            int updateCount = baseDao.DoJDBCExecuteNonQuery("UPDATE WQX_MONLOCATTACHEDBINARYOBJECT SET BINARYOBJECTCONTENT = ? WHERE RECORDID = ? AND BINARYOBJECTFILE = ?",
+                                                                            content, monitoringLocation.RecordId, fileName);
+                            if (updateCount == 0)
+                            {
+                                throw new ArgException("Failed to update the content for an attachment with the name \"{0}\" for the monitoring location \"{1}\" with id \"{2}\"",
+                                                        fileName, monitoringLocation.WellInformation, monitoringLocation.RecordId);
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (data.Project != null)
+            {
+                foreach (ProjectDataType project in data.Project)
+                {
+                    if (project.AttachedBinaryObject != null)
+                    {
+                        foreach (AttachedBinaryObjectDataType attachment in project.AttachedBinaryObject)
+                        {
+                            if (string.IsNullOrEmpty(attachment.BinaryObjectFileName))
+                            {
+                                throw new ArgException("An attachment for the project \"{0}\" with id \"{1}\" does not have an attachment name.",
+                                                        project.ProjectDescriptionText, project.RecordId);
+                            }
+
+                            string fileName = MakeEmbeddedNameForAttachedFile(project.RecordId, attachment.BinaryObjectFileName);
+                            string filePath = Path.Combine(folderPath, fileName);
+                            if (!File.Exists(filePath))
+                            {
+                                throw new ArgException("Failed to locate an attachment with the name \"{0}\" for the project \"{1}\" with id \"{2}\" in the temporary folder: \"{3}\"",
+                                                       fileName, project.ProjectDescriptionText, project.RecordId, filePath);
+                            }
+
+                            byte[] content = File.ReadAllBytes(filePath);
+
+                            int updateCount = baseDao.DoJDBCExecuteNonQuery("UPDATE WQX_PROJATTACHEDBINARYOBJECT SET BINARYOBJECTCONTENT = ? WHERE RECORDID = ? AND BINARYOBJECTFILE = ?",
+                                                                            content, project.RecordId, fileName);
+                            if (updateCount == 0)
+                            {
+                                throw new ArgException("Failed to update the content for an attachment with the name \"{0}\" for the project \"{1}\" with id \"{2}\"",
+                                                        fileName, project.ProjectDescriptionText, project.RecordId);
+                            }
+                        }
+                    }
+                }
+            }            
+        }
+
+        private static void AppendCountString(StringBuilder sb, int count, string countName, string countsName, ref int addCount, ref int commaIndex)
+        {
+            if (count > 0)
+            {
+                if (addCount > 0)
+                {
+                    commaIndex = sb.Length;
+                    sb.Append(", ");
+                }
+                sb.AppendFormat("{0} {1}", count.ToString(), (count == 1) ? countName : ((countsName == null) ? countName : countsName));
+                ++addCount;
+            }
+        }
+
+        public static string GetWqxOrgCountsString(OrganizationDataType org)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendFormat("WQX data for organization \"{0}\" contains ", org.OrganizationDescription.OrganizationFormalName);
+
+            int collectionActivityCount = CollectionUtils.Count(org.Activity);
+            int biologicalHabitatCount = CollectionUtils.Count(org.BiologicalHabitatIndex);            
+
+            int addCount = 0, commaIndex = -1;
+            AppendCountString(sb, collectionActivityCount, "Collection Activities", null, ref addCount, ref commaIndex);
+            AppendCountString(sb, biologicalHabitatCount, "Biological Habitat Indices", null, ref addCount, ref commaIndex);            
+
+            if (addCount == 0)
+            {
+                sb.Append("no collection activites or biological habitat indices");
+            }
+            else if (addCount > 1)
+            {
+                sb.Replace(", ", " and ", commaIndex, sb.Length - commaIndex);
+            }
+
+            return sb.ToString();
+        }
+
+        public static string CreateTableRowCountsString(Dictionary<string, int> tableRowCounts)
+        {
+            if (CollectionUtils.IsNullOrEmpty(tableRowCounts))
+            {
+                return "None";
+            }
+            StringBuilder sb = new StringBuilder();
+            foreach (KeyValuePair<string, int> pair in tableRowCounts)
+            {
+                if (sb.Length > 0)
+                {
+                    sb.Append(", ");
+                }
+                sb.AppendFormat("{0} ({1})", pair.Key, pair.Value.ToString());
+            }
+            return sb.ToString();
+        }
+
         public static string WQX_FILE_PREFIX = "__";
-        
+
+        public const string PARAM_ORGANIZATION_ID_KEY = "OrganizationIdentifier";        
+        public const string PARAM_START_DATE_KEY = "StartDate";
+        public const string PARAM_END_DATE_KEY = "EndDate";
     }
 }
