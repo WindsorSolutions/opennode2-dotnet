@@ -110,10 +110,10 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
                     appendAuditLogEvent.AppendAuditLogEvent("Compressed WQX xml data file and attachments.");
 
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     FileUtils.SafeDeleteFile(zipXmlFilePath);
-                    throw;
+                    throw ex;
                 }
                 finally
                 {
@@ -293,7 +293,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
         public static string MakeEmbeddedNameForAttachedFile(string parentId, string attachedFileName)
         {
             string name = string.Format("{0}_{1}", parentId, attachedFileName);
-            name = FileUtils.ReplaceInvalidFilenameChars(name, "%%%");
+            name = FileUtils.ReplaceInvalidFilenameChars(name, "%");
             return name;
         }
 
