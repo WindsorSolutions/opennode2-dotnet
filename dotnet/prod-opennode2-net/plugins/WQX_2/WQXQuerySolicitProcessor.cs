@@ -93,10 +93,19 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                 _queryUsername = _transactionManager.GetTransactionUsername(_dataRequest.TransactionId);
                 if (string.IsNullOrEmpty(_queryUsername))
                 {
-                    throw new ArgumentException("A Submit username is not associated with the transaction");
+                    throw new ArgumentException("A query username is not associated with the transaction");
                 }
                 List<string> usernames = null;
                 if (_authorizedWqxUsers.TryGetValue(_organizationIdentifier.ToUpper(), out usernames))
+                {
+                    if (!usernames.Contains("*") && !usernames.Contains(_queryUsername.ToUpper()))
+                    {
+                        string orgName = _settingsProvider.NodeOrganizationName;
+                        throw new UnauthorizedAccessException(string.Format("The User \"{0}\" is not authorized to query data for WQX Organization ID \"{1}.\"  If you feel you have received this message in error, please contact the {2} for further assistance.",
+                                                                            _queryUsername, _organizationIdentifier, orgName));
+                    }
+                }
+                else if (_authorizedWqxUsers.TryGetValue("*", out usernames))
                 {
                     if (!usernames.Contains("*") && !usernames.Contains(_queryUsername.ToUpper()))
                     {

@@ -230,6 +230,15 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                                                                                 _submitUsername, orgName, orgId));
                         }
                     }
+                    else if (_authorizedWqxUsers.TryGetValue("*", out usernames))
+                    {
+                        if (!usernames.Contains("*") && !usernames.Contains(_submitUsername.ToUpper()))
+                        {
+                            string orgName = _settingsProvider.NodeOrganizationName;
+                            throw new UnauthorizedAccessException(string.Format("The User \"{0}\" is not authorized to provide data to the {1} for the Organization ID \"{2}.\"  If you feel you have received this message in error, please contact the {1} for further assistance.",
+                                                                                _submitUsername, orgName, orgId));
+                        }
+                    }
                     else
                     {
                         string orgName = _settingsProvider.NodeOrganizationName;
@@ -295,8 +304,19 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                 Document document = _documentManager.GetDocument(transactionId, docId, true);
                 if (document.IsZipFile)
                 {
-                    AppendAuditLogEvent("Decompressing document to temporary file");
-                    _compressionHelper.UncompressDeep(document.Content, tempXmlFilePath);
+                    AppendAuditLogEvent("Decompressing document to temporary folder");
+                    string tempFolder = _settingsProvider.CreateNewTempFolderPath();
+                    _compressionHelper.UncompressDirectory(document.Content, tempFolder);
+                    string[] xmlFiles = Directory.GetFiles(tempFolder, "*.xml");
+                    if (xmlFiles.Length == 0)
+                    {
+                        throw new ArgException("Failed to locate an WQX xml file in the WQX data");
+                    }
+                    else if (xmlFiles.Length > 1)
+                    {
+                        throw new ArgException("More than one xml file was found in the WQX data");
+                    }
+                    tempXmlFilePath = xmlFiles[0];
                 }
                 else
                 {
