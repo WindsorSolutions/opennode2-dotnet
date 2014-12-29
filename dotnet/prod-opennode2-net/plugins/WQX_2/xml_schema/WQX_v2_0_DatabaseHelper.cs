@@ -382,17 +382,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
                 {
                     appendAuditLogEvent.AppendAuditLogEvent("The WQX data does not contain any organizations, so no elements will be stored in the database.");
                     return null;
-                }
-                else
-                {
-                    //TODO: check submit data flag
-                    //foreach(ActivityDataType activity in data.Organization.Activity)
-                    //{ 
-                    //}
-
-                    //foreach(BiologicalHabitatIndexDataType biological in data.Organization.BiologicalHabitatIndex)
-                    //{ }
-                }
+                }                
             }
             catch (Exception)
             {
@@ -433,12 +423,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
                 count = baseDao.DoJDBCExecuteNonQuery("	DELETE FROM WQX_DELETES WHERE 1=1 ");
                 count = baseDao.DoJDBCExecuteNonQuery("	DELETE FROM WQX_ORGANIZATION WHERE 1=1 ");
         }
-
-        //public static void DeleteOrganizationFromDatabase(string organizationId, SpringBaseDao baseDao)
-        //{
-        //    //TODO: Delete data from existing non-WQX tables?
-        //}
-
+        
         public static string StoreWqxDataToDatabase(IAppendAuditLogEvent appendAuditLogEvent, WQXDataType data, IObjectsToDatabase objectsToDatabase,
                                                     SpringBaseDao baseDao, string attachmentsFolderPath)
         {
@@ -449,11 +434,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
             baseDao.TransactionTemplate.Execute(delegate(Spring.Transaction.ITransactionStatus status)
             {
                 OrganizationDataType org = data.Organization;
-
-                //appendAuditLogEvent.AppendAuditLogEvent("Replacing existing WQX data in database for organization \"{0}\" ...", org.OrganizationDescription.OrganizationFormalName);
-                
-                //DeleteOrganizationFromDatabase(org.OrganizationDescription.OrganizationIdentifier, baseDao);
-
+                                
                 appendAuditLogEvent.AppendAuditLogEvent("Storing WQX data into database for organization \"{0}\" ...", org.OrganizationDescription.OrganizationFormalName);
 
                 appendAuditLogEvent.AppendAuditLogEvent(DatabaseHelper.GetWqxOrgCountsString(org));
@@ -510,30 +491,33 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
                             {
                                 foreach (ResultDataType result in activity.Result)
                                 {
-                                    foreach (ResultAttachedBinaryObjectDataType resultAttachment in result.AttachedBinaryObject)
+                                    if (result.AttachedBinaryObject != null)
                                     {
-                                        if (string.IsNullOrEmpty(resultAttachment.BinaryObjectFileName))
+                                        foreach (ResultAttachedBinaryObjectDataType resultAttachment in result.AttachedBinaryObject)
                                         {
-                                            throw new ArgException("An attachment for the result \"{0}\" with id \"{1}\" does not have an attachment name.",
-                                                                    result.ResultDescription, result.RecordId);
-                                        }
+                                            if (string.IsNullOrEmpty(resultAttachment.BinaryObjectFileName))
+                                            {
+                                                throw new ArgException("An attachment for the result \"{0}\" with id \"{1}\" does not have an attachment name.",
+                                                                        result.ResultDescription, result.RecordId);
+                                            }
 
-                                        fileName = MakeEmbeddedNameForAttachedFile(result.RecordId, resultAttachment.BinaryObjectFileName);
-                                        filePath = Path.Combine(folderPath, fileName);
-                                        if (!File.Exists(filePath))
-                                        {
-                                            throw new ArgException("Failed to locate an attachment with the name \"{0}\" for the result \"{1}\" with id \"{2}\" in the temporary folder: \"{3}\"",
-                                                                   fileName, result.ResultDescription, result.RecordId, filePath);
-                                        }
+                                            fileName = MakeEmbeddedNameForAttachedFile(result.RecordId, resultAttachment.BinaryObjectFileName);
+                                            filePath = Path.Combine(folderPath, fileName);
+                                            if (!File.Exists(filePath))
+                                            {
+                                                throw new ArgException("Failed to locate an attachment with the name \"{0}\" for the result \"{1}\" with id \"{2}\" in the temporary folder: \"{3}\"",
+                                                                       fileName, result.ResultDescription, result.RecordId, filePath);
+                                            }
 
-                                        content = File.ReadAllBytes(filePath);
+                                            content = File.ReadAllBytes(filePath);
 
-                                        updateCount = baseDao.DoJDBCExecuteNonQuery("UPDATE WQX_RESULTATTACHEDBINARYOBJECT SET BINARYOBJECTCONTENT = ? WHERE RECORDID = ? AND BINARYOBJECTFILE = ?",
-                                                                                        content, result.RecordId, fileName);
-                                        if (updateCount == 0)
-                                        {
-                                            throw new ArgException("Failed to update the content for an attachment with the name \"{0}\" for the result \"{1}\" with id \"{2}\"",
-                                                                    fileName, result.ResultDescription, result.RecordId);
+                                            updateCount = baseDao.DoJDBCExecuteNonQuery("UPDATE WQX_RESULTATTACHEDBINARYOBJECT SET BINARYOBJECTCONTENT = ? WHERE RECORDID = ? AND BINARYOBJECTFILE = ?",
+                                                                                            content, result.RecordId, fileName);
+                                            if (updateCount == 0)
+                                            {
+                                                throw new ArgException("Failed to update the content for an attachment with the name \"{0}\" for the result \"{1}\" with id \"{2}\"",
+                                                                        fileName, result.ResultDescription, result.RecordId);
+                                            }
                                         }
                                     }
                                 }
