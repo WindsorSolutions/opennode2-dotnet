@@ -144,67 +144,30 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
 
                             if (string.IsNullOrEmpty(attachment.BinaryObjectFileName))
                             {
-                                throw new ArgException("An attachment for the activity \"{0}\" with id \"{1}\" does not have an attachment name.",
-                                                            activity.ActivityDescription, activity.RecordId);
+                                throw new ArgException("An attachment for the activity with id \"{0}\" does not have an attachment name.",
+                                                            activity.ActivityDescription.ActivityIdentifier);
                             }
-                            string fileName = MakeEmbeddedNameForAttachedFile(activity.RecordId, attachment.BinaryObjectFileName);
+                            string fileName = MakeEmbeddedNameForAttachedFile(activity.ActivityDescription.ActivityIdentifier, attachment.BinaryObjectFileName);
                             string filePath = Path.Combine(folderPath, fileName);
                             if (File.Exists(filePath))
                             {
-                                throw new ArgException("Failed to write the attachment \"{0}\" for the activity \"{1}\" with id \"{2}\" because another file with the same name already exists in the temporary folder: \"{3}\"",
-                                                       attachment.BinaryObjectFileName, activity.ActivityDescription, activity.RecordId, filePath);
+                                throw new ArgException("Failed to write the attachment \"{0}\" for the activity with id \"{1}\" because another file with the same name already exists in the temporary folder: \"{2}\"",
+                                                       attachment.BinaryObjectFileName, activity.ActivityDescription.ActivityIdentifier, filePath);
                             }
                             byte[] content = null;
                             baseDao.DoJDBCQueryWithRowCallbackDelegate("SELECT BINARYOBJECTCONTENT FROM WQX_ACTATTACHEDBINARYOBJECT WHERE PARENTID = ? AND BINARYOBJECTFILE = ?",
                                                          delegate(IDataReader dataReader)
                                                          {
                                                              content = (byte[])dataReader.GetValue(0);
-                                                         }, activity.RecordId, attachment.BinaryObjectFileName);
+                                                         }, activity.ActivityDescription.ActivityIdentifier, attachment.BinaryObjectFileName);
 
                             if (content == null)
                             {
-                                throw new ArgException("Failed to load attachment content for the file \"{0}\" from the database for the activity \"{1}\" with id \"{2}\"",
-                                                       attachment.BinaryObjectFileName, activity.ActivityDescription, activity.RecordId);
+                                throw new ArgException("Failed to load attachment content for the file \"{0}\" from the database for the activity with id \"{1}\"",
+                                                       attachment.BinaryObjectFileName, activity.ActivityDescription.ActivityIdentifier);
                             }
                             File.WriteAllBytes(filePath, content);
-
-                            if (activity.Result != null)
-                            {
-                                foreach (ResultDataType result in activity.Result)
-                                {
-                                    if (result.AttachedBinaryObject != null)
-                                    {
-                                        foreach (ResultAttachedBinaryObjectDataType resultAttachment in result.AttachedBinaryObject)
-                                        {
-                                            if (string.IsNullOrEmpty(attachment.BinaryObjectFileName))
-                                            {
-                                                throw new ArgException("An attachment for the result \"{0}\" with id \"{1}\" does not have an attachment name.",
-                                                                            result.ResultDescription, result.RecordId);
-                                            }
-                                            fileName = MakeEmbeddedNameForAttachedFile(result.RecordId, resultAttachment.BinaryObjectFileName);
-                                            filePath = Path.Combine(folderPath, fileName);
-                                            if (File.Exists(filePath))
-                                            {
-                                                throw new ArgException("Failed to write the attachment \"{0}\" for the result \"{1}\" with id \"{2}\" because another file with the same name already exists in the temporary folder: \"{3}\"",
-                                                                        resultAttachment.BinaryObjectFileName, result.ResultDescription, result.RecordId, filePath);
-                                            }
-                                            content = null;
-                                            baseDao.DoJDBCQueryWithRowCallbackDelegate("SELECT BINARYOBJECTCONTENT FROM WQX_RESULTATTACHEDBINARYOBJECT WHERE PARENTID = ? AND BINARYOBJECTFILE = ?",
-                                                                            delegate(IDataReader dataReader)
-                                                                            {
-                                                                                content = (byte[])dataReader.GetValue(0);
-                                                                            }, result.RecordId, resultAttachment.BinaryObjectFileName);
-
-                                            if (content == null)
-                                            {
-                                                throw new ArgException("Failed to load attachment content for the file \"{0}\" from the database for the result \"{1}\" with id \"{2}\"",
-                                                                        resultAttachment.BinaryObjectFileName, result.ResultDescription, result.RecordId);
-                                            }
-                                            File.WriteAllBytes(filePath, content);
-                                        }
-                                    }
-                                }
-                            }
+                           
                         });
                     }
                 });
@@ -261,26 +224,26 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
                             if (string.IsNullOrEmpty(attachment.BinaryObjectFileName))
                             {
                                 throw new ArgException("An attachment for the monitoring location \"{0}\" with id \"{1}\" does not have an attachment name.",
-                                                            monitoringLocation.WellInformation, monitoringLocation.RecordId);
+                                                            monitoringLocation.WellInformation, monitoringLocation.MonitoringLocationIdentity.MonitoringLocationIdentifier);
                             }
-                            string fileName = MakeEmbeddedNameForAttachedFile(monitoringLocation.RecordId, attachment.BinaryObjectFileName);
+                            string fileName = MakeEmbeddedNameForAttachedFile(monitoringLocation.MonitoringLocationIdentity.MonitoringLocationIdentifier, attachment.BinaryObjectFileName);
                             string filePath = Path.Combine(folderPath, fileName);
                             if (File.Exists(filePath))
                             {
                                 throw new ArgException("Failed to write the attachment \"{0}\" for the monitoring location \"{1}\" with id \"{2}\" because another file with the same name already exists in the temporary folder: \"{3}\"",
-                                                       attachment.BinaryObjectFileName, monitoringLocation.WellInformation, monitoringLocation.RecordId, filePath);
+                                                       attachment.BinaryObjectFileName, monitoringLocation.WellInformation, monitoringLocation.MonitoringLocationIdentity.MonitoringLocationIdentifier, filePath);
                             }
                             byte[] content = null;
                             baseDao.DoJDBCQueryWithRowCallbackDelegate("SELECT BINARYOBJECTCONTENT FROM WQX_MONLOCATTACHEDBINARYOBJECT WHERE PARENTID = ? AND BINARYOBJECTFILE = ?",
                                                          delegate(IDataReader dataReader)
                                                          {
                                                              content = (byte[])dataReader.GetValue(0);
-                                                         }, monitoringLocation.RecordId, attachment.BinaryObjectFileName);
+                                                         }, monitoringLocation.MonitoringLocationIdentity.MonitoringLocationIdentifier, attachment.BinaryObjectFileName);
 
                             if (content == null)
                             {
                                 throw new ArgException("Failed to load attachment content for the file \"{0}\" from the database for the monitoring location \"{1}\" with id \"{2}\"",
-                                                       attachment.BinaryObjectFileName, monitoringLocation.WellInformation, monitoringLocation.RecordId);
+                                                       attachment.BinaryObjectFileName, monitoringLocation.WellInformation, monitoringLocation.MonitoringLocationIdentity.MonitoringLocationIdentifier);
                             }
                             File.WriteAllBytes(filePath, content);
                         });
@@ -465,63 +428,28 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
                         {
                             if (string.IsNullOrEmpty(attachment.BinaryObjectFileName))
                             {
-                                throw new ArgException("An attachment for the activity \"{0}\" with id \"{1}\" does not have an attachment name.",
-                                                        activity.ActivityDescription, activity.RecordId);
+                                throw new ArgException("An attachment for the activity with id \"{0}\" does not have an attachment name.",
+                                                            activity.ActivityDescription.ActivityIdentifier);
                             }
 
-                            string fileName = MakeEmbeddedNameForAttachedFile(activity.RecordId, attachment.BinaryObjectFileName);
+                            string fileName = MakeEmbeddedNameForAttachedFile(activity.ActivityDescription.ActivityIdentifier, attachment.BinaryObjectFileName);
                             string filePath = Path.Combine(folderPath, fileName);
                             if (!File.Exists(filePath))
                             {
                                 throw new ArgException("Failed to locate an attachment with the name \"{0}\" for the activity \"{1}\" with id \"{2}\" in the temporary folder: \"{3}\"",
-                                                       fileName, activity.ActivityDescription, activity.RecordId, filePath);
+                                                       fileName, attachment.BinaryObjectFileName, activity.ActivityDescription.ActivityIdentifier, filePath);
                             }
 
                             byte[] content = File.ReadAllBytes(filePath);
 
-                            int updateCount = baseDao.DoJDBCExecuteNonQuery("UPDATE WQX_ACTATTACHEDBINARYOBJECT SET BINARYOBJECTCONTENT = ? WHERE RECORDID = ? AND BINARYOBJECTFILE = ?",
-                                                                            content, activity.RecordId, fileName);
+                            int updateCount = baseDao.DoJDBCExecuteNonQuery("UPDATE WQX_ACTATTACHEDBINARYOBJECT SET BINARYOBJECTCONTENT = ? WHERE PARENTID = ? AND BINARYOBJECTFILE = ?",
+                                                                            content, activity.RecordId, attachment.BinaryObjectFileName);
                             if (updateCount == 0)
                             {
-                                throw new ArgException("Failed to update the content for an attachment with the name \"{0}\" for the activity \"{1}\" with id \"{2}\"",
-                                                        fileName, activity.ActivityDescription, activity.RecordId);
+                                throw new ArgException("Failed to update the content for an attachment with the name \"{0}\" for the activity with id \"{1}\"",
+                                                        attachment.BinaryObjectFileName, activity.ActivityDescription.ActivityIdentifier);
                             }
-
-                            if (activity.Result != null)
-                            {
-                                foreach (ResultDataType result in activity.Result)
-                                {
-                                    if (result.AttachedBinaryObject != null)
-                                    {
-                                        foreach (ResultAttachedBinaryObjectDataType resultAttachment in result.AttachedBinaryObject)
-                                        {
-                                            if (string.IsNullOrEmpty(resultAttachment.BinaryObjectFileName))
-                                            {
-                                                throw new ArgException("An attachment for the result \"{0}\" with id \"{1}\" does not have an attachment name.",
-                                                                        result.ResultDescription, result.RecordId);
-                                            }
-
-                                            fileName = MakeEmbeddedNameForAttachedFile(result.RecordId, resultAttachment.BinaryObjectFileName);
-                                            filePath = Path.Combine(folderPath, fileName);
-                                            if (!File.Exists(filePath))
-                                            {
-                                                throw new ArgException("Failed to locate an attachment with the name \"{0}\" for the result \"{1}\" with id \"{2}\" in the temporary folder: \"{3}\"",
-                                                                       fileName, result.ResultDescription, result.RecordId, filePath);
-                                            }
-
-                                            content = File.ReadAllBytes(filePath);
-
-                                            updateCount = baseDao.DoJDBCExecuteNonQuery("UPDATE WQX_RESULTATTACHEDBINARYOBJECT SET BINARYOBJECTCONTENT = ? WHERE RECORDID = ? AND BINARYOBJECTFILE = ?",
-                                                                                            content, result.RecordId, fileName);
-                                            if (updateCount == 0)
-                                            {
-                                                throw new ArgException("Failed to update the content for an attachment with the name \"{0}\" for the result \"{1}\" with id \"{2}\"",
-                                                                        fileName, result.ResultDescription, result.RecordId);
-                                            }
-                                        }
-                                    }
-                                }
-                            }
+                            
                         }
                     }
                 }
@@ -538,25 +466,25 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
                             if (string.IsNullOrEmpty(attachment.BinaryObjectFileName))
                             {
                                 throw new ArgException("An attachment for the monitoring location \"{0}\" with id \"{1}\" does not have an attachment name.",
-                                                        monitoringLocation.WellInformation, monitoringLocation.RecordId);
+                                                        monitoringLocation.WellInformation, monitoringLocation.MonitoringLocationIdentity.MonitoringLocationIdentifier);
                             }
 
-                            string fileName = MakeEmbeddedNameForAttachedFile(monitoringLocation.RecordId, attachment.BinaryObjectFileName);
+                            string fileName = MakeEmbeddedNameForAttachedFile(monitoringLocation.MonitoringLocationIdentity.MonitoringLocationIdentifier, attachment.BinaryObjectFileName);
                             string filePath = Path.Combine(folderPath, fileName);
                             if (!File.Exists(filePath))
                             {
                                 throw new ArgException("Failed to locate an attachment with the name \"{0}\" for the monitoring location \"{1}\" with id \"{2}\" in the temporary folder: \"{3}\"",
-                                                       fileName, monitoringLocation.WellInformation, monitoringLocation.RecordId, filePath);
+                                                       fileName, monitoringLocation.WellInformation, monitoringLocation.MonitoringLocationIdentity.MonitoringLocationIdentifier, filePath);
                             }
 
                             byte[] content = File.ReadAllBytes(filePath);
 
-                            int updateCount = baseDao.DoJDBCExecuteNonQuery("UPDATE WQX_MONLOCATTACHEDBINARYOBJECT SET BINARYOBJECTCONTENT = ? WHERE RECORDID = ? AND BINARYOBJECTFILE = ?",
-                                                                            content, monitoringLocation.RecordId, fileName);
+                            int updateCount = baseDao.DoJDBCExecuteNonQuery("UPDATE WQX_MONLOCATTACHEDBINARYOBJECT SET BINARYOBJECTCONTENT = ? WHERE PARENTID = ? AND BINARYOBJECTFILE = ?",
+                                                                            content, monitoringLocation.RecordId, attachment.BinaryObjectFileName);
                             if (updateCount == 0)
                             {
                                 throw new ArgException("Failed to update the content for an attachment with the name \"{0}\" for the monitoring location \"{1}\" with id \"{2}\"",
-                                                        fileName, monitoringLocation.WellInformation, monitoringLocation.RecordId);
+                                                        fileName, attachment.BinaryObjectFileName, monitoringLocation.MonitoringLocationIdentity.MonitoringLocationIdentifier);
                             }
                         }
                     }
@@ -574,25 +502,25 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
                             if (string.IsNullOrEmpty(attachment.BinaryObjectFileName))
                             {
                                 throw new ArgException("An attachment for the project \"{0}\" with id \"{1}\" does not have an attachment name.",
-                                                        project.ProjectDescriptionText, project.RecordId);
+                                                        project.ProjectDescriptionText, project.ProjectIdentifier);
                             }
 
-                            string fileName = MakeEmbeddedNameForAttachedFile(project.RecordId, attachment.BinaryObjectFileName);
+                            string fileName = MakeEmbeddedNameForAttachedFile(project.ProjectIdentifier, attachment.BinaryObjectFileName);
                             string filePath = Path.Combine(folderPath, fileName);
                             if (!File.Exists(filePath))
                             {
                                 throw new ArgException("Failed to locate an attachment with the name \"{0}\" for the project \"{1}\" with id \"{2}\" in the temporary folder: \"{3}\"",
-                                                       fileName, project.ProjectDescriptionText, project.RecordId, filePath);
+                                                       fileName, project.ProjectDescriptionText, project.ProjectIdentifier, filePath);
                             }
 
                             byte[] content = File.ReadAllBytes(filePath);
 
-                            int updateCount = baseDao.DoJDBCExecuteNonQuery("UPDATE WQX_PROJATTACHEDBINARYOBJECT SET BINARYOBJECTCONTENT = ? WHERE RECORDID = ? AND BINARYOBJECTFILE = ?",
-                                                                            content, project.RecordId, fileName);
+                            int updateCount = baseDao.DoJDBCExecuteNonQuery("UPDATE WQX_PROJATTACHEDBINARYOBJECT SET BINARYOBJECTCONTENT = ? WHERE PARENTID = ? AND BINARYOBJECTFILE = ?",
+                                                                            content, project.RecordId, attachment.BinaryObjectFileName);
                             if (updateCount == 0)
                             {
                                 throw new ArgException("Failed to update the content for an attachment with the name \"{0}\" for the project \"{1}\" with id \"{2}\"",
-                                                        fileName, project.ProjectDescriptionText, project.RecordId);
+                                                        fileName, attachment.BinaryObjectFileName, project.ProjectIdentifier);
                             }
                         }
                     }
