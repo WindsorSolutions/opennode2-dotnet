@@ -310,7 +310,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                     string[] xmlFiles = Directory.GetFiles(tempFolder, "*.xml");
                     if (xmlFiles.Length == 0)
                     {
-                        throw new ArgException("Failed to locate an WQX xml file in the WQX data");
+                        throw new ArgException("Failed to locate a WQX xml file in the WQX data");
                     }
                     else if (xmlFiles.Length > 1)
                     {
