@@ -4,6 +4,7 @@ using System.Data;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using Windsor.Commons.Compression;
 using Windsor.Commons.Core;
 using Windsor.Commons.Spring;
 using Windsor.Commons.XsdOrm;
@@ -165,8 +166,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
                                 throw new ArgException("Failed to load attachment content for the file \"{0}\" from the database for the activity with id \"{1}\"",
                                                        attachment.BinaryObjectFileName, activity.ActivityDescription.ActivityIdentifier);
                             }
-                            File.WriteAllBytes(filePath, content);
-                           
+                            UncompressFile(content, filePath);                           
                         });
                     }
                 });
@@ -205,7 +205,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
                                 throw new ArgException("Failed to load attachment content for the file \"{0}\" from the database for the project \"{1}\" with id \"{2}\"",
                                                         attachment.BinaryObjectFileName, project.ProjectName, project.ProjectIdentifier);
                             }
-                            File.WriteAllBytes(filePath, content);
+                            UncompressFile(content, filePath);
                         });
                     }
                 });
@@ -244,7 +244,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
                                 throw new ArgException("Failed to load attachment content for the file \"{0}\" from the database for the monitoring location \"{1}\" with id \"{2}\"",
                                                        attachment.BinaryObjectFileName, monitoringLocation.WellInformation, monitoringLocation.MonitoringLocationIdentity.MonitoringLocationIdentifier);
                             }
-                            File.WriteAllBytes(filePath, content);
+                            UncompressFile(content, filePath);
                         });
                     }
                 });
@@ -581,6 +581,12 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
                 sb.AppendFormat("{0} ({1})", pair.Key, pair.Value.ToString());
             }
             return sb.ToString();
+        }
+
+        public static void UncompressFile(byte[] compressedDocContent, string saveFilePath)
+        {
+            DotNetZipHelper compressionHelper = new DotNetZipHelper();
+            compressionHelper.Uncompress(compressedDocContent, saveFilePath);
         }
 
         public static string WQX_FILE_PREFIX = "__";
