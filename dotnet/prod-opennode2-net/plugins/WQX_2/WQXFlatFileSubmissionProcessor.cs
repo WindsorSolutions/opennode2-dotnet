@@ -181,11 +181,12 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
 
         protected override WQXDataType GetWQXData(string transactionId, string docId,
                                                   out Windsor.Node2008.WNOSPlugin.WQX1XsdOrm.WQXDataType data1,
-                                                  out WQXDeleteDataType deleteData)
+                                                  out WQXDeleteDataType deleteData, out string attachmentsFolderPath)
         {
             WQXDataType data = null;
             data1 = null;
             deleteData = null;
+            attachmentsFolderPath = null;
             string tempFolderPath = Path.Combine(_settingsProvider.TempFolderPath, Guid.NewGuid().ToString());
             try
             {

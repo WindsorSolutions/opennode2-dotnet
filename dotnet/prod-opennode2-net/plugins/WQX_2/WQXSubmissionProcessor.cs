@@ -54,6 +54,7 @@ using Windsor.Commons.Spring;
 using Windsor.Commons.XsdOrm;
 using Windsor.Node2008.WNOSPlugin.WQX2XsdOrm;
 using Microsoft.VisualBasic.FileIO;
+using Windsor.Node2008.WNOSPlugin.WQX_20;
 
 namespace Windsor.Node2008.WNOSPlugin.WQX2
 {
@@ -137,13 +138,14 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
         }
         protected virtual void ProcessSubmitDocument(string transactionId, string docId)
         {
+            string attachmentsFolderPath = null;
             try
             {
                 WQXDataType data = null;
                 WQXDeleteDataType deleteData = null;
                 Windsor.Node2008.WNOSPlugin.WQX1XsdOrm.WQXDataType data1 = null;
 
-                data = GetWQXData(transactionId, docId, out data1, out deleteData);
+                data = GetWQXData(transactionId, docId, out data1, out deleteData, out attachmentsFolderPath);
 
                 AppendAuditLogEvent("Storing WQX data into database");
 
@@ -273,6 +275,11 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                                         orgId);
                     Dictionary<string, int> tableRowCounts = _objectsToDatabase.SaveToDatabase(addObject, _baseDao);
 
+                    if (attachmentsFolderPath != null)
+                    {
+                        DatabaseHelper.StoreAttachmentFilesFromFolder(_objectsToDatabase, _baseDao, data.Organization, attachmentsFolderPath);
+                    }
+
                     string recordId = ReflectionUtils.GetFieldOrPropertyValueByName<string>(addObject, "RecordId");
 
                     AppendAuditLogEvent("Stored WQX data content with organization primary key \"{0}\" into data store with the following table row counts: {1}",
@@ -286,15 +293,21 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                                     docId.ToString(), ExceptionUtils.ToShortString(e));
                 throw;
             }
+            finally
+            {
+                FileUtils.SafeDeleteAllFilesAndFoldersInFolder(attachmentsFolderPath);
+            }
         }
         protected virtual WQXDataType GetWQXData(string transactionId, string docId,
                                                  out Windsor.Node2008.WNOSPlugin.WQX1XsdOrm.WQXDataType data1,
-                                                 out WQXDeleteDataType deleteData)
+                                                 out WQXDeleteDataType deleteData, out string attachmentsFolderPath)
         {
             WQXDataType data = null;
             data1 = null;
             deleteData = null;
             string tempXmlFilePath = _settingsProvider.NewTempFilePath();
+            attachmentsFolderPath = null;
+            string tempFolder = null;
             try
             {
                 IHeaderDocumentHelper headerDocumentHelper;
@@ -304,8 +317,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                 Document document = _documentManager.GetDocument(transactionId, docId, true);
                 if (document.IsZipFile)
                 {
+                    tempFolder = _settingsProvider.CreateNewTempFolderPath();
                     AppendAuditLogEvent("Decompressing document to temporary folder");
-                    string tempFolder = _settingsProvider.CreateNewTempFolderPath();
                     _compressionHelper.UncompressDirectory(document.Content, tempFolder);
                     string[] xmlFiles = Directory.GetFiles(tempFolder, "*.xml");
                     if (xmlFiles.Length == 0)
@@ -351,6 +364,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                     try
                     {
                         data = _serializationHelper.Deserialize<WQXDataType>(loadElement);
+                        attachmentsFolderPath = tempFolder;
                     }
                     catch (Exception)
                     {
@@ -371,6 +385,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                     try
                     {
                         data = _serializationHelper.Deserialize<WQXDataType>(tempXmlFilePath);
+                        attachmentsFolderPath = tempFolder;
                     }
                     catch (Exception)
                     {
@@ -386,6 +401,11 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                         }
                     }
                 }
+            }
+            catch (Exception)
+            {
+                FileUtils.SafeDeleteAllFilesAndFoldersInFolder(tempFolder);
+                throw;
             }
             finally
             {

@@ -421,21 +421,31 @@ namespace Windsor.Commons.Core
         }
         public static void SafeDeleteAllFilesAndFoldersInFolder(string directoryPath)
         {
-            using (FileSystemEnumerator enumerator = new FileSystemEnumerator(directoryPath, "*", false,
-                                                                              FileSystemEnumerator.EReturnTypes.eReturnDirectories))
+            if (directoryPath == null)
             {
-                foreach (string subFolderPath in enumerator)
+                return;
+            }
+            try
+            {
+                using (FileSystemEnumerator enumerator = new FileSystemEnumerator(directoryPath, "*", false,
+                                                                                  FileSystemEnumerator.EReturnTypes.eReturnDirectories))
                 {
-                    FileUtils.SafeDeleteDirectory(subFolderPath);
+                    foreach (string subFolderPath in enumerator)
+                    {
+                        FileUtils.SafeDeleteDirectory(subFolderPath);
+                    }
+                }
+                using (FileSystemEnumerator enumerator = new FileSystemEnumerator(directoryPath, "*", false,
+                                                                                  FileSystemEnumerator.EReturnTypes.eReturnFiles))
+                {
+                    foreach (string filePath in enumerator)
+                    {
+                        FileUtils.SafeDeleteFile(filePath);
+                    }
                 }
             }
-            using (FileSystemEnumerator enumerator = new FileSystemEnumerator(directoryPath, "*", false,
-                                                                              FileSystemEnumerator.EReturnTypes.eReturnFiles))
+            catch (Exception)
             {
-                foreach (string filePath in enumerator)
-                {
-                    FileUtils.SafeDeleteFile(filePath);
-                }
             }
         }
         /// <summary>

@@ -9,7 +9,6 @@ using Windsor.Commons.Spring;
 using Windsor.Commons.XsdOrm;
 using Windsor.Node2008.WNOSProviders;
 using Windsor.Node2008.WNOSPlugin.WQX2XsdOrm;
-using Wintellect.PowerCollections;
 
 
 using System.Linq;
