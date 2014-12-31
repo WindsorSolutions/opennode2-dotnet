@@ -968,6 +968,21 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
             {
                 this.ProjectActivity = projectActivities.ToArray();
             }
+
+            List<ActivityConductingOrganizationDataType> conductingOrganizations = null;
+            CollectionUtils.ForEach(ActivityDescription.ActivityConductingOrganizationText, delegate(string conductingOrganizationText)
+            {
+                ActivityConductingOrganizationDataType conductingOrganization = new ActivityConductingOrganizationDataType();
+                conductingOrganization.RecordId = Guid.NewGuid().ToString();
+                conductingOrganization.ParentId = this.RecordId;
+                conductingOrganization.ActivityId = this.ActivityDescription.ActivityIdentifier;
+                conductingOrganization.ActivityConductingOrganizationText = conductingOrganizationText;
+                CollectionUtils.Add(conductingOrganization, ref conductingOrganizations);
+            });
+            if (conductingOrganizations != null)
+            {
+                this.ActivityDescription.ActivityConductingOrganization = conductingOrganizations.ToArray();
+            }
         }
         public void AfterLoadFromDatabase(Dictionary<string, string> projectPkToIdentifierMap)
         {
@@ -999,6 +1014,18 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
             if (projectIds != null)
             {
                 ActivityDescription.ProjectIdentifier = projectIds.ToArray();
+            }
+            List<string> conductingOrganizationTextList = null;
+            CollectionUtils.ForEach(ActivityDescription.ActivityConductingOrganization, delegate(ActivityConductingOrganizationDataType conductingOrganization)
+            {
+                if (!string.IsNullOrEmpty(conductingOrganization.ActivityConductingOrganizationText))
+                {
+                    CollectionUtils.Add(conductingOrganization.ActivityConductingOrganizationText, ref conductingOrganizationTextList);
+                }
+            });
+            if (conductingOrganizationTextList != null)
+            {
+                ActivityDescription.ActivityConductingOrganizationText = conductingOrganizationTextList.ToArray();
             }
         }
         private static ProjectActivityDataTypeComparer s_ProjectActivityDataTypeComparer = new ProjectActivityDataTypeComparer();
