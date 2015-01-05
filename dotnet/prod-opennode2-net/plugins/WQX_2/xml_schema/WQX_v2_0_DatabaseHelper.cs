@@ -439,7 +439,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
                                                        fileName, attachment.BinaryObjectFileName, activity.ActivityDescription.ActivityIdentifier, filePath);
                             }
 
-                            byte[] content = File.ReadAllBytes(filePath);
+                            byte[] content = CompressFile(folderPath, filePath);
 
                             int updateCount = baseDao.DoJDBCExecuteNonQuery("UPDATE WQX_ACTATTACHEDBINARYOBJECT SET BINARYOBJECTCONTENT = ? WHERE PARENTID = ? AND BINARYOBJECTFILE = ?",
                                                                             content, activity.RecordId, attachment.BinaryObjectFileName);
@@ -476,7 +476,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
                                                        fileName, monitoringLocation.WellInformation, monitoringLocation.MonitoringLocationIdentity.MonitoringLocationIdentifier, filePath);
                             }
 
-                            byte[] content = File.ReadAllBytes(filePath);
+                            byte[] content = CompressFile(folderPath, filePath);
 
                             int updateCount = baseDao.DoJDBCExecuteNonQuery("UPDATE WQX_MONLOCATTACHEDBINARYOBJECT SET BINARYOBJECTCONTENT = ? WHERE PARENTID = ? AND BINARYOBJECTFILE = ?",
                                                                             content, monitoringLocation.RecordId, attachment.BinaryObjectFileName);
@@ -512,7 +512,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
                                                        fileName, project.ProjectDescriptionText, project.ProjectIdentifier, filePath);
                             }
 
-                            byte[] content = File.ReadAllBytes(filePath);
+                            byte[] content = CompressFile(folderPath, filePath);
 
                             int updateCount = baseDao.DoJDBCExecuteNonQuery("UPDATE WQX_PROJATTACHEDBINARYOBJECT SET BINARYOBJECTCONTENT = ? WHERE PARENTID = ? AND BINARYOBJECTFILE = ?",
                                                                             content, project.RecordId, attachment.BinaryObjectFileName);
@@ -587,6 +587,32 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
         {
             DotNetZipHelper compressionHelper = new DotNetZipHelper();
             compressionHelper.Uncompress(compressedDocContent, saveFilePath);
+        }
+
+        public static byte[] CompressFile(string folderPath, string filePath)
+        {
+            DotNetZipHelper compressionHelper = new DotNetZipHelper();
+
+            string tempFilePath = GetTempFilePath(folderPath);
+            compressionHelper.CompressFile(filePath, Path.GetFileName(filePath), tempFilePath);
+            try
+            {
+                return File.ReadAllBytes(tempFilePath);
+            }
+            finally
+            {
+                FileUtils.SafeDeleteFile(tempFilePath);
+            }
+        }
+
+        public static string GetTempFilePath(string folderPath)
+        {
+            return GetTempFilePath(folderPath, ".tmp");
+        }
+
+        public static string GetTempFilePath(string folderPath, string extension)
+        {
+            return Path.Combine(folderPath, Guid.NewGuid().ToString() + extension);
         }
 
         public static string WQX_FILE_PREFIX = "__";
