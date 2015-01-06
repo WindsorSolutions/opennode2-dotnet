@@ -1,0 +1,606 @@
+<?xml version="1.0"?>
+<xsd:schema xmlns:icis="http://www.exchangenetwork.net/schema/icis/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/icis/5" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5">
+	<xsd:annotation>
+		<xsd:documentation>Schema Name : ICIS_ResponseFileShared_v5.0.xsd</xsd:documentation>
+        <xsd:documentation>Current Version Available: http://www.exchangenetwork.net/schema/icis/5</xsd:documentation>
+        <xsd:documentation>Description : Shared Content file for common simple types and data elements for the ICIS Batch response files.</xsd:documentation>
+		<xsd:documentation>Developed by : ICIS Full Batch IPT</xsd:documentation>
+		<xsd:documentation>Point of Contact : Won Lee, U.S. EPA</xsd:documentation>
+		<xsd:documentation>Last Date Modified: 2014-10-27</xsd:documentation>
+	</xsd:annotation>
+	<xsd:include schemaLocation="ICIS_Common_v5.0.xsd"/>
+	<xsd:include schemaLocation="ICIS_KeyElements_v5.0.xsd"/>
+	<xsd:include schemaLocation="ICIS_ComplianceMonitoringLinkage_v5.0.xsd"/>
+	<!--<xsd:include schemaLocation="ICIS_DMRProgramReportLinkage_v5.0.xsd"/>-->
+	<xsd:include schemaLocation="ICIS_EnforcementActionMilestone_v5.0.xsd"/>
+	<xsd:include schemaLocation="ICIS_EnforcementActionViolationLinkage_v5.0.xsd"/>
+	<!--<xsd:include schemaLocation="ICIS_FinalOrderViolationLinkage_v5.0.xsd"/>
+	<xsd:include schemaLocation="ICIS_CopyMGPLimitSet_v5.0.xsd"/>-->
+	<xsd:include schemaLocation="ICIS_AirDAEnforcementActionLinkage_v5.0.xsd"/>
+	<xsd:include schemaLocation="ICIS_CaseFileLinkage_v5.0.xsd"/>
+	<xsd:element name="AcceptedReport" type="icis:AcceptedReportDataType">
+		<xsd:annotation>
+			<xsd:documentation>Describes an error that was encountered.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="AcceptedReportDataType">
+		<xsd:sequence>
+			<xsd:element ref="icis:InformationCode"/>
+			<xsd:element ref="icis:InformationTypeCode"/>
+			<xsd:element ref="icis:InformationDescription"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ErrorCode" type="icis:ErrorCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>An Service Provider (e.g., ICIS-NPDES) specific error code that uniquely identifies a type of error.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="ErrorCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="5"/>
+			<xsd:maxLength value="7"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="ErrorDescription" type="icis:ErrorDescriptionDataType">
+		<xsd:annotation>
+			<xsd:documentation>A human readable description on an error.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="ErrorDescriptionDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="4000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="ErrorReport" type="icis:ErrorReportDataType">
+		<xsd:annotation>
+			<xsd:documentation>Describes an error that was encountered.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ErrorReportDataType">
+		<xsd:sequence>
+			<xsd:element ref="icis:ErrorCode" minOccurs="0"/>
+			<xsd:element ref="icis:ErrorTypeCode"/>
+			<xsd:element ref="icis:ErrorDescription"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ErrorTypeCode" type="icis:ErrorTypeCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The type of error that is being returned.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="ErrorTypeCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Error"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="FileErrorReport" type="icis:FileErrorReportDataType">
+		<xsd:annotation>
+			<xsd:documentation>Describes an error that was encountered.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="FileErrorReportDataType">
+		<xsd:sequence>
+			<xsd:element ref="icis:ErrorTypeCode"/>
+			<xsd:element ref="icis:ErrorDescription"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="InformationCode" type="icis:InformationCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>An Service Provider (e.g., ICIS-NPDES) specific information or warning code that uniquely identifies a type of error.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="InformationCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="5"/>
+			<xsd:maxLength value="6"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="InformationDescription" type="icis:InformationDescriptionDataType">
+		<xsd:annotation>
+			<xsd:documentation>A human readable description on a  information or warning.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="InformationDescriptionDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="4000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="InformationTypeCode" type="icis:InformationTypeCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The type of  information or warning that is being returned.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="InformationTypeCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Information"/>
+			<xsd:enumeration value="Warning"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="PercentTransactionsAccepted" type="icis:PercentTransactionsAcceptedDataType">
+		<xsd:annotation>
+			<xsd:documentation>Percent of TotalTransactions that were accepted. The reports show 2 decimal places max.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="PercentTransactionsAcceptedDataType">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="100"/>
+			<xsd:fractionDigits value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="ProcessedDate" type="icis:ProcessedDateDataType">
+		<xsd:annotation>
+			<xsd:documentation>The date something was created.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="ProcessedDateDataType">
+		<xsd:restriction base="xsd:date"/>
+	</xsd:simpleType>
+	<xsd:element name="SubmissionDate" type="icis:SubmissionDateDataType">
+		<xsd:annotation>
+			<xsd:documentation>The date something was submitted.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="SubmissionDateDataType">
+		<xsd:restriction base="xsd:date"/>
+	</xsd:simpleType>
+	<xsd:element name="SubmissionTransactionTypeCode" type="icis:SubmissionTransactionTypeCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The type of transaction that was sent in the submission.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="SubmissionTransactionTypeCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="C"/>
+			<xsd:enumeration value="D"/>
+			<xsd:enumeration value="N"/>
+			<xsd:enumeration value="R"/>
+			<xsd:enumeration value="X"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="SubmissionTypeName" type="icis:SubmissionTypeNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>The name of the submission type.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="SubmissionTypeNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="TotalAcceptedTransactions" type="icis:TotalAcceptedTransactionsDataType">
+		<xsd:annotation>
+			<xsd:documentation>Unique number that identifies the total count of accepted records by transaction type.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="TotalAcceptedTransactionsDataType">
+		<xsd:restriction base="xsd:nonNegativeInteger">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="999999"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="BatchTotalPercentTransactionsAccepted" type="icis:BatchTotalPercentTransactionsAcceptedDataType">
+		<xsd:annotation>
+			<xsd:documentation>Unique number that identifies the total percent of transactions that were accepted.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="BatchTotalPercentTransactionsAcceptedDataType">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="100"/>
+			<xsd:fractionDigits value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="TotalRejectedTransactions" type="icis:TotalRejectedTransactionsDataType">
+		<xsd:annotation>
+			<xsd:documentation>Unique number that identifies the total count of rejected records by transaction type.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="TotalRejectedTransactionsDataType">
+		<xsd:restriction base="xsd:nonNegativeInteger">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="999999"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="BatchTotalTransactions" type="icis:BatchTotalTransactionsDataType">
+		<xsd:annotation>
+			<xsd:documentation>Unique number that identifies the total transaction of records for an entire batch.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="BatchTotalTransactionsDataType">
+		<xsd:restriction base="xsd:nonNegativeInteger">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="9999999"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="BatchTotalSubmissions" type="icis:BatchTotalSubmissionsDataType">
+		<xsd:annotation>
+			<xsd:documentation>Unique number that identifies the total count of records for an entire submission.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="BatchTotalSubmissionsDataType">
+		<xsd:restriction base="xsd:nonNegativeInteger">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="9999999"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="TotalSubmissions" type="icis:TotalSubmissionsDataType">
+		<xsd:annotation>
+			<xsd:documentation>Unique number that identifies the total count of records for an entire submission.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="TotalSubmissionsDataType">
+		<xsd:restriction base="xsd:nonNegativeInteger">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="9999999"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="TotalTransactions" type="icis:TotalTransactionsDataType">
+		<xsd:annotation>
+			<xsd:documentation>The total amount of transactions that were accepted and rejected by ICIS for a given user within the same batch submission.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="TotalTransactionsDataType">
+		<xsd:restriction base="xsd:nonNegativeInteger">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="9999999"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="TransactionIdentifier" type="icis:TransactionIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>An Exchange Network transaction ID issued by a Exchange Network Node.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="TransactionIdentifierDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="40"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="UserID" type="icis:UserIDDataType">
+		<xsd:annotation>
+			<xsd:documentation>Counts of the accepted and rejected transactions for this transaction type.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="UserIDDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="3"/>
+			<xsd:maxLength value="30"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="AirComplianceMonitoringStrategyIdentifier" type="icis:AirComplianceMonitoringStrategyKeyElements">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies an Air Compliance Monitoring Strategy by including all the appropriate keys for it.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="AirDACaseFileIdentifier" type="icis:CaseFileKeyElements">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies an Air DA Case File by including all the appropriate keys for it.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="AirDAComplianceMonitoringIdentifier" type="icis:ComplianceMonitoringKeyElements">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies an Air DA compliance monitoring activity by including all the appropriate keys for it.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="AirDAEnforcementActionLinkageIdentifier" type="icis:AirDAEnforcementActionLinkage">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies an Air DA enforcement action linkage by including all the appropriate keys for it.  The type definition is found in the Air DA Enforcement Action Linkage xsd file.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="AirDAEnforcementActionMilestoneIdentifier" type="icis:AirDAEnforcementActionMilestoneKeyElements">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies an Air DA Enforcement Action Milestone by including all the appropriate keys for it.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="AirDAFormalEnforcementActionIdentifier" type="icis:AirDAEnforcementActionKeyElements">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies an Air DA Formal Enforcement Action by including all the appropriate keys for it.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="AirDAInformalEnforcementActionIdentifier" type="icis:AirDAEnforcementActionKeyElements">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies an Air DA Informal Enforcement Action by including all the appropriate keys for it.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="AirFacilityReportIdentifier" type="icis:AirFacilityKeyElements">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies an Air Facility by including all the appropriate keys for it.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="AirPollutantsIdentifier" type="icis:AirPollutantsKeyElements">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies an Air Pollutants by including all the appropriate keys for it.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="AirProgramReportIdentifier" type="icis:AirProgramsKeyElements">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies an Air program by including all the appropriate keys for it.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="AirTVACCIdentifier" type="icis:ComplianceMonitoringKeyElements">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies an Air Title V Annual Compliance Certification compliance monitoring activity by including all the appropriate keys for it.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="BiosolidsProgramReportIdentifier" type="icis:BiosolidsProgramReportKeyElements">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies a biosolids program report by including all the appropriate keys for it.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CAFOAnnualProgramReportIdentifier" type="icis:CAFOAnnualProgramReportKeyElements">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies a CAFO annual program report by including all the appropriate keys for it.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CaseFileLinkageIdentifier" type="icis:CaseFileLinkage">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies a case file linkage by including all the appropriate keys for it.  The type definition is found in the Case File Linkage xsd file.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ComplianceMonitoringLinkageIdentifier" type="icis:ComplianceMonitoringLinkage">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies a compliance monitoring linkage by including all the appropriate keys for it.  The type definition is found in the CMLinkage xsd file.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ComplianceScheduleIdentifier" type="icis:ComplianceScheduleKeyElements">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies a compliance schedule by including all the appropriate keys for it.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ComplianceScheduleEventIdentifier" type="icis:ComplianceScheduleEventKeyElements">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies a compliance schedule event by including all the appropriate keys for it.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!--<xsd:element name="CopyMGPLimitSetIdentifier" type="icis:CopyMGPLimitSetIdentifier">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies a Copy Master General Permit Limit Set by including all the appropriate keys for it.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CSOEventReportIdentifier" type="icis:CSOEventReportKeyElements">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies a CSO Event by including all the appropriate keys for it.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DischargeMonitoringReportIdentifier" type="icis:DischargeMonitoringReportKeyElements">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies a DMR by including all the appropriate keys for it.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DMRParameterIdentifier" type="icis:DischargeMonitoringReportParameterViolation">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies a parameter within a specific DMR by including all the appropriate keys for it. The type is defined in EAViolationLinkage xsd.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DMRProgramReportLinkageIdentifier" type="icis:DMRProgramReportLinkage">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies a DMR Program Report Linkage by including all the appropriate keys for it.  The type definition is found in the DMRProgramReportLinkage xsd file.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DMRViolationIdentifier" type="icis:DMRViolationKeyElements">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies a DMR violation by including all the appropriate keys.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="EffluentTradePartnerReportIdentifier" type="icis:EffluentTradePartnerKeyElements">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies an Effluent Trade Partner by including all the appropriate keys for it.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>-->
+	<xsd:element name="EnforcementActionMilestoneReportIdentifier" type="icis:EnforcementActionMilestoneKeyElements">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies an Enforcement Action Milestone by including all the appropriate keys for it.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="EnforcementActionViolationLinkageIdentifier" type="icis:EnforcementActionViolationLinkage">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies an Enforcement Action Violation Linkage by including all the appropriate keys for it.  The type is defined in EAViolationLinkage xsd.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="FederalComplianceMonitoringIdentifier" type="icis:ComplianceMonitoringKeyElements">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies a compliance monitoring inspection by including all the appropriate keys for it.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!--<xsd:element name="FinalOrderViolationLinkageIdentifier" type="icis:FinalOrderViolationLinkage">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies an Enforcement Action Violation Linkage by including all the appropriate keys for it.  The type is defined in the FO ViolationLinkage xsd.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>-->
+	<xsd:element name="FormalEnforcementActionIdentifier" type="icis:EnforcementActionKeyElements">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies a Formal Enforcement Action by including all the appropriate keys for it.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="HistoricalPermitScheduleEventIdentifier" type="icis:HistoricalPermitScheduleKeyElements">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies a Historical Permit Schedule Event by including all the appropriate keys for it.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="InformalEnforcementActionIdentifier" type="icis:EnforcementActionKeyElements">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies an Informal Enforcement Action by including all the appropriate keys for it.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="LimitSegmentIdentifier" type="icis:LimitKeyElements">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies a limit segment by including all the appropriate keys for the limit segment.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="LimitSetIdentifier" type="icis:LimitSetKeyElements">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies a limit set by including all the appropriate keys for the limit set.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="LocalLimitsProgramReportIdentifier" type="icis:LocalLimitsProgramReportKeyElements">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies a Local Limits Program Report by including all the appropriate keys for it.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="NarrativeConditionScheduleIdentifier" type="icis:PermitScheduleKeyElements">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies a narrative condition and its schedules by including all the appropriate keys for the narrative condition.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ParameterLimitIdentifier" type="icis:ParameterLimitKeyElements">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies a parameter limit by including all the appropriate keys for the parameter limit.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="PermitRecordIdentifier" type="icis:BasicPermitKeyElements">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies a permit by including the appropriate key for the it.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="PermittedFeatureRecordIdentifier" type="icis:PermittedFeatureKeyElements">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies a permitted feature by including all the appropriate keys for the permitted feature.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="PermitTrackingEventIdentifier" type="icis:PermitTrackingEventKeyElements">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies a permit tracking event by including all the appropriate keys for the permit tracking event.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="PretreatmentPerformanceSummaryIdentifier" type="icis:PretreatmentPerformanceSummaryReportKeyElements">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies a Pretreatment Performance Summary by including all the appropriate keys for it.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ScheduleEventViolationIdentifier" type="icis:ScheduleEventViolationKeyElements">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies a Schedule Event Violation by including all the appropriate keys for it.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SingleEventIdentifier" type="icis:SingleEventKeyElements">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies a Single Event Violation by including all the appropriate keys for it.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="StateNPDESComplianceMonitoringIdentifier" type="icis:ComplianceMonitoringKeyElements">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies a state NPDES compliance monitoring activity by including all the appropriate keys for it.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SSOAnnualReportIdentifier" type="icis:SSOAnnualReportKeyElements">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies a SSO Annual Report by including all the appropriate keys for it.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SSOEventReportIdentifier" type="icis:SSOEventReportKeyElements">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies a SSO Event Report by including all the appropriate keys for it.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SSOMonthlyEventReportIdentifier" type="icis:SSOMonthlyEventReportKeyElements">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies a SSO Monthly Event Report by including all the appropriate keys for it.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SWEventReportIdentifier" type="icis:SWEventReportKeyElements">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies a Storm Water Event Report by including all the appropriate keys for it.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+		<xsd:element name="SWIndustrialAnnualReportIdentifier" type="icis:SWIndustrialAnnualReportKeyElements">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies a Storm Water Industrial Annual Report by including all the appropriate keys for it.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SWMS4ProgramReportIdentifier" type="icis:SWMS4ProgramReportKeyElements">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies a Storm Water MS4 Program Report by including all the appropriate keys for it.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TransactionTypeTotals" type="icis:TransactionTypeTotalsDataType">
+		<xsd:annotation>
+			<xsd:documentation>Counts of the accepted and rejected transactions for this transaction type.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="TransactionTypeTotalsDataType">
+		<xsd:sequence>
+			<xsd:element ref="icis:SubmissionTransactionTypeCode"/>
+			<xsd:element ref="icis:TotalAcceptedTransactions"/>
+			<xsd:element ref="icis:TotalRejectedTransactions"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="SubmissionResponseIdentifierChoicesGroup">
+		<xsd:annotation>
+			<xsd:documentation>Choice of Submission response identifier choice that is used in both the accepted and error key data types.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:choice>
+			<!--BEGIN HACK (Windsor) -->
+			<xsd:element name="UnknownKeyIdentifier">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element ref="icis:AirFacilityIdentifier" minOccurs="0"/>
+						<xsd:element ref="icis:CaseFileIdentifier" minOccurs="0"/>
+						<xsd:element ref="icis:ComplianceMonitoringIdentifier" minOccurs="0"/>
+						<xsd:element ref="icis:AirDAEnforcementActionIdentifier" minOccurs="0"/>
+						<xsd:element ref="icis:MilestoneTypeCode" minOccurs="0"/>
+						<xsd:element ref="icis:AirPollutantsCode" minOccurs="0"/>
+						<xsd:element ref="icis:AirProgramCode" minOccurs="0"/>
+						<xsd:element ref="icis:EnforcementActionIdentifier" minOccurs="0"/>
+						<xsd:element ref="icis:LinkageCaseFile" minOccurs="0"/>
+						<xsd:element ref="icis:LinkageAirDAEnforcementAction" minOccurs="0"/>
+						<xsd:element ref="icis:LinkageComplianceMonitoring" minOccurs="0"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<!--END HACK (Windsor) -->
+			<xsd:element ref="icis:AirComplianceMonitoringStrategyIdentifier"/>
+			<xsd:element ref="icis:AirDACaseFileIdentifier"/>
+			<xsd:element ref="icis:AirDAComplianceMonitoringIdentifier"/>
+			<xsd:element ref="icis:AirDAEnforcementActionLinkageIdentifier"/>
+			<xsd:element ref="icis:AirDAEnforcementActionMilestoneIdentifier"/>
+			<xsd:element ref="icis:AirDAFormalEnforcementActionIdentifier"/>
+			<xsd:element ref="icis:AirDAInformalEnforcementActionIdentifier"/>
+			<xsd:element ref="icis:AirFacilityReportIdentifier"/>
+			<xsd:element ref="icis:AirPollutantsIdentifier"/>
+			<xsd:element ref="icis:AirProgramReportIdentifier"/>
+			<xsd:element ref="icis:AirTVACCIdentifier"/>
+			<!--<xsd:element ref="icis:BiosolidsProgramReportIdentifier"/>
+			<xsd:element ref="icis:CAFOAnnualProgramReportIdentifier"/>-->
+			<xsd:element ref="icis:CaseFileLinkageIdentifier"/>
+			<xsd:element ref="icis:ComplianceMonitoringLinkageIdentifier"/>
+			<!--<xsd:element ref="icis:ComplianceScheduleIdentifier"/>
+			<xsd:element ref="icis:ComplianceScheduleEventIdentifier"/>
+			<xsd:element ref="icis:CopyMGPLimitSetIdentifier"/>
+			<xsd:element ref="icis:CSOEventReportIdentifier"/>
+			<xsd:element ref="icis:DischargeMonitoringReportIdentifier"/>
+			<xsd:element ref="icis:DMRParameterIdentifier"/>
+			<xsd:element ref="icis:DMRProgramReportLinkageIdentifier"/>
+			<xsd:element ref="icis:DMRViolationIdentifier"/>
+			<xsd:element ref="icis:EffluentTradePartnerReportIdentifier"/>-->
+			<xsd:element ref="icis:EnforcementActionMilestoneReportIdentifier"/>
+			<xsd:element ref="icis:EnforcementActionViolationLinkageIdentifier"/>
+			<xsd:element ref="icis:FederalComplianceMonitoringIdentifier"/>
+			<!--<xsd:element ref="icis:FinalOrderViolationLinkageIdentifier"/>-->
+			<xsd:element ref="icis:FormalEnforcementActionIdentifier"/>
+			<!--<xsd:element ref="icis:HistoricalPermitScheduleEventIdentifier"/>-->
+			<xsd:element ref="icis:InformalEnforcementActionIdentifier"/>
+			<!--<xsd:element ref="icis:LimitSegmentIdentifier"/>
+			<xsd:element ref="icis:LimitSetIdentifier"/>
+			<xsd:element ref="icis:LocalLimitsProgramReportIdentifier"/>
+			<xsd:element ref="icis:NarrativeConditionScheduleIdentifier"/>
+			<xsd:element ref="icis:ParameterLimitIdentifier"/>
+			<xsd:element ref="icis:PermitRecordIdentifier"/>
+			<xsd:element ref="icis:PermitTrackingEventIdentifier"/>
+			<xsd:element ref="icis:PermittedFeatureRecordIdentifier"/>
+			<xsd:element ref="icis:PretreatmentPerformanceSummaryIdentifier"/>
+			<xsd:element ref="icis:ScheduleEventViolationIdentifier"/>
+			<xsd:element ref="icis:SingleEventIdentifier"/>
+			<xsd:element ref="icis:StateNPDESComplianceMonitoringIdentifier"/>
+			<xsd:element ref="icis:SSOAnnualReportIdentifier"/>
+			<xsd:element ref="icis:SSOEventReportIdentifier"/>
+			<xsd:element ref="icis:SSOMonthlyEventReportIdentifier"/>
+			<xsd:element ref="icis:SWEventReportIdentifier"/>
+			<xsd:element ref="icis:SWIndustrialAnnualReportIdentifier"/>
+			<xsd:element ref="icis:SWMS4ProgramReportIdentifier"/>-->
+		</xsd:choice>
+	</xsd:group>
+</xsd:schema>

@@ -1,0 +1,1243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:icis="http://www.exchangenetwork.net/schema/icis/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/icis/5" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5">
+	<xsd:include schemaLocation="ICIS_Address_v5.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>Schema Name: ICIS_Common_v5.0.xsd</xsd:documentation>
+		<xsd:documentation>Current Version Available: http://www.exchangenetwork.net/schema/icis/5</xsd:documentation>
+		<xsd:documentation>Description: ICIS-NPDES global elements with their facets and code lists</xsd:documentation>
+		<xsd:documentation>Application: ICIS-NPDES</xsd:documentation>
+		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
+		<xsd:documentation>Point of Contact: EPA/Alison Kittle</xsd:documentation>
+		<xsd:documentation>Data Written: July 2006</xsd:documentation>
+		<xsd:documentation>Last Date Modified: 2014-10-27</xsd:documentation>
+	</xsd:annotation>
+	<xsd:annotation>
+		<xsd:documentation>GLOBAL ELEMENT CHARACTERISTICS</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="AffiliationTypeText" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="AirDAEnforcementActionIdentifier" type="icis:StringMin7Max25TypeBase"/>
+	<xsd:element name="AirFacilityIdentifier" type="icis:StringMin6Max18TypeBase"/>
+	<xsd:element name="AirPollutantCode" type="icis:NonNegativeIntegerMin1Max10Type"/>
+	<xsd:element name="AirPollutantsCode" type="icis:NonNegativeIntegerMin1Max10TypeBase"/>
+	<xsd:element name="AirProgramCode" type="icis:StringMin1Max9TypeBase"/>
+	<xsd:element name="CaseFileIdentifier" type="icis:StringMin7Max25TypeBase"/>
+	<xsd:element name="Comments" type="icis:StringMin1Max4000Type"/>
+	<xsd:element name="ComplianceMonitoringCategoryCode" type="icis:StringMin1Max3TypeBase"/>
+	<xsd:element name="ComplianceMonitoringActivityTypeCode" type="icis:ComplianceMonitoringActivityTypeCodeType"/>
+	<xsd:element name="ComplianceMonitoringIdentifier" type="icis:StringMin7Max25TypeBase"/>
+	<xsd:element name="ComplianceMonitoringDate" type="xsd:date"/>
+	<xsd:element name="ComplianceScheduleNumber" type="icis:IntegerRange1To999TypeBase"/>
+	<xsd:element name="ComplianceSchedulePenaltyAmount" type="icis:DecimalRange0To999999999999.99Type"/>
+	<xsd:element name="ComplianceScheduleType" type="icis:ComplianceScheduleFlagType"/>
+	<xsd:element name="CSOEventDate" type="xsd:date"/>
+	<xsd:element name="CSOEventID" type="icis:IntegerRange1To99TypeBase"/>
+	<xsd:element name="DateStormEventSampled" type="xsd:date"/>
+	<xsd:element name="StormWaterEventID" type="icis:IntegerRange1To99TypeBase"/>
+	<xsd:element name="EnforcementActionIdentifier" type="icis:StringMin1Max20TypeBase"/>
+	<xsd:element name="FinalOrderIdentifier" type="icis:IntegerRange1To99999Type"/>
+	<xsd:element name="FacilitySiteName" type="icis:StringMin1Max80TypeBase"/>
+	<xsd:element name="FederalFacilityIndicator" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="FederalFacilityIndicatorComment" type="icis:StringMin1Max4000Type"/>
+	<xsd:element name="FederalStatuteCode" type="icis:StringMin1Max6TypeBase"/>
+	<xsd:element name="IndustrialStormWaterAnnualReportReceivedDate" type="xsd:date"/>
+	<xsd:element name="LeadAgencyCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="LimitEndDate" type="xsd:date"/>
+	<xsd:element name="LimitModificationEffectiveDate" type="icis:DateType"/>
+	<xsd:element name="LimitSeasonNumber" type="icis:IntegerRange-1To12TypeBase"/>
+	<xsd:element name="LimitSetDesignator" type="icis:AlphanumericStringMin1Max2TypeBase"/>
+	<xsd:element name="LimitSetType" type="icis:LimitSetType"/>
+	<xsd:element name="LimitStartDate" type="xsd:date"/>
+	<xsd:element name="LocalLimitsPermittingAuthorityReportReceivedDate" type="xsd:date"/>
+	<xsd:element name="MilestoneTypeCode" type="icis:StringMin1Max5TypeBase"/>
+	<xsd:element name="MonitoringPeriodEndDate" type="xsd:date"/>
+	<xsd:element name="MonitoringSiteDescriptionCode" type="icis:StringMin1Max3TypeBase"/>
+	<xsd:element name="NarrativeConditionCode" type="icis:String3FixedTypeBase"/>
+	<xsd:element name="NarrativeConditionNumber" type="icis:IntegerRange1To999TypeBase"/>
+	<xsd:element name="NumericConditionQualifier" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="NumericConditionQuantity" type="icis:Decimal8FloatingType"/>
+	<xsd:element name="NumericReportCode" type="icis:NumericReportTextType"/>
+	<xsd:element name="NumericReportViolationCode" type="icis:NumericReportViolationCodeType"/>
+	<xsd:element name="OrganizationFormalName" type="icis:StringMin1Max80Type"/>
+	<xsd:element name="OtherAgencyInitiativeText" type="icis:StringMin1Max200Type"/>
+	<xsd:element name="OtherProgramDescriptionText" type="icis:StringMin1Max100Type"/>
+	<xsd:element name="ParameterCode" type="icis:StringMin1Max5TypeBase"/>
+	<xsd:element name="PermitEffectiveDate" type="xsd:date"/>
+	<xsd:element name="PermitExpirationDate" type="xsd:date"/>
+	<xsd:element name="PermitTerminationDate" type="xsd:date"/>
+	<xsd:element name="PermitIdentifier" type="icis:String9FixedTypeBase"/>
+	<xsd:element name="PermitIssueDate" type="xsd:date"/>
+	<xsd:element name="PermittedFeatureIdentifier" type="icis:AlphanumericStringMin3Max4TypeBase"/>
+	<xsd:element name="PermittingAuthorityReportReceivedDate" type="xsd:date"/>
+	<xsd:element name="PermitTrackingEventCode" type="icis:StringMin1Max3TypeBase"/>
+	<xsd:element name="PermitTrackingEventDate" type="xsd:date"/>
+	<xsd:element name="PretreatmentPerformanceSummaryEndDate" type="xsd:date"/>
+	<xsd:element name="ProgramSystemAcronym" type="icis:StringMin1Max20TypeBase"/>
+	<xsd:element name="ProgramSystemIdentifier" type="icis:StringMin1Max30TypeBase"/>
+	<xsd:element name="ReportCoverageEndDate" type="xsd:date"/>
+	<xsd:element name="SensitiveCommentText" type="icis:StringMin1Max4000Type"/>
+	<xsd:element name="ScheduleDate" type="xsd:date"/>
+	<xsd:element name="ScheduleEventCode" type="icis:StringMin1Max5TypeBase"/>
+	<xsd:element name="ScheduleViolationCode" type="icis:ScheduleViolationCodeType"/>
+	<xsd:element name="SingleEventViolationCode" type="icis:StringMin1Max5TypeBase"/>
+	<xsd:element name="SingleEventViolationDate" type="xsd:date"/>
+	<xsd:element name="SSOAnnualReportReceivedDate" type="xsd:date"/>
+	<xsd:element name="SSOEventDate" type="xsd:date"/>
+	<xsd:element name="SSOEventID" type="icis:IntegerRange1To99TypeBase"/>
+	<xsd:element name="SSOMonthlyReportReceivedDate" type="xsd:date"/>
+	<xsd:element name="StormWaterMS4ReportReceivedDate" type="xsd:date"/>
+	<xsd:element name="StateFacilityIdentifier" type="icis:StringMin1Max12Type"/>
+	<xsd:element name="StateRegionCode" type="icis:StringMin1Max5Type"/>
+	<xsd:element name="TradeID" type="icis:StringMin1Max30TypeBase"/>
+	<xsd:annotation>
+		<xsd:documentation>SIMPLE TYPE DECLARATIONS</xsd:documentation>
+		<xsd:documentation>An * is used in non-strings as a way to blank out the field in the database.</xsd:documentation>
+	</xsd:annotation>
+	<xsd:simpleType name="AlphanumericStringMin1Max2TypeBase">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="2"/>
+			<xsd:pattern value="[A-Za-z0-9]{1,2}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="AlphanumericStringMin1Max2Type">
+		<xsd:union memberTypes="icis:AlphanumericStringMin1Max2TypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="AlphanumericStringMin3Max4TypeBase">
+		<xsd:annotation>
+			<xsd:documentation>This type is used by PermittedFeatureIdentifier only (as of 2010-11-03) and only allows 3 or 4 alphanumeric characters and no other characters.  Lower and upper cases are allowed.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="3"/>
+			<xsd:maxLength value="4"/>
+			<xsd:pattern value="[A-Za-z0-9]{3,4}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="AlphanumericStringMin3Max4Type">
+		<xsd:union memberTypes="icis:AlphanumericStringMin3Max4TypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="String1FixedTypeBase">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="1"/>
+			<xsd:pattern value="[^\*]*"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="String1FixedType">
+		<xsd:union memberTypes="icis:String1FixedTypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="String2FixedTypeBase">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="2"/>
+			<xsd:maxLength value="2"/>
+			<xsd:pattern value="[^\*]*"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="String2FixedType">
+		<xsd:union memberTypes="icis:String2FixedTypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="String3FixedTypeBase">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="3"/>
+			<xsd:maxLength value="3"/>
+			<xsd:pattern value="[^\*]*"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="String3FixedType">
+		<xsd:union memberTypes="icis:String3FixedTypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="String4FixedTypeBase">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="4"/>
+			<xsd:maxLength value="4"/>
+			<xsd:pattern value="[^\*]*"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="String4FixedType">
+		<xsd:union memberTypes="icis:String4FixedTypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="String5FixedTypeBase">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="5"/>
+			<xsd:maxLength value="5"/>
+			<xsd:pattern value="[^\*]*"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="String5FixedType">
+		<xsd:union memberTypes="icis:String5FixedTypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="String6FixedTypeBase">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="6"/>
+			<xsd:maxLength value="6"/>
+			<xsd:pattern value="[^\*]*"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="String6FixedType">
+		<xsd:union memberTypes="icis:String6FixedTypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="String9FixedTypeBase">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="9"/>
+			<xsd:maxLength value="9"/>
+			<xsd:pattern value="[^\*]*"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="String9FixedType">
+		<xsd:union memberTypes="icis:String9FixedTypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="String10FixedTypeBase">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="10"/>
+			<xsd:maxLength value="10"/>
+			<xsd:pattern value="[^\*]*"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="String10FixedType">
+		<xsd:union memberTypes="icis:String10FixedTypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="String12FixedTypeBase">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="12"/>
+			<xsd:maxLength value="12"/>
+			<xsd:pattern value="[^\*]*"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="String12FixedType">
+		<xsd:union memberTypes="icis:String12FixedTypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="String18FixedTypeBase">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="18"/>
+			<xsd:maxLength value="18"/>
+			<xsd:pattern value="[^\*]*"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Type">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max2TypeBase">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="2"/>
+			<xsd:pattern value="[^\*]*"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max2Type">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max3TypeBase">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="3"/>
+			<xsd:pattern value="[^\*]*"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max3Type">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="3"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max4Type">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="4"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max5TypeBase">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="5"/>
+			<xsd:pattern value="[^\*]*"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max5Type">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="5"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max6TypeBase">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="6"/>
+			<xsd:pattern value="[^\*]*"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max6Type">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="6"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max7TypeBase">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="7"/>
+			<xsd:pattern value="[^\*]*"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max7Type">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="7"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max8Type">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="8"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max9TypeBase">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="9"/>
+			<xsd:pattern value="[^\*]*"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max9Type">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="9"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max10Type">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="10"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max12Type">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="12"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max12TypeBase">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="12"/>
+			<xsd:pattern value="[^\*]*"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max11Type">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="11"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max14TypeBase">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="14"/>
+			<xsd:pattern value="[^\*]*"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max14Type">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="14"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max15Type">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="15"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max20TypeBase">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="20"/>
+			<xsd:pattern value="[^\*]*"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max20Type">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="20"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max25Type">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="25"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max30TypeBase">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="30"/>
+			<xsd:pattern value="[^\*]*"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max30Type">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="30"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max35Type">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="35"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max40TypeBase">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="40"/>
+			<xsd:pattern value="[^\*]*"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max40Type">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="40"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max44Type">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="44"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max50TypeBase">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="50"/>
+			<xsd:pattern value="[^\*]*"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max50Type">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max60TypeBase">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="60"/>
+			<xsd:pattern value="[^\*]*"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max60Type">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="60"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max80TypeBase">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="80"/>
+			<xsd:pattern value="[^\*]*"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max80Type">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="80"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max100Type">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="100"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max120Type">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="120"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max150Type">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="150"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max200Type">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="200"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max250Type">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="250"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max300Type">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="300"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max304Type">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="304"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max315Type">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="315"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max500Type">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="500"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max1000Type">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="1000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max2000Type">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="2000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max4000Type">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="4000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max5000Type">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="5000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin3Max30TypeBase">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="3"/>
+			<xsd:maxLength value="30"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin3Max30Type">
+		<xsd:union memberTypes="icis:StringMin3Max30TypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin6Max18TypeBase">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="6"/>
+			<xsd:maxLength value="18"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin7Max10TypeBase">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="7"/>
+			<xsd:maxLength value="10"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin7Max10Type">
+		<xsd:union memberTypes="icis:StringMin7Max10TypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin7Max25TypeBase">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="7"/>
+			<xsd:maxLength value="25"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:annotation>
+		<xsd:documentation>PERCENT TYPES</xsd:documentation>
+	</xsd:annotation>
+	<xsd:simpleType name="PercentRange0To99.9TypeBase">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="99.9"/>
+			<xsd:fractionDigits value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="PercentRange0To99.9Type">
+		<xsd:union memberTypes="icis:PercentRange0To99.9TypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:annotation>
+		<xsd:documentation>DECIMAL TYPES</xsd:documentation>
+	</xsd:annotation>
+	<xsd:simpleType name="Decimal4FloatingTypeBase">
+		<xsd:annotation>
+			<xsd:documentation>Acceptable values are 1-4 characters (integer or decimal including an optional leading + or - symbol and 0 to 2 decimal places, without commas).  An integer followed by a point is allowed, e.g. +4. , but not +. or . by itself.  </xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="4"/>
+			<xsd:pattern value="(\+|-)?([0-9]+(\.[0-9]{0,2})?|\.[0-9]{1,2})"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Decimal4FloatingType">
+		<xsd:union memberTypes="icis:Decimal4FloatingTypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="Decimal6Base">
+		<xsd:annotation>
+			<xsd:documentation>Acceptable range is 0 to 999999 and 0 to 1 decimal places without commas.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:decimal">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="99999.9"/>
+			<xsd:fractionDigits value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Decimal6FloatingType">
+		<xsd:union memberTypes="icis:Decimal6Base icis:NonNegativeIntegerMin1Max6TypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="Decimal7FloatingTypeBase">
+		<xsd:annotation>
+			<xsd:documentation>Acceptable values are 1-7 characters (integer or decimal including an optional leading + or - symbol and 0 to 2 decimal places, without commas).  An integer followed by a point is allowed, e.g. +4. , but not +. or . by itself.  </xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="7"/>
+			<xsd:pattern value="(\+|-)?([0-9]+(\.[0-9]{0,2})?|\.[0-9]{1,2})"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Decimal7FloatingType">
+		<xsd:union memberTypes="icis:Decimal7FloatingTypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="Decimal8FloatingTypeBase">
+		<xsd:annotation>
+			<xsd:documentation>Acceptable range is -99999999 to 99999999 and 0 to 8 decimal places without commas.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:union>
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:decimal">
+					<xsd:minInclusive value="0"/>
+					<xsd:maxInclusive value="+99999999"/>
+					<xsd:fractionDigits value="8"/>
+					<xsd:totalDigits value="9"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:decimal">
+					<xsd:minInclusive value="0"/>
+					<xsd:maxInclusive value="+99999999"/>
+					<xsd:pattern value="([+]{0,1}.[0-9]{1,8})|([+]{0,1}0.[0-9]{1,8})"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:decimal">
+					<xsd:minInclusive value="-99999999"/>
+					<xsd:maxInclusive value="-.00000001"/>
+					<xsd:fractionDigits value="8"/>
+					<xsd:totalDigits value="8"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:decimal">
+					<xsd:minInclusive value="-.99999999"/>
+					<xsd:maxInclusive value="-.00000001"/>
+					<xsd:fractionDigits value="8"/>
+					<xsd:totalDigits value="9"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:union>
+	</xsd:simpleType>
+	<xsd:simpleType name="Decimal8FloatingType">
+		<xsd:union memberTypes="icis:Decimal8FloatingTypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="Decimal10FloatingTypeBase">
+		<xsd:annotation>
+			<xsd:documentation>Acceptable range is 0 to 9999999999 and 0 to 9 decimal places without commas.  Leading + and - signs are allowed, but because the type is restricted to a max of 10 characters, this will force the highest number to be 999999999 or if it is a decimal, a max of 7 or 8 places depending on whether an integer and/or sign exists.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="10"/>
+			<xsd:pattern value="(\+|-)?([0-9]+(\.[0-9]*)?|\.[0-9]+)"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Decimal10FloatingType">
+		<xsd:union memberTypes="icis:Decimal10FloatingTypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="Decimal11FloatingTypeBase">
+		<xsd:annotation>
+			<xsd:documentation> Acceptable range is 0 to 99999999999 and 0 to 10 decimal places without commas.  Leading + and - signs are allowed, but because the type is restricted to a max of 10 characters, this will force the highest number to be 999999999 or if it is a decimal, a max of 7 or 8 places depending on whether an integer and/or sign exists.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="11"/>
+			<xsd:pattern value="(\+|-)?([0-9]+(\.[0-9]*)?|\.[0-9]+)"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Decimal11FloatingType">
+		<xsd:union memberTypes="icis:Decimal11FloatingTypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="NonNegativeDecimal4FloatingTypeBase">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="9999"/>
+			<xsd:fractionDigits value="2"/>
+			<xsd:pattern value="[\d.]{1,7}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NonNegativeDecimal4FloatingType">
+		<xsd:union memberTypes="icis:NonNegativeDecimal4FloatingTypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="NonNegativeDecimal8FloatingTypeBase">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="99999999"/>
+			<xsd:fractionDigits value="7"/>
+			<xsd:pattern value="[\d.]{1,8}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NonNegativeDecimal8FloatingType">
+		<xsd:union memberTypes="icis:NonNegativeDecimal8FloatingTypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="DecimalRange0To999.9TypeBase">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="999.9"/>
+			<xsd:fractionDigits value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="DecimalRange0To999.9Type">
+		<xsd:union memberTypes="icis:DecimalRange0To999.9TypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="DecimalRange0To999.99TypeBase">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="999.99"/>
+			<xsd:fractionDigits value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="DecimalRange0To999.99Type">
+		<xsd:union memberTypes="icis:DecimalRange0To999.99TypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="DecimalRange0To9999.99TypeBase">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="9999.99"/>
+			<xsd:fractionDigits value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="DecimalRange0To9999.99Type">
+		<xsd:union memberTypes="icis:DecimalRange0To9999.99TypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="DecimalRange0To9999999.9TypeBase">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="9999999.9"/>
+			<xsd:fractionDigits value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="DecimalRange0To9999999.9Type">
+		<xsd:union memberTypes="icis:DecimalRange0To9999999.9TypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="DecimalRange0To999999999999.99TypeBase">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="999999999999.99"/>
+			<xsd:fractionDigits value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="DecimalRange0To999999999999.99Type">
+		<xsd:union memberTypes="icis:DecimalRange0To999999999999.99TypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:annotation>
+		<xsd:documentation>INTEGER TYPES</xsd:documentation>
+	</xsd:annotation>
+	<xsd:simpleType name="IntegerMin1Max6TypeBase">
+		<xsd:restriction base="xsd:integer">
+			<xsd:minInclusive value="-999999"/>
+			<xsd:maxInclusive value="+999999"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="IntegerMin1Max6Type">
+		<xsd:union memberTypes="icis:IntegerMin1Max6TypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="IntegerMin1Max10TypeBase">
+		<xsd:restriction base="xsd:integer">
+			<xsd:minInclusive value="-9999999999"/>
+			<xsd:maxInclusive value="+9999999999"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="IntegerMin1Max10Type">
+		<xsd:union memberTypes="icis:IntegerMin1Max10TypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="IntegerRange-1To12TypeBase">
+		<xsd:restriction base="xsd:integer">
+			<xsd:minInclusive value="-1"/>
+			<xsd:maxInclusive value="12"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="IntegerRange0To8TypeBase">
+		<xsd:restriction base="xsd:nonNegativeInteger">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="8"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="IntegerRange0To8Type">
+		<xsd:union memberTypes="icis:IntegerRange0To8TypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="IntegerRange0To12TypeBase">
+		<xsd:restriction base="xsd:nonNegativeInteger">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="12"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="IntegerRange0To12Type">
+		<xsd:union memberTypes="icis:IntegerRange0To12TypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="IntegerRange0To9TypeBase">
+		<xsd:restriction base="xsd:nonNegativeInteger">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="9"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="IntegerRange1To10TypeBase">
+		<xsd:restriction base="xsd:nonNegativeInteger">
+			<xsd:minInclusive value="1"/>
+			<xsd:maxInclusive value="10"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="IntegerRange1To12TypeBase">
+		<xsd:restriction base="xsd:nonNegativeInteger">
+			<xsd:minInclusive value="1"/>
+			<xsd:maxInclusive value="12"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="IntegerRange1To12Type">
+		<xsd:union memberTypes="icis:IntegerRange1To12TypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="IntegerRange1To99TypeBase">
+		<xsd:annotation>
+			<xsd:documentation>Allows 1, 2, ... up to 99.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:nonNegativeInteger">
+			<xsd:minInclusive value="1"/>
+			<xsd:maxInclusive value="99"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="IntegerRange1To999TypeBase">
+		<xsd:annotation>
+			<xsd:documentation>Allows 1, 2, ... up to 999.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:nonNegativeInteger">
+			<xsd:minInclusive value="1"/>
+			<xsd:maxInclusive value="999"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="IntegerRange1To99999TypeBase">
+		<xsd:annotation>
+			<xsd:documentation>Allows 1, 2, ... up to 99999.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:nonNegativeInteger">
+			<xsd:minInclusive value="1"/>
+			<xsd:maxInclusive value="99999"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="IntegerRange1To99999Type">
+		<xsd:union memberTypes="icis:IntegerRange1To99999TypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="IntegerRange1To4TypeBase">
+		<xsd:restriction base="xsd:nonNegativeInteger">
+			<xsd:minInclusive value="1"/>
+			<xsd:maxInclusive value="4"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="IntegerRange1To4Type">
+		<xsd:union memberTypes="icis:IntegerRange1To4TypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="IntegerRange0To1000TypeBase">
+		<xsd:restriction base="xsd:nonNegativeInteger">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="1000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="IntegerRange0To1000Type">
+		<xsd:union memberTypes="icis:IntegerRange0To1000TypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="IntegerRange1To999999999999999TypeBase">
+		<xsd:restriction base="xsd:nonNegativeInteger">
+			<xsd:minInclusive value="1"/>
+			<xsd:maxInclusive value="999999999999999"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="IntegerRange1To999999999999999Type">
+		<xsd:union memberTypes="icis:IntegerRange1To999999999999999TypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="IntegerRange1970To2099TypeBase">
+		<xsd:restriction base="xsd:nonNegativeInteger">
+			<xsd:minInclusive value="1970"/>
+			<xsd:maxInclusive value="2099"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="IntegerRange1970To2099Type">
+		<xsd:union memberTypes="icis:IntegerRange1970To2099TypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="Integer2FixedRange00To99TypeBase">
+		<xsd:annotation>
+			<xsd:documentation>Allows 00, 01,... up to 99.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:nonNegativeInteger">
+			<xsd:pattern value="\p{Nd}\p{Nd}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Integer2FixedRange00To99Type">
+		<xsd:union memberTypes="icis:Integer2FixedRange00To99TypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="Integer2FixedRange01To99TypeBase">
+		<xsd:annotation>
+			<xsd:documentation>Allows 01,... up to 99, but not 00 b/c it is not a positiveInteger.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:positiveInteger">
+			<xsd:pattern value="\p{Nd}\p{Nd}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Integer2FixedRange01To99Type">
+		<xsd:union memberTypes="icis:Integer2FixedRange01To99TypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="Integer2FixedRange01To12TypeBase">
+		<xsd:restriction base="xsd:positiveInteger">
+			<xsd:minInclusive value="01"/>
+			<xsd:maxInclusive value="12"/>
+			<xsd:pattern value="\p{Nd}\p{Nd}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Integer2FixedRange01To12Type">
+		<xsd:union memberTypes="icis:Integer2FixedRange01To12TypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="Integer2FixedRange01To60TypeBase">
+		<xsd:restriction base="xsd:positiveInteger">
+			<xsd:minInclusive value="01"/>
+			<xsd:maxInclusive value="60"/>
+			<xsd:pattern value="\p{Nd}\p{Nd}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Integer2FixedRange01To60Type">
+		<xsd:union memberTypes="icis:Integer2FixedRange01To60TypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="Integer3FixedRange001To999TypeBase">
+		<xsd:restriction base="xsd:positiveInteger">
+			<xsd:pattern value="\p{Nd}\p{Nd}\p{Nd}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Integer3FixedRange001To999Type">
+		<xsd:union memberTypes="icis:Integer3FixedRange001To999TypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="NonNegativeIntegerMin1Max2TypeBase">
+		<xsd:restriction base="xsd:nonNegativeInteger">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="99"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NonNegativeIntegerMin1Max2Type">
+		<xsd:union memberTypes="icis:NonNegativeIntegerMin1Max2TypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="NonNegativeIntegerMin1Max3TypeBase">
+		<xsd:restriction base="xsd:nonNegativeInteger">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="999"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NonNegativeIntegerMin1Max3Type">
+		<xsd:union memberTypes="icis:NonNegativeIntegerMin1Max3TypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="NonNegativeIntegerMin1Max4TypeBase">
+		<xsd:restriction base="xsd:nonNegativeInteger">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="9999"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NonNegativeIntegerMin1Max4Type">
+		<xsd:union memberTypes="icis:NonNegativeIntegerMin1Max4TypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="NonNegativeIntegerMin1Max5TypeBase">
+		<xsd:restriction base="xsd:nonNegativeInteger">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="99999"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NonNegativeIntegerMin1Max5Type">
+		<xsd:union memberTypes="icis:NonNegativeIntegerMin1Max5TypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="NonNegativeIntegerMin1Max6TypeBase">
+		<xsd:restriction base="xsd:nonNegativeInteger">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="999999"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NonNegativeIntegerMin1Max6Type">
+		<xsd:union memberTypes="icis:NonNegativeIntegerMin1Max6TypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="NonNegativeIntegerMin1Max7TypeBase">
+		<xsd:restriction base="xsd:nonNegativeInteger">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="9999999"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NonNegativeIntegerMin1Max7Type">
+		<xsd:union memberTypes="icis:NonNegativeIntegerMin1Max7TypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="NonNegativeIntegerMin1Max8TypeBase">
+		<xsd:restriction base="xsd:nonNegativeInteger">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="99999999"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NonNegativeIntegerMin1Max8Type">
+		<xsd:union memberTypes="icis:NonNegativeIntegerMin1Max8TypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="NonNegativeIntegerMin1Max9TypeBase">
+		<xsd:restriction base="xsd:nonNegativeInteger">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="999999999"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NonNegativeIntegerMin1Max9Type">
+		<xsd:union memberTypes="icis:NonNegativeIntegerMin1Max9TypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="NonNegativeIntegerMin1Max10TypeBase">
+		<xsd:restriction base="xsd:nonNegativeInteger">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="9999999999"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NonNegativeIntegerMin1Max10Type">
+		<xsd:union memberTypes="icis:NonNegativeIntegerMin1Max10TypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="NonNegativeIntegerSansPositiveSignMin1Max10TypeBase">
+		<xsd:annotation>
+			<xsd:documentation>This type does NOT allow leading + signs, but DOES allow leading 0s.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:nonNegativeInteger">
+			<xsd:pattern value="[0-9]{1,10}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NonNegativeIntegerSansPositiveSignMin1Max10Type">
+		<xsd:union memberTypes="icis:NonNegativeIntegerSansPositiveSignMin1Max10TypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="NonNegativeIntegerMin1Max15TypeBase">
+		<xsd:restriction base="xsd:nonNegativeInteger">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="999999999999999"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NonNegativeIntegerMin1Max15Type">
+		<xsd:union memberTypes="icis:NonNegativeIntegerMin1Max15TypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="HourMinuteType">
+		<xsd:union memberTypes="icis:ClockTypeBeforeHour20 icis:ClockTypeAfterHour20 icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="ClockTypeBeforeHour20">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="5"/>
+			<xsd:maxLength value="5"/>
+			<xsd:pattern value="[0-1][0-9][:][0-5][0-9]"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ClockTypeAfterHour20">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="5"/>
+			<xsd:maxLength value="5"/>
+			<xsd:pattern value="[2][0-3][:][0-5][0-9]"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NAICSTypeBase">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="6"/>
+			<xsd:maxLength value="6"/>
+			<xsd:pattern value="[0-9]{6}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NAICSType">
+		<xsd:union memberTypes="icis:NAICSTypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="SICTypeBase">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="4"/>
+			<xsd:maxLength value="4"/>
+			<xsd:pattern value="[0-9]{4}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SICType">
+		<xsd:union memberTypes="icis:SICTypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:annotation>
+		<xsd:documentation>ENUMERATION DEFINITIONS</xsd:documentation>
+		<xsd:documentation>An * is used as way to blank out the field in the database.</xsd:documentation>
+	</xsd:annotation>
+	<xsd:simpleType name="ActiveInactiveType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="A"/>
+			<xsd:enumeration value="I"/>
+			<xsd:enumeration value="*"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="AsteriskType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="*"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ComplianceMonitoringActivityTypeCodeType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="INF"/>
+			<xsd:enumeration value="INS"/>
+			<xsd:enumeration value="INV"/>
+			<xsd:enumeration value="OSR"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ComplianceScheduleFlagType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="A"/>
+			<xsd:enumeration value="J"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="DateType">
+		<xsd:union memberTypes="xsd:date icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="EstimatedMeasuredType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="E"/>
+			<xsd:enumeration value="M"/>
+			<xsd:enumeration value="*"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ForumType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="AFR"/>
+			<xsd:enumeration value="JDC"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="LeadPartyType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="E"/>
+			<xsd:enumeration value="S"/>
+			<xsd:enumeration value="*"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="LimitSetType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="U"/>
+			<xsd:enumeration value="S"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MonthTextType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="ALL"/>
+			<xsd:enumeration value="JAN"/>
+			<xsd:enumeration value="FEB"/>
+			<xsd:enumeration value="MAR"/>
+			<xsd:enumeration value="APR"/>
+			<xsd:enumeration value="MAY"/>
+			<xsd:enumeration value="JUN"/>
+			<xsd:enumeration value="JUL"/>
+			<xsd:enumeration value="AUG"/>
+			<xsd:enumeration value="SEP"/>
+			<xsd:enumeration value="OCT"/>
+			<xsd:enumeration value="NOV"/>
+			<xsd:enumeration value="DEC"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="nameType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="e-mail"/>
+			<xsd:enumeration value="Source"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NumericReportTextType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Q1"/>
+			<xsd:enumeration value="Q2"/>
+			<xsd:enumeration value="C1"/>
+			<xsd:enumeration value="C2"/>
+			<xsd:enumeration value="C3"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NumericReportViolationCodeType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="D"/>
+			<xsd:enumeration value="E"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="PassFailIndicatorType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="P"/>
+			<xsd:enumeration value="F"/>
+			<xsd:enumeration value="*"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="PermitStatusCodeType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="NON"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="PretreatmentProgramRequiredIndicatorType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="C"/>
+			<xsd:enumeration value="E"/>
+			<xsd:enumeration value="R"/>
+			<xsd:enumeration value="S"/>
+			<xsd:enumeration value="Y"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="PrecipitationFormType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="R"/>
+			<xsd:enumeration value="S"/>
+			<xsd:enumeration value="*"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SamplingBasisType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="D"/>
+			<xsd:enumeration value="W"/>
+			<xsd:enumeration value="*"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ScheduleViolationCodeType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="C30"/>
+			<xsd:enumeration value="C40"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StateFederalJointType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="S"/>
+			<xsd:enumeration value="E"/>
+			<xsd:enumeration value="J"/>
+			<xsd:enumeration value="*"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TransactionType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="C"/>
+			<xsd:enumeration value="D"/>
+			<xsd:enumeration value="N"/>
+			<xsd:enumeration value="R"/>
+			<xsd:enumeration value="X"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="WetDryType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="W"/>
+			<xsd:enumeration value="D"/>
+			<xsd:enumeration value="*"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="YesNoIndicatorTypeBase">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Y"/>
+			<xsd:enumeration value="N"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="YesNoIndicatorType">
+		<xsd:union memberTypes="icis:YesNoIndicatorTypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+</xsd:schema>

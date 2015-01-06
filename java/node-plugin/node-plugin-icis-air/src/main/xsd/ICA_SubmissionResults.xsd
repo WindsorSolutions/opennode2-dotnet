@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="SubmissionResultList">
+		<xs:annotation>
+			<xs:documentation>Represents a single row in the OpenNode2 ICIS-Air Full Batch plugin ICA_SUBM_RESULTS staging table. Transformed from ICIS-Air Accepted and Rejected transaction report.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="SubmissionResult" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="SubmissionTypeName" type="xs:string"/>
+							<xs:element name="TransactionType" type="xs:string"/>
+							<xs:element name="AirFacilityIdentifier" type="xs:string" minOccurs="0"/>
+							<xs:element name="ComplianceMonitoringIdentifier" type="xs:string" minOccurs="0"/>
+							<xs:element name="ComplianceMonitoringIdentifier2" type="xs:string" minOccurs="0"/>
+							<xs:element name="AirDAEnforcementActionIdentifier" type="xs:string" minOccurs="0"/>
+							<xs:element name="AirDAEnforcementActionIdentifier2" type="xs:string" minOccurs="0"/>
+							<xs:element name="MilestoneTypeCode" type="xs:string" minOccurs="0"/>
+							<xs:element name="AirPollutantsCode" type="xs:string" minOccurs="0"/>
+							<xs:element name="AirProgramCode" type="xs:string" minOccurs="0"/>
+							<xs:element name="CaseFileIdentifier" type="xs:string" minOccurs="0"/>
+							<xs:element name="CaseFileIdentifier2" type="xs:string" minOccurs="0"/>
+							<xs:element name="ResultCode" type="xs:string" minOccurs="0"/>
+							<xs:element name="ResultTypeCode" type="xs:string" minOccurs="0"/>
+							<xs:element name="ResultDescription" type="xs:string" minOccurs="0"/>
+							<xs:element name="SubmissionTransactionId" type="xs:string"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
