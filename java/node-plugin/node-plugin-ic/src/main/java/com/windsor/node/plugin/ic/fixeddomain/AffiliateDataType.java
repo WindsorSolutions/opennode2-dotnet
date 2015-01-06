@@ -136,8 +136,8 @@ public class AffiliateDataType
      *     {@link TelephonicListDataType }
      *     
      */
-   /* @Embedded
-    @AssociationOverride(name = "telephonic", joinTable = @JoinTable(name = "IC_TELE", joinColumns = {
+    @Embedded
+    /*@AssociationOverride(name = "telephonic", joinTable = @JoinTable(name = "IC_TELE", joinColumns = {
         @JoinColumn(name = "IC_AFFIL_ID", referencedColumnName = "IC_AFFIL_ID")
     }, inverseJoinColumns = {
         @JoinColumn(name = "IC_AFFIL_ID")
