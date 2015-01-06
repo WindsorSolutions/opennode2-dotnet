@@ -6,6 +6,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.spi.PersistenceProvider;
 import javax.sql.DataSource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.cfg.Environment;
 import org.hibernate.ejb.HibernatePersistence;
 
@@ -26,6 +27,10 @@ public class HibernatePersistenceProvider {
 
         if (config.getBatchFetchSize() != null) {
             jpaProperties.put(Environment.DEFAULT_BATCH_FETCH_SIZE, config.getBatchFetchSize());
+        }
+
+        if (StringUtils.isNotBlank(config.getHibernateDialect())) {
+            jpaProperties.put(Environment.DIALECT, config.getHibernateDialect());
         }
 
         return provider.createContainerEntityManagerFactory(

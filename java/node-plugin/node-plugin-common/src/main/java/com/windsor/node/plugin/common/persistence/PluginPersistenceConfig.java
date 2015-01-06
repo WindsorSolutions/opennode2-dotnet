@@ -1,8 +1,11 @@
 package com.windsor.node.plugin.common.persistence;
 
+
 public class PluginPersistenceConfig {
 
     private String rootEntityPackage;
+    private ClassLoader classLoader;
+    private String hibernateDialect; //Should rarely be used
 
     private boolean debugSql = Boolean.FALSE;
 
@@ -30,9 +33,29 @@ public class PluginPersistenceConfig {
         return this;
     }
 
+    public PluginPersistenceConfig hibernateDialect(String hibernateDialect) {
+        this.hibernateDialect = hibernateDialect;
+        return this;
+    }
+
+    public PluginPersistenceConfig classLoader(ClassLoader classLoader) {
+        this.classLoader = classLoader;
+        return this;
+    }
+
+    public ClassLoader getClassLoader()
+    {
+        return classLoader;
+    }
+
     public PluginPersistenceConfig debugSql(boolean debugSql) {
         this.debugSql = debugSql;
         return this;
+    }
+
+    public String getHibernateDialect()
+    {
+        return hibernateDialect;
     }
 }
 

@@ -31,12 +31,13 @@ import javax.sql.DataSource;
 public class HibernatePersistenceUnitInfo implements PersistenceUnitInfo {
 
     private final Properties jpaProperties;
-
     private final String entityPackageName;
+    private final ClassLoader classLoader;
 
     public HibernatePersistenceUnitInfo(Properties jpaProperties, PluginPersistenceConfig config) {
         this.jpaProperties = jpaProperties;
         this.entityPackageName = config.getRootEntityPackage();
+        this.classLoader = config.getClassLoader();
     }
 
     @Override
@@ -114,7 +115,12 @@ public class HibernatePersistenceUnitInfo implements PersistenceUnitInfo {
 
     private List<Class<?>> listEntitiesInPackage(String packageName) throws ClassNotFoundException, IOException {
 
-        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        ClassLoader classLoader = this.classLoader;
+
+        if(classLoader == null)
+        {
+            classLoader = Thread.currentThread().getContextClassLoader();
+        }
 
         assert classLoader != null;
 
