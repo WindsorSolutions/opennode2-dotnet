@@ -960,7 +960,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                     results[listKeyFieldsIndex].ResultLabInformation.ResultDetectionQuantitationLimit = array;
                 });
         }
-        protected string GenerateSubmissionFile(Submission_Type submissionType, object data)
+        protected virtual string GenerateSubmissionFile(Submission_Type submissionType, object data)
         {
             AppendAuditLogEvent("Generating submission file from results");
 

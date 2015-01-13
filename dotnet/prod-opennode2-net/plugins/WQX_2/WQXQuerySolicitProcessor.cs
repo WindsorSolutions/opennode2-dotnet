@@ -180,6 +180,42 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
                 FileUtils.SafeDeleteFile(submitFile);
             }
         }
+        protected override string GenerateSubmissionFile(Submission_Type submissionType, object data)
+        {
+            string filePath = base.GenerateSubmissionFile(submissionType, data);
+
+            if ((submissionType == Submission_Type.Delete) || !(data is WQXDataType))
+            {
+                return filePath;
+            }
+
+            var wqxDataType = data as WQXDataType;
+
+            ISettingsProvider settingsProvider;
+            GetServiceImplementation(out settingsProvider);
+
+            string attachedBinaryObjectFolder = Path.Combine(settingsProvider.TempFolderPath, Guid.NewGuid().ToString());
+
+            int attachedBinaryFileCount = wqxDataType.WriteBinaryObjectDataToFolder(attachedBinaryObjectFolder);
+
+            if (attachedBinaryFileCount > 0)
+            {
+                AppendAuditLogEvent("Found {0} attached binary objects (with content) to submit, building zip file for submission ...",
+                                    attachedBinaryFileCount.ToString());
+                //string tempZipFilePath = settingsProvider.NewTempFilePath(".zip");
+                try
+                {
+                    //_compressionHelper.CompressFile(filePath, tempZipFilePath);
+                    _compressionHelper.CompressDirectory(filePath, attachedBinaryObjectFolder);
+                }
+                catch (Exception)
+                {
+                    FileUtils.SafeDeleteFile(filePath);
+                    throw;
+                }
+            }
+            return filePath;
+        }
         protected override object GetInsertUpdateData()
         {
             IObjectsFromDatabase objectsFromDatabase;
