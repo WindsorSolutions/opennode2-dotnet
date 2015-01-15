@@ -1,4 +1,4 @@
-package com.windsor.node.plugin.icisnpdes40.domain;
+package com.windsor.node.plugin.icisnpdes.domain;
 
 import java.io.Serializable;
 

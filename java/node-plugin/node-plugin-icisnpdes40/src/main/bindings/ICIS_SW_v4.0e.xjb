@@ -8,7 +8,7 @@
 
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='GPCFNoticeOfIntent']">
-			<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractGPCFNotice
+			<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractGPCFNotice
 			</inheritance:extends>
 		</jaxb:bindings>
 	</jaxb:bindings>
@@ -17,7 +17,7 @@
 
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='GPCFNoticeOfTermination']">
-			<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractGPCFNotice
+			<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractGPCFNotice
 			</inheritance:extends>
 		</jaxb:bindings>
 	</jaxb:bindings>
@@ -26,7 +26,7 @@
 
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='ProjectType']">
-			<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractProjectType
+			<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractProjectType
 			</inheritance:extends>
 		</jaxb:bindings>
 	</jaxb:bindings>

@@ -1,4 +1,4 @@
-package com.windsor.node.plugin.icisnpdes40.submission.exception;
+package com.windsor.node.plugin.icisnpdes.submission.exception;
 
 import com.windsor.node.common.domain.PartnerIdentity;
 

@@ -302,7 +302,7 @@
 
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='PermitScheduleEventViolationKeyElements']">
-			<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractScheduleEventViolationKeyElements</inheritance:extends>
+			<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractScheduleEventViolationKeyElements</inheritance:extends>
 		</jaxb:bindings>
 	</jaxb:bindings>
 
@@ -310,7 +310,7 @@
 
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='ComplianceScheduleEventViolationKeyElements']">
-			<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractScheduleEventViolationKeyElements</inheritance:extends>
+			<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractScheduleEventViolationKeyElements</inheritance:extends>
 		</jaxb:bindings>
 	</jaxb:bindings>
 

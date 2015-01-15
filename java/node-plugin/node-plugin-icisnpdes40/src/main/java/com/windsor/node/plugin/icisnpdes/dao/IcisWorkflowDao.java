@@ -1,6 +1,6 @@
-package com.windsor.node.plugin.icisnpdes40.dao;
+package com.windsor.node.plugin.icisnpdes.dao;
 
-import com.windsor.node.plugin.icisnpdes40.domain.IcisWorkflow;
+import com.windsor.node.plugin.icisnpdes.domain.IcisWorkflow;
 
 public interface IcisWorkflowDao
 {

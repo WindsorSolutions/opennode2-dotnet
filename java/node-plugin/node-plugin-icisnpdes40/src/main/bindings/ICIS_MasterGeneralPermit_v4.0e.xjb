@@ -8,7 +8,7 @@
 
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='MasterGeneralPermitData']">
-			<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractMasterGeneralPermitData
+			<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractMasterGeneralPermitData
 			</inheritance:extends>
 		</jaxb:bindings>
 	</jaxb:bindings>

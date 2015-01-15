@@ -8,7 +8,7 @@
 
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='SWEventReportData']">
-			<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractSWEventReportData</inheritance:extends>
+			<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractSWEventReportData</inheritance:extends>
 		</jaxb:bindings>
 	</jaxb:bindings>
 

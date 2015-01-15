@@ -59,7 +59,7 @@
 
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='LandApplicationSite']">
-			<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractHasDischargeMonitoringReport
+			<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractHasDischargeMonitoringReport
 			</inheritance:extends>
 		</jaxb:bindings>
 	</jaxb:bindings>
@@ -68,7 +68,7 @@
 
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='SurfaceDisposalSite']">
-			<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractHasDischargeMonitoringReport
+			<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractHasDischargeMonitoringReport
 			</inheritance:extends>
 		</jaxb:bindings>
 	</jaxb:bindings>
@@ -77,7 +77,7 @@
 
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='Incinerator']">
-			<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractHasDischargeMonitoringReport
+			<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractHasDischargeMonitoringReport
 			</inheritance:extends>
 		</jaxb:bindings>
 	</jaxb:bindings>
@@ -86,7 +86,7 @@
 
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='CoDisposalSite']">
-			<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractHasDischargeMonitoringReport
+			<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractHasDischargeMonitoringReport
 			</inheritance:extends>
 		</jaxb:bindings>
 	</jaxb:bindings>

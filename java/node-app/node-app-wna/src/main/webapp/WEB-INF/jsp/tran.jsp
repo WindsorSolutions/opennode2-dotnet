@@ -12,7 +12,7 @@
         <p style="clear: both;" />
 
         <div style="clear: both; text-align: right; margin-bottom: 10px">
-        <c:if test="${model.tran.networkEndpointUrl != null && model.tran.status.status == 'Completed'}">
+        <c:if test="${model.tran.networkEndpointUrl != null && (model.tran.status.status == 'Completed' || model.tran.status.status == 'Failed')}">
             <input type="button" id="downloadButton" value="Download" class="button" style="width:120px" 
                 onclick="window.location.href='download.htm?transactionId=<c:out value="${model.tran.id}" />'" />
         </c:if>

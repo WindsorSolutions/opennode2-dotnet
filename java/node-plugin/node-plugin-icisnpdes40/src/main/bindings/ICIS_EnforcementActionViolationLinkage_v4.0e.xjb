@@ -67,35 +67,35 @@
 	<!-- compliance schedule violation -->
 
 	<jaxb:bindings node="//xsd:complexType[@name='ComplianceScheduleViolation']">
-		<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractEnhancedComplianceScheduleKeyElements
+		<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractEnhancedComplianceScheduleKeyElements
 		</inheritance:extends>
 	</jaxb:bindings>
 
 	<!-- discharge monitoring report parameter violation -->
 
 	<jaxb:bindings node="//xsd:complexType[@name='DischargeMonitoringReportParameterViolation']">
-		<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractEnhancedDischargeMonitoringReportKeyElements
+		<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractEnhancedDischargeMonitoringReportKeyElements
 		</inheritance:extends>
 	</jaxb:bindings>
 
 	<!-- discharge monitoring report violation -->
 
 	<jaxb:bindings node="//xsd:complexType[@name='DischargeMonitoringReportViolation']">
-		<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractEnhancedDischargeMonitoringReportKeyElements
+		<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractEnhancedDischargeMonitoringReportKeyElements
 		</inheritance:extends>
 	</jaxb:bindings>
 
 	<!-- permit schedule violation -->
 
 	<jaxb:bindings node="//xsd:complexType[@name='PermitScheduleViolation']">
-		<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractEnhancedPermitScheduleKeyElements
+		<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractEnhancedPermitScheduleKeyElements
 		</inheritance:extends>
 	</jaxb:bindings>
 
 	<!-- single events violation -->
 
 	<jaxb:bindings node="//xsd:complexType[@name='SingleEventsViolation']">
-		<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractEnhancedSingleEventKeyElements
+		<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractEnhancedSingleEventKeyElements
 		</inheritance:extends>
 	</jaxb:bindings>
 

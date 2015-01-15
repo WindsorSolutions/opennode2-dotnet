@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>$helper.startStopWatch()
+#if($lastProcessedTimestamp)
+#set($lastProcessedTimestamp = $helper.toDbDateString($lastProcessedTimestamp))
+$helper.print("lastProcessedTimestamp: $lastProcessedTimestamp")
+#set($facilityQuery = "SELECT facility_uid, facility_id, fac_type, petit_stat, facility_state, facility_city, f_state_id, facility_street, facility_zip, naics_code, sic_code, fac_name FROM UIC_FACILITY")
+#set($wellQuery = "SELECT well_uid, well_id, aqui_exempt, total_depth, high_priority_yn, geology_uid, well_site_name, permit_uid, well_state_id, well_in_swa_yn, well_name, facility_uid, contact_uid FROM UIC_WELL where facility_uid = ?")
+#set($wellStatusQuery = "SELECT oper_status, well_status_date, well_status_id FROM UIC_WELL_STATUS WHERE well_uid = ?")
+#set($wellTypeQuery = "SELECT well_type, well_type_date, well_type_id FROM UIC_WELL_TYPE WHERE well_uid = ?")
+#set($locationQuery = "SELECT well_location_id, acc_value, description, horiz_datum, method, point_line_area, source_scale, well_latitude, well_longitude, well_county FROM UIC_WELL_LOCATION WHERE well_uid = ?")
+#set($violationQuery = "SELECT violation_uid, violation_id, contamination, endanger, re_comp_date, violation_snc, violation_date, violation_type FROM UIC_VIOLATION WHERE well_uid = ?")
+#set($responseQuery = "SELECT enf_uid FROM UIC_RESPONSE WHERE violation_uid = ?")
+#set($inspectionQuery = "SELECT inspection_id, assistance, deficiency, inspection_date, inspection_type FROM UIC_INSPECTION WHERE well_uid = ?")
+#set($mitestQuery = "SELECT mit_id, mit_date, mit_result, mit_type, ra_date, ra_type FROM UIC_MI_TEST WHERE well_uid = ?")
+#set($enggQuery = "SELECT engineering_id, max_rate, on_injection, off_injection FROM UIC_ENGINEERING WHERE well_uid = ?")
+#set($wasteQuery = "SELECT waste_id, waste_code, waste_stream, waste_uid FROM UIC_WASTE WHERE well_uid = ?")
+#set($constituentQuery = "SELECT constituent_id, concentration, unit, constituent_name FROM UIC_CONSTITUENT WHERE waste_uid = ?")
+#set($contactQuery = "SELECT contact_id, contact_phone, contact_name, contact_city, contact_state, contact_street, contact_zip FROM UIC_CONTACT")
+#set($permitQuery = "SELECT permit_uid, permit_id, aor_well, aut_status, ownership_type, p_state_id FROM UIC_PERMIT")
+#set($permitActivityQuery = "SELECT permact_type, activity_id, act_date FROM UIC_PERMIT_ACTIVITY WHERE permit_uid = ?")
+#set($geologyQuery = "SELECT geology_id, cz_name, cz_top, cz_bottom, cz_lithology, iz_name, iz_bottom, iz_lithology, int_top, int_bottom, iz_permeability, iz_porosity, usdw_depth FROM UIC_GEOLOGY")
+#set($enforcementQuery = "SELECT enf_id, enf_date, enf_act_type FROM UIC_ENFORCEMENT")
+#end##if($lastProcessedTimestamp)
+#if($makeHeader)#if($makeHeader == "true" || $makeHeader == "TRUE")
+<Document Id="$docId" 
+          xmlns="http://www.exchangenetwork.net/schema/v1.0/ExchangeNetworkDocument.xsd" 
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<Header>
+    <Author>$authorName</Author>
+    <Organization>$authorOrg</Organization>
+    <Title>UIC</Title>
+    <CreationTime>$helper.getCurrentDateTime()</CreationTime>
+    <Comment>This is a sample UIC export file.</Comment>
+    <DataService>UIC</DataService>        
+    <ContactInfo>$contactInfo</ContactInfo>
+    <Notification>$contactInfo</Notification>
+    <Sensitivity>UNCLASSIFIED</Sensitivity>    
+</Header>
+<Payload Operation="Delete-Insert">
+#end#end##if($makeHeader)
+<UIC xmlns="http://www.exchangenetwork.net/schema/uic/2" 
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://www.exchangenetwork.net/schema/uic/2 http://www.exchangenetwork.net/schema/uic/2/0/UIC_UIC_v2.0.xsd">
+<PrimacyAgencyCode>$orgId</PrimacyAgencyCode>
+#foreach($facilitydetail in $helper.getData($facilityQuery))
+	<FacilityList>
+	<FacilityDetail xmlns="http://www.exchangenetwork.net/schema/uic/2">
+		<FacilityIdentifier>$facilitydetail.get("facility_id")</FacilityIdentifier> 
+		<LocalityName>$facilitydetail.get("facility_city")</LocalityName> 
+		<FacilitySiteName>$facilitydetail.get("fac_name")</FacilitySiteName>
+		<FacilityPetitionStatusCode>$facilitydetail.get("petit_stat")</FacilityPetitionStatusCode>
+		<LocationAddressStateCode>$facilitydetail.get("facility_state")</LocationAddressStateCode> 
+		<FacilityStateIdentifier>$facilitydetail.get("f_state_id")</FacilityStateIdentifier> 
+		<LocationAddressText>$facilitydetail.get("facility_street")</LocationAddressText> 
+		<FacilitySiteTypeCode>$facilitydetail.get("fac_type")</FacilitySiteTypeCode> 
+		<LocationAddressPostalCode>$facilitydetail.get("facility_zip")</LocationAddressPostalCode>
+    </FacilityDetail>
+#foreach($welldetail in $helper.getData($wellQuery,$facilitydetail.get("facility_uid")))
+	<WellDetail xmlns="http://www.exchangenetwork.net/schema/uic/2">
+	<WellIdentifier>$welldetail.get("well_id")</WellIdentifier> 
+    <WellAquiferExemptionInjectionCode>$welldetail.get("aqui_exempt")</WellAquiferExemptionInjectionCode> 
+    <WellTotalDepthNumeric>$welldetail.get("total_depth")</WellTotalDepthNumeric> 
+    <WellHighPriorityDesignationCode>$welldetail.get("high_priority_yn")</WellHighPriorityDesignationCode>
+	#set($contact = $helper.getObject("SELECT contact_id FROM UIC_CONTACT WHERE contact_uid = ? ", $welldetail.get("contact_uid")))
+    <WellContactIdentifier>$contact.get("contact_id")</WellContactIdentifier>
+    <WellFacilityIdentifier>$facilitydetail.get("facility_id")</WellFacilityIdentifier>
+	#if($welldetail.get("geology_uid"))
+	#set($geology = $helper.getObject("SELECT geology_id FROM UIC_GEOLOGY WHERE geology_uid = ? ", $welldetail.get("geology_uid")))
+    <WellGeologyIdentifier>$geology.get("geology_id")</WellGeologyIdentifier> 
+	#end
+    <WellSiteAreaNameText>$welldetail.get("well_state_id")</WellSiteAreaNameText>
+	#set($permit = $helper.getObject("SELECT permit_id FROM UIC_PERMIT WHERE permit_uid = ? ", $welldetail.get("permit_uid")))
+    <WellPermitIdentifier>$permit.get("permit_id")</WellPermitIdentifier> 
+    <WellStateIdentifier>$welldetail.get("well_state_id")</WellStateIdentifier>     
+    <WellInSourceWaterAreaLocationText>$welldetail.get("well_in_swa_yn")</WellInSourceWaterAreaLocationText> 
+    <WellName>$welldetail.get("well_name")</WellName>
+#foreach($wellstatusdetail in $helper.getData($wellStatusQuery,$welldetail.get("well_uid")))	
+	<WellStatusDetail>
+    <WellStatusIdentifier>$wellstatusdetail.get("well_status_id")</WellStatusIdentifier> 
+    <WellStatusDate>$helper.toUicDate($wellstatusdetail.get("well_status_date"))</WellStatusDate> 
+    <WellStatusOperatingStatusCode>$wellstatusdetail.get("oper_status")</WellStatusOperatingStatusCode> 
+    <WellStatusWellIdentifier>$welldetail.get("well_id")</WellStatusWellIdentifier> 
+    </WellStatusDetail>
+#end	##foreach($wellstatusdetail in $helper.getData
+#foreach($welltypedetail in $helper.getData($wellTypeQuery,$welldetail.get("well_uid")))	
+	<WellTypeDetail>
+    <WellTypeIdentifier>$welltypedetail.get("well_type_id")</WellTypeIdentifier>
+	<WellTypeCode>$welltypedetail.get("well_type")</WellTypeCode>
+    <WellTypeDate>$helper.toUicDate($welltypedetail.get("well_type_date"))</WellTypeDate>     
+    <WellTypeWellIdentifier>$welldetail.get("well_id")</WellTypeWellIdentifier> 
+    </WellTypeDetail>
+#end	##foreach($welltypedetail in $helper.getData
+#set($locationdetail = $helper.getObject($locationQuery, $welldetail.get("well_uid")))
+  <LocationDetail>
+  <LocationIdentifier>$locationdetail.get("well_location_id")</LocationIdentifier> 
+  <LocationAddressCounty>$locationdetail.get("well_county")</LocationAddressCounty> 
+  <LocationAccuracyValueMeasure>$locationdetail.get("acc_value")</LocationAccuracyValueMeasure>   
+  <HorizontalCoordinateReferenceSystemDatumCode>$locationdetail.get("horiz_datum")</HorizontalCoordinateReferenceSystemDatumCode> 
+  <HorizontalCollectionMethodCode>$locationdetail.get("method")</HorizontalCollectionMethodCode> 
+  <LocationPointLineAreaCode>$locationdetail.get("point_line_area")</LocationPointLineAreaCode> 
+  <SourceMapScaleNumeric>$locationdetail.get("source_scale")</SourceMapScaleNumeric> 
+  <LocationWellIdentifier>$welldetail.get("well_id")</LocationWellIdentifier> 
+  <LatitudeMeasure>$locationdetail.get("well_latitude")</LatitudeMeasure> 
+  <LongitudeMeasure>$locationdetail.get("well_longitude")</LongitudeMeasure> 
+  </LocationDetail>
+#foreach($violationdetail in $helper.getData($violationQuery,$welldetail.get("well_uid")))
+	<WellViolationDetail>
+  <ViolationIdentifier>$violationdetail.get("violation_id")</ViolationIdentifier> 
+  <ViolationContaminationCode>$violationdetail.get("contamination")</ViolationContaminationCode> 
+  <ViolationEndangeringCode>$violationdetail.get("endanger")</ViolationEndangeringCode>
+  #if($violationdetail.get("re_comp_date"))
+  <ViolationReturnComplianceDate>$helper.toUicDate($violationdetail.get("re_comp_date"))</ViolationReturnComplianceDate>
+  #end
+  <ViolationSignificantCode>$violationdetail.get("violation_snc")</ViolationSignificantCode> 
+  <ViolationDeterminedDate>$helper.toUicDate($violationdetail.get("violation_date"))</ViolationDeterminedDate> 
+  <ViolationTypeCode>$violationdetail.get("violation_type")</ViolationTypeCode> 
+  <ViolationWellIdentifier>$welldetail.get("well_id")</ViolationWellIdentifier>
+#foreach($responsedetail in $helper.getData($responseQuery,$violationdetail.get("violation_uid")))
+	<WellResponseDetail>
+#set($enforcement = $helper.getObject("SELECT enf_id FROM UIC_ENFORCEMENT WHERE enf_uid = ? ", $responsedetail.get("enf_uid")))		
+  <ResponseEnforcementIdentifier>$enforcement.get("enf_id")</ResponseEnforcementIdentifier> 
+  <ResponseViolationIdentifier>$violationdetail.get("violation_id")</ResponseViolationIdentifier> 
+  </WellResponseDetail>
+#end##foreach($responsedetail in $helper.getData
+    </WellViolationDetail>
+#end##foreach($violationdetail in $helper.getData
+#foreach($inspectiondetail in $helper.getData($inspectionQuery,$welldetail.get("well_uid")))
+  <WellInspectionDetail>
+  <InspectionIdentifier>$inspectiondetail.get("inspection_id")</InspectionIdentifier> 
+  <InspectionAssistanceCode>$inspectiondetail.get("assistance")</InspectionAssistanceCode> 
+  <InspectionDeficiencyCode>$inspectiondetail.get("deficiency")</InspectionDeficiencyCode> 
+  <InspectionActionDate>$helper.toUicDate($inspectiondetail.get("inspection_date"))</InspectionActionDate>   
+  <InspectionTypeActionCode>$inspectiondetail.get("inspection_type")</InspectionTypeActionCode> 
+  <InspectionWellIdentifier>$welldetail.get("well_id")</InspectionWellIdentifier>
+  </WellInspectionDetail>
+#end##foreach($inspectiondetail in $helper.getData
+#foreach($mitestdetail in $helper.getData($mitestQuery,$welldetail.get("well_uid")))
+  <MITestDetail>
+  <MechanicalIntegrityTestIdentifier>$mitestdetail.get("mit_id")</MechanicalIntegrityTestIdentifier> 
+  <MechanicalIntegrityTestCompletedDate>$helper.toUicDate($mitestdetail.get("mit_date"))</MechanicalIntegrityTestCompletedDate> 
+  <MechanicalIntegrityTestResultCode>$mitestdetail.get("mit_result")</MechanicalIntegrityTestResultCode> 
+  <MechanicalIntegrityTestTypeCode>$mitestdetail.get("mit_type")</MechanicalIntegrityTestTypeCode>
+  #if($mitestdetail.get("ra_date") && $mitestdetail.get("ra_type"))
+  <MechanicalIntegrityTestRemedialActionDate>$helper.toUicDate($mitestdetail.get("ra_date"))</MechanicalIntegrityTestRemedialActionDate>
+  <MechanicalIntegrityTestRemedialActionTypeCode>$mitestdetail.get("ra_type")</MechanicalIntegrityTestRemedialActionTypeCode>
+  #end   
+  <MechanicalIntegrityTestWellIdentifier>$welldetail.get("well_id")</MechanicalIntegrityTestWellIdentifier> 
+  </MITestDetail>
+#end##foreach($mitestdetail in $helper.getData
+#foreach($enggdetail in $helper.getData($enggQuery,$welldetail.get("well_uid")))
+  <EngineeringDetail>
+  <EngineeringIdentifier>$enggdetail.get("engineering_id")</EngineeringIdentifier> 
+  <EngineeringMaximumFlowRateNumeric>$enggdetail.get("max_rate")</EngineeringMaximumFlowRateNumeric> 
+  <EngineeringPermittedOnsiteInjectionVolumeNumeric>$enggdetail.get("on_injection")</EngineeringPermittedOnsiteInjectionVolumeNumeric> 
+  <EngineeringPermittedOffsiteInjectionVolumeNumeric>$enggdetail.get("off_injection")</EngineeringPermittedOffsiteInjectionVolumeNumeric> 
+  <EngineeringWellIdentifier>$welldetail.get("well_id")</EngineeringWellIdentifier> 
+  </EngineeringDetail>
+#end##foreach($mitestdetail in $helper.getData
+#foreach($wastedetail in $helper.getData($wasteQuery,$welldetail.get("well_uid")))
+  <WasteDetail>
+  <WasteIdentifier>$wastedetail.get("waste_id")</WasteIdentifier> 
+  <WasteCode>$wastedetail.get("waste_code")</WasteCode> 
+  <WasteStreamClassificationCode>$wastedetail.get("waste_stream")</WasteStreamClassificationCode> 
+  <WasteWellIdentifier>$welldetail.get("well_id")</WasteWellIdentifier>
+#foreach($constituentdetail in $helper.getData($constituentQuery,$wastedetail.get("waste_uid")))
+  <ConstituentDetail>
+  <ConstituentIdentifier>$constituentdetail.get("constituent_id")</ConstituentIdentifier> 
+  <MeasureValue>$constituentdetail.get("concentration")</MeasureValue> 
+  <MeasureUnitCode>$constituentdetail.get("unit")</MeasureUnitCode> 
+  <ConstituentNameText>$constituentdetail.get("constituent_name")</ConstituentNameText> 
+  <ConstituentWasteIdentifier>$wastedetail.get("waste_id")</ConstituentWasteIdentifier> 
+  </ConstituentDetail>
+#end##foreach($constituentdetail in $helper.getData	
+    </WasteDetail>
+#end##foreach($wastedetail in $helper.getData	
+    </WellDetail>
+#end##foreach($welldetail in $helper.getData
+</FacilityList>
+#end##foreach($facilitydetail in $helper.getData
+#foreach($contactdetail in $helper.getData($contactQuery))	
+<ContactDetail xmlns="http://www.exchangenetwork.net/schema/uic/2">
+  <ContactIdentifier>$contactdetail.get("contact_id")</ContactIdentifier> 
+  <TelephoneNumberText>$contactdetail.get("contact_phone")</TelephoneNumberText> 
+  <IndividualFullName>$contactdetail.get("contact_name")</IndividualFullName> 
+  <ContactCityName>$contactdetail.get("contact_city")</ContactCityName> 
+  <ContactAddressStateCode>$contactdetail.get("contact_state")</ContactAddressStateCode> 
+  <ContactAddressText>$contactdetail.get("contact_street")</ContactAddressText> 
+  <ContactAddressPostalCode>$contactdetail.get("contact_zip")</ContactAddressPostalCode> 
+  </ContactDetail>
+#end##foreach($contactdetail in $helper.getData
+#foreach($permitdetail in $helper.getData($permitQuery))	
+	<PermitDetail xmlns="http://www.exchangenetwork.net/schema/uic/2">
+  <PermitIdentifier>$permitdetail.get("permit_id")</PermitIdentifier> 
+  <PermitAORWellNumberNumeric>$permitdetail.get("aor_well")</PermitAORWellNumberNumeric> 
+  <PermitAuthorizedStatusCode>$permitdetail.get("aut_status")</PermitAuthorizedStatusCode> 
+  <PermitOwnershipTypeCode>$permitdetail.get("ownership_type")</PermitOwnershipTypeCode> 
+  <PermitAuthorizedIdentifier>$permitdetail.get("p_state_id")</PermitAuthorizedIdentifier>
+#foreach($permitactivitydetail in $helper.getData($permitActivityQuery,$permitdetail.get("permit_uid")))
+  <PermitActivityDetail>
+  <PermitActivityIdentifier>$permitactivitydetail.get("activity_id")</PermitActivityIdentifier> 
+  <PermitActivityActionTypeCode>$permitactivitydetail.get("permact_type")</PermitActivityActionTypeCode> 
+  <PermitActivityDate>$helper.toUicDate($permitactivitydetail.get("act_date"))</PermitActivityDate> 
+  <PermitActivityPermitIdentifier>$permitdetail.get("permit_id")</PermitActivityPermitIdentifier> 
+  </PermitActivityDetail>
+#end##foreach($permitactivitydetail in $helper.getData	
+ </PermitDetail>
+ #end##foreach($permitdetail in $helper.getData
+#foreach($geologydetail in $helper.getData($geologyQuery))
+  <GeologyDetail xmlns="http://www.exchangenetwork.net/schema/uic/2">
+  <GeologyIdentifier>$geologydetail.get("geology_id")</GeologyIdentifier> 
+  <GeologyConfiningZoneName>$geologydetail.get("cz_name")</GeologyConfiningZoneName> 
+  <GeologyConfiningZoneTopNumeric>$geologydetail.get("cz_top")</GeologyConfiningZoneTopNumeric> 
+  <GeologyConfiningZoneBottomNumeric>$geologydetail.get("cz_bottom")</GeologyConfiningZoneBottomNumeric> 
+  <GeologyLithologicConfiningZoneText>$geologydetail.get("cz_lithology")</GeologyLithologicConfiningZoneText> 
+  <GeologyInjectionZoneFormationName>$geologydetail.get("iz_name")</GeologyInjectionZoneFormationName> 
+  <GeologyBottomInjectionZoneNumeric>$geologydetail.get("iz_bottom")</GeologyBottomInjectionZoneNumeric> 
+  <GeologyLithologicInjectionZoneText>$geologydetail.get("iz_lithology")</GeologyLithologicInjectionZoneText> 
+  <GeologyTopInjectionIntervalNumeric>$geologydetail.get("int_top")</GeologyTopInjectionIntervalNumeric> 
+  <GeologyBottomInjectionIntervalNumeric>$geologydetail.get("int_bottom")</GeologyBottomInjectionIntervalNumeric> 
+  <GeologyInjectioneZonePermeabilityRateNumeric>$geologydetail.get("iz_permeability")</GeologyInjectioneZonePermeabilityRateNumeric> 
+  <GeologyInjectionZonePorosityPercentNumeric>$geologydetail.get("iz_porosity")</GeologyInjectionZonePorosityPercentNumeric> 
+  <GeologyUSDWDepthNumeric>$geologydetail.get("usdw_depth")</GeologyUSDWDepthNumeric> 
+  </GeologyDetail>
+ #end##foreach($geologydetail in $helper.getData
+#foreach($enforcementdetail in $helper.getData($enforcementQuery))
+  <EnforcementDetail xmlns="http://www.exchangenetwork.net/schema/uic/2">
+  <EnforcementIdentifier>$enforcementdetail.get("enf_id")</EnforcementIdentifier> 
+  <EnforcementActionDate>$helper.toUicDate($enforcementdetail.get("enf_date"))</EnforcementActionDate> 
+  <EnforcementActionType>$enforcementdetail.get("enf_act_type")</EnforcementActionType> 
+  </EnforcementDetail>
+#end##foreach($enforcementdetail in $helper.getData	
+</UIC>	
+#if($makeHeader)#if($makeHeader == "true" || $makeHeader == "TRUE")
+</Payload>
+</Document>
+#end#end##if($makeHeader)
+$helper.print("Template merge complete! Total elapsed time:")
+$helper.printElapsedTime()

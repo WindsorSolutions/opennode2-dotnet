@@ -9,7 +9,7 @@
 		<!-- global settings -->
 
 		<jaxb:schemaBindings>
-			<jaxb:package name="com.windsor.node.plugin.icisnpdes40.generated" />
+			<jaxb:package name="com.windsor.node.plugin.icisnpdes.generated" />
 		</jaxb:schemaBindings>
 
 		<jaxb:globalBindings generateIsSetMethod="true" localScoping="toplevel">

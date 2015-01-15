@@ -1,4 +1,4 @@
-package com.windsor.node.plugin.icisnpdes40.dao.jdbc;
+package com.windsor.node.plugin.icisnpdes.dao.jdbc;
 
 import java.sql.Types;
 import java.util.HashMap;
@@ -13,11 +13,11 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.jdbc.object.StoredProcedure;
 
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
-import com.windsor.node.plugin.icisnpdes40.dao.IcisStatusAndProcessingDao;
-import com.windsor.node.plugin.icisnpdes40.dao.IcisWorkflowDao;
-import com.windsor.node.plugin.icisnpdes40.domain.IcisWorkflow;
-import com.windsor.node.plugin.icisnpdes40.generated.SubmissionResult;
-import com.windsor.node.plugin.icisnpdes40.generated.SubmissionResultList;
+import com.windsor.node.plugin.icisnpdes.dao.IcisStatusAndProcessingDao;
+import com.windsor.node.plugin.icisnpdes.dao.IcisWorkflowDao;
+import com.windsor.node.plugin.icisnpdes.domain.IcisWorkflow;
+import com.windsor.node.plugin.icisnpdes.generated.SubmissionResult;
+import com.windsor.node.plugin.icisnpdes.generated.SubmissionResultList;
 
 public class JdbcIcisStatusAndProcessingDao extends JdbcDaoSupport implements IcisStatusAndProcessingDao
 {
@@ -34,7 +34,7 @@ public class JdbcIcisStatusAndProcessingDao extends JdbcDaoSupport implements Ic
     }
 
     /* (non-Javadoc)
-     * @see com.windsor.node.plugin.icisnpdes40.dao.IcisStatusAndProcessingDao#countPendingWorkflows()
+     * @see com.windsor.node.plugin.icisnpdes.dao.IcisStatusAndProcessingDao#countPendingWorkflows()
      */
     @Override
     public int countPendingWorkflows()
@@ -44,7 +44,7 @@ public class JdbcIcisStatusAndProcessingDao extends JdbcDaoSupport implements Ic
     }
 
     /* (non-Javadoc)
-     * @see com.windsor.node.plugin.icisnpdes40.dao.IcisStatusAndProcessingDao#loadPendingWorkflow()
+     * @see com.windsor.node.plugin.icisnpdes.dao.IcisStatusAndProcessingDao#loadPendingWorkflow()
      */
     @Override
     public IcisWorkflow loadPendingWorkflow()
@@ -55,7 +55,7 @@ public class JdbcIcisStatusAndProcessingDao extends JdbcDaoSupport implements Ic
     }
 
     /* (non-Javadoc)
-     * @see com.windsor.node.plugin.icisnpdes40.dao.IcisStatusAndProcessingDao#saveIcisStatusResults(java.util.List, java.util.List)
+     * @see com.windsor.node.plugin.icisnpdes.dao.IcisStatusAndProcessingDao#saveIcisStatusResults(java.util.List, java.util.List)
      */
     @Override
     public void saveIcisStatusResults(SubmissionResultList accepted, SubmissionResultList rejected, EntityManager em)
@@ -81,7 +81,7 @@ public class JdbcIcisStatusAndProcessingDao extends JdbcDaoSupport implements Ic
     }
 
     /* (non-Javadoc)
-     * @see com.windsor.node.plugin.icisnpdes40.dao.IcisStatusAndProcessingDao#runCleanupStoredProc(java.lang.String, java.lang.String)
+     * @see com.windsor.node.plugin.icisnpdes.dao.IcisStatusAndProcessingDao#runCleanupStoredProc(java.lang.String, java.lang.String)
      */
     @Override
     public void runCleanupStoredProc(String procName, String storedProcedureTransactionIdArgument)
@@ -92,7 +92,7 @@ public class JdbcIcisStatusAndProcessingDao extends JdbcDaoSupport implements Ic
     }
 
     /* (non-Javadoc)
-     * @see com.windsor.node.plugin.icisnpdes40.dao.IcisStatusAndProcessingDao#getIcisWorkflowDao()
+     * @see com.windsor.node.plugin.icisnpdes.dao.IcisStatusAndProcessingDao#getIcisWorkflowDao()
      */
     @Override
     public IcisWorkflowDao getIcisWorkflowDao()
@@ -101,7 +101,7 @@ public class JdbcIcisStatusAndProcessingDao extends JdbcDaoSupport implements Ic
     }
 
     /* (non-Javadoc)
-     * @see com.windsor.node.plugin.icisnpdes40.dao.IcisStatusAndProcessingDao#setIcisWorkflowDao(com.windsor.node.plugin.icisnpdes40.dao.IcisWorkflowDao)
+     * @see com.windsor.node.plugin.icisnpdes.dao.IcisStatusAndProcessingDao#setIcisWorkflowDao(com.windsor.node.plugin.icisnpdes.dao.IcisWorkflowDao)
      */
     @Override
     public void setIcisWorkflowDao(IcisWorkflowDao icisWorkflowDao)

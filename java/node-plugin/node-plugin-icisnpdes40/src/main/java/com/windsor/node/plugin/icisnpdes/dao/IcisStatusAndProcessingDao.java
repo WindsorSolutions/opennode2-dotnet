@@ -1,8 +1,8 @@
-package com.windsor.node.plugin.icisnpdes40.dao;
+package com.windsor.node.plugin.icisnpdes.dao;
 
 import javax.persistence.EntityManager;
-import com.windsor.node.plugin.icisnpdes40.domain.IcisWorkflow;
-import com.windsor.node.plugin.icisnpdes40.generated.SubmissionResultList;
+import com.windsor.node.plugin.icisnpdes.domain.IcisWorkflow;
+import com.windsor.node.plugin.icisnpdes.generated.SubmissionResultList;
 
 public interface IcisStatusAndProcessingDao
 {

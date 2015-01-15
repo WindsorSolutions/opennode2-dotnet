@@ -212,7 +212,7 @@ public class ScheduleExecutionWorker extends NodeWorker implements ScheduleItemE
             tran.setCreator(accountDao.get(schedule.getModifiedById()));
 
             logEntry.setTransactionId(tran.getId());
-            logEntry.addEntry("Transaction Id: " + tran.getNetworkId());
+            logEntry.addEntry("Transaction Id: " + tran.getId());
 
             /*
              * SOURCE

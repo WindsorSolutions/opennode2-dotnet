@@ -1,4 +1,4 @@
-package com.windsor.node.plugin.icisnpdes40;
+package com.windsor.node.plugin.icisnpdes;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,57 +22,57 @@ import org.testng.Assert;
 
 import com.windsor.node.plugin.common.xml.validation.ValidationResult;
 import com.windsor.node.plugin.common.xml.validation.jaxb.JaxbXmlValidator;
-import com.windsor.node.plugin.icisnpdes40.generated.BasicPermitData;
-import com.windsor.node.plugin.icisnpdes40.generated.BiosolidsPermitData;
-import com.windsor.node.plugin.icisnpdes40.generated.BiosolidsProgramReportData;
-import com.windsor.node.plugin.icisnpdes40.generated.CAFOAnnualReportData;
-import com.windsor.node.plugin.icisnpdes40.generated.CAFOPermitData;
-import com.windsor.node.plugin.icisnpdes40.generated.CSOEventReportData;
-import com.windsor.node.plugin.icisnpdes40.generated.CSOPermitData;
-import com.windsor.node.plugin.icisnpdes40.generated.ComplianceMonitoringData;
-import com.windsor.node.plugin.icisnpdes40.generated.ComplianceMonitoringLinkageData;
-import com.windsor.node.plugin.icisnpdes40.generated.ComplianceScheduleData;
-import com.windsor.node.plugin.icisnpdes40.generated.DMRProgramReportLinkageData;
-import com.windsor.node.plugin.icisnpdes40.generated.DMRViolationData;
-import com.windsor.node.plugin.icisnpdes40.generated.DischargeMonitoringReportData;
-import com.windsor.node.plugin.icisnpdes40.generated.Document;
-import com.windsor.node.plugin.icisnpdes40.generated.EffluentTradePartnerData;
-import com.windsor.node.plugin.icisnpdes40.generated.EnforcementActionMilestoneData;
-import com.windsor.node.plugin.icisnpdes40.generated.EnforcementActionViolationLinkageData;
-import com.windsor.node.plugin.icisnpdes40.generated.FinalOrderViolationLinkageData;
-import com.windsor.node.plugin.icisnpdes40.generated.FormalEnforcementActionData;
-import com.windsor.node.plugin.icisnpdes40.generated.GeneralPermitData;
-import com.windsor.node.plugin.icisnpdes40.generated.HeaderData;
-import com.windsor.node.plugin.icisnpdes40.generated.HistoricalPermitScheduleEventsData;
-import com.windsor.node.plugin.icisnpdes40.generated.InformalEnforcementActionData;
-import com.windsor.node.plugin.icisnpdes40.generated.LimitSetData;
-import com.windsor.node.plugin.icisnpdes40.generated.LimitsData;
-import com.windsor.node.plugin.icisnpdes40.generated.LocalLimitsProgramReportData;
-import com.windsor.node.plugin.icisnpdes40.generated.MasterGeneralPermitData;
-import com.windsor.node.plugin.icisnpdes40.generated.NarrativeConditionScheduleData;
-import com.windsor.node.plugin.icisnpdes40.generated.ObjectFactory;
-import com.windsor.node.plugin.icisnpdes40.generated.OperationType;
-import com.windsor.node.plugin.icisnpdes40.generated.POTWPermitData;
-import com.windsor.node.plugin.icisnpdes40.generated.ParameterLimitsData;
-import com.windsor.node.plugin.icisnpdes40.generated.PayloadData;
-import com.windsor.node.plugin.icisnpdes40.generated.PermitReissuanceData;
-import com.windsor.node.plugin.icisnpdes40.generated.PermitTerminationData;
-import com.windsor.node.plugin.icisnpdes40.generated.PermitTrackingEventData;
-import com.windsor.node.plugin.icisnpdes40.generated.PermittedFeatureData;
-import com.windsor.node.plugin.icisnpdes40.generated.PretreatmentPerformanceSummaryData;
-import com.windsor.node.plugin.icisnpdes40.generated.PretreatmentPermitData;
-import com.windsor.node.plugin.icisnpdes40.generated.SSOAnnualReportData;
-import com.windsor.node.plugin.icisnpdes40.generated.SSOEventReportData;
-import com.windsor.node.plugin.icisnpdes40.generated.SSOMonthlyEventReportData;
-import com.windsor.node.plugin.icisnpdes40.generated.SWConstructionPermitData;
-import com.windsor.node.plugin.icisnpdes40.generated.SWEventReportData;
-import com.windsor.node.plugin.icisnpdes40.generated.SWIndustrialPermitData;
-import com.windsor.node.plugin.icisnpdes40.generated.SWMS4LargePermitData;
-import com.windsor.node.plugin.icisnpdes40.generated.SWMS4ProgramReportData;
-import com.windsor.node.plugin.icisnpdes40.generated.SWMS4SmallPermitData;
-import com.windsor.node.plugin.icisnpdes40.generated.ScheduleEventViolationData;
-import com.windsor.node.plugin.icisnpdes40.generated.SingleEventViolationData;
-import com.windsor.node.plugin.icisnpdes40.generated.UnpermittedFacilityData;
+import com.windsor.node.plugin.icisnpdes.generated.BasicPermitData;
+import com.windsor.node.plugin.icisnpdes.generated.BiosolidsPermitData;
+import com.windsor.node.plugin.icisnpdes.generated.BiosolidsProgramReportData;
+import com.windsor.node.plugin.icisnpdes.generated.CAFOAnnualReportData;
+import com.windsor.node.plugin.icisnpdes.generated.CAFOPermitData;
+import com.windsor.node.plugin.icisnpdes.generated.CSOEventReportData;
+import com.windsor.node.plugin.icisnpdes.generated.CSOPermitData;
+import com.windsor.node.plugin.icisnpdes.generated.ComplianceMonitoringData;
+import com.windsor.node.plugin.icisnpdes.generated.ComplianceMonitoringLinkageData;
+import com.windsor.node.plugin.icisnpdes.generated.ComplianceScheduleData;
+import com.windsor.node.plugin.icisnpdes.generated.DMRProgramReportLinkageData;
+import com.windsor.node.plugin.icisnpdes.generated.DMRViolationData;
+import com.windsor.node.plugin.icisnpdes.generated.DischargeMonitoringReportData;
+import com.windsor.node.plugin.icisnpdes.generated.Document;
+import com.windsor.node.plugin.icisnpdes.generated.EffluentTradePartnerData;
+import com.windsor.node.plugin.icisnpdes.generated.EnforcementActionMilestoneData;
+import com.windsor.node.plugin.icisnpdes.generated.EnforcementActionViolationLinkageData;
+import com.windsor.node.plugin.icisnpdes.generated.FinalOrderViolationLinkageData;
+import com.windsor.node.plugin.icisnpdes.generated.FormalEnforcementActionData;
+import com.windsor.node.plugin.icisnpdes.generated.GeneralPermitData;
+import com.windsor.node.plugin.icisnpdes.generated.HeaderData;
+import com.windsor.node.plugin.icisnpdes.generated.HistoricalPermitScheduleEventsData;
+import com.windsor.node.plugin.icisnpdes.generated.InformalEnforcementActionData;
+import com.windsor.node.plugin.icisnpdes.generated.LimitSetData;
+import com.windsor.node.plugin.icisnpdes.generated.LimitsData;
+import com.windsor.node.plugin.icisnpdes.generated.LocalLimitsProgramReportData;
+import com.windsor.node.plugin.icisnpdes.generated.MasterGeneralPermitData;
+import com.windsor.node.plugin.icisnpdes.generated.NarrativeConditionScheduleData;
+import com.windsor.node.plugin.icisnpdes.generated.ObjectFactory;
+import com.windsor.node.plugin.icisnpdes.generated.OperationType;
+import com.windsor.node.plugin.icisnpdes.generated.POTWPermitData;
+import com.windsor.node.plugin.icisnpdes.generated.ParameterLimitsData;
+import com.windsor.node.plugin.icisnpdes.generated.PayloadData;
+import com.windsor.node.plugin.icisnpdes.generated.PermitReissuanceData;
+import com.windsor.node.plugin.icisnpdes.generated.PermitTerminationData;
+import com.windsor.node.plugin.icisnpdes.generated.PermitTrackingEventData;
+import com.windsor.node.plugin.icisnpdes.generated.PermittedFeatureData;
+import com.windsor.node.plugin.icisnpdes.generated.PretreatmentPerformanceSummaryData;
+import com.windsor.node.plugin.icisnpdes.generated.PretreatmentPermitData;
+import com.windsor.node.plugin.icisnpdes.generated.SSOAnnualReportData;
+import com.windsor.node.plugin.icisnpdes.generated.SSOEventReportData;
+import com.windsor.node.plugin.icisnpdes.generated.SSOMonthlyEventReportData;
+import com.windsor.node.plugin.icisnpdes.generated.SWConstructionPermitData;
+import com.windsor.node.plugin.icisnpdes.generated.SWEventReportData;
+import com.windsor.node.plugin.icisnpdes.generated.SWIndustrialPermitData;
+import com.windsor.node.plugin.icisnpdes.generated.SWMS4LargePermitData;
+import com.windsor.node.plugin.icisnpdes.generated.SWMS4ProgramReportData;
+import com.windsor.node.plugin.icisnpdes.generated.SWMS4SmallPermitData;
+import com.windsor.node.plugin.icisnpdes.generated.ScheduleEventViolationData;
+import com.windsor.node.plugin.icisnpdes.generated.SingleEventViolationData;
+import com.windsor.node.plugin.icisnpdes.generated.UnpermittedFacilityData;
 import com.windsor.node.plugin.test.AbstractExistingDbIT;
 
 public class IcisNpdesExistingDatabaseIT //extends AbstractExistingDbIT
@@ -83,7 +83,7 @@ public class IcisNpdesExistingDatabaseIT //extends AbstractExistingDbIT
 
 	@Override
 	protected String getRootEntityPackage() {
-		return "com.windsor.node.plugin.icisnpdes40.generated";
+		return "com.windsor.node.plugin.icisnpdes.generated";
 	}
 
 	private Map<OperationType, Class<?>> payloadOperationTypeJpaEntityMap() {

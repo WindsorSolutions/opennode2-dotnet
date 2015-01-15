@@ -8,7 +8,7 @@
 
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='SWConstructionPermitData']">
-			<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractSWConstructionPermitData</inheritance:extends>
+			<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractSWConstructionPermitData</inheritance:extends>
 		</jaxb:bindings>
 	</jaxb:bindings>
 

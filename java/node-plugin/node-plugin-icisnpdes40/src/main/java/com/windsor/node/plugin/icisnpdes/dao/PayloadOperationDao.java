@@ -1,8 +1,8 @@
-package com.windsor.node.plugin.icisnpdes40.dao;
+package com.windsor.node.plugin.icisnpdes.dao;
 
 import java.util.List;
 
-import com.windsor.node.plugin.icisnpdes40.domain.PayloadOperation;
+import com.windsor.node.plugin.icisnpdes.domain.PayloadOperation;
 
 /**
  * Data access object for retrieving {@link PayloadOperation} instances from the

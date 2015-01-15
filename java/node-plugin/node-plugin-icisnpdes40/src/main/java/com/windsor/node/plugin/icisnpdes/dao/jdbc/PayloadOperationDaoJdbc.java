@@ -1,4 +1,4 @@
-package com.windsor.node.plugin.icisnpdes40.dao.jdbc;
+package com.windsor.node.plugin.icisnpdes.dao.jdbc;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,8 +9,8 @@ import javax.sql.DataSource;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
-import com.windsor.node.plugin.icisnpdes40.dao.PayloadOperationDao;
-import com.windsor.node.plugin.icisnpdes40.domain.PayloadOperation;
+import com.windsor.node.plugin.icisnpdes.dao.PayloadOperationDao;
+import com.windsor.node.plugin.icisnpdes.domain.PayloadOperation;
 
 /**
  * A JDBC implementation of the {@link PayloadOperationDao}.

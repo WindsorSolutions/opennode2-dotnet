@@ -1,4 +1,4 @@
-package com.windsor.node.plugin.icisnpdes40.submission;
+package com.windsor.node.plugin.icisnpdes.submission;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

@@ -1,4 +1,4 @@
-package com.windsor.node.plugin.icisnpdes40.submission.exception;
+package com.windsor.node.plugin.icisnpdes.submission.exception;
 
 /**
  * Thrown when exception occurs while executing the ETL stored procedure.

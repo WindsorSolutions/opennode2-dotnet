@@ -17,7 +17,7 @@
 			<div class="error"><c:out value="${error}"></c:out></div>
 		</c:if>
 
-		<form method="post" action="flow-edit.htm">
+		<form:form method="post" action="flow-edit.htm">
 
 		<table id="formTable" width="100%" cellpadding="2" cellspacing="0">
 
@@ -60,6 +60,12 @@
 			</tr>
             <tr>
                 <td colspan="2"><div id="helpText" style="display:none"><c:out value="${pluginMetaData.helpText}" /></div></td>
+            </tr>
+            <tr>
+                <td class="label" width="5%" style="text-align: right; vertical-align: top;">Target Exchange Name (optional):</td>
+                <td class="ctrl" width="95%">
+                    <form:input path="targetDataFlowName" cssClass="textBox" cssStyle="width: 95%;" />
+                </td>
             </tr>
 
 			<tr>
@@ -141,7 +147,7 @@
 
 
 		</table>
-		</form>
+		</form:form>
 		</td>
 
 	</tr>

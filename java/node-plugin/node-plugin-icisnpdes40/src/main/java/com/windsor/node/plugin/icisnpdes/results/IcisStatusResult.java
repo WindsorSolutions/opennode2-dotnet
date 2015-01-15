@@ -1,4 +1,4 @@
-package com.windsor.node.plugin.icisnpdes40.results;
+package com.windsor.node.plugin.icisnpdes.results;
 
 import java.io.Serializable;
 import java.util.Date;

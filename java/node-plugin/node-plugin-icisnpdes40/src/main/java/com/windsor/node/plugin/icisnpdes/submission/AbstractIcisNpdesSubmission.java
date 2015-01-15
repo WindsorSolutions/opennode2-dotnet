@@ -1,4 +1,4 @@
-package com.windsor.node.plugin.icisnpdes40.submission;
+package com.windsor.node.plugin.icisnpdes.submission;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -37,21 +37,21 @@ import com.windsor.node.plugin.common.BaseWnosJaxbPlugin;
 import com.windsor.node.plugin.common.xml.validation.ValidationResult;
 import com.windsor.node.plugin.common.xml.validation.Validator;
 import com.windsor.node.plugin.common.xml.validation.jaxb.JaxbXmlValidator;
-import com.windsor.node.plugin.icisnpdes40.dao.IcisEntityManagerFactory;
-import com.windsor.node.plugin.icisnpdes40.dao.IcisWorkflowDao;
-import com.windsor.node.plugin.icisnpdes40.dao.jdbc.JdbcIcisWorkflowDao;
-import com.windsor.node.plugin.icisnpdes40.domain.IcisWorkflow;
-import com.windsor.node.plugin.icisnpdes40.generated.HeaderData;
-import com.windsor.node.plugin.icisnpdes40.generated.NameType;
-import com.windsor.node.plugin.icisnpdes40.generated.ObjectFactory;
-import com.windsor.node.plugin.icisnpdes40.generated.PayloadData;
-import com.windsor.node.plugin.icisnpdes40.generated.Property;
-import com.windsor.node.plugin.icisnpdes40.submission.exception.CDXSubmissionException;
-import com.windsor.node.plugin.icisnpdes40.submission.exception.ETLExecutionException;
-import com.windsor.node.plugin.icisnpdes40.submission.exception.EmptyIcisStagingLocalDatabaseResultsException;
-import com.windsor.node.plugin.icisnpdes40.submission.exception.InvalidWorkflowStateException;
-import com.windsor.node.plugin.icisnpdes40.submission.exception.PartnerIdentityNotFoundException;
-import com.windsor.node.plugin.icisnpdes40.submission.exception.XmlGenerationException;
+import com.windsor.node.plugin.icisnpdes.dao.IcisEntityManagerFactory;
+import com.windsor.node.plugin.icisnpdes.dao.IcisWorkflowDao;
+import com.windsor.node.plugin.icisnpdes.dao.jdbc.JdbcIcisWorkflowDao;
+import com.windsor.node.plugin.icisnpdes.domain.IcisWorkflow;
+import com.windsor.node.plugin.icisnpdes.generated.HeaderData;
+import com.windsor.node.plugin.icisnpdes.generated.NameType;
+import com.windsor.node.plugin.icisnpdes.generated.ObjectFactory;
+import com.windsor.node.plugin.icisnpdes.generated.PayloadData;
+import com.windsor.node.plugin.icisnpdes.generated.Property;
+import com.windsor.node.plugin.icisnpdes.submission.exception.CDXSubmissionException;
+import com.windsor.node.plugin.icisnpdes.submission.exception.ETLExecutionException;
+import com.windsor.node.plugin.icisnpdes.submission.exception.EmptyIcisStagingLocalDatabaseResultsException;
+import com.windsor.node.plugin.icisnpdes.submission.exception.InvalidWorkflowStateException;
+import com.windsor.node.plugin.icisnpdes.submission.exception.PartnerIdentityNotFoundException;
+import com.windsor.node.plugin.icisnpdes.submission.exception.XmlGenerationException;
 import com.windsor.node.service.helper.CompressionService;
 import com.windsor.node.service.helper.IdGenerator;
 import com.windsor.node.service.helper.ServiceFactory;
@@ -486,20 +486,20 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
             /**
              * Create ICIS XML document
              */
-            com.windsor.node.plugin.icisnpdes40.generated.Document document = objectFactory.createDocument();
+            com.windsor.node.plugin.icisnpdes.generated.Document document = objectFactory.createDocument();
 
             document.setHeader(makeHeaderData(objectFactory));
 
             document.setPayload(payloads);
 
             /**
-             * com.windsor.node.plugin.icisnpdes40.generated.Document is defined
+             * com.windsor.node.plugin.icisnpdes.generated.Document is defined
              * in the XSD in a funny manner, causing ObjectFactory to not create
              * all utility methods for it so manually create the JAXBElement for
              * it.
              */
-            writeDocument(new JAXBElement<com.windsor.node.plugin.icisnpdes40.generated.Document>(DOCUMENT_QNAME,
-                            com.windsor.node.plugin.icisnpdes40.generated.Document.class, null, document), tempFilePath);
+            writeDocument(new JAXBElement<com.windsor.node.plugin.icisnpdes.generated.Document>(DOCUMENT_QNAME,
+                            com.windsor.node.plugin.icisnpdes.generated.Document.class, null, document), tempFilePath);
 
             Document doc = makeDocument(nodeTransaction.getRequest().getType(), docId, tempFilePath);
 

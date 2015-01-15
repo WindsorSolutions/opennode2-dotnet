@@ -52,7 +52,7 @@ public class JdbcFlowDao extends BaseJdbcDao implements FlowDao
     /*protected static final String SQL_SELECT = "SELECT Id, InfoUrl, Contact, "
             + "IsProtected, ModifiedBy, ModifiedOn, Code, Description FROM NFlow ";*/
     protected static final String SQL_SELECT_WITH_COUNT = "SELECT NFlow.Id, NFlow.InfoUrl, NFlow.Contact, "
-            + " NFlow.IsProtected, NFlow.ModifiedBy, NFlow.ModifiedOn, NFlow.Code, NFlow.Description,"
+            + " NFlow.IsProtected, NFlow.ModifiedBy, NFlow.ModifiedOn, NFlow.Code, NFlow.Description, NFlow.TargetExchangeName,"
             + " (SELECT COUNT(DISTINCT NPlugin.id)  from NPlugin where NFlow.id = NPlugin.FlowId) AS NumPluginsUploaded FROM NFlow ";
 
     protected static final String SQL_SELECT_NAMES = "SELECT Code FROM NFlow ORDER BY Code ";
@@ -79,13 +79,13 @@ public class JdbcFlowDao extends BaseJdbcDao implements FlowDao
      * SQL INSERT statement for this table
      */
     protected static final String SQL_INSERT = "INSERT INTO NFlow ( InfoUrl, Contact, IsProtected, "
-            + "ModifiedBy, ModifiedOn, Code, Description, Id ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ? )";
+            + "ModifiedBy, ModifiedOn, Code, Description, TargetExchangeName, Id ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ? )";
 
     /**
      * SQL UPDATE statement for this table
      */
     protected static final String SQL_UPDATE = "UPDATE NFlow SET InfoUrl = ?, Contact = ?, "
-            + "IsProtected = ?, ModifiedBy = ?, ModifiedOn = ?, Code = ?, Description = ? WHERE Id = ?";
+            + "IsProtected = ?, ModifiedBy = ?, ModifiedOn = ?, Code = ?, Description = ?, TargetExchangeName=? WHERE Id = ?";
 
     /**
      * SQL DELETE statement for this table
@@ -153,10 +153,10 @@ public class JdbcFlowDao extends BaseJdbcDao implements FlowDao
                 instance.getContactUserId(),
                 FormatUtil.toYNFromBoolean(instance.isSecured()),
                 instance.getModifiedById(), DateUtil.getTimestamp(),
-                instance.getName(), instance.getDescription(), instance.getId() };
+                instance.getName(), instance.getDescription(), instance.getTargetDataFlowName(), instance.getId() };
 
         int[] types = new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,
-                Types.VARCHAR, Types.TIMESTAMP, Types.VARCHAR, Types.VARCHAR,
+                Types.VARCHAR, Types.TIMESTAMP, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,
                 Types.VARCHAR };
 
         printourArgs(args);
@@ -245,6 +245,13 @@ public class JdbcFlowDao extends BaseJdbcDao implements FlowDao
             {
                 dataFlow.setPluginExists(Boolean.TRUE);
             }
+
+            String targetExchangeName = rs.getString("TargetExchangeName");
+            if(StringUtils.isBlank(targetExchangeName))
+            {
+                targetExchangeName = dataFlow.getName();
+            }
+            dataFlow.setTargetDataFlowName(targetExchangeName);
 
             return dataFlow;
 

@@ -8,7 +8,7 @@
 
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='SWIndustrialPermitData']">
-			<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractSWIndustrialPermitData</inheritance:extends>
+			<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractSWIndustrialPermitData</inheritance:extends>
 		</jaxb:bindings>
 	</jaxb:bindings>
 
@@ -53,7 +53,7 @@
 
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='GPCFNoExposure']">
-			<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractGPCFNoExposure</inheritance:extends>
+			<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractGPCFNoExposure</inheritance:extends>
 		</jaxb:bindings>
 	</jaxb:bindings>
 

@@ -1,9 +1,9 @@
-package com.windsor.node.plugin.icisnpdes40.domain;
+package com.windsor.node.plugin.icisnpdes.domain;
 
 import java.io.Serializable;
-import com.windsor.node.plugin.icisnpdes40.dao.PayloadOperationDao;
-import com.windsor.node.plugin.icisnpdes40.dao.jdbc.PayloadOperationDaoJdbc;
-import com.windsor.node.plugin.icisnpdes40.generated.OperationType;
+import com.windsor.node.plugin.icisnpdes.dao.PayloadOperationDao;
+import com.windsor.node.plugin.icisnpdes.dao.jdbc.PayloadOperationDaoJdbc;
+import com.windsor.node.plugin.icisnpdes.generated.OperationType;
 
 /**
  * Represents ICS_PAYLOAD record.

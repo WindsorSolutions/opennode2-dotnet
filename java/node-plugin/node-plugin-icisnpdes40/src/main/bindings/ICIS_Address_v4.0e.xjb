@@ -10,7 +10,7 @@
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='BiosolidsPermitAddress']">
 			<hj:embeddable />
-			<inheritance:implements>com.windsor.node.plugin.icisnpdes40.domain.IAddressList</inheritance:implements>
+			<inheritance:implements>com.windsor.node.plugin.icisnpdes.domain.IAddressList</inheritance:implements>
 		</jaxb:bindings>
 	</jaxb:bindings>
 
@@ -19,7 +19,7 @@
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='CAFOAddress']">
 			<hj:embeddable />
-			<inheritance:implements>com.windsor.node.plugin.icisnpdes40.domain.IAddressList</inheritance:implements>
+			<inheritance:implements>com.windsor.node.plugin.icisnpdes.domain.IAddressList</inheritance:implements>
 		</jaxb:bindings>
 	</jaxb:bindings>
 	
@@ -27,7 +27,7 @@
 
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='EffluentTradePartnerAddress']">
-			<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractEffluentTradePartnerAddress</inheritance:extends>
+			<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractEffluentTradePartnerAddress</inheritance:extends>
 		</jaxb:bindings>
 	</jaxb:bindings>
 
@@ -36,7 +36,7 @@
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='FacilityAddress']">
 			<hj:embeddable />
-			<inheritance:implements>com.windsor.node.plugin.icisnpdes40.domain.IAddressList</inheritance:implements>
+			<inheritance:implements>com.windsor.node.plugin.icisnpdes.domain.IAddressList</inheritance:implements>
 		</jaxb:bindings>
 	</jaxb:bindings>
 
@@ -45,7 +45,7 @@
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='PermitAddress']">
 			<hj:embeddable />
-			<inheritance:implements>com.windsor.node.plugin.icisnpdes40.domain.IAddressList</inheritance:implements>
+			<inheritance:implements>com.windsor.node.plugin.icisnpdes.domain.IAddressList</inheritance:implements>
 		</jaxb:bindings>
 	</jaxb:bindings>
 
@@ -54,7 +54,7 @@
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='PretreatmentAddress']">
 			<hj:ignored />
-			<inheritance:implements>com.windsor.node.plugin.icisnpdes40.domain.IAddressList</inheritance:implements>
+			<inheritance:implements>com.windsor.node.plugin.icisnpdes.domain.IAddressList</inheritance:implements>
 		</jaxb:bindings>
 	</jaxb:bindings>
 
@@ -63,7 +63,7 @@
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='SiteOwnerAddress']">
 			<hj:embeddable />
-			<inheritance:implements>com.windsor.node.plugin.icisnpdes40.domain.IAddressList</inheritance:implements>
+			<inheritance:implements>com.windsor.node.plugin.icisnpdes.domain.IAddressList</inheritance:implements>
 		</jaxb:bindings>
 	</jaxb:bindings>
 
@@ -72,7 +72,7 @@
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='StormWaterAddress']">
 			<hj:embeddable />
-			<inheritance:implements>com.windsor.node.plugin.icisnpdes40.domain.IAddressList</inheritance:implements>
+			<inheritance:implements>com.windsor.node.plugin.icisnpdes.domain.IAddressList</inheritance:implements>
 		</jaxb:bindings>
 	</jaxb:bindings>
 

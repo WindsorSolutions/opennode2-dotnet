@@ -1,4 +1,4 @@
-package com.windsor.node.plugin.icisnpdes40.dao;
+package com.windsor.node.plugin.icisnpdes.dao;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
@@ -18,7 +18,7 @@ public class IcisEntityManagerFactory {
         return provider.createEntityManagerFactory(
                 dataSource,
                 new PluginPersistenceConfig().rootEntityPackage(
-                        "com.windsor.node.plugin.icisnpdes40.generated")
+                        "com.windsor.node.plugin.icisnpdes.generated")
                         .debugSql(Boolean.FALSE));
     }
 }

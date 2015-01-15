@@ -34,6 +34,8 @@ package com.windsor.node.common.domain;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
@@ -74,6 +76,9 @@ public class DataFlow extends AuditableIdentity {
 
     /** indicates at least one plugin implementation has been uploaded   */
     private Boolean pluginExists = Boolean.FALSE;
+
+    /** If this member is null in the database, the regular DataFlow name will be populated here instead. */
+    private String targetDataFlowName;
 
     /** Default constructor. */
     public DataFlow() {
@@ -218,6 +223,7 @@ public class DataFlow extends AuditableIdentity {
         return new HashCodeBuilder(n, n + 2).appendSuper(super.hashCode())
                 .append(infoUrl).append(contactUserId).append(name).append(
                         description).append(services).append(secured).append(pluginExists)
+                        .append(targetDataFlowName)
                 .toHashCode();
     }
 
@@ -240,6 +246,7 @@ public class DataFlow extends AuditableIdentity {
                 .append(contactUserId, flow.contactUserId).append(name,
                         flow.name).append(description, flow.description)
                 .append(services, flow.services).append(secured, flow.secured).append(pluginExists, flow.pluginExists)
+                .append(targetDataFlowName, flow.targetDataFlowName)
                 .isEquals();
     }
 
@@ -251,5 +258,19 @@ public class DataFlow extends AuditableIdentity {
     public void setPluginExists(Boolean pluginExists)
     {
         this.pluginExists = pluginExists;
+    }
+
+    public String getTargetDataFlowName()
+    {
+        if(StringUtils.isBlank(this.targetDataFlowName))
+        {
+            this.targetDataFlowName = this.name;
+        }
+        return targetDataFlowName;
+    }
+
+    public void setTargetDataFlowName(String targetDataFlowName)
+    {
+        this.targetDataFlowName = targetDataFlowName;
     }
 }

@@ -8,7 +8,7 @@
 
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='PermittedFeatureData']">
-			<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractPermittedFeatureData</inheritance:extends>
+			<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractPermittedFeatureData</inheritance:extends>
 		</jaxb:bindings>
 	</jaxb:bindings>
 	

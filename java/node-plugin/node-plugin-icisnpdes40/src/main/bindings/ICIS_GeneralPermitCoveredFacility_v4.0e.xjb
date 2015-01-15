@@ -16,7 +16,7 @@
 						<orm:join-column name="ICS_GNRL_PRMT_ID" referenced-column-name="ICS_GNRL_PRMT_ID" insertable="false" updatable="false"/>
 				</orm:association-override>
 			</hj:entity>
-			<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractGeneralPermitData
+			<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractGeneralPermitData
 			</inheritance:extends>
 		</jaxb:bindings>
 	</jaxb:bindings>

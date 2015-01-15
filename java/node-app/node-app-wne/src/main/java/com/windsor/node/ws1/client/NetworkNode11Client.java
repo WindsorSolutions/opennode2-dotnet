@@ -157,7 +157,7 @@ public class NetworkNode11Client implements NodeClientService {
         }
 
         if (transaction.getFlow() == null
-                || StringUtils.isBlank(transaction.getFlow().getName())) {
+                || StringUtils.isBlank(transaction.getFlow().getTargetDataFlowName())) {
             throw new RuntimeException("Null data flow name");
         }
 
@@ -410,7 +410,7 @@ public class NetworkNode11Client implements NodeClientService {
 
             logger.debug("Submitting...");
             String remoteTransactionId = port.submit(token,
-                    transactionIdToSubmit, transaction.getFlow().getName(),
+                    transactionIdToSubmit, transaction.getFlow().getTargetDataFlowName(),
                     documents);
             logger.debug("Remote Transaction Id: " + remoteTransactionId);
 

@@ -34,7 +34,7 @@
                                       style="border: 0; vertical-align: middle; padding-right: 3px;" />
                                 </td>
                                 <td width="93%">
-								    <strong><a href="flow-edit.htm?id=<c:out value="${flow.id}" />" class="whitetext"><c:out value="${flow.name}" /></strong>
+								    <strong><a href="flow-edit.htm?id=<c:out value="${flow.id}" />" class="whitetext"><c:out value="${flow.name}" /><c:if test="${flow.name ne flow.targetDataFlowName}" > (Target Exchange Name: <c:out value="${flow.targetDataFlowName}" />)</c:if></strong>
 									<c:if test="${flow.secured == true}">&nbsp;(Protected)</c:if></a>
                                     <c:if test="${flow.pluginExists == false}">&nbsp;<span style="color:darkred; font-weight:bold">(No Plugin Uploaded)</span></c:if></a>
 								</td>

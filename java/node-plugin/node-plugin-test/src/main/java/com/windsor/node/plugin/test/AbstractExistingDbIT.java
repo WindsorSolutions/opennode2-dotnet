@@ -4,7 +4,7 @@ import static com.windsor.node.plugin.test.AbstractJpaIT.EXISTING_DB_TEST_GROUP_
 
 import javax.sql.DataSource;
 
-import org.apache.commons.dbcp.BasicDataSource;
+//import org.apache.commons.dbcp.BasicDataSource;
 import org.testng.annotations.Test;
 
 /**
@@ -46,7 +46,7 @@ public abstract class AbstractExistingDbIT extends AbstractJpaIT {
 	/**
 	 * Datasource for connecting to the DB.
 	 */
-	private final BasicDataSource dataSource;
+	//private final BasicDataSource dataSource;
 
 	/**
 	 * No-arg constructor.
@@ -69,16 +69,17 @@ public abstract class AbstractExistingDbIT extends AbstractJpaIT {
 	public AbstractExistingDbIT(final String username, final String password, final String url,
 			final String driverClassName) {
 		super();
-		dataSource = new BasicDataSource();
+		/*dataSource = new BasicDataSource();
 		dataSource.setUsername(username);
 		dataSource.setPassword(password);
 		dataSource.setUrl(url);
-		dataSource.setDriverClassName(driverClassName);
+		dataSource.setDriverClassName(driverClassName);*/
 	}
 
 	@Override
 	public DataSource getDataSource() {
-		return dataSource;
+		//return dataSource;
+	    return null;
 	}
 
 }

@@ -202,7 +202,7 @@
 	</bean>
 
 	<!-- Node Client v.2.0 -->
-	<bean id="nodeClient20"
+	<bean id="nodeClient21"
 		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean"
 		lazy-init="true">
 		<property name="serviceUrl" value="${url.node.endpoint2Client}" />
@@ -269,7 +269,7 @@
 		<property name="naasConfig" ref="naasConfig" />
 		<property name="nosConfig" ref="nosConfig" />
 		<property name="client11" ref="nodeClient11" />
-		<property name="client20" ref="nodeClient20" />
+		<property name="client21" ref="nodeClient21" />
 	</bean>
 
 	<!-- END Node Client & supporting beans -->

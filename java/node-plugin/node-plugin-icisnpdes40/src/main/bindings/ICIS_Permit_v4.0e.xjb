@@ -28,7 +28,7 @@
 	
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='ComplianceTrackingStatus']">
-			<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractComplianceTrackingStatus</inheritance:extends>
+			<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractComplianceTrackingStatus</inheritance:extends>
 		</jaxb:bindings>
 	</jaxb:bindings>
 

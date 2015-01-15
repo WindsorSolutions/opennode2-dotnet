@@ -8,7 +8,7 @@
 
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='ComplianceMonitoringData']">
-			<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractComplianceMonitoringData
+			<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractComplianceMonitoringData
 			</inheritance:extends>
 		</jaxb:bindings>
 	</jaxb:bindings>
@@ -106,56 +106,56 @@
 	<!-- CAFO inspection -->
 
 	<jaxb:bindings node="//xsd:complexType[@name='CAFOInspection']">
-		<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractHasComplianceMonitoring
+		<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractHasComplianceMonitoring
 		</inheritance:extends>
 	</jaxb:bindings>
 
 	<!-- CSO inspection -->
 
 	<jaxb:bindings node="//xsd:complexType[@name='CSOInspection']">
-		<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractHasComplianceMonitoring
+		<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractHasComplianceMonitoring
 		</inheritance:extends>
 	</jaxb:bindings>
 
 	<!-- pretreatment inspection -->
 
 	<jaxb:bindings node="//xsd:complexType[@name='PretreatmentInspection']">
-		<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractHasComplianceMonitoring
+		<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractHasComplianceMonitoring
 		</inheritance:extends>
 	</jaxb:bindings>
 
 	<!-- SSO inspection -->
 
 	<jaxb:bindings node="//xsd:complexType[@name='SSOInspection']">
-		<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractHasComplianceMonitoring
+		<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractHasComplianceMonitoring
 		</inheritance:extends>
 	</jaxb:bindings>
 
 	<!-- SW construction inspection -->
 
 	<jaxb:bindings node="//xsd:complexType[@name='StormWaterConstructionInspection']">
-		<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractHasComplianceMonitoring
+		<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractHasComplianceMonitoring
 		</inheritance:extends>
 	</jaxb:bindings>
 
 	<!-- SW non-construction inspection -->
 
 	<jaxb:bindings node="//xsd:complexType[@name='StormWaterNonConstructionInspection']">
-		<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractHasComplianceMonitoring
+		<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractHasComplianceMonitoring
 		</inheritance:extends>
 	</jaxb:bindings>
 
 	<!-- SW construction non-construction inspections -->
 
 	<jaxb:bindings node="//xsd:complexType[@name='StormWaterConstructionNonConstructionInspections']">
-		<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractHasComplianceMonitoring
+		<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractHasComplianceMonitoring
 		</inheritance:extends>
 	</jaxb:bindings>
 
 	<!-- SW MS4 inspection -->
 
 	<jaxb:bindings node="//xsd:complexType[@name='StormWaterMS4Inspection']">
-		<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractHasComplianceMonitoring
+		<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractHasComplianceMonitoring
 		</inheritance:extends>
 	</jaxb:bindings>
 
@@ -196,7 +196,7 @@
 		<jaxb:bindings>
 
 			<jaxb:bindings node="//xsd:complexType[@name='StormWaterUnpermittedConstructionInspection']">
-				<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractSWConstructionInspection
+				<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractSWConstructionInspection
 				</inheritance:extends>
 			</jaxb:bindings>
 
@@ -210,7 +210,7 @@
 
 		<jaxb:bindings>
 			<jaxb:bindings node="//xsd:complexType[@name='StormWaterConstructionIndustrialInspection']">
-				<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractSWConstructionInspection
+				<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractSWConstructionInspection
 				</inheritance:extends>
 			</jaxb:bindings>
 		</jaxb:bindings>

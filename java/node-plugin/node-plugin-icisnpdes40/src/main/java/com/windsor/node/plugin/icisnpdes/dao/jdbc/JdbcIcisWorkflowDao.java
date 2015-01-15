@@ -1,4 +1,4 @@
-package com.windsor.node.plugin.icisnpdes40.dao.jdbc;
+package com.windsor.node.plugin.icisnpdes.dao.jdbc;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,8 +11,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
-import com.windsor.node.plugin.icisnpdes40.dao.IcisWorkflowDao;
-import com.windsor.node.plugin.icisnpdes40.domain.IcisWorkflow;
+import com.windsor.node.plugin.icisnpdes.dao.IcisWorkflowDao;
+import com.windsor.node.plugin.icisnpdes.domain.IcisWorkflow;
 
 public class JdbcIcisWorkflowDao extends JdbcDaoSupport implements IcisWorkflowDao
 {
@@ -66,7 +66,7 @@ public class JdbcIcisWorkflowDao extends JdbcDaoSupport implements IcisWorkflowD
     }
     
     /* (non-Javadoc)
-     * @see com.windsor.node.plugin.icisnpdes40.dao.IcisWorkflowDao#countPendingWorkflows()
+     * @see com.windsor.node.plugin.icisnpdes.dao.IcisWorkflowDao#countPendingWorkflows()
      */
     @Override
     public int countPendingWorkflows() {
@@ -74,7 +74,7 @@ public class JdbcIcisWorkflowDao extends JdbcDaoSupport implements IcisWorkflowD
     }
 
     /* (non-Javadoc)
-     * @see com.windsor.node.plugin.icisnpdes40.dao.IcisWorkflowDao#findPendingWorkflow()
+     * @see com.windsor.node.plugin.icisnpdes.dao.IcisWorkflowDao#findPendingWorkflow()
      */
     @Override
     public IcisWorkflow findPendingWorkflow() {
@@ -104,7 +104,7 @@ public class JdbcIcisWorkflowDao extends JdbcDaoSupport implements IcisWorkflowD
     }
     
     /* (non-Javadoc)
-     * @see com.windsor.node.plugin.icisnpdes40.dao.IcisWorkflowDao#loadById(java.lang.String)
+     * @see com.windsor.node.plugin.icisnpdes.dao.IcisWorkflowDao#loadById(java.lang.String)
      */
     @Override
     public IcisWorkflow loadById(String id)
@@ -125,7 +125,7 @@ public class JdbcIcisWorkflowDao extends JdbcDaoSupport implements IcisWorkflowD
     }
 
     /* (non-Javadoc)
-     * @see com.windsor.node.plugin.icisnpdes40.dao.IcisWorkflowDao#save(com.windsor.node.plugin.icisnpdes40.domain.IcisWorkflow)
+     * @see com.windsor.node.plugin.icisnpdes.dao.IcisWorkflowDao#save(com.windsor.node.plugin.icisnpdes.domain.IcisWorkflow)
      */
     @Override
     public void save(IcisWorkflow icisWorkflow)

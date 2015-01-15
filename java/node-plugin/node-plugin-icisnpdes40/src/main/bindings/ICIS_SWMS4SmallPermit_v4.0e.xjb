@@ -8,7 +8,7 @@
 
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='SWMS4SmallPermitData']">
-			<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractSWMS4SmallPermitData</inheritance:extends>
+			<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractSWMS4SmallPermitData</inheritance:extends>
 		</jaxb:bindings>
 	</jaxb:bindings>
 
@@ -35,7 +35,7 @@
 	
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='GPCFConstructionWaiver']">
-			<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractGPCFConstructionWaiver</inheritance:extends>
+			<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractGPCFConstructionWaiver</inheritance:extends>
 		</jaxb:bindings>
 	</jaxb:bindings>
 

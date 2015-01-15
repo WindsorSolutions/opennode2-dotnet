@@ -4,7 +4,7 @@
 	<parent>
 	    <groupId>com.windsor.node.util</groupId>
 	    <artifactId>node-util</artifactId>
-		<version>2.09-SNAPSHOT</version>
+		<version>2.10</version>
 	</parent>
 	<groupId>com.windsor.node.util.hyperjaxb3</groupId>
 	<artifactId>node-util-hyperjaxb3</artifactId>
@@ -15,6 +15,7 @@
         <module>node-util-hyperjaxb3-attains</module>
         <module>node-util-hyperjaxb3-ic</module>
         <module>node-util-hyperjaxb3-icisnpdes</module>
+        <module>node-util-hyperjaxb3-icisair</module>
         <module>node-util-hyperjaxb3-wqx</module>
         <module>node-util-hyperjaxb3-facid</module>
     </modules>

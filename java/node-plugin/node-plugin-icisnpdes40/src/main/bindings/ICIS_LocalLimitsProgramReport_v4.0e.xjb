@@ -37,13 +37,13 @@
 	
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='LocalLimits']">
-			<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractLocalLimits</inheritance:extends>
+			<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractLocalLimits</inheritance:extends>
 		</jaxb:bindings>
 	</jaxb:bindings>
 	
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='RemovalCredits']">
-			<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractRemovalCredits</inheritance:extends>
+			<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractRemovalCredits</inheritance:extends>
 		</jaxb:bindings>
 	</jaxb:bindings>
 

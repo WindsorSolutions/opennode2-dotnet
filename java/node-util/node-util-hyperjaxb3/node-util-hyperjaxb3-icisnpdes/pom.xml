@@ -4,9 +4,9 @@
 	<parent>
 		<groupId>com.windsor.node.util.hyperjaxb3</groupId>
 		<artifactId>node-util-hyperjaxb3</artifactId>
-		<version>2.09-SNAPSHOT</version>
+		<version>2.10</version>
 	</parent>
 	<artifactId>node-util-hyperjaxb3-icisnpdes</artifactId>
 	<packaging>jar</packaging>
-	<name>Node Util - Hyperjaxb3 - icisnpdes40</name>
+	<name>Node Util - Hyperjaxb3 - icisnpdes</name>
 </project>

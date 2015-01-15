@@ -52,7 +52,7 @@ public class NodeClientFactory implements InitializingBean,
     private NAASConfig naasConfig;
     private NOSConfig nosConfig;
     private NodeClientService client11;
-    private NodeClientService client20;
+    private NodeClientService client21;
 
     public void afterPropertiesSet() {
 
@@ -68,8 +68,8 @@ public class NodeClientFactory implements InitializingBean,
             throw new RuntimeException("Null Client11");
         }
 
-        if (client20 == null) {
-            throw new RuntimeException("Null Client20");
+        if (client21 == null) {
+            throw new RuntimeException("Null Client21");
         }
 
     }
@@ -99,7 +99,7 @@ public class NodeClientFactory implements InitializingBean,
                     .getWebServiceEndpoint1(), credentials, nosConfig
                     .getTempDir());
         } else if (partner.getVersion() == EndpointVersionType.EN21) {
-            client = client20;
+            client = client21;
             client.configure(partner.getUrl(), nosConfig
                     .getWebServiceEndpoint2(), credentials, nosConfig
                     .getTempDir());
@@ -123,8 +123,8 @@ public class NodeClientFactory implements InitializingBean,
         this.client11 = client11;
     }
 
-    public void setClient20(NodeClientService client20) {
-        this.client20 = client20;
+    public void setClient21(NodeClientService client21) {
+        this.client21 = client21;
     }
 
 }

@@ -14,7 +14,7 @@
 					<orm:join-column name="ICS_FAC_ID" referenced-column-name="ICS_FAC_ID" insertable="false" updatable="false"/>
 				</orm:association-override>
 			</hj:entity>
-			<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractFacility
+			<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractFacility
 			</inheritance:extends>
 		</jaxb:bindings>
  

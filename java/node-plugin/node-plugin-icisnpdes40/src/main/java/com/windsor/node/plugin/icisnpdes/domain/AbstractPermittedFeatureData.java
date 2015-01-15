@@ -1,9 +1,9 @@
-package com.windsor.node.plugin.icisnpdes40.domain;
+package com.windsor.node.plugin.icisnpdes.domain;
 
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
-import com.windsor.node.plugin.icisnpdes40.generated.PermittedFeature;
+import com.windsor.node.plugin.icisnpdes.generated.PermittedFeature;
 
 /**
  * Specifies how to access address and contact info for {@link PermittedFeature}

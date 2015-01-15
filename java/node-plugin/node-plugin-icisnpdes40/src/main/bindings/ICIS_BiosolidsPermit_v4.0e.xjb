@@ -7,7 +7,7 @@
 	<!-- biosolids permit data -->
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='BiosolidsPermitData']">
-			<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractBiosolidsPermitData</inheritance:extends>
+			<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractBiosolidsPermitData</inheritance:extends>
 		</jaxb:bindings>
 	</jaxb:bindings>
 

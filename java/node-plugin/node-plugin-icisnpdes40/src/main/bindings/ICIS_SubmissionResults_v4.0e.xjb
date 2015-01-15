@@ -16,7 +16,7 @@
 
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:element[@name='SubmissionResult']//xsd:complexType">
-			<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractSubmissionResult</inheritance:extends>
+			<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractSubmissionResult</inheritance:extends>
 			<hj:entity>
 				<orm:table name="ICS_SUBM_RESULTS" />
 			</hj:entity>

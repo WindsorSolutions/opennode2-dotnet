@@ -45,7 +45,7 @@
     </bean>
 
     <!-- Clients -->
-    <bean name="client20" class="com.windsor.node.ws2.client.NetworkNode20Client" />
+    <bean name="client21" class="com.windsor.node.ws2.client.NetworkNode21Client" />
 
     <bean id="httpClient" class="org.springframework.remoting.httpinvoker.CommonsHttpInvokerRequestExecutor">
         <property name="readTimeout" value="0" />

@@ -1,10 +1,10 @@
-package com.windsor.node.plugin.icisnpdes40.domain;
+package com.windsor.node.plugin.icisnpdes.domain;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.xml.bind.annotation.XmlTransient;
 
-import com.windsor.node.plugin.icisnpdes40.generated.ComplianceScheduleKeyElements;
+import com.windsor.node.plugin.icisnpdes.generated.ComplianceScheduleKeyElements;
 
 /**
  * Provides column names to link for use in Hibernate schema validation. Without these

@@ -9,7 +9,7 @@
 
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='GeographicCoordinates']">
-			<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractGeographicCoordinates</inheritance:extends>
+			<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractGeographicCoordinates</inheritance:extends>
 		</jaxb:bindings>
 		
 	</jaxb:bindings>

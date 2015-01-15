@@ -1,13 +1,13 @@
-package com.windsor.node.plugin.icisnpdes40.domain;
+package com.windsor.node.plugin.icisnpdes.domain;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlTransient;
 
-import com.windsor.node.plugin.icisnpdes40.generated.Facility;
-import com.windsor.node.plugin.icisnpdes40.generated.FacilityAddress;
-import com.windsor.node.plugin.icisnpdes40.generated.FacilityContact;
+import com.windsor.node.plugin.icisnpdes.generated.Facility;
+import com.windsor.node.plugin.icisnpdes.generated.FacilityAddress;
+import com.windsor.node.plugin.icisnpdes.generated.FacilityContact;
 
 /**
  * Specifies how to access address and contact info for {@link Facility} data.

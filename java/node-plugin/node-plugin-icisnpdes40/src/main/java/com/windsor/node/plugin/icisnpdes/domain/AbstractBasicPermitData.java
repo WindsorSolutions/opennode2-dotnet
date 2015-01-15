@@ -1,9 +1,9 @@
-package com.windsor.node.plugin.icisnpdes40.domain;
+package com.windsor.node.plugin.icisnpdes.domain;
 
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
-import com.windsor.node.plugin.icisnpdes40.generated.BasicPermit;
+import com.windsor.node.plugin.icisnpdes.generated.BasicPermit;
 
 /**
  * Specifies how to access address and contact info for {@link BasicPermit}

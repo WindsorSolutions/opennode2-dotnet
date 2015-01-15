@@ -1,4 +1,4 @@
-package com.windsor.node.plugin.icisnpdes40.response;
+package com.windsor.node.plugin.icisnpdes.response;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -32,15 +32,15 @@ import com.windsor.node.data.dao.TransactionDao;
 import com.windsor.node.data.dao.jdbc.JdbcPartnerDao;
 import com.windsor.node.data.dao.jdbc.JdbcTransactionDao;
 import com.windsor.node.plugin.common.BaseWnosJaxbPlugin;
-import com.windsor.node.plugin.icisnpdes40.dao.IcisEntityManagerFactory;
-import com.windsor.node.plugin.icisnpdes40.dao.IcisStatusAndProcessingDao;
-import com.windsor.node.plugin.icisnpdes40.dao.IcisWorkflowDao;
-import com.windsor.node.plugin.icisnpdes40.dao.jdbc.JdbcIcisStatusAndProcessingDao;
-import com.windsor.node.plugin.icisnpdes40.dao.jdbc.JdbcIcisWorkflowDao;
-import com.windsor.node.plugin.icisnpdes40.domain.IcisWorkflow;
-import com.windsor.node.plugin.icisnpdes40.generated.SubmissionResultList;
-import com.windsor.node.plugin.icisnpdes40.results.xml.IcisProcessingResultsXmlParser;
-import com.windsor.node.plugin.icisnpdes40.results.xml.ResultsParser;
+import com.windsor.node.plugin.icisnpdes.dao.IcisEntityManagerFactory;
+import com.windsor.node.plugin.icisnpdes.dao.IcisStatusAndProcessingDao;
+import com.windsor.node.plugin.icisnpdes.dao.IcisWorkflowDao;
+import com.windsor.node.plugin.icisnpdes.dao.jdbc.JdbcIcisStatusAndProcessingDao;
+import com.windsor.node.plugin.icisnpdes.dao.jdbc.JdbcIcisWorkflowDao;
+import com.windsor.node.plugin.icisnpdes.domain.IcisWorkflow;
+import com.windsor.node.plugin.icisnpdes.generated.SubmissionResultList;
+import com.windsor.node.plugin.icisnpdes.results.xml.IcisProcessingResultsXmlParser;
+import com.windsor.node.plugin.icisnpdes.results.xml.ResultsParser;
 import com.windsor.node.service.helper.client.NodeClientFactory;
 import com.windsor.node.service.helper.settings.SettingServiceProvider;
 

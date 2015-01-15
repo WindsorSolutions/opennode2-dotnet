@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.mangofactory.swagger.plugin.EnableSwagger;
 import com.windsor.node.common.domain.CommonContentType;
 import com.windsor.node.common.domain.DataFlow;
 import com.windsor.node.common.domain.DataRequest;
@@ -56,6 +57,7 @@ import com.wordnik.swagger.annotations.ApiOperation;
 
 @Api(value = "OpenNode2 REST Endpoint API")
 @Controller
+@EnableSwagger
 public class RestActivationController implements Serializable
 {
     private static final long serialVersionUID = 5444456389572239306L;

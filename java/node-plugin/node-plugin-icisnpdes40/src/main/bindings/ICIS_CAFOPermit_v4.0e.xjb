@@ -8,7 +8,7 @@
 	
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='CAFOPermitData']">
-			<inheritance:extends>com.windsor.node.plugin.icisnpdes40.domain.AbstractCAFOPermitData</inheritance:extends>
+			<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractCAFOPermitData</inheritance:extends>
 		</jaxb:bindings>
 	</jaxb:bindings>
 	

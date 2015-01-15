@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.windsor.node</groupId>
         <artifactId>node</artifactId>
-        <version>2.09-SNAPSHOT</version>
+        <version>2.10</version>
     </parent>
     <groupId>com.windsor.node.plugin</groupId>
     <artifactId>node-plugin</artifactId>
@@ -27,7 +27,7 @@
         <module>node-plugin-flowsecurity</module>
         <module>node-plugin-here</module>
         <module>node-plugin-ic</module>
-        <module>node-plugin-icisnpdes40</module>
+        <module>node-plugin-icisnpdes</module>
         <module>node-plugin-icis-air</module>
         <module>node-plugin-mapforcebridge</module>
         <module>node-plugin-nct</module>

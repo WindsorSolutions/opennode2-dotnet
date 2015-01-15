@@ -12,9 +12,9 @@
 
 	<import resource="classes/endpoint2.xml" />
 	
-	<bean name="/NodeClient20"
+	<bean name="/NodeClient21"
 		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
-		<property name="service" ref="client20" />
+		<property name="service" ref="client21" />
 		<property name="serviceInterface" value="com.windsor.node.common.util.NodeClientService" />
 	</bean>
 
