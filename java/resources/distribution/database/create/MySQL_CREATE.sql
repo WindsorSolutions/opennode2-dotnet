@@ -80,7 +80,8 @@ CREATE TABLE NFlow (
     ModifiedBy  varchar(50) NOT NULL,
     ModifiedOn  datetime NOT NULL,
     Code        varchar(255) NOT NULL,
-    Description varchar(500) NULL 
+    TargetExchangeName varchar(255) NULL,
+    Description varchar(500) NULL
     ) ENGINE=InnoDB;
 
 CREATE TABLE NNotification ( 
@@ -93,7 +94,9 @@ CREATE TABLE NNotification (
     OnNotify    char(1) NOT NULL,
     OnSchedule  char(1) NOT NULL,
     OnDownload  char(1) NOT NULL,
-    OnExecute   char(1) NOT NULL 
+    OnExecute   char(1) NOT NULL,
+    ModifiedBy  varchar(50) NULL,
+    ModifiedOn  datetime NULL
     ) ENGINE=InnoDB;
 
 CREATE TABLE NPartner ( 
@@ -110,7 +113,8 @@ CREATE TABLE NPlugin (
     FlowId          varchar(50) NOT NULL,
     ModifiedBy      varchar(50) NOT NULL,
     ModifiedOn      datetime NOT NULL,
-    PluginContent   longblob NOT NULL 
+    PluginContent   longblob NOT NULL,
+    BinaryVersion   varchar(40) NULL
     ) ENGINE=InnoDB;
 
 CREATE TABLE NRequest ( 
@@ -120,6 +124,7 @@ CREATE TABLE NRequest (
     RowIndex        int NOT NULL,
     MaxRowCount     int NOT NULL,
     RequestType     varchar(50) NOT NULL,
+    ParamsByName    varchar(1) NULL,
     ModifiedBy      varchar(50) NOT NULL,
     ModifiedOn      datetime NOT NULL 
     ) ENGINE=InnoDB;
@@ -151,7 +156,11 @@ CREATE TABLE NSchedule (
     ModifiedOn          datetime NOT NULL,
     IsActive            varchar(1) NOT NULL,
     IsRunNow            varchar(1) NOT NULL,
-    ExecuteStatus       varchar(50) NOT NULL 
+    ExecuteStatus       varchar(50) NOT NULL,
+    SourceFlow          varchar(255) NULL,
+    TargetFlow          varchar(255) NULL, 
+    TargetOperation     varchar(255) NULL,
+    LastExecuteActivityId  varchar(50) NULL
     ) ENGINE=InnoDB;
 
 CREATE TABLE NScheduleSourceArg ( 

@@ -79,6 +79,7 @@ CREATE TABLE NFlow (
 	ModifiedBy 	varchar(50) NOT NULL,
 	ModifiedOn 	datetime NOT NULL,
 	Code       	varchar(255) NOT NULL,
+	TargetExchangeName varchar(255) NULL,
 	Description	varchar(500) NULL 
 	);
 
