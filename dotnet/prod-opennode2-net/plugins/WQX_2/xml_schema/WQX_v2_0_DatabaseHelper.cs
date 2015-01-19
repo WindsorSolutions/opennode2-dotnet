@@ -431,7 +431,9 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
                                                             activity.ActivityDescription.ActivityIdentifier);
                             }
 
-                            string fileName = MakeEmbeddedNameForAttachedFile(activity.ActivityDescription.ActivityIdentifier, attachment.BinaryObjectFileName);
+                            //TODO: handle duplicate file names
+                            //string fileName = MakeEmbeddedNameForAttachedFile(activity.ActivityDescription.ActivityIdentifier, attachment.BinaryObjectFileName);
+                            string fileName = attachment.BinaryObjectFileName;
                             string filePath = Path.Combine(folderPath, fileName);
                             if (!File.Exists(filePath))
                             {
@@ -468,7 +470,9 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
                                                         monitoringLocation.WellInformation, monitoringLocation.MonitoringLocationIdentity.MonitoringLocationIdentifier);
                             }
 
-                            string fileName = MakeEmbeddedNameForAttachedFile(monitoringLocation.MonitoringLocationIdentity.MonitoringLocationIdentifier, attachment.BinaryObjectFileName);
+                            //TODO: handle duplicate file names
+                            //string fileName = MakeEmbeddedNameForAttachedFile(monitoringLocation.MonitoringLocationIdentity.MonitoringLocationIdentifier, attachment.BinaryObjectFileName);
+                            string fileName = attachment.BinaryObjectFileName;
                             string filePath = Path.Combine(folderPath, fileName);
                             if (!File.Exists(filePath))
                             {
@@ -504,7 +508,9 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
                                                         project.ProjectDescriptionText, project.ProjectIdentifier);
                             }
 
-                            string fileName = MakeEmbeddedNameForAttachedFile(project.ProjectIdentifier, attachment.BinaryObjectFileName);
+                            //TODO: handle duplicate file names
+                            //string fileName = MakeEmbeddedNameForAttachedFile(project.ProjectIdentifier, attachment.BinaryObjectFileName);
+                            string fileName = attachment.BinaryObjectFileName;
                             string filePath = Path.Combine(folderPath, fileName);
                             if (!File.Exists(filePath))
                             {
