@@ -147,8 +147,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
                                 throw new ArgException("An attachment for the activity with id \"{0}\" does not have an attachment name.",
                                                             activity.ActivityDescription.ActivityIdentifier);
                             }
-                            string fileName = MakeEmbeddedNameForAttachedFile(activity.ActivityDescription.ActivityIdentifier, attachment.BinaryObjectFileName);
-                            string filePath = Path.Combine(folderPath, fileName);
+                            string filePath = Path.Combine(folderPath, attachment.BinaryObjectFileName);
                             if (File.Exists(filePath))
                             {
                                 throw new ArgException("Failed to write the attachment \"{0}\" for the activity with id \"{1}\" because another file with the same name already exists in the temporary folder: \"{2}\"",
@@ -186,8 +185,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
                                 throw new ArgException("An attachment for the project \"{0}\" with id \"{1}\" does not have an attachment name.",
                                                             project.ProjectName, project.ProjectIdentifier);
                             }
-                            string fileName = MakeEmbeddedNameForAttachedFile(project.ProjectIdentifier, attachment.BinaryObjectFileName);
-                            string filePath = Path.Combine(folderPath, fileName);
+                            string filePath = Path.Combine(folderPath, attachment.BinaryObjectFileName);
                             if (File.Exists(filePath))
                             {
                                 throw new ArgException("Failed to write the attachment \"{0}\" for the project \"{1}\" with id \"{2}\" because another file with the same name already exists in the temporary folder: \"{3}\"",
@@ -225,8 +223,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
                                 throw new ArgException("An attachment for the monitoring location \"{0}\" with id \"{1}\" does not have an attachment name.",
                                                             monitoringLocation.WellInformation, monitoringLocation.MonitoringLocationIdentity.MonitoringLocationIdentifier);
                             }
-                            string fileName = MakeEmbeddedNameForAttachedFile(monitoringLocation.MonitoringLocationIdentity.MonitoringLocationIdentifier, attachment.BinaryObjectFileName);
-                            string filePath = Path.Combine(folderPath, fileName);
+                            string filePath = Path.Combine(folderPath, attachment.BinaryObjectFileName);
                             if (File.Exists(filePath))
                             {
                                 throw new ArgException("Failed to write the attachment \"{0}\" for the monitoring location \"{1}\" with id \"{2}\" because another file with the same name already exists in the temporary folder: \"{3}\"",
@@ -251,14 +248,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
             }
             
         }
-
-        public static string MakeEmbeddedNameForAttachedFile(string parentId, string attachedFileName)
-        {
-            string name = string.Format("{0}_{1}", parentId, attachedFileName);
-            name = FileUtils.ReplaceInvalidFilenameChars(name, "%");
-            return name;
-        }
-
+        
         public static int TotalResultCount(WQXDataType data)
         {
             int count = 0;
@@ -431,14 +421,11 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
                                                             activity.ActivityDescription.ActivityIdentifier);
                             }
 
-                            //TODO: handle duplicate file names
-                            //string fileName = MakeEmbeddedNameForAttachedFile(activity.ActivityDescription.ActivityIdentifier, attachment.BinaryObjectFileName);
-                            string fileName = attachment.BinaryObjectFileName;
-                            string filePath = Path.Combine(folderPath, fileName);
+                            string filePath = Path.Combine(folderPath, attachment.BinaryObjectFileName);
                             if (!File.Exists(filePath))
                             {
-                                throw new ArgException("Failed to locate an attachment with the name \"{0}\" for the activity \"{1}\" with id \"{2}\" in the temporary folder: \"{3}\"",
-                                                       fileName, attachment.BinaryObjectFileName, activity.ActivityDescription.ActivityIdentifier, filePath);
+                                throw new ArgException("Failed to locate an attachment with the name \"{0}\" for the activity with id \"{1}\" in the temporary folder: \"{2}\"",
+                                                       attachment.BinaryObjectFileName, activity.ActivityDescription.ActivityIdentifier, filePath);
                             }
 
                             byte[] content = CompressFile(folderPath, filePath);
@@ -470,14 +457,11 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
                                                         monitoringLocation.WellInformation, monitoringLocation.MonitoringLocationIdentity.MonitoringLocationIdentifier);
                             }
 
-                            //TODO: handle duplicate file names
-                            //string fileName = MakeEmbeddedNameForAttachedFile(monitoringLocation.MonitoringLocationIdentity.MonitoringLocationIdentifier, attachment.BinaryObjectFileName);
-                            string fileName = attachment.BinaryObjectFileName;
-                            string filePath = Path.Combine(folderPath, fileName);
+                            string filePath = Path.Combine(folderPath, attachment.BinaryObjectFileName);
                             if (!File.Exists(filePath))
                             {
                                 throw new ArgException("Failed to locate an attachment with the name \"{0}\" for the monitoring location \"{1}\" with id \"{2}\" in the temporary folder: \"{3}\"",
-                                                       fileName, monitoringLocation.WellInformation, monitoringLocation.MonitoringLocationIdentity.MonitoringLocationIdentifier, filePath);
+                                                       attachment.BinaryObjectFileName, monitoringLocation.WellInformation, monitoringLocation.MonitoringLocationIdentity.MonitoringLocationIdentifier, filePath);
                             }
 
                             byte[] content = CompressFile(folderPath, filePath);
@@ -486,8 +470,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
                                                                             content, monitoringLocation.RecordId, attachment.BinaryObjectFileName);
                             if (updateCount == 0)
                             {
-                                throw new ArgException("Failed to update the content for an attachment with the name \"{0}\" for the monitoring location \"{1}\" with id \"{2}\"",
-                                                        fileName, attachment.BinaryObjectFileName, monitoringLocation.MonitoringLocationIdentity.MonitoringLocationIdentifier);
+                                throw new ArgException("Failed to update the content for an attachment with the name \"{0}\" for the monitoring location with id \"{1}\"",
+                                                        attachment.BinaryObjectFileName, monitoringLocation.MonitoringLocationIdentity.MonitoringLocationIdentifier);
                             }
                         }
                     }
@@ -508,14 +492,11 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
                                                         project.ProjectDescriptionText, project.ProjectIdentifier);
                             }
 
-                            //TODO: handle duplicate file names
-                            //string fileName = MakeEmbeddedNameForAttachedFile(project.ProjectIdentifier, attachment.BinaryObjectFileName);
-                            string fileName = attachment.BinaryObjectFileName;
-                            string filePath = Path.Combine(folderPath, fileName);
+                            string filePath = Path.Combine(folderPath, attachment.BinaryObjectFileName);
                             if (!File.Exists(filePath))
                             {
                                 throw new ArgException("Failed to locate an attachment with the name \"{0}\" for the project \"{1}\" with id \"{2}\" in the temporary folder: \"{3}\"",
-                                                       fileName, project.ProjectDescriptionText, project.ProjectIdentifier, filePath);
+                                                       attachment.BinaryObjectFileName, project.ProjectDescriptionText, project.ProjectIdentifier, filePath);
                             }
 
                             byte[] content = CompressFile(folderPath, filePath);
@@ -524,8 +505,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
                                                                             content, project.RecordId, attachment.BinaryObjectFileName);
                             if (updateCount == 0)
                             {
-                                throw new ArgException("Failed to update the content for an attachment with the name \"{0}\" for the project \"{1}\" with id \"{2}\"",
-                                                        fileName, attachment.BinaryObjectFileName, project.ProjectIdentifier);
+                                throw new ArgException("Failed to update the content for an attachment with the name \"{0}\" for the project with id \"{1}\"",
+                                                        attachment.BinaryObjectFileName, project.ProjectIdentifier);
                             }
                         }
                     }
