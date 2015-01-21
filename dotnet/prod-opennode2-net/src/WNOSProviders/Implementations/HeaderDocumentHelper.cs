@@ -159,6 +159,20 @@ namespace Windsor.Node2008.WNOSProviders.Implementation
                 return false;
             }
         }
+
+        public bool TryLoad(XmlElement element)
+        {
+            try
+            {
+                _hd = _serializationHelper.Deserialize<Docs.ExchangeNetworkDocument>(element);
+                return true;
+            }
+            catch (InvalidOperationException)
+            {
+                return false;
+            }
+        }
+
         public void Load(string serializeFilePath)
         {
             _hd = _serializationHelper.Deserialize<Docs.ExchangeNetworkDocument>(serializeFilePath);
