@@ -65,7 +65,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
             
         }
         public static string GenerateAndValidateWqxQueryFile(IAppendAuditLogEvent appendAuditLogEvent, IObjectsFromDatabase objectsFromDatabase, SpringBaseDao baseDao, 
-                                                             string queryOrganizationIdentifier, string sysTempFolderPath, 
+                                                             string queryOrganizationName, string queryOrganizationIdentifier, string sysTempFolderPath, 
                                                              Assembly xmlSchemaZippedResourceAssembly, string xmlSchemaZippedQualifiedResourceName,
                                                              string xmlSchemaRootFileName, ISerializationHelper serializationHelper, ICompressionHelper compressionHelper,
                                                              out string validationErrorsFile)
@@ -89,7 +89,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
                 serializationHelper.Serialize(wqx, tempXmlFilePath);
 
                 appendAuditLogEvent.AppendAuditLogEvent("Inserting header into WQX xml file");
-                tempXmlFilePath = MakeHeaderFile(tempXmlFilePath, tempFolderPath, queryOrganizationIdentifier, serializationHelper);
+                tempXmlFilePath = MakeHeaderFile(tempXmlFilePath, tempFolderPath, queryOrganizationName, queryOrganizationIdentifier, serializationHelper);
                 appendAuditLogEvent.AppendAuditLogEvent("Inserted header into WQX xml file");
 
                 appendAuditLogEvent.AppendAuditLogEvent("Generated WQX xml file from query results");                
@@ -612,16 +612,16 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
             return Path.Combine(folderPath, Guid.NewGuid().ToString() + extension);
         }
 
-        public static string MakeHeaderFile(string tempXmlFilePath, string tempFolderPath, string org, ISerializationHelper serializationHelper)
+        public static string MakeHeaderFile(string tempXmlFilePath, string tempFolderPath, string author, string orgId, ISerializationHelper serializationHelper)
         {
             string tempXmlFilePath2 = null;
 
             try
             {
-                HeaderDocumentHelper headerDocumentHelper = new HeaderDocumentHelper();
+                HeaderDocumentHelperQualified headerDocumentHelper = new HeaderDocumentHelperQualified();
                 headerDocumentHelper.SerializationHelper = serializationHelper;
 
-                headerDocumentHelper.Configure("Windsor Solutions", org, "title", null, "contactInfo", null);
+                headerDocumentHelper.Configure(author, orgId, null, null, null, null);
 
                 XmlDocument doc = new XmlDocument();
                 doc.Load(tempXmlFilePath);
@@ -651,8 +651,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
             string tempXmlFilePath2 = null;
             try
             {
-
-                HeaderDocumentHelper headerDocumentHelper = new HeaderDocumentHelper();
+                HeaderDocumentHelperQualified headerDocumentHelper = new HeaderDocumentHelperQualified();
                 headerDocumentHelper.SerializationHelper = serializationHelper;
 
                 XmlDocument doc = new XmlDocument();
