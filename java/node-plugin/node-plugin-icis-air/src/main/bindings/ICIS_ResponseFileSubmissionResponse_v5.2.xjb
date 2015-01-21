@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:annox="http://annox.dev.java.net"
+	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm" jaxb:extensionBindingPrefixes="hj orm annox"
+	schemaLocation="../xsd/ICIS_ResponseFileSubmissionResponse_v5.2.xsd">
+	
+	<!-- file submission error data type -->
+
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='FileSubmissionErrorDataType']">
+			<hj:ignored />
+		</jaxb:bindings>
+	</jaxb:bindings>
+
+	<!-- file submission errors data type -->
+
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='FileSubmissionErrorsDataType']">
+			<hj:ignored />
+		</jaxb:bindings>
+	</jaxb:bindings>
+	
+	<!-- submission response data type -->
+
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='SubmissionResponseDataType']">
+			<hj:ignored />
+		</jaxb:bindings>
+	</jaxb:bindings>
+	
+	<!-- submission type data type -->
+
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='SubmissionTypeDataType']">
+			<hj:ignored />
+		</jaxb:bindings>
+	</jaxb:bindings>
+	
+	<!-- submitting party data type -->
+
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='SubmittingPartyDataType']">
+			<hj:ignored />
+		</jaxb:bindings>
+	</jaxb:bindings>
+
+</jaxb:bindings>

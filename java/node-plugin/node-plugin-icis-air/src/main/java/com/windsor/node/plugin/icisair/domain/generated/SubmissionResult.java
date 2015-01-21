@@ -132,6 +132,11 @@ public class SubmissionResult extends AbstractSubmissionResult
     @XmlTransient
     protected String dbid;
 
+    private String trim(String value)
+    {
+        return (value != null ? value.trim() : null);
+    }
+
     /**
      * Gets the value of the submissionTypeName property.
      * 
@@ -143,7 +148,7 @@ public class SubmissionResult extends AbstractSubmissionResult
     @Basic
     @Column(name = "SUBM_TYPE_NAME", length = 255)
     public String getSubmissionTypeName() {
-        return submissionTypeName;
+        return trim(submissionTypeName);
     }
 
     /**
@@ -174,7 +179,7 @@ public class SubmissionResult extends AbstractSubmissionResult
     @Basic
     @Column(name = "TRANSACTION_TYPE", length = 255)
     public String getTransactionType() {
-        return transactionType;
+        return trim(transactionType);
     }
 
     /**
@@ -205,7 +210,7 @@ public class SubmissionResult extends AbstractSubmissionResult
     @Basic
     @Column(name = "FAC_IDENT", length = 255)
     public String getAirFacilityIdentifier() {
-        return airFacilityIdentifier;
+        return trim(airFacilityIdentifier);
     }
 
     /**
@@ -236,7 +241,7 @@ public class SubmissionResult extends AbstractSubmissionResult
     @Basic
     @Column(name = "CMPL_MON_IDENT", length = 255)
     public String getComplianceMonitoringIdentifier() {
-        return complianceMonitoringIdentifier;
+        return trim(complianceMonitoringIdentifier);
     }
 
     /**
@@ -267,7 +272,7 @@ public class SubmissionResult extends AbstractSubmissionResult
     @Basic
     @Column(name = "CMPL_MON_IDENT_2", length = 255)
     public String getComplianceMonitoringIdentifier2() {
-        return complianceMonitoringIdentifier2;
+        return trim(complianceMonitoringIdentifier2);
     }
 
     /**
@@ -298,7 +303,7 @@ public class SubmissionResult extends AbstractSubmissionResult
     @Basic
     @Column(name = "DA_ENFRC_ACTN_IDENT", length = 255)
     public String getAirDAEnforcementActionIdentifier() {
-        return airDAEnforcementActionIdentifier;
+        return trim(airDAEnforcementActionIdentifier);
     }
 
     /**
@@ -329,7 +334,7 @@ public class SubmissionResult extends AbstractSubmissionResult
     @Basic
     @Column(name = "DA_ENFRC_ACTN_IDENT_2", length = 255)
     public String getAirDAEnforcementActionIdentifier2() {
-        return airDAEnforcementActionIdentifier2;
+        return trim(airDAEnforcementActionIdentifier2);
     }
 
     /**
@@ -360,7 +365,7 @@ public class SubmissionResult extends AbstractSubmissionResult
     @Basic
     @Column(name = "MILSTN_TYPE_CODE", length = 255)
     public String getMilestoneTypeCode() {
-        return milestoneTypeCode;
+        return trim(milestoneTypeCode);
     }
 
     /**
@@ -391,7 +396,7 @@ public class SubmissionResult extends AbstractSubmissionResult
     @Basic
     @Column(name = "POLUTS_CODE", length = 255)
     public String getAirPollutantsCode() {
-        return airPollutantsCode;
+        return trim(airPollutantsCode);
     }
 
     /**
@@ -422,7 +427,7 @@ public class SubmissionResult extends AbstractSubmissionResult
     @Basic
     @Column(name = "PROG_CODE", length = 255)
     public String getAirProgramCode() {
-        return airProgramCode;
+        return trim(airProgramCode);
     }
 
     /**
@@ -453,7 +458,7 @@ public class SubmissionResult extends AbstractSubmissionResult
     @Basic
     @Column(name = "CASE_FILE_IDENT", length = 255)
     public String getCaseFileIdentifier() {
-        return caseFileIdentifier;
+        return trim(caseFileIdentifier);
     }
 
     /**
@@ -484,7 +489,7 @@ public class SubmissionResult extends AbstractSubmissionResult
     @Basic
     @Column(name = "CASE_FILE_IDENT_2", length = 255)
     public String getCaseFileIdentifier2() {
-        return caseFileIdentifier2;
+        return trim(caseFileIdentifier2);
     }
 
     /**
@@ -515,7 +520,7 @@ public class SubmissionResult extends AbstractSubmissionResult
     @Basic
     @Column(name = "RESULT_CODE", length = 255)
     public String getResultCode() {
-        return resultCode;
+        return trim(resultCode);
     }
 
     /**
@@ -546,7 +551,7 @@ public class SubmissionResult extends AbstractSubmissionResult
     @Basic
     @Column(name = "RESULT_TYPE_CODE", length = 255)
     public String getResultTypeCode() {
-        return resultTypeCode;
+        return trim(resultTypeCode);
     }
 
     /**
@@ -577,7 +582,7 @@ public class SubmissionResult extends AbstractSubmissionResult
     @Basic
     @Column(name = "RESULT_DESC", length = 255)
     public String getResultDescription() {
-        return resultDescription;
+        return trim(resultDescription);
     }
 
     /**
@@ -608,7 +613,7 @@ public class SubmissionResult extends AbstractSubmissionResult
     @Basic
     @Column(name = "SUBM_TRANSACTION_ID", length = 255)
     public String getSubmissionTransactionId() {
-        return submissionTransactionId;
+        return trim(submissionTransactionId);
     }
 
     /**

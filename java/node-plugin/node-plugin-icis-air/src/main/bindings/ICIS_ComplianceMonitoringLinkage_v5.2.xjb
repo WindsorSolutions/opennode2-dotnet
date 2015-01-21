@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance" xmlns:annox="http://annox.dev.java.net"
+	jaxb:extensionBindingPrefixes="hj orm inheritance annox" schemaLocation="../xsd/ICIS_ComplianceMonitoringLinkage_v5.2.xsd">
+	
+	
+	
+	
+
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='LinkageEnforcementAction']">
+			<hj:generated-id name="Dbid">
+				<orm:column name="ICA_CMPL_MON_LNK_ID"/>
+			</hj:generated-id>
+		</jaxb:bindings>		
+	</jaxb:bindings>
+
+	
+
+	<jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:complexType[@name='ComplianceMonitoringLinkage']">
+			<hj:embeddable />
+		</jaxb:bindings>
+		
+		
+		
+	</jaxb:bindings>
+
+</jaxb:bindings>

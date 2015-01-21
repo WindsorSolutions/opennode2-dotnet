@@ -9,6 +9,8 @@
 package com.windsor.node.plugin.icisair.domain.generated;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.AssociationOverride;
 import javax.persistence.AssociationOverrides;
 import javax.persistence.AttributeOverride;
@@ -21,6 +23,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.PostLoad;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -28,6 +31,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
+
 import org.jvnet.jaxb2_commons.lang.Equals;
 import org.jvnet.jaxb2_commons.lang.EqualsStrategy;
 import org.jvnet.jaxb2_commons.lang.HashCode;
@@ -77,6 +81,16 @@ public class ComplianceMonitoringData
     protected ComplianceMonitoring complianceMonitoring;
     @XmlTransient
     protected String dbid;
+
+    @PostLoad
+    public void handlePostLoad() {
+        if (complianceMonitoring != null && complianceMonitoring.getInspectionContact() != null) {
+            final List<?> list = complianceMonitoring.getInspectionContact().getContact();
+            if (list == null || list.isEmpty()) {
+                complianceMonitoring.setInspectionContact(null);
+            }
+        }
+    }
 
     /**
      * Gets the value of the transactionHeader property.

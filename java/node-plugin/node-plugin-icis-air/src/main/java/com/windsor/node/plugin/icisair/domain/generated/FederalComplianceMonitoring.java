@@ -13,16 +13,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.PostLoad;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
-import com.windsor.node.plugin.common.xml.bind.annotation.adapters.DateNoTimeZoneAdapter;
-import com.windsor.node.plugin.common.xml.bind.annotation.adapters.IntegerAdapter;
 
 import org.jvnet.jaxb2_commons.lang.Equals;
 import org.jvnet.jaxb2_commons.lang.EqualsStrategy;
@@ -32,6 +28,9 @@ import org.jvnet.jaxb2_commons.lang.JAXBEqualsStrategy;
 import org.jvnet.jaxb2_commons.lang.JAXBHashCodeStrategy;
 import org.jvnet.jaxb2_commons.locator.ObjectLocator;
 import org.jvnet.jaxb2_commons.locator.util.LocatorUtils;
+
+import com.windsor.node.plugin.common.xml.bind.annotation.adapters.DateNoTimeZoneAdapter;
+import com.windsor.node.plugin.common.xml.bind.annotation.adapters.IntegerAdapter;
 
 
 /**
@@ -266,16 +265,6 @@ public class FederalComplianceMonitoring
     protected List<Citation> citation;
     @XmlElement(name = "FederalAirStackTestData")
     protected FederalAirStackTestData federalAirStackTestData;
-
-    @PostLoad
-    public void handlePostLoad() {
-        if (inspectionContact != null) {
-            final List<?> list = inspectionContact.getContact();
-            if (list == null || list.isEmpty()) {
-                inspectionContact = null;
-            }
-        }
-    }
 
     /**
      * Gets the value of the programSystemAcronym property.

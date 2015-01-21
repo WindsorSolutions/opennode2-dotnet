@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:icis="http://www.exchangenetwork.net/schema/icis/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/icis/5" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5">
+	<xsd:include schemaLocation="ICIS_KeyElements_v5.2.xsd"/>
+	<xsd:include schemaLocation="ICIS_Common_v5.2.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>Schema Name: ICIS_AirPrograms_v5.2.xsd</xsd:documentation>
+		<xsd:documentation>Current Version Available: http://www.exchangenetwork.net/schema/icis/5</xsd:documentation>
+		<xsd:documentation>Description: ICIS-Air programs data input format</xsd:documentation>
+		<xsd:documentation>Application: ICIS-Air</xsd:documentation>
+		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
+		<xsd:documentation>Point of Contact: EPA/Alison Kittle</xsd:documentation>
+		<xsd:documentation>Last Date Modified: 2014-10-27</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="AirPrograms" type="icis:AirPrograms"/>
+	<xsd:element name="AirProgramOperatingStatusCode" type="icis:StringMin1Max5Type"/>
+	<xsd:element name="AirProgramOperatingStatusData" type="icis:AirProgramOperatingStatusData"/>
+	<xsd:element name="AirProgramOperatingStatusStartDate" type="xsd:date"/>
+	<xsd:element name="AirProgramSubpartData" type="icis:AirProgramSubpartData"/>
+	<xsd:element name="AirProgramSubpartCode" type="icis:StringMin1Max20Type"/>
+	<xsd:element name="AirProgramSubpartStatusIndicator" type="icis:ActiveInactiveType"/>
+
+	<xsd:complexType name="AirProgramsData">
+		<xsd:sequence>
+			<xsd:element ref="icis:TransactionHeader"/>
+			<xsd:element ref="icis:AirPrograms"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AirPrograms">
+		<xsd:complexContent>
+			<xsd:extension base="icis:AirProgramsKeyElements">
+				<xsd:sequence>
+					<xsd:element ref="icis:OtherProgramDescriptionText" minOccurs="0"/>
+					<xsd:element ref="icis:AirProgramOperatingStatusData" minOccurs="0"/>
+					<xsd:element ref="icis:AirProgramSubpartData" minOccurs="0" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="AirProgramOperatingStatusData">
+		<xsd:sequence>
+			<xsd:element ref="icis:AirProgramOperatingStatusCode"/>
+			<xsd:element ref="icis:AirProgramOperatingStatusStartDate" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AirProgramSubpartData">
+		<xsd:sequence>
+			<xsd:element ref="icis:AirProgramSubpartCode"/>
+			<xsd:element ref="icis:AirProgramSubpartStatusIndicator" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,550 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:icis="http://www.exchangenetwork.net/schema/icis/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/icis/5" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5">
+	<xsd:include schemaLocation="ICIS_Common_v5.2.xsd"/>
+	<xsd:include schemaLocation="ICIS_Header_v5.2.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>Schema Name: ICIS_KeyElements_v5.2.xsd</xsd:documentation>
+		<xsd:documentation>Current Version Available: http://www.exchangenetwork.net/schema/icis/5</xsd:documentation>
+		<xsd:documentation>Description: ICIS-NPDES key elements data input format</xsd:documentation>
+		<xsd:documentation>Application: ICIS-NPDES</xsd:documentation>
+		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
+		<xsd:documentation>Point of Contact: EPA/Alison Kittle</xsd:documentation>
+		<xsd:documentation>Data Written: July 2006</xsd:documentation>
+		<xsd:documentation>Last Date Modified: 2014-10-27</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="AirComplianceMonitoringStrategyKeyElements" type="icis:AirComplianceMonitoringStrategyKeyElements"/>
+	<xsd:element name="AirDAEnforcementActionKeyElements" type="icis:AirDAEnforcementActionKeyElements"/>
+	<xsd:element name="AirDAEnforcementActionMilestoneKeyElements" type="icis:AirDAEnforcementActionMilestoneKeyElements"/>
+	<xsd:element name="AirFacilityKeyElements" type="icis:AirFacilityKeyElements"/>
+	<xsd:element name="AirPollutantsKeyElements" type="icis:AirPollutantsKeyElements"/>
+	<xsd:element name="AirProgramsKeyElements" type="icis:AirProgramsKeyElements"/>
+	<xsd:element name="BasicPermitKeyElements" type="icis:BasicPermitKeyElements"/>
+	<xsd:element name="BiosolidsProgramReportKeyElements" type="icis:BiosolidsProgramReportKeyElements"/>
+	<xsd:element name="CAFOAnnualProgramReportKeyElements" type="icis:CAFOAnnualProgramReportKeyElements"/>
+	<xsd:element name="CaseFileKeyElements" type="icis:CaseFileKeyElements"/>
+	<xsd:element name="ComplianceMonitoringKeyElements" type="icis:ComplianceMonitoringKeyElements"/>
+	<xsd:element name="ComplianceScheduleKeyElements" type="icis:ComplianceScheduleKeyElements"/>
+	<xsd:element name="ComplianceScheduleEventKeyElements" type="icis:ComplianceScheduleKeyElements"/>
+	<xsd:element name="ComplianceScheduleEventViolationKeyElements" type="icis:ComplianceScheduleEventViolationKeyElements"/>
+	<xsd:element name="CSOEventReportKeyElements" type="icis:CSOEventReportKeyElements"/>
+	<xsd:element name="DischargeMonitoringReportKeyElements" type="icis:DischargeMonitoringReportKeyElements"/>
+	<xsd:element name="DMRViolationKeyElements" type="icis:DMRViolationKeyElements"/>
+	<xsd:element name="EffluentTradePartnerKeyElements" type="icis:ComplianceScheduleKeyElements"/>
+	<xsd:element name="EnforcementActionKeyElements" type="icis:EnforcementActionKeyElements"/>
+	<xsd:element name="EnforcementActionMilestoneKeyElements" type="icis:EnforcementActionMilestoneKeyElements"/>
+	<xsd:element name="HistoricalPermitScheduleKeyElements" type="icis:HistoricalPermitScheduleKeyElements"/>
+	<xsd:element name="LimitKeyElements" type="icis:LimitKeyElements"/>
+	<xsd:element name="LimitSetKeyElements" type="icis:LimitSetKeyElements"/>
+	<xsd:element name="LocalLimitsProgramReportKeyElements" type="icis:LocalLimitsProgramReportKeyElements"/>
+	<xsd:element name="ParameterLimitKeyElements" type="icis:ParameterLimitKeyElements"/>
+	<xsd:element name="ParameterKeyElements" type="icis:ParameterKeyElements"/>
+	<xsd:element name="PermitScheduleKeyElements" type="icis:PermitScheduleKeyElements"/>
+	<xsd:element name="PermitScheduleEventKeyElements" type="icis:PermitScheduleEventKeyElements"/>
+	<xsd:element name="PermitScheduleEventViolationKeyElements" type="icis:PermitScheduleEventViolationKeyElements"/>
+	<xsd:element name="PermitTrackingEventKeyElements" type="icis:PermitTrackingEventKeyElements"/>
+	<xsd:element name="PermittedFeatureKeyElements" type="icis:PermittedFeatureKeyElements"/>
+	<xsd:element name="PretreatmentPerformanceSummaryReportKeyElements" type="icis:PretreatmentPerformanceSummaryReportKeyElements"/>
+	<xsd:element name="ProgramInspectionKeyElements" type="icis:ProgramInspectionKeyElements"/>
+	<xsd:element name="ScheduleEventViolationKeyElements" type="icis:ScheduleEventViolationKeyElements"/>
+	<xsd:element name="SingleEventKeyElements" type="icis:SingleEventKeyElements"/>
+	<xsd:element name="SSOAnnualReportKeyElements" type="icis:SSOAnnualReportKeyElements"/>
+	<xsd:element name="SSOEventReportKeyElements" type="icis:SSOEventReportKeyElements"/>
+	<xsd:element name="SSOMonthlyEventReportKeyElements" type="icis:SSOMonthlyEventReportKeyElements"/>
+	<xsd:element name="SWEventReportKeyElements" type="icis:SWEventReportKeyElements"/>
+	<xsd:element name="SWIndustrialAnnualReportKeyElements" type="icis:SWIndustrialAnnualReportKeyElements"/>
+	<xsd:element name="SWMS4ProgramReportKeyElements" type="icis:SWMS4ProgramReportKeyElements"/>
+	<xsd:group name="AirComplianceMonitoringStrategyKeyElementsGroup">
+        <xsd:sequence>
+            <xsd:element ref="icis:AirFacilityIdentifier"/>
+        </xsd:sequence>
+    </xsd:group>
+    <xsd:complexType name="AirComplianceMonitoringStrategyKeyElements">
+        <xsd:sequence>
+            <xsd:group ref="icis:AirComplianceMonitoringStrategyKeyElementsGroup"/>
+        </xsd:sequence> 
+	</xsd:complexType>
+	
+	<xsd:group name="AirDAEnforcementActionKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:element ref="icis:AirDAEnforcementActionIdentifier"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="AirDAEnforcementActionKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:AirDAEnforcementActionKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="AirDAEnforcementActionMilestoneKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:element ref="icis:AirDAEnforcementActionIdentifier"/>
+			<xsd:element ref="icis:MilestoneTypeCode"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="AirDAEnforcementActionMilestoneKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:AirDAEnforcementActionMilestoneKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="AirFacilityKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:element ref="icis:AirFacilityIdentifier"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="AirFacilityKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:AirFacilityKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="AirPollutantsKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:element ref="icis:AirFacilityIdentifier"/>
+			<xsd:element ref="icis:AirPollutantsCode"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="AirPollutantsKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:AirPollutantsKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="AirProgramsKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:element ref="icis:AirFacilityIdentifier"/>
+			<xsd:element ref="icis:AirProgramCode"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="AirProgramsKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:AirProgramsKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:group name="BasicPermitKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:element ref="icis:PermitIdentifier"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="BasicPermitKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:BasicPermitKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="BiosolidsProgramReportKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:group ref="icis:BasicPermitKeyElementsGroup"/>
+			<xsd:element ref="icis:ReportCoverageEndDate"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="BiosolidsProgramReportKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:BiosolidsProgramReportKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="CAFOAnnualProgramReportKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:group ref="icis:BasicPermitKeyElementsGroup"/>
+			<xsd:element ref="icis:PermittingAuthorityReportReceivedDate"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="CAFOAnnualProgramReportKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:CAFOAnnualProgramReportKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="CaseFileKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:element ref="icis:CaseFileIdentifier"/>
+		</xsd:sequence>
+	</xsd:group>	
+	<xsd:complexType name="CaseFileKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:CaseFileKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="ComplianceMonitoringKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:element ref="icis:ComplianceMonitoringIdentifier"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="ComplianceMonitoringKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:ComplianceMonitoringKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="ComplianceScheduleKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:element ref="icis:EnforcementActionIdentifier"/>
+			<xsd:element ref="icis:FinalOrderIdentifier"/>
+			<xsd:element ref="icis:PermitIdentifier"/>
+			<xsd:element ref="icis:ComplianceScheduleNumber"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="ComplianceScheduleKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:ComplianceScheduleKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="ComplianceScheduleEventKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:element ref="icis:ScheduleEventCode"/>
+			<xsd:element ref="icis:ScheduleDate"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="ComplianceScheduleEventKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:ComplianceScheduleEventKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="ComplianceScheduleEventViolationKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:group ref="icis:ComplianceScheduleKeyElementsGroup"/>
+			<xsd:element ref="icis:ScheduleEventCode"/>
+			<xsd:element ref="icis:ScheduleDate"/>
+			<xsd:element ref="icis:ScheduleViolationCode"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="ComplianceScheduleEventViolationKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:ComplianceScheduleEventViolationKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="CSOEventReportKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:group ref="icis:BasicPermitKeyElementsGroup"/>
+			<xsd:element ref="icis:CSOEventDate"/>
+			<xsd:element ref="icis:CSOEventID"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="CSOEventReportKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:CSOEventReportKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="DischargeMonitoringReportKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:group ref="icis:BasicPermitKeyElementsGroup"/>
+			<xsd:element ref="icis:PermittedFeatureIdentifier"/>
+			<xsd:element ref="icis:LimitSetDesignator"/>
+			<xsd:element ref="icis:MonitoringPeriodEndDate"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="DischargeMonitoringReportKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:DischargeMonitoringReportKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="DMRViolationKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:group ref="icis:BasicPermitKeyElementsGroup"/>
+			<xsd:element ref="icis:PermittedFeatureIdentifier"/>
+			<xsd:element ref="icis:LimitSetDesignator"/>
+			<xsd:element ref="icis:MonitoringPeriodEndDate"/>
+			<xsd:element ref="icis:ParameterCode"/>
+			<xsd:element ref="icis:MonitoringSiteDescriptionCode"/>
+			<xsd:element ref="icis:LimitSeasonNumber"/>
+			<xsd:element ref="icis:NumericReportCode"/>
+			<xsd:element ref="icis:NumericReportViolationCode"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="DMRViolationKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:DMRViolationKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="EffluentTradePartnerKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:group ref="icis:BasicPermitKeyElementsGroup"/>
+			<xsd:element ref="icis:PermittedFeatureIdentifier"/>
+			<xsd:element ref="icis:LimitSetDesignator"/>
+			<xsd:element ref="icis:ParameterCode"/>
+			<xsd:element ref="icis:MonitoringSiteDescriptionCode"/>
+			<xsd:element ref="icis:LimitSeasonNumber"/>
+			<xsd:element ref="icis:LimitStartDate"/>
+			<xsd:element ref="icis:LimitEndDate"/>
+			<xsd:element ref="icis:LimitModificationEffectiveDate" minOccurs="0"/>
+			<xsd:element ref="icis:TradeID"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="EffluentTradePartnerKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:EffluentTradePartnerKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="EnforcementActionKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:element ref="icis:EnforcementActionIdentifier"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="EnforcementActionKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:EnforcementActionKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="EnforcementActionMilestoneKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:element ref="icis:EnforcementActionIdentifier"/>
+			<xsd:element ref="icis:MilestoneTypeCode"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="EnforcementActionMilestoneKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:EnforcementActionMilestoneKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:group name="HistoricalPermitScheduleKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:group ref="icis:BasicPermitKeyElementsGroup"/>
+			<xsd:element ref="icis:PermitEffectiveDate"/>
+			<xsd:element ref="icis:NarrativeConditionNumber"/>
+			<xsd:element ref="icis:ScheduleEventCode"/>
+			<xsd:element ref="icis:ScheduleDate"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="HistoricalPermitScheduleKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:HistoricalPermitScheduleKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="LimitKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:group ref="icis:BasicPermitKeyElementsGroup"/>
+			<xsd:element ref="icis:PermittedFeatureIdentifier"/>
+			<xsd:element ref="icis:LimitSetDesignator"/>
+			<xsd:element ref="icis:ParameterCode"/>
+			<xsd:element ref="icis:MonitoringSiteDescriptionCode"/>
+			<xsd:element ref="icis:LimitSeasonNumber"/>
+			<xsd:element ref="icis:LimitStartDate"/>
+			<xsd:element ref="icis:LimitEndDate"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="LimitKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:LimitKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="LimitSetKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:group ref="icis:BasicPermitKeyElementsGroup"/>
+			<xsd:element ref="icis:PermittedFeatureIdentifier"/>
+			<xsd:element ref="icis:LimitSetDesignator"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="LimitSetKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:LimitSetKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="LocalLimitsProgramReportKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:group ref="icis:BasicPermitKeyElementsGroup"/>
+			<xsd:element ref="icis:LocalLimitsPermittingAuthorityReportReceivedDate"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="LocalLimitsProgramReportKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:LocalLimitsProgramReportKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="ParameterKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:element ref="icis:ParameterCode"/>
+			<xsd:element ref="icis:MonitoringSiteDescriptionCode"/>
+			<xsd:element ref="icis:LimitSeasonNumber"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="ParameterKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:ParameterKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="ParameterLimitKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:group ref="icis:BasicPermitKeyElementsGroup"/>
+			<xsd:element ref="icis:PermittedFeatureIdentifier"/>
+			<xsd:element ref="icis:LimitSetDesignator"/>
+			<xsd:element ref="icis:ParameterCode"/>
+			<xsd:element ref="icis:MonitoringSiteDescriptionCode"/>
+			<xsd:element ref="icis:LimitSeasonNumber"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="ParameterLimitKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:ParameterLimitKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="PermitScheduleKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:group ref="icis:BasicPermitKeyElementsGroup"/>
+			<xsd:element ref="icis:NarrativeConditionNumber"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="PermitScheduleKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:PermitScheduleKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="PermitScheduleEventKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:element ref="icis:ScheduleEventCode"/>
+			<xsd:element ref="icis:ScheduleDate"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="PermitScheduleEventKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:PermitScheduleEventKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="PermitScheduleEventViolationKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:group ref="icis:BasicPermitKeyElementsGroup"/>
+			<xsd:element ref="icis:NarrativeConditionNumber"/>
+			<xsd:element ref="icis:ScheduleEventCode"/>
+			<xsd:element ref="icis:ScheduleDate"/>
+			<xsd:element ref="icis:ScheduleViolationCode"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="PermitScheduleEventViolationKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:PermitScheduleEventViolationKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="PermittedFeatureKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:group ref="icis:BasicPermitKeyElementsGroup"/>
+			<xsd:element ref="icis:PermittedFeatureIdentifier"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="PermittedFeatureKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:PermittedFeatureKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="PermitTrackingEventKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:group ref="icis:BasicPermitKeyElementsGroup"/>
+			<xsd:element ref="icis:PermitTrackingEventCode"/>
+			<xsd:element ref="icis:PermitTrackingEventDate"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="PermitTrackingEventKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:PermitTrackingEventKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="PretreatmentPerformanceSummaryReportKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:group ref="icis:BasicPermitKeyElementsGroup"/>
+			<xsd:element ref="icis:PretreatmentPerformanceSummaryEndDate"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="PretreatmentPerformanceSummaryReportKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:PretreatmentPerformanceSummaryReportKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="ProgramInspectionKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:group ref="icis:BasicPermitKeyElementsGroup"/>
+			<xsd:element ref="icis:ComplianceMonitoringCategoryCode"/>
+			<xsd:element ref="icis:ComplianceMonitoringDate"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="ProgramInspectionKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:ProgramInspectionKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="ScheduleEventViolationKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:choice>
+				<xsd:element ref="icis:PermitScheduleEventViolationKeyElements"/>
+				<xsd:element ref="icis:ComplianceScheduleEventViolationKeyElements"/>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="ScheduleEventViolationKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:ScheduleEventViolationKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="SingleEventKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:group ref="icis:BasicPermitKeyElementsGroup"/>
+			<xsd:element ref="icis:SingleEventViolationCode"/>
+			<xsd:element ref="icis:SingleEventViolationDate"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="SingleEventKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:SingleEventKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="SSOAnnualReportKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:group ref="icis:BasicPermitKeyElementsGroup"/>
+			<xsd:element ref="icis:SSOAnnualReportReceivedDate"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="SSOAnnualReportKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:SSOAnnualReportKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="SSOEventReportKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:group ref="icis:BasicPermitKeyElementsGroup"/>
+			<xsd:element ref="icis:SSOEventDate"/>
+			<xsd:element ref="icis:SSOEventID"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="SSOEventReportKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:SSOEventReportKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="SSOMonthlyEventReportKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:group ref="icis:BasicPermitKeyElementsGroup"/>
+			<xsd:element ref="icis:SSOMonthlyReportReceivedDate"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="SSOMonthlyEventReportKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:SSOMonthlyEventReportKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="SWEventReportKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:group ref="icis:BasicPermitKeyElementsGroup"/>
+			<xsd:element ref="icis:DateStormEventSampled"/>
+			<xsd:element ref="icis:StormWaterEventID"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="SWEventReportKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:SWEventReportKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="SWIndustrialAnnualReportKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:group ref="icis:BasicPermitKeyElementsGroup"/>
+			<xsd:element ref="icis:IndustrialStormWaterAnnualReportReceivedDate"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="SWIndustrialAnnualReportKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:SWIndustrialAnnualReportKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="SWMS4ProgramReportKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:group ref="icis:BasicPermitKeyElementsGroup"/>
+			<xsd:element ref="icis:StormWaterMS4ReportReceivedDate"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="SWMS4ProgramReportKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:SWMS4ProgramReportKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

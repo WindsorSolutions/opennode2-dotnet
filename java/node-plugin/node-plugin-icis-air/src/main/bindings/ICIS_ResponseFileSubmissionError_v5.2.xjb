@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:annox="http://annox.dev.java.net"
+	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm" jaxb:extensionBindingPrefixes="hj orm annox"
+	schemaLocation="../xsd/ICIS_ResponseFileSubmissionError_v5.2.xsd">
+	
+	<!-- submission error data type -->
+
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='SubmissionErrorDataType']">
+			<hj:ignored />
+		</jaxb:bindings>
+	</jaxb:bindings>
+
+</jaxb:bindings>

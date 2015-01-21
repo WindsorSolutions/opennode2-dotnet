@@ -9,6 +9,7 @@
 package com.windsor.node.plugin.icisair.domain.generated;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
@@ -18,6 +19,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.PostLoad;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -75,6 +77,16 @@ public class AirDAComplianceMonitoringData
     protected AirDAComplianceMonitoring airDAComplianceMonitoring;
     @XmlTransient
     protected String dbid;
+
+    @PostLoad
+    public void handlePostLoad() {
+        if (airDAComplianceMonitoring != null && airDAComplianceMonitoring.getInspectionContact() != null) {
+            final List<?> list = airDAComplianceMonitoring.getInspectionContact().getContact();
+            if (list == null || list.isEmpty()) {
+                airDAComplianceMonitoring.setInspectionContact(null);
+            }
+        }
+    }
 
     /**
      * Gets the value of the transactionHeader property.

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:icis="http://www.exchangenetwork.net/schema/icis/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/icis/5" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5">
+	<xsd:include schemaLocation="ICIS_Address_v5.2.xsd"/>
+	<xsd:include schemaLocation="ICIS_Contact_v5.2.xsd"/>
+	<xsd:include schemaLocation="ICIS_GeographicCoordinates_v5.2.xsd"/>
+	<xsd:include schemaLocation="ICIS_SICNAICS_v5.2.xsd"/>
+	<xsd:include schemaLocation="ICIS_Facility_v5.2.xsd"/>
+	<xsd:include schemaLocation="ICIS_KeyElements_v5.2.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>Schema Name: ICIS_AirFacility_v5.2.xsd</xsd:documentation>
+		<xsd:documentation>Current Version Available: http://www.exchangenetwork.net/schema/icis/5</xsd:documentation>
+		<xsd:documentation>Description: ICIS-Air facility data input format</xsd:documentation>
+		<xsd:documentation>Application: ICIS-Air</xsd:documentation>
+		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
+		<xsd:documentation>Point of Contact: EPA/Alison Kittle</xsd:documentation>
+		<xsd:documentation>Last Date Modified: 2014-10-27</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="AirFacility" type="icis:AirFacility"/>
+	<xsd:element name="EnvironmentalJusticeCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="FederallyReportableIndicator" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="AirGeographicCoordinateData" type="icis:AirGeographicCoordinateData"/>
+	<xsd:element name="PortableSource" type="icis:PortableSource"/>
+	<xsd:element name="PortableSourceData" type="icis:PortableSourceData"/>
+	<xsd:element name="PortableSourceIndicator" type="icis:YesNoIndicatorTypeBase"/>
+	<xsd:element name="PortableSourceSiteName" type="icis:StringMin1Max80Type"/>
+	<xsd:element name="PortableSourceStartDate" type="icis:DateType"/>
+	<xsd:element name="PortableSourceEndDate" type="icis:DateType"/>
+	<xsd:element name="RegistrationNumber" type="icis:StringMin1Max15Type"/>
+	<xsd:element name="SmallBusinessIndicator" type="icis:YesNoIndicatorTypeBase"/>
+	<xsd:element name="SourceUniformResourceLocatorURL" type="icis:StringMin1Max100Type"/>
+	<xsd:element name="UniverseIndicatorCode" type="icis:StringMin1Max10Type"/>
+	<xsd:complexType name="AirFacilityData">
+		<xsd:sequence>
+			<xsd:element ref="icis:TransactionHeader"/>
+			<xsd:element ref="icis:AirFacility"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AirFacility">
+		<xsd:complexContent>
+			<xsd:extension base="icis:AirFacilityKeyElements">
+				<xsd:sequence>
+					<xsd:group ref="icis:AirFacilityLocationAddressGroup" minOccurs="0"/>
+					<xsd:element ref="icis:FacilityTypeOfOwnershipCode" minOccurs="0"/>
+					<xsd:element ref="icis:RegistrationNumber" minOccurs="0"/>
+					<xsd:element ref="icis:SmallBusinessIndicator" minOccurs="0"/>
+					<xsd:element ref="icis:FederallyReportableIndicator" minOccurs="0"/>
+					<xsd:element ref="icis:SourceUniformResourceLocatorURL" minOccurs="0"/>
+					<xsd:element ref="icis:EnvironmentalJusticeCode" minOccurs="0"/>
+					<xsd:element ref="icis:FacilityCongressionalDistrictNumber" minOccurs="0"/>
+					<xsd:element ref="icis:FacilityUserDefinedField1" minOccurs="0"/>
+					<xsd:element ref="icis:FacilityUserDefinedField2" minOccurs="0"/>
+					<xsd:element ref="icis:FacilityUserDefinedField3" minOccurs="0"/>
+					<xsd:element ref="icis:FacilityUserDefinedField4" minOccurs="0"/>
+					<xsd:element ref="icis:FacilityUserDefinedField5" minOccurs="0"/>
+					<xsd:element ref="icis:FacilityComments" minOccurs="0"/>
+					<xsd:element ref="icis:UniverseIndicatorCode" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="icis:SICCodeDetails" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="icis:NAICSCodeDetails" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="icis:AirGeographicCoordinateData" minOccurs="0"/>
+					<xsd:element ref="icis:PortableSourceData" minOccurs="0"/>
+					<xsd:element ref="icis:FacilityContact" minOccurs="0"/>
+					<xsd:element ref="icis:FacilityAddress" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="PortableSourceData">
+		<xsd:sequence>
+			<xsd:element ref="icis:PortableSourceIndicator"/>
+			<xsd:element ref="icis:PortableSource" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PortableSource">
+		<xsd:sequence>
+			<xsd:element ref="icis:PortableSourceSiteName"/>
+			<xsd:element ref="icis:PortableSourceStartDate"/>
+			<xsd:element ref="icis:PortableSourceEndDate" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AirGeographicCoordinateData">
+		<xsd:complexContent>
+			<xsd:extension base="icis:GeographicCoordinates">
+				<xsd:sequence>
+					<xsd:element ref="icis:UTMCoordinate1" minOccurs="0"/>
+					<xsd:element ref="icis:UTMCoordinate2" minOccurs="0"/>
+					<xsd:element ref="icis:UTMCoordinate3" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+</xsd:schema>

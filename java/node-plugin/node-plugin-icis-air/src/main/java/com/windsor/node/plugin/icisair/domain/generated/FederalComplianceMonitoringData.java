@@ -9,10 +9,14 @@
 package com.windsor.node.plugin.icisair.domain.generated;
 
 import java.io.Serializable;
+import java.util.List;
+
+import javax.persistence.PostLoad;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+
 import org.jvnet.jaxb2_commons.lang.Equals;
 import org.jvnet.jaxb2_commons.lang.EqualsStrategy;
 import org.jvnet.jaxb2_commons.lang.HashCode;
@@ -57,6 +61,16 @@ public class FederalComplianceMonitoringData
     protected TransactionHeader transactionHeader;
     @XmlElement(name = "FederalComplianceMonitoring", required = true)
     protected FederalComplianceMonitoring federalComplianceMonitoring;
+
+    @PostLoad
+    public void handlePostLoad() {
+        if (federalComplianceMonitoring != null && federalComplianceMonitoring.getInspectionContact() != null) {
+            final List<?> list = federalComplianceMonitoring.getInspectionContact().getContact();
+            if (list == null || list.isEmpty()) {
+                federalComplianceMonitoring.setInspectionContact(null);
+            }
+        }
+    }
 
     /**
      * Gets the value of the transactionHeader property.

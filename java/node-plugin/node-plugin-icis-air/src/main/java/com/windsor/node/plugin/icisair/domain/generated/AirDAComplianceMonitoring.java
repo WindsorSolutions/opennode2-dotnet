@@ -25,7 +25,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.PostLoad;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
@@ -202,16 +201,6 @@ public class AirDAComplianceMonitoring
     protected AirStackTestData airStackTestData;
     @XmlTransient
     protected String dbid;
-
-    @PostLoad
-    public void handlePostLoad() {
-        if (inspectionContact != null) {
-            final List<?> list = inspectionContact.getContact();
-            if (list == null || list.isEmpty()) {
-                inspectionContact = null;
-            }
-        }
-    }
 
     /**
      * Gets the value of the complianceMonitoringActivityTypeCode property.

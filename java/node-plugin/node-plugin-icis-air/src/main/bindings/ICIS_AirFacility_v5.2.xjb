@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+    xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance" xmlns:annox="http://annox.dev.java.net"
+    jaxb:extensionBindingPrefixes="hj orm inheritance annox" schemaLocation="../xsd/ICIS_AirFacility_v5.2.xsd">
+
+    <!-- compliance monitoring data -->
+
+    <jaxb:bindings>
+
+        <jaxb:bindings node="//xsd:complexType[@name='AirFacilityData']">
+            <!-- <inheritance:extends>com.windsor.node.plugin.icisair.domain.AbstractFacility
+            </inheritance:extends> -->
+            <hj:entity>
+                <!-- <orm:table name="ICA_FAC"/> -->
+                <orm:table name="VW_ICA_FAC_GEO_COORD"/>
+            </hj:entity>
+            <hj:generated-id name="Dbid">
+                <orm:column name="ICA_FAC_ID"/>
+            </hj:generated-id>
+        </jaxb:bindings>
+
+        <!-- <jaxb:bindings node="//xsd:complexType[@name='PortableSourceData']">
+            <hj:entity>
+                <orm:table name="ICA_PORT_SRC"/>
+            </hj:entity>
+            <hj:generated-id name="Dbid">
+                <orm:column name="ICA_PORT_SRC_ID"/>
+            </hj:generated-id>
+        </jaxb:bindings> -->
+
+    </jaxb:bindings>
+
+
+
+    <jaxb:bindings>
+
+        <jaxb:bindings node="//xsd:complexType[@name='AirFacility']">
+            <hj:embeddable />
+            <!-- <jaxb:bindings node="./xsd:element[@name='UniverseIndicatorCode']">
+                <hj:one-to-many>
+                    <orm:join-table name="ICA_UNIVERSE_IND">
+                        <orm:join-column name="ICA_FAC_ID" referenced-column-name="ICA_FAC_ID" />
+                        <orm:inverse-join-column name="ICA_FAC_ID" />
+                    </orm:join-table>
+                </hj:one-to-many>
+            </jaxb:bindings> -->
+        </jaxb:bindings>
+
+        <jaxb:bindings node="//xsd:complexType[@name='PortableSourceData']">
+            <hj:embeddable />
+        </jaxb:bindings>
+
+        <jaxb:bindings node="//xsd:complexType[@name='AirGeographicCoordinateData']">
+            <hj:embeddable />
+        </jaxb:bindings>
+
+        <!-- <jaxb:bindings node="//xsd:complexType[@name='AirComplianceMonitoringStrategyData']">
+            <hj:entity>
+                <orm:table name="ICA_CMPL_MON_STRGY"/>
+            </hj:entity>
+            <hj:generated-id name="Dbid">
+                <orm:column name="ICA_CMPL_MON_STRGY_ID"/>
+            </hj:generated-id>
+        </jaxb:bindings>
+
+        <jaxb:bindings node="//xsd:complexType[@name='AirComplianceMonitoringStrategy']">
+            <hj:embeddable />
+        </jaxb:bindings> -->
+
+        <!-- <jaxb:bindings node="//xsd:complexType[@name='AirFacilityData']">
+            <hj:one-to-many>
+                <orm:join-table name="ICA_PORT_SRC">
+                    <orm:join-column name="ICA_FAC_ID" referenced-column-name="ICA_FAC_ID" insertable="false" updatable="false" />
+                    <orm:inverse-join-column name="ICA_FAC_ID" insertable="false" updatable="false" />
+                </orm:join-table>
+            </hj:one-to-many>
+        </jaxb:bindings> -->
+
+        <!-- <jaxb:bindings node="//xsd:complexType[@name='GeographicCoordinates']">
+            <hj:embeddable />
+        </jaxb:bindings> -->
+
+        <!-- <jaxb:bindings node="//xsd:complexType[@name='UniverseIndicatorCode']">
+            <hj:embeddable />
+        </jaxb:bindings> -->
+
+        <jaxb:bindings node="//xsd:element[@ref='icis:SICCodeDetails']">
+            <hj:one-to-many>
+                <orm:join-table name="ICA_SIC_CODE">
+                    <orm:join-column name="ICA_FAC_ID" referenced-column-name="ICA_FAC_ID" />
+                    <orm:inverse-join-column name="ICA_FAC_ID" />
+                </orm:join-table>
+            </hj:one-to-many>
+        </jaxb:bindings>
+
+        <jaxb:bindings node="//xsd:element[@ref='icis:NAICSCodeDetails']">
+            <hj:one-to-many>
+                <orm:join-table name="ICA_NAICS_CODE">
+                    <orm:join-column name="ICA_FAC_ID" referenced-column-name="ICA_FAC_ID" />
+                    <orm:inverse-join-column name="ICA_FAC_ID" />
+                </orm:join-table>
+            </hj:one-to-many>
+        </jaxb:bindings>
+
+        <!-- <jaxb:bindings node="//xsd:complexType[@name='GeographicCoordinates']" schemaLocation="../xsd/ICIS_Common_v5.2.xsd">
+            <hj:mapped-superclass />
+        </jaxb:bindings> -->
+
+        <!-- <jaxb:bindings node="//xsd:complexType[@name='AirGeographicCoordinateData']">
+            <hj:entity>
+                <orm:table name="ICA_GEO_COORD" />
+            </hj:entity>
+        </jaxb:bindings>
+
+        <jaxb:bindings node="//xsd:element[@ref='icis:AirGeographicCoordinateData']">
+            <hj:one-to-one>
+                <orm:join-table name="ICA_GEO_COORD">
+                    <orm:join-column name="ICA_FAC_ID" referenced-column-name="ICA_FAC_ID" />
+                    <orm:inverse-join-column name="ICA_FAC_ID" />
+                </orm:join-table>
+            </hj:one-to-one>
+        </jaxb:bindings> -->
+
+        <!-- <jaxb:bindings node="//xsd:complexType[@name='icis:GeographicCoordinates']">
+            
+        </jaxb:bindings> -->
+
+        <!-- <jaxb:bindings schemaLocation="../xsd/ICIS_Common_v5.2.xsd">
+            <jaxb:bindings node="//xsd:simpleType[@name='StringMin1Max10Type']">
+                <hj:one-to-many>
+                    <orm:join-table name="ICA_UNIVERSE_IND">
+                        <orm:join-column name="ICA_FAC_ID" referenced-column-name="ICA_FAC_ID" />
+                        <orm:inverse-join-column name="ICA_FAC_ID" />
+                    </orm:join-table>
+                </hj:one-to-many>
+            </jaxb:bindings>
+        </jaxb:bindings> -->
+
+        <jaxb:bindings node="//xsd:element[@ref='icis:PortableSource']">
+            <hj:one-to-many>
+                <orm:join-table name="ICA_PORT_SRC">
+                    <orm:join-column name="ICA_FAC_ID" referenced-column-name="ICA_FAC_ID" insertable="false" updatable="false" />
+                    <orm:inverse-join-column name="ICA_FAC_ID" insertable="false" updatable="false" />
+                </orm:join-table>
+            </hj:one-to-many>
+        </jaxb:bindings>
+
+        <!-- <jaxb:bindings node="//xsd:element[@ref='icis:FacilityContact']">
+            <hj:one-to-one>
+                <orm:join-table name="ICA_CNTCT">
+                    <orm:join-column name="ICA_FAC_ID" referenced-column-name="ICA_FAC_ID" />
+                    <orm:inverse-join-column name="ICA_FAC_ID" />
+                </orm:join-table>
+            </hj:one-to-one>
+        </jaxb:bindings> -->
+
+        <!-- <jaxb:bindings node="//xsd:element[@ref='icis:FacilityAddress']">
+            <hj:one-to-one>
+                <orm:join-table name="ICA_FAC_ADDR">
+                    <orm:join-column name="ICA_FAC_ID" referenced-column-name="ICA_FAC_ID" />
+                    <orm:inverse-join-column name="ICA_FAC_ID" />
+                </orm:join-table>
+            </hj:one-to-one>
+        </jaxb:bindings> -->
+
+    </jaxb:bindings>
+
+
+</jaxb:bindings>
