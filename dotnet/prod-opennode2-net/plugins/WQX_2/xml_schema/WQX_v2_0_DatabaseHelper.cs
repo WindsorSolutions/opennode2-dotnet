@@ -9,6 +9,7 @@ using Windsor.Commons.Core;
 using Windsor.Commons.Spring;
 using Windsor.Commons.XsdOrm;
 using Windsor.Node2008.WNOSProviders;
+using Windsor.Node2008.WNOSProviders.Implementation;
 using Windsor.Node2008.WNOSPlugin.WQX2XsdOrm;
 
 
@@ -19,6 +20,7 @@ using Spring.Data;
 using Spring.Data.Support;
 using Spring.Dao;
 using System.Data.SqlClient;
+using System.Xml;
 
 namespace Windsor.Node2008.WNOSPlugin.WQX_20
 {
@@ -77,7 +79,6 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
 
             appendAuditLogEvent.AppendAuditLogEvent("Generating WQX xml file from query results ...");
             string tempFolderPath = Path.Combine(sysTempFolderPath, Guid.NewGuid().ToString());
-
             string fileName = Guid.NewGuid().ToString();
             string tempXmlFilePath = Path.Combine(tempFolderPath, WQX_FILE_PREFIX + fileName + ".xml");
             string zipXmlFilePath = Path.ChangeExtension(Path.Combine(sysTempFolderPath, fileName), ".zip");
@@ -87,11 +88,17 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
             {
                 serializationHelper.Serialize(wqx, tempXmlFilePath);
 
-                appendAuditLogEvent.AppendAuditLogEvent("Generated WQX xml file from query results");
+                appendAuditLogEvent.AppendAuditLogEvent("Inserting header into WQX xml file");
+                tempXmlFilePath = MakeHeaderFile(tempXmlFilePath, tempFolderPath, queryOrganizationIdentifier, serializationHelper);
+                appendAuditLogEvent.AppendAuditLogEvent("Inserted header into WQX xml file");
+
+                appendAuditLogEvent.AppendAuditLogEvent("Generated WQX xml file from query results");                
 
                 validationErrorsFile =
                     BaseWNOSPlugin.ValidateXmlFile(tempXmlFilePath, xmlSchemaZippedResourceAssembly, xmlSchemaZippedQualifiedResourceName,
                                                    xmlSchemaRootFileName, sysTempFolderPath, appendAuditLogEvent, compressionHelper);
+
+                
 
                 if (validationErrorsFile != null)
                 {
@@ -102,9 +109,9 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
                 try
                 {
                     appendAuditLogEvent.AppendAuditLogEvent("Writing attachment files to temp folder ...");
-                    DatabaseHelper.WriteAttachmentFilesToFolder(baseDao, wqx, tempFolderPath);
+                    WriteAttachmentFilesToFolder(baseDao, wqx, tempFolderPath);
                     appendAuditLogEvent.AppendAuditLogEvent("Wrote attachment files to temp folder.");
-
+                    
                     appendAuditLogEvent.AppendAuditLogEvent("Compressing WQX xml data file and attachments ...");
                     compressionHelper.CompressDirectory(zipXmlFilePath, tempFolderPath);
                     appendAuditLogEvent.AppendAuditLogEvent("Compressed WQX xml data file and attachments.");
@@ -320,6 +327,9 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
                     }
                 }
 
+                //Remove header
+                wqxFilePath = RemoveHeaderFile(wqxFilePath, sysTempFolderPath, serializationHelper);
+
                 appendAuditLogEvent.AppendAuditLogEvent("Deserializing the WQX data xml file ...");
                 try
                 {
@@ -336,10 +346,10 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
                     return null;
                 }                
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 FileUtils.SafeDeleteDirectory(attachmentsFolderPath);
-                throw;
+                throw ex;
             }
             finally
             {
@@ -600,6 +610,80 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
         public static string GetTempFilePath(string folderPath, string extension)
         {
             return Path.Combine(folderPath, Guid.NewGuid().ToString() + extension);
+        }
+
+        public static string MakeHeaderFile(string tempXmlFilePath, string tempFolderPath, string org, ISerializationHelper serializationHelper)
+        {
+            string tempXmlFilePath2 = null;
+
+            try
+            {
+                HeaderDocumentHelper headerDocumentHelper = new HeaderDocumentHelper();
+                headerDocumentHelper.SerializationHelper = serializationHelper;
+
+                headerDocumentHelper.Configure("Windsor Solutions", org, "title", null, "contactInfo", null);
+
+                XmlDocument doc = new XmlDocument();
+                doc.Load(tempXmlFilePath);
+
+                headerDocumentHelper.AddPayload("Update-Insert", doc.DocumentElement);
+                
+                //Serialize to new file
+                string fileName = Guid.NewGuid().ToString();
+                tempXmlFilePath2 = Path.Combine(tempFolderPath, WQX_FILE_PREFIX + fileName + ".xml");
+                headerDocumentHelper.Serialize(tempXmlFilePath2);
+
+                return tempXmlFilePath2;
+            }
+            catch (Exception)
+            {
+                FileUtils.SafeDeleteFile(tempXmlFilePath2);
+                throw;
+            }
+            finally
+            {
+                FileUtils.SafeDeleteFile(tempXmlFilePath);
+            }
+        }
+
+        public static string RemoveHeaderFile(string tempXmlFilePath, string tempFolderPath, ISerializationHelper serializationHelper)
+        {
+            string tempXmlFilePath2 = null;
+            try
+            {
+
+                HeaderDocumentHelper headerDocumentHelper = new HeaderDocumentHelper();
+                headerDocumentHelper.SerializationHelper = serializationHelper;
+
+                XmlDocument doc = new XmlDocument();
+                doc.Load(tempXmlFilePath);
+
+                if (headerDocumentHelper.TryLoad(doc.DocumentElement))
+                {
+                    XmlElement element = headerDocumentHelper.GetPayload("Update-Insert");
+
+                    //Serialize to new file
+                    string fileName = Guid.NewGuid().ToString();
+                    tempXmlFilePath2 = Path.Combine(tempFolderPath, WQX_FILE_PREFIX + fileName + ".xml");
+                    serializationHelper.Serialize(element, tempXmlFilePath2);
+
+                    return tempXmlFilePath2;
+                }
+                else
+                {
+                    throw new Exception("Unable to load document element.");
+                }
+            }
+
+            catch (Exception)
+            {
+                FileUtils.SafeDeleteFile(tempXmlFilePath2);
+                throw;
+            }
+            finally
+            {
+                FileUtils.SafeDeleteFile(tempXmlFilePath);
+            }            
         }
 
         public static string WQX_FILE_PREFIX = "__";
