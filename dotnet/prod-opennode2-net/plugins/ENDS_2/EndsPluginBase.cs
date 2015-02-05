@@ -176,7 +176,8 @@ namespace Windsor.Node2008.WNOSPlugin.ENDS_2
             {
                 networkNodeType.NodeDeploymentTypeCode = NodeStageCode.Development;
             }
-            networkNodeType.NodeIdentifier = _settingsProvider.NodeId;
+            networkNodeType.NodeIdentifier = _settingsProvider.NodeId + " - " + (_settingsProvider.IsProductionNode ? "Prod" : "Test");
+            networkNodeType.NodeName = networkNodeType.NodeIdentifier;
             networkNodeType.OrganizationIdentifier = _settingsProvider.NodeOrganizationName;
             networkNodeType.NodeStatus = NodeStatusCode.Operational;
 

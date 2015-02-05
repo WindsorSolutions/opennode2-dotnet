@@ -270,7 +270,7 @@ namespace Windsor.Node2008.WNOSPlugin.P2R
 
             if (!foundIt)
             {
-                throw new ArgumentException(string.Format("The organization \"{0}\" was not found in the staging database",
+                throw new ArgumentException(string.Format("The organization \"{0}\" was not found",
                                                           _organizationIdentifier));
             }
             _projectDetailsWhereQuery =

@@ -571,7 +571,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
 
             if (_organizationRecordId == null)
             {
-                throw new ArgumentException(string.Format("The organization \"{0}\" was not found in the staging database",
+                throw new ArgumentException(string.Format("The organization \"{0}\" was not found",
                                                           _organizationIdentifier));
             }
         }
@@ -590,7 +590,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
 
             if (organizationDescriptionDataType == null)
             {
-                throw new ArgumentException(string.Format("The organization \"{0}\" was not found in the staging database",
+                throw new ArgumentException(string.Format("The organization \"{0}\" was not found.",
                                                           _organizationIdentifier));
             }
             return organizationDescriptionDataType;
