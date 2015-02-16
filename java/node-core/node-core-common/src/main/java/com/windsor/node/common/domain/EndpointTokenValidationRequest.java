@@ -43,16 +43,23 @@ public class EndpointTokenValidationRequest implements Serializable {
     private EndpointVersionType endpointVersion;
     private String ip;
     private Timestamp createdOn = new Timestamp(System.currentTimeMillis());
+    private Boolean anonymousVisit = Boolean.FALSE;
 
     public EndpointTokenValidationRequest() {
     }
 
     public EndpointTokenValidationRequest(EndpointVersionType endpointVersion,
             String token, String ip) {
-        this.token = token;
-        this.endpointVersion = endpointVersion;
-        this.ip = ip;
+        this(endpointVersion, token, ip, Boolean.FALSE);
     }
+
+    public EndpointTokenValidationRequest(EndpointVersionType endpointVersion,
+                    String token, String ip, Boolean anonymousVisit) {
+                this.token = token;
+                this.endpointVersion = endpointVersion;
+                this.ip = ip;
+                this.anonymousVisit = anonymousVisit;
+            }
 
     public String getToken() {
         return token;
@@ -86,6 +93,16 @@ public class EndpointTokenValidationRequest implements Serializable {
         this.createdOn = createdOn;
     }
 
+    public Boolean getAnonymousVisit()
+    {
+        return anonymousVisit;
+    }
+
+    public void setAnonymousVisit(Boolean anonymousVisit)
+    {
+        this.anonymousVisit = anonymousVisit;
+    }
+
   //CHECKSTYLE:OFF
     public int hashCode() {
         final int prime = 31;
@@ -96,6 +113,7 @@ public class EndpointTokenValidationRequest implements Serializable {
                 + ((endpointVersion == null) ? 0 : endpointVersion.hashCode());
         result = prime * result + ((ip == null) ? 0 : ip.hashCode());
         result = prime * result + ((token == null) ? 0 : token.hashCode());
+        result = prime * result + ((anonymousVisit == null) ? 0 : anonymousVisit.hashCode());
         return result;
     }
   //CHECKSTYLE:ON
@@ -129,6 +147,11 @@ public class EndpointTokenValidationRequest implements Serializable {
                 return false;
         } else if (!token.equals(other.token))
             return false;
+        if (anonymousVisit == null) {
+            if (other.anonymousVisit != null)
+                return false;
+        } else if (!anonymousVisit.equals(other.anonymousVisit))
+            return false;
         return true;
     }
   //CHECKSTYLE:ON
@@ -140,5 +163,4 @@ public class EndpointTokenValidationRequest implements Serializable {
         rtsb.setAppendTransients(false);
         return rtsb.toString();
     }
-
 }

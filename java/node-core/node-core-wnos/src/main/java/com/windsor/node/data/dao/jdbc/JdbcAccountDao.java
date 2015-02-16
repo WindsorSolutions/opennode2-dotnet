@@ -42,6 +42,7 @@ import org.springframework.jdbc.core.RowMapper;
 import com.windsor.node.common.domain.SystemRoleType;
 import com.windsor.node.common.domain.UserAccount;
 import com.windsor.node.common.domain.flowsecurity.UserAccessPolicy;
+import com.windsor.node.common.exception.WinNodeException;
 import com.windsor.node.data.dao.AccountDao;
 import com.windsor.node.util.DateUtil;
 import com.windsor.node.util.FormatUtil;
@@ -60,6 +61,9 @@ public class JdbcAccountDao extends BaseJdbcDao implements AccountDao {
             + ORDER_BY_NAAS;
 
     private static final String SQL_SELECT_BY_ID = SQL_SELECT + "WHERE Id = ?";
+
+    private static final String SQL_SELECT_ANONYMOUS_ACCOUNT = SQL_SELECT
+                    + " WHERE IsActive = ? and SystemRole = ?" + ORDER_BY_NAAS;
 
     /*
      * Local Users
@@ -227,6 +231,25 @@ public class JdbcAccountDao extends BaseJdbcDao implements AccountDao {
 
     }
 
+    @Override
+    public UserAccount getAnonymousAccount()
+    {
+        List<UserAccount> accounts = getJdbcTemplate().query(
+                        SQL_SELECT_ANONYMOUS_ACCOUNT,
+                        new Object[] { FormatUtil.YES, SystemRoleType.Anonymous.name() },
+                        new UserAccountMapper(false));
+
+        if(accounts == null || accounts.size() == 0)
+        {
+            throw new WinNodeException("No Anonymous accounts exist in this Node Admin database.");
+        }
+        else if(accounts.size() > 1)
+        {
+            throw new WinNodeException("More than one Anonymous accounts exist in this Node Admin database, only one of SystemRole \"Anonymous\" is allowed.");
+        }
+        return accounts.get(0);
+    }
+
     /**
      * getNames
      */
@@ -360,5 +383,4 @@ public class JdbcAccountDao extends BaseJdbcDao implements AccountDao {
 
         return activeAdmins;
     }
-
 }

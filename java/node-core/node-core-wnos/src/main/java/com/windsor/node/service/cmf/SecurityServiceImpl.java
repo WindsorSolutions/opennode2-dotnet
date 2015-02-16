@@ -163,64 +163,61 @@ public class SecurityServiceImpl extends BaseService implements
         }
 
         EndpointVisit visit = null;
+        visit = new EndpointVisit();
+        visit.setEndpointVersion(request.getEndpointVersion());
+        visit.setIp(request.getIp());
 
-        logger.debug("endpointValidate request: " + request);
-
-        Activity logEntry = makeNewActivity(ActivityType.Audit, request.getIp());
-
-        try {
-
-            logger.debug("Validating: " + request);
-
-            String username = authenticationHelper.validateToken(request
-                    .getToken(), request.getIp());
-
-            if (StringUtils.isBlank(username)) {
-                throw new IllegalArgumentException(
-                        "Authentication did not return username or error.");
-            }
-
-            logger.debug("getting Db user for: " + username);
-
-            UserAccount userAccount = getAccountDao().getOrCreateAccount(
-                    username, NAASConfig.DEFAULT_NODE_ID,
-                    getAdminAccount().getId());
-
-            logger.debug("Db user: " + username);
-
-            if (userAccount == null) {
-                throw new RuntimeException("Unable to get a local account.");
-            }
-
-            visit = new EndpointVisit();
-            visit.setEndpointVersion(request.getEndpointVersion());
-            visit.setIp(request.getIp());
-            visit.setUserAccount(userAccount);
-
-            logEntry.setModifiedById(userAccount.getId());
-
-            logEntry.addEntry("Authentication attempt from {0} by {1}.",
-                    new Object[] { request.getIp(),
-                            userAccount.getNaasUserName() });
-
-            logEntry
-                    .addEntry("Result username {0}.", new Object[] { username });
-
-        } catch (Exception ex) {
-            logger.error(ex.getMessage(), ex);
-            logEntry.setType(ActivityType.Error);
-            logEntry.addEntry(ex.getMessage());
-
-            throw new RuntimeException("Error while validating: "
-                    + ex.getMessage(), ex);
-
-        } finally {
-            getActivityDao().make(logEntry);
-
+        //If the service is allowed to be anonymous, the rest is uneccesary and will cause errors
+        if(request.getAnonymousVisit())
+        {
+            visit.setAnonymousVisit(Boolean.TRUE);
+            visit.setUserAccount(getAnonymousAccount());
         }
+        else
+        {
+            logger.debug("endpointValidate request: " + request);
+            Activity logEntry = makeNewActivity(ActivityType.Audit, request.getIp());
 
+            try
+            {
+                logger.debug("Validating: " + request);
+
+                String username = authenticationHelper.validateToken(request.getToken(), request.getIp());
+                if(StringUtils.isBlank(username))
+                {
+                    throw new IllegalArgumentException("Authentication did not return username or error.");
+                }
+
+                logger.debug("getting Db user for: " + username);
+
+                UserAccount userAccount = getAccountDao().getOrCreateAccount(username, NAASConfig.DEFAULT_NODE_ID, getAdminAccount().getId());
+
+                logger.debug("Db user: " + username);
+
+                if(userAccount == null)
+                {
+                    throw new RuntimeException("Unable to get a local account.");
+                }
+                visit.setUserAccount(userAccount);
+
+                logEntry.setModifiedById(userAccount.getId());
+                logEntry.addEntry("Authentication attempt from {0} by {1}.", new Object[]{ request.getIp(), userAccount.getNaasUserName() });
+                logEntry.addEntry("Result username {0}.", new Object[]{ username });
+            }
+            catch(Exception ex)
+            {
+                logger.error(ex.getMessage(), ex);
+                logEntry.setType(ActivityType.Error);
+                logEntry.addEntry(ex.getMessage());
+
+                throw new RuntimeException("Error while validating: " + ex.getMessage(), ex);
+            }
+            finally
+            {
+                getActivityDao().make(logEntry);
+            }
+        }
         return visit;
-
     }
 
     public void setAuthenticationHelper(

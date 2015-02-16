@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.mangofactory.swagger.plugin.EnableSwagger;
+//import com.mangofactory.swagger.plugin.EnableSwagger;
 import com.windsor.node.common.domain.CommonContentType;
 import com.windsor.node.common.domain.DataFlow;
 import com.windsor.node.common.domain.DataRequest;
@@ -52,12 +52,12 @@ import com.windsor.node.common.util.ByIndexOrNameMap;
 import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
 import com.windsor.node.service.helper.id.UUIDGenerator;
 import com.windsor.node.web.exception.RestException;
-import com.wordnik.swagger.annotations.Api;
-import com.wordnik.swagger.annotations.ApiOperation;
+/*import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;*/
 
-@Api(value = "OpenNode2 REST Endpoint API")
+//@Api(value = "OpenNode2 REST Endpoint API")
 @Controller
-@EnableSwagger
+//@EnableSwagger
 public class RestActivationController implements Serializable
 {
     private static final long serialVersionUID = 5444456389572239306L;
@@ -99,8 +99,8 @@ public class RestActivationController implements Serializable
         return null;
     }
 
-    @ApiOperation(value = "perform a NodePing as defined in the EN2 spec.", response = String.class, notes = "Will retuned the standard ready response,"
-                    + "including OpenNode2 version.")
+    /*@ApiOperation(value = "perform a NodePing as defined in the EN2 spec.", response = String.class, notes = "Will retuned the standard ready response,"
+                    + "including OpenNode2 version.")*/
     @RequestMapping(value="/NodePing", method=RequestMethod.GET, produces={"text/plain;charset=UTF-8", "application/xml;charset=UTF-8"})
     public String nodePing(Writer out) throws IOException
     {
@@ -131,7 +131,12 @@ public class RestActivationController implements Serializable
         String userId = request.getParameter("Username");
         String credential = request.getParameter("Password");
         EndpointVisit visit = null;
-        if(StringUtils.isNotBlank(userId) && StringUtils.isNotBlank(credential))
+
+        //Lookup flow information
+        DataFlow dataFlow = getDataFlowByExchangeName(exchangeName, visit);
+        DataService dataService = getDataServiceByServiceNameAndDataFlow(serviceName, dataFlow);
+
+        if(StringUtils.isNotBlank(userId) && StringUtils.isNotBlank(credential) && dataService.getAuthRequired())
         {
             /*String domain = request.getParameter("domain");
             if(StringUtils.isBlank(domain))
@@ -142,18 +147,15 @@ public class RestActivationController implements Serializable
             visit = securityService.endpointAuthenticate(new EndpointAuthenticationRequest(EndpointVersionType.ENREST, userId,
                             credential, "password", getClientHost(request)));
         }
-        else if(StringUtils.isBlank(request.getParameter("token")))
+        else if(StringUtils.isBlank(request.getParameter("token")) && dataService.getAuthRequired())
         {
-            throw new RestException("Neither NAAS authentication credentials nor an existing authenticated NAAS token were provided.");
+            throw new RestException(
+                            "Neither NAAS authentication credentials nor an existing authenticated NAAS token were provided (this service not Anonymous access).");
         }
         else
         {
-            visit = getEndpointVisit(request);
+            visit = getEndpointVisit(request, dataService);
         }
-
-        //Lookup flow information
-        DataFlow dataFlow = getDataFlowByExchangeName(exchangeName, visit);
-        DataService dataService = getDataServiceByServiceNameAndDataFlow(serviceName, dataFlow);
 
         if(dataFlow == null || dataService == null)
         {
@@ -552,9 +554,15 @@ public class RestActivationController implements Serializable
 
     private EndpointVisit getEndpointVisit(HttpServletRequest request)
     {
+        return getEndpointVisit(request, null);
+    }
+
+    private EndpointVisit getEndpointVisit(HttpServletRequest request, DataService dataService)
+    {
         String securityToken = request.getParameter("token");
         EndpointTokenValidationRequest endpointTokenValidationRequest = new EndpointTokenValidationRequest(EndpointVersionType.ENREST, securityToken,
-                        getClientHost(request));
+                        getClientHost(request), ((dataService != null && securityToken == null && !dataService.getAuthRequired()) ? Boolean.TRUE
+                                        : Boolean.FALSE));
         EndpointVisit visit = getSecurityService().endpointValidate(endpointTokenValidationRequest);
         return visit;
     }

@@ -55,7 +55,7 @@
         <!-- /Spring dependencies -->
 
         <!-- Swagger (automated REST documentation suite of projects - https://github.com/wordnik/swagger-spec ) -->
-        <dependency>
+        <!-- <dependency>
             <groupId>com.mangofactory</groupId>
             <artifactId>swagger-springmvc</artifactId>
             <version>0.8.4</version>
@@ -77,7 +77,7 @@
                     <artifactId>spring-context</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
+        </dependency> -->
         <!-- //FIXME exclude spring and other library conflicts -->
 
         <dependency>

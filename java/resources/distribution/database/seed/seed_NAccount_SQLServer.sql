@@ -19,3 +19,21 @@ values('0000-0000-0000-0000-0000',
     'MY_AGENCY',
     '0000-0000-0000-0000-0000',
     getdate());
+
+insert into NAccount
+(
+    Id ,
+    NAASAccount ,
+    IsActive ,
+    SystemRole ,
+    Affiliation,
+    ModifiedBy ,
+    ModifiedOn
+)
+values('0000-0000-0000-0000-0001', 
+    'Anonymous',
+    'Y',
+    'Anonymous',
+    'MY_AGENCY',
+    '0000-0000-0000-0000-0000',
+    getdate());

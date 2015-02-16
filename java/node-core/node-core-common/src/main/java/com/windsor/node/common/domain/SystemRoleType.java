@@ -36,7 +36,7 @@ import java.io.Serializable;
 public enum SystemRoleType implements Serializable
 {
 
-    None("None"), Authed("Endpoint User"), Program("Program User"), Admin("Admin User");
+    None("None"), Authed("Endpoint User"), Program("Program User"), Admin("Admin User"), Anonymous("Anonymous");
 
     private static final long serialVersionUID = 2;
     private final String description;

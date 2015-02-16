@@ -42,6 +42,7 @@ public class NodeVisit implements Serializable {
     private UserAccount userAccount;
     private Timestamp createdOn = new Timestamp(System.currentTimeMillis());
     private String ip;
+    private Boolean anonymousVisit = Boolean.FALSE;
 
     public NodeVisit() {
     }
@@ -83,6 +84,16 @@ public class NodeVisit implements Serializable {
         this.ip = ip;
     }
 
+    public Boolean getAnonymousVisit()
+    {
+        return anonymousVisit;
+    }
+
+    public void setAnonymousVisit(Boolean anonymousVisit)
+    {
+        this.anonymousVisit = anonymousVisit;
+    }
+
     // CHECKSTYLE:OFF
     public int hashCode() {
         final int prime = 31;
@@ -92,6 +103,7 @@ public class NodeVisit implements Serializable {
         result = prime * result + ((ip == null) ? 0 : ip.hashCode());
         result = prime * result
                 + ((userAccount == null) ? 0 : userAccount.hashCode());
+        result = prime * result + ((anonymousVisit == null) ? 0 : anonymousVisit.hashCode());
         return result;
     }
     // CHECKSTYLE:ON
@@ -119,6 +131,11 @@ public class NodeVisit implements Serializable {
             if (other.userAccount != null)
                 return false;
         } else if (!userAccount.equals(other.userAccount))
+            return false;
+        if (anonymousVisit == null) {
+            if (other.anonymousVisit != null)
+                return false;
+        } else if (!anonymousVisit.equals(other.anonymousVisit))
             return false;
         return true;
     }

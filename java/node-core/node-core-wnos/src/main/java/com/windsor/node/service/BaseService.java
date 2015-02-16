@@ -51,7 +51,7 @@ public class BaseService {
     /** Logger for this class and subclasses */
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private UserAccount adminAccount;
+    private UserAccount account;
 
     private ActivityDao activityDao;
     private NAASConfig naasConfig;
@@ -139,34 +139,54 @@ public class BaseService {
                     "NAASConfig AdminAccount not set.");
         }
 
-        if (adminAccount == null) {
+        if (account == null) {
 
             logger.debug("Setting AdminVisit.");
 
-            adminAccount = accountDao.getByNAASAccount(naasConfig
+            account = accountDao.getByNAASAccount(naasConfig
                     .getAdminAccount().getUsername());
 
-            if (adminAccount == null) {
+            if (account == null) {
                 throw new IllegalArgumentException(
                         "NAASAdmin AdminAccount not in database.");
             }
 
         }
 
-        logger.debug("getAdminAccount: " + adminAccount);
+        logger.debug("getAdminAccount: " + account);
 
-        return adminAccount;
+        return account;
 
+    }
+
+    protected UserAccount getAnonymousAccount()
+    {
+        if(account == null)
+        {
+            account = accountDao.getAnonymousAccount();
+            if(account == null)
+            {
+                throw new IllegalArgumentException("OpenNode2 Anonymous account not in database.");
+            }
+        }
+        return account;
     }
 
     protected Activity makeNewActivity(ActivityType type, NodeVisit visit) {
 
-        if (visit == null || visit.getUserAccount() == null) {
+        if (visit == null || (visit.getUserAccount() == null && !visit.getAnonymousVisit())) {
             throw new RuntimeException("Null visit or Account");
         }
 
         Activity logEntry = new Activity();
-        logEntry.setModifiedById(visit.getUserAccount().getId());
+        if(!visit.getAnonymousVisit())
+        {
+            logEntry.setModifiedById(visit.getUserAccount().getId());
+        }
+        else//Anonymous access allowed, use Admin account to avoid too much refactoring.
+        {
+            logEntry.setModifiedById(getAnonymousAccount().getId());
+        }
         logEntry.setIp(visit.getIp());
         logEntry.setType(type);
 

@@ -52,4 +52,5 @@ public interface AccountDao extends DeletableDao {
     UserAccount getOrCreateAccount(String naasAccount, String affiliationCode,
             String adminUserId);
 
+    UserAccount getAnonymousAccount();
 }
