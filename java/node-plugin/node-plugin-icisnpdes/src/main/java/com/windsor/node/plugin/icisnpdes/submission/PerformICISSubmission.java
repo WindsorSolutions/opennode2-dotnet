@@ -133,7 +133,8 @@ public class PerformICISSubmission extends AbstractIcisNpdesSubmission {
                  * Use the class name to create a JPQL select statement and then
                  * get the results.
                  */
-                final List<?> list = em.createQuery("select ls from "+klassName+" ls where ls.transactionHeader.transactionType is not null").getResultList();
+                final List<?> list = em.createQuery("select ls from " + klassName + " ls where ls.transactionHeader.transactionType is not null")
+                                .getResultList();
 
                 log("...Found {} records in the database.", list.size());
 

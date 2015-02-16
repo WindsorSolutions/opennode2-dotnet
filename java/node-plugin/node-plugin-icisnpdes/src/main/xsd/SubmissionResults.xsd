@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:icis="http://www.exchangenetwork.net/schema/icis/4" elementFormDefault="qualified" attributeFormDefault="unqualified"  targetNamespace="http://www.exchangenetwork.net/schema/icis/4">
-	<xs:include schemaLocation="0/ICIS_Common_v4.0e.xsd"/>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:icis="http://www.exchangenetwork.net/schema/icis/5" elementFormDefault="qualified" attributeFormDefault="unqualified"  targetNamespace="http://www.exchangenetwork.net/schema/icis/5">
+	<xs:include schemaLocation="0/ICIS_Common_v5.0.xsd"/>
 	<xs:element name="SubmissionResultList">
 		<xs:annotation>
 			<xs:documentation>Represents a single row in the OpenNode2 ICIS-NPDES Full Batch plugin ICS_SUBM_RESULTS staging table. Transformed from ICIS Accepted and Rejected transaction report.</xs:documentation>
