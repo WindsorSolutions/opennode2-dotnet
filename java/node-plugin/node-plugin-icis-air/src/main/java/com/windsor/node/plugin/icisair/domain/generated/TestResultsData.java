@@ -77,7 +77,7 @@ import org.jvnet.jaxb2_commons.locator.util.LocatorUtils;
     "otherFailureReasonText"
 })
 @Entity(name = "TestResultsData")
-@Table(name = "ICA_TEST_RESULTS")
+@Table(name = "ICA_TST_RSLTS")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class TestResultsData
     implements Serializable, Equals, HashCode
@@ -193,7 +193,7 @@ public class TestResultsData
     @ElementCollection
     @Column(name = "METHOD_CODE", length = 3)
     @CollectionTable(name = "ICA_METHOD", joinColumns = {
-        @JoinColumn(name = "ICA_TEST_RESULTS_ID")
+        @JoinColumn(name = "ICA_TST_RSLTS_ID")
     })
     public List<String> getMethodCode() {
         if (methodCode == null) {
@@ -290,7 +290,7 @@ public class TestResultsData
      *     
      */
     @Basic
-    @Column(name = "ACTUL_RESULT", scale = 0)
+    @Column(name = "ACTUAL_RESULT", scale = 0)
     public Integer getActualResult() {
         return actualResult;
     }
@@ -383,7 +383,7 @@ public class TestResultsData
      *     
      */
     @Id
-    @Column(name = "ICA_TEST_RESULTS_ID")
+    @Column(name = "ICA_TST_RSLTS_ID")
     public String getDbid() {
         return dbid;
     }

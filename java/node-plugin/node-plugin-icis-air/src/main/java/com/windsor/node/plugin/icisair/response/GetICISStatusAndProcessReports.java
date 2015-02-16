@@ -25,7 +25,6 @@ import com.windsor.node.common.domain.PluginServiceImplementorDescriptor;
 import com.windsor.node.common.domain.ProcessContentResult;
 import com.windsor.node.common.domain.ServiceType;
 import com.windsor.node.common.domain.TransactionStatus;
-import com.windsor.node.common.exception.WinNodeException;
 import com.windsor.node.common.util.NodeClientService;
 import com.windsor.node.data.dao.PartnerDao;
 import com.windsor.node.data.dao.PluginServiceParameterDescriptor;

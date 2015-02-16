@@ -14,7 +14,6 @@ public class IcisEntityManagerFactory
      */
     public static EntityManagerFactory initEntityManagerFactory(DataSource dataSource)
     {
-
         HibernatePersistenceProvider provider = new HibernatePersistenceProvider();
 
         return provider.createEntityManagerFactory(dataSource, new PluginPersistenceConfig().rootEntityPackage("com.windsor.node.plugin.icisair.domain.generated")

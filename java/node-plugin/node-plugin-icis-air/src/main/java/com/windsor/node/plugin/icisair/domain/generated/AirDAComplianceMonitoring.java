@@ -24,7 +24,7 @@ import javax.persistence.Embedded;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
@@ -1234,10 +1234,7 @@ public class AirDAComplianceMonitoring
      *     {@link AirStackTestData }
      *     
      */
-    @OneToOne(targetEntity = AirStackTestData.class, cascade = {
-        CascadeType.ALL
-    })
-    @JoinColumn(name = "ICA_DA_CMPL_MON_ID")
+    @Transient
     public AirStackTestData getAirStackTestData() {
         return airStackTestData;
     }
@@ -1252,6 +1249,28 @@ public class AirDAComplianceMonitoring
      */
     public void setAirStackTestData(AirStackTestData value) {
         this.airStackTestData = value;
+    }
+
+    /*@ManyToOne(targetEntity = AirStackTestData.class, cascade = {
+        CascadeType.ALL
+    })
+    //@NotFound(action = NotFoundAction.IGNORE)
+    @JoinColumn(name = "ICA_DA_CMPL_MON_ID", insertable = false, updatable = false)*/
+    @OneToMany(targetEntity = AirStackTestData.class, cascade = {
+        CascadeType.ALL
+    })
+    @JoinColumn(name = "ICA_DA_CMPL_MON_ID")
+    public List<AirStackTestData> getAirStackTestDataList() {
+        List<AirStackTestData> list = new ArrayList<AirStackTestData>();
+        list.add(getAirStackTestData());
+        return list;
+    }
+
+    public void setAirStackTestDataList(List<AirStackTestData> list) {
+        if(list != null && list.size() >= 1)
+        {
+            this.airStackTestData = list.get(0);
+        }
     }
 
     @Transient
