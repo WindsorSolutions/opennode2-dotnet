@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance" xmlns:annox="http://annox.dev.java.net"
+	jaxb:extensionBindingPrefixes="hj orm inheritance annox" schemaLocation="../xsd/0/ICIS_PermittedFeature_v5.0.xsd">
+	
+	<!-- permitted feature data -->
+
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='PermittedFeatureData']">
+			<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractPermittedFeatureData</inheritance:extends>
+		</jaxb:bindings>
+	</jaxb:bindings>
+	
+	<!-- permitted feature -->
+
+	<jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:complexType[@name='PermittedFeature']">
+			<hj:embeddable />
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:element[@ref='icis:GeographicCoordinates']">
+			<annox:annotate>
+				<annox:annotate annox:class="org.hibernate.annotations.NotFound" action="IGNORE" />
+			</annox:annotate>
+			<hj:many-to-one>
+				<orm:join-column name="ICS_PRMT_FEATR_ID" referenced-column-name="ICS_PRMT_FEATR_ID" insertable="false" updatable="false"/>
+			</hj:many-to-one>
+		</jaxb:bindings>
+		
+	</jaxb:bindings>
+
+</jaxb:bindings>

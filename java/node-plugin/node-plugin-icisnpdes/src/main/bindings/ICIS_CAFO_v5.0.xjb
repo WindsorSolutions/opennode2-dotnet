@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	jaxb:extensionBindingPrefixes="hj orm" schemaLocation="../xsd/0/ICIS_CAFO_v5.0.xsd">
+
+	<!-- reported animal type -->
+
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='ReportedAnimalType']">
+			<hj:entity>
+				<orm:inheritance strategy="TABLE_PER_CLASS" />
+			</hj:entity>
+		</jaxb:bindings>
+
+		<!-- non-standard column name ("Under") -->
+		
+		<jaxb:bindings node="//xsd:element[@ref='icis:HousedUnderRoofConfinementCount']">
+			<hj:basic>
+				<orm:column name="HOUSD_UNDR_ROOF_CONFINEMNT_CNT" />
+			</hj:basic>
+		</jaxb:bindings>
+
+	</jaxb:bindings>
+
+	<!-- animal type -->
+	
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='AnimalType']">
+			<hj:entity>
+				<orm:table name="ICS_V_ANML_TYPE_HIB"/>
+			</hj:entity>
+		</jaxb:bindings>
+	</jaxb:bindings>
+
+</jaxb:bindings>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance"
+	jaxb:extensionBindingPrefixes="hj orm inheritance" schemaLocation="../xsd/0/ICIS_GeneralPermitCoveredFacility_v5.0.xsd">
+
+	<!-- general permit -->
+
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='GeneralPermitData']">
+			<hj:entity>
+				<orm:association-override name="generalPermit.facility">
+						<orm:join-column name="ICS_GNRL_PRMT_ID" referenced-column-name="ICS_GNRL_PRMT_ID" insertable="false" updatable="false"/>
+				</orm:association-override>
+				<orm:association-override name="generalPermit.complianceTrackingStatus">
+						<orm:join-column name="ICS_GNRL_PRMT_ID" referenced-column-name="ICS_GNRL_PRMT_ID" insertable="false" updatable="false"/>
+				</orm:association-override>
+			</hj:entity>
+			<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractGeneralPermitData
+			</inheritance:extends>
+		</jaxb:bindings>
+	</jaxb:bindings>
+
+	<!-- general permit -->
+
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='GeneralPermit']">
+			<hj:embeddable/>
+		</jaxb:bindings>
+	</jaxb:bindings>
+
+</jaxb:bindings>

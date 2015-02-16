@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	xmlns:annox="http://annox.dev.java.net"
+	jaxb:extensionBindingPrefixes="hj orm annox" schemaLocation="../xsd/0/ICIS_PretreatmentProgramSummaryReport_v5.0.xsd">
+
+	<!-- pretreatment performance summary -->
+
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='PretreatmentPerformanceSummary']">
+			<hj:embeddable />
+		</jaxb:bindings>
+		
+		<jaxb:bindings>
+			<jaxb:bindings node="//xsd:element[@ref='icis:LocalLimits']">
+				<annox:annotate>
+				<annox:annotate annox:class="org.hibernate.annotations.NotFound" action="IGNORE" />
+			</annox:annotate>
+				<hj:many-to-one>
+					<orm:join-column name="ICS_PRETR_PERF_SUMM_ID" referenced-column-name="ICS_PRETR_PERF_SUMM_ID"
+						insertable="false" updatable="false" />
+				</hj:many-to-one>
+			</jaxb:bindings>
+		</jaxb:bindings>
+
+		<jaxb:bindings>
+			<jaxb:bindings node="//xsd:element[@ref='icis:RemovalCredits']">
+				<annox:annotate>
+				<annox:annotate annox:class="org.hibernate.annotations.NotFound" action="IGNORE" />
+			</annox:annotate>
+				<hj:many-to-one>
+					<orm:join-column name="ICS_PRETR_PERF_SUMM_ID" referenced-column-name="ICS_PRETR_PERF_SUMM_ID"
+						insertable="false" updatable="false" />
+				</hj:many-to-one>
+			</jaxb:bindings>
+		</jaxb:bindings>
+		
+	</jaxb:bindings>
+
+</jaxb:bindings>

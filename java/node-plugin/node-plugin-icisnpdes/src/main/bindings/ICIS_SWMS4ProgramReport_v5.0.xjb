@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance"
+	jaxb:extensionBindingPrefixes="hj orm inheritance" schemaLocation="../xsd/0/ICIS_SWMS4ProgramReport_v5.0.xsd">
+
+	<!-- storm water MS4 program report data -->
+
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='SWMS4ProgramReportData']">
+			<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractSWMS4ProgramReportData</inheritance:extends>
+		</jaxb:bindings>
+	</jaxb:bindings>
+
+	<!-- storm water MS4 program report -->
+
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='SWMS4ProgramReport']">
+			<hj:embeddable />
+		</jaxb:bindings>
+	</jaxb:bindings>
+
+</jaxb:bindings>
