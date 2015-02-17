@@ -6,7 +6,7 @@ INTO
 		NAASAccount ,
 		IsActive ,
 		SystemRole ,
-		Affiliation,
+		Affiliation ,
 		ModifiedBy ,
 		ModifiedOn
 	)
@@ -29,7 +29,7 @@ INTO
         NAASAccount ,
         IsActive ,
         SystemRole ,
-        Affiliation,
+        Affiliation ,
         ModifiedBy ,
         ModifiedOn
     )

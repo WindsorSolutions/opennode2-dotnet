@@ -8,7 +8,7 @@ insert into NAccount
     NAASAccount ,
     IsActive ,
     SystemRole ,
-    Affiliation,
+    Affiliation ,
     ModifiedBy ,
     ModifiedOn
 )
@@ -26,7 +26,7 @@ insert into NAccount
     NAASAccount ,
     IsActive ,
     SystemRole ,
-    Affiliation,
+    Affiliation ,
     ModifiedBy ,
     ModifiedOn
 )

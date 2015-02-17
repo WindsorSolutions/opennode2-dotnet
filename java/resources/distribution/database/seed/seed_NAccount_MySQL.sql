@@ -6,7 +6,7 @@ INTO
 		NAASAccount ,
 		IsActive ,
 		SystemRole ,
-		Affiliation,
+		Affiliation ,
 		ModifiedBy ,
 		ModifiedOn
 	)
@@ -29,7 +29,7 @@ INTO
         NAASAccount ,
         IsActive ,
         SystemRole ,
-        Affiliation,
+        Affiliation ,
         ModifiedBy ,
         ModifiedOn
     )
@@ -39,7 +39,7 @@ VALUES
         'Anonymous',
         'Y',
         'Anonymous',
-        'WINDSOR',
+        'MY_AGENCY',
         '00000000-0000-0000-0000-000000000000',
         current_timestamp
     )
