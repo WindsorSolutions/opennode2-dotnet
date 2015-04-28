@@ -11,7 +11,7 @@ namespace Hyper.ComponentModel
     sealed class HyperTypeDescriptor : CustomTypeDescriptor
     {
         private readonly PropertyDescriptorCollection propertyCollections;
-        static readonly Dictionary<PropertyInfo, PropertyDescriptor> properties = new Dictionary<PropertyInfo, PropertyDescriptor>();
+        private static readonly Dictionary<PropertyInfo, PropertyDescriptor> properties = new Dictionary<PropertyInfo, PropertyDescriptor>();
         internal HyperTypeDescriptor(ICustomTypeDescriptor parent)
             : base(parent)
         {
@@ -71,6 +71,11 @@ namespace Hyper.ComponentModel
                     {
                         descriptor = foundBuiltAlready;
                         return true;
+                    }
+                    int propHashCode = property.GetHashCode();
+                    int propertiesCount = properties.Count;
+                    if (properties.ContainsKey(property))
+                    {
                     }
 
                     string name = "_c" + Interlocked.Increment(ref counter).ToString();
@@ -236,6 +241,13 @@ namespace Hyper.ComponentModel
                         return false;
                     }
                     descriptor = newDesc;
+                    int propHashCode2 = property.GetHashCode();
+                    int propertiesCount2 = properties.Count;
+                    if (properties.TryGetValue(property, out foundBuiltAlready))
+                    {
+                        descriptor = foundBuiltAlready;
+                        return true;
+                    }
                     properties.Add(property, descriptor);
                     return true;
                 }

@@ -66,6 +66,13 @@ namespace CopyPlugins
                 PackagesFolderPath = Path.Combine(trunkFolder, "Packages");
                 BuildFolderPath = Path.Combine(trunkFolder, BUILD_FOLDER_NAME);
 
+                if ((args.Length > 0) && (args[0] == "/TestZip"))
+                {
+                    if (File.Exists(@"D:\TEMP\ICISSubmission.zip")) File.Delete(@"D:\TEMP\ICISSubmission.zip");
+                    DotNetZipHelper zipHelper = new DotNetZipHelper();
+                    zipHelper.CompressFile(@"D:\TEMP\ICISSubmission.xml", @"D:\TEMP\ICISSubmission.zip");
+                }
+
                 if (CreateZipPackages)
                 {
                     FileUtils.SafeDeleteDirectory(PackagesFolderPath);

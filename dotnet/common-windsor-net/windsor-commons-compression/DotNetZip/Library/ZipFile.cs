@@ -1911,7 +1911,7 @@ namespace Ionic.Zip
             _name = zipFileName;
             _StatusMessageTextWriter = statusMessageWriter;
             _contentsChanged = true;
-            CompressionLevel = Ionic.Zlib.CompressionLevel.DEFAULT;
+            CompressionLevel = Ionic.Zlib.CompressionLevel.Default;
 
             if (!string.IsNullOrEmpty(_name) && System.IO.File.Exists(_name))
             {

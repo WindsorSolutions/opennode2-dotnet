@@ -68,14 +68,40 @@
     <Compile Include="DotNetZip\Library\ZipFile.cs" />
     <Compile Include="DotNetZip\Library\ZipFile.SaveSelfExtractor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Zlib\Deflate.cs" />
-    <Compile Include="Zlib\Inflate.cs" />
-    <Compile Include="Zlib\InfTree.cs" />
-    <Compile Include="Zlib\Tree.cs" />
-    <Compile Include="Zlib\Zlib.cs" />
-    <Compile Include="Zlib\ZlibCodec.cs" />
-    <Compile Include="Zlib\ZlibConstants.cs" />
-    <Compile Include="Zlib\ZlibStream.cs" />
+    <Compile Include="Zlib\CRC32.cs" />
+    <Compile Include="Zlib\Deflate.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Zlib\DeflateStream.cs" />
+    <Compile Include="Zlib\GZipStream.cs" />
+    <Compile Include="Zlib\Inflate.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Zlib\InfTree.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Zlib\Iso8859Dash1Encoding.cs" />
+    <Compile Include="Zlib\ParallelDeflateOutputStream.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Zlib\Tree.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Zlib\Zlib.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Zlib\ZlibBaseStream.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Zlib\ZlibCodec.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Zlib\ZlibConstants.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Zlib\ZlibStream.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

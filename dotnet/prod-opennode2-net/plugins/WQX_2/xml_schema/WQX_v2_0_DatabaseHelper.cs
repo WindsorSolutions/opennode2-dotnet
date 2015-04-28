@@ -27,7 +27,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
     public static class DatabaseHelper
     {
         public static WQXDataType GenerateWqxQueryFromDatabase(IAppendAuditLogEvent appendAuditLogEvent, IObjectsFromDatabase objectsFromDatabase, SpringBaseDao baseDao,
-                                                       string organizationIdentifier)
+                                                               string organizationIdentifier)
         {
             ExceptionUtils.ThrowIfNull(objectsFromDatabase);
             ExceptionUtils.ThrowIfNull(baseDao);
@@ -64,6 +64,17 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
             }
             
         }
+        public static string GenerateAndValidateWqxQueryFile(IAppendAuditLogEvent appendAuditLogEvent, IObjectsFromDatabase objectsFromDatabase, SpringBaseDao baseDao,
+                                                             string queryOrganizationName, string queryOrganizationIdentifier, string naasUserName, string sysTempFolderPath,
+                                                             Assembly xmlSchemaZippedResourceAssembly, string xmlSchemaZippedQualifiedResourceName,
+                                                             string xmlSchemaRootFileName, ISerializationHelper serializationHelper, ICompressionHelper compressionHelper,
+                                                             out string validationErrorsFile)
+        {
+            // Jaime had an additional "string naasUserName" parameter to this method, but he did not check in code, so not sure what it does.
+            return GenerateAndValidateWqxQueryFile(appendAuditLogEvent, objectsFromDatabase, baseDao, queryOrganizationName, queryOrganizationIdentifier, sysTempFolderPath,
+                                                   xmlSchemaZippedResourceAssembly, xmlSchemaZippedQualifiedResourceName, xmlSchemaRootFileName, serializationHelper,
+                                                   compressionHelper, out validationErrorsFile);
+        }
         public static string GenerateAndValidateWqxQueryFile(IAppendAuditLogEvent appendAuditLogEvent, IObjectsFromDatabase objectsFromDatabase, SpringBaseDao baseDao, 
                                                              string queryOrganizationName, string queryOrganizationIdentifier, string sysTempFolderPath, 
                                                              Assembly xmlSchemaZippedResourceAssembly, string xmlSchemaZippedQualifiedResourceName,
@@ -75,7 +86,9 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
             WQXDataType wqx = GenerateWqxQueryFromDatabase(appendAuditLogEvent, objectsFromDatabase, baseDao, queryOrganizationIdentifier);
 
             if (wqx == null)
+            {
                 return null;
+            }
 
             appendAuditLogEvent.AppendAuditLogEvent("Generating WQX xml file from query results ...");
             string tempFolderPath = Path.Combine(sysTempFolderPath, Guid.NewGuid().ToString());
@@ -690,5 +703,6 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
         public const string PARAM_ORGANIZATION_ID_KEY = "OrganizationIdentifier";        
         public const string PARAM_START_DATE_KEY = "StartDate";
         public const string PARAM_END_DATE_KEY = "EndDate";
+        public const string PARAM_ADD_HEADER = "AddHeader";
     }
 }
