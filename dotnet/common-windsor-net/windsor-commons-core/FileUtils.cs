@@ -367,7 +367,10 @@ namespace Windsor.Commons.Core
         {
             try
             {
-                Directory.Delete(directoryPath, true);
+                if (Directory.Exists(directoryPath))
+                {
+                    Directory.Delete(directoryPath, true);
+                }
             }
             catch (Exception)
             {
