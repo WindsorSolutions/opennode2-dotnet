@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified"
+    xmlns:icis="http://www.exchangenetwork.net/schema/icis/5" targetNamespace="http://www.exchangenetwork.net/schema/icis/5">
+    <xs:include schemaLocation="0/ICIS_Common_v5.0.xsd"/>
+    <xs:element name="SubmissionResultList">
+        <xs:annotation>
+            <xs:documentation>Represents a single row in the OpenNode2 ICIS-NPDES Full Batch plugin ICS_SUBM_RESULTS staging table. Transformed from ICIS Accepted and Rejected transaction report for ICIS schema v5.0.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="SubmissionResult" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="SubmissionTypeName" type="xs:string"/>
+                            <xs:element name="TransactionType" type="xs:string"/>
+                            <xs:element name="PermitIdentifier" type="xs:string" minOccurs="0"/>
+                            <xs:element name="PermitIdentifier2" type="xs:string" minOccurs="0"/>
+                            <xs:element name="PermittedFeatureIdentifier" type="xs:string" minOccurs="0"/>
+                            <xs:element name="LimitSetDesignator" type="xs:string" minOccurs="0"/>
+                            <xs:element name="MonitoringPeriodEndDate" type="xs:date" minOccurs="0"/>
+                            <xs:element name="ParameterCode" type="xs:string" minOccurs="0"/>
+                            <xs:element name="MonitoringSiteDescriptionCode" type="xs:string" minOccurs="0"/>
+                            <xs:element name="LimitSeasonNumber" type="xs:integer" minOccurs="0"/>
+                            <xs:element name="LimitStartDate" type="xs:date" minOccurs="0"/>
+                            <xs:element name="LimitEndDate" type="xs:date" minOccurs="0"/>
+                            <xs:element name="LimitModificationEffectiveDate" type="xs:date" minOccurs="0"/>
+                            <xs:element name="TradeID" type="xs:string" minOccurs="0"/>
+                            <xs:element name="ComplianceMonitoringIdentifier" type="xs:string" minOccurs="0"/>
+                            <xs:element name="ComplianceMonitoringIdentifier2" type="xs:string" minOccurs="0"/>
+                            <xs:element name="CSOEventDate" type="xs:date" minOccurs="0"/>
+                            <xs:element name="DateStormEventSampled" type="xs:date" minOccurs="0"/>
+                            <xs:element name="PermitEffectiveDate" type="xs:date" minOccurs="0"/>
+                            <xs:element name="PermitTrackingEventCode" type="xs:string" minOccurs="0"/>
+                            <xs:element name="PermitTrackingEventDate" type="xs:date" minOccurs="0"/>
+                            <xs:element name="NarrativeConditionNumber" type="xs:integer" minOccurs="0"/>
+                            <xs:element name="ScheduleEventCode" type="xs:string" minOccurs="0"/>
+                            <xs:element name="ScheduleDate" type="xs:date" minOccurs="0"/>
+                            <xs:element name="NumericReportCode" type="xs:string" minOccurs="0"/>
+                            <xs:element name="NumericReportViolationCode" type="xs:string" minOccurs="0"/>
+                            <xs:element name="PermittingAuthorityReportReceivedDate" type="xs:date" minOccurs="0"/>
+                            <xs:element name="PretreatmentPerformanceSummaryEndDate" type="xs:date" minOccurs="0"/>
+                            <xs:element name="ReportCoverageEndDate" type="xs:date" minOccurs="0"/>
+                            <xs:element name="SingleEventViolationCode" type="xs:string" minOccurs="0"/>
+                            <xs:element name="SingleEventViolationDate" type="xs:date" minOccurs="0"/>
+                            <xs:element name="SSOAnnualReportReceivedDate" type="xs:date" minOccurs="0"/>
+                            <xs:element name="SSOEventDate" type="xs:date" minOccurs="0"/>
+                            <xs:element name="SSOMonthlyReportReceivedDate" type="xs:date" minOccurs="0"/>
+                            <xs:element name="StormWaterMS4ReportReceivedDate" type="xs:date" minOccurs="0"/>
+                            <xs:element name="IndustrialStormWaterAnnualReportReceivedDate" type="xs:date" minOccurs="0"/>
+                            <xs:element name="EnforcementActionIdentifier" type="xs:string" minOccurs="0"/>
+                            <xs:element name="EnforcementActionIdentifier2" type="xs:string" minOccurs="0"/>
+                            <xs:element name="FinalOrderIdentifier" type="xs:string" minOccurs="0"/>
+                            <xs:element name="FinalOrderIdentifier2" type="xs:string" minOccurs="0"/>
+                            <xs:element name="ComplianceScheduleNumber" type="xs:integer" minOccurs="0"/>
+                            <xs:element name="MilestoneTypeCode" type="xs:string" minOccurs="0"/>
+                            <xs:element name="ScheduleViolationCode" type="xs:string" minOccurs="0"/>
+                            <xs:element name="EventId" type="xs:integer" minOccurs="0"/>
+                            <xs:element name="ResultCode" type="xs:string" minOccurs="0"/>
+                            <xs:element name="ResultTypeCode" type="xs:string" minOccurs="0"/>
+                            <xs:element name="ResultDescription" type="xs:string" minOccurs="0"/>
+                            <xs:element name="SubmissionTransactionId" type="xs:string"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
+

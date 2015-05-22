@@ -8,7 +8,7 @@ OVERWRITTEN WHEN YOU RE-RUN CODE GENERATION.
 Refer to the Altova MapForce Documentation for further details.
 http://www.altova.com/mapforce
 -->
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:vmf="http://www.altova.com/MapForce/UDF/vmf" xmlns="http://www.exchangenetwork.net/schema/icis/4" xmlns:ns0="http://www.exchangenetwork.net/schema/icis/4" xmlns:xs="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="vmf xs ns0">
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:vmf="http://www.altova.com/MapForce/UDF/vmf" xmlns:ns0="http://www.exchangenetwork.net/schema/icis/5" xmlns:xs="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="vmf ns0 xs">
     <xsl:template name="vmf:vmf1_inputtoresult">
         <xsl:param name="input" select="/.."/>
         <xsl:choose>
@@ -150,6 +150,9 @@ http://www.altova.com/mapforce
             <xsl:when test="$input='Unpermitted Facility'">
                 <xsl:value-of select="'UnpermittedFacilitySubmission'"/>
             </xsl:when>
+            <xsl:when test="$input='SW Industrial Annual Report'">
+                <xsl:value-of select="'SWIndustrialAnnualReportSubmission'"/>
+            </xsl:when>
             <xsl:otherwise>
                 <xsl:value-of select="'(Unrecognized)'"/>
             </xsl:otherwise>
@@ -158,9 +161,9 @@ http://www.altova.com/mapforce
     <xsl:output method="xml" encoding="UTF-8" indent="yes"/>
     <xsl:template match="/">
         <xsl:variable name="var1_instance_index" select="."/>
-        <SubmissionResultList>
+        <SubmissionResultList xmlns="http://www.exchangenetwork.net/schema/icis/5">
             <xsl:attribute name="xsi:noNamespaceSchemaLocation" namespace="http://www.w3.org/2001/XMLSchema-instance">
-                <xsl:value-of select="'SubmissionResults.xsd'"/>
+                <xsl:value-of select="'ICS_SubmissionResults.xsd'"/>
             </xsl:attribute>
             <xsl:for-each select="$var1_instance_index/ns0:SubmissionResponse">
                 <xsl:variable name="var2_SubmissionResponse" select="."/>
@@ -321,10 +324,10 @@ http://www.altova.com/mapforce
                                     <xsl:value-of select="string($var55_CSOEventReportIdentifier/ns0:PermitIdentifier)"/>
                                 </PermitIdentifier>
                             </xsl:for-each>
-                            <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ComplianceMonitoringIdentifier">
-                                <xsl:variable name="var57_ComplianceMonitoringIdentifier" select="."/>
+                            <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:CAFOAnnualProgramReportIdentifier">
+                                <xsl:variable name="var57_CAFOAnnualProgramReportIdentifier" select="."/>
                                 <PermitIdentifier>
-                                    <xsl:value-of select="string($var57_ComplianceMonitoringIdentifier/ns0:PermitIdentifier)"/>
+                                    <xsl:value-of select="string($var57_CAFOAnnualProgramReportIdentifier/ns0:PermitIdentifier)"/>
                                 </PermitIdentifier>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:CAFOAnnualProgramReportIdentifier">
@@ -333,937 +336,907 @@ http://www.altova.com/mapforce
                                     <xsl:value-of select="string($var59_CAFOAnnualProgramReportIdentifier/ns0:PermitIdentifier)"/>
                                 </PermitIdentifier>
                             </xsl:for-each>
-                            <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:CAFOAnnualProgramReportIdentifier">
-                                <xsl:variable name="var61_CAFOAnnualProgramReportIdentifier" select="."/>
-                                <PermitIdentifier>
-                                    <xsl:value-of select="string($var61_CAFOAnnualProgramReportIdentifier/ns0:PermitIdentifier)"/>
-                                </PermitIdentifier>
-                            </xsl:for-each>
-                            <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ComplianceMonitoringLinkageIdentifier">
-                                <xsl:variable name="var63_ComplianceMonitoringLinkageIdentifier" select="."/>
-                                <PermitIdentifier>
-                                    <xsl:value-of select="string($var63_ComplianceMonitoringLinkageIdentifier/ns0:PermitIdentifier)"/>
-                                </PermitIdentifier>
-                            </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:PermitScheduleViolation">
-                                <xsl:variable name="var65_PermitScheduleViolation" select="."/>
+                                <xsl:variable name="var61_PermitScheduleViolation" select="."/>
                                 <PermitIdentifier>
-                                    <xsl:value-of select="string($var65_PermitScheduleViolation/ns0:PermitIdentifier)"/>
+                                    <xsl:value-of select="string($var61_PermitScheduleViolation/ns0:PermitIdentifier)"/>
                                 </PermitIdentifier>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:ComplianceScheduleViolation">
-                                <xsl:variable name="var67_ComplianceScheduleViolation" select="."/>
+                                <xsl:variable name="var63_ComplianceScheduleViolation" select="."/>
                                 <PermitIdentifier>
-                                    <xsl:value-of select="string($var67_ComplianceScheduleViolation/ns0:PermitIdentifier)"/>
+                                    <xsl:value-of select="string($var63_ComplianceScheduleViolation/ns0:PermitIdentifier)"/>
                                 </PermitIdentifier>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:DischargeMonitoringReportViolation">
-                                <xsl:variable name="var69_DischargeMonitoringReportViolation" select="."/>
+                                <xsl:variable name="var65_DischargeMonitoringReportViolation" select="."/>
                                 <PermitIdentifier>
-                                    <xsl:value-of select="string($var69_DischargeMonitoringReportViolation/ns0:PermitIdentifier)"/>
+                                    <xsl:value-of select="string($var65_DischargeMonitoringReportViolation/ns0:PermitIdentifier)"/>
                                 </PermitIdentifier>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:DischargeMonitoringReportParameterViolation">
-                                <xsl:variable name="var71_DischargeMonitoringReportParameterViolation" select="."/>
+                                <xsl:variable name="var67_DischargeMonitoringReportParameterViolation" select="."/>
                                 <PermitIdentifier>
-                                    <xsl:value-of select="string($var71_DischargeMonitoringReportParameterViolation/ns0:PermitIdentifier)"/>
+                                    <xsl:value-of select="string($var67_DischargeMonitoringReportParameterViolation/ns0:PermitIdentifier)"/>
                                 </PermitIdentifier>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:SingleEventsViolation">
-                                <xsl:variable name="var73_SingleEventsViolation" select="."/>
+                                <xsl:variable name="var69_SingleEventsViolation" select="."/>
                                 <PermitIdentifier>
-                                    <xsl:value-of select="string($var73_SingleEventsViolation/ns0:PermitIdentifier)"/>
+                                    <xsl:value-of select="string($var69_SingleEventsViolation/ns0:PermitIdentifier)"/>
                                 </PermitIdentifier>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ScheduleEventViolationIdentifier/ns0:PermitScheduleEventViolationKeyElements">
-                                <xsl:variable name="var75_PermitScheduleEventViolationKeyElements" select="."/>
+                                <xsl:variable name="var71_PermitScheduleEventViolationKeyElements" select="."/>
                                 <PermitIdentifier>
-                                    <xsl:value-of select="string($var75_PermitScheduleEventViolationKeyElements/ns0:PermitIdentifier)"/>
+                                    <xsl:value-of select="string($var71_PermitScheduleEventViolationKeyElements/ns0:PermitIdentifier)"/>
                                 </PermitIdentifier>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ScheduleEventViolationIdentifier/ns0:ComplianceScheduleEventViolationKeyElements">
-                                <xsl:variable name="var77_ComplianceScheduleEventViolationKeyElements" select="."/>
+                                <xsl:variable name="var73_ComplianceScheduleEventViolationKeyElements" select="."/>
                                 <PermitIdentifier>
-                                    <xsl:value-of select="string($var77_ComplianceScheduleEventViolationKeyElements/ns0:PermitIdentifier)"/>
+                                    <xsl:value-of select="string($var73_ComplianceScheduleEventViolationKeyElements/ns0:PermitIdentifier)"/>
                                 </PermitIdentifier>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:DMRProgramReportLinkageIdentifier">
-                                <xsl:variable name="var79_DMRProgramReportLinkageIdentifier" select="."/>
+                                <xsl:variable name="var75_DMRProgramReportLinkageIdentifier" select="."/>
                                 <PermitIdentifier>
-                                    <xsl:value-of select="string($var79_DMRProgramReportLinkageIdentifier/ns0:PermitIdentifier)"/>
+                                    <xsl:value-of select="string($var75_DMRProgramReportLinkageIdentifier/ns0:PermitIdentifier)"/>
                                 </PermitIdentifier>
                             </xsl:for-each>
-                            <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:PermitTerminationIdentifier">
-                                <xsl:variable name="var81_PermitTerminationIdentifier" select="."/>
+                            <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:SWIndustrialAnnualReportIdentifier">
+                                <xsl:variable name="var77_SWIndustrialAnnualReportIdentifier" select="."/>
                                 <PermitIdentifier>
-                                    <xsl:value-of select="string($var81_PermitTerminationIdentifier/ns0:PermitIdentifier)"/>
+                                    <xsl:value-of select="string($var77_SWIndustrialAnnualReportIdentifier/ns0:PermitIdentifier)"/>
                                 </PermitIdentifier>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageSingleEvent">
-                                <xsl:variable name="var83_LinkageSingleEvent" select="."/>
+                                <xsl:variable name="var79_LinkageSingleEvent" select="."/>
                                 <PermitIdentifier2>
-                                    <xsl:value-of select="string($var83_LinkageSingleEvent/ns0:PermitIdentifier)"/>
+                                    <xsl:value-of select="string($var79_LinkageSingleEvent/ns0:PermitIdentifier)"/>
                                 </PermitIdentifier2>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:DMRProgramReportLinkageIdentifier/ns0:LinkageSWEventReport">
-                                <xsl:variable name="var85_LinkageSWEventReport" select="."/>
+                                <xsl:variable name="var81_LinkageSWEventReport" select="."/>
                                 <PermitIdentifier2>
-                                    <xsl:value-of select="string($var85_LinkageSWEventReport/ns0:PermitIdentifier)"/>
+                                    <xsl:value-of select="string($var81_LinkageSWEventReport/ns0:PermitIdentifier)"/>
                                 </PermitIdentifier2>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:DMRProgramReportLinkageIdentifier/ns0:LinkageBiosolidsReport">
-                                <xsl:variable name="var87_LinkageBiosolidsReport" select="."/>
+                                <xsl:variable name="var83_LinkageBiosolidsReport" select="."/>
                                 <PermitIdentifier2>
-                                    <xsl:value-of select="string($var87_LinkageBiosolidsReport/ns0:PermitIdentifier)"/>
+                                    <xsl:value-of select="string($var83_LinkageBiosolidsReport/ns0:PermitIdentifier)"/>
                                 </PermitIdentifier2>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageBiosolidsReport">
-                                <xsl:variable name="var89_LinkageBiosolidsReport" select="."/>
+                                <xsl:variable name="var85_LinkageBiosolidsReport" select="."/>
                                 <PermitIdentifier2>
-                                    <xsl:value-of select="string($var89_LinkageBiosolidsReport/ns0:PermitIdentifier)"/>
+                                    <xsl:value-of select="string($var85_LinkageBiosolidsReport/ns0:PermitIdentifier)"/>
                                 </PermitIdentifier2>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageCAFOAnnualReport">
-                                <xsl:variable name="var91_LinkageCAFOAnnualReport" select="."/>
+                                <xsl:variable name="var87_LinkageCAFOAnnualReport" select="."/>
                                 <PermitIdentifier2>
-                                    <xsl:value-of select="string($var91_LinkageCAFOAnnualReport/ns0:PermitIdentifier)"/>
+                                    <xsl:value-of select="string($var87_LinkageCAFOAnnualReport/ns0:PermitIdentifier)"/>
                                 </PermitIdentifier2>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageCSOEventReport">
-                                <xsl:variable name="var93_LinkageCSOEventReport" select="."/>
+                                <xsl:variable name="var89_LinkageCSOEventReport" select="."/>
                                 <PermitIdentifier2>
-                                    <xsl:value-of select="string($var93_LinkageCSOEventReport/ns0:PermitIdentifier)"/>
+                                    <xsl:value-of select="string($var89_LinkageCSOEventReport/ns0:PermitIdentifier)"/>
                                 </PermitIdentifier2>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageLocalLimitsReport">
-                                <xsl:variable name="var95_LinkageLocalLimitsReport" select="."/>
+                                <xsl:variable name="var91_LinkageLocalLimitsReport" select="."/>
                                 <PermitIdentifier2>
-                                    <xsl:value-of select="string($var95_LinkageLocalLimitsReport/ns0:PermitIdentifier)"/>
+                                    <xsl:value-of select="string($var91_LinkageLocalLimitsReport/ns0:PermitIdentifier)"/>
                                 </PermitIdentifier2>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkagePretreatmentPerformanceReport">
-                                <xsl:variable name="var97_LinkagePretreatmentPerformanceReport" select="."/>
+                                <xsl:variable name="var93_LinkagePretreatmentPerformanceReport" select="."/>
                                 <PermitIdentifier2>
-                                    <xsl:value-of select="string($var97_LinkagePretreatmentPerformanceReport/ns0:PermitIdentifier)"/>
+                                    <xsl:value-of select="string($var93_LinkagePretreatmentPerformanceReport/ns0:PermitIdentifier)"/>
                                 </PermitIdentifier2>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageSSOAnnualReport">
-                                <xsl:variable name="var99_LinkageSSOAnnualReport" select="."/>
+                                <xsl:variable name="var95_LinkageSSOAnnualReport" select="."/>
                                 <PermitIdentifier2>
-                                    <xsl:value-of select="string($var99_LinkageSSOAnnualReport/ns0:PermitIdentifier)"/>
+                                    <xsl:value-of select="string($var95_LinkageSSOAnnualReport/ns0:PermitIdentifier)"/>
                                 </PermitIdentifier2>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageSSOEventReport">
-                                <xsl:variable name="var101_LinkageSSOEventReport" select="."/>
+                                <xsl:variable name="var97_LinkageSSOEventReport" select="."/>
                                 <PermitIdentifier2>
-                                    <xsl:value-of select="string($var101_LinkageSSOEventReport/ns0:PermitIdentifier)"/>
+                                    <xsl:value-of select="string($var97_LinkageSSOEventReport/ns0:PermitIdentifier)"/>
                                 </PermitIdentifier2>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageSSOMonthlyEventReport">
-                                <xsl:variable name="var103_LinkageSSOMonthlyEventReport" select="."/>
+                                <xsl:variable name="var99_LinkageSSOMonthlyEventReport" select="."/>
                                 <PermitIdentifier2>
-                                    <xsl:value-of select="string($var103_LinkageSSOMonthlyEventReport/ns0:PermitIdentifier)"/>
+                                    <xsl:value-of select="string($var99_LinkageSSOMonthlyEventReport/ns0:PermitIdentifier)"/>
                                 </PermitIdentifier2>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageSWEventReport">
-                                <xsl:variable name="var105_LinkageSWEventReport" select="."/>
+                                <xsl:variable name="var101_LinkageSWEventReport" select="."/>
                                 <PermitIdentifier2>
-                                    <xsl:value-of select="string($var105_LinkageSWEventReport/ns0:PermitIdentifier)"/>
+                                    <xsl:value-of select="string($var101_LinkageSWEventReport/ns0:PermitIdentifier)"/>
                                 </PermitIdentifier2>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageSWMS4Report">
-                                <xsl:variable name="var107_LinkageSWMS4Report" select="."/>
+                                <xsl:variable name="var103_LinkageSWMS4Report" select="."/>
                                 <PermitIdentifier2>
-                                    <xsl:value-of select="string($var107_LinkageSWMS4Report/ns0:PermitIdentifier)"/>
-                                </PermitIdentifier2>
-                            </xsl:for-each>
-                            <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageStateComplianceMonitoring">
-                                <xsl:variable name="var109_LinkageStateComplianceMonitoring" select="."/>
-                                <PermitIdentifier2>
-                                    <xsl:value-of select="string($var109_LinkageStateComplianceMonitoring/ns0:PermitIdentifier)"/>
+                                    <xsl:value-of select="string($var103_LinkageSWMS4Report/ns0:PermitIdentifier)"/>
                                 </PermitIdentifier2>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:DischargeMonitoringReportIdentifier">
-                                <xsl:variable name="var111_DischargeMonitoringReportIdentifier" select="."/>
+                                <xsl:variable name="var105_DischargeMonitoringReportIdentifier" select="."/>
                                 <PermittedFeatureIdentifier>
-                                    <xsl:value-of select="string($var111_DischargeMonitoringReportIdentifier/ns0:PermittedFeatureIdentifier)"/>
+                                    <xsl:value-of select="string($var105_DischargeMonitoringReportIdentifier/ns0:PermittedFeatureIdentifier)"/>
                                 </PermittedFeatureIdentifier>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:DMRProgramReportLinkageIdentifier">
-                                <xsl:variable name="var113_DMRProgramReportLinkageIdentifier" select="."/>
+                                <xsl:variable name="var107_DMRProgramReportLinkageIdentifier" select="."/>
                                 <PermittedFeatureIdentifier>
-                                    <xsl:value-of select="string($var113_DMRProgramReportLinkageIdentifier/ns0:PermittedFeatureIdentifier)"/>
+                                    <xsl:value-of select="string($var107_DMRProgramReportLinkageIdentifier/ns0:PermittedFeatureIdentifier)"/>
                                 </PermittedFeatureIdentifier>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:PermittedFeatureRecordIdentifier">
-                                <xsl:variable name="var115_PermittedFeatureRecordIdentifier" select="."/>
+                                <xsl:variable name="var109_PermittedFeatureRecordIdentifier" select="."/>
                                 <PermittedFeatureIdentifier>
-                                    <xsl:value-of select="string($var115_PermittedFeatureRecordIdentifier/ns0:PermittedFeatureIdentifier)"/>
+                                    <xsl:value-of select="string($var109_PermittedFeatureRecordIdentifier/ns0:PermittedFeatureIdentifier)"/>
                                 </PermittedFeatureIdentifier>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ParameterLimitIdentifier">
-                                <xsl:variable name="var117_ParameterLimitIdentifier" select="."/>
+                                <xsl:variable name="var111_ParameterLimitIdentifier" select="."/>
                                 <PermittedFeatureIdentifier>
-                                    <xsl:value-of select="string($var117_ParameterLimitIdentifier/ns0:PermittedFeatureIdentifier)"/>
+                                    <xsl:value-of select="string($var111_ParameterLimitIdentifier/ns0:PermittedFeatureIdentifier)"/>
                                 </PermittedFeatureIdentifier>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:LimitSetIdentifier">
-                                <xsl:variable name="var119_LimitSetIdentifier" select="."/>
+                                <xsl:variable name="var113_LimitSetIdentifier" select="."/>
                                 <PermittedFeatureIdentifier>
-                                    <xsl:value-of select="string($var119_LimitSetIdentifier/ns0:PermittedFeatureIdentifier)"/>
+                                    <xsl:value-of select="string($var113_LimitSetIdentifier/ns0:PermittedFeatureIdentifier)"/>
                                 </PermittedFeatureIdentifier>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:LimitSegmentIdentifier">
-                                <xsl:variable name="var121_LimitSegmentIdentifier" select="."/>
+                                <xsl:variable name="var115_LimitSegmentIdentifier" select="."/>
                                 <PermittedFeatureIdentifier>
-                                    <xsl:value-of select="string($var121_LimitSegmentIdentifier/ns0:PermittedFeatureIdentifier)"/>
+                                    <xsl:value-of select="string($var115_LimitSegmentIdentifier/ns0:PermittedFeatureIdentifier)"/>
                                 </PermittedFeatureIdentifier>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:EffluentTradePartnerReportIdentifier">
-                                <xsl:variable name="var123_EffluentTradePartnerReportIdentifier" select="."/>
+                                <xsl:variable name="var117_EffluentTradePartnerReportIdentifier" select="."/>
                                 <PermittedFeatureIdentifier>
-                                    <xsl:value-of select="string($var123_EffluentTradePartnerReportIdentifier/ns0:PermittedFeatureIdentifier)"/>
+                                    <xsl:value-of select="string($var117_EffluentTradePartnerReportIdentifier/ns0:PermittedFeatureIdentifier)"/>
                                 </PermittedFeatureIdentifier>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:DMRViolationIdentifier">
-                                <xsl:variable name="var125_DMRViolationIdentifier" select="."/>
+                                <xsl:variable name="var119_DMRViolationIdentifier" select="."/>
                                 <PermittedFeatureIdentifier>
-                                    <xsl:value-of select="string($var125_DMRViolationIdentifier/ns0:PermittedFeatureIdentifier)"/>
+                                    <xsl:value-of select="string($var119_DMRViolationIdentifier/ns0:PermittedFeatureIdentifier)"/>
                                 </PermittedFeatureIdentifier>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:DMRParameterIdentifier">
-                                <xsl:variable name="var127_DMRParameterIdentifier" select="."/>
+                                <xsl:variable name="var121_DMRParameterIdentifier" select="."/>
                                 <PermittedFeatureIdentifier>
-                                    <xsl:value-of select="string($var127_DMRParameterIdentifier/ns0:PermittedFeatureIdentifier)"/>
+                                    <xsl:value-of select="string($var121_DMRParameterIdentifier/ns0:PermittedFeatureIdentifier)"/>
                                 </PermittedFeatureIdentifier>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:DischargeMonitoringReportViolation">
-                                <xsl:variable name="var129_DischargeMonitoringReportViolation" select="."/>
+                                <xsl:variable name="var123_DischargeMonitoringReportViolation" select="."/>
                                 <PermittedFeatureIdentifier>
-                                    <xsl:value-of select="string($var129_DischargeMonitoringReportViolation/ns0:PermittedFeatureIdentifier)"/>
+                                    <xsl:value-of select="string($var123_DischargeMonitoringReportViolation/ns0:PermittedFeatureIdentifier)"/>
                                 </PermittedFeatureIdentifier>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:DischargeMonitoringReportParameterViolation">
-                                <xsl:variable name="var131_DischargeMonitoringReportParameterViolation" select="."/>
+                                <xsl:variable name="var125_DischargeMonitoringReportParameterViolation" select="."/>
                                 <PermittedFeatureIdentifier>
-                                    <xsl:value-of select="string($var131_DischargeMonitoringReportParameterViolation/ns0:PermittedFeatureIdentifier)"/>
+                                    <xsl:value-of select="string($var125_DischargeMonitoringReportParameterViolation/ns0:PermittedFeatureIdentifier)"/>
                                 </PermittedFeatureIdentifier>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:DischargeMonitoringReportIdentifier">
-                                <xsl:variable name="var133_DischargeMonitoringReportIdentifier" select="."/>
+                                <xsl:variable name="var127_DischargeMonitoringReportIdentifier" select="."/>
                                 <LimitSetDesignator>
-                                    <xsl:value-of select="string($var133_DischargeMonitoringReportIdentifier/ns0:LimitSetDesignator)"/>
+                                    <xsl:value-of select="string($var127_DischargeMonitoringReportIdentifier/ns0:LimitSetDesignator)"/>
                                 </LimitSetDesignator>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:DMRProgramReportLinkageIdentifier">
-                                <xsl:variable name="var135_DMRProgramReportLinkageIdentifier" select="."/>
+                                <xsl:variable name="var129_DMRProgramReportLinkageIdentifier" select="."/>
                                 <LimitSetDesignator>
-                                    <xsl:value-of select="string($var135_DMRProgramReportLinkageIdentifier/ns0:LimitSetDesignator)"/>
+                                    <xsl:value-of select="string($var129_DMRProgramReportLinkageIdentifier/ns0:LimitSetDesignator)"/>
                                 </LimitSetDesignator>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ParameterLimitIdentifier">
-                                <xsl:variable name="var137_ParameterLimitIdentifier" select="."/>
+                                <xsl:variable name="var131_ParameterLimitIdentifier" select="."/>
                                 <LimitSetDesignator>
-                                    <xsl:value-of select="string($var137_ParameterLimitIdentifier/ns0:LimitSetDesignator)"/>
+                                    <xsl:value-of select="string($var131_ParameterLimitIdentifier/ns0:LimitSetDesignator)"/>
                                 </LimitSetDesignator>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:LimitSetIdentifier">
-                                <xsl:variable name="var139_LimitSetIdentifier" select="."/>
+                                <xsl:variable name="var133_LimitSetIdentifier" select="."/>
                                 <LimitSetDesignator>
-                                    <xsl:value-of select="string($var139_LimitSetIdentifier/ns0:LimitSetDesignator)"/>
+                                    <xsl:value-of select="string($var133_LimitSetIdentifier/ns0:LimitSetDesignator)"/>
                                 </LimitSetDesignator>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:LimitSegmentIdentifier">
-                                <xsl:variable name="var141_LimitSegmentIdentifier" select="."/>
+                                <xsl:variable name="var135_LimitSegmentIdentifier" select="."/>
                                 <LimitSetDesignator>
-                                    <xsl:value-of select="string($var141_LimitSegmentIdentifier/ns0:LimitSetDesignator)"/>
+                                    <xsl:value-of select="string($var135_LimitSegmentIdentifier/ns0:LimitSetDesignator)"/>
                                 </LimitSetDesignator>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:EffluentTradePartnerReportIdentifier">
-                                <xsl:variable name="var143_EffluentTradePartnerReportIdentifier" select="."/>
+                                <xsl:variable name="var137_EffluentTradePartnerReportIdentifier" select="."/>
                                 <LimitSetDesignator>
-                                    <xsl:value-of select="string($var143_EffluentTradePartnerReportIdentifier/ns0:LimitSetDesignator)"/>
+                                    <xsl:value-of select="string($var137_EffluentTradePartnerReportIdentifier/ns0:LimitSetDesignator)"/>
                                 </LimitSetDesignator>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:DMRViolationIdentifier">
-                                <xsl:variable name="var145_DMRViolationIdentifier" select="."/>
+                                <xsl:variable name="var139_DMRViolationIdentifier" select="."/>
                                 <LimitSetDesignator>
-                                    <xsl:value-of select="string($var145_DMRViolationIdentifier/ns0:LimitSetDesignator)"/>
+                                    <xsl:value-of select="string($var139_DMRViolationIdentifier/ns0:LimitSetDesignator)"/>
                                 </LimitSetDesignator>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:DMRParameterIdentifier">
-                                <xsl:variable name="var147_DMRParameterIdentifier" select="."/>
+                                <xsl:variable name="var141_DMRParameterIdentifier" select="."/>
                                 <LimitSetDesignator>
-                                    <xsl:value-of select="string($var147_DMRParameterIdentifier/ns0:LimitSetDesignator)"/>
+                                    <xsl:value-of select="string($var141_DMRParameterIdentifier/ns0:LimitSetDesignator)"/>
                                 </LimitSetDesignator>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:DischargeMonitoringReportViolation">
-                                <xsl:variable name="var149_DischargeMonitoringReportViolation" select="."/>
+                                <xsl:variable name="var143_DischargeMonitoringReportViolation" select="."/>
                                 <LimitSetDesignator>
-                                    <xsl:value-of select="string($var149_DischargeMonitoringReportViolation/ns0:LimitSetDesignator)"/>
+                                    <xsl:value-of select="string($var143_DischargeMonitoringReportViolation/ns0:LimitSetDesignator)"/>
                                 </LimitSetDesignator>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:DischargeMonitoringReportParameterViolation">
-                                <xsl:variable name="var151_DischargeMonitoringReportParameterViolation" select="."/>
+                                <xsl:variable name="var145_DischargeMonitoringReportParameterViolation" select="."/>
                                 <LimitSetDesignator>
-                                    <xsl:value-of select="string($var151_DischargeMonitoringReportParameterViolation/ns0:LimitSetDesignator)"/>
+                                    <xsl:value-of select="string($var145_DischargeMonitoringReportParameterViolation/ns0:LimitSetDesignator)"/>
                                 </LimitSetDesignator>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:DischargeMonitoringReportIdentifier">
-                                <xsl:variable name="var153_DischargeMonitoringReportIdentifier" select="."/>
+                                <xsl:variable name="var147_DischargeMonitoringReportIdentifier" select="."/>
                                 <MonitoringPeriodEndDate>
-                                    <xsl:value-of select="string($var153_DischargeMonitoringReportIdentifier/ns0:MonitoringPeriodEndDate)"/>
+                                    <xsl:value-of select="string($var147_DischargeMonitoringReportIdentifier/ns0:MonitoringPeriodEndDate)"/>
                                 </MonitoringPeriodEndDate>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:DMRProgramReportLinkageIdentifier">
-                                <xsl:variable name="var155_DMRProgramReportLinkageIdentifier" select="."/>
+                                <xsl:variable name="var149_DMRProgramReportLinkageIdentifier" select="."/>
                                 <MonitoringPeriodEndDate>
-                                    <xsl:value-of select="string($var155_DMRProgramReportLinkageIdentifier/ns0:MonitoringPeriodEndDate)"/>
+                                    <xsl:value-of select="string($var149_DMRProgramReportLinkageIdentifier/ns0:MonitoringPeriodEndDate)"/>
                                 </MonitoringPeriodEndDate>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:DischargeMonitoringReportViolation">
-                                <xsl:variable name="var157_DischargeMonitoringReportViolation" select="."/>
+                                <xsl:variable name="var151_DischargeMonitoringReportViolation" select="."/>
                                 <MonitoringPeriodEndDate>
-                                    <xsl:value-of select="string($var157_DischargeMonitoringReportViolation/ns0:MonitoringPeriodEndDate)"/>
+                                    <xsl:value-of select="string($var151_DischargeMonitoringReportViolation/ns0:MonitoringPeriodEndDate)"/>
                                 </MonitoringPeriodEndDate>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:DMRViolationIdentifier">
-                                <xsl:variable name="var159_DMRViolationIdentifier" select="."/>
+                                <xsl:variable name="var153_DMRViolationIdentifier" select="."/>
                                 <MonitoringPeriodEndDate>
-                                    <xsl:value-of select="string($var159_DMRViolationIdentifier/ns0:MonitoringPeriodEndDate)"/>
+                                    <xsl:value-of select="string($var153_DMRViolationIdentifier/ns0:MonitoringPeriodEndDate)"/>
                                 </MonitoringPeriodEndDate>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:DMRParameterIdentifier">
-                                <xsl:variable name="var161_DMRParameterIdentifier" select="."/>
+                                <xsl:variable name="var155_DMRParameterIdentifier" select="."/>
                                 <MonitoringPeriodEndDate>
-                                    <xsl:value-of select="string($var161_DMRParameterIdentifier/ns0:MonitoringPeriodEndDate)"/>
+                                    <xsl:value-of select="string($var155_DMRParameterIdentifier/ns0:MonitoringPeriodEndDate)"/>
                                 </MonitoringPeriodEndDate>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:DischargeMonitoringReportParameterViolation">
-                                <xsl:variable name="var163_DischargeMonitoringReportParameterViolation" select="."/>
+                                <xsl:variable name="var157_DischargeMonitoringReportParameterViolation" select="."/>
                                 <MonitoringPeriodEndDate>
-                                    <xsl:value-of select="string($var163_DischargeMonitoringReportParameterViolation/ns0:MonitoringPeriodEndDate)"/>
+                                    <xsl:value-of select="string($var157_DischargeMonitoringReportParameterViolation/ns0:MonitoringPeriodEndDate)"/>
                                 </MonitoringPeriodEndDate>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:DMRParameterIdentifier">
-                                <xsl:variable name="var165_DMRParameterIdentifier" select="."/>
+                                <xsl:variable name="var159_DMRParameterIdentifier" select="."/>
                                 <ParameterCode>
-                                    <xsl:value-of select="string($var165_DMRParameterIdentifier/ns0:ParameterCode)"/>
+                                    <xsl:value-of select="string($var159_DMRParameterIdentifier/ns0:ParameterCode)"/>
                                 </ParameterCode>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ParameterLimitIdentifier">
-                                <xsl:variable name="var167_ParameterLimitIdentifier" select="."/>
+                                <xsl:variable name="var161_ParameterLimitIdentifier" select="."/>
                                 <ParameterCode>
-                                    <xsl:value-of select="string($var167_ParameterLimitIdentifier/ns0:ParameterCode)"/>
+                                    <xsl:value-of select="string($var161_ParameterLimitIdentifier/ns0:ParameterCode)"/>
                                 </ParameterCode>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:LimitSegmentIdentifier">
-                                <xsl:variable name="var169_LimitSegmentIdentifier" select="."/>
+                                <xsl:variable name="var163_LimitSegmentIdentifier" select="."/>
                                 <ParameterCode>
-                                    <xsl:value-of select="string($var169_LimitSegmentIdentifier/ns0:ParameterCode)"/>
+                                    <xsl:value-of select="string($var163_LimitSegmentIdentifier/ns0:ParameterCode)"/>
                                 </ParameterCode>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:EffluentTradePartnerReportIdentifier">
-                                <xsl:variable name="var171_EffluentTradePartnerReportIdentifier" select="."/>
+                                <xsl:variable name="var165_EffluentTradePartnerReportIdentifier" select="."/>
                                 <ParameterCode>
-                                    <xsl:value-of select="string($var171_EffluentTradePartnerReportIdentifier/ns0:ParameterCode)"/>
+                                    <xsl:value-of select="string($var165_EffluentTradePartnerReportIdentifier/ns0:ParameterCode)"/>
                                 </ParameterCode>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:DMRViolationIdentifier">
-                                <xsl:variable name="var173_DMRViolationIdentifier" select="."/>
+                                <xsl:variable name="var167_DMRViolationIdentifier" select="."/>
                                 <ParameterCode>
-                                    <xsl:value-of select="string($var173_DMRViolationIdentifier/ns0:ParameterCode)"/>
+                                    <xsl:value-of select="string($var167_DMRViolationIdentifier/ns0:ParameterCode)"/>
                                 </ParameterCode>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:DischargeMonitoringReportParameterViolation">
-                                <xsl:variable name="var175_DischargeMonitoringReportParameterViolation" select="."/>
+                                <xsl:variable name="var169_DischargeMonitoringReportParameterViolation" select="."/>
                                 <ParameterCode>
-                                    <xsl:value-of select="string($var175_DischargeMonitoringReportParameterViolation/ns0:ParameterCode)"/>
+                                    <xsl:value-of select="string($var169_DischargeMonitoringReportParameterViolation/ns0:ParameterCode)"/>
                                 </ParameterCode>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:DMRParameterIdentifier">
-                                <xsl:variable name="var177_DMRParameterIdentifier" select="."/>
+                                <xsl:variable name="var171_DMRParameterIdentifier" select="."/>
                                 <MonitoringSiteDescriptionCode>
-                                    <xsl:value-of select="string($var177_DMRParameterIdentifier/ns0:MonitoringSiteDescriptionCode)"/>
+                                    <xsl:value-of select="string($var171_DMRParameterIdentifier/ns0:MonitoringSiteDescriptionCode)"/>
                                 </MonitoringSiteDescriptionCode>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:DischargeMonitoringReportParameterViolation">
-                                <xsl:variable name="var179_DischargeMonitoringReportParameterViolation" select="."/>
+                                <xsl:variable name="var173_DischargeMonitoringReportParameterViolation" select="."/>
                                 <MonitoringSiteDescriptionCode>
-                                    <xsl:value-of select="string($var179_DischargeMonitoringReportParameterViolation/ns0:MonitoringSiteDescriptionCode)"/>
+                                    <xsl:value-of select="string($var173_DischargeMonitoringReportParameterViolation/ns0:MonitoringSiteDescriptionCode)"/>
                                 </MonitoringSiteDescriptionCode>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ParameterLimitIdentifier">
-                                <xsl:variable name="var181_ParameterLimitIdentifier" select="."/>
+                                <xsl:variable name="var175_ParameterLimitIdentifier" select="."/>
                                 <MonitoringSiteDescriptionCode>
-                                    <xsl:value-of select="string($var181_ParameterLimitIdentifier/ns0:MonitoringSiteDescriptionCode)"/>
+                                    <xsl:value-of select="string($var175_ParameterLimitIdentifier/ns0:MonitoringSiteDescriptionCode)"/>
                                 </MonitoringSiteDescriptionCode>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:LimitSegmentIdentifier">
-                                <xsl:variable name="var183_LimitSegmentIdentifier" select="."/>
+                                <xsl:variable name="var177_LimitSegmentIdentifier" select="."/>
                                 <MonitoringSiteDescriptionCode>
-                                    <xsl:value-of select="string($var183_LimitSegmentIdentifier/ns0:MonitoringSiteDescriptionCode)"/>
+                                    <xsl:value-of select="string($var177_LimitSegmentIdentifier/ns0:MonitoringSiteDescriptionCode)"/>
                                 </MonitoringSiteDescriptionCode>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:EffluentTradePartnerReportIdentifier">
-                                <xsl:variable name="var185_EffluentTradePartnerReportIdentifier" select="."/>
+                                <xsl:variable name="var179_EffluentTradePartnerReportIdentifier" select="."/>
                                 <MonitoringSiteDescriptionCode>
-                                    <xsl:value-of select="string($var185_EffluentTradePartnerReportIdentifier/ns0:MonitoringSiteDescriptionCode)"/>
+                                    <xsl:value-of select="string($var179_EffluentTradePartnerReportIdentifier/ns0:MonitoringSiteDescriptionCode)"/>
                                 </MonitoringSiteDescriptionCode>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:DMRViolationIdentifier">
-                                <xsl:variable name="var187_DMRViolationIdentifier" select="."/>
+                                <xsl:variable name="var181_DMRViolationIdentifier" select="."/>
                                 <MonitoringSiteDescriptionCode>
-                                    <xsl:value-of select="string($var187_DMRViolationIdentifier/ns0:MonitoringSiteDescriptionCode)"/>
+                                    <xsl:value-of select="string($var181_DMRViolationIdentifier/ns0:MonitoringSiteDescriptionCode)"/>
                                 </MonitoringSiteDescriptionCode>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:DMRParameterIdentifier">
-                                <xsl:variable name="var189_DMRParameterIdentifier" select="."/>
+                                <xsl:variable name="var183_DMRParameterIdentifier" select="."/>
                                 <LimitSeasonNumber>
-                                    <xsl:value-of select="number(string($var189_DMRParameterIdentifier/ns0:LimitSeasonNumber))"/>
+                                    <xsl:value-of select="number(string($var183_DMRParameterIdentifier/ns0:LimitSeasonNumber))"/>
                                 </LimitSeasonNumber>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ParameterLimitIdentifier">
-                                <xsl:variable name="var191_ParameterLimitIdentifier" select="."/>
+                                <xsl:variable name="var185_ParameterLimitIdentifier" select="."/>
                                 <LimitSeasonNumber>
-                                    <xsl:value-of select="number(string($var191_ParameterLimitIdentifier/ns0:LimitSeasonNumber))"/>
+                                    <xsl:value-of select="number(string($var185_ParameterLimitIdentifier/ns0:LimitSeasonNumber))"/>
                                 </LimitSeasonNumber>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:LimitSegmentIdentifier">
-                                <xsl:variable name="var193_LimitSegmentIdentifier" select="."/>
+                                <xsl:variable name="var187_LimitSegmentIdentifier" select="."/>
                                 <LimitSeasonNumber>
-                                    <xsl:value-of select="number(string($var193_LimitSegmentIdentifier/ns0:LimitSeasonNumber))"/>
+                                    <xsl:value-of select="number(string($var187_LimitSegmentIdentifier/ns0:LimitSeasonNumber))"/>
+                                </LimitSeasonNumber>
+                            </xsl:for-each>
+                            <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:EffluentTradePartnerReportIdentifier">
+                                <xsl:variable name="var189_EffluentTradePartnerReportIdentifier" select="."/>
+                                <LimitSeasonNumber>
+                                    <xsl:value-of select="number(string($var189_EffluentTradePartnerReportIdentifier/ns0:LimitSeasonNumber))"/>
+                                </LimitSeasonNumber>
+                            </xsl:for-each>
+                            <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:DMRViolationIdentifier">
+                                <xsl:variable name="var191_DMRViolationIdentifier" select="."/>
+                                <LimitSeasonNumber>
+                                    <xsl:value-of select="number(string($var191_DMRViolationIdentifier/ns0:LimitSeasonNumber))"/>
+                                </LimitSeasonNumber>
+                            </xsl:for-each>
+                            <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:DischargeMonitoringReportParameterViolation">
+                                <xsl:variable name="var193_DischargeMonitoringReportParameterViolation" select="."/>
+                                <LimitSeasonNumber>
+                                    <xsl:value-of select="number(string($var193_DischargeMonitoringReportParameterViolation/ns0:LimitSeasonNumber))"/>
                                 </LimitSeasonNumber>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:EffluentTradePartnerReportIdentifier">
                                 <xsl:variable name="var195_EffluentTradePartnerReportIdentifier" select="."/>
-                                <LimitSeasonNumber>
-                                    <xsl:value-of select="number(string($var195_EffluentTradePartnerReportIdentifier/ns0:LimitSeasonNumber))"/>
-                                </LimitSeasonNumber>
-                            </xsl:for-each>
-                            <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:DMRViolationIdentifier">
-                                <xsl:variable name="var197_DMRViolationIdentifier" select="."/>
-                                <LimitSeasonNumber>
-                                    <xsl:value-of select="number(string($var197_DMRViolationIdentifier/ns0:LimitSeasonNumber))"/>
-                                </LimitSeasonNumber>
-                            </xsl:for-each>
-                            <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:DischargeMonitoringReportParameterViolation">
-                                <xsl:variable name="var199_DischargeMonitoringReportParameterViolation" select="."/>
-                                <LimitSeasonNumber>
-                                    <xsl:value-of select="number(string($var199_DischargeMonitoringReportParameterViolation/ns0:LimitSeasonNumber))"/>
-                                </LimitSeasonNumber>
-                            </xsl:for-each>
-                            <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:EffluentTradePartnerReportIdentifier">
-                                <xsl:variable name="var201_EffluentTradePartnerReportIdentifier" select="."/>
                                 <LimitStartDate>
-                                    <xsl:value-of select="string($var201_EffluentTradePartnerReportIdentifier/ns0:LimitStartDate)"/>
+                                    <xsl:value-of select="string($var195_EffluentTradePartnerReportIdentifier/ns0:LimitStartDate)"/>
                                 </LimitStartDate>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:LimitSegmentIdentifier">
-                                <xsl:variable name="var203_LimitSegmentIdentifier" select="."/>
+                                <xsl:variable name="var197_LimitSegmentIdentifier" select="."/>
                                 <LimitStartDate>
-                                    <xsl:value-of select="string($var203_LimitSegmentIdentifier/ns0:LimitStartDate)"/>
+                                    <xsl:value-of select="string($var197_LimitSegmentIdentifier/ns0:LimitStartDate)"/>
                                 </LimitStartDate>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:EffluentTradePartnerReportIdentifier">
-                                <xsl:variable name="var205_EffluentTradePartnerReportIdentifier" select="."/>
+                                <xsl:variable name="var199_EffluentTradePartnerReportIdentifier" select="."/>
                                 <LimitEndDate>
-                                    <xsl:value-of select="string($var205_EffluentTradePartnerReportIdentifier/ns0:LimitEndDate)"/>
+                                    <xsl:value-of select="string($var199_EffluentTradePartnerReportIdentifier/ns0:LimitEndDate)"/>
                                 </LimitEndDate>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:LimitSegmentIdentifier">
-                                <xsl:variable name="var207_LimitSegmentIdentifier" select="."/>
+                                <xsl:variable name="var201_LimitSegmentIdentifier" select="."/>
                                 <LimitEndDate>
-                                    <xsl:value-of select="string($var207_LimitSegmentIdentifier/ns0:LimitEndDate)"/>
+                                    <xsl:value-of select="string($var201_LimitSegmentIdentifier/ns0:LimitEndDate)"/>
                                 </LimitEndDate>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:EffluentTradePartnerReportIdentifier/ns0:LimitModificationEffectiveDate">
-                                <xsl:variable name="var209_LimitModificationEffectiveDate" select="."/>
+                                <xsl:variable name="var203_LimitModificationEffectiveDate" select="."/>
                                 <LimitModificationEffectiveDate>
-                                    <xsl:value-of select="string($var209_LimitModificationEffectiveDate)"/>
+                                    <xsl:value-of select="string($var203_LimitModificationEffectiveDate)"/>
                                 </LimitModificationEffectiveDate>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:EffluentTradePartnerReportIdentifier">
-                                <xsl:variable name="var211_EffluentTradePartnerReportIdentifier" select="."/>
+                                <xsl:variable name="var205_EffluentTradePartnerReportIdentifier" select="."/>
                                 <TradeID>
-                                    <xsl:value-of select="string($var211_EffluentTradePartnerReportIdentifier/ns0:TradeID)"/>
+                                    <xsl:value-of select="string($var205_EffluentTradePartnerReportIdentifier/ns0:TradeID)"/>
                                 </TradeID>
                             </xsl:for-each>
-                            <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ComplianceMonitoringIdentifier">
-                                <xsl:variable name="var213_ComplianceMonitoringIdentifier" select="."/>
-                                <ComplianceMonitoringCategoryCode>
-                                    <xsl:value-of select="string($var213_ComplianceMonitoringIdentifier/ns0:ComplianceMonitoringCategoryCode)"/>
-                                </ComplianceMonitoringCategoryCode>
-                            </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ComplianceMonitoringLinkageIdentifier">
-                                <xsl:variable name="var215_ComplianceMonitoringLinkageIdentifier" select="."/>
-                                <ComplianceMonitoringCategoryCode>
-                                    <xsl:value-of select="string($var215_ComplianceMonitoringLinkageIdentifier/ns0:ComplianceMonitoringCategoryCode)"/>
-                                </ComplianceMonitoringCategoryCode>
+                                <xsl:variable name="var207_ComplianceMonitoringLinkageIdentifier" select="."/>
+                                <ComplianceMonitoringIdentifier>
+                                    <xsl:value-of select="string($var207_ComplianceMonitoringLinkageIdentifier/ns0:ComplianceMonitoringIdentifier)"/>
+                                </ComplianceMonitoringIdentifier>
                             </xsl:for-each>
-                            <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageStateComplianceMonitoring">
-                                <xsl:variable name="var217_LinkageStateComplianceMonitoring" select="."/>
-                                <ComplianceMonitoringCategoryCode2>
-                                    <xsl:value-of select="string($var217_LinkageStateComplianceMonitoring/ns0:ComplianceMonitoringCategoryCode)"/>
-                                </ComplianceMonitoringCategoryCode2>
+                            <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:StateNPDESComplianceMonitoringIdentifier">
+                                <xsl:variable name="var209_StateNPDESComplianceMonitoringIdentifier" select="."/>
+                                <ComplianceMonitoringIdentifier>
+                                    <xsl:value-of select="string($var209_StateNPDESComplianceMonitoringIdentifier/ns0:ComplianceMonitoringIdentifier)"/>
+                                </ComplianceMonitoringIdentifier>
                             </xsl:for-each>
-                            <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ComplianceMonitoringIdentifier">
-                                <xsl:variable name="var219_ComplianceMonitoringIdentifier" select="."/>
-                                <ComplianceMonitoringDate>
-                                    <xsl:value-of select="string($var219_ComplianceMonitoringIdentifier/ns0:ComplianceMonitoringDate)"/>
-                                </ComplianceMonitoringDate>
-                            </xsl:for-each>
-                            <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ComplianceMonitoringLinkageIdentifier">
-                                <xsl:variable name="var221_ComplianceMonitoringLinkageIdentifier" select="."/>
-                                <ComplianceMonitoringDate>
-                                    <xsl:value-of select="string($var221_ComplianceMonitoringLinkageIdentifier/ns0:ComplianceMonitoringDate)"/>
-                                </ComplianceMonitoringDate>
-                            </xsl:for-each>
-                            <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageStateComplianceMonitoring">
-                                <xsl:variable name="var223_LinkageStateComplianceMonitoring" select="."/>
-                                <ComplianceMonitoringDate2>
-                                    <xsl:value-of select="string($var223_LinkageStateComplianceMonitoring/ns0:ComplianceMonitoringDate)"/>
-                                </ComplianceMonitoringDate2>
+                            <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageComplianceMonitoring">
+                                <xsl:variable name="var211_LinkageComplianceMonitoring" select="."/>
+                                <ComplianceMonitoringIdentifier2>
+                                    <xsl:value-of select="string($var211_LinkageComplianceMonitoring/ns0:ComplianceMonitoringIdentifier)"/>
+                                </ComplianceMonitoringIdentifier2>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:CSOEventReportIdentifier">
-                                <xsl:variable name="var225_CSOEventReportIdentifier" select="."/>
+                                <xsl:variable name="var213_CSOEventReportIdentifier" select="."/>
                                 <CSOEventDate>
-                                    <xsl:value-of select="string($var225_CSOEventReportIdentifier/ns0:CSOEventDate)"/>
+                                    <xsl:value-of select="string($var213_CSOEventReportIdentifier/ns0:CSOEventDate)"/>
                                 </CSOEventDate>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageCSOEventReport">
-                                <xsl:variable name="var227_LinkageCSOEventReport" select="."/>
+                                <xsl:variable name="var215_LinkageCSOEventReport" select="."/>
                                 <CSOEventDate>
-                                    <xsl:value-of select="string($var227_LinkageCSOEventReport/ns0:CSOEventDate)"/>
+                                    <xsl:value-of select="string($var215_LinkageCSOEventReport/ns0:CSOEventDate)"/>
                                 </CSOEventDate>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:SWEventReportIdentifier">
-                                <xsl:variable name="var229_SWEventReportIdentifier" select="."/>
+                                <xsl:variable name="var217_SWEventReportIdentifier" select="."/>
                                 <DateStormEventSampled>
-                                    <xsl:value-of select="string($var229_SWEventReportIdentifier/ns0:DateStormEventSampled)"/>
+                                    <xsl:value-of select="string($var217_SWEventReportIdentifier/ns0:DateStormEventSampled)"/>
                                 </DateStormEventSampled>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageSWEventReport">
-                                <xsl:variable name="var231_LinkageSWEventReport" select="."/>
+                                <xsl:variable name="var219_LinkageSWEventReport" select="."/>
                                 <DateStormEventSampled>
-                                    <xsl:value-of select="string($var231_LinkageSWEventReport/ns0:DateStormEventSampled)"/>
+                                    <xsl:value-of select="string($var219_LinkageSWEventReport/ns0:DateStormEventSampled)"/>
                                 </DateStormEventSampled>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:DMRProgramReportLinkageIdentifier/ns0:LinkageSWEventReport">
-                                <xsl:variable name="var233_LinkageSWEventReport" select="."/>
+                                <xsl:variable name="var221_LinkageSWEventReport" select="."/>
                                 <DateStormEventSampled>
-                                    <xsl:value-of select="string($var233_LinkageSWEventReport/ns0:DateStormEventSampled)"/>
+                                    <xsl:value-of select="string($var221_LinkageSWEventReport/ns0:DateStormEventSampled)"/>
                                 </DateStormEventSampled>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:HistoricalPermitScheduleEventIdentifier">
-                                <xsl:variable name="var235_HistoricalPermitScheduleEventIdentifier" select="."/>
+                                <xsl:variable name="var223_HistoricalPermitScheduleEventIdentifier" select="."/>
                                 <PermitEffectiveDate>
-                                    <xsl:value-of select="string($var235_HistoricalPermitScheduleEventIdentifier/ns0:PermitEffectiveDate)"/>
+                                    <xsl:value-of select="string($var223_HistoricalPermitScheduleEventIdentifier/ns0:PermitEffectiveDate)"/>
                                 </PermitEffectiveDate>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:PermitTrackingEventIdentifier">
-                                <xsl:variable name="var237_PermitTrackingEventIdentifier" select="."/>
+                                <xsl:variable name="var225_PermitTrackingEventIdentifier" select="."/>
                                 <PermitTrackingEventCode>
-                                    <xsl:value-of select="string($var237_PermitTrackingEventIdentifier/ns0:PermitTrackingEventCode)"/>
+                                    <xsl:value-of select="string($var225_PermitTrackingEventIdentifier/ns0:PermitTrackingEventCode)"/>
                                 </PermitTrackingEventCode>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:PermitTrackingEventIdentifier">
-                                <xsl:variable name="var239_PermitTrackingEventIdentifier" select="."/>
+                                <xsl:variable name="var227_PermitTrackingEventIdentifier" select="."/>
                                 <PermitTrackingEventDate>
-                                    <xsl:value-of select="string($var239_PermitTrackingEventIdentifier/ns0:PermitTrackingEventDate)"/>
+                                    <xsl:value-of select="string($var227_PermitTrackingEventIdentifier/ns0:PermitTrackingEventDate)"/>
                                 </PermitTrackingEventDate>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:HistoricalPermitScheduleEventIdentifier">
-                                <xsl:variable name="var241_HistoricalPermitScheduleEventIdentifier" select="."/>
+                                <xsl:variable name="var229_HistoricalPermitScheduleEventIdentifier" select="."/>
                                 <NarrativeConditionNumber>
-                                    <xsl:value-of select="number(string($var241_HistoricalPermitScheduleEventIdentifier/ns0:NarrativeConditionNumber))"/>
+                                    <xsl:value-of select="number(string($var229_HistoricalPermitScheduleEventIdentifier/ns0:NarrativeConditionNumber))"/>
                                 </NarrativeConditionNumber>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:NarrativeConditionScheduleIdentifier">
-                                <xsl:variable name="var243_NarrativeConditionScheduleIdentifier" select="."/>
+                                <xsl:variable name="var231_NarrativeConditionScheduleIdentifier" select="."/>
                                 <NarrativeConditionNumber>
-                                    <xsl:value-of select="number(string($var243_NarrativeConditionScheduleIdentifier/ns0:NarrativeConditionNumber))"/>
+                                    <xsl:value-of select="number(string($var231_NarrativeConditionScheduleIdentifier/ns0:NarrativeConditionNumber))"/>
                                 </NarrativeConditionNumber>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:PermitScheduleViolation">
-                                <xsl:variable name="var245_PermitScheduleViolation" select="."/>
+                                <xsl:variable name="var233_PermitScheduleViolation" select="."/>
                                 <NarrativeConditionNumber>
-                                    <xsl:value-of select="number(string($var245_PermitScheduleViolation/ns0:NarrativeConditionNumber))"/>
+                                    <xsl:value-of select="number(string($var233_PermitScheduleViolation/ns0:NarrativeConditionNumber))"/>
                                 </NarrativeConditionNumber>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ScheduleEventViolationIdentifier/ns0:PermitScheduleEventViolationKeyElements">
-                                <xsl:variable name="var247_PermitScheduleEventViolationKeyElements" select="."/>
+                                <xsl:variable name="var235_PermitScheduleEventViolationKeyElements" select="."/>
                                 <NarrativeConditionNumber>
-                                    <xsl:value-of select="number(string($var247_PermitScheduleEventViolationKeyElements/ns0:NarrativeConditionNumber))"/>
+                                    <xsl:value-of select="number(string($var235_PermitScheduleEventViolationKeyElements/ns0:NarrativeConditionNumber))"/>
                                 </NarrativeConditionNumber>
+                            </xsl:for-each>
+                            <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ComplianceScheduleEventIdentifier">
+                                <xsl:variable name="var237_ComplianceScheduleEventIdentifier" select="."/>
+                                <ScheduleEventCode>
+                                    <xsl:value-of select="string($var237_ComplianceScheduleEventIdentifier/ns0:ScheduleEventCode)"/>
+                                </ScheduleEventCode>
+                            </xsl:for-each>
+                            <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:HistoricalPermitScheduleEventIdentifier">
+                                <xsl:variable name="var239_HistoricalPermitScheduleEventIdentifier" select="."/>
+                                <ScheduleEventCode>
+                                    <xsl:value-of select="string($var239_HistoricalPermitScheduleEventIdentifier/ns0:ScheduleEventCode)"/>
+                                </ScheduleEventCode>
+                            </xsl:for-each>
+                            <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:PermitScheduleViolation">
+                                <xsl:variable name="var241_PermitScheduleViolation" select="."/>
+                                <ScheduleEventCode>
+                                    <xsl:value-of select="string($var241_PermitScheduleViolation/ns0:ScheduleEventCode)"/>
+                                </ScheduleEventCode>
+                            </xsl:for-each>
+                            <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:ComplianceScheduleViolation">
+                                <xsl:variable name="var243_ComplianceScheduleViolation" select="."/>
+                                <ScheduleEventCode>
+                                    <xsl:value-of select="string($var243_ComplianceScheduleViolation/ns0:ScheduleEventCode)"/>
+                                </ScheduleEventCode>
+                            </xsl:for-each>
+                            <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ScheduleEventViolationIdentifier/ns0:PermitScheduleEventViolationKeyElements">
+                                <xsl:variable name="var245_PermitScheduleEventViolationKeyElements" select="."/>
+                                <ScheduleEventCode>
+                                    <xsl:value-of select="string($var245_PermitScheduleEventViolationKeyElements/ns0:ScheduleEventCode)"/>
+                                </ScheduleEventCode>
+                            </xsl:for-each>
+                            <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ScheduleEventViolationIdentifier/ns0:ComplianceScheduleEventViolationKeyElements">
+                                <xsl:variable name="var247_ComplianceScheduleEventViolationKeyElements" select="."/>
+                                <ScheduleEventCode>
+                                    <xsl:value-of select="string($var247_ComplianceScheduleEventViolationKeyElements/ns0:ScheduleEventCode)"/>
+                                </ScheduleEventCode>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ComplianceScheduleEventIdentifier">
                                 <xsl:variable name="var249_ComplianceScheduleEventIdentifier" select="."/>
-                                <ScheduleEventCode>
-                                    <xsl:value-of select="string($var249_ComplianceScheduleEventIdentifier/ns0:ScheduleEventCode)"/>
-                                </ScheduleEventCode>
+                                <ScheduleDate>
+                                    <xsl:value-of select="string($var249_ComplianceScheduleEventIdentifier/ns0:ScheduleDate)"/>
+                                </ScheduleDate>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:HistoricalPermitScheduleEventIdentifier">
                                 <xsl:variable name="var251_HistoricalPermitScheduleEventIdentifier" select="."/>
-                                <ScheduleEventCode>
-                                    <xsl:value-of select="string($var251_HistoricalPermitScheduleEventIdentifier/ns0:ScheduleEventCode)"/>
-                                </ScheduleEventCode>
+                                <ScheduleDate>
+                                    <xsl:value-of select="string($var251_HistoricalPermitScheduleEventIdentifier/ns0:ScheduleDate)"/>
+                                </ScheduleDate>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:PermitScheduleViolation">
                                 <xsl:variable name="var253_PermitScheduleViolation" select="."/>
-                                <ScheduleEventCode>
-                                    <xsl:value-of select="string($var253_PermitScheduleViolation/ns0:ScheduleEventCode)"/>
-                                </ScheduleEventCode>
+                                <ScheduleDate>
+                                    <xsl:value-of select="string($var253_PermitScheduleViolation/ns0:ScheduleDate)"/>
+                                </ScheduleDate>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:ComplianceScheduleViolation">
                                 <xsl:variable name="var255_ComplianceScheduleViolation" select="."/>
-                                <ScheduleEventCode>
-                                    <xsl:value-of select="string($var255_ComplianceScheduleViolation/ns0:ScheduleEventCode)"/>
-                                </ScheduleEventCode>
+                                <ScheduleDate>
+                                    <xsl:value-of select="string($var255_ComplianceScheduleViolation/ns0:ScheduleDate)"/>
+                                </ScheduleDate>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ScheduleEventViolationIdentifier/ns0:PermitScheduleEventViolationKeyElements">
                                 <xsl:variable name="var257_PermitScheduleEventViolationKeyElements" select="."/>
-                                <ScheduleEventCode>
-                                    <xsl:value-of select="string($var257_PermitScheduleEventViolationKeyElements/ns0:ScheduleEventCode)"/>
-                                </ScheduleEventCode>
+                                <ScheduleDate>
+                                    <xsl:value-of select="string($var257_PermitScheduleEventViolationKeyElements/ns0:ScheduleDate)"/>
+                                </ScheduleDate>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ScheduleEventViolationIdentifier/ns0:ComplianceScheduleEventViolationKeyElements">
                                 <xsl:variable name="var259_ComplianceScheduleEventViolationKeyElements" select="."/>
-                                <ScheduleEventCode>
-                                    <xsl:value-of select="string($var259_ComplianceScheduleEventViolationKeyElements/ns0:ScheduleEventCode)"/>
-                                </ScheduleEventCode>
-                            </xsl:for-each>
-                            <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ComplianceScheduleEventIdentifier">
-                                <xsl:variable name="var261_ComplianceScheduleEventIdentifier" select="."/>
                                 <ScheduleDate>
-                                    <xsl:value-of select="string($var261_ComplianceScheduleEventIdentifier/ns0:ScheduleDate)"/>
-                                </ScheduleDate>
-                            </xsl:for-each>
-                            <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:HistoricalPermitScheduleEventIdentifier">
-                                <xsl:variable name="var263_HistoricalPermitScheduleEventIdentifier" select="."/>
-                                <ScheduleDate>
-                                    <xsl:value-of select="string($var263_HistoricalPermitScheduleEventIdentifier/ns0:ScheduleDate)"/>
-                                </ScheduleDate>
-                            </xsl:for-each>
-                            <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:PermitScheduleViolation">
-                                <xsl:variable name="var265_PermitScheduleViolation" select="."/>
-                                <ScheduleDate>
-                                    <xsl:value-of select="string($var265_PermitScheduleViolation/ns0:ScheduleDate)"/>
-                                </ScheduleDate>
-                            </xsl:for-each>
-                            <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:ComplianceScheduleViolation">
-                                <xsl:variable name="var267_ComplianceScheduleViolation" select="."/>
-                                <ScheduleDate>
-                                    <xsl:value-of select="string($var267_ComplianceScheduleViolation/ns0:ScheduleDate)"/>
-                                </ScheduleDate>
-                            </xsl:for-each>
-                            <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ScheduleEventViolationIdentifier/ns0:PermitScheduleEventViolationKeyElements">
-                                <xsl:variable name="var269_PermitScheduleEventViolationKeyElements" select="."/>
-                                <ScheduleDate>
-                                    <xsl:value-of select="string($var269_PermitScheduleEventViolationKeyElements/ns0:ScheduleDate)"/>
-                                </ScheduleDate>
-                            </xsl:for-each>
-                            <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ScheduleEventViolationIdentifier/ns0:ComplianceScheduleEventViolationKeyElements">
-                                <xsl:variable name="var271_ComplianceScheduleEventViolationKeyElements" select="."/>
-                                <ScheduleDate>
-                                    <xsl:value-of select="string($var271_ComplianceScheduleEventViolationKeyElements/ns0:ScheduleDate)"/>
+                                    <xsl:value-of select="string($var259_ComplianceScheduleEventViolationKeyElements/ns0:ScheduleDate)"/>
                                 </ScheduleDate>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:DMRViolationIdentifier">
-                                <xsl:variable name="var273_DMRViolationIdentifier" select="."/>
+                                <xsl:variable name="var261_DMRViolationIdentifier" select="."/>
                                 <NumericReportCode>
-                                    <xsl:value-of select="string($var273_DMRViolationIdentifier/ns0:NumericReportCode)"/>
+                                    <xsl:value-of select="string($var261_DMRViolationIdentifier/ns0:NumericReportCode)"/>
                                 </NumericReportCode>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:DMRViolationIdentifier">
-                                <xsl:variable name="var275_DMRViolationIdentifier" select="."/>
+                                <xsl:variable name="var263_DMRViolationIdentifier" select="."/>
                                 <NumericReportViolationCode>
-                                    <xsl:value-of select="string($var275_DMRViolationIdentifier/ns0:NumericReportViolationCode)"/>
+                                    <xsl:value-of select="string($var263_DMRViolationIdentifier/ns0:NumericReportViolationCode)"/>
                                 </NumericReportViolationCode>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:CAFOAnnualProgramReportIdentifier">
-                                <xsl:variable name="var277_CAFOAnnualProgramReportIdentifier" select="."/>
+                                <xsl:variable name="var265_CAFOAnnualProgramReportIdentifier" select="."/>
                                 <PermittingAuthorityReportReceivedDate>
-                                    <xsl:value-of select="string($var277_CAFOAnnualProgramReportIdentifier/ns0:PermittingAuthorityReportReceivedDate)"/>
+                                    <xsl:value-of select="string($var265_CAFOAnnualProgramReportIdentifier/ns0:PermittingAuthorityReportReceivedDate)"/>
                                 </PermittingAuthorityReportReceivedDate>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:LocalLimitsProgramReportIdentifier">
-                                <xsl:variable name="var279_LocalLimitsProgramReportIdentifier" select="."/>
+                                <xsl:variable name="var267_LocalLimitsProgramReportIdentifier" select="."/>
                                 <PermittingAuthorityReportReceivedDate>
-                                    <xsl:value-of select="string($var279_LocalLimitsProgramReportIdentifier/ns0:LocalLimitsPermittingAuthorityReportReceivedDate)"/>
+                                    <xsl:value-of select="string($var267_LocalLimitsProgramReportIdentifier/ns0:LocalLimitsPermittingAuthorityReportReceivedDate)"/>
                                 </PermittingAuthorityReportReceivedDate>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageCAFOAnnualReport">
-                                <xsl:variable name="var281_LinkageCAFOAnnualReport" select="."/>
+                                <xsl:variable name="var269_LinkageCAFOAnnualReport" select="."/>
                                 <PermittingAuthorityReportReceivedDate>
-                                    <xsl:value-of select="string($var281_LinkageCAFOAnnualReport/ns0:PermittingAuthorityReportReceivedDate)"/>
+                                    <xsl:value-of select="string($var269_LinkageCAFOAnnualReport/ns0:PermittingAuthorityReportReceivedDate)"/>
                                 </PermittingAuthorityReportReceivedDate>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageLocalLimitsReport">
-                                <xsl:variable name="var283_LinkageLocalLimitsReport" select="."/>
+                                <xsl:variable name="var271_LinkageLocalLimitsReport" select="."/>
                                 <PermittingAuthorityReportReceivedDate>
-                                    <xsl:value-of select="string($var283_LinkageLocalLimitsReport/ns0:LocalLimitsPermittingAuthorityReportReceivedDate)"/>
+                                    <xsl:value-of select="string($var271_LinkageLocalLimitsReport/ns0:LocalLimitsPermittingAuthorityReportReceivedDate)"/>
                                 </PermittingAuthorityReportReceivedDate>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:PretreatmentPerformanceSummaryIdentifier">
-                                <xsl:variable name="var285_PretreatmentPerformanceSummaryIdentifier" select="."/>
+                                <xsl:variable name="var273_PretreatmentPerformanceSummaryIdentifier" select="."/>
                                 <PretreatmentPerformanceSummaryEndDate>
-                                    <xsl:value-of select="string($var285_PretreatmentPerformanceSummaryIdentifier/ns0:PretreatmentPerformanceSummaryEndDate)"/>
+                                    <xsl:value-of select="string($var273_PretreatmentPerformanceSummaryIdentifier/ns0:PretreatmentPerformanceSummaryEndDate)"/>
                                 </PretreatmentPerformanceSummaryEndDate>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkagePretreatmentPerformanceReport">
-                                <xsl:variable name="var287_LinkagePretreatmentPerformanceReport" select="."/>
+                                <xsl:variable name="var275_LinkagePretreatmentPerformanceReport" select="."/>
                                 <PretreatmentPerformanceSummaryEndDate>
-                                    <xsl:value-of select="string($var287_LinkagePretreatmentPerformanceReport/ns0:PretreatmentPerformanceSummaryEndDate)"/>
+                                    <xsl:value-of select="string($var275_LinkagePretreatmentPerformanceReport/ns0:PretreatmentPerformanceSummaryEndDate)"/>
                                 </PretreatmentPerformanceSummaryEndDate>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:BiosolidsProgramReportIdentifier">
-                                <xsl:variable name="var289_BiosolidsProgramReportIdentifier" select="."/>
+                                <xsl:variable name="var277_BiosolidsProgramReportIdentifier" select="."/>
                                 <ReportCoverageEndDate>
-                                    <xsl:value-of select="string($var289_BiosolidsProgramReportIdentifier/ns0:ReportCoverageEndDate)"/>
+                                    <xsl:value-of select="string($var277_BiosolidsProgramReportIdentifier/ns0:ReportCoverageEndDate)"/>
                                 </ReportCoverageEndDate>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageBiosolidsReport">
-                                <xsl:variable name="var291_LinkageBiosolidsReport" select="."/>
+                                <xsl:variable name="var279_LinkageBiosolidsReport" select="."/>
                                 <ReportCoverageEndDate>
-                                    <xsl:value-of select="string($var291_LinkageBiosolidsReport/ns0:ReportCoverageEndDate)"/>
+                                    <xsl:value-of select="string($var279_LinkageBiosolidsReport/ns0:ReportCoverageEndDate)"/>
                                 </ReportCoverageEndDate>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:DMRProgramReportLinkageIdentifier/ns0:LinkageBiosolidsReport">
-                                <xsl:variable name="var293_LinkageBiosolidsReport" select="."/>
+                                <xsl:variable name="var281_LinkageBiosolidsReport" select="."/>
                                 <ReportCoverageEndDate>
-                                    <xsl:value-of select="string($var293_LinkageBiosolidsReport/ns0:ReportCoverageEndDate)"/>
+                                    <xsl:value-of select="string($var281_LinkageBiosolidsReport/ns0:ReportCoverageEndDate)"/>
                                 </ReportCoverageEndDate>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:SingleEventIdentifier">
-                                <xsl:variable name="var295_SingleEventIdentifier" select="."/>
+                                <xsl:variable name="var283_SingleEventIdentifier" select="."/>
                                 <SingleEventViolationCode>
-                                    <xsl:value-of select="string($var295_SingleEventIdentifier/ns0:SingleEventViolationCode)"/>
+                                    <xsl:value-of select="string($var283_SingleEventIdentifier/ns0:SingleEventViolationCode)"/>
                                 </SingleEventViolationCode>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageSingleEvent">
-                                <xsl:variable name="var297_LinkageSingleEvent" select="."/>
+                                <xsl:variable name="var285_LinkageSingleEvent" select="."/>
                                 <SingleEventViolationCode>
-                                    <xsl:value-of select="string($var297_LinkageSingleEvent/ns0:SingleEventViolationCode)"/>
+                                    <xsl:value-of select="string($var285_LinkageSingleEvent/ns0:SingleEventViolationCode)"/>
                                 </SingleEventViolationCode>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:SingleEventsViolation">
-                                <xsl:variable name="var299_SingleEventsViolation" select="."/>
+                                <xsl:variable name="var287_SingleEventsViolation" select="."/>
                                 <SingleEventViolationCode>
-                                    <xsl:value-of select="string($var299_SingleEventsViolation/ns0:SingleEventViolationCode)"/>
+                                    <xsl:value-of select="string($var287_SingleEventsViolation/ns0:SingleEventViolationCode)"/>
                                 </SingleEventViolationCode>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:SingleEventIdentifier">
-                                <xsl:variable name="var301_SingleEventIdentifier" select="."/>
+                                <xsl:variable name="var289_SingleEventIdentifier" select="."/>
                                 <SingleEventViolationDate>
-                                    <xsl:value-of select="string($var301_SingleEventIdentifier/ns0:SingleEventViolationDate)"/>
+                                    <xsl:value-of select="string($var289_SingleEventIdentifier/ns0:SingleEventViolationDate)"/>
                                 </SingleEventViolationDate>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageSingleEvent">
-                                <xsl:variable name="var303_LinkageSingleEvent" select="."/>
+                                <xsl:variable name="var291_LinkageSingleEvent" select="."/>
                                 <SingleEventViolationDate>
-                                    <xsl:value-of select="string($var303_LinkageSingleEvent/ns0:SingleEventViolationDate)"/>
+                                    <xsl:value-of select="string($var291_LinkageSingleEvent/ns0:SingleEventViolationDate)"/>
                                 </SingleEventViolationDate>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:SingleEventsViolation">
-                                <xsl:variable name="var305_SingleEventsViolation" select="."/>
+                                <xsl:variable name="var293_SingleEventsViolation" select="."/>
                                 <SingleEventViolationDate>
-                                    <xsl:value-of select="string($var305_SingleEventsViolation/ns0:SingleEventViolationDate)"/>
+                                    <xsl:value-of select="string($var293_SingleEventsViolation/ns0:SingleEventViolationDate)"/>
                                 </SingleEventViolationDate>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:SSOAnnualReportIdentifier">
-                                <xsl:variable name="var307_SSOAnnualReportIdentifier" select="."/>
+                                <xsl:variable name="var295_SSOAnnualReportIdentifier" select="."/>
                                 <SSOAnnualReportReceivedDate>
-                                    <xsl:value-of select="string($var307_SSOAnnualReportIdentifier/ns0:SSOAnnualReportReceivedDate)"/>
+                                    <xsl:value-of select="string($var295_SSOAnnualReportIdentifier/ns0:SSOAnnualReportReceivedDate)"/>
                                 </SSOAnnualReportReceivedDate>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageSSOAnnualReport">
-                                <xsl:variable name="var309_LinkageSSOAnnualReport" select="."/>
+                                <xsl:variable name="var297_LinkageSSOAnnualReport" select="."/>
                                 <SSOAnnualReportReceivedDate>
-                                    <xsl:value-of select="string($var309_LinkageSSOAnnualReport/ns0:SSOAnnualReportReceivedDate)"/>
+                                    <xsl:value-of select="string($var297_LinkageSSOAnnualReport/ns0:SSOAnnualReportReceivedDate)"/>
                                 </SSOAnnualReportReceivedDate>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:SSOEventReportIdentifier">
-                                <xsl:variable name="var311_SSOEventReportIdentifier" select="."/>
+                                <xsl:variable name="var299_SSOEventReportIdentifier" select="."/>
                                 <SSOEventDate>
-                                    <xsl:value-of select="string($var311_SSOEventReportIdentifier/ns0:SSOEventDate)"/>
+                                    <xsl:value-of select="string($var299_SSOEventReportIdentifier/ns0:SSOEventDate)"/>
                                 </SSOEventDate>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageSSOEventReport">
-                                <xsl:variable name="var313_LinkageSSOEventReport" select="."/>
+                                <xsl:variable name="var301_LinkageSSOEventReport" select="."/>
                                 <SSOEventDate>
-                                    <xsl:value-of select="string($var313_LinkageSSOEventReport/ns0:SSOEventDate)"/>
+                                    <xsl:value-of select="string($var301_LinkageSSOEventReport/ns0:SSOEventDate)"/>
                                 </SSOEventDate>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:SSOMonthlyEventReportIdentifier">
-                                <xsl:variable name="var315_SSOMonthlyEventReportIdentifier" select="."/>
+                                <xsl:variable name="var303_SSOMonthlyEventReportIdentifier" select="."/>
                                 <SSOMonthlyReportReceivedDate>
-                                    <xsl:value-of select="string($var315_SSOMonthlyEventReportIdentifier/ns0:SSOMonthlyReportReceivedDate)"/>
+                                    <xsl:value-of select="string($var303_SSOMonthlyEventReportIdentifier/ns0:SSOMonthlyReportReceivedDate)"/>
                                 </SSOMonthlyReportReceivedDate>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageSSOMonthlyEventReport">
-                                <xsl:variable name="var317_LinkageSSOMonthlyEventReport" select="."/>
+                                <xsl:variable name="var305_LinkageSSOMonthlyEventReport" select="."/>
                                 <SSOMonthlyReportReceivedDate>
-                                    <xsl:value-of select="string($var317_LinkageSSOMonthlyEventReport/ns0:SSOMonthlyReportReceivedDate)"/>
+                                    <xsl:value-of select="string($var305_LinkageSSOMonthlyEventReport/ns0:SSOMonthlyReportReceivedDate)"/>
                                 </SSOMonthlyReportReceivedDate>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:SWMS4ProgramReportIdentifier">
-                                <xsl:variable name="var319_SWMS4ProgramReportIdentifier" select="."/>
+                                <xsl:variable name="var307_SWMS4ProgramReportIdentifier" select="."/>
                                 <StormWaterMS4ReportReceivedDate>
-                                    <xsl:value-of select="string($var319_SWMS4ProgramReportIdentifier/ns0:StormWaterMS4ReportReceivedDate)"/>
+                                    <xsl:value-of select="string($var307_SWMS4ProgramReportIdentifier/ns0:StormWaterMS4ReportReceivedDate)"/>
                                 </StormWaterMS4ReportReceivedDate>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageSWMS4Report">
-                                <xsl:variable name="var321_LinkageSWMS4Report" select="."/>
+                                <xsl:variable name="var309_LinkageSWMS4Report" select="."/>
                                 <StormWaterMS4ReportReceivedDate>
-                                    <xsl:value-of select="string($var321_LinkageSWMS4Report/ns0:StormWaterMS4ReportReceivedDate)"/>
+                                    <xsl:value-of select="string($var309_LinkageSWMS4Report/ns0:StormWaterMS4ReportReceivedDate)"/>
                                 </StormWaterMS4ReportReceivedDate>
                             </xsl:for-each>
+                            <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:SWIndustrialAnnualReportIdentifier">
+                                <xsl:variable name="var311_SWIndustrialAnnualReportIdentifier" select="."/>
+                                <IndustrialStormWaterAnnualReportReceivedDate>
+                                    <xsl:value-of select="string($var311_SWIndustrialAnnualReportIdentifier/ns0:IndustrialStormWaterAnnualReportReceivedDate)"/>
+                                </IndustrialStormWaterAnnualReportReceivedDate>
+                            </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ComplianceScheduleIdentifier">
-                                <xsl:variable name="var323_ComplianceScheduleIdentifier" select="."/>
+                                <xsl:variable name="var313_ComplianceScheduleIdentifier" select="."/>
                                 <EnforcementActionIdentifier>
-                                    <xsl:value-of select="string($var323_ComplianceScheduleIdentifier/ns0:EnforcementActionIdentifier)"/>
+                                    <xsl:value-of select="string($var313_ComplianceScheduleIdentifier/ns0:EnforcementActionIdentifier)"/>
                                 </EnforcementActionIdentifier>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:InformalEnforcementActionIdentifier">
-                                <xsl:variable name="var325_InformalEnforcementActionIdentifier" select="."/>
+                                <xsl:variable name="var315_InformalEnforcementActionIdentifier" select="."/>
                                 <EnforcementActionIdentifier>
-                                    <xsl:value-of select="string($var325_InformalEnforcementActionIdentifier/ns0:EnforcementActionIdentifier)"/>
+                                    <xsl:value-of select="string($var315_InformalEnforcementActionIdentifier/ns0:EnforcementActionIdentifier)"/>
                                 </EnforcementActionIdentifier>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:FormalEnforcementActionIdentifier">
-                                <xsl:variable name="var327_FormalEnforcementActionIdentifier" select="."/>
+                                <xsl:variable name="var317_FormalEnforcementActionIdentifier" select="."/>
                                 <EnforcementActionIdentifier>
-                                    <xsl:value-of select="string($var327_FormalEnforcementActionIdentifier/ns0:EnforcementActionIdentifier)"/>
+                                    <xsl:value-of select="string($var317_FormalEnforcementActionIdentifier/ns0:EnforcementActionIdentifier)"/>
                                 </EnforcementActionIdentifier>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:EnforcementActionMilestoneReportIdentifier">
-                                <xsl:variable name="var329_EnforcementActionMilestoneReportIdentifier" select="."/>
+                                <xsl:variable name="var319_EnforcementActionMilestoneReportIdentifier" select="."/>
                                 <EnforcementActionIdentifier>
-                                    <xsl:value-of select="string($var329_EnforcementActionMilestoneReportIdentifier/ns0:EnforcementActionIdentifier)"/>
+                                    <xsl:value-of select="string($var319_EnforcementActionMilestoneReportIdentifier/ns0:EnforcementActionIdentifier)"/>
                                 </EnforcementActionIdentifier>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageEnforcementAction">
-                                <xsl:variable name="var331_LinkageEnforcementAction" select="."/>
+                                <xsl:variable name="var321_LinkageEnforcementAction" select="."/>
                                 <EnforcementActionIdentifier>
-                                    <xsl:value-of select="string($var331_LinkageEnforcementAction/ns0:EnforcementActionIdentifier)"/>
+                                    <xsl:value-of select="string($var321_LinkageEnforcementAction/ns0:EnforcementActionIdentifier)"/>
                                 </EnforcementActionIdentifier>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:EnforcementActionViolationLinkageIdentifier">
-                                <xsl:variable name="var333_EnforcementActionViolationLinkageIdentifier" select="."/>
+                                <xsl:variable name="var323_EnforcementActionViolationLinkageIdentifier" select="."/>
                                 <EnforcementActionIdentifier>
-                                    <xsl:value-of select="string($var333_EnforcementActionViolationLinkageIdentifier/ns0:EnforcementActionIdentifier)"/>
+                                    <xsl:value-of select="string($var323_EnforcementActionViolationLinkageIdentifier/ns0:EnforcementActionIdentifier)"/>
                                 </EnforcementActionIdentifier>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ScheduleEventViolationIdentifier/ns0:ComplianceScheduleEventViolationKeyElements">
-                                <xsl:variable name="var335_ComplianceScheduleEventViolationKeyElements" select="."/>
+                                <xsl:variable name="var325_ComplianceScheduleEventViolationKeyElements" select="."/>
                                 <EnforcementActionIdentifier>
-                                    <xsl:value-of select="string($var335_ComplianceScheduleEventViolationKeyElements/ns0:EnforcementActionIdentifier)"/>
+                                    <xsl:value-of select="string($var325_ComplianceScheduleEventViolationKeyElements/ns0:EnforcementActionIdentifier)"/>
                                 </EnforcementActionIdentifier>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:ComplianceScheduleViolation">
-                                <xsl:variable name="var337_ComplianceScheduleViolation" select="."/>
+                                <xsl:variable name="var327_ComplianceScheduleViolation" select="."/>
                                 <EnforcementActionIdentifier2>
-                                    <xsl:value-of select="string($var337_ComplianceScheduleViolation/ns0:EnforcementActionIdentifier)"/>
+                                    <xsl:value-of select="string($var327_ComplianceScheduleViolation/ns0:EnforcementActionIdentifier)"/>
                                 </EnforcementActionIdentifier2>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ComplianceScheduleIdentifier">
-                                <xsl:variable name="var339_ComplianceScheduleIdentifier" select="."/>
+                                <xsl:variable name="var329_ComplianceScheduleIdentifier" select="."/>
                                 <FinalOrderIdentifier>
-                                    <xsl:value-of select="string($var339_ComplianceScheduleIdentifier/ns0:FinalOrderIdentifier)"/>
+                                    <xsl:value-of select="string($var329_ComplianceScheduleIdentifier/ns0:FinalOrderIdentifier)"/>
                                 </FinalOrderIdentifier>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:ComplianceScheduleViolation">
-                                <xsl:variable name="var341_ComplianceScheduleViolation" select="."/>
+                                <xsl:variable name="var331_ComplianceScheduleViolation" select="."/>
                                 <FinalOrderIdentifier>
-                                    <xsl:value-of select="string($var341_ComplianceScheduleViolation/ns0:FinalOrderIdentifier)"/>
+                                    <xsl:value-of select="string($var331_ComplianceScheduleViolation/ns0:FinalOrderIdentifier)"/>
                                 </FinalOrderIdentifier>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ScheduleEventViolationIdentifier/ns0:ComplianceScheduleEventViolationKeyElements">
-                                <xsl:variable name="var343_ComplianceScheduleEventViolationKeyElements" select="."/>
+                                <xsl:variable name="var333_ComplianceScheduleEventViolationKeyElements" select="."/>
                                 <FinalOrderIdentifier>
-                                    <xsl:value-of select="string($var343_ComplianceScheduleEventViolationKeyElements/ns0:FinalOrderIdentifier)"/>
+                                    <xsl:value-of select="string($var333_ComplianceScheduleEventViolationKeyElements/ns0:FinalOrderIdentifier)"/>
                                 </FinalOrderIdentifier>
                             </xsl:for-each>
                             <xsl:for-each select="$var4_SubmissionType/ns0:SubmissionErrors/ns0:SubmissionError/ns0:SubmissionErrorKey/ns0:ScheduleEventViolationIdentifier/ns0:ComplianceScheduleEventViolationKeyElements">
-                                <xsl:variable name="var345_ComplianceScheduleEventViolationKeyElements" select="."/>
+                                <xsl:variable name="var335_ComplianceScheduleEventViolationKeyElements" select="."/>
                                 <FinalOrderIdentifier>
-                                    <xsl:value-of select="string($var345_ComplianceScheduleEventViolationKeyElements/ns0:FinalOrderIdentifier)"/>
+                                    <xsl:value-of select="string($var335_ComplianceScheduleEventViolationKeyElements/ns0:FinalOrderIdentifier)"/>
                                 </FinalOrderIdentifier>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ComplianceScheduleIdentifier">
-                                <xsl:variable name="var347_ComplianceScheduleIdentifier" select="."/>
+                                <xsl:variable name="var337_ComplianceScheduleIdentifier" select="."/>
                                 <ComplianceScheduleNumber>
-                                    <xsl:value-of select="number(string($var347_ComplianceScheduleIdentifier/ns0:ComplianceScheduleNumber))"/>
+                                    <xsl:value-of select="number(string($var337_ComplianceScheduleIdentifier/ns0:ComplianceScheduleNumber))"/>
                                 </ComplianceScheduleNumber>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:ComplianceScheduleViolation">
-                                <xsl:variable name="var349_ComplianceScheduleViolation" select="."/>
+                                <xsl:variable name="var339_ComplianceScheduleViolation" select="."/>
                                 <ComplianceScheduleNumber>
-                                    <xsl:value-of select="number(string($var349_ComplianceScheduleViolation/ns0:ComplianceScheduleNumber))"/>
+                                    <xsl:value-of select="number(string($var339_ComplianceScheduleViolation/ns0:ComplianceScheduleNumber))"/>
                                 </ComplianceScheduleNumber>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ScheduleEventViolationIdentifier/ns0:ComplianceScheduleEventViolationKeyElements">
-                                <xsl:variable name="var351_ComplianceScheduleEventViolationKeyElements" select="."/>
+                                <xsl:variable name="var341_ComplianceScheduleEventViolationKeyElements" select="."/>
                                 <ComplianceScheduleNumber>
-                                    <xsl:value-of select="number(string($var351_ComplianceScheduleEventViolationKeyElements/ns0:ComplianceScheduleNumber))"/>
+                                    <xsl:value-of select="number(string($var341_ComplianceScheduleEventViolationKeyElements/ns0:ComplianceScheduleNumber))"/>
                                 </ComplianceScheduleNumber>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:EnforcementActionMilestoneReportIdentifier">
-                                <xsl:variable name="var353_EnforcementActionMilestoneReportIdentifier" select="."/>
+                                <xsl:variable name="var343_EnforcementActionMilestoneReportIdentifier" select="."/>
                                 <MilestoneTypeCode>
-                                    <xsl:value-of select="string($var353_EnforcementActionMilestoneReportIdentifier/ns0:MilestoneTypeCode)"/>
+                                    <xsl:value-of select="string($var343_EnforcementActionMilestoneReportIdentifier/ns0:MilestoneTypeCode)"/>
                                 </MilestoneTypeCode>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ScheduleEventViolationIdentifier/ns0:PermitScheduleEventViolationKeyElements">
-                                <xsl:variable name="var355_PermitScheduleEventViolationKeyElements" select="."/>
+                                <xsl:variable name="var345_PermitScheduleEventViolationKeyElements" select="."/>
                                 <ScheduleViolationCode>
-                                    <xsl:value-of select="string($var355_PermitScheduleEventViolationKeyElements/ns0:ScheduleViolationCode)"/>
+                                    <xsl:value-of select="string($var345_PermitScheduleEventViolationKeyElements/ns0:ScheduleViolationCode)"/>
                                 </ScheduleViolationCode>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ScheduleEventViolationIdentifier/ns0:ComplianceScheduleEventViolationKeyElements">
-                                <xsl:variable name="var357_ComplianceScheduleEventViolationKeyElements" select="."/>
+                                <xsl:variable name="var347_ComplianceScheduleEventViolationKeyElements" select="."/>
                                 <ScheduleViolationCode>
-                                    <xsl:value-of select="string($var357_ComplianceScheduleEventViolationKeyElements/ns0:ScheduleViolationCode)"/>
+                                    <xsl:value-of select="string($var347_ComplianceScheduleEventViolationKeyElements/ns0:ScheduleViolationCode)"/>
                                 </ScheduleViolationCode>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:SSOEventReportIdentifier">
-                                <xsl:variable name="var359_SSOEventReportIdentifier" select="."/>
+                                <xsl:variable name="var349_SSOEventReportIdentifier" select="."/>
                                 <EventId>
-                                    <xsl:value-of select="number(string($var359_SSOEventReportIdentifier/ns0:SSOEventID))"/>
+                                    <xsl:value-of select="number(string($var349_SSOEventReportIdentifier/ns0:SSOEventID))"/>
                                 </EventId>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageCSOEventReport">
-                                <xsl:variable name="var361_LinkageCSOEventReport" select="."/>
+                                <xsl:variable name="var351_LinkageCSOEventReport" select="."/>
                                 <EventId>
-                                    <xsl:value-of select="number(string($var361_LinkageCSOEventReport/ns0:CSOEventID))"/>
+                                    <xsl:value-of select="number(string($var351_LinkageCSOEventReport/ns0:CSOEventID))"/>
                                 </EventId>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:SWEventReportIdentifier">
-                                <xsl:variable name="var363_SWEventReportIdentifier" select="."/>
+                                <xsl:variable name="var353_SWEventReportIdentifier" select="."/>
                                 <EventId>
-                                    <xsl:value-of select="number(string($var363_SWEventReportIdentifier/ns0:StormWaterEventID))"/>
+                                    <xsl:value-of select="number(string($var353_SWEventReportIdentifier/ns0:StormWaterEventID))"/>
                                 </EventId>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:CSOEventReportIdentifier">
-                                <xsl:variable name="var365_CSOEventReportIdentifier" select="."/>
+                                <xsl:variable name="var355_CSOEventReportIdentifier" select="."/>
                                 <EventId>
-                                    <xsl:value-of select="number(string($var365_CSOEventReportIdentifier/ns0:CSOEventID))"/>
+                                    <xsl:value-of select="number(string($var355_CSOEventReportIdentifier/ns0:CSOEventID))"/>
                                 </EventId>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageSSOEventReport">
-                                <xsl:variable name="var367_LinkageSSOEventReport" select="."/>
+                                <xsl:variable name="var357_LinkageSSOEventReport" select="."/>
                                 <EventId>
-                                    <xsl:value-of select="number(string($var367_LinkageSSOEventReport/ns0:SSOEventID))"/>
+                                    <xsl:value-of select="number(string($var357_LinkageSSOEventReport/ns0:SSOEventID))"/>
                                 </EventId>
                             </xsl:for-each>
                             <xsl:for-each select="$var6_SubmissionAccepted/ns0:SubmissionAcceptedKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageSWEventReport">
-                                <xsl:variable name="var369_LinkageSWEventReport" select="."/>
+                                <xsl:variable name="var359_LinkageSWEventReport" select="."/>
                                 <EventId>
-                                    <xsl:value-of select="number(string($var369_LinkageSWEventReport/ns0:StormWaterEventID))"/>
+                                    <xsl:value-of select="number(string($var359_LinkageSWEventReport/ns0:StormWaterEventID))"/>
                                 </EventId>
                             </xsl:for-each>
-                            <xsl:variable name="var371_cond_result_greater">
+                            <xsl:variable name="var361_cond_result_greater">
                                 <xsl:choose>
                                     <xsl:when test="string((count($var6_SubmissionAccepted/ns0:AcceptedReport) &gt; 1)) != 'false'">
                                         <xsl:value-of select="'1'"/>
@@ -1275,9 +1248,9 @@ http://www.altova.com/mapforce
                                     </xsl:otherwise>
                                 </xsl:choose>
                             </xsl:variable>
-                            <xsl:if test="string(boolean(string($var371_cond_result_greater))) != 'false'">
+                            <xsl:if test="string(boolean(string($var361_cond_result_greater))) != 'false'">
                                 <ResultCode>
-                                    <xsl:variable name="var372_cond_result_greater">
+                                    <xsl:variable name="var362_cond_result_greater">
                                         <xsl:choose>
                                             <xsl:when test="string((count($var6_SubmissionAccepted/ns0:AcceptedReport) &gt; 1)) != 'false'">
                                                 <xsl:value-of select="'MULTPL'"/>
@@ -1289,10 +1262,10 @@ http://www.altova.com/mapforce
                                             </xsl:otherwise>
                                         </xsl:choose>
                                     </xsl:variable>
-                                    <xsl:value-of select="$var372_cond_result_greater"/>
+                                    <xsl:value-of select="$var362_cond_result_greater"/>
                                 </ResultCode>
                             </xsl:if>
-                            <xsl:variable name="var373_">
+                            <xsl:variable name="var363_">
                                 <xsl:choose>
                                     <xsl:when test="$var6_SubmissionAccepted/ns0:AcceptedReport">
                                         <xsl:value-of select="string($var6_SubmissionAccepted/ns0:AcceptedReport/ns0:InformationTypeCode)"/>
@@ -1303,9 +1276,9 @@ http://www.altova.com/mapforce
                                 </xsl:choose>
                             </xsl:variable>
                             <ResultTypeCode>
-                                <xsl:value-of select="$var373_"/>
+                                <xsl:value-of select="$var363_"/>
                             </ResultTypeCode>
-                            <xsl:variable name="var375_cond_result_greater">
+                            <xsl:variable name="var365_cond_result_greater">
                                 <xsl:choose>
                                     <xsl:when test="string((count($var6_SubmissionAccepted/ns0:AcceptedReport) &gt; 1)) != 'false'">
                                         <xsl:value-of select="'1'"/>
@@ -1317,9 +1290,9 @@ http://www.altova.com/mapforce
                                     </xsl:otherwise>
                                 </xsl:choose>
                             </xsl:variable>
-                            <xsl:if test="string(boolean(string($var375_cond_result_greater))) != 'false'">
+                            <xsl:if test="string(boolean(string($var365_cond_result_greater))) != 'false'">
                                 <ResultDescription>
-                                    <xsl:variable name="var376_cond_result_greater">
+                                    <xsl:variable name="var366_cond_result_greater">
                                         <xsl:choose>
                                             <xsl:when test="string((count($var6_SubmissionAccepted/ns0:AcceptedReport) &gt; 1)) != 'false'">
                                                 <xsl:value-of select="'Mutliple warnings returned. See PDF.'"/>
@@ -1331,7 +1304,7 @@ http://www.altova.com/mapforce
                                             </xsl:otherwise>
                                         </xsl:choose>
                                     </xsl:variable>
-                                    <xsl:value-of select="$var376_cond_result_greater"/>
+                                    <xsl:value-of select="$var366_cond_result_greater"/>
                                 </ResultDescription>
                             </xsl:if>
                             <SubmissionTransactionId>
@@ -1341,1099 +1314,1069 @@ http://www.altova.com/mapforce
                     </xsl:for-each>
                 </xsl:for-each>
                 <xsl:for-each select="$var2_SubmissionResponse/ns0:SubmittingParty/ns0:SubmissionType">
-                    <xsl:variable name="var377_SubmissionType" select="."/>
-                    <xsl:for-each select="$var377_SubmissionType/ns0:SubmissionErrors/ns0:SubmissionError">
-                        <xsl:variable name="var379_SubmissionError" select="."/>
-                        <xsl:for-each select="$var379_SubmissionError/ns0:ErrorReport">
-                            <xsl:variable name="var381_ErrorReport" select="."/>
+                    <xsl:variable name="var367_SubmissionType" select="."/>
+                    <xsl:for-each select="$var367_SubmissionType/ns0:SubmissionErrors/ns0:SubmissionError">
+                        <xsl:variable name="var369_SubmissionError" select="."/>
+                        <xsl:for-each select="$var369_SubmissionError/ns0:ErrorReport">
+                            <xsl:variable name="var371_ErrorReport" select="."/>
                             <SubmissionResult>
                                 <SubmissionTypeName>
-                                    <xsl:variable name="var383_result_vmf1_inputtoresult">
+                                    <xsl:variable name="var373_result_vmf1_inputtoresult">
                                         <xsl:call-template name="vmf:vmf1_inputtoresult">
-                                            <xsl:with-param name="input" select="string($var377_SubmissionType/ns0:SubmissionTypeName)"/>
+                                            <xsl:with-param name="input" select="string($var367_SubmissionType/ns0:SubmissionTypeName)"/>
                                         </xsl:call-template>
                                     </xsl:variable>
-                                    <xsl:value-of select="$var383_result_vmf1_inputtoresult"/>
+                                    <xsl:value-of select="$var373_result_vmf1_inputtoresult"/>
                                 </SubmissionTypeName>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey">
-                                    <xsl:variable name="var384_SubmissionErrorKey" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey">
+                                    <xsl:variable name="var374_SubmissionErrorKey" select="."/>
                                     <TransactionType>
-                                        <xsl:value-of select="string($var384_SubmissionErrorKey/ns0:SubmissionTransactionTypeCode)"/>
+                                        <xsl:value-of select="string($var374_SubmissionErrorKey/ns0:SubmissionTransactionTypeCode)"/>
                                     </TransactionType>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:PermitRecordIdentifier">
-                                    <xsl:variable name="var386_PermitRecordIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:PermitRecordIdentifier">
+                                    <xsl:variable name="var376_PermitRecordIdentifier" select="."/>
                                     <PermitIdentifier>
-                                        <xsl:value-of select="string($var386_PermitRecordIdentifier/ns0:PermitIdentifier)"/>
+                                        <xsl:value-of select="string($var376_PermitRecordIdentifier/ns0:PermitIdentifier)"/>
                                     </PermitIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:BiosolidsProgramReportIdentifier">
-                                    <xsl:variable name="var388_BiosolidsProgramReportIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:BiosolidsProgramReportIdentifier">
+                                    <xsl:variable name="var378_BiosolidsProgramReportIdentifier" select="."/>
                                     <PermitIdentifier>
-                                        <xsl:value-of select="string($var388_BiosolidsProgramReportIdentifier/ns0:PermitIdentifier)"/>
+                                        <xsl:value-of select="string($var378_BiosolidsProgramReportIdentifier/ns0:PermitIdentifier)"/>
                                     </PermitIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:CAFOAnnualProgramReportIdentifier">
-                                    <xsl:variable name="var390_CAFOAnnualProgramReportIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:CAFOAnnualProgramReportIdentifier">
+                                    <xsl:variable name="var380_CAFOAnnualProgramReportIdentifier" select="."/>
                                     <PermitIdentifier>
-                                        <xsl:value-of select="string($var390_CAFOAnnualProgramReportIdentifier/ns0:PermitIdentifier)"/>
+                                        <xsl:value-of select="string($var380_CAFOAnnualProgramReportIdentifier/ns0:PermitIdentifier)"/>
                                     </PermitIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringIdentifier">
-                                    <xsl:variable name="var392_ComplianceMonitoringIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceScheduleIdentifier">
+                                    <xsl:variable name="var382_ComplianceScheduleIdentifier" select="."/>
                                     <PermitIdentifier>
-                                        <xsl:value-of select="string($var392_ComplianceMonitoringIdentifier/ns0:PermitIdentifier)"/>
+                                        <xsl:value-of select="string($var382_ComplianceScheduleIdentifier/ns0:PermitIdentifier)"/>
                                     </PermitIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceScheduleIdentifier">
-                                    <xsl:variable name="var394_ComplianceScheduleIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:CSOEventReportIdentifier">
+                                    <xsl:variable name="var384_CSOEventReportIdentifier" select="."/>
                                     <PermitIdentifier>
-                                        <xsl:value-of select="string($var394_ComplianceScheduleIdentifier/ns0:PermitIdentifier)"/>
+                                        <xsl:value-of select="string($var384_CSOEventReportIdentifier/ns0:PermitIdentifier)"/>
                                     </PermitIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:CSOEventReportIdentifier">
-                                    <xsl:variable name="var396_CSOEventReportIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:DischargeMonitoringReportIdentifier">
+                                    <xsl:variable name="var386_DischargeMonitoringReportIdentifier" select="."/>
                                     <PermitIdentifier>
-                                        <xsl:value-of select="string($var396_CSOEventReportIdentifier/ns0:PermitIdentifier)"/>
+                                        <xsl:value-of select="string($var386_DischargeMonitoringReportIdentifier/ns0:PermitIdentifier)"/>
                                     </PermitIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:DischargeMonitoringReportIdentifier">
-                                    <xsl:variable name="var398_DischargeMonitoringReportIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:DMRParameterIdentifier">
+                                    <xsl:variable name="var388_DMRParameterIdentifier" select="."/>
                                     <PermitIdentifier>
-                                        <xsl:value-of select="string($var398_DischargeMonitoringReportIdentifier/ns0:PermitIdentifier)"/>
+                                        <xsl:value-of select="string($var388_DMRParameterIdentifier/ns0:PermitIdentifier)"/>
                                     </PermitIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:DMRParameterIdentifier">
-                                    <xsl:variable name="var400_DMRParameterIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:DMRViolationIdentifier">
+                                    <xsl:variable name="var390_DMRViolationIdentifier" select="."/>
                                     <PermitIdentifier>
-                                        <xsl:value-of select="string($var400_DMRParameterIdentifier/ns0:PermitIdentifier)"/>
+                                        <xsl:value-of select="string($var390_DMRViolationIdentifier/ns0:PermitIdentifier)"/>
                                     </PermitIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:DMRViolationIdentifier">
-                                    <xsl:variable name="var402_DMRViolationIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:EffluentTradePartnerReportIdentifier">
+                                    <xsl:variable name="var392_EffluentTradePartnerReportIdentifier" select="."/>
                                     <PermitIdentifier>
-                                        <xsl:value-of select="string($var402_DMRViolationIdentifier/ns0:PermitIdentifier)"/>
+                                        <xsl:value-of select="string($var392_EffluentTradePartnerReportIdentifier/ns0:PermitIdentifier)"/>
                                     </PermitIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:EffluentTradePartnerReportIdentifier">
-                                    <xsl:variable name="var404_EffluentTradePartnerReportIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:HistoricalPermitScheduleEventIdentifier">
+                                    <xsl:variable name="var394_HistoricalPermitScheduleEventIdentifier" select="."/>
                                     <PermitIdentifier>
-                                        <xsl:value-of select="string($var404_EffluentTradePartnerReportIdentifier/ns0:PermitIdentifier)"/>
+                                        <xsl:value-of select="string($var394_HistoricalPermitScheduleEventIdentifier/ns0:PermitIdentifier)"/>
                                     </PermitIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:HistoricalPermitScheduleEventIdentifier">
-                                    <xsl:variable name="var406_HistoricalPermitScheduleEventIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:LimitSegmentIdentifier">
+                                    <xsl:variable name="var396_LimitSegmentIdentifier" select="."/>
                                     <PermitIdentifier>
-                                        <xsl:value-of select="string($var406_HistoricalPermitScheduleEventIdentifier/ns0:PermitIdentifier)"/>
+                                        <xsl:value-of select="string($var396_LimitSegmentIdentifier/ns0:PermitIdentifier)"/>
                                     </PermitIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:LimitSegmentIdentifier">
-                                    <xsl:variable name="var408_LimitSegmentIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:LimitSetIdentifier">
+                                    <xsl:variable name="var398_LimitSetIdentifier" select="."/>
                                     <PermitIdentifier>
-                                        <xsl:value-of select="string($var408_LimitSegmentIdentifier/ns0:PermitIdentifier)"/>
+                                        <xsl:value-of select="string($var398_LimitSetIdentifier/ns0:PermitIdentifier)"/>
                                     </PermitIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:LimitSetIdentifier">
-                                    <xsl:variable name="var410_LimitSetIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:NarrativeConditionScheduleIdentifier">
+                                    <xsl:variable name="var400_NarrativeConditionScheduleIdentifier" select="."/>
                                     <PermitIdentifier>
-                                        <xsl:value-of select="string($var410_LimitSetIdentifier/ns0:PermitIdentifier)"/>
+                                        <xsl:value-of select="string($var400_NarrativeConditionScheduleIdentifier/ns0:PermitIdentifier)"/>
                                     </PermitIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:NarrativeConditionScheduleIdentifier">
-                                    <xsl:variable name="var412_NarrativeConditionScheduleIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ParameterLimitIdentifier">
+                                    <xsl:variable name="var402_ParameterLimitIdentifier" select="."/>
                                     <PermitIdentifier>
-                                        <xsl:value-of select="string($var412_NarrativeConditionScheduleIdentifier/ns0:PermitIdentifier)"/>
+                                        <xsl:value-of select="string($var402_ParameterLimitIdentifier/ns0:PermitIdentifier)"/>
                                     </PermitIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ParameterLimitIdentifier">
-                                    <xsl:variable name="var414_ParameterLimitIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:PermitTrackingEventIdentifier">
+                                    <xsl:variable name="var404_PermitTrackingEventIdentifier" select="."/>
                                     <PermitIdentifier>
-                                        <xsl:value-of select="string($var414_ParameterLimitIdentifier/ns0:PermitIdentifier)"/>
+                                        <xsl:value-of select="string($var404_PermitTrackingEventIdentifier/ns0:PermitIdentifier)"/>
                                     </PermitIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:PermitTrackingEventIdentifier">
-                                    <xsl:variable name="var416_PermitTrackingEventIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:PermittedFeatureRecordIdentifier">
+                                    <xsl:variable name="var406_PermittedFeatureRecordIdentifier" select="."/>
                                     <PermitIdentifier>
-                                        <xsl:value-of select="string($var416_PermitTrackingEventIdentifier/ns0:PermitIdentifier)"/>
+                                        <xsl:value-of select="string($var406_PermittedFeatureRecordIdentifier/ns0:PermitIdentifier)"/>
                                     </PermitIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:PermittedFeatureRecordIdentifier">
-                                    <xsl:variable name="var418_PermittedFeatureRecordIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:PretreatmentPerformanceSummaryIdentifier">
+                                    <xsl:variable name="var408_PretreatmentPerformanceSummaryIdentifier" select="."/>
                                     <PermitIdentifier>
-                                        <xsl:value-of select="string($var418_PermittedFeatureRecordIdentifier/ns0:PermitIdentifier)"/>
+                                        <xsl:value-of select="string($var408_PretreatmentPerformanceSummaryIdentifier/ns0:PermitIdentifier)"/>
                                     </PermitIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:PretreatmentPerformanceSummaryIdentifier">
-                                    <xsl:variable name="var420_PretreatmentPerformanceSummaryIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:SingleEventIdentifier">
+                                    <xsl:variable name="var410_SingleEventIdentifier" select="."/>
                                     <PermitIdentifier>
-                                        <xsl:value-of select="string($var420_PretreatmentPerformanceSummaryIdentifier/ns0:PermitIdentifier)"/>
+                                        <xsl:value-of select="string($var410_SingleEventIdentifier/ns0:PermitIdentifier)"/>
                                     </PermitIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:SingleEventIdentifier">
-                                    <xsl:variable name="var422_SingleEventIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:SSOAnnualReportIdentifier">
+                                    <xsl:variable name="var412_SSOAnnualReportIdentifier" select="."/>
                                     <PermitIdentifier>
-                                        <xsl:value-of select="string($var422_SingleEventIdentifier/ns0:PermitIdentifier)"/>
+                                        <xsl:value-of select="string($var412_SSOAnnualReportIdentifier/ns0:PermitIdentifier)"/>
                                     </PermitIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:SSOAnnualReportIdentifier">
-                                    <xsl:variable name="var424_SSOAnnualReportIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:SSOEventReportIdentifier">
+                                    <xsl:variable name="var414_SSOEventReportIdentifier" select="."/>
                                     <PermitIdentifier>
-                                        <xsl:value-of select="string($var424_SSOAnnualReportIdentifier/ns0:PermitIdentifier)"/>
+                                        <xsl:value-of select="string($var414_SSOEventReportIdentifier/ns0:PermitIdentifier)"/>
                                     </PermitIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:SSOEventReportIdentifier">
-                                    <xsl:variable name="var426_SSOEventReportIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:SSOMonthlyEventReportIdentifier">
+                                    <xsl:variable name="var416_SSOMonthlyEventReportIdentifier" select="."/>
                                     <PermitIdentifier>
-                                        <xsl:value-of select="string($var426_SSOEventReportIdentifier/ns0:PermitIdentifier)"/>
+                                        <xsl:value-of select="string($var416_SSOMonthlyEventReportIdentifier/ns0:PermitIdentifier)"/>
                                     </PermitIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:SSOMonthlyEventReportIdentifier">
-                                    <xsl:variable name="var428_SSOMonthlyEventReportIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:SWEventReportIdentifier">
+                                    <xsl:variable name="var418_SWEventReportIdentifier" select="."/>
                                     <PermitIdentifier>
-                                        <xsl:value-of select="string($var428_SSOMonthlyEventReportIdentifier/ns0:PermitIdentifier)"/>
+                                        <xsl:value-of select="string($var418_SWEventReportIdentifier/ns0:PermitIdentifier)"/>
                                     </PermitIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:SWEventReportIdentifier">
-                                    <xsl:variable name="var430_SWEventReportIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:SWMS4ProgramReportIdentifier">
+                                    <xsl:variable name="var420_SWMS4ProgramReportIdentifier" select="."/>
                                     <PermitIdentifier>
-                                        <xsl:value-of select="string($var430_SWEventReportIdentifier/ns0:PermitIdentifier)"/>
+                                        <xsl:value-of select="string($var420_SWMS4ProgramReportIdentifier/ns0:PermitIdentifier)"/>
                                     </PermitIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:SWMS4ProgramReportIdentifier">
-                                    <xsl:variable name="var432_SWMS4ProgramReportIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:LocalLimitsProgramReportIdentifier">
+                                    <xsl:variable name="var422_LocalLimitsProgramReportIdentifier" select="."/>
                                     <PermitIdentifier>
-                                        <xsl:value-of select="string($var432_SWMS4ProgramReportIdentifier/ns0:PermitIdentifier)"/>
+                                        <xsl:value-of select="string($var422_LocalLimitsProgramReportIdentifier/ns0:PermitIdentifier)"/>
                                     </PermitIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:LocalLimitsProgramReportIdentifier">
-                                    <xsl:variable name="var434_LocalLimitsProgramReportIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:PermitScheduleViolation">
+                                    <xsl:variable name="var424_PermitScheduleViolation" select="."/>
                                     <PermitIdentifier>
-                                        <xsl:value-of select="string($var434_LocalLimitsProgramReportIdentifier/ns0:PermitIdentifier)"/>
+                                        <xsl:value-of select="string($var424_PermitScheduleViolation/ns0:PermitIdentifier)"/>
                                     </PermitIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier">
-                                    <xsl:variable name="var436_ComplianceMonitoringLinkageIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:ComplianceScheduleViolation">
+                                    <xsl:variable name="var426_ComplianceScheduleViolation" select="."/>
                                     <PermitIdentifier>
-                                        <xsl:value-of select="string($var436_ComplianceMonitoringLinkageIdentifier/ns0:PermitIdentifier)"/>
+                                        <xsl:value-of select="string($var426_ComplianceScheduleViolation/ns0:PermitIdentifier)"/>
                                     </PermitIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:PermitScheduleViolation">
-                                    <xsl:variable name="var438_PermitScheduleViolation" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:DischargeMonitoringReportViolation">
+                                    <xsl:variable name="var428_DischargeMonitoringReportViolation" select="."/>
                                     <PermitIdentifier>
-                                        <xsl:value-of select="string($var438_PermitScheduleViolation/ns0:PermitIdentifier)"/>
+                                        <xsl:value-of select="string($var428_DischargeMonitoringReportViolation/ns0:PermitIdentifier)"/>
                                     </PermitIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:ComplianceScheduleViolation">
-                                    <xsl:variable name="var440_ComplianceScheduleViolation" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:DischargeMonitoringReportParameterViolation">
+                                    <xsl:variable name="var430_DischargeMonitoringReportParameterViolation" select="."/>
                                     <PermitIdentifier>
-                                        <xsl:value-of select="string($var440_ComplianceScheduleViolation/ns0:PermitIdentifier)"/>
+                                        <xsl:value-of select="string($var430_DischargeMonitoringReportParameterViolation/ns0:PermitIdentifier)"/>
                                     </PermitIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:DischargeMonitoringReportViolation">
-                                    <xsl:variable name="var442_DischargeMonitoringReportViolation" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:SingleEventsViolation">
+                                    <xsl:variable name="var432_SingleEventsViolation" select="."/>
                                     <PermitIdentifier>
-                                        <xsl:value-of select="string($var442_DischargeMonitoringReportViolation/ns0:PermitIdentifier)"/>
+                                        <xsl:value-of select="string($var432_SingleEventsViolation/ns0:PermitIdentifier)"/>
                                     </PermitIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:DischargeMonitoringReportParameterViolation">
-                                    <xsl:variable name="var444_DischargeMonitoringReportParameterViolation" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ScheduleEventViolationIdentifier/ns0:PermitScheduleEventViolationKeyElements">
+                                    <xsl:variable name="var434_PermitScheduleEventViolationKeyElements" select="."/>
                                     <PermitIdentifier>
-                                        <xsl:value-of select="string($var444_DischargeMonitoringReportParameterViolation/ns0:PermitIdentifier)"/>
+                                        <xsl:value-of select="string($var434_PermitScheduleEventViolationKeyElements/ns0:PermitIdentifier)"/>
                                     </PermitIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:SingleEventsViolation">
-                                    <xsl:variable name="var446_SingleEventsViolation" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ScheduleEventViolationIdentifier/ns0:ComplianceScheduleEventViolationKeyElements">
+                                    <xsl:variable name="var436_ComplianceScheduleEventViolationKeyElements" select="."/>
                                     <PermitIdentifier>
-                                        <xsl:value-of select="string($var446_SingleEventsViolation/ns0:PermitIdentifier)"/>
+                                        <xsl:value-of select="string($var436_ComplianceScheduleEventViolationKeyElements/ns0:PermitIdentifier)"/>
                                     </PermitIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ScheduleEventViolationIdentifier/ns0:PermitScheduleEventViolationKeyElements">
-                                    <xsl:variable name="var448_PermitScheduleEventViolationKeyElements" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:DMRProgramReportLinkageIdentifier">
+                                    <xsl:variable name="var438_DMRProgramReportLinkageIdentifier" select="."/>
                                     <PermitIdentifier>
-                                        <xsl:value-of select="string($var448_PermitScheduleEventViolationKeyElements/ns0:PermitIdentifier)"/>
+                                        <xsl:value-of select="string($var438_DMRProgramReportLinkageIdentifier/ns0:PermitIdentifier)"/>
                                     </PermitIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ScheduleEventViolationIdentifier/ns0:ComplianceScheduleEventViolationKeyElements">
-                                    <xsl:variable name="var450_ComplianceScheduleEventViolationKeyElements" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:SWIndustrialAnnualReportIdentifier">
+                                    <xsl:variable name="var440_SWIndustrialAnnualReportIdentifier" select="."/>
                                     <PermitIdentifier>
-                                        <xsl:value-of select="string($var450_ComplianceScheduleEventViolationKeyElements/ns0:PermitIdentifier)"/>
+                                        <xsl:value-of select="string($var440_SWIndustrialAnnualReportIdentifier/ns0:PermitIdentifier)"/>
                                     </PermitIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:DMRProgramReportLinkageIdentifier">
-                                    <xsl:variable name="var452_DMRProgramReportLinkageIdentifier" select="."/>
-                                    <PermitIdentifier>
-                                        <xsl:value-of select="string($var452_DMRProgramReportLinkageIdentifier/ns0:PermitIdentifier)"/>
-                                    </PermitIdentifier>
-                                </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:PermitTerminationIdentifier">
-                                    <xsl:variable name="var454_PermitTerminationIdentifier" select="."/>
-                                    <PermitIdentifier>
-                                        <xsl:value-of select="string($var454_PermitTerminationIdentifier/ns0:PermitIdentifier)"/>
-                                    </PermitIdentifier>
-                                </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageSingleEvent">
-                                    <xsl:variable name="var456_LinkageSingleEvent" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageSingleEvent">
+                                    <xsl:variable name="var442_LinkageSingleEvent" select="."/>
                                     <PermitIdentifier2>
-                                        <xsl:value-of select="string($var456_LinkageSingleEvent/ns0:PermitIdentifier)"/>
+                                        <xsl:value-of select="string($var442_LinkageSingleEvent/ns0:PermitIdentifier)"/>
                                     </PermitIdentifier2>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:DMRProgramReportLinkageIdentifier/ns0:LinkageBiosolidsReport">
-                                    <xsl:variable name="var458_LinkageBiosolidsReport" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:DMRProgramReportLinkageIdentifier/ns0:LinkageBiosolidsReport">
+                                    <xsl:variable name="var444_LinkageBiosolidsReport" select="."/>
                                     <PermitIdentifier2>
-                                        <xsl:value-of select="string($var458_LinkageBiosolidsReport/ns0:PermitIdentifier)"/>
+                                        <xsl:value-of select="string($var444_LinkageBiosolidsReport/ns0:PermitIdentifier)"/>
                                     </PermitIdentifier2>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageBiosolidsReport">
-                                    <xsl:variable name="var460_LinkageBiosolidsReport" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageBiosolidsReport">
+                                    <xsl:variable name="var446_LinkageBiosolidsReport" select="."/>
                                     <PermitIdentifier2>
-                                        <xsl:value-of select="string($var460_LinkageBiosolidsReport/ns0:PermitIdentifier)"/>
+                                        <xsl:value-of select="string($var446_LinkageBiosolidsReport/ns0:PermitIdentifier)"/>
                                     </PermitIdentifier2>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageCAFOAnnualReport">
-                                    <xsl:variable name="var462_LinkageCAFOAnnualReport" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageCAFOAnnualReport">
+                                    <xsl:variable name="var448_LinkageCAFOAnnualReport" select="."/>
                                     <PermitIdentifier2>
-                                        <xsl:value-of select="string($var462_LinkageCAFOAnnualReport/ns0:PermitIdentifier)"/>
+                                        <xsl:value-of select="string($var448_LinkageCAFOAnnualReport/ns0:PermitIdentifier)"/>
                                     </PermitIdentifier2>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageCSOEventReport">
-                                    <xsl:variable name="var464_LinkageCSOEventReport" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageCSOEventReport">
+                                    <xsl:variable name="var450_LinkageCSOEventReport" select="."/>
                                     <PermitIdentifier2>
-                                        <xsl:value-of select="string($var464_LinkageCSOEventReport/ns0:PermitIdentifier)"/>
+                                        <xsl:value-of select="string($var450_LinkageCSOEventReport/ns0:PermitIdentifier)"/>
                                     </PermitIdentifier2>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageLocalLimitsReport">
-                                    <xsl:variable name="var466_LinkageLocalLimitsReport" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageLocalLimitsReport">
+                                    <xsl:variable name="var452_LinkageLocalLimitsReport" select="."/>
                                     <PermitIdentifier2>
-                                        <xsl:value-of select="string($var466_LinkageLocalLimitsReport/ns0:PermitIdentifier)"/>
+                                        <xsl:value-of select="string($var452_LinkageLocalLimitsReport/ns0:PermitIdentifier)"/>
                                     </PermitIdentifier2>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkagePretreatmentPerformanceReport">
-                                    <xsl:variable name="var468_LinkagePretreatmentPerformanceReport" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkagePretreatmentPerformanceReport">
+                                    <xsl:variable name="var454_LinkagePretreatmentPerformanceReport" select="."/>
                                     <PermitIdentifier2>
-                                        <xsl:value-of select="string($var468_LinkagePretreatmentPerformanceReport/ns0:PermitIdentifier)"/>
+                                        <xsl:value-of select="string($var454_LinkagePretreatmentPerformanceReport/ns0:PermitIdentifier)"/>
                                     </PermitIdentifier2>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageSSOAnnualReport">
-                                    <xsl:variable name="var470_LinkageSSOAnnualReport" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageSSOAnnualReport">
+                                    <xsl:variable name="var456_LinkageSSOAnnualReport" select="."/>
                                     <PermitIdentifier2>
-                                        <xsl:value-of select="string($var470_LinkageSSOAnnualReport/ns0:PermitIdentifier)"/>
+                                        <xsl:value-of select="string($var456_LinkageSSOAnnualReport/ns0:PermitIdentifier)"/>
                                     </PermitIdentifier2>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageSSOEventReport">
-                                    <xsl:variable name="var472_LinkageSSOEventReport" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageSSOEventReport">
+                                    <xsl:variable name="var458_LinkageSSOEventReport" select="."/>
                                     <PermitIdentifier2>
-                                        <xsl:value-of select="string($var472_LinkageSSOEventReport/ns0:PermitIdentifier)"/>
+                                        <xsl:value-of select="string($var458_LinkageSSOEventReport/ns0:PermitIdentifier)"/>
                                     </PermitIdentifier2>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageSSOMonthlyEventReport">
-                                    <xsl:variable name="var474_LinkageSSOMonthlyEventReport" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageSSOMonthlyEventReport">
+                                    <xsl:variable name="var460_LinkageSSOMonthlyEventReport" select="."/>
                                     <PermitIdentifier2>
-                                        <xsl:value-of select="string($var474_LinkageSSOMonthlyEventReport/ns0:PermitIdentifier)"/>
+                                        <xsl:value-of select="string($var460_LinkageSSOMonthlyEventReport/ns0:PermitIdentifier)"/>
                                     </PermitIdentifier2>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageSWEventReport">
-                                    <xsl:variable name="var476_LinkageSWEventReport" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageSWEventReport">
+                                    <xsl:variable name="var462_LinkageSWEventReport" select="."/>
                                     <PermitIdentifier2>
-                                        <xsl:value-of select="string($var476_LinkageSWEventReport/ns0:PermitIdentifier)"/>
+                                        <xsl:value-of select="string($var462_LinkageSWEventReport/ns0:PermitIdentifier)"/>
                                     </PermitIdentifier2>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageSWMS4Report">
-                                    <xsl:variable name="var478_LinkageSWMS4Report" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageSWMS4Report">
+                                    <xsl:variable name="var464_LinkageSWMS4Report" select="."/>
                                     <PermitIdentifier2>
-                                        <xsl:value-of select="string($var478_LinkageSWMS4Report/ns0:PermitIdentifier)"/>
+                                        <xsl:value-of select="string($var464_LinkageSWMS4Report/ns0:PermitIdentifier)"/>
                                     </PermitIdentifier2>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageStateComplianceMonitoring">
-                                    <xsl:variable name="var480_LinkageStateComplianceMonitoring" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:DMRProgramReportLinkageIdentifier/ns0:LinkageSWEventReport">
+                                    <xsl:variable name="var466_LinkageSWEventReport" select="."/>
                                     <PermitIdentifier2>
-                                        <xsl:value-of select="string($var480_LinkageStateComplianceMonitoring/ns0:PermitIdentifier)"/>
+                                        <xsl:value-of select="string($var466_LinkageSWEventReport/ns0:PermitIdentifier)"/>
                                     </PermitIdentifier2>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:DMRProgramReportLinkageIdentifier/ns0:LinkageSWEventReport">
-                                    <xsl:variable name="var482_LinkageSWEventReport" select="."/>
-                                    <PermitIdentifier2>
-                                        <xsl:value-of select="string($var482_LinkageSWEventReport/ns0:PermitIdentifier)"/>
-                                    </PermitIdentifier2>
-                                </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:DischargeMonitoringReportIdentifier">
-                                    <xsl:variable name="var484_DischargeMonitoringReportIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:DischargeMonitoringReportIdentifier">
+                                    <xsl:variable name="var468_DischargeMonitoringReportIdentifier" select="."/>
                                     <PermittedFeatureIdentifier>
-                                        <xsl:value-of select="string($var484_DischargeMonitoringReportIdentifier/ns0:PermittedFeatureIdentifier)"/>
+                                        <xsl:value-of select="string($var468_DischargeMonitoringReportIdentifier/ns0:PermittedFeatureIdentifier)"/>
                                     </PermittedFeatureIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:DMRProgramReportLinkageIdentifier">
-                                    <xsl:variable name="var486_DMRProgramReportLinkageIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:DMRProgramReportLinkageIdentifier">
+                                    <xsl:variable name="var470_DMRProgramReportLinkageIdentifier" select="."/>
                                     <PermittedFeatureIdentifier>
-                                        <xsl:value-of select="string($var486_DMRProgramReportLinkageIdentifier/ns0:PermittedFeatureIdentifier)"/>
+                                        <xsl:value-of select="string($var470_DMRProgramReportLinkageIdentifier/ns0:PermittedFeatureIdentifier)"/>
                                     </PermittedFeatureIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:DischargeMonitoringReportViolation">
-                                    <xsl:variable name="var488_DischargeMonitoringReportViolation" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:DischargeMonitoringReportViolation">
+                                    <xsl:variable name="var472_DischargeMonitoringReportViolation" select="."/>
                                     <PermittedFeatureIdentifier>
-                                        <xsl:value-of select="string($var488_DischargeMonitoringReportViolation/ns0:PermittedFeatureIdentifier)"/>
+                                        <xsl:value-of select="string($var472_DischargeMonitoringReportViolation/ns0:PermittedFeatureIdentifier)"/>
                                     </PermittedFeatureIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:DMRParameterIdentifier">
-                                    <xsl:variable name="var490_DMRParameterIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:DMRParameterIdentifier">
+                                    <xsl:variable name="var474_DMRParameterIdentifier" select="."/>
                                     <PermittedFeatureIdentifier>
-                                        <xsl:value-of select="string($var490_DMRParameterIdentifier/ns0:PermittedFeatureIdentifier)"/>
+                                        <xsl:value-of select="string($var474_DMRParameterIdentifier/ns0:PermittedFeatureIdentifier)"/>
                                     </PermittedFeatureIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:DMRViolationIdentifier">
-                                    <xsl:variable name="var492_DMRViolationIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:DMRViolationIdentifier">
+                                    <xsl:variable name="var476_DMRViolationIdentifier" select="."/>
                                     <PermittedFeatureIdentifier>
-                                        <xsl:value-of select="string($var492_DMRViolationIdentifier/ns0:PermittedFeatureIdentifier)"/>
+                                        <xsl:value-of select="string($var476_DMRViolationIdentifier/ns0:PermittedFeatureIdentifier)"/>
                                     </PermittedFeatureIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:EffluentTradePartnerReportIdentifier">
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:EffluentTradePartnerReportIdentifier">
+                                    <xsl:variable name="var478_EffluentTradePartnerReportIdentifier" select="."/>
+                                    <PermittedFeatureIdentifier>
+                                        <xsl:value-of select="string($var478_EffluentTradePartnerReportIdentifier/ns0:PermittedFeatureIdentifier)"/>
+                                    </PermittedFeatureIdentifier>
+                                </xsl:for-each>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:LimitSegmentIdentifier">
+                                    <xsl:variable name="var480_LimitSegmentIdentifier" select="."/>
+                                    <PermittedFeatureIdentifier>
+                                        <xsl:value-of select="string($var480_LimitSegmentIdentifier/ns0:PermittedFeatureIdentifier)"/>
+                                    </PermittedFeatureIdentifier>
+                                </xsl:for-each>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:LimitSetIdentifier">
+                                    <xsl:variable name="var482_LimitSetIdentifier" select="."/>
+                                    <PermittedFeatureIdentifier>
+                                        <xsl:value-of select="string($var482_LimitSetIdentifier/ns0:PermittedFeatureIdentifier)"/>
+                                    </PermittedFeatureIdentifier>
+                                </xsl:for-each>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ParameterLimitIdentifier">
+                                    <xsl:variable name="var484_ParameterLimitIdentifier" select="."/>
+                                    <PermittedFeatureIdentifier>
+                                        <xsl:value-of select="string($var484_ParameterLimitIdentifier/ns0:PermittedFeatureIdentifier)"/>
+                                    </PermittedFeatureIdentifier>
+                                </xsl:for-each>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:PermittedFeatureRecordIdentifier">
+                                    <xsl:variable name="var486_PermittedFeatureRecordIdentifier" select="."/>
+                                    <PermittedFeatureIdentifier>
+                                        <xsl:value-of select="string($var486_PermittedFeatureRecordIdentifier/ns0:PermittedFeatureIdentifier)"/>
+                                    </PermittedFeatureIdentifier>
+                                </xsl:for-each>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:DischargeMonitoringReportParameterViolation">
+                                    <xsl:variable name="var488_DischargeMonitoringReportParameterViolation" select="."/>
+                                    <PermittedFeatureIdentifier>
+                                        <xsl:value-of select="string($var488_DischargeMonitoringReportParameterViolation/ns0:PermittedFeatureIdentifier)"/>
+                                    </PermittedFeatureIdentifier>
+                                </xsl:for-each>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:DischargeMonitoringReportIdentifier">
+                                    <xsl:variable name="var490_DischargeMonitoringReportIdentifier" select="."/>
+                                    <LimitSetDesignator>
+                                        <xsl:value-of select="string($var490_DischargeMonitoringReportIdentifier/ns0:LimitSetDesignator)"/>
+                                    </LimitSetDesignator>
+                                </xsl:for-each>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:DMRProgramReportLinkageIdentifier">
+                                    <xsl:variable name="var492_DMRProgramReportLinkageIdentifier" select="."/>
+                                    <LimitSetDesignator>
+                                        <xsl:value-of select="string($var492_DMRProgramReportLinkageIdentifier/ns0:LimitSetDesignator)"/>
+                                    </LimitSetDesignator>
+                                </xsl:for-each>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:EffluentTradePartnerReportIdentifier">
                                     <xsl:variable name="var494_EffluentTradePartnerReportIdentifier" select="."/>
-                                    <PermittedFeatureIdentifier>
-                                        <xsl:value-of select="string($var494_EffluentTradePartnerReportIdentifier/ns0:PermittedFeatureIdentifier)"/>
-                                    </PermittedFeatureIdentifier>
-                                </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:LimitSegmentIdentifier">
-                                    <xsl:variable name="var496_LimitSegmentIdentifier" select="."/>
-                                    <PermittedFeatureIdentifier>
-                                        <xsl:value-of select="string($var496_LimitSegmentIdentifier/ns0:PermittedFeatureIdentifier)"/>
-                                    </PermittedFeatureIdentifier>
-                                </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:LimitSetIdentifier">
-                                    <xsl:variable name="var498_LimitSetIdentifier" select="."/>
-                                    <PermittedFeatureIdentifier>
-                                        <xsl:value-of select="string($var498_LimitSetIdentifier/ns0:PermittedFeatureIdentifier)"/>
-                                    </PermittedFeatureIdentifier>
-                                </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ParameterLimitIdentifier">
-                                    <xsl:variable name="var500_ParameterLimitIdentifier" select="."/>
-                                    <PermittedFeatureIdentifier>
-                                        <xsl:value-of select="string($var500_ParameterLimitIdentifier/ns0:PermittedFeatureIdentifier)"/>
-                                    </PermittedFeatureIdentifier>
-                                </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:PermittedFeatureRecordIdentifier">
-                                    <xsl:variable name="var502_PermittedFeatureRecordIdentifier" select="."/>
-                                    <PermittedFeatureIdentifier>
-                                        <xsl:value-of select="string($var502_PermittedFeatureRecordIdentifier/ns0:PermittedFeatureIdentifier)"/>
-                                    </PermittedFeatureIdentifier>
-                                </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:DischargeMonitoringReportParameterViolation">
-                                    <xsl:variable name="var504_DischargeMonitoringReportParameterViolation" select="."/>
-                                    <PermittedFeatureIdentifier>
-                                        <xsl:value-of select="string($var504_DischargeMonitoringReportParameterViolation/ns0:PermittedFeatureIdentifier)"/>
-                                    </PermittedFeatureIdentifier>
-                                </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:DischargeMonitoringReportIdentifier">
-                                    <xsl:variable name="var506_DischargeMonitoringReportIdentifier" select="."/>
                                     <LimitSetDesignator>
-                                        <xsl:value-of select="string($var506_DischargeMonitoringReportIdentifier/ns0:LimitSetDesignator)"/>
+                                        <xsl:value-of select="string($var494_EffluentTradePartnerReportIdentifier/ns0:LimitSetDesignator)"/>
                                     </LimitSetDesignator>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:DMRProgramReportLinkageIdentifier">
-                                    <xsl:variable name="var508_DMRProgramReportLinkageIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:DMRParameterIdentifier">
+                                    <xsl:variable name="var496_DMRParameterIdentifier" select="."/>
                                     <LimitSetDesignator>
-                                        <xsl:value-of select="string($var508_DMRProgramReportLinkageIdentifier/ns0:LimitSetDesignator)"/>
+                                        <xsl:value-of select="string($var496_DMRParameterIdentifier/ns0:LimitSetDesignator)"/>
                                     </LimitSetDesignator>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:EffluentTradePartnerReportIdentifier">
-                                    <xsl:variable name="var510_EffluentTradePartnerReportIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:DMRViolationIdentifier">
+                                    <xsl:variable name="var498_DMRViolationIdentifier" select="."/>
                                     <LimitSetDesignator>
-                                        <xsl:value-of select="string($var510_EffluentTradePartnerReportIdentifier/ns0:LimitSetDesignator)"/>
+                                        <xsl:value-of select="string($var498_DMRViolationIdentifier/ns0:LimitSetDesignator)"/>
                                     </LimitSetDesignator>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:DMRParameterIdentifier">
-                                    <xsl:variable name="var512_DMRParameterIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:LimitSegmentIdentifier">
+                                    <xsl:variable name="var500_LimitSegmentIdentifier" select="."/>
                                     <LimitSetDesignator>
-                                        <xsl:value-of select="string($var512_DMRParameterIdentifier/ns0:LimitSetDesignator)"/>
+                                        <xsl:value-of select="string($var500_LimitSegmentIdentifier/ns0:LimitSetDesignator)"/>
                                     </LimitSetDesignator>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:DMRViolationIdentifier">
-                                    <xsl:variable name="var514_DMRViolationIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:LimitSetIdentifier">
+                                    <xsl:variable name="var502_LimitSetIdentifier" select="."/>
                                     <LimitSetDesignator>
-                                        <xsl:value-of select="string($var514_DMRViolationIdentifier/ns0:LimitSetDesignator)"/>
+                                        <xsl:value-of select="string($var502_LimitSetIdentifier/ns0:LimitSetDesignator)"/>
                                     </LimitSetDesignator>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:LimitSegmentIdentifier">
-                                    <xsl:variable name="var516_LimitSegmentIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ParameterLimitIdentifier">
+                                    <xsl:variable name="var504_ParameterLimitIdentifier" select="."/>
                                     <LimitSetDesignator>
-                                        <xsl:value-of select="string($var516_LimitSegmentIdentifier/ns0:LimitSetDesignator)"/>
+                                        <xsl:value-of select="string($var504_ParameterLimitIdentifier/ns0:LimitSetDesignator)"/>
                                     </LimitSetDesignator>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:LimitSetIdentifier">
-                                    <xsl:variable name="var518_LimitSetIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:DischargeMonitoringReportViolation">
+                                    <xsl:variable name="var506_DischargeMonitoringReportViolation" select="."/>
                                     <LimitSetDesignator>
-                                        <xsl:value-of select="string($var518_LimitSetIdentifier/ns0:LimitSetDesignator)"/>
+                                        <xsl:value-of select="string($var506_DischargeMonitoringReportViolation/ns0:LimitSetDesignator)"/>
                                     </LimitSetDesignator>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ParameterLimitIdentifier">
-                                    <xsl:variable name="var520_ParameterLimitIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:DischargeMonitoringReportParameterViolation">
+                                    <xsl:variable name="var508_DischargeMonitoringReportParameterViolation" select="."/>
                                     <LimitSetDesignator>
-                                        <xsl:value-of select="string($var520_ParameterLimitIdentifier/ns0:LimitSetDesignator)"/>
+                                        <xsl:value-of select="string($var508_DischargeMonitoringReportParameterViolation/ns0:LimitSetDesignator)"/>
                                     </LimitSetDesignator>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:DischargeMonitoringReportViolation">
-                                    <xsl:variable name="var522_DischargeMonitoringReportViolation" select="."/>
-                                    <LimitSetDesignator>
-                                        <xsl:value-of select="string($var522_DischargeMonitoringReportViolation/ns0:LimitSetDesignator)"/>
-                                    </LimitSetDesignator>
-                                </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:DischargeMonitoringReportParameterViolation">
-                                    <xsl:variable name="var524_DischargeMonitoringReportParameterViolation" select="."/>
-                                    <LimitSetDesignator>
-                                        <xsl:value-of select="string($var524_DischargeMonitoringReportParameterViolation/ns0:LimitSetDesignator)"/>
-                                    </LimitSetDesignator>
-                                </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:DischargeMonitoringReportIdentifier">
-                                    <xsl:variable name="var526_DischargeMonitoringReportIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:DischargeMonitoringReportIdentifier">
+                                    <xsl:variable name="var510_DischargeMonitoringReportIdentifier" select="."/>
                                     <MonitoringPeriodEndDate>
-                                        <xsl:value-of select="string($var526_DischargeMonitoringReportIdentifier/ns0:MonitoringPeriodEndDate)"/>
+                                        <xsl:value-of select="string($var510_DischargeMonitoringReportIdentifier/ns0:MonitoringPeriodEndDate)"/>
                                     </MonitoringPeriodEndDate>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:DMRProgramReportLinkageIdentifier">
-                                    <xsl:variable name="var528_DMRProgramReportLinkageIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:DMRProgramReportLinkageIdentifier">
+                                    <xsl:variable name="var512_DMRProgramReportLinkageIdentifier" select="."/>
                                     <MonitoringPeriodEndDate>
-                                        <xsl:value-of select="string($var528_DMRProgramReportLinkageIdentifier/ns0:MonitoringPeriodEndDate)"/>
+                                        <xsl:value-of select="string($var512_DMRProgramReportLinkageIdentifier/ns0:MonitoringPeriodEndDate)"/>
                                     </MonitoringPeriodEndDate>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:DMRParameterIdentifier">
-                                    <xsl:variable name="var530_DMRParameterIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:DMRParameterIdentifier">
+                                    <xsl:variable name="var514_DMRParameterIdentifier" select="."/>
                                     <MonitoringPeriodEndDate>
-                                        <xsl:value-of select="string($var530_DMRParameterIdentifier/ns0:MonitoringPeriodEndDate)"/>
+                                        <xsl:value-of select="string($var514_DMRParameterIdentifier/ns0:MonitoringPeriodEndDate)"/>
                                     </MonitoringPeriodEndDate>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:DMRViolationIdentifier">
-                                    <xsl:variable name="var532_DMRViolationIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:DMRViolationIdentifier">
+                                    <xsl:variable name="var516_DMRViolationIdentifier" select="."/>
                                     <MonitoringPeriodEndDate>
-                                        <xsl:value-of select="string($var532_DMRViolationIdentifier/ns0:MonitoringPeriodEndDate)"/>
+                                        <xsl:value-of select="string($var516_DMRViolationIdentifier/ns0:MonitoringPeriodEndDate)"/>
                                     </MonitoringPeriodEndDate>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:DischargeMonitoringReportViolation">
-                                    <xsl:variable name="var534_DischargeMonitoringReportViolation" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:DischargeMonitoringReportViolation">
+                                    <xsl:variable name="var518_DischargeMonitoringReportViolation" select="."/>
                                     <MonitoringPeriodEndDate>
-                                        <xsl:value-of select="string($var534_DischargeMonitoringReportViolation/ns0:MonitoringPeriodEndDate)"/>
+                                        <xsl:value-of select="string($var518_DischargeMonitoringReportViolation/ns0:MonitoringPeriodEndDate)"/>
                                     </MonitoringPeriodEndDate>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:DischargeMonitoringReportParameterViolation">
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:DischargeMonitoringReportParameterViolation">
+                                    <xsl:variable name="var520_DischargeMonitoringReportParameterViolation" select="."/>
+                                    <MonitoringPeriodEndDate>
+                                        <xsl:value-of select="string($var520_DischargeMonitoringReportParameterViolation/ns0:MonitoringPeriodEndDate)"/>
+                                    </MonitoringPeriodEndDate>
+                                </xsl:for-each>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:DMRParameterIdentifier">
+                                    <xsl:variable name="var522_DMRParameterIdentifier" select="."/>
+                                    <ParameterCode>
+                                        <xsl:value-of select="string($var522_DMRParameterIdentifier/ns0:ParameterCode)"/>
+                                    </ParameterCode>
+                                </xsl:for-each>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:DMRViolationIdentifier">
+                                    <xsl:variable name="var524_DMRViolationIdentifier" select="."/>
+                                    <ParameterCode>
+                                        <xsl:value-of select="string($var524_DMRViolationIdentifier/ns0:ParameterCode)"/>
+                                    </ParameterCode>
+                                </xsl:for-each>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:EffluentTradePartnerReportIdentifier">
+                                    <xsl:variable name="var526_EffluentTradePartnerReportIdentifier" select="."/>
+                                    <ParameterCode>
+                                        <xsl:value-of select="string($var526_EffluentTradePartnerReportIdentifier/ns0:ParameterCode)"/>
+                                    </ParameterCode>
+                                </xsl:for-each>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:LimitSegmentIdentifier">
+                                    <xsl:variable name="var528_LimitSegmentIdentifier" select="."/>
+                                    <ParameterCode>
+                                        <xsl:value-of select="string($var528_LimitSegmentIdentifier/ns0:ParameterCode)"/>
+                                    </ParameterCode>
+                                </xsl:for-each>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ParameterLimitIdentifier">
+                                    <xsl:variable name="var530_ParameterLimitIdentifier" select="."/>
+                                    <ParameterCode>
+                                        <xsl:value-of select="string($var530_ParameterLimitIdentifier/ns0:ParameterCode)"/>
+                                    </ParameterCode>
+                                </xsl:for-each>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:DischargeMonitoringReportParameterViolation">
+                                    <xsl:variable name="var532_DischargeMonitoringReportParameterViolation" select="."/>
+                                    <ParameterCode>
+                                        <xsl:value-of select="string($var532_DischargeMonitoringReportParameterViolation/ns0:ParameterCode)"/>
+                                    </ParameterCode>
+                                </xsl:for-each>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:DMRParameterIdentifier">
+                                    <xsl:variable name="var534_DMRParameterIdentifier" select="."/>
+                                    <MonitoringSiteDescriptionCode>
+                                        <xsl:value-of select="string($var534_DMRParameterIdentifier/ns0:MonitoringSiteDescriptionCode)"/>
+                                    </MonitoringSiteDescriptionCode>
+                                </xsl:for-each>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:DischargeMonitoringReportParameterViolation">
                                     <xsl:variable name="var536_DischargeMonitoringReportParameterViolation" select="."/>
-                                    <MonitoringPeriodEndDate>
-                                        <xsl:value-of select="string($var536_DischargeMonitoringReportParameterViolation/ns0:MonitoringPeriodEndDate)"/>
-                                    </MonitoringPeriodEndDate>
+                                    <MonitoringSiteDescriptionCode>
+                                        <xsl:value-of select="string($var536_DischargeMonitoringReportParameterViolation/ns0:MonitoringSiteDescriptionCode)"/>
+                                    </MonitoringSiteDescriptionCode>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:DMRParameterIdentifier">
-                                    <xsl:variable name="var538_DMRParameterIdentifier" select="."/>
-                                    <ParameterCode>
-                                        <xsl:value-of select="string($var538_DMRParameterIdentifier/ns0:ParameterCode)"/>
-                                    </ParameterCode>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:DMRViolationIdentifier">
+                                    <xsl:variable name="var538_DMRViolationIdentifier" select="."/>
+                                    <MonitoringSiteDescriptionCode>
+                                        <xsl:value-of select="string($var538_DMRViolationIdentifier/ns0:MonitoringSiteDescriptionCode)"/>
+                                    </MonitoringSiteDescriptionCode>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:DMRViolationIdentifier">
-                                    <xsl:variable name="var540_DMRViolationIdentifier" select="."/>
-                                    <ParameterCode>
-                                        <xsl:value-of select="string($var540_DMRViolationIdentifier/ns0:ParameterCode)"/>
-                                    </ParameterCode>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:EffluentTradePartnerReportIdentifier">
+                                    <xsl:variable name="var540_EffluentTradePartnerReportIdentifier" select="."/>
+                                    <MonitoringSiteDescriptionCode>
+                                        <xsl:value-of select="string($var540_EffluentTradePartnerReportIdentifier/ns0:MonitoringSiteDescriptionCode)"/>
+                                    </MonitoringSiteDescriptionCode>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:EffluentTradePartnerReportIdentifier">
-                                    <xsl:variable name="var542_EffluentTradePartnerReportIdentifier" select="."/>
-                                    <ParameterCode>
-                                        <xsl:value-of select="string($var542_EffluentTradePartnerReportIdentifier/ns0:ParameterCode)"/>
-                                    </ParameterCode>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:LimitSegmentIdentifier">
+                                    <xsl:variable name="var542_LimitSegmentIdentifier" select="."/>
+                                    <MonitoringSiteDescriptionCode>
+                                        <xsl:value-of select="string($var542_LimitSegmentIdentifier/ns0:MonitoringSiteDescriptionCode)"/>
+                                    </MonitoringSiteDescriptionCode>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:LimitSegmentIdentifier">
-                                    <xsl:variable name="var544_LimitSegmentIdentifier" select="."/>
-                                    <ParameterCode>
-                                        <xsl:value-of select="string($var544_LimitSegmentIdentifier/ns0:ParameterCode)"/>
-                                    </ParameterCode>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ParameterLimitIdentifier">
+                                    <xsl:variable name="var544_ParameterLimitIdentifier" select="."/>
+                                    <MonitoringSiteDescriptionCode>
+                                        <xsl:value-of select="string($var544_ParameterLimitIdentifier/ns0:MonitoringSiteDescriptionCode)"/>
+                                    </MonitoringSiteDescriptionCode>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ParameterLimitIdentifier">
-                                    <xsl:variable name="var546_ParameterLimitIdentifier" select="."/>
-                                    <ParameterCode>
-                                        <xsl:value-of select="string($var546_ParameterLimitIdentifier/ns0:ParameterCode)"/>
-                                    </ParameterCode>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:DMRParameterIdentifier">
+                                    <xsl:variable name="var546_DMRParameterIdentifier" select="."/>
+                                    <LimitSeasonNumber>
+                                        <xsl:value-of select="number(string($var546_DMRParameterIdentifier/ns0:LimitSeasonNumber))"/>
+                                    </LimitSeasonNumber>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:DischargeMonitoringReportParameterViolation">
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:DischargeMonitoringReportParameterViolation">
                                     <xsl:variable name="var548_DischargeMonitoringReportParameterViolation" select="."/>
-                                    <ParameterCode>
-                                        <xsl:value-of select="string($var548_DischargeMonitoringReportParameterViolation/ns0:ParameterCode)"/>
-                                    </ParameterCode>
-                                </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:DMRParameterIdentifier">
-                                    <xsl:variable name="var550_DMRParameterIdentifier" select="."/>
-                                    <MonitoringSiteDescriptionCode>
-                                        <xsl:value-of select="string($var550_DMRParameterIdentifier/ns0:MonitoringSiteDescriptionCode)"/>
-                                    </MonitoringSiteDescriptionCode>
-                                </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:DischargeMonitoringReportParameterViolation">
-                                    <xsl:variable name="var552_DischargeMonitoringReportParameterViolation" select="."/>
-                                    <MonitoringSiteDescriptionCode>
-                                        <xsl:value-of select="string($var552_DischargeMonitoringReportParameterViolation/ns0:MonitoringSiteDescriptionCode)"/>
-                                    </MonitoringSiteDescriptionCode>
-                                </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:DMRViolationIdentifier">
-                                    <xsl:variable name="var554_DMRViolationIdentifier" select="."/>
-                                    <MonitoringSiteDescriptionCode>
-                                        <xsl:value-of select="string($var554_DMRViolationIdentifier/ns0:MonitoringSiteDescriptionCode)"/>
-                                    </MonitoringSiteDescriptionCode>
-                                </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:EffluentTradePartnerReportIdentifier">
-                                    <xsl:variable name="var556_EffluentTradePartnerReportIdentifier" select="."/>
-                                    <MonitoringSiteDescriptionCode>
-                                        <xsl:value-of select="string($var556_EffluentTradePartnerReportIdentifier/ns0:MonitoringSiteDescriptionCode)"/>
-                                    </MonitoringSiteDescriptionCode>
-                                </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:LimitSegmentIdentifier">
-                                    <xsl:variable name="var558_LimitSegmentIdentifier" select="."/>
-                                    <MonitoringSiteDescriptionCode>
-                                        <xsl:value-of select="string($var558_LimitSegmentIdentifier/ns0:MonitoringSiteDescriptionCode)"/>
-                                    </MonitoringSiteDescriptionCode>
-                                </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ParameterLimitIdentifier">
-                                    <xsl:variable name="var560_ParameterLimitIdentifier" select="."/>
-                                    <MonitoringSiteDescriptionCode>
-                                        <xsl:value-of select="string($var560_ParameterLimitIdentifier/ns0:MonitoringSiteDescriptionCode)"/>
-                                    </MonitoringSiteDescriptionCode>
-                                </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:DMRParameterIdentifier">
-                                    <xsl:variable name="var562_DMRParameterIdentifier" select="."/>
                                     <LimitSeasonNumber>
-                                        <xsl:value-of select="number(string($var562_DMRParameterIdentifier/ns0:LimitSeasonNumber))"/>
+                                        <xsl:value-of select="number(string($var548_DischargeMonitoringReportParameterViolation/ns0:LimitSeasonNumber))"/>
                                     </LimitSeasonNumber>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:DischargeMonitoringReportParameterViolation">
-                                    <xsl:variable name="var564_DischargeMonitoringReportParameterViolation" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:DMRViolationIdentifier">
+                                    <xsl:variable name="var550_DMRViolationIdentifier" select="."/>
                                     <LimitSeasonNumber>
-                                        <xsl:value-of select="number(string($var564_DischargeMonitoringReportParameterViolation/ns0:LimitSeasonNumber))"/>
+                                        <xsl:value-of select="number(string($var550_DMRViolationIdentifier/ns0:LimitSeasonNumber))"/>
                                     </LimitSeasonNumber>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:DMRViolationIdentifier">
-                                    <xsl:variable name="var566_DMRViolationIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:EffluentTradePartnerReportIdentifier">
+                                    <xsl:variable name="var552_EffluentTradePartnerReportIdentifier" select="."/>
                                     <LimitSeasonNumber>
-                                        <xsl:value-of select="number(string($var566_DMRViolationIdentifier/ns0:LimitSeasonNumber))"/>
+                                        <xsl:value-of select="number(string($var552_EffluentTradePartnerReportIdentifier/ns0:LimitSeasonNumber))"/>
                                     </LimitSeasonNumber>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:EffluentTradePartnerReportIdentifier">
-                                    <xsl:variable name="var568_EffluentTradePartnerReportIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:LimitSegmentIdentifier">
+                                    <xsl:variable name="var554_LimitSegmentIdentifier" select="."/>
                                     <LimitSeasonNumber>
-                                        <xsl:value-of select="number(string($var568_EffluentTradePartnerReportIdentifier/ns0:LimitSeasonNumber))"/>
+                                        <xsl:value-of select="number(string($var554_LimitSegmentIdentifier/ns0:LimitSeasonNumber))"/>
                                     </LimitSeasonNumber>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:LimitSegmentIdentifier">
-                                    <xsl:variable name="var570_LimitSegmentIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ParameterLimitIdentifier">
+                                    <xsl:variable name="var556_ParameterLimitIdentifier" select="."/>
                                     <LimitSeasonNumber>
-                                        <xsl:value-of select="number(string($var570_LimitSegmentIdentifier/ns0:LimitSeasonNumber))"/>
+                                        <xsl:value-of select="number(string($var556_ParameterLimitIdentifier/ns0:LimitSeasonNumber))"/>
                                     </LimitSeasonNumber>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ParameterLimitIdentifier">
-                                    <xsl:variable name="var572_ParameterLimitIdentifier" select="."/>
-                                    <LimitSeasonNumber>
-                                        <xsl:value-of select="number(string($var572_ParameterLimitIdentifier/ns0:LimitSeasonNumber))"/>
-                                    </LimitSeasonNumber>
-                                </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:EffluentTradePartnerReportIdentifier">
-                                    <xsl:variable name="var574_EffluentTradePartnerReportIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:EffluentTradePartnerReportIdentifier">
+                                    <xsl:variable name="var558_EffluentTradePartnerReportIdentifier" select="."/>
                                     <LimitStartDate>
-                                        <xsl:value-of select="string($var574_EffluentTradePartnerReportIdentifier/ns0:LimitStartDate)"/>
+                                        <xsl:value-of select="string($var558_EffluentTradePartnerReportIdentifier/ns0:LimitStartDate)"/>
                                     </LimitStartDate>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:LimitSegmentIdentifier">
-                                    <xsl:variable name="var576_LimitSegmentIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:LimitSegmentIdentifier">
+                                    <xsl:variable name="var560_LimitSegmentIdentifier" select="."/>
                                     <LimitStartDate>
-                                        <xsl:value-of select="string($var576_LimitSegmentIdentifier/ns0:LimitStartDate)"/>
+                                        <xsl:value-of select="string($var560_LimitSegmentIdentifier/ns0:LimitStartDate)"/>
                                     </LimitStartDate>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:EffluentTradePartnerReportIdentifier">
-                                    <xsl:variable name="var578_EffluentTradePartnerReportIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:EffluentTradePartnerReportIdentifier">
+                                    <xsl:variable name="var562_EffluentTradePartnerReportIdentifier" select="."/>
                                     <LimitEndDate>
-                                        <xsl:value-of select="string($var578_EffluentTradePartnerReportIdentifier/ns0:LimitEndDate)"/>
+                                        <xsl:value-of select="string($var562_EffluentTradePartnerReportIdentifier/ns0:LimitEndDate)"/>
                                     </LimitEndDate>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:LimitSegmentIdentifier">
-                                    <xsl:variable name="var580_LimitSegmentIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:LimitSegmentIdentifier">
+                                    <xsl:variable name="var564_LimitSegmentIdentifier" select="."/>
                                     <LimitEndDate>
-                                        <xsl:value-of select="string($var580_LimitSegmentIdentifier/ns0:LimitEndDate)"/>
+                                        <xsl:value-of select="string($var564_LimitSegmentIdentifier/ns0:LimitEndDate)"/>
                                     </LimitEndDate>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:EffluentTradePartnerReportIdentifier/ns0:LimitModificationEffectiveDate">
-                                    <xsl:variable name="var582_LimitModificationEffectiveDate" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:EffluentTradePartnerReportIdentifier/ns0:LimitModificationEffectiveDate">
+                                    <xsl:variable name="var566_LimitModificationEffectiveDate" select="."/>
                                     <LimitModificationEffectiveDate>
-                                        <xsl:value-of select="string($var582_LimitModificationEffectiveDate)"/>
+                                        <xsl:value-of select="string($var566_LimitModificationEffectiveDate)"/>
                                     </LimitModificationEffectiveDate>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:EffluentTradePartnerReportIdentifier">
-                                    <xsl:variable name="var584_EffluentTradePartnerReportIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:EffluentTradePartnerReportIdentifier">
+                                    <xsl:variable name="var568_EffluentTradePartnerReportIdentifier" select="."/>
                                     <TradeID>
-                                        <xsl:value-of select="string($var584_EffluentTradePartnerReportIdentifier/ns0:TradeID)"/>
+                                        <xsl:value-of select="string($var568_EffluentTradePartnerReportIdentifier/ns0:TradeID)"/>
                                     </TradeID>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringIdentifier">
-                                    <xsl:variable name="var586_ComplianceMonitoringIdentifier" select="."/>
-                                    <ComplianceMonitoringCategoryCode>
-                                        <xsl:value-of select="string($var586_ComplianceMonitoringIdentifier/ns0:ComplianceMonitoringCategoryCode)"/>
-                                    </ComplianceMonitoringCategoryCode>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier">
+                                    <xsl:variable name="var570_ComplianceMonitoringLinkageIdentifier" select="."/>
+                                    <ComplianceMonitoringIdentifier>
+                                        <xsl:value-of select="string($var570_ComplianceMonitoringLinkageIdentifier/ns0:ComplianceMonitoringIdentifier)"/>
+                                    </ComplianceMonitoringIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier">
-                                    <xsl:variable name="var588_ComplianceMonitoringLinkageIdentifier" select="."/>
-                                    <ComplianceMonitoringCategoryCode>
-                                        <xsl:value-of select="string($var588_ComplianceMonitoringLinkageIdentifier/ns0:ComplianceMonitoringCategoryCode)"/>
-                                    </ComplianceMonitoringCategoryCode>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:StateNPDESComplianceMonitoringIdentifier">
+                                    <xsl:variable name="var572_StateNPDESComplianceMonitoringIdentifier" select="."/>
+                                    <ComplianceMonitoringIdentifier>
+                                        <xsl:value-of select="string($var572_StateNPDESComplianceMonitoringIdentifier/ns0:ComplianceMonitoringIdentifier)"/>
+                                    </ComplianceMonitoringIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageStateComplianceMonitoring">
-                                    <xsl:variable name="var590_LinkageStateComplianceMonitoring" select="."/>
-                                    <ComplianceMonitoringCategoryCode2>
-                                        <xsl:value-of select="string($var590_LinkageStateComplianceMonitoring/ns0:ComplianceMonitoringCategoryCode)"/>
-                                    </ComplianceMonitoringCategoryCode2>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageComplianceMonitoring">
+                                    <xsl:variable name="var574_LinkageComplianceMonitoring" select="."/>
+                                    <ComplianceMonitoringIdentifier2>
+                                        <xsl:value-of select="string($var574_LinkageComplianceMonitoring/ns0:ComplianceMonitoringIdentifier)"/>
+                                    </ComplianceMonitoringIdentifier2>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringIdentifier">
-                                    <xsl:variable name="var592_ComplianceMonitoringIdentifier" select="."/>
-                                    <ComplianceMonitoringDate>
-                                        <xsl:value-of select="string($var592_ComplianceMonitoringIdentifier/ns0:ComplianceMonitoringDate)"/>
-                                    </ComplianceMonitoringDate>
-                                </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier">
-                                    <xsl:variable name="var594_ComplianceMonitoringLinkageIdentifier" select="."/>
-                                    <ComplianceMonitoringDate>
-                                        <xsl:value-of select="string($var594_ComplianceMonitoringLinkageIdentifier/ns0:ComplianceMonitoringDate)"/>
-                                    </ComplianceMonitoringDate>
-                                </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageStateComplianceMonitoring">
-                                    <xsl:variable name="var596_LinkageStateComplianceMonitoring" select="."/>
-                                    <ComplianceMonitoringDate2>
-                                        <xsl:value-of select="string($var596_LinkageStateComplianceMonitoring/ns0:ComplianceMonitoringDate)"/>
-                                    </ComplianceMonitoringDate2>
-                                </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:CSOEventReportIdentifier">
-                                    <xsl:variable name="var598_CSOEventReportIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:CSOEventReportIdentifier">
+                                    <xsl:variable name="var576_CSOEventReportIdentifier" select="."/>
                                     <CSOEventDate>
-                                        <xsl:value-of select="string($var598_CSOEventReportIdentifier/ns0:CSOEventDate)"/>
+                                        <xsl:value-of select="string($var576_CSOEventReportIdentifier/ns0:CSOEventDate)"/>
                                     </CSOEventDate>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageCSOEventReport">
-                                    <xsl:variable name="var600_LinkageCSOEventReport" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageCSOEventReport">
+                                    <xsl:variable name="var578_LinkageCSOEventReport" select="."/>
                                     <CSOEventDate>
-                                        <xsl:value-of select="string($var600_LinkageCSOEventReport/ns0:CSOEventDate)"/>
+                                        <xsl:value-of select="string($var578_LinkageCSOEventReport/ns0:CSOEventDate)"/>
                                     </CSOEventDate>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:SWEventReportIdentifier">
-                                    <xsl:variable name="var602_SWEventReportIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:SWEventReportIdentifier">
+                                    <xsl:variable name="var580_SWEventReportIdentifier" select="."/>
                                     <DateStormEventSampled>
-                                        <xsl:value-of select="string($var602_SWEventReportIdentifier/ns0:DateStormEventSampled)"/>
+                                        <xsl:value-of select="string($var580_SWEventReportIdentifier/ns0:DateStormEventSampled)"/>
                                     </DateStormEventSampled>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageSWEventReport">
-                                    <xsl:variable name="var604_LinkageSWEventReport" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageSWEventReport">
+                                    <xsl:variable name="var582_LinkageSWEventReport" select="."/>
                                     <DateStormEventSampled>
-                                        <xsl:value-of select="string($var604_LinkageSWEventReport/ns0:DateStormEventSampled)"/>
+                                        <xsl:value-of select="string($var582_LinkageSWEventReport/ns0:DateStormEventSampled)"/>
                                     </DateStormEventSampled>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:DMRProgramReportLinkageIdentifier/ns0:LinkageSWEventReport">
-                                    <xsl:variable name="var606_LinkageSWEventReport" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:DMRProgramReportLinkageIdentifier/ns0:LinkageSWEventReport">
+                                    <xsl:variable name="var584_LinkageSWEventReport" select="."/>
                                     <DateStormEventSampled>
-                                        <xsl:value-of select="string($var606_LinkageSWEventReport/ns0:DateStormEventSampled)"/>
+                                        <xsl:value-of select="string($var584_LinkageSWEventReport/ns0:DateStormEventSampled)"/>
                                     </DateStormEventSampled>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:HistoricalPermitScheduleEventIdentifier">
-                                    <xsl:variable name="var608_HistoricalPermitScheduleEventIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:HistoricalPermitScheduleEventIdentifier">
+                                    <xsl:variable name="var586_HistoricalPermitScheduleEventIdentifier" select="."/>
                                     <PermitEffectiveDate>
-                                        <xsl:value-of select="string($var608_HistoricalPermitScheduleEventIdentifier/ns0:PermitEffectiveDate)"/>
+                                        <xsl:value-of select="string($var586_HistoricalPermitScheduleEventIdentifier/ns0:PermitEffectiveDate)"/>
                                     </PermitEffectiveDate>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:PermitTrackingEventIdentifier">
-                                    <xsl:variable name="var610_PermitTrackingEventIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:PermitTrackingEventIdentifier">
+                                    <xsl:variable name="var588_PermitTrackingEventIdentifier" select="."/>
                                     <PermitTrackingEventCode>
-                                        <xsl:value-of select="string($var610_PermitTrackingEventIdentifier/ns0:PermitTrackingEventCode)"/>
+                                        <xsl:value-of select="string($var588_PermitTrackingEventIdentifier/ns0:PermitTrackingEventCode)"/>
                                     </PermitTrackingEventCode>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:PermitTrackingEventIdentifier">
-                                    <xsl:variable name="var612_PermitTrackingEventIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:PermitTrackingEventIdentifier">
+                                    <xsl:variable name="var590_PermitTrackingEventIdentifier" select="."/>
                                     <PermitTrackingEventDate>
-                                        <xsl:value-of select="string($var612_PermitTrackingEventIdentifier/ns0:PermitTrackingEventDate)"/>
+                                        <xsl:value-of select="string($var590_PermitTrackingEventIdentifier/ns0:PermitTrackingEventDate)"/>
                                     </PermitTrackingEventDate>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:HistoricalPermitScheduleEventIdentifier">
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:HistoricalPermitScheduleEventIdentifier">
+                                    <xsl:variable name="var592_HistoricalPermitScheduleEventIdentifier" select="."/>
+                                    <NarrativeConditionNumber>
+                                        <xsl:value-of select="number(string($var592_HistoricalPermitScheduleEventIdentifier/ns0:NarrativeConditionNumber))"/>
+                                    </NarrativeConditionNumber>
+                                </xsl:for-each>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:NarrativeConditionScheduleIdentifier">
+                                    <xsl:variable name="var594_NarrativeConditionScheduleIdentifier" select="."/>
+                                    <NarrativeConditionNumber>
+                                        <xsl:value-of select="number(string($var594_NarrativeConditionScheduleIdentifier/ns0:NarrativeConditionNumber))"/>
+                                    </NarrativeConditionNumber>
+                                </xsl:for-each>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:PermitScheduleViolation">
+                                    <xsl:variable name="var596_PermitScheduleViolation" select="."/>
+                                    <NarrativeConditionNumber>
+                                        <xsl:value-of select="number(string($var596_PermitScheduleViolation/ns0:NarrativeConditionNumber))"/>
+                                    </NarrativeConditionNumber>
+                                </xsl:for-each>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ScheduleEventViolationIdentifier/ns0:PermitScheduleEventViolationKeyElements">
+                                    <xsl:variable name="var598_PermitScheduleEventViolationKeyElements" select="."/>
+                                    <NarrativeConditionNumber>
+                                        <xsl:value-of select="number(string($var598_PermitScheduleEventViolationKeyElements/ns0:NarrativeConditionNumber))"/>
+                                    </NarrativeConditionNumber>
+                                </xsl:for-each>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceScheduleEventIdentifier">
+                                    <xsl:variable name="var600_ComplianceScheduleEventIdentifier" select="."/>
+                                    <ScheduleEventCode>
+                                        <xsl:value-of select="string($var600_ComplianceScheduleEventIdentifier/ns0:ScheduleEventCode)"/>
+                                    </ScheduleEventCode>
+                                </xsl:for-each>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:HistoricalPermitScheduleEventIdentifier">
+                                    <xsl:variable name="var602_HistoricalPermitScheduleEventIdentifier" select="."/>
+                                    <ScheduleEventCode>
+                                        <xsl:value-of select="string($var602_HistoricalPermitScheduleEventIdentifier/ns0:ScheduleEventCode)"/>
+                                    </ScheduleEventCode>
+                                </xsl:for-each>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:PermitScheduleViolation">
+                                    <xsl:variable name="var604_PermitScheduleViolation" select="."/>
+                                    <ScheduleEventCode>
+                                        <xsl:value-of select="string($var604_PermitScheduleViolation/ns0:ScheduleEventCode)"/>
+                                    </ScheduleEventCode>
+                                </xsl:for-each>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:ComplianceScheduleViolation">
+                                    <xsl:variable name="var606_ComplianceScheduleViolation" select="."/>
+                                    <ScheduleEventCode>
+                                        <xsl:value-of select="string($var606_ComplianceScheduleViolation/ns0:ScheduleEventCode)"/>
+                                    </ScheduleEventCode>
+                                </xsl:for-each>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ScheduleEventViolationIdentifier/ns0:PermitScheduleEventViolationKeyElements">
+                                    <xsl:variable name="var608_PermitScheduleEventViolationKeyElements" select="."/>
+                                    <ScheduleEventCode>
+                                        <xsl:value-of select="string($var608_PermitScheduleEventViolationKeyElements/ns0:ScheduleEventCode)"/>
+                                    </ScheduleEventCode>
+                                </xsl:for-each>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ScheduleEventViolationIdentifier/ns0:ComplianceScheduleEventViolationKeyElements">
+                                    <xsl:variable name="var610_ComplianceScheduleEventViolationKeyElements" select="."/>
+                                    <ScheduleEventCode>
+                                        <xsl:value-of select="string($var610_ComplianceScheduleEventViolationKeyElements/ns0:ScheduleEventCode)"/>
+                                    </ScheduleEventCode>
+                                </xsl:for-each>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceScheduleEventIdentifier">
+                                    <xsl:variable name="var612_ComplianceScheduleEventIdentifier" select="."/>
+                                    <ScheduleDate>
+                                        <xsl:value-of select="string($var612_ComplianceScheduleEventIdentifier/ns0:ScheduleDate)"/>
+                                    </ScheduleDate>
+                                </xsl:for-each>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:HistoricalPermitScheduleEventIdentifier">
                                     <xsl:variable name="var614_HistoricalPermitScheduleEventIdentifier" select="."/>
-                                    <NarrativeConditionNumber>
-                                        <xsl:value-of select="number(string($var614_HistoricalPermitScheduleEventIdentifier/ns0:NarrativeConditionNumber))"/>
-                                    </NarrativeConditionNumber>
+                                    <ScheduleDate>
+                                        <xsl:value-of select="string($var614_HistoricalPermitScheduleEventIdentifier/ns0:ScheduleDate)"/>
+                                    </ScheduleDate>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:NarrativeConditionScheduleIdentifier">
-                                    <xsl:variable name="var616_NarrativeConditionScheduleIdentifier" select="."/>
-                                    <NarrativeConditionNumber>
-                                        <xsl:value-of select="number(string($var616_NarrativeConditionScheduleIdentifier/ns0:NarrativeConditionNumber))"/>
-                                    </NarrativeConditionNumber>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:PermitScheduleViolation">
+                                    <xsl:variable name="var616_PermitScheduleViolation" select="."/>
+                                    <ScheduleDate>
+                                        <xsl:value-of select="string($var616_PermitScheduleViolation/ns0:ScheduleDate)"/>
+                                    </ScheduleDate>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:PermitScheduleViolation">
-                                    <xsl:variable name="var618_PermitScheduleViolation" select="."/>
-                                    <NarrativeConditionNumber>
-                                        <xsl:value-of select="number(string($var618_PermitScheduleViolation/ns0:NarrativeConditionNumber))"/>
-                                    </NarrativeConditionNumber>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:ComplianceScheduleViolation">
+                                    <xsl:variable name="var618_ComplianceScheduleViolation" select="."/>
+                                    <ScheduleDate>
+                                        <xsl:value-of select="string($var618_ComplianceScheduleViolation/ns0:ScheduleDate)"/>
+                                    </ScheduleDate>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ScheduleEventViolationIdentifier/ns0:PermitScheduleEventViolationKeyElements">
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ScheduleEventViolationIdentifier/ns0:PermitScheduleEventViolationKeyElements">
                                     <xsl:variable name="var620_PermitScheduleEventViolationKeyElements" select="."/>
-                                    <NarrativeConditionNumber>
-                                        <xsl:value-of select="number(string($var620_PermitScheduleEventViolationKeyElements/ns0:NarrativeConditionNumber))"/>
-                                    </NarrativeConditionNumber>
-                                </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceScheduleEventIdentifier">
-                                    <xsl:variable name="var622_ComplianceScheduleEventIdentifier" select="."/>
-                                    <ScheduleEventCode>
-                                        <xsl:value-of select="string($var622_ComplianceScheduleEventIdentifier/ns0:ScheduleEventCode)"/>
-                                    </ScheduleEventCode>
-                                </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:HistoricalPermitScheduleEventIdentifier">
-                                    <xsl:variable name="var624_HistoricalPermitScheduleEventIdentifier" select="."/>
-                                    <ScheduleEventCode>
-                                        <xsl:value-of select="string($var624_HistoricalPermitScheduleEventIdentifier/ns0:ScheduleEventCode)"/>
-                                    </ScheduleEventCode>
-                                </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:PermitScheduleViolation">
-                                    <xsl:variable name="var626_PermitScheduleViolation" select="."/>
-                                    <ScheduleEventCode>
-                                        <xsl:value-of select="string($var626_PermitScheduleViolation/ns0:ScheduleEventCode)"/>
-                                    </ScheduleEventCode>
-                                </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:ComplianceScheduleViolation">
-                                    <xsl:variable name="var628_ComplianceScheduleViolation" select="."/>
-                                    <ScheduleEventCode>
-                                        <xsl:value-of select="string($var628_ComplianceScheduleViolation/ns0:ScheduleEventCode)"/>
-                                    </ScheduleEventCode>
-                                </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ScheduleEventViolationIdentifier/ns0:PermitScheduleEventViolationKeyElements">
-                                    <xsl:variable name="var630_PermitScheduleEventViolationKeyElements" select="."/>
-                                    <ScheduleEventCode>
-                                        <xsl:value-of select="string($var630_PermitScheduleEventViolationKeyElements/ns0:ScheduleEventCode)"/>
-                                    </ScheduleEventCode>
-                                </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ScheduleEventViolationIdentifier/ns0:ComplianceScheduleEventViolationKeyElements">
-                                    <xsl:variable name="var632_ComplianceScheduleEventViolationKeyElements" select="."/>
-                                    <ScheduleEventCode>
-                                        <xsl:value-of select="string($var632_ComplianceScheduleEventViolationKeyElements/ns0:ScheduleEventCode)"/>
-                                    </ScheduleEventCode>
-                                </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceScheduleEventIdentifier">
-                                    <xsl:variable name="var634_ComplianceScheduleEventIdentifier" select="."/>
                                     <ScheduleDate>
-                                        <xsl:value-of select="string($var634_ComplianceScheduleEventIdentifier/ns0:ScheduleDate)"/>
+                                        <xsl:value-of select="string($var620_PermitScheduleEventViolationKeyElements/ns0:ScheduleDate)"/>
                                     </ScheduleDate>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:HistoricalPermitScheduleEventIdentifier">
-                                    <xsl:variable name="var636_HistoricalPermitScheduleEventIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ScheduleEventViolationIdentifier/ns0:ComplianceScheduleEventViolationKeyElements">
+                                    <xsl:variable name="var622_ComplianceScheduleEventViolationKeyElements" select="."/>
                                     <ScheduleDate>
-                                        <xsl:value-of select="string($var636_HistoricalPermitScheduleEventIdentifier/ns0:ScheduleDate)"/>
+                                        <xsl:value-of select="string($var622_ComplianceScheduleEventViolationKeyElements/ns0:ScheduleDate)"/>
                                     </ScheduleDate>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:PermitScheduleViolation">
-                                    <xsl:variable name="var638_PermitScheduleViolation" select="."/>
-                                    <ScheduleDate>
-                                        <xsl:value-of select="string($var638_PermitScheduleViolation/ns0:ScheduleDate)"/>
-                                    </ScheduleDate>
-                                </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:ComplianceScheduleViolation">
-                                    <xsl:variable name="var640_ComplianceScheduleViolation" select="."/>
-                                    <ScheduleDate>
-                                        <xsl:value-of select="string($var640_ComplianceScheduleViolation/ns0:ScheduleDate)"/>
-                                    </ScheduleDate>
-                                </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ScheduleEventViolationIdentifier/ns0:PermitScheduleEventViolationKeyElements">
-                                    <xsl:variable name="var642_PermitScheduleEventViolationKeyElements" select="."/>
-                                    <ScheduleDate>
-                                        <xsl:value-of select="string($var642_PermitScheduleEventViolationKeyElements/ns0:ScheduleDate)"/>
-                                    </ScheduleDate>
-                                </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ScheduleEventViolationIdentifier/ns0:ComplianceScheduleEventViolationKeyElements">
-                                    <xsl:variable name="var644_ComplianceScheduleEventViolationKeyElements" select="."/>
-                                    <ScheduleDate>
-                                        <xsl:value-of select="string($var644_ComplianceScheduleEventViolationKeyElements/ns0:ScheduleDate)"/>
-                                    </ScheduleDate>
-                                </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:DMRViolationIdentifier">
-                                    <xsl:variable name="var646_DMRViolationIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:DMRViolationIdentifier">
+                                    <xsl:variable name="var624_DMRViolationIdentifier" select="."/>
                                     <NumericReportCode>
-                                        <xsl:value-of select="string($var646_DMRViolationIdentifier/ns0:NumericReportCode)"/>
+                                        <xsl:value-of select="string($var624_DMRViolationIdentifier/ns0:NumericReportCode)"/>
                                     </NumericReportCode>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:DMRViolationIdentifier">
-                                    <xsl:variable name="var648_DMRViolationIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:DMRViolationIdentifier">
+                                    <xsl:variable name="var626_DMRViolationIdentifier" select="."/>
                                     <NumericReportViolationCode>
-                                        <xsl:value-of select="string($var648_DMRViolationIdentifier/ns0:NumericReportViolationCode)"/>
+                                        <xsl:value-of select="string($var626_DMRViolationIdentifier/ns0:NumericReportViolationCode)"/>
                                     </NumericReportViolationCode>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:CAFOAnnualProgramReportIdentifier">
-                                    <xsl:variable name="var650_CAFOAnnualProgramReportIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:CAFOAnnualProgramReportIdentifier">
+                                    <xsl:variable name="var628_CAFOAnnualProgramReportIdentifier" select="."/>
                                     <PermittingAuthorityReportReceivedDate>
-                                        <xsl:value-of select="string($var650_CAFOAnnualProgramReportIdentifier/ns0:PermittingAuthorityReportReceivedDate)"/>
+                                        <xsl:value-of select="string($var628_CAFOAnnualProgramReportIdentifier/ns0:PermittingAuthorityReportReceivedDate)"/>
                                     </PermittingAuthorityReportReceivedDate>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:LocalLimitsProgramReportIdentifier">
-                                    <xsl:variable name="var652_LocalLimitsProgramReportIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:LocalLimitsProgramReportIdentifier">
+                                    <xsl:variable name="var630_LocalLimitsProgramReportIdentifier" select="."/>
                                     <PermittingAuthorityReportReceivedDate>
-                                        <xsl:value-of select="string($var652_LocalLimitsProgramReportIdentifier/ns0:LocalLimitsPermittingAuthorityReportReceivedDate)"/>
+                                        <xsl:value-of select="string($var630_LocalLimitsProgramReportIdentifier/ns0:LocalLimitsPermittingAuthorityReportReceivedDate)"/>
                                     </PermittingAuthorityReportReceivedDate>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageCAFOAnnualReport">
-                                    <xsl:variable name="var654_LinkageCAFOAnnualReport" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageCAFOAnnualReport">
+                                    <xsl:variable name="var632_LinkageCAFOAnnualReport" select="."/>
                                     <PermittingAuthorityReportReceivedDate>
-                                        <xsl:value-of select="string($var654_LinkageCAFOAnnualReport/ns0:PermittingAuthorityReportReceivedDate)"/>
+                                        <xsl:value-of select="string($var632_LinkageCAFOAnnualReport/ns0:PermittingAuthorityReportReceivedDate)"/>
                                     </PermittingAuthorityReportReceivedDate>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageLocalLimitsReport">
-                                    <xsl:variable name="var656_LinkageLocalLimitsReport" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageLocalLimitsReport">
+                                    <xsl:variable name="var634_LinkageLocalLimitsReport" select="."/>
                                     <PermittingAuthorityReportReceivedDate>
-                                        <xsl:value-of select="string($var656_LinkageLocalLimitsReport/ns0:LocalLimitsPermittingAuthorityReportReceivedDate)"/>
+                                        <xsl:value-of select="string($var634_LinkageLocalLimitsReport/ns0:LocalLimitsPermittingAuthorityReportReceivedDate)"/>
                                     </PermittingAuthorityReportReceivedDate>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:PretreatmentPerformanceSummaryIdentifier">
-                                    <xsl:variable name="var658_PretreatmentPerformanceSummaryIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:PretreatmentPerformanceSummaryIdentifier">
+                                    <xsl:variable name="var636_PretreatmentPerformanceSummaryIdentifier" select="."/>
                                     <PretreatmentPerformanceSummaryEndDate>
-                                        <xsl:value-of select="string($var658_PretreatmentPerformanceSummaryIdentifier/ns0:PretreatmentPerformanceSummaryEndDate)"/>
+                                        <xsl:value-of select="string($var636_PretreatmentPerformanceSummaryIdentifier/ns0:PretreatmentPerformanceSummaryEndDate)"/>
                                     </PretreatmentPerformanceSummaryEndDate>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkagePretreatmentPerformanceReport">
-                                    <xsl:variable name="var660_LinkagePretreatmentPerformanceReport" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkagePretreatmentPerformanceReport">
+                                    <xsl:variable name="var638_LinkagePretreatmentPerformanceReport" select="."/>
                                     <PretreatmentPerformanceSummaryEndDate>
-                                        <xsl:value-of select="string($var660_LinkagePretreatmentPerformanceReport/ns0:PretreatmentPerformanceSummaryEndDate)"/>
+                                        <xsl:value-of select="string($var638_LinkagePretreatmentPerformanceReport/ns0:PretreatmentPerformanceSummaryEndDate)"/>
                                     </PretreatmentPerformanceSummaryEndDate>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:BiosolidsProgramReportIdentifier">
-                                    <xsl:variable name="var662_BiosolidsProgramReportIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:BiosolidsProgramReportIdentifier">
+                                    <xsl:variable name="var640_BiosolidsProgramReportIdentifier" select="."/>
                                     <ReportCoverageEndDate>
-                                        <xsl:value-of select="string($var662_BiosolidsProgramReportIdentifier/ns0:ReportCoverageEndDate)"/>
+                                        <xsl:value-of select="string($var640_BiosolidsProgramReportIdentifier/ns0:ReportCoverageEndDate)"/>
                                     </ReportCoverageEndDate>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageBiosolidsReport">
-                                    <xsl:variable name="var664_LinkageBiosolidsReport" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageBiosolidsReport">
+                                    <xsl:variable name="var642_LinkageBiosolidsReport" select="."/>
                                     <ReportCoverageEndDate>
-                                        <xsl:value-of select="string($var664_LinkageBiosolidsReport/ns0:ReportCoverageEndDate)"/>
+                                        <xsl:value-of select="string($var642_LinkageBiosolidsReport/ns0:ReportCoverageEndDate)"/>
                                     </ReportCoverageEndDate>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:DMRProgramReportLinkageIdentifier/ns0:LinkageBiosolidsReport">
-                                    <xsl:variable name="var666_LinkageBiosolidsReport" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:DMRProgramReportLinkageIdentifier/ns0:LinkageBiosolidsReport">
+                                    <xsl:variable name="var644_LinkageBiosolidsReport" select="."/>
                                     <ReportCoverageEndDate>
-                                        <xsl:value-of select="string($var666_LinkageBiosolidsReport/ns0:ReportCoverageEndDate)"/>
+                                        <xsl:value-of select="string($var644_LinkageBiosolidsReport/ns0:ReportCoverageEndDate)"/>
                                     </ReportCoverageEndDate>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:SingleEventIdentifier">
-                                    <xsl:variable name="var668_SingleEventIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:SingleEventIdentifier">
+                                    <xsl:variable name="var646_SingleEventIdentifier" select="."/>
                                     <SingleEventViolationCode>
-                                        <xsl:value-of select="string($var668_SingleEventIdentifier/ns0:SingleEventViolationCode)"/>
+                                        <xsl:value-of select="string($var646_SingleEventIdentifier/ns0:SingleEventViolationCode)"/>
                                     </SingleEventViolationCode>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageSingleEvent">
-                                    <xsl:variable name="var670_LinkageSingleEvent" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageSingleEvent">
+                                    <xsl:variable name="var648_LinkageSingleEvent" select="."/>
                                     <SingleEventViolationCode>
-                                        <xsl:value-of select="string($var670_LinkageSingleEvent/ns0:SingleEventViolationCode)"/>
+                                        <xsl:value-of select="string($var648_LinkageSingleEvent/ns0:SingleEventViolationCode)"/>
                                     </SingleEventViolationCode>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:SingleEventsViolation">
-                                    <xsl:variable name="var672_SingleEventsViolation" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:SingleEventsViolation">
+                                    <xsl:variable name="var650_SingleEventsViolation" select="."/>
                                     <SingleEventViolationCode>
-                                        <xsl:value-of select="string($var672_SingleEventsViolation/ns0:SingleEventViolationCode)"/>
+                                        <xsl:value-of select="string($var650_SingleEventsViolation/ns0:SingleEventViolationCode)"/>
                                     </SingleEventViolationCode>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:SingleEventIdentifier">
-                                    <xsl:variable name="var674_SingleEventIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:SingleEventIdentifier">
+                                    <xsl:variable name="var652_SingleEventIdentifier" select="."/>
                                     <SingleEventViolationDate>
-                                        <xsl:value-of select="string($var674_SingleEventIdentifier/ns0:SingleEventViolationDate)"/>
+                                        <xsl:value-of select="string($var652_SingleEventIdentifier/ns0:SingleEventViolationDate)"/>
                                     </SingleEventViolationDate>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageSingleEvent">
-                                    <xsl:variable name="var676_LinkageSingleEvent" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageSingleEvent">
+                                    <xsl:variable name="var654_LinkageSingleEvent" select="."/>
                                     <SingleEventViolationDate>
-                                        <xsl:value-of select="string($var676_LinkageSingleEvent/ns0:SingleEventViolationDate)"/>
+                                        <xsl:value-of select="string($var654_LinkageSingleEvent/ns0:SingleEventViolationDate)"/>
                                     </SingleEventViolationDate>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:SingleEventsViolation">
-                                    <xsl:variable name="var678_SingleEventsViolation" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:SingleEventsViolation">
+                                    <xsl:variable name="var656_SingleEventsViolation" select="."/>
                                     <SingleEventViolationDate>
-                                        <xsl:value-of select="string($var678_SingleEventsViolation/ns0:SingleEventViolationDate)"/>
+                                        <xsl:value-of select="string($var656_SingleEventsViolation/ns0:SingleEventViolationDate)"/>
                                     </SingleEventViolationDate>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:SSOAnnualReportIdentifier">
-                                    <xsl:variable name="var680_SSOAnnualReportIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:SSOAnnualReportIdentifier">
+                                    <xsl:variable name="var658_SSOAnnualReportIdentifier" select="."/>
                                     <SSOAnnualReportReceivedDate>
-                                        <xsl:value-of select="string($var680_SSOAnnualReportIdentifier/ns0:SSOAnnualReportReceivedDate)"/>
+                                        <xsl:value-of select="string($var658_SSOAnnualReportIdentifier/ns0:SSOAnnualReportReceivedDate)"/>
                                     </SSOAnnualReportReceivedDate>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageSSOAnnualReport">
-                                    <xsl:variable name="var682_LinkageSSOAnnualReport" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageSSOAnnualReport">
+                                    <xsl:variable name="var660_LinkageSSOAnnualReport" select="."/>
                                     <SSOAnnualReportReceivedDate>
-                                        <xsl:value-of select="string($var682_LinkageSSOAnnualReport/ns0:SSOAnnualReportReceivedDate)"/>
+                                        <xsl:value-of select="string($var660_LinkageSSOAnnualReport/ns0:SSOAnnualReportReceivedDate)"/>
                                     </SSOAnnualReportReceivedDate>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:SSOEventReportIdentifier">
-                                    <xsl:variable name="var684_SSOEventReportIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:SSOEventReportIdentifier">
+                                    <xsl:variable name="var662_SSOEventReportIdentifier" select="."/>
                                     <SSOEventDate>
-                                        <xsl:value-of select="string($var684_SSOEventReportIdentifier/ns0:SSOEventDate)"/>
+                                        <xsl:value-of select="string($var662_SSOEventReportIdentifier/ns0:SSOEventDate)"/>
                                     </SSOEventDate>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageSSOEventReport">
-                                    <xsl:variable name="var686_LinkageSSOEventReport" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageSSOEventReport">
+                                    <xsl:variable name="var664_LinkageSSOEventReport" select="."/>
                                     <SSOEventDate>
-                                        <xsl:value-of select="string($var686_LinkageSSOEventReport/ns0:SSOEventDate)"/>
+                                        <xsl:value-of select="string($var664_LinkageSSOEventReport/ns0:SSOEventDate)"/>
                                     </SSOEventDate>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:SSOMonthlyEventReportIdentifier">
-                                    <xsl:variable name="var688_SSOMonthlyEventReportIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:SSOMonthlyEventReportIdentifier">
+                                    <xsl:variable name="var666_SSOMonthlyEventReportIdentifier" select="."/>
                                     <SSOMonthlyReportReceivedDate>
-                                        <xsl:value-of select="string($var688_SSOMonthlyEventReportIdentifier/ns0:SSOMonthlyReportReceivedDate)"/>
+                                        <xsl:value-of select="string($var666_SSOMonthlyEventReportIdentifier/ns0:SSOMonthlyReportReceivedDate)"/>
                                     </SSOMonthlyReportReceivedDate>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageSSOMonthlyEventReport">
-                                    <xsl:variable name="var690_LinkageSSOMonthlyEventReport" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageSSOMonthlyEventReport">
+                                    <xsl:variable name="var668_LinkageSSOMonthlyEventReport" select="."/>
                                     <SSOMonthlyReportReceivedDate>
-                                        <xsl:value-of select="string($var690_LinkageSSOMonthlyEventReport/ns0:SSOMonthlyReportReceivedDate)"/>
+                                        <xsl:value-of select="string($var668_LinkageSSOMonthlyEventReport/ns0:SSOMonthlyReportReceivedDate)"/>
                                     </SSOMonthlyReportReceivedDate>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:SWMS4ProgramReportIdentifier">
-                                    <xsl:variable name="var692_SWMS4ProgramReportIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:SWMS4ProgramReportIdentifier">
+                                    <xsl:variable name="var670_SWMS4ProgramReportIdentifier" select="."/>
                                     <StormWaterMS4ReportReceivedDate>
-                                        <xsl:value-of select="string($var692_SWMS4ProgramReportIdentifier/ns0:StormWaterMS4ReportReceivedDate)"/>
+                                        <xsl:value-of select="string($var670_SWMS4ProgramReportIdentifier/ns0:StormWaterMS4ReportReceivedDate)"/>
                                     </StormWaterMS4ReportReceivedDate>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageSWMS4Report">
-                                    <xsl:variable name="var694_LinkageSWMS4Report" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageSWMS4Report">
+                                    <xsl:variable name="var672_LinkageSWMS4Report" select="."/>
                                     <StormWaterMS4ReportReceivedDate>
-                                        <xsl:value-of select="string($var694_LinkageSWMS4Report/ns0:StormWaterMS4ReportReceivedDate)"/>
+                                        <xsl:value-of select="string($var672_LinkageSWMS4Report/ns0:StormWaterMS4ReportReceivedDate)"/>
                                     </StormWaterMS4ReportReceivedDate>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceScheduleIdentifier">
-                                    <xsl:variable name="var696_ComplianceScheduleIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:SWIndustrialAnnualReportIdentifier">
+                                    <xsl:variable name="var674_SWIndustrialAnnualReportIdentifier" select="."/>
+                                    <IndustrialStormWaterAnnualReportReceivedDate>
+                                        <xsl:value-of select="string($var674_SWIndustrialAnnualReportIdentifier/ns0:IndustrialStormWaterAnnualReportReceivedDate)"/>
+                                    </IndustrialStormWaterAnnualReportReceivedDate>
+                                </xsl:for-each>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceScheduleIdentifier">
+                                    <xsl:variable name="var676_ComplianceScheduleIdentifier" select="."/>
                                     <EnforcementActionIdentifier>
-                                        <xsl:value-of select="string($var696_ComplianceScheduleIdentifier/ns0:EnforcementActionIdentifier)"/>
+                                        <xsl:value-of select="string($var676_ComplianceScheduleIdentifier/ns0:EnforcementActionIdentifier)"/>
                                     </EnforcementActionIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier">
-                                    <xsl:variable name="var698_EnforcementActionViolationLinkageIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier">
+                                    <xsl:variable name="var678_EnforcementActionViolationLinkageIdentifier" select="."/>
                                     <EnforcementActionIdentifier>
-                                        <xsl:value-of select="string($var698_EnforcementActionViolationLinkageIdentifier/ns0:EnforcementActionIdentifier)"/>
+                                        <xsl:value-of select="string($var678_EnforcementActionViolationLinkageIdentifier/ns0:EnforcementActionIdentifier)"/>
                                     </EnforcementActionIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionMilestoneReportIdentifier">
-                                    <xsl:variable name="var700_EnforcementActionMilestoneReportIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionMilestoneReportIdentifier">
+                                    <xsl:variable name="var680_EnforcementActionMilestoneReportIdentifier" select="."/>
                                     <EnforcementActionIdentifier>
-                                        <xsl:value-of select="string($var700_EnforcementActionMilestoneReportIdentifier/ns0:EnforcementActionIdentifier)"/>
+                                        <xsl:value-of select="string($var680_EnforcementActionMilestoneReportIdentifier/ns0:EnforcementActionIdentifier)"/>
                                     </EnforcementActionIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:FormalEnforcementActionIdentifier">
-                                    <xsl:variable name="var702_FormalEnforcementActionIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:FormalEnforcementActionIdentifier">
+                                    <xsl:variable name="var682_FormalEnforcementActionIdentifier" select="."/>
                                     <EnforcementActionIdentifier>
-                                        <xsl:value-of select="string($var702_FormalEnforcementActionIdentifier/ns0:EnforcementActionIdentifier)"/>
+                                        <xsl:value-of select="string($var682_FormalEnforcementActionIdentifier/ns0:EnforcementActionIdentifier)"/>
                                     </EnforcementActionIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:InformalEnforcementActionIdentifier">
-                                    <xsl:variable name="var704_InformalEnforcementActionIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:InformalEnforcementActionIdentifier">
+                                    <xsl:variable name="var684_InformalEnforcementActionIdentifier" select="."/>
                                     <EnforcementActionIdentifier>
-                                        <xsl:value-of select="string($var704_InformalEnforcementActionIdentifier/ns0:EnforcementActionIdentifier)"/>
+                                        <xsl:value-of select="string($var684_InformalEnforcementActionIdentifier/ns0:EnforcementActionIdentifier)"/>
                                     </EnforcementActionIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageEnforcementAction">
-                                    <xsl:variable name="var706_LinkageEnforcementAction" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageEnforcementAction">
+                                    <xsl:variable name="var686_LinkageEnforcementAction" select="."/>
                                     <EnforcementActionIdentifier>
-                                        <xsl:value-of select="string($var706_LinkageEnforcementAction/ns0:EnforcementActionIdentifier)"/>
+                                        <xsl:value-of select="string($var686_LinkageEnforcementAction/ns0:EnforcementActionIdentifier)"/>
                                     </EnforcementActionIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ScheduleEventViolationIdentifier/ns0:ComplianceScheduleEventViolationKeyElements">
-                                    <xsl:variable name="var708_ComplianceScheduleEventViolationKeyElements" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ScheduleEventViolationIdentifier/ns0:ComplianceScheduleEventViolationKeyElements">
+                                    <xsl:variable name="var688_ComplianceScheduleEventViolationKeyElements" select="."/>
                                     <EnforcementActionIdentifier>
-                                        <xsl:value-of select="string($var708_ComplianceScheduleEventViolationKeyElements/ns0:EnforcementActionIdentifier)"/>
+                                        <xsl:value-of select="string($var688_ComplianceScheduleEventViolationKeyElements/ns0:EnforcementActionIdentifier)"/>
                                     </EnforcementActionIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:ComplianceScheduleViolation">
-                                    <xsl:variable name="var710_ComplianceScheduleViolation" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:ComplianceScheduleViolation">
+                                    <xsl:variable name="var690_ComplianceScheduleViolation" select="."/>
                                     <EnforcementActionIdentifier2>
-                                        <xsl:value-of select="string($var710_ComplianceScheduleViolation/ns0:EnforcementActionIdentifier)"/>
+                                        <xsl:value-of select="string($var690_ComplianceScheduleViolation/ns0:EnforcementActionIdentifier)"/>
                                     </EnforcementActionIdentifier2>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceScheduleIdentifier">
-                                    <xsl:variable name="var712_ComplianceScheduleIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceScheduleIdentifier">
+                                    <xsl:variable name="var692_ComplianceScheduleIdentifier" select="."/>
                                     <FinalOrderIdentifier>
-                                        <xsl:value-of select="string($var712_ComplianceScheduleIdentifier/ns0:FinalOrderIdentifier)"/>
+                                        <xsl:value-of select="string($var692_ComplianceScheduleIdentifier/ns0:FinalOrderIdentifier)"/>
                                     </FinalOrderIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:ComplianceScheduleViolation">
-                                    <xsl:variable name="var714_ComplianceScheduleViolation" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:ComplianceScheduleViolation">
+                                    <xsl:variable name="var694_ComplianceScheduleViolation" select="."/>
                                     <FinalOrderIdentifier>
-                                        <xsl:value-of select="string($var714_ComplianceScheduleViolation/ns0:FinalOrderIdentifier)"/>
+                                        <xsl:value-of select="string($var694_ComplianceScheduleViolation/ns0:FinalOrderIdentifier)"/>
                                     </FinalOrderIdentifier>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceScheduleIdentifier">
-                                    <xsl:variable name="var716_ComplianceScheduleIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceScheduleIdentifier">
+                                    <xsl:variable name="var696_ComplianceScheduleIdentifier" select="."/>
                                     <ComplianceScheduleNumber>
-                                        <xsl:value-of select="number(string($var716_ComplianceScheduleIdentifier/ns0:ComplianceScheduleNumber))"/>
+                                        <xsl:value-of select="number(string($var696_ComplianceScheduleIdentifier/ns0:ComplianceScheduleNumber))"/>
                                     </ComplianceScheduleNumber>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:ComplianceScheduleViolation">
-                                    <xsl:variable name="var718_ComplianceScheduleViolation" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionViolationLinkageIdentifier/ns0:ComplianceScheduleViolation">
+                                    <xsl:variable name="var698_ComplianceScheduleViolation" select="."/>
                                     <ComplianceScheduleNumber>
-                                        <xsl:value-of select="number(string($var718_ComplianceScheduleViolation/ns0:ComplianceScheduleNumber))"/>
+                                        <xsl:value-of select="number(string($var698_ComplianceScheduleViolation/ns0:ComplianceScheduleNumber))"/>
                                     </ComplianceScheduleNumber>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ScheduleEventViolationIdentifier/ns0:ComplianceScheduleEventViolationKeyElements">
-                                    <xsl:variable name="var720_ComplianceScheduleEventViolationKeyElements" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ScheduleEventViolationIdentifier/ns0:ComplianceScheduleEventViolationKeyElements">
+                                    <xsl:variable name="var700_ComplianceScheduleEventViolationKeyElements" select="."/>
                                     <ComplianceScheduleNumber>
-                                        <xsl:value-of select="number(string($var720_ComplianceScheduleEventViolationKeyElements/ns0:ComplianceScheduleNumber))"/>
+                                        <xsl:value-of select="number(string($var700_ComplianceScheduleEventViolationKeyElements/ns0:ComplianceScheduleNumber))"/>
                                     </ComplianceScheduleNumber>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionMilestoneReportIdentifier">
-                                    <xsl:variable name="var722_EnforcementActionMilestoneReportIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:EnforcementActionMilestoneReportIdentifier">
+                                    <xsl:variable name="var702_EnforcementActionMilestoneReportIdentifier" select="."/>
                                     <MilestoneTypeCode>
-                                        <xsl:value-of select="string($var722_EnforcementActionMilestoneReportIdentifier/ns0:MilestoneTypeCode)"/>
+                                        <xsl:value-of select="string($var702_EnforcementActionMilestoneReportIdentifier/ns0:MilestoneTypeCode)"/>
                                     </MilestoneTypeCode>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ScheduleEventViolationIdentifier/ns0:PermitScheduleEventViolationKeyElements">
-                                    <xsl:variable name="var724_PermitScheduleEventViolationKeyElements" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ScheduleEventViolationIdentifier/ns0:PermitScheduleEventViolationKeyElements">
+                                    <xsl:variable name="var704_PermitScheduleEventViolationKeyElements" select="."/>
                                     <ScheduleViolationCode>
-                                        <xsl:value-of select="string($var724_PermitScheduleEventViolationKeyElements/ns0:ScheduleViolationCode)"/>
+                                        <xsl:value-of select="string($var704_PermitScheduleEventViolationKeyElements/ns0:ScheduleViolationCode)"/>
                                     </ScheduleViolationCode>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ScheduleEventViolationIdentifier/ns0:ComplianceScheduleEventViolationKeyElements">
-                                    <xsl:variable name="var726_ComplianceScheduleEventViolationKeyElements" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ScheduleEventViolationIdentifier/ns0:ComplianceScheduleEventViolationKeyElements">
+                                    <xsl:variable name="var706_ComplianceScheduleEventViolationKeyElements" select="."/>
                                     <ScheduleViolationCode>
-                                        <xsl:value-of select="string($var726_ComplianceScheduleEventViolationKeyElements/ns0:ScheduleViolationCode)"/>
+                                        <xsl:value-of select="string($var706_ComplianceScheduleEventViolationKeyElements/ns0:ScheduleViolationCode)"/>
                                     </ScheduleViolationCode>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:CSOEventReportIdentifier">
-                                    <xsl:variable name="var728_CSOEventReportIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:CSOEventReportIdentifier">
+                                    <xsl:variable name="var708_CSOEventReportIdentifier" select="."/>
                                     <EventId>
-                                        <xsl:value-of select="number(string($var728_CSOEventReportIdentifier/ns0:CSOEventID))"/>
+                                        <xsl:value-of select="number(string($var708_CSOEventReportIdentifier/ns0:CSOEventID))"/>
                                     </EventId>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageSWEventReport">
-                                    <xsl:variable name="var730_LinkageSWEventReport" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageSWEventReport">
+                                    <xsl:variable name="var710_LinkageSWEventReport" select="."/>
                                     <EventId>
-                                        <xsl:value-of select="number(string($var730_LinkageSWEventReport/ns0:StormWaterEventID))"/>
+                                        <xsl:value-of select="number(string($var710_LinkageSWEventReport/ns0:StormWaterEventID))"/>
                                     </EventId>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:SSOEventReportIdentifier">
-                                    <xsl:variable name="var732_SSOEventReportIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:SSOEventReportIdentifier">
+                                    <xsl:variable name="var712_SSOEventReportIdentifier" select="."/>
                                     <EventId>
-                                        <xsl:value-of select="number(string($var732_SSOEventReportIdentifier/ns0:SSOEventID))"/>
+                                        <xsl:value-of select="number(string($var712_SSOEventReportIdentifier/ns0:SSOEventID))"/>
                                     </EventId>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:SWEventReportIdentifier">
-                                    <xsl:variable name="var734_SWEventReportIdentifier" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:SWEventReportIdentifier">
+                                    <xsl:variable name="var714_SWEventReportIdentifier" select="."/>
                                     <EventId>
-                                        <xsl:value-of select="number(string($var734_SWEventReportIdentifier/ns0:StormWaterEventID))"/>
+                                        <xsl:value-of select="number(string($var714_SWEventReportIdentifier/ns0:StormWaterEventID))"/>
                                     </EventId>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageCSOEventReport">
-                                    <xsl:variable name="var736_LinkageCSOEventReport" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageCSOEventReport">
+                                    <xsl:variable name="var716_LinkageCSOEventReport" select="."/>
                                     <EventId>
-                                        <xsl:value-of select="number(string($var736_LinkageCSOEventReport/ns0:CSOEventID))"/>
+                                        <xsl:value-of select="number(string($var716_LinkageCSOEventReport/ns0:CSOEventID))"/>
                                     </EventId>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var379_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageSSOEventReport">
-                                    <xsl:variable name="var738_LinkageSSOEventReport" select="."/>
+                                <xsl:for-each select="$var369_SubmissionError/ns0:SubmissionErrorKey/ns0:ComplianceMonitoringLinkageIdentifier/ns0:LinkageSSOEventReport">
+                                    <xsl:variable name="var718_LinkageSSOEventReport" select="."/>
                                     <EventId>
-                                        <xsl:value-of select="number(string($var738_LinkageSSOEventReport/ns0:SSOEventID))"/>
+                                        <xsl:value-of select="number(string($var718_LinkageSSOEventReport/ns0:SSOEventID))"/>
                                     </EventId>
                                 </xsl:for-each>
-                                <xsl:for-each select="$var381_ErrorReport/ns0:ErrorCode">
-                                    <xsl:variable name="var740_ErrorCode" select="."/>
+                                <xsl:for-each select="$var371_ErrorReport/ns0:ErrorCode">
+                                    <xsl:variable name="var720_ErrorCode" select="."/>
                                     <ResultCode>
-                                        <xsl:value-of select="string($var740_ErrorCode)"/>
+                                        <xsl:value-of select="string($var720_ErrorCode)"/>
                                     </ResultCode>
                                 </xsl:for-each>
                                 <ResultTypeCode>
-                                    <xsl:value-of select="string($var381_ErrorReport/ns0:ErrorTypeCode)"/>
+                                    <xsl:value-of select="string($var371_ErrorReport/ns0:ErrorTypeCode)"/>
                                 </ResultTypeCode>
                                 <ResultDescription>
-                                    <xsl:value-of select="string($var381_ErrorReport/ns0:ErrorDescription)"/>
+                                    <xsl:value-of select="string($var371_ErrorReport/ns0:ErrorDescription)"/>
                                 </ResultDescription>
                                 <SubmissionTransactionId>
                                     <xsl:value-of select="string($var2_SubmissionResponse/ns0:TransactionIdentifier)"/>

@@ -9,6 +9,17 @@
 			<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractComplianceMonitoringAndDmrProgramReportLinkage</inheritance:extends>
 		</jaxb:bindings>		
 	</jaxb:bindings>
+
+    <jaxb:bindings>
+        <jaxb:bindings node="//xsd:complexType[@name='LinkageComplianceMonitoring']">
+            <hj:entity>
+                <orm:table name="ICS_LNK_ST_CMPL_MON"/>
+            </hj:entity>
+            <hj:generated-id name="Dbid">
+                <orm:column name="ICS_LNK_ST_CMPL_MON_ID"/>
+            </hj:generated-id>
+        </jaxb:bindings>        
+    </jaxb:bindings>
 	
 	<!-- linkage CAFO annual report -->
 	<jaxb:bindings>

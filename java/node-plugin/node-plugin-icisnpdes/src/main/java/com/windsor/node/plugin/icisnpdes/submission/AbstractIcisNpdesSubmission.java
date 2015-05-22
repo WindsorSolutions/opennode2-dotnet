@@ -64,7 +64,7 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
     /**
      * Activity audit message prefix
      */
-    private static final String ACTIVITY_AUDIT_PREFIX = "[icisnpdes4]";
+    private static final String ACTIVITY_AUDIT_PREFIX = "[icisnpdes]";
 
     /**
      * The prefix to be prepended to the name of the  XML file.
@@ -84,7 +84,7 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
     /**
      * A static {@link QName} instance of the Document.
      */
-    private static final QName DOCUMENT_QNAME = new QName("http://www.exchangenetwork.net/schema/icis/4", "Document");
+    private static final QName DOCUMENT_QNAME = new QName("http://www.exchangenetwork.net/schema/icis/5", "Document");
 
     /**
      * ETL Procedure Name: The name of the ETL stored procedure. If blank,
