@@ -153,9 +153,12 @@ public class IcisProcessingResultsXmlParser implements ResultsParser {
 
         Object o = u.unmarshal(transformedIn);
 
-        if (o != null) {
-            return ((JAXBElement<SubmissionResultList>)o).getValue();
-        } else {
+        if(o != null)
+        {
+            return ((JAXBElement<SubmissionResultList>) o).getValue();
+        }
+        else
+        {
             return null;
         }
     }

@@ -5,6 +5,7 @@ import javax.sql.DataSource;
 
 import com.windsor.node.plugin.common.persistence.HibernatePersistenceProvider;
 import com.windsor.node.plugin.common.persistence.PluginPersistenceConfig;
+import com.zaxxer.hikari.HikariDataSource;
 
 public class IcisEntityManagerFactory
 {
@@ -16,9 +17,30 @@ public class IcisEntityManagerFactory
     {
         HibernatePersistenceProvider provider = new HibernatePersistenceProvider();
 
-        return provider.createEntityManagerFactory(dataSource, new PluginPersistenceConfig().rootEntityPackage("com.windsor.node.plugin.icisair.domain.generated")
-                        .classLoader(IcisEntityManagerFactory.class.getClassLoader())//.hibernateDialect("org.hibernate.dialect.Oracle10gDialect")
-                        //Don't use this, work around for Oracle 12c when running against OpenNode2 2.08
-                        .debugSql(Boolean.FALSE));
+        EntityManagerFactory emf = null;
+        if(dataSource != null && HikariDataSource.class.isAssignableFrom(dataSource.getClass()))
+        {
+            HikariDataSource hkds = (HikariDataSource)dataSource;
+            if(hkds.getDataSourceClassName().contains("Oracle") || hkds.getDataSourceClassName().contains("oracle"))
+            {
+                //Oracle work around for Oracle version 13 and later
+                emf = provider.createEntityManagerFactory(dataSource, new PluginPersistenceConfig().rootEntityPackage("com.windsor.node.plugin.icisair.domain.generated")
+                                .classLoader(IcisEntityManagerFactory.class.getClassLoader())
+                                .hibernateDialect("org.hibernate.dialect.Oracle10gDialect")
+                                .debugSql(Boolean.FALSE));
+            }
+            else
+            {
+                emf = provider.createEntityManagerFactory(dataSource, new PluginPersistenceConfig().rootEntityPackage("com.windsor.node.plugin.icisair.domain.generated")
+                                .classLoader(IcisEntityManagerFactory.class.getClassLoader())
+                                .debugSql(Boolean.FALSE));
+            }
+        }
+        else
+        {
+            //error condition
+        }
+
+        return emf;
     }
 }

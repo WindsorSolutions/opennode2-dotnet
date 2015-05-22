@@ -11,7 +11,7 @@
     <name>Node Plugin - ICIS-AIR</name>
     <properties>
         <node.plugin.name>icis-air</node.plugin.name>
-        <node.plugin.build.number>07</node.plugin.build.number>
+        <node.plugin.build.number>02</node.plugin.build.number>
         <node.plugin.description>Submits data to EPA ICIS-AIR System. Data to be submitted must be loaded into the staging tables that accompany this plugin.</node.plugin.description>
         <node.plugin.help.text>Integrated Compliance Information System - ICIS-AIR Plugin</node.plugin.help.text>
     </properties>
