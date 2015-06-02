@@ -107,7 +107,12 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
             var parameters = new Dictionary<string, string>();
             parameters[WQXPluginBase.PARAM_ORGANIZATION_IDENTIFIER_KEY] = _organizationIdentifier;
             string executionInfo, transactionId;
+
+            AppendAuditLogEvent("Executing schedule \"{0}\" for WQX organization \"{1}\"", _scheduleName, _organizationIdentifier);
+
             var scheduledItem = _scheduleManager.ExecuteSchedule(_scheduleName, parameters, out transactionId, out executionInfo);
+
+            AppendAuditLogEvent("Successfully executed schedule \"{0}\" for WQX organization \"{1}\"", _scheduleName, _organizationIdentifier);
 
             var resultData = new WQXExecuteScheduleResult();
             resultData.LocalTransactionId = transactionId;
