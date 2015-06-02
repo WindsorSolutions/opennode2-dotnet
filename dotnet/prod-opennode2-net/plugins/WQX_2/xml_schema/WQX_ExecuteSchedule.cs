@@ -1,3 +1,4 @@
+using Windsor.Commons.NodeDomain;
 namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 {
     public partial class WQXExecuteScheduleQueryParameters
@@ -12,6 +13,10 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
         public string LocalTransactionId;
 
         public string NetworkTransactionId;
+
+        public string NodeEndpointUrl;
+
+        public EndpointVersionType NodeEndpointVersion;
 
         public string ActivityDetails;
     }

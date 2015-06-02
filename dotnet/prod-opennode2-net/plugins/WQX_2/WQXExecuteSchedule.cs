@@ -116,10 +116,18 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
 
             var resultData = new WQXExecuteScheduleResult();
             resultData.LocalTransactionId = transactionId;
-            resultData.NetworkTransactionId = _transactionManager.GetNetworkId(transactionId);
+            CommonTransactionStatusCode status;
+            EndpointVersionType endpointVersion;
+            string endpointUrl;
+            resultData.NetworkTransactionId =
+                _transactionManager.GetNetworkTransactionStatus(transactionId, out status, out endpointVersion, out endpointUrl);
+            resultData.NodeEndpointUrl = endpointUrl;
+            resultData.NodeEndpointVersion = endpointVersion;
             resultData.ActivityDetails = executionInfo;
 
-            var bytes = _serializationHelper.BinarySerialize(resultData);
+            var bytes = _serializationHelper.Serialize(resultData);
+
+            File.WriteAllBytes(@"D:\Temp\Exec.xml", bytes);
             PaginatedContentResult result = new PaginatedContentResult(0, 1, true, CommonContentType.XML, bytes);
             return result;
         }
