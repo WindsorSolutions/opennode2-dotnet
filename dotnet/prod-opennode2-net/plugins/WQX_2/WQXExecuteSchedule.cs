@@ -127,7 +127,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
 
             var bytes = _serializationHelper.Serialize(resultData);
 
-            File.WriteAllBytes(@"D:\Temp\Exec.xml", bytes);
+            //File.WriteAllBytes(@"D:\Temp\Exec.xml", bytes);
             PaginatedContentResult result = new PaginatedContentResult(0, 1, true, CommonContentType.XML, bytes);
             return result;
         }
