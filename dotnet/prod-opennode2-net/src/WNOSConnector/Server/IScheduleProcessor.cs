@@ -33,48 +33,13 @@ POSSIBILITY OF SUCH DAMAGE.
 
 using System;
 using System.Collections.Generic;
-using System.Collections;
-using System.Collections.Specialized;
 using System.Text;
-
 using Windsor.Node2008.WNOSDomain;
-using Windsor.Commons.NodeDomain;
 
-namespace Windsor.Node2008.WNOSProviders
+namespace Windsor.Node2008.WNOSConnector.Server
 {
-    /// <summary>
-    /// Schedule manager interface.
-    /// </summary>
-    public interface IScheduleManager
+    public interface IScheduleProcessor : INodeProcessor
     {
-        IList<ScheduledItem> GetSchedules();
-        /// <summary>
-        /// SetScheduleRuntime
-        /// </summary>
-        void SetScheduleRuntime(string scheduleName, DateTime nextRuntime, ByIndexOrNameDictionary<string> parameters);
-        /// <summary>
-        /// UpdateScheduleStatus
-        /// </summary>
-        void UpdateScheduleStatus(string scheduleId, ScheduleExecuteStatus status);
-        /// <summary>
-        /// CreateOrUpdate
-        /// </summary>
-        ScheduledItem CreateRunOnceLocalServiceSchedule(string scheduleName, string serviceName, DateTime nextRuntime,
-                                                        ByIndexOrNameDictionary<string> parameters);
-        string GetTransactionIdFromActivityId(string activityId);
-        ScheduledItemExecuteInfo GetScheduleLastExecuteInfo(string activityId);
-
-        /// <summary>
-        /// GetScheduledItem
-        /// </summary>
-        ScheduledItem GetScheduledItem(string inScheduledItemId);
-        /// <summary>
-        /// GetScheduledItem
-        /// </summary>
-        ScheduledItem GetScheduledItem(string inScheduledItemId, out bool isRunNow);
-
-        ScheduledItem ExecuteSchedule(string scheduleName, Dictionary<string, string> updateScheduleParameters, out string transactionId,
-                                      out string executionInfo);
-
+        ScheduledItem ProcessScheduledItem(string scheduleId, bool forceRun, out Activity activity);
     }
 }

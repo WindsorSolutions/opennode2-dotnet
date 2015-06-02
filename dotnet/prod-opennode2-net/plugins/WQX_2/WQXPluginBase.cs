@@ -120,7 +120,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
 
         protected const string SOURCE_PROVIDER_KEY = "Data Source";
 
-        protected const string PARAM_ORGANIZATION_IDENTIFIER_KEY = "OrganizationIdentifier";
+        public const string PARAM_ORGANIZATION_IDENTIFIER_KEY = "OrganizationIdentifier";
         protected const string PARAM_ADD_HEADER_KEY = "AddHeader";
         protected const string PARAM_USE_SUBMISSION_HISTORY_TABLE_KEY = "UseSubmissionHistoryTable";
         protected const string PARAM_WQX_UPDATE_DATE_KEY = "WQXUpdateDate";

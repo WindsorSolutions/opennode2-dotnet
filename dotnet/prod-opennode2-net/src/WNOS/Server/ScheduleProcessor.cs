@@ -55,7 +55,7 @@ using Windsor.Commons.NodeClient;
 
 namespace Windsor.Node2008.WNOS.Server
 {
-    public class ScheduleProcessor : BaseNodeProcessor
+    public class ScheduleProcessor : BaseNodeProcessor, IScheduleProcessor
     {
         private IRequestManagerEx _requestManager;
         private IDocumentManagerEx _documentManager;
@@ -130,30 +130,36 @@ namespace Windsor.Node2008.WNOS.Server
             LOG.Error(messageFormat, args);
         }
 
-        protected virtual void ProcessScheduledItem(string scheduleId)
+        protected ScheduledItem ProcessScheduledItem(string scheduleId)
         {
+            Activity activity;
+            return ProcessScheduledItem(scheduleId, false, out activity);
+        }
+        public ScheduledItem ProcessScheduledItem(string scheduleId, bool forceRun, out Activity activity)
+        {
+            activity = null;
             using (INodeProcessorMutex mutex = GetMutex(scheduleId))
             {
                 if (!mutex.IsAcquired)
                 {
                     LOG.Debug("Exiting ProcessScheduleItem(), could not acquire mutex");
-                    return;	// Another thread is already working on this transaction, get out of here
+                    return null;	// Another thread is already working on this transaction, get out of here
                 }
                 bool isRunNow;
                 ScheduledItem scheduledItem = ScheduleManager.GetScheduledItem(scheduleId, out isRunNow);
                 DateTime startTime = DateTime.Now;
                 // Make sure the transaction has not been processed yet
-                if ((scheduledItem.NextRunOn > startTime) && !isRunNow)
+                if (!forceRun && ((scheduledItem.NextRunOn > startTime) && !isRunNow))
                 {
                     LOG.Debug("Exiting ProcessScheduledItem(), schedule {0} has already run",
                               scheduledItem);
-                    return;
+                    return null;
                 }
 
                 string flowName = _flowManager.GetDataFlowNameById(scheduledItem.FlowId);
-                Activity activity = new Activity(NodeMethod.Schedule, flowName, scheduledItem.Name, ActivityType.Info,
-                                                 null, NetworkUtils.GetLocalIp(), "Start processing schedule: \"{0}\"",
-                                                 scheduledItem.Name);
+                activity = new Activity(NodeMethod.Schedule, flowName, scheduledItem.Name, ActivityType.Info,
+                                        null, NetworkUtils.GetLocalIp(), "Start processing schedule: \"{0}\"",
+                                        scheduledItem.Name);
                 string transactionId = null;
                 try
                 {
@@ -163,7 +169,7 @@ namespace Windsor.Node2008.WNOS.Server
                     {
                         activity.AppendFormat("The user account that created the scheduled item \"{0}\" is no longer active.  Scheduled item cannot execute.",
                                               scheduledItem.Name);
-                        return;
+                        return null;
                     }
                     activity.ModifiedById = userAccount.Id;
 
@@ -269,6 +275,7 @@ namespace Windsor.Node2008.WNOS.Server
                     ActivityManager.Log(activity);
                     UpdateScheduleRunInfo(scheduledItem, activity);
                 }
+                return scheduledItem;
             }
         }
         protected virtual void UpdateScheduleRunInfo(ScheduledItem scheduledItem, Activity activity)

@@ -47,6 +47,7 @@ namespace Windsor.Node2008.WNOS.Data
         IList<string> GetNextScheduledItemsToProcess();
         ScheduledItem GetScheduledItem(string inScheduledItemId);
         ScheduledItem GetScheduledItem(string inScheduledItemId, out bool isRunNow);
+        ScheduledItem GetScheduledItemByName(string scheduleName, out bool isRunNow);
         ByIndexOrNameDictionary<string> GetScheduleSourceArgs(string scheduleId);
         void Save(ScheduledItem item, bool isRunNow);
         void Save(ScheduledItem item);
@@ -60,5 +61,8 @@ namespace Windsor.Node2008.WNOS.Data
         ScheduledItemExecuteInfo GetScheduleLastExecuteInfo(IList<string> activityIds);
         ScheduledItemExecuteInfo GetTransactionLastExecuteInfo(string transactionId);
         ScheduledItemExecuteInfo GetTransactionCompleteLastExecuteInfo(string transactionId);
+        void SaveAndRun(string scheduleId, IDictionary<string, string> updateScheduleParameters);
+        string GetLastExecutionInfo(Activity activity);
+        void UpdateScheduleSourceArgs(string scheduleId, IDictionary<string, string> updateScheduleParams);
     }
 }

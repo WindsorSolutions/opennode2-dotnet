@@ -156,13 +156,16 @@ namespace Windsor.Commons.Core
             // Wait for all the worker threads to exit
             lock (m_LockObject)
             {
-                if (m_ThreadPool.Remove(Thread.CurrentThread))
+                if (m_ThreadPool != null)
                 {
-                    s_ContinueThreadLoop = false;
-                    if ((m_ThreadPool == null) || (m_ThreadPool.Count == 0))
+                    if (m_ThreadPool.Remove(Thread.CurrentThread))
                     {
-                        m_ThreadPool = null;
-                        m_ShutdownAutoResetEvent.Set();
+                        s_ContinueThreadLoop = false;
+                        if ((m_ThreadPool == null) || (m_ThreadPool.Count == 0))
+                        {
+                            m_ThreadPool = null;
+                            m_ShutdownAutoResetEvent.Set();
+                        }
                     }
                 }
             }

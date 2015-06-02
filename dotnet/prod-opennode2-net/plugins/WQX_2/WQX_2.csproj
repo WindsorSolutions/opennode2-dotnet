@@ -85,6 +85,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TWQDMerge.cs" />
     <Compile Include="WQXBaseAuthorizationPlugin.cs" />
+    <Compile Include="WQXExecuteSchedule.cs" />
     <Compile Include="WQXExtractAndSubmission.cs" />
     <Compile Include="WQXFlatFileParser.cs" />
     <Compile Include="WQXFlatFileSubmissionProcessor.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="WQXTestPullPushProcessor.cs" />
     <Compile Include="WQXTestSubmitAcceptor.cs" />
     <Compile Include="WQXTWQDImportSubmissionProcessor.cs" />
+    <Compile Include="xml_schema\WQX_ExecuteSchedule.cs" />
     <Compile Include="xml_schema\WQX_v1_0.cs" />
     <Compile Include="xml_schema\WQX_v1_0_2.cs" />
     <Compile Include="xml_schema\WQX_v2_0.cs" />

@@ -49,6 +49,7 @@ using Windsor.Node2008.WNOSConnector.Admin;
 using Windsor.Node2008.WNOSProviders;
 using Windsor.Commons.Core;
 using Windsor.Commons.NodeDomain;
+using Windsor.Node2008.WNOSConnector.Server;
 
 namespace Windsor.Node2008.WNOS.Logic
 {
@@ -62,6 +63,7 @@ namespace Windsor.Node2008.WNOS.Logic
         private IAccountManagerEx _accountManager;
         private ISchematronHelper _schematronHelper;
         private IActivityDao _activityDao;
+        private IScheduleProcessor _scheduleProcessor;
 
         #region Init
 
@@ -77,6 +79,7 @@ namespace Windsor.Node2008.WNOS.Logic
             FieldNotInitializedException.ThrowIfNull(this, ref _schematronHelper);
             FieldNotInitializedException.ThrowIfNull(this, ref _activityDao);
             FieldNotInitializedException.ThrowIfNull(this, ref _endpointUserManager);
+            FieldNotInitializedException.ThrowIfNull(this, ref _scheduleProcessor);
         }
 
         #endregion
@@ -137,6 +140,53 @@ namespace Windsor.Node2008.WNOS.Logic
         public void SetScheduleRuntime(string scheduleName, DateTime nextRuntime, ByIndexOrNameDictionary<string> parameters)
         {
             ScheduleDao.SetScheduleRuntime(scheduleName, nextRuntime, parameters);
+        }
+
+        public ScheduledItem ExecuteSchedule(string scheduleName, Dictionary<string, string> updateScheduleParameters, out string transactionId,
+                                             out string executionInfo)
+        {
+            DateTime nextRuntime = DateTime.Now;
+            bool isRunNow;
+            var scheduledItem = ScheduleDao.GetScheduledItemByName(scheduleName, out isRunNow);
+            if (scheduledItem == null)
+            {
+                throw new ArgumentException(string.Format("Could not locate a schedule with the name \"{0}\"", scheduleName));
+            }
+            if (!scheduledItem.IsActive)
+            {
+                throw new ArgumentException(string.Format("The schedule \"{0}\" is inactive and could not be scheduled.  Please active the schedule and try again.",
+                                                          scheduleName));
+            }
+            if ((scheduledItem.StartOn > nextRuntime) || (scheduledItem.EndOn < nextRuntime))
+            {
+                throw new ArgumentException(string.Format("The schedule \"{0}\" could not be scheduled to run at {1} since it has an execution range of {2} to {3}",
+                                                          scheduleName, nextRuntime.ToString(), scheduledItem.StartOn.ToString(),
+                                                          scheduledItem.EndOn.ToString()));
+            }
+            if (isRunNow || (scheduledItem.ExecuteStatus == ScheduleExecuteStatus.Running))
+            {
+                throw new ArgumentException(string.Format("The schedule \"{0}\" is already running and could not be scheduled.  Please try to run the schedule again later.",
+                                                          scheduleName));
+            }
+            ScheduleDao.UpdateScheduleSourceArgs(scheduledItem.Id, updateScheduleParameters);
+
+            Activity activity;
+            scheduledItem = _scheduleProcessor.ProcessScheduledItem(scheduledItem.Id, true, out activity);
+
+            if (scheduledItem == null)
+            {
+                throw new ArgumentException(string.Format("The schedule \"{0}\" is already running and could not be scheduled.  Please try to run the schedule again later.",
+                                                          scheduleName));
+            }
+            if (scheduledItem.ExecuteStatus != ScheduleExecuteStatus.CompletedSuccess)
+            {
+                throw new ArgumentException(string.Format("The schedule \"{0}\" failed to run with error: {1}.",
+                                                          scheduleName, activity.Entries[activity.Entries.Count - 1].Message));
+            }
+
+            transactionId = activity.TransactionId;
+            executionInfo = ScheduleDao.GetLastExecutionInfo(activity);
+            return scheduledItem;
         }
 
         #region IScheduleService
@@ -371,6 +421,17 @@ namespace Windsor.Node2008.WNOS.Logic
             }
         }
         #endregion
+        public IScheduleProcessor ScheduleProcessor
+        {
+            get
+            {
+                return _scheduleProcessor;
+            }
+            set
+            {
+                _scheduleProcessor = value;
+            }
+        }
         public IServiceManager ServiceManager
         {
             get

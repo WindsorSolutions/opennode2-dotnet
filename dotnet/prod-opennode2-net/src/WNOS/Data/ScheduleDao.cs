@@ -284,7 +284,7 @@ namespace Windsor.Node2008.WNOS.Data
         {
             return GetScheduleLastExecuteInfo(_activityDao.GetActivityIdsFromTransactionId(transactionId));
         }
-        protected string GetLastExecutionInfo(Activity activity)
+        public string GetLastExecutionInfo(Activity activity)
         {
             if (!CollectionUtils.IsNullOrEmpty(activity.Entries))
             {
@@ -521,6 +521,50 @@ namespace Windsor.Node2008.WNOS.Data
                 item.Id = id;
             }
             item.ModifiedOn = now;
+        }
+        public void SaveAndRun(string scheduleId, IDictionary<string, string> updateScheduleParameters)
+        {
+            if (scheduleId == null)
+            {
+                throw new ArgumentException("Null item");
+            }
+            string columnNames = "IsRunNow";
+            List<object> columnValues =
+                CollectionUtils.CreateList<object>(DbUtils.ToDbBool(true));
+            TransactionTemplate.Execute(delegate
+            {
+                DoSimpleUpdateOneWithValues(TABLE_NAME, "Id", scheduleId, columnNames, columnValues);
+                bool isRunNow;
+                if (!CollectionUtils.IsNullOrEmpty(updateScheduleParameters))
+                {
+                    UpdateScheduleSourceArgs(scheduleId, updateScheduleParameters);
+                }
+                return null;
+            });
+        }
+        public void UpdateScheduleSourceArgs(string scheduleId, IDictionary<string, string> updateScheduleParams)
+        {
+            if (CollectionUtils.IsNullOrEmpty(updateScheduleParams))
+            {
+                return;
+            }
+            TransactionTemplate.Execute(delegate
+            {
+                foreach (var pair in updateScheduleParams)
+                {
+                    int count = DoSimpleUpdate(SOURCE_ARGS_TABLE_NAME, "ScheduleId;Name LIKE '%'p", new object[] { scheduleId, pair.Key },
+                                               "Value", 1, pair.Value);
+                    if (count == 0)
+                    {
+                        throw new ArgumentException(string.Format("The schedule with id \"{0}\" does not have any schedule parameters matching the name \"{0}\"", pair.Key));
+                    } 
+                    else if (count > 1)
+                    {
+                        throw new ArgumentException(string.Format("The schedule with id \"{0}\" has more than one schedule parameter matching the name \"{0}\"", pair.Key));
+                    }
+                }
+                return null;
+            });
         }
         private void SaveScheduleSourceArgs(string scheduleId, ByIndexOrNameDictionary<string> args)
         {

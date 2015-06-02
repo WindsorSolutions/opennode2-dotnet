@@ -115,6 +115,7 @@
     <Compile Include="Provider\SimpleVisitProvider.cs" />
     <Compile Include="Server\ICentralProcessor.cs" />
     <Compile Include="Server\INodeProcessor.cs" />
+    <Compile Include="Server\IScheduleProcessor.cs" />
     <Compile Include="Service\ITransactionService.cs" />
     <Compile Include="Service\IContentService.cs" />
     <Compile Include="Service\ISecurityService.cs" />
