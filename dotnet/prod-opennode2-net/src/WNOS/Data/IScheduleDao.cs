@@ -63,6 +63,7 @@ namespace Windsor.Node2008.WNOS.Data
         ScheduledItemExecuteInfo GetTransactionCompleteLastExecuteInfo(string transactionId);
         void SaveAndRun(string scheduleId, IDictionary<string, string> updateScheduleParameters);
         string GetLastExecutionInfo(Activity activity);
+        string GetLastExecutionInfo(Activity activity, bool obfuscateActivityMessage);
         void UpdateScheduleSourceArgs(string scheduleId, IDictionary<string, string> updateScheduleParams);
     }
 }

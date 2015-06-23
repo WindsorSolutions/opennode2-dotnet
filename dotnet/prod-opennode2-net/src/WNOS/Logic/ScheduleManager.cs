@@ -185,7 +185,7 @@ namespace Windsor.Node2008.WNOS.Logic
             }
 
             transactionId = activity.TransactionId;
-            executionInfo = ScheduleDao.GetLastExecutionInfo(activity);
+            executionInfo = ScheduleDao.GetLastExecutionInfo(activity, true);
             return scheduledItem;
         }
 

@@ -286,6 +286,11 @@ namespace Windsor.Node2008.WNOS.Data
         }
         public string GetLastExecutionInfo(Activity activity)
         {
+            return GetLastExecutionInfo(activity, false);
+        }
+
+        public string GetLastExecutionInfo(Activity activity, bool obfuscateActivityMessage)
+        {
             if (!CollectionUtils.IsNullOrEmpty(activity.Entries))
             {
                 StringBuilder sb = new StringBuilder();
@@ -295,7 +300,8 @@ namespace Windsor.Node2008.WNOS.Data
                     {
                         sb.AppendLine();
                     }
-                    sb.AppendFormat("{0}: {1}", entry.ToDisplayTimeStamp(), entry.Message);
+                    sb.AppendFormat("{0}: {1}", entry.ToDisplayTimeStamp(), obfuscateActivityMessage ?
+                        StringUtils.ObfuscateActivityMessage(entry.Message) : entry.Message);
                 }
                 return sb.ToString();
             }
