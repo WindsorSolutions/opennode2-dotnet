@@ -89,8 +89,18 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
         {
             base.ValidateRequest(requestId);
 
-            GetParameter(_dataRequest, EnumUtils.ToDescription(ExecuteWQXExtract.ScheduleParams.OrgId), 0,
-                          out _orgId);
+            if (!TryGetParameter(_dataRequest, EnumUtils.ToDescription(ExecuteWQXExtract.ScheduleParams.OrgId), 0,
+                                ref _orgId))
+            {
+                if (!TryGetParameter(_dataRequest, WQXPluginBase.PARAM_ORGANIZATION_IDENTIFIER_KEY, 0,
+                                     ref _orgId))
+                {
+                    throw new ArgumentException(string.Format("This schedule requires either the \"{0}\" or \"{1}\" parameter to be specified.",
+                                                              EnumUtils.ToDescription(ExecuteWQXExtract.ScheduleParams.OrgId),
+                                                              WQXPluginBase.PARAM_ORGANIZATION_IDENTIFIER_KEY));
+                }
+            }
+
             TryGetParameter(_dataRequest, EnumUtils.ToDescription(ExecuteWQXExtract.ScheduleParams.ProjectId), 1,
                             ref _projectId);
 
