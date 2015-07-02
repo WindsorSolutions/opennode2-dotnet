@@ -4,7 +4,7 @@
 	<xsd:include schemaLocation="ICIS_Common_v5.4.xsd"/>
 	<xsd:include schemaLocation="ICIS_FederalComplianceMonitoring_v5.4.xsd"/>
 	<xsd:annotation>
-		<xsd:documentation>Schema Name: ICIS_AirDACaseFile_v5.0.xsd</xsd:documentation>
+		<xsd:documentation>Schema Name: ICIS_AirDACaseFile_v5.4.xsd</xsd:documentation>
 		<xsd:documentation>Current Version Available: http://www.exchangenetwork.net/schema/icis/5</xsd:documentation>
 		<xsd:documentation>Description: ICIS-Air case file data input format</xsd:documentation>
 		<xsd:documentation>Application: ICIS-Air</xsd:documentation>

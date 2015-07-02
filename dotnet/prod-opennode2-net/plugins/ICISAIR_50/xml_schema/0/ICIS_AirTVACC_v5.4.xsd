@@ -5,7 +5,7 @@
 	<xsd:include schemaLocation="ICIS_ComplianceMonitoring_v5.4.xsd"/>
 	<xsd:include schemaLocation="ICIS_AirDAComplianceMonitoring_v5.4.xsd"/>
 	<xsd:annotation>
-		<xsd:documentation>Schema Name: ICIS_AirTVACC_v5.0.xsd</xsd:documentation>
+		<xsd:documentation>Schema Name: ICIS_AirTVACC_v5.4.xsd</xsd:documentation>
 		<xsd:documentation>Current Version Available: http://www.exchangenetwork.net/schema/icis/5</xsd:documentation>
 		<xsd:documentation>Description: ICIS-Air TVACC data input format</xsd:documentation>
 		<xsd:documentation>Application: ICIS-Air</xsd:documentation>

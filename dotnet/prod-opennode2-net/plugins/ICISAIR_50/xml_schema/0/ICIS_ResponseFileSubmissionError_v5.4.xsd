@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsd:schema xmlns:icis="http://www.exchangenetwork.net/schema/icis/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/icis/5" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5">
 	<xsd:annotation>
-		<xsd:documentation>Schema Name : ICIS_ResponseFileSubmissionError_v5.0.xsd</xsd:documentation>
+		<xsd:documentation>Schema Name : ICIS_ResponseFileSubmissionError_v5.4.xsd</xsd:documentation>
 		<xsd:documentation>Current Version Available: http://www.exchangenetwork.net/schema/icis/5</xsd:documentation>
 		<xsd:documentation>Description : The component schema for the SubmissionError type.</xsd:documentation>
 		<xsd:documentation>Developed by : ICIS Full Batch IPT</xsd:documentation>

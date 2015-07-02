@@ -2,7 +2,7 @@
 <xsd:schema xmlns:icis="http://www.exchangenetwork.net/schema/icis/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/icis/5" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5">
 	<xsd:include schemaLocation="ICIS_KeyElements_v5.4.xsd"/>
 	<xsd:annotation>
-		<xsd:documentation>Schema Name: ICIS_EnforcementActionMilestone_v5.0.xsd</xsd:documentation>
+		<xsd:documentation>Schema Name: ICIS_EnforcementActionMilestone_v5.4.xsd</xsd:documentation>
 		<xsd:documentation>Current Version Available: http://www.exchangenetwork.net/schema/icis/5</xsd:documentation>
 		<xsd:documentation>Description: ICIS-NPDES enforcement action subactivity data input format</xsd:documentation>
 		<xsd:documentation>Application: ICIS-NPDES</xsd:documentation>
