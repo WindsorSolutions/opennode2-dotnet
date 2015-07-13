@@ -28,13 +28,11 @@
 	<xsd:element name="AirTestedPollutantCode" type="icis:NonNegativeIntegerMin1Max10Type"/>
 	<xsd:element name="TestResultCode" type="icis:StringMin1Max3Type"/>
 	<xsd:element name="MethodCode" type="icis:StringMin1Max3Type"/>
-	<xsd:element name="AllowableValue" type="icis:NonNegativeIntegerMin1Max5Type"/>
+	<xsd:element name="AllowableValue" type="icis:NonNegativeDecimal18FloatingType"/>
 	<xsd:element name="AllowableUnitCode" type="icis:StringMin1Max7Type"/>
-	<xsd:element name="ActualResult" type="icis:NonNegativeIntegerMin1Max5Type"/>
+	<xsd:element name="ActualResult" type="icis:NonNegativeDecimal18FloatingType"/>
 	<xsd:element name="FailureReasonCode" type="icis:StringMin1Max3Type"/>
 	<xsd:element name="OtherFailureReasonText" type="icis:StringMin1Max50Type"/>
-	
-
 	<xsd:complexType name="AirDAComplianceMonitoringData">
 		<xsd:sequence>
 			<xsd:element ref="icis:TransactionHeader"/>
@@ -87,7 +85,7 @@
 			<xsd:element ref="icis:StackTestObservedAgencyTypeCode" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="icis:StackTestReportReceivedDate" minOccurs="0"/>
 			<xsd:element ref="icis:TestResultsReviewedDate" minOccurs="0"/>
-			<xsd:element ref="icis:TestResultsData" minOccurs="0" maxOccurs="unbounded"/>					
+			<xsd:element ref="icis:TestResultsData" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:complexType name="TestResultsData">

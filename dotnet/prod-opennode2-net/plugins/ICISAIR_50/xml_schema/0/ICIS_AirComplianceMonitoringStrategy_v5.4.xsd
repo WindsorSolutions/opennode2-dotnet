@@ -13,9 +13,9 @@
 	<xsd:element name="AirComplianceMonitoringStrategy" type="icis:AirComplianceMonitoringStrategy"/>
 	<xsd:element name="AirCMSSourceCategoryCode" type="icis:StringMin1Max3TypeBase"/>
 	<xsd:element name="AirCMSMinimumFrequency" type="icis:IntegerRange0To9TypeBase"/>
-	<xsd:element name="AirActiveCMSPlanIndicator" type="icis:YesNoIndicatorTypeBase"/>
-	<xsd:element name="AirCMSStartDate" type="xsd:date"/>
-	<xsd:element name="AirRemovedPlanDate" type="xsd:date"/>
+	<xsd:element name="AirActiveCMSPlanIndicator" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="AirCMSStartDate" type="icis:DateType"/>
+	<xsd:element name="AirRemovedPlanDate" type="icis:DateType"/>
 	<xsd:element name="AirReasonChangingCMSComments" type="icis:StringMin1Max200Type"/>
 	<xsd:complexType name="AirComplianceMonitoringStrategyData">
 		<xsd:sequence>

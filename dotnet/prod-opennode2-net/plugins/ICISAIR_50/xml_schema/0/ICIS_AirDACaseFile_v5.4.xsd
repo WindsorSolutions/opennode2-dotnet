@@ -26,7 +26,7 @@
 	<xsd:element name="AirViolationData" type="icis:AirViolationData"/>
 	<xsd:element name="AirViolationTypeCode" type="icis:StringMin1Max5Type"/>
 	<xsd:element name="AirViolationProgramCode" type="icis:StringMin1Max9Type"/>
-	<xsd:element name="AirViolationProgramDescriptionText" type="icis:StringMin1Max1000Type"/>
+	<xsd:element name="AirViolationProgramDescriptionText" type="icis:StringMin1Max100Type"/>
 	<xsd:element name="AirViolationPollutantCode" type="icis:NonNegativeIntegerMin1Max10Type"/>
 	<xsd:element name="FRVDeterminationDate" type="icis:DateType"/>
 	<xsd:element name="HPVDayZeroDate" type="icis:DateType"/>

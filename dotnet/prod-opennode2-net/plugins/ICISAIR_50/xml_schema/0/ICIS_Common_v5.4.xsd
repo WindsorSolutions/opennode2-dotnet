@@ -35,7 +35,7 @@
 	<xsd:element name="StormWaterEventID" type="icis:IntegerRange1To99TypeBase"/>
 	<xsd:element name="EnforcementActionIdentifier" type="icis:StringMin1Max20TypeBase"/>
 	<xsd:element name="FinalOrderIdentifier" type="icis:IntegerRange1To99999Type"/>
-	<xsd:element name="FacilitySiteName" type="icis:StringMin1Max80TypeBase"/>
+	<xsd:element name="FacilitySiteName" type="icis:StringMin1Max80TypeRejectSingleAsterisk"/>
 	<xsd:element name="FederalFacilityIndicator" type="icis:StringMin1Max3Type"/>
 	<xsd:element name="FederalFacilityIndicatorComment" type="icis:StringMin1Max4000Type"/>
 	<xsd:element name="FederalStatuteCode" type="icis:StringMin1Max6TypeBase"/>
@@ -434,11 +434,11 @@
 			<xsd:maxLength value="60"/>
 		</xsd:restriction>
 	</xsd:simpleType>
-	<xsd:simpleType name="StringMin1Max80TypeBase">
+	<xsd:simpleType name="StringMin1Max80TypeRejectSingleAsterisk">
 		<xsd:restriction base="xsd:string">
 			<xsd:minLength value="1"/>
 			<xsd:maxLength value="80"/>
-			<xsd:pattern value="[^\*]*"/>
+			<xsd:pattern value="((\*)*[^*]+(\*)*)*|([^*]*\*){2,}"/>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="StringMin1Max80Type">
@@ -699,6 +699,16 @@
 	<xsd:simpleType name="NonNegativeDecimal8FloatingType">
 		<xsd:union memberTypes="icis:NonNegativeDecimal8FloatingTypeBase icis:AsteriskType"/>
 	</xsd:simpleType>
+		<xsd:simpleType name="NonNegativeDecimal18FloatingTypeBase">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="999999999999999999"/>
+			<xsd:fractionDigits value="17"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NonNegativeDecimal18FloatingType">
+		<xsd:union memberTypes="icis:NonNegativeDecimal18FloatingTypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
 	<xsd:simpleType name="DecimalRange0To999.9TypeBase">
 		<xsd:restriction base="xsd:decimal">
 			<xsd:minInclusive value="0"/>
@@ -738,6 +748,16 @@
 	</xsd:simpleType>
 	<xsd:simpleType name="DecimalRange0To9999999.9Type">
 		<xsd:union memberTypes="icis:DecimalRange0To9999999.9TypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="DecimalRange0To99999999.99TypeBase">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="99999999.99"/>
+			<xsd:fractionDigits value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="DecimalRange0To99999999.99Type">
+		<xsd:union memberTypes="icis:DecimalRange0To99999999.99TypeBase icis:AsteriskType"/>
 	</xsd:simpleType>
 	<xsd:simpleType name="DecimalRange0To999999999999.99TypeBase">
 		<xsd:restriction base="xsd:decimal">

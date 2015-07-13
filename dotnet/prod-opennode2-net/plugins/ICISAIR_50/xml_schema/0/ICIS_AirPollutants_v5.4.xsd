@@ -11,7 +11,6 @@
 		<xsd:documentation>Last Date Modified: 2014-10-27</xsd:documentation>
 	</xsd:annotation>
 	<xsd:element name="AirPollutants" type="icis:AirPollutants"/>
-	<xsd:element name="AirPollutantsData" type="icis:AirPollutantsData"/>
 	<xsd:element name="AirPollutantStatusIndicator" type="icis:ActiveInactiveType"/>
 	<xsd:element name="AirPollutantEPAClassificationData" type="icis:AirPollutantEPAClassificationData"/>
 	<xsd:element name="AirPollutantEPAClassificationCode" type="icis:StringMin1Max3Type"/>

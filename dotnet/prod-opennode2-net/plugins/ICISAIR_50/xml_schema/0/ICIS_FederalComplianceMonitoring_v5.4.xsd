@@ -58,11 +58,11 @@
 			<xsd:extension base="icis:ComplianceMonitoringKeyElements">
 				<xsd:sequence>
 					<xsd:element ref="icis:ProgramSystemAcronym" minOccurs="0"/>
-            		<xsd:element ref="icis:ProgramSystemIdentifier" minOccurs="0"/>
-            		<xsd:element ref="icis:FederalStatuteCode" minOccurs="0"/>
-            		<xsd:element ref="icis:ComplianceMonitoringActivityTypeCode" minOccurs="0"/>
-            		<xsd:element ref="icis:ComplianceMonitoringCategoryCode" minOccurs="0"/>
-            		<xsd:element ref="icis:ComplianceMonitoringDate" minOccurs="0"/> 
+					<xsd:element ref="icis:ProgramSystemIdentifier" minOccurs="0"/>
+					<xsd:element ref="icis:FederalStatuteCode" minOccurs="0"/>
+					<xsd:element ref="icis:ComplianceMonitoringActivityTypeCode" minOccurs="0"/>
+					<xsd:element ref="icis:ComplianceMonitoringCategoryCode" minOccurs="0"/>
+					<xsd:element ref="icis:ComplianceMonitoringDate" minOccurs="0"/>
 					<xsd:element ref="icis:ComplianceMonitoringStartDate" minOccurs="0"/>
 					<xsd:element ref="icis:ComplianceInspectionTypeCode" minOccurs="0" maxOccurs="unbounded"/>
 					<xsd:element ref="icis:ComplianceMonitoringActivityName" minOccurs="0"/>
@@ -149,6 +149,7 @@
 			<xsd:element ref="icis:StackTestConductorTypeCode"/>
 			<xsd:element ref="icis:StackIdentifier" minOccurs="0"/>
 			<xsd:element ref="icis:OtherStackTestPurposeName" minOccurs="0"/>
+			<xsd:element ref="icis:StackTestObservedAgencyTypeCode" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="icis:StackTestReportReceivedDate" minOccurs="0"/>
 			<xsd:element ref="icis:TestResultsReviewedDate" minOccurs="0"/>
 			<xsd:element ref="icis:TestResultsData" minOccurs="0" maxOccurs="unbounded"/>

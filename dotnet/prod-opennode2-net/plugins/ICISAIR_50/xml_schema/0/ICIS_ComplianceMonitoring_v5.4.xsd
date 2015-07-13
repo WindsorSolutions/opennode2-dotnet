@@ -35,7 +35,7 @@
 	<xsd:element name="EPAAssistanceIndicator" type="icis:YesNoIndicatorType"/>
 	<xsd:element name="InspectionCommentText" type="icis:StringMin1Max4000Type"/>
 	<xsd:element name="InspectionRatingCode" type="icis:StringMin1Max3Type"/>
-	<xsd:element name="InspectionUserDefinedField1" type="icis:YesNoIndicatorTypeBase"/>
+	<xsd:element name="InspectionUserDefinedField1" type="icis:YesNoIndicatorType"/>
 	<xsd:element name="InspectionUserDefinedField2" type="icis:StringMin1Max50Type"/>
 	<xsd:element name="InspectionUserDefinedField3" type="icis:StringMin1Max50Type"/>
 	<xsd:element name="InspectionUserDefinedField4" type="icis:DateType"/>
@@ -43,7 +43,7 @@
 	<xsd:element name="InspectionUserDefinedField6" type="icis:StringMin1Max4000Type"/>
 	<xsd:element name="JointInspectionReasonCode" type="icis:StringMin1Max3Type"/>
 	<xsd:element name="LeadParty" type="icis:LeadPartyType"/>
-	<xsd:element name="MultimediaIndicator" type="icis:YesNoIndicatorTypeBase"/>
+	<xsd:element name="MultimediaIndicator" type="icis:YesNoIndicatorType"/>
 	<xsd:element name="NationalPrioritiesCode" type="icis:NonNegativeIntegerMin1Max5Type"/>
 	<xsd:element name="NumberDaysPhysicallyConductingActivity" type="icis:NonNegativeIntegerMin1Max10Type"/>
 	<xsd:element name="NumberHoursPhysicallyConductingActivity" type="icis:NonNegativeIntegerMin1Max10Type"/>
@@ -101,7 +101,7 @@
 					<xsd:element ref="icis:InspectionUserDefinedField4" minOccurs="0"/>
 					<xsd:element ref="icis:InspectionUserDefinedField5" minOccurs="0"/>
 					<xsd:element ref="icis:InspectionUserDefinedField6" minOccurs="0"/>
-					<xsd:element ref="icis:InspectionCommentText" minOccurs="0"/>
+					<xsd:element ref="icis:InspectionCommentText" minOccurs="0" maxOccurs="unbounded"/>
 					<xsd:element ref="icis:InspectionContact" minOccurs="0"/>
 					<!--<xsd:element ref="icis:CAFOInspection" minOccurs="0"/>
 					<xsd:element ref="icis:CSOInspection" minOccurs="0"/>

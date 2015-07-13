@@ -20,9 +20,9 @@
 	<xsd:element name="CertificationPeriodEndDate" type="icis:DateType"/>
 	<xsd:element name="FacilityReportedComplianceStatusCode" type="icis:StringMin1Max3Type"/>
 	<xsd:element name="TVACCReviewedDate" type="icis:DateType"/>
-	<xsd:element name="FacilityReportDeviationsIndicator" type="icis:YesNoIndicatorTypeBase"/>
+	<xsd:element name="FacilityReportDeviationsIndicator" type="icis:YesNoIndicatorType"/>
 	<xsd:element name="PermitConditionsText" type="icis:StringMin1Max100Type"/>
-	<xsd:element name="ExceedanceExcursionIndicator" type="icis:YesNoIndicatorTypeBase"/>
+	<xsd:element name="ExceedanceExcursionIndicator" type="icis:YesNoIndicatorType"/>
 	<xsd:element name="ReviewerAgencyCode" type="icis:StringMin1Max3Type"/>
 	<xsd:element name="TVACCReviewerName" type="icis:StringMin1Max100Type"/>
 	<xsd:element name="ReviewerComment" type="icis:StringMin1Max100Type"/>
