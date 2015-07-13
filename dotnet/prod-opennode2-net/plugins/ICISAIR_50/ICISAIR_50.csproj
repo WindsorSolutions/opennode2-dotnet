@@ -81,8 +81,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SubmissionProcessor.cs" />
     <Compile Include="SubmissionTrackingTableHelper.cs" />
-    <Compile Include="xml_schema\ICISAIR_v5_0.cs" />
-    <Compile Include="xml_schema\ICISAIR_v5_0_2.cs" />
+    <Compile Include="xml_schema\ICISAIR_v5_4.cs" />
+    <Compile Include="xml_schema\ICISAIR_v5_4_2.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
