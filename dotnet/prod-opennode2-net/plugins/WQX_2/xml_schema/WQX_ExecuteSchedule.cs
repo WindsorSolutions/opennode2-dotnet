@@ -19,5 +19,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
         public EndpointVersionType NodeEndpointVersion;
 
         public string ActivityDetails;
+
+        public string ErrorDetails;
     }
 }

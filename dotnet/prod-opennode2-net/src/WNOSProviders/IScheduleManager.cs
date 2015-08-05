@@ -74,7 +74,7 @@ namespace Windsor.Node2008.WNOSProviders
         ScheduledItem GetScheduledItem(string inScheduledItemId, out bool isRunNow);
 
         ScheduledItem ExecuteSchedule(string scheduleName, Dictionary<string, string> updateScheduleParameters, out string transactionId,
-                                      out string executionInfo);
+                                      out string executionInfo, out string errorDetails);
 
     }
 }

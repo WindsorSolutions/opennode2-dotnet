@@ -1530,7 +1530,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public Windsor.Node2008.WNOSPlugin.ICISAIR_50.RemoveTrailingZerosDecimal DemandStipulatedPenaltyPaidDate;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate DemandStipulatedPenaltyPaidDate;
     }
 
     /// <remarks/>

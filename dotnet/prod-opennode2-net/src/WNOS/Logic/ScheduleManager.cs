@@ -143,7 +143,7 @@ namespace Windsor.Node2008.WNOS.Logic
         }
 
         public ScheduledItem ExecuteSchedule(string scheduleName, Dictionary<string, string> updateScheduleParameters, out string transactionId,
-                                             out string executionInfo)
+                                             out string executionInfo, out string errorDetails)
         {
             DateTime nextRuntime = DateTime.Now;
             bool isRunNow;
@@ -180,8 +180,12 @@ namespace Windsor.Node2008.WNOS.Logic
             }
             if (scheduledItem.ExecuteStatus != ScheduleExecuteStatus.CompletedSuccess)
             {
-                throw new ArgumentException(string.Format("The schedule \"{0}\" failed to run with error: {1}.",
-                                                          scheduleName, activity.Entries[activity.Entries.Count - 1].Message));
+                errorDetails = string.Format("The schedule \"{0}\" failed to run with error: {1}.",
+                                             scheduleName, activity.Entries[activity.Entries.Count - 1].Message);
+            }
+            else
+            {
+                errorDetails = null;
             }
 
             transactionId = activity.TransactionId;

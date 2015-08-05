@@ -106,11 +106,11 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
 
             var parameters = new Dictionary<string, string>();
             parameters[WQXPluginBase.PARAM_ORGANIZATION_IDENTIFIER_KEY] = _organizationIdentifier;
-            string executionInfo, transactionId;
+            string executionInfo, transactionId, errorDetails;
 
             AppendAuditLogEvent("Executing schedule \"{0}\" for WQX organization \"{1}\"", _scheduleName, _organizationIdentifier);
 
-            var scheduledItem = _scheduleManager.ExecuteSchedule(_scheduleName, parameters, out transactionId, out executionInfo);
+            var scheduledItem = _scheduleManager.ExecuteSchedule(_scheduleName, parameters, out transactionId, out executionInfo, out errorDetails);
 
             AppendAuditLogEvent("Successfully executed schedule \"{0}\" for WQX organization \"{1}\"", _scheduleName, _organizationIdentifier);
 
@@ -124,6 +124,11 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2
             resultData.NodeEndpointUrl = endpointUrl;
             resultData.NodeEndpointVersion = endpointVersion;
             resultData.ActivityDetails = executionInfo;
+            resultData.ErrorDetails = errorDetails;
+            if (string.Equals(resultData.NetworkTransactionId, resultData.LocalTransactionId))
+            {
+                resultData.NetworkTransactionId = null;
+            }
 
             var bytes = _serializationHelper.Serialize(resultData);
 
