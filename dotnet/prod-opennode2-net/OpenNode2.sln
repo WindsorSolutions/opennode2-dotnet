@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{5B2CD84C-073E-4489-8744-E0F37E1C1994}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Config", "Config", "{0D5B21F7-53D7-466C-9D16-8029CB7B9C73}"
@@ -180,6 +182,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetRCRAInfoData_52", "plugins\GetRCRAInfoData_52\GetRCRAInfoData_52.csproj", "{EC21AB7C-9FF7-47DC-8CC4-09E54583B192}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Windsor.Commons.XsdOrm3", "..\common-windsor-net\windsor-commons-xsdorm3\Windsor.Commons.XsdOrm3.csproj", "{BE1DD2B4-BDC9-45A6-A8F4-6F7629A1D5F7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICISAIR_54", "plugins\ICISAIR_54\ICISAIR_54.csproj", "{02644186-196F-4238-B7A6-B0B4719F61AE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -399,6 +403,10 @@ Global
 		{BE1DD2B4-BDC9-45A6-A8F4-6F7629A1D5F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE1DD2B4-BDC9-45A6-A8F4-6F7629A1D5F7}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{BE1DD2B4-BDC9-45A6-A8F4-6F7629A1D5F7}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{02644186-196F-4238-B7A6-B0B4719F61AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02644186-196F-4238-B7A6-B0B4719F61AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02644186-196F-4238-B7A6-B0B4719F61AE}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{02644186-196F-4238-B7A6-B0B4719F61AE}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -429,5 +437,6 @@ Global
 		{A8B3F1BC-15E2-4D21-9A1D-16BC0E87E179} = {5B2CD84C-073E-4489-8744-E0F37E1C1994}
 		{83957777-16E0-4267-BA73-E510DB40BAC7} = {5B2CD84C-073E-4489-8744-E0F37E1C1994}
 		{EC21AB7C-9FF7-47DC-8CC4-09E54583B192} = {5B2CD84C-073E-4489-8744-E0F37E1C1994}
+		{02644186-196F-4238-B7A6-B0B4719F61AE} = {5B2CD84C-073E-4489-8744-E0F37E1C1994}
 	EndGlobalSection
 EndGlobal

@@ -70,5 +70,5 @@ using Windsor.Node2008.WNOSPlugin;
 [assembly: AssemblyFileVersion(AssemblyInfo.cAssemblyFileVersion)]
 [assembly: PluginDefaultFlowAttribute("ICIS-AIR")]
 [assembly: PluginPackageNameAttribute("ICIS-AIR 5.4")]
-[assembly: PluginSqlDdlFilePaths(@"ICIS_AIR\5.4\staging_schema_ddl\ICS_AIR_5.4-SQL-DDL,ICIS_AIR\5.4\staging_schema_ddl\ICS_AIR_5.4-ORA-DDL.zip")]
+[assembly: PluginSqlDdlFilePaths(@"ICIS_AIR\5.4\staging_schema_ddl\ICS_AIR_5.4-SQL-DDL.zip,ICIS_AIR\5.4\staging_schema_ddl\ICS_AIR_5.4-ORA-DDL.zip")]
 [assembly: PublicPluginAttribute()]
