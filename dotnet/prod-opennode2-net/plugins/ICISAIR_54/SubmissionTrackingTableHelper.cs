@@ -38,7 +38,7 @@ using System.Data;
 using Windsor.Commons.Core;
 using Windsor.Commons.Spring;
 
-namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
+namespace Windsor.Node2008.WNOSPlugin.ICISAIR_54
 {
     public static class SubmissionTrackingTableHelper
     {

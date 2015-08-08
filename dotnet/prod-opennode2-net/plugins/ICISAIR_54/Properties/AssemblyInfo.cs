@@ -40,7 +40,7 @@ using Windsor.Node2008.WNOSPlugin;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ICISAIR_50 Plugin")]
+[assembly: AssemblyTitle("ICISAIR_54 Plugin")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany(AssemblyInfo.cAssemblyCompany)]
@@ -69,6 +69,6 @@ using Windsor.Node2008.WNOSPlugin;
 [assembly: AssemblyVersion(AssemblyInfo.cAssemblyVersion)]
 [assembly: AssemblyFileVersion(AssemblyInfo.cAssemblyFileVersion)]
 [assembly: PluginDefaultFlowAttribute("ICIS-AIR")]
-[assembly: PluginPackageNameAttribute("ICIS-AIR 5.0")]
+[assembly: PluginPackageNameAttribute("ICIS-AIR 5.4")]
 [assembly: PluginSqlDdlFilePaths(@"ICIS_AIR\5.0\staging_schema_ddl\ICS_AIR_5.0_SQL.zip,ICIS_AIR\5.0\staging_schema_ddl\ICS_AIR_5.0_ORA.zip")]
 [assembly: PublicPluginAttribute()]

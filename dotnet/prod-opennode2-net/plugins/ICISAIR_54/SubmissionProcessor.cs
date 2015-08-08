@@ -57,7 +57,7 @@ using Windsor.Commons.Spring;
 using Windsor.Commons.XsdOrm2;
 using Windsor.Commons.NodeDomain;
 
-namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
+namespace Windsor.Node2008.WNOSPlugin.ICISAIR_54
 {
     [Serializable]
     public class SubmissionProcessor : BaseWNOSPlugin, ISubmitProcessorEx
@@ -155,11 +155,11 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
 
                 AppendAuditLogEvent("Deserializing document data to ICIS data");
                 XmlReader reader = new NamespaceSpecifiedXmlTextReader("http://www.exchangenetwork.net/schema/icis/4", tempXmlFilePath);
-                Windsor.Node2008.WNOSPlugin.ICISAIR_50.Document data =
-                    _serializationHelper.Deserialize<Windsor.Node2008.WNOSPlugin.ICISAIR_50.Document>(reader);
+                Windsor.Node2008.WNOSPlugin.ICISAIR_54.Document data =
+                    _serializationHelper.Deserialize<Windsor.Node2008.WNOSPlugin.ICISAIR_54.Document>(reader);
 
-                //Windsor.Node2008.WNOSPlugin.ICISAIR_50.Document data =
-                //    _serializationHelper.Deserialize<Windsor.Node2008.WNOSPlugin.ICISAIR_50.Document>(tempXmlFilePath);
+                //Windsor.Node2008.WNOSPlugin.ICISAIR_54.Document data =
+                //    _serializationHelper.Deserialize<Windsor.Node2008.WNOSPlugin.ICISAIR_54.Document>(tempXmlFilePath);
 
                 if (CollectionUtils.IsNullOrEmpty(data.Payload))
                 {
@@ -169,7 +169,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
                 }
                 AppendAuditLogEvent("ICIS data contains {0} payloads", data.Payload.Length.ToString());
 
-                Type mappingAttributesType = typeof(Windsor.Node2008.WNOSPlugin.ICISAIR_50.MappingAttributes);
+                Type mappingAttributesType = typeof(Windsor.Node2008.WNOSPlugin.ICISAIR_54.MappingAttributes);
 
                 _baseDao.TransactionTemplate.Execute(delegate
                 {
@@ -177,7 +177,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
                     {
                         AppendAuditLogEvent("Deleting all existing ICIS payload data from the data store");
 
-                        int numRowsDeleted = _objectsToDatabase.DeleteAllFromDatabase(typeof(Windsor.Node2008.WNOSPlugin.ICISAIR_50.Payload),
+                        int numRowsDeleted = _objectsToDatabase.DeleteAllFromDatabase(typeof(Windsor.Node2008.WNOSPlugin.ICISAIR_54.Payload),
                                                                                       _baseDao, mappingAttributesType);
                         if (numRowsDeleted > 0)
                         {
@@ -192,7 +192,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
 
                     AppendAuditLogEvent("Storing ICIS payload data into database");
 
-                    foreach (Windsor.Node2008.WNOSPlugin.ICISAIR_50.Payload payload in data.Payload)
+                    foreach (Windsor.Node2008.WNOSPlugin.ICISAIR_54.Payload payload in data.Payload)
                     {
                         Dictionary<string, int> tableRowCounts = _objectsToDatabase.SaveToDatabase(payload, _baseDao, mappingAttributesType);
 
@@ -225,8 +225,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
             string tempZipFilePath = _settingsProvider.NewTempFilePath();
             try
             {
-                Windsor.Node2008.WNOSPlugin.ICISAIR_50.SubmissionResponseDataType response =
-                    new Windsor.Node2008.WNOSPlugin.ICISAIR_50.SubmissionResponseDataType();
+                Windsor.Node2008.WNOSPlugin.ICISAIR_54.SubmissionResponseDataType response =
+                    new Windsor.Node2008.WNOSPlugin.ICISAIR_54.SubmissionResponseDataType();
                 response.CreationDate = response.SubmissionDate = DateTime.Now;
                 response.TransactionIdentifier = transactionId;
 

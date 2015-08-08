@@ -6,7 +6,7 @@ using Windsor.Commons.Core;
 using System.Collections.Generic;
 using Windsor.Commons.Spring;
 
-namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
+namespace Windsor.Node2008.WNOSPlugin.ICISAIR_54
 {
     [DefaultTableNamePrefixAttribute("ICA")]
     [RemovePostfixNamesFromTableAndColumnNamesAttribute("Data", "Details", "Code")]

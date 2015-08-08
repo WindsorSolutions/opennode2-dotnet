@@ -44,7 +44,7 @@ using System.Text;
 using Windsor.Commons.NodeDomain;
 using System.IO;
 
-namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
+namespace Windsor.Node2008.WNOSPlugin.ICISAIR_54
 {
     [Serializable]
     public class PerformICISSubmission : ExecuteICISExtract
@@ -186,10 +186,10 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
         protected virtual bool DoXmlLoad(out string submitFilePath)
         {
             submitFilePath = null;
-            Type mappingAttributesType = typeof(Windsor.Node2008.WNOSPlugin.ICISAIR_50.MappingAttributes);
-            IDictionary<string, DbAppendSelectWhereClause> selectClauses = Windsor.Node2008.WNOSPlugin.ICISAIR_50.Payload.GetDefaultSelectClauses(_stagingDao);
-            List<Windsor.Node2008.WNOSPlugin.ICISAIR_50.Payload> payloads =
-                _objectsFromDatabase.LoadFromDatabase<Windsor.Node2008.WNOSPlugin.ICISAIR_50.Payload>(_stagingDao, selectClauses, mappingAttributesType);
+            Type mappingAttributesType = typeof(Windsor.Node2008.WNOSPlugin.ICISAIR_54.MappingAttributes);
+            IDictionary<string, DbAppendSelectWhereClause> selectClauses = Windsor.Node2008.WNOSPlugin.ICISAIR_54.Payload.GetDefaultSelectClauses(_stagingDao);
+            List<Windsor.Node2008.WNOSPlugin.ICISAIR_54.Payload> payloads =
+                _objectsFromDatabase.LoadFromDatabase<Windsor.Node2008.WNOSPlugin.ICISAIR_54.Payload>(_stagingDao, selectClauses, mappingAttributesType);
 
             // Remove payloads that don't contain any data
             if (payloads != null)
@@ -218,7 +218,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
 
             AppendAuditLogEvent("The following ICIS payload(s) were loaded from the database: {0}", GetPayloadsDescription(payloads));
 
-            Windsor.Node2008.WNOSPlugin.ICISAIR_50.Document document = new Document();
+            Windsor.Node2008.WNOSPlugin.ICISAIR_54.Document document = new Document();
 
             document.Payload = payloads.ToArray();
             document.Header = CreateHeader();
@@ -311,10 +311,10 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_50
             header.Property = properties.ToArray();
             return header;
         }
-        protected virtual string GetPayloadsDescription(IList<Windsor.Node2008.WNOSPlugin.ICISAIR_50.Payload> payloads)
+        protected virtual string GetPayloadsDescription(IList<Windsor.Node2008.WNOSPlugin.ICISAIR_54.Payload> payloads)
         {
             StringBuilder sb = new StringBuilder();
-            CollectionUtils.ForEach(payloads, delegate(Windsor.Node2008.WNOSPlugin.ICISAIR_50.Payload payload)
+            CollectionUtils.ForEach(payloads, delegate(Windsor.Node2008.WNOSPlugin.ICISAIR_54.Payload payload)
             {
                 if (sb.Length > 0)
                 {

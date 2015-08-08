@@ -8,8 +8,8 @@
     <ProjectGuid>{02644186-196F-4238-B7A6-B0B4719F61AE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Windsor.Node2008.WNOSPlugin.ICISAIR_50</RootNamespace>
-    <AssemblyName>Windsor.Node2008.WNOSPlugin.ICISAIR_50</AssemblyName>
+    <RootNamespace>Windsor.Node2008.WNOSPlugin.ICISAIR_54</RootNamespace>
+    <AssemblyName>Windsor.Node2008.WNOSPlugin.ICISAIR_54</AssemblyName>
     <SccProjectName>
     </SccProjectName>
     <SccLocalPath>
