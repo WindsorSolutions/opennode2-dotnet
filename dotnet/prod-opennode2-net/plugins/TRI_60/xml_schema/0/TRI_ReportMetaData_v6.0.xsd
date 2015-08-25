@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:TRI="http://www.exchangenetwork.net/schema/TRI/6" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/TRI/6" elementFormDefault="qualified" attributeFormDefault="unqualified" version="6.0">
+	<xsd:include schemaLocation="TRI_ReportValidation_v6.0.xsd"/>
+	<xsd:include schemaLocation="TRI_SharedTypes_v6.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>		
+		Schema Name : 	TRI_ReportMetaData_v6.0.xsd
+		Current Version Available At :
+		Description : 	Data which supplements the information in a TRI report, such as the result of data processing operations by the receiver. 
+		Application : Toxics Release Inventory
+		Developed by : 	 Environmental Protection Agency, CGI
+		Point of Contact : Kathy Hale
+		Maintained by : Environmental Protection Agency, CGI
+		Point of Contact : Kathy Hale [kathy.hale@cgifederal.com]       
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="ReportMetaData" type="TRI:ReportMetaDataType">
+		<xsd:annotation>
+			<xsd:documentation>Data which supplements the information in a TRI report, such as the result of data processing operations by the receiver.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ReportMetaDataType">
+		<xsd:annotation>
+			<xsd:documentation>Information about the TRI Form R Report.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="TRI:ReportPostmarkDate" minOccurs="0"/>
+			<xsd:element ref="TRI:ReportReceivedDate" minOccurs="0"/>
+			<xsd:element ref="TRI:ReportOriginalPostmarkDate" minOccurs="0"/>
+			<xsd:element ref="TRI:ReportOriginalReceivedDate" minOccurs="0"/>
+			<xsd:element ref="TRI:ReportSubmissionMethodCode" minOccurs="0"/>
+			<xsd:element ref="TRI:EPAPassedValidationIndicator" minOccurs="0"/>
+			<xsd:element ref="TRI:EPAProcessingStatusCode" minOccurs="0"/>
+			<xsd:element ref="TRI:UnalteredReportIndicator" minOccurs="0"/>
+			<xsd:element ref="TRI:ReportValidation" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ReportPostmarkDate" type="TRI:ToxicReleaseDateType">
+		<xsd:annotation>
+			<xsd:documentation>The postmark date for this submission (if by mail).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ReportReceivedDate" type="TRI:ToxicReleaseDateType">
+		<xsd:annotation>
+			<xsd:documentation>The date the report was received by EPA.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ReportOriginalPostmarkDate" type="TRI:ToxicReleaseDateType">
+		<xsd:annotation>
+			<xsd:documentation>The original postmark date for a submission for this chemical from this facility and this reporting year. Applies to revisions only.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ReportOriginalReceivedDate" type="TRI:ToxicReleaseDateType">
+		<xsd:annotation>
+			<xsd:documentation>The original received date for a submission for this chemical from this facility and this reporting year. Applies to revisions only.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ReportSubmissionMethodCode" type="TRI:ReportSubmissionMethodCodeType">
+		<xsd:annotation>
+			<xsd:documentation>The means by which the report was transmitted to the EPA from a reporting facility.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="EPAProcessingStatusCode" type="TRI:EPAProcessingStatusCodeType">
+		<xsd:annotation>
+			<xsd:documentation>The EPA processing status of the submission:
+-1 = unknown
+ 0 = inactive submission
+ 1 = active submission
+ 2 = submission needs manual review
+ 3 = hold active
+ 4 = hold inactive
+ 6 = withdrawal request pending
+			 </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="EPAPassedValidationIndicator" type="TRI:ToxicReleaseBooleanType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates that the report has passed EPA validation.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="UnalteredReportIndicator" type="TRI:ToxicReleaseBooleanType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates that the data in the XML TRI report has not been altered, representing an original TRI submission from a reporting facility.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!--Report metadata date type-->
+	<xsd:simpleType name="ReportSubmissionMethodCodeType">
+		<xsd:annotation>
+			<xsd:documentation>Enumeration of 4 status codes type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="MAIL"/>
+			<xsd:enumeration value="CDX_WEB"/>
+			<xsd:enumeration value="TRIME_WEB"/>
+			<xsd:enumeration value="OTHER"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="EPAProcessingStatusCodeType">
+		<xsd:annotation>
+			<xsd:documentation>Enumeration of 8 status codes type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="-1"/>
+			<xsd:enumeration value="0"/>
+			<xsd:enumeration value="1"/>
+			<xsd:enumeration value="2"/>
+			<xsd:enumeration value="3"/>
+			<xsd:enumeration value="4"/>
+			<xsd:enumeration value="5"/>
+			<xsd:enumeration value="6"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

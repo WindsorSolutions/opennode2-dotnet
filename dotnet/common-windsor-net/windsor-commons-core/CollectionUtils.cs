@@ -1143,5 +1143,12 @@ namespace Windsor.Commons.Core
                 entity.AddRange(collection);
             }
         }
+        public static void AddIfNotContains<T>(this ICollection<T> source, T item)
+        {
+            if (!source.Contains(item))
+            {
+                source.Add(item);
+            }
+        }
     }
 }
