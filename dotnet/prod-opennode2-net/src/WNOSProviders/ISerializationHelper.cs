@@ -75,5 +75,7 @@ namespace Windsor.Node2008.WNOSProviders
             get;
             set;
         }
+        void JsonSerialize(object obj, string targetPath);
+        byte[] JsonSerialize(object obj);
     }
 }

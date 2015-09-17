@@ -60,6 +60,13 @@ namespace Windsor.Commons.Core
             _unqualifiedNamespace.Add("", "");
             _omitXmlDeclarationWriterSettings = new XmlWriterSettings();
             _omitXmlDeclarationWriterSettings.OmitXmlDeclaration = true;
+
+            ServiceStack.Text.JsConfig.EmitCamelCaseNames = true;
+            ServiceStack.Text.JsConfig.DateHandler = ServiceStack.Text.JsonDateHandler.ISO8601;
+            ServiceStack.Text.JsConfig.ThrowOnDeserializationError = true;
+            ServiceStack.Text.JsConfig.IncludeNullValues = true;
+            ServiceStack.Text.JsConfig.IncludePublicFields = false;
+            ServiceStack.Text.JsConfig.ExcludeTypeInfo = true;
         }
 
         /// <summary>
@@ -474,6 +481,21 @@ namespace Windsor.Commons.Core
             return this.BinaryDeserialize<T>(bytes);
         } 
         #endregion
+        public void JsonSerialize(object obj, string targetPath)
+        {
+            using (FileStream stream = File.OpenWrite(targetPath))
+            {
+                ServiceStack.Text.JsonSerializer.SerializeToStream(obj, stream);
+            }
+        }
+        public byte[] JsonSerialize(object obj)
+        {
+            using (MemoryStream stream = new MemoryStream())
+            {
+                ServiceStack.Text.JsonSerializer.SerializeToStream(obj, stream);
+                return stream.ToArray();
+            }
+        }
     }
     public class NamespaceSpecifiedXmlTextReader : XmlTextReader
     {

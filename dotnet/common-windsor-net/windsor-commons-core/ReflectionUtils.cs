@@ -212,11 +212,8 @@ namespace Windsor.Commons.Core
                     T assignAttribute = curAttribute as T;
                     if (assignAttribute != null)
                     {
-                        if (attribute != null)
-                        {
-                            return true; // More than one, don't call delegate for any!
-                        }
                         attribute = assignAttribute;
+                        break;
                     }
                 }
                 if (attribute != null)

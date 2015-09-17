@@ -128,8 +128,17 @@ namespace Windsor.Commons.Spring
         public virtual DateTime GetNullDateTime(string name, out bool isSpecified)
         {
             int ordinal = GetOrdinal(name);
-            isSpecified = !base.IsDBNull(ordinal) && base.GetString(ordinal).Length > 0;
+            isSpecified = !base.IsDBNull(ordinal);
             return isSpecified ? base.GetDateTime(ordinal) : default(DateTime);
+        }
+        public virtual DateTime? GetNullableDateTime(string name)
+        {
+            return GetNullableDateTime(GetOrdinal(name));
+        }
+        public virtual DateTime? GetNullableDateTime(int ordinal)
+        {
+            bool isSpecified = !base.IsDBNull(ordinal);
+            return isSpecified ? base.GetDateTime(ordinal) : (DateTime?)null;
         }
         public virtual int GetInt32(string name)
         {

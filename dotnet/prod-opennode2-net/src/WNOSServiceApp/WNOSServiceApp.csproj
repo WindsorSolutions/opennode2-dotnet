@@ -57,6 +57,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\common-windsor-net\lib\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="ServiceStack.Text, Version=3.9.59.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\common-windsor-net\lib\ServiceStack.Text.dll</HintPath>
+    </Reference>
     <Reference Include="Spring.Aop, Version=1.3.1.20711, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\common-windsor-net\lib\Spring.Aop.dll</HintPath>
