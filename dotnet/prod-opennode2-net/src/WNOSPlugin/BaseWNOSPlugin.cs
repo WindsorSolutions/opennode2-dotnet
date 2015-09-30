@@ -2159,5 +2159,44 @@ namespace Windsor.Node2008.WNOSPlugin
 
             return documentNames;
         }
+        protected virtual void ExecStoredProc(SpringBaseDao baseDao, string storedProcName,
+                                              int commandTimeout, IDbParameters parameters)
+        {
+            this.AppendAuditLogEvent("Executing stored procedure \"{0}\" with timeout of {1} seconds ...",
+                                     storedProcName, commandTimeout.ToString());
+
+            try
+            {
+                baseDao.AdoTemplate.Execute<int>(delegate(DbCommand command)
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = storedProcName;
+                    Spring.Data.Support.ParameterUtils.CopyParameters(command, parameters);
+
+                    try
+                    {
+                        SpringBaseDao.ExecuteCommandWithTimeout(command, commandTimeout, delegate(DbCommand commandToExecute)
+                        {
+                            commandToExecute.ExecuteNonQuery();
+                        });
+                    }
+                    catch (Exception ex2)
+                    {
+                        this.AppendAuditLogEvent("Error returned from stored procedure: {0}", ExceptionUtils.GetDeepExceptionMessage(ex2));
+                        throw;
+                    }
+
+                    return 0;
+                });
+
+                this.AppendAuditLogEvent("Successfully executed stored procedure \"{0}\"", storedProcName);
+            }
+            catch (Exception e)
+            {
+                this.AppendAuditLogEvent("Failed to execute stored procedure \"{0}\" with error: {1}",
+                                           storedProcName, ExceptionUtils.GetDeepExceptionMessage(e));
+                throw;
+            }
+        }
     }
 }
