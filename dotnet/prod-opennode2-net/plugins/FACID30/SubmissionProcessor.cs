@@ -53,6 +53,7 @@ using Windsor.Commons.Core;
 using Windsor.Commons.Logging;
 using Windsor.Commons.Spring;
 using Windsor.Commons.XsdOrm;
+using System.Transactions;
 
 namespace Windsor.Node2008.WNOSPlugin.FACID30
 {
@@ -60,12 +61,20 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
     public class SubmissionProcessor : FACIDPluginBase, ISubmitProcessor
     {
         protected const string CONFIG_DELETE_DATA_BEFORE_INSERT = "Delete Existing Data Before Insert (True or False)";
+        protected const string CONFIG_PARAM_PROC_NAME = "Post-processing Stored Procedure Name";
+        protected const string CONFIG_PARAM_PROC_TIMEOUT = "Post-processing Stored Procedure Timeout (in seconds)";
 
         protected bool _deleteExistingDataBeforeInsert = true;
-        
+        protected const string p_fac_dtls_id = "FAC_DTLS_ID";
+
+        protected string _storedProcName = null;
+        protected int _storedProcTimeout = 300;
+
         public SubmissionProcessor()
         {
             ConfigurationArguments.Add(CONFIG_DELETE_DATA_BEFORE_INSERT, null);
+            ConfigurationArguments.Add(CONFIG_PARAM_PROC_NAME, null);
+            ConfigurationArguments.Add(CONFIG_PARAM_PROC_TIMEOUT, null);
         }
 
         protected override void LazyInit()
@@ -73,6 +82,10 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
             base.LazyInit();
             
             GetConfigParameter(CONFIG_DELETE_DATA_BEFORE_INSERT, out _deleteExistingDataBeforeInsert);
+
+            _storedProcName = ValidateNonEmptyConfigParameter(CONFIG_PARAM_PROC_NAME);
+
+            TryGetConfigParameter(CONFIG_PARAM_PROC_TIMEOUT, ref _storedProcTimeout);
         }
 
         public void ProcessSubmit(string transactionId)
@@ -131,12 +144,29 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
             IObjectsToDatabase objectsToDatabase;
             GetServiceImplementation(out objectsToDatabase);
 
-            Dictionary<string, int> insertCounts = objectsToDatabase.SaveToDatabase(data, _baseDao);
+            Dictionary<string, int> insertCounts;
+            using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, TimeSpan.FromSeconds(_storedProcTimeout)))
+            {
+                insertCounts = objectsToDatabase.SaveToDatabase(data, _baseDao);
+
+                CallPostprocessingStoredProc(data.FacilityDetailsId);
+            }
 
             AppendAuditLogEvent(GetRowCountsAuditString(insertCounts));
 
             AppendAuditLogEvent("Success, added facility details with primary key: {0}!",
                                 data.FacilityDetailsId);
+        }
+        protected virtual void CallPostprocessingStoredProc(string facDtlsId)
+        {
+            if (_storedProcName == null)
+            {
+                return;
+            }
+            IDbParameters parameters = _baseDao.AdoTemplate.CreateDbParameters();
+            parameters.AddWithValue(p_fac_dtls_id, facDtlsId);
+
+            ExecStoredProc(_baseDao, _storedProcName, _storedProcTimeout, parameters);
         }
     }
 }
