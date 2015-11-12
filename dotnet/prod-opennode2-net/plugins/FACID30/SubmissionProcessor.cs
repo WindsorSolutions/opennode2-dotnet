@@ -150,6 +150,8 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
                 insertCounts = objectsToDatabase.SaveToDatabase(data, _baseDao);
 
                 CallPostprocessingStoredProc(data.FacilityDetailsId);
+
+                scope.Complete();
             }
 
             AppendAuditLogEvent(GetRowCountsAuditString(insertCounts));

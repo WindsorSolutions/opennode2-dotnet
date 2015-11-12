@@ -82,8 +82,10 @@
     <Compile Include="ExecuteBeachesExtract.cs" />
     <Compile Include="GetBeachesSubmissionStatus.cs" />
     <Compile Include="BeachesExtractAndSubmission.cs" />
+    <Compile Include="GetNotificationDetailsByParameters.cs" />
     <Compile Include="PerformBeachesSubmission.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuerySolicitProcessorBase.cs" />
     <Compile Include="SubmissionProcessor.cs" />
     <Compile Include="xml_schema\BEACHES_v2_2.cs" />
     <Compile Include="xml_schema\BEACHES_v2_2_2.cs" />
