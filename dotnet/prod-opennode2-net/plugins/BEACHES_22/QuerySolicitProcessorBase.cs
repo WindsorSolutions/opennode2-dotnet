@@ -54,11 +54,12 @@ using Windsor.Commons.Spring;
 using Windsor.Commons.XsdOrm;
 using System.Text.RegularExpressions;
 using Windsor.Commons.NodeDomain;
+using System.Collections;
 
 namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
 {
     [Serializable]
-    public abstract class QuerySolicitProcessorBase : BaseWNOSPlugin
+    public abstract class QuerySolicitProcessorBase : BaseWNOSPlugin, IQueryProcessor, ISolicitProcessor
     {
         protected const string SOURCE_PROVIDER_KEY = "Data Source";
 
@@ -69,6 +70,7 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
         protected ICompressionHelper _compressionHelper;
         protected IDocumentManager _documentManager;
         protected ISettingsProvider _settingsProvider;
+        protected IObjectsFromDatabase _objectsFromDatabase;
 
         protected DataRequest _dataRequest;
         protected SpringBaseDao _baseDao;
@@ -80,7 +82,7 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
             DataProviders.Add(SOURCE_PROVIDER_KEY, null);
         }
 
-        protected override void LazyInit()
+        protected virtual void LazyInit()
         {
             AppendAuditLogEvent("Initializing {0} plugin ...", this.GetType().Name);
 
@@ -89,10 +91,11 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
             GetServiceImplementation(out _compressionHelper);
             GetServiceImplementation(out _documentManager);
             GetServiceImplementation(out _settingsProvider);
+            GetServiceImplementation(out _objectsFromDatabase);
 
             _baseDao = ValidateDBProvider(SOURCE_PROVIDER_KEY);
         }
-        protected override void ValidateRequest(string requestId)
+        protected virtual void ValidateRequest(string requestId)
         {
             AppendAuditLogEvent("Loading request with id \"{0}\"", requestId);
 
@@ -100,5 +103,108 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
 
             AppendAuditLogEvent("Validating request: {0}", _dataRequest);
         }
+        public virtual void ProcessSolicit(string requestId)
+        {
+            LazyInit();
+
+            ValidateRequest(requestId);
+
+            CommonContentType contentType;
+            var dataFilePath = DoProcessQuerySolicit(out contentType);
+        }
+
+        public virtual PaginatedContentResult ProcessQuery(string requestId)
+        {
+            LazyInit();
+
+            ValidateRequest(requestId);
+
+            CommonContentType contentType;
+            var dataFilePath = DoProcessQuerySolicit(out contentType);
+
+            PaginatedContentResult result =
+                new PaginatedContentResult(_dataRequest.RowIndex, _dataRequest.MaxRowCount, true, contentType,
+                                           File.ReadAllBytes(dataFilePath));
+
+            return result;
+        }
+
+        protected virtual string GetQuerySolicitResultsString(BeachDataSubmissionDataType data)
+        {
+            StringBuilder sb = new StringBuilder();
+            if (data == null)
+            {
+                sb.AppendFormat("Did not find any BEACHES data that matched the query parameters.");
+            }
+            else
+            {
+                sb.AppendFormat("Found the following BEACHES data that matched the query parameters: ");
+                int i = 0;
+                AppendCountString("Organization Details", data.OrganizationDetail, ++i == 1, sb);
+                AppendCountString("Beach Details", data.BeachDetail, ++i == 1, sb);
+                int beachActivityCount = 0;
+                CollectionUtils.ForEach(data.BeachDetail, delegate(BeachDetailDataType beachDetailDataType)
+                {
+                    if (beachDetailDataType.BeachActivityDetail != null)
+                    {
+                        beachActivityCount += beachDetailDataType.BeachActivityDetail.Length;
+                    }
+                });
+                sb.AppendFormat(", {0} {1}", beachActivityCount.ToString(), "Beach Activities");
+            }
+            return sb.ToString();
+        }
+        protected void AppendCountString(string collectionName, ICollection collection, bool isFirst,
+                                         StringBuilder sb)
+        {
+            if (!isFirst)
+            {
+                sb.Append(", ");
+            }
+            int count = CollectionUtils.IsNullOrEmpty(collection) ? 0 : collection.Count;
+            sb.AppendFormat("{0} {1}", count.ToString(), collectionName);
+        }
+        protected virtual string GenerateQuerySolicitFileAndAddToTransaction(BeachDataSubmissionDataType data)
+        {
+            string querySolicitFile = GenerateQuerySolicitFile(data);
+            try
+            {
+                AppendAuditLogEvent("Attaching submission document to transaction \"{0}\"",
+                                    _dataRequest.TransactionId);
+                _documentManager.AddDocument(_dataRequest.TransactionId,
+                                             CommonTransactionStatusCode.Completed,
+                                             null, querySolicitFile);
+            }
+            catch (Exception e)
+            {
+                AppendAuditLogEvent("Failed to attach submission document \"{0}\" to transaction \"{1}\" with exception: {2}",
+                                    querySolicitFile, _dataRequest.TransactionId, ExceptionUtils.ToShortString(e));
+                FileUtils.SafeDeleteFile(querySolicitFile);
+                throw;
+            }
+            return querySolicitFile;
+        }
+        protected virtual string GenerateQuerySolicitFile(BeachDataSubmissionDataType data)
+        {
+            string tempXmlFilePath = _settingsProvider.NewTempFilePath(".xml");
+            string tempZipFilePath = _settingsProvider.NewTempFilePath(".zip");
+            try
+            {
+                AppendAuditLogEvent("Generating submission file from results");
+                _serializationHelper.Serialize(data, tempXmlFilePath);
+                _compressionHelper.CompressFile(tempXmlFilePath, tempZipFilePath);
+            }
+            catch (Exception)
+            {
+                FileUtils.SafeDeleteFile(tempZipFilePath);
+                throw;
+            }
+            finally
+            {
+                FileUtils.SafeDeleteFile(tempXmlFilePath);
+            }
+            return tempZipFilePath;
+        }
+        protected abstract string DoProcessQuerySolicit(out CommonContentType contentType);
     }
 }

@@ -108,7 +108,7 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
 
                 if (numRowsDeleted > 0)
                 {
-                    AppendAuditLogEvent("Deleted {0} existing FACID data rows from the data store");
+                    AppendAuditLogEvent("Deleted {0} existing FACID data rows from the data store", numRowsDeleted.ToString());
                 }
                 else
                 {
@@ -147,11 +147,15 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
             Dictionary<string, int> insertCounts;
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, TimeSpan.FromSeconds(_storedProcTimeout)))
             {
+                AppendAuditLogEvent("Inserting data into database ...");
                 insertCounts = objectsToDatabase.SaveToDatabase(data, _baseDao);
+                AppendAuditLogEvent("Successfully inserted data into database");
 
                 CallPostprocessingStoredProc(data.FacilityDetailsId);
 
+                AppendAuditLogEvent("Attempting to complete database transaction ...");
                 scope.Complete();
+                AppendAuditLogEvent("Successfully completed database transaction");
             }
 
             AppendAuditLogEvent(GetRowCountsAuditString(insertCounts));
@@ -168,7 +172,19 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
             IDbParameters parameters = _baseDao.AdoTemplate.CreateDbParameters();
             parameters.AddWithValue(p_fac_dtls_id, facDtlsId);
 
-            ExecStoredProc(_baseDao, _storedProcName, _storedProcTimeout, parameters);
+            AppendAuditLogEvent("Attempting to call database stored procedure \"{0}\" ...", _storedProcName);
+
+            try
+            {
+                ExecStoredProc(_baseDao, _storedProcName, _storedProcTimeout, parameters);
+                AppendAuditLogEvent("Successfully called database stored procedure \"{0}\"", _storedProcName);
+            }
+            catch (Exception ex)
+            {
+                AppendAuditLogEvent("The database stored procedure \"{0}\" returned an error: {1}",
+                                    _storedProcName, ExceptionUtils.GetDeepExceptionMessageOnly(ex));
+                throw;
+            }
         }
     }
 }

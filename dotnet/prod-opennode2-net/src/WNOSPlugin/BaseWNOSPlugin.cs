@@ -485,9 +485,37 @@ namespace Windsor.Node2008.WNOSPlugin
             {
                 return (T)(object)valueStr;
             }
-            else if (typeof(T) == typeof(TimeSpan))
+            else if (typeof(T) == typeof(TimeSpan) || typeof(T) == typeof(TimeSpan?))
             {
-                return (T)Convert.ChangeType(TimeSpan.Parse(valueStr), typeof(T));
+                return (T)(object)TimeSpan.Parse(valueStr);
+            }
+            else if (typeof(T) == typeof(DateTime) || typeof(T) == typeof(DateTime?))
+            {
+                return (T)(object)DateTime.Parse(valueStr);
+            }
+            else if (typeof(T) == typeof(bool) || typeof(T) == typeof(bool?))
+            {
+                return (T)(object)bool.Parse(valueStr);
+            }
+            else if (typeof(T) == typeof(int) || typeof(T) == typeof(int?))
+            {
+                return (T)(object)int.Parse(valueStr);
+            }
+            else if (typeof(T) == typeof(float) || typeof(T) == typeof(float?))
+            {
+                return (T)(object)float.Parse(valueStr);
+            }
+            else if (typeof(T) == typeof(double) || typeof(T) == typeof(double?))
+            {
+                return (T)(object)double.Parse(valueStr);
+            }
+            else if (typeof(T) == typeof(long) || typeof(T) == typeof(long?))
+            {
+                return (T)(object)long.Parse(valueStr);
+            }
+            else if (typeof(T) == typeof(decimal) || typeof(T) == typeof(decimal?))
+            {
+                return (T)(object)decimal.Parse(valueStr);
             }
             else
             {
