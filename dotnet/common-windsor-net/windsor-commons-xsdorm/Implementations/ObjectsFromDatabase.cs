@@ -521,7 +521,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
                         throw new ArgumentException(string.Format("appendSelectWhereClause.SelectWhereQuery is empty for object path: {0}",
                                                                   tableName));
                     }
-                    command.CommandText += " WHERE " + appendSelectWhereClause.SelectWhereQuery;
+                    command.CommandText += " " + appendSelectWhereClause.SelectTableAlias + " WHERE " + appendSelectWhereClause.SelectWhereQuery;
                     CollectionUtils.ForEach(appendSelectWhereClause.SelectWhereParameters,
                                             delegate(IDataParameter parameter)
                                             {

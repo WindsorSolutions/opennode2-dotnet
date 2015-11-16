@@ -71,26 +71,39 @@ namespace Windsor.Commons.XsdOrm
             _selectWhereQuery = baseDao.LoadGenericParameters(selectJDBCWhereQuery, out parameters, queryValues);
             _selectWhereParameters = parameters;
         }
+        public DbAppendSelectWhereClause(string selectTableAlias, SpringBaseDao baseDao, string selectJDBCWhereQuery, params object[] queryValues) :
+            this(baseDao, selectJDBCWhereQuery, queryValues)
+        {
+            _selectTableAlias = selectTableAlias;
+        }
         public DbAppendSelectWhereClause(SpringBaseDao baseDao, string selectJDBCWhereQuery, IList<object> queryValues)
         {
             ICollection<IDataParameter> parameters;
             _selectWhereQuery = baseDao.LoadGenericParametersFromList(selectJDBCWhereQuery, out parameters, queryValues);
             _selectWhereParameters = parameters;
         }
+        public DbAppendSelectWhereClause(string selectTableAlias, SpringBaseDao baseDao, string selectJDBCWhereQuery, IList<object> queryValues) :
+            this(baseDao, selectJDBCWhereQuery, (IList<object>)queryValues)
+        {
+            _selectTableAlias = selectTableAlias;
+        }
+        public string SelectTableAlias
+        {
+            get { return _selectTableAlias; }
+        }
         public string SelectWhereQuery
         {
             get { return _selectWhereQuery; }
-            set { _selectWhereQuery = value; }
         }
         public ICollection<IDataParameter> SelectWhereParameters
         {
             get { return _selectWhereParameters; }
-            set { _selectWhereParameters = value; }
         }
         public override string ToString()
         {
             return ReflectionUtils.GetPublicPropertiesString(this);
         }
+        private string _selectTableAlias = string.Empty;
         private string _selectWhereQuery;
         private ICollection<IDataParameter> _selectWhereParameters;
     }

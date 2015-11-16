@@ -132,69 +132,79 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
             List<object> beachActivityMonStationParams = null;
             string activityIndicatorClause = null;
             List<object> activityIndicatorParams = null;
+            const string organizationAlias = "O";
+            const string beachAlias = "B";
+            const string beachActivityAlias = "BA";
+            const string beachActivityMonStationAlias = "BAMS";
+            const string activityIndicatorAlias = "AI";
             if (_actualStartDate.HasValue)
             {
-                beachActivityClause = AppendToDbClause(beachActivityClause, "ACTUALSTARTDATE >= ?");
+                beachActivityClause = AppendToDbClause(beachActivityClause, beachActivityAlias + "." + "ACTUALSTARTDATE >= ?");
                 beachActivityParams = CollectionUtils.Add(_actualStartDate.Value, beachActivityParams);
             }
             if (_actualStopDate.HasValue)
             {
-                beachActivityClause = AppendToDbClause(beachActivityClause, "ACTUALSTOPDATE <= ?");
+                beachActivityClause = AppendToDbClause(beachActivityClause, beachActivityAlias + "." + "ACTUALSTOPDATE <= ?");
                 beachActivityParams = CollectionUtils.Add(_actualStopDate.Value, beachActivityParams);
             }
             if (!string.IsNullOrEmpty(_beachName))
             {
-                beachClause = AppendToDbClause(beachClause, "UPPER(BEACHNAME) LIKE " + _baseDao.SqlConcat("'%'", "UPPER(?)", "'%'"));
+                beachClause = AppendToDbClause(beachClause, "UPPER(" + beachAlias + "." + "BEACHNAME) LIKE " + _baseDao.SqlConcat("'%'", "UPPER(?)", "'%'"));
                 beachParams = CollectionUtils.Add(_beachName, beachParams);
             }
             if (!string.IsNullOrEmpty(_beachIdentifier))
             {
-                beachClause = AppendToDbClause(beachClause, "UPPER(BEACHIDENTIFIER) = UPPER(?)");
+                beachClause = AppendToDbClause(beachClause, "UPPER(" + beachAlias + "." + "BEACHIDENTIFIER) = UPPER(?)");
                 beachParams = CollectionUtils.Add(_beachIdentifier, beachParams);
             }
             if (!string.IsNullOrEmpty(_monitoringStationIdentifier))
             {
-                beachActivityMonStationClause = AppendToDbClause(beachActivityMonStationClause, "UPPER(MONITORINGSTATIONIDENTIFIER) = UPPER(?)");
+                beachActivityMonStationClause = AppendToDbClause(beachActivityMonStationClause, "UPPER(" + beachActivityMonStationAlias + "." + "MONITORINGSTATIONIDENTIFIER) = UPPER(?)");
                 beachActivityMonStationParams = CollectionUtils.Add(_monitoringStationIdentifier, beachActivityMonStationParams);
             }
             if (!string.IsNullOrEmpty(_beachAccessType))
             {
-                beachClause = AppendToDbClause(beachClause, "UPPER(BEACHACCESSTYPE) = UPPER(?)");
+                beachClause = AppendToDbClause(beachClause, "UPPER(" + beachAlias + "." + "BEACHACCESSTYPE) = UPPER(?)");
                 beachParams = CollectionUtils.Add(_beachAccessType, beachParams);
             }
             if (!string.IsNullOrEmpty(_activityIndicatorType))
             {
-                activityIndicatorClause = AppendToDbClause(activityIndicatorClause, "UPPER(INDICATORTYPE) = UPPER(?)");
+                activityIndicatorClause = AppendToDbClause(activityIndicatorClause, "UPPER(" + activityIndicatorAlias + "." + "INDICATORTYPE) = UPPER(?)");
                 activityIndicatorParams = CollectionUtils.Add(_activityIndicatorType, activityIndicatorParams);
             }
             if (_activeAdvisoryIndicator.HasValue)
             {
                 if (_activeAdvisoryIndicator.Value)
                 {
-                    beachActivityClause = AppendToDbClause(beachActivityClause, "ACTUALSTOPDATE IS NULL");
+                    beachActivityClause = AppendToDbClause(beachActivityClause, beachActivityAlias + "." + "ACTUALSTOPDATE IS NULL");
                 }
             }
             if (beachActivityMonStationClause != null)
             {
-                selectClauses.Add("NOTIF_BEACHACTIVITYMONSTATION", new DbAppendSelectWhereClause(_baseDao, beachActivityMonStationClause, beachActivityMonStationParams));
-                beachActivityClause = AppendToDbClause(beachActivityClause, string.Format("ID IN (SELECT BAMS.ACTIVITY_ID FROM NOTIF_BEACHACTIVITYMONSTATION BAMS WHERE {0})", beachActivityMonStationClause));
+                selectClauses.Add("NOTIF_BEACHACTIVITYMONSTATION", new DbAppendSelectWhereClause(beachActivityMonStationAlias, _baseDao, beachActivityMonStationClause, beachActivityMonStationParams));
+                beachActivityClause = AppendToDbClause(beachActivityClause,
+                    string.Format("{2}.ID IN (SELECT {1}.ACTIVITY_ID FROM NOTIF_BEACHACTIVITYMONSTATION {1} WHERE {0})",
+                                  beachActivityMonStationClause, beachActivityMonStationAlias, beachActivityAlias));
                 CollectionUtils.AddRange(beachActivityMonStationParams, ref beachActivityParams);
             }
             if (activityIndicatorClause != null)
             {
-                selectClauses.Add("NOTIF_ACTIVITYINDICATOR", new DbAppendSelectWhereClause(_baseDao, activityIndicatorClause, activityIndicatorParams));
-                beachActivityClause = AppendToDbClause(beachActivityClause, string.Format("ID IN (SELECT AI.ACTIVITY_ID FROM NOTIF_ACTIVITYINDICATOR AI WHERE {0})", activityIndicatorClause));
+                selectClauses.Add("NOTIF_ACTIVITYINDICATOR", new DbAppendSelectWhereClause(activityIndicatorAlias, _baseDao, activityIndicatorClause, activityIndicatorParams));
+                beachActivityClause = AppendToDbClause(beachActivityClause,
+                    string.Format("{2}.ID IN (SELECT {1}.ACTIVITY_ID FROM NOTIF_ACTIVITYINDICATOR {1} WHERE {0})",
+                                  activityIndicatorClause, activityIndicatorAlias, beachActivityAlias));
                 CollectionUtils.AddRange(activityIndicatorParams, ref beachActivityParams);
             }
             if (beachActivityClause != null)
             {
-                selectClauses.Add("NOTIF_BEACHACTIVITY", new DbAppendSelectWhereClause(_baseDao, beachActivityClause, beachActivityParams));
-                beachClause = AppendToDbClause(beachClause, string.Format("ID IN (SELECT BA.BEACH_ID FROM NOTIF_BEACHACTIVITY BA WHERE {0})", beachActivityClause));
+                selectClauses.Add("NOTIF_BEACHACTIVITY", new DbAppendSelectWhereClause(beachActivityAlias, _baseDao, beachActivityClause, beachActivityParams));
+                beachClause = AppendToDbClause(beachClause, string.Format("{2}.ID IN (SELECT {1}.BEACH_ID FROM NOTIF_BEACHACTIVITY {1} WHERE {0})",
+                                               beachActivityClause, beachActivityAlias, beachAlias));
                 CollectionUtils.AddRange(beachActivityParams, ref beachParams);
             }
             if (beachClause != null)
             {
-                selectClauses.Add("NOTIF_BEACH", new DbAppendSelectWhereClause(_baseDao, beachClause, beachParams));
+                selectClauses.Add("NOTIF_BEACH", new DbAppendSelectWhereClause(beachAlias, _baseDao, beachClause, beachParams));
             }
            
             AppendAuditLogEvent("Querying database for BEACHES data ...");
@@ -202,9 +212,10 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
             List<OrganizationDetailDataType> organizationDetails = null;
             if (!CollectionUtils.IsNullOrEmpty(beachDetails))
             {
-                string organizationClause = 
-                    string.Format("(ID IN (SELECT DISTINCT OBR.ORGANIZATION_ID FROM NOTIF_ORGANIZATIONBEACHROLE OBR WHERE BEACH_ID IN (SELECT B.ID FROM NOTIF_BEACH B WHERE {0})))", beachClause);
-                selectClauses.Add("NOTIF_ORGANIZATION", new DbAppendSelectWhereClause(_baseDao, organizationClause, beachParams));
+                string organizationClause =
+                    string.Format("({2}.ID IN (SELECT DISTINCT OBR.ORGANIZATION_ID FROM NOTIF_ORGANIZATIONBEACHROLE OBR WHERE OBR.BEACH_ID IN (SELECT {1}.ID FROM NOTIF_BEACH {1} WHERE {0})))",
+                                  beachClause, beachAlias, organizationAlias);
+                selectClauses.Add("NOTIF_ORGANIZATION", new DbAppendSelectWhereClause(organizationAlias, _baseDao, organizationClause, beachParams));
                 organizationDetails = _objectsFromDatabase.LoadFromDatabase<OrganizationDetailDataType>(_baseDao, selectClauses);
             }
 
