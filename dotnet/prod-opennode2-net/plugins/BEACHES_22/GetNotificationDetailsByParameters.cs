@@ -212,10 +212,20 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
             List<OrganizationDetailDataType> organizationDetails = null;
             if (!CollectionUtils.IsNullOrEmpty(beachDetails))
             {
-                string organizationClause =
-                    string.Format("({2}.ID IN (SELECT DISTINCT OBR.ORGANIZATION_ID FROM NOTIF_ORGANIZATIONBEACHROLE OBR WHERE OBR.BEACH_ID IN (SELECT {1}.ID FROM NOTIF_BEACH {1} WHERE {0})))",
-                                  beachClause, beachAlias, organizationAlias);
-                selectClauses.Add("NOTIF_ORGANIZATION", new DbAppendSelectWhereClause(organizationAlias, _baseDao, organizationClause, beachParams));
+                string organizationClause;
+                if (beachClause != null)
+                {
+                    organizationClause =
+                        string.Format("({2}.ID IN (SELECT DISTINCT OBR.ORGANIZATION_ID FROM NOTIF_ORGANIZATIONBEACHROLE OBR WHERE OBR.BEACH_ID IN (SELECT {1}.ID FROM NOTIF_BEACH {1} WHERE {0})))",
+                                      beachClause, beachAlias, organizationAlias);
+                    selectClauses.Add("NOTIF_ORGANIZATION", new DbAppendSelectWhereClause(organizationAlias, _baseDao, organizationClause, beachParams));
+                }
+                else
+                {
+                    organizationClause =
+                        string.Format("({0}.ID IN (SELECT DISTINCT OBR.ORGANIZATION_ID FROM NOTIF_ORGANIZATIONBEACHROLE OBR))",
+                                      organizationAlias);
+                }
                 organizationDetails = _objectsFromDatabase.LoadFromDatabase<OrganizationDetailDataType>(_baseDao, selectClauses);
             }
 

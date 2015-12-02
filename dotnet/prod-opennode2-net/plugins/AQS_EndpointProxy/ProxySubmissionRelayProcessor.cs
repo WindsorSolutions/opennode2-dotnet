@@ -103,7 +103,6 @@ namespace Windsor.Node2008.WNOSPlugin.AQS_EndpointProxy
         /// </summary>
         public ProxySubmissionRelayProcessor()
         {
-
             ConfigurationArguments.Add(AqsEndpointProxyServiceParameterType.SUBMIT_ENDPOINT_URI.ToString(), SUBMIT_ENDPOINT_URI);
             ConfigurationArguments.Add(AqsEndpointProxyServiceParameterType.DATA_FLOW.ToString(), FLOW_NAME);
             ConfigurationArguments.Add(AqsEndpointProxyServiceParameterType.ENS_USER_ID.ToString(), null);

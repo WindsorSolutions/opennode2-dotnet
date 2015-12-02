@@ -74,7 +74,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQSCommon
         protected ICompressionHelper _compressionHelper;
         protected ISerializationHelper _serializationHelper;
         protected IDocumentManager _documentManager;
-        protected string[] _validVersionValues = new string[] { "2.0", "2.1", "2.2" };
+        protected string[] _validVersionValues = new string[] { "2.0", "2.1", "2.2", "3.0" };
 
         public AQSBaseHeaderPlugin()
         {
