@@ -25,21 +25,14 @@ namespace Windsor.Node2008.WNOSPlugin.AQS_FileSubmitter
     public class FileProcessor : AQSBaseHeaderPlugin, ISubmitProcessor
     {
         protected const string CONFIG_PARAM_SUBMIT_ENDPOINT_URI = "Submission Endpoint Url";
+        protected const string CONFIG_PARAM_SUBMIT_USERNAME = "Submission NAAS Username";
+        protected const string CONFIG_PARAM_SUBMIT_PASSWORD = "Submission NAAS Password";
         public const string SERVICE_NAME = "AQS FileProcessor";
         private const string SUBMIT_ENDPOINT_URI = "https://testngn.epacdxnode.net/ngn-enws20/services/NetworkNode2ServiceConditionalMTOM";
-
-        #region fields
 
         private static readonly ILogEx LOG = LogManagerEx.GetLogger(MethodBase.GetCurrentMethod());
         private INodeEndpointClientFactory _nodeEndpointClientFactory;
         private ITransactionManager _transactionManager;
-
-        /// <summary>
-        /// ENS User ID
-        /// </summary>
-        protected string _strSubmitEndpointUri;
-
-        #endregion fields
 
 
         #region constructor
@@ -50,6 +43,8 @@ namespace Windsor.Node2008.WNOSPlugin.AQS_FileSubmitter
         public FileProcessor()
         {
             ConfigurationArguments.Add(CONFIG_PARAM_SUBMIT_ENDPOINT_URI, SUBMIT_ENDPOINT_URI);
+            ConfigurationArguments.Add(CONFIG_PARAM_SUBMIT_USERNAME, null);
+            ConfigurationArguments.Add(CONFIG_PARAM_SUBMIT_PASSWORD, null);
         }
 
         #endregion constructor
@@ -120,28 +115,29 @@ namespace Windsor.Node2008.WNOSPlugin.AQS_FileSubmitter
         public virtual void ProcessSubmit(string transactionId)
         {
             TransactionStatus status = new TransactionStatus(transactionId);
+            string tempDirPath = null;
             try
             {
                 LazyInit();
 
-                WriteOut("Getting documents to submit:");
+                WriteOut("Getting documents to submit ...");
                 IList<Document> documents = _documentManager.GetDocuments(transactionId, true);
                 List<string> documentPaths = new List<string>();
 
-                string tempDirPath = Path.Combine(_settingsProvider.TempFolderPath, Guid.NewGuid().ToString());
+                tempDirPath = Path.Combine(_settingsProvider.TempFolderPath, Guid.NewGuid().ToString());
                 WriteOut("Creating temp directory: " + tempDirPath);
                 Directory.CreateDirectory(tempDirPath);
 
                 foreach (Document doc in documents)
                 {
-                    WriteOut("Doc: {0} ({1}); ", doc.DocumentName, doc.Type);
+                    WriteOut("Doc: {0} ({1})", doc.DocumentName, doc.Type);
                     string tempDocPath = Path.Combine(tempDirPath, doc.DocumentName);
 
                     WriteOut("Saving content to submit: " + tempDocPath);
                     File.WriteAllBytes(tempDocPath, doc.Content);
                     tempDocPath = AddExchangeDocumentHeader(tempDocPath, true, null);
                     var docName = Path.GetFileNameWithoutExtension(doc.DocumentName) + "_Submission" + Path.GetExtension(tempDocPath);
-                    var newDocPath = Path.Combine(Path.GetDirectoryName(tempDocPath), docName);
+                    var newDocPath = Path.Combine(tempDirPath, docName);
                     File.Move(tempDocPath, newDocPath);
                     _documentManager.AddDocument(transactionId, CommonTransactionStatusCode.Completed, null, newDocPath);
                     documentPaths.Add(newDocPath);
@@ -149,17 +145,33 @@ namespace Windsor.Node2008.WNOSPlugin.AQS_FileSubmitter
 
                 WriteOut("Parsing argument values ...");
 
-                _strSubmitEndpointUri = ConfigurationArguments[CONFIG_PARAM_SUBMIT_ENDPOINT_URI];
-                WriteOut("endpointUrl: {0}; ", _strSubmitEndpointUri);
+                var endpointUri = ConfigurationArguments[CONFIG_PARAM_SUBMIT_ENDPOINT_URI];
+                WriteOut("{0}: {1}", CONFIG_PARAM_SUBMIT_ENDPOINT_URI, endpointUri);
 
-                if (!string.IsNullOrEmpty(_strSubmitEndpointUri))
+                if (!string.IsNullOrEmpty(endpointUri))
                 {
+                    var username = ConfigurationArguments[CONFIG_PARAM_SUBMIT_USERNAME];
+                    WriteOut("{0}: {1}", CONFIG_PARAM_SUBMIT_USERNAME, username);
+
+                    var password = ConfigurationArguments[CONFIG_PARAM_SUBMIT_PASSWORD];
+                    WriteOut("{0}: {1}", CONFIG_PARAM_SUBMIT_PASSWORD, password != null ? "*******" : null);
+
                     WriteOut("Creating endpoint client ...");
 
                     string resultTranId = null;
 
-                    using (INodeEndpointClient nodeClient = _nodeEndpointClientFactory.Make(_strSubmitEndpointUri,
-                        EndpointVersionType.EN20))
+                    INodeEndpointClient nodeClient;
+                    if (string.IsNullOrEmpty(username))
+                    {
+                        nodeClient = _nodeEndpointClientFactory.Make(endpointUri, EndpointVersionType.EN20);
+                    }
+                    else
+                    {
+                        nodeClient = _nodeEndpointClientFactory.Make(endpointUri, EndpointVersionType.EN20,
+                                                                     new AuthenticationCredentials(username, password));
+                    }
+
+                    using (nodeClient)
                     {
                         WriteOut("Submitting documents ...");
                         resultTranId = nodeClient.Submit(AQS_FLOW_NAME, null, documentPaths);
@@ -170,9 +182,9 @@ namespace Windsor.Node2008.WNOSPlugin.AQS_FileSubmitter
                         }
 
                         _transactionManager.SetTransactionStatus(transactionId, CommonTransactionStatusCode.Completed,
-                        WriteOut("Remote transaction Id: {1}", _strSubmitEndpointUri, resultTranId), true);
+                        WriteOut("Remote transaction Id: {1}", endpointUri, resultTranId), true);
 
-                        _transactionManager.SetNetworkId(transactionId, resultTranId, nodeClient.Version, _strSubmitEndpointUri, AQS_FLOW_NAME, null);
+                        _transactionManager.SetNetworkId(transactionId, resultTranId, nodeClient.Version, endpointUri, AQS_FLOW_NAME, null);
                         WriteOut("Submission complete ...");
                     }
 
@@ -197,6 +209,10 @@ namespace Windsor.Node2008.WNOSPlugin.AQS_FileSubmitter
                 if (status.Description != null)
                 {
                     AppendAuditLogEvent(status.Description);
+                }
+                if (tempDirPath != null)
+                {
+                    FileUtils.SafeDeleteDirectory(tempDirPath);
                 }
             }
         }
