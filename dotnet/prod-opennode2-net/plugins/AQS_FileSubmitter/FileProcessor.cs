@@ -22,18 +22,21 @@ namespace Windsor.Node2008.WNOSPlugin.AQS_FileSubmitter
     /// Plug-in interface handler to process data file endpoint relay submissions
     /// </summary>
     [Serializable]
-    public class FileProcessor : AQSBaseHeaderPlugin, ISubmitProcessor
+    public class FileProcessor : AQSBaseHeaderPlugin, ITaskProcessor
     {
         protected const string CONFIG_PARAM_SUBMIT_ENDPOINT_URI = "Submission Endpoint Url";
         protected const string CONFIG_PARAM_SUBMIT_USERNAME = "Submission NAAS Username";
         protected const string CONFIG_PARAM_SUBMIT_PASSWORD = "Submission NAAS Password";
         public const string SERVICE_NAME = "AQS FileProcessor";
+        public const string INPUT_FILE_PATH_NAME = "Input File Path";
+        public const string DELETE_INPUT_FILE_NAME = "Delete Input File (True or False)";
         private const string SUBMIT_ENDPOINT_URI = "https://testngn.epacdxnode.net/ngn-enws20/services/NetworkNode2ServiceConditionalMTOM";
 
         private static readonly ILogEx LOG = LogManagerEx.GetLogger(MethodBase.GetCurrentMethod());
         private INodeEndpointClientFactory _nodeEndpointClientFactory;
         private ITransactionManager _transactionManager;
-
+        protected DataRequest _dataRequest;
+        protected IRequestManager _requestManager;
 
         #region constructor
 
@@ -45,6 +48,8 @@ namespace Windsor.Node2008.WNOSPlugin.AQS_FileSubmitter
             ConfigurationArguments.Add(CONFIG_PARAM_SUBMIT_ENDPOINT_URI, SUBMIT_ENDPOINT_URI);
             ConfigurationArguments.Add(CONFIG_PARAM_SUBMIT_USERNAME, null);
             ConfigurationArguments.Add(CONFIG_PARAM_SUBMIT_PASSWORD, null);
+            ConfigurationArguments.Add(DELETE_INPUT_FILE_NAME, null);
+            ConfigurationArguments.Add(INPUT_FILE_PATH_NAME, null);
         }
 
         #endregion constructor
@@ -61,6 +66,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS_FileSubmitter
 
             GetServiceImplementation(out _nodeEndpointClientFactory);
             GetServiceImplementation(out _transactionManager);
+            GetServiceImplementation(out _requestManager);
         }
 
         #endregion initializer
@@ -108,40 +114,64 @@ namespace Windsor.Node2008.WNOSPlugin.AQS_FileSubmitter
             return null;
         }
 
+        protected virtual void ValidateRequest(string requestId)
+        {
+            AppendAuditLogEvent("Loading request with id \"{0}\"", requestId);
+            _dataRequest = _requestManager.GetDataRequest(requestId);
+        }
+       
         /// <summary>
         /// Plug-in service processor method
         /// </summary>
         /// <param name="transactionId">Transaction ID reference</param>
-        public virtual void ProcessSubmit(string transactionId)
+        public virtual void ProcessTask(string requestId)
         {
-            TransactionStatus status = new TransactionStatus(transactionId);
+            TransactionStatus status = null;
             string tempDirPath = null;
             try
             {
                 LazyInit();
 
-                WriteOut("Getting documents to submit ...");
-                IList<Document> documents = _documentManager.GetDocuments(transactionId, true);
-                List<string> documentPaths = new List<string>();
+                ValidateRequest(requestId);
+
+                var transactionId = _dataRequest.TransactionId;
+                status = new TransactionStatus(transactionId);
+
+                var inputFilePath = ConfigurationArguments[INPUT_FILE_PATH_NAME];
+                if (string.IsNullOrEmpty(inputFilePath))
+                {
+                    throw new ArgException("The config parameter \"{0}\" was not specified", INPUT_FILE_PATH_NAME);
+                }
+                if (!File.Exists(inputFilePath))
+                {
+                    throw new ArgException("The input file \"{0}\" does not exist", inputFilePath);
+                }
+                bool deleteInputFile = false;
+                var deleteFileStr = ConfigurationArguments[DELETE_INPUT_FILE_NAME];
+                if (!string.IsNullOrEmpty(deleteFileStr))
+                {
+                    deleteInputFile = bool.Parse(deleteFileStr);
+                }
+                WriteOut("{0}: {1}", DELETE_INPUT_FILE_NAME, deleteInputFile.ToString());
+
+                WriteOut("Loading document to submit \"{0}\" ...", inputFilePath);
+
+                var fileContent = File.ReadAllBytes(inputFilePath);
+                var fileName = Path.GetFileName(inputFilePath);
 
                 tempDirPath = Path.Combine(_settingsProvider.TempFolderPath, Guid.NewGuid().ToString());
                 WriteOut("Creating temp directory: " + tempDirPath);
                 Directory.CreateDirectory(tempDirPath);
 
-                foreach (Document doc in documents)
-                {
-                    WriteOut("Doc: {0} ({1})", doc.DocumentName, doc.Type);
-                    string tempDocPath = Path.Combine(tempDirPath, doc.DocumentName);
+                string tempDocPath = Path.Combine(tempDirPath, fileName);
 
-                    WriteOut("Saving content to submit: " + tempDocPath);
-                    File.WriteAllBytes(tempDocPath, doc.Content);
-                    tempDocPath = AddExchangeDocumentHeader(tempDocPath, true, null);
-                    var docName = Path.GetFileNameWithoutExtension(doc.DocumentName) + "_Submission" + Path.GetExtension(tempDocPath);
-                    var newDocPath = Path.Combine(tempDirPath, docName);
-                    File.Move(tempDocPath, newDocPath);
-                    _documentManager.AddDocument(transactionId, CommonTransactionStatusCode.Completed, null, newDocPath);
-                    documentPaths.Add(newDocPath);
-                }
+                WriteOut("Saving content to submit: " + tempDocPath);
+                File.WriteAllBytes(tempDocPath, fileContent);
+                tempDocPath = AddExchangeDocumentHeader(tempDocPath, true, null);
+                var docName = Path.GetFileNameWithoutExtension(fileName) + "_Submission" + Path.GetExtension(tempDocPath);
+                var newDocPath = Path.Combine(tempDirPath, docName);
+                File.Move(tempDocPath, newDocPath);
+                _documentManager.AddDocument(transactionId, CommonTransactionStatusCode.Completed, null, newDocPath);
 
                 WriteOut("Parsing argument values ...");
 
@@ -154,7 +184,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS_FileSubmitter
                     WriteOut("{0}: {1}", CONFIG_PARAM_SUBMIT_USERNAME, username);
 
                     var password = ConfigurationArguments[CONFIG_PARAM_SUBMIT_PASSWORD];
-                    WriteOut("{0}: {1}", CONFIG_PARAM_SUBMIT_PASSWORD, password != null ? "*******" : null);
+                    WriteOut("{0}: {1}", CONFIG_PARAM_SUBMIT_PASSWORD, string.IsNullOrEmpty(password) ? "" : "*******");
 
                     WriteOut("Creating endpoint client ...");
 
@@ -174,7 +204,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS_FileSubmitter
                     using (nodeClient)
                     {
                         WriteOut("Submitting documents ...");
-                        resultTranId = nodeClient.Submit(AQS_FLOW_NAME, null, documentPaths);
+                        resultTranId = nodeClient.Submit(AQS_FLOW_NAME, null, new string[] { newDocPath });
 
                         if (string.IsNullOrEmpty(resultTranId))
                         {
@@ -191,17 +221,24 @@ namespace Windsor.Node2008.WNOSPlugin.AQS_FileSubmitter
                     status.Description = string.Format("The AQS document was successfully submitted at {0} with a returned transaction id of {1}.",
                         DateTime.Now, 
                         resultTranId);
-                    status.Status = CommonTransactionStatusCode.Completed;
                 }
+                if (deleteInputFile)
+                {
+                    File.Delete(inputFilePath);
+                }
+                status.Status = CommonTransactionStatusCode.Completed;
             }
             catch (Exception ex)
             {
-                status.Description = string.Format("An error occurred running the {0} service:{1}{2}{3}",
-                    SERVICE_NAME, 
-                    Environment.NewLine, 
-                    Environment.NewLine, 
-                    ExceptionUtils.GetDeepExceptionMessage(ex));
-                status.Status = CommonTransactionStatusCode.Failed;
+                if (status != null)
+                {
+                    status.Description = string.Format("An error occurred running the {0} service:{1}{2}{3}",
+                        SERVICE_NAME,
+                        Environment.NewLine,
+                        Environment.NewLine,
+                        ExceptionUtils.GetDeepExceptionMessage(ex));
+                    status.Status = CommonTransactionStatusCode.Failed;
+                }
                 throw;
             }
             finally
