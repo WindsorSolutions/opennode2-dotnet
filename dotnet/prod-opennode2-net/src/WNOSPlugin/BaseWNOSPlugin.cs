@@ -1396,6 +1396,30 @@ namespace Windsor.Node2008.WNOSPlugin
             }
             return null;
         }
+        protected virtual DateTime? GetLastSuccessfulSubmissionDate(SpringBaseDao baseDao)
+        {
+            if (_useSubmissionHistoryTable)
+            {
+                ExceptionUtils.ThrowIfEmptyString(_submissionHistoryTableName, "_submissionHistoryTableName");
+                ExceptionUtils.ThrowIfEmptyString(_submissionHistoryTableProcessingStatusName, "_submissionHistoryTableProcessingStatusName");
+                ExceptionUtils.ThrowIfEmptyString(_submissionHistoryTableRunDateName, "_submissionHistoryTableRunDateName");
+
+                DateTime? rtnDateTime = null;
+
+                baseDao.DoSimpleQueryWithRowCallbackDelegate(
+                    _submissionHistoryTableName,
+                    _submissionHistoryTableProcessingStatusName,
+                    EnumUtils.ToDescription(CDX_Processing_Status.Completed),
+                    _submissionHistoryTableRunDateName + " DESC",
+                    _submissionHistoryTableRunDateName,
+                    delegate(IDataReader reader)
+                    {
+                        rtnDateTime = reader.GetDateTime(0);
+                    });
+                return rtnDateTime;
+            }
+            return null;
+        }
         protected virtual void CheckForPendingSubmissions(SpringBaseDao baseDao)
         {
             if (_useSubmissionHistoryTable)

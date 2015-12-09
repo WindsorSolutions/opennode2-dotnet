@@ -28,6 +28,7 @@
 -- KJames 11.05.2010 - Altered triggers to pull SYS_GUID() vs original NEXTVAL from 
 --                     the sequence.
 -- Brensmith 4/10/2012 - Modified to accomodate schema v2.2 
+-- PPatterson Added beaches_submission table for submission tracking, made actualstop date nullable and added lastupdated field in notif_beachactivity table */
 
 /* Drop */
 
@@ -377,6 +378,9 @@ DROP TABLE NOTIF_BEACHACTIVITY
 
 /* Oracle */
 
+/*Added first table below*/
+
+
 CREATE TABLE "NOTIF_ACTIVITYINDICATOR" ( 
 	"ID"                  	VARCHAR2(40) NOT NULL,
 	"ACTIVITY_ID"         	VARCHAR2(40) NOT NULL,
@@ -466,15 +470,16 @@ CREATE TABLE "NOTIF_BEACHACTIVITY" (
 	"ACTIVITYTYPECODE"           	VARCHAR2(12) NOT NULL,
 	"ACTIVITYNAME"               	VARCHAR2(60) NOT NULL,
 	"ACTUALSTARTDATE"            	VARCHAR2(25) NOT NULL,
-	"ACTUALSTOPDATE"             	VARCHAR2(25) NOT NULL,
+	"ACTUALSTOPDATE"             	VARCHAR2(25)  NULL,     /*Changed to NULL*/
 	"ACTIVITYDESCRIPTION"        	VARCHAR2(255) NULL,
 	"ACTIVITYCOMMENT"            	VARCHAR2(255) NULL,
 	"EXTENTSTARTMEASURE"         	DECIMAL(16,6) NULL,
 	"EXTENTLENGTHMEASURE"        	DECIMAL(16,6) NULL,
 	"EXTENTUNITOFMEASURE"        	VARCHAR2(255) NULL,
-	"SENTTOEPA"                  	CHAR(1) NULL 
+	"SENTTOEPA"                  	CHAR(1)       NULL,
+	"NOTIFUPDATEUPDATE"             DATETIME      NULL      
 	);
-	
+
 --------------------------------------------------------
 --  DDL for Table NOTIF_BEACHACTIVITYMONSTATION
 --------------------------------------------------------
@@ -902,9 +907,15 @@ ALTER TABLE "NOTIF_BEACHPOLLUTION"
 	ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE VALIDATE );
 
 ALTER TABLE "NOTIF_BEACHPROCEDURE"
-	ADD ( CONSTRAINT "FK_BEACHPROCEDURE_BEACH"
+	ADD ( CONSTRAINT "FK_BEACHPROCEDURE_PROCEDURE"
 	FOREIGN KEY("PROCEDURE_ID")
 	REFERENCES "NOTIF_PROCEDURE"("ID")
+	ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE VALIDATE );
+
+ALTER TABLE "NOTIF_BEACHPROCEDURE"
+	ADD ( CONSTRAINT "FK_BEACHPROCEDURE_BEACH"
+	FOREIGN KEY("BEACH_ID")
+	REFERENCES "NOTIF_BEACH"("ID")
 	ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE VALIDATE );
 
 ALTER TABLE "NOTIF_ORGANIZATIONBEACHROLE"

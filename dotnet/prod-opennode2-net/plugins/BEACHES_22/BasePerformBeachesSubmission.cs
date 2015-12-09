@@ -71,8 +71,10 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
         protected IObjectsToDatabase _objectsToDatabase;
 
         protected bool _updateSentToEpaFlag = true;
+        protected DateTime? _lastUpdateDate = null;
 
         protected const string PARAM_UPDATE_SENT_TO_EPA_FLAG = "UpdateSentToEPAFlag";
+        protected const string PARAM_LAST_UPDATE_DATE = "LastUpdateDate";
 
         #endregion
 
@@ -119,6 +121,20 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
 
             TryGetParameter(_dataRequest, PARAM_UPDATE_SENT_TO_EPA_FLAG, 0, ref _updateSentToEpaFlag);
             TryGetParameter(_dataRequest, PARAM_USE_SUBMISSION_HISTORY_TABLE_KEY, 1, ref _useSubmissionHistoryTable);
+            DateTime dateTime = DateTime.Now;
+            if (TryGetNowDateParameter(_dataRequest, PARAM_LAST_UPDATE_DATE, 2, ref dateTime))
+            {
+                _lastUpdateDate = dateTime;
+            }
+            AppendAuditLogEvent("Schedule parameters: {0} ({1}), {2} ({3}), {4} ({5})", PARAM_UPDATE_SENT_TO_EPA_FLAG,
+                                _updateSentToEpaFlag.ToString(), PARAM_USE_SUBMISSION_HISTORY_TABLE_KEY, _useSubmissionHistoryTable.ToString(),
+                                PARAM_LAST_UPDATE_DATE, _lastUpdateDate.HasValue ? _lastUpdateDate.Value.ToString() : "Not specified");
+
+            if (_useSubmissionHistoryTable && _lastUpdateDate.HasValue)
+            {
+                throw new ArgException("\"{0}\" and \"{1}\" cannot both be set.  Please choose one or the other.",
+                                       PARAM_USE_SUBMISSION_HISTORY_TABLE_KEY, PARAM_LAST_UPDATE_DATE);
+            }
         }
         protected virtual string GenerateSubmissionFile(BeachDataSubmissionDataType data)
         {
@@ -160,16 +176,35 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
         }
         protected virtual void PerformSubmission()
         {
-            const string BEACH_ACTIVITY_SELECT = "SENTTOEPA IS NULL OR SENTTOEPA <> 'Y'";
+            var beachActivitySelect = "(SENTTOEPA IS NULL OR SENTTOEPA <> 'Y')";
+            List<object> beachActivitySelectParams = null;
 
             Dictionary<string, DbAppendSelectWhereClause> selectClauses = new Dictionary<string, DbAppendSelectWhereClause>();
 
-            selectClauses.Add("NOTIF_BEACHACTIVITY", new DbAppendSelectWhereClause(_baseDao, BEACH_ACTIVITY_SELECT));
+            if (_lastUpdateDate.HasValue)
+            {
+                beachActivitySelect += " AND (NOTIFUPDATEDATE >= ?)";
+                beachActivitySelectParams = new List<object>(new object[] { _lastUpdateDate.Value });
+            }
+
+            selectClauses.Add("NOTIF_BEACHACTIVITY", (beachActivitySelectParams == null) ? new DbAppendSelectWhereClause(_baseDao, beachActivitySelect)  : 
+                              new DbAppendSelectWhereClause(_baseDao, beachActivitySelect, beachActivitySelectParams));
+
+            var beachSelect = "ID IN (SELECT DISTINCT BEACH_ID FROM NOTIF_BEACHACTIVITY WHERE " + beachActivitySelect + ")";
+            selectClauses.Add("NOTIF_BEACH", (beachActivitySelectParams == null) ? new DbAppendSelectWhereClause(_baseDao, beachSelect) :
+                              new DbAppendSelectWhereClause(_baseDao, beachSelect, beachActivitySelectParams));
+
+            var beachProcedureSelect = "BEACH_ID IN (SELECT DISTINCT BEACH_ID FROM NOTIF_BEACHACTIVITY WHERE " + beachActivitySelect + ")";
+            selectClauses.Add("NOTIF_BEACHPROCEDURE", (beachActivitySelectParams == null) ? new DbAppendSelectWhereClause(_baseDao, beachProcedureSelect) :
+                              new DbAppendSelectWhereClause(_baseDao, beachProcedureSelect, beachActivitySelectParams));
+            var procedureSelect = "ID IN (SELECT DISTINCT PROCEDURE_ID FROM NOTIF_BEACHPROCEDURE WHERE " + beachProcedureSelect + ")";
+            selectClauses.Add("NOTIF_PROCEDURE", (beachActivitySelectParams == null) ? new DbAppendSelectWhereClause(_baseDao, procedureSelect) :
+                              new DbAppendSelectWhereClause(_baseDao, procedureSelect, beachActivitySelectParams));
 
             AppendAuditLogEvent("Querying database for BEACHES data ...");
             List<OrganizationDetailDataType> organizationDetails = _objectsFromDatabase.LoadFromDatabase<OrganizationDetailDataType>(_baseDao, null);
             List<BeachDetailDataType> beachDetails = _objectsFromDatabase.LoadFromDatabase<BeachDetailDataType>(_baseDao, selectClauses);
-            List<BeachProcedureDetailDataType> beachProcedureDetails = _objectsFromDatabase.LoadFromDatabase<BeachProcedureDetailDataType>(_baseDao, null);
+            List<BeachProcedureDetailDataType> beachProcedureDetails = _objectsFromDatabase.LoadFromDatabase<BeachProcedureDetailDataType>(_baseDao, selectClauses);
             List<YearCompletionIndicatorDataType> yearCompletionIndicators = _objectsFromDatabase.LoadFromDatabase<YearCompletionIndicatorDataType>(_baseDao, null);
 
             if (!CollectionUtils.IsNullOrEmpty(yearCompletionIndicators) && (yearCompletionIndicators.Count > 1))
@@ -192,7 +227,18 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
 
             if (_updateSentToEpaFlag)
             {
-                int rowsSet = _baseDao.AdoTemplate.ExecuteNonQuery(CommandType.Text, "UPDATE NOTIF_BEACHACTIVITY SET SENTTOEPA = 'Y' WHERE " + BEACH_ACTIVITY_SELECT);
+                int rowsSet;
+                if (beachActivitySelectParams == null)
+                {
+                    rowsSet = _baseDao.AdoTemplate.ExecuteNonQuery(CommandType.Text, "UPDATE NOTIF_BEACHACTIVITY SET SENTTOEPA = 'Y' WHERE " + beachActivitySelect);
+                }
+                else
+                {
+                    IDbParameters parameters;
+                    var selectWhereQuery = _baseDao.LoadGenericParametersFromValueList(beachActivitySelect, out parameters, beachActivitySelectParams);
+                    rowsSet = _baseDao.AdoTemplate.ExecuteNonQuery(CommandType.Text, "UPDATE NOTIF_BEACHACTIVITY SET SENTTOEPA = 'Y' WHERE " + beachActivitySelect,
+                                                                   parameters);
+                }
 
                 AppendAuditLogEvent("Set {0} NOTIF_BEACHACTIVITY.SENTTOEPA columns to 'Y'", rowsSet.ToString());
             }
@@ -203,6 +249,10 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
         }
         protected virtual void PrepareForSubmission()
         {
+            if (_useSubmissionHistoryTable && !_lastUpdateDate.HasValue)
+            {
+                _lastUpdateDate = GetLastSuccessfulSubmissionDate(_baseDao);
+            }
         }
         protected virtual void ProcessSubmissionFile(string submissionFile)
         {

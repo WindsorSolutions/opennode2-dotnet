@@ -101,6 +101,8 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
 
         protected override void PrepareForSubmission()
         {
+            base.PrepareForSubmission();
+
             if (!string.IsNullOrEmpty(_storedProcName))
             {
                 _scheduleRunDate =
