@@ -36,6 +36,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using Spring.Data.Common;
 using Windsor.Commons.Spring;
+using System.Collections;
 
 namespace Windsor.Commons.XsdOrm
 {
@@ -61,6 +62,8 @@ namespace Windsor.Commons.XsdOrm
 
         Dictionary<string, int> SaveToDatabase<T>(IEnumerable<T> objectsToSave, SpringBaseDao baseDao,
                                                   bool deleteAllBeforeSave);
+
+        Dictionary<string, int> SaveAllToDatabase(IEnumerable objectsToSave, SpringBaseDao baseDao);
 
         int DeleteAllFromDatabase(Type objectType, SpringBaseDao baseDao);
 

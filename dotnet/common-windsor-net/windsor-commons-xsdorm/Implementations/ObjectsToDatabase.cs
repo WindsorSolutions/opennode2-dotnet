@@ -47,6 +47,7 @@ using Spring.Data;
 using Spring.Transaction;
 using Spring.Data.Support;
 using Spring.Dao;
+using System.Linq;
 
 namespace Windsor.Commons.XsdOrm.Implementations
 {
@@ -182,6 +183,43 @@ namespace Windsor.Commons.XsdOrm.Implementations
                     SaveToDatabase(objectToSave, objectPath, mappingContext,
                                    previousInsertColumnValues, insertRowCounts,
                                    command);
+                    return null;
+                });
+                return null;
+            });
+            return insertRowCounts;
+        }
+        public virtual Dictionary<string, int> SaveAllToDatabase(IEnumerable objectsToSave, SpringBaseDao baseDao)
+        {
+            Type objectToSaveType = null;
+            foreach (var objectToSave in objectsToSave)
+            {
+                objectToSaveType = objectToSave.GetType();
+            }
+            MappingContext mappingContext = MappingContext.GetMappingContext(objectToSaveType);
+
+            BuildObjectSql(mappingContext.ObjectPaths, baseDao);
+
+            string objectPath = objectToSaveType.FullName;
+            Dictionary<string, int> insertRowCounts = new Dictionary<string, int>();
+
+            baseDao.TransactionTemplate.Execute(delegate
+            {
+                baseDao.AdoTemplate.ClassicAdoTemplate.Execute(delegate(IDbCommand command)
+                {
+                    foreach (var objectToSave in objectsToSave)
+                    {
+                        IBeforeSaveToDatabase beforeSaveToDatabase = objectToSave as IBeforeSaveToDatabase;
+                        if (beforeSaveToDatabase != null)
+                        {
+                            beforeSaveToDatabase.BeforeSaveToDatabase();
+                        }
+
+                        Dictionary<string, object> previousInsertColumnValues = new Dictionary<string, object>();
+                        SaveToDatabase(objectToSave, objectPath, mappingContext,
+                                       previousInsertColumnValues, insertRowCounts,
+                                       command);
+                    }
                     return null;
                 });
                 return null;

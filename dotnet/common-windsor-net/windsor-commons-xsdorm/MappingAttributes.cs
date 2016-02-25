@@ -834,6 +834,10 @@ namespace Windsor.Commons.XsdOrm
             this(null, columnType, columnSize, true)
         {
         }
+        public ColumnAttribute(string columnName, DbType columnType) :
+            this(columnName, columnType, 0, true)
+        {
+        }
         public ColumnAttribute(string columnName, DbType columnType, int columnSize) :
             this(columnName, columnType, columnSize, true)
         {

@@ -345,6 +345,8 @@ namespace Windsor.Commons.XsdOrm.Implementations
                     return ((dbSize == 0) || (dbSize == 8));    // dbSize == 8 is Timestamp
                 case DbType.Decimal:
                     return ((dbSize == 0) && (dbScale == 0)) || ((dbSize >= dbScale) && (dbScale >= 0));
+                case DbType.Boolean:
+                    return (dbSize == 1);
                 default:
                     return (dbSize == 0);
             }
