@@ -62,6 +62,14 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
     [Serializable]
     public abstract class BasePerformBeachesSubmission : BaseBeachesSubmissionPlugin
     {
+        protected enum ConfigArgs
+        {
+            None,
+            [Description("Extract Stored Procedure Name")]
+            StoredProcedureName,
+            [Description("Execute Timeout (in seconds)")]
+            ExecuteTimeout,
+        }
         #region fields
 
         protected ISerializationHelper _serializationHelper;
@@ -72,15 +80,20 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
 
         protected bool _updateSentToEpaFlag = true;
         protected DateTime? _lastUpdateDate = null;
+        protected string _storedProcName;
+        protected int _commandTimeout = 300;
 
         protected const string PARAM_UPDATE_SENT_TO_EPA_FLAG = "UpdateSentToEPAFlag";
         protected const string PARAM_LAST_UPDATE_DATE = "LastUpdateDate";
+        protected const string PARAM_ONLY_SEND_BEACHES_WITH_ACTIVITIES = "OnlySendBeachesWithActivities";
 
         #endregion
 
         public BasePerformBeachesSubmission()
         {
             _useSubmissionHistoryTable = true; // By default
+            
+            AppendConfigArguments<ConfigArgs>();
         }
 
         public override void ProcessTask(string requestId)
@@ -108,6 +121,9 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
         protected override void LazyInit()
         {
             base.LazyInit();
+
+            TryGetConfigParameter(EnumUtils.ToDescription(ConfigArgs.StoredProcedureName), ref _storedProcName);
+            TryGetConfigParameter(EnumUtils.ToDescription(ConfigArgs.ExecuteTimeout), ref _commandTimeout);
 
             GetServiceImplementation(out _serializationHelper);
             GetServiceImplementation(out _compressionHelper);
@@ -176,7 +192,7 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
         }
         protected virtual void PerformSubmission()
         {
-            var beachActivitySelect = "(SENTTOEPA IS NULL OR SENTTOEPA <> 'Y')";
+            var beachActivitySelect = "(SENTTOEPA IS NULL OR SENTTOEPA <> 'Y') AND (ACTUALSTOPDATE IS NOT NULL)";
             List<object> beachActivitySelectParams = null;
 
             Dictionary<string, DbAppendSelectWhereClause> selectClauses = new Dictionary<string, DbAppendSelectWhereClause>();
@@ -190,16 +206,20 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
             selectClauses.Add("NOTIF_BEACHACTIVITY", (beachActivitySelectParams == null) ? new DbAppendSelectWhereClause(_baseDao, beachActivitySelect)  : 
                               new DbAppendSelectWhereClause(_baseDao, beachActivitySelect, beachActivitySelectParams));
 
-            var beachSelect = "ID IN (SELECT DISTINCT BEACH_ID FROM NOTIF_BEACHACTIVITY WHERE " + beachActivitySelect + ")";
-            selectClauses.Add("NOTIF_BEACH", (beachActivitySelectParams == null) ? new DbAppendSelectWhereClause(_baseDao, beachSelect) :
-                              new DbAppendSelectWhereClause(_baseDao, beachSelect, beachActivitySelectParams));
-
-            var beachProcedureSelect = "BEACH_ID IN (SELECT DISTINCT BEACH_ID FROM NOTIF_BEACHACTIVITY WHERE " + beachActivitySelect + ")";
-            selectClauses.Add("NOTIF_BEACHPROCEDURE", (beachActivitySelectParams == null) ? new DbAppendSelectWhereClause(_baseDao, beachProcedureSelect) :
-                              new DbAppendSelectWhereClause(_baseDao, beachProcedureSelect, beachActivitySelectParams));
-            var procedureSelect = "ID IN (SELECT DISTINCT PROCEDURE_ID FROM NOTIF_BEACHPROCEDURE WHERE " + beachProcedureSelect + ")";
-            selectClauses.Add("NOTIF_PROCEDURE", (beachActivitySelectParams == null) ? new DbAppendSelectWhereClause(_baseDao, procedureSelect) :
-                              new DbAppendSelectWhereClause(_baseDao, procedureSelect, beachActivitySelectParams));
+            //if (_onlySendBeachesWithActivities)
+            //{
+            //    var beachSelect = "ID IN (SELECT DISTINCT BEACH_ID FROM NOTIF_BEACHACTIVITY WHERE " + beachActivitySelect + ")";
+            //    selectClauses.Add("NOTIF_BEACH", (beachActivitySelectParams == null) ? new DbAppendSelectWhereClause(_baseDao, beachSelect) :
+            //                      new DbAppendSelectWhereClause(_baseDao, beachSelect, beachActivitySelectParams));
+                
+            //    var beachProcedureSelect = "BEACH_ID IN (SELECT DISTINCT BEACH_ID FROM NOTIF_BEACHACTIVITY WHERE " + beachActivitySelect + ")";
+            //    selectClauses.Add("NOTIF_BEACHPROCEDURE", (beachActivitySelectParams == null) ? new DbAppendSelectWhereClause(_baseDao, beachProcedureSelect) :
+            //                      new DbAppendSelectWhereClause(_baseDao, beachProcedureSelect, beachActivitySelectParams));
+                
+            //    var procedureSelect = "ID IN (SELECT DISTINCT PROCEDURE_ID FROM NOTIF_BEACHPROCEDURE WHERE " + beachProcedureSelect + ")";
+            //    selectClauses.Add("NOTIF_PROCEDURE", (beachActivitySelectParams == null) ? new DbAppendSelectWhereClause(_baseDao, procedureSelect) :
+            //                      new DbAppendSelectWhereClause(_baseDao, procedureSelect, beachActivitySelectParams));
+            //}
 
             AppendAuditLogEvent("Querying database for BEACHES data ...");
             List<OrganizationDetailDataType> organizationDetails = _objectsFromDatabase.LoadFromDatabase<OrganizationDetailDataType>(_baseDao, null);
@@ -249,6 +269,10 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
         }
         protected virtual void PrepareForSubmission()
         {
+            if (!string.IsNullOrEmpty(_storedProcName))
+            {
+                base.ExecStoredProc(_baseDao, _storedProcName, _commandTimeout, null);
+            }
             if (_useSubmissionHistoryTable && !_lastUpdateDate.HasValue)
             {
                 _lastUpdateDate = GetLastSuccessfulSubmissionDate(_baseDao);

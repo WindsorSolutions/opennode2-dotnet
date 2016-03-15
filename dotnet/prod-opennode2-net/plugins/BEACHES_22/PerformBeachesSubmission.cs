@@ -63,7 +63,7 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
     [Serializable]
     public class PerformBeachesSubmission : BasePerformBeachesSubmission
     {
-        protected enum ConfigArgs
+        protected enum ConfigArgsEx
         {
             None,
             [Description("Submission Partner Name")]
@@ -81,7 +81,7 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
 
         public PerformBeachesSubmission()
         {
-            AppendConfigArguments<ConfigArgs>();
+            AppendConfigArguments<ConfigArgsEx>();
         }
 
         protected override void LazyInit()
@@ -90,20 +90,20 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
 
             GetServiceImplementation(out _partnerManager);
 
-            string epaPartnerName = GetConfigParameter(EnumUtils.ToDescription(ConfigArgs.SubmissionPartnerName));
+            string epaPartnerName = GetConfigParameter(EnumUtils.ToDescription(ConfigArgsEx.SubmissionPartnerName));
             if (!string.IsNullOrEmpty(epaPartnerName))
             {
                 _epaPartnerNode = _partnerManager.GetByName(epaPartnerName);
                 if (_epaPartnerNode == null)
                 {
                     throw new ArgumentException(string.Format("The node partner \"{0}\" with the name \"{1}\" specified for this service cannot be found",
-                                                              EnumUtils.ToDescription(ConfigArgs.SubmissionPartnerName), epaPartnerName));
+                                                              EnumUtils.ToDescription(ConfigArgsEx.SubmissionPartnerName), epaPartnerName));
                 }
             }
             else
             {
                 AppendAuditLogEvent("WARNING: A {0} was not specified, so the generated BEACHES xml file will NOT be submitted, but it will be added to the transaction.",
-                                    EnumUtils.ToDescription(ConfigArgs.SubmissionPartnerName));
+                                    EnumUtils.ToDescription(ConfigArgsEx.SubmissionPartnerName));
             }
         }
         protected override void ValidateRequest(string requestId)

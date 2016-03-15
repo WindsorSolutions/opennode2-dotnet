@@ -613,10 +613,10 @@ namespace Windsor.Node2008.WNOS.Utilities
                 loaderAlreadyThere = HttpRuntime.Cache[cacheName] as PluginDomainInstanceLoader;
                 if (loaderAlreadyThere == null)
                 {
+                    loader.Acquire();
                     HttpRuntime.Cache.Add(cacheName, loader, new CacheDependency(parentDirPath),
                                           Cache.NoAbsoluteExpiration, TimeSpan.FromMinutes(PluginInstanceLoadersCacheTimeInMinutes),
                                           CacheItemPriority.AboveNormal, OnCachePluginDomainInstanceLoaderRemovedCallback);
-                    loader.Acquire();
                 }
             }
             if (loaderAlreadyThere != null)

@@ -61,14 +61,6 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
     [Serializable]
     public class BeachesExtractAndSubmission : BasePerformBeachesSubmission
     {
-        protected enum ConfigArgs
-        {
-            None,
-            [Description("Extract Stored Procedure Name")]
-            StoredProcedureName,
-            [Description("Execute Timeout (in seconds)")]
-            ExecuteTimeout,
-        }
         protected enum ScheduleParams
         {
             None,
@@ -76,8 +68,6 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
             AttributeEffectiveYear,
         }
         #region fields
-        protected string _storedProcName;/* = "ETL_EXTRACT_BEACHES.LOAD_BEACH_DATA_P"*/
-        protected int _commandTimeout = 300;
         protected int _attributeEffectiveYear;
         #endregion
 
@@ -88,9 +78,6 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
         protected override void LazyInit()
         {
             base.LazyInit();
-            
-            TryGetConfigParameter(EnumUtils.ToDescription(ConfigArgs.StoredProcedureName), ref _storedProcName);
-            TryGetConfigParameter(EnumUtils.ToDescription(ConfigArgs.ExecuteTimeout), ref _commandTimeout);
         }
         protected override void ValidateRequest(string requestId)
         {
