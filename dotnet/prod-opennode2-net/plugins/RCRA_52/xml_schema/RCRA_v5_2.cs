@@ -1217,9 +1217,13 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
     [System.Xml.Serialization.XmlRootAttribute("LocationAddress", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
     public partial class LocationAddressDataType
     {
-
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [System.ComponentModel.DescriptionAttribute("Location Address Street Number")]
+        public string LocationAddressNumberText;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [System.ComponentModel.DescriptionAttribute("This abstract element is the head of a substitutionGroup hierararchy which may co" +
             "ntain either simpleContent or complexContent elements.  It is used to assert the" +
             " model position of \"class\" elements declared in other GML schemas.  ")]
@@ -1227,34 +1231,34 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
         public string LocationAddressText;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [System.ComponentModel.DescriptionAttribute("This abstract element is the head of a substitutionGroup hierararchy which may co" +
             "ntain either simpleContent or complexContent elements.  It is used to assert the" +
             " model position of \"class\" elements declared in other GML schemas.  ")]
         public string SupplementalLocationText;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [System.ComponentModel.DescriptionAttribute("Name or number assigned by the implementing agency to identify a corrective actio" +
             "n area.")]
         [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         public string LocalityName;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
         [System.ComponentModel.DescriptionAttribute("This abstract element is the head of a substitutionGroup hierararchy which may co" +
             "ntain either simpleContent or complexContent elements.  It is used to assert the" +
             " model position of \"class\" elements declared in other GML schemas.  ")]
         public string StateUSPSCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
         [System.ComponentModel.DescriptionAttribute("Name or number assigned by the implementing agency to identify a corrective actio" +
             "n area.")]
         public string CountryName;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
         [System.ComponentModel.DescriptionAttribute("This abstract element is the head of a substitutionGroup hierararchy which may co" +
             "ntain either simpleContent or complexContent elements.  It is used to assert the" +
             " model position of \"class\" elements declared in other GML schemas.  ")]
@@ -1477,42 +1481,46 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
     [System.Xml.Serialization.XmlRootAttribute("MailingAddress", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
     public partial class MailingAddressDataType
     {
-
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("This abstract element is the head of a substitutionGroup hierararchy which may co" +
-            "ntain either simpleContent or complexContent elements.  It is used to assert the" +
-            " model position of \"class\" elements declared in other GML schemas.  ")]
-        public string MailingAddressText;
+        [System.ComponentModel.DescriptionAttribute("Mailing Address Street Number")]
+        public string MailingAddressNumberText;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [System.ComponentModel.DescriptionAttribute("This abstract element is the head of a substitutionGroup hierararchy which may co" +
             "ntain either simpleContent or complexContent elements.  It is used to assert the" +
             " model position of \"class\" elements declared in other GML schemas.  ")]
-        public string SupplementalAddressText;
+        public string MailingAddressText;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
+        [System.ComponentModel.DescriptionAttribute("This abstract element is the head of a substitutionGroup hierararchy which may co" +
+            "ntain either simpleContent or complexContent elements.  It is used to assert the" +
+            " model position of \"class\" elements declared in other GML schemas.  ")]
+        public string SupplementalAddressText;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [System.ComponentModel.DescriptionAttribute("Name or number assigned by the implementing agency to identify a corrective actio" +
             "n area.")]
         public string MailingAddressCityName;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
         [System.ComponentModel.DescriptionAttribute("This abstract element is the head of a substitutionGroup hierararchy which may co" +
             "ntain either simpleContent or complexContent elements.  It is used to assert the" +
             " model position of \"class\" elements declared in other GML schemas.  ")]
         public string MailingAddressStateUSPSCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
         [System.ComponentModel.DescriptionAttribute("Name or number assigned by the implementing agency to identify a corrective actio" +
             "n area.")]
         public string MailingAddressCountryName;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
         [System.ComponentModel.DescriptionAttribute("This abstract element is the head of a substitutionGroup hierararchy which may co" +
             "ntain either simpleContent or complexContent elements.  It is used to assert the" +
             " model position of \"class\" elements declared in other GML schemas.  ")]
@@ -1643,65 +1651,70 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
+        [System.ComponentModel.DescriptionAttribute("Descriptive text describing the code indicating the state-designated legislative district(s) in which the site is located (Data publishing only)")]
+        public string StateDistrictCodeText;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
         [System.ComponentModel.DescriptionAttribute("Code indicating that the handler is engaged in importing hazardous waste into the" +
             " United States.")]
         public string ImporterActivityCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
         [System.ComponentModel.DescriptionAttribute("Code indicating that the handler is engaged in generating mixed waste (waste that" +
             " is both hazardous and radioactive).")]
         public string MixedWasteGeneratorCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
         [System.ComponentModel.DescriptionAttribute("Code indicating that the handler is engaged in recycling hazardous waste.")]
         public string RecyclerActivityCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
         [System.ComponentModel.DescriptionAttribute("Code indicating that the handler is engaged in the transportation of hazardous wa" +
             "ste.")]
         public string TransporterActivityCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
         [System.ComponentModel.DescriptionAttribute("Code indicating that the handler is engaged in the treatment, storage, or disposa" +
             "l of hazardous waste.")]
         public string TreatmentStorageDisposalActivityCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 10)]
         [System.ComponentModel.DescriptionAttribute("Code indicating that the handler generates and or treats, stores, or disposes of " +
             "hazardous waste and has an injection well located at the installation.")]
         public string UndergroundInjectionActivityCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 10)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
         [System.ComponentModel.DescriptionAttribute("Code indicating that the handler treats, disposes of, or recycles hazardous waste" +
             " on site.")]
         public string UniversalWasteDestinationFacilityIndicator;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 12)]
         [System.ComponentModel.DescriptionAttribute("Code indicating that the handler qualifies for the Small Quantity Onsite Burner E" +
             "xemption.")]
         public string OnsiteBurnerExemptionCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 12)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 13)]
         [System.ComponentModel.DescriptionAttribute("Code indicating that the handler qualifies for the Smelting, Melting, and Refinin" +
             "g Furnace Exemption.")]
         public string FurnaceExemptionCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 13)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 14)]
         [System.ComponentModel.DescriptionAttribute("Code indicating that the handler is engaged in short-term hazardous waste generat" +
             "ion activities.")]
         public string ShortTermGeneratorIndicator;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 14)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 15)]
         [System.ComponentModel.DescriptionAttribute("Code indicating that the handler is a Hazardous Waste Transfer Facility (not to b" +
             "e confused with a used oil transfer facility).")]
         public string TransferFacilityIndicator;
@@ -1945,7 +1958,12 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
         public string LandBasedUnitIndicator;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("HandlerWasteCodeDetails", Order = 8)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
+        [System.ComponentModel.DescriptionAttribute("Descriptive text describing the code to indicate if the HSM is being managed in a Land Based Unit (Data publishing only)")]
+        public string LandBasedUnitIndicatorText;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("HandlerWasteCodeDetails", Order = 9)]
         [System.ComponentModel.DescriptionAttribute("Hazardous waste codes describing the handler\'s hazardous waste streams.")]
         //TSM:
         //public HandlerWasteCodeDataType[] HandlerWasteCodeDetails;
@@ -1995,7 +2013,13 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
         public string FinancialAssuranceIndicator;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("HazardousSecondaryMaterialActivity", Order = 5)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
+        [System.ComponentModel.DescriptionAttribute("Indicates the facility has a recycling process which the product has levels of " +
+            "hazardous constituents that are not comparable to or unable to be compared to a legitimate product or intermediate but that the recycling is still legitimate")]
+        public string RecyclingIndicator;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("HazardousSecondaryMaterialActivity", Order = 6)]
         [System.ComponentModel.DescriptionAttribute("Hazardous Secondary Material activity of the Handler")]
         public HazardousSecondaryMaterialActivityDataType[] HazardousSecondaryMaterialActivity;
     }
@@ -2074,7 +2098,12 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
         public string NonNotifierIndicator;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 9)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
+        [System.ComponentModel.DescriptionAttribute(@"Descriptive text describing Notification source(Data publishing only).")]
+        public string NonNotifierIndicatorText;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 10)]
         [System.ComponentModel.DescriptionAttribute("The date that operation of the facility commenced, the date construction on the f" +
             "acility commenced, or the date that operation is expected to begin.")]
         public System.DateTime TreatmentStorageDisposalDate;
@@ -2087,124 +2116,129 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
         public bool TreatmentStorageDisposalDateSpecified;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 10)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
         [System.ComponentModel.DescriptionAttribute(@"Code indicating that the handler, whether public or private, currently accepts hazardous waste from another site (site identified by a different EPA ID). If information is also available on the specific processes and wastes which are accepted, it is indicated by a flag at the process unit level (Process Unit Group Commercial Status).")]
         public string OffsiteWasteReceiptCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 12)]
         [System.ComponentModel.DescriptionAttribute("Code indicating the reason why the handler is not accessible for normal RCRA trac" +
             "king and processing (previously called Bankrupt Indicator).")]
         public string AccessibilityCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 12)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 13)]
+        [System.ComponentModel.DescriptionAttribute(@"Descriptive text describing reason facility is not accessible(Data publishing only).")]
+        public string AccessibilityCodeText;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 14)]
         [System.ComponentModel.DescriptionAttribute("Indicates the agency that defines the county code.")]
         public string CountyCodeOwner;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 13)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 15)]
         [System.ComponentModel.DescriptionAttribute("The Federal Information Processing Standard (FIPS) code for the county in which t" +
             "he facility is located (Ref: FIPS Publication, 6-3, \"Counties and County Equival" +
             "ents of the States of the United States\").")]
         public string CountyCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 14)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 16)]
         [System.ComponentModel.DescriptionAttribute("Name or number assigned by the implementing agency to identify a corrective actio" +
             "n area.")]
         public string CountyName;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 15)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 17)]
         [System.ComponentModel.DescriptionAttribute("Notes providing more information.")]
         public string HandlerSupplementalInformationText;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 16)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 18)]
         [System.ComponentModel.DescriptionAttribute("Location address information.")]
         public LocationAddressDataType LocationAddress;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 17)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 19)]
         [System.ComponentModel.DescriptionAttribute("Mailing address information.")]
         public MailingAddressDataType MailingAddress;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 18)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 20)]
         [System.ComponentModel.DescriptionAttribute("Contact address information for the facility owner/operator.")]
         public ContactAddressDataType ContactAddress;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 19)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 21)]
         [System.ComponentModel.DescriptionAttribute("Contact address information for the facility owner/operator.")]
         public ContactAddressDataType PermitContactAddress;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 20)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 22)]
         [System.ComponentModel.DescriptionAttribute("Used Oil codes.")]
         public UsedOilDataType UsedOil;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 21)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 23)]
         [System.ComponentModel.DescriptionAttribute("State and EPA hazardous waste activity codes.")]
         public SiteWasteActivityDataType WasteActivitySite;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 22)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 24)]
         [System.ComponentModel.DescriptionAttribute("State code indicating that the handler is engaged in the generation of hazardous " +
             "waste.")]
         public WasteGeneratorDataType StateWasteGenerator;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 23)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 25)]
         [System.ComponentModel.DescriptionAttribute("Federal code indicating that the handler is engaged in the generation of hazardou" +
             "s waste.")]
         public WasteGeneratorDataType FederalWasteGenerator;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 24)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 26)]
         [System.ComponentModel.DescriptionAttribute("Types of Laboratory Waste that the Handler has opted to manage under SubPart K")]
         public LaboratoryHazardousWasteDataType LaboratoryHazardousWaste;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 25)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 27)]
         [System.ComponentModel.DescriptionAttribute("Description of the Hazardous Secondary Material managed by the Handler")]
         public HazardousSecondaryMaterialDataType HazardousSecondaryMaterial;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Certification", Order = 26)]
+        [System.Xml.Serialization.XmlElementAttribute("Certification", Order = 28)]
         [System.ComponentModel.DescriptionAttribute("Certification information for the person who certified report to the authorizing " +
             "agency.")]
         public CertificationDataType[] Certification;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("NAICSIdentity", Order = 27)]
+        [System.Xml.Serialization.XmlElementAttribute("NAICSIdentity", Order = 29)]
         [System.ComponentModel.DescriptionAttribute("North American Industry Classification Status codes reported for the handler.")]
         public NAICSIdentityDataType[] NAICSIdentity;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("FacilityOwnerOperator", Order = 28)]
+        [System.Xml.Serialization.XmlElementAttribute("FacilityOwnerOperator", Order = 30)]
         [System.ComponentModel.DescriptionAttribute("Handler owner and operator information.")]
         public FacilityOwnerOperatorDataType[] FacilityOwnerOperator;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("EnvironmentalPermit", Order = 29)]
+        [System.Xml.Serialization.XmlElementAttribute("EnvironmentalPermit", Order = 301)]
         [System.ComponentModel.DescriptionAttribute("Information about environmental permits issued to the handler.")]
         public EnvironmentalPermitDataType[] EnvironmentalPermit;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("StateActivity", Order = 30)]
+        [System.Xml.Serialization.XmlElementAttribute("StateActivity", Order = 32)]
         [System.ComponentModel.DescriptionAttribute("State waste activity of the handler.")]
         public StateActivityDataType[] StateActivity;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("HandlerUniversalWaste", Order = 31)]
+        [System.Xml.Serialization.XmlElementAttribute("HandlerUniversalWaste", Order = 33)]
         [System.ComponentModel.DescriptionAttribute("Information about universal waste generated by the handler.")]
         public UniversalWasteActivityDataType[] HandlerUniversalWaste;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("HandlerWasteCodeDetails", Order = 32)]
+        [System.Xml.Serialization.XmlElementAttribute("HandlerWasteCodeDetails", Order = 34)]
         [System.ComponentModel.DescriptionAttribute("Hazardous waste codes describing the handler\'s hazardous waste streams.")]
         public HandlerWasteCodeDataType[] HandlerWasteCodeDetails;
     }
