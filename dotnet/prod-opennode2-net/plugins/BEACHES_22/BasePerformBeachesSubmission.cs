@@ -256,7 +256,7 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
                 {
                     IDbParameters parameters;
                     var selectWhereQuery = _baseDao.LoadGenericParametersFromValueList(beachActivitySelect, out parameters, beachActivitySelectParams);
-                    rowsSet = _baseDao.AdoTemplate.ExecuteNonQuery(CommandType.Text, "UPDATE NOTIF_BEACHACTIVITY SET SENTTOEPA = 'Y' WHERE " + beachActivitySelect,
+                    rowsSet = _baseDao.AdoTemplate.ExecuteNonQuery(CommandType.Text, "UPDATE NOTIF_BEACHACTIVITY SET SENTTOEPA = 'Y' WHERE " + selectWhereQuery,
                                                                    parameters);
                 }
 
