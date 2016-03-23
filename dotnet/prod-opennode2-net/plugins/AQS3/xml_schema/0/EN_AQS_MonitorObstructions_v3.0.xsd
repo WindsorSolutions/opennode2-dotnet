@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:aqs="http://www.exchangenetwork.net/schema/AQS/Submission/3" targetNamespace="http://www.exchangenetwork.net/schema/AQS/Submission/3" elementFormDefault="qualified" attributeFormDefault="qualified" version="3.0">
+	<xsd:annotation>
+		<xsd:documentation>Monitor Obstructions file
+		Current Version Available At :
+		Description : Schema for Monitor Obstructions 
+		Application : Air Quality System (AQS)
+		Developed by : Environmental Protection Agency, Computer Sciences Corporation
+		Point of Contact : Nick Mangus (EPA), WDavid Ripley, III (CSC)	
+		</xsd:documentation>
+	</xsd:annotation>
+	<!--Data element and data type inclide files-->
+	<xsd:include schemaLocation="http://www.exchangenetwork.net/schema/SC/SC_SimpleContent_v2.0.xsd"/>
+	<xsd:include schemaLocation="AQS_ELEMENTS/EN_AQS_ActionCode_v3.0.xsd"/>
+	<xsd:include schemaLocation="AQS_ELEMENTS/AQS_TYPES/EN_AQS_CompassSectorCodeDataType_v3.0.xsd"/>
+	<xsd:include schemaLocation="AQS_ELEMENTS/AQS_TYPES/EN_AQS_NormCharFiftyTextDataType_v3.0.xsd"/>
+	<!--Monitor Obstructions schema components-->
+	<xsd:element name="MonitorObstructions" type="aqs:MonitorObstructionsType">
+		<xsd:annotation>
+			<xsd:documentation>This is a complex element (element grouping) containing all of the elements describing structures which may affect the sampling ability of the monitor.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!--Monitor Obstructions complex data type-->
+	<xsd:complexType name="MonitorObstructionsType">
+		<xsd:annotation>
+			<xsd:documentation>Monitor obstruction information details complex type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="aqs:ActionCode"/>
+			<xsd:element ref="aqs:ObstructionTypeCode"/>
+			<xsd:element ref="aqs:DirectionToObstructionCode"/>
+			<xsd:element ref="aqs:DistanceToObstructionMeasure"/>
+			<xsd:element ref="aqs:ObstructionHeightMeasure"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--Monitor Obstructions data elements-->
+	<xsd:element name="ObstructionTypeCode" type="aqs:NormCharFiftyTextType">
+		<xsd:annotation>
+			<xsd:documentation>The type of obstruction responsible for the restricted air flow of a monitor.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DirectionToObstructionCode" type="aqs:CompassSectorCodeType">
+		<xsd:annotation>
+			<xsd:documentation>The direction from the monitor to the obstruction.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DistanceToObstructionMeasure" type="aqs:MeasureValueDataType">
+		<xsd:annotation>
+			<xsd:documentation>The distance, in meters, between the probe and obstruction.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ObstructionHeightMeasure" type="aqs:MeasureValueDataType">
+		<xsd:annotation>
+			<xsd:documentation>The height, in meters, of the top of the obstruction above the probe.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!--Monitor Obstructions data type-->
+	<xsd:simpleType name="ObstructionTypeCodeType">
+		<xsd:annotation>
+			<xsd:documentation>The type of obstruction responsible for the restricted air flow of a monitor.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="BUILDINGS"/>
+			<xsd:enumeration value="CLIFFS"/>
+			<xsd:enumeration value="RIDGES"/>
+			<xsd:enumeration value="TREES/BRUSH"/>
+			<xsd:enumeration value="OTHER"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:aqs="http://www.exchangenetwork.net/schema/AQS/Submission/3" targetNamespace="http://www.exchangenetwork.net/schema/AQS/Submission/3" elementFormDefault="qualified" attributeFormDefault="qualified" version="3.0">
+	<xsd:annotation>
+		<xsd:documentation>Raw Precision Information file
+		Current Version Available At :
+		Description : Schema for Raw Precision Information
+		Application : Air Quality System (AQS)
+		Developed by : Environmental Protection Agency
+		Point of Contact : Nick Mangus (EPA)
+		</xsd:documentation>
+	</xsd:annotation>
+	<!--Data element and data type include files-->
+	<xsd:include schemaLocation="AQS_ELEMENTS/EN_AQS_QualityAssuranceAssessmentElements_v3.0.xsd"/>
+	<!--Raw Precision Information schema components-->
+	<xsd:element name="SemiAnnualFlowRateAuditDetails" type="aqs:SemiAnnualFlowRateAuditDetailsType">
+		<xsd:annotation>
+			<xsd:documentation>This is a complex element (element grouping) containing all of the elements related to monitor level semi-annual flow rate audit quality control assessments.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!--Raw Precision Information complex data types-->
+	<xsd:complexType name="SemiAnnualFlowRateAuditDetailsType">
+		<xsd:annotation>
+			<xsd:documentation>Detailed data elements for the semi-annual flow rate audit monitor assessment complex type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="aqs:MeasureUnitCode"/>
+			<xsd:element ref="aqs:MonitorFlowRateValue"/>
+			<xsd:element ref="aqs:AssessmentFlowRateValue"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

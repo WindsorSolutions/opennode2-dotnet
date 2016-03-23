@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:aqs="http://www.exchangenetwork.net/schema/AQS/Submission/3" targetNamespace="http://www.exchangenetwork.net/schema/AQS/Submission/3" elementFormDefault="qualified" attributeFormDefault="qualified" version="3.0">
+	<xsd:annotation>
+		<xsd:documentation>AQS Duraction Code data element file
+		Current Version Available At :
+		Description : Schema for the Duration Code data element
+		Application : Air Quality System (AQS) reusable data element
+		Developed by : Environmental Protection Agency, Computer Sciences Corporation
+		Point of Contact : Nick Mangus (EPA), WDavid Ripley, III (CSC)	
+		</xsd:documentation>
+	</xsd:annotation>
+	<!--Duration Code data element-->
+	<xsd:element name="DurationCode" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation>A code representing the sample duration. The sample duration is the length of time that air passes through the monitoring device before it is analyzed (measured).  So, it represents an averaging period in the atmosphere (for example, a 24-hour sample duration draws ambient air over a collection filter for 24 straight hours).  For continuous monitors, it can represent an averaging time of many samples  (for example, a 1-hour value may be the average of four one-minute samples collected during each quarter of the hour).  This used to be called Sampling Interval.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

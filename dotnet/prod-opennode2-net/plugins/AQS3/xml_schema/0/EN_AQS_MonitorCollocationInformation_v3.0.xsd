@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:aqs="http://www.exchangenetwork.net/schema/AQS/Submission/3" targetNamespace="http://www.exchangenetwork.net/schema/AQS/Submission/3" elementFormDefault="qualified" attributeFormDefault="qualified" version="3.0">
+	<xsd:annotation>
+		<xsd:documentation>Monitor Collocation Information file
+		Current Version Available At :
+		Description : Schema for Monitor Collocation Information 
+		Application : Air Quality System (AQS)
+		Developed by : Environmental Protection Agency, Computer Sciences Corporation
+		Point of Contact : Nick Mangus (EPA), WDavid Ripley, III (CSC)	
+		</xsd:documentation>
+	</xsd:annotation>
+	<!--Data element and data type include files-->
+	<xsd:include schemaLocation="http://www.exchangenetwork.net/schema/SC/SC_SimpleContent_v2.0.xsd"/>
+	<xsd:include schemaLocation="AQS_ELEMENTS/EN_AQS_ActionCode_v3.0.xsd"/>
+	<xsd:include schemaLocation="AQS_ELEMENTS/AQS_TYPES/EN_AQS_DateTimeDataTypes_v3.0.xsd"/>
+	<xsd:include schemaLocation="AQS_ELEMENTS/AQS_TYPES/EN_AQS_YesNoIndicatorDataType_v3.0.xsd"/>
+	<!--Monitor Collocation Information schema components-->
+	<xsd:element name="MonitorCollocationInformation" type="aqs:MonitorCollocationInformationType">
+		<xsd:annotation>
+			<xsd:documentation>This is a complex element (element grouping) containing all of the elements related to the description of collocated monitors.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!--Monitor Collocation Information complex data types-->
+	<xsd:complexType name="MonitorCollocationInformationType">
+		<xsd:annotation>
+			<xsd:documentation>Monitor collocation period details complex type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="aqs:ActionCode"/>
+			<xsd:element ref="aqs:CollocationBeginDate"/>
+			<xsd:element ref="aqs:CollocationEndDate" minOccurs="0"/>
+			<xsd:element ref="aqs:PrimaryMonitorDistanceMeasure" minOccurs="0"/>
+			<xsd:element ref="aqs:PrimaryMonitorIndicator" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--Monitor Collocation Information data elements-->
+	<xsd:element name="CollocationBeginDate" type="xsd:date">
+		<xsd:annotation>
+			<xsd:documentation>The beginning date of the time period during which a collocated monitor pair recorded precision and accuracy data. Used to determine data completeness.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CollocationEndDate" type="xsd:date">
+		<xsd:annotation>
+			<xsd:documentation>The ending date of the time period during which a collocated monitor pair recorded precision and accuracy data. Used to determine data completeness.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="PrimaryMonitorDistanceMeasure" type="aqs:MeasureValueDataType">
+		<xsd:annotation>
+			<xsd:documentation>The distance, in meters, between a duplicate sampler and the primary sampler in a collocated pair.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="PrimaryMonitorIndicator" type="aqs:YesNoIndicatorDataType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates whether the monitor is the primary or duplicate monitor in a collocated monitor pair.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

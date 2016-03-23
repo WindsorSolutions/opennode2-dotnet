@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:aqs="http://www.exchangenetwork.net/schema/AQS/Submission/3" targetNamespace="http://www.exchangenetwork.net/schema/AQS/Submission/3" elementFormDefault="qualified" attributeFormDefault="qualified" version="3.0">
+	<xsd:annotation>
+		<xsd:documentation>AQS 10 digit positive integer data type file
+		Current Version Available At :
+		Description : Schema for the 10 digit positive integer data type
+		Application : Air Quality System (AQS) reusable data type
+		Developed by : Environmental Protection Agency, Computer Sciences Corporation
+		Point of Contact : Nick Mangus (EPA), WDavid Ripley, III (CSC)	
+		</xsd:documentation>
+	</xsd:annotation>
+	<!--10 digit positive integer data type-->
+	<xsd:simpleType name="TenDigitPositiveIntegerType">
+		<xsd:annotation>
+			<xsd:documentation>10 digit positive integer type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:positiveInteger">
+			<xsd:maxExclusive value="10000000000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

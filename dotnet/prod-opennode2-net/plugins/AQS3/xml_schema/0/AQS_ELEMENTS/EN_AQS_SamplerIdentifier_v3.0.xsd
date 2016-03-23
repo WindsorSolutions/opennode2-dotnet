@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:aqs="http://www.exchangenetwork.net/schema/AQS/Submission/3" targetNamespace="http://www.exchangenetwork.net/schema/AQS/Submission/3" elementFormDefault="qualified" attributeFormDefault="qualified" version="3.0">
+	<xsd:annotation>
+		<xsd:documentation>AQS Sampler Identifier data element file
+		Current Version Available At :
+		Description : Schema for the Action Code data element
+		Application : Air Quality System (AQS) reusable data element
+		Developed by : Environmental Protection Agency, Lockheed Martin Information Technology
+		Point of Contact : Nick Mangus (EPA), John M. Hall (LMIT)	
+		</xsd:documentation>
+	</xsd:annotation>
+	<!--Sampler Identifier data element-->
+	<xsd:element name="SamplerIdentifier" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation>The unique identifier for the sampler at the site.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

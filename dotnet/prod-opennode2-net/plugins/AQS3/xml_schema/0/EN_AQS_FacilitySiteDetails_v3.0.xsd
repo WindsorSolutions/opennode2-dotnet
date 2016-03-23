@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:aqs="http://www.exchangenetwork.net/schema/AQS/Submission/3" targetNamespace="http://www.exchangenetwork.net/schema/AQS/Submission/3" elementFormDefault="qualified" attributeFormDefault="qualified" version="3.0">
+	<xsd:annotation>
+		<xsd:documentation>AQS Facility Site Details file, component of Transaction AA
+		Current Version Available At :
+		Description : Schema for Facility Site Details, component of Transaction AA, AQS Submission
+		Application : Air Quality System (AQS)
+		Developed by : Environmental Protection Agency, Computer Sciences Corporation
+		Point of Contact : Nick Mangus (EPA), WDavid Ripley, III (CSC)	
+		</xsd:documentation>
+	</xsd:annotation>
+	<!--Data element and data type include files-->
+	<xsd:include schemaLocation="http://www.exchangenetwork.net/schema/SC/SC_SimpleContent_v2.0.xsd"/>
+	<xsd:include schemaLocation="AQS_ELEMENTS/AQS_TYPES/EN_AQS_CompassSectorCodeDataType_v3.0.xsd"/>
+	<xsd:include schemaLocation="AQS_ELEMENTS/AQS_TYPES/EN_AQS_DateTimeDataTypes_v3.0.xsd"/>
+	<xsd:include schemaLocation="AQS_ELEMENTS/AQS_TYPES/EN_AQS_CharNineStringDataType_v3.0.xsd"/>
+	<xsd:include schemaLocation="AQS_ELEMENTS/AQS_TYPES/EN_AQS_CharOneToEightStringDataType_v3.0.xsd"/>
+	<xsd:include schemaLocation="AQS_ELEMENTS/AQS_TYPES/EN_AQS_CharFourToSixStringDataType_v3.0.xsd"/>
+	<xsd:include schemaLocation="AQS_ELEMENTS/AQS_TYPES/EN_AQS_NormCharFortyTextDataType_v3.0.xsd"/>
+	<xsd:include schemaLocation="AQS_ELEMENTS/AQS_TYPES/EN_AQS_NormCharSeventyTextDataType_v3.0.xsd"/>
+	<xsd:include schemaLocation="AQS_ELEMENTS/AQS_TYPES/EN_AQS_DigitFourStringDataType_v3.0.xsd"/>
+	<xsd:include schemaLocation="AQS_ELEMENTS/AQS_TYPES/EN_AQS_DigitOneToFourStringDataType_v3.0.xsd"/>
+	<xsd:include schemaLocation="AQS_ELEMENTS/AQS_TYPES/EN_AQS_DigitOneStringDataType_v3.0.xsd"/>
+	<xsd:include schemaLocation="AQS_ELEMENTS/AQS_TYPES/EN_AQS_DigitOneToSixStringDataType_v3.0.xsd"/>
+	<xsd:include schemaLocation="AQS_ELEMENTS/EN_AQS_AQCRDataElement_v3.0.xsd"/>
+	<xsd:include schemaLocation="AQS_ELEMENTS/EN_AQS_CityCodeDataElement_v3.0.xsd"/>
+	<xsd:include schemaLocation="AQS_ELEMENTS/EN_AQS_LandUseIdentifierDataElement_v3.0.xsd"/>
+	<xsd:include schemaLocation="AQS_ELEMENTS/EN_AQS_LocationSettingIdentifierDataElement_v3.0.xsd"/>
+	<!--Facility Site schema components-->
+	<xsd:element name="FacilitySiteDetails" type="aqs:FacilitySiteDetailsType">
+		<xsd:annotation>
+			<xsd:documentation>This is a complex element (element grouping) containing all of the elements related to the description of the surroundings of an air quality site (facility).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!--Facility Site complex data types-->
+	<xsd:complexType name="FacilitySiteDetailsType">
+		<xsd:annotation>
+			<xsd:documentation>Facility site action details complex type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="aqs:SupportAgencyCode"/>
+			<xsd:element ref="aqs:LocationAddressText"/>
+			<xsd:element ref="aqs:CityCode" minOccurs="0"/>
+			<xsd:element ref="aqs:AddressPostalCode" minOccurs="0"/>
+			<xsd:element ref="aqs:LocalIdentifier" minOccurs="0"/>
+			<xsd:element ref="aqs:LocalName" minOccurs="0"/>
+			<xsd:element ref="aqs:LocalRegionCode" minOccurs="0"/>
+			<xsd:element ref="aqs:UrbanAreaCode" minOccurs="0"/>
+			<xsd:element ref="aqs:AQCRCode"/>
+			<xsd:element ref="aqs:LandUseIdentifier"/>
+			<xsd:element ref="aqs:LocationSettingIdentifier"/>
+			<xsd:element ref="aqs:SiteEstablishedDate"/>
+			<xsd:element ref="aqs:SiteTerminatedDate" minOccurs="0"/>
+			<xsd:element ref="aqs:CongressionalDistrictCode" minOccurs="0"/>
+			<xsd:sequence minOccurs="0">
+				<xsd:element ref="aqs:CensusBlockCode"/>
+				<xsd:element ref="aqs:CensusBlockGroupCode" minOccurs="0"/>
+				<xsd:element ref="aqs:CensusTractCode"/>
+			</xsd:sequence>
+			<xsd:element ref="aqs:ClassIAreaCode" minOccurs="0"/>
+			<xsd:element ref="aqs:HQEvaluationDate" minOccurs="0"/>
+			<xsd:element ref="aqs:RegionalEvaluationDate" minOccurs="0"/>
+			<xsd:element ref="aqs:DirectionFromCityCode" minOccurs="0"/>
+			<xsd:element ref="aqs:DistanceFromCityMeasure" minOccurs="0"/>
+			<xsd:element ref="aqs:MetSiteIdentifier" minOccurs="0"/>
+			<xsd:element ref="aqs:MetSiteTypeCode" minOccurs="0"/>
+			<xsd:element ref="aqs:DistanceToMetSiteMeasure" minOccurs="0"/>
+			<xsd:element ref="aqs:DirectionToMetSiteCode" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--Facility Site data elements-->
+	<xsd:element name="SupportAgencyCode" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation>Identifies the agency responsible for the operation of the monitoring site.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="LocalIdentifier" type="aqs:NormCharFortyTextType">
+		<xsd:annotation>
+			<xsd:documentation>Identification code used by a State, Tribe or Local agency, if different from the AQS Site ID.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="LocalName" type="aqs:NormCharSeventyTextType">
+		<xsd:annotation>
+			<xsd:documentation>The locally defined name of the site.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="UrbanAreaCode" type="aqs:DigitFourStringType">
+		<xsd:annotation>
+			<xsd:documentation>The urbanized area within which the monitoring site is located. An urbanized area is a U.S. Census Bureau demographic entity that comprises a place and the adjacent densely-settled surrounding territory that together have a minimum population of 50,000 people.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SiteEstablishedDate" type="xsd:date">
+		<xsd:annotation>
+			<xsd:documentation>The date on which an air monitoring site began collecting air quality data.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SiteTerminatedDate" type="xsd:date">
+		<xsd:annotation>
+			<xsd:documentation>The date on which a monitoring site ceased to operate.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CongressionalDistrictCode" type="aqs:CongressionalDistrictCodeType">
+		<xsd:annotation>
+			<xsd:documentation>The Congressional district within which the site is located.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CensusBlockCode" type="aqs:DigitOneToFourStringType">
+		<xsd:annotation>
+			<xsd:documentation>The U.S. Census Bureau block within which the site is located.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CensusBlockGroupCode" type="aqs:DigitOneStringType">
+		<xsd:annotation>
+			<xsd:documentation>The U.S. Census Bureau block group within which the site is located.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CensusTractCode" type="aqs:DigitOneToSixStringType">
+		<xsd:annotation>
+			<xsd:documentation>The U.S. Census Bureau census tract/block numbering area within which the site is located.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ClassIAreaCode" type="aqs:CharFourToSixStringType">
+		<xsd:annotation>
+			<xsd:documentation>The Class One Area within which the site is located. A Class One Area is a geographic area recognized by EPA as being of the highest environmental quality and requiring maximum protection.  These lands generally consist of national wildernesses (Forest Service), parks (National Park Service) and wildlife refuges (U.S. Fish &amp; Wildlife Service) in existence at the time the 1977 Clean Air Act Amendment was passed.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="LocalRegionCode" type="aqs:CharOneToEightStringType">
+		<xsd:annotation>
+			<xsd:documentation>The state-specific geographic/administrative area within which the site is located.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="HQEvaluationDate" type="xsd:date">
+		<xsd:annotation>
+			<xsd:documentation>The date on which the most recent headquarters (HQ) evaluation of the site occurred.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="RegionalEvaluationDate" type="xsd:date">
+		<xsd:annotation>
+			<xsd:documentation>The date on which the most recent regional evaluation of the site for siting criteria occurred.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DirectionFromCityCode" type="aqs:CompassSectorCodeType">
+		<xsd:annotation>
+			<xsd:documentation>A representation of the true, as opposed to magnetic, direction of the site from the central business district. If the site is within the central business district, it is a representation of the direction the probe faces.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DistanceFromCityMeasure" type="aqs:MeasureValueDataType">
+		<xsd:annotation>
+			<xsd:documentation>The distance, in kilometers, to the site from the center of the downtown central business district of the city in which the site is located.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MetSiteIdentifier" type="aqs:CharNineStringType">
+		<xsd:annotation>
+			<xsd:documentation>The AQS Site ID where meteorological data is collected, if not collected at this site.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MetSiteTypeCode" type="aqs:MetSiteTypeCodeType">
+		<xsd:annotation>
+			<xsd:documentation>The type of meteorological station identified for the monitoring site. Required for sites with monitors in a Photochemical Assessment Monitoring System (PAMS) network.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DistanceToMetSiteMeasure" type="aqs:MeasureValueDataType">
+		<xsd:annotation>
+			<xsd:documentation>The distance of the associated meteorological site from the air quality monitoring site, in meters. This information is required if the site has monitors that are part of a Photochemical Assessment Monitoring System (PAMS) network. The associated site need not be an AQS site.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DirectionToMetSiteCode" type="aqs:CompassSectorCodeType">
+		<xsd:annotation>
+			<xsd:documentation>A representation of the true, as opposed to magnetic, direction of the meteorological site from this site.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!--Facility Site data type-->
+	<xsd:simpleType name="CongressionalDistrictCodeType">
+		<xsd:annotation>
+			<xsd:documentation>1 or 2 digit code type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[0-9]{1,2}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MetSiteTypeCodeType">
+		<xsd:annotation>
+			<xsd:documentation>Enumeration of 6 type codes type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="ON-SITE MET EQUIP"/>
+			<xsd:enumeration value="ON-SITE UA MET"/>
+			<xsd:enumeration value="OTHER AIRS SITE"/>
+			<xsd:enumeration value="NWS"/>
+			<xsd:enumeration value="AIRPORT"/>
+			<xsd:enumeration value="OTHER"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

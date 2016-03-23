@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2013 sp1 (http://www.altova.com) by Nick Mangus (LMP4 ISGS) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:aqs="http://www.exchangenetwork.net/schema/AQS/Submission/3" targetNamespace="http://www.exchangenetwork.net/schema/AQS/Submission/3" elementFormDefault="qualified" attributeFormDefault="qualified" version="3.0">
+	<xsd:annotation>
+		<xsd:documentation>Raw Precision Information file
+		Current Version Available At :
+		Description : Schema for Raw Precision Information
+		Application : Air Quality System (AQS)
+		Developed by : Environmental Protection Agency
+		Point of Contact : Nick Mangus (EPA)
+		</xsd:documentation>
+	</xsd:annotation>
+	<!--Data element and data type include files-->
+	<xsd:include schemaLocation="AQS_ELEMENTS/EN_AQS_QualityAssuranceAssessmentElements_v3.0.xsd"/>
+	<!--Raw Precision Information schema components-->
+	<xsd:element name="OzoneStandardVerificationDetails" type="aqs:OzoneStandardVerificationDetailsType">
+		<xsd:annotation>
+			<xsd:documentation>This is a complex element (element grouping) containing all of the elements related to ozone gas verification quality control activities.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!--Raw Precision Information complex data types-->
+	<xsd:complexType name="OzoneStandardVerificationDetailsType">
+		<xsd:sequence>
+			<xsd:element ref="aqs:PrimaryQualityAssuranceOrganizationCode"/>
+			<xsd:element ref="aqs:VerificationTypeIdentifier"/>
+			<xsd:element ref="aqs:AuthoritativeStandardIdentifierCode"/>
+			<xsd:element ref="aqs:AuthoritativeStandardLevelValue"/>
+			<xsd:element ref="aqs:TransferStandardIdentifierCode"/>
+			<xsd:element ref="aqs:TransferStandardLevelValue"/>
+			<xsd:element ref="aqs:LevelOneAuthoritativeStandardValue"/>
+			<xsd:element ref="aqs:LevelOneTransferStandardValue"/>
+			<xsd:element ref="aqs:LevelTwoAuthoritativeStandardValue"/>
+			<xsd:element ref="aqs:LevelTwoTransferStandardValue"/>
+			<xsd:element ref="aqs:LevelThreeAuthoritativeStandardValue"/>
+			<xsd:element ref="aqs:LevelThreeTransferStandardValue"/>
+			<xsd:element ref="aqs:LevelFourAuthoritativeStandardValue"/>
+			<xsd:element ref="aqs:LevelFourTransferStandardValue"/>
+			<xsd:element ref="aqs:LevelFiveAuthoritativeStandardValue"/>
+			<xsd:element ref="aqs:LevelFiveTransferStandardValue"/>
+			<xsd:element ref="aqs:LevelSixAuthoritativeStandardValue"/>
+			<xsd:element ref="aqs:LevelSixTransferStandardValue"/>
+			<xsd:element ref="aqs:LevelSevenAuthoritativeStandardValue"/>
+			<xsd:element ref="aqs:LevelSevenTransferStandardValue"/>
+			<xsd:element ref="aqs:LevelEightAuthoritativeStandardValue"/>
+			<xsd:element ref="aqs:LevelEightTransferStandardValue"/>
+			<xsd:element ref="aqs:LevelNineAuthoritativeStandardValue"/>
+			<xsd:element ref="aqs:LevelNineTransferStandardValue"/>
+			<xsd:element ref="aqs:LevelTenAuthoritativeStandardValue"/>
+			<xsd:element ref="aqs:LevelTenTransferStandardValue"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="VerificationTypeIdentifier" type="aqs:VerificationTypeIdentifierType">
+		<xsd:annotation>
+			<xsd:documentation>The full name of the type of verification being performed.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="VerificationTypeIdentifierType">
+		<xsd:annotation>
+			<xsd:documentation>Enumeration of allowable verification types</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="6x6"/>
+			<xsd:enumeration value="Standard"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

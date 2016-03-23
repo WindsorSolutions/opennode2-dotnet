@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2013 sp1 (http://www.altova.com) by Nick Mangus (LMP4 ISGS) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:aqs="http://www.exchangenetwork.net/schema/AQS/Submission/3" targetNamespace="http://www.exchangenetwork.net/schema/AQS/Submission/3" elementFormDefault="qualified" attributeFormDefault="qualified" version="3.0">
+	<xsd:annotation>
+		<xsd:documentation>AQS Raw Data Value Code file
+		Current Version Available At :
+		Description : Schema for Raw Data Value Code, AQS Submission
+		Application : Air Quality System (AQS)
+		Developed by : Environmental Protection Agency, Computer Sciences Corporation
+		Point of Contact : Nick Mangus (EPA), WDavid Ripley, III (CSC)	
+		</xsd:documentation>
+	</xsd:annotation>
+	<!--Data element and data type include files-->
+	<xsd:include schemaLocation="http://www.exchangenetwork.net/schema/SC/SC_SimpleContent_v2.0.xsd"/>
+	<xsd:include schemaLocation="AQS_ELEMENTS/EN_AQS_UncertaintyValueDataElement_v3.0.xsd"/>
+	<xsd:include schemaLocation="AQS_ELEMENTS/AQS_TYPES/EN_AQS_YesNoIndicatorDataType_v3.0.xsd"/>
+	<xsd:include schemaLocation="AQS_ELEMENTS/AQS_TYPES/EN_AQS_NormCharTwoThousandTextDataType_v3.0.xsd"/>
+	<!--Raw Data Value Code schema components-->
+	<xsd:element name="RawValueDetails" type="aqs:RawValueDetailsType">
+		<xsd:annotation>
+			<xsd:documentation>This is a complex element (element grouping) containing all of the elements related to measured sample values.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="RawValueDetailsType">
+		<xsd:annotation>
+			<xsd:documentation>Raw Data value and code action U details complex type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:choice minOccurs="0">
+				<xsd:sequence minOccurs="0">
+					<xsd:element ref="aqs:MeasureValue" minOccurs="0"/>
+					<xsd:element ref="aqs:UncertaintyValue" minOccurs="0"/>
+				</xsd:sequence>
+				<xsd:element ref="aqs:NullDataCode" minOccurs="0"/>
+			</xsd:choice>
+			<xsd:element ref="aqs:ResultQualifierCode" minOccurs="0" maxOccurs="10"/>
+			<xsd:element ref="aqs:DataValidityCode" minOccurs="0"/>
+			<xsd:element ref="aqs:DataApprovalIndicator" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--Raw Data Value Code data elements-->
+	<xsd:element name="NullDataCode" type="aqs:NullDataCodeType">
+		<xsd:annotation>
+			<xsd:documentation>Code to explain why no sample value was reported.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DataValidityCode" type="aqs:DataValidityType">
+		<xsd:annotation>
+			<xsd:documentation>This is a field used only by non-AQS data transfers to indicate if the level of validity of the data.  (This is generally used for state to state exchanges of near-real-time air quality data.)</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DataApprovalIndicator" type="aqs:YesNoIndicatorDataType">
+		<xsd:annotation>
+			<xsd:documentation>This is a field used only by non-AQS data transfers to indicate if the level of approval of the data.  (This is generally used for state to state exchanges of near-real-time air quality data.)</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!--Raw Data Value Code local data type-->
+	<xsd:simpleType name="NullDataCodeType">
+		<xsd:annotation>
+			<xsd:documentation>2 character code type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[A-Z]{2}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="DataValidityType">
+		<xsd:annotation>
+			<xsd:documentation>Enumeration of 3 data validation type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="V"/>
+			<xsd:enumeration value="I"/>
+			<xsd:enumeration value="C"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:aqs="http://www.exchangenetwork.net/schema/AQS/Submission/3" targetNamespace="http://www.exchangenetwork.net/schema/AQS/Submission/3" elementFormDefault="qualified" attributeFormDefault="qualified" version="3.0">
+	<xsd:annotation>
+		<xsd:documentation>AQS Location Setting Identifier data element file
+		Current Version Available At :
+		Description : Schema for the Location Setting Identifier data element
+		Application : Air Quality System (AQS) reusable data element
+		Developed by : Environmental Protection Agency, Computer Sciences Corporation
+		Point of Contact : Nick Mangus (EPA), WDavid Ripley, III (CSC)	
+		</xsd:documentation>
+	</xsd:annotation>
+	<!--Location Setting data element-->
+	<xsd:element name="LocationSettingIdentifier" type="aqs:LocationSettingIdentifierType">
+		<xsd:annotation>
+			<xsd:documentation>A description of the environmental setting within which the site is located.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!--Location Setting data type-->
+	<xsd:simpleType name="LocationSettingIdentifierType">
+		<xsd:annotation>
+			<xsd:documentation>Enumeration of 4 identifiers type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="RURAL"/>
+			<xsd:enumeration value="SUBURBAN"/>
+			<xsd:enumeration value="URBAN AND CENTER CITY"/>
+			<xsd:enumeration value="UNKNOWN"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

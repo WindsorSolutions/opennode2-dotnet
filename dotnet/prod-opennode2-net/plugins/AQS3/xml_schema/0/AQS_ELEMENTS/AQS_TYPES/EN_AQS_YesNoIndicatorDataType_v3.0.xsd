@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:aqs="http://www.exchangenetwork.net/schema/AQS/Submission/3" targetNamespace="http://www.exchangenetwork.net/schema/AQS/Submission/3" elementFormDefault="qualified" attributeFormDefault="qualified" version="3.0">
+	<xsd:annotation>
+		<xsd:documentation>
+		Current Version Available At :
+		Description : Schema for Yes/No indicator, AQS Submission
+		Application : Air Quality System (AQS)
+		Developed by : Environmental Protection Agency, Lockheed Martin Information Technology
+		Point of Contact : Nick Mangus (EPA), John Hall (LMIT)	
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:simpleType name="YesNoIndicatorDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Y"/>
+			<xsd:enumeration value="N"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

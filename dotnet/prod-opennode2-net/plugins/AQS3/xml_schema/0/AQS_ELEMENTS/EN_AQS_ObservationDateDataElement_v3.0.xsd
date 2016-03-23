@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:aqs="http://www.exchangenetwork.net/schema/AQS/Submission/3" targetNamespace="http://www.exchangenetwork.net/schema/AQS/Submission/3" elementFormDefault="qualified" attributeFormDefault="qualified" version="3.0">
+	<xsd:annotation>
+		<xsd:documentation>AQS Observation Date data element file
+		Current Version Available At :
+		Description : Schema for the Observation Date data element
+		Application : Air Quality System (AQS) reusable data element
+		Developed by : Environmental Protection Agency, Computer Sciences Corporation
+		Point of Contact : Nick Mangus (EPA), WDavid Ripley, III (CSC)	
+		</xsd:documentation>
+	</xsd:annotation>
+	<!--Data type include file-->
+	<xsd:include schemaLocation="AQS_TYPES/EN_AQS_DateTimeDataTypes_v3.0.xsd"/>
+	<!--Observation Data data element-->
+	<xsd:element name="SampleCollectionStartDate" type="xsd:date">
+		<xsd:annotation>
+			<xsd:documentation>The date on which a particular sample began being collected.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>
