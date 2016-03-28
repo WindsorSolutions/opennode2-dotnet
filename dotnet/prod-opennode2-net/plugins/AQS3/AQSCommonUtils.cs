@@ -57,7 +57,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3Common
         protected const string CONFIG_PARAM_AQS_SCREENING_GROUP = "AQS Screening Group";
         protected const string CONFIG_PARAM_AQS_FINAL_PROCESSING_STEP = "AQS Final Processing Step (Stage, Load, or Post)";
         protected const string CONFIG_PARAM_AQS_STOP_ON_ERROR = "AQS Stop On Error (Yes or No)";
-        protected const string CONFIG_PARAM_AQS_SCHEMA_VERSION = "AQS Schema Version";
+        //protected const string CONFIG_PARAM_AQS_SCHEMA_VERSION = "AQS Schema Version";
 
         protected bool _addHeader;
         protected string _author;
@@ -74,7 +74,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3Common
         protected ICompressionHelper _compressionHelper;
         protected ISerializationHelper _serializationHelper;
         protected IDocumentManager _documentManager;
-        protected string[] _validVersionValues = new string[] { "3.0" };
+        //protected string[] _validVersionValues = new string[] { "3.0" };
 
         public AQS3BaseHeaderPlugin()
         {
@@ -86,7 +86,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3Common
             ConfigurationArguments.Add(CONFIG_PARAM_AQS_SCREENING_GROUP, null);
             ConfigurationArguments.Add(CONFIG_PARAM_AQS_FINAL_PROCESSING_STEP, null);
             ConfigurationArguments.Add(CONFIG_PARAM_AQS_STOP_ON_ERROR, null);
-            ConfigurationArguments.Add(CONFIG_PARAM_AQS_SCHEMA_VERSION, null);
+            //ConfigurationArguments.Add(CONFIG_PARAM_AQS_SCHEMA_VERSION, null);
         }
         protected virtual void LazyInit()
         {
@@ -100,12 +100,12 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3Common
 
             GetConfigParameter(CONFIG_PARAM_ADD_HEADER, true, out _addHeader);
 
-            _aqsSchemaVersion = ValidateNonEmptyConfigParameter(CONFIG_PARAM_AQS_SCHEMA_VERSION);
-            if (!CollectionUtils.Contains(_validVersionValues, _aqsSchemaVersion, StringComparison.CurrentCulture))
-            {
-                throw new ArgumentException(string.Format("The config parameter \"{0}\" must be one of the following values: {1}",
-                                                          CONFIG_PARAM_AQS_SCHEMA_VERSION, StringUtils.Join(", ", _validVersionValues)));
-            }
+            //_aqsSchemaVersion = ValidateNonEmptyConfigParameter(CONFIG_PARAM_AQS_SCHEMA_VERSION);
+            //if (!CollectionUtils.Contains(_validVersionValues, _aqsSchemaVersion, StringComparison.CurrentCulture))
+            //{
+            //    throw new ArgumentException(string.Format("The config parameter \"{0}\" must be one of the following values: {1}",
+            //                                              CONFIG_PARAM_AQS_SCHEMA_VERSION, StringUtils.Join(", ", _validVersionValues)));
+            //}
 
             if (_addHeader)
             {

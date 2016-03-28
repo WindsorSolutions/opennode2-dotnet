@@ -37,6 +37,7 @@ using Windsor.Commons.Spring;
 using Windsor.Node2008.WNOSDomain;
 using Windsor.Node2008.WNOSProviders;
 using Windsor.Node2008.WNOSPlugin.AQS3Common;
+using Windsor.Commons.XsdOrm2;
 
 namespace Windsor.Node2008.WNOSPlugin.AQS3
 {
@@ -55,12 +56,13 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
 
         protected IRequestManager _requestManager;
         protected ITransactionManager _transactionManager;
+        protected IObjectsFromDatabase _objectsFromDatabase;
 
         protected SpringBaseDao _baseDao;
         protected DataRequest _dataRequest;
 
-        protected DateTime _startDate;
-        protected DateTime _endDate;
+        protected DateTime? _startDate;
+        protected DateTime? _endDate;
         protected string _siteId;
         protected string _countyCode;
         protected string _commaSeparatedActionCodes;
@@ -68,7 +70,6 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
         protected bool _clearMetadataBeforeRun = true;
         protected bool _includeRawResultsOnly;
         protected bool _filterByImportedDate;
-        protected Version _aqsSchemaVersionType;
 
         public AQSGetRawData()
         {
@@ -117,7 +118,8 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
         }
         protected virtual AirQualitySubmissionType LoadData()
         {
-            //data.Version = _aqsSchemaVersionType;
+            var submissions = 
+                _objectsFromDatabase.LoadFromDatabase<AirQualitySubmissionType>(_baseDao, null, typeof(MappingAttributes));
             return null;
         }
 
@@ -125,21 +127,13 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
         {
             base.LazyInit();
 
-            if (_aqsSchemaVersion == _validVersionValues[0])
-            {
-                _aqsSchemaVersionType = Version.Item30;
-            }
-            else
-            {
-                throw new NotImplementedException();
-            }
-
             GetServiceImplementation(out _requestManager);
             GetServiceImplementation(out _serializationHelper);
             GetServiceImplementation(out _compressionHelper);
             GetServiceImplementation(out _documentManager);
             GetServiceImplementation(out _settingsProvider);
             GetServiceImplementation(out _transactionManager);
+            GetServiceImplementation(out _objectsFromDatabase);
 
             TryGetConfigParameter(CONFIG_PARAM_ACTION_CODES, ref _commaSeparatedActionCodes);
             AppendAuditLogEvent("Action Codes: {0}", _commaSeparatedActionCodes == null ? "NONE" :
@@ -154,18 +148,19 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
 
             AppendAuditLogEvent("Validating request: {0}", _dataRequest);
 
-            GetParameter(_dataRequest, PARAM_START_DATE_KEY, 0, out _startDate);
-            GetParameter(_dataRequest, PARAM_END_DATE_KEY, 1, out _endDate);
+            TryGetParameter(_dataRequest, PARAM_START_DATE_KEY, 0, ref _startDate);
+            TryGetParameter(_dataRequest, PARAM_END_DATE_KEY, 1, ref _endDate);
             TryGetParameter(_dataRequest, PARAM_SITE_ID_KEY, 2, ref _siteId);
             TryGetParameter(_dataRequest, PARAM_COUNTY_CODE_KEY, 3, ref _countyCode);
             TryGetParameter(_dataRequest, PARAM_INCLUDE_RAW_RESULTS_ONLY_KEY, 4, ref _includeRawResultsOnly);
             TryGetParameter(_dataRequest, PARAM_FILTER_BY_IMPORTED_DATE_KEY, 5, ref _filterByImportedDate);
 
             AppendAuditLogEvent("Validated request with parameters: {0} = {1}, {2} = {3}, {4} = {5}, {6} = {7}, {8} = {9}, {10} = {11}",
-                                      PARAM_START_DATE_KEY, _startDate, PARAM_END_DATE_KEY, _endDate,
-                                      PARAM_SITE_ID_KEY, _siteId, PARAM_COUNTY_CODE_KEY, _countyCode,
-                                      PARAM_INCLUDE_RAW_RESULTS_ONLY_KEY, _includeRawResultsOnly,
-                                      PARAM_FILTER_BY_IMPORTED_DATE_KEY, _filterByImportedDate);
+                                PARAM_START_DATE_KEY, _startDate.HasValue ? _startDate.Value.ToString() : "null",
+                                PARAM_END_DATE_KEY, _endDate.HasValue ? _endDate.Value.ToString() : "null", 
+                                PARAM_SITE_ID_KEY, _siteId, PARAM_COUNTY_CODE_KEY, _countyCode,
+                                PARAM_INCLUDE_RAW_RESULTS_ONLY_KEY, _includeRawResultsOnly,
+                                PARAM_FILTER_BY_IMPORTED_DATE_KEY, _filterByImportedDate);
         }
         /// <summary>
         /// Return the Query, Solicit, or Execute data service parameters for specified data service.

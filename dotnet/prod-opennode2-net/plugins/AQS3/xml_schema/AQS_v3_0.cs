@@ -4287,7 +4287,9 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(Form = System.Xml.Schema.XmlSchemaForm.Qualified)]
-        public Version Version;
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        //public Version Version;
+        public string Version;
     }
 
     /// <remarks/>

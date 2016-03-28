@@ -74,6 +74,7 @@
       <Link>AssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AQSCommonUtils.cs" />
+    <Compile Include="AQSExtractAndSubmission.cs" />
     <Compile Include="AQSGetRawData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="xml_schema\AQS_v3_0.cs" />
@@ -136,6 +137,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="xml_schema_v2.2\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="xml_schema\xml_schema.zip" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
