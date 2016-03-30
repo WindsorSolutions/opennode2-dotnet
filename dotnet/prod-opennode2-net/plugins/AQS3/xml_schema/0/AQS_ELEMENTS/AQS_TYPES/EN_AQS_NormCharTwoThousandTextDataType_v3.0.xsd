@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:aqs="http://www.exchangenetwork.net/schema/AQS/Submission/3" targetNamespace="http://www.exchangenetwork.net/schema/AQS/Submission/3" elementFormDefault="qualified" attributeFormDefault="qualified" version="3.0">
+	<xsd:annotation>
+		<xsd:documentation>AQS 1 to 2,000characters of normalized text data type file
+		Current Version Available At :
+		Description : Schema for the 1 to 2,000 characters of normalized text data type
+		Application : Air Quality System (AQS) reusable data type
+		Developed by : Environmental Protection Agency
+		Point of Contact : Nick Mangus (EPA)
+		</xsd:documentation>
+	</xsd:annotation>
+	<!--1 to 120 characters of normalized text data type-->
+	<xsd:simpleType name="NormCharTwoThousandTextType">
+		<xsd:annotation>
+			<xsd:documentation>1 to 2,000 characters normalized text type definition.  This is, as far as AQS is concerned, an unlimited text field.  Oracle can store up to 2,000 characters in a VARCHAR2 field; anything longer requires a CLOB field which would be incompatible with current AQS internal functions.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:maxLength value="2000"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

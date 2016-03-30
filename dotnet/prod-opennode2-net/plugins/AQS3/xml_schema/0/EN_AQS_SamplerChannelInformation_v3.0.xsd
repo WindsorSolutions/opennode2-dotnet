@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2013 sp1 (http://www.altova.com) by Nick Mangus (LOCKHEED MARTIN) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:aqs="http://www.exchangenetwork.net/schema/AQS/Submission/3" targetNamespace="http://www.exchangenetwork.net/schema/AQS/Submission/3" elementFormDefault="qualified" attributeFormDefault="qualified" version="3.0">
+	<xsd:annotation>
+		<xsd:documentation>Site Sampler Channel Informatin
+		Current Version Available At :
+		Description : Schema for Transaction AE, AQS Submission
+		Application : Air Quality System (AQS)
+		Developed by : Environmental Protection Agency
+		Point of Contact : Nick Mangus (EPA)
+		</xsd:documentation>
+	</xsd:annotation>
+	<!--Data element and data type include files-->
+	<xsd:include schemaLocation="AQS_ELEMENTS/EN_AQS_ActionCode_v3.0.xsd"/>
+	<xsd:include schemaLocation="http://www.exchangenetwork.net/schema/SC/SC_SimpleContent_v2.0.xsd"/>
+	<xsd:include schemaLocation="AQS_ELEMENTS/EN_AQS_ChannelIdentifier_v3.0.xsd"/>
+	<xsd:include schemaLocation="EN_AQS_SamplerAssessmentDetails_v3.0.xsd"/>
+	<xsd:include schemaLocation="AQS_ELEMENTS/AQS_TYPES/EN_AQS_DecimalNonNegativeDataType_v3.0.xsd"/>
+	<xsd:include schemaLocation="AQS_ELEMENTS/AQS_TYPES/EN_AQS_NormCharFiftyTextDataType_v3.0.xsd"/>
+	<!--Transaction AE schema components-->
+	<xsd:element name="SamplerChannelInformation" type="aqs:SamplerChannelInformationType">
+		<xsd:annotation>
+			<xsd:documentation>This is a complex element (element grouping) containing all of the elements relating samplers to channels at a monitoring site.
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!--Transaction AE complex data types-->
+	<xsd:complexType name="SamplerChannelInformationType">
+		<xsd:annotation>
+			<xsd:documentation>Site sampler channel relationship complex type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="aqs:ChannelIdentifier"/>
+			<xsd:element ref="aqs:ChannelDetails" minOccurs="0" maxOccurs="1"/>
+			<xsd:element ref="aqs:SamplerAssessmentResults" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ChannelDetails" type="aqs:ChannelDetailsType">
+		<xsd:annotation>
+			<xsd:documentation>This is a complex element (element grouping) containing all of the elements needed to defina a sampler channel.
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ChannelDetailsType">
+		<xsd:annotation>
+			<xsd:documentation>Specific fields that comprise a sampler channel definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="aqs:ActionCode"/>
+			<xsd:element ref="aqs:SamplerFilterType" minOccurs="0"/>
+			<xsd:element ref="aqs:SamplerTargetFlowRate" minOccurs="0"/>
+			<xsd:element ref="aqs:SamplerFlowUnitCode" minOccurs="0"/>
+			<xsd:element ref="aqs:SamplerChannelBeginDate"/>
+			<xsd:element ref="aqs:SamplerChannelEndDate" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--Transaction AD data elements-->
+	<xsd:element name="SamplerFilterType" type="aqs:NormCharFiftyTextType">
+		<xsd:annotation>
+			<xsd:documentation>Type of filter loaded into the sampler on this channel (e.g. Quartz).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SamplerTargetFlowRate" type="aqs:NonNegativeDecimalType">
+		<xsd:annotation>
+			<xsd:documentation>Nominal flow rate for channel.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SamplerFlowUnitCode" type="aqs:MeasureUnitCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The code representing the units of measure for target flow rate.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SamplerChannelBeginDate" type="xsd:date">
+		<xsd:annotation>
+			<xsd:documentation>The beginning date of operation of the sampler.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SamplerChannelEndDate" type="xsd:date">
+		<xsd:annotation>
+			<xsd:documentation>The ending date of operation of the sampler.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

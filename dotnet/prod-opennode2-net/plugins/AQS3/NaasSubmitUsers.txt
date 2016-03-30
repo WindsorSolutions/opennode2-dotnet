@@ -1,0 +1,13 @@
+// NOTES:
+//
+// Each line should contain the NAAS username followed by the NAAS password
+//
+// Comments can be added by prefixing a line with //
+//
+
+ted@windsorsolutions.com,Password1234
+User1@domain.org,Password1
+User2@domain.org,Password2
+User3@domain.org,Password3
+User4@domain.org,Password4
+User5@domain.org,Password5

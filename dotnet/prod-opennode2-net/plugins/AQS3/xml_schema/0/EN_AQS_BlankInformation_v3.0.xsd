@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:aqs="http://www.exchangenetwork.net/schema/AQS/Submission/3" targetNamespace="http://www.exchangenetwork.net/schema/AQS/Submission/3" elementFormDefault="qualified" attributeFormDefault="qualified" version="3.0">
+	<xsd:annotation>
+		<xsd:documentation>Blank Information file
+		Current Version Available At :
+		Description : Schema for Blank Information 
+		Application : Air Quality System (AQS)
+		Developed by : Environmental Protection Agency, Computer Sciences Corporation
+		Point of Contact : Nick Mangus (EPA), WDavid Ripley, III (CSC)	
+		</xsd:documentation>
+	</xsd:annotation>
+	<!--Data element and data type include files-->
+	<xsd:include schemaLocation="AQS_ELEMENTS/EN_AQS_ActionCode_v3.0.xsd"/>
+	<xsd:include schemaLocation="AQS_ELEMENTS/AQS_TYPES/EN_AQS_NormCharTwentyTextDataType_v3.0.xsd"/>
+	<xsd:include schemaLocation="AQS_ELEMENTS/EN_AQS_ObservationDateDataElement_v3.0.xsd"/>
+	<xsd:include schemaLocation="AQS_ELEMENTS/EN_AQS_ObservationStartTimeDataElement_v3.0.xsd"/>
+	<xsd:include schemaLocation="EN_AQS_RawDataValueCodeDetails_v3.0.xsd"/>
+	<!--Blank Information schema components-->
+	<xsd:element name="BlankInformation" type="aqs:BlankInformationType">
+		<xsd:annotation>
+			<xsd:documentation>This is a complex element (element grouping) containing all of the elements related to the description of blanks (field, trip, or lab) data submission.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!--Blank Information complex data types-->
+	<xsd:complexType name="BlankInformationType">
+		<xsd:annotation>
+			<xsd:documentation>Blank raw data details complex type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="aqs:ActionCode"/>
+			<xsd:element ref="aqs:SampleCollectionStartDate"/>
+			<xsd:element ref="aqs:SampleCollectionStartTime"/>
+			<xsd:element ref="aqs:BlankTypeCode"/>
+			<xsd:element ref="aqs:RawValueDetails" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--Blank Information data element-->
+	<xsd:element name="BlankTypeCode" type="aqs:NormalizedString20CharType">
+		<xsd:annotation>
+			<xsd:documentation>The blank type describes how the un-exposed filter was handled. It has possible values TRIP and FIELD. A type of TRIP means that the filter was taken to the site, but not placed in the instrument, while a type of FIELD means that the filter was placed in the instrument and removed before operation of the instrument.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

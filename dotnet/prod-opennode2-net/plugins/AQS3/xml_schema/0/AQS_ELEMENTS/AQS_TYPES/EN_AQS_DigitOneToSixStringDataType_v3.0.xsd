@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:aqs="http://www.exchangenetwork.net/schema/AQS/Submission/3" targetNamespace="http://www.exchangenetwork.net/schema/AQS/Submission/3" elementFormDefault="qualified" attributeFormDefault="qualified" version="3.0">
+	<xsd:annotation>
+		<xsd:documentation>AQS 1 to 6 digit integer string data type file
+		Current Version Available At :
+		Description : Schema for the 1 to 6 digit integer string data type
+		Application : Air Quality System (AQS) reusable data type
+		Developed by : Environmental Protection Agency, Computer Sciences Corporation
+		Point of Contact : Nick Mangus (EPA), WDavid Ripley, III (CSC)	
+		</xsd:documentation>
+	</xsd:annotation>
+	<!--1 to 6 digit integer string data type-->
+	<xsd:simpleType name="DigitOneToSixStringType">
+		<xsd:annotation>
+			<xsd:documentation>1 to 6 digit integer string type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[0-9]{1,6}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

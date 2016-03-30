@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:aqs="http://www.exchangenetwork.net/schema/AQS/Submission/3" targetNamespace="http://www.exchangenetwork.net/schema/AQS/Submission/3" elementFormDefault="qualified" attributeFormDefault="qualified" version="3.0">
+	<xsd:annotation>
+		<xsd:documentation>AQS 16 point Compass Sector Code data type file
+		Current Version Available At :
+		Description : Schema for the 16 point Compass Sector Code data type
+		Application : Air Quality System (AQS) reusable data type
+		Developed by : Environmental Protection Agency, Computer Sciences Corporation
+		Point of Contact : Nick Mangus (EPA), WDavid Ripley, III (CSC)	
+		</xsd:documentation>
+	</xsd:annotation>
+	<!--16 point Compass Sector Code data type-->
+	<xsd:simpleType name="CompassSectorCodeType">
+		<xsd:annotation>
+			<xsd:documentation>16 compass direction type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="E"/>
+			<xsd:enumeration value="ENE"/>
+			<xsd:enumeration value="ESE"/>
+			<xsd:enumeration value="N"/>
+			<xsd:enumeration value="NE"/>
+			<xsd:enumeration value="NNE"/>
+			<xsd:enumeration value="NNW"/>
+			<xsd:enumeration value="NW"/>
+			<xsd:enumeration value="S"/>
+			<xsd:enumeration value="SE"/>
+			<xsd:enumeration value="SSE"/>
+			<xsd:enumeration value="SSW"/>
+			<xsd:enumeration value="SW"/>
+			<xsd:enumeration value="W"/>
+			<xsd:enumeration value="WNW"/>
+			<xsd:enumeration value="WSW"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

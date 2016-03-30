@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:aqs="http://www.exchangenetwork.net/schema/AQS/Submission/3" targetNamespace="http://www.exchangenetwork.net/schema/AQS/Submission/3" elementFormDefault="qualified" attributeFormDefault="qualified" version="3.0">
+	<xsd:annotation>
+		<xsd:documentation>AQS Monitor Identifier file
+		Current Version Available At :
+		Description : Schema for Monitor Identifier, AQS Submission
+		Application : Air Quality System (AQS)
+		Developed by : Environmental Protection Agency, Computer Sciences Corporation
+		Point of Contact : Nick Mangus (EPA), WDavid Ripley, III (CSC)	
+		</xsd:documentation>
+	</xsd:annotation>
+	<!--Data type include files-->
+	<xsd:include schemaLocation="http://www.exchangenetwork.net/schema/SC/SC_SimpleContent_v2.0.xsd"/>
+	<xsd:include schemaLocation="EN_AQS_IntegerTwoDigitPositiveDataType_v3.0.xsd"/>
+	<!--Monitor Identifier schema component-->
+	<xsd:complexType name="MonitorIdentifierDetailsType">
+		<xsd:annotation>
+			<xsd:documentation>Required elements for monitor identification complex type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="aqs:SubstanceIdentifier"/>
+			<xsd:element ref="aqs:SubstanceOccurrenceCode"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--Monitor Identifier data elements-->
+	<xsd:element name="SubstanceOccurrenceCode" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation>Another name for Parameter Occurrence Code (POC).  If there are multiple monitors for the same substance at a single site, each monitor must have a unique substance occurrence code.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

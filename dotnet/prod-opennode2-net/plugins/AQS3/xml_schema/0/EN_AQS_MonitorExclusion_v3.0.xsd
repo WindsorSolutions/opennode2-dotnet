@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2013 rel. 2 sp2 (http://www.altova.com) by Robert Coats (U.S. EPA) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:aqs="http://www.exchangenetwork.net/schema/AQS/Submission/3" targetNamespace="http://www.exchangenetwork.net/schema/AQS/Submission/3" elementFormDefault="qualified" attributeFormDefault="qualified" version="3.0">
+	<xsd:annotation>
+		<xsd:documentation>Monitor Regulatory Exclusion file
+		Current Version Available At :
+		Description : Schema for Monitor exclusion from National Ambient Air Quality Standard (NAAQS) Determinations
+		Application : Air Quality System (AQS)
+		Developed by : Environmental Protection Agency
+		Point of Contact : Robert Coats (EPA)
+		</xsd:documentation>
+	</xsd:annotation>
+	<!--Data element and data type include files-->
+	<xsd:include schemaLocation="http://www.exchangenetwork.net/schema/SC/SC_SimpleContent_v2.0.xsd"/>
+	<xsd:include schemaLocation="AQS_ELEMENTS/EN_AQS_ActionCode_v3.0.xsd"/>
+	<xsd:include schemaLocation="AQS_ELEMENTS/AQS_TYPES/EN_AQS_DateTimeDataTypes_v3.0.xsd"/>
+	<xsd:include schemaLocation="AQS_ELEMENTS/AQS_TYPES/EN_AQS_NormCharTwoThousandTextDataType_v3.0.xsd"/>
+	<!--Monitor Regulatory Compliance schema components-->
+	<xsd:element name="MonitorExclusion" type="aqs:MonitorExclusionType">
+		<xsd:annotation>
+			<xsd:documentation>The Code of Federal Regulations Title 40 Part 58 Air Quality Surveillance allows monitors that do not meet the QA requiremetns of Part 58 Appendix A to be excluded from Design Value calculations.  This element provides the interface to request exclusion.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!--Monitor Exclusion complex data types-->
+	<xsd:complexType name="MonitorExclusionType">
+		<xsd:annotation>
+			<xsd:documentation>Monitor exclusion details complex type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="aqs:ActionCode"/>
+			<xsd:element ref="aqs:PollutantStandardCode" minOccurs="0" maxOccurs="1"/>
+			<xsd:element ref="aqs:ExclusionBeginDate"/>
+			<xsd:element ref="aqs:ExclusionEndDate" minOccurs="0" maxOccurs="1"/>
+			<xsd:element ref="aqs:MonitorExclusionCommentText" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--Monitor Exclusion data element-->
+	<xsd:element name="PollutantStandardCode" type="xsd:integer">
+		<xsd:annotation>
+			<xsd:documentation>A code indicating the National Ambient Air Quality Standard from whic the monitor shall be excluded from being assessed against.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ExclusionBeginDate" type="xsd:date">
+		<xsd:annotation>
+			<xsd:documentation>The date on which the current status of the monitor's exclusion begins.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ExclusionEndDate" type="xsd:date">
+		<xsd:annotation>
+			<xsd:documentation>The date on which the current status of the monitor's exclusion ends.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MonitorExclusionCommentText" type="aqs:NormCharTwoThousandTextType">
+		<xsd:annotation>
+			<xsd:documentation>Free form text area to provide any annotations to monitor designation declaration.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

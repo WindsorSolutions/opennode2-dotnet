@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2013 sp1 (http://www.altova.com) by Nick Mangus (LMP4 ISGS) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:aqs="http://www.exchangenetwork.net/schema/AQS/Submission/3" targetNamespace="http://www.exchangenetwork.net/schema/AQS/Submission/3" elementFormDefault="qualified" attributeFormDefault="qualified" version="3.0">
+	<xsd:annotation>
+		<xsd:documentation>Raw Accuracy Information file
+		Current Version Available At :
+		Description : Schema for Raw Accuracy Information 
+		Application : Air Quality System (AQS)
+		Developed by : Environmental Protection Agency
+		Point of Contact : Nick Mangus (EPA)
+		</xsd:documentation>
+	</xsd:annotation>
+	<!--Data element and data type include files-->
+	<xsd:include schemaLocation="AQS_ELEMENTS/EN_AQS_ActionCode_v3.0.xsd"/>
+	<xsd:include schemaLocation="AQS_ELEMENTS/EN_AQS_QualityAssuranceAssessmentElements_v3.0.xsd"/>
+	<!--Raw Accuracy Information schema components-->
+	<xsd:element name="ReplicateAssessmentDetails" type="aqs:ReplicateAssessmentDetailsType">
+		<xsd:annotation>
+			<xsd:documentation>This is a complex element (element grouping) containing all of the elements related to monitor level replicate assessments.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!--Annual Performance Evaluation monitor assessment details complex data types-->
+	<xsd:complexType name="ReplicateAssessmentDetailsType">
+		<xsd:annotation>
+			<xsd:documentation>Replicate assessment data details complex type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="aqs:MethodIdentifierCode"/>
+			<xsd:element ref="aqs:MeasureUnitCode"/>
+			<xsd:element ref="aqs:Replicate1Value" minOccurs="0"/>
+			<xsd:element ref="aqs:Replicate2Value" minOccurs="0"/>
+			<xsd:element ref="aqs:Replicate3Value" minOccurs="0"/>
+			<xsd:element ref="aqs:Replicate4Value" minOccurs="0"/>
+			<xsd:element ref="aqs:Replicate5Value" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

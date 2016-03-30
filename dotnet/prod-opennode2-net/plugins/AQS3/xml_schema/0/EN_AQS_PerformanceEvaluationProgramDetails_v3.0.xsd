@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:aqs="http://www.exchangenetwork.net/schema/AQS/Submission/3" targetNamespace="http://www.exchangenetwork.net/schema/AQS/Submission/3" elementFormDefault="qualified" attributeFormDefault="qualified" version="3.0">
+	<xsd:annotation>
+		<xsd:documentation>Raw Precision Information file
+		Current Version Available At :
+		Description : Schema for Raw Precision Information
+		Application : Air Quality System (AQS)
+		Developed by : Environmental Protection Agency
+		Point of Contact : Nick Mangus (EPA)
+		</xsd:documentation>
+	</xsd:annotation>
+	<!--Data element and data type include files-->
+	<xsd:include schemaLocation="AQS_ELEMENTS/EN_AQS_QualityAssuranceAssessmentElements_v3.0.xsd"/>
+	<!--Raw Precision Information schema components-->
+	<xsd:element name="PerformanceEvaluationProgramDetails" type="aqs:PerformanceEvaluationProgramDetailsType">
+		<xsd:annotation>
+			<xsd:documentation>This is a complex element (element grouping) containing all of the elements related to monitor level performance evaluation program (PEP) quality control assessments.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!--Raw Precision Information complex data types-->
+	<xsd:complexType name="PerformanceEvaluationProgramDetailsType">
+		<xsd:annotation>
+			<xsd:documentation>Detailed data elements for performance evaluation program monitor assessment complex type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="aqs:PerformanceEvaluationProgramSamplerType"/>
+			<xsd:element ref="aqs:MethodIdentifierCode"/>
+			<xsd:element ref="aqs:MeasureUnitCode"/>
+			<xsd:element ref="aqs:PerformanceEvaluationSamplerConcentrationValue"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--1 Point QC Check detailed data elements-->
+	<xsd:element name="PerformanceEvaluationSamplerConcentrationValue" type="xsd:decimal">
+		<xsd:annotation>
+			<xsd:documentation>The value of the parameter concentration at the PEP monitor.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="PerformanceEvaluationProgramSamplerType" type="aqs:PerformanceEvaluationProgramSamplerTypeType">
+		<xsd:annotation>
+			<xsd:documentation>The full name of the assessment being performed.  The entry must match the entry for the assessment details provided at the switch below.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="PerformanceEvaluationProgramSamplerTypeType">
+		<xsd:annotation>
+			<xsd:documentation>Enumeration of allowable PEP sampler types</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Independent"/>
+			<xsd:enumeration value="Collocated"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>
