@@ -40,7 +40,7 @@ using Windsor.Commons.Spring;
 using Windsor.Node2008.WNOSDomain;
 using Windsor.Node2008.WNOSProviders;
 
-namespace Windsor.Node2008.WNOSPlugin.AQS2
+namespace Windsor.Node2008.WNOSPlugin.AQS3
 {
     public class CsvFileImporter : BaseWNOSPlugin, ITaskProcessor
     {
@@ -105,7 +105,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS2
 
                 AppendAuditLogEvent("Generating AQS data from CSV file \"{0}\" ...", _csvFilePath);
                 AirQualitySubmissionType data =
-                    cdr.GetAirQualityData(_csvFilePath, Windsor.Node2008.WNOSPlugin.AQS2.AqsDeserializeCsv.AqsFileType.rawResults,
+                    cdr.GetAirQualityData(_csvFilePath, Windsor.Node2008.WNOSPlugin.AQS3.AqsDeserializeCsv.AqsFileType.rawResults,
                                           _mappingTemplateName, this);
 
                 AppendAuditLogEvent("Importing AQS data into database ...");

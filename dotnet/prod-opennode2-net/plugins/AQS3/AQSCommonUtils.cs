@@ -41,7 +41,7 @@ using Windsor.Commons.NodeDomain;
 using Windsor.Node2008.WNOSDomain;
 using System.IO;
 
-namespace Windsor.Node2008.WNOSPlugin.AQSCommon
+namespace Windsor.Node2008.WNOSPlugin.AQS3
 {
     [Serializable]
     public abstract class AQSBaseHeaderPlugin : BaseWNOSPlugin

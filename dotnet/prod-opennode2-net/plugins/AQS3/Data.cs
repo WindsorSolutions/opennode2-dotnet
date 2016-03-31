@@ -39,7 +39,7 @@ using Windsor.Commons.Core;
 using Windsor.Commons.Spring;
 using System.Collections.Generic;
 
-namespace Windsor.Node2008.WNOSPlugin.AQS2
+namespace Windsor.Node2008.WNOSPlugin.AQS3
 {
     public class Data
     {

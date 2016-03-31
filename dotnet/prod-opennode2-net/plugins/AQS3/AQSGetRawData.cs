@@ -36,9 +36,8 @@ using Windsor.Commons.NodeDomain;
 using Windsor.Commons.Spring;
 using Windsor.Node2008.WNOSDomain;
 using Windsor.Node2008.WNOSProviders;
-using Windsor.Node2008.WNOSPlugin.AQSCommon;
 
-namespace Windsor.Node2008.WNOSPlugin.AQS2
+namespace Windsor.Node2008.WNOSPlugin.AQS3
 {
     public abstract class AQSGetRawData : AQSBaseHeaderPlugin
     {

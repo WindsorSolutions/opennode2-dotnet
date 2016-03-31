@@ -48,7 +48,7 @@ using Microsoft.VisualBasic.FileIO;
 using Windsor.Commons.NodeDomain;
 using Windsor.Commons.NodeClient;
 
-namespace Windsor.Node2008.WNOSPlugin.AQS2
+namespace Windsor.Node2008.WNOSPlugin.AQS3
 {
     public class GetAQSRawDataInsertByDate : AQSGetRawData, ISolicitProcessor, IQueryProcessor
     {

@@ -22,7 +22,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/AQS/Submission/3")]
     [System.Xml.Serialization.XmlRootAttribute("AddressPostalCode", Namespace = "http://www.exchangenetwork.net/schema/AQS/Submission/3", IsNullable = false)]
-    public partial class AddressPostalCode
+    public partial class AddressPostalCodeDataType
     {
 
         /// <remarks/>
@@ -414,7 +414,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/AQS/Submission/3")]
     [System.Xml.Serialization.XmlRootAttribute("FacilitySiteIdentifier", Namespace = "http://www.exchangenetwork.net/schema/AQS/Submission/3", IsNullable = false)]
-    public partial class FacilitySiteIdentifier
+    public partial class FacilitySiteIdentifierDataType
     {
 
         /// <remarks/>
@@ -876,7 +876,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/AQS/Submission/3")]
     [System.Xml.Serialization.XmlRootAttribute("SubstanceIdentifier", Namespace = "http://www.exchangenetwork.net/schema/AQS/Submission/3", IsNullable = false)]
-    public partial class SubstanceIdentifier
+    public partial class SubstanceIdentifierDataType
     {
 
         /// <remarks/>
@@ -982,46 +982,34 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/AQS/Submission/3")]
     [System.Xml.Serialization.XmlRootAttribute("SiteIdentifierDetails", Namespace = "http://www.exchangenetwork.net/schema/AQS/Submission/3", IsNullable = false)]
-    public partial class SiteIdentifierDetails
+    public partial class SiteIdentifierDetailsType
     {
 
-        ///// <remarks/>
-        //[System.Xml.Serialization.XmlElementAttribute("CountyCode", typeof(string), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("NonStateCode", typeof(string), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("StateCode", typeof(string), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("TribalCode", typeof(string), Order = 0)]
-        //[System.Xml.Serialization.XmlChoiceIdentifierAttribute("ItemsElementName")]
-        //public string[] Items;
-
-        ///// <remarks/>
-        //[System.Xml.Serialization.XmlElementAttribute("CountyCode", Order = 1)]
-        //[System.Xml.Serialization.XmlIgnoreAttribute()]
-        //public ItemsElementName[] ItemsElementName;
-
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("CountyCode", typeof(string), Order = 0)]
-        public string CountyCode;
-
-        [System.Xml.Serialization.XmlElementAttribute("NonStateCode", typeof(string), Order = 1)]
-        public string NonStateCode;
-
-        [System.Xml.Serialization.XmlElementAttribute("StateCode", typeof(string), Order = 2)]
-        public string StateCode;
-
-        [System.Xml.Serialization.XmlElementAttribute("TribalCode", typeof(string), Order = 3)]
-        public string TribalCode;
+        [System.Xml.Serialization.XmlElementAttribute("NonStateCode", typeof(string), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("StateCode", typeof(string), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("TribalCode", typeof(string), Order = 0)]
+        [System.Xml.Serialization.XmlChoiceIdentifierAttribute("ItemsElementName")]
+        public string[] Items;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
+        [System.Xml.Serialization.XmlElementAttribute("CountyCode", Order = 1)]
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public ItemsChoiceType[] ItemsElementName;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [System.ComponentModel.DescriptionAttribute("The unique identification number used by a governmental entity to identify a faci" +
             "lity site.")]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public FacilitySiteIdentifier FacilitySiteIdentifier;
+        public FacilitySiteIdentifierDataType FacilitySiteIdentifier;
     }
 
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/AQS/Submission/3", IncludeInSchema = false)]
-    public enum ItemsElementName
+    public enum ItemsChoiceType
     {
 
         /// <remarks/>
@@ -1089,7 +1077,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/AQS/Submission/3")]
     [System.Xml.Serialization.XmlRootAttribute("FacilitySiteDetails", Namespace = "http://www.exchangenetwork.net/schema/AQS/Submission/3", IsNullable = false)]
-    public partial class FacilitySiteDetails
+    public partial class FacilitySiteDetailsType
     {
 
         /// <remarks/>
@@ -1114,7 +1102,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [System.ComponentModel.DescriptionAttribute(@"The combination of the 5-digit Zone Improvement Plan (ZIP) code and the four-digit extension code (if available) that represents the geographic segment that is a subunit of the ZIP Code, assigned by the U.S. Postal Service to a geographic location to facilitate mail delivery; or the postal zone specific to the country, other than the U.S., where the mail is delivered.")]
-        public AddressPostalCode AddressPostalCode;
+        public AddressPostalCodeDataType AddressPostalCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "normalizedString", Order = 4)]
@@ -1367,47 +1355,32 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/AQS/Submission/3")]
     [System.Xml.Serialization.XmlRootAttribute("GeographicMonitoringLocation", Namespace = "http://www.exchangenetwork.net/schema/AQS/Submission/3", IsNullable = false)]
-    public partial class GeographicMonitoringLocation
+    public partial class GeographicMonitoringLocationType
     {
 
         /// <remarks/>
-        //[System.Xml.Serialization.XmlElementAttribute("LatitudeMeasure", typeof(string), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("LongitudeMeasure", typeof(string), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("UTMEastingMeasure", typeof(decimal), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("UTMNorthingMeasure", typeof(decimal), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("UTMZoneCode", typeof(string), DataType = "positiveInteger", Order = 0)]
-        //[System.Xml.Serialization.XmlChoiceIdentifierAttribute("ItemsElementName")]
-        //public object[] Items;
-
-        ///// <remarks/>
-        //[System.Xml.Serialization.XmlElementAttribute("ItemsElementName", Order = 1)]
-        //[System.Xml.Serialization.XmlIgnoreAttribute()]
-        //public ItemsElementName3[] ItemsElementName;
-
         [System.Xml.Serialization.XmlElementAttribute("LatitudeMeasure", typeof(string), Order = 0)]
-        public string LatitudeMeasure;
-
-        [System.Xml.Serialization.XmlElementAttribute("LongitudeMeasure", typeof(string), Order = 1)]
-        public string LongitudeMeasure;
-
-        [System.Xml.Serialization.XmlElementAttribute("UTMEastingMeasure", typeof(string), Order = 2)]
-        public decimal UTMEastingMeasure;
-
-        [System.Xml.Serialization.XmlElementAttribute("UTMNorthingMeasure", typeof(string), Order = 3)]
-        public decimal UTMNorthingMeasure;
-
-        [System.Xml.Serialization.XmlElementAttribute("UTMZoneCode", typeof(string), Order = 4)]
-        public string UTMZoneCode;
+        [System.Xml.Serialization.XmlElementAttribute("LongitudeMeasure", typeof(string), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("UTMEastingMeasure", typeof(decimal), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("UTMNorthingMeasure", typeof(decimal), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("UTMZoneCode", typeof(string), DataType = "positiveInteger", Order = 0)]
+        [System.Xml.Serialization.XmlChoiceIdentifierAttribute("ItemsElementName")]
+        public object[] Items;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
+        [System.Xml.Serialization.XmlElementAttribute("ItemsElementName", Order = 1)]
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public ItemsChoiceType1[] ItemsElementName;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [System.ComponentModel.DescriptionAttribute("The code indicating the method used to determine the latitude and longitude. E.g." +
             ", map interpolation, GPS.")]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public string HorizontalCollectionMethodCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "normalizedString", Order = 6)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "normalizedString", Order = 3)]
         [System.ComponentModel.DescriptionAttribute("The edition of North American Datum used as the basis for determining the site co" +
             "ordinates.")]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
@@ -1415,14 +1388,14 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
         public string HorizontalReferenceDatumName;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 7)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 4)]
         [System.ComponentModel.DescriptionAttribute("The number that represents the proportional distance on the ground for one unit o" +
             "f measure on the map or photo.")]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
         public string SourceMapScaleNumber;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
         [System.ComponentModel.DescriptionAttribute("Description of the accuracy of the site coordinates, as a range reported in meter" +
             "s. Only the least accurate measurement needs to be recorded, whether it is latit" +
             "ude or longitude (or UTM easting or northing).")]
@@ -1430,19 +1403,19 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
         public string HorizontalAccuracyMeasure;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
         [System.ComponentModel.DescriptionAttribute("The elevation, in meters, above or below mean sea level (MSL) of the site.")]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public string VerticalMeasure;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 10)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
         [System.ComponentModel.DescriptionAttribute("The method used to determine the Locational Data Policy (LDP) vertical measure.")]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public string VerticalMethodCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "normalizedString", Order = 11)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "normalizedString", Order = 8)]
         [System.ComponentModel.DescriptionAttribute("The edition of North American Datum used as the basis for determining the site co" +
             "ordinates.")]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
@@ -1450,13 +1423,13 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
         public string VerticalDatumIdentifier;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 12)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
         [System.ComponentModel.DescriptionAttribute("Description of the accuracy of the Vertical Measure, reported in meters.")]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public string VerticalAccuracyMeasure;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 13)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 10)]
         [System.ComponentModel.DescriptionAttribute("A standard time zone, as established by section 1 of the Standard Time Act, as am" +
             "ended by section 4 of the Uniform Time Act of 1966 (15 U.S.C. 261).")]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
@@ -1467,7 +1440,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/AQS/Submission/3", IncludeInSchema = false)]
-    public enum ItemsElementName3
+    public enum ItemsChoiceType1
     {
 
         /// <remarks/>
@@ -1533,7 +1506,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/AQS/Submission/3")]
     [System.Xml.Serialization.XmlRootAttribute("BasicSiteInformation", Namespace = "http://www.exchangenetwork.net/schema/AQS/Submission/3", IsNullable = false)]
-    public partial class BasicSiteInformation
+    public partial class BasicSiteInformationType
     {
 
         /// <remarks/>
@@ -1548,13 +1521,13 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [System.ComponentModel.DescriptionAttribute("This is a complex element (element grouping) containing all of the elements relat" +
             "ed to the description of the surroundings of an air quality site (facility).")]
-        public FacilitySiteDetails FacilitySiteDetails;
+        public FacilitySiteDetailsType FacilitySiteDetails;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [System.ComponentModel.DescriptionAttribute("This is a complex element (element grouping) containing all of the elements relat" +
             "ed to the latitude and longitude of a monitoring site.")]
-        public GeographicMonitoringLocation GeographicMonitoringLocation;
+        public GeographicMonitoringLocationType GeographicMonitoringLocation;
     }
 
     /// <remarks/>
@@ -1982,14 +1955,14 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/AQS/Submission/3")]
     [System.Xml.Serialization.XmlRootAttribute("MonitorIdentifierDetails", Namespace = "http://www.exchangenetwork.net/schema/AQS/Submission/3", IsNullable = false)]
-    public partial class MonitorIdentifierDetails
+    public partial class MonitorIdentifierDetailsType
     {
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [System.ComponentModel.DescriptionAttribute("A designator used to uniquely identify a substance.")]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public SubstanceIdentifier SubstanceIdentifier;
+        public SubstanceIdentifierDataType SubstanceIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
@@ -2004,7 +1977,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/AQS/Submission/3")]
     [System.Xml.Serialization.XmlRootAttribute("BasicMonitoringInformation", Namespace = "http://www.exchangenetwork.net/schema/AQS/Submission/3", IsNullable = false)]
-    public partial class BasicMonitoringInformation
+    public partial class BasicMonitoringInformationType
     {
 
         /// <remarks/>
@@ -2261,7 +2234,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/AQS/Submission/3")]
     [System.Xml.Serialization.XmlRootAttribute("MonitorSamplingPeriod", Namespace = "http://www.exchangenetwork.net/schema/AQS/Submission/3", IsNullable = false)]
-    public partial class MonitorSamplingPeriod
+    public partial class MonitorSamplingPeriodType
     {
 
         /// <remarks/>
@@ -2454,7 +2427,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/AQS/Submission/3")]
     [System.Xml.Serialization.XmlRootAttribute("MonitorObjectiveInformation", Namespace = "http://www.exchangenetwork.net/schema/AQS/Submission/3", IsNullable = false)]
-    public partial class MonitorObjectiveInformation
+    public partial class MonitorObjectiveInformationType
     {
 
         /// <remarks/>
@@ -2472,32 +2445,23 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(50)]
         public string MonitorObjectiveIdentifier;
 
-        ///// <remarks/>
-        //[System.Xml.Serialization.XmlElementAttribute("CBSARepresentedCode", typeof(string), Order = 2)]
-        //[System.Xml.Serialization.XmlElementAttribute("CSARepresentedCode", typeof(string), Order = 2)]
-        //[System.Xml.Serialization.XmlElementAttribute("UrbanAreaRepresentedCode", typeof(string), Order = 2)]
-        //[System.Xml.Serialization.XmlChoiceIdentifierAttribute("ItemElementName")]
-        //public string Item;
-
-        ///// <remarks/>
-        //[System.Xml.Serialization.XmlElementAttribute(Order = 3)]
-        //[System.Xml.Serialization.XmlIgnoreAttribute()]
-        //public ItemElementName ItemElementName;
-
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("CBSARepresentedCode", typeof(string), Order = 2)]
-        public string CBSARepresentedCode;
+        [System.Xml.Serialization.XmlElementAttribute("CSARepresentedCode", typeof(string), Order = 2)]
+        [System.Xml.Serialization.XmlElementAttribute("UrbanAreaRepresentedCode", typeof(string), Order = 2)]
+        [System.Xml.Serialization.XmlChoiceIdentifierAttribute("ItemElementName")]
+        public string Item;
 
-        [System.Xml.Serialization.XmlElementAttribute("CSARepresentedCode", typeof(string), Order = 3)]
-        public string CSARepresentedCode;
-
-        [System.Xml.Serialization.XmlElementAttribute("UrbanAreaRepresentedCode", typeof(string), Order = 4)]
-        public string UrbanAreaRepresentedCode;
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public ItemChoiceType ItemElementName;
     }
 
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/AQS/Submission/3", IncludeInSchema = false)]
-    public enum ItemElementName
+    public enum ItemChoiceType
     {
 
         /// <remarks/>
@@ -2520,7 +2484,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/AQS/Submission/3")]
     [System.Xml.Serialization.XmlRootAttribute("MonitorSamplingSchedule", Namespace = "http://www.exchangenetwork.net/schema/AQS/Submission/3", IsNullable = false)]
-    public partial class MonitorSamplingSchedule
+    public partial class MonitorSamplingScheduleType
     {
 
         /// <remarks/>
@@ -2845,32 +2809,26 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/AQS/Submission/3")]
     [System.Xml.Serialization.XmlRootAttribute("TransactionProtocolDetails", Namespace = "http://www.exchangenetwork.net/schema/AQS/Submission/3", IsNullable = false)]
-    public partial class TransactionProtocolDetails
+    public partial class TransactionProtocolDetailsType
     {
 
-        ///// <remarks/>
-        //[System.Xml.Serialization.XmlElementAttribute("CompositeTypeIdentifier", typeof(CompositeTypeIdentifierType), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("DurationCode", typeof(string), Order = 0)]
-        //public object Item;
-
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("CompositeTypeIdentifier", typeof(CompositeTypeIdentifierType), Order = 0)]
-        public CompositeTypeIdentifierType CompositeTypeIdentifier;
-
-        [System.Xml.Serialization.XmlElementAttribute("DurationCode", typeof(string), Order = 1)]
-        public string DurationCode;
+        [System.Xml.Serialization.XmlElementAttribute("DurationCode", typeof(string), Order = 0)]
+        public object Item;
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [System.ComponentModel.DescriptionAttribute("The identification number or code assigned by the method publisher.")]
         public string MethodIdentifierCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [System.ComponentModel.DescriptionAttribute("The code that represents the unit for measuring the item.")]
         public string MeasureUnitCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [System.ComponentModel.DescriptionAttribute("The method detectable limit defined for the monitor by the reporting agency, whic" +
             "h supersedes the EPA-defined method detectable limit for the designated methodol" +
             "ogy.")]
@@ -2908,37 +2866,28 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/AQS/Submission/3")]
     [System.Xml.Serialization.XmlRootAttribute("RawValueDetails", Namespace = "http://www.exchangenetwork.net/schema/AQS/Submission/3", IsNullable = false)]
-    public partial class RawValueDetails
+    public partial class RawValueDetailsType
     {
 
-        ///// <remarks/>
-        //[System.Xml.Serialization.XmlElementAttribute("MeasureValue", typeof(string), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("NullDataCode", typeof(string), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("UncertaintyValue", typeof(decimal), Order = 0)]
-        //[System.Xml.Serialization.XmlChoiceIdentifierAttribute("ItemsElementName")]
-        //public object[] Items;
-
-        ///// <remarks/>
-        //[System.Xml.Serialization.XmlElementAttribute("ItemsElementName", Order = 1)]
-        //[System.Xml.Serialization.XmlIgnoreAttribute()]
-        //public ItemsElementName2[] ItemsElementName;
-
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("MeasureValue", typeof(string), Order = 0)]
-        public string MeasureValue;
-
-        [System.Xml.Serialization.XmlElementAttribute("NullDataCode", typeof(string), Order = 1)]
-        public string NullDataCode;
-
-        [System.Xml.Serialization.XmlElementAttribute("UncertaintyValue", typeof(decimal), Order = 2)]
-        public decimal UncertaintyValue;
+        [System.Xml.Serialization.XmlElementAttribute("NullDataCode", typeof(string), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("UncertaintyValue", typeof(decimal), Order = 0)]
+        [System.Xml.Serialization.XmlChoiceIdentifierAttribute("ItemsElementName")]
+        public object[] Items;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("ResultQualifierCode", Order = 3)]
+        [System.Xml.Serialization.XmlElementAttribute("ItemsElementName", Order = 1)]
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public ItemsChoiceType3[] ItemsElementName;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("ResultQualifierCode", Order = 2)]
         [System.ComponentModel.DescriptionAttribute("A code used to identify any qualifying issues that affect the results.")]
         public string[] ResultQualifierCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [System.ComponentModel.DescriptionAttribute("This is a field used only by non-AQS data transfers to indicate if the level of v" +
             "alidity of the data. (This is generally used for state to state exchanges of nea" +
             "r-real-time air quality data.)")]
@@ -2965,7 +2914,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/AQS/Submission/3", IncludeInSchema = false)]
-    public enum ItemsElementName2
+    public enum ItemsChoiceType3
     {
 
         /// <remarks/>
@@ -3030,7 +2979,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [System.ComponentModel.DescriptionAttribute("This is a complex element (element grouping) containing all of the elements relat" +
             "ed to measured sample values.")]
-        public RawValueDetails RawValueDetails;
+        public RawValueDetailsType RawValueDetails;
     }
 
     /// <remarks/>
@@ -3810,7 +3759,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
         [System.ComponentModel.DescriptionAttribute("This is a complex element (element grouping) containing all of the elements relat" +
             "ed to measured sample values.")]
-        public RawValueDetails RawValueDetails;
+        public RawValueDetailsType RawValueDetails;
     }
 
     /// <remarks/>
@@ -4157,7 +4106,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
         [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
         [System.ComponentModel.DescriptionAttribute("A designator used to uniquely identify a substance.")]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public SubstanceIdentifier SubstanceIdentifier;
+        public SubstanceIdentifierDataType SubstanceIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
@@ -4265,7 +4214,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
         [System.ComponentModel.DescriptionAttribute("The reason (destination system) for creating the XML file.")]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(6)]
-        public FileGenerationPurposeCode FileGenerationPurposeCode;
+        public FileGenerationPurposeCodeType FileGenerationPurposeCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
@@ -4277,7 +4226,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
         [System.Xml.Serialization.XmlElementAttribute("FacilitySiteList", Order = 2)]
         [System.ComponentModel.DescriptionAttribute("This is a complex element (element grouping) containing all of the elements descr" +
             "ibing the site, monitor, and sample values.")]
-        public FacilitySiteList[] FacilitySiteList;
+        public FacilitySiteListType[] FacilitySiteList;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("AgencyList", Order = 3)]
@@ -4296,7 +4245,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/AQS/Submission/3")]
     [System.Xml.Serialization.XmlRootAttribute("FileGenerationPurposeCode", Namespace = "http://www.exchangenetwork.net/schema/AQS/Submission/3", IsNullable = false)]
-    public enum FileGenerationPurposeCode
+    public enum FileGenerationPurposeCodeType
     {
 
         /// <remarks/>
@@ -4313,7 +4262,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/AQS/Submission/3")]
     [System.Xml.Serialization.XmlRootAttribute("FacilitySiteList", Namespace = "http://www.exchangenetwork.net/schema/AQS/Submission/3", IsNullable = false)]
-    public partial class FacilitySiteList
+    public partial class FacilitySiteListType
     {
 
         /// <remarks/>
@@ -4321,13 +4270,13 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
         [System.ComponentModel.DescriptionAttribute("This is a complex element (element grouping) containing all of the elements relat" +
             "ed to site identification codes and names.")]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public SiteIdentifierDetails SiteIdentifierDetails;
+        public SiteIdentifierDetailsType SiteIdentifierDetails;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [System.ComponentModel.DescriptionAttribute("This is a complex element (element grouping) containing all of the elements relat" +
             "ed to physical description of an air quality site (facility).")]
-        public BasicSiteInformation BasicSiteInformation;
+        public BasicSiteInformationType BasicSiteInformation;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("RoadInfluences", Order = 2)]
@@ -4351,14 +4300,14 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
         [System.Xml.Serialization.XmlElementAttribute("MonitorList", Order = 5)]
         [System.ComponentModel.DescriptionAttribute("This is a complex element (element grouping) containing all of the elements descr" +
             "ibing the monitor, and sample values.")]
-        public MonitorList[] MonitorList;
+        public MonitorListType[] MonitorList;
     }
 
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/AQS/Submission/3")]
     [System.Xml.Serialization.XmlRootAttribute("MonitorList", Namespace = "http://www.exchangenetwork.net/schema/AQS/Submission/3", IsNullable = false)]
-    public partial class MonitorList
+    public partial class MonitorListType
     {
 
         /// <remarks/>
@@ -4366,19 +4315,19 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
         [System.ComponentModel.DescriptionAttribute("This is a complex element (element grouping) containing all of the elements relat" +
             "ed to monitor identification codes and names.")]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public MonitorIdentifierDetails MonitorIdentifierDetails;
+        public MonitorIdentifierDetailsType MonitorIdentifierDetails;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [System.ComponentModel.DescriptionAttribute("This is a complex element (element grouping) containing all of the elements relat" +
             "ed to physical description of an air quality sampler (monitor).")]
-        public BasicMonitoringInformation BasicMonitoringInformation;
+        public BasicMonitoringInformationType BasicMonitoringInformation;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("MonitorSamplingPeriod", Order = 2)]
         [System.ComponentModel.DescriptionAttribute("This is a complex element (element grouping) containing all of the elements indic" +
             "ating when a monitor began and ended sampling operations.")]
-        public MonitorSamplingPeriod[] MonitorSamplingPeriod;
+        public MonitorSamplingPeriodType[] MonitorSamplingPeriod;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("MonitorMethodInformation", Order = 3)]
@@ -4408,13 +4357,13 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
         [System.Xml.Serialization.XmlElementAttribute("MonitorObjectiveInformation", Order = 7)]
         [System.ComponentModel.DescriptionAttribute("This is a complex element (element grouping) containing all of the elements relat" +
             "ed to the purpose of a monitor and the urban area(s) it represents.")]
-        public MonitorObjectiveInformation[] MonitorObjectiveInformation;
+        public MonitorObjectiveInformationType[] MonitorObjectiveInformation;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("MonitorSamplingSchedule", Order = 8)]
         [System.ComponentModel.DescriptionAttribute("This is a complex element (element grouping) containing all of the elements descr" +
             "ibing the monitor sampling schedule.")]
-        public MonitorSamplingSchedule[] MonitorSamplingSchedule;
+        public MonitorSamplingScheduleType[] MonitorSamplingSchedule;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("MonitorLocationInfluences", Order = 9)]
@@ -4465,14 +4414,14 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
         [System.Xml.Serialization.XmlElementAttribute("RawDataList", Order = 16)]
         [System.ComponentModel.DescriptionAttribute("This is a complex element (element grouping) containing all of the elements descr" +
             "ibing the sample values.")]
-        public RawDataList[] RawDataList;
+        public RawDataListType[] RawDataList;
     }
 
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/AQS/Submission/3")]
     [System.Xml.Serialization.XmlRootAttribute("RawDataList", Namespace = "http://www.exchangenetwork.net/schema/AQS/Submission/3", IsNullable = false)]
-    public partial class RawDataList
+    public partial class RawDataListType
     {
 
         /// <remarks/>
@@ -4480,18 +4429,12 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
         [System.ComponentModel.DescriptionAttribute("This is a complex element (element grouping) containing all of the elements descr" +
             "ibing the protocol of a measurement: the sample duration, frequency, units of me" +
             "asure, method, and detection limit.")]
-        public TransactionProtocolDetails TransactionProtocolDetails;
+        public TransactionProtocolDetailsType TransactionProtocolDetails;
 
-        ///// <remarks/>
-        //[System.Xml.Serialization.XmlElementAttribute("BlankInformation", typeof(BlankInformationType), Order = 1)]
-        //[System.Xml.Serialization.XmlElementAttribute("RawResults", typeof(RawResultsType), Order = 1)]
-        //public object[] Items;
-
-        [System.Xml.Serialization.XmlElementAttribute("BlankInformation", typeof(string), Order = 1)]
-        public BlankInformationType BlankInformation;
-
-        [System.Xml.Serialization.XmlElementAttribute("RawResults", typeof(string), Order = 2)]
-        public RawResultsType RawResults;
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("BlankInformation", typeof(BlankInformationType), Order = 1)]
+        [System.Xml.Serialization.XmlElementAttribute("RawResults", typeof(RawResultsType), Order = 1)]
+        public object[] Items;
     }
 
     /// <remarks/>
@@ -4512,7 +4455,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/AQS/Submission/3")]
-    public enum Version
+    public enum VersionType
     {
 
         /// <remarks/>

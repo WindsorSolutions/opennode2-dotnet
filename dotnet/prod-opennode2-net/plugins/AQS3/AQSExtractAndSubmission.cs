@@ -49,7 +49,7 @@ using Windsor.Node2008.WNOSDomain;
 using Windsor.Node2008.WNOSProviders;
 using Microsoft.VisualBasic.FileIO;
 
-namespace Windsor.Node2008.WNOSPlugin.AQS2
+namespace Windsor.Node2008.WNOSPlugin.AQS3
 {
     public class AQSExtractAndSubmission : AQSGetRawData, ITaskProcessor
     {

@@ -34,7 +34,7 @@ POSSIBILITY OF SUCH DAMAGE.
 using System;
 using System.Data;
 
-namespace Windsor.Node2008.WNOSPlugin.AQS2
+namespace Windsor.Node2008.WNOSPlugin.AQS3
 {
     public class Util
     {

@@ -5,7 +5,7 @@ using System.Text;
 using Windsor.Commons.Core;
 using Windsor.Commons.Spring;
 
-namespace Windsor.Node2008.WNOSPlugin.AQS2
+namespace Windsor.Node2008.WNOSPlugin.AQS3
 {
     public class AQSPersistDataToDatabase
     {

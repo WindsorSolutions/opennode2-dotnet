@@ -32,9 +32,8 @@ POSSIBILITY OF SUCH DAMAGE.
 #endregion
 
 using System;
-using Windsor.Node2008.WNOSPlugin.AQSCommon;
 
-namespace Windsor.Node2008.WNOSPlugin.AQS2
+namespace Windsor.Node2008.WNOSPlugin.AQS3
 {
     [Serializable]
     public class GetAQSStatusAndDownloadReports : BaseGetAQSStatusAndDownloadReports
