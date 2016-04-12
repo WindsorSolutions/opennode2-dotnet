@@ -57,7 +57,8 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
         protected const string CONFIG_PARAM_AQS_SCREENING_GROUP = "AQS Screening Group";
         protected const string CONFIG_PARAM_AQS_FINAL_PROCESSING_STEP = "AQS Final Processing Step (Stage, Load, or Post)";
         protected const string CONFIG_PARAM_AQS_STOP_ON_ERROR = "AQS Stop On Error (Yes or No)";
-        protected const string CONFIG_PARAM_AQS_SCHEMA_VERSION = "AQS Schema Version";
+        
+        protected const string PARAM_VALIDATE_XML_KEY = "ValidateXml";
 
         protected bool _addHeader;
         protected string _author;
@@ -67,14 +68,13 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
         protected string _aqsScreeningGroup;
         protected string _aqsFinalProcessingStep;
         protected string _aqsStopOnError;
-        protected string _aqsSchemaVersion;
+        protected bool _validateXml;
 
         protected IHeaderDocument2Helper _headerDocumentHelper;
         protected ISettingsProvider _settingsProvider;
         protected ICompressionHelper _compressionHelper;
         protected ISerializationHelper _serializationHelper;
         protected IDocumentManager _documentManager;
-        protected string[] _validVersionValues = new string[] { "2.0", "2.1", "2.2", "3.0" };
 
         public AQSBaseHeaderPlugin()
         {
@@ -86,7 +86,6 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
             ConfigurationArguments.Add(CONFIG_PARAM_AQS_SCREENING_GROUP, null);
             ConfigurationArguments.Add(CONFIG_PARAM_AQS_FINAL_PROCESSING_STEP, null);
             ConfigurationArguments.Add(CONFIG_PARAM_AQS_STOP_ON_ERROR, null);
-            ConfigurationArguments.Add(CONFIG_PARAM_AQS_SCHEMA_VERSION, null);
         }
         protected virtual void LazyInit()
         {
@@ -99,13 +98,6 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
             GetServiceImplementation(out _documentManager);
 
             GetConfigParameter(CONFIG_PARAM_ADD_HEADER, true, out _addHeader);
-
-            _aqsSchemaVersion = ValidateNonEmptyConfigParameter(CONFIG_PARAM_AQS_SCHEMA_VERSION);
-            if (!CollectionUtils.Contains(_validVersionValues, _aqsSchemaVersion, StringComparison.CurrentCulture))
-            {
-                throw new ArgumentException(string.Format("The config parameter \"{0}\" must be one of the following values: {1}",
-                                                          CONFIG_PARAM_AQS_SCHEMA_VERSION, StringUtils.Join(", ", _validVersionValues)));
-            }
 
             if (_addHeader)
             {
@@ -148,7 +140,17 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
                 throw;
             }
 
+            ValidateXmlFile(docTransactionId, tempXmlFilePath);
+
             return AddExchangeDocumentHeader(tempXmlFilePath, doCompress, docTransactionId);
+        }
+        protected virtual void ValidateXmlFile(string transactionId, string xmlFilePath)
+        {
+            if (_validateXml)
+            {
+                ValidateXmlFileAndAttachErrorsAndFileToTransaction(xmlFilePath, "xml_schema.xml_schema.zip",
+                                                                   null, transactionId);
+            }
         }
         protected virtual string AddExchangeDocumentHeader(string inputFile, bool doCompress, string docTransactionId)
         {
@@ -206,13 +208,9 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
                     {
                         _headerDocumentHelper.AddPropery("AQS.StopOnError", _aqsStopOnError);
                     }
-                    if (!string.IsNullOrEmpty(_aqsSchemaVersion))
-                    {
-                        _headerDocumentHelper.AddPropery("AQS.SchemaVersion", _aqsSchemaVersion);
+                    _headerDocumentHelper.AddPropery("AQS.SchemaVersion", "3.0");
 
-                    }
                     _headerDocumentHelper.AddPropery("AQS.PayloadType", "XML");
-
 
                     _headerDocumentHelper.AddPayload(null, doc.DocumentElement);
 

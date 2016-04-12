@@ -13,7 +13,7 @@
 	<!--Data element and data type include files-->
 	<xsd:include schemaLocation="AQS_ELEMENTS/EN_AQS_ActionCode_v3.0.xsd"/>
 	<xsd:include schemaLocation="AQS_ELEMENTS/AQS_TYPES/EN_AQS_DateTimeDataTypes_v3.0.xsd"/>
-	<xsd:include schemaLocation="http://www.exchangenetwork.net/schema/SC/SC_SimpleContent_v2.0.xsd"/>
+	<xsd:include schemaLocation="SC_SimpleContent_v2.0.xsd"/>
 	<!--Transaction MC schema components-->
 	<xsd:element name="MonitorMethodInformation" type="aqs:MonitorMethodInformationType">
 		<xsd:annotation>

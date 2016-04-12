@@ -10,7 +10,7 @@
 		</xsd:documentation>
 	</xsd:annotation>
 	<!--Data element and data type include files-->
-	<xsd:include schemaLocation="http://www.exchangenetwork.net/schema/SC/SC_SimpleContent_v2.0.xsd"/>
+	<xsd:include schemaLocation="SC_SimpleContent_v2.0.xsd"/>
 	<xsd:include schemaLocation="AQS_ELEMENTS/EN_AQS_DurationCodeDataElement_v3.0.xsd"/>
 	<!--Transaction Protocol schema component-->
 	<xsd:element name="TransactionProtocolDetails" type="aqs:TransactionProtocolDetailsType">

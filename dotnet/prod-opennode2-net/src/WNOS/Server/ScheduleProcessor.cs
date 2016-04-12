@@ -526,8 +526,11 @@ namespace Windsor.Node2008.WNOS.Server
             }
             LogActivity(activity, "Performed Solicit of partner \"{0}\" at url \"{1}\" with returned transaction id \"{2}\"",
                         partner.Name, partner.Url, networkTransactionId);
-            _transactionManager.SetNetworkId(transactionId, networkTransactionId, endpointVersion, endpointUrl,
-                                             networkFlowName, networkFlowOperation);
+            _transactionManager.SetNetworkIdAndEndpointUserId(transactionId, networkTransactionId, endpointVersion, endpointUrl,
+                                                              networkFlowName, networkFlowOperation,
+                                                              null, scheduledItem.SourceEndpointUser);
+            //_transactionManager.SetNetworkId(transactionId, networkTransactionId, endpointVersion, endpointUrl,
+            //                                 networkFlowName, networkFlowOperation);
         }
         protected virtual void ProcessPartnerTarget(TransactionStatus transactionStatus,
                                                     ScheduledItem scheduledItem,

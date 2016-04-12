@@ -289,7 +289,9 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
                             ml.BasicMonitoringInformation.UnrestrictedAirFlowIndicator = Util.ToStr(drMonitorID["UNRESTR_AIR_FLOW_IND"]);
                             ml.BasicMonitoringInformation.SampleResidenceTime = Util.ToStr(drMonitorID["SAMPLE_RESID_TIME"]);
                             ml.BasicMonitoringInformation.WorstSiteTypeCode = Util.ToStr(drMonitorID["WORST_SITE_TYPE_CD"]);
+#if !V_3
                             ml.BasicMonitoringInformation.ApplicableNAAQSIndicator = Util.ToStr(drMonitorID["APPLICABLE_NAAQS_IND"]);
+#endif // !V_3
                             ml.BasicMonitoringInformation.SpatialAverageIndicator = Util.ToStr(drMonitorID["SPACIAL_AVG_IND"]);
                             ml.BasicMonitoringInformation.ScheduleExemptionIndicator = Util.ToStr(drMonitorID["SCHED_EXEMPT_IND"]);
                             ml.BasicMonitoringInformation.CommunityMonitoringZoneCode = Util.ToStr(drMonitorID["CMNTY_MONITOR_ZONE"]);
@@ -305,7 +307,10 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
                                 (ml.BasicMonitoringInformation.VerticalDistanceMeasure == null) && (ml.BasicMonitoringInformation.SurrogateIndicator == null) &&
                                 (ml.BasicMonitoringInformation.UnrestrictedAirFlowIndicator == null) && (ml.BasicMonitoringInformation.SampleResidenceTime == null) &&
 
-                                (ml.BasicMonitoringInformation.WorstSiteTypeCode == null) && (ml.BasicMonitoringInformation.ApplicableNAAQSIndicator == null) &&
+                                (ml.BasicMonitoringInformation.WorstSiteTypeCode == null) &&
+#if !V_3
+                                (ml.BasicMonitoringInformation.ApplicableNAAQSIndicator == null) &&
+#endif // !V_3
                                 (ml.BasicMonitoringInformation.SpatialAverageIndicator == null) && (ml.BasicMonitoringInformation.ScheduleExemptionIndicator == null) &&
                                 (ml.BasicMonitoringInformation.CommunityMonitoringZoneCode == null) && (ml.BasicMonitoringInformation.MonitorCloseDate == null) &&
                                 (ml.BasicMonitoringInformation.PollutantAreaCode == null))
@@ -400,8 +405,10 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
                                         List<ItemChoiceType> valueQualifierList = null;
                                         AddToListsIfNotEmpty(Util.ToStr(drInformationData["URBAN_AREA_REP_CD"]), ItemChoiceType.UrbanAreaRepresentedCode,
                                                              ref valueList, ref valueQualifierList);
+#if !V_3
                                         AddToListsIfNotEmpty(Util.ToStr(drInformationData["METRO_SA_REP_CD"]), ItemChoiceType.MSARepresentedCode,
                                                              ref valueList, ref valueQualifierList);
+#endif // !V_3
                                         AddToListsIfNotEmpty(Util.ToStr(drInformationData["COVE_BS_REP_CD"]), ItemChoiceType.CBSARepresentedCode,
                                                              ref valueList, ref valueQualifierList);
                                         AddToListsIfNotEmpty(Util.ToStr(drInformationData["COMBINED_SA_REP_CD"]), ItemChoiceType.CSARepresentedCode,
@@ -445,6 +452,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
                                 rawData.TransactionProtocolDetails = new TransactionProtocolDetailsType();
 #if V_2_2
                                 {
+#if !V_3
                                     List<object> valueList = null;
                                     List<ItemsChoiceType2> valueQualifierList = null;
                                     AddToListsIfNotEmpty(GetCompositeTypeIdentifier(Util.ToStr(drRawData["COMPOSITE_TYPE_ID"])),
@@ -456,6 +464,10 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
                                                          ref valueList, ref valueQualifierList);
                                     SetListsIfNotEmpty(valueList, valueQualifierList, ref rawData.TransactionProtocolDetails.Items,
                                                        ref rawData.TransactionProtocolDetails.ItemsElementName);
+#else // !V_3
+                                    rawData.TransactionProtocolDetails.CompositeTypeIdentifier = Util.ToStr(drRawData["COMPOSITE_TYPE_ID"]);
+                                    rawData.TransactionProtocolDetails.DurationCode = Util.ToStr(drRawData["DURATION_CD"]);
+#endif // !V_3
                                 }
 #else // V_2_2
                                     rawData.TransactionProtocolDetails.CompositeTypeIdentifier = Util.ToStr(drRawData["COMPOSITE_TYPE_ID"]);
@@ -614,6 +626,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
         }
         private void AddRawPrecisionInformation(List<object> rawDataItems, string transProtocolPk)
         {
+#if !V_3
             DataTable dtRawResults = null;
             dtRawResults = Data.GetDataTable(_baseDao, Data.Tables.TransactionRawPrecisionInformation, _startDate, _endDate,
                                              _siteId, _countyCode, transProtocolPk, _commaSeparatedActionCodes, _useImportedDateDate);
@@ -651,9 +664,11 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
                     rawDataItems.Add(rawRslt);
                 }
             }
+#endif // !V_3
         }
         private void AddRawCompositeInformation(List<object> rawDataItems, string transProtocolPk)
         {
+#if !V_3
             DataTable dtRawResults = null;
             dtRawResults = Data.GetDataTable(_baseDao, Data.Tables.TransactionRawCompositeInformation, _startDate, _endDate,
                                              _siteId, _countyCode, transProtocolPk, _commaSeparatedActionCodes, _useImportedDateDate);
@@ -704,9 +719,11 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
                     rawDataItems.Add(rawRslt);
                 }
             }
+#endif // !V_3
         }
         private void AddRawAccuracyInformation(List<object> rawDataItems, string transProtocolPk)
         {
+#if !V_3
             DataTable dtRawResults = null;
             dtRawResults = Data.GetDataTable(_baseDao, Data.Tables.TransactionRawAccuracyInformation, _startDate, _endDate,
                                              _siteId, _countyCode, transProtocolPk, _commaSeparatedActionCodes, _useImportedDateDate);
@@ -763,6 +780,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
                     rawDataItems.Add(rawRslt);
                 }
             }
+#endif // !V_3
         }
         private void AddBlankInformation(List<object> rawDataItems, string transProtocolPk)
         {
@@ -849,6 +867,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
         }
         private void AddAnnualSummaryInformation(List<object> rawDataItems, string transProtocolPk)
         {
+#if !V_3
             DataTable dtRawResults = null;
             dtRawResults = Data.GetDataTable(_baseDao, Data.Tables.TransactionAnnualSummaryInformation, _startDate, _endDate,
                                              _siteId, _countyCode, transProtocolPk, _commaSeparatedActionCodes, _useImportedDateDate);
@@ -900,6 +919,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
                     rawDataItems.Add(rawRslt);
                 }
             }
+#endif // !V_3
         }
         private static void AddToListsIfNotEmpty<T>(string value, T valueQualifier, ref List<string> valueList,
                                              ref List<T> valueQualifierList)

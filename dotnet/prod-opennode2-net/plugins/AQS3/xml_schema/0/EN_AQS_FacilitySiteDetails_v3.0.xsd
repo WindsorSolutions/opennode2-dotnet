@@ -10,7 +10,7 @@
 		</xsd:documentation>
 	</xsd:annotation>
 	<!--Data element and data type include files-->
-	<xsd:include schemaLocation="http://www.exchangenetwork.net/schema/SC/SC_SimpleContent_v2.0.xsd"/>
+	<xsd:include schemaLocation="SC_SimpleContent_v2.0.xsd"/>
 	<xsd:include schemaLocation="AQS_ELEMENTS/AQS_TYPES/EN_AQS_CompassSectorCodeDataType_v3.0.xsd"/>
 	<xsd:include schemaLocation="AQS_ELEMENTS/AQS_TYPES/EN_AQS_DateTimeDataTypes_v3.0.xsd"/>
 	<xsd:include schemaLocation="AQS_ELEMENTS/AQS_TYPES/EN_AQS_CharNineStringDataType_v3.0.xsd"/>

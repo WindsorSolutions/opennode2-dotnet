@@ -67,7 +67,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
         protected bool _clearMetadataBeforeRun = true;
         protected bool _includeRawResultsOnly;
         protected bool _filterByImportedDate;
-        protected VersionType _aqsSchemaVersionType;
+        protected VersionType _aqsSchemaVersionType = VersionType.Item30;
 
         public AQSGetRawData()
         {
@@ -129,23 +129,6 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
         {
             base.LazyInit();
 
-            if (_aqsSchemaVersion == _validVersionValues[0])
-            {
-                _aqsSchemaVersionType = VersionType.Item20;
-            }
-            else if (_aqsSchemaVersion == _validVersionValues[1])
-            {
-                _aqsSchemaVersionType = VersionType.Item21;
-            }
-            else if (_aqsSchemaVersion == _validVersionValues[2])
-            {
-                _aqsSchemaVersionType = VersionType.Item22;
-            }
-            else
-            {
-                throw new NotImplementedException();
-            }
-
             GetServiceImplementation(out _requestManager);
             GetServiceImplementation(out _serializationHelper);
             GetServiceImplementation(out _compressionHelper);
@@ -172,6 +155,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
             TryGetParameter(_dataRequest, PARAM_COUNTY_CODE_KEY, 3, ref _countyCode);
             TryGetParameter(_dataRequest, PARAM_INCLUDE_RAW_RESULTS_ONLY_KEY, 4, ref _includeRawResultsOnly);
             TryGetParameter(_dataRequest, PARAM_FILTER_BY_IMPORTED_DATE_KEY, 5, ref _filterByImportedDate);
+            TryGetParameter(_dataRequest, PARAM_VALIDATE_XML_KEY, 2, ref _validateXml);
 
             AppendAuditLogEvent("Validated request with parameters: {0} = {1}, {2} = {3}, {4} = {5}, {6} = {7}, {8} = {9}, {10} = {11}",
                                       PARAM_START_DATE_KEY, _startDate, PARAM_END_DATE_KEY, _endDate,

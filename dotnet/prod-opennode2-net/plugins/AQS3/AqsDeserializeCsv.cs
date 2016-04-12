@@ -257,7 +257,9 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
                     monitor.BasicMonitoringInformation = new BasicMonitoringInformationType();
                     //Don't delete monitors, since they may have results from other files.
                     monitor.BasicMonitoringInformation.ActionCode = unmap("MONITOR.ACTION_CD");
+#if !V_3
                     monitor.BasicMonitoringInformation.ApplicableNAAQSIndicator = unmap("APPLICABLE_NAAQS_IND");
+#endif // !V_3
                     monitor.BasicMonitoringInformation.CommunityMonitoringZoneCode = unmap("CMNTY_MONITOR_ZONE");
                     monitor.BasicMonitoringInformation.DominantSourceText = unmap("DOMINANT_SCR_TXT");
                     monitor.BasicMonitoringInformation.HorizontalDistanceMeasure = unmap("HORIZ_DIST_MSR");
@@ -290,6 +292,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
                     datum.TransactionProtocolDetails.MeasureUnitCode = unit;
                     datum.TransactionProtocolDetails.MethodIdentifierCode = unmap("METHOD_ID_CD");
                     datum.TransactionProtocolDetails.AlternateMDLValue = unmap("ALTERNATE_MDL_VALUE");
+#if !V_3
                     var items = new List<object>();
                     var itemNames = new List<ItemsChoiceType2>();
                     var item = unmap("COMPOSITE_TYPE_ID");
@@ -312,6 +315,10 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
                     }
                     datum.TransactionProtocolDetails.Items = items.ToArray();
                     datum.TransactionProtocolDetails.ItemsElementName = itemNames.ToArray();
+#else // !V_3
+                    datum.TransactionProtocolDetails.CompositeTypeIdentifier = unmap("COMPOSITE_TYPE_ID");
+                    datum.TransactionProtocolDetails.DurationCode = unmap("DURATION_CD");
+#endif // !V_3
                     _rawDataList.Add(datumKey, datum);
                 }
                 string startDate = unmap("SMPL_COLL_START_DATE");

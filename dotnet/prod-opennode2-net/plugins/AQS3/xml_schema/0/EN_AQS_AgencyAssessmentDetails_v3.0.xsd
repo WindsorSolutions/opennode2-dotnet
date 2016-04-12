@@ -11,7 +11,7 @@
 		</xsd:documentation>
 	</xsd:annotation>
 	<!--Data element and data type include files-->
-	<xsd:include schemaLocation="http://www.exchangenetwork.net/schema/SC/SC_SimpleContent_v2.0.xsd"/>
+	<xsd:include schemaLocation="SC_SimpleContent_v2.0.xsd"/>
 	<xsd:include schemaLocation="AQS_ELEMENTS/EN_AQS_QualityAssuranceAssessmentElements_v3.0.xsd"/>
 	<xsd:include schemaLocation="AQS_ELEMENTS/EN_AQS_ActionCode_v3.0.xsd"/>
 	<xsd:include schemaLocation="EN_AQS_PbAnalysisAuditDetails_v3.0.xsd"/>
