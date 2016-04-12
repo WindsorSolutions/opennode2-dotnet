@@ -382,10 +382,14 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
     [AppliedAttribute(typeof(HandlerWasteCodeDataType), "WasteCodeText", typeof(DbIgnoreAttribute))]
 
     //RCRA_HD_SEC_WASTE_CODE
-    [AppliedAttribute(typeof(SecondaryHandlerWasteCodeDataType), "TransactionCode", typeof(ColumnAttribute), "TRANSACTION_CODE", DbType.AnsiStringFixedLength, 1)]
-    [AppliedAttribute(typeof(SecondaryHandlerWasteCodeDataType), "WasteCodeOwnerName", typeof(ColumnAttribute), "WASTE_CODE_OWNER", DbType.AnsiStringFixedLength, 2)]
-    [AppliedAttribute(typeof(SecondaryHandlerWasteCodeDataType), "WasteCode", typeof(ColumnAttribute), "WASTE_CODE_TYPE", 6)]
-    [AppliedAttribute(typeof(SecondaryHandlerWasteCodeDataType), "WasteCodeText", typeof(DbIgnoreAttribute))]
+    [AppliedPathAttribute("Handler.HazardousSecondaryMaterial.HazardousSecondaryMaterialActivity.HandlerWasteCodeDetails.TransactionCode", typeof(ColumnAttribute), "TRANSACTION_CODE", 1)]
+    [AppliedPathAttribute("Handler.HazardousSecondaryMaterial.HazardousSecondaryMaterialActivity.HandlerWasteCodeDetails.WasteCodeOwnerName", typeof(ColumnAttribute), "WASTE_CODE_OWNER", 2)]
+    [AppliedPathAttribute("Handler.HazardousSecondaryMaterial.HazardousSecondaryMaterialActivity.HandlerWasteCodeDetails.WasteCode", typeof(ColumnAttribute), "WASTE_CODE_TYPE", 6)]
+    [AppliedPathAttribute("Handler.HazardousSecondaryMaterial.HazardousSecondaryMaterialActivity.HandlerWasteCodeDetails.WasteCodeText", typeof(DbIgnoreAttribute))]
+    //[AppliedAttribute(typeof(SecondaryHandlerWasteCodeDataType), "TransactionCode", typeof(ColumnAttribute), "TRANSACTION_CODE", DbType.AnsiStringFixedLength, 1)]
+    //[AppliedAttribute(typeof(SecondaryHandlerWasteCodeDataType), "WasteCodeOwnerName", typeof(ColumnAttribute), "WASTE_CODE_OWNER", DbType.AnsiStringFixedLength, 2)]
+    //[AppliedAttribute(typeof(SecondaryHandlerWasteCodeDataType), "WasteCode", typeof(ColumnAttribute), "WASTE_CODE_TYPE", 6)]
+    //[AppliedAttribute(typeof(SecondaryHandlerWasteCodeDataType), "WasteCodeText", typeof(DbIgnoreAttribute))]
 
     // HazardousSecondaryMaterialActivityDataType
     [AppliedAttribute(typeof(HazardousSecondaryMaterialActivityDataType), "EstimatedShortTonsQuantity", typeof(ColumnAttribute), DbType.Int32)]
@@ -751,10 +755,14 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
     [AppliedAttribute(typeof(PermitRelatedEventDataType), "PermitEventText", typeof(DbIgnoreAttribute))]
 
     //PermitHandlerWasteCodeDataType
-    [AppliedAttribute(typeof(PermitHandlerWasteCodeDataType), "TransactionCode", typeof(ColumnAttribute), "TRANSACTION_CODE", 1)]
-    [AppliedAttribute(typeof(PermitHandlerWasteCodeDataType), "WasteCodeOwnerName", typeof(ColumnAttribute), "WASTE_CODE_OWNER", 2)]
-    [AppliedAttribute(typeof(PermitHandlerWasteCodeDataType), "WasteCode", typeof(ColumnAttribute), "WASTE_CODE_TYPE", 6)]
-    [AppliedAttribute(typeof(PermitHandlerWasteCodeDataType), "WasteCodeText", typeof(DbIgnoreAttribute))]
+    [AppliedPathAttribute("PermitFacilitySubmission.PermitUnit.PermitUnitDetail.HandlerWasteCodeDetails.TransactionCode", typeof(ColumnAttribute), "TRANSACTION_CODE", 1)]
+    [AppliedPathAttribute("PermitFacilitySubmission.PermitUnit.PermitUnitDetail.HandlerWasteCodeDetails.WasteCodeOwnerName", typeof(ColumnAttribute), "WASTE_CODE_OWNER", 2)]
+    [AppliedPathAttribute("PermitFacilitySubmission.PermitUnit.PermitUnitDetail.HandlerWasteCodeDetails.WasteCode", typeof(ColumnAttribute), "WASTE_CODE_TYPE", 6)]
+    [AppliedPathAttribute("PermitFacilitySubmission.PermitUnit.PermitUnitDetail.HandlerWasteCodeDetails.WasteCodeText", typeof(DbIgnoreAttribute))]
+    //[AppliedAttribute(typeof(PermitHandlerWasteCodeDataType), "TransactionCode", typeof(ColumnAttribute), "TRANSACTION_CODE", 1)]
+    //[AppliedAttribute(typeof(PermitHandlerWasteCodeDataType), "WasteCodeOwnerName", typeof(ColumnAttribute), "WASTE_CODE_OWNER", 2)]
+    //[AppliedAttribute(typeof(PermitHandlerWasteCodeDataType), "WasteCode", typeof(ColumnAttribute), "WASTE_CODE_TYPE", 6)]
+    //[AppliedAttribute(typeof(PermitHandlerWasteCodeDataType), "WasteCodeText", typeof(DbIgnoreAttribute))]
 
     //EventCommitmentDataType
     [AppliedAttribute(typeof(EventCommitmentDataType), "TransactionCode", typeof(ColumnAttribute), 1)]
