@@ -120,13 +120,18 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
                 ProcessSubmitDocument(transactionId, docId);
             }
         }
-        protected void ProcessSubmitDocument(string transactionId, string docId)
+        protected virtual FacilityDetailsDataType GetSubmitDocumentData(string transactionId, string docId)
         {
             string operation;
             FacilityDetailsDataType data =
                  GetHeaderDocumentContent<FacilityDetailsDataType>(transactionId, docId, _settingsProvider,
                                                                    _serializationHelper, _compressionHelper,
                                                                    _documentManager, out operation);
+            return data;
+        }
+        protected virtual void ProcessSubmitDocument(string transactionId, string docId)
+        {
+            FacilityDetailsDataType data = GetSubmitDocumentData(transactionId, docId);
 
             if (CollectionUtils.IsNullOrEmpty(data.FacilityList) &&
                 CollectionUtils.IsNullOrEmpty(data.AffiliateList))
@@ -185,6 +190,106 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
                                     _storedProcName, ExceptionUtils.GetDeepExceptionMessageOnly(ex));
                 throw;
             }
+        }
+    }
+    [Serializable]
+    public class SubmissionProcessorFacilityInterest : SubmissionProcessor
+    {
+        public SubmissionProcessorFacilityInterest()
+        {
+        }
+        protected override FacilityDetailsDataType GetSubmitDocumentData(string transactionId, string docId)
+        {
+            string operation;
+            FacilityInterestDataType data =
+                 GetHeaderDocumentContent<FacilityInterestDataType>(transactionId, docId, _settingsProvider,
+                                                                    _serializationHelper, _compressionHelper,
+                                                                    _documentManager, out operation);
+            return ConvertFacilityInterestToFacilityDetails(data);
+        }
+        protected virtual FacilityDetailsDataType ConvertFacilityInterestToFacilityDetails(FacilityInterestDataType facilityInterest)
+        {
+            FacilityDetailsDataType facilityDetails = new FacilityDetailsDataType();
+
+            if (CollectionUtils.IsNullOrEmpty(facilityInterest.FacilityInterestSummaryList))
+            {
+                return facilityDetails;
+            }
+
+            List<FacilityDataType> list = new List<FacilityDataType>(facilityInterest.FacilityInterestSummaryList.Length);
+            foreach (var facilitySummary in facilityInterest.FacilityInterestSummaryList)
+            {
+                var facility = new FacilityDataType();
+
+                facility.DataSource = facilitySummary.DataSource;
+                facility.LocationAddress = 
+                    LocationAddressDataType.FromFacilityLocationAddress(facilitySummary.FacilityLocationAddress);
+                facility.FacilitySiteIdentity = new FacilitySiteIdentityDataType();
+                facility.FacilitySiteIdentity.FacilitySiteIdentifier = facilitySummary.FacilitySiteIdentifier;
+                facility.FacilitySiteIdentity.FacilitySiteName = facilitySummary.FacilitySiteName;
+                if (facilitySummary.FacilitySummaryGeographicLocation != null)
+                {
+                    facility.FacilityPrimaryGeographicLocationDescription = 
+                        new FacilityPrimaryGeographicLocationDescriptionDataType(facilitySummary.FacilitySummaryGeographicLocation);
+                }
+                facility.FacilityURLText = facilitySummary.FacilityURLText;
+
+                if (!CollectionUtils.IsNullOrEmpty(facilitySummary.EnvironmentalInterestSummaryList))
+                {
+                    List<EnvironmentalInterestDataType> envIntList = new List<EnvironmentalInterestDataType>(facilitySummary.EnvironmentalInterestSummaryList.Length);
+                    foreach (EnvironmentalInterestSummaryDataType envIntSumm in facilitySummary.EnvironmentalInterestSummaryList)
+                    {
+                        EnvironmentalInterestDataType envInt = new EnvironmentalInterestDataType();
+                        envInt.DataSource = envIntSumm.DataSource;
+                        envInt.EnvironmentalInterestIdentifier = envIntSumm.EnvironmentalInterestIdentifier;
+                        envInt.EnvironmentalInterestTypeText = envIntSumm.EnvironmentalInterestTypeText;
+                        envInt.EnvironmentalInterestURLText = envIntSumm.EnvironmentalInterestURLText;
+                        envIntList.Add(envInt);
+                    }
+                    facility.EnvironmentalInterestList = envIntList.ToArray();
+                }
+
+                list.Add(facility);
+            }
+
+            facilityDetails.FacilityList = list.ToArray();
+
+            return facilityDetails;
+
+            //FacilityInterestDataType facilityInterest = new FacilityInterestDataType();
+            //if (!CollectionUtils.IsNullOrEmpty(facilityDetails.FacilityList))
+            //{
+            //    List<FacilityInterestSummaryDataType> rtnList = new List<FacilityInterestSummaryDataType>(facilityDetails.FacilityList.Length);
+            //    foreach (FacilityDataType facility in facilityDetails.FacilityList)
+            //    {
+            //        FacilityInterestSummaryDataType facilitySummary = new FacilityInterestSummaryDataType();
+            //        facilitySummary.DataSource = facility.DataSource;
+            //        facilitySummary.FacilityLocationAddress =
+            //            FacilityLocationAddressDataType.FromLocationAddress(facility.LocationAddress);
+            //        facilitySummary.FacilitySiteIdentifier = facility.FacilitySiteIdentity.FacilitySiteIdentifier;
+            //        facilitySummary.FacilitySiteName = facility.FacilitySiteIdentity.FacilitySiteName;
+            //        facilitySummary.FacilitySummaryGeographicLocation = (facility.FacilityPrimaryGeographicLocationDescription == null) ? null :
+            //            new FacilitySummaryGeographicLocationDataType(facility.FacilityPrimaryGeographicLocationDescription);
+            //        facilitySummary.FacilityURLText = facility.FacilityURLText;
+            //        if (!CollectionUtils.IsNullOrEmpty(facility.EnvironmentalInterestList))
+            //        {
+            //            List<EnvironmentalInterestSummaryDataType> envIntSummList = new List<EnvironmentalInterestSummaryDataType>(facility.EnvironmentalInterestList.Length);
+            //            foreach (EnvironmentalInterestDataType envInt in facility.EnvironmentalInterestList)
+            //            {
+            //                EnvironmentalInterestSummaryDataType envIntSumm = new EnvironmentalInterestSummaryDataType();
+            //                envIntSumm.DataSource = envInt.DataSource;
+            //                envIntSumm.EnvironmentalInterestIdentifier = envInt.EnvironmentalInterestIdentifier;
+            //                envIntSumm.EnvironmentalInterestTypeText = envInt.EnvironmentalInterestTypeText;
+            //                envIntSumm.EnvironmentalInterestURLText = envInt.EnvironmentalInterestURLText;
+            //                envIntSummList.Add(envIntSumm);
+            //            }
+            //            facilitySummary.EnvironmentalInterestSummaryList = envIntSummList.ToArray();
+            //        }
+            //        rtnList.Add(facilitySummary);
+            //    }
+            //    facilityInterest.FacilityInterestSummaryList = rtnList.ToArray();
+            //}
+            //return facilityInterest;
         }
     }
 }

@@ -1413,10 +1413,38 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
             return data;
         }
     }
+    public partial class LocationAddressDataType
+    {
+        public static LocationAddressDataType FromFacilityLocationAddress(FacilityLocationAddressDataType facilityLocationAddress)
+        {
+            if (facilityLocationAddress == null)
+            {
+                return null;
+            }
+            LocationAddressDataType data = new LocationAddressDataType();
+            data.AddressPostalCode = facilityLocationAddress.AddressPostalCode;
+            data.CountryIdentity = facilityLocationAddress.CountryIdentity;
+            data.LocalityName = facilityLocationAddress.LocalityName;
+            data.LocationAddressText = facilityLocationAddress.LocationAddressText;
+            data.StateIdentity = facilityLocationAddress.StateIdentity;
+            data.SupplementalLocationText = facilityLocationAddress.SupplementalLocationText;
+            return data;
+        }
+    }
     public partial class FacilitySummaryGeographicLocationDataType
     {
         public FacilitySummaryGeographicLocationDataType() { }
         public FacilitySummaryGeographicLocationDataType(FacilityPrimaryGeographicLocationDescriptionDataType locationDesc)
+        {
+            this.Point = locationDesc.Point;
+            this.HorizontalAccuracyMeasure = locationDesc.HorizontalAccuracyMeasure;
+            this.HorizontalCollectionMethod = locationDesc.HorizontalCollectionMethod;
+        }
+    }
+    public partial class FacilityPrimaryGeographicLocationDescriptionDataType
+    {
+        public FacilityPrimaryGeographicLocationDescriptionDataType() { }
+        public FacilityPrimaryGeographicLocationDescriptionDataType(FacilitySummaryGeographicLocationDataType locationDesc)
         {
             this.Point = locationDesc.Point;
             this.HorizontalAccuracyMeasure = locationDesc.HorizontalAccuracyMeasure;
