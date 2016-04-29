@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:IR="http://www.exchangenetwork.net/schema/IR/0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/IR/0" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="0.4">
+	<xsd:include schemaLocation="IR_Pollutant_v0.4.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name:	IR_Pollutants_v0.4.xsd
+		Description:	Pollutants identified in this Action
+		Developed By:	Dwane Young, U.S. EPA
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="Pollutants" type="IR:PollutantsDataType">
+		<xsd:annotation>
+			<xsd:documentation>Pollutants identified in this Action</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="PollutantsDataType">
+		<xsd:annotation>
+			<xsd:documentation>Pollutants identified in this Action</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="IR:Pollutant" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

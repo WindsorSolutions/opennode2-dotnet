@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:IR="http://www.exchangenetwork.net/schema/IR/0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/IR/0" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="0.4">
+	<xsd:include schemaLocation="IR_StateWideWaterType_v0.4.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name:	IR_StateWideWaterTypes_v0.4.xsd
+		Description:	Group of water types
+		Developed By:	Dwane Young, U.S. EPA
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="StateWideWaterTypes" type="IR:StateWideWaterTypesDataType">
+		<xsd:annotation>
+			<xsd:documentation>Group of water types</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="StateWideWaterTypesDataType">
+		<xsd:annotation>
+			<xsd:documentation>Group of water types</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="IR:StateWideWaterType" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>
