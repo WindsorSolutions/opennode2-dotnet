@@ -288,6 +288,7 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
                     "srsDimension", "10",
                     "srsName", "255"
     )]
+    [UseNewSameTableMapping]
 
     public partial class MappingAttributes
     {
@@ -298,6 +299,23 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
     {
         public virtual void AfterLoadFromDatabase()
         {
+            CollectionUtils.ForEach(this.ReportingCycle, delegate(ReportingCycle reportingCycle) {
+                CollectionUtils.ForEach(reportingCycle.Assessments, delegate(Assessment assessment)
+                {
+                    CollectionUtils.ForEach(assessment.Parameters, delegate(Parameter parameter)
+                    {
+                        if (!CollectionUtils.IsNullOrEmpty(parameter.PriorCauses))
+                        {
+                            if (parameter.ImpairedWatersInformation == null)
+                            {
+                                parameter.ImpairedWatersInformation = new ImpairedWatersInformation();
+                            }
+                            parameter.ImpairedWatersInformation.PriorCauses = parameter.PriorCauses;
+                            parameter.PriorCauses = null;
+                        }
+                    });
+                });
+            });
         }
         public virtual void BeforeSaveToDatabase()
         {

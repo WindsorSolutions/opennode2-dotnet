@@ -292,6 +292,17 @@ namespace Windsor.Commons.XsdOrm2
     }
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Assembly)]
+    public class UseNewSameTableMappingAttribute : MappingAttribute
+    {
+        public UseNewSameTableMappingAttribute()
+        {
+        }
+        public override string GetShortDescription()
+        {
+            return "UseNewSameTableMapping";
+        }
+    }
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Assembly)]
     public class DefaultTableNamePrefixAttribute : MappingAttribute
     {
         public DefaultTableNamePrefixAttribute(string prefix)

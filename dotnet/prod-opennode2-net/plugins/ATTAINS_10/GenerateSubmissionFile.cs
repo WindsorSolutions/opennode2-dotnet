@@ -64,18 +64,18 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         protected enum ConfigParams
         {
             None,
-            [Description("AuthorName")]
+            [Description("Author Name")]
             AuthorName,
-            [Description("OrganizationName")]
+            [Description("Organization Name")]
             OrganizationName,
-            [Description("DocumentTitle")]
+            [Description("Document Title")]
             DocumentTitle,
-            [Description("Keywords")]
-            Keywords,
-            [Description("DataServiceName")]
-            DataServiceName,
-            [Description("SenderAddress")]
+            [Description("Sender Address")]
             SenderAddress,
+            [Description("Sender Contact")]
+            SenderContact,
+            [Description("Payload Operation (\"Update-Insert\" or \"Delete\")")]
+            PayloadOperation,
             [Description("Validate Xml (True or False)")]
             ValidateXml,
         }
@@ -83,7 +83,9 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
         protected static readonly ILogEx LOG = LogManagerEx.GetLogger(MethodBase.GetCurrentMethod());
 
-        protected const string FLOW_NAME = "OWIR-ATT_v2.0";
+        protected const string FLOW_NAME = "ATTAINS";
+        protected const string UPDATE_INSERT_OPERATION_NAME = "Update-Insert";
+        protected const string DELETE_OPERATION_NAME = "Delete";
 
         protected IRequestManager _requestManager;
         protected ISerializationHelper _serializationHelper;
@@ -97,9 +99,9 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         protected string _authorName;
         protected string _organizationName;
         protected string _documentTitle;
-        protected string _keywords;
-        protected string _dataServiceName;
         protected string _senderAddress;
+        protected string _senderContact;
+        protected string _payloadOperation;
         protected bool _validateXml;
 
         #endregion
@@ -142,18 +144,32 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
             _authorName = ValidateNonEmptyConfigParameter(EnumUtils.ToDescription(ConfigParams.AuthorName));
             _organizationName = ValidateNonEmptyConfigParameter(EnumUtils.ToDescription(ConfigParams.OrganizationName));
             _documentTitle = ValidateNonEmptyConfigParameter(EnumUtils.ToDescription(ConfigParams.DocumentTitle));
-            _keywords = ValidateNonEmptyConfigParameter(EnumUtils.ToDescription(ConfigParams.Keywords));
-            _dataServiceName = ValidateNonEmptyConfigParameter(EnumUtils.ToDescription(ConfigParams.DataServiceName));
             _senderAddress = ValidateNonEmptyConfigParameter(EnumUtils.ToDescription(ConfigParams.SenderAddress));
+            _senderContact = ValidateNonEmptyConfigParameter(EnumUtils.ToDescription(ConfigParams.SenderContact));
+            _payloadOperation = ValidateNonEmptyConfigParameter(EnumUtils.ToDescription(ConfigParams.PayloadOperation));
+            if (string.Equals(_payloadOperation, UPDATE_INSERT_OPERATION_NAME, StringComparison.OrdinalIgnoreCase))
+            {
+                _payloadOperation = UPDATE_INSERT_OPERATION_NAME;
+            }
+            else if (string.Equals(_payloadOperation, DELETE_OPERATION_NAME, StringComparison.OrdinalIgnoreCase))
+            {
+                _payloadOperation = DELETE_OPERATION_NAME;
+            }
+            else
+            {
+                throw new ArgException("The \"{0}\" configuration parameter must be either \"{1}\" or \"{2}\"",
+                                       EnumUtils.ToDescription(ConfigParams.PayloadOperation), UPDATE_INSERT_OPERATION_NAME,
+                                       DELETE_OPERATION_NAME);
+            }
             TryGetConfigParameter(EnumUtils.ToDescription(ConfigParams.ValidateXml), ref _validateXml);
 
-            AppendAuditLogEvent("Loaded the following configuration parameters: {0} ({1}), {2} ({3}), {4} ({5}), {6} ({7}), {8} ({9}), {10} ({11}, {12} ({13})",
+            AppendAuditLogEvent("Loaded the following configuration parameters: {0} ({1}), {2} ({3}), {4} ({5}), {6} ({7}), {8} ({9}), {10} ({11}), {12} ({13})",
                                 EnumUtils.ToDescription(ConfigParams.AuthorName), _authorName,
                                 EnumUtils.ToDescription(ConfigParams.OrganizationName), _organizationName,
                                 EnumUtils.ToDescription(ConfigParams.DocumentTitle), _documentTitle,
-                                EnumUtils.ToDescription(ConfigParams.Keywords), _keywords,
-                                EnumUtils.ToDescription(ConfigParams.DataServiceName), _dataServiceName,
                                 EnumUtils.ToDescription(ConfigParams.SenderAddress), _senderAddress,
+                                EnumUtils.ToDescription(ConfigParams.SenderContact), _senderContact,
+                                EnumUtils.ToDescription(ConfigParams.PayloadOperation), _payloadOperation,
                                 EnumUtils.ToDescription(ConfigParams.ValidateXml), _validateXml);
 
             // Load database provider
@@ -239,7 +255,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
                 // Configure the submission exchange header and add header to xml file
                 headerDocumentHelper.Configure(_authorName, _organizationName, _documentTitle, FLOW_NAME,
-                                               _dataServiceName, _senderAddress, null, _keywords);
+                                               null, _senderContact, null, null);
+                headerDocumentHelper.AddNotification(_senderAddress);
 
                 string tempXmlFilePath2 = _settingsProvider.NewTempFilePath(".xml");
                 try
@@ -247,7 +264,7 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
                     XmlDocument doc = new XmlDocument();
                     doc.Load(tempXmlFilePath);
 
-                    headerDocumentHelper.AddPayload("REPLACE", doc.DocumentElement);
+                    headerDocumentHelper.AddPayload(_payloadOperation, doc.DocumentElement);
 
                     headerDocumentHelper.Serialize(tempXmlFilePath2);
 

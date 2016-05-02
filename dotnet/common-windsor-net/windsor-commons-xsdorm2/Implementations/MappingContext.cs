@@ -1040,6 +1040,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
             m_MemberTypeAppliedAttributes = GetMemberTypeAppliedAttributes(mappingAttributesType);
             m_NamePostfixAppliedAttributes = GetNamePostfixAppliedAttributes(mappingAttributesType);
             m_RemovePostfixNamesFromTableAndColumnNames = GetRemovePostfixNamesFromTableAndColumnNamesAttribute(mappingAttributesType);
+            UseNewSameTableMapping = GetUseNewSameTableMappingAttribute(mappingAttributesType);
 
             List<MappingAttribute> attributes = GetMappingAttributesForType(mappingAttributesType);
             foreach (MappingAttribute mappingAttribute in attributes)
@@ -1099,6 +1100,11 @@ namespace Windsor.Commons.XsdOrm2.Implementations
         {
             DefaultTableNamePrefixAttribute attr = GetGlobalAttribute<DefaultTableNamePrefixAttribute>(rootType);
             return (attr == null) ? null : attr.Prefix;
+        }
+        protected virtual bool GetUseNewSameTableMappingAttribute(Type rootType)
+        {
+            UseNewSameTableMappingAttribute attr = GetGlobalAttribute<UseNewSameTableMappingAttribute>(rootType);
+            return (attr != null);
         }
         protected virtual IList<string> GetRemovePostfixNamesFromTableAndColumnNamesAttribute(Type rootType)
         {
@@ -1502,6 +1508,11 @@ namespace Windsor.Commons.XsdOrm2.Implementations
             {
                 return true;
             }
+        }
+        public bool UseNewSameTableMapping
+        {
+            get;
+            set;
         }
     }
 }

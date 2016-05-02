@@ -275,8 +275,16 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                             fk = pk;
                             fkKey = pkKey;
                         }
-                        LoadSameTableInstances(objectToSet, tableOfObjectsToLoad.ChildSameTableElements, cachedValues, reader,
-                                               ref readerIndex, ref anyObjectToSetFieldsWereSet);
+                        if (mappingContext.UseNewSameTableMapping)
+                        {
+                            LoadSameTableInstancesNew(objectToSet, tableOfObjectsToLoad.ChildSameTableElements, cachedValues,
+                                                      reader, ref readerIndex, ref anyObjectToSetFieldsWereSet);
+                        }
+                        else
+                        {
+                            LoadSameTableInstances(objectToSet, tableOfObjectsToLoad.ChildSameTableElements, cachedValues,
+                                                   reader, ref readerIndex, ref anyObjectToSetFieldsWereSet);
+                        }
                     }
 
                     int fieldCount = reader.FieldCount;
@@ -467,6 +475,63 @@ namespace Windsor.Commons.XsdOrm2.Implementations
         }
 
 
+        protected virtual void LoadSameTableInstancesNew(object objectToSet, ICollection<SameTableElementInfo> sameTableElements,
+                                                         ColumnCachedValues cachedValues, IDataReader reader,
+                                                         ref int readerIndex, ref bool anyObjectToSetFieldsWereSet)
+        {
+            if (sameTableElements != null)
+            {
+                if (objectToSet.GetType().Name == "Parameter")
+                {
+
+                }
+                foreach (SameTableElementInfo sameTableElementInfo in sameTableElements)
+                {
+                    object sameTableElementObjectToSet = null;
+                    foreach (Column column in sameTableElementInfo.DirectColumns)
+                    {
+                        if (!column.NoLoad)
+                        {
+                            object value = reader.GetValue(readerIndex++);
+
+                            if (value == DBNull.Value)
+                            {
+                                value = null;
+                            }
+
+                            if (value != null)
+                            {
+                                if (sameTableElementObjectToSet == null)
+                                {
+                                    sameTableElementObjectToSet = Activator.CreateInstance(sameTableElementInfo.MemberType);
+                                }
+                                column.SetSelectColumnValue(sameTableElementObjectToSet, value, cachedValues);
+                            }
+                        }
+                    }
+                    if (sameTableElementObjectToSet != null)
+                    {
+                        sameTableElementInfo.SetMemberValue(objectToSet, sameTableElementObjectToSet);
+                        anyObjectToSetFieldsWereSet = true;
+                        LoadSameTableInstancesNew(sameTableElementObjectToSet, sameTableElementInfo.ChildSameTableElements,
+                                                  cachedValues, reader, ref readerIndex, ref anyObjectToSetFieldsWereSet);
+                    }
+                    else if (!CollectionUtils.IsNullOrEmpty(sameTableElementInfo.ChildSameTableElements))
+                    {
+                        // Need to check to see if any children will be set in same table
+                        sameTableElementObjectToSet = Activator.CreateInstance(sameTableElementInfo.MemberType);
+                        bool anyObjectToSetChildFieldsWereSet = false;
+                        LoadSameTableInstancesNew(sameTableElementObjectToSet, sameTableElementInfo.ChildSameTableElements,
+                                                  cachedValues, reader, ref readerIndex, ref anyObjectToSetChildFieldsWereSet);
+                        if (anyObjectToSetChildFieldsWereSet)
+                        {
+                            sameTableElementInfo.SetMemberValue(objectToSet, sameTableElementObjectToSet);
+                            anyObjectToSetFieldsWereSet = true;
+                        }
+                    }
+                }
+            }
+        }
         protected virtual void AppendSelectWhereClause(string tableName, IDbCommand command,
                                                        IDictionary<string, DbAppendSelectWhereClause> appendSelectWhereClauseMap)
         {

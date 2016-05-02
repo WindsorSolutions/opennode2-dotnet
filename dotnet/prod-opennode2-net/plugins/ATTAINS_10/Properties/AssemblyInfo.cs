@@ -55,7 +55,7 @@ using Windsor.Node2008.WNOSPlugin;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("55BCCD3A-D8D8-42DF-9DD9-35EDDB423E59")]
+[assembly: Guid("24CC50F6-E1ED-4657-A7D6-5584EF5D8F13")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -70,5 +70,5 @@ using Windsor.Node2008.WNOSPlugin;
 [assembly: AssemblyFileVersion(AssemblyInfo.cAssemblyFileVersion)]
 [assembly: PluginDefaultFlowAttribute("ATTAINS")]
 [assembly: PluginPackageNameAttribute("ATTAINS 1.0")]
-[assembly: PluginSqlDdlFilePaths(@"OWIR_ATT\2.0\staging_schema_ddl\OWIR_ATT_2.0-SQL-DDL.sql,OWIR_ATT\2.0\staging_schema_ddl\OWIR_ATT_2.0-ORA-DDL.sql")]
+[assembly: PluginSqlDdlFilePaths(@"ATTAINS\1.0\staging_schema_ddl\ATTAINS_1.0-SQL-DDL.sql,ATTAINS\1.0\staging_schema_ddl\ATTAINS_1.0-ORA-DDL.sql")]
 [assembly: PublicPluginAttribute()]
