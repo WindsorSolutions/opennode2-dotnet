@@ -299,9 +299,47 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
     {
         public virtual void AfterLoadFromDatabase()
         {
-            CollectionUtils.ForEach(this.ReportingCycle, delegate(ReportingCycle reportingCycle) {
+            CollectionUtils.ForEach(this.Actions, delegate(Action action)
+            {
+                if (!CollectionUtils.IsNullOrEmpty(action.TMDLHistory))
+                {
+                    if (action.TMDLReportDetails == null)
+                    {
+                        action.TMDLReportDetails = new TMDLReportDetails();
+                    }
+                    action.TMDLReportDetails.TMDLHistory = action.TMDLHistory;
+                    action.TMDLHistory = null;
+                }
+                if (!CollectionUtils.IsNullOrEmpty(action.StateWideActions) || !CollectionUtils.IsNullOrEmpty(action.SpecificWaters))
+                {
+                    if (action.AssociatedWaters == null)
+                    {
+                        action.AssociatedWaters = new AssociatedWaters();
+                    }
+                    action.AssociatedWaters.StateWideActions = action.StateWideActions;
+                    action.StateWideActions = null;
+                    action.AssociatedWaters.SpecificWaters = action.SpecificWaters;
+                    action.SpecificWaters = null;
+                }
+            });
+            CollectionUtils.ForEach(this.ReportingCycle, delegate(ReportingCycle reportingCycle)
+            {
                 CollectionUtils.ForEach(reportingCycle.Assessments, delegate(Assessment assessment)
                 {
+                    CollectionUtils.ForEach(assessment.UseAttainments, delegate(UseAttainment useAttainment)
+                    {
+                        if (!CollectionUtils.IsNullOrEmpty(useAttainment.AssessmentTypes) || !CollectionUtils.IsNullOrEmpty(useAttainment.AssessmentMethodTypes))
+                        {
+                            if (useAttainment.AssessmentMetadata == null)
+                            {
+                                useAttainment.AssessmentMetadata = new AssessmentMetadata();
+                            }
+                            useAttainment.AssessmentMetadata.AssessmentTypes = useAttainment.AssessmentTypes;
+                            useAttainment.AssessmentTypes = null;
+                            useAttainment.AssessmentMetadata.AssessmentMethodTypes = useAttainment.AssessmentMethodTypes;
+                            useAttainment.AssessmentMethodTypes = null;
+                        }
+                    });
                     CollectionUtils.ForEach(assessment.Parameters, delegate(Parameter parameter)
                     {
                         if (!CollectionUtils.IsNullOrEmpty(parameter.PriorCauses))
@@ -319,6 +357,7 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         }
         public virtual void BeforeSaveToDatabase()
         {
+            // TODO: Need to implement all the logic from AfterLoadFromDatabase() in this method to implement import of xml to db
         }
     }
 }
