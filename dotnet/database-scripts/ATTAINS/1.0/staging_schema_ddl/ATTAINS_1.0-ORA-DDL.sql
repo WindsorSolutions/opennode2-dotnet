@@ -1,5 +1,5 @@
 --------------------------------------------------------
---  File created - Tuesday-April-05-2016   
+--  File created - Monday-May-09-2016   
 --------------------------------------------------------
 --------------------------------------------------------
 --  DDL for Table ATT_ACTN
@@ -15,7 +15,12 @@
 	"ACTN_STAT_CODE" VARCHAR2(30 BYTE), 
 	"PLANNED_CMPL_DATE" TIMESTAMP (6), 
 	"ACTUAL_CMPL_DATE" TIMESTAMP (6), 
-	"ACTN_CMNT" VARCHAR2(4000 BYTE)
+	"ACTN_CMNT" VARCHAR2(4000 BYTE), 
+	"TMDL_REP_IDENT" VARCHAR2(45 BYTE), 
+	"TMDL_OTHR_IDENT" VARCHAR2(45 BYTE), 
+	"TMDL_REP_NAME" VARCHAR2(255 BYTE), 
+	"TMDL_DATE" TIMESTAMP (6), 
+	"INDIAN_COUNTRY_IND" CHAR(1 BYTE)
    ) ;
  
 
@@ -34,6 +39,16 @@
    COMMENT ON COLUMN "ATT_ACTN"."ACTUAL_CMPL_DATE" IS 'Completion date for the action (ActualCompletionDate)';
  
    COMMENT ON COLUMN "ATT_ACTN"."ACTN_CMNT" IS 'Free text providing additional comments on the action (ActionComment)';
+ 
+   COMMENT ON COLUMN "ATT_ACTN"."TMDL_REP_IDENT" IS 'Unique code identifying the TMDL Report (TMDLReportIdentifier)';
+ 
+   COMMENT ON COLUMN "ATT_ACTN"."TMDL_OTHR_IDENT" IS 'Alternative code identifying the TMDL Report (an example could be a state assigned identifier that is different from the ID in TMDLReportIdentifier) (TMDLOtherIdentifier)';
+ 
+   COMMENT ON COLUMN "ATT_ACTN"."TMDL_REP_NAME" IS 'Name of the TMDL (TMDLReportName)';
+ 
+   COMMENT ON COLUMN "ATT_ACTN"."TMDL_DATE" IS 'Date TMDL was established (TMDLDate)';
+ 
+   COMMENT ON COLUMN "ATT_ACTN"."INDIAN_COUNTRY_IND" IS 'Indicates if the water is either wholly or partially in Indian country. (IndianCountryIndicator)';
  
    COMMENT ON TABLE "ATT_ACTN"  IS 'Schema element: Action';
 /
@@ -119,18 +134,6 @@
    COMMENT ON TABLE "ATT_ASSC_USE"  IS 'Schema element: AssociatedUse';
 /
 --------------------------------------------------------
---  DDL for Table ATT_ASSC_WATERS
---------------------------------------------------------
-
-  CREATE TABLE "ATT_ASSC_WATERS" 
-   (	"ATT_ASSC_WATERS_ID" VARCHAR2(36 BYTE), 
-	"ATT_ACTN_ID" VARCHAR2(36 BYTE)
-   ) ;
- 
-
-   COMMENT ON TABLE "ATT_ASSC_WATERS"  IS 'Schema element: AssociatedWaters';
-/
---------------------------------------------------------
 --  DDL for Table ATT_ASSESSMNT
 --------------------------------------------------------
 
@@ -164,45 +167,12 @@
    COMMENT ON TABLE "ATT_ASSESSMNT"  IS 'Schema element: Assessment';
 /
 --------------------------------------------------------
---  DDL for Table ATT_ASSESSMNT_ACTY
---------------------------------------------------------
-
-  CREATE TABLE "ATT_ASSESSMNT_ACTY" 
-   (	"ATT_ASSESSMNT_ACTY_ID" VARCHAR2(36 BYTE), 
-	"ATT_ASSESSMNT_METADATA_ID" VARCHAR2(36 BYTE), 
-	"ASSESSMNT_DATE" TIMESTAMP (6), 
-	"ASSESSOR_NAME" VARCHAR2(80 BYTE)
-   ) ;
- 
-
-   COMMENT ON COLUMN "ATT_ASSESSMNT_ACTY"."ASSESSMNT_DATE" IS 'Day on which the assessment was completed (AssessmentDate)';
- 
-   COMMENT ON COLUMN "ATT_ASSESSMNT_ACTY"."ASSESSOR_NAME" IS 'Name of the individual performing the assessment (AssessorName)';
- 
-   COMMENT ON TABLE "ATT_ASSESSMNT_ACTY"  IS 'Schema element: AssessmentActivity';
-/
---------------------------------------------------------
---  DDL for Table ATT_ASSESSMNT_METADATA
---------------------------------------------------------
-
-  CREATE TABLE "ATT_ASSESSMNT_METADATA" 
-   (	"ATT_ASSESSMNT_METADATA_ID" VARCHAR2(36 BYTE), 
-	"ATT_USE_ATTAINMENT_ID" VARCHAR2(36 BYTE), 
-	"ASSESSMNT_BASIS_CODE" VARCHAR2(30 BYTE)
-   ) ;
- 
-
-   COMMENT ON COLUMN "ATT_ASSESSMNT_METADATA"."ASSESSMNT_BASIS_CODE" IS 'Code representing the basis for the assessment; is it based on monitored data, extrapolated data, or both. (AssessmentBasisCode)';
- 
-   COMMENT ON TABLE "ATT_ASSESSMNT_METADATA"  IS 'Schema element: AssessmentMetadata';
-/
---------------------------------------------------------
 --  DDL for Table ATT_ASSESSMNT_METHOD_TYPE
 --------------------------------------------------------
 
   CREATE TABLE "ATT_ASSESSMNT_METHOD_TYPE" 
    (	"ATT_ASSESSMNT_METHOD_TYPE_ID" VARCHAR2(36 BYTE), 
-	"ATT_ASSESSMNT_METADATA_ID" VARCHAR2(36 BYTE), 
+	"ATT_USE_ATTAINMENT_ID" VARCHAR2(36 BYTE), 
 	"METHOD_TYPE_CNTXT" VARCHAR2(30 BYTE), 
 	"METHOD_TYPE_CODE" VARCHAR2(20 BYTE), 
 	"METHOD_TYPE_NAME" VARCHAR2(150 BYTE)
@@ -223,7 +193,7 @@
 
   CREATE TABLE "ATT_ASSESSMNT_TYPE" 
    (	"ATT_ASSESSMNT_TYPE_ID" VARCHAR2(36 BYTE), 
-	"ATT_ASSESSMNT_METADATA_ID" VARCHAR2(36 BYTE), 
+	"ATT_USE_ATTAINMENT_ID" VARCHAR2(36 BYTE), 
 	"ASSESSMNT_TYPE_CODE" VARCHAR2(30 BYTE), 
 	"ASSESSMNT_CONFIDENCE_CODE" VARCHAR2(30 BYTE)
    ) ;
@@ -248,7 +218,10 @@
 	"AGNCY_CODE" CHAR(1 BYTE), 
 	"ST_CODE" VARCHAR2(2 BYTE), 
 	"STAT_IND" CHAR(1 BYTE), 
-	"ASSESSMNT_UNIT_CMNT_TXT" VARCHAR2(4000 BYTE)
+	"ASSESSMNT_UNIT_CMNT_TXT" VARCHAR2(4000 BYTE), 
+	"USE_CLASS_CNTXT" VARCHAR2(30 BYTE), 
+	"USE_CLASS_CODE" VARCHAR2(15 BYTE), 
+	"USE_CLASS_NAME" VARCHAR2(50 BYTE)
    ) ;
  
 
@@ -265,6 +238,12 @@
    COMMENT ON COLUMN "ATT_ASSESSMNT_UNIT"."STAT_IND" IS 'Indicator of whether the Assessment Unit is currently active, or if the identifier has been retired and is being kept for historical tracking purposes and is part of an Assessment Unit History of another Assessment Unit. (StatusIndicator)';
  
    COMMENT ON COLUMN "ATT_ASSESSMNT_UNIT"."ASSESSMNT_UNIT_CMNT_TXT" IS 'Text to provide a comment on a specific Assessment Unit (AssessmentUnitCommentText)';
+ 
+   COMMENT ON COLUMN "ATT_ASSESSMNT_UNIT"."USE_CLASS_CNTXT" IS 'Context for the class code (typically OrganizationIdentifier) (UseClassContext)';
+ 
+   COMMENT ON COLUMN "ATT_ASSESSMNT_UNIT"."USE_CLASS_CODE" IS 'Unique code identifying the use class for this water (UseClassCode)';
+ 
+   COMMENT ON COLUMN "ATT_ASSESSMNT_UNIT"."USE_CLASS_NAME" IS 'name of the use class for this water (UseClassName)';
  
    COMMENT ON TABLE "ATT_ASSESSMNT_UNIT"  IS 'Schema element: AssessmentUnit';
 /
@@ -387,36 +366,6 @@
    COMMENT ON TABLE "ATT_LOC"  IS 'Schema element: Location';
 /
 --------------------------------------------------------
---  DDL for Table ATT_MAILING_ADDR
---------------------------------------------------------
-
-  CREATE TABLE "ATT_MAILING_ADDR" 
-   (	"ATT_MAILING_ADDR_ID" VARCHAR2(36 BYTE), 
-	"ATT_ORG_CONTACT_ID" VARCHAR2(36 BYTE), 
-	"MAILING_ADDR_TXT" VARCHAR2(30 BYTE), 
-	"SUPPL_ADDR_TXT" VARCHAR2(30 BYTE), 
-	"MAILING_ADDR_CITY_NAME" VARCHAR2(25 BYTE), 
-	"MAILING_ADDR_ST_USPS_CODE" VARCHAR2(2 BYTE), 
-	"MAILING_ADDR_COUNTRY_CODE" VARCHAR2(2 BYTE), 
-	"MAILING_ADDR_ZIP_CODE" VARCHAR2(14 BYTE)
-   ) ;
- 
-
-   COMMENT ON COLUMN "ATT_MAILING_ADDR"."MAILING_ADDR_TXT" IS 'Mailing Address (MailingAddressText)';
- 
-   COMMENT ON COLUMN "ATT_MAILING_ADDR"."SUPPL_ADDR_TXT" IS 'Additional Address Information (SupplementalAddressText)';
- 
-   COMMENT ON COLUMN "ATT_MAILING_ADDR"."MAILING_ADDR_CITY_NAME" IS 'City or Locality Name (MailingAddressCityName)';
- 
-   COMMENT ON COLUMN "ATT_MAILING_ADDR"."MAILING_ADDR_ST_USPS_CODE" IS 'State USPS Code (i.e. KS) (MailingAddressStateUSPSCode)';
- 
-   COMMENT ON COLUMN "ATT_MAILING_ADDR"."MAILING_ADDR_COUNTRY_CODE" IS 'Country Name (MailingAddressCountryCode)';
- 
-   COMMENT ON COLUMN "ATT_MAILING_ADDR"."MAILING_ADDR_ZIP_CODE" IS 'Zip Code (MailingAddressZIPCode)';
- 
-   COMMENT ON TABLE "ATT_MAILING_ADDR"  IS 'Schema element: MailingAddress';
-/
---------------------------------------------------------
 --  DDL for Table ATT_MOD
 --------------------------------------------------------
 
@@ -436,24 +385,6 @@
    COMMENT ON COLUMN "ATT_MOD"."CHANGE_DESC_TXT" IS 'Text describing the change made to the Assessment Unit (ChangeDescriptionText)';
  
    COMMENT ON TABLE "ATT_MOD"  IS 'Schema element: Modification';
-/
---------------------------------------------------------
---  DDL for Table ATT_MON_ACTY
---------------------------------------------------------
-
-  CREATE TABLE "ATT_MON_ACTY" 
-   (	"ATT_MON_ACTY_ID" VARCHAR2(36 BYTE), 
-	"ATT_ASSESSMNT_METADATA_ID" VARCHAR2(36 BYTE), 
-	"MON_START_DATE" TIMESTAMP (6), 
-	"MON_END_DATE" TIMESTAMP (6)
-   ) ;
- 
-
-   COMMENT ON COLUMN "ATT_MON_ACTY"."MON_START_DATE" IS 'Date on which monitoring began (MonitoringStartDate)';
- 
-   COMMENT ON COLUMN "ATT_MON_ACTY"."MON_END_DATE" IS 'Date on which monitoring ended (MonitoringEndDate)';
- 
-   COMMENT ON TABLE "ATT_MON_ACTY"  IS 'Schema element: MonitoringActivity';
 /
 --------------------------------------------------------
 --  DDL for Table ATT_MON_STATION
@@ -531,7 +462,13 @@
 	"INDVL_TITLE_TXT" VARCHAR2(45 BYTE), 
 	"TELEPH_NUM_TXT" VARCHAR2(15 BYTE), 
 	"PHONE_EXT_TXT" VARCHAR2(6 BYTE), 
-	"FAX_NUM_TXT" VARCHAR2(15 BYTE)
+	"FAX_NUM_TXT" VARCHAR2(15 BYTE), 
+	"MAILING_ADDR_TXT" VARCHAR2(30 BYTE), 
+	"SUPPL_ADDR_TXT" VARCHAR2(30 BYTE), 
+	"MAILING_ADDR_CITY_NAME" VARCHAR2(25 BYTE), 
+	"MAILING_ADDR_ST_USPS_CODE" VARCHAR2(2 BYTE), 
+	"MAILING_ADDR_COUNTRY_CODE" VARCHAR2(2 BYTE), 
+	"MAILING_ADDR_ZIP_CODE" VARCHAR2(14 BYTE)
    ) ;
  
 
@@ -556,6 +493,18 @@
    COMMENT ON COLUMN "ATT_ORG_CONTACT"."PHONE_EXT_TXT" IS 'Telephone number extension (PhoneExtensionText)';
  
    COMMENT ON COLUMN "ATT_ORG_CONTACT"."FAX_NUM_TXT" IS 'Fax Number (FaxNumberText)';
+ 
+   COMMENT ON COLUMN "ATT_ORG_CONTACT"."MAILING_ADDR_TXT" IS 'Mailing Address (MailingAddressText)';
+ 
+   COMMENT ON COLUMN "ATT_ORG_CONTACT"."SUPPL_ADDR_TXT" IS 'Additional Address Information (SupplementalAddressText)';
+ 
+   COMMENT ON COLUMN "ATT_ORG_CONTACT"."MAILING_ADDR_CITY_NAME" IS 'City or Locality Name (MailingAddressCityName)';
+ 
+   COMMENT ON COLUMN "ATT_ORG_CONTACT"."MAILING_ADDR_ST_USPS_CODE" IS 'State USPS Code (i.e. KS) (MailingAddressStateUSPSCode)';
+ 
+   COMMENT ON COLUMN "ATT_ORG_CONTACT"."MAILING_ADDR_COUNTRY_CODE" IS 'Country Name (MailingAddressCountryCode)';
+ 
+   COMMENT ON COLUMN "ATT_ORG_CONTACT"."MAILING_ADDR_ZIP_CODE" IS 'Zip Code (MailingAddressZIPCode)';
  
    COMMENT ON TABLE "ATT_ORG_CONTACT"  IS 'Schema element: OrganizationContact';
 /
@@ -613,7 +562,14 @@
 	"ATT_ACTN_ID" VARCHAR2(36 BYTE), 
 	"POLUT_NAME" VARCHAR2(240 BYTE), 
 	"POLUT_SRC_TYPE_CODE" VARCHAR2(40 BYTE), 
-	"JUSTIFICATION_URL_TXT" VARCHAR2(255 BYTE)
+	"JUSTIFICATION_URL_TXT" VARCHAR2(255 BYTE), 
+	"TTL_LOAD_ALLOCTN_NUM" NUMBER(12,6), 
+	"TTL_LOAD_ALLOCTN_UNTS_TXT" VARCHAR2(20 BYTE), 
+	"TTL_WSTE_LOAD_ALLOCTN_NUM" NUMBER(12,6), 
+	"TTL_WSTE_LOAD_ALLOCTN_UNTS_TXT" VARCHAR2(20 BYTE), 
+	"EXPLICIT_MARGINOF_SAFETY_TXT" VARCHAR2(255 BYTE), 
+	"IMPLICIT_MARGINOF_SAFETY_TXT" VARCHAR2(255 BYTE), 
+	"TMDL_END_POINT_TXT" VARCHAR2(4000 BYTE)
    ) ;
  
 
@@ -622,6 +578,20 @@
    COMMENT ON COLUMN "ATT_POLUT"."POLUT_SRC_TYPE_CODE" IS 'Are the sources of the pollutant point source, nonpoint source or both. (PollutantSourceTypeCode)';
  
    COMMENT ON COLUMN "ATT_POLUT"."JUSTIFICATION_URL_TXT" IS 'URL providing the link to find more information about the 4B activity. (JustificationURLText)';
+ 
+   COMMENT ON COLUMN "ATT_POLUT"."TTL_LOAD_ALLOCTN_NUM" IS 'Total load allocation for this pollutant (TotalLoadAllocationNumber)';
+ 
+   COMMENT ON COLUMN "ATT_POLUT"."TTL_LOAD_ALLOCTN_UNTS_TXT" IS 'Unit of measure for total load allocation (TotalLoadAllocationUnitsText)';
+ 
+   COMMENT ON COLUMN "ATT_POLUT"."TTL_WSTE_LOAD_ALLOCTN_NUM" IS 'Total waste load allocation for this pollutant (TotalWasteLoadAllocationNumber)';
+ 
+   COMMENT ON COLUMN "ATT_POLUT"."TTL_WSTE_LOAD_ALLOCTN_UNTS_TXT" IS 'Unit of measure for total waste load allocation (TotalWasteLoadAllocationUnitsText)';
+ 
+   COMMENT ON COLUMN "ATT_POLUT"."EXPLICIT_MARGINOF_SAFETY_TXT" IS 'Explicit margin of safety for the load allocation (ExplicitMarginofSafetyText)';
+ 
+   COMMENT ON COLUMN "ATT_POLUT"."IMPLICIT_MARGINOF_SAFETY_TXT" IS 'Implicit margin of safety for the load allocation (ImplicitMarginofSafetyText)';
+ 
+   COMMENT ON COLUMN "ATT_POLUT"."TMDL_END_POINT_TXT" IS 'Free text describing the TMDL End Point (TMDLEndPointText)';
  
    COMMENT ON TABLE "ATT_POLUT"  IS 'Schema element: Pollutant';
 /
@@ -769,7 +739,7 @@
 
   CREATE TABLE "ATT_RELATED_TMD_LS" 
    (	"ATT_RELATED_TMD_LS_ID" VARCHAR2(36 BYTE), 
-	"ATT_TMDL_REP_ID" VARCHAR2(36 BYTE), 
+	"ATT_ACTN_ID" VARCHAR2(36 BYTE), 
 	"TMDL_REP_IDENT" VARCHAR2(45 BYTE), 
 	"CHANGE_TYPE_TXT" VARCHAR2(255 BYTE)
    ) ;
@@ -850,7 +820,7 @@
 
   CREATE TABLE "ATT_SPECIFIC_WTR" 
    (	"ATT_SPECIFIC_WTR_ID" VARCHAR2(36 BYTE), 
-	"ATT_ASSC_WATERS_ID" VARCHAR2(36 BYTE), 
+	"ATT_ACTN_ID" VARCHAR2(36 BYTE), 
 	"ASSESSMNT_UNIT_IDENT" VARCHAR2(50 BYTE), 
 	"UNLISTED_WTR_IND" CHAR(1 BYTE)
    ) ;
@@ -921,7 +891,7 @@
 
   CREATE TABLE "ATT_ST_WIDE_ACTN" 
    (	"ATT_ST_WIDE_ACTN_ID" VARCHAR2(36 BYTE), 
-	"ATT_ASSC_WATERS_ID" VARCHAR2(36 BYTE), 
+	"ATT_ACTN_ID" VARCHAR2(36 BYTE), 
 	"ST_WIDE_ASSESSMNT_IDENT" VARCHAR2(45 BYTE), 
 	"ST_WIDE_CYCLE" VARCHAR2(4 BYTE), 
 	"ST_WIDE_CMNT_TXT" VARCHAR2(4000 BYTE)
@@ -1065,66 +1035,6 @@
    COMMENT ON TABLE "ATT_TMDLNPDES"  IS 'Schema element: TMDLNPDES';
 /
 --------------------------------------------------------
---  DDL for Table ATT_TMDL_POLUT
---------------------------------------------------------
-
-  CREATE TABLE "ATT_TMDL_POLUT" 
-   (	"ATT_TMDL_POLUT_ID" VARCHAR2(36 BYTE), 
-	"ATT_POLUT_ID" VARCHAR2(36 BYTE), 
-	"TTL_LOAD_ALLOCTN_NUM" NUMBER(12,6), 
-	"TTL_LOAD_ALLOCTN_UNTS_TXT" VARCHAR2(20 BYTE), 
-	"TTL_WSTE_LOAD_ALLOCTN_NUM" NUMBER(12,6), 
-	"TTL_WSTE_LOAD_ALLOCTN_UNTS_TXT" VARCHAR2(20 BYTE), 
-	"EXPLICIT_MARGINOF_SAFETY_TXT" VARCHAR2(255 BYTE), 
-	"IMPLICIT_MARGINOF_SAFETY_TXT" VARCHAR2(255 BYTE), 
-	"TMDL_END_POINT_TXT" VARCHAR2(4000 BYTE)
-   ) ;
- 
-
-   COMMENT ON COLUMN "ATT_TMDL_POLUT"."TTL_LOAD_ALLOCTN_NUM" IS 'Total load allocation for this pollutant (TotalLoadAllocationNumber)';
- 
-   COMMENT ON COLUMN "ATT_TMDL_POLUT"."TTL_LOAD_ALLOCTN_UNTS_TXT" IS 'Unit of measure for total load allocation (TotalLoadAllocationUnitsText)';
- 
-   COMMENT ON COLUMN "ATT_TMDL_POLUT"."TTL_WSTE_LOAD_ALLOCTN_NUM" IS 'Total waste load allocation for this pollutant (TotalWasteLoadAllocationNumber)';
- 
-   COMMENT ON COLUMN "ATT_TMDL_POLUT"."TTL_WSTE_LOAD_ALLOCTN_UNTS_TXT" IS 'Unit of measure for total waste load allocation (TotalWasteLoadAllocationUnitsText)';
- 
-   COMMENT ON COLUMN "ATT_TMDL_POLUT"."EXPLICIT_MARGINOF_SAFETY_TXT" IS 'Explicit margin of safety for the load allocation (ExplicitMarginofSafetyText)';
- 
-   COMMENT ON COLUMN "ATT_TMDL_POLUT"."IMPLICIT_MARGINOF_SAFETY_TXT" IS 'Implicit margin of safety for the load allocation (ImplicitMarginofSafetyText)';
- 
-   COMMENT ON COLUMN "ATT_TMDL_POLUT"."TMDL_END_POINT_TXT" IS 'Free text describing the TMDL End Point (TMDLEndPointText)';
- 
-   COMMENT ON TABLE "ATT_TMDL_POLUT"  IS 'Schema element: TMDLPollutantDetails';
-/
---------------------------------------------------------
---  DDL for Table ATT_TMDL_REP
---------------------------------------------------------
-
-  CREATE TABLE "ATT_TMDL_REP" 
-   (	"ATT_TMDL_REP_ID" VARCHAR2(36 BYTE), 
-	"ATT_ACTN_ID" VARCHAR2(36 BYTE), 
-	"TMDL_REP_IDENT" VARCHAR2(45 BYTE), 
-	"TMDL_OTHR_IDENT" VARCHAR2(45 BYTE), 
-	"TMDL_REP_NAME" VARCHAR2(255 BYTE), 
-	"TMDL_DATE" TIMESTAMP (6), 
-	"INDIAN_COUNTRY_IND" CHAR(1 BYTE)
-   ) ;
- 
-
-   COMMENT ON COLUMN "ATT_TMDL_REP"."TMDL_REP_IDENT" IS 'Unique code identifying the TMDL Report (TMDLReportIdentifier)';
- 
-   COMMENT ON COLUMN "ATT_TMDL_REP"."TMDL_OTHR_IDENT" IS 'Alternative code identifying the TMDL Report (an example could be a state assigned identifier that is different from the ID in TMDLReportIdentifier) (TMDLOtherIdentifier)';
- 
-   COMMENT ON COLUMN "ATT_TMDL_REP"."TMDL_REP_NAME" IS 'Name of the TMDL (TMDLReportName)';
- 
-   COMMENT ON COLUMN "ATT_TMDL_REP"."TMDL_DATE" IS 'Date TMDL was established (TMDLDate)';
- 
-   COMMENT ON COLUMN "ATT_TMDL_REP"."INDIAN_COUNTRY_IND" IS 'Indicates if the water is either wholly or partially in Indian country. (IndianCountryIndicator)';
- 
-   COMMENT ON TABLE "ATT_TMDL_REP"  IS 'Schema element: TMDLReportDetails';
-/
---------------------------------------------------------
 --  DDL for Table ATT_USE_ATTAINMENT
 --------------------------------------------------------
 
@@ -1136,7 +1046,12 @@
 	"THREATENED_IND" CHAR(1 BYTE), 
 	"TREND_CODE" VARCHAR2(25 BYTE), 
 	"AGNCY_CODE" CHAR(1 BYTE), 
-	"USE_CMNT_TXT" VARCHAR2(4000 BYTE)
+	"USE_CMNT_TXT" VARCHAR2(4000 BYTE), 
+	"ASSESSMNT_BASIS_CODE" VARCHAR2(30 BYTE), 
+	"MON_START_DATE" TIMESTAMP (6), 
+	"MON_END_DATE" TIMESTAMP (6), 
+	"ASSESSMNT_DATE" TIMESTAMP (6), 
+	"ASSESSOR_NAME" VARCHAR2(80 BYTE)
    ) ;
  
 
@@ -1152,28 +1067,17 @@
  
    COMMENT ON COLUMN "ATT_USE_ATTAINMENT"."USE_CMNT_TXT" IS 'Free text for providing additional comments on the use assessment (UseCommentText)';
  
+   COMMENT ON COLUMN "ATT_USE_ATTAINMENT"."ASSESSMNT_BASIS_CODE" IS 'Code representing the basis for the assessment; is it based on monitored data, extrapolated data, or both. (AssessmentBasisCode)';
+ 
+   COMMENT ON COLUMN "ATT_USE_ATTAINMENT"."MON_START_DATE" IS 'Date on which monitoring began (MonitoringStartDate)';
+ 
+   COMMENT ON COLUMN "ATT_USE_ATTAINMENT"."MON_END_DATE" IS 'Date on which monitoring ended (MonitoringEndDate)';
+ 
+   COMMENT ON COLUMN "ATT_USE_ATTAINMENT"."ASSESSMNT_DATE" IS 'Day on which the assessment was completed (AssessmentDate)';
+ 
+   COMMENT ON COLUMN "ATT_USE_ATTAINMENT"."ASSESSOR_NAME" IS 'Name of the individual performing the assessment (AssessorName)';
+ 
    COMMENT ON TABLE "ATT_USE_ATTAINMENT"  IS 'Schema element: UseAttainment';
-/
---------------------------------------------------------
---  DDL for Table ATT_USE_CLASS
---------------------------------------------------------
-
-  CREATE TABLE "ATT_USE_CLASS" 
-   (	"ATT_USE_CLASS_ID" VARCHAR2(36 BYTE), 
-	"ATT_ASSESSMNT_UNIT_ID" VARCHAR2(36 BYTE), 
-	"USE_CLASS_CNTXT" VARCHAR2(30 BYTE), 
-	"USE_CLASS_CODE" VARCHAR2(15 BYTE), 
-	"USE_CLASS_NAME" VARCHAR2(50 BYTE)
-   ) ;
- 
-
-   COMMENT ON COLUMN "ATT_USE_CLASS"."USE_CLASS_CNTXT" IS 'Context for the class code (typically OrganizationIdentifier) (UseClassContext)';
- 
-   COMMENT ON COLUMN "ATT_USE_CLASS"."USE_CLASS_CODE" IS 'Unique code identifying the use class for this water (UseClassCode)';
- 
-   COMMENT ON COLUMN "ATT_USE_CLASS"."USE_CLASS_NAME" IS 'name of the use class for this water (UseClassName)';
- 
-   COMMENT ON TABLE "ATT_USE_CLASS"  IS 'Schema element: UseClass';
 /
 --------------------------------------------------------
 --  DDL for Table ATT_WTR_TYPE
@@ -1206,90 +1110,6 @@
    COMMENT ON TABLE "ATT_WTR_TYPE"  IS 'Schema element: WaterType';
 /
 --------------------------------------------------------
---  DDL for Index IX_MON_STTN_ATT_ASSSSM_UNIT_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_MON_STTN_ATT_ASSSSM_UNIT_ID" ON "ATT_MON_STATION" ("ATT_ASSESSMNT_UNIT_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index PK_ST_INTEGRATED_REP_CATG
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "PK_ST_INTEGRATED_REP_CATG" ON "ATT_ST_INTEGRATED_REP_CATG" ("ATT_ST_INTEGRATED_REP_CATG_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_LOC_ATT_PRIO_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_LOC_ATT_PRIO_ID" ON "ATT_LOC" ("ATT_PRIO_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index PK_SRC
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "PK_SRC" ON "ATT_SRC" ("ATT_SRC_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_ST_WID_CUS_ATT_ST_WID_AC_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_ST_WID_CUS_ATT_ST_WID_AC_ID" ON "ATT_ST_WIDE_CAUSE" ("ATT_ST_WIDE_ACTN_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index PK_LEGACY_NPDES
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "PK_LEGACY_NPDES" ON "ATT_LEGACY_NPDES" ("ATT_LEGACY_NPDES_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_TMDLNPDES_ATT_NPDES_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_TMDLNPDES_ATT_NPDES_ID" ON "ATT_TMDLNPDES" ("ATT_NPDES_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_ASSC_ACTN_ATT_PARAM_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_ASSC_ACTN_ATT_PARAM_ID" ON "ATT_ASSC_ACTN" ("ATT_PARAM_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index PK_POLUT
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "PK_POLUT" ON "ATT_POLUT" ("ATT_POLUT_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_RVIW_CMNT_ATT_ST_WID_ASS_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_RVIW_CMNT_ATT_ST_WID_ASS_ID" ON "ATT_REVIEW_CMNT" ("ATT_ST_WIDE_ASSESSMNT_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index PK_ASSC_CAUSE_NAME
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "PK_ASSC_CAUSE_NAME" ON "ATT_ASSC_CAUSE_NAME" ("ATT_ASSC_CAUSE_NAME_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index PK_ASSESSMNT
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "PK_ASSESSMNT" ON "ATT_ASSESSMNT" ("ATT_ASSESSMNT_ID") 
-  ;
-/
---------------------------------------------------------
 --  DDL for Index PK_NPDES
 --------------------------------------------------------
 
@@ -1297,430 +1117,24 @@
   ;
 /
 --------------------------------------------------------
---  DDL for Index IX_ST_WID_US_AT_AT_ST_WI_AS_ID
+--  DDL for Index PK_DELISTED_WTR
 --------------------------------------------------------
 
-  CREATE INDEX "IX_ST_WID_US_AT_AT_ST_WI_AS_ID" ON "ATT_ST_WIDE_USE_ATTAINMENT" ("ATT_ST_WIDE_ASSESSMNT_ID") 
+  CREATE UNIQUE INDEX "PK_DELISTED_WTR" ON "ATT_DELISTED_WTR" ("ATT_DELISTED_WTR_ID") 
   ;
 /
 --------------------------------------------------------
---  DDL for Index PK_ST_WIDE_SRC
+--  DDL for Index PK_ASSC_POLUT
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "PK_ST_WIDE_SRC" ON "ATT_ST_WIDE_SRC" ("ATT_ST_WIDE_SRC_ID") 
+  CREATE UNIQUE INDEX "PK_ASSC_POLUT" ON "ATT_ASSC_POLUT" ("ATT_ASSC_POLUT_ID") 
   ;
 /
 --------------------------------------------------------
---  DDL for Index PK_ACTN
+--  DDL for Index IX_DOCUMENT_ATT_ACTN_ID
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "PK_ACTN" ON "ATT_ACTN" ("ATT_ACTN_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index PK_PRIO_CAUSE
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "PK_PRIO_CAUSE" ON "ATT_PRIO_CAUSE" ("ATT_PRIO_CAUSE_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_USE_CLSS_ATT_ASSSSM_UNIT_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_USE_CLSS_ATT_ASSSSM_UNIT_ID" ON "ATT_USE_CLASS" ("ATT_ASSESSMNT_UNIT_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_ST_WIDE_ASSS_ATT_REP_CYC_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_ST_WIDE_ASSS_ATT_REP_CYC_ID" ON "ATT_ST_WIDE_ASSESSMNT" ("ATT_REP_CYCLE_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_TMDLNPDES_ATT_LEGCY_NPDS_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_TMDLNPDES_ATT_LEGCY_NPDS_ID" ON "ATT_TMDLNPDES" ("ATT_LEGACY_NPDES_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index PK_TMDL_REP
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "PK_TMDL_REP" ON "ATT_TMDL_REP" ("ATT_TMDL_REP_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_ASSC_USE_ATT_PARAM_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_ASSC_USE_ATT_PARAM_ID" ON "ATT_ASSC_USE" ("ATT_PARAM_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_PRIOR_CAUSE_ATT_PARAM_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_PRIOR_CAUSE_ATT_PARAM_ID" ON "ATT_PRIOR_CAUSE" ("ATT_PARAM_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_ASSESSMNT_ATT_REP_CYCLE_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_ASSESSMNT_ATT_REP_CYCLE_ID" ON "ATT_ASSESSMNT" ("ATT_REP_CYCLE_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_TMDL_POLUT_ATT_POLUT_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_TMDL_POLUT_ATT_POLUT_ID" ON "ATT_TMDL_POLUT" ("ATT_POLUT_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_DOCUMENT_ATT_ASSESSMNT_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_DOCUMENT_ATT_ASSESSMNT_ID" ON "ATT_DOCUMENT" ("ATT_ASSESSMNT_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index PK_LOC
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "PK_LOC" ON "ATT_LOC" ("ATT_LOC_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_DOCUMENT_ATT_REP_CYCLE_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_DOCUMENT_ATT_REP_CYCLE_ID" ON "ATT_DOCUMENT" ("ATT_REP_CYCLE_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_ASSSS_TYPE_ATT_ASSS_MTDT_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_ASSSS_TYPE_ATT_ASSS_MTDT_ID" ON "ATT_ASSESSMNT_TYPE" ("ATT_ASSESSMNT_METADATA_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index PK_PRIOR_CAUSE
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "PK_PRIOR_CAUSE" ON "ATT_PRIOR_CAUSE" ("ATT_PRIOR_CAUSE_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index PK_ASSESSMNT_METADATA
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "PK_ASSESSMNT_METADATA" ON "ATT_ASSESSMNT_METADATA" ("ATT_ASSESSMNT_METADATA_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_DLST_WTR_CUS_ATT_DLS_WTR_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_DLST_WTR_CUS_ATT_DLS_WTR_ID" ON "ATT_DELISTED_WTR_CAUSE" ("ATT_DELISTED_WTR_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_ST_INT_REP_CAT_ATT_US_AT_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_ST_INT_REP_CAT_ATT_US_AT_ID" ON "ATT_ST_INTEGRATED_REP_CATG" ("ATT_USE_ATTAINMENT_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index PK_REVIEW_CMNT
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "PK_REVIEW_CMNT" ON "ATT_REVIEW_CMNT" ("ATT_REVIEW_CMNT_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_WTR_TYPE_ATT_ASSSSM_UNIT_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_WTR_TYPE_ATT_ASSSSM_UNIT_ID" ON "ATT_WTR_TYPE" ("ATT_ASSESSMNT_UNIT_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index PK_ORG_CONTACT
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "PK_ORG_CONTACT" ON "ATT_ORG_CONTACT" ("ATT_ORG_CONTACT_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_PRIO_ATT_ORG_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_PRIO_ATT_ORG_ID" ON "ATT_PRIO" ("ATT_ORG_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_PRIO_ASSSS_UNIT_ATT_PRIO_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_PRIO_ASSSS_UNIT_ATT_PRIO_ID" ON "ATT_PRIO_ASSESSMNT_UNIT" ("ATT_PRIO_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_PROBBLE_SRC_ATT_ASSSSMNT_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_PROBBLE_SRC_ATT_ASSSSMNT_ID" ON "ATT_PROBABLE_SRC" ("ATT_ASSESSMNT_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_REVIEW_CMNT_ATT_ACTN_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_REVIEW_CMNT_ATT_ACTN_ID" ON "ATT_REVIEW_CMNT" ("ATT_ACTN_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_PRIO_CAUSE_ATT_PRIO_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_PRIO_CAUSE_ATT_PRIO_ID" ON "ATT_PRIO_CAUSE" ("ATT_PRIO_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index PK_TMDLNPDES
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "PK_TMDLNPDES" ON "ATT_TMDLNPDES" ("ATT_TMDLNPDES_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index PK_SPECIFIC_WTR_CAUSE
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "PK_SPECIFIC_WTR_CAUSE" ON "ATT_SPECIFIC_WTR_CAUSE" ("ATT_SPECIFIC_WTR_CAUSE_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_ST_WID_PR_SR_AT_ST_WI_AS_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_ST_WID_PR_SR_AT_ST_WI_AS_ID" ON "ATT_ST_WIDE_PROBABLE_SRC" ("ATT_ST_WIDE_ASSESSMNT_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index PK_ORG
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "PK_ORG" ON "ATT_ORG" ("ATT_ORG_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index PK_ST_WIDE_ASSESSMNT
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "PK_ST_WIDE_ASSESSMNT" ON "ATT_ST_WIDE_ASSESSMNT" ("ATT_ST_WIDE_ASSESSMNT_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index PK_ST_WIDE_PROBABLE_SRC
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "PK_ST_WIDE_PROBABLE_SRC" ON "ATT_ST_WIDE_PROBABLE_SRC" ("ATT_ST_WIDE_PROBABLE_SRC_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_ASSC_PLU_ATT_SPC_WTR_CUS_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_ASSC_PLU_ATT_SPC_WTR_CUS_ID" ON "ATT_ASSC_POLUT" ("ATT_SPECIFIC_WTR_CAUSE_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index PK_RELATED_TMD_LS
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "PK_RELATED_TMD_LS" ON "ATT_RELATED_TMD_LS" ("ATT_RELATED_TMD_LS_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_MILNG_ADDR_ATT_ORG_CNTCT_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_MILNG_ADDR_ATT_ORG_CNTCT_ID" ON "ATT_MAILING_ADDR" ("ATT_ORG_CONTACT_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_LGCY_NPD_ATT_SPC_WTR_CUS_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_LGCY_NPD_ATT_SPC_WTR_CUS_ID" ON "ATT_LEGACY_NPDES" ("ATT_SPECIFIC_WTR_CAUSE_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index PK_ASSESSMNT_UNIT
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "PK_ASSESSMNT_UNIT" ON "ATT_ASSESSMNT_UNIT" ("ATT_ASSESSMNT_UNIT_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_PARAM_ATT_ASSESSMNT_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_PARAM_ATT_ASSESSMNT_ID" ON "ATT_PARAM" ("ATT_ASSESSMNT_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index PK_ST_WIDE_CAUSE
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "PK_ST_WIDE_CAUSE" ON "ATT_ST_WIDE_CAUSE" ("ATT_ST_WIDE_CAUSE_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_SPCIFC_WTR_ATT_ASSC_WTRS_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_SPCIFC_WTR_ATT_ASSC_WTRS_ID" ON "ATT_SPECIFIC_WTR" ("ATT_ASSC_WATERS_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index PK_PREVIOUS_ASSESSMNT_UNIT
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "PK_PREVIOUS_ASSESSMNT_UNIT" ON "ATT_PREVIOUS_ASSESSMNT_UNIT" ("ATT_PREVIOUS_ASSESSMNT_UNIT_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index PK_PRIO
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "PK_PRIO" ON "ATT_PRIO" ("ATT_PRIO_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index PK_ASSC_USE
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "PK_ASSC_USE" ON "ATT_ASSC_USE" ("ATT_ASSC_USE_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_ADDRESSED_PRIO_ATT_ACTN_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_ADDRESSED_PRIO_ATT_ACTN_ID" ON "ATT_ADDRESSED_PRIO" ("ATT_ACTN_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index PK_SPECIFIC_WTR
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "PK_SPECIFIC_WTR" ON "ATT_SPECIFIC_WTR" ("ATT_SPECIFIC_WTR_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_ST_WIDE_ACTN_ATT_ASS_WTR_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_ST_WIDE_ACTN_ATT_ASS_WTR_ID" ON "ATT_ST_WIDE_ACTN" ("ATT_ASSC_WATERS_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index PK_MOD
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "PK_MOD" ON "ATT_MOD" ("ATT_MOD_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_ASSSS_MTDTA_ATT_USE_ATTN_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_ASSSS_MTDTA_ATT_USE_ATTN_ID" ON "ATT_ASSESSMNT_METADATA" ("ATT_USE_ATTAINMENT_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_LOC_ATT_ASSESSMNT_UNIT_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_LOC_ATT_ASSESSMNT_UNIT_ID" ON "ATT_LOC" ("ATT_ASSESSMNT_UNIT_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_ST_INTG_REP_CATG_ATT_ASS_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_ST_INTG_REP_CATG_ATT_ASS_ID" ON "ATT_ST_INTEGRATED_REP_CATG" ("ATT_ASSESSMNT_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_PRIO_USE_ATT_PRIO_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_PRIO_USE_ATT_PRIO_ID" ON "ATT_PRIO_USE" ("ATT_PRIO_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_ORG_CONTACT_ATT_ORG_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_ORG_CONTACT_ATT_ORG_ID" ON "ATT_ORG_CONTACT" ("ATT_ORG_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_NPDES_ATT_POLUT_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_NPDES_ATT_POLUT_ID" ON "ATT_NPDES" ("ATT_POLUT_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index PK_ASSESSMNT_METHOD_TYPE
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "PK_ASSESSMNT_METHOD_TYPE" ON "ATT_ASSESSMNT_METHOD_TYPE" ("ATT_ASSESSMNT_METHOD_TYPE_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_REVIEW_CMNT_ATT_ASSSSMNT_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_REVIEW_CMNT_ATT_ASSSSMNT_ID" ON "ATT_REVIEW_CMNT" ("ATT_ASSESSMNT_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index PK_ASSESSMNT_ACTY
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "PK_ASSESSMNT_ACTY" ON "ATT_ASSESSMNT_ACTY" ("ATT_ASSESSMNT_ACTY_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_USE_ATTNMNT_ATT_ASSSSMNT_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_USE_ATTNMNT_ATT_ASSSSMNT_ID" ON "ATT_USE_ATTAINMENT" ("ATT_ASSESSMNT_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_ASSESSMNT_UNIT_ATT_ORG_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_ASSESSMNT_UNIT_ATT_ORG_ID" ON "ATT_ASSESSMNT_UNIT" ("ATT_ORG_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index PK_ASSESSMNT_TYPE
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "PK_ASSESSMNT_TYPE" ON "ATT_ASSESSMNT_TYPE" ("ATT_ASSESSMNT_TYPE_ID") 
+  CREATE INDEX "IX_DOCUMENT_ATT_ACTN_ID" ON "ATT_DOCUMENT" ("ATT_ACTN_ID") 
   ;
 /
 --------------------------------------------------------
@@ -1731,59 +1145,122 @@
   ;
 /
 --------------------------------------------------------
---  DDL for Index IX_SEASON_ATT_ASSC_USE_ID
+--  DDL for Index IX_ASSESSMNT_ATT_REP_CYCLE_ID
 --------------------------------------------------------
 
-  CREATE INDEX "IX_SEASON_ATT_ASSC_USE_ID" ON "ATT_SEASON" ("ATT_ASSC_USE_ID") 
+  CREATE INDEX "IX_ASSESSMNT_ATT_REP_CYCLE_ID" ON "ATT_ASSESSMNT" ("ATT_REP_CYCLE_ID") 
   ;
 /
 --------------------------------------------------------
---  DDL for Index PK_WTR_TYPE
+--  DDL for Index IX_SPCF_WTR_CUS_ATT_SPC_WTR_ID
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "PK_WTR_TYPE" ON "ATT_WTR_TYPE" ("ATT_WTR_TYPE_ID") 
+  CREATE INDEX "IX_SPCF_WTR_CUS_ATT_SPC_WTR_ID" ON "ATT_SPECIFIC_WTR_CAUSE" ("ATT_SPECIFIC_WTR_ID") 
   ;
 /
 --------------------------------------------------------
---  DDL for Index IX_TMDL_REP_ATT_ACTN_ID
+--  DDL for Index PK_ASSESSMNT
 --------------------------------------------------------
 
-  CREATE INDEX "IX_TMDL_REP_ATT_ACTN_ID" ON "ATT_TMDL_REP" ("ATT_ACTN_ID") 
+  CREATE UNIQUE INDEX "PK_ASSESSMNT" ON "ATT_ASSESSMNT" ("ATT_ASSESSMNT_ID") 
   ;
 /
 --------------------------------------------------------
---  DDL for Index IX_MON_ACTY_ATT_ASSSS_MTDTA_ID
+--  DDL for Index PK_RELATED_TMD_LS
 --------------------------------------------------------
 
-  CREATE INDEX "IX_MON_ACTY_ATT_ASSSS_MTDTA_ID" ON "ATT_MON_ACTY" ("ATT_ASSESSMNT_METADATA_ID") 
+  CREATE UNIQUE INDEX "PK_RELATED_TMD_LS" ON "ATT_RELATED_TMD_LS" ("ATT_RELATED_TMD_LS_ID") 
   ;
 /
 --------------------------------------------------------
---  DDL for Index PK_REP_CYCLE
+--  DDL for Index PK_PREVIOUS_ASSESSMNT_UNIT
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "PK_REP_CYCLE" ON "ATT_REP_CYCLE" ("ATT_REP_CYCLE_ID") 
+  CREATE UNIQUE INDEX "PK_PREVIOUS_ASSESSMNT_UNIT" ON "ATT_PREVIOUS_ASSESSMNT_UNIT" ("ATT_PREVIOUS_ASSESSMNT_UNIT_ID") 
   ;
 /
 --------------------------------------------------------
---  DDL for Index IX_ACTN_ATT_ORG_ID
+--  DDL for Index IX_LOC_ATT_PRIO_ID
 --------------------------------------------------------
 
-  CREATE INDEX "IX_ACTN_ATT_ORG_ID" ON "ATT_ACTN" ("ATT_ORG_ID") 
+  CREATE INDEX "IX_LOC_ATT_PRIO_ID" ON "ATT_LOC" ("ATT_PRIO_ID") 
   ;
 /
 --------------------------------------------------------
---  DDL for Index IX_PRVS_ASSSSM_UNIT_ATT_MOD_ID
+--  DDL for Index PK_ST_INTEGRATED_REP_CATG
 --------------------------------------------------------
 
-  CREATE INDEX "IX_PRVS_ASSSSM_UNIT_ATT_MOD_ID" ON "ATT_PREVIOUS_ASSESSMNT_UNIT" ("ATT_MOD_ID") 
+  CREATE UNIQUE INDEX "PK_ST_INTEGRATED_REP_CATG" ON "ATT_ST_INTEGRATED_REP_CATG" ("ATT_ST_INTEGRATED_REP_CATG_ID") 
   ;
 /
 --------------------------------------------------------
---  DDL for Index IX_ASSS_MTH_TYP_ATT_ASS_MTD_ID
+--  DDL for Index IX_ST_WID_CUS_ATT_ST_WID_AC_ID
 --------------------------------------------------------
 
-  CREATE INDEX "IX_ASSS_MTH_TYP_ATT_ASS_MTD_ID" ON "ATT_ASSESSMNT_METHOD_TYPE" ("ATT_ASSESSMNT_METADATA_ID") 
+  CREATE INDEX "IX_ST_WID_CUS_ATT_ST_WID_AC_ID" ON "ATT_ST_WIDE_CAUSE" ("ATT_ST_WIDE_ACTN_ID") 
+  ;
+/
+--------------------------------------------------------
+--  DDL for Index PK_REVIEW_CMNT
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "PK_REVIEW_CMNT" ON "ATT_REVIEW_CMNT" ("ATT_REVIEW_CMNT_ID") 
+  ;
+/
+--------------------------------------------------------
+--  DDL for Index PK_PROBABLE_SRC
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "PK_PROBABLE_SRC" ON "ATT_PROBABLE_SRC" ("ATT_PROBABLE_SRC_ID") 
+  ;
+/
+--------------------------------------------------------
+--  DDL for Index IX_TMDLNPDES_ATT_NPDES_ID
+--------------------------------------------------------
+
+  CREATE INDEX "IX_TMDLNPDES_ATT_NPDES_ID" ON "ATT_TMDLNPDES" ("ATT_NPDES_ID") 
+  ;
+/
+--------------------------------------------------------
+--  DDL for Index PK_TMDLNPDES
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "PK_TMDLNPDES" ON "ATT_TMDLNPDES" ("ATT_TMDLNPDES_ID") 
+  ;
+/
+--------------------------------------------------------
+--  DDL for Index IX_MON_STTN_ATT_ASSSSM_UNIT_ID
+--------------------------------------------------------
+
+  CREATE INDEX "IX_MON_STTN_ATT_ASSSSM_UNIT_ID" ON "ATT_MON_STATION" ("ATT_ASSESSMNT_UNIT_ID") 
+  ;
+/
+--------------------------------------------------------
+--  DDL for Index PK_ST_WIDE_ASSESSMNT
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "PK_ST_WIDE_ASSESSMNT" ON "ATT_ST_WIDE_ASSESSMNT" ("ATT_ST_WIDE_ASSESSMNT_ID") 
+  ;
+/
+--------------------------------------------------------
+--  DDL for Index PK_PRIOR_CAUSE
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "PK_PRIOR_CAUSE" ON "ATT_PRIOR_CAUSE" ("ATT_PRIOR_CAUSE_ID") 
+  ;
+/
+--------------------------------------------------------
+--  DDL for Index IX_ASSS_MTH_TYP_ATT_USE_ATT_ID
+--------------------------------------------------------
+
+  CREATE INDEX "IX_ASSS_MTH_TYP_ATT_USE_ATT_ID" ON "ATT_ASSESSMNT_METHOD_TYPE" ("ATT_USE_ATTAINMENT_ID") 
+  ;
+/
+--------------------------------------------------------
+--  DDL for Index PK_SPECIFIC_WTR
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "PK_SPECIFIC_WTR" ON "ATT_SPECIFIC_WTR" ("ATT_SPECIFIC_WTR_ID") 
   ;
 /
 --------------------------------------------------------
@@ -1794,6 +1271,209 @@
   ;
 /
 --------------------------------------------------------
+--  DDL for Index IX_ASSESSMNT_UNIT_ATT_ORG_ID
+--------------------------------------------------------
+
+  CREATE INDEX "IX_ASSESSMNT_UNIT_ATT_ORG_ID" ON "ATT_ASSESSMNT_UNIT" ("ATT_ORG_ID") 
+  ;
+/
+--------------------------------------------------------
+--  DDL for Index IX_ASSC_USE_ATT_PARAM_ID
+--------------------------------------------------------
+
+  CREATE INDEX "IX_ASSC_USE_ATT_PARAM_ID" ON "ATT_ASSC_USE" ("ATT_PARAM_ID") 
+  ;
+/
+--------------------------------------------------------
+--  DDL for Index IX_DOCUMENT_ATT_REP_CYCLE_ID
+--------------------------------------------------------
+
+  CREATE INDEX "IX_DOCUMENT_ATT_REP_CYCLE_ID" ON "ATT_DOCUMENT" ("ATT_REP_CYCLE_ID") 
+  ;
+/
+--------------------------------------------------------
+--  DDL for Index PK_PARAM
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "PK_PARAM" ON "ATT_PARAM" ("ATT_PARAM_ID") 
+  ;
+/
+--------------------------------------------------------
+--  DDL for Index IX_PRVS_ASSSSM_UNIT_ATT_MOD_ID
+--------------------------------------------------------
+
+  CREATE INDEX "IX_PRVS_ASSSSM_UNIT_ATT_MOD_ID" ON "ATT_PREVIOUS_ASSESSMNT_UNIT" ("ATT_MOD_ID") 
+  ;
+/
+--------------------------------------------------------
+--  DDL for Index IX_PARAM_ATT_ASSESSMNT_ID
+--------------------------------------------------------
+
+  CREATE INDEX "IX_PARAM_ATT_ASSESSMNT_ID" ON "ATT_PARAM" ("ATT_ASSESSMNT_ID") 
+  ;
+/
+--------------------------------------------------------
+--  DDL for Index PK_ORG
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "PK_ORG" ON "ATT_ORG" ("ATT_ORG_ID") 
+  ;
+/
+--------------------------------------------------------
+--  DDL for Index PK_ASSESSMNT_METHOD_TYPE
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "PK_ASSESSMNT_METHOD_TYPE" ON "ATT_ASSESSMNT_METHOD_TYPE" ("ATT_ASSESSMNT_METHOD_TYPE_ID") 
+  ;
+/
+--------------------------------------------------------
+--  DDL for Index IX_PROBBLE_SRC_ATT_ASSSSMNT_ID
+--------------------------------------------------------
+
+  CREATE INDEX "IX_PROBBLE_SRC_ATT_ASSSSMNT_ID" ON "ATT_PROBABLE_SRC" ("ATT_ASSESSMNT_ID") 
+  ;
+/
+--------------------------------------------------------
+--  DDL for Index IX_ST_WIDE_ACTN_ATT_ACTN_ID
+--------------------------------------------------------
+
+  CREATE INDEX "IX_ST_WIDE_ACTN_ATT_ACTN_ID" ON "ATT_ST_WIDE_ACTN" ("ATT_ACTN_ID") 
+  ;
+/
+--------------------------------------------------------
+--  DDL for Index PK_ST_WIDE_CAUSE
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "PK_ST_WIDE_CAUSE" ON "ATT_ST_WIDE_CAUSE" ("ATT_ST_WIDE_CAUSE_ID") 
+  ;
+/
+--------------------------------------------------------
+--  DDL for Index PK_ST_WIDE_SRC
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "PK_ST_WIDE_SRC" ON "ATT_ST_WIDE_SRC" ("ATT_ST_WIDE_SRC_ID") 
+  ;
+/
+--------------------------------------------------------
+--  DDL for Index IX_REP_CYCLE_ATT_ORG_ID
+--------------------------------------------------------
+
+  CREATE INDEX "IX_REP_CYCLE_ATT_ORG_ID" ON "ATT_REP_CYCLE" ("ATT_ORG_ID") 
+  ;
+/
+--------------------------------------------------------
+--  DDL for Index PK_SRC
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "PK_SRC" ON "ATT_SRC" ("ATT_SRC_ID") 
+  ;
+/
+--------------------------------------------------------
+--  DDL for Index IX_ST_WID_PR_SR_AT_ST_WI_AS_ID
+--------------------------------------------------------
+
+  CREATE INDEX "IX_ST_WID_PR_SR_AT_ST_WI_AS_ID" ON "ATT_ST_WIDE_PROBABLE_SRC" ("ATT_ST_WIDE_ASSESSMNT_ID") 
+  ;
+/
+--------------------------------------------------------
+--  DDL for Index IX_ST_INTG_REP_CATG_ATT_ASS_ID
+--------------------------------------------------------
+
+  CREATE INDEX "IX_ST_INTG_REP_CATG_ATT_ASS_ID" ON "ATT_ST_INTEGRATED_REP_CATG" ("ATT_ASSESSMNT_ID") 
+  ;
+/
+--------------------------------------------------------
+--  DDL for Index PK_ASSESSMNT_UNIT
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "PK_ASSESSMNT_UNIT" ON "ATT_ASSESSMNT_UNIT" ("ATT_ASSESSMNT_UNIT_ID") 
+  ;
+/
+--------------------------------------------------------
+--  DDL for Index PK_ASSC_ACTN
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "PK_ASSC_ACTN" ON "ATT_ASSC_ACTN" ("ATT_ASSC_ACTN_ID") 
+  ;
+/
+--------------------------------------------------------
+--  DDL for Index IX_REVIEW_CMNT_ATT_ASSSSMNT_ID
+--------------------------------------------------------
+
+  CREATE INDEX "IX_REVIEW_CMNT_ATT_ASSSSMNT_ID" ON "ATT_REVIEW_CMNT" ("ATT_ASSESSMNT_ID") 
+  ;
+/
+--------------------------------------------------------
+--  DDL for Index IX_LOC_ATT_ASSESSMNT_UNIT_ID
+--------------------------------------------------------
+
+  CREATE INDEX "IX_LOC_ATT_ASSESSMNT_UNIT_ID" ON "ATT_LOC" ("ATT_ASSESSMNT_UNIT_ID") 
+  ;
+/
+--------------------------------------------------------
+--  DDL for Index PK_LOC
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "PK_LOC" ON "ATT_LOC" ("ATT_LOC_ID") 
+  ;
+/
+--------------------------------------------------------
+--  DDL for Index IX_MOD_ATT_ASSESSMNT_UNIT_ID
+--------------------------------------------------------
+
+  CREATE INDEX "IX_MOD_ATT_ASSESSMNT_UNIT_ID" ON "ATT_MOD" ("ATT_ASSESSMNT_UNIT_ID") 
+  ;
+/
+--------------------------------------------------------
+--  DDL for Index IX_ST_WIDE_ASSS_ATT_REP_CYC_ID
+--------------------------------------------------------
+
+  CREATE INDEX "IX_ST_WIDE_ASSS_ATT_REP_CYC_ID" ON "ATT_ST_WIDE_ASSESSMNT" ("ATT_REP_CYCLE_ID") 
+  ;
+/
+--------------------------------------------------------
+--  DDL for Index PK_PRIO_CAUSE
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "PK_PRIO_CAUSE" ON "ATT_PRIO_CAUSE" ("ATT_PRIO_CAUSE_ID") 
+  ;
+/
+--------------------------------------------------------
+--  DDL for Index IX_SEASON_ATT_POLUT_ID
+--------------------------------------------------------
+
+  CREATE INDEX "IX_SEASON_ATT_POLUT_ID" ON "ATT_SEASON" ("ATT_POLUT_ID") 
+  ;
+/
+--------------------------------------------------------
+--  DDL for Index IX_ST_WID_SRC_ATT_ST_WID_AC_ID
+--------------------------------------------------------
+
+  CREATE INDEX "IX_ST_WID_SRC_ATT_ST_WID_AC_ID" ON "ATT_ST_WIDE_SRC" ("ATT_ST_WIDE_ACTN_ID") 
+  ;
+/
+--------------------------------------------------------
+--  DDL for Index IX_TMDLNPDES_ATT_LEGCY_NPDS_ID
+--------------------------------------------------------
+
+  CREATE INDEX "IX_TMDLNPDES_ATT_LEGCY_NPDS_ID" ON "ATT_TMDLNPDES" ("ATT_LEGACY_NPDES_ID") 
+  ;
+/
+--------------------------------------------------------
+--  DDL for Index IX_DLISTD_WTR_ATT_REP_CYCLE_ID
+--------------------------------------------------------
+
+  CREATE INDEX "IX_DLISTD_WTR_ATT_REP_CYCLE_ID" ON "ATT_DELISTED_WTR" ("ATT_REP_CYCLE_ID") 
+  ;
+/
+--------------------------------------------------------
+--  DDL for Index PK_REP_CYCLE
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "PK_REP_CYCLE" ON "ATT_REP_CYCLE" ("ATT_REP_CYCLE_ID") 
+  ;
+/
+--------------------------------------------------------
 --  DDL for Index PK_SEASON
 --------------------------------------------------------
 
@@ -1801,10 +1481,45 @@
   ;
 /
 --------------------------------------------------------
+--  DDL for Index IX_USE_ATTNMNT_ATT_ASSSSMNT_ID
+--------------------------------------------------------
+
+  CREATE INDEX "IX_USE_ATTNMNT_ATT_ASSSSMNT_ID" ON "ATT_USE_ATTAINMENT" ("ATT_ASSESSMNT_ID") 
+  ;
+/
+--------------------------------------------------------
+--  DDL for Index IX_ORG_CONTACT_ATT_ORG_ID
+--------------------------------------------------------
+
+  CREATE INDEX "IX_ORG_CONTACT_ATT_ORG_ID" ON "ATT_ORG_CONTACT" ("ATT_ORG_ID") 
+  ;
+/
+--------------------------------------------------------
+--  DDL for Index PK_ST_WIDE_PROBABLE_SRC
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "PK_ST_WIDE_PROBABLE_SRC" ON "ATT_ST_WIDE_PROBABLE_SRC" ("ATT_ST_WIDE_PROBABLE_SRC_ID") 
+  ;
+/
+--------------------------------------------------------
+--  DDL for Index PK_ASSC_CAUSE_NAME
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "PK_ASSC_CAUSE_NAME" ON "ATT_ASSC_CAUSE_NAME" ("ATT_ASSC_CAUSE_NAME_ID") 
+  ;
+/
+--------------------------------------------------------
 --  DDL for Index PK_ST_WIDE_USE_ATTAINMENT
 --------------------------------------------------------
 
   CREATE UNIQUE INDEX "PK_ST_WIDE_USE_ATTAINMENT" ON "ATT_ST_WIDE_USE_ATTAINMENT" ("ATT_ST_WIDE_USE_ATTAINMENT_ID") 
+  ;
+/
+--------------------------------------------------------
+--  DDL for Index IX_DCUMNT_ATT_ASSSSMNT_UNIT_ID
+--------------------------------------------------------
+
+  CREATE INDEX "IX_DCUMNT_ATT_ASSSSMNT_UNIT_ID" ON "ATT_DOCUMENT" ("ATT_ASSESSMNT_UNIT_ID") 
   ;
 /
 --------------------------------------------------------
@@ -1822,220 +1537,45 @@
   ;
 /
 --------------------------------------------------------
---  DDL for Index PK_MAILING_ADDR
+--  DDL for Index IX_ASSSS_TYPE_ATT_USE_ATTNM_ID
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "PK_MAILING_ADDR" ON "ATT_MAILING_ADDR" ("ATT_MAILING_ADDR_ID") 
+  CREATE INDEX "IX_ASSSS_TYPE_ATT_USE_ATTNM_ID" ON "ATT_ASSESSMNT_TYPE" ("ATT_USE_ATTAINMENT_ID") 
   ;
 /
 --------------------------------------------------------
---  DDL for Index IX_DOCUMENT_ATT_ACTN_ID
+--  DDL for Index IX_LGCY_NPD_ATT_SPC_WTR_CUS_ID
 --------------------------------------------------------
 
-  CREATE INDEX "IX_DOCUMENT_ATT_ACTN_ID" ON "ATT_DOCUMENT" ("ATT_ACTN_ID") 
+  CREATE INDEX "IX_LGCY_NPD_ATT_SPC_WTR_CUS_ID" ON "ATT_LEGACY_NPDES" ("ATT_SPECIFIC_WTR_CAUSE_ID") 
   ;
 /
 --------------------------------------------------------
---  DDL for Index IX_REP_CYCLE_ATT_ORG_ID
+--  DDL for Index PK_ORG_CONTACT
 --------------------------------------------------------
 
-  CREATE INDEX "IX_REP_CYCLE_ATT_ORG_ID" ON "ATT_REP_CYCLE" ("ATT_ORG_ID") 
+  CREATE UNIQUE INDEX "PK_ORG_CONTACT" ON "ATT_ORG_CONTACT" ("ATT_ORG_CONTACT_ID") 
   ;
 /
 --------------------------------------------------------
---  DDL for Index IX_ST_WID_CUS_ATT_ST_WID_AS_ID
+--  DDL for Index IX_ACTN_ATT_ORG_ID
 --------------------------------------------------------
 
-  CREATE INDEX "IX_ST_WID_CUS_ATT_ST_WID_AS_ID" ON "ATT_ST_WIDE_CAUSE" ("ATT_ST_WIDE_ASSESSMNT_ID") 
+  CREATE INDEX "IX_ACTN_ATT_ORG_ID" ON "ATT_ACTN" ("ATT_ORG_ID") 
   ;
 /
 --------------------------------------------------------
---  DDL for Index IX_SPCF_WTR_CUS_ATT_SPC_WTR_ID
+--  DDL for Index IX_NPDES_ATT_POLUT_ID
 --------------------------------------------------------
 
-  CREATE INDEX "IX_SPCF_WTR_CUS_ATT_SPC_WTR_ID" ON "ATT_SPECIFIC_WTR_CAUSE" ("ATT_SPECIFIC_WTR_ID") 
+  CREATE INDEX "IX_NPDES_ATT_POLUT_ID" ON "ATT_NPDES" ("ATT_POLUT_ID") 
   ;
 /
 --------------------------------------------------------
---  DDL for Index IX_MOD_ATT_ASSESSMNT_UNIT_ID
+--  DDL for Index IX_SPECIFIC_WTR_ATT_ACTN_ID
 --------------------------------------------------------
 
-  CREATE INDEX "IX_MOD_ATT_ASSESSMNT_UNIT_ID" ON "ATT_MOD" ("ATT_ASSESSMNT_UNIT_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index PK_PROBABLE_SRC
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "PK_PROBABLE_SRC" ON "ATT_PROBABLE_SRC" ("ATT_PROBABLE_SRC_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index PK_ASSC_ACTN
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "PK_ASSC_ACTN" ON "ATT_ASSC_ACTN" ("ATT_ASSC_ACTN_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_ASSC_CUS_NAM_ATT_PRB_SRC_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_ASSC_CUS_NAM_ATT_PRB_SRC_ID" ON "ATT_ASSC_CAUSE_NAME" ("ATT_PROBABLE_SRC_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_ST_WID_SRC_ATT_ST_WID_AC_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_ST_WID_SRC_ATT_ST_WID_AC_ID" ON "ATT_ST_WIDE_SRC" ("ATT_ST_WIDE_ACTN_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_SEASON_ATT_POLUT_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_SEASON_ATT_POLUT_ID" ON "ATT_SEASON" ("ATT_POLUT_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_ASSSS_ACTY_ATT_ASSS_MTDT_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_ASSSS_ACTY_ATT_ASSS_MTDT_ID" ON "ATT_ASSESSMNT_ACTY" ("ATT_ASSESSMNT_METADATA_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index PK_ST_WIDE_WTR_TYPE
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "PK_ST_WIDE_WTR_TYPE" ON "ATT_ST_WIDE_WTR_TYPE" ("ATT_ST_WIDE_WTR_TYPE_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_POLUT_ATT_ACTN_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_POLUT_ATT_ACTN_ID" ON "ATT_POLUT" ("ATT_ACTN_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_SRC_ATT_SPECIFIC_WTR_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_SRC_ATT_SPECIFIC_WTR_ID" ON "ATT_SRC" ("ATT_SPECIFIC_WTR_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index PK_ADDRESSED_PRIO
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "PK_ADDRESSED_PRIO" ON "ATT_ADDRESSED_PRIO" ("ATT_ADDRESSED_PRIO_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index PK_PRIO_USE
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "PK_PRIO_USE" ON "ATT_PRIO_USE" ("ATT_PRIO_USE_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_RLTD_TMD_LS_ATT_TMDL_REP_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_RLTD_TMD_LS_ATT_TMDL_REP_ID" ON "ATT_RELATED_TMD_LS" ("ATT_TMDL_REP_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index PK_PARAM
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "PK_PARAM" ON "ATT_PARAM" ("ATT_PARAM_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index PK_DELISTED_WTR_CAUSE
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "PK_DELISTED_WTR_CAUSE" ON "ATT_DELISTED_WTR_CAUSE" ("ATT_DELISTED_WTR_CAUSE_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index PK_DELISTED_WTR
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "PK_DELISTED_WTR" ON "ATT_DELISTED_WTR" ("ATT_DELISTED_WTR_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index PK_USE_CLASS
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "PK_USE_CLASS" ON "ATT_USE_CLASS" ("ATT_USE_CLASS_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index PK_ASSC_WATERS
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "PK_ASSC_WATERS" ON "ATT_ASSC_WATERS" ("ATT_ASSC_WATERS_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index PK_TMDL_POLUT
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "PK_TMDL_POLUT" ON "ATT_TMDL_POLUT" ("ATT_TMDL_POLUT_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_DCUMNT_ATT_ASSSSMNT_UNIT_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_DCUMNT_ATT_ASSSSMNT_UNIT_ID" ON "ATT_DOCUMENT" ("ATT_ASSESSMNT_UNIT_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_ST_INTG_REP_CATG_ATT_PAR_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_ST_INTG_REP_CATG_ATT_PAR_ID" ON "ATT_ST_INTEGRATED_REP_CATG" ("ATT_PARAM_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index PK_DOCUMENT
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "PK_DOCUMENT" ON "ATT_DOCUMENT" ("ATT_DOCUMENT_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index PK_MON_ACTY
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "PK_MON_ACTY" ON "ATT_MON_ACTY" ("ATT_MON_ACTY_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_DLISTD_WTR_ATT_REP_CYCLE_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_DLISTD_WTR_ATT_REP_CYCLE_ID" ON "ATT_DELISTED_WTR" ("ATT_REP_CYCLE_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index IX_ASSC_WATERS_ATT_ACTN_ID
---------------------------------------------------------
-
-  CREATE INDEX "IX_ASSC_WATERS_ATT_ACTN_ID" ON "ATT_ASSC_WATERS" ("ATT_ACTN_ID") 
-  ;
-/
---------------------------------------------------------
---  DDL for Index PK_ASSC_POLUT
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "PK_ASSC_POLUT" ON "ATT_ASSC_POLUT" ("ATT_ASSC_POLUT_ID") 
+  CREATE INDEX "IX_SPECIFIC_WTR_ATT_ACTN_ID" ON "ATT_SPECIFIC_WTR" ("ATT_ACTN_ID") 
   ;
 /
 --------------------------------------------------------
@@ -2046,472 +1586,256 @@
   ;
 /
 --------------------------------------------------------
---  Constraints for Table ATT_ASSC_POLUT
+--  DDL for Index PK_ASSC_USE
 --------------------------------------------------------
 
-  ALTER TABLE "ATT_ASSC_POLUT" ADD CONSTRAINT "PK_ASSC_POLUT" PRIMARY KEY ("ATT_ASSC_POLUT_ID") ENABLE;
- 
-  ALTER TABLE "ATT_ASSC_POLUT" MODIFY ("ATT_ASSC_POLUT_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_ASSC_POLUT" MODIFY ("ATT_SPECIFIC_WTR_CAUSE_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_ASSC_POLUT" MODIFY ("POLUT_NAME" NOT NULL ENABLE);
+  CREATE UNIQUE INDEX "PK_ASSC_USE" ON "ATT_ASSC_USE" ("ATT_ASSC_USE_ID") 
+  ;
 /
 --------------------------------------------------------
---  Constraints for Table ATT_DELISTED_WTR_CAUSE
+--  DDL for Index IX_ST_WID_CUS_ATT_ST_WID_AS_ID
 --------------------------------------------------------
 
-  ALTER TABLE "ATT_DELISTED_WTR_CAUSE" ADD CONSTRAINT "PK_DELISTED_WTR_CAUSE" PRIMARY KEY ("ATT_DELISTED_WTR_CAUSE_ID") ENABLE;
- 
-  ALTER TABLE "ATT_DELISTED_WTR_CAUSE" MODIFY ("ATT_DELISTED_WTR_CAUSE_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_DELISTED_WTR_CAUSE" MODIFY ("ATT_DELISTED_WTR_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_DELISTED_WTR_CAUSE" MODIFY ("AGNCY_CODE" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_DELISTED_WTR_CAUSE" MODIFY ("DELISTING_REASON_CODE" NOT NULL ENABLE);
+  CREATE INDEX "IX_ST_WID_CUS_ATT_ST_WID_AS_ID" ON "ATT_ST_WIDE_CAUSE" ("ATT_ST_WIDE_ASSESSMNT_ID") 
+  ;
 /
 --------------------------------------------------------
---  Constraints for Table ATT_TMDLNPDES
+--  DDL for Index IX_WTR_TYPE_ATT_ASSSSM_UNIT_ID
 --------------------------------------------------------
 
-  ALTER TABLE "ATT_TMDLNPDES" ADD CONSTRAINT "PK_TMDLNPDES" PRIMARY KEY ("ATT_TMDLNPDES_ID") ENABLE;
- 
-  ALTER TABLE "ATT_TMDLNPDES" MODIFY ("ATT_TMDLNPDES_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_TMDLNPDES" MODIFY ("WSTE_LOAD_ALLOCTN_NUM" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_TMDLNPDES" MODIFY ("WSTE_LOAD_ALLOCTN_UNTS_TXT" NOT NULL ENABLE);
+  CREATE INDEX "IX_WTR_TYPE_ATT_ASSSSM_UNIT_ID" ON "ATT_WTR_TYPE" ("ATT_ASSESSMNT_UNIT_ID") 
+  ;
 /
 --------------------------------------------------------
---  Constraints for Table ATT_PRIO_USE
+--  DDL for Index PK_LEGACY_NPDES
 --------------------------------------------------------
 
-  ALTER TABLE "ATT_PRIO_USE" ADD CONSTRAINT "PK_PRIO_USE" PRIMARY KEY ("ATT_PRIO_USE_ID") ENABLE;
- 
-  ALTER TABLE "ATT_PRIO_USE" MODIFY ("ATT_PRIO_USE_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_PRIO_USE" MODIFY ("ATT_PRIO_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_PRIO_USE" MODIFY ("USE_NAME" NOT NULL ENABLE);
+  CREATE UNIQUE INDEX "PK_LEGACY_NPDES" ON "ATT_LEGACY_NPDES" ("ATT_LEGACY_NPDES_ID") 
+  ;
 /
 --------------------------------------------------------
---  Constraints for Table ATT_USE_ATTAINMENT
+--  DDL for Index IX_ST_INTG_REP_CATG_ATT_PAR_ID
 --------------------------------------------------------
 
-  ALTER TABLE "ATT_USE_ATTAINMENT" ADD CONSTRAINT "PK_USE_ATTAINMENT" PRIMARY KEY ("ATT_USE_ATTAINMENT_ID") ENABLE;
- 
-  ALTER TABLE "ATT_USE_ATTAINMENT" MODIFY ("ATT_USE_ATTAINMENT_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_USE_ATTAINMENT" MODIFY ("ATT_ASSESSMNT_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_USE_ATTAINMENT" MODIFY ("USE_NAME" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_USE_ATTAINMENT" MODIFY ("USE_ATTAINMENT_CODE" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_USE_ATTAINMENT" MODIFY ("AGNCY_CODE" NOT NULL ENABLE);
+  CREATE INDEX "IX_ST_INTG_REP_CATG_ATT_PAR_ID" ON "ATT_ST_INTEGRATED_REP_CATG" ("ATT_PARAM_ID") 
+  ;
 /
 --------------------------------------------------------
---  Constraints for Table ATT_ASSESSMNT_TYPE
+--  DDL for Index IX_PRIO_ASSSS_UNIT_ATT_PRIO_ID
 --------------------------------------------------------
 
-  ALTER TABLE "ATT_ASSESSMNT_TYPE" ADD CONSTRAINT "PK_ASSESSMNT_TYPE" PRIMARY KEY ("ATT_ASSESSMNT_TYPE_ID") ENABLE;
- 
-  ALTER TABLE "ATT_ASSESSMNT_TYPE" MODIFY ("ATT_ASSESSMNT_TYPE_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_ASSESSMNT_TYPE" MODIFY ("ATT_ASSESSMNT_METADATA_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_ASSESSMNT_TYPE" MODIFY ("ASSESSMNT_TYPE_CODE" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_ASSESSMNT_TYPE" MODIFY ("ASSESSMNT_CONFIDENCE_CODE" NOT NULL ENABLE);
+  CREATE INDEX "IX_PRIO_ASSSS_UNIT_ATT_PRIO_ID" ON "ATT_PRIO_ASSESSMNT_UNIT" ("ATT_PRIO_ID") 
+  ;
 /
 --------------------------------------------------------
---  Constraints for Table ATT_ST_WIDE_ASSESSMNT
+--  DDL for Index PK_PRIO
 --------------------------------------------------------
 
-  ALTER TABLE "ATT_ST_WIDE_ASSESSMNT" ADD CONSTRAINT "PK_ST_WIDE_ASSESSMNT" PRIMARY KEY ("ATT_ST_WIDE_ASSESSMNT_ID") ENABLE;
- 
-  ALTER TABLE "ATT_ST_WIDE_ASSESSMNT" MODIFY ("ATT_ST_WIDE_ASSESSMNT_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_ST_WIDE_ASSESSMNT" MODIFY ("ATT_REP_CYCLE_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_ST_WIDE_ASSESSMNT" MODIFY ("ST_WIDE_ASSESSMNT_IDENT" NOT NULL ENABLE);
+  CREATE UNIQUE INDEX "PK_PRIO" ON "ATT_PRIO" ("ATT_PRIO_ID") 
+  ;
 /
 --------------------------------------------------------
---  Constraints for Table ATT_REVIEW_CMNT
+--  DDL for Index IX_PRIO_CAUSE_ATT_PRIO_ID
 --------------------------------------------------------
 
-  ALTER TABLE "ATT_REVIEW_CMNT" ADD CONSTRAINT "PK_REVIEW_CMNT" PRIMARY KEY ("ATT_REVIEW_CMNT_ID") ENABLE;
- 
-  ALTER TABLE "ATT_REVIEW_CMNT" MODIFY ("ATT_REVIEW_CMNT_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_REVIEW_CMNT" MODIFY ("REVIEW_CMNT_TXT" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_REVIEW_CMNT" MODIFY ("REVIEW_CMNT_DATE" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_REVIEW_CMNT" MODIFY ("REVIEW_CMNT_USR_NAME" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_REVIEW_CMNT" MODIFY ("ORG_IDENT" NOT NULL ENABLE);
+  CREATE INDEX "IX_PRIO_CAUSE_ATT_PRIO_ID" ON "ATT_PRIO_CAUSE" ("ATT_PRIO_ID") 
+  ;
 /
 --------------------------------------------------------
---  Constraints for Table ATT_ACTN
+--  DDL for Index IX_PRIO_ATT_ORG_ID
 --------------------------------------------------------
 
-  ALTER TABLE "ATT_ACTN" ADD CONSTRAINT "PK_ACTN" PRIMARY KEY ("ATT_ACTN_ID") ENABLE;
- 
-  ALTER TABLE "ATT_ACTN" MODIFY ("ATT_ACTN_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_ACTN" MODIFY ("ATT_ORG_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_ACTN" MODIFY ("ACTN_IDENT" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_ACTN" MODIFY ("AGNCY_CODE" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_ACTN" MODIFY ("ACTN_TYPE_CODE" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_ACTN" MODIFY ("ACTN_STAT_CODE" NOT NULL ENABLE);
+  CREATE INDEX "IX_PRIO_ATT_ORG_ID" ON "ATT_PRIO" ("ATT_ORG_ID") 
+  ;
 /
 --------------------------------------------------------
---  Constraints for Table ATT_DOCUMENT
+--  DDL for Index IX_POLUT_ATT_ACTN_ID
 --------------------------------------------------------
 
-  ALTER TABLE "ATT_DOCUMENT" ADD CONSTRAINT "PK_DOCUMENT" PRIMARY KEY ("ATT_DOCUMENT_ID") ENABLE;
- 
-  ALTER TABLE "ATT_DOCUMENT" MODIFY ("ATT_DOCUMENT_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_DOCUMENT" MODIFY ("DOCUMENT_IDENT" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_DOCUMENT" MODIFY ("AGNCY_CODE" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_DOCUMENT" MODIFY ("DOCUMENT_TYPE_CODE" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_DOCUMENT" MODIFY ("DOCUMENT_FILE_TYPE" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_DOCUMENT" MODIFY ("DOCUMENT_FILE_NAME" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_DOCUMENT" MODIFY ("DOCUMENT_NAME" NOT NULL ENABLE);
+  CREATE INDEX "IX_POLUT_ATT_ACTN_ID" ON "ATT_POLUT" ("ATT_ACTN_ID") 
+  ;
 /
 --------------------------------------------------------
---  Constraints for Table ATT_ST_WIDE_PROBABLE_SRC
+--  DDL for Index IX_ASSC_PLU_ATT_SPC_WTR_CUS_ID
 --------------------------------------------------------
 
-  ALTER TABLE "ATT_ST_WIDE_PROBABLE_SRC" ADD CONSTRAINT "PK_ST_WIDE_PROBABLE_SRC" PRIMARY KEY ("ATT_ST_WIDE_PROBABLE_SRC_ID") ENABLE;
- 
-  ALTER TABLE "ATT_ST_WIDE_PROBABLE_SRC" MODIFY ("ATT_ST_WIDE_PROBABLE_SRC_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_ST_WIDE_PROBABLE_SRC" MODIFY ("ATT_ST_WIDE_ASSESSMNT_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_ST_WIDE_PROBABLE_SRC" MODIFY ("ST_WIDE_PROBABLE_SRC_NAME" NOT NULL ENABLE);
+  CREATE INDEX "IX_ASSC_PLU_ATT_SPC_WTR_CUS_ID" ON "ATT_ASSC_POLUT" ("ATT_SPECIFIC_WTR_CAUSE_ID") 
+  ;
 /
 --------------------------------------------------------
---  Constraints for Table ATT_SRC
+--  DDL for Index PK_DELISTED_WTR_CAUSE
 --------------------------------------------------------
 
-  ALTER TABLE "ATT_SRC" ADD CONSTRAINT "PK_SRC" PRIMARY KEY ("ATT_SRC_ID") ENABLE;
- 
-  ALTER TABLE "ATT_SRC" MODIFY ("ATT_SRC_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_SRC" MODIFY ("ATT_SPECIFIC_WTR_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_SRC" MODIFY ("SRC_NAME" NOT NULL ENABLE);
+  CREATE UNIQUE INDEX "PK_DELISTED_WTR_CAUSE" ON "ATT_DELISTED_WTR_CAUSE" ("ATT_DELISTED_WTR_CAUSE_ID") 
+  ;
 /
 --------------------------------------------------------
---  Constraints for Table ATT_WTR_TYPE
+--  DDL for Index IX_PRIOR_CAUSE_ATT_PARAM_ID
 --------------------------------------------------------
 
-  ALTER TABLE "ATT_WTR_TYPE" ADD CONSTRAINT "PK_WTR_TYPE" PRIMARY KEY ("ATT_WTR_TYPE_ID") ENABLE;
- 
-  ALTER TABLE "ATT_WTR_TYPE" MODIFY ("ATT_WTR_TYPE_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_WTR_TYPE" MODIFY ("ATT_ASSESSMNT_UNIT_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_WTR_TYPE" MODIFY ("WTR_TYPE_CODE" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_WTR_TYPE" MODIFY ("WTR_SIZE_NUM" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_WTR_TYPE" MODIFY ("UNTS_CODE" NOT NULL ENABLE);
+  CREATE INDEX "IX_PRIOR_CAUSE_ATT_PARAM_ID" ON "ATT_PRIOR_CAUSE" ("ATT_PARAM_ID") 
+  ;
 /
 --------------------------------------------------------
---  Constraints for Table ATT_TMDL_REP
+--  DDL for Index IX_RELATED_TMD_LS_ATT_ACTN_ID
 --------------------------------------------------------
 
-  ALTER TABLE "ATT_TMDL_REP" ADD CONSTRAINT "PK_TMDL_REP" PRIMARY KEY ("ATT_TMDL_REP_ID") ENABLE;
- 
-  ALTER TABLE "ATT_TMDL_REP" MODIFY ("ATT_TMDL_REP_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_TMDL_REP" MODIFY ("ATT_ACTN_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_TMDL_REP" MODIFY ("TMDL_REP_IDENT" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_TMDL_REP" MODIFY ("TMDL_REP_NAME" NOT NULL ENABLE);
+  CREATE INDEX "IX_RELATED_TMD_LS_ATT_ACTN_ID" ON "ATT_RELATED_TMD_LS" ("ATT_ACTN_ID") 
+  ;
 /
 --------------------------------------------------------
---  Constraints for Table ATT_ST_WIDE_CAUSE
+--  DDL for Index PK_ST_WIDE_WTR_TYPE
 --------------------------------------------------------
 
-  ALTER TABLE "ATT_ST_WIDE_CAUSE" ADD CONSTRAINT "PK_ST_WIDE_CAUSE" PRIMARY KEY ("ATT_ST_WIDE_CAUSE_ID") ENABLE;
- 
-  ALTER TABLE "ATT_ST_WIDE_CAUSE" MODIFY ("ATT_ST_WIDE_CAUSE_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_ST_WIDE_CAUSE" MODIFY ("ST_WIDE_CAUSE_NAME" NOT NULL ENABLE);
+  CREATE UNIQUE INDEX "PK_ST_WIDE_WTR_TYPE" ON "ATT_ST_WIDE_WTR_TYPE" ("ATT_ST_WIDE_WTR_TYPE_ID") 
+  ;
 /
 --------------------------------------------------------
---  Constraints for Table ATT_MON_ACTY
+--  DDL for Index IX_PRIO_USE_ATT_PRIO_ID
 --------------------------------------------------------
 
-  ALTER TABLE "ATT_MON_ACTY" ADD CONSTRAINT "PK_MON_ACTY" PRIMARY KEY ("ATT_MON_ACTY_ID") ENABLE;
- 
-  ALTER TABLE "ATT_MON_ACTY" MODIFY ("ATT_MON_ACTY_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_MON_ACTY" MODIFY ("ATT_ASSESSMNT_METADATA_ID" NOT NULL ENABLE);
+  CREATE INDEX "IX_PRIO_USE_ATT_PRIO_ID" ON "ATT_PRIO_USE" ("ATT_PRIO_ID") 
+  ;
 /
 --------------------------------------------------------
---  Constraints for Table ATT_PRIOR_CAUSE
+--  DDL for Index IX_ADDRESSED_PRIO_ATT_ACTN_ID
 --------------------------------------------------------
 
-  ALTER TABLE "ATT_PRIOR_CAUSE" ADD CONSTRAINT "PK_PRIOR_CAUSE" PRIMARY KEY ("ATT_PRIOR_CAUSE_ID") ENABLE;
- 
-  ALTER TABLE "ATT_PRIOR_CAUSE" MODIFY ("ATT_PRIOR_CAUSE_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_PRIOR_CAUSE" MODIFY ("ATT_PARAM_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_PRIOR_CAUSE" MODIFY ("PRIOR_CAUSE_NAME" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_PRIOR_CAUSE" MODIFY ("PRIOR_CAUSE_CYCLE_TXT" NOT NULL ENABLE);
+  CREATE INDEX "IX_ADDRESSED_PRIO_ATT_ACTN_ID" ON "ATT_ADDRESSED_PRIO" ("ATT_ACTN_ID") 
+  ;
 /
 --------------------------------------------------------
---  Constraints for Table ATT_POLUT
+--  DDL for Index PK_MOD
 --------------------------------------------------------
 
-  ALTER TABLE "ATT_POLUT" ADD CONSTRAINT "PK_POLUT" PRIMARY KEY ("ATT_POLUT_ID") ENABLE;
- 
-  ALTER TABLE "ATT_POLUT" MODIFY ("ATT_POLUT_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_POLUT" MODIFY ("ATT_ACTN_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_POLUT" MODIFY ("POLUT_NAME" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_POLUT" MODIFY ("POLUT_SRC_TYPE_CODE" NOT NULL ENABLE);
+  CREATE UNIQUE INDEX "PK_MOD" ON "ATT_MOD" ("ATT_MOD_ID") 
+  ;
 /
 --------------------------------------------------------
---  Constraints for Table ATT_ST_WIDE_USE_ATTAINMENT
+--  DDL for Index PK_ADDRESSED_PRIO
 --------------------------------------------------------
 
-  ALTER TABLE "ATT_ST_WIDE_USE_ATTAINMENT" ADD CONSTRAINT "PK_ST_WIDE_USE_ATTAINMENT" PRIMARY KEY ("ATT_ST_WIDE_USE_ATTAINMENT_ID") ENABLE;
- 
-  ALTER TABLE "ATT_ST_WIDE_USE_ATTAINMENT" MODIFY ("ATT_ST_WIDE_USE_ATTAINMENT_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_ST_WIDE_USE_ATTAINMENT" MODIFY ("ATT_ST_WIDE_ASSESSMNT_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_ST_WIDE_USE_ATTAINMENT" MODIFY ("ST_WIDE_USE_NAME" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_ST_WIDE_USE_ATTAINMENT" MODIFY ("USE_ATTAINMENT_CODE" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_ST_WIDE_USE_ATTAINMENT" MODIFY ("AGNCY_CODE" NOT NULL ENABLE);
+  CREATE UNIQUE INDEX "PK_ADDRESSED_PRIO" ON "ATT_ADDRESSED_PRIO" ("ATT_ADDRESSED_PRIO_ID") 
+  ;
 /
 --------------------------------------------------------
---  Constraints for Table ATT_ASSC_ACTN
+--  DDL for Index IX_ASSC_ACTN_ATT_PARAM_ID
 --------------------------------------------------------
 
-  ALTER TABLE "ATT_ASSC_ACTN" ADD CONSTRAINT "PK_ASSC_ACTN" PRIMARY KEY ("ATT_ASSC_ACTN_ID") ENABLE;
- 
-  ALTER TABLE "ATT_ASSC_ACTN" MODIFY ("ATT_ASSC_ACTN_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_ASSC_ACTN" MODIFY ("ATT_PARAM_ID" NOT NULL ENABLE);
+  CREATE INDEX "IX_ASSC_ACTN_ATT_PARAM_ID" ON "ATT_ASSC_ACTN" ("ATT_PARAM_ID") 
+  ;
 /
 --------------------------------------------------------
---  Constraints for Table ATT_ASSESSMNT_METADATA
+--  DDL for Index PK_ASSESSMNT_TYPE
 --------------------------------------------------------
 
-  ALTER TABLE "ATT_ASSESSMNT_METADATA" ADD CONSTRAINT "PK_ASSESSMNT_METADATA" PRIMARY KEY ("ATT_ASSESSMNT_METADATA_ID") ENABLE;
- 
-  ALTER TABLE "ATT_ASSESSMNT_METADATA" MODIFY ("ATT_ASSESSMNT_METADATA_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_ASSESSMNT_METADATA" MODIFY ("ATT_USE_ATTAINMENT_ID" NOT NULL ENABLE);
+  CREATE UNIQUE INDEX "PK_ASSESSMNT_TYPE" ON "ATT_ASSESSMNT_TYPE" ("ATT_ASSESSMNT_TYPE_ID") 
+  ;
 /
 --------------------------------------------------------
---  Constraints for Table ATT_MOD
+--  DDL for Index IX_ST_WID_US_AT_AT_ST_WI_AS_ID
 --------------------------------------------------------
 
-  ALTER TABLE "ATT_MOD" ADD CONSTRAINT "PK_MOD" PRIMARY KEY ("ATT_MOD_ID") ENABLE;
- 
-  ALTER TABLE "ATT_MOD" MODIFY ("ATT_MOD_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_MOD" MODIFY ("ATT_ASSESSMNT_UNIT_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_MOD" MODIFY ("MOD_TYPE_CODE" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_MOD" MODIFY ("CHANGE_CYCLE_TXT" NOT NULL ENABLE);
+  CREATE INDEX "IX_ST_WID_US_AT_AT_ST_WI_AS_ID" ON "ATT_ST_WIDE_USE_ATTAINMENT" ("ATT_ST_WIDE_ASSESSMNT_ID") 
+  ;
 /
 --------------------------------------------------------
---  Constraints for Table ATT_ORG_CONTACT
+--  DDL for Index IX_REVIEW_CMNT_ATT_ACTN_ID
 --------------------------------------------------------
 
-  ALTER TABLE "ATT_ORG_CONTACT" ADD CONSTRAINT "PK_ORG_CONTACT" PRIMARY KEY ("ATT_ORG_CONTACT_ID") ENABLE;
- 
-  ALTER TABLE "ATT_ORG_CONTACT" MODIFY ("ATT_ORG_CONTACT_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_ORG_CONTACT" MODIFY ("ATT_ORG_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_ORG_CONTACT" MODIFY ("CONTACT_TYPE" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_ORG_CONTACT" MODIFY ("WEB_URL_TXT" NOT NULL ENABLE);
+  CREATE INDEX "IX_REVIEW_CMNT_ATT_ACTN_ID" ON "ATT_REVIEW_CMNT" ("ATT_ACTN_ID") 
+  ;
 /
 --------------------------------------------------------
---  Constraints for Table ATT_ASSC_WATERS
+--  DDL for Index IX_SRC_ATT_SPECIFIC_WTR_ID
 --------------------------------------------------------
 
-  ALTER TABLE "ATT_ASSC_WATERS" ADD CONSTRAINT "PK_ASSC_WATERS" PRIMARY KEY ("ATT_ASSC_WATERS_ID") ENABLE;
- 
-  ALTER TABLE "ATT_ASSC_WATERS" MODIFY ("ATT_ASSC_WATERS_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_ASSC_WATERS" MODIFY ("ATT_ACTN_ID" NOT NULL ENABLE);
+  CREATE INDEX "IX_SRC_ATT_SPECIFIC_WTR_ID" ON "ATT_SRC" ("ATT_SPECIFIC_WTR_ID") 
+  ;
 /
 --------------------------------------------------------
---  Constraints for Table ATT_TMDL_POLUT
+--  DDL for Index PK_WTR_TYPE
 --------------------------------------------------------
 
-  ALTER TABLE "ATT_TMDL_POLUT" ADD CONSTRAINT "PK_TMDL_POLUT" PRIMARY KEY ("ATT_TMDL_POLUT_ID") ENABLE;
- 
-  ALTER TABLE "ATT_TMDL_POLUT" MODIFY ("ATT_TMDL_POLUT_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_TMDL_POLUT" MODIFY ("ATT_POLUT_ID" NOT NULL ENABLE);
+  CREATE UNIQUE INDEX "PK_WTR_TYPE" ON "ATT_WTR_TYPE" ("ATT_WTR_TYPE_ID") 
+  ;
 /
 --------------------------------------------------------
---  Constraints for Table ATT_PREVIOUS_ASSESSMNT_UNIT
+--  DDL for Index PK_ACTN
 --------------------------------------------------------
 
-  ALTER TABLE "ATT_PREVIOUS_ASSESSMNT_UNIT" ADD CONSTRAINT "PK_PREVIOUS_ASSESSMNT_UNIT" PRIMARY KEY ("ATT_PREVIOUS_ASSESSMNT_UNIT_ID") ENABLE;
- 
-  ALTER TABLE "ATT_PREVIOUS_ASSESSMNT_UNIT" MODIFY ("ATT_PREVIOUS_ASSESSMNT_UNIT_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_PREVIOUS_ASSESSMNT_UNIT" MODIFY ("ATT_MOD_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_PREVIOUS_ASSESSMNT_UNIT" MODIFY ("ASSESSMNT_UNIT_IDENT" NOT NULL ENABLE);
+  CREATE UNIQUE INDEX "PK_ACTN" ON "ATT_ACTN" ("ATT_ACTN_ID") 
+  ;
 /
 --------------------------------------------------------
---  Constraints for Table ATT_ADDRESSED_PRIO
+--  DDL for Index PK_SPECIFIC_WTR_CAUSE
 --------------------------------------------------------
 
-  ALTER TABLE "ATT_ADDRESSED_PRIO" ADD CONSTRAINT "PK_ADDRESSED_PRIO" PRIMARY KEY ("ATT_ADDRESSED_PRIO_ID") ENABLE;
- 
-  ALTER TABLE "ATT_ADDRESSED_PRIO" MODIFY ("ATT_ADDRESSED_PRIO_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_ADDRESSED_PRIO" MODIFY ("ATT_ACTN_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_ADDRESSED_PRIO" MODIFY ("PRIO_IDENT" NOT NULL ENABLE);
+  CREATE UNIQUE INDEX "PK_SPECIFIC_WTR_CAUSE" ON "ATT_SPECIFIC_WTR_CAUSE" ("ATT_SPECIFIC_WTR_CAUSE_ID") 
+  ;
 /
 --------------------------------------------------------
---  Constraints for Table ATT_ASSESSMNT_ACTY
+--  DDL for Index IX_RVIW_CMNT_ATT_ST_WID_ASS_ID
 --------------------------------------------------------
 
-  ALTER TABLE "ATT_ASSESSMNT_ACTY" ADD CONSTRAINT "PK_ASSESSMNT_ACTY" PRIMARY KEY ("ATT_ASSESSMNT_ACTY_ID") ENABLE;
- 
-  ALTER TABLE "ATT_ASSESSMNT_ACTY" MODIFY ("ATT_ASSESSMNT_ACTY_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_ASSESSMNT_ACTY" MODIFY ("ATT_ASSESSMNT_METADATA_ID" NOT NULL ENABLE);
+  CREATE INDEX "IX_RVIW_CMNT_ATT_ST_WID_ASS_ID" ON "ATT_REVIEW_CMNT" ("ATT_ST_WIDE_ASSESSMNT_ID") 
+  ;
 /
 --------------------------------------------------------
---  Constraints for Table ATT_ASSESSMNT_METHOD_TYPE
+--  DDL for Index PK_DOCUMENT
 --------------------------------------------------------
 
-  ALTER TABLE "ATT_ASSESSMNT_METHOD_TYPE" ADD CONSTRAINT "PK_ASSESSMNT_METHOD_TYPE" PRIMARY KEY ("ATT_ASSESSMNT_METHOD_TYPE_ID") ENABLE;
- 
-  ALTER TABLE "ATT_ASSESSMNT_METHOD_TYPE" MODIFY ("ATT_ASSESSMNT_METHOD_TYPE_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_ASSESSMNT_METHOD_TYPE" MODIFY ("ATT_ASSESSMNT_METADATA_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_ASSESSMNT_METHOD_TYPE" MODIFY ("METHOD_TYPE_CNTXT" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_ASSESSMNT_METHOD_TYPE" MODIFY ("METHOD_TYPE_CODE" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_ASSESSMNT_METHOD_TYPE" MODIFY ("METHOD_TYPE_NAME" NOT NULL ENABLE);
+  CREATE UNIQUE INDEX "PK_DOCUMENT" ON "ATT_DOCUMENT" ("ATT_DOCUMENT_ID") 
+  ;
 /
 --------------------------------------------------------
---  Constraints for Table ATT_MON_STATION
+--  DDL for Index IX_DOCUMENT_ATT_ASSESSMNT_ID
 --------------------------------------------------------
 
-  ALTER TABLE "ATT_MON_STATION" ADD CONSTRAINT "PK_MON_STATION" PRIMARY KEY ("ATT_MON_STATION_ID") ENABLE;
- 
-  ALTER TABLE "ATT_MON_STATION" MODIFY ("ATT_MON_STATION_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_MON_STATION" MODIFY ("ATT_ASSESSMNT_UNIT_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_MON_STATION" MODIFY ("MON_ORG_IDENT" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_MON_STATION" MODIFY ("MON_LOC_IDENT" NOT NULL ENABLE);
+  CREATE INDEX "IX_DOCUMENT_ATT_ASSESSMNT_ID" ON "ATT_DOCUMENT" ("ATT_ASSESSMNT_ID") 
+  ;
 /
 --------------------------------------------------------
---  Constraints for Table ATT_SEASON
+--  DDL for Index IX_SEASON_ATT_ASSC_USE_ID
 --------------------------------------------------------
 
-  ALTER TABLE "ATT_SEASON" ADD CONSTRAINT "PK_SEASON" PRIMARY KEY ("ATT_SEASON_ID") ENABLE;
- 
-  ALTER TABLE "ATT_SEASON" MODIFY ("ATT_SEASON_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_SEASON" MODIFY ("SEASON_START_TXT" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_SEASON" MODIFY ("SEASON_END_TXT" NOT NULL ENABLE);
+  CREATE INDEX "IX_SEASON_ATT_ASSC_USE_ID" ON "ATT_SEASON" ("ATT_ASSC_USE_ID") 
+  ;
 /
 --------------------------------------------------------
---  Constraints for Table ATT_ST_WIDE_ACTN
+--  DDL for Index PK_PRIO_USE
 --------------------------------------------------------
 
-  ALTER TABLE "ATT_ST_WIDE_ACTN" ADD CONSTRAINT "PK_ST_WIDE_ACTN" PRIMARY KEY ("ATT_ST_WIDE_ACTN_ID") ENABLE;
- 
-  ALTER TABLE "ATT_ST_WIDE_ACTN" MODIFY ("ATT_ST_WIDE_ACTN_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_ST_WIDE_ACTN" MODIFY ("ATT_ASSC_WATERS_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_ST_WIDE_ACTN" MODIFY ("ST_WIDE_ASSESSMNT_IDENT" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_ST_WIDE_ACTN" MODIFY ("ST_WIDE_CYCLE" NOT NULL ENABLE);
+  CREATE UNIQUE INDEX "PK_PRIO_USE" ON "ATT_PRIO_USE" ("ATT_PRIO_USE_ID") 
+  ;
 /
 --------------------------------------------------------
---  Constraints for Table ATT_ST_WIDE_WTR_TYPE
+--  DDL for Index IX_DLST_WTR_CUS_ATT_DLS_WTR_ID
 --------------------------------------------------------
 
-  ALTER TABLE "ATT_ST_WIDE_WTR_TYPE" ADD CONSTRAINT "PK_ST_WIDE_WTR_TYPE" PRIMARY KEY ("ATT_ST_WIDE_WTR_TYPE_ID") ENABLE;
- 
-  ALTER TABLE "ATT_ST_WIDE_WTR_TYPE" MODIFY ("ATT_ST_WIDE_WTR_TYPE_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_ST_WIDE_WTR_TYPE" MODIFY ("ATT_ST_WIDE_ASSESSMNT_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_ST_WIDE_WTR_TYPE" MODIFY ("ST_WIDE_WTR_TYPE_CODE" NOT NULL ENABLE);
+  CREATE INDEX "IX_DLST_WTR_CUS_ATT_DLS_WTR_ID" ON "ATT_DELISTED_WTR_CAUSE" ("ATT_DELISTED_WTR_ID") 
+  ;
 /
 --------------------------------------------------------
---  Constraints for Table ATT_ST_INTEGRATED_REP_CATG
+--  DDL for Index IX_ST_INT_REP_CAT_ATT_US_AT_ID
 --------------------------------------------------------
 
-  ALTER TABLE "ATT_ST_INTEGRATED_REP_CATG" ADD CONSTRAINT "PK_ST_INTEGRATED_REP_CATG" PRIMARY KEY ("ATT_ST_INTEGRATED_REP_CATG_ID") ENABLE;
- 
-  ALTER TABLE "ATT_ST_INTEGRATED_REP_CATG" MODIFY ("ATT_ST_INTEGRATED_REP_CATG_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_ST_INTEGRATED_REP_CATG" MODIFY ("ST_IR_CATG_CODE" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_ST_INTEGRATED_REP_CATG" MODIFY ("ST_CATG_DESC_TXT" NOT NULL ENABLE);
+  CREATE INDEX "IX_ST_INT_REP_CAT_ATT_US_AT_ID" ON "ATT_ST_INTEGRATED_REP_CATG" ("ATT_USE_ATTAINMENT_ID") 
+  ;
 /
 --------------------------------------------------------
---  Constraints for Table ATT_NPDES
+--  DDL for Index PK_POLUT
 --------------------------------------------------------
 
-  ALTER TABLE "ATT_NPDES" ADD CONSTRAINT "PK_NPDES" PRIMARY KEY ("ATT_NPDES_ID") ENABLE;
- 
-  ALTER TABLE "ATT_NPDES" MODIFY ("ATT_NPDES_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_NPDES" MODIFY ("ATT_POLUT_ID" NOT NULL ENABLE);
+  CREATE UNIQUE INDEX "PK_POLUT" ON "ATT_POLUT" ("ATT_POLUT_ID") 
+  ;
 /
 --------------------------------------------------------
---  Constraints for Table ATT_DELISTED_WTR
+--  DDL for Index IX_ASSC_CUS_NAM_ATT_PRB_SRC_ID
 --------------------------------------------------------
 
-  ALTER TABLE "ATT_DELISTED_WTR" ADD CONSTRAINT "PK_DELISTED_WTR" PRIMARY KEY ("ATT_DELISTED_WTR_ID") ENABLE;
- 
-  ALTER TABLE "ATT_DELISTED_WTR" MODIFY ("ATT_DELISTED_WTR_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_DELISTED_WTR" MODIFY ("ATT_REP_CYCLE_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_DELISTED_WTR" MODIFY ("ASSESSMNT_UNIT_IDENT" NOT NULL ENABLE);
+  CREATE INDEX "IX_ASSC_CUS_NAM_ATT_PRB_SRC_ID" ON "ATT_ASSC_CAUSE_NAME" ("ATT_PROBABLE_SRC_ID") 
+  ;
 /
 --------------------------------------------------------
 --  Constraints for Table ATT_LOC
@@ -2541,105 +1865,31 @@
  
   ALTER TABLE "ATT_PARAM" MODIFY ("PARAM_NAME" NOT NULL ENABLE);
  
-  ALTER TABLE "ATT_PARAM" MODIFY ("POLUT_IND" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_PARAM" MODIFY ("AGNCY_CODE" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_PARAM" MODIFY ("CYCLE_FIRST_LISTED_TXT" NOT NULL ENABLE);
- 
   ALTER TABLE "ATT_PARAM" MODIFY ("CYCLE_EXPECTED_TO_ATTAIN_TXT" NOT NULL ENABLE);
 /
 --------------------------------------------------------
---  Constraints for Table ATT_ASSESSMNT_UNIT
+--  Constraints for Table ATT_MON_STATION
 --------------------------------------------------------
 
-  ALTER TABLE "ATT_ASSESSMNT_UNIT" ADD CONSTRAINT "PK_ASSESSMNT_UNIT" PRIMARY KEY ("ATT_ASSESSMNT_UNIT_ID") ENABLE;
+  ALTER TABLE "ATT_MON_STATION" ADD CONSTRAINT "PK_MON_STATION" PRIMARY KEY ("ATT_MON_STATION_ID") ENABLE;
  
-  ALTER TABLE "ATT_ASSESSMNT_UNIT" MODIFY ("ATT_ASSESSMNT_UNIT_ID" NOT NULL ENABLE);
+  ALTER TABLE "ATT_MON_STATION" MODIFY ("ATT_MON_STATION_ID" NOT NULL ENABLE);
  
-  ALTER TABLE "ATT_ASSESSMNT_UNIT" MODIFY ("ATT_ORG_ID" NOT NULL ENABLE);
+  ALTER TABLE "ATT_MON_STATION" MODIFY ("ATT_ASSESSMNT_UNIT_ID" NOT NULL ENABLE);
  
-  ALTER TABLE "ATT_ASSESSMNT_UNIT" MODIFY ("ASSESSMNT_UNIT_IDENT" NOT NULL ENABLE);
+  ALTER TABLE "ATT_MON_STATION" MODIFY ("MON_ORG_IDENT" NOT NULL ENABLE);
  
-  ALTER TABLE "ATT_ASSESSMNT_UNIT" MODIFY ("ASSESSMNT_UNIT_NAME" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_ASSESSMNT_UNIT" MODIFY ("LOC_DESC_TXT" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_ASSESSMNT_UNIT" MODIFY ("AGNCY_CODE" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_ASSESSMNT_UNIT" MODIFY ("ST_CODE" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_ASSESSMNT_UNIT" MODIFY ("STAT_IND" NOT NULL ENABLE);
+  ALTER TABLE "ATT_MON_STATION" MODIFY ("MON_LOC_IDENT" NOT NULL ENABLE);
 /
 --------------------------------------------------------
---  Constraints for Table ATT_ORG
+--  Constraints for Table ATT_ST_WIDE_CAUSE
 --------------------------------------------------------
 
-  ALTER TABLE "ATT_ORG" ADD CONSTRAINT "PK_ORG" PRIMARY KEY ("ATT_ORG_ID") ENABLE;
+  ALTER TABLE "ATT_ST_WIDE_CAUSE" ADD CONSTRAINT "PK_ST_WIDE_CAUSE" PRIMARY KEY ("ATT_ST_WIDE_CAUSE_ID") ENABLE;
  
-  ALTER TABLE "ATT_ORG" MODIFY ("ATT_ORG_ID" NOT NULL ENABLE);
+  ALTER TABLE "ATT_ST_WIDE_CAUSE" MODIFY ("ATT_ST_WIDE_CAUSE_ID" NOT NULL ENABLE);
  
-  ALTER TABLE "ATT_ORG" MODIFY ("ORG_IDENT" NOT NULL ENABLE);
-/
---------------------------------------------------------
---  Constraints for Table ATT_LEGACY_NPDES
---------------------------------------------------------
-
-  ALTER TABLE "ATT_LEGACY_NPDES" ADD CONSTRAINT "PK_LEGACY_NPDES" PRIMARY KEY ("ATT_LEGACY_NPDES_ID") ENABLE;
- 
-  ALTER TABLE "ATT_LEGACY_NPDES" MODIFY ("ATT_LEGACY_NPDES_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_LEGACY_NPDES" MODIFY ("ATT_SPECIFIC_WTR_CAUSE_ID" NOT NULL ENABLE);
-/
---------------------------------------------------------
---  Constraints for Table ATT_SPECIFIC_WTR
---------------------------------------------------------
-
-  ALTER TABLE "ATT_SPECIFIC_WTR" ADD CONSTRAINT "PK_SPECIFIC_WTR" PRIMARY KEY ("ATT_SPECIFIC_WTR_ID") ENABLE;
- 
-  ALTER TABLE "ATT_SPECIFIC_WTR" MODIFY ("ATT_SPECIFIC_WTR_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_SPECIFIC_WTR" MODIFY ("ATT_ASSC_WATERS_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_SPECIFIC_WTR" MODIFY ("ASSESSMNT_UNIT_IDENT" NOT NULL ENABLE);
-/
---------------------------------------------------------
---  Constraints for Table ATT_USE_CLASS
---------------------------------------------------------
-
-  ALTER TABLE "ATT_USE_CLASS" ADD CONSTRAINT "PK_USE_CLASS" PRIMARY KEY ("ATT_USE_CLASS_ID") ENABLE;
- 
-  ALTER TABLE "ATT_USE_CLASS" MODIFY ("ATT_USE_CLASS_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_USE_CLASS" MODIFY ("ATT_ASSESSMNT_UNIT_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_USE_CLASS" MODIFY ("USE_CLASS_CNTXT" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_USE_CLASS" MODIFY ("USE_CLASS_CODE" NOT NULL ENABLE);
-/
---------------------------------------------------------
---  Constraints for Table ATT_REP_CYCLE
---------------------------------------------------------
-
-  ALTER TABLE "ATT_REP_CYCLE" ADD CONSTRAINT "PK_REP_CYCLE" PRIMARY KEY ("ATT_REP_CYCLE_ID") ENABLE;
- 
-  ALTER TABLE "ATT_REP_CYCLE" MODIFY ("ATT_REP_CYCLE_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_REP_CYCLE" MODIFY ("ATT_ORG_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_REP_CYCLE" MODIFY ("REP_CYCLE_TXT" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_REP_CYCLE" MODIFY ("REP_STAT_CODE" NOT NULL ENABLE);
-/
---------------------------------------------------------
---  Constraints for Table ATT_PRIO_CAUSE
---------------------------------------------------------
-
-  ALTER TABLE "ATT_PRIO_CAUSE" ADD CONSTRAINT "PK_PRIO_CAUSE" PRIMARY KEY ("ATT_PRIO_CAUSE_ID") ENABLE;
- 
-  ALTER TABLE "ATT_PRIO_CAUSE" MODIFY ("ATT_PRIO_CAUSE_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_PRIO_CAUSE" MODIFY ("ATT_PRIO_ID" NOT NULL ENABLE);
+  ALTER TABLE "ATT_ST_WIDE_CAUSE" MODIFY ("ST_WIDE_CAUSE_NAME" NOT NULL ENABLE);
 /
 --------------------------------------------------------
 --  Constraints for Table ATT_ASSC_USE
@@ -2654,32 +1904,138 @@
   ALTER TABLE "ATT_ASSC_USE" MODIFY ("ASSC_USE_NAME" NOT NULL ENABLE);
 /
 --------------------------------------------------------
---  Constraints for Table ATT_ASSC_CAUSE_NAME
+--  Constraints for Table ATT_SPECIFIC_WTR
 --------------------------------------------------------
 
-  ALTER TABLE "ATT_ASSC_CAUSE_NAME" ADD CONSTRAINT "PK_ASSC_CAUSE_NAME" PRIMARY KEY ("ATT_ASSC_CAUSE_NAME_ID") ENABLE;
+  ALTER TABLE "ATT_SPECIFIC_WTR" ADD CONSTRAINT "PK_SPECIFIC_WTR" PRIMARY KEY ("ATT_SPECIFIC_WTR_ID") ENABLE;
  
-  ALTER TABLE "ATT_ASSC_CAUSE_NAME" MODIFY ("ATT_ASSC_CAUSE_NAME_ID" NOT NULL ENABLE);
+  ALTER TABLE "ATT_SPECIFIC_WTR" MODIFY ("ATT_SPECIFIC_WTR_ID" NOT NULL ENABLE);
  
-  ALTER TABLE "ATT_ASSC_CAUSE_NAME" MODIFY ("ATT_PROBABLE_SRC_ID" NOT NULL ENABLE);
+  ALTER TABLE "ATT_SPECIFIC_WTR" MODIFY ("ATT_ACTN_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_SPECIFIC_WTR" MODIFY ("ASSESSMNT_UNIT_IDENT" NOT NULL ENABLE);
 /
 --------------------------------------------------------
---  Constraints for Table ATT_MAILING_ADDR
+--  Constraints for Table ATT_DELISTED_WTR
 --------------------------------------------------------
 
-  ALTER TABLE "ATT_MAILING_ADDR" ADD CONSTRAINT "PK_MAILING_ADDR" PRIMARY KEY ("ATT_MAILING_ADDR_ID") ENABLE;
+  ALTER TABLE "ATT_DELISTED_WTR" ADD CONSTRAINT "PK_DELISTED_WTR" PRIMARY KEY ("ATT_DELISTED_WTR_ID") ENABLE;
  
-  ALTER TABLE "ATT_MAILING_ADDR" MODIFY ("ATT_MAILING_ADDR_ID" NOT NULL ENABLE);
+  ALTER TABLE "ATT_DELISTED_WTR" MODIFY ("ATT_DELISTED_WTR_ID" NOT NULL ENABLE);
  
-  ALTER TABLE "ATT_MAILING_ADDR" MODIFY ("ATT_ORG_CONTACT_ID" NOT NULL ENABLE);
+  ALTER TABLE "ATT_DELISTED_WTR" MODIFY ("ATT_REP_CYCLE_ID" NOT NULL ENABLE);
  
-  ALTER TABLE "ATT_MAILING_ADDR" MODIFY ("MAILING_ADDR_TXT" NOT NULL ENABLE);
+  ALTER TABLE "ATT_DELISTED_WTR" MODIFY ("ASSESSMNT_UNIT_IDENT" NOT NULL ENABLE);
+/
+--------------------------------------------------------
+--  Constraints for Table ATT_ASSC_ACTN
+--------------------------------------------------------
+
+  ALTER TABLE "ATT_ASSC_ACTN" ADD CONSTRAINT "PK_ASSC_ACTN" PRIMARY KEY ("ATT_ASSC_ACTN_ID") ENABLE;
  
-  ALTER TABLE "ATT_MAILING_ADDR" MODIFY ("MAILING_ADDR_CITY_NAME" NOT NULL ENABLE);
+  ALTER TABLE "ATT_ASSC_ACTN" MODIFY ("ATT_ASSC_ACTN_ID" NOT NULL ENABLE);
  
-  ALTER TABLE "ATT_MAILING_ADDR" MODIFY ("MAILING_ADDR_ST_USPS_CODE" NOT NULL ENABLE);
+  ALTER TABLE "ATT_ASSC_ACTN" MODIFY ("ATT_PARAM_ID" NOT NULL ENABLE);
+/
+--------------------------------------------------------
+--  Constraints for Table ATT_ST_WIDE_PROBABLE_SRC
+--------------------------------------------------------
+
+  ALTER TABLE "ATT_ST_WIDE_PROBABLE_SRC" ADD CONSTRAINT "PK_ST_WIDE_PROBABLE_SRC" PRIMARY KEY ("ATT_ST_WIDE_PROBABLE_SRC_ID") ENABLE;
  
-  ALTER TABLE "ATT_MAILING_ADDR" MODIFY ("MAILING_ADDR_ZIP_CODE" NOT NULL ENABLE);
+  ALTER TABLE "ATT_ST_WIDE_PROBABLE_SRC" MODIFY ("ATT_ST_WIDE_PROBABLE_SRC_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_ST_WIDE_PROBABLE_SRC" MODIFY ("ATT_ST_WIDE_ASSESSMNT_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_ST_WIDE_PROBABLE_SRC" MODIFY ("ST_WIDE_PROBABLE_SRC_NAME" NOT NULL ENABLE);
+/
+--------------------------------------------------------
+--  Constraints for Table ATT_ST_WIDE_ACTN
+--------------------------------------------------------
+
+  ALTER TABLE "ATT_ST_WIDE_ACTN" ADD CONSTRAINT "PK_ST_WIDE_ACTN" PRIMARY KEY ("ATT_ST_WIDE_ACTN_ID") ENABLE;
+ 
+  ALTER TABLE "ATT_ST_WIDE_ACTN" MODIFY ("ATT_ST_WIDE_ACTN_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_ST_WIDE_ACTN" MODIFY ("ATT_ACTN_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_ST_WIDE_ACTN" MODIFY ("ST_WIDE_ASSESSMNT_IDENT" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_ST_WIDE_ACTN" MODIFY ("ST_WIDE_CYCLE" NOT NULL ENABLE);
+/
+--------------------------------------------------------
+--  Constraints for Table ATT_ASSESSMNT
+--------------------------------------------------------
+
+  ALTER TABLE "ATT_ASSESSMNT" ADD CONSTRAINT "PK_ASSESSMNT" PRIMARY KEY ("ATT_ASSESSMNT_ID") ENABLE;
+ 
+  ALTER TABLE "ATT_ASSESSMNT" MODIFY ("ATT_ASSESSMNT_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_ASSESSMNT" MODIFY ("ATT_REP_CYCLE_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_ASSESSMNT" MODIFY ("ASSESSMNT_UNIT_IDENT" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_ASSESSMNT" MODIFY ("AGNCY_CODE" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_ASSESSMNT" MODIFY ("CYCLE_LAST_ASSESSED_TXT" NOT NULL ENABLE);
+/
+--------------------------------------------------------
+--  Constraints for Table ATT_ADDRESSED_PRIO
+--------------------------------------------------------
+
+  ALTER TABLE "ATT_ADDRESSED_PRIO" ADD CONSTRAINT "PK_ADDRESSED_PRIO" PRIMARY KEY ("ATT_ADDRESSED_PRIO_ID") ENABLE;
+ 
+  ALTER TABLE "ATT_ADDRESSED_PRIO" MODIFY ("ATT_ADDRESSED_PRIO_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_ADDRESSED_PRIO" MODIFY ("ATT_ACTN_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_ADDRESSED_PRIO" MODIFY ("PRIO_IDENT" NOT NULL ENABLE);
+/
+--------------------------------------------------------
+--  Constraints for Table ATT_DOCUMENT
+--------------------------------------------------------
+
+  ALTER TABLE "ATT_DOCUMENT" ADD CONSTRAINT "PK_DOCUMENT" PRIMARY KEY ("ATT_DOCUMENT_ID") ENABLE;
+ 
+  ALTER TABLE "ATT_DOCUMENT" MODIFY ("ATT_DOCUMENT_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_DOCUMENT" MODIFY ("DOCUMENT_IDENT" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_DOCUMENT" MODIFY ("AGNCY_CODE" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_DOCUMENT" MODIFY ("DOCUMENT_TYPE_CODE" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_DOCUMENT" MODIFY ("DOCUMENT_FILE_TYPE" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_DOCUMENT" MODIFY ("DOCUMENT_FILE_NAME" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_DOCUMENT" MODIFY ("DOCUMENT_NAME" NOT NULL ENABLE);
+/
+--------------------------------------------------------
+--  Constraints for Table ATT_ST_WIDE_ASSESSMNT
+--------------------------------------------------------
+
+  ALTER TABLE "ATT_ST_WIDE_ASSESSMNT" ADD CONSTRAINT "PK_ST_WIDE_ASSESSMNT" PRIMARY KEY ("ATT_ST_WIDE_ASSESSMNT_ID") ENABLE;
+ 
+  ALTER TABLE "ATT_ST_WIDE_ASSESSMNT" MODIFY ("ATT_ST_WIDE_ASSESSMNT_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_ST_WIDE_ASSESSMNT" MODIFY ("ATT_REP_CYCLE_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_ST_WIDE_ASSESSMNT" MODIFY ("ST_WIDE_ASSESSMNT_IDENT" NOT NULL ENABLE);
+/
+--------------------------------------------------------
+--  Constraints for Table ATT_PROBABLE_SRC
+--------------------------------------------------------
+
+  ALTER TABLE "ATT_PROBABLE_SRC" ADD CONSTRAINT "PK_PROBABLE_SRC" PRIMARY KEY ("ATT_PROBABLE_SRC_ID") ENABLE;
+ 
+  ALTER TABLE "ATT_PROBABLE_SRC" MODIFY ("ATT_PROBABLE_SRC_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_PROBABLE_SRC" MODIFY ("ATT_ASSESSMNT_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_PROBABLE_SRC" MODIFY ("SRC_NAME" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_PROBABLE_SRC" MODIFY ("SRC_CONFIRMED_IND" NOT NULL ENABLE);
 /
 --------------------------------------------------------
 --  Constraints for Table ATT_RELATED_TMD_LS
@@ -2689,33 +2045,11 @@
  
   ALTER TABLE "ATT_RELATED_TMD_LS" MODIFY ("ATT_RELATED_TMD_LS_ID" NOT NULL ENABLE);
  
-  ALTER TABLE "ATT_RELATED_TMD_LS" MODIFY ("ATT_TMDL_REP_ID" NOT NULL ENABLE);
+  ALTER TABLE "ATT_RELATED_TMD_LS" MODIFY ("ATT_ACTN_ID" NOT NULL ENABLE);
  
   ALTER TABLE "ATT_RELATED_TMD_LS" MODIFY ("TMDL_REP_IDENT" NOT NULL ENABLE);
  
   ALTER TABLE "ATT_RELATED_TMD_LS" MODIFY ("CHANGE_TYPE_TXT" NOT NULL ENABLE);
-/
---------------------------------------------------------
---  Constraints for Table ATT_PRIO_ASSESSMNT_UNIT
---------------------------------------------------------
-
-  ALTER TABLE "ATT_PRIO_ASSESSMNT_UNIT" ADD CONSTRAINT "PK_PRIO_ASSESSMNT_UNIT" PRIMARY KEY ("ATT_PRIO_ASSESSMNT_UNIT_ID") ENABLE;
- 
-  ALTER TABLE "ATT_PRIO_ASSESSMNT_UNIT" MODIFY ("ATT_PRIO_ASSESSMNT_UNIT_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_PRIO_ASSESSMNT_UNIT" MODIFY ("ATT_PRIO_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_PRIO_ASSESSMNT_UNIT" MODIFY ("ASSESSMNT_UNIT_IDENT" NOT NULL ENABLE);
-/
---------------------------------------------------------
---  Constraints for Table ATT_SPECIFIC_WTR_CAUSE
---------------------------------------------------------
-
-  ALTER TABLE "ATT_SPECIFIC_WTR_CAUSE" ADD CONSTRAINT "PK_SPECIFIC_WTR_CAUSE" PRIMARY KEY ("ATT_SPECIFIC_WTR_CAUSE_ID") ENABLE;
- 
-  ALTER TABLE "ATT_SPECIFIC_WTR_CAUSE" MODIFY ("ATT_SPECIFIC_WTR_CAUSE_ID" NOT NULL ENABLE);
- 
-  ALTER TABLE "ATT_SPECIFIC_WTR_CAUSE" MODIFY ("ATT_SPECIFIC_WTR_ID" NOT NULL ENABLE);
 /
 --------------------------------------------------------
 --  Constraints for Table ATT_PRIO
@@ -2744,6 +2078,60 @@
   ALTER TABLE "ATT_PRIO" MODIFY ("PRIO_DESC" NOT NULL ENABLE);
 /
 --------------------------------------------------------
+--  Constraints for Table ATT_ASSESSMNT_UNIT
+--------------------------------------------------------
+
+  ALTER TABLE "ATT_ASSESSMNT_UNIT" ADD CONSTRAINT "PK_ASSESSMNT_UNIT" PRIMARY KEY ("ATT_ASSESSMNT_UNIT_ID") ENABLE;
+ 
+  ALTER TABLE "ATT_ASSESSMNT_UNIT" MODIFY ("ATT_ASSESSMNT_UNIT_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_ASSESSMNT_UNIT" MODIFY ("ATT_ORG_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_ASSESSMNT_UNIT" MODIFY ("ASSESSMNT_UNIT_IDENT" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_ASSESSMNT_UNIT" MODIFY ("ASSESSMNT_UNIT_NAME" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_ASSESSMNT_UNIT" MODIFY ("LOC_DESC_TXT" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_ASSESSMNT_UNIT" MODIFY ("AGNCY_CODE" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_ASSESSMNT_UNIT" MODIFY ("ST_CODE" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_ASSESSMNT_UNIT" MODIFY ("STAT_IND" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_ASSESSMNT_UNIT" MODIFY ("USE_CLASS_CNTXT" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_ASSESSMNT_UNIT" MODIFY ("USE_CLASS_CODE" NOT NULL ENABLE);
+/
+--------------------------------------------------------
+--  Constraints for Table ATT_MOD
+--------------------------------------------------------
+
+  ALTER TABLE "ATT_MOD" ADD CONSTRAINT "PK_MOD" PRIMARY KEY ("ATT_MOD_ID") ENABLE;
+ 
+  ALTER TABLE "ATT_MOD" MODIFY ("ATT_MOD_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_MOD" MODIFY ("ATT_ASSESSMNT_UNIT_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_MOD" MODIFY ("MOD_TYPE_CODE" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_MOD" MODIFY ("CHANGE_CYCLE_TXT" NOT NULL ENABLE);
+/
+--------------------------------------------------------
+--  Constraints for Table ATT_ASSESSMNT_TYPE
+--------------------------------------------------------
+
+  ALTER TABLE "ATT_ASSESSMNT_TYPE" ADD CONSTRAINT "PK_ASSESSMNT_TYPE" PRIMARY KEY ("ATT_ASSESSMNT_TYPE_ID") ENABLE;
+ 
+  ALTER TABLE "ATT_ASSESSMNT_TYPE" MODIFY ("ATT_ASSESSMNT_TYPE_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_ASSESSMNT_TYPE" MODIFY ("ATT_USE_ATTAINMENT_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_ASSESSMNT_TYPE" MODIFY ("ASSESSMNT_TYPE_CODE" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_ASSESSMNT_TYPE" MODIFY ("ASSESSMNT_CONFIDENCE_CODE" NOT NULL ENABLE);
+/
+--------------------------------------------------------
 --  Constraints for Table ATT_ST_WIDE_SRC
 --------------------------------------------------------
 
@@ -2756,34 +2144,340 @@
   ALTER TABLE "ATT_ST_WIDE_SRC" MODIFY ("ST_WIDE_SRC_NAME" NOT NULL ENABLE);
 /
 --------------------------------------------------------
---  Constraints for Table ATT_ASSESSMNT
+--  Constraints for Table ATT_ASSESSMNT_METHOD_TYPE
 --------------------------------------------------------
 
-  ALTER TABLE "ATT_ASSESSMNT" ADD CONSTRAINT "PK_ASSESSMNT" PRIMARY KEY ("ATT_ASSESSMNT_ID") ENABLE;
+  ALTER TABLE "ATT_ASSESSMNT_METHOD_TYPE" ADD CONSTRAINT "PK_ASSESSMNT_METHOD_TYPE" PRIMARY KEY ("ATT_ASSESSMNT_METHOD_TYPE_ID") ENABLE;
  
-  ALTER TABLE "ATT_ASSESSMNT" MODIFY ("ATT_ASSESSMNT_ID" NOT NULL ENABLE);
+  ALTER TABLE "ATT_ASSESSMNT_METHOD_TYPE" MODIFY ("ATT_ASSESSMNT_METHOD_TYPE_ID" NOT NULL ENABLE);
  
-  ALTER TABLE "ATT_ASSESSMNT" MODIFY ("ATT_REP_CYCLE_ID" NOT NULL ENABLE);
+  ALTER TABLE "ATT_ASSESSMNT_METHOD_TYPE" MODIFY ("ATT_USE_ATTAINMENT_ID" NOT NULL ENABLE);
  
-  ALTER TABLE "ATT_ASSESSMNT" MODIFY ("ASSESSMNT_UNIT_IDENT" NOT NULL ENABLE);
+  ALTER TABLE "ATT_ASSESSMNT_METHOD_TYPE" MODIFY ("METHOD_TYPE_CNTXT" NOT NULL ENABLE);
  
-  ALTER TABLE "ATT_ASSESSMNT" MODIFY ("AGNCY_CODE" NOT NULL ENABLE);
+  ALTER TABLE "ATT_ASSESSMNT_METHOD_TYPE" MODIFY ("METHOD_TYPE_CODE" NOT NULL ENABLE);
  
-  ALTER TABLE "ATT_ASSESSMNT" MODIFY ("CYCLE_LAST_ASSESSED_TXT" NOT NULL ENABLE);
+  ALTER TABLE "ATT_ASSESSMNT_METHOD_TYPE" MODIFY ("METHOD_TYPE_NAME" NOT NULL ENABLE);
 /
 --------------------------------------------------------
---  Constraints for Table ATT_PROBABLE_SRC
+--  Constraints for Table ATT_SPECIFIC_WTR_CAUSE
 --------------------------------------------------------
 
-  ALTER TABLE "ATT_PROBABLE_SRC" ADD CONSTRAINT "PK_PROBABLE_SRC" PRIMARY KEY ("ATT_PROBABLE_SRC_ID") ENABLE;
+  ALTER TABLE "ATT_SPECIFIC_WTR_CAUSE" ADD CONSTRAINT "PK_SPECIFIC_WTR_CAUSE" PRIMARY KEY ("ATT_SPECIFIC_WTR_CAUSE_ID") ENABLE;
  
-  ALTER TABLE "ATT_PROBABLE_SRC" MODIFY ("ATT_PROBABLE_SRC_ID" NOT NULL ENABLE);
+  ALTER TABLE "ATT_SPECIFIC_WTR_CAUSE" MODIFY ("ATT_SPECIFIC_WTR_CAUSE_ID" NOT NULL ENABLE);
  
-  ALTER TABLE "ATT_PROBABLE_SRC" MODIFY ("ATT_ASSESSMNT_ID" NOT NULL ENABLE);
+  ALTER TABLE "ATT_SPECIFIC_WTR_CAUSE" MODIFY ("ATT_SPECIFIC_WTR_ID" NOT NULL ENABLE);
+/
+--------------------------------------------------------
+--  Constraints for Table ATT_USE_ATTAINMENT
+--------------------------------------------------------
+
+  ALTER TABLE "ATT_USE_ATTAINMENT" ADD CONSTRAINT "PK_USE_ATTAINMENT" PRIMARY KEY ("ATT_USE_ATTAINMENT_ID") ENABLE;
  
-  ALTER TABLE "ATT_PROBABLE_SRC" MODIFY ("SRC_NAME" NOT NULL ENABLE);
+  ALTER TABLE "ATT_USE_ATTAINMENT" MODIFY ("ATT_USE_ATTAINMENT_ID" NOT NULL ENABLE);
  
-  ALTER TABLE "ATT_PROBABLE_SRC" MODIFY ("SRC_CONFIRMED_IND" NOT NULL ENABLE);
+  ALTER TABLE "ATT_USE_ATTAINMENT" MODIFY ("ATT_ASSESSMNT_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_USE_ATTAINMENT" MODIFY ("USE_NAME" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_USE_ATTAINMENT" MODIFY ("USE_ATTAINMENT_CODE" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_USE_ATTAINMENT" MODIFY ("AGNCY_CODE" NOT NULL ENABLE);
+/
+--------------------------------------------------------
+--  Constraints for Table ATT_ST_WIDE_WTR_TYPE
+--------------------------------------------------------
+
+  ALTER TABLE "ATT_ST_WIDE_WTR_TYPE" ADD CONSTRAINT "PK_ST_WIDE_WTR_TYPE" PRIMARY KEY ("ATT_ST_WIDE_WTR_TYPE_ID") ENABLE;
+ 
+  ALTER TABLE "ATT_ST_WIDE_WTR_TYPE" MODIFY ("ATT_ST_WIDE_WTR_TYPE_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_ST_WIDE_WTR_TYPE" MODIFY ("ATT_ST_WIDE_ASSESSMNT_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_ST_WIDE_WTR_TYPE" MODIFY ("ST_WIDE_WTR_TYPE_CODE" NOT NULL ENABLE);
+/
+--------------------------------------------------------
+--  Constraints for Table ATT_ORG
+--------------------------------------------------------
+
+  ALTER TABLE "ATT_ORG" ADD CONSTRAINT "PK_ORG" PRIMARY KEY ("ATT_ORG_ID") ENABLE;
+ 
+  ALTER TABLE "ATT_ORG" MODIFY ("ATT_ORG_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_ORG" MODIFY ("ORG_IDENT" NOT NULL ENABLE);
+/
+--------------------------------------------------------
+--  Constraints for Table ATT_PRIO_USE
+--------------------------------------------------------
+
+  ALTER TABLE "ATT_PRIO_USE" ADD CONSTRAINT "PK_PRIO_USE" PRIMARY KEY ("ATT_PRIO_USE_ID") ENABLE;
+ 
+  ALTER TABLE "ATT_PRIO_USE" MODIFY ("ATT_PRIO_USE_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_PRIO_USE" MODIFY ("ATT_PRIO_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_PRIO_USE" MODIFY ("USE_NAME" NOT NULL ENABLE);
+/
+--------------------------------------------------------
+--  Constraints for Table ATT_POLUT
+--------------------------------------------------------
+
+  ALTER TABLE "ATT_POLUT" ADD CONSTRAINT "PK_POLUT" PRIMARY KEY ("ATT_POLUT_ID") ENABLE;
+ 
+  ALTER TABLE "ATT_POLUT" MODIFY ("ATT_POLUT_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_POLUT" MODIFY ("ATT_ACTN_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_POLUT" MODIFY ("POLUT_NAME" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_POLUT" MODIFY ("POLUT_SRC_TYPE_CODE" NOT NULL ENABLE);
+/
+--------------------------------------------------------
+--  Constraints for Table ATT_PREVIOUS_ASSESSMNT_UNIT
+--------------------------------------------------------
+
+  ALTER TABLE "ATT_PREVIOUS_ASSESSMNT_UNIT" ADD CONSTRAINT "PK_PREVIOUS_ASSESSMNT_UNIT" PRIMARY KEY ("ATT_PREVIOUS_ASSESSMNT_UNIT_ID") ENABLE;
+ 
+  ALTER TABLE "ATT_PREVIOUS_ASSESSMNT_UNIT" MODIFY ("ATT_PREVIOUS_ASSESSMNT_UNIT_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_PREVIOUS_ASSESSMNT_UNIT" MODIFY ("ATT_MOD_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_PREVIOUS_ASSESSMNT_UNIT" MODIFY ("ASSESSMNT_UNIT_IDENT" NOT NULL ENABLE);
+/
+--------------------------------------------------------
+--  Constraints for Table ATT_ORG_CONTACT
+--------------------------------------------------------
+
+  ALTER TABLE "ATT_ORG_CONTACT" ADD CONSTRAINT "PK_ORG_CONTACT" PRIMARY KEY ("ATT_ORG_CONTACT_ID") ENABLE;
+ 
+  ALTER TABLE "ATT_ORG_CONTACT" MODIFY ("ATT_ORG_CONTACT_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_ORG_CONTACT" MODIFY ("ATT_ORG_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_ORG_CONTACT" MODIFY ("CONTACT_TYPE" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_ORG_CONTACT" MODIFY ("WEB_URL_TXT" NOT NULL ENABLE);
+/
+--------------------------------------------------------
+--  Constraints for Table ATT_PRIO_CAUSE
+--------------------------------------------------------
+
+  ALTER TABLE "ATT_PRIO_CAUSE" ADD CONSTRAINT "PK_PRIO_CAUSE" PRIMARY KEY ("ATT_PRIO_CAUSE_ID") ENABLE;
+ 
+  ALTER TABLE "ATT_PRIO_CAUSE" MODIFY ("ATT_PRIO_CAUSE_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_PRIO_CAUSE" MODIFY ("ATT_PRIO_ID" NOT NULL ENABLE);
+/
+--------------------------------------------------------
+--  Constraints for Table ATT_ST_INTEGRATED_REP_CATG
+--------------------------------------------------------
+
+  ALTER TABLE "ATT_ST_INTEGRATED_REP_CATG" ADD CONSTRAINT "PK_ST_INTEGRATED_REP_CATG" PRIMARY KEY ("ATT_ST_INTEGRATED_REP_CATG_ID") ENABLE;
+ 
+  ALTER TABLE "ATT_ST_INTEGRATED_REP_CATG" MODIFY ("ATT_ST_INTEGRATED_REP_CATG_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_ST_INTEGRATED_REP_CATG" MODIFY ("ST_IR_CATG_CODE" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_ST_INTEGRATED_REP_CATG" MODIFY ("ST_CATG_DESC_TXT" NOT NULL ENABLE);
+/
+--------------------------------------------------------
+--  Constraints for Table ATT_WTR_TYPE
+--------------------------------------------------------
+
+  ALTER TABLE "ATT_WTR_TYPE" ADD CONSTRAINT "PK_WTR_TYPE" PRIMARY KEY ("ATT_WTR_TYPE_ID") ENABLE;
+ 
+  ALTER TABLE "ATT_WTR_TYPE" MODIFY ("ATT_WTR_TYPE_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_WTR_TYPE" MODIFY ("ATT_ASSESSMNT_UNIT_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_WTR_TYPE" MODIFY ("WTR_TYPE_CODE" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_WTR_TYPE" MODIFY ("WTR_SIZE_NUM" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_WTR_TYPE" MODIFY ("UNTS_CODE" NOT NULL ENABLE);
+/
+--------------------------------------------------------
+--  Constraints for Table ATT_PRIOR_CAUSE
+--------------------------------------------------------
+
+  ALTER TABLE "ATT_PRIOR_CAUSE" ADD CONSTRAINT "PK_PRIOR_CAUSE" PRIMARY KEY ("ATT_PRIOR_CAUSE_ID") ENABLE;
+ 
+  ALTER TABLE "ATT_PRIOR_CAUSE" MODIFY ("ATT_PRIOR_CAUSE_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_PRIOR_CAUSE" MODIFY ("ATT_PARAM_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_PRIOR_CAUSE" MODIFY ("PRIOR_CAUSE_NAME" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_PRIOR_CAUSE" MODIFY ("PRIOR_CAUSE_CYCLE_TXT" NOT NULL ENABLE);
+/
+--------------------------------------------------------
+--  Constraints for Table ATT_SRC
+--------------------------------------------------------
+
+  ALTER TABLE "ATT_SRC" ADD CONSTRAINT "PK_SRC" PRIMARY KEY ("ATT_SRC_ID") ENABLE;
+ 
+  ALTER TABLE "ATT_SRC" MODIFY ("ATT_SRC_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_SRC" MODIFY ("ATT_SPECIFIC_WTR_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_SRC" MODIFY ("SRC_NAME" NOT NULL ENABLE);
+/
+--------------------------------------------------------
+--  Constraints for Table ATT_NPDES
+--------------------------------------------------------
+
+  ALTER TABLE "ATT_NPDES" ADD CONSTRAINT "PK_NPDES" PRIMARY KEY ("ATT_NPDES_ID") ENABLE;
+ 
+  ALTER TABLE "ATT_NPDES" MODIFY ("ATT_NPDES_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_NPDES" MODIFY ("ATT_POLUT_ID" NOT NULL ENABLE);
+/
+--------------------------------------------------------
+--  Constraints for Table ATT_ACTN
+--------------------------------------------------------
+
+  ALTER TABLE "ATT_ACTN" ADD CONSTRAINT "PK_ACTN" PRIMARY KEY ("ATT_ACTN_ID") ENABLE;
+ 
+  ALTER TABLE "ATT_ACTN" MODIFY ("ATT_ACTN_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_ACTN" MODIFY ("ATT_ORG_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_ACTN" MODIFY ("ACTN_IDENT" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_ACTN" MODIFY ("AGNCY_CODE" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_ACTN" MODIFY ("ACTN_TYPE_CODE" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_ACTN" MODIFY ("ACTN_STAT_CODE" NOT NULL ENABLE);
+/
+--------------------------------------------------------
+--  Constraints for Table ATT_TMDLNPDES
+--------------------------------------------------------
+
+  ALTER TABLE "ATT_TMDLNPDES" ADD CONSTRAINT "PK_TMDLNPDES" PRIMARY KEY ("ATT_TMDLNPDES_ID") ENABLE;
+ 
+  ALTER TABLE "ATT_TMDLNPDES" MODIFY ("ATT_TMDLNPDES_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_TMDLNPDES" MODIFY ("WSTE_LOAD_ALLOCTN_NUM" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_TMDLNPDES" MODIFY ("WSTE_LOAD_ALLOCTN_UNTS_TXT" NOT NULL ENABLE);
+/
+--------------------------------------------------------
+--  Constraints for Table ATT_SEASON
+--------------------------------------------------------
+
+  ALTER TABLE "ATT_SEASON" ADD CONSTRAINT "PK_SEASON" PRIMARY KEY ("ATT_SEASON_ID") ENABLE;
+ 
+  ALTER TABLE "ATT_SEASON" MODIFY ("ATT_SEASON_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_SEASON" MODIFY ("SEASON_START_TXT" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_SEASON" MODIFY ("SEASON_END_TXT" NOT NULL ENABLE);
+/
+--------------------------------------------------------
+--  Constraints for Table ATT_ASSC_POLUT
+--------------------------------------------------------
+
+  ALTER TABLE "ATT_ASSC_POLUT" ADD CONSTRAINT "PK_ASSC_POLUT" PRIMARY KEY ("ATT_ASSC_POLUT_ID") ENABLE;
+ 
+  ALTER TABLE "ATT_ASSC_POLUT" MODIFY ("ATT_ASSC_POLUT_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_ASSC_POLUT" MODIFY ("ATT_SPECIFIC_WTR_CAUSE_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_ASSC_POLUT" MODIFY ("POLUT_NAME" NOT NULL ENABLE);
+/
+--------------------------------------------------------
+--  Constraints for Table ATT_ASSC_CAUSE_NAME
+--------------------------------------------------------
+
+  ALTER TABLE "ATT_ASSC_CAUSE_NAME" ADD CONSTRAINT "PK_ASSC_CAUSE_NAME" PRIMARY KEY ("ATT_ASSC_CAUSE_NAME_ID") ENABLE;
+ 
+  ALTER TABLE "ATT_ASSC_CAUSE_NAME" MODIFY ("ATT_ASSC_CAUSE_NAME_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_ASSC_CAUSE_NAME" MODIFY ("ATT_PROBABLE_SRC_ID" NOT NULL ENABLE);
+/
+--------------------------------------------------------
+--  Constraints for Table ATT_ST_WIDE_USE_ATTAINMENT
+--------------------------------------------------------
+
+  ALTER TABLE "ATT_ST_WIDE_USE_ATTAINMENT" ADD CONSTRAINT "PK_ST_WIDE_USE_ATTAINMENT" PRIMARY KEY ("ATT_ST_WIDE_USE_ATTAINMENT_ID") ENABLE;
+ 
+  ALTER TABLE "ATT_ST_WIDE_USE_ATTAINMENT" MODIFY ("ATT_ST_WIDE_USE_ATTAINMENT_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_ST_WIDE_USE_ATTAINMENT" MODIFY ("ATT_ST_WIDE_ASSESSMNT_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_ST_WIDE_USE_ATTAINMENT" MODIFY ("ST_WIDE_USE_NAME" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_ST_WIDE_USE_ATTAINMENT" MODIFY ("USE_ATTAINMENT_CODE" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_ST_WIDE_USE_ATTAINMENT" MODIFY ("AGNCY_CODE" NOT NULL ENABLE);
+/
+--------------------------------------------------------
+--  Constraints for Table ATT_DELISTED_WTR_CAUSE
+--------------------------------------------------------
+
+  ALTER TABLE "ATT_DELISTED_WTR_CAUSE" ADD CONSTRAINT "PK_DELISTED_WTR_CAUSE" PRIMARY KEY ("ATT_DELISTED_WTR_CAUSE_ID") ENABLE;
+ 
+  ALTER TABLE "ATT_DELISTED_WTR_CAUSE" MODIFY ("ATT_DELISTED_WTR_CAUSE_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_DELISTED_WTR_CAUSE" MODIFY ("ATT_DELISTED_WTR_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_DELISTED_WTR_CAUSE" MODIFY ("AGNCY_CODE" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_DELISTED_WTR_CAUSE" MODIFY ("DELISTING_REASON_CODE" NOT NULL ENABLE);
+/
+--------------------------------------------------------
+--  Constraints for Table ATT_REP_CYCLE
+--------------------------------------------------------
+
+  ALTER TABLE "ATT_REP_CYCLE" ADD CONSTRAINT "PK_REP_CYCLE" PRIMARY KEY ("ATT_REP_CYCLE_ID") ENABLE;
+ 
+  ALTER TABLE "ATT_REP_CYCLE" MODIFY ("ATT_REP_CYCLE_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_REP_CYCLE" MODIFY ("ATT_ORG_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_REP_CYCLE" MODIFY ("REP_CYCLE_TXT" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_REP_CYCLE" MODIFY ("REP_STAT_CODE" NOT NULL ENABLE);
+/
+--------------------------------------------------------
+--  Constraints for Table ATT_PRIO_ASSESSMNT_UNIT
+--------------------------------------------------------
+
+  ALTER TABLE "ATT_PRIO_ASSESSMNT_UNIT" ADD CONSTRAINT "PK_PRIO_ASSESSMNT_UNIT" PRIMARY KEY ("ATT_PRIO_ASSESSMNT_UNIT_ID") ENABLE;
+ 
+  ALTER TABLE "ATT_PRIO_ASSESSMNT_UNIT" MODIFY ("ATT_PRIO_ASSESSMNT_UNIT_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_PRIO_ASSESSMNT_UNIT" MODIFY ("ATT_PRIO_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_PRIO_ASSESSMNT_UNIT" MODIFY ("ASSESSMNT_UNIT_IDENT" NOT NULL ENABLE);
+/
+--------------------------------------------------------
+--  Constraints for Table ATT_LEGACY_NPDES
+--------------------------------------------------------
+
+  ALTER TABLE "ATT_LEGACY_NPDES" ADD CONSTRAINT "PK_LEGACY_NPDES" PRIMARY KEY ("ATT_LEGACY_NPDES_ID") ENABLE;
+ 
+  ALTER TABLE "ATT_LEGACY_NPDES" MODIFY ("ATT_LEGACY_NPDES_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_LEGACY_NPDES" MODIFY ("ATT_SPECIFIC_WTR_CAUSE_ID" NOT NULL ENABLE);
+/
+--------------------------------------------------------
+--  Constraints for Table ATT_REVIEW_CMNT
+--------------------------------------------------------
+
+  ALTER TABLE "ATT_REVIEW_CMNT" ADD CONSTRAINT "PK_REVIEW_CMNT" PRIMARY KEY ("ATT_REVIEW_CMNT_ID") ENABLE;
+ 
+  ALTER TABLE "ATT_REVIEW_CMNT" MODIFY ("ATT_REVIEW_CMNT_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_REVIEW_CMNT" MODIFY ("REVIEW_CMNT_TXT" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_REVIEW_CMNT" MODIFY ("REVIEW_CMNT_DATE" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_REVIEW_CMNT" MODIFY ("REVIEW_CMNT_USR_NAME" NOT NULL ENABLE);
+ 
+  ALTER TABLE "ATT_REVIEW_CMNT" MODIFY ("ORG_IDENT" NOT NULL ENABLE);
 /
 --------------------------------------------------------
 --  Ref Constraints for Table ATT_ACTN
@@ -2828,13 +2522,6 @@
 	  REFERENCES "ATT_PARAM" ("ATT_PARAM_ID") ON DELETE CASCADE ENABLE;
 /
 --------------------------------------------------------
---  Ref Constraints for Table ATT_ASSC_WATERS
---------------------------------------------------------
-
-  ALTER TABLE "ATT_ASSC_WATERS" ADD CONSTRAINT "FK_ASSC_WATERS_ACTN" FOREIGN KEY ("ATT_ACTN_ID")
-	  REFERENCES "ATT_ACTN" ("ATT_ACTN_ID") ON DELETE CASCADE ENABLE;
-/
---------------------------------------------------------
 --  Ref Constraints for Table ATT_ASSESSMNT
 --------------------------------------------------------
 
@@ -2842,32 +2529,18 @@
 	  REFERENCES "ATT_REP_CYCLE" ("ATT_REP_CYCLE_ID") ON DELETE CASCADE ENABLE;
 /
 --------------------------------------------------------
---  Ref Constraints for Table ATT_ASSESSMNT_ACTY
---------------------------------------------------------
-
-  ALTER TABLE "ATT_ASSESSMNT_ACTY" ADD CONSTRAINT "FK_ASSSSMNT_ACTY_ASSSSMN_MTDTA" FOREIGN KEY ("ATT_ASSESSMNT_METADATA_ID")
-	  REFERENCES "ATT_ASSESSMNT_METADATA" ("ATT_ASSESSMNT_METADATA_ID") ON DELETE CASCADE ENABLE;
-/
---------------------------------------------------------
---  Ref Constraints for Table ATT_ASSESSMNT_METADATA
---------------------------------------------------------
-
-  ALTER TABLE "ATT_ASSESSMNT_METADATA" ADD CONSTRAINT "FK_ASSSSMNT_METDTA_USE_ATTNMNT" FOREIGN KEY ("ATT_USE_ATTAINMENT_ID")
-	  REFERENCES "ATT_USE_ATTAINMENT" ("ATT_USE_ATTAINMENT_ID") ON DELETE CASCADE ENABLE;
-/
---------------------------------------------------------
 --  Ref Constraints for Table ATT_ASSESSMNT_METHOD_TYPE
 --------------------------------------------------------
 
-  ALTER TABLE "ATT_ASSESSMNT_METHOD_TYPE" ADD CONSTRAINT "FK_ASSSS_MTHD_TYPE_ASSSS_MTDTA" FOREIGN KEY ("ATT_ASSESSMNT_METADATA_ID")
-	  REFERENCES "ATT_ASSESSMNT_METADATA" ("ATT_ASSESSMNT_METADATA_ID") ON DELETE CASCADE ENABLE;
+  ALTER TABLE "ATT_ASSESSMNT_METHOD_TYPE" ADD CONSTRAINT "FK_ASSSSMN_MTHD_TYPE_USE_ATTNM" FOREIGN KEY ("ATT_USE_ATTAINMENT_ID")
+	  REFERENCES "ATT_USE_ATTAINMENT" ("ATT_USE_ATTAINMENT_ID") ON DELETE CASCADE ENABLE;
 /
 --------------------------------------------------------
 --  Ref Constraints for Table ATT_ASSESSMNT_TYPE
 --------------------------------------------------------
 
-  ALTER TABLE "ATT_ASSESSMNT_TYPE" ADD CONSTRAINT "FK_ASSSSMNT_TYPE_ASSSSMN_MTDTA" FOREIGN KEY ("ATT_ASSESSMNT_METADATA_ID")
-	  REFERENCES "ATT_ASSESSMNT_METADATA" ("ATT_ASSESSMNT_METADATA_ID") ON DELETE CASCADE ENABLE;
+  ALTER TABLE "ATT_ASSESSMNT_TYPE" ADD CONSTRAINT "FK_ASSSSMNT_TYPE_USE_ATTINMENT" FOREIGN KEY ("ATT_USE_ATTAINMENT_ID")
+	  REFERENCES "ATT_USE_ATTAINMENT" ("ATT_USE_ATTAINMENT_ID") ON DELETE CASCADE ENABLE;
 /
 --------------------------------------------------------
 --  Ref Constraints for Table ATT_ASSESSMNT_UNIT
@@ -2924,25 +2597,11 @@
 	  REFERENCES "ATT_PRIO" ("ATT_PRIO_ID") ENABLE;
 /
 --------------------------------------------------------
---  Ref Constraints for Table ATT_MAILING_ADDR
---------------------------------------------------------
-
-  ALTER TABLE "ATT_MAILING_ADDR" ADD CONSTRAINT "FK_MAILING_ADDR_ORG_CONTACT" FOREIGN KEY ("ATT_ORG_CONTACT_ID")
-	  REFERENCES "ATT_ORG_CONTACT" ("ATT_ORG_CONTACT_ID") ON DELETE CASCADE ENABLE;
-/
---------------------------------------------------------
 --  Ref Constraints for Table ATT_MOD
 --------------------------------------------------------
 
   ALTER TABLE "ATT_MOD" ADD CONSTRAINT "FK_MOD_ASSESSMNT_UNIT" FOREIGN KEY ("ATT_ASSESSMNT_UNIT_ID")
 	  REFERENCES "ATT_ASSESSMNT_UNIT" ("ATT_ASSESSMNT_UNIT_ID") ON DELETE CASCADE ENABLE;
-/
---------------------------------------------------------
---  Ref Constraints for Table ATT_MON_ACTY
---------------------------------------------------------
-
-  ALTER TABLE "ATT_MON_ACTY" ADD CONSTRAINT "FK_MON_ACTY_ASSESSMNT_METADATA" FOREIGN KEY ("ATT_ASSESSMNT_METADATA_ID")
-	  REFERENCES "ATT_ASSESSMNT_METADATA" ("ATT_ASSESSMNT_METADATA_ID") ON DELETE CASCADE ENABLE;
 /
 --------------------------------------------------------
 --  Ref Constraints for Table ATT_MON_STATION
@@ -3032,8 +2691,8 @@
 --  Ref Constraints for Table ATT_RELATED_TMD_LS
 --------------------------------------------------------
 
-  ALTER TABLE "ATT_RELATED_TMD_LS" ADD CONSTRAINT "FK_RELATED_TMD_LS_TMDL_REP" FOREIGN KEY ("ATT_TMDL_REP_ID")
-	  REFERENCES "ATT_TMDL_REP" ("ATT_TMDL_REP_ID") ON DELETE CASCADE ENABLE;
+  ALTER TABLE "ATT_RELATED_TMD_LS" ADD CONSTRAINT "FK_RELATED_TMD_LS_ACTN" FOREIGN KEY ("ATT_ACTN_ID")
+	  REFERENCES "ATT_ACTN" ("ATT_ACTN_ID") ON DELETE CASCADE ENABLE;
 /
 --------------------------------------------------------
 --  Ref Constraints for Table ATT_REP_CYCLE
@@ -3069,8 +2728,8 @@
 --  Ref Constraints for Table ATT_SPECIFIC_WTR
 --------------------------------------------------------
 
-  ALTER TABLE "ATT_SPECIFIC_WTR" ADD CONSTRAINT "FK_SPECIFIC_WTR_ASSC_WATERS" FOREIGN KEY ("ATT_ASSC_WATERS_ID")
-	  REFERENCES "ATT_ASSC_WATERS" ("ATT_ASSC_WATERS_ID") ON DELETE CASCADE ENABLE;
+  ALTER TABLE "ATT_SPECIFIC_WTR" ADD CONSTRAINT "FK_SPECIFIC_WTR_ACTN" FOREIGN KEY ("ATT_ACTN_ID")
+	  REFERENCES "ATT_ACTN" ("ATT_ACTN_ID") ON DELETE CASCADE ENABLE;
 /
 --------------------------------------------------------
 --  Ref Constraints for Table ATT_SPECIFIC_WTR_CAUSE
@@ -3103,8 +2762,8 @@
 --  Ref Constraints for Table ATT_ST_WIDE_ACTN
 --------------------------------------------------------
 
-  ALTER TABLE "ATT_ST_WIDE_ACTN" ADD CONSTRAINT "FK_ST_WIDE_ACTN_ASSC_WATERS" FOREIGN KEY ("ATT_ASSC_WATERS_ID")
-	  REFERENCES "ATT_ASSC_WATERS" ("ATT_ASSC_WATERS_ID") ON DELETE CASCADE ENABLE;
+  ALTER TABLE "ATT_ST_WIDE_ACTN" ADD CONSTRAINT "FK_ST_WIDE_ACTN_ACTN" FOREIGN KEY ("ATT_ACTN_ID")
+	  REFERENCES "ATT_ACTN" ("ATT_ACTN_ID") ON DELETE CASCADE ENABLE;
 /
 --------------------------------------------------------
 --  Ref Constraints for Table ATT_ST_WIDE_ASSESSMNT
@@ -3162,32 +2821,11 @@
 	  REFERENCES "ATT_NPDES" ("ATT_NPDES_ID") ENABLE;
 /
 --------------------------------------------------------
---  Ref Constraints for Table ATT_TMDL_POLUT
---------------------------------------------------------
-
-  ALTER TABLE "ATT_TMDL_POLUT" ADD CONSTRAINT "FK_TMDL_POLUT_POLUT" FOREIGN KEY ("ATT_POLUT_ID")
-	  REFERENCES "ATT_POLUT" ("ATT_POLUT_ID") ON DELETE CASCADE ENABLE;
-/
---------------------------------------------------------
---  Ref Constraints for Table ATT_TMDL_REP
---------------------------------------------------------
-
-  ALTER TABLE "ATT_TMDL_REP" ADD CONSTRAINT "FK_TMDL_REP_ACTN" FOREIGN KEY ("ATT_ACTN_ID")
-	  REFERENCES "ATT_ACTN" ("ATT_ACTN_ID") ON DELETE CASCADE ENABLE;
-/
---------------------------------------------------------
 --  Ref Constraints for Table ATT_USE_ATTAINMENT
 --------------------------------------------------------
 
   ALTER TABLE "ATT_USE_ATTAINMENT" ADD CONSTRAINT "FK_USE_ATTAINMENT_ASSESSMNT" FOREIGN KEY ("ATT_ASSESSMNT_ID")
 	  REFERENCES "ATT_ASSESSMNT" ("ATT_ASSESSMNT_ID") ON DELETE CASCADE ENABLE;
-/
---------------------------------------------------------
---  Ref Constraints for Table ATT_USE_CLASS
---------------------------------------------------------
-
-  ALTER TABLE "ATT_USE_CLASS" ADD CONSTRAINT "FK_USE_CLASS_ASSESSMNT_UNIT" FOREIGN KEY ("ATT_ASSESSMNT_UNIT_ID")
-	  REFERENCES "ATT_ASSESSMNT_UNIT" ("ATT_ASSESSMNT_UNIT_ID") ON DELETE CASCADE ENABLE;
 /
 --------------------------------------------------------
 --  Ref Constraints for Table ATT_WTR_TYPE
