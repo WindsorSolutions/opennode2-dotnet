@@ -1725,7 +1725,7 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [System.ComponentModel.DescriptionAttribute("Cycle by which the Assessment Unit is expected to attain its standards (used to i" +
             "ndicate whether or not this cause should be considered towards category 4B)")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        //[Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4)]
         public string CycleExpectedToAttainText;
     }
