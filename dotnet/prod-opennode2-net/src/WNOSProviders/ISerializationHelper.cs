@@ -47,9 +47,11 @@ namespace Windsor.Node2008.WNOSProviders
     public interface ISerializationHelper
     {
         T Deserialize<T>(string xml, XmlElementEventHandler unknownElementHandler);
+        T Deserialize<T>(string xml, XmlElementEventHandler unknownElementHandler, XmlAttributeEventHandler unknownAttributeHandler);
         T Deserialize<T>(string sourceFile, XmlElementEventHandler unknownElementHandler, bool deleteAfterDeserialization);
         T Deserialize<T>(byte[] bytes);
         T Deserialize<T>(byte[] bytes, XmlElementEventHandler unknownElementHandler);
+        T Deserialize<T>(byte[] bytes, XmlElementEventHandler unknownElementHandler, XmlAttributeEventHandler unknownAttributeHandler);
         T DeserializeFromBase64String<T>(string text, XmlElementEventHandler unknownElementHandler);
         T Deserialize<T>(string sourceFile, bool deleteAfterDeserialization);
         T Deserialize<T>(string sourceFile);

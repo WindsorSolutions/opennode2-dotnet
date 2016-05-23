@@ -78,7 +78,11 @@ namespace Windsor.Commons.Core
         /// <returns></returns>
         public T Deserialize<T>(string xml, XmlElementEventHandler unknownElementHandler)
         {
-            return Deserialize<T>(StringUtils.UTF8.GetBytes(xml));
+            return Deserialize<T>(StringUtils.UTF8.GetBytes(xml), unknownElementHandler);
+        }
+        public T Deserialize<T>(string xml, XmlElementEventHandler unknownElementHandler, XmlAttributeEventHandler unknownAttributeHandler)
+        {
+            return Deserialize<T>(StringUtils.UTF8.GetBytes(xml), unknownElementHandler, unknownAttributeHandler);
         }
         public T FromXml<T>(string xml)
         {
@@ -105,12 +109,20 @@ namespace Windsor.Commons.Core
         /// <returns></returns>
         public T Deserialize<T>(byte[] bytes, XmlElementEventHandler unknownElementHandler)
         {
+            return Deserialize<T>(bytes, unknownElementHandler, null);
+        }
+        public T Deserialize<T>(byte[] bytes, XmlElementEventHandler unknownElementHandler, XmlAttributeEventHandler unknownAttributeHandler)
+        {
             XmlSerializer serializer = new XmlSerializer(typeof(T));
             serializer.UnknownElement += new XmlElementEventHandler(DefaultUnknownElementHandler);
 
             if (unknownElementHandler != null)
             {
                 serializer.UnknownElement += unknownElementHandler;
+            }
+            if (unknownAttributeHandler != null)
+            {
+                serializer.UnknownAttribute += unknownAttributeHandler;
             }
 
             using (XmlReader reader = XmlReader.Create(new MemoryStream(bytes)))
@@ -380,7 +392,7 @@ namespace Windsor.Commons.Core
         public T DeserializeFromBase64String<T>(string text, XmlElementEventHandler unknownElementHandler)
         {
 
-            return Deserialize<T>(Convert.FromBase64String(text));
+            return Deserialize<T>(Convert.FromBase64String(text), unknownElementHandler);
 
         }
 
