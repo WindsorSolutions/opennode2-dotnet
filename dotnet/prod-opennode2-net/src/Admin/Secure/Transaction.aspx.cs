@@ -356,7 +356,7 @@ namespace Windsor.Node2008.Admin.Secure
             {
                 return string.Empty;
             }
-            return Tran.Status.Description;
+            return StringUtils.BreakUpText(Tran.Status.Description, 100, "<br/>");
         }
         protected override void BindFormData()
         {

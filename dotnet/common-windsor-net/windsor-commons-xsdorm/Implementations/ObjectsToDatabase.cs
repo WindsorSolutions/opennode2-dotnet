@@ -904,9 +904,13 @@ namespace Windsor.Commons.XsdOrm.Implementations
                         {
                             command.ExecuteNonQuery();
                         }
-                        catch (Exception)
+                        catch (Exception ex)
                         {
-                            throw;
+                            var message = string.Format("The SQL insert failed for table \"{0}\" for object data \"{1}\" with error: {2}",
+                                                        GetTableNameForType(objectToSave.GetType()),
+                                                        ReflectionUtils.GetPublicPropertiesString(objectToSave),
+                                                        ExceptionUtils.GetDeepExceptionMessage(ex));
+                            throw new ArgException(message);
                         }
                         if (insertRowCounts != null)
                         {
