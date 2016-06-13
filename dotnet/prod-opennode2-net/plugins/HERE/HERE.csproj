@@ -82,7 +82,6 @@
     </Compile>
     <Compile Include="CAFO11\CAFO.cs">
       <DependentUpon>CAFO.xsd</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="CAFO11\CAFO.Designer.cs">
       <DependentUpon>CAFO.xsd</DependentUpon>

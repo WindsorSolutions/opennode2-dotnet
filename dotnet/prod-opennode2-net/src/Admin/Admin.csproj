@@ -141,9 +141,7 @@
     <Compile Include="Code\SimpleListConfig.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Code\SimplePage.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
+    <Compile Include="Code\SimplePage.cs" />
     <Compile Include="Code\UIUtility.cs" />
     <Compile Include="Code\VisitHelper.cs" />
     <Compile Include="Controls\BaseSecurePane.cs">
