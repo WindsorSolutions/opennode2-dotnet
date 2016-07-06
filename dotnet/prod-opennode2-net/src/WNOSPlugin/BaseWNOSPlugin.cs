@@ -1406,15 +1406,17 @@ namespace Windsor.Node2008.WNOSPlugin
 
                 DateTime? rtnDateTime = null;
 
-                baseDao.DoSimpleQueryWithRowCallbackDelegate(
+                baseDao.DoSimpleQueryWithCancelableRowCallbackDelegate(
                     _submissionHistoryTableName,
                     _submissionHistoryTableProcessingStatusName,
-                    EnumUtils.ToDescription(CDX_Processing_Status.Completed),
+                    new string[] { EnumUtils.ToDescription(CDX_Processing_Status.Completed) },
                     _submissionHistoryTableRunDateName + " DESC",
                     _submissionHistoryTableRunDateName,
                     delegate(IDataReader reader)
                     {
                         rtnDateTime = reader.GetDateTime(0);
+                        return false;
+
                     });
                 return rtnDateTime;
             }

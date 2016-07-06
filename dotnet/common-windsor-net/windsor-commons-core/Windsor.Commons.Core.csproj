@@ -112,6 +112,7 @@
     <Compile Include="RandomStringGenerator.cs" />
     <Compile Include="ReadOnlyDictionary.cs" />
     <Compile Include="ReflectionUtils.cs" />
+    <Compile Include="SecurityUtils.cs" />
     <Compile Include="SerializableDictionary.cs" />
     <Compile Include="SerializationUtils.cs" />
     <Compile Include="SimpleConfigFileParser.cs" />

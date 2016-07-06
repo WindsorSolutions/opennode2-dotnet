@@ -131,7 +131,11 @@ namespace Windsor.Node2008.WNOSPlugin.AQS3
                     args.Add(monitor.MonitorIdentifierDetails.SubstanceOccurrenceCode);
                     if (monitor.BasicMonitoringInformation != null)
                     {
+#if !V_3
                         argNames.Append("ACTION_CD;APPLICABLE_NAAQS_IND;CMNTY_MONITOR_ZONE;DOMINANT_SCR_TXT;HORIZ_DIST_MSR;MEASUREMENT_SCALE_ID;MONITOR_CLOSE_DATE;OPEN_PATH_ID;PROBE_HEIGHT_MSR;PROBE_LOC_CODE;PROJECT_CLASS_CD;SAMPLE_RESID_TIME;SCHED_EXEMPT_IND;SPACIAL_AVG_IND;SURROGATE_IND;UNRESTR_AIR_FLOW_IND;VERT_DIST_MSR;WORST_SITE_TYPE_CD");
+#else // !V_3
+                        argNames.Append("ACTION_CD;CMNTY_MONITOR_ZONE;DOMINANT_SCR_TXT;HORIZ_DIST_MSR;MEASUREMENT_SCALE_ID;MONITOR_CLOSE_DATE;OPEN_PATH_ID;PROBE_HEIGHT_MSR;PROBE_LOC_CODE;PROJECT_CLASS_CD;SAMPLE_RESID_TIME;SCHED_EXEMPT_IND;SPACIAL_AVG_IND;SURROGATE_IND;UNRESTR_AIR_FLOW_IND;VERT_DIST_MSR;WORST_SITE_TYPE_CD");
+#endif // !V_3
                         args.Add(monitor.BasicMonitoringInformation.ActionCode);
 #if !V_3
                         args.Add(monitor.BasicMonitoringInformation.ApplicableNAAQSIndicator);

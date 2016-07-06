@@ -199,6 +199,8 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
 
             if (_lastUpdateDate.HasValue)
             {
+                AppendAuditLogEvent("Using last update date of \"{0}\" to build query...", 
+                                    _lastUpdateDate.Value.ToString());
                 beachActivitySelect += " AND (NOTIFUPDATEDATE >= ?)";
                 beachActivitySelectParams = new List<object>(new object[] { _lastUpdateDate.Value });
             }
