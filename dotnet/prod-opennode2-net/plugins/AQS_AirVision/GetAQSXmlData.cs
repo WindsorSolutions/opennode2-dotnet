@@ -213,11 +213,11 @@ namespace Windsor.Node2008.WNOSPlugin.AQSAirVision
                 arguments.Tags = tags.ToArray();
             }
 
-            if (!TryGetParameter(_dataRequest, PARAM_START_TIME, paramIndex++, ref arguments.StartTime))
+            if (!TryGetNowDateParameter(_dataRequest, PARAM_START_TIME, paramIndex++, ref arguments.StartTime))
             {
                 arguments.StartTime = DateTime.Now.AddYears(-1);
             }
-            if (!TryGetParameter(_dataRequest, PARAM_END_TIME, paramIndex++, ref arguments.EndTime))
+            if (!TryGetNowDateParameter(_dataRequest, PARAM_END_TIME, paramIndex++, ref arguments.EndTime))
             {
                 arguments.EndTime = DateTime.Now;
             }
