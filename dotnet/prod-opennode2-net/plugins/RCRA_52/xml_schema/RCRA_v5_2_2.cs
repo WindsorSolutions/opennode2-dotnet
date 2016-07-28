@@ -208,7 +208,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
     [AppliedAttribute(typeof(HandlerDataType), "ReceiveDate", typeof(ColumnAttribute), "RECEIVE_DATE", DbType.AnsiString, 10)]
     [AppliedAttribute(typeof(HandlerDataType), "HandlerName", typeof(ColumnAttribute), "HANDLER_NAME", DbType.AnsiString, 80)]
     [AppliedAttribute(typeof(HandlerDataType), "NonNotifierIndicator", typeof(ColumnAttribute), "NON_NOTIFIER", DbType.AnsiStringFixedLength, 1)]
-    [AppliedAttribute(typeof(HandlerDataType), "NonNotifierText", typeof(ColumnAttribute), "NON_NOTIFIER_TEXT", DbType.AnsiString, 255)]
+    [AppliedAttribute(typeof(HandlerDataType), "NonNotifierIndicatorText", typeof(ColumnAttribute), "NON_NOTIFIER_TEXT", DbType.AnsiString, 255)]
     // REMOVED: [AppliedAttribute(typeof(HandlerDataType), "OnsiteEmployeeQuantity", typeof(ColumnAttribute), "NUMBER_OF_EMPLOYEES", DbType.Int32)]
     [AppliedAttribute(typeof(LocationAddressDataType), "LocationAddressNumberText", typeof(ColumnAttribute), "LOCATION_STREET_NUMBER", 12)]
     [AppliedAttribute(typeof(LocationAddressDataType), "LocationAddressText", typeof(ColumnAttribute), "LOCATION_STREET1", 50)]
