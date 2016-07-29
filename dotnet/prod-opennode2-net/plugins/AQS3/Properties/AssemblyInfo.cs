@@ -70,5 +70,5 @@ using Windsor.Node2008.WNOSPlugin;
 [assembly: AssemblyFileVersion(AssemblyInfo.cAssemblyFileVersion)]
 [assembly: PluginDefaultFlowAttribute("AQS")]
 [assembly: PluginPackageNameAttribute("AQS 3.0")]
-//[assembly: PluginSqlDdlFilePaths(@"AQS\3.0\staging_schema_ddl\AQS_2.2_ORA_DLL.sql")]
+[assembly: PluginSqlDdlFilePaths(@"AQS\3.0\staging_schema_ddl\AQS_3.0-ORA-DLL.sql,AQS\3.0\staging_schema_ddl\AQS_3.0-SQL-DLL.sql")]
 [assembly: PublicPluginAttribute()]
