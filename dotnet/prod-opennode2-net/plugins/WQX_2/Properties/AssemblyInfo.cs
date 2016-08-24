@@ -70,5 +70,5 @@ using Windsor.Node2008.WNOSPlugin;
 [assembly: AssemblyFileVersion(AssemblyInfo.cAssemblyFileVersion)]
 [assembly: PluginDefaultFlowAttribute("WQX")]
 [assembly: PluginPackageNameAttribute("WQX 2.0")]
-[assembly: PluginSqlDdlFilePaths(@"WQX\2.0\staging_schema_ddl\WQX_2.0-SQL-DDL.sql,WQX\2.0\staging_schema_ddl\WQX_2.0-ORA-DDL.sql")]
+[assembly: PluginSqlDdlFilePaths(@"WQX\2.1\staging_schema_ddl\WQX_2.1-SQL-DDL.sql,WQX\2.1\staging_schema_ddl\WQX_2.1-ORA-DDL.sql")]
 [assembly: PublicPluginAttribute()]
