@@ -188,8 +188,26 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_54
             submitFilePath = null;
             Type mappingAttributesType = typeof(Windsor.Node2008.WNOSPlugin.ICISAIR_54.MappingAttributes);
             IDictionary<string, DbAppendSelectWhereClause> selectClauses = Windsor.Node2008.WNOSPlugin.ICISAIR_54.Payload.GetDefaultSelectClauses(_stagingDao);
-            List<Windsor.Node2008.WNOSPlugin.ICISAIR_54.Payload> payloads =
-                _objectsFromDatabase.LoadFromDatabase<Windsor.Node2008.WNOSPlugin.ICISAIR_54.Payload>(_stagingDao, selectClauses, mappingAttributesType);
+            List<Windsor.Node2008.WNOSPlugin.ICISAIR_54.Payload> payloads;
+
+            try
+            {
+                payloads =
+                    _objectsFromDatabase.LoadFromDatabase<Windsor.Node2008.WNOSPlugin.ICISAIR_54.Payload>(_stagingDao, selectClauses, mappingAttributesType);
+                if (CollectionUtils.IsNullOrEmpty(payloads))
+                {
+                    AppendAuditLogEvent("The staging database did not contain any ICIS payloads ...");
+                }
+                else
+                {
+                    AppendAuditLogEvent("Queried {0} ICIS payload(s) from the database ...", payloads.Count);
+                }
+            }
+            catch (Exception ex)
+            {
+                AppendAuditLogEvent("Failed to query ICIS payloads from the database with exception: {0}", ExceptionUtils.ToLongString(ex));
+                throw;
+            }
 
             // Remove payloads that don't contain any data
             if (payloads != null)
@@ -347,8 +365,21 @@ namespace Windsor.Node2008.WNOSPlugin.ICISAIR_54
                     AppendAuditLogEvent("The ETL stored procedure indicated that this service should not continue, exiting plugin ...");
                     return false;
                 }
+                AppendAuditLogEvent("The ETL stored procedure returned \"{0}\" for the submission tracking PK ...", _submissionTrackingDataTypePK);
 
-                _submissionTrackingDataType = SubmissionTrackingTableHelper.GetActiveSubmissionTrackingElement(_stagingDao, _submissionTrackingDataTypePK);
+
+                try
+                {
+                    AppendAuditLogEvent("Attempting to read the submission tracking row with PK \"{0}\" ...", _submissionTrackingDataTypePK);
+                    _submissionTrackingDataType = SubmissionTrackingTableHelper.GetActiveSubmissionTrackingElement(_stagingDao, _submissionTrackingDataTypePK);
+                    AppendAuditLogEvent("Successfully read the submission tracking row with PK \"{0}\".", _submissionTrackingDataTypePK);
+                }
+                catch (Exception ex)
+                {
+                    AppendAuditLogEvent("Failed to read the submission tracking row with PK \"{0}\" with exception: {1}",
+                                        _submissionTrackingDataTypePK, ExceptionUtils.GetDeepExceptionMessage(ex));
+                    throw;
+                }
             }
             else
             {

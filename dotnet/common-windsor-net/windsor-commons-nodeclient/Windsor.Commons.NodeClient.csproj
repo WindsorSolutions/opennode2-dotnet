@@ -63,7 +63,9 @@
     <Compile Include="..\Windsor-Commons-AssemblyInfo\AssemblyInfo.cs">
       <Link>AssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Client1\Windsor.Node.Proxy11.WSDL\NetworkNode.cs" />
+    <Compile Include="Client1\Windsor.Node.Proxy11.WSDL\NetworkNode.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Client1\Windsor.Node.Proxy11.WSDL\NodeDocument.cs" />
     <Compile Include="Client1\Windsor.Node.Proxy11\CertificatePolicy.cs" />
     <Compile Include="Client1\Windsor.Node.Proxy11\INodeRequestor11.cs" />
