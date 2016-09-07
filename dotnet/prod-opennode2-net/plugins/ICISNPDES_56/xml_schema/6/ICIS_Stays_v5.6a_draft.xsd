@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:icis="http://www.exchangenetwork.net/schema/icis/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/icis/5" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5">
+	
+	<xsd:include schemaLocation="ICIS_Common_v5.6a_draft.xsd"/>
+	
+	<xsd:annotation>
+		<xsd:documentation>Schema Name: ICIS_Stays_v5.6a_draft.xsd</xsd:documentation>
+		<xsd:documentation>Current Version Available: http://www.exchangenetwork.net/schema/icis/5</xsd:documentation>
+		<xsd:documentation>Description: ICIS-NPDES stay data input format</xsd:documentation>
+		<xsd:documentation>Application: ICIS-NPDES</xsd:documentation>
+		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
+		<xsd:documentation>Point of Contact: Joe Carioti, U.S. EPA</xsd:documentation>
+		<xsd:documentation>Data Written: July 2006</xsd:documentation>
+		<xsd:documentation>Last Date Modified: 2016-08-09</xsd:documentation>
+	</xsd:annotation>
+	
+	<xsd:element name="CalculateViolationsIndicator" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="LimitStayTypeCode" type="icis:String1FixedType"/>
+	<xsd:element name="StayEndDate" type="icis:DateType"/>
+	<xsd:element name="StayReasonText" type="icis:StringMin1Max500Type"/>
+	<xsd:element name="StayStartDate" type="icis:DateType"/>
+	
+	<xsd:group name="StayDataGroup">
+		<xsd:sequence>
+			<xsd:element ref="icis:LimitStayTypeCode"/>
+			<xsd:element ref="icis:StayStartDate" minOccurs="0"/>
+			<xsd:element ref="icis:StayEndDate" minOccurs="0"/>
+			<xsd:element ref="icis:StayReasonText" minOccurs="0"/>
+			<xsd:element ref="icis:CalculateViolationsIndicator" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+</xsd:schema>
