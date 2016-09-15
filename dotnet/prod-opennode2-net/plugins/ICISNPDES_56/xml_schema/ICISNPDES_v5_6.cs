@@ -1254,10 +1254,6 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_56
 
         /// <remarks/>
         M,
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlEnumAttribute("*")]
-        Item,
     }
 
     /// <remarks/>
@@ -2076,8 +2072,26 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_56
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 22)] //5.6
-        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
+        [Windsor.Commons.XsdOrm2.DbIgnore()]
         public MajorMinorStatus MajorMinorStatus;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
+        public MajorMinorStatusIndicatorType MajorMinorStatusIndicator;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool MajorMinorStatusIndicatorSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate MajorMinorStatusStartDate;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool MajorMinorStatusStartDateSpecified;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 23)]
@@ -2116,8 +2130,26 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_56
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 30)] //5.6
-        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
+        [Windsor.Commons.XsdOrm2.DbIgnoreAttribute()]
         public DMRNonReceiptStatus DMRNonReceiptStatus;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
+        public ActiveInactiveType DMRNonReceiptStatusIndicator;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool DMRNonReceiptStatusIndicatorSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate DMRNonReceiptStatusStartDate;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool DMRNonReceiptStatusStartDateSpecified;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("ReportableNonComplianceStatus", Order = 31)] //5.6
@@ -2414,10 +2446,6 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_56
 
         /// <remarks/>
         M,
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlEnumAttribute("*")]
-        Item,
     }
 
     /// <remarks/>
@@ -2483,10 +2511,6 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_56
 
         /// <remarks/>
         I,
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlEnumAttribute("*")]
-        Item,
     }
 
     /// <remarks/>
@@ -3144,8 +3168,26 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_56
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 21)] //5.6
-        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
+        [Windsor.Commons.XsdOrm2.DbIgnore()]
         public MajorMinorStatus MajorMinorStatus;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
+        public MajorMinorStatusIndicatorType MajorMinorStatusIndicator;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool MajorMinorStatusIndicatorSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate MajorMinorStatusStartDate;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool MajorMinorStatusStartDateSpecified;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 22)]
@@ -3184,8 +3226,26 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_56
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 29)] //5.6
-        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
+        [Windsor.Commons.XsdOrm2.DbIgnoreAttribute()]
         public DMRNonReceiptStatus DMRNonReceiptStatus;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
+        public ActiveInactiveType DMRNonReceiptStatusIndicator;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool DMRNonReceiptStatusIndicatorSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate DMRNonReceiptStatusStartDate;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool DMRNonReceiptStatusStartDateSpecified;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("ReportableNonComplianceStatus", Order = 30)] //5.6
@@ -5141,10 +5201,6 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_56
 
         /// <remarks/>
         D,
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlEnumAttribute("*")]
-        Item,
     }
 
     /// <remarks/>
@@ -5283,10 +5339,6 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_56
 
         /// <remarks/>
         W,
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlEnumAttribute("*")]
-        Item,
     }
 
     /// <remarks/>
@@ -5301,10 +5353,6 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_56
 
         /// <remarks/>
         S,
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlEnumAttribute("*")]
-        Item,
     }
 
     /// <remarks/>
@@ -5951,10 +5999,6 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_56
 
         /// <remarks/>
         F,
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlEnumAttribute("*")]
-        Item,
     }
 
     /// <remarks/>
@@ -6457,10 +6501,6 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_56
 
         /// <remarks/>
         J,
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlEnumAttribute("*")]
-        Item,
     }
 
     /// <remarks/>
@@ -6475,10 +6515,6 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_56
 
         /// <remarks/>
         S,
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlEnumAttribute("*")]
-        Item,
     }
 
     /// <remarks/>
@@ -6632,10 +6668,6 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_56
 
         /// <remarks/>
         YB,
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlEnumAttribute("*")]
-        Item,
     }
 
     /// <remarks/>

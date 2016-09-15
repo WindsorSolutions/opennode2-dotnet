@@ -392,6 +392,126 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_56
             return selectClauses;
         }
     }
+    public partial class BasicPermitData : IAfterLoadFromDatabase, IBeforeSaveToDatabase
+    {
+        public virtual void AfterLoadFromDatabase()
+        {
+            if (BasicPermit != null)
+            {
+                BasicPermit.AfterLoadFromDatabase();
+            }
+        }
+        public virtual void BeforeSaveToDatabase()
+        {
+            if (BasicPermit != null)
+            {
+                BasicPermit.BeforeSaveToDatabase();
+            }
+        }
+    }
+    public partial class BasicPermit : IAfterLoadFromDatabase, IBeforeSaveToDatabase
+    {
+        public virtual void AfterLoadFromDatabase()
+        {
+            if (MajorMinorStatusIndicatorSpecified || MajorMinorStatusStartDateSpecified)
+            {
+                MajorMinorStatus = new MajorMinorStatus()
+                {
+                    MajorMinorStatusIndicator = MajorMinorStatusIndicator,
+                    MajorMinorStatusIndicatorSpecified = MajorMinorStatusIndicatorSpecified,
+                    MajorMinorStatusStartDate = MajorMinorStatusStartDate,
+                    MajorMinorStatusStartDateSpecified = MajorMinorStatusStartDateSpecified,
+                };
+            }
+            if (DMRNonReceiptStatusIndicatorSpecified || DMRNonReceiptStatusStartDateSpecified)
+            {
+                DMRNonReceiptStatus = new DMRNonReceiptStatus()
+                {
+                    DMRNonReceiptStatusIndicator = DMRNonReceiptStatusIndicator,
+                    DMRNonReceiptStatusIndicatorSpecified = DMRNonReceiptStatusIndicatorSpecified,
+                    DMRNonReceiptStatusStartDate = DMRNonReceiptStatusStartDate,
+                    DMRNonReceiptStatusStartDateSpecified = DMRNonReceiptStatusStartDateSpecified,
+                };
+            }
+        }
+        public virtual void BeforeSaveToDatabase()
+        {
+            if (MajorMinorStatus != null)
+            {
+                MajorMinorStatusIndicator = MajorMinorStatus.MajorMinorStatusIndicator;
+                MajorMinorStatusIndicatorSpecified = MajorMinorStatus.MajorMinorStatusIndicatorSpecified;
+                MajorMinorStatusStartDate = MajorMinorStatus.MajorMinorStatusStartDate;
+                MajorMinorStatusStartDateSpecified = MajorMinorStatus.MajorMinorStatusStartDateSpecified;
+            }
+            if (DMRNonReceiptStatus != null)
+            {
+                DMRNonReceiptStatusIndicator = DMRNonReceiptStatus.DMRNonReceiptStatusIndicator;
+                DMRNonReceiptStatusIndicatorSpecified = DMRNonReceiptStatus.DMRNonReceiptStatusIndicatorSpecified;
+                DMRNonReceiptStatusStartDate = DMRNonReceiptStatus.DMRNonReceiptStatusStartDate;
+                DMRNonReceiptStatusStartDateSpecified = DMRNonReceiptStatus.DMRNonReceiptStatusStartDateSpecified;
+            }
+        }
+    }
+    public partial class GeneralPermitData : IAfterLoadFromDatabase, IBeforeSaveToDatabase
+    {
+        public virtual void AfterLoadFromDatabase()
+        {
+            if (GeneralPermit != null)
+            {
+                GeneralPermit.AfterLoadFromDatabase();
+            }
+        }
+        public virtual void BeforeSaveToDatabase()
+        {
+            if (GeneralPermit != null)
+            {
+                GeneralPermit.BeforeSaveToDatabase();
+            }
+        }
+    }
+    public partial class GeneralPermit : IAfterLoadFromDatabase, IBeforeSaveToDatabase
+    {
+        public virtual void AfterLoadFromDatabase()
+        {
+            if (MajorMinorStatusIndicatorSpecified || MajorMinorStatusStartDateSpecified)
+            {
+                MajorMinorStatus = new MajorMinorStatus()
+                {
+                    MajorMinorStatusIndicator = MajorMinorStatusIndicator,
+                    MajorMinorStatusIndicatorSpecified = MajorMinorStatusIndicatorSpecified,
+                    MajorMinorStatusStartDate = MajorMinorStatusStartDate,
+                    MajorMinorStatusStartDateSpecified = MajorMinorStatusStartDateSpecified,
+                };
+            }
+            if (DMRNonReceiptStatusIndicatorSpecified || DMRNonReceiptStatusStartDateSpecified)
+            {
+                DMRNonReceiptStatus = new DMRNonReceiptStatus()
+                {
+                    DMRNonReceiptStatusIndicator = DMRNonReceiptStatusIndicator,
+                    DMRNonReceiptStatusIndicatorSpecified = DMRNonReceiptStatusIndicatorSpecified,
+                    DMRNonReceiptStatusStartDate = DMRNonReceiptStatusStartDate,
+                    DMRNonReceiptStatusStartDateSpecified = DMRNonReceiptStatusStartDateSpecified,
+                };
+            }
+        }
+        public virtual void BeforeSaveToDatabase()
+        {
+            if (MajorMinorStatus != null)
+            {
+                MajorMinorStatusIndicator = MajorMinorStatus.MajorMinorStatusIndicator;
+                MajorMinorStatusIndicatorSpecified = MajorMinorStatus.MajorMinorStatusIndicatorSpecified;
+                MajorMinorStatusStartDate = MajorMinorStatus.MajorMinorStatusStartDate;
+                MajorMinorStatusStartDateSpecified = MajorMinorStatus.MajorMinorStatusStartDateSpecified;
+            }
+            if (DMRNonReceiptStatus != null)
+            {
+                DMRNonReceiptStatusIndicator = DMRNonReceiptStatus.DMRNonReceiptStatusIndicator;
+                DMRNonReceiptStatusIndicatorSpecified = DMRNonReceiptStatus.DMRNonReceiptStatusIndicatorSpecified;
+                DMRNonReceiptStatusStartDate = DMRNonReceiptStatus.DMRNonReceiptStatusStartDate;
+                DMRNonReceiptStatusStartDateSpecified = DMRNonReceiptStatus.DMRNonReceiptStatusStartDateSpecified;
+            }
+        }
+    }
     public partial class DischargeMonitoringReportData : IAfterLoadFromDatabase, IBeforeSaveToDatabase
     {
         public virtual void AfterLoadFromDatabase()
