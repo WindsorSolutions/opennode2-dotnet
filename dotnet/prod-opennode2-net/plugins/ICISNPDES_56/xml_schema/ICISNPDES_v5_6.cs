@@ -962,14 +962,14 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_56
         public GeographicCoordinates GeographicCoordinates;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 33)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4000)]
-        public string PermitCommentsText;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("PermitComponentTypeCode", Order = 34)]
+        [System.Xml.Serialization.XmlElementAttribute("PermitComponentTypeCode", Order = 33)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
         public string[] PermitComponentTypeCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 34)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4000)]
+        public string PermitCommentsText;
     }
 
     /// <remarks/>
@@ -7422,16 +7422,6 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_56
         public string ReasonDeletingRecord;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
-        public string FederalFacilityIndicator;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4000)]
-        public string FederalFacilityIndicatorComment;
-
-        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4000)]
         public string InformalEACommentText;
@@ -7551,16 +7541,6 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_56
         [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(500)]
         public string ReasonDeletingRecord;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
-        public string FederalFacilityIndicator;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4000)]
-        public string FederalFacilityIndicatorComment;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 10)]
