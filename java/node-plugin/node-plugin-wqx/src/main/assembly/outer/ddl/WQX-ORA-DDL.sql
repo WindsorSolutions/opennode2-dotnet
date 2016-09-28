@@ -1,5 +1,5 @@
 /******************************************************************************************************************************
- ** ObjectName: WQX_2.0-ORA-DDL.sql
+ ** ObjectName: WQX_2.1-ORA-DDL.sql
  **
  ** Author: Windsor Solutions, Inc.
  **
@@ -14,13 +14,14 @@
  ** ----------------------------------------------------------------------------------------------------------------------------
  **  Date         Name        Description
  ** ----------------------------------------------------------------------------------------------------------------------------
- ** 01/01/2010  Windsor       Original   
- ** 11/05/2010  KJames        Added ORG_ID to the WQX_SUBMISSIONHISTORY table.   
- ** 11/05/2010  KJames        Removed the constraint between WQX_SUBMISSIONHISTORY and WQX_ORGANIZATION.  This will allow the
- **                           deletion of WQX data without purging historical submission records.                  
- ** 01/03/2012  KJames        Removed residual references to WQX_TAXONOMICDETAIL.
- ** 10/01/2012  KJames        Modified FK contraint WQX_ACTIVITYGROUP to be a CASCADE delete.
- ** 12/18/2012  AGeery        Added three views to support Java plugin
+ ** 08/24/2016  BRensmith     Baseline v2.1 based on existing WQX v2.0 script
+ ** 08/24/2016  BRensmith     Changes for v2.1: 
+ **                           Increased ResourceSubjectText maxlength from 500 to 4000
+ **                           Increased MonitoringLocationDescriptionText maxlength from 1999 to 4000
+ **                           Increased ProjectDescriptionText maxlength from 1999 to 4000
+ **                           Increased ResultParticleSizeBasisText maxlength from 15 to 40
+ **                           Increased MethodDescriptionText maxlength from 500 to 4000
+ **                           Increased SampleTransportStorageDescription maxlength from 250 to 1999
  ** 
  ******************************************************************************************************************************/
 /*
@@ -274,7 +275,7 @@ CREATE TABLE WQX_ACTIVITY (
 	SAMPPREPCONTCOLOR             	VARCHAR2(15) NULL,
 	SAMPPREPCONTCHEMPRESERVUSED   	VARCHAR2(250) NULL,
 	SAMPPREPCONTTHERMALPRESERVUSED	VARCHAR2(25) NULL,
-	SAMPPREPCONTSAMPTRANSSTORDESC 	VARCHAR2(250) NULL,
+	SAMPPREPCONTSAMPTRANSSTORDESC 	VARCHAR2(1999) NULL,
 	RESULTCOUNT                   	VARCHAR2(255) NULL,
 	WQXUPDATEDATE                 	DATE NOT NULL,
 	TMPPROJECTID			VARCHAR(50) NULL
@@ -314,7 +315,7 @@ CREATE TABLE WQX_ACTIVITYMETRIC (
 	METRICTYPENAME           	VARCHAR2(50) NULL,
 	CITATIONRESOURCETITLE    	VARCHAR2(120) NULL,
 	CITATIONRESOURCECREATOR  	VARCHAR2(120) NULL,
-	CITATIONRESOURCESUBJECT  	VARCHAR2(500) NULL,
+	CITATIONRESOURCESUBJECT  	VARCHAR2(4000) NULL,
 	CITATIONRESOURCEPUBLISHER	VARCHAR2(60) NULL,
 	CITATIONRESOURCEDATE     	DATE NULL,
 	CITATIONRESOURCEID       	VARCHAR2(255) NULL,
@@ -400,7 +401,7 @@ CREATE TABLE WQX_MONITORINGLOCATION (
 	MONITORINGLOCATIONID    	VARCHAR2(35) NOT NULL,
 	MONLOCNAME              	VARCHAR2(255) NOT NULL,
 	MONLOCTYPE              	VARCHAR2(45) NOT NULL,
-	MONLOCDESC              	VARCHAR2(1999) NULL,
+	MONLOCDESC              	VARCHAR2(4000) NULL,
 	HUCEIGHTDIGITCODE       	VARCHAR2(8) NULL,
 	HUCTWELVEDIGITCODE      	VARCHAR2(12) NULL,
 	TRIBALLANDIND           	CHAR(1) NULL,
@@ -474,7 +475,7 @@ CREATE TABLE WQX_PROJECT (
 	PARENTID              	VARCHAR2(50) NOT NULL,
 	PROJECTID             	VARCHAR2(35) NOT NULL,
 	PROJECTNAME           	VARCHAR2(120) NOT NULL,
-	PROJECTDESC           	VARCHAR2(1999) NULL,
+	PROJECTDESC           	VARCHAR2(2000) NULL,
 	SAMPLINGDESIGNTYPECODE	VARCHAR2(20) NULL,
 	QAPPAPPROVEDIND       	CHAR(1) NULL,
 	QAPPAPPROVALAGENCYNAME	VARCHAR2(50) NULL,
@@ -528,7 +529,7 @@ CREATE TABLE WQX_RESULT (
 	WEIGHTBASIS                   	VARCHAR2(15) NULL,
 	TIMEBASIS                     	VARCHAR2(12) NULL,
 	TEMPERATUREBASIS              	VARCHAR2(12) NULL,
-	PARTICLESIZEBASIS             	VARCHAR2(15) NULL,
+	PARTICLESIZEBASIS             	VARCHAR2(40) NULL,
 	PRECISIONVALUE                	VARCHAR2(60) NULL,
 	BIASVALUE                     	VARCHAR2(60) NULL,
 	CONFIDENCEINTERVALVALUE       	VARCHAR2(15) NULL,
@@ -568,7 +569,7 @@ CREATE TABLE WQX_RESULT (
 	ANALYTICALMETHODIDCONTEXT     	VARCHAR2(120) NULL,
 	ANALYTICALMETHODNAME          	VARCHAR2(120) NULL,
 	ANALYTICALMETHODQUALIFIERTYPE 	VARCHAR2(25) NULL,
-	ANALYTICALMETHODDESC          	VARCHAR2(500) NULL,
+	ANALYTICALMETHODDESC          	VARCHAR2(4000) NULL,
 	LABNAME                       	VARCHAR2(60) NULL,
 	LABANALYSISSTARTDATE          	DATE NULL,
 	LABANALYSISSTARTTIME          	VARCHAR2(20) NULL,

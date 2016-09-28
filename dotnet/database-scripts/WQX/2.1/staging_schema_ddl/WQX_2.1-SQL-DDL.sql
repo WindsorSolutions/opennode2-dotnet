@@ -22,6 +22,7 @@
  **                           Increased ResultParticleSizeBasisText maxlength from 15 to 40
  **                           Increased MethodDescriptionText maxlength from 500 to 4000
  **                           Increased SampleTransportStorageDescription maxlength from 250 to 1999
+ ** 09/28/2016  BRensmith     Fixed VARBINARY to VARBINARY(MAX)
  **
  ******************************************************************************************************************************/
 /*  
@@ -425,7 +426,7 @@ CREATE TABLE [dbo].[WQX_ACTATTACHEDBINARYOBJECT] (
 	[PARENTID]                	varchar(50) NOT NULL,
 	[BINARYOBJECTFILE]        	varchar(255) NOT NULL,
 	[BINARYOBJECTFILETYPECODE]	varchar(6) NOT NULL,
-	[BINARYOBJECTCONTENT]     	varbinary NULL 
+	[BINARYOBJECTCONTENT]     	VARBINARY(MAX) NULL 
 	)
 GO
 
@@ -654,7 +655,7 @@ CREATE TABLE [dbo].[WQX_MONLOCATTACHEDBINARYOBJECT] (
 	[PARENTID]                	varchar(50) NOT NULL,
 	[BINARYOBJECTFILE]        	varchar(255) NOT NULL,
 	[BINARYOBJECTFILETYPECODE]	varchar(6) NOT NULL,
-	[BINARYOBJECTCONTENT]     	varbinary NULL 
+	[BINARYOBJECTCONTENT]     	VARBINARY(MAX) NULL 
 	)
 GO
 
@@ -686,7 +687,7 @@ CREATE TABLE [dbo].[WQX_PROJATTACHEDBINARYOBJECT] (
 	[PARENTID]                	varchar(50) NOT NULL,
 	[BINARYOBJECTFILE]        	varchar(255) NOT NULL,
 	[BINARYOBJECTFILETYPECODE]	varchar(6) NOT NULL,
-	[BINARYOBJECTCONTENT]     	varbinary NULL 
+	[BINARYOBJECTCONTENT]     	VARBINARY(MAX) NULL 
 	)
 GO
 
@@ -811,7 +812,7 @@ CREATE TABLE [dbo].[WQX_RESULTATTACHEDBINARYOBJECT] (
 	[PARENTID]                	varchar(50) NOT NULL,
 	[BINARYOBJECTFILE]        	varchar(255) NOT NULL,
 	[BINARYOBJECTFILETYPECODE]	varchar(6) NOT NULL,
-	[BINARYOBJECTCONTENT]     	varbinary NULL 
+	[BINARYOBJECTCONTENT]     	VARBINARY(MAX) NULL 
 	)
 GO
 
