@@ -5,7 +5,7 @@
     <groupId>com.windsor.node</groupId>
     <artifactId>node</artifactId>
     <packaging>pom</packaging>
-    <version>2.10</version>
+    <version>2.11</version>
     <name>OpenNode2</name>
     <description>Node - Parent Project</description>
     <url>http://code.google.com/p/opennode2/</url>
@@ -126,7 +126,7 @@
         in ~/.m2/settings.xml) and be rebuilt to avoid editing deployed war files after the fact -->
         <node.home>/var/opennode2_home</node.home>
         <!-- version number to use in the wnos and plugin distribution zip filenames -->
-        <node.dist.version>2.11-beta-5</node.dist.version>
+        <node.dist.version>2.11</node.dist.version>
         <jaxb.implementation.version>2.2.7-b41</jaxb.implementation.version>
         <node.dist.patch.version></node.dist.patch.version>
         <main.basedir>${project.basedir}</main.basedir>
