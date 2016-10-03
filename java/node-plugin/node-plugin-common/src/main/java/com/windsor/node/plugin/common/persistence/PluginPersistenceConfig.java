@@ -6,6 +6,7 @@ public class PluginPersistenceConfig {
     private String rootEntityPackage;
     private ClassLoader classLoader;
     private String hibernateDialect; //Should rarely be used
+    private String[] additionalEntityPackages;
 
     private boolean debugSql = Boolean.FALSE;
 
@@ -30,6 +31,19 @@ public class PluginPersistenceConfig {
 
     public PluginPersistenceConfig rootEntityPackage(String rootEntityPackage) {
         this.rootEntityPackage = rootEntityPackage;
+        return this;
+    }
+
+    public String[] getAdditionalEntityPackages() {
+        return additionalEntityPackages;
+    }
+
+    public void setAdditionalEntityPackages(String[] additionalEntityPackages) {
+        this.additionalEntityPackages = additionalEntityPackages;
+    }
+
+    public PluginPersistenceConfig additionalEntityPackages(String... additionalEntityPackages) {
+        setAdditionalEntityPackages(additionalEntityPackages);
         return this;
     }
 

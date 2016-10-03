@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>log/wna.log</File>
+        <encoder>
+            <pattern>%date %level [%thread] %logger{10} [%file:%line] %msg%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>TRACE</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <maxIndex>3</maxIndex>
+            <FileNamePattern>log/wna.log.%i</FileNamePattern>
+        </rollingPolicy>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>3072KB</MaxFileSize>
+        </triggeringPolicy>
+    </appender>
+    <logger name="org.apache.axis.encoding" level="INFO"/>
+    <logger name="com.windsor" level="DEBUG" />
+    <logger name="org.springframework.jdbc.core.JdbcTemplate" level="INFO" />
+    <logger name="org.hibernate.sql" level="INFO" />
+    <logger name="org.hibernate.jdbc" level="INFO" />
+    <logger name="org.hibernate.type" level="INFO" />
+    <root level="INFO">
+        <appender-ref ref="LOG" />
+    </root>
+</configuration>

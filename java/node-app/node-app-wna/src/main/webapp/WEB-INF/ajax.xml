@@ -11,8 +11,7 @@
 		<property name="maxParameter" value="limit" />
 		<property name="parameter" value="q" />
 		<property name="search">
-			<bean
-				class="com.windsor.node.admin.ajax.StringArraySearchService" />
+			<bean class="com.windsor.node.admin.ajax.StringArraySearchService" />
 		</property>
 		<property name="accountService" ref="accountService" />
 	</bean>

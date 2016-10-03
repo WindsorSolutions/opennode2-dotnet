@@ -323,7 +323,7 @@ public class NetworkNode11Client implements NodeClientService {
      * 
      * @return
      */
-    private String authenticate() {
+    public String authenticate() {
 
         try {
             String token = null;

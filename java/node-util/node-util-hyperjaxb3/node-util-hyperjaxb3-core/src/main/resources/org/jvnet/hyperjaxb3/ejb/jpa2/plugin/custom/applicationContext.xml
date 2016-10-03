@@ -89,5 +89,4 @@
 	<bean name="persistenceMarshaller"
 		class="com.windsor.node.hyperjaxb3.NoopPersistenceMarshaller">
 	</bean>
-
 </beans>

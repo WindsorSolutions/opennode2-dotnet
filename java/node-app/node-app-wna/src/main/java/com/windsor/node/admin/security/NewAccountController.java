@@ -36,6 +36,8 @@ import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.windsor.node.admin.util.*;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -46,10 +48,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 import org.springframework.web.servlet.view.RedirectView;
 import com.windsor.node.admin.editor.SystemRoleTypeEditor;
-import com.windsor.node.admin.util.AdminConstants;
-import com.windsor.node.admin.util.SideBarUtils;
-import com.windsor.node.admin.util.SiteTabUtils;
-import com.windsor.node.admin.util.VisitUtils;
 import com.windsor.node.common.domain.NodeVisit;
 import com.windsor.node.common.domain.SystemRoleType;
 import com.windsor.node.common.domain.UserAccount;
@@ -64,6 +62,7 @@ public class NewAccountController extends BaseSecurityFormController implements
         super();
         logger = LoggerFactory.getLogger(NewAccountController.class);
         setCommandClass(UserAccount.class);
+        setRequireSession(true);
         setSessionForm(true);
     }
 
@@ -75,13 +74,59 @@ public class NewAccountController extends BaseSecurityFormController implements
 
     }
 
-    protected void initBinder(HttpServletRequest request,
-            ServletRequestDataBinder binder) throws Exception {
+//    protected ModelAndView handleRequestInternal(HttpServletRequest request,
+//                                                 HttpServletResponse response) throws Exception {
+//
+//        NodeVisit visit = VisitUtils.getVisit(request);
+//
+//        if (visit == null) {
+//            logger.debug(AdminConstants.UNAUTHED + " security access "
+//                    + AdminConstants.ACCESS_REQUEST);
+//            return VisitUtils.getUnauthedView(request);
+//        }
+//
+//        Map<String, Object> model = new HashMap<String, Object>();
+//        model.put(AdminConstants.VISIT_KEY, visit);
+//
+//        // Set the selected tab
+//        model.put(AdminConstants.TAB_KEY, SiteTabUtils.TAB_SECURITY);
+//
+//        // defaults to 0
+//        Integer viewIndex = QueryStringUtils.getBarIndex(request);
+//
+//        // Defaults page view to 0
+//        model.put(AdminConstants.VIEW_INDEX_KEY, viewIndex);
+//
+//        if (viewIndex.intValue() == 1) {
+//            model.put("naasUsers", accountService.findAccountNameByName("a", 20));
+//        } else {
+//            model.put("localUsers", accountService.getLocalUsers(false, visit));
+//        }
+//
+//        // set the side bar
+//        model.put(AdminConstants.BARS_KEY, SideBarUtils.getSecurityBars(
+//                request, 0, showManageUserRequests));
+//        model.put("command", new UserAccount());
+//        model.put("sysRoles", SystemRoleType.getLoginValues());
+//
+//        ModelAndView modelAndView =
+//                new ModelAndView("account-new", AdminConstants.MODEL_KEY, model);
+//        return modelAndView;
+//    }
 
-        binder.registerCustomEditor(SystemRoleType.class,
-                new SystemRoleTypeEditor());
-
+    protected ModelAndView handleRequestInternal(HttpServletRequest request,
+                                                 HttpServletResponse response) throws Exception {
+        logger.info("REQ: " + request);
+        logger.info("RESP: " + response);
+        return super.handleRequestInternal(request, response);
     }
+
+//    protected void initBinder(HttpServletRequest request,
+//            ServletRequestDataBinder binder) throws Exception {
+//
+//        binder.registerCustomEditor(SystemRoleType.class,
+//                new SystemRoleTypeEditor());
+//    }
 
     protected ModelAndView onSubmit(HttpServletRequest request,
             HttpServletResponse response, Object command, BindException errors)
@@ -147,7 +192,23 @@ public class NewAccountController extends BaseSecurityFormController implements
                 request, 0, showManageUserRequests));
 
         // sys roles
-        model.put("sysRoles", SystemRoleType.values());
+        model.put("sysRoles", SystemRoleType.getLoginValues());
+
+        // defaults to 0
+        Integer viewIndex = QueryStringUtils.getBarIndex(request);
+
+        // Defaults page view to 0
+        model.put(AdminConstants.VIEW_INDEX_KEY, viewIndex);
+
+        if (viewIndex.intValue() == 1) {
+            model.put("naasUsers", accountService.findAccountNameByName("a", 20));
+        } else {
+            model.put("localUsers", accountService.getLocalUsers(false, visit));
+        }
+
+        // set the side bar
+        model.put(AdminConstants.BARS_KEY, SideBarUtils.getSecurityBars(
+                request, 0, showManageUserRequests));
 
         return model;
 
@@ -180,9 +241,8 @@ public class NewAccountController extends BaseSecurityFormController implements
         }
 
         UserAccount accountRequest = new UserAccount();
-        accountRequest.setRole(SystemRoleType.Authed);
+        accountRequest.setRole(SystemRoleType.Program);
         return accountRequest;
-
     }
 
     public void setAccountService(AccountService accountService) {

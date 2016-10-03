@@ -64,9 +64,9 @@ public class AccountRequestValidator extends AbstractValidator {
             }
 
             // Not sure this is possible as the menu does not allow a null
-            if (item.getRole() == null) {
-                errors.rejectValue("role", REQUIRED_ERR_CODE, REQUIRED_MSG);
-            }
+//            if (item.getRole() == null) {
+//                errors.rejectValue("role", REQUIRED_ERR_CODE, REQUIRED_MSG);
+//            }
         }
 
     }

@@ -44,7 +44,7 @@ import com.windsor.node.ws2.Endpoint2FaultMessage;
 
 public final class FaultUtil {
 
-    /*private static final Logger LOGGER = LoggerFactory.getLogger(FaultUtil.class);*/
+    private static final Logger LOGGER = LoggerFactory.getLogger(FaultUtil.class);
 
     private FaultUtil() {
     }

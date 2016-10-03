@@ -10,7 +10,7 @@
     <packaging>war</packaging>
     <name>Node Application - Web Node Administration</name>
     <properties>
-        <wna.extra.resources.location>${project.basedir}/src/main/env/ecos-generic</wna.extra.resources.location>
+        <wna.extra.resources.location>${project.basedir}/src/main/env/${environment}</wna.extra.resources.location>
     </properties>
     <build>
         <finalName>wna</finalName>
@@ -63,6 +63,10 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>jcl-over-slf4j</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>log4j-over-slf4j</artifactId>
         </dependency>
         <dependency>
             <groupId>org.safehaus.jug</groupId>

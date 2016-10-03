@@ -51,6 +51,7 @@ public class CustomTimestampEditor extends ClassEditor {
         this.format.setLenient(true);
     }
 
+
     public void setAsText(String text) throws IllegalArgumentException {
 
         if (StringUtils.isBlank(text)) {

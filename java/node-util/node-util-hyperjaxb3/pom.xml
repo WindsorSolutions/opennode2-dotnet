@@ -18,5 +18,6 @@
         <module>node-util-hyperjaxb3-icisair</module>
         <module>node-util-hyperjaxb3-wqx</module>
         <module>node-util-hyperjaxb3-facid</module>
+		<module>node-util-hyperjaxb3-rcra52</module>
     </modules>
 </project>

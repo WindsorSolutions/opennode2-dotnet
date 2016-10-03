@@ -1,29 +1,41 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-    xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
-    xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance" xmlns:annox="http://annox.dev.java.net"
-    jaxb:extensionBindingPrefixes="hj orm inheritance annox" schemaLocation="../xsd/ICIS_AirPollutants_v5.2.xsd">
+<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance"
+	xmlns:annox="http://annox.dev.java.net" jaxb:extensionBindingPrefixes="hj orm inheritance annox"
+	schemaLocation="../xsd/ICIS_AirPollutants_v5.2.xsd">
 
-    <!-- compliance monitoring data -->
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='AirPollutants']">
+			<hj:embeddable />
+		</jaxb:bindings>
+	</jaxb:bindings>
 
-    <jaxb:bindings>
-        <jaxb:bindings node="//xsd:complexType[@name='AirPollutantsData']">
-            <!-- <inheritance:extends>com.windsor.node.plugin.icisair.domain.AbstractFacility
-            </inheritance:extends> -->
-        </jaxb:bindings>
-    </jaxb:bindings>
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='AirPollutantsData']">
+			<hj:entity>
+				<orm:table name="VW_ICA_POLUTS_CLASS" />
+			</hj:entity>
+			<hj:generated-id name="Dbid">
+				<orm:column name="ICA_POLUTS_ID" />
+			</hj:generated-id>
+		</jaxb:bindings>
+	</jaxb:bindings>
 
-    <!-- compliance monitoring -->
-
-    <jaxb:bindings>
-
-        <jaxb:bindings node="//xsd:complexType[@name='AirPollutants']">
-            <hj:embeddable />
-        </jaxb:bindings>
-
-    </jaxb:bindings>
+	<jaxb:bindings>
+		<jaxb:bindings
+			node="//xsd:complexType[@name='AirPollutantDAClassificationData']">
+			<hj:embeddable />
+		</jaxb:bindings>
+	</jaxb:bindings>
 
 
-    
+	<jaxb:bindings>
+		<jaxb:bindings
+			node="//xsd:complexType[@name='AirPollutantEPAClassificationData']">
+			<hj:embeddable />
+		</jaxb:bindings>
+	</jaxb:bindings>
 
 </jaxb:bindings>

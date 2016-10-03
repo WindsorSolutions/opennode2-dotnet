@@ -150,7 +150,7 @@ public class LogFileRetriever extends BaseWnosPlugin {
 
             result.getAuditEntries().add(makeEntry("Compressing log files..."));
 
-            // setup archive file
+            // setup 6-archive file
             SimpleDateFormat format = new SimpleDateFormat(TIMESTAMP_FORMAT);
             String timeStamp = format.format(new Date());
 

@@ -6,11 +6,7 @@ import java.lang.annotation.Annotation;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.Properties;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -32,12 +28,14 @@ public class HibernatePersistenceUnitInfo implements PersistenceUnitInfo {
 
     private final Properties jpaProperties;
     private final String entityPackageName;
+    private final String[] additionalEntityPackages;
     private final ClassLoader classLoader;
 
     public HibernatePersistenceUnitInfo(Properties jpaProperties, PluginPersistenceConfig config) {
         this.jpaProperties = jpaProperties;
         this.entityPackageName = config.getRootEntityPackage();
         this.classLoader = config.getClassLoader();
+        this.additionalEntityPackages = config.getAdditionalEntityPackages();
     }
 
     @Override
@@ -98,19 +96,29 @@ public class HibernatePersistenceUnitInfo implements PersistenceUnitInfo {
     @Override
     public List<String> getManagedClassNames() {
 
-        try {
+        List<String> packageNames = new ArrayList<>();
+        packageNames.add(entityPackageName);
 
-            List<String> classes = new ArrayList<String>();
-
-            for (Class<?> k : listEntitiesInPackage(entityPackageName)) {
-                classes.add(k.getCanonicalName());
+        if(additionalEntityPackages != null) {
+            for(String packageName : additionalEntityPackages) {
+                packageNames.add(packageName);
             }
-
-            return classes;
-
-        } catch (Exception e) {
-            throw new RuntimeException("Unable to build list of Entity classes.", e);
         }
+
+        List<String> classes = new ArrayList<String>();
+        for (String packageName : packageNames) {
+
+            try {
+                for (Class<?> k : listEntitiesInPackage(packageName)) {
+                    classes.add(k.getCanonicalName());
+                }
+
+            } catch (Exception e) {
+                throw new RuntimeException("Unable to build list of Entity classes.", e);
+            }
+        }
+
+        return classes;
     }
 
     private List<Class<?>> listEntitiesInPackage(String packageName) throws ClassNotFoundException, IOException {

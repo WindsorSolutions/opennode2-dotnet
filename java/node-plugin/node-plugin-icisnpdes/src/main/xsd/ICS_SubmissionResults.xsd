@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified"
     xmlns:icis="http://www.exchangenetwork.net/schema/icis/5" targetNamespace="http://www.exchangenetwork.net/schema/icis/5">
-    <xs:include schemaLocation="0/ICIS_Common_v5.0.xsd"/>
+    <xs:include schemaLocation="6/ICIS_Common_v5.6a_draft.xsd"/>
     <xs:element name="SubmissionResultList">
         <xs:annotation>
             <xs:documentation>Represents a single row in the OpenNode2 ICIS-NPDES Full Batch plugin ICS_SUBM_RESULTS staging table. Transformed from ICIS Accepted and Rejected transaction report for ICIS schema v5.0.</xs:documentation>

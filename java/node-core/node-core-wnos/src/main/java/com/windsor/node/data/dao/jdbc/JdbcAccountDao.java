@@ -33,10 +33,12 @@ package com.windsor.node.data.dao.jdbc;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
 import com.windsor.node.common.domain.SystemRoleType;
@@ -69,11 +71,11 @@ public class JdbcAccountDao extends BaseJdbcDao implements AccountDao {
      * Local Users
      */
     private static final String SQL_SELECT_BY_AFFIL_ACTIVE = SQL_SELECT
-            + "WHERE IsActive = ? AND ((UPPER(Affiliation) = ?) OR (SystemRole = ? OR SystemRole = ?))"
+            + "WHERE IsActive = ? AND (SystemRole = ? OR SystemRole = ? OR SystemRole = ?) "
             + ORDER_BY_NAAS;
 
     private static final String SQL_SELECT_BY_AFFIL_ALL = SQL_SELECT
-            + "WHERE ((UPPER(Affiliation) = ?) OR (SystemRole = ? OR SystemRole = ?))"
+            + "WHERE SystemRole = ? OR SystemRole = ? OR SystemRole = ?"
             + ORDER_BY_NAAS;
 
     private static final String SQL_SELECT_NAMES = "SELECT NAASAccount FROM NAccount "
@@ -94,6 +96,9 @@ public class JdbcAccountDao extends BaseJdbcDao implements AccountDao {
 
     private static final String SQL_SELECT_ACTIVE_ADMINS = SQL_SELECT
             + " WHERE IsActive = ? and SystemRole = ?" + ORDER_BY_NAAS;
+
+    private static final String SQL_FIND_BY_NAME = "SELECT NAASAccount FROM NAccount "
+            + "WHERE IsActive = ? and NAASAccount like  ? " + ORDER_BY_NAAS;
 
     private JdbcUserAccessPolicyDao userAccessPolicyDao;
 
@@ -282,17 +287,19 @@ public class JdbcAccountDao extends BaseJdbcDao implements AccountDao {
         if (includeInactive) {
             return getJdbcTemplate().query(
                     SQL_SELECT_BY_AFFIL_ALL,
-                    new Object[] { nodeId.toUpperCase(),
+                    new Object[] {
                             SystemRoleType.Admin.name(),
-                            SystemRoleType.Program.name() },
+                            SystemRoleType.Program.name(),
+                            SystemRoleType.Anonymous.name()},
                     new UserAccountMapper(true));
 
         } else {
             return getJdbcTemplate().query(
                     SQL_SELECT_BY_AFFIL_ACTIVE,
-                    new Object[] { FormatUtil.YES, nodeId.toUpperCase(),
+                    new Object[] { FormatUtil.YES,
                             SystemRoleType.Admin.name(),
-                            SystemRoleType.Program.name() },
+                            SystemRoleType.Program.name(),
+                            SystemRoleType.Anonymous.name()},
                     new UserAccountMapper(true));
 
         }
@@ -382,5 +389,19 @@ public class JdbcAccountDao extends BaseJdbcDao implements AccountDao {
                 new UserAccountMapper(false));
 
         return activeAdmins;
+    }
+
+    public List findAccountNameByName(String search, int maxResults) {
+        //return (String[]) getArray(SQL_SELECT_NAMES, FormatUtil.YES);
+        logger.info("Searching for \"" + search + "\", maximum results " + maxResults);
+        JdbcTemplate template = getJdbcTemplate();
+        List results = template.query(SQL_FIND_BY_NAME, new Object[] { FormatUtil.YES, "%" + search + "%" }, new ArrayMapper());
+        logger.info("Results: " + results.size());
+
+        if(results.size() > maxResults) {
+            results = new ArrayList(results.subList(0, maxResults));
+        }
+
+        return results;
     }
 }

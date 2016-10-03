@@ -10,7 +10,7 @@
     <packaging>war</packaging>
     <name>Node Application - Web Node Orchestration Server</name>
     <properties>
-        <wnos.extra.resources.location>${project.basedir}/src/main/env/ecos-generic</wnos.extra.resources.location>
+        <wnos.extra.resources.location>${project.basedir}/src/main/env/${environment}</wnos.extra.resources.location>
     </properties>
     <build>
         <finalName>wnos</finalName>

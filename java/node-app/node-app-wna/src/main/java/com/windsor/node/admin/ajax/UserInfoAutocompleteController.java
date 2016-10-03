@@ -35,11 +35,17 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.windsor.node.admin.ajax;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONArray;
 import org.springframework.beans.factory.InitializingBean;
 
 import com.windsor.node.admin.util.VisitUtils;
 import com.windsor.node.common.service.admin.AccountService;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.io.Writer;
+import java.util.List;
 
 /**
  * Concrete class to access the user access list
@@ -79,4 +85,26 @@ public class UserInfoAutocompleteController extends
         this.accountService = accountService;
     }
 
+    @Override
+    protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        response.setDateHeader("Expires", 0);
+        response
+                .setHeader("Cache-Control",
+                        "no-store, no-cache, must-revalidate, post-check=0, pre-check=0");
+        response.setHeader("Pragma", "no-cache");
+
+        List list =
+                accountService.findAccountNameByName(request.getParameter(getParameter()), getMaxParameter(request));
+
+        if (list == null || list.size() < 1) {
+            return null;
+        }
+
+        Writer writer = response.getWriter();
+
+        JSONArray json = JSONArray.fromObject(list);
+        writer.write(json.toString());
+
+        return null;
+    }
 }

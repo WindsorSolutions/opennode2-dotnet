@@ -204,7 +204,7 @@ CREATE TABLE NServiceArg (
 	Id       	varchar2(50) NOT NULL,
 	ServiceId	varchar2(50) NOT NULL,
 	ArgKey   	varchar2(255) NOT NULL,
-	ArgValue 	varchar2(1024) NOT NULL 
+	ArgValue 	varchar2(1024)
 	)
 ;
 

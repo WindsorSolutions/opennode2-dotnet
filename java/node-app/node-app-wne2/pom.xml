@@ -10,7 +10,7 @@
     <packaging>war</packaging>
     <name>Node Application - Web Node Endpoint v2.1</name>
     <properties>
-        <wne2.extra.resources.location>${project.basedir}/src/main/env/ecos-generic</wne2.extra.resources.location>
+        <wne2.extra.resources.location>${project.basedir}/src/main/env/${environment}</wne2.extra.resources.location>
     </properties>
     <build>
         <finalName>wne2</finalName>
@@ -55,6 +55,10 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>jcl-over-slf4j</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>log4j-over-slf4j</artifactId>
         </dependency>
         <dependency>
             <groupId>javax.activation</groupId>

@@ -197,6 +197,55 @@
 			<hj:mapped-superclass />
 		</jaxb:bindings>
 	</jaxb:bindings>
+	
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='AirComplianceMonitoringStrategyKeyElements']">
+			<hj:mapped-superclass />
+		</jaxb:bindings>
+	</jaxb:bindings>
+
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='AirDAEnforcementActionKeyElements']">
+			<hj:mapped-superclass />
+		</jaxb:bindings>
+	</jaxb:bindings>
+	
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='AirDAEnforcementActionMilestoneKeyElements']">
+			<hj:mapped-superclass />
+		</jaxb:bindings>
+	</jaxb:bindings>
+
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='AirPollutantsKeyElements']">
+			<hj:mapped-superclass />
+		</jaxb:bindings>
+	</jaxb:bindings>
+	
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='AirProgramsKeyElements']">
+			<hj:mapped-superclass />
+		</jaxb:bindings>
+	</jaxb:bindings>
+
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='CaseFileKeyElements']">
+			<hj:mapped-superclass />
+		</jaxb:bindings>
+	</jaxb:bindings>
+
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='SWIndustrialAnnualReportKeyElements']">
+			<hj:mapped-superclass />
+		</jaxb:bindings>
+	</jaxb:bindings>
+	
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='AirFacilityKeyElements']">
+			<hj:mapped-superclass />
+		</jaxb:bindings>
+	</jaxb:bindings>
+	
 
 	<!-- program inspection key elements -->
 

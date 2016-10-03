@@ -131,7 +131,7 @@ public class NetworkNode21Client implements NodeClientService {
      * 
      * @return
      */
-    private String authenticate() {
+    public String authenticate() {
 
         try {
 
@@ -235,8 +235,7 @@ public class NetworkNode21Client implements NodeClientService {
             }
 
             Download downloadReq = new Download();
-            downloadReq
-                    .setDataflow(new NCName(transaction.getFlow().getName()));
+            downloadReq.setDataflow(new NCName(transaction.getFlow().getTargetDataFlowName()));
             downloadReq.setSecurityToken(token);
             downloadReq.setTransactionId(transaction.getNetworkId());
 
@@ -377,9 +376,6 @@ public class NetworkNode21Client implements NodeClientService {
             NetworkNode2Stub stub = getStub("GetStatus");
             stub._getServiceClient().getOptions().setProperty(Constants.Configuration.ENABLE_MTOM, Constants.VALUE_TRUE);
             GetStatusResponse response = stub.GetStatus(request);
-            
-
-            logger.debug("Response: " + response);
 
             if (response == null || response.getGetStatusResponse() == null) {
                 throw new RuntimeException("Empty token returned");
@@ -393,9 +389,6 @@ public class NetworkNode21Client implements NodeClientService {
                     .setStatus((CommonTransactionStatusCode) CommonTransactionStatusCodeConverter
                             .convert(response.getGetStatusResponse()
                                     .getStatus().getValue()));
-
-            logger.debug("Status: " + status);
-
             return status;
 
         } catch (Exception ex) {
@@ -583,8 +576,7 @@ public class NetworkNode21Client implements NodeClientService {
 
             Submit submitRequest = new Submit();
             submitRequest.setSecurityToken(authenticate());
-            submitRequest.setDataflow(new NCName(transaction.getFlow()
-                    .getTargetDataFlowName()));
+            submitRequest.setDataflow(new NCName(transaction.getFlow().getTargetDataFlowName()));
             submitRequest.setFlowOperation(transaction.getOperation());
 
             logger.debug("Add notifications for ALL: " + localEndpointUrl);

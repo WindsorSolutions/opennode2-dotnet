@@ -798,4 +798,8 @@ public class AccountServiceImpl extends BaseService implements AccountService,
         this.policyDao = policyDao;
     }
 
+    @Override
+    public List findAccountNameByName(String search, int maxResults) {
+        return getAccountDao().findAccountNameByName(search, maxResults);
+    }
 }

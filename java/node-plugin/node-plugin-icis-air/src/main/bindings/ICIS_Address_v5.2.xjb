@@ -4,6 +4,21 @@
 	xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance"
 	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm" jaxb:extensionBindingPrefixes="hj orm inheritance"
 	schemaLocation="../xsd/ICIS_Address_v5.2.xsd">
+	
+    <jaxb:bindings node="//xsd:complexType[@name='Address']">
+    	<hj:entity>
+            <orm:table name="ICA_FAC_ADDR"/>
+        </hj:entity>
+        <hj:generated-id name="Dbid">
+        	<orm:column name="ICA_FAC_ADDR_ID"/>
+        </hj:generated-id>
+    </jaxb:bindings>
+    
+    <jaxb:bindings node="//xsd:element[@ref='icis:Telephone']">
+        <hj:one-to-many>
+        	<orm:join-column name="ICA_FAC_ADDR_ID" />
+        </hj:one-to-many>
+    </jaxb:bindings>	
 
 	<!-- biosolids address -->
 

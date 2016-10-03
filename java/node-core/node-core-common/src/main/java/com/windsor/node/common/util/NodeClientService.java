@@ -59,4 +59,6 @@ public interface NodeClientService {
     TransactionStatus getStatus(String transactionId);
 
     String nodePing(String hello);
+
+    String authenticate();
 }

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance" xmlns:annox="http://annox.dev.java.net"
+	jaxb:extensionBindingPrefixes="hj orm inheritance annox" schemaLocation="../xsd/6/ICIS_SWIndustrialPermit_v5.6a_draft.xsd">
+
+	<!-- storm water industrial permit data -->
+
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='SWIndustrialPermitData']">
+			<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractSWIndustrialPermitData</inheritance:extends>
+		</jaxb:bindings>
+	</jaxb:bindings>
+
+	<!-- storm water industrial permit -->
+
+	<jaxb:bindings>
+	
+		<jaxb:bindings node="//xsd:complexType[@name='SWIndustrialPermit']">
+			<hj:embeddable />
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:element[@ref='icis:GPCFNoticeOfIntent']">
+			<annox:annotate>
+				<annox:annotate annox:class="org.hibernate.annotations.NotFound" action="IGNORE" />
+			</annox:annotate>
+			<hj:many-to-one>
+				<orm:join-column name="ICS_SW_INDST_PRMT_ID" referenced-column-name="ICS_SW_INDST_PRMT_ID" insertable="false" updatable="false"/>
+			</hj:many-to-one>
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:element[@ref='icis:GPCFNoticeOfTermination']">
+			<annox:annotate>
+				<annox:annotate annox:class="org.hibernate.annotations.NotFound" action="IGNORE" />
+			</annox:annotate>
+			<hj:many-to-one>
+				<orm:join-column name="ICS_SW_INDST_PRMT_ID" referenced-column-name="ICS_SW_INDST_PRMT_ID" insertable="false" updatable="false"/>
+			</hj:many-to-one>
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="//xsd:element[@ref='icis:GPCFNoExposure']">
+			<annox:annotate>
+				<annox:annotate annox:class="org.hibernate.annotations.NotFound" action="IGNORE" />
+			</annox:annotate>
+			<hj:many-to-one>
+				<orm:join-column name="ICS_SW_INDST_PRMT_ID" referenced-column-name="ICS_SW_INDST_PRMT_ID" insertable="false" updatable="false"/>
+			</hj:many-to-one>
+		</jaxb:bindings>
+		
+	</jaxb:bindings>
+	
+	<!-- GPCF no exposure -->
+
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='GPCFNoExposure']">
+			<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractGPCFNoExposure</inheritance:extends>
+		</jaxb:bindings>
+	</jaxb:bindings>
+
+</jaxb:bindings>

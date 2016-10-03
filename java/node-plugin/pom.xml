@@ -15,7 +15,7 @@
         <module>node-plugin-common</module>
         <!-- integration tests are not a support module -->
         <!-- //FIXME move these tests to a normal maven test location  -->
-        <!-- <module>node-plugin-test</module> -->
+         <module>node-plugin-test</module>
 
         <!-- Plugin modules -->
         <module>node-plugin-aqs</module>
@@ -32,6 +32,7 @@
         <module>node-plugin-mapforcebridge</module>
         <module>node-plugin-nct</module>
         <module>node-plugin-rcra50</module>
+        <module>node-plugin-rcra52</module>
         <module>node-plugin-sdwis</module>
         <module>node-plugin-uic</module>
         <module>node-plugin-windsor</module>
@@ -101,13 +102,8 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <!-- <version>2.3</version> -->
                     <version>3.1</version>
                     <configuration>
-                        <!-- <source>1.6</source>
-                        <target>1.6</target> -->
-                        <source>1.7</source>
-                        <target>1.7</target>
                         <compilerArgument>-proc:none</compilerArgument>
                     </configuration>
                 </plugin>
@@ -136,6 +132,7 @@
                             <groupId>org.hibernate</groupId>
                             <artifactId>hibernate-jpamodelgen</artifactId>
                             <version>1.2.0.Final</version>
+                            <optional>true</optional>
                         </dependency>
                     </dependencies>
                 </plugin>
@@ -238,9 +235,11 @@
                     </executions>
                 </plugin>
                 <plugin>
+                    <!-- <groupId>org.apache.maven.plugins</groupId> -->
+                    <!-- <artifactId>maven-shade-plugin</artifactId> -->
+                    <!-- <version>2.0</version> -->
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-shade-plugin</artifactId>
-                    <version>2.0</version>
                     <executions>
                         <execution>
                             <phase>package</phase>

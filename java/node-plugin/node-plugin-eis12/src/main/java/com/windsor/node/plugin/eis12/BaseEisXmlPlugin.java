@@ -83,12 +83,12 @@ public abstract class BaseEisXmlPlugin extends BaseWnosPlugin {
     /**
      * Index for schedule parameter
      */
-    public static final int PARAM_INDEX_EMISSION_YEAR = 0;
+    public static final String PARAM_INDEX_EMISSION_YEAR = "Emissions Year";
 
     /**
      * Index for schedule parameter
      */
-    public static final int PARAM_INDEX_SUBMISSION_TYPE = 1;
+    public static final String PARAM_INDEX_SUBMISSION_TYPE = "Submission Type";
 
     /** Velocity template variable name. */
     public static final String TEMPLATE_AUTHOR_NAME = "authorName";
@@ -145,12 +145,12 @@ public abstract class BaseEisXmlPlugin extends BaseWnosPlugin {
                     Boolean.FALSE,
                     "The sender’s additional contact information, typically an  email address. This value is inserted into the submission’s XML header \"SenderContact\" element.");
     public static final PluginServiceParameterDescriptor EMISSIONS_YEAR = new PluginServiceParameterDescriptor(
-                    "Emissions Year",
+    				PARAM_INDEX_EMISSION_YEAR,
                     PluginServiceParameterDescriptor.TYPE_STRING,
                     Boolean.TRUE,
                     "Used to provide the year for which the emissions data is being submitted. Format YYYY. This will be used, along with the relevant data category for the data service, to filter data to be extracted from the staging database.");
     public static final PluginServiceParameterDescriptor SUBMISSION_TYPE = new PluginServiceParameterDescriptor(
-                    "Submission Type",
+    				PARAM_INDEX_SUBMISSION_TYPE,
                     PluginServiceParameterDescriptor.TYPE_STRING,
                     Boolean.TRUE,
                     "Allows the user to specify whether the XML file resulting from the data service execution should be submitted to the EIS Production or Quality Assurance environment. Accepted values: Production or QA.");

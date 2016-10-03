@@ -31,8 +31,61 @@
                             </descriptors>
                         </configuration>
                     </execution>
+
+                    <execution>
+                        <id>assemble-for-development</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <inherited>false</inherited>
+                        <configuration>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <finalName>dev</finalName>
+                            <outputDirectory>${project.parent.basedir}/../target/</outputDirectory>
+                            <descriptors>
+                                <descriptor>src/main/assembly/dev-assembly.xml</descriptor>
+                            </descriptors>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
         </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.jolokia</groupId>
+                    <artifactId>docker-maven-plugin</artifactId>
+                    <version>0.13.7</version>
+                    <configuration>
+                        <dockerHost>tcp://applejack.east.windsor.com:2375</dockerHost>
+                        <images>
+                            <image>
+                                <name>opennode2</name>
+                                <build>
+                                    <from>tomcat:jre8</from>
+                                    <tags>
+                                        <tag>latest</tag>
+                                        <tag>${project.version}</tag>
+                                    </tags>
+                                    <assembly>
+                                        <basedir>/</basedir>
+                                        <mode>dir</mode>
+                                        <descriptor>assembly.xml</descriptor>
+                                    </assembly>
+                                    <env>
+                                        <VIRTUAL_PORT>8080</VIRTUAL_PORT>
+                                        <VIRTUAL_HOST>opennode2.jenkins.east.windsor.com</VIRTUAL_HOST>
+                                        <CATALINA_OPTS>-Doracle.jdbc.timezoneAsRegion=false</CATALINA_OPTS>
+                                    </env>
+                                </build>
+                            </image>
+                        </images>
+                        <stop></stop>
+                        <run></run>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 </project>

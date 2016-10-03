@@ -116,11 +116,14 @@
 
 			<xjc:javaType name="java.math.BigDecimal" xmlType="icis:DecimalRange0To999999999999.99Type"
 				adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.TwoDigitPrecisionAdapter" />
+			
+			<xjc:javaType name="java.math.BigDecimal" xmlType="icis:DecimalRange0To99999999.99Type"
+                adapter="com.windsor.node.plugin.common.xml.bind.annotation.adapters.TwoDigitPrecisionAdapter" />
 
 			<!-- unions -->
 
 			<!-- The reason we have to explicitly map this to a String is that it is an xsd:union in the schema 
-				and unions aren't handled too well (see http://weblogs.java.net/blog/kohsuke/archive/2006/03/handling_union.html). 
+				and unions aren't handled too well (see http://weblogs.java.net/blog/kohsuke/6-archive/2006/03/handling_union.html).
 				If we don't explicitly map this, we end up with a List<String> type. -->
 
 			<xjc:javaType name="java.lang.String" xmlType="icis:Decimal8FloatingType"
@@ -247,12 +250,26 @@
 					<orm:column length="9" column-definition="char(9)" />
 				</hj:basic>
 			</hj:default-single-property>
+            <hj:default-collection-property type="icis:String9FixedTypeBase">
+                <hj:element-collection>
+                    <orm:column length="9" column-definition="char(9)"/>
+                </hj:element-collection>
+            </hj:default-collection-property>
 			<hj:default-single-property type="icis:String9FixedType">
 				<hj:basic>
 					<orm:column length="9" column-definition="char(9)" />
 				</hj:basic>
 			</hj:default-single-property>
-
+            <hj:default-single-property type="icis:StringMin1Max4000Type">
+                <hj:basic>
+                    <orm:column length="1" column-definition="varchar(4000)" />
+                </hj:basic>
+            </hj:default-single-property>
+            <hj:default-single-property type="icis:MajorMinorType">
+                <hj:basic>
+                    <orm:column name="MAJOR_MINOR_STAT_IND" length="1" column-definition="varchar(1)" />
+                </hj:basic>
+            </hj:default-single-property>
 		</hj:persistence>
 
 	</jaxb:bindings>

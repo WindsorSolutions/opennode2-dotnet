@@ -187,7 +187,7 @@ CREATE TABLE NServiceArg (
 	Id       	varchar(50) NOT NULL,
 	ServiceId	varchar(50) NOT NULL,
 	ArgKey   	varchar(255) NOT NULL,
-	ArgValue 	varchar(1024) NOT NULL 
+	ArgValue 	varchar(1024)
 	);
 
 CREATE TABLE NServiceConn ( 

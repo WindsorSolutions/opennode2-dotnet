@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+	xmlns:annox="http://annox.dev.java.net" xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance"
+	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	jaxb:extensionBindingPrefixes="hj orm inheritance"
+	schemaLocation="../xsd/ICIS_AirDAInformalEnforcementAction_v5.2.xsd">
+
+	<jaxb:bindings
+		node="//xsd:complexType[@name='AirDAInformalEnforcementAction']">
+		<hj:embeddable />
+	</jaxb:bindings>
+
+	<jaxb:bindings node="//xsd:complexType[@name='AirDAInformalEnforcementActionData']">
+		<hj:entity>
+			<orm:table name="ICA_DA_INFRML_ENFRC_ACTN" />
+		</hj:entity>
+		<hj:generated-id name="Dbid">
+                <orm:column name="ICA_DA_INFRML_ENFRC_ACTN_ID"/>
+         </hj:generated-id>
+	</jaxb:bindings>
+		
+</jaxb:bindings>

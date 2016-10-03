@@ -139,7 +139,7 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
          */
         int count = getIcisStatusAndProcessingDao().countPendingWorkflows();
 
-        if(count >= 2) {
+        if(count > 1) {
             result.getAuditEntries().add(new ActivityEntry("Invalid workflow state. More than one pending workflow exists. Exiting."));
             result.setStatus(CommonTransactionStatusCode.Failed);
             result.setSuccess(Boolean.FALSE);

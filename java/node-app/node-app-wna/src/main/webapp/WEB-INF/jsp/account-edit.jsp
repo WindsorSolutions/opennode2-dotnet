@@ -1,7 +1,5 @@
 <%@ include file="/WEB-INF/jsp/_head.jsp"%>
 
-
-
 <table id="contentTable">
 	<tr>
 		<td id="sidebarPane" align="left"><%@ include

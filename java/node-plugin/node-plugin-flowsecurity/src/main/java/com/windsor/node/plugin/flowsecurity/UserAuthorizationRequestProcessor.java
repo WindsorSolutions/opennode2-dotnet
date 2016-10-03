@@ -328,7 +328,7 @@ public class UserAuthorizationRequestProcessor extends BaseWnosPlugin {
             if (uncompressedFileNames.length > 1) {
 
                 throw new RuntimeException(
-                        "Expected only 1 file in zip archive, found "
+                        "Expected only 1 file in zip 6-archive, found "
                                 + uncompressedFileNames.length);
             }
 

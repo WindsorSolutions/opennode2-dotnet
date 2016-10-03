@@ -149,4 +149,5 @@ public interface AccountService {
      */
     void validateAccess(NodeVisit visit, NodeTransaction transaction);
 
+    List findAccountNameByName(String search, int maxResults);
 }

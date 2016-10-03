@@ -97,7 +97,7 @@ public class SecurityController extends AbstractController implements
         model.put(AdminConstants.VIEW_INDEX_KEY, viewIndex);
 
         if (viewIndex.intValue() == 1) {
-            model.put("naasUsers", accountService.getActiveUsernames(visit));
+            model.put("naasUsers", accountService.findAccountNameByName("a", 20));
         } else {
             model.put("localUsers", accountService.getLocalUsers(false, visit));
         }

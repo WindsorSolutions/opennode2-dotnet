@@ -41,36 +41,6 @@ function goto(searchValue){
 								<input type="text" id="userSearch" class="textbox" style="width: 93%"/>
 							</td>
 						</tr>
-						<tr>
-							<td colspan="3" style="text-align: center">
-								- or -
-							</td>
-						</tr>
-						<tr>
-
-							<td class="label" width="5%" nowrap="nowrap"><img
-								alt="" src="img/user.png"
-								style="border: 0; vertical-align: middle; padding-right: 3px; float: right;" /></td>
-							<td class="ctrl" width="95%">
-								<select name="listUsers" style="vertical-align: middle; width: 100%;"
-									onChange="if (this.selectedIndex > 0) window.location='policy-edit.htm?id='+this.options[this.selectedIndex].value;">
-									<option></option>
-									<c:forEach var="user" items="${model.naasUsers}"
-										varStatus="status">
-	
-										<option value="<c:out value="${user}" />"><c:out
-											value="${user}" /></option>
-	
-									</c:forEach>
-								</select>
-							</td>
-							<td class="label" width="10" nowrap="nowrap" align="right"><input
-								type="image" src="img/action_refresh.gif"
-								alt="Refresh accounts from NAAS" align="middle"
-								style="border-width: 0px;"
-								onclick="location.href='security.htm?bi=1&refresh=true'" /></td>
-						</tr>
-
 					</table>
 
 				</c:if>

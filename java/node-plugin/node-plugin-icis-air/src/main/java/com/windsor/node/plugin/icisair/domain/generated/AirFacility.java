@@ -92,6 +92,8 @@ import com.windsor.node.plugin.icisair.domain.adapters.PortableSourceDataAdapter
     "facilitySiteName",
     "locationAddressText",
     "supplementalLocationText",
+    "localityName",
+    "locationAddressCountyCode",
     "locationAddressCityCode",
     "locationStateCode",
     "locationZipCode",
@@ -132,6 +134,10 @@ public class AirFacility
     protected String locationAddressText;
     @XmlElement(name = "SupplementalLocationText")
     protected String supplementalLocationText;
+    @XmlElement(name = "LocalityName")
+    protected String localityName;
+    @XmlElement(name = "LocationAddressCountyCode")
+    protected String locationAddressCountyCode;
     @XmlElement(name = "LocationAddressCityCode")
     protected String locationAddressCityCode;
     @XmlElement(name = "LocationStateCode")
@@ -280,6 +286,68 @@ public class AirFacility
     @Transient
     public boolean isSetSupplementalLocationText() {
         return (this.supplementalLocationText!= null);
+    }
+    
+    /**
+     * Gets the value of the localityName property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    @Basic
+    @Column(name = "LOCALITY_NAME", length = 60)
+    public String getLocalityName() {
+        return localityName;
+    }
+
+    /**
+     * Sets the value of the localityName property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setLocalityName(String value) {
+        this.localityName = value;
+    }
+
+    @Transient
+    public boolean isSetLocalityName() {
+        return (this.localityName!= null);
+    }
+
+    /**
+     * Gets the value of the locationAddressCountyCode property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    @Basic
+    @Column(name = "LOC_ADDR_COUNTY_CODE", length = 5)
+    public String getLocationAddressCountyCode() {
+        return locationAddressCountyCode;
+    }
+
+    /**
+     * Sets the value of the locationAddressCountyCode property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setLocationAddressCountyCode(String value) {
+        this.locationAddressCountyCode = value;
+    }
+
+    @Transient
+    public boolean isSetLocationAddressCountyCode() {
+        return (this.locationAddressCountyCode!= null);
     }
 
     /**
@@ -1231,6 +1299,24 @@ public class AirFacility
             }
         }
         {
+            String lhsLocalityName;
+            lhsLocalityName = this.getLocalityName();
+            String rhsLocalityName;
+            rhsLocalityName = that.getLocalityName();
+            if (!strategy.equals(LocatorUtils.property(thisLocator, "localityName", lhsLocalityName), LocatorUtils.property(thatLocator, "localityName", rhsLocalityName), lhsLocalityName, rhsLocalityName)) {
+                return false;
+            }
+        }
+        {
+            String lhsLocationAddressCountyCode;
+            lhsLocationAddressCountyCode = this.getLocationAddressCountyCode();
+            String rhsLocationAddressCountyCode;
+            rhsLocationAddressCountyCode = that.getLocationAddressCountyCode();
+            if (!strategy.equals(LocatorUtils.property(thisLocator, "locationAddressCountyCode", lhsLocationAddressCountyCode), LocatorUtils.property(thatLocator, "locationAddressCountyCode", rhsLocationAddressCountyCode), lhsLocationAddressCountyCode, rhsLocationAddressCountyCode)) {
+                return false;
+            }
+        }
+        {
             String lhsLocationAddressCityCode;
             lhsLocationAddressCityCode = this.getLocationAddressCityCode();
             String rhsLocationAddressCityCode;
@@ -1488,6 +1574,16 @@ public class AirFacility
             String theSupplementalLocationText;
             theSupplementalLocationText = this.getSupplementalLocationText();
             currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "supplementalLocationText", theSupplementalLocationText), currentHashCode, theSupplementalLocationText);
+        }
+        {
+            String theLocalityName;
+            theLocalityName = this.getLocalityName();
+            currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "localityName", theLocalityName), currentHashCode, theLocalityName);
+        }
+        {
+            String theLocationAddressCountyCode;
+            theLocationAddressCountyCode = this.getLocationAddressCountyCode();
+            currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "locationAddressCountyCode", theLocationAddressCountyCode), currentHashCode, theLocationAddressCountyCode);
         }
         {
             String theLocationAddressCityCode;

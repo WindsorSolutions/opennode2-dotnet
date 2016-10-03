@@ -50,4 +50,8 @@ public enum SystemRoleType implements Serializable
     {
         return description;
     }
+
+    public static SystemRoleType[] getLoginValues() {
+        return new SystemRoleType[] {Authed, Program, Admin, Anonymous};
+    }
 }

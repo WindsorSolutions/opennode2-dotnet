@@ -19,6 +19,9 @@
         <module>node-app-wnos</module>
         <module>node-app-assemble</module>
     </modules>
+    <properties>
+        <node.home>/var/opennode2_home</node.home>
+    </properties>
     <build>
 		<resources>
 			<resource>
@@ -32,5 +35,53 @@
 				<directory>${node.app.user.resources.dir}</directory>
 			</resource>
 		</resources>
+        <plugins>
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>9.4.0.M0</version>
+                <configuration>
+                    <contextHandlers>
+                        <contextHandler implementation="org.eclipse.jetty.maven.plugin.JettyWebAppContext">
+                            <war>${project.basedir}/node-app-wna/target/wna.war</war>
+                            <contextPath>/wna</contextPath>
+                        </contextHandler>
+                        <contextHandler implementation="org.eclipse.jetty.maven.plugin.JettyWebAppContext">
+                            <war>${project.basedir}/node-app-wne/target/wne.war</war>
+                            <contextPath>/wne</contextPath>
+                        </contextHandler>
+                        <contextHandler implementation="org.eclipse.jetty.maven.plugin.JettyWebAppContext">
+                            <war>${project.basedir}/node-app-wne2/target/wne2.war</war>
+                            <contextPath>/wne2</contextPath>
+                        </contextHandler>
+                        <contextHandler implementation="org.eclipse.jetty.maven.plugin.JettyWebAppContext">
+                            <war>${project.basedir}/node-app-wnos/target/wnos.war</war>
+                            <contextPath>/wnos</contextPath>
+                        </contextHandler>
+                        <contextHandler implementation="org.eclipse.jetty.maven.plugin.JettyWebAppContext">
+                            <war>${project.basedir}/node-app-wnrest/target/wnrest.war</war>
+                            <contextPath>/wnrest</contextPath>
+                        </contextHandler>
+                    </contextHandlers>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.zeroturnaround</groupId>
+                <artifactId>jrebel-maven-plugin</artifactId>
+                <version>1.1.6</version>
+                <configuration>
+                    <packaging>war</packaging>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>generate-rebel-xml</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>    
 </project>

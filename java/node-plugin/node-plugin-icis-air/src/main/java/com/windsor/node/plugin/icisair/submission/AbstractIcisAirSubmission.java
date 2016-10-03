@@ -453,11 +453,12 @@ public abstract class AbstractIcisAirSubmission extends BaseWnosJaxbPlugin
                 catch(CDXSubmissionException e)
                 {
 
-                    String msg = "...Error submitting document to endpoint: " + e.getMessage() + " Exiting.";
+//                    String msg = "...Error submitting document to endpoint: " + e.getMessage() + " Exiting.";
+//                    updateWorkflowStatusAsFailed(workflow, msg);
 
-                    updateWorkflowStatusAsFailed(workflow, msg);
-
-                    return updateProcessAsFailed(result, msg);
+//                    return updateProcessAsFailed(result, msg);
+                    updateWorkflowStatusAsCompleted(workflow, "...ETL processing still in progress. Exiting.");
+                    return updateProcessAsCompleted(result, "ETL processing still in progress. Exiting.");
                 }
 
             }
@@ -1207,4 +1208,10 @@ public abstract class AbstractIcisAirSubmission extends BaseWnosJaxbPlugin
     {
         this.partnerDao = partnerDao;
     }
+
+	public void setEmf(EntityManagerFactory emf) {
+		this.emf = emf;
+	}
+    
+    
 }

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:icis="http://www.exchangenetwork.net/schema/icis/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/icis/5" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5">
+	<xsd:include schemaLocation="ICIS_KeyElements_v5.6a_draft.xsd"/>
+	<!--<xsd:include schemaLocation="ICIS_LimitSet_v5.6a_draft.xsd"/>-->
+	<xsd:include schemaLocation="ICIS_PermittedFeature_v5.6a_draft.xsd"/>
+	<xsd:include schemaLocation="ICIS_SW_v5.6a_draft.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>Schema Name: ICIS_CopyMGPLimitSet_v5.6a_draft.xsd</xsd:documentation>
+		<xsd:documentation>Current Version Available: http://www.exchangenetwork.net/schema/icis/5</xsd:documentation>
+		<xsd:documentation>Description: ICIS-NPDES copy master general permit limit set data input format</xsd:documentation>
+		<xsd:documentation>Application: ICIS-NPDES</xsd:documentation>
+		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
+		<xsd:documentation>Point of Contact: Joe Carioti, U.S. EPA</xsd:documentation>
+		<xsd:documentation>Data Written: July 2006</xsd:documentation>
+		<xsd:documentation>Last Date Modified: 2016-08-09</xsd:documentation>
+	</xsd:annotation>
+<!--
+	<xsd:element name="CopyMGPLimitSet" type="icis:CopyMGPLimitSet"/>
+	<xsd:element name="TargetGeneralPermitLimitSetKeyElements" type="icis:TargetGeneralPermitLimitSetKeyElements"/>
+	<xsd:element name="TargetPermittedFeatureGroup" type="icis:TargetPermittedFeatureGroup"/>
+	<xsd:element name="TargetLimitSetGroup" type="icis:TargetLimitSetGroup"/>
+	<xsd:complexType name="CopyMGPLimitSetData">
+		<xsd:sequence>
+			<xsd:element ref="icis:TransactionHeader"/>
+			<xsd:element ref="icis:CopyMGPLimitSet"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CopyMGPLimitSet">
+		<xsd:complexContent>
+			<xsd:extension base="icis:LimitSetKeyElements">
+				<xsd:sequence>
+					<xsd:element ref="icis:TargetGeneralPermitLimitSetKeyElements"/>
+					<xsd:element ref="icis:TargetPermittedFeatureGroup" minOccurs="0"/>
+					<xsd:element ref="icis:TargetLimitSetGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+-->
+	<xsd:complexType name="TargetGeneralPermitLimitSetKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:LimitSetKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="TargetPermittedFeatureGroup">
+		<xsd:sequence>
+			<xsd:element ref="icis:PermittedFeatureTypeCode" minOccurs="0"/>
+			<xsd:element ref="icis:PermittedFeatureDescription" minOccurs="0"/>
+			<xsd:element ref="icis:PermittedFeatureStateWaterBodyName" minOccurs="0"/>
+			<xsd:element ref="icis:ImpairedWaterIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:TMDLCompletedIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:PermittedFeatureUserDefinedDataElement1" minOccurs="0"/>
+			<xsd:element ref="icis:PermittedFeatureUserDefinedDataElement2" minOccurs="0"/>
+			<xsd:element ref="icis:GeographicCoordinates" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="TargetLimitSetGroup">
+		<xsd:sequence>
+			<!--<xsd:element ref="icis:LimitSetNameText" minOccurs="0"/>-->
+			<!--<xsd:element ref="icis:DMRPrePrintCommentsText" minOccurs="0"/>-->
+			<xsd:element ref="icis:LimitSetStatus" minOccurs="0"/>
+			<!--<xsd:element ref="icis:LimitSetSchedule" maxOccurs="unbounded"/>-->
+		</xsd:sequence>
+	</xsd:complexType>
+<!--
+	<xsd:complexType name="CopyMGPLimitSetIdentifier">
+		<xsd:annotation>
+			<xsd:documentation>This complex type is used in the Response Shared File to define the CopyMGPLimitSetIdentifier</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="icis:LimitSetKeyElements">
+				<xsd:sequence>
+					<xsd:element ref="icis:TargetGeneralPermitLimitSetKeyElements"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+-->
+</xsd:schema>

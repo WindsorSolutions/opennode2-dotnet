@@ -140,8 +140,8 @@
         <jaxb:bindings node="//xsd:element[@ref='icis:PortableSource']">
             <hj:one-to-many>
                 <orm:join-table name="ICA_PORT_SRC">
-                    <orm:join-column name="ICA_FAC_ID" referenced-column-name="ICA_FAC_ID" insertable="false" updatable="false" />
-                    <orm:inverse-join-column name="ICA_FAC_ID" insertable="false" updatable="false" />
+                    <orm:join-column name="ICA_FAC_ID" insertable="false" updatable="false" />
+                    <orm:inverse-join-column name="ICA_FAC_ID" />
                 </orm:join-table>
             </hj:one-to-many>
         </jaxb:bindings>

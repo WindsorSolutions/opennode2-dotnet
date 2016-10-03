@@ -1,0 +1,232 @@
+<jaxb:bindings xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+               xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+               xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+               xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+               jaxb:extensionBindingPrefixes="hj orm"
+               version="2.1">
+    <jaxb:bindings schemaLocation="../xsd/5/3/gmlgeorss.xsd">
+
+       <jaxb:bindings node="//xsd:element[@name='_FeatureCollection']">
+            <jaxb:factoryMethod name="FeatureCollectionPrivate"/>
+       </jaxb:bindings>
+
+       <jaxb:bindings>
+       		<jaxb:bindings node="//xsd:list[@itemType='double']">
+       			<hj:ignored />
+       		</jaxb:bindings>
+       	</jaxb:bindings>
+
+       	<!-- point type -->
+
+       	<jaxb:bindings>
+       		<jaxb:bindings node="//xsd:complexType[@name='PointType']">
+       			<hj:embeddable />
+
+       			<jaxb:bindings node="//xsd:complexType[@name='PointType']//xsd:element[@ref='gml:pos']">
+       				<hj:embedded>
+
+       					<orm:attribute-override name="srsName">
+       						<orm:column name="SRS_NAME" insertable="false" updatable="false" />
+       					</orm:attribute-override>
+
+       					<orm:attribute-override name="srsDimension">
+       						<orm:column name="SRS_DIM" insertable="false" updatable="false" />
+       					</orm:attribute-override>
+
+       				</hj:embedded>
+       			</jaxb:bindings>
+
+       		</jaxb:bindings>
+       	</jaxb:bindings>
+
+       	<!-- direct position type -->
+
+       	<jaxb:bindings>
+       		<jaxb:bindings node="//xsd:complexType[@name='DirectPositionType']">
+       			<hj:embeddable />
+       		</jaxb:bindings>
+       	</jaxb:bindings>
+
+       	<!-- line string type -->
+
+       	<jaxb:bindings>
+       		<jaxb:bindings node="//xsd:complexType[@name='LineStringType']">
+       			<hj:ignored />
+       		</jaxb:bindings>
+       	</jaxb:bindings>
+
+       	<!-- direct position list type -->
+
+       	<jaxb:bindings>
+       		<jaxb:bindings node="//xsd:complexType[@name='DirectPositionListType']">
+       			<hj:embeddable />
+       		</jaxb:bindings>
+       	</jaxb:bindings>
+
+       	<!-- envelope type -->
+
+       	<jaxb:bindings>
+       		<jaxb:bindings node="//xsd:complexType[@name='EnvelopeType']">
+       			<hj:ignored />
+       		</jaxb:bindings>
+       	</jaxb:bindings>
+
+       	<!-- circle by center point type -->
+
+       	<jaxb:bindings>
+       		<jaxb:bindings node="//xsd:complexType[@name='CircleByCenterPointType']">
+       			<hj:embeddable />
+       		</jaxb:bindings>
+       	</jaxb:bindings>
+
+       	<!-- polygon type -->
+
+       	<jaxb:bindings>
+       		<jaxb:bindings node="//xsd:complexType[@name='PolygonType']">
+       			<hj:ignored />
+       		</jaxb:bindings>
+       	</jaxb:bindings>
+
+       	<!-- linear ring type -->
+
+       	<jaxb:bindings>
+       		<jaxb:bindings node="//xsd:complexType[@name='LinearRingType']">
+       			<hj:embeddable />
+       		</jaxb:bindings>
+       	</jaxb:bindings>
+
+       	<!-- arc by center point type -->
+
+       	<jaxb:bindings>
+       		<jaxb:bindings node="//xsd:complexType[@name='ArcByCenterPointType']">
+       			<hj:embeddable />
+       		</jaxb:bindings>
+       	</jaxb:bindings>
+
+       	<!-- length type -->
+
+       	<jaxb:bindings>
+       		<jaxb:bindings node="//xsd:complexType[@name='LengthType']">
+       			<hj:embeddable />
+       		</jaxb:bindings>
+       	</jaxb:bindings>
+
+       	<!-- measure type -->
+
+       	<jaxb:bindings>
+       		<jaxb:bindings node="//xsd:complexType[@name='MeasureType']">
+       			<hj:embeddable />
+       		</jaxb:bindings>
+       	</jaxb:bindings>
+
+       	<!-- abstract geometric primitive type -->
+
+       	<jaxb:bindings>
+       		<jaxb:bindings node="//xsd:complexType[@name='AbstractGeometricPrimitiveType']">
+       			<hj:mapped-superclass />
+       		</jaxb:bindings>
+       	</jaxb:bindings>
+
+       	<!-- abstract geometry type -->
+
+       	<jaxb:bindings>
+       		<jaxb:bindings node="//xsd:complexType[@name='AbstractGeometryType']">
+       			<hj:mapped-superclass />
+       		</jaxb:bindings>
+       	</jaxb:bindings>
+
+       	<!-- abstract gml type -->
+
+       	<jaxb:bindings>
+
+       		<jaxb:bindings node="//xsd:complexType[@name='AbstractGMLType']">
+       			<hj:mapped-superclass />
+       		</jaxb:bindings>
+
+       		<jaxb:bindings node="//xsd:attribute[@ref='gml:id']">
+       			<hj:ignored />
+       		</jaxb:bindings>
+
+       	</jaxb:bindings>
+
+       	<!-- abstract curve type -->
+
+       	<jaxb:bindings>
+       		<jaxb:bindings node="//xsd:complexType[@name='AbstractCurveType']">
+       			<hj:mapped-superclass />
+       		</jaxb:bindings>
+       	</jaxb:bindings>
+
+       	<!-- abstract curve segment type -->
+
+       	<jaxb:bindings>
+       		<jaxb:bindings node="//xsd:complexType[@name='AbstractCurveSegmentType']">
+       			<hj:mapped-superclass />
+       		</jaxb:bindings>
+       	</jaxb:bindings>
+
+       	<!-- abstract surface type -->
+
+       	<jaxb:bindings>
+       		<jaxb:bindings node="//xsd:complexType[@name='AbstractSurfaceType']">
+       			<hj:mapped-superclass />
+       		</jaxb:bindings>
+       	</jaxb:bindings>
+
+       	<!-- abstract ring property type -->
+
+       	<jaxb:bindings>
+       		<jaxb:bindings node="//xsd:complexType[@name='AbstractRingPropertyType']">
+       			<hj:ignored />
+       		</jaxb:bindings>
+       	</jaxb:bindings>
+
+       	<!-- abstract ring type -->
+
+       	<jaxb:bindings>
+       		<jaxb:bindings node="//xsd:complexType[@name='AbstractRingType']">
+       			<hj:mapped-superclass />
+       		</jaxb:bindings>
+       	</jaxb:bindings>
+
+       	<!-- abstract feature type -->
+
+       	<jaxb:bindings>
+       		<jaxb:bindings node="//xsd:complexType[@name='AbstractFeatureType']">
+       			<hj:mapped-superclass />
+       		</jaxb:bindings>
+       	</jaxb:bindings>
+
+       	<!-- bounding shape type -->
+
+       	<jaxb:bindings>
+       		<jaxb:bindings node="//xsd:complexType[@name='BoundingShapeType']">
+       			<hj:embeddable />
+       		</jaxb:bindings>
+       	</jaxb:bindings>
+
+       	<!-- feature property type -->
+
+       	<jaxb:bindings>
+       		<jaxb:bindings node="//xsd:complexType[@name='FeaturePropertyType']">
+       			<hj:ignored />
+       		</jaxb:bindings>
+       	</jaxb:bindings>
+
+       	<!-- abstract feature collection type -->
+
+       	<jaxb:bindings>
+       		<jaxb:bindings node="//xsd:complexType[@name='AbstractFeatureCollectionType']">
+       			<hj:mapped-superclass />
+       		</jaxb:bindings>
+       	</jaxb:bindings>
+
+       	<!-- feature collection type -->
+
+       	<jaxb:bindings>
+       		<jaxb:bindings node="//xsd:complexType[@name='FeatureCollectionType']">
+       			<hj:embeddable />
+       		</jaxb:bindings>
+       	</jaxb:bindings>
+    </jaxb:bindings>
+</jaxb:bindings>

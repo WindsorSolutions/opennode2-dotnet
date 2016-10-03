@@ -9,10 +9,10 @@
 	<hj:default-id>
 		<orm:column/>
 	</hj:default-id>
-	<hj:default-generated-id name="Dbid" javaType="java.lang.Long" schemaType="xsd:long">
+	<hj:default-generated-id name="Id" javaType="java.lang.Long" schemaType="xsd:long">
 		<orm:column/>
-		<!-- commented out generated value -->
-		<!-- <orm:generated-value strategy="AUTO"/>-->
+		<orm:generated-value strategy="AUTO" generator="ColSequence"/>
+		<orm:sequence-generator name="ColSequence" sequence-name="COLUMN_ID_SEQUENCE" allocation-size="1"/>
 	</hj:default-generated-id>
     <hj:default-embedded-id>
     </hj:default-embedded-id>

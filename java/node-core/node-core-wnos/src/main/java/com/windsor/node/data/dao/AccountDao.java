@@ -53,4 +53,6 @@ public interface AccountDao extends DeletableDao {
             String adminUserId);
 
     UserAccount getAnonymousAccount();
+
+    List findAccountNameByName(String search, int maxResults);
 }

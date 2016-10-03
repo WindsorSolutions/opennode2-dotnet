@@ -78,7 +78,11 @@
         <dist.name>ecos-generic</dist.name>
         <dist.resources.basedir>${project.basedir}/../../resources/distribution</dist.resources.basedir>
         <dist.resources.overlay.basedir>${project.basedir}/../../resources/distribution-overlay</dist.resources.overlay.basedir>
+        <dist.resources.overlay-dev.basedir>${project.basedir}/../../resources/distribution-overlay-dev</dist.resources.overlay-dev.basedir>
+        <dist.resources.overlay-debug.basedir>${project.basedir}/../../resources/distribution-overlay-debug</dist.resources.overlay-debug.basedir>
         <dist.resources.overlay.dir>${dist.resources.overlay.basedir}/${dist.name}</dist.resources.overlay.dir>
+        <dist.resources.overlay-dev.dir>${dist.resources.overlay-dev.basedir}/${dist.name}</dist.resources.overlay-dev.dir>
+        <dist.resources.overlay-debug.dir>${dist.resources.overlay-debug.basedir}/${dist.name}</dist.resources.overlay-debug.dir>
 		
 		<!-- Environment specific resources directory (@see node-app pom for usage -->
 		<node.app.env.resources.dir>${project.basedir}/src/main/env/${dist.name}</node.app.env.resources.dir>
@@ -113,7 +117,7 @@
         <!-- <springframework.version>4.0.3.RELEASE</springframework.version> -->
         <springframework.version>3.2.8.RELEASE</springframework.version>
         <!-- upgrade to Spring 3.2.8 or 4.0.3? -->
-        <hibernate.version>4.3.5.Final</hibernate.version>
+        <hibernate.version>4.3.11.Final</hibernate.version>
         <commons.beanutils.version>1.8.3</commons.beanutils.version>
         <!-- The default node.home property, will be filtered into the build XML config files 
         and can be overridden if necessary.  An example might be a build that will be deployed on the 
@@ -122,10 +126,37 @@
         in ~/.m2/settings.xml) and be rebuilt to avoid editing deployed war files after the fact -->
         <node.home>/var/opennode2_home</node.home>
         <!-- version number to use in the wnos and plugin distribution zip filenames -->
-        <node.dist.version>2.10</node.dist.version>
+        <node.dist.version>2.11-beta-5</node.dist.version>
         <jaxb.implementation.version>2.2.7-b41</jaxb.implementation.version>
         <node.dist.patch.version></node.dist.patch.version>
+        <main.basedir>${project.basedir}</main.basedir>
     </properties>
+
+    <profiles>
+        <profile>
+            <id>debug</id>
+            <properties>
+                <environment>debug</environment>
+                <path.node.home>${dist.resources.overlay-debug.basedir}</path.node.home>
+            </properties>
+        </profile>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <environment>development</environment>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <environment>ecos-generic</environment>
+            </properties>
+        </profile>
+    </profiles>
+
     <build>
         <pluginManagement>
             <plugins>
@@ -137,7 +168,7 @@
 							<fileset>
 								<directory>dist</directory>
 								<includes>
-									<include>**/*.zip</include>
+									<include>**/*</include>
 								</includes>
 							</fileset>
 						</filesets>
@@ -204,6 +235,11 @@
                 <plugin>
                     <artifactId>maven-assembly-plugin</artifactId>
                     <version>2.3</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-shade-plugin</artifactId>
+                    <version>2.4.3</version>
                 </plugin>
                 <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
                 <!-- <plugin>
@@ -385,6 +421,11 @@
                 <version>1.6.4</version>
             </dependency>
             <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>log4j-over-slf4j</artifactId>
+                <version>1.6.4</version>
+            </dependency>
+            <dependency>
                 <groupId>commons-beanutils</groupId>
                 <artifactId>commons-beanutils</artifactId>
                 <version>${commons.beanutils.version}</version>
@@ -442,11 +483,22 @@
     </dependencyManagement>
     <repositories>
         <repository>
+            <id>nexus-east</id>
+            <url>http://nexus.east.windsor.com/content/repositories/public/</url>
+        </repository>
+        <repository>
+            <id>nexus-east-snapshot</id>
+            <url>http://nexus.east.windsor.com/content/repositories/snapshots/</url>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
-            <id>windsor-maven</id>
-            <url>http://maven.windsorsolutions.biz/nexus/content/groups/public/</url>
         </repository>
+        <!--<repository>-->
+            <!--<snapshots>-->
+                <!--<enabled>false</enabled>-->
+            <!--</snapshots>-->
+            <!--<id>windsor-maven</id>-->
+            <!--<url>http://maven.windsorsolutions.biz/nexus/content/groups/public/</url>-->
+        <!--</repository>-->
     </repositories>
 </project>

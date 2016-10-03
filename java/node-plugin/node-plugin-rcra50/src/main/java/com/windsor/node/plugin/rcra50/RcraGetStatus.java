@@ -15,7 +15,8 @@ public class RcraGetStatus extends BaseRcra50Plugin {
 
     public static final String SERVICE_NAME = "RcraGetStatus";
 
-    private static final PluginServiceImplementorDescriptor PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR = new PluginServiceImplementorDescriptor();
+    private static final PluginServiceImplementorDescriptor PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR =
+            new PluginServiceImplementorDescriptor();
 
     static
     {

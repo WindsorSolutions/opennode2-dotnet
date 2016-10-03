@@ -17,7 +17,7 @@
             <MaxFileSize>3072KB</MaxFileSize>
         </triggeringPolicy>
     </appender>
-    <logger name="com.windsor" level="DEBUG" />
+    <logger name="com.windsor" level="INFO" />
     <root level="INFO">
         <appender-ref ref="LOG" />
     </root>

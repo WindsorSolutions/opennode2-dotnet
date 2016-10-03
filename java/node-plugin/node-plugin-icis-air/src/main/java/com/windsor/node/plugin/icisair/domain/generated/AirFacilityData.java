@@ -125,6 +125,8 @@ public class AirFacilityData
         @AttributeOverride(name = "facilitySiteName", column = @Column(name = "FAC_SITE_NAME", length = 80)),
         @AttributeOverride(name = "locationAddressText", column = @Column(name = "LOC_ADDR_TXT", length = 50)),
         @AttributeOverride(name = "supplementalLocationText", column = @Column(name = "SUPPL_LOC_TXT", length = 50)),
+        @AttributeOverride(name = "localityName", column = @Column(name = "LOCALITY_NAME", length = 60)),
+        @AttributeOverride(name = "locationAddressCountyCode", column = @Column(name = "LOC_ADDR_COUNTY_CODE", length = 5)),
         @AttributeOverride(name = "locationAddressCityCode", column = @Column(name = "LOC_ADDR_CITY_CODE", length = 12)),
         @AttributeOverride(name = "locationStateCode", column = @Column(name = "LOC_ST_CODE", columnDefinition = "char(2)", length = 2)),
         @AttributeOverride(name = "locationZipCode", column = @Column(name = "LOC_ZIP_CODE", length = 14)),

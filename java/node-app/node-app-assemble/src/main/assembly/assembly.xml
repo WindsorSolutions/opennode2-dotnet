@@ -7,7 +7,7 @@
     <includeBaseDirectory>true</includeBaseDirectory>
     <fileSets>
         <fileSet>
-            <directory>${dist.resources.basedir}</directory>
+            <directory>${dist.resources.basedir}/plugins</directory>
             <outputDirectory>./</outputDirectory>
             <includes>
                 <include>**/*</include>

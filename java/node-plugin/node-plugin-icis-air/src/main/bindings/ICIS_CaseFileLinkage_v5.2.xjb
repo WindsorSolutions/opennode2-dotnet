@@ -8,8 +8,9 @@
 
     <jaxb:bindings>
         <jaxb:bindings node="//xsd:complexType[@name='CaseFileLinkageData']">
-            <!-- <inheritance:extends>com.windsor.node.plugin.icisair.domain.AbstractFacility
-            </inheritance:extends> -->
+			<hj:entity>
+				<orm:table name="VW_ICA_CASE_FILE_LNK" />
+			</hj:entity>
         </jaxb:bindings>
     </jaxb:bindings>
 
@@ -22,8 +23,14 @@
         </jaxb:bindings>
 
     </jaxb:bindings>
-
-
     
+    <jaxb:bindings>
+
+        <jaxb:bindings node="//xsd:complexType[@name='LinkageCaseFile']">
+            <hj:embeddable />
+        </jaxb:bindings>
+
+    </jaxb:bindings>    
+
 
 </jaxb:bindings>
