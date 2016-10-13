@@ -83,6 +83,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQSAirVision
         protected string _webServiceUrl = "http://173.10.212.9:9889/AirVision.Services.WebServices.AQSXml/AQSXmlService/";
         protected int _webServiceTimeoutInSeconds = 60 * 10;
         protected AQSWebServiceArgument _webServiceQueryArguments;
+        protected AQS3WebServiceArgument _webServiceQueryArguments3;
 
         public GetAQSXmlData()
         {
@@ -130,7 +131,31 @@ namespace Windsor.Node2008.WNOSPlugin.AQSAirVision
             AppendAuditLogEvent("Service was called with {0}", 
                                 _dataRequest.Parameters.GetKeyValuesString());
 
-            _webServiceQueryArguments = GetWebServiceArguments();
+            ParseWebServiceArguments();
+        }
+        protected virtual void ParseWebServiceArguments()
+        {
+            var args = GetWebServiceArguments();
+            double version = double.Parse(args.AQSXMLSchemaVersion);
+            if (version >= 3.0)
+            {
+                _webServiceQueryArguments3 = new AQS3WebServiceArgument();
+                _webServiceQueryArguments3.AQSXMLSchemaVersion = args.AQSXMLSchemaVersion;
+                _webServiceQueryArguments3.CompressPayload = args.CompressPayload;
+                _webServiceQueryArguments3.EndTime = args.EndTime;
+                //_webServiceQueryArguments3.SendMonitorAssuranceTransactions = args.SendMonitorAssuranceTransactions;
+                _webServiceQueryArguments3.SendOnlyQAData = args.SendOnlyQAData;
+                _webServiceQueryArguments3.SendRBTransactions = args.SendRBTransactions;
+                _webServiceQueryArguments3.SendRDTransactions = args.SendRDTransactions;
+                _webServiceQueryArguments3.StartTime = args.StartTime;
+                _webServiceQueryArguments3.Tags = args.Tags;
+                _webServiceQueryArguments = null;
+            } 
+            else
+            {
+                _webServiceQueryArguments = args;
+                _webServiceQueryArguments3 = null;
+            }
         }
         protected virtual AQSWebServiceArgument GetWebServiceArguments()
         {
@@ -257,7 +282,14 @@ namespace Windsor.Node2008.WNOSPlugin.AQSAirVision
                 AQSXmlResultData data = null;
                 try
                 {
-                    data = webService.GetAQSXmlData(_webServiceQueryArguments);
+                    if (_webServiceQueryArguments3 != null)
+                    {
+                        data = webService.GetAQS3XmlData(_webServiceQueryArguments3);
+                    }
+                    else
+                    {
+                        data = webService.GetAQSXmlData(_webServiceQueryArguments);
+                    }
                 }
                 catch (Exception e)
                 {

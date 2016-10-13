@@ -126,6 +126,16 @@ namespace Windsor.Node2008.WNOSPlugin.AQSAirVision
         }
 
         /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.agilairecorp.com/AQSXmlService/GetAQS3XmlData", RequestNamespace = "http://www.agilairecorp.com/", ResponseNamespace = "http://www.agilairecorp.com/", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        [return: System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
+        public AQSXmlResultData GetAQS3XmlData([System.Xml.Serialization.XmlElementAttribute(IsNullable = true)] AQS3WebServiceArgument args)
+        {
+            object[] results = this.Invoke("GetAQS3XmlData", new object[] {
+                        args});
+            return ((AQSXmlResultData)(results[0]));
+        }
+
+        /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.agilairecorp.com/AQSXmlService/GetAQSParameters", RequestNamespace = "http://www.agilairecorp.com/", ResponseNamespace = "http://www.agilairecorp.com/", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         [return: System.Xml.Serialization.XmlArrayAttribute(IsNullable = true)]
         [return: System.Xml.Serialization.XmlArrayItemAttribute(Namespace = "http://schemas.datacontract.org/2004/07/AirVision.Common.Services.WebServices.AQS" +
@@ -428,6 +438,46 @@ namespace Windsor.Node2008.WNOSPlugin.AQSAirVision
                 return ((AQSParameterInformation[])(this.results[0]));
             }
         }
+    }
+
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1067.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://schemas.datacontract.org/2004/07/AirVision.Common.Services.WebServices.AQS" +
+        "XmlService")]
+    public partial class AQS3WebServiceArgument
+    {
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
+        public string AQSXMLSchemaVersion;
+
+        /// <remarks/>
+        public bool CompressPayload;
+
+        /// <remarks/>
+        public System.DateTime EndTime;
+
+        /// <remarks/>
+        public bool SendMonitorAssuranceTransactions;
+
+        /// <remarks/>
+        public bool SendOnlyQAData;
+
+        /// <remarks/>
+        public bool SendRBTransactions;
+
+        /// <remarks/>
+        public bool SendRDTransactions;
+
+        /// <remarks/>
+        public System.DateTime StartTime;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(IsNullable = true)]
+        public AQSParameterTag[] Tags;
     }
 }
 
