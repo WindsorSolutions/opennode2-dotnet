@@ -51,9 +51,6 @@ public class AirVisionProxyService extends BaseWnosJaxbPlugin {
     public static final String ARG_HEADER_AQS_STOP_ON_ERROR = "AQS.StopOnError";
     public static final String ARG_AIRVISION_URL = "AirVision URL";
 
-    public static  final PluginServiceParameterDescriptor AIRVISION_URL =
-            new PluginServiceParameterDescriptor("AirVisionUrl", "java.lang.String",
-                    "The URL for the AirVision WSDL endpoint that will be queried for data");
     public static final PluginServiceParameterDescriptor START_TIME =
             new PluginServiceParameterDescriptor("StartTime", "java.lang.String", Boolean.TRUE,
                     "The earliest date for which to return data in YYYY-MM-DD format.");
@@ -105,7 +102,7 @@ public class AirVisionProxyService extends BaseWnosJaxbPlugin {
 
     public AirVisionProxyService() {
 
-        //getConfigurationArguments().put("Service Base Url", "");
+        getConfigurationArguments().put(ARG_AIRVISION_URL, "");
         getConfigurationArguments().put("Author", "");
         getConfigurationArguments().put("Contact Info", "");
         getConfigurationArguments().put("Organization", "");
@@ -123,7 +120,6 @@ public class AirVisionProxyService extends BaseWnosJaxbPlugin {
     public List<PluginServiceParameterDescriptor> getParameters() {
 
         List<PluginServiceParameterDescriptor> params = new ArrayList();
-        params.add(AIRVISION_URL);
         params.add(START_TIME);
         params.add(END_TIME);
         params.add(SEND_RD_TRANSACTIONS);
@@ -215,7 +211,7 @@ public class AirVisionProxyService extends BaseWnosJaxbPlugin {
             }
             result.getAuditEntries().add(makeEntry(paramOutString));
 
-            AQSXmlService aqsXmlService = getAQSDataService((String) namedParams.get(AIRVISION_URL.getName()));
+            AQSXmlService aqsXmlService = getAQSDataService(getConfigValueAsStringNoFail(ARG_AIRVISION_URL));
             AQSXmlResultData aqsXmlResultData = aqsXmlService.getAQS3XmlData(aqs3WebServiceArgument);
             AqsResultHandler aqsResultHandler = new AqsResultHandlerImpl(tempOutput.getAbsolutePath());
             aqsResultFile = aqsResultHandler.handle(aqsXmlResultData);
