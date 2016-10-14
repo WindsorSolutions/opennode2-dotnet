@@ -49,6 +49,11 @@ public class AirVisionProxyService extends BaseWnosJaxbPlugin {
     public static final String ARG_HEADER_AQS_SCREENING_GROUP = "AQS.ScreeningGroup";
     public static final String ARG_HEADER_AQS_FINAL_PROCESSING_STEP = "AQS.FinalProcessingStep";
     public static final String ARG_HEADER_AQS_STOP_ON_ERROR = "AQS.StopOnError";
+    public static final String ARG_AIRVISION_URL = "AirVision URL";
+
+    public static  final PluginServiceParameterDescriptor AIRVISION_URL =
+            new PluginServiceParameterDescriptor("AirVisionUrl", "java.lang.String",
+                    "The URL for the AirVision WSDL endpoint that will be queried for data");
     public static final PluginServiceParameterDescriptor START_TIME =
             new PluginServiceParameterDescriptor("StartTime", "java.lang.String", Boolean.TRUE,
                     "The earliest date for which to return data in YYYY-MM-DD format.");
@@ -118,6 +123,7 @@ public class AirVisionProxyService extends BaseWnosJaxbPlugin {
     public List<PluginServiceParameterDescriptor> getParameters() {
 
         List<PluginServiceParameterDescriptor> params = new ArrayList();
+        params.add(AIRVISION_URL);
         params.add(START_TIME);
         params.add(END_TIME);
         params.add(SEND_RD_TRANSACTIONS);
@@ -209,7 +215,7 @@ public class AirVisionProxyService extends BaseWnosJaxbPlugin {
             }
             result.getAuditEntries().add(makeEntry(paramOutString));
 
-            AQSXmlService aqsXmlService = getAQSDataService();
+            AQSXmlService aqsXmlService = getAQSDataService((String) namedParams.get(AIRVISION_URL.getName()));
             AQSXmlResultData aqsXmlResultData = aqsXmlService.getAQS3XmlData(aqs3WebServiceArgument);
             AqsResultHandler aqsResultHandler = new AqsResultHandlerImpl(tempOutput.getAbsolutePath());
             aqsResultFile = aqsResultHandler.handle(aqsXmlResultData);
@@ -609,14 +615,13 @@ public class AirVisionProxyService extends BaseWnosJaxbPlugin {
      * @return AQS XML Service implementation
      * @throws MalformedURLException
      */
-    private AQSXmlService getAQSDataService() throws MalformedURLException {
+    private AQSXmlService getAQSDataService(String urlAirVision) throws MalformedURLException {
 
-        String wsdlUrl = "http://108.163.187.10:9889/AirVision.Services.WebServices.AQSXml/AQSXmlService/?wsdl";
         String qnameNamespaceUri = "http://tempuri.org/";
         String qnameLocalPart = "AQSXmlService";
 
         QName serviceName = new QName(qnameNamespaceUri, qnameLocalPart);
-        Service service = Service.create(new URL(wsdlUrl), serviceName);
+        Service service = Service.create(new URL(urlAirVision), serviceName);
         AQSXmlService aqsXmlService = service.getPort(AQSXmlService.class);
 
         // add our logger to the handler chain
