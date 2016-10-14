@@ -286,42 +286,6 @@ public class AirVisionProxyService extends BaseWnosJaxbPlugin {
 
         try {
 
-            // START: call daemon proxy
-//            RemoteFileResourceHelper restCaller = (RemoteFileResourceHelper) getServiceFactory().makeService(RemoteFileResourceHelper.class);
-//            String restUrl = constructAddress(transaction);
-//            result.getAuditEntries().add(makeEntry("Calling REST Url:  \"" + restUrl + "\""));
-//
-//            byte[] response = null;
-//            if (restUrl.startsWith("http:")) {
-//                response = restCaller.getBytesFromURL(restUrl);
-//            } else if (restUrl.startsWith("https:")) {
-//                response = getBytesFromHttpsUrl(restUrl);
-//            } else {
-//                throw new WinNodeException("Not a valid URL scheme, must be http: or https:");
-//            }
-//
-//            List<String> lines = null;
-//            String responseString = new String(response, "UTF-8");
-//            if (responseString.indexOf("ERROR") == -1) {
-//                File file = new File(responseString);
-//                result.getAuditEntries().add(makeEntry("Successfully completed call, response file name was:  " + file.getName()));
-//                FileInputStream in = new FileInputStream(file);
-//
-//                List<String> fileLines = IOUtils.readLines(in);
-//
-//                if ((fileLines != null) && (fileLines.size() > 0)) {
-//                    if (((String) fileLines.get(0)).startsWith("<?xml")) {
-//                        fileLines.remove(0);
-//                    }
-//                }
-//                lines = fileLines;
-//
-//                result.getAuditEntries().add(makeEntry("Loaded response file into memory."));
-//            } else {
-//                result.getAuditEntries().add(makeEntry("REST service call caused remote error:  " + responseString));
-//            }
-            // END: call daemon proxy
-
             List<String> lines = null;
             if (aqsResult.indexOf("ERROR") == -1) {
                 result.getAuditEntries().add(makeEntry("Successfully completed call, response file name was:  "
