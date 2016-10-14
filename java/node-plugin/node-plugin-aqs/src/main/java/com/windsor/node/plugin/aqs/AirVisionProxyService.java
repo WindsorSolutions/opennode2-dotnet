@@ -5,6 +5,7 @@ import com.windsor.node.common.exception.WinNodeException;
 import com.windsor.node.common.util.ByIndexOrNameMap;
 import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
 import com.windsor.node.data.dao.jdbc.JdbcTransactionDao;
+import com.windsor.node.plugin.aqs.agilaire.*;
 import com.windsor.node.plugin.common.BaseWnosJaxbPlugin;
 import com.windsor.node.service.helper.CompressionService;
 import com.windsor.node.service.helper.IdGenerator;
@@ -15,12 +16,24 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.exception.ExceptionContext;
+import org.apache.cxf.endpoint.Client;
+import org.apache.cxf.frontend.ClientProxy;
+import org.apache.cxf.transport.http.HTTPConduit;
+import org.apache.cxf.transports.http.configuration.HTTPClientPolicy;
+
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
+import javax.xml.namespace.QName;
 
 import javax.net.ssl.HttpsURLConnection;
+import javax.xml.ws.Service;
+import javax.xml.ws.soap.SOAPFaultException;
 import java.io.*;
+import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Provides a plugin for extracting data from AirVision.
@@ -84,7 +97,7 @@ public class AirVisionProxyService extends BaseWnosJaxbPlugin {
 
     public AirVisionProxyService() {
 
-        getConfigurationArguments().put("Service Base Url", "");
+        //getConfigurationArguments().put("Service Base Url", "");
         getConfigurationArguments().put("Author", "");
         getConfigurationArguments().put("Contact Info", "");
         getConfigurationArguments().put("Organization", "");
@@ -133,30 +146,159 @@ public class AirVisionProxyService extends BaseWnosJaxbPlugin {
     public ProcessContentResult process(NodeTransaction transaction) {
         debug("Processing transaction...");
 
+        // dump all traffic
+        System.setProperty("com.sun.xml.ws.transport.http.HttpAdapter.dump", "true");
+
         ProcessContentResult result = new ProcessContentResult();
         result.setSuccess(false);
         result.setStatus(CommonTransactionStatusCode.Failed);
 
-        try {
-            RemoteFileResourceHelper restCaller = (RemoteFileResourceHelper) getServiceFactory().makeService(RemoteFileResourceHelper.class);
-            String restUrl = constructAddress(transaction);
-            result.getAuditEntries().add(makeEntry("Calling REST Url:  \"" + restUrl + "\""));
+        // get a handle on our parameters
+        ByIndexOrNameMap namedParams = transaction.getRequest().getParameters();
 
-            byte[] response = null;
-            if (restUrl.startsWith("http:")) {
-                response = restCaller.getBytesFromURL(restUrl);
-            } else if (restUrl.startsWith("https:")) {
-                response = getBytesFromHttpsUrl(restUrl);
-            } else {
-                throw new WinNodeException("Not a valid URL scheme, must be http: or https:");
-            }
+        // accumulate a list of documents
+        List<Document> documents = new ArrayList<>();
+        result.setDocuments(documents);
+
+        // setup a temporary output directory for our results
+        File tempOutput = new File(System.getProperty("java.io.tmpdir"));
+
+        /*
+         * Get the AQS data from AirVision
+         */
+
+        // setup our parameters
+        Map<AqsParams, Object> aqsParamsMap = new HashMap();
+        aqsParamsMap.put(AqsParams.StartTime, parseSQLDate((String) namedParams.get(START_TIME.getName())));
+        aqsParamsMap.put(AqsParams.EndTime, parseSQLDate((String) namedParams.get(END_TIME.getName())));
+        aqsParamsMap.put(AqsParams.SendRdTransactions, namedParams.get(SEND_RD_TRANSACTIONS.getName()));
+        aqsParamsMap.put(AqsParams.SendRbTransactions, namedParams.get(SEND_RB_TRANSACTIONS.getName()));
+        aqsParamsMap.put(AqsParams.SendMonitorAssuranceTransactions,
+                namedParams.get(SEND_MONITORING_ASSURANCE_TRANSACTIONS.getName()));
+        aqsParamsMap.put(AqsParams.AgencyCode, namedParams.get(AGENCY_CODE.getName()));
+        aqsParamsMap.put(AqsParams.SiteCode, namedParams.get(SITE_CODE.getName()));
+        aqsParamsMap.put(AqsParams.ParameterCode, namedParams.get(PARAMETER_CODE.getName()));
+//        result.getAuditEntries().add(
+//                makeEntry("Will request data from Agile Air with the following parameters: " +
+//                        aqsParamsMap.toString()));
+
+        File aqsResultFile = null;
+        String aqsResult = null;
+        try {
+
+            AQS3WebServiceArgument aqs3WebServiceArgument = getAQS3WebServiceArguments(aqsParamsMap);
+            AQSXmlService aqsXmlService = getAQSDataService();
+            AQSXmlResultData aqsXmlResultData = aqsXmlService.getAQS3XmlData(aqs3WebServiceArgument);
+            AqsResultHandler aqsResultHandler = new AqsResultHandlerImpl(tempOutput.getAbsolutePath());
+            aqsResultFile = aqsResultHandler.handle(aqsXmlResultData);
+            aqsResult = FileUtils.readFileToString(aqsResultFile, "UTF-8");
+
+            // store the result document
+            Document aqsResultDocument = new Document();
+            aqsResultDocument.setDocumentName("AQS Result Response");
+            aqsResultDocument.setType(CommonContentType.XML);
+            aqsResultDocument.setContent(IOUtils.toByteArray(new FileInputStream(aqsResultFile)));
+            documents.add(aqsResultDocument);
+        } catch(SOAPFaultException exception) {
+            error(exception.getMessage(), exception);
+            error(exception.getMessage());
+            result.setSuccess(false);
+            result.setStatus(CommonTransactionStatusCode.Failed);
+            result.getAuditEntries().add(
+                    makeEntry(
+                            "I submitted my request to the AirVision server but I can't understand the response. " +
+                            "This is a problem with your AirVision server, you will need to contact Agile Air in " +
+                            "order to diagnose this issue. " +
+                            "The complete error was: \"" +
+                            exception.getMessage() + "\""));
+            return result;
+        } catch(DatatypeConfigurationException exception) {
+            error(exception.getMessage(), exception);
+            error(exception.getMessage());
+            result.setSuccess(false);
+            result.setStatus(CommonTransactionStatusCode.Failed);
+            result.getAuditEntries().add(
+                    makeEntry(
+                        "The configuration settings submitted to AirVision were not valid, so I couldn't request " +
+                        "any data from the AirVision server. Please review the settings in the exchange as well " +
+                        "as the settings in this specific schedule. The complete error from AirVision was: \"" +
+                        exception.getMessage() + "\""));
+            return result;
+        } catch(MalformedURLException exception) {
+            error(exception.getMessage(), exception);
+            error(exception.getMessage());
+            result.setSuccess(false);
+            result.setStatus(CommonTransactionStatusCode.Failed);
+            result.getAuditEntries().add(
+                    makeEntry(
+                            "The URL for the AirVision server was not valid. This is particularly troublesome " +
+                            "because the URL is hard-coded into this plugin. I am very sorry! " +
+                            "The complete error was: \"" +
+                            exception.getMessage() + "\""));
+            return result;
+        } catch(IOException exception) {
+            error(exception.getMessage(), exception);
+            error(exception.getMessage());
+            result.setSuccess(false);
+            result.setStatus(CommonTransactionStatusCode.Failed);
+            result.getAuditEntries().add(
+                    makeEntry(
+                            "I was unable to write the result file from the AirVision system to disk. This is most " +
+                            "often caused by a mis-configuration of your Tomcat server. Please have your system " +
+                            "administrator for your OpenNode2 instance verify that the Tomcat temporary directory " +
+                            "is readable and writeable by the account that is running Tomcat. " +
+                            "The complete error was: \"" +
+                            exception.getMessage() + "\""));
+            return result;
+        }
+
+        /*
+         * Process the AQS result file
+         */
+
+        try {
+
+            // START: call daemon proxy
+//            RemoteFileResourceHelper restCaller = (RemoteFileResourceHelper) getServiceFactory().makeService(RemoteFileResourceHelper.class);
+//            String restUrl = constructAddress(transaction);
+//            result.getAuditEntries().add(makeEntry("Calling REST Url:  \"" + restUrl + "\""));
+//
+//            byte[] response = null;
+//            if (restUrl.startsWith("http:")) {
+//                response = restCaller.getBytesFromURL(restUrl);
+//            } else if (restUrl.startsWith("https:")) {
+//                response = getBytesFromHttpsUrl(restUrl);
+//            } else {
+//                throw new WinNodeException("Not a valid URL scheme, must be http: or https:");
+//            }
+//
+//            List<String> lines = null;
+//            String responseString = new String(response, "UTF-8");
+//            if (responseString.indexOf("ERROR") == -1) {
+//                File file = new File(responseString);
+//                result.getAuditEntries().add(makeEntry("Successfully completed call, response file name was:  " + file.getName()));
+//                FileInputStream in = new FileInputStream(file);
+//
+//                List<String> fileLines = IOUtils.readLines(in);
+//
+//                if ((fileLines != null) && (fileLines.size() > 0)) {
+//                    if (((String) fileLines.get(0)).startsWith("<?xml")) {
+//                        fileLines.remove(0);
+//                    }
+//                }
+//                lines = fileLines;
+//
+//                result.getAuditEntries().add(makeEntry("Loaded response file into memory."));
+//            } else {
+//                result.getAuditEntries().add(makeEntry("REST service call caused remote error:  " + responseString));
+//            }
+            // END: call daemon proxy
 
             List<String> lines = null;
-            String responseString = new String(response, "UTF-8");
-            if (responseString.indexOf("ERROR") == -1) {
-                File file = new File(responseString);
-                result.getAuditEntries().add(makeEntry("Successfully completed call, response file name was:  " + file.getName()));
-                FileInputStream in = new FileInputStream(file);
+            if (aqsResult.indexOf("ERROR") == -1) {
+                result.getAuditEntries().add(makeEntry("Successfully completed call, response file name was:  "
+                        + aqsResultFile.getName()));
+                FileInputStream in = new FileInputStream(aqsResultFile);
 
                 List<String> fileLines = IOUtils.readLines(in);
 
@@ -169,7 +311,7 @@ public class AirVisionProxyService extends BaseWnosJaxbPlugin {
 
                 result.getAuditEntries().add(makeEntry("Loaded response file into memory."));
             } else {
-                result.getAuditEntries().add(makeEntry("REST service call caused remote error:  " + responseString));
+                result.getAuditEntries().add(makeEntry("REST service call caused remote error:  " + aqsResult));
             }
 
             result.getAuditEntries().add(makeEntry("Creating document..."));
@@ -188,7 +330,7 @@ public class AirVisionProxyService extends BaseWnosJaxbPlugin {
 
                 result.getAuditEntries().add(makeEntry("Setting result..."));
                 result.setPaginatedContentIndicator(new PaginationIndicator(transaction.getRequest().getPaging().getStart(), transaction.getRequest().getPaging().getCount(), true));
-                result.getDocuments().add(doc);
+                documents.add(doc);
                 result.setSuccess(true);
                 result.setStatus(CommonTransactionStatusCode.Processed);
                 result.getAuditEntries().add(makeEntry("Done: OK"));
@@ -203,9 +345,11 @@ public class AirVisionProxyService extends BaseWnosJaxbPlugin {
 
             error(e.getMessage(), e);
             error(e.getMessage());
+
             result.setSuccess(false);
             result.setStatus(CommonTransactionStatusCode.Failed);
-            result.getAuditEntries().add(makeEntry("Error while executing: " + getClass().getName() + " Message: " + e.getMessage()));
+            result.getAuditEntries().add(makeEntry(
+                    "Error while executing: " + getClass().getName() + " Message: " + e.getMessage()));
         }
 
         return result;
@@ -407,5 +551,123 @@ public class AirVisionProxyService extends BaseWnosJaxbPlugin {
 
     public void setZipService(CompressionService zipService) {
         this.zipService = zipService;
+    }
+
+    /**
+     * Returns a GregorianCalendar instance initialized to date represented by the provided String.
+     *
+     * @param sqlDate String with valid SQL date
+     * @return GregorianCalendar instance
+     */
+    private GregorianCalendar parseSQLDate(String sqlDate) {
+        Date date = java.sql.Date.valueOf(sqlDate);
+        GregorianCalendar calendar = new GregorianCalendar();
+        calendar.setTime(date);
+        return calendar;
+    }
+
+    /**
+     * Returns an XMLGregorianCalendar instance initialized to the date represented by the provided Java date.
+     *
+     * @param date Java Date
+     * @return XMLGregorianCalendar instance
+     * @throws DatatypeConfigurationException
+     */
+    private XMLGregorianCalendar convertToXmlGregorianCalendar(Date date) throws DatatypeConfigurationException {
+     DatatypeFactory df = DatatypeFactory.newInstance();
+     GregorianCalendar gc = new GregorianCalendar();
+     gc.setTime(date);
+     XMLGregorianCalendar cal = df.newXMLGregorianCalendar(gc);
+     return cal;
+   }
+
+    /**
+     * Returns an AQS XML Service implementation.
+     *
+     * @return AQS XML Service implementation
+     * @throws MalformedURLException
+     */
+    private AQSXmlService getAQSDataService() throws MalformedURLException {
+
+        String wsdlUrl = "http://108.163.187.10:9889/AirVision.Services.WebServices.AQSXml/AQSXmlService/?wsdl";
+        String qnameNamespaceUri = "http://tempuri.org/";
+        String qnameLocalPart = "AQSXmlService";
+
+        QName serviceName = new QName(qnameNamespaceUri, qnameLocalPart);
+        Service service = Service.create(new URL(wsdlUrl), serviceName);
+        AQSXmlService aqsXmlService = service.getPort(AQSXmlService.class);
+
+        Client client = ClientProxy.getClient(aqsXmlService);
+        HTTPConduit http = (HTTPConduit)client.getConduit();
+        HTTPClientPolicy httpClientPolicy = new HTTPClientPolicy();
+        httpClientPolicy.setConnectionTimeout(30000L);
+        httpClientPolicy.setReceiveTimeout(10800000L);
+        http.setClient(httpClientPolicy);
+
+        return aqsXmlService;
+    }
+
+    /**
+     * Returns an AQS3WebServiceArgument instance initialized with the values from the provided service parameters
+     * map.
+     *
+     * @param serviceParams Map of AqsParams instances and their values
+     * @return AQS3WebServiceArgument initialized with the provided values
+     * @throws DatatypeConfigurationException On any problem converting the dates
+     */
+    private AQS3WebServiceArgument getAQS3WebServiceArguments(Map<AqsParams, Object> serviceParams)
+            throws DatatypeConfigurationException {
+
+        Date start = null;
+        if ((serviceParams != null) && (serviceParams.get(AqsParams.StartTime) != null)) {
+            start = ((Calendar) serviceParams.get(AqsParams.StartTime)).getTime();
+        }
+
+        Date end = null;
+        if ((serviceParams != null) && (serviceParams.get(AqsParams.EndTime) != null)) {
+            end = ((Calendar) serviceParams.get(AqsParams.EndTime)).getTime();
+        }
+
+        AQS3WebServiceArgument args = new AQS3WebServiceArgument();
+        args.setTags(new ArrayOfAQSParameterTag());
+        AQSParameterTag tag = new AQSParameterTag();
+        args.getTags().getAQSParameterTag().add(0, tag);
+
+        args.setCompressPayload(Boolean.FALSE.booleanValue());
+        args.setStartTime(convertToXmlGregorianCalendar(start));
+        args.setEndTime(convertToXmlGregorianCalendar(end));
+
+        if ((serviceParams != null) && (serviceParams.get(AqsParams.SendRdTransactions) != null)) {
+            args.setSendRDTransactions(
+                    Boolean.valueOf((String) serviceParams.get(AqsParams.SendRdTransactions)).booleanValue());
+        } else {
+            args.setSendRDTransactions(Boolean.FALSE.booleanValue());
+        }
+
+        if ((serviceParams != null) && (serviceParams.get(AqsParams.SendRbTransactions) != null)) {
+            args.setSendRBTransactions(
+                    Boolean.valueOf((String) serviceParams.get(AqsParams.SendRbTransactions)).booleanValue());
+        } else {
+            args.setSendRDTransactions(Boolean.FALSE.booleanValue());
+        }
+
+        if ((serviceParams != null) && (serviceParams.get(AqsParams.SendMonitorAssuranceTransactions) != null)) {
+            args.setSendMonitorAssuranceTransactions(
+                    Boolean.valueOf((String) serviceParams.get(AqsParams.SendMonitorAssuranceTransactions)).booleanValue());
+        } else {
+            args.setSendMonitorAssuranceTransactions(Boolean.FALSE.booleanValue());
+        }
+
+        if ((serviceParams != null) && (serviceParams.get(AqsParams.AgencyCode) != null)) {
+            (args.getTags().getAQSParameterTag().get(0)).setAgencyCode((String) serviceParams.get(AqsParams.AgencyCode));
+        }
+        if ((serviceParams != null) && (serviceParams.get(AqsParams.SiteCode) != null)) {
+            (args.getTags().getAQSParameterTag().get(0)).setSiteCode((String) serviceParams.get(AqsParams.SiteCode));
+        }
+        if ((serviceParams != null) && (serviceParams.get(AqsParams.ParameterCode) != null)) {
+            (args.getTags().getAQSParameterTag().get(0)).setParameterCode((String) serviceParams.get(AqsParams.ParameterCode));
+        }
+
+        return args;
     }
 }
