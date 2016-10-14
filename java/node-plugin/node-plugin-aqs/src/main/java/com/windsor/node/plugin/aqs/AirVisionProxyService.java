@@ -5,7 +5,6 @@ import com.windsor.node.common.exception.WinNodeException;
 import com.windsor.node.common.util.ByIndexOrNameMap;
 import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
 import com.windsor.node.data.dao.jdbc.JdbcTransactionDao;
-import com.windsor.node.plugin.aqs.agilaire.*;
 import com.windsor.node.plugin.common.BaseWnosJaxbPlugin;
 import com.windsor.node.service.helper.CompressionService;
 import com.windsor.node.service.helper.IdGenerator;
@@ -21,6 +20,9 @@ import org.apache.cxf.endpoint.Client;
 import org.apache.cxf.frontend.ClientProxy;
 import org.apache.cxf.transport.http.HTTPConduit;
 import org.apache.cxf.transports.http.configuration.HTTPClientPolicy;
+import org.datacontract.schemas._2004._07.airvision_common_services_webservices.*;
+import org.tempuri.*;
+import com.agilairecorp.*;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
@@ -28,6 +30,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.namespace.QName;
 
 import javax.net.ssl.HttpsURLConnection;
+import javax.xml.ws.BindingProvider;
 import javax.xml.ws.Service;
 import javax.xml.ws.soap.SOAPFaultException;
 import java.io.*;
@@ -178,15 +181,34 @@ public class AirVisionProxyService extends BaseWnosJaxbPlugin {
         aqsParamsMap.put(AqsParams.AgencyCode, namedParams.get(AGENCY_CODE.getName()));
         aqsParamsMap.put(AqsParams.SiteCode, namedParams.get(SITE_CODE.getName()));
         aqsParamsMap.put(AqsParams.ParameterCode, namedParams.get(PARAMETER_CODE.getName()));
-//        result.getAuditEntries().add(
-//                makeEntry("Will request data from Agile Air with the following parameters: " +
-//                        aqsParamsMap.toString()));
 
         File aqsResultFile = null;
         String aqsResult = null;
         try {
 
             AQS3WebServiceArgument aqs3WebServiceArgument = getAQS3WebServiceArguments(aqsParamsMap);
+            String paramOutString = "\n\nWill request data from Agile Air with the following parameters: \n" +
+                    "Schema version: " + aqs3WebServiceArgument.getAQSXMLSchemaVersion() + "\n" +
+                    "Start time: " + aqs3WebServiceArgument.getStartTime() + "\n" +
+                    "End time: " + aqs3WebServiceArgument.getEndTime() + "\n" +
+                    "Compress payload: " + aqs3WebServiceArgument.isCompressPayload() + "\n" +
+                    "Send monitor assurance transaction: " +
+                    aqs3WebServiceArgument.isSendMonitorAssuranceTransactions() + "\n" +
+                    "Send only QA data: " + aqs3WebServiceArgument.isSendOnlyQAData() + "\n" +
+                    "Send RB transactions: " + aqs3WebServiceArgument.isSendRBTransactions() + "\n" +
+                    "Send RD transactions: " + aqs3WebServiceArgument.isSendRDTransactions() + "\n" +
+                    "Tags:\n";
+            for (AQSParameterTag tag : aqs3WebServiceArgument.getTags().getAQSParameterTag()) {
+                paramOutString += "  Agency Code: " + tag.getAgencyCode() + "\n";
+                paramOutString += "  State Code: " + tag.getStateCode() + "\n";
+                paramOutString += "  Parameter Code: " + tag.getParameterCode() + "\n";
+                paramOutString += "  Site Code: " + tag.getSiteCode() + "\n";
+                paramOutString += "  County Tribal Code: " + tag.getCountyTribalCode() + "\n";
+                paramOutString += "  Duration Code: " + tag.getDurationCode() + "\n";
+                paramOutString += "  Parameter Occurrence Code: " + tag.getParameterOccurrenceCode();
+            }
+            result.getAuditEntries().add(makeEntry(paramOutString));
+
             AQSXmlService aqsXmlService = getAQSDataService();
             AQSXmlResultData aqsXmlResultData = aqsXmlService.getAQS3XmlData(aqs3WebServiceArgument);
             AqsResultHandler aqsResultHandler = new AqsResultHandlerImpl(tempOutput.getAbsolutePath());
@@ -206,7 +228,7 @@ public class AirVisionProxyService extends BaseWnosJaxbPlugin {
             result.setStatus(CommonTransactionStatusCode.Failed);
             result.getAuditEntries().add(
                     makeEntry(
-                            "I submitted my request to the AirVision server but I can't understand the response. " +
+                            "\n\nI submitted my request to the AirVision server but I can't understand the response. " +
                             "This is a problem with your AirVision server, you will need to contact Agile Air in " +
                             "order to diagnose this issue. " +
                             "The complete error was: \"" +
@@ -219,7 +241,7 @@ public class AirVisionProxyService extends BaseWnosJaxbPlugin {
             result.setStatus(CommonTransactionStatusCode.Failed);
             result.getAuditEntries().add(
                     makeEntry(
-                        "The configuration settings submitted to AirVision were not valid, so I couldn't request " +
+                        "\n\nThe configuration settings submitted to AirVision were not valid, so I couldn't request " +
                         "any data from the AirVision server. Please review the settings in the exchange as well " +
                         "as the settings in this specific schedule. The complete error from AirVision was: \"" +
                         exception.getMessage() + "\""));
@@ -231,7 +253,7 @@ public class AirVisionProxyService extends BaseWnosJaxbPlugin {
             result.setStatus(CommonTransactionStatusCode.Failed);
             result.getAuditEntries().add(
                     makeEntry(
-                            "The URL for the AirVision server was not valid. This is particularly troublesome " +
+                            "\n\nThe URL for the AirVision server was not valid. This is particularly troublesome " +
                             "because the URL is hard-coded into this plugin. I am very sorry! " +
                             "The complete error was: \"" +
                             exception.getMessage() + "\""));
@@ -243,7 +265,7 @@ public class AirVisionProxyService extends BaseWnosJaxbPlugin {
             result.setStatus(CommonTransactionStatusCode.Failed);
             result.getAuditEntries().add(
                     makeEntry(
-                            "I was unable to write the result file from the AirVision system to disk. This is most " +
+                            "\n\nI was unable to write the result file from the AirVision system to disk. This is most " +
                             "often caused by a mis-configuration of your Tomcat server. Please have your system " +
                             "administrator for your OpenNode2 instance verify that the Tomcat temporary directory " +
                             "is readable and writeable by the account that is running Tomcat. " +
@@ -597,6 +619,10 @@ public class AirVisionProxyService extends BaseWnosJaxbPlugin {
         Service service = Service.create(new URL(wsdlUrl), serviceName);
         AQSXmlService aqsXmlService = service.getPort(AQSXmlService.class);
 
+        // add our logger to the handler chain
+        BindingProvider bindingProvider = (BindingProvider) aqsXmlService;
+        bindingProvider.getBinding().getHandlerChain().add(new SOAPLoggingHandler());
+
         Client client = ClientProxy.getClient(aqsXmlService);
         HTTPConduit http = (HTTPConduit)client.getConduit();
         HTTPClientPolicy httpClientPolicy = new HTTPClientPolicy();
@@ -632,6 +658,8 @@ public class AirVisionProxyService extends BaseWnosJaxbPlugin {
         args.setTags(new ArrayOfAQSParameterTag());
         AQSParameterTag tag = new AQSParameterTag();
         args.getTags().getAQSParameterTag().add(0, tag);
+
+        args.setAQSXMLSchemaVersion("3.0");
 
         args.setCompressPayload(Boolean.FALSE.booleanValue());
         args.setStartTime(convertToXmlGregorianCalendar(start));

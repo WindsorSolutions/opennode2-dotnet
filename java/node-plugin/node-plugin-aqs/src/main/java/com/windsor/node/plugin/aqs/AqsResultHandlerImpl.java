@@ -1,6 +1,6 @@
 package com.windsor.node.plugin.aqs;
 
-import com.windsor.node.plugin.aqs.agilaire.AQSXmlResultData;
+import org.datacontract.schemas._2004._07.airvision_common_services_webservices.AQSXmlResultData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
