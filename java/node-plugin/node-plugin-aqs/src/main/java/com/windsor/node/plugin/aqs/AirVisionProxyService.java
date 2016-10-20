@@ -45,7 +45,7 @@ public class AirVisionProxyService extends BaseWnosJaxbPlugin {
 
     public static final String ARG_SERVICE_DAEMON_SERVICE_URL = "Service Base Url";
     public static final String ARG_SERVICE_PARTNER_ENDPOINT = "Partner Endpoint";
-    public static final String ARG_HEADER_APPLICATION_IDENTIFIER = "Application Identifier";
+    public static final String ARG_HEADER_APPLICATION_IDENTIFIER = "AQS User Info";
     public static final String ARG_HEADER_AQS_SCREENING_GROUP = "AQS.ScreeningGroup";
     public static final String ARG_HEADER_AQS_FINAL_PROCESSING_STEP = "AQS.FinalProcessingStep";
     public static final String ARG_HEADER_AQS_STOP_ON_ERROR = "AQS.StopOnError";
@@ -107,7 +107,7 @@ public class AirVisionProxyService extends BaseWnosJaxbPlugin {
         getConfigurationArguments().put("Contact Info", "");
         getConfigurationArguments().put("Organization", "");
         getConfigurationArguments().put("Document Title", "");
-        getConfigurationArguments().put("Application Identifier", "");
+        getConfigurationArguments().put("AQS User Info", "");
         getConfigurationArguments().put("AQS.ScreeningGroup", "");
         getConfigurationArguments().put("AQS.FinalProcessingStep", "");
         getConfigurationArguments().put("AQS.StopOnError", "");
@@ -352,7 +352,7 @@ public class AirVisionProxyService extends BaseWnosJaxbPlugin {
         String aqsFinalProcessingStep = getConfigValueAsStringNoFail("AQS.FinalProcessingStep");
         String aqsStopOnError = getConfigValueAsStringNoFail("AQS.StopOnError");
         String documentTitle = getConfigValueAsStringNoFail("Document Title");
-        String applicationIdentifier = getConfigValueAsStringNoFail("Application Identifier");
+        String applicationIdentifier = getConfigValueAsStringNoFail("AQS User Info");
         StringBuffer header = new StringBuffer();
         StringBuffer footer = new StringBuffer();
 
