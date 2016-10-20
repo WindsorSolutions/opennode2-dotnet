@@ -1,5 +1,5 @@
 <hj:persistence xmlns="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm">
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:annox="http://annox.dev.java.net" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm">
 	<hj:default-entity class="##default">
 	</hj:default-entity>
 	<hj:default-mapped-superclass class="##default">
@@ -9,10 +9,9 @@
 	<hj:default-id>
 		<orm:column/>
 	</hj:default-id>
-	<hj:default-generated-id name="Id" javaType="java.lang.Long" schemaType="xsd:long">
+	<hj:default-generated-id name="Id" javaType="java.lang.String" schemaType="xsd:string">
 		<orm:column/>
-		<orm:generated-value strategy="AUTO" generator="ColSequence"/>
-		<orm:sequence-generator name="ColSequence" sequence-name="COLUMN_ID_SEQUENCE" allocation-size="1"/>
+		<orm:generated-value strategy="AUTO"/>
 	</hj:default-generated-id>
     <hj:default-embedded-id>
     </hj:default-embedded-id>

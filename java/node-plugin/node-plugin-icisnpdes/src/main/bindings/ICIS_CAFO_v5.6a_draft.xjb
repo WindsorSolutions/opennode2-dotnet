@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+<jaxb:bindings version="2.1"
+    xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	xmlns:annox="http://annox.dev.java.net"
+	xmlns:ha="http://annox.dev.java.net/org.hibernate.annotations"
 	jaxb:extensionBindingPrefixes="hj orm" schemaLocation="../xsd/6/ICIS_CAFO_v5.6a_draft.xsd">
 
 	<!-- reported animal type -->
@@ -10,7 +14,11 @@
 			<hj:entity>
 				<orm:inheritance strategy="TABLE_PER_CLASS" />
 			</hj:entity>
-		</jaxb:bindings>
+			<hj:generated-id name="Dbid">
+                <orm:column name="ICS_REP_ANML_TYPE_ID"/>
+                <orm:generated-value strategy="TABLE"/>
+            </hj:generated-id>
+    </jaxb:bindings>
 
 		<!-- non-standard column name ("Under") -->
 		
