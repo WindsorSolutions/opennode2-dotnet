@@ -231,6 +231,7 @@ public abstract class SolicitOperation extends BaseRcra52Plugin {
             query.executeUpdate();
             getTargetEntityManager().getTransaction().commit();
         } catch(Exception exception) {
+            getTargetEntityManager().getTransaction().rollback();
             throw new StoredProcedureException(exception.getMessage(), exception);
         }
     }
