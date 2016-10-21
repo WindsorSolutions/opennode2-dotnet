@@ -1,29 +1,26 @@
 package com.windsor.node.plugin.aqs;
 
 import com.windsor.node.common.domain.*;
-import com.windsor.node.common.exception.WinNodeException;
 import com.windsor.node.common.util.ByIndexOrNameMap;
 import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
 import com.windsor.node.data.dao.jdbc.JdbcTransactionDao;
 import com.windsor.node.plugin.common.BaseWnosJaxbPlugin;
 import com.windsor.node.service.helper.CompressionService;
 import com.windsor.node.service.helper.IdGenerator;
-import com.windsor.node.service.helper.RemoteFileResourceHelper;
 import com.windsor.node.service.helper.settings.SettingServiceProvider;
 import com.windsor.node.service.helper.zip.ZipCompressionService;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.exception.ExceptionContext;
 import org.apache.cxf.endpoint.Client;
 import org.apache.cxf.frontend.ClientProxy;
 import org.apache.cxf.transport.http.HTTPConduit;
 import org.apache.cxf.transports.http.configuration.HTTPClientPolicy;
 import org.datacontract.schemas._2004._07.airvision_common_services_webservices.*;
 import org.tempuri.*;
-import com.agilairecorp.*;
 
+import javax.xml.bind.JAXBElement;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -44,12 +41,15 @@ import java.util.*;
 public class AirVisionProxyService extends BaseWnosJaxbPlugin {
 
     public static final String ARG_SERVICE_DAEMON_SERVICE_URL = "Service Base Url";
-    public static final String ARG_SERVICE_PARTNER_ENDPOINT = "Partner Endpoint";
     public static final String ARG_HEADER_APPLICATION_IDENTIFIER = "AQS User Info";
     public static final String ARG_HEADER_AQS_SCREENING_GROUP = "AQS.ScreeningGroup";
     public static final String ARG_HEADER_AQS_FINAL_PROCESSING_STEP = "AQS.FinalProcessingStep";
     public static final String ARG_HEADER_AQS_STOP_ON_ERROR = "AQS.StopOnError";
     public static final String ARG_AIRVISION_URL = "AirVision URL";
+    public static final String ARG_AUTHOR = "Author";
+    public static final String ARG_CONTACT_INFO = "Contact Info";
+    public static final String ARG_ORGANIZATION = "Organization";
+    public static final String ARG_DOCUMENT_TITLE = "Document Title";
 
     public static final PluginServiceParameterDescriptor START_TIME =
             new PluginServiceParameterDescriptor("StartTime", "java.lang.String", Boolean.TRUE,
@@ -59,14 +59,14 @@ public class AirVisionProxyService extends BaseWnosJaxbPlugin {
                     "The latest date for which to return data in YYYY-MM-DD format.");
     public static final PluginServiceParameterDescriptor SEND_RD_TRANSACTIONS =
             new PluginServiceParameterDescriptor("SendRdTransactions", "java.lang.String", Boolean.FALSE,
-                    "Flag indicating whether to include RD transactions in the query result.");
+                    "Flag indicating whether to include RD transactions in the query result (\"true\" or \"false\").");
     public static final PluginServiceParameterDescriptor SEND_RB_TRANSACTIONS =
             new PluginServiceParameterDescriptor("SendRbTransactions", "java.lang.String", Boolean.FALSE,
-                    "Flag indicating whether to include RB transactions in the query result.");
+                    "Flag indicating whether to include RB transactions in the query result (\"true\" or \"false\").");
     public static final PluginServiceParameterDescriptor SEND_MONITORING_ASSURANCE_TRANSACTIONS =
             new PluginServiceParameterDescriptor("SendMonitoringAssuranceTransactions", "java.lang.String",
                     Boolean.FALSE,
-                    "Flag indicating whether to include Mointoring Assurance Transactions in the query result.");
+                    "Flag indicating whether to include Mointoring Assurance Transactions in the query result (\"true\" or \"false\").");
     public static final PluginServiceParameterDescriptor AGENCY_CODE =
             new PluginServiceParameterDescriptor("AgencyCode", "java.lang.String", Boolean.FALSE,
                     "AirVision Agency Code.");
@@ -75,6 +75,21 @@ public class AirVisionProxyService extends BaseWnosJaxbPlugin {
     public static final PluginServiceParameterDescriptor PARAMETER_CODE =
             new PluginServiceParameterDescriptor("ParameterCode", "java.lang.String", Boolean.FALSE,
                     "AirVision Parameter Code.");
+    public static final PluginServiceParameterDescriptor DURATION_CODE =
+            new PluginServiceParameterDescriptor("DurationCode", "java.lang.String", Boolean.FALSE,
+                    "AirVision Duration Code.");
+    public static final PluginServiceParameterDescriptor OCCURRENCE_CODE =
+            new PluginServiceParameterDescriptor("OccurrenceCode", "java.lang.String", Boolean.FALSE,
+                    "AirVision Occurrence Code.");
+    public static final PluginServiceParameterDescriptor STATE_CODE =
+            new PluginServiceParameterDescriptor("StateCode", "java.lang.String", Boolean.FALSE,
+                    "AirVision State Code.");
+    public static final PluginServiceParameterDescriptor COUNTY_TRIBAL_CODE =
+            new PluginServiceParameterDescriptor("CountyTribalCode", "java.lang.String", Boolean.FALSE,
+                    "AirVision County Tribal Code.");
+    public static final PluginServiceParameterDescriptor SEND_ONLY_QA_DATA =
+            new PluginServiceParameterDescriptor("SendOnlyQAData", "java.lang.String", Boolean.FALSE,
+                    "Flag indicating that AirVision should only send QA data (\"true\" or \"false\")/");
 
     private static final String FILE_PREFIX = "AQS_";
     private static final String FILE_EXTENSION_XML = "xml";
@@ -103,14 +118,14 @@ public class AirVisionProxyService extends BaseWnosJaxbPlugin {
     public AirVisionProxyService() {
 
         getConfigurationArguments().put(ARG_AIRVISION_URL, "");
-        getConfigurationArguments().put("Author", "");
-        getConfigurationArguments().put("Contact Info", "");
-        getConfigurationArguments().put("Organization", "");
-        getConfigurationArguments().put("Document Title", "");
-        getConfigurationArguments().put("AQS User Info", "");
-        getConfigurationArguments().put("AQS.ScreeningGroup", "");
-        getConfigurationArguments().put("AQS.FinalProcessingStep", "");
-        getConfigurationArguments().put("AQS.StopOnError", "");
+        getConfigurationArguments().put(ARG_AUTHOR, "");
+        getConfigurationArguments().put(ARG_CONTACT_INFO, "");
+        getConfigurationArguments().put(ARG_ORGANIZATION, "");
+        getConfigurationArguments().put(ARG_DOCUMENT_TITLE, "");
+        getConfigurationArguments().put(ARG_HEADER_APPLICATION_IDENTIFIER, "");
+        getConfigurationArguments().put(ARG_HEADER_AQS_SCREENING_GROUP, "");
+        getConfigurationArguments().put(ARG_HEADER_AQS_FINAL_PROCESSING_STEP, "");
+        getConfigurationArguments().put(ARG_HEADER_AQS_STOP_ON_ERROR, "");
         getSupportedPluginTypes().add(ServiceType.QUERY);
         getSupportedPluginTypes().add(ServiceType.SOLICIT);
         getSupportedPluginTypes().add(ServiceType.QUERY_OR_SOLICIT);
@@ -125,9 +140,14 @@ public class AirVisionProxyService extends BaseWnosJaxbPlugin {
         params.add(SEND_RD_TRANSACTIONS);
         params.add(SEND_RB_TRANSACTIONS);
         params.add(SEND_MONITORING_ASSURANCE_TRANSACTIONS);
+        params.add(SEND_ONLY_QA_DATA);
         params.add(AGENCY_CODE);
         params.add(SITE_CODE);
         params.add(PARAMETER_CODE);
+        params.add(DURATION_CODE);
+        params.add(OCCURRENCE_CODE);
+        params.add(STATE_CODE);
+        params.add(COUNTY_TRIBAL_CODE);
         return params;
     }
 
@@ -180,9 +200,15 @@ public class AirVisionProxyService extends BaseWnosJaxbPlugin {
         aqsParamsMap.put(AqsParams.SendRbTransactions, namedParams.get(SEND_RB_TRANSACTIONS.getName()));
         aqsParamsMap.put(AqsParams.SendMonitorAssuranceTransactions,
                 namedParams.get(SEND_MONITORING_ASSURANCE_TRANSACTIONS.getName()));
+        aqsParamsMap.put(AqsParams.SendOnlyQAData,
+                namedParams.get(SEND_ONLY_QA_DATA.getName()));
         aqsParamsMap.put(AqsParams.AgencyCode, namedParams.get(AGENCY_CODE.getName()));
         aqsParamsMap.put(AqsParams.SiteCode, namedParams.get(SITE_CODE.getName()));
         aqsParamsMap.put(AqsParams.ParameterCode, namedParams.get(PARAMETER_CODE.getName()));
+        aqsParamsMap.put(AqsParams.DurationCode, namedParams.get(DURATION_CODE.getName()));
+        aqsParamsMap.put(AqsParams.OccurrenceCode, namedParams.get(OCCURRENCE_CODE.getName()));
+        aqsParamsMap.put(AqsParams.StateCode, namedParams.get(STATE_CODE.getName()));
+        aqsParamsMap.put(AqsParams.CountyTribalCode, namedParams.get(COUNTY_TRIBAL_CODE.getName()));
 
         File aqsResultFile = null;
         String aqsResult = null;
@@ -345,14 +371,14 @@ public class AirVisionProxyService extends BaseWnosJaxbPlugin {
 
     private void addHeader(List<String> lines, String docId, NodeTransaction transaction) {
 
-        String authorName = getConfigValueAsStringNoFail("Author");
-        String contactInfo = getConfigValueAsStringNoFail("Contact Info");
-        String orgName = getConfigValueAsStringNoFail("Organization");
-        String aqsScreeningGroup = getConfigValueAsStringNoFail("AQS.ScreeningGroup");
-        String aqsFinalProcessingStep = getConfigValueAsStringNoFail("AQS.FinalProcessingStep");
-        String aqsStopOnError = getConfigValueAsStringNoFail("AQS.StopOnError");
-        String documentTitle = getConfigValueAsStringNoFail("Document Title");
-        String applicationIdentifier = getConfigValueAsStringNoFail("AQS User Info");
+        String authorName = getConfigValueAsStringNoFail(ARG_AUTHOR);
+        String contactInfo = getConfigValueAsStringNoFail(ARG_CONTACT_INFO);
+        String orgName = getConfigValueAsStringNoFail(ARG_ORGANIZATION);
+        String aqsScreeningGroup = getConfigValueAsStringNoFail(ARG_HEADER_AQS_SCREENING_GROUP);
+        String aqsFinalProcessingStep = getConfigValueAsStringNoFail(ARG_HEADER_AQS_FINAL_PROCESSING_STEP);
+        String aqsStopOnError = getConfigValueAsStringNoFail(ARG_HEADER_AQS_STOP_ON_ERROR);
+        String documentTitle = getConfigValueAsStringNoFail(ARG_DOCUMENT_TITLE);
+        String applicationIdentifier = getConfigValueAsStringNoFail(ARG_HEADER_APPLICATION_IDENTIFIER);
         StringBuffer header = new StringBuffer();
         StringBuffer footer = new StringBuffer();
 
@@ -454,7 +480,7 @@ public class AirVisionProxyService extends BaseWnosJaxbPlugin {
         ByIndexOrNameMap namedParams = transaction.getRequest().getParameters();
         String startDate = (String) namedParams.get(START_TIME.getName());
         String endDate = (String) namedParams.get(END_TIME.getName());
-        String daemonServiceUrl = getConfigValueAsString("Service Base Url", false);
+        String daemonServiceUrl = getConfigValueAsString(ARG_SERVICE_DAEMON_SERVICE_URL, false);
 
         StringBuffer url = new StringBuffer();
         url.append(daemonServiceUrl).append("/aqs/").append(startDate).append("/").append(endDate);
@@ -619,13 +645,12 @@ public class AirVisionProxyService extends BaseWnosJaxbPlugin {
             end = ((Calendar) serviceParams.get(AqsParams.EndTime)).getTime();
         }
 
+        ObjectFactory factory = new ObjectFactory();
+
         AQS3WebServiceArgument args = new AQS3WebServiceArgument();
         args.setTags(new ArrayOfAQSParameterTag());
-        AQSParameterTag tag = new AQSParameterTag();
-        args.getTags().getAQSParameterTag().add(0, tag);
 
         args.setAQSXMLSchemaVersion("3.0");
-
         args.setCompressPayload(Boolean.FALSE.booleanValue());
         args.setStartTime(convertToXmlGregorianCalendar(start));
         args.setEndTime(convertToXmlGregorianCalendar(end));
@@ -651,16 +676,89 @@ public class AirVisionProxyService extends BaseWnosJaxbPlugin {
             args.setSendMonitorAssuranceTransactions(Boolean.FALSE.booleanValue());
         }
 
-        if ((serviceParams != null) && (serviceParams.get(AqsParams.AgencyCode) != null)) {
-            (args.getTags().getAQSParameterTag().get(0)).setAgencyCode((String) serviceParams.get(AqsParams.AgencyCode));
+        if ((serviceParams != null) && (serviceParams.get(AqsParams.SendOnlyQAData) != null)) {
+            args.setSendMonitorAssuranceTransactions(
+                    Boolean.valueOf((String) serviceParams.get(AqsParams.SendOnlyQAData)).booleanValue());
+        } else {
+            args.setSendMonitorAssuranceTransactions(Boolean.FALSE.booleanValue());
         }
-        if ((serviceParams != null) && (serviceParams.get(AqsParams.SiteCode) != null)) {
-            (args.getTags().getAQSParameterTag().get(0)).setSiteCode((String) serviceParams.get(AqsParams.SiteCode));
+
+        String[] durationCodes = splitParameterOnPipe((String) serviceParams.get(AqsParams.DurationCode));
+        String[] occurrenceCodes = splitParameterOnPipe((String) serviceParams.get(AqsParams.OccurrenceCode));
+        String[] stateCodes = splitParameterOnPipe((String) serviceParams.get(AqsParams.StateCode));
+        String[] countyTribalCodes = splitParameterOnPipe((String) serviceParams.get(AqsParams.CountyTribalCode));
+        String[] agencyCodes = splitParameterOnPipe((String) serviceParams.get(AqsParams.AgencyCode));
+        String[] siteCodes = splitParameterOnPipe((String) serviceParams.get(AqsParams.SiteCode));
+        String[] parameterCodes = splitParameterOnPipe((String) serviceParams.get(AqsParams.ParameterCode));
+
+        int maxTags = 0;
+
+        if(durationCodes != null && durationCodes.length > maxTags) {
+            maxTags = durationCodes.length;
         }
-        if ((serviceParams != null) && (serviceParams.get(AqsParams.ParameterCode) != null)) {
-            (args.getTags().getAQSParameterTag().get(0)).setParameterCode((String) serviceParams.get(AqsParams.ParameterCode));
+        if(occurrenceCodes != null && occurrenceCodes.length > maxTags) {
+            maxTags = occurrenceCodes.length;
+        }
+        if(stateCodes != null && stateCodes.length > maxTags) {
+            maxTags = stateCodes.length;
+        }
+        if(countyTribalCodes != null && countyTribalCodes.length > maxTags) {
+            maxTags = countyTribalCodes.length;
+        }
+        if(agencyCodes != null && agencyCodes.length > maxTags) {
+            maxTags = agencyCodes.length;
+        }
+        if(siteCodes != null && siteCodes.length > maxTags) {
+            maxTags = siteCodes.length;
+        }
+        if(parameterCodes != null && parameterCodes.length > maxTags) {
+            maxTags = parameterCodes.length;
+        }
+
+        for(int index = 0; index < maxTags; index++) {
+            AQSParameterTag tag = new AQSParameterTag();
+
+            if(agencyCodes != null && agencyCodes.length > index) {
+                tag.setAgencyCode(agencyCodes[index]);
+            }
+            if(countyTribalCodes != null && countyTribalCodes.length > index) {
+                JAXBElement<String> value =
+                        factory.createAQSParameterTagCountyTribalCode(countyTribalCodes[index]);
+                tag.setCountyTribalCode(value);
+            }
+            if(durationCodes != null && durationCodes.length > index) {
+                JAXBElement<String> value =
+                        factory.createAQSParameterTagDurationCode(durationCodes[index]);
+                tag.setDurationCode(value);
+            }
+            if(parameterCodes != null && parameterCodes.length > index) {
+                tag.setParameterCode(parameterCodes[index]);
+            }
+            if(occurrenceCodes != null && occurrenceCodes.length > index) {
+                JAXBElement<Integer> value =
+                        factory.createAQSParameterTagParameterOccurrenceCode(Integer.parseInt(occurrenceCodes[index]));
+                tag.setParameterOccurrenceCode(value);
+            }
+            if(siteCodes != null && siteCodes.length > index) {
+                tag.setSiteCode(siteCodes[index]);
+            }
+            if(stateCodes != null && stateCodes.length > index) {
+                JAXBElement<String> value =
+                        factory.createAQSParameterTagStateCode(stateCodes[index]);
+                tag.setStateCode(value);
+            }
+
+            args.getTags().getAQSParameterTag().add(tag);
         }
 
         return args;
+    }
+
+    private String[] splitParameterOnPipe(String parameter) {
+        if(parameter != null) {
+            return parameter.split("\\|");
+        } else {
+            return null;
+        }
     }
 }

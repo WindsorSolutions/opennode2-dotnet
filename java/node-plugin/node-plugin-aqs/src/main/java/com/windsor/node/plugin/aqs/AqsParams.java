@@ -9,9 +9,14 @@ public enum AqsParams {
     SendRdTransactions,
     SendRbTransactions,
     SendMonitorAssuranceTransactions,
+    SendOnlyQAData,
     AgencyCode,
     SiteCode,
-    ParameterCode;
+    ParameterCode,
+    DurationCode,
+    OccurrenceCode,
+    StateCode,
+    CountyTribalCode;
 
     private AqsParams() {
     }
