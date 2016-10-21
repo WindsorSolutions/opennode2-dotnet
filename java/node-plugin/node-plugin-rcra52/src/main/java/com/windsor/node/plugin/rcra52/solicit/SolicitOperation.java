@@ -232,6 +232,7 @@ public abstract class SolicitOperation extends BaseRcra52Plugin {
             getTargetEntityManager().getTransaction().commit();
         } catch(Exception exception) {
             getTargetEntityManager().getTransaction().rollback();
+            logger.info("Rolled back the transaction for the stored procedure");
             throw new StoredProcedureException(exception.getMessage(), exception);
         }
     }
