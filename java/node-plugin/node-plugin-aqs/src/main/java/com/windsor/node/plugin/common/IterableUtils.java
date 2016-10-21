@@ -23,7 +23,7 @@
 /*    */ 
 /*    */ public class IterableUtils
 /*    */ {
-/*    */   public static <IN, OUT> Iterable<OUT> transform(Iterable<IN> it, final ITransformer<IN, OUT> transformer)
+/*    */   public static <IN, OUT> Iterable<OUT> transform(final Iterable<IN> it, final ITransformer<IN, OUT> transformer)
 /*    */   {
 /* 28 */     return new Iterable()
 /*    */     {

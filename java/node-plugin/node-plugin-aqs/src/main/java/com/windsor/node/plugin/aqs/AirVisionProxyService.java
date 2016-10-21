@@ -69,12 +69,14 @@ public class AirVisionProxyService extends BaseWnosJaxbPlugin {
                     "Flag indicating whether to include Mointoring Assurance Transactions in the query result (\"true\" or \"false\").");
     public static final PluginServiceParameterDescriptor AGENCY_CODE =
             new PluginServiceParameterDescriptor("AgencyCode", "java.lang.String", Boolean.FALSE,
-                    "AirVision Agency Code.");
+                    "AirVision Agency Code, you may use \"|\" to delimit multiple values.");
     public static final PluginServiceParameterDescriptor SITE_CODE =
-            new PluginServiceParameterDescriptor("SiteCode", "java.lang.String", Boolean.FALSE, "AirVision Site Code.");
+            new PluginServiceParameterDescriptor("SiteCode", "java.lang.String", Boolean.FALSE,
+                    "AirVision Site Code, you may use \"|\4"" +
+                            " to delimit multiple values.");
     public static final PluginServiceParameterDescriptor PARAMETER_CODE =
             new PluginServiceParameterDescriptor("ParameterCode", "java.lang.String", Boolean.FALSE,
-                    "AirVision Parameter Code.");
+                    "AirVision Parameter Code you may use \"|\" to delimit multiple values.");
     public static final PluginServiceParameterDescriptor DURATION_CODE =
             new PluginServiceParameterDescriptor("DurationCode", "java.lang.String", Boolean.FALSE,
                     "AirVision Duration Code.");
@@ -83,7 +85,7 @@ public class AirVisionProxyService extends BaseWnosJaxbPlugin {
                     "AirVision Occurrence Code.");
     public static final PluginServiceParameterDescriptor STATE_CODE =
             new PluginServiceParameterDescriptor("StateCode", "java.lang.String", Boolean.FALSE,
-                    "AirVision State Code.");
+                    "AirVision State Code you may use \"|\" to delimit multiple values.");
     public static final PluginServiceParameterDescriptor COUNTY_TRIBAL_CODE =
             new PluginServiceParameterDescriptor("CountyTribalCode", "java.lang.String", Boolean.FALSE,
                     "AirVision County Tribal Code.");
@@ -227,13 +229,14 @@ public class AirVisionProxyService extends BaseWnosJaxbPlugin {
                     "Send RD transactions: " + aqs3WebServiceArgument.isSendRDTransactions() + "\n" +
                     "Tags:\n";
             for (AQSParameterTag tag : aqs3WebServiceArgument.getTags().getAQSParameterTag()) {
-                paramOutString += "  Agency Code: " + tag.getAgencyCode() + "\n";
-                paramOutString += "  State Code: " + tag.getStateCode() + "\n";
-                paramOutString += "  Parameter Code: " + tag.getParameterCode() + "\n";
-                paramOutString += "  Site Code: " + tag.getSiteCode() + "\n";
-                paramOutString += "  County Tribal Code: " + tag.getCountyTribalCode() + "\n";
-                paramOutString += "  Duration Code: " + tag.getDurationCode() + "\n";
-                paramOutString += "  Parameter Occurrence Code: " + tag.getParameterOccurrenceCode();
+                paramOutString += "\n  Tag:";
+                paramOutString += "    Agency Code: " + tag.getAgencyCode() + "\n";
+                paramOutString += "    State Code: " + tag.getStateCode() + "\n";
+                paramOutString += "    Parameter Code: " + tag.getParameterCode() + "\n";
+                paramOutString += "    Site Code: " + tag.getSiteCode() + "\n";
+                paramOutString += "    County Tribal Code: " + tag.getCountyTribalCode() + "\n";
+                paramOutString += "    Duration Code: " + tag.getDurationCode() + "\n";
+                paramOutString += "    Parameter Occurrence Code: " + tag.getParameterOccurrenceCode() + "\n";
             }
             result.getAuditEntries().add(makeEntry(paramOutString));
 
