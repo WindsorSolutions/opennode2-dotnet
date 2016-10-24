@@ -33,7 +33,9 @@ import javax.xml.ws.soap.SOAPFaultException;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.*;
 import java.util.*;
+import java.util.Date;
 
 /**
  * Provides a plugin for extracting data from AirVision.
@@ -53,10 +55,10 @@ public class AirVisionProxyService extends BaseWnosJaxbPlugin {
 
     public static final PluginServiceParameterDescriptor START_TIME =
             new PluginServiceParameterDescriptor("StartTime", "java.lang.String", Boolean.TRUE,
-                    "The earliest date for which to return data in YYYY-MM-DD format.");
+                    "The earliest date for which to return data in YYYY-MM-DD hh:mm format.");
     public static final PluginServiceParameterDescriptor END_TIME =
             new PluginServiceParameterDescriptor("EndTime", "java.lang.String", Boolean.TRUE,
-                    "The latest date for which to return data in YYYY-MM-DD format.");
+                    "The latest date for which to return data in YYYY-MM-DD hh:mm format.");
     public static final PluginServiceParameterDescriptor SEND_RD_TRANSACTIONS =
             new PluginServiceParameterDescriptor("SendRdTransactions", "java.lang.String", Boolean.FALSE,
                     "Flag indicating whether to include RD transactions in the query result (\"true\" or \"false\").");
@@ -72,7 +74,7 @@ public class AirVisionProxyService extends BaseWnosJaxbPlugin {
                     "AirVision Agency Code, you may use \"|\" to delimit multiple values.");
     public static final PluginServiceParameterDescriptor SITE_CODE =
             new PluginServiceParameterDescriptor("SiteCode", "java.lang.String", Boolean.FALSE,
-                    "AirVision Site Code, you may use \"|\4"" +
+                    "AirVision Site Code, you may use \"|\4" +
                             " to delimit multiple values.");
     public static final PluginServiceParameterDescriptor PARAMETER_CODE =
             new PluginServiceParameterDescriptor("ParameterCode", "java.lang.String", Boolean.FALSE,
@@ -577,7 +579,16 @@ public class AirVisionProxyService extends BaseWnosJaxbPlugin {
      * @return GregorianCalendar instance
      */
     private GregorianCalendar parseSQLDate(String sqlDate) {
-        Date date = java.sql.Date.valueOf(sqlDate);
+        Date date = null;
+
+        if(sqlDate.length() > 10 && sqlDate.length()  < 17) {
+            date = Timestamp.valueOf(sqlDate + ":00");
+        } else if(sqlDate.length() > 16) {
+            date = Timestamp.valueOf(sqlDate);
+        } else {
+            date = java.sql.Date.valueOf(sqlDate);
+        }
+
         GregorianCalendar calendar = new GregorianCalendar();
         calendar.setTime(date);
         return calendar;
