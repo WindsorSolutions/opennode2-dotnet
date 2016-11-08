@@ -382,9 +382,14 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
                     {
                         if (endpointClient.Version == EndpointVersionType.EN20)
                         {
+                            IList<string> notificationUris = null;
+                            if (!string.IsNullOrEmpty(_notifications))
+                            {
+                                notificationUris = StringUtils.SplitAndReallyRemoveEmptyEntries(_notifications, ',', ';');
+                            }
                             transactionId =
                                 endpointClient.Submit(networkFlowName, "default",
-                                                      string.Empty, new string[] { filePath });
+                                                      string.Empty, notificationUris, new string[] { filePath });
                             networkFlowOperation = "default";
                         }
                         else

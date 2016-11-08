@@ -6279,6 +6279,10 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_56
         public ComplianceMonitoringActivityTypeCodeType ComplianceMonitoringActivityTypeCode;
 
         /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ComplianceMonitoringActivityTypeCodeSpecified;
+
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         //[Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
