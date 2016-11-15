@@ -228,6 +228,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
     [AppliedPathAttribute("Handler.ContactAddress.Contact.MiddleInitial", typeof(ColumnAttribute), "CONTACT_MIDDLE_INITIAL", DbType.AnsiStringFixedLength, 1)]
     [AppliedPathAttribute("Handler.ContactAddress.Contact.LastName", typeof(ColumnAttribute), "CONTACT_LAST_NAME", 38)]
     [AppliedPathAttribute("Handler.ContactAddress.Contact.OrganizationFormalName", typeof(ColumnAttribute), "CONTACT_ORG_NAME", 80)]
+    [AppliedPathAttribute("Handler.ContactAddress.MailingAddress.MailingAddressNumberText", typeof(ColumnAttribute), "CONTACT_STREET_NUMBER", 12)] //??
     [AppliedPathAttribute("Handler.ContactAddress.MailingAddress.MailingAddressText", typeof(ColumnAttribute), "CONTACT_STREET1", 30)]
     [AppliedPathAttribute("Handler.ContactAddress.MailingAddress.SupplementalAddressText", typeof(ColumnAttribute), "CONTACT_STREET2", 30)]
     [AppliedPathAttribute("Handler.ContactAddress.MailingAddress.MailingAddressCityName", typeof(ColumnAttribute), "CONTACT_CITY", 25)]
@@ -243,6 +244,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
     [AppliedPathAttribute("Handler.PermitContactAddress.Contact.MiddleInitial", typeof(ColumnAttribute), "PCONTACT_MIDDLE_NAME", DbType.AnsiStringFixedLength, 1)]
     [AppliedPathAttribute("Handler.PermitContactAddress.Contact.LastName", typeof(ColumnAttribute), "PCONTACT_LAST_NAME", 38)]
     [AppliedPathAttribute("Handler.PermitContactAddress.Contact.OrganizationFormalName", typeof(ColumnAttribute), "PCONTACT_ORG_NAME", 80)]
+    [AppliedPathAttribute("Handler.PermitContactAddress.MailingAddress.MailingAddressNumberText", typeof(ColumnAttribute), "PCONTACT_STREET_NUMBER", 12)] //??
     [AppliedPathAttribute("Handler.PermitContactAddress.MailingAddress.MailingAddressText", typeof(ColumnAttribute), "PCONTACT_STREET1", 30)]
     [AppliedPathAttribute("Handler.PermitContactAddress.MailingAddress.SupplementalAddressText", typeof(ColumnAttribute), "PCONTACT_STREET2", 30)]
     [AppliedPathAttribute("Handler.PermitContactAddress.MailingAddress.MailingAddressCityName", typeof(ColumnAttribute), "PCONTACT_CITY", 25)]
@@ -376,10 +378,14 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
     [AppliedAttribute(typeof(UniversalWasteActivityDataType), "UniversalWasteTypeText", typeof(DbIgnoreAttribute))]
 
     //RCRA_HD_WASTE_CODE
-    [AppliedAttribute(typeof(HandlerWasteCodeDataType), "TransactionCode", typeof(ColumnAttribute), "TRANSACTION_CODE", DbType.AnsiStringFixedLength, 1)]
-    [AppliedAttribute(typeof(HandlerWasteCodeDataType), "WasteCodeOwnerName", typeof(ColumnAttribute), "WASTE_CODE_OWNER", DbType.AnsiStringFixedLength, 2)]
-    [AppliedAttribute(typeof(HandlerWasteCodeDataType), "WasteCode", typeof(ColumnAttribute), "WASTE_CODE_TYPE", 6)]
-    [AppliedAttribute(typeof(HandlerWasteCodeDataType), "WasteCodeText", typeof(DbIgnoreAttribute))]
+    [AppliedPathAttribute("Handler.HandlerWasteCodeDetails.TransactionCode", typeof(ColumnAttribute), "TRANSACTION_CODE", 1)]
+    [AppliedPathAttribute("Handler.HandlerWasteCodeDetails.WasteCodeOwnerName", typeof(ColumnAttribute), "WASTE_CODE_OWNER", 2)]
+    [AppliedPathAttribute("Handler.HandlerWasteCodeDetails.WasteCode", typeof(ColumnAttribute), "WASTE_CODE_TYPE", 6)]
+    [AppliedPathAttribute("Handler.HandlerWasteCodeDetails.WasteCodeText", typeof(DbIgnoreAttribute))]
+    //[AppliedAttribute(typeof(HandlerWasteCodeDataType), "TransactionCode", typeof(ColumnAttribute), "TRANSACTION_CODE", DbType.AnsiStringFixedLength, 1)]
+    //[AppliedAttribute(typeof(HandlerWasteCodeDataType), "WasteCodeOwnerName", typeof(ColumnAttribute), "WASTE_CODE_OWNER", DbType.AnsiStringFixedLength, 2)]
+    //[AppliedAttribute(typeof(HandlerWasteCodeDataType), "WasteCode", typeof(ColumnAttribute), "WASTE_CODE_TYPE", 6)]
+    //[AppliedAttribute(typeof(HandlerWasteCodeDataType), "WasteCodeText", typeof(DbIgnoreAttribute))]
 
     //RCRA_HD_SEC_WASTE_CODE
     [AppliedPathAttribute("Handler.HazardousSecondaryMaterial.HazardousSecondaryMaterialActivity.HandlerWasteCodeDetails.TransactionCode", typeof(ColumnAttribute), "TRANSACTION_CODE", 1)]
