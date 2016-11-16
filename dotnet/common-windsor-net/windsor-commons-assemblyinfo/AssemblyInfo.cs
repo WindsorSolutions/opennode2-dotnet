@@ -44,7 +44,7 @@ namespace Windsor.Commons.AssemblyInfo
     internal static class AssemblyInfo
     {
         // [assembly: AssemblyVersion(AssemblyInfoServer.cAssemblyVersion)]
-        public const string cAssemblyVersion = "2.7.2.1148";
+        public const string cAssemblyVersion = "2.7.3.1149";
 
         // [assembly: AssemblyFileVersion(AssemblyInfoServer.cAssemblyFileVersion)]
         public const string cAssemblyFileVersion = cAssemblyVersion;
