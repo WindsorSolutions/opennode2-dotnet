@@ -33,7 +33,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
  This script updates an existing RCRA v5.2 staging database to v5.4.
  Created: 2/4/2016
- Last Updated: 4/11/2016
+ Last Updated: 11/15/2016
  
 */
 
@@ -73,6 +73,24 @@ BEGIN
     EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Mailing Address Street Number' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'RCRA_HD_HANDLER', @level2type=N'COLUMN',@level2name=N'MAIL_STREET_NUMBER';
 END
 
+--Added 11/15/2016 BGR
+IF (SELECT COUNT(1) FROM sys.columns where name = 'CONTACT_STREET_NUMBER') = 0
+BEGIN
+    ALTER TABLE RCRA_HD_HANDLER
+    ADD CONTACT_STREET_NUMBER VARCHAR(12) NULL;
+
+    EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Contact Address Street Number' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'RCRA_HD_HANDLER', @level2type=N'COLUMN',@level2name=N'CONTACT_STREET_NUMBER';
+END
+
+--Added 11/15/2016 BGR
+IF (SELECT COUNT(1) FROM sys.columns where name = 'PCONTACT_STREET_NUMBER') = 0
+BEGIN
+    ALTER TABLE RCRA_HD_HANDLER
+    ADD PCONTACT_STREET_NUMBER VARCHAR(12) NULL;
+
+    EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Permit Contact Address Street Number' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'RCRA_HD_HANDLER', @level2type=N'COLUMN',@level2name=N'PCONTACT_STREET_NUMBER';
+END
+
 --Added element: StateDistrictCodeText - this element is used for publishing
 IF (SELECT COUNT(1) FROM sys.columns where name = 'STATE_DISTRICT_TEXT') = 0
 BEGIN
@@ -110,6 +128,15 @@ BEGIN
     ADD RECYCLING_IND CHAR(1) NULL;
 
     EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Indicates the facility has a recycling process which the product has levels of hazardous constituents that are not comparable to or unable to be compared to a legitimate product or intermediate but that the recycling is still legitimate' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'RCRA_HD_HANDLER', @level2type=N'COLUMN',@level2name=N'RECYCLING_IND';
+END
+
+--Added 11/15/2016 BGR, from RCRA v5.3
+IF (SELECT COUNT(1) FROM sys.columns where name = 'MAIL_ADDR_NUM_TXT') = 0
+BEGIN
+    ALTER TABLE RCRA_HD_OWNEROP
+    ADD MAIL_ADDR_NUM_TXT VARCHAR(12) NULL;
+
+    EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Owner/Operator Address Street Number' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'RCRA_HD_OWNEROP', @level2type=N'COLUMN',@level2name=N'MAIL_ADDR_NUM_TXT';
 END
 
 /* SQL Server

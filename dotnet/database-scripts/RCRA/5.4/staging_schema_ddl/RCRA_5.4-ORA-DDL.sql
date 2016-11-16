@@ -30,11 +30,11 @@ POSSIBILITY OF SUCH DAMAGE.
 */
 /*****************************************************************************************************************************   
  *
- *  Script Name:  RCRA_5.3-ORA-DDL.sql
+ *  Script Name:  RCRA_5.4-ORA-DDL.sql
  *
  *  Company:  Windsor Solutions, Inc.
  *  
- *  Purpose:  This script will build the database objects supporting the RCRA v5.3 flow
+ *  Purpose:  This script will build the database objects supporting the RCRA v5.4 flow
  *   
  *  Maintenance:
  *  
@@ -43,6 +43,7 @@ POSSIBILITY OF SUCH DAMAGE.
  *    Bill R          2/4/2016        Adapted v5.2 DDL script for new elements in v5.3
  *    Bill R          3/17/2016       Added 5.4 changes
  *    Bill R          4/11/2016       Adjust decimal data types to match schema
+ *    Bill R          11/15/2016      Add three missing address number fields from v5.3
  *
   ****************************************************************************************************************************   
  */
@@ -2054,6 +2055,7 @@ purge recyclebin;
 	"CONTACT_PHONE" VARCHAR2(15), 
 	"CONTACT_PHONE_EXT" VARCHAR2(6), 
 	"CONTACT_FAX" VARCHAR2(15), 
+    "CONTACT_STREET_NUMBER" VARCHAR2(12), 
 	"CONTACT_STREET1" VARCHAR2(50), 
 	"CONTACT_STREET2" VARCHAR2(50), 
 	"CONTACT_CITY" VARCHAR2(25), 
@@ -2069,6 +2071,7 @@ purge recyclebin;
 	"PCONTACT_PHONE" VARCHAR2(15), 
 	"PCONTACT_PHONE_EXT" VARCHAR2(6), 
 	"PCONTACT_FAX" VARCHAR2(15), 
+    "PCONTACT_STREET_NUMBER" VARCHAR2(12), 
 	"PCONTACT_STREET1" VARCHAR2(50), 
 	"PCONTACT_STREET2" VARCHAR2(50), 
 	"PCONTACT_CITY" VARCHAR2(25), 
@@ -2196,6 +2199,8 @@ purge recyclebin;
  
    COMMENT ON COLUMN "RCRA_HD_HANDLER"."CONTACT_FAX" IS 'Contact fax number (FaxNumberText)';
  
+   COMMENT ON COLUMN "RCRA_HD_HANDLER"."CONTACT_STREET_NUMBER" IS 'Contact Address Street Number';
+
    COMMENT ON COLUMN "RCRA_HD_HANDLER"."CONTACT_STREET1" IS 'Parent: Mailing address information. (MailingAddressText)';
  
    COMMENT ON COLUMN "RCRA_HD_HANDLER"."CONTACT_STREET2" IS 'Parent: Mailing address information. (SupplementalAddressText)';
@@ -2226,6 +2231,8 @@ purge recyclebin;
  
    COMMENT ON COLUMN "RCRA_HD_HANDLER"."PCONTACT_FAX" IS 'Contact fax number (FaxNumberText)';
  
+   COMMENT ON COLUMN "RCRA_HD_HANDLER"."PCONTACT_STREET_NUMBER" IS 'Permit Contact Address Street Number';
+
    COMMENT ON COLUMN "RCRA_HD_HANDLER"."PCONTACT_STREET1" IS 'Parent: Mailing address information. (MailingAddressText)';
  
    COMMENT ON COLUMN "RCRA_HD_HANDLER"."PCONTACT_STREET2" IS 'Parent: Mailing address information. (SupplementalAddressText)';
@@ -2429,6 +2436,7 @@ purge recyclebin;
 	"PHONE" VARCHAR2(15), 
 	"PHONE_EXT" VARCHAR2(6), 
 	"FAX" VARCHAR2(15), 
+    "MAIL_ADDR_NUM_TXT" VARCHAR2(12), 
 	"STREET1" VARCHAR2(30), 
 	"STREET2" VARCHAR2(30), 
 	"CITY" VARCHAR2(25), 
@@ -2474,6 +2482,8 @@ purge recyclebin;
  
    COMMENT ON COLUMN "RCRA_HD_OWNEROP"."FAX" IS 'Contact fax number (FaxNumberText)';
  
+   COMMENT ON COLUMN "RCRA_HD_OWNEROP"."MAIL_ADDR_NUM_TXT" IS 'Owner/Operator Address Street Number';
+
    COMMENT ON COLUMN "RCRA_HD_OWNEROP"."STREET1" IS 'Parent: Mailing address information. (MailingAddressText)';
  
    COMMENT ON COLUMN "RCRA_HD_OWNEROP"."STREET2" IS 'Parent: Mailing address information. (SupplementalAddressText)';

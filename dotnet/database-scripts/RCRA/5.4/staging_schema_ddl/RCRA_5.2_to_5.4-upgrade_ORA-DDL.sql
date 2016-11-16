@@ -33,7 +33,7 @@ POSSIBILITY OF SUCH DAMAGE.
  Oracle
  This script updates an existing RCRA v5.2 staging database to v5.4 
  Created 2/4/2016
- Last Updated: 4/11/2016
+ Last Updated: 11/15/2016
 */
 
 /* Added element: NonNotifierIndicatorText - this element is used for publishing */
@@ -205,6 +205,93 @@ EXCEPTION
        
       EXECUTE IMMEDIATE v_sql_statement;
       DBMS_OUTPUT.PUT_LINE( 'The column RCRA_HD_SEC_MATERIAL_ACTIVITY.LAND_BASED_UNIT_IND_TEXT was successfully added');
+       
+    END;
+    
+END;
+/
+/* Added element: ContactStreetNumber */
+DECLARE
+
+  v_object_ind NUMBER(01) := 0;
+  v_sql_statement VARCHAR2(4000) := 'ALTER TABLE RCRA_HD_HANDLER ADD (CONTACT_STREET_NUMBER VARCHAR2(12))';
+
+BEGIN 
+
+   SELECT 1
+     INTO v_object_ind
+     FROM all_tab_columns
+    WHERE table_name = 'RCRA_HD_HANDLER'
+      AND column_name = 'CONTACT_STREET_NUMBER';
+      
+      DBMS_OUTPUT.PUT_LINE( 'The column RCRA_HD_HANDLER.CONTACT_STREET_NUMBER was already added, schema alteration bypassed!');
+   
+EXCEPTION
+
+  WHEN NO_DATA_FOUND THEN  
+  
+    BEGIN
+       
+      EXECUTE IMMEDIATE v_sql_statement;
+      DBMS_OUTPUT.PUT_LINE( 'The column RCRA_HD_HANDLER.CONTACT_STREET_NUMBER was successfully added');
+       
+    END;
+    
+END;
+/
+/* Added element: PermitContactStreetNumber */
+DECLARE
+
+  v_object_ind NUMBER(01) := 0;
+  v_sql_statement VARCHAR2(4000) := 'ALTER TABLE RCRA_HD_HANDLER ADD (PCONTACT_STREET_NUMBER VARCHAR2(12))';
+
+BEGIN 
+
+   SELECT 1
+     INTO v_object_ind
+     FROM all_tab_columns
+    WHERE table_name = 'RCRA_HD_HANDLER'
+      AND column_name = 'PCONTACT_STREET_NUMBER';
+      
+      DBMS_OUTPUT.PUT_LINE( 'The column RCRA_HD_HANDLER.PCONTACT_STREET_NUMBER was already added, schema alteration bypassed!');
+   
+EXCEPTION
+
+  WHEN NO_DATA_FOUND THEN  
+  
+    BEGIN
+       
+      EXECUTE IMMEDIATE v_sql_statement;
+      DBMS_OUTPUT.PUT_LINE( 'The column RCRA_HD_HANDLER.PCONTACT_STREET_NUMBER was successfully added');
+       
+    END;
+    
+END;
+/
+/* Added element: RCRA_HD_OWNEROP.MAIL_ADDR_NUM_TXT */
+DECLARE
+
+  v_object_ind NUMBER(01) := 0;
+  v_sql_statement VARCHAR2(4000) := 'ALTER TABLE RCRA_HD_OWNEROP ADD (MAIL_ADDR_NUM_TXT VARCHAR2(12))';
+
+BEGIN 
+
+   SELECT 1
+     INTO v_object_ind
+     FROM all_tab_columns
+    WHERE table_name = 'RCRA_HD_OWNEROP'
+      AND column_name = 'MAIL_ADDR_NUM_TXT';
+      
+      DBMS_OUTPUT.PUT_LINE( 'The column RCRA_HD_OWNEROP.MAIL_ADDR_NUM_TXT was already added, schema alteration bypassed!');
+   
+EXCEPTION
+
+  WHEN NO_DATA_FOUND THEN  
+  
+    BEGIN
+       
+      EXECUTE IMMEDIATE v_sql_statement;
+      DBMS_OUTPUT.PUT_LINE( 'The column RCRA_HD_OWNEROP.MAIL_ADDR_NUM_TXT was successfully added');
        
     END;
     

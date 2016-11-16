@@ -30,11 +30,11 @@ POSSIBILITY OF SUCH DAMAGE.
 */
 /*****************************************************************************************************************************   
  *
- *  Script Name:  RCRA_5.3-SQL-DDL.sql
+ *  Script Name:  RCRA_5.4-SQL-DDL.sql
  *
  *  Company:  Windsor Solutions, Inc.
  *  
- *  Purpose:  This script will build the database objects supporting the RCRA v5.3 flow
+ *  Purpose:  This script will build the database objects supporting the RCRA v5.4 flow
  *   
  *  Maintenance:
  *  
@@ -43,6 +43,7 @@ POSSIBILITY OF SUCH DAMAGE.
  *    Bill R          2/4/2016        Adapted v5.2 DDL script for new elements in v5.3
  *    Bill R          3/17/2016       Added 5.4 changes
  *    Bill R          4/11/2016       Adjust decimal data types to match schema
+ *    Bill R          11/15/2016      Add three missing address number fields from v5.3
  *
   ****************************************************************************************************************************   
  */
@@ -681,6 +682,7 @@ CREATE TABLE [dbo].[RCRA_HD_HANDLER](
 	[CONTACT_PHONE] [varchar](15) NULL,
 	[CONTACT_PHONE_EXT] [varchar](6) NULL,
 	[CONTACT_FAX] [varchar](15) NULL,
+    [CONTACT_STREET_NUMBER] [varchar](12) NULL,
 	[CONTACT_STREET1] [varchar](30) NULL,
 	[CONTACT_STREET2] [varchar](30) NULL,
 	[CONTACT_CITY] [varchar](25) NULL,
@@ -696,6 +698,7 @@ CREATE TABLE [dbo].[RCRA_HD_HANDLER](
 	[PCONTACT_PHONE] [varchar](15) NULL,
 	[PCONTACT_PHONE_EXT] [varchar](6) NULL,
 	[PCONTACT_FAX] [varchar](15) NULL,
+    [PCONTACT_STREET_NUMBER] [varchar](12) NULL,
 	[PCONTACT_STREET1] [varchar](30) NULL,
 	[PCONTACT_STREET2] [varchar](30) NULL,
 	[PCONTACT_CITY] [varchar](25) NULL,
@@ -833,6 +836,8 @@ EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Telephone numb
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Contact fax number (FaxNumberText)' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'RCRA_HD_HANDLER', @level2type=N'COLUMN',@level2name=N'CONTACT_FAX'
 GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Contact Address Street Number' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'RCRA_HD_HANDLER', @level2type=N'COLUMN',@level2name=N'CONTACT_STREET_NUMBER';
+GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Parent: Mailing address information. (MailingAddressText)' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'RCRA_HD_HANDLER', @level2type=N'COLUMN',@level2name=N'CONTACT_STREET1'
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Parent: Mailing address information. (SupplementalAddressText)' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'RCRA_HD_HANDLER', @level2type=N'COLUMN',@level2name=N'CONTACT_STREET2'
@@ -862,6 +867,8 @@ GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Telephone number extension (PhoneExtensionText)' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'RCRA_HD_HANDLER', @level2type=N'COLUMN',@level2name=N'PCONTACT_PHONE_EXT'
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Contact fax number (FaxNumberText)' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'RCRA_HD_HANDLER', @level2type=N'COLUMN',@level2name=N'PCONTACT_FAX'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Permit Contact Address Street Number' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'RCRA_HD_HANDLER', @level2type=N'COLUMN',@level2name=N'PCONTACT_STREET_NUMBER';
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Parent: Mailing address information. (MailingAddressText)' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'RCRA_HD_HANDLER', @level2type=N'COLUMN',@level2name=N'PCONTACT_STREET1'
 GO
@@ -2689,6 +2696,7 @@ CREATE TABLE [dbo].[RCRA_HD_OWNEROP](
 	[PHONE] [varchar](15) NULL,
 	[PHONE_EXT] [varchar](6) NULL,
 	[FAX] [varchar](15) NULL,
+    [MAIL_ADDR_NUM_TXT] [varchar](12) NULL,
 	[STREET1] [varchar](30) NULL,
 	[STREET2] [varchar](30) NULL,
 	[CITY] [varchar](25) NULL,
@@ -2743,6 +2751,8 @@ GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Telephone number extension (PhoneExtensionText)' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'RCRA_HD_OWNEROP', @level2type=N'COLUMN',@level2name=N'PHONE_EXT'
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Contact fax number (FaxNumberText)' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'RCRA_HD_OWNEROP', @level2type=N'COLUMN',@level2name=N'FAX'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Owner/Operator Address Street Number' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'RCRA_HD_OWNEROP', @level2type=N'COLUMN',@level2name=N'MAIL_ADDR_NUM_TXT';
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Parent: Mailing address information. (MailingAddressText)' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'RCRA_HD_OWNEROP', @level2type=N'COLUMN',@level2name=N'STREET1'
 GO
