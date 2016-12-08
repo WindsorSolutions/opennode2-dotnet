@@ -1360,6 +1360,11 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
         [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
         [System.ComponentModel.DescriptionAttribute("Last name of a person.")]
         public string LastName;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
+        [System.ComponentModel.DescriptionAttribute("Email address data.")]
+        public string CertificationEmailText;
     }
 
     /// <remarks/>
@@ -2117,133 +2122,143 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_52
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
+        [System.ComponentModel.DescriptionAttribute(@"Notes regarding Handler Part-A submissions.")]
+        public string NatureOfBusinessText;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 12)]
         [System.ComponentModel.DescriptionAttribute(@"Code indicating that the handler, whether public or private, currently accepts hazardous waste from another site (site identified by a different EPA ID). If information is also available on the specific processes and wastes which are accepted, it is indicated by a flag at the process unit level (Process Unit Group Commercial Status).")]
         public string OffsiteWasteReceiptCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 12)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 13)]
         [System.ComponentModel.DescriptionAttribute("Code indicating the reason why the handler is not accessible for normal RCRA trac" +
             "king and processing (previously called Bankrupt Indicator).")]
         public string AccessibilityCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 13)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 14)]
         [System.ComponentModel.DescriptionAttribute(@"Descriptive text describing reason facility is not accessible(Data publishing only).")]
         public string AccessibilityCodeText;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 14)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 15)]
         [System.ComponentModel.DescriptionAttribute("Indicates the agency that defines the county code.")]
         public string CountyCodeOwner;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 15)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 16)]
         [System.ComponentModel.DescriptionAttribute("The Federal Information Processing Standard (FIPS) code for the county in which t" +
             "he facility is located (Ref: FIPS Publication, 6-3, \"Counties and County Equival" +
             "ents of the States of the United States\").")]
         public string CountyCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 16)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 17)]
         [System.ComponentModel.DescriptionAttribute("Name or number assigned by the implementing agency to identify a corrective actio" +
             "n area.")]
         public string CountyName;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 17)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 18)]
         [System.ComponentModel.DescriptionAttribute("Notes regarding the Handler (these are public notes; will be available via all services).")]
         public string HandlerSupplementalInformationText;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 18)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 19)]
         [System.ComponentModel.DescriptionAttribute("Notes regarding the Handler (these are internal notes; will be available via authenticated services).")]
         public string HandlerInternalSupplementalInformationText;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 19)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 20)]
+        [System.ComponentModel.DescriptionAttribute("Notes regarding the Handler (these are internal notes; will be available via authenticated services).")]
+        public string ShortTermSupplementalInformationText;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 21)]
         [System.ComponentModel.DescriptionAttribute("Location address information.")]
         public LocationAddressDataType LocationAddress;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 20)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 22)]
         [System.ComponentModel.DescriptionAttribute("Mailing address information.")]
         public MailingAddressDataType MailingAddress;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 21)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 23)]
         [System.ComponentModel.DescriptionAttribute("Contact address information for the facility owner/operator.")]
         public ContactAddressDataType ContactAddress;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 22)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 24)]
         [System.ComponentModel.DescriptionAttribute("Contact address information for the facility owner/operator.")]
         public ContactAddressDataType PermitContactAddress;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 23)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 25)]
         [System.ComponentModel.DescriptionAttribute("Used Oil codes.")]
         public UsedOilDataType UsedOil;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 24)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 26)]
         [System.ComponentModel.DescriptionAttribute("State and EPA hazardous waste activity codes.")]
         public SiteWasteActivityDataType WasteActivitySite;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 25)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 27)]
         [System.ComponentModel.DescriptionAttribute("State code indicating that the handler is engaged in the generation of hazardous " +
             "waste.")]
         public WasteGeneratorDataType StateWasteGenerator;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 26)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 28)]
         [System.ComponentModel.DescriptionAttribute("Federal code indicating that the handler is engaged in the generation of hazardou" +
             "s waste.")]
         public WasteGeneratorDataType FederalWasteGenerator;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 27)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 29)]
         [System.ComponentModel.DescriptionAttribute("Types of Laboratory Waste that the Handler has opted to manage under SubPart K")]
         public LaboratoryHazardousWasteDataType LaboratoryHazardousWaste;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 28)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 30)]
         [System.ComponentModel.DescriptionAttribute("Description of the Hazardous Secondary Material managed by the Handler")]
         public HazardousSecondaryMaterialDataType HazardousSecondaryMaterial;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Certification", Order = 29)]
+        [System.Xml.Serialization.XmlElementAttribute("Certification", Order = 31)]
         [System.ComponentModel.DescriptionAttribute("Certification information for the person who certified report to the authorizing " +
             "agency.")]
         public CertificationDataType[] Certification;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("NAICSIdentity", Order = 30)]
+        [System.Xml.Serialization.XmlElementAttribute("NAICSIdentity", Order = 32)]
         [System.ComponentModel.DescriptionAttribute("North American Industry Classification Status codes reported for the handler.")]
         public NAICSIdentityDataType[] NAICSIdentity;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("FacilityOwnerOperator", Order = 31)]
+        [System.Xml.Serialization.XmlElementAttribute("FacilityOwnerOperator", Order = 33)]
         [System.ComponentModel.DescriptionAttribute("Handler owner and operator information.")]
         public FacilityOwnerOperatorDataType[] FacilityOwnerOperator;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("EnvironmentalPermit", Order = 32)]
+        [System.Xml.Serialization.XmlElementAttribute("EnvironmentalPermit", Order = 34)]
         [System.ComponentModel.DescriptionAttribute("Information about environmental permits issued to the handler.")]
         public EnvironmentalPermitDataType[] EnvironmentalPermit;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("StateActivity", Order = 33)]
+        [System.Xml.Serialization.XmlElementAttribute("StateActivity", Order = 35)]
         [System.ComponentModel.DescriptionAttribute("State waste activity of the handler.")]
         public StateActivityDataType[] StateActivity;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("HandlerUniversalWaste", Order = 34)]
+        [System.Xml.Serialization.XmlElementAttribute("HandlerUniversalWaste", Order = 36)]
         [System.ComponentModel.DescriptionAttribute("Information about universal waste generated by the handler.")]
         public UniversalWasteActivityDataType[] HandlerUniversalWaste;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("HandlerWasteCodeDetails", Order = 35)]
+        [System.Xml.Serialization.XmlElementAttribute("HandlerWasteCodeDetails", Order = 37)]
         [System.ComponentModel.DescriptionAttribute("Hazardous waste codes describing the handler\'s hazardous waste streams.")]
         public HandlerWasteCodeDataType[] HandlerWasteCodeDetails;
     }
