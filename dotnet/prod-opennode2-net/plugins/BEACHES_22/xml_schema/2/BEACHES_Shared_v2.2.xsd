@@ -231,8 +231,9 @@
 			<xsd:enumeration value="ENTEROCOCCI"/>
 			<xsd:enumeration value="FECAL"/>
 			<xsd:enumeration value="TOTAL"/>
-			<xsd:enumeration value="E.COLI"/>
-		</xsd:restriction>
+			<xsd:enumeration value="ECOLI"/>
+      <xsd:enumeration value="OTHER"/>
+    </xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="WaterTypeNameDataType">
 		<xsd:restriction base="xsd:string">

@@ -800,8 +800,10 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_22
         TOTAL,
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlEnumAttribute("E.COLI")]
         ECOLI,
+
+        /// <remarks/>
+        OTHER,
     }
 
     /// <remarks/>
