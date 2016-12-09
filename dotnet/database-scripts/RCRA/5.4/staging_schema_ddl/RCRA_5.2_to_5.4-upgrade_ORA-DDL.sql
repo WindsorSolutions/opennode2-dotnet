@@ -33,7 +33,7 @@ POSSIBILITY OF SUCH DAMAGE.
  Oracle
  This script updates an existing RCRA v5.2 staging database to v5.4 
  Created 2/4/2016
- Last Updated: 11/15/2016
+ Last Updated: 12/8/2016
 */
 
 /* Added element: NonNotifierIndicatorText - this element is used for publishing */
@@ -1444,3 +1444,190 @@ EXCEPTION
     END;
     
 END;  
+/
+--RCRA_v5.4
+--Added optional element: CertificationEmailText to capture email (added 12/8/2016)
+DECLARE
+
+  v_object_ind NUMBER(01) := 0;
+  v_sql_statement VARCHAR2(4000) := 'ALTER TABLE RCRA_HD_CERTIFICATION ADD (CERT_EMAIL_TEXT VARCHAR2(80))';
+
+BEGIN 
+
+   SELECT 1
+     INTO v_object_ind
+     FROM all_tab_columns
+    WHERE table_name = 'RCRA_HD_CERTIFICATION'
+      AND column_name = 'CERT_EMAIL_TEXT';
+      
+      DBMS_OUTPUT.PUT_LINE( 'The column RCRA_HD_CERTIFICATION.CERT_EMAIL_TEXT was already added, schema alteration bypassed!');
+   
+EXCEPTION
+
+  WHEN NO_DATA_FOUND THEN  
+  
+    BEGIN
+       
+      EXECUTE IMMEDIATE v_sql_statement;
+      DBMS_OUTPUT.PUT_LINE( 'The column RCRA_HD_HANDLER.CERT_EMAIL_TEXT was successfully added');
+       
+    END;
+    
+END;
+/
+--Shortened EmailAddressTextDataType from 240 to 80 align with RCRAInfo database (1 of 3) (added 12/8/2016)
+DECLARE
+
+  v_object_ind NUMBER(01) := 0;
+  v_sql_statement VARCHAR2(4000);
+
+BEGIN 
+
+   SELECT 1
+     INTO v_object_ind
+     FROM all_tab_columns
+    WHERE table_name = 'RCRA_HD_OWNEROP'
+      AND column_name = 'EMAIL_ADDRESS'
+      AND data_type = 'VARCHAR2'
+      AND data_length <> 80;
+      
+      v_sql_statement := 'ALTER TABLE RCRA_HD_OWNEROP MODIFY EMAIL_ADDRESS VARCHAR2(80)';
+      EXECUTE IMMEDIATE v_sql_statement;   
+      DBMS_OUTPUT.PUT_LINE( 'The column RCRA_HD_OWNEROP.EMAIL_ADDRESS was successfully modified to VARCHAR2(80).');
+   
+EXCEPTION
+
+  WHEN NO_DATA_FOUND THEN  
+  
+    BEGIN
+       
+      DBMS_OUTPUT.PUT_LINE( 'The column RCRA_HD_OTHER_ID.EMAIL_ADDRESS was already VARCHAR2(80), schema alteration bypassed!');
+       
+    END;
+    
+END;
+/
+--Shortened EmailAddressTextDataType from 240 to 80 align with RCRAInfo database (2 of 3) (added 12/8/2016)
+DECLARE
+
+  v_object_ind NUMBER(01) := 0;
+  v_sql_statement VARCHAR2(4000);
+
+BEGIN 
+
+   SELECT 1
+     INTO v_object_ind
+     FROM all_tab_columns
+    WHERE table_name = 'RCRA_HD_HANDLER'
+      AND column_name = 'CONTACT_EMAIL_ADDRESS'
+      AND data_type = 'VARCHAR2'
+      AND data_length <> 80;
+      
+      v_sql_statement := 'ALTER TABLE RCRA_HD_HANDLER MODIFY CONTACT_EMAIL_ADDRESS VARCHAR2(80)';
+      EXECUTE IMMEDIATE v_sql_statement;   
+      DBMS_OUTPUT.PUT_LINE( 'The column RCRA_HD_HANDLER.CONTACT_EMAIL_ADDRESS was successfully modified to VARCHAR2(80).');
+   
+EXCEPTION
+
+  WHEN NO_DATA_FOUND THEN  
+  
+    BEGIN
+       
+      DBMS_OUTPUT.PUT_LINE( 'The column RCRA_HD_HANDLER.CONTACT_EMAIL_ADDRESS was already VARCHAR2(80), schema alteration bypassed!');
+       
+    END;
+    
+END;
+/
+--Shortened EmailAddressTextDataType from 240 to 80 align with RCRAInfo database (3 of 3) (added 12/8/2016)
+DECLARE
+
+  v_object_ind NUMBER(01) := 0;
+  v_sql_statement VARCHAR2(4000);
+
+BEGIN 
+
+   SELECT 1
+     INTO v_object_ind
+     FROM all_tab_columns
+    WHERE table_name = 'RCRA_HD_HANDLER'
+      AND column_name = 'PCONTACT_EMAIL_ADDRESS'
+      AND data_type = 'VARCHAR2'
+      AND data_length <> 80;
+      
+      v_sql_statement := 'ALTER TABLE RCRA_HD_HANDLER MODIFY PCONTACT_EMAIL_ADDRESS VARCHAR2(80)';
+      EXECUTE IMMEDIATE v_sql_statement;   
+      DBMS_OUTPUT.PUT_LINE( 'The column RCRA_HD_HANDLER.PCONTACT_EMAIL_ADDRESS was successfully modified to VARCHAR2(80).');
+   
+EXCEPTION
+
+  WHEN NO_DATA_FOUND THEN  
+  
+    BEGIN
+       
+      DBMS_OUTPUT.PUT_LINE( 'The column RCRA_HD_HANDLER.PCONTACT_EMAIL_ADDRESS was already VARCHAR2(80), schema alteration bypassed!');
+       
+    END;
+    
+END;
+/
+--RCRA_v5.4
+--Added optional element: ShortTermSupplementalInformationText to capture notes (added 12/8/2016)
+DECLARE
+
+  v_object_ind NUMBER(01) := 0;
+  v_sql_statement VARCHAR2(4000) := 'ALTER TABLE RCRA_HD_HANDLER ADD (SHORT_TERM_INTRNL_NOTES VARCHAR2(4000))';
+
+BEGIN 
+
+   SELECT 1
+     INTO v_object_ind
+     FROM all_tab_columns
+    WHERE table_name = 'RCRA_HD_HANDLER'
+      AND column_name = 'SHORT_TERM_INTRNL_NOTES';
+      
+      DBMS_OUTPUT.PUT_LINE( 'The column RCRA_HD_HANDLER.SHORT_TERM_INTRNL_NOTES was already added, schema alteration bypassed!');
+   
+EXCEPTION
+
+  WHEN NO_DATA_FOUND THEN  
+  
+    BEGIN
+       
+      EXECUTE IMMEDIATE v_sql_statement;
+      DBMS_OUTPUT.PUT_LINE( 'The column RCRA_HD_HANDLER.SHORT_TERM_INTRNL_NOTES was successfully added');
+       
+    END;
+    
+END;
+/
+--RCRA_v5.4
+--Added optional element: NatureOfBusinessText to capture Part A notes (added 12/8/2016)
+DECLARE
+
+  v_object_ind NUMBER(01) := 0;
+  v_sql_statement VARCHAR2(4000) := 'ALTER TABLE RCRA_HD_HANDLER ADD (NATURE_OF_BUSINESS_TEXT VARCHAR2(4000))';
+
+BEGIN 
+
+   SELECT 1
+     INTO v_object_ind
+     FROM all_tab_columns
+    WHERE table_name = 'RCRA_HD_HANDLER'
+      AND column_name = 'NATURE_OF_BUSINESS_TEXT';
+      
+      DBMS_OUTPUT.PUT_LINE( 'The column RCRA_HD_HANDLER.NATURE_OF_BUSINESS_TEXT was already added, schema alteration bypassed!');
+   
+EXCEPTION
+
+  WHEN NO_DATA_FOUND THEN  
+  
+    BEGIN
+       
+      EXECUTE IMMEDIATE v_sql_statement;
+      DBMS_OUTPUT.PUT_LINE( 'The column RCRA_HD_HANDLER.NATURE_OF_BUSINESS_TEXT was successfully added');
+       
+    END;
+    
+END;
+/

@@ -33,7 +33,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
  This script updates an existing RCRA v5.2 staging database to v5.4.
  Created: 2/4/2016
- Last Updated: 11/15/2016
+ Last Updated: 12/8/2016
  
 */
 
@@ -222,6 +222,50 @@ END
 
     ALTER TABLE RCRA_HD_OTHER_ID
     ALTER COLUMN NOTES VARCHAR(4000) NULL;
+
+--RCRA_v5.4
+--Added optional element: CertificationEmailText to capture email (added 12/8/2016)
+
+IF (SELECT COUNT(1) FROM sys.columns where name = 'CERT_EMAIL_TEXT') = 0
+BEGIN
+    ALTER TABLE RCRA_HD_CERTIFICATION
+    ADD CERT_EMAIL_TEXT VARCHAR(80) NULL;
+
+    EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Schema element: CertificationEmailText' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'RCRA_HD_CERTIFICATION', @level2type=N'COLUMN',@level2name=N'CERT_EMAIL_TEXT';
+END
+--Shortened EmailAddressTextDataType from 240 to 80 align with RCRAInfo database (1 of 3) (added 12/8/2016)
+
+    ALTER TABLE RCRA_HD_OWNEROP
+    ALTER COLUMN EMAIL_ADDRESS VARCHAR(80) NULL;
+
+--Shortened EmailAddressTextDataType from 240 to 80 align with RCRAInfo database (2 of 3) (added 12/8/2016)
+
+    ALTER TABLE RCRA_HD_HANDLER
+    ALTER COLUMN CONTACT_EMAIL_ADDRESS VARCHAR(80) NULL;
+
+--Shortened EmailAddressTextDataType from 240 to 80 align with RCRAInfo database (3 of 3) (added 12/8/2016)
+
+    ALTER TABLE RCRA_HD_HANDLER
+    ALTER COLUMN PCONTACT_EMAIL_ADDRESS VARCHAR(80) NULL;
+
+--Added optional element: ShortTermSupplementalInformationText to capture notes (added 12/8/2016)
+
+IF (SELECT COUNT(1) FROM sys.columns where name = 'SHORT_TERM_INTRNL_NOTES') = 0
+BEGIN
+    ALTER TABLE RCRA_HD_HANDLER
+    ADD SHORT_TERM_INTRNL_NOTES VARCHAR(4000) NULL;
+
+    EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Schema element: ShortTermSupplementalInformationText' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'RCRA_HD_HANDLER', @level2type=N'COLUMN',@level2name=N'SHORT_TERM_INTRNL_NOTES';
+END
+
+--Added optional element: NatureOfBusinessText to capture Part A notes (added 12/8/2016)
+IF (SELECT COUNT(1) FROM sys.columns where name = 'NATURE_OF_BUSINESS_TEXT') = 0
+BEGIN
+    ALTER TABLE RCRA_HD_HANDLER
+    ADD NATURE_OF_BUSINESS_TEXT VARCHAR(4000) NULL;
+
+    EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Notes regarding Handler Part-A submissions. (NatureOfBusinessText)' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'RCRA_HD_HANDLER', @level2type=N'COLUMN',@level2name=N'NATURE_OF_BUSINESS_TEXT';
+END
 
 --Other Fixes to staging tables unrelated to EPA schema change
 

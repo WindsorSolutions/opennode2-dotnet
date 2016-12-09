@@ -678,7 +678,7 @@ CREATE TABLE [dbo].[RCRA_HD_HANDLER](
 	[CONTACT_LAST_NAME] [varchar](38) NULL,
 	[CONTACT_ORG_NAME] [varchar](80) NULL,
 	[CONTACT_TITLE] [varchar](80) NULL,
-	[CONTACT_EMAIL_ADDRESS] [varchar](240) NULL,
+	[CONTACT_EMAIL_ADDRESS] [varchar](80) NULL,
 	[CONTACT_PHONE] [varchar](15) NULL,
 	[CONTACT_PHONE_EXT] [varchar](6) NULL,
 	[CONTACT_FAX] [varchar](15) NULL,
@@ -694,7 +694,7 @@ CREATE TABLE [dbo].[RCRA_HD_HANDLER](
 	[PCONTACT_LAST_NAME] [varchar](38) NULL,
 	[PCONTACT_ORG_NAME] [varchar](80) NULL,
 	[PCONTACT_TITLE] [varchar](80) NULL,
-	[PCONTACT_EMAIL_ADDRESS] [varchar](240) NULL,
+	[PCONTACT_EMAIL_ADDRESS] [varchar](80) NULL,
 	[PCONTACT_PHONE] [varchar](15) NULL,
 	[PCONTACT_PHONE_EXT] [varchar](6) NULL,
 	[PCONTACT_FAX] [varchar](15) NULL,
@@ -746,7 +746,9 @@ CREATE TABLE [dbo].[RCRA_HD_HANDLER](
     [ACCESSIBILITY_TEXT] [varchar](255) NULL,
     [STATE_DISTRICT_TEXT] [varchar](255) NULL,
     --Added for v5.4
-    [INTRNL_NOTES] [varchar](4000) NULL
+    [INTRNL_NOTES] [varchar](4000) NULL,
+    [SHORT_TERM_INTRNL_NOTES] [varchar](4000) NULL,
+    [NATURE_OF_BUSINESS_TEXT] [varchar](4000) NULL
  CONSTRAINT [PK_HD_HANDLER] PRIMARY KEY CLUSTERED 
 (
 	[HD_HANDLER_ID] ASC
@@ -961,6 +963,10 @@ GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Descriptive text describing reason facility is not accessible (Data publishing only)' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'RCRA_HD_HANDLER', @level2type=N'COLUMN',@level2name=N'ACCESSIBILITY_TEXT'
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Descriptive text describing the code indicating the state-designated legislative district(s) in which the site is located (Data publishing only)' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'RCRA_HD_HANDLER', @level2type=N'COLUMN',@level2name=N'STATE_DISTRICT_TEXT'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'(ShortTermSupplementalInformationText)' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'RCRA_HD_HANDLER', @level2type=N'COLUMN',@level2name=N'SHORT_TERM_INTRNL_NOTES'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Notes regarding Handler Part-A submissions. (NatureOfBusinessText)' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'RCRA_HD_HANDLER', @level2type=N'COLUMN',@level2name=N'NATURE_OF_BUSINESS_TEXT'
 GO
 /****** Object:  Table [dbo].[RCRA_CA_AREA]    Script Date: 10/06/2010 21:15:36 ******/
 SET ANSI_NULLS ON
@@ -2351,6 +2357,7 @@ CREATE TABLE [dbo].[RCRA_HD_CERTIFICATION](
 	[CERT_FIRST_NAME] [varchar](38) NULL,
 	[CERT_MIDDLE_INITIAL] [char](1) NULL,
 	[CERT_LAST_NAME] [varchar](38) NULL,
+    [CERT_EMAIL_TEXT] [varchar](80) NULL
  CONSTRAINT [PK_HD_CERTIFICATIO] PRIMARY KEY CLUSTERED 
 (
 	[HD_CERTIFICATION_ID] ASC
@@ -2383,6 +2390,8 @@ GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Last name of a person. (LastName)' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'RCRA_HD_CERTIFICATION', @level2type=N'COLUMN',@level2name=N'CERT_LAST_NAME'
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Schema element: CertificationDataType' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'RCRA_HD_CERTIFICATION'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Schema element: CertificationEmailText' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'RCRA_HD_CERTIFICATION', @level2type=N'COLUMN',@level2name=N'CERT_EMAIL_TEXT';
 GO
 /****** Object:  Table [dbo].[RCRA_HD_NAICS]    Script Date: 10/06/2010 21:15:36 ******/
 SET ANSI_NULLS ON
@@ -2692,7 +2701,7 @@ CREATE TABLE [dbo].[RCRA_HD_OWNEROP](
 	[LAST_NAME] [varchar](38) NULL,
 	[ORG_NAME] [varchar](80) NULL,
 	[TITLE] [varchar](80) NULL,
-	[EMAIL_ADDRESS] [varchar](240) NULL,
+	[EMAIL_ADDRESS] [varchar](80) NULL,
 	[PHONE] [varchar](15) NULL,
 	[PHONE_EXT] [varchar](6) NULL,
 	[FAX] [varchar](15) NULL,

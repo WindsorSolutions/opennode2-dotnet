@@ -40,7 +40,7 @@ using Windsor.Node2008.WNOSPlugin;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("RCRA 5.2 Plugin")]
+[assembly: AssemblyTitle("RCRA 5.4 Plugin")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany(AssemblyInfo.cAssemblyCompany)]
@@ -69,6 +69,6 @@ using Windsor.Node2008.WNOSPlugin;
 [assembly: AssemblyVersion(AssemblyInfo.cAssemblyVersion)]
 [assembly: AssemblyFileVersion(AssemblyInfo.cAssemblyFileVersion)]
 [assembly: PluginDefaultFlowAttribute("RCRA")]
-[assembly: PluginPackageNameAttribute("RCRA 5.2")]
+[assembly: PluginPackageNameAttribute("RCRA 5.4")]
 [assembly: PluginSqlDdlFilePaths(@"RCRA\5.4\staging_schema_ddl\RCRA_5.4-SQL-DDL.sql,RCRA\5.4\staging_schema_ddl\RCRA_5.4-ORA-DDL.sql,RCRA\5.4\staging_schema_ddl\RCRA_5.2_to_5.4-upgrade_ORA-DDL.sql,RCRA\5.4\staging_schema_ddl\RCRA_5.2_to_5.4-upgrade_SQL-DDL.sql")]
 [assembly: PublicPluginAttribute()]
