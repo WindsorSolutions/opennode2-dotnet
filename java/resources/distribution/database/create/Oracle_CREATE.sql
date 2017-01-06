@@ -51,6 +51,7 @@ CREATE TABLE NConfig (
 	Id         	varchar2(255) NOT NULL,
 	ConfigValue	varchar2(4000) NOT NULL,
 	Description	varchar2(500) NULL,
+	Name        varchar2(255) NULL, -- added in 2.20
 	ModifiedBy 	varchar2(50) NOT NULL,
 	ModifiedOn 	date NOT NULL,
 	IsEditable 	char(1) NOT NULL 

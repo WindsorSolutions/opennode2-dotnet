@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:uic="http://www.exchangenetwork.net/schema/uic/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/uic/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+	<xsd:include schemaLocation="UIC_Constituent_v2.0.xsd"/>
+	<xsd:include schemaLocation="UIC_SimpleContent_v2.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>UIC waste (Table 17): UIC_Waste_v2.0.xsd
+		Current Version Available At :
+		Description : Schema for the Resource Conservation and Recovery Act (RCRA) waste code and generalized waste source.
+		Application : UIC data submission 
+		Developed by : Environmental Protection Agency, Lockheed Martin, CGI Federal
+		Point of Contact : Carl Reeverts, Trang Le (EPA/UIC), Lauren Hall (CGI Federal)	
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:annotation>
+		<xsd:documentation>Waste complex component</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="WasteDetail" type="uic:WasteDetailType">
+		<xsd:annotation>
+			<xsd:documentation>Container for Waste information.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:annotation>
+		<xsd:documentation>Waste complex type</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="WasteDetailType">
+		<xsd:annotation>
+			<xsd:documentation>Container for Waste information type definition.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="uic:WasteIdentifier"/>
+			<xsd:element ref="uic:WasteCode" minOccurs="0"/>
+			<xsd:element ref="uic:WasteStreamClassificationCode" minOccurs="0"/>
+			<xsd:element ref="uic:WasteWellIdentifier"/>
+			<xsd:element ref="uic:ConstituentDetail" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:annotation>
+		<xsd:documentation>Waste data elements</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="WasteIdentifier" type="uic:UICIdentifierType">
+		<xsd:annotation>
+			<xsd:documentation>Unique identification for waste records - The first four characters are primacy agency code (appendix D) and followed by 8 additional characters identifying unique waste (e.g. WYEQ00000543, …).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="WasteCode" type="uic:UICGenericStringType">
+		<xsd:annotation>
+			<xsd:documentation>The RCRA or state waste code included when the constituent has been assigned a code.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="WasteStreamClassificationCode" type="uic:UICGenericStringType">
+		<xsd:annotation>
+			<xsd:documentation>A classification of the waste stream that contains various constituents and waste codes in various concentrations.  These are liquids waste approved to go down the well.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="WasteWellIdentifier" type="uic:UICIdentifierType">
+		<xsd:annotation>
+			<xsd:documentation>Unique identification of an injection well.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

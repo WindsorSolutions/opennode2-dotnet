@@ -302,8 +302,8 @@ public class ConfigServiceImpl extends BaseService implements ConfigService,
             throw new WinNodeException("ConfigItem argument not set.");
         }
 
-        if (StringUtils.contains(instance.getId(), " ")) {
-            throw new WinNodeException("ConfigItem Id cannot contain spaces.");
+        if (StringUtils.contains(instance.getName(), " ")) {
+            throw new WinNodeException("ConfigItem name cannot contain spaces.");
         }
 
         // Make sure the user performing that action has admin rights

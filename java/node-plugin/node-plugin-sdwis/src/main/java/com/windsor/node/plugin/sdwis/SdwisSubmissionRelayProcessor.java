@@ -294,7 +294,7 @@ public class SdwisSubmissionRelayProcessor extends BaseWnosPlugin {
             partner.setVersion(EndpointVersionType.EN11);
         }
 
-        debug("Submission target endpoint version: " + partner.getVersion());
+        debug("Submission datatarget endpoint version: " + partner.getVersion());
 
         client = getClientFactory().makeAndConfigure(partner, credentials);
         return client;

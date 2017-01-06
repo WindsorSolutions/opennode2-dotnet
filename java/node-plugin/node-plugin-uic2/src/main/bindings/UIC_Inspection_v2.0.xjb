@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	jaxb:extensionBindingPrefixes="hj orm" schemaLocation="../xsd/0/UIC_Inspection_v2.0.xsd">
+
+	<jaxb:bindings node="//xsd:element[@ref='uic:CorrectionDetail']">
+		<hj:one-to-many>
+			<orm:join-column name="WELL_INSPECTION_ID" />
+		</hj:one-to-many>
+	</jaxb:bindings>
+
+	<jaxb:bindings
+		node="//xsd:complexType[@name='FacilityInspectionDetailType']">
+		<hj:entity>
+			<orm:table name="UIC_FACILITY_INSPECTION" />
+		</hj:entity>
+		<hj:generated-id name="Dbid" transient="true">
+			<orm:column name="FACILITY_INSPECTION_ID" />
+		</hj:generated-id>
+	</jaxb:bindings>
+
+	<jaxb:bindings node="//xsd:complexType[@name='WellInspectionDetailType']">
+		<hj:entity>
+			<orm:table name="UIC_WELL_INSPECTION" />
+		</hj:entity>
+		<hj:generated-id name="Dbid" transient="true">
+			<orm:column name="WELL_INSPECTION_ID" />
+		</hj:generated-id>
+	</jaxb:bindings>
+
+	<jaxb:bindings node="//xsd:element[@ref='uic:InspectionICISMOAName']">
+		<hj:basic>
+			<orm:column name="INSP_ICIS_MOA_NAME" />
+		</hj:basic>
+	</jaxb:bindings>
+	
+	<jaxb:bindings node="//xsd:complexType[@name='FacilityInspectionDetailType']//xsd:element[@ref='uic:InspectionTypeActionCode']">
+        <hj:basic>
+            <orm:column name="INSP_TYPE_ACT_CD" column-definition="CHAR(2)"/>
+        </hj:basic>
+    </jaxb:bindings>
+    
+    <jaxb:bindings node="//xsd:complexType[@name='WellInspectionDetailType']//xsd:element[@ref='uic:InspectionTypeActionCode']">
+        <hj:basic>
+            <orm:column name="INSP_TYPE_ACT_CD" column-definition="CHAR(2)"/>
+        </hj:basic>
+    </jaxb:bindings>
+
+</jaxb:bindings>

@@ -3,6 +3,8 @@ package com.windsor.node.plugin.common;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.GregorianCalendar;
+import java.util.List;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
@@ -10,15 +12,21 @@ import javax.xml.bind.Marshaller;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.plugin.BaseWnosPlugin;
 import com.windsor.node.plugin.common.domain.DocumentHeaderType;
 import com.windsor.node.plugin.common.domain.DocumentPayloadType;
 import com.windsor.node.plugin.common.domain.ExchangeNetworkDocumentType;
+import com.windsor.node.plugin.common.domain.NameValuePair;
 import com.windsor.node.plugin.common.domain.ObjectFactory;
+import com.windsor.node.plugin.common.domain.v1.DocHeader;
+import com.windsor.node.plugin.common.domain.v1.ExchangeNetworkDocument;
+import com.windsor.node.plugin.common.domain.v1.Payload;
 import com.windsor.node.service.helper.id.UUIDGenerator;
 
 public abstract class BaseWnosJaxbPlugin extends BaseWnosPlugin
@@ -69,6 +77,20 @@ public abstract class BaseWnosJaxbPlugin extends BaseWnosPlugin
         documentHeader.setCreationDateTime(getDocumentCreationDateTime());
         documentHeader.setDataFlowName(transaction.getRequest().getFlowName());
         documentHeader.setDataServiceName(transaction.getRequest().getService().getName());
+        
+        List<String> additionalPropertyNames = getAdditionalPropertyNames();
+        if (additionalPropertyNames != null) {
+        	List<NameValuePair> properties = documentHeader.getProperty();
+	        for (String propertyName : additionalPropertyNames) {
+	        	NameValuePair pair = new NameValuePair();
+	        	String value = getConfigValueAsStringNoFail(propertyName);
+	        	if (StringUtils.isNotBlank(value)) {
+	        		pair.setPropertyName(propertyName);
+	        		pair.setPropertyValue(value);
+	        		properties.add(pair);
+	        	}
+	        }
+        }
 
         DocumentPayloadType documentPayloadType = fact.createDocumentPayloadType();
         exchangeNetworkDocumentType.getPayload().add(documentPayloadType);
@@ -80,6 +102,67 @@ public abstract class BaseWnosJaxbPlugin extends BaseWnosPlugin
         documentPayloadType.setAny(jaxbElement);
 
         return fact.createDocument(exchangeNetworkDocumentType);
+    }
+    
+    protected JAXBElement<?> processV1HeaderDirectives(JAXBElement<?> jaxbElement, String docId, String operation, NodeTransaction transaction, Boolean forceHeaderUse)
+    {
+        String addHeader = getConfigValueAsStringNoFail(ARG_ADD_HEADER);
+        if(!"true".equalsIgnoreCase(addHeader) && !forceHeaderUse)
+        {
+            return jaxbElement;
+        }
+        com.windsor.node.plugin.common.domain.v1.ObjectFactory fact = new com.windsor.node.plugin.common.domain.v1.ObjectFactory();
+        ExchangeNetworkDocument exchangeNetworkDocument = fact.createExchangeNetworkDocument();
+        exchangeNetworkDocument.setId(UUIDGenerator.makeId());
+
+        DocHeader docHeader = fact.createDocHeader();
+        exchangeNetworkDocument.setHeader(docHeader);
+        String authorName = getConfigValueAsStringNoFail(ARG_HEADER_AUTHOR);
+        docHeader.setAuthor(StringUtils.isNotBlank(authorName) ? authorName: "");
+        String contactInfo = getConfigValueAsStringNoFail(ARG_HEADER_CONTACT_INFO);
+        docHeader.setContactInfo(StringUtils.isNotBlank(contactInfo) ? contactInfo: "");
+        String orgName = getConfigValueAsStringNoFail(ARG_HEADER_ORG_NAME);
+        String payloadName = getConfigValueAsStringNoFail(ARG_HEADER_PAYLOAD_OP);
+        String title = getConfigValueAsStringNoFail(ARG_HEADER_TITLE);
+        docHeader.setOrganization(StringUtils.isNotBlank(orgName) ? orgName: "");
+        if(StringUtils.isNotBlank(title))
+        {
+            docHeader.setTitle(title);
+        }
+        else
+        {
+            docHeader.setTitle(operation + docId);
+        }
+        docHeader.setCreationTime(getDocumentCreationDateTime());
+        docHeader.setDataService(transaction.getRequest().getService().getName());
+        
+        List<String> additionalPropertyNames = getAdditionalPropertyNames();
+        if (additionalPropertyNames != null) {
+        	List<com.windsor.node.plugin.common.domain.v1.NameValuePair> properties = docHeader.getProperty();
+	        for (String propertyName : additionalPropertyNames) {
+	        	com.windsor.node.plugin.common.domain.v1.NameValuePair pair = new com.windsor.node.plugin.common.domain.v1.NameValuePair();
+	        	String value = getConfigValueAsStringNoFail(propertyName);
+	        	if (StringUtils.isNotBlank(value)) {
+	        		pair.setName(propertyName);
+	        		pair.setValue(value);
+	        		properties.add(pair);
+	        	}
+	        }
+        }
+
+        Payload documentPayloadType = fact.createPayload();
+        exchangeNetworkDocument.getPayload().add(documentPayloadType);
+        if(StringUtils.isNotBlank(payloadName))
+        {
+            documentPayloadType.setOperation(payloadName);
+        }
+        documentPayloadType.setAny(jaxbElement);
+
+        return fact.createDocument(exchangeNetworkDocument);
+    }
+    
+    protected List<String> getAdditionalPropertyNames() {
+    	return null;
     }
 
     private XMLGregorianCalendar getDocumentCreationDateTime()
@@ -100,15 +183,22 @@ public abstract class BaseWnosJaxbPlugin extends BaseWnosPlugin
 
     protected void writeDocument(JAXBElement<?> document, String pathname) throws JAXBException, IOException
     {
-        Class<?> clazz = document.getValue().getClass();
+    	Object value  = document.getValue();
+        Class<?> clazz = value.getClass();
         StringBuffer packageNames = new StringBuffer(clazz.getPackage().getName());
         //if a header is used the JAXB classes are in a different package, both must be included for the engine to function properly.
-        if(document.getValue() instanceof ExchangeNetworkDocumentType)
+        if(value instanceof ExchangeNetworkDocumentType)
         {
             ExchangeNetworkDocumentType doc = (ExchangeNetworkDocumentType)document.getValue();
             for(int i = 0; i < doc.getPayload().size(); i++)
             {
-                //prepend the package name of every package with JAXBElement domain elements in it
+                packageNames.insert(0, ":").insert(0, ((JAXBElement<?>)doc.getPayload().get(i).getAny()).getValue().getClass().getPackage().getName());
+            }
+        } else if(value instanceof ExchangeNetworkDocument)
+        {
+        	ExchangeNetworkDocument doc = (ExchangeNetworkDocument)document.getValue();
+            for(int i = 0; i < doc.getPayload().size(); i++)
+            {
                 packageNames.insert(0, ":").insert(0, ((JAXBElement<?>)doc.getPayload().get(i).getAny()).getValue().getClass().getPackage().getName());
             }
         }
@@ -131,7 +221,7 @@ public abstract class BaseWnosJaxbPlugin extends BaseWnosPlugin
             return null;
         }
 
-        String value = (String)getConfigurationArguments().get(key);
+        String value = getConfigurationArguments().get(key);
         if(StringUtils.isBlank(value))
         {
             return null;

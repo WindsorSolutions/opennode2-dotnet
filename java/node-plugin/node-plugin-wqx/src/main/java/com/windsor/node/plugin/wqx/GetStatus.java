@@ -51,15 +51,19 @@ public class GetStatus extends AbstractWqxService {
     @Override
     public List<PluginServiceParameterDescriptor> getParameters() {
         List<PluginServiceParameterDescriptor> params = new ArrayList<PluginServiceParameterDescriptor>();
-        params.add(ORG_ID);                     // available @ index = 0
-        params.add(SUBMISSION_PARTNER_NAME);    // available @ index = 1
+        params.add(ORG_ID);                                // available @ index = 0
+        params.add(new PluginServiceParameterDescriptor(   // available @ index = 1
+                SUBMISSION_PARTNER_NAME.getName(),
+                SUBMISSION_PARTNER_NAME.getType(),
+                Boolean.TRUE,
+                SUBMISSION_PARTNER_NAME.getDescription()));
         return params;
     }
 
     @Override
-    public ProcessContentResult process(NodeTransaction transaction) {
+    public ProcessContentResult process(final NodeTransaction transaction) {
 
-        ProcessContentResult result = new ProcessContentResult();
+        final ProcessContentResult result = new ProcessContentResult();
         result.setStatus(CommonTransactionStatusCode.Failed);
         result.setSuccess(Boolean.FALSE);
 
@@ -69,8 +73,13 @@ public class GetStatus extends AbstractWqxService {
 
             @Override
             public String getSubmissionPartnerName() {
+                if(transaction.getRequest().getParameters().get(AbstractWqxService.SUBMISSION_PARTNER_NAME.getName()) != null)
+                {
+                    return (String)transaction.getRequest().getParameters().get(AbstractWqxService.SUBMISSION_PARTNER_NAME.getName());
+                }
                 return stringValue(GetStatus.PARAM_INDEX_SUBMISSION_PARTNER_NAME);
             }
+
         };
 
         try {

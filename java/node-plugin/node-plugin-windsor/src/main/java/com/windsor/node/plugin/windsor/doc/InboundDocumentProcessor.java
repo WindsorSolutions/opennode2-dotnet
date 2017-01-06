@@ -238,7 +238,7 @@ public class InboundDocumentProcessor extends BaseWnosPlugin {
                         "Invalid number of documents. At least one required");
             }
 
-            result.getAuditEntries().add(makeEntry("Parsing target folder..."));
+            result.getAuditEntries().add(makeEntry("Parsing datatarget folder..."));
 
             File targetDir = getAndMakeQualifiedTargetDirPath(transaction);
 

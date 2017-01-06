@@ -129,7 +129,7 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
 
     @Override
     public ProcessContentResult process(NodeTransaction transaction) {
-
+        logger.info("Processing tranaction " + transaction.getId());
         ProcessContentResult result = new ProcessContentResult();
         result.setStatus(CommonTransactionStatusCode.Failed);
         result.setSuccess(Boolean.FALSE);
@@ -138,8 +138,11 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
          * Check if there is more than one outstanding workflow, if yes, Fail
          */
         int count = getIcisStatusAndProcessingDao().countPendingWorkflows();
+        logger.info("Found " + count + " pending ICIS Status and Processing workflows");
 
         if(count >= 2) {
+            logger.info("Failing transaction " + transaction.getId() + ": more than one pending workflow exists (" +
+                    count + " instead of 0)");
             result.getAuditEntries().add(new ActivityEntry("Invalid workflow state. More than one pending workflow exists. Exiting."));
             result.setStatus(CommonTransactionStatusCode.Failed);
             result.setSuccess(Boolean.FALSE);
@@ -149,6 +152,7 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
          * If no workflows exist in Pending, set self Complete
          */
         else if(count == 0) {
+            logger.info("Completed transaction " + transaction.getId() + ": no outstanding submissions to process");
             result.getAuditEntries().add(new ActivityEntry("No outstanding submissions to process. Exiting."));
             result.setStatus(CommonTransactionStatusCode.Completed);
             result.setSuccess(Boolean.TRUE);
@@ -172,6 +176,7 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
                 result.getAuditEntries().add(new ActivityEntry("Workflow " + icisWorkflow.getId() + " has not been submitted yet. Exiting."));
                 result.setStatus(CommonTransactionStatusCode.Completed);
                 result.setSuccess(Boolean.TRUE);
+                logger.info("Exiting transaction " + transaction.getId() + ": workflow " + icisWorkflow.getId() + " has not been submitted yet");
                 return result;
             }
 
@@ -190,6 +195,7 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
                                                              + ".  No more processing can be done."));
                 result.setStatus(CommonTransactionStatusCode.Failed);
                 result.setSuccess(Boolean.FALSE);
+                logger.info("Exiting transaction " + transaction.getId() + ": GetStatus operation failed");
                 return result;
             }
 
@@ -200,6 +206,7 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
                                                              + " failed o find a Remote Partner URL.  No more processing can be done."));
                 result.setStatus(CommonTransactionStatusCode.Failed);
                 result.setSuccess(Boolean.FALSE);
+                logger.info("Exiting transaction " + transaction.getId() + ": no remote partner");
                 return result;
             }
 
@@ -219,6 +226,8 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
                 icisWorkflow.setSubmissionTransactionStatus(statusResult.getStatus().name());
             }
 
+            logger.info("Transaction " + transaction.getId() + ":  status code '" + statusResult.getStatus() + "'... " +
+                    " NOTE: we only download and parse document for COMPLETED or FAILED transactions");
             if (CommonTransactionStatusCode.Failed.equals(statusResult.getStatus())) {
                 icisWorkflow.setWorkflowStatus(CommonTransactionStatusCode.Failed.toString());
                 icisWorkflow.setWorkflowStatusMessage("Remote node set transaction to Failed.");
@@ -234,13 +243,15 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
                     result.getAuditEntries().add(new ActivityEntry("Attempted to download the remote response file, but it was null."));
                 }
 
-                result.getAuditEntries().add(new ActivityEntry("Remote node set transaction of id=" + originalTransaction.getNetworkId() + " to Failed. Setting ICS_SUBM_TRACK.WORKFLOW_STAT = Failed."));
+                result.getAuditEntries().add(new ActivityEntry("Remote node set transaction of id=" +
+                        originalTransaction.getNetworkId() + " to Failed. Setting ICS_SUBM_TRACK.WORKFLOW_STAT = Failed."));
                 result.getAuditEntries().add(new ActivityEntry("This transaction completed successfully."));
                 originalTransaction.getStatus().setStatus(CommonTransactionStatusCode.Failed);
                 getTransactionDao().save(transaction);
 
                 result.setStatus(CommonTransactionStatusCode.Completed);
                 result.setSuccess(Boolean.TRUE);
+                logger.info("Exiting transaction " + transaction.getId() + ": success, downloaded the result file for failed submission");
                 return result;
 
             } else if (!CommonTransactionStatusCode.Completed.equals(statusResult.getStatus())) {
@@ -256,6 +267,8 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
 
                 result.setStatus(CommonTransactionStatusCode.Completed);
                 result.setSuccess(Boolean.TRUE);
+                logger.info("Exiting transaction " + transaction.getId() + ": success, the submission was not successful " +
+                        " or a failure, it's status was '" + statusResult.getStatus() + "'");
                 return result;
             }
 
@@ -274,6 +287,7 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
                 result.getAuditEntries().add(new ActivityEntry("Results already downloaded and parsed. Exiting."));
                 result.setStatus(CommonTransactionStatusCode.Completed);
                 result.setSuccess(Boolean.TRUE);
+                logger.info("Exiting transaction " + transaction.getId() + ": results already downloaded and parsed");
                 return result;
             }
 
@@ -281,12 +295,10 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
              * Download processing report from CDX, response.zip must be present in response, must contain named files ending with
              */
             result.getAuditEntries().add(new ActivityEntry("Attempting to download response documents for ICIS submission with transaction id \""+originalTransaction.getId()+"\""));
-
             Document responseZipDoc = downloadResponseFile(originalTransaction, client);
 
-
             try {
-
+                logger.info("Transaction " + transaction.getId() + ": actually doing stuff for this transaction...");
                 if (responseZipDoc == null) {
                     icisWorkflow.setWorkflowStatus(CommonTransactionStatusCode.Pending.toString());
                     icisWorkflow.setWorkflowStatusMessage("Download did not contain expected files containing processing results.");
@@ -296,6 +308,7 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
                     result.getAuditEntries().add(new ActivityEntry("Download did not contain expected files containing processing results."));
                     result.setStatus(CommonTransactionStatusCode.Completed);
                     result.setSuccess(Boolean.TRUE);
+                    logger.info("Exiting transaction " + transaction.getId() + ": download had unexpected contents");
                     return result;
                 }
                 //attach to the original transaction and save
@@ -303,6 +316,13 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
 
                 byte[] accpetedEntry = getAcceptedEntry(responseZipDoc);
                 byte[] rejectedEntry = getRejectedEntry(responseZipDoc);
+
+                if(accpetedEntry != null) {
+                    logger.info("Transaction " + transaction.getId() + ":  we have accepted entries");
+                }
+                if(rejectedEntry != null) {
+                    logger.info("Transaction " + transaction.getId() + ":  we have rejected entries");
+                }
 
                 if(accpetedEntry == null || rejectedEntry == null)
                 {
@@ -315,11 +335,13 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
                     result.getAuditEntries().add(new ActivityEntry("Download did not contain expected files containing processing results."));
                     result.setStatus(CommonTransactionStatusCode.Completed);
                     result.setSuccess(Boolean.TRUE);
+                    logger.info("Exiting transaction " + transaction.getId() + ": either no accepted or rejected entries in the file");
                     return result;
                 }
 
                result.getAuditEntries().add(new ActivityEntry("Attempting to process response documents for ICIS submission with transaction id \""+originalTransaction.getId()+"\" "));
 
+                logger.info("Transaction " + transaction.getId() + ":  parsing out the response file!");
                 //Parse the results out of the two byte[] arrays that contain the response files
                parseAndSaveResponseFiles(result, accpetedEntry, rejectedEntry);
 
@@ -329,6 +351,7 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
                 //If response is improper, local transaction "Failed" and msg: "Download operation failed: {error}. Exiting."
                 //OR msg: "Download did not contain expected files containing processing results."
                 //Essentially, if anything whatsoever goes wrong, do this (IOException and JAXBException are two big candidates):
+                logger.warn("Download operation really failed spectacularly: " + e.getMessage(), e);
                 icisWorkflow.setWorkflowStatus(CommonTransactionStatusCode.Pending.toString());
                 icisWorkflow.setWorkflowStatusMessage("Download operation failed: " + e.getMessage() + ". Exiting.");
                 icisWorkflow.setSubmissionStatusDate(new Date());
@@ -337,6 +360,7 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
                 result.getAuditEntries().add(new ActivityEntry("Download operation failed: " + e.getMessage() + ". Exiting."));
                 result.setStatus(CommonTransactionStatusCode.Failed);
                 result.setSuccess(Boolean.FALSE);
+                logger.info("Exiting transaction " + transaction.getId() + ": Could not download the file");
                 return result;
             }
 
@@ -344,7 +368,7 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
              * Run any configured Post Processing Stored Procedures
              */
             try {
-
+                logger.info("Transaction " + transaction.getId() + ": handling post processing stored procedure");
                 String procName = getConfigValueAsString(SERVICE_PARAM_POST_PROCESSING_PROC_NAME.getName(), false);
 
                 if(StringUtils.isNotEmpty(procName)) {
@@ -370,6 +394,7 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
                 result.getAuditEntries().add(new ActivityEntry("Database error copying accepted transactions: " + e.getMessage() + ". Exiting."));
                 result.setStatus(CommonTransactionStatusCode.Failed);
                 result.setSuccess(Boolean.FALSE);
+                logger.info("Exiting transaction " + transaction.getId() + ": database error while copying accepted transactions");
                 return result;
             }
 
@@ -377,6 +402,7 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
              * Email contacts
              */
             try {
+                logger.info("Transaction " + transaction.getId() + ": handling status email");
                 //SUCCESS  update Complete, WORKFLOW_STAT=Complete, Response Date Time to "now"
                 //msg: "Workflow completed successfully. Exiting."
                 //This is success, finally!
@@ -406,9 +432,13 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
                 result.getAuditEntries().add(new ActivityEntry("Email to contacts configured, but sending failed with message: " + e.getMessage() + ". Exiting."));
                 result.setStatus(CommonTransactionStatusCode.Failed);
                 result.setSuccess(Boolean.FALSE);
+                logger.info("Exiting transaction " + transaction.getId() + ": Could not email job status");
                 return result;
             }
         }
+
+        logger.info("Wow, I made it all the way through this function and literally did nothing! Exiting transaction " +
+                transaction.getId());
         return result;
     }
     private void attachFileToTransactionAndSave(NodeTransaction transaction, Document document) {
@@ -427,34 +457,80 @@ public class GetICISStatusAndProcessReports extends BaseWnosJaxbPlugin
     }
 
     private void parseAndSaveResponseFiles(ProcessContentResult result, byte[] accpetedEntry, byte[] rejectedEntry) throws JAXBException {
+        logger.info("P:  Starting to parse and save the response files...");
 
-        result.getAuditEntries().add(new ActivityEntry("Transforming accepted response file."));
-        SubmissionResultList accepted = getResultsParser().parse(result, accpetedEntry, this);
+        try {
 
-        result.getAuditEntries().add(new ActivityEntry("Transforming rejected response file."));
-        SubmissionResultList rejected = getResultsParser().parse(result, rejectedEntry, this);
+            logger.info("P:  Parsing the accepted file...");
+            result.getAuditEntries().add(new ActivityEntry("Transforming accepted response file."));
+            SubmissionResultList accepted = null;
+            try {
+                accepted = getResultsParser().parse(result, accpetedEntry, this);
+            } catch (JAXBException jaxbException){
 
-        // Update ICS_SUBM_RESULTS table with contents of both files, NOTE:
-        // blanks are translated to "Accepted" in the InformationCode field
+                logger.warn("JAXB exception reading accepted file! " + jaxbException.getMessage(), jaxbException);
+                throw jaxbException;
+            } catch(Exception exception) {
+                logger.info("Couldn't parse the accepted file: " + exception.getMessage(), exception);
+            }
 
-        result.getAuditEntries().add(new ActivityEntry("Saving response data to database."));
+            if (accepted.getSubmissionResult() != null) {
+                logger.info("P:  Accepted submissions: " + accepted.getSubmissionResult().size());
+            } else {
+                logger.info("P:  Accepted submissions: NULL");
+            }
 
-        getIcisStatusAndProcessingDao().saveIcisStatusResults(accepted, rejected, emf.createEntityManager());
+            logger.info("P:  Parsing the rejected file...");
+            result.getAuditEntries().add(new ActivityEntry("Transforming rejected response file."));
+            SubmissionResultList rejected = null;
+            try {
+                rejected = getResultsParser().parse(result, rejectedEntry, this);
+            } catch (JAXBException jaxbException){
 
-        /**
-         * Get total count saved to DB and log it.
-         */
-        int totalCountSaved = 0;
+                logger.warn("JAXB exception reading rejection file! " + jaxbException.getMessage(), jaxbException);
+                throw jaxbException;
+            }catch(Exception exception) {
+                logger.info("Couldn't parse the rejected file: " + exception.getMessage(), exception);
+            }
 
-        if (accepted != null && accepted.getSubmissionResult() != null) {
-            totalCountSaved += accepted.getSubmissionResult().size();
+            if (rejected.getSubmissionResult() != null) {
+                logger.info("P:  Rejected submissions: " + rejected.getSubmissionResult().size());
+            } else {
+                logger.info("P:  Rejected submissions: NULL");
+            }
+
+            logger.info("   Parsing complete!");
+            // Update ICS_SUBM_RESULTS table with contents of both files, NOTE:
+            // blanks are translated to "Accepted" in the InformationCode field
+            result.getAuditEntries().add(new ActivityEntry("Saving response data to database."));
+
+            try {
+                logger.info("P:  Saving accepted and rejected submissions to the database...");
+                getIcisStatusAndProcessingDao().saveIcisStatusResults(accepted, rejected, emf.createEntityManager());
+            } catch(Exception exception) {
+                logger.warn("P:  Could not save ICIS status results: " + exception.getMessage(), exception);
+                throw exception;
+            }
+            logger.info("P:  Saving accepted and rejected submissions to the database... Successful!");
+
+            /**
+             * Get total count saved to DB and log it.
+             */
+            int totalCountSaved = 0;
+
+            if (accepted != null && accepted.getSubmissionResult() != null) {
+                totalCountSaved += accepted.getSubmissionResult().size();
+            }
+
+            if (rejected != null && rejected.getSubmissionResult() != null) {
+                totalCountSaved += rejected.getSubmissionResult().size();
+            }
+
+            result.getAuditEntries().add(new ActivityEntry("Response data saved to database with the following insert row counts: ICS_SUBM_RESULTS ("+totalCountSaved+")"));
+            logger.info("  Completed parsing and saving the response files");
+        } catch (Exception exception) {
+            logger.warn("Whoa, something went wrong: " + exception.getMessage(), exception);
         }
-
-        if (rejected != null && rejected.getSubmissionResult() != null) {
-            totalCountSaved += rejected.getSubmissionResult().size();
-        }
-
-        result.getAuditEntries().add(new ActivityEntry("Response data saved to database with the following insert row counts: ICS_SUBM_RESULTS ("+totalCountSaved+")"));
     }
 
     private byte[] getRejectedEntry(Document responseZipDoc) throws IOException {

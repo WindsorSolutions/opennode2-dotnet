@@ -46,25 +46,23 @@ import com.windsor.node.util.FormatUtil;
 
 public class JdbcConfigDao extends BaseJdbcDao implements ConfigDao {
 
-    private static final String SQL_SELECT = "SELECT Id, ConfigValue, Description, ModifiedBy, ModifiedOn, IsEditable FROM NConfig ORDER BY Id ";
+    private static final String SQL_SELECT = "SELECT Id, name, ConfigValue, Description, ModifiedBy, ModifiedOn, IsEditable FROM NConfig ORDER BY Id ";
 
-    private static final String SQL_SELECT_BY_ID = "SELECT Id, ConfigValue, Description, ModifiedBy, ModifiedOn, IsEditable FROM NConfig WHERE Id = ?";
+    private static final String SQL_SELECT_BY_ID = "SELECT Id, name, ConfigValue, Description, ModifiedBy, ModifiedOn, IsEditable FROM NConfig WHERE Id = ?";
 
     private static final String SQL_SELECT_EXISTS = "SELECT COUNT(*) FROM NConfig WHERE Id = ? ";
 
-    private static final String SQL_SELECT_MAP = "SELECT Id, ConfigValue FROM NConfig ";
+    private static final String SQL_SELECT_MAP = "SELECT name, ConfigValue FROM NConfig ";
 
     /**
      * SQL INSERT statement for this table
      */
-    private static final String SQL_INSERT = "INSERT INTO NConfig ( ConfigValue, Description, ModifiedBy, ModifiedOn, IsEditable, Id ) VALUES ( ?, ?, ?, ?, ?, ? )";
+    private static final String SQL_INSERT = "INSERT INTO NConfig ( name, ConfigValue, Description, ModifiedBy, ModifiedOn, IsEditable, Id ) VALUES ( ?, ?, ?, ?, ?, ?, ? )";
 
     /**
      * SQL UPDATE statement for this table
      */
-    private static final String SQL_UPDATE = "UPDATE NConfig SET ConfigValue = ?, Description = ?, ModifiedBy = ?, ModifiedOn = ?, IsEditable = ? WHERE Id = ?";
-
-    protected final String SQL_SELECT_ARG = "SELECT Id, ServiceId, ArgKey, ArgValue FROM NServiceArg WHERE ServiceId = ? ORDER BY ArgKey  ";
+    private static final String SQL_UPDATE = "UPDATE NConfig SET name = ?, ConfigValue = ?, Description = ?, ModifiedBy = ?, ModifiedOn = ?, IsEditable = ? WHERE Id = ?";
 
     /**
      * SQL DELETE statement for this table
@@ -75,7 +73,7 @@ public class JdbcConfigDao extends BaseJdbcDao implements ConfigDao {
 
         validateObjectArg(instance, "ConfigItem");
 
-        validateStringArg(instance.getId());
+        validateStringArg(instance.getName());
 
         String sql = SQL_UPDATE;
         if (!isUpdate) {
@@ -89,14 +87,15 @@ public class JdbcConfigDao extends BaseJdbcDao implements ConfigDao {
 
         // ConfigValue, Description, ModifiedBy, ModifiedOn, Id
 
-        Object[] args = new Object[6];
+        Object[] args = new Object[7];
 
-        args[0] = instance.getValue();
-        args[1] = instance.getDescription();
-        args[2] = instance.getModifiedById();
-        args[3] = DateUtil.getTimestamp();
-        args[4] = FormatUtil.toYNFromBoolean(instance.isEditable());
-        args[5] = instance.getId();
+        args[0] = instance.getName();
+        args[1] = instance.getValue();
+        args[2] = instance.getDescription();
+        args[3] = instance.getModifiedById();
+        args[4] = DateUtil.getTimestamp();
+        args[5] = FormatUtil.toYNFromBoolean(instance.isEditable());
+        args[6] = instance.getId();
 
         for (int i = 0; i < args.length; i++) {
             validateObjectArg(args[i], "Object");
@@ -161,6 +160,7 @@ public class JdbcConfigDao extends BaseJdbcDao implements ConfigDao {
             ConfigItem obj = new ConfigItem();
 
             obj.setId(rs.getString("Id"));
+            obj.setName(rs.getString("name"));
             obj.setValue(rs.getString("ConfigValue"));
             obj.setDescription(rs.getString("Description"));
             obj.setModifiedById(rs.getString("ModifiedBy"));

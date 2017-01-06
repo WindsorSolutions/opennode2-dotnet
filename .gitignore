@@ -7,4 +7,6 @@ dependency-reduced-pom.xml
 .settings/
 .classpath
 archive
+node-ng/node-web/*path.plugin.dir
+
 ~

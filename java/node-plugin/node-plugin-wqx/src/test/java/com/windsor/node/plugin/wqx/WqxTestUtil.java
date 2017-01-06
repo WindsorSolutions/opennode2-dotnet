@@ -17,15 +17,15 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
+import com.windsor.node.plugin.wqx.domain.ObjectFactory;
+import com.windsor.node.plugin.wqx.domain.OrganizationDataType;
+import com.windsor.node.plugin.wqx.domain.WQXDataType;
 import org.apache.commons.io.FileUtils;
 import org.xml.sax.SAXException;
 
 import com.windsor.node.plugin.common.xml.validation.ValidationResult;
 import com.windsor.node.plugin.common.xml.validation.jaxb.JaxbXmlValidator;
 import com.windsor.node.plugin.test.AbstractJpaIT;
-import com.windsor.node.plugin.wqx.domain.generated.ObjectFactory;
-import com.windsor.node.plugin.wqx.domain.generated.OrganizationDataType;
-import com.windsor.node.plugin.wqx.domain.generated.WQXDataType;
 
 public class WqxTestUtil {
 

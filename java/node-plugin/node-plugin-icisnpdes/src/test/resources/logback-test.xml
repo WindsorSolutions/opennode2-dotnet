@@ -8,6 +8,8 @@
     </encoder>
   </appender>
 
+  <logger name="org.hibernate" level="DEBUG" />
+
   <root level="info">
     <appender-ref ref="STDOUT" />
   </root>

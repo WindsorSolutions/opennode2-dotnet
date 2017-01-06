@@ -1,0 +1,67 @@
+package com.windsor.node.plugin.rcra52.solicit;
+
+import com.windsor.node.common.domain.PluginServiceImplementorDescriptor;
+import com.windsor.node.common.util.ByIndexOrNameMap;
+import com.windsor.node.plugin.rcra52.solicit.request.SolicitRequest;
+import com.windsor.node.plugin.rcra52.solicit.request.SolicitRequestFactory;
+import com.windsor.node.plugin.rcra52.solicit.request.SolicitRequestType;
+
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaQuery;
+import java.util.Date;
+
+public class SolicitOpCEEvaluationByHandler extends SolicitOperation {
+
+    public static final String SERVICE_NAME = "SolicitOpCEEvaluationByHandler";
+    private static final PluginServiceImplementorDescriptor PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR =
+            new PluginServiceImplementorDescriptor();
+
+    static {
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setName(SERVICE_NAME);
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setDescription("Solicits CE Evaluation Data by Handler from the RCRAInfo service.");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setClassName(SolicitOperation.class.getCanonicalName());
+    }
+
+    @Override
+    public PluginServiceImplementorDescriptor getPluginServiceImplementorDescription() {
+        return PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR;
+    }
+
+    @Override
+    public SolicitRequestType getRequestType() {
+        return SolicitRequestType.CE_EVALUATION_BY_HANDLER;
+    }
+
+    @Override
+    public SolicitRequest getRequest(SolicitRequestFactory requestFactory, ByIndexOrNameMap namedParams) {
+
+        String state = null;
+        String agency = null;
+        String fromDate = null;
+        String toDate = null;
+        String changeDate = null;
+
+        String handlerId = namedParams.get(SolicitOperation.PARAM_HANDLER_ID_REQ.getName()).toString();
+        if(namedParams.get(SolicitOperation.PARAM_STATE.getName()) != null) {
+            state = namedParams.get(SolicitOperation.PARAM_STATE.getName()).toString();
+        }
+        if(namedParams.get(SolicitOperation.PARAM_AGENCY.getName()) != null) {
+            agency = namedParams.get(SolicitOperation.PARAM_AGENCY.getName()).toString();
+        }
+        if(namedParams.get(SolicitOperation.PARAM_FROM_DATE.getName()) != null) {
+            fromDate = namedParams.get(SolicitOperation.PARAM_FROM_DATE.getName()).toString();
+        }
+        if(namedParams.get(SolicitOperation.PARAM_TO_DATE.getName()) != null) {
+            toDate = namedParams.get(SolicitOperation.PARAM_TO_DATE.getName()).toString();
+        }
+        if(namedParams.get(SolicitOperation.PARAM_CHANGE_DATE.getName()) != null) {
+            changeDate = namedParams.get(SolicitOperation.PARAM_CHANGE_DATE.getName()).toString();
+        }
+        return requestFactory.getCEEvaluationDataByHandler(handlerId, state, agency, fromDate, toDate, changeDate);
+    }
+
+    @Override
+    public Query getCleanupQuery() {
+        return null;
+    }
+}

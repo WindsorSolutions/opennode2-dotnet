@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:uic="http://www.exchangenetwork.net/schema/uic/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/uic/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+	<xsd:include schemaLocation="UIC_SimpleContent_v2.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>UIC response file (Table 10): UIC_Response_v2.0.xsd
+		Current Version Available At :
+		Description : Schema for the connecting table for the many-to-many relationship between Violation and Enforcement.
+		Application : UIC data submission 
+		Developed by : Environmental Protection Agency, Lockheed Martin, CGI Federal
+		Point of Contact : Carl Reeverts, Trang Le (EPA/UIC), Lauren Hall (CGI Federal)	
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:annotation>
+		<xsd:documentation>Response complex component</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="FacilityResponseDetail" type="uic:ResponseDetailDataType">
+		<xsd:annotation>
+			<xsd:documentation>Container for Response information.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="WellResponseDetail" type="uic:ResponseDetailDataType">
+		<xsd:annotation>
+			<xsd:documentation>Container for Response information.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:annotation>
+		<xsd:documentation>Response complex type</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="ResponseDetailDataType">
+		<xsd:annotation>
+			<xsd:documentation>Container for Response information type definition.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="uic:ResponseEnforcementIdentifier"/>
+			<xsd:element ref="uic:ResponseViolationIdentifier"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:annotation>
+		<xsd:documentation>Response data elements</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="ResponseEnforcementIdentifier" type="uic:UICIdentifierType">
+		<xsd:annotation>
+			<xsd:documentation>Unique identification of Enforcement table - The first four characters are the primacy agency code (Appendix D). The rest is DI program or State’s choice (letters and numbers only identifying unique  enforcement action (e.g. 08DI000766, …).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ResponseViolationIdentifier" type="uic:UICIdentifierType">
+		<xsd:annotation>
+			<xsd:documentation>Unique identification of Violation table - The first four characters are the primacy agency code (Appendix D). The rest is DI program or State’s choice (letters and numbers only identifying unique violation (e.g. 08DI000905, …).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

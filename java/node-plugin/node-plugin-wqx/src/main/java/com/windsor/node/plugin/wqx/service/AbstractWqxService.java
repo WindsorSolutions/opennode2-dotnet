@@ -26,6 +26,7 @@ import com.windsor.node.plugin.wqx.dao.SubmissionHistoryDao;
 import com.windsor.node.plugin.wqx.dao.SubmissionHistoryDaoJpaImpl;
 import com.windsor.node.plugin.wqx.dao.WqxDao;
 import com.windsor.node.plugin.wqx.dao.WqxDaoJpaImpl;
+import com.windsor.node.plugin.wqx.domain.OrganizationDataType;
 import com.windsor.node.service.helper.CompressionService;
 import com.windsor.node.service.helper.IdGenerator;
 import com.windsor.node.service.helper.client.NodeClientFactory;
@@ -256,6 +257,7 @@ public abstract class AbstractWqxService extends BaseWnosPlugin implements Initi
         EntityManagerFactory emf = provider.createEntityManagerFactory(
                 getDataSources().get(ARG_DS_SOURCE),
                 new PluginPersistenceConfig()
+                        .classLoader(OrganizationDataType.class.getClassLoader())
                         .debugSql(Boolean.FALSE)
                         .rootEntityPackage("com.windsor.node.plugin.wqx.domain")
                         .setBatchFetchSize(1000));

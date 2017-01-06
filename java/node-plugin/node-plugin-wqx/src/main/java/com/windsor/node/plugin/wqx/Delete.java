@@ -8,11 +8,11 @@ import com.windsor.node.common.domain.ServiceType;
 import com.windsor.node.plugin.common.xml.stream.ElementWriter;
 import com.windsor.node.plugin.wqx.domain.Component;
 import com.windsor.node.plugin.wqx.domain.DeleteComponentIdentifier;
-import com.windsor.node.plugin.wqx.domain.OperationType;
-import com.windsor.node.plugin.wqx.domain.SubmissionHistory;
+import com.windsor.node.plugin.wqx.domain.DeleteComponentIdentifierObjectFactory;
 import com.windsor.node.plugin.wqx.domain.Header;
-import com.windsor.node.plugin.wqx.domain.generated.DeleteComponentIdentifierObjectFactory;
-import com.windsor.node.plugin.wqx.domain.generated.OrganizationDataType;
+import com.windsor.node.plugin.wqx.domain.OperationType;
+import com.windsor.node.plugin.wqx.domain.OrganizationDataType;
+import com.windsor.node.plugin.wqx.domain.SubmissionHistory;
 import com.windsor.node.plugin.wqx.service.AbstractSubmittingWqxService;
 import com.windsor.node.plugin.wqx.service.ScheduleParameters;
 import com.windsor.node.plugin.wqx.xml.DeleteXmlOutputStreamWriter;
@@ -66,8 +66,6 @@ public class Delete extends AbstractSubmittingWqxService<List<DeleteComponentIde
     @Override
     protected List<List<DeleteComponentIdentifier>> getSubmissionData(ScheduleParameters parameters) {
 
-        SubmissionHistory submissionHistory = getSubmissionHistoryDao().findLatestCompleted(parameters.getOrgId(), submissionType().operation());
-
         OrganizationDataType org = getWqxDao().findOrganizationByOrgId(parameters.getOrgId());
 
         if (org == null) {
@@ -98,6 +96,8 @@ public class Delete extends AbstractSubmittingWqxService<List<DeleteComponentIde
             }
 
         } else {
+
+            SubmissionHistory submissionHistory = getSubmissionHistoryDao().findLatestCompleted(parameters.getOrgId(), submissionType().operation());
 
             if (submissionHistory != null && submissionHistory.getWqxDateTime() != null) {
 

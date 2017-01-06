@@ -1,0 +1,30 @@
+<html xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd">
+<wicket:panel>
+    <div class="col-xs-12 col-md-12 col-lg-12">
+        <form wicket:id="form">
+            <div class="row">
+                <div class="col-xs-12 col-md-12 col-lg-12">
+                    <div wicket:id="nameGroup">
+                        <input wicket:id="field" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-12 col-lg-12">
+                    <div wicket:id="globalFieldGroup">
+                        <input wicket:id="field" type="hidden" />
+                    </div>
+                </div>
+            </div>
+            <div class="row text-right">
+                <div class="col-xs-12 col-md-12 col-lg-12">
+                    <div wicket:id="globalGroup" style="margin-top: -75px;">
+                        <input wicket:id="field" type="checkbox" />
+                        <span wicket:id="label">[GLOBAL VALUE]</span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</wicket:panel>
+</html>

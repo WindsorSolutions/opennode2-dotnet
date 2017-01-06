@@ -4,14 +4,14 @@
     <parent>
         <groupId>com.windsor.node.plugin</groupId>
         <artifactId>node-plugin</artifactId>
-        <version>2.11</version>
+        <version>2.12</version>
     </parent>
     <artifactId>node-plugin-icisnpdes</artifactId>
     <packaging>jar</packaging>
     <name>Node Plugin - ICIS NPDES v5</name>
     <properties>
         <node.plugin.name>icisnpdes</node.plugin.name>
-        <node.plugin.build.number>04</node.plugin.build.number>
+        <node.plugin.build.number>37</node.plugin.build.number>
         <node.plugin.description>Submits data to EPA ICIS-NPDES System. Data to be submitted must be loaded into the staging tables that accompany this plugin.</node.plugin.description>
         <node.plugin.help.text>Integrated Compliance Information System - NPDES Plugin</node.plugin.help.text>
     </properties>
@@ -22,17 +22,17 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
             </plugin>
-            <plugin>
-                <groupId>org.jvnet.hyperjaxb3</groupId>
-                <artifactId>maven-hyperjaxb3-plugin</artifactId>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.windsor.node.util.hyperjaxb3</groupId>
-                        <artifactId>node-util-hyperjaxb3-icisnpdes</artifactId>
-                        <version>${project.version}</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
+            <!--<plugin>-->
+                <!--<groupId>org.jvnet.hyperjaxb3</groupId>-->
+                <!--<artifactId>maven-hyperjaxb3-plugin</artifactId>-->
+                <!--<dependencies>-->
+                    <!--<dependency>-->
+                        <!--<groupId>com.windsor.node.util.hyperjaxb3</groupId>-->
+                        <!--<artifactId>node-util-hyperjaxb3-icisnpdes</artifactId>-->
+                        <!--<version>2.12</version>-->
+                    <!--</dependency>-->
+                <!--</dependencies>-->
+            <!--</plugin>-->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>

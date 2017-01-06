@@ -169,12 +169,12 @@ public class EmailDataProcessor implements InitializingBean {
                 String finalTargetPath = FilenameUtils.concat(nosConfig
                         .getTempDir().toString(), idGenerator.createId()
                         + ".zip");
-                logger.debug("Compressing target File: " + finalTargetPath);
+                logger.debug("Compressing datatarget File: " + finalTargetPath);
 
                 info.add(new ActivityEntry("Compressing all files..."));
                 compressionService.zip(finalTargetPath, targetDirPath);
                 finalFile = new File(finalTargetPath);
-                logger.debug("Compressed target file: "
+                logger.debug("Compressed datatarget file: "
                         + finalFile.getAbsolutePath());
 
             }

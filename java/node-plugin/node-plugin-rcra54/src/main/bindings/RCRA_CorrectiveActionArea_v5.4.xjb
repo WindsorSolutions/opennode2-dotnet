@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+    xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance" xmlns:annox="http://annox.dev.java.net"
+    jaxb:extensionBindingPrefixes="hj orm inheritance" schemaLocation="../xsd/5/4/RCRA_CorrectiveActionArea_v5.4.xsd">
+
+    <jaxb:bindings node="//xsd:complexType[@name='CorrectiveActionAreaDataType']">
+        <hj:entity>
+            <orm:table name="RCRA_CA_AREA"/>
+        </hj:entity>
+        <hj:generated-id name="Dbid">
+            <orm:column name="CA_AREA_ID"/>
+        </hj:generated-id>
+    </jaxb:bindings>        
+
+    <jaxb:bindings node="//xsd:element[@ref='RC:AreaName']">
+        <hj:basic>
+            <orm:column name="AREA_NAME"/>
+        </hj:basic>
+    </jaxb:bindings>
+ 
+    <jaxb:bindings node="//xsd:element[@ref='RC:EPAResponsiblePersonDataOwnerCode']">
+        <hj:basic>
+            <orm:column name="EPA_RESP_PERSON_DATA_OWNER_CDE" column-definition="char(2)" length="2"/>
+        </hj:basic>
+    </jaxb:bindings>
+    
+    <jaxb:bindings node="//xsd:element[@ref='RC:StateResponsiblePersonDataOwnerCode']">
+        <hj:basic>
+            <orm:column name="STA_RESP_PERSON_DATA_OWNER_CDE" column-definition="char(2)" length="2"/>
+        </hj:basic>
+    </jaxb:bindings>
+    
+    <jaxb:bindings node="//xsd:element[@ref='RC:StateResponsiblePersonID']">
+        <hj:basic>
+            <orm:column name="STA_RESP_PERSON_ID"/>
+        </hj:basic>
+    </jaxb:bindings>
+    
+</jaxb:bindings>
+

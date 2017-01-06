@@ -1,14 +1,12 @@
 package com.windsor.node.plugin.icisnpdes.domain;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Date;
 import java.util.UUID;
 
-import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.PrePersist;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlTransient;
@@ -23,6 +21,10 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlAccessorType(XmlAccessType.FIELD)
 public abstract class AbstractSubmissionResult {
 
+    private final static Logger logger = LoggerFactory.getLogger(AbstractSubmissionResult.class);
+
+    private String dbid;
+
 	/**
 	 * Date the submission result was created.
 	 */
@@ -34,8 +36,12 @@ public abstract class AbstractSubmissionResult {
 	 *
 	 * @return the DB PK
 	 */
-	@Transient
-	public abstract String getDbid();
+    @Id
+    @Basic
+    @Column(name = "ICS_SUBM_RESULTS_ID")
+	public String getDbid() {
+    	return dbid;
+	}
 
 	/**
 	 * Sets the DB PK.
@@ -43,7 +49,9 @@ public abstract class AbstractSubmissionResult {
 	 * @param dbid
 	 *            DB PK
 	 */
-	public abstract void setDbid(final String dbid);
+	public void setDbid(final String dbid) {
+		this.dbid = dbid;
+	}
 
 	/**
 	 * Returns the date the submission result was created.
@@ -77,6 +85,9 @@ public abstract class AbstractSubmissionResult {
 		if (getDbid() == null) {
 			setDbid(UUID.randomUUID().toString());
 		}
+
+		logger.info("ID: " + new String(getDbid()));
+        logger.info("CREATED: " + getCreatedDate());
 	}
 
 }

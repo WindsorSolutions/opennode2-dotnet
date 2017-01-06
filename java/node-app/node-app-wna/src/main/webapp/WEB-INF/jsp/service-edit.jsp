@@ -169,8 +169,8 @@ $(document).ready(function() {
 											<option value="" /></option>
 											<c:forEach var="gArg" items="${model.globalArgs}">
 												<option value="<c:out value="${gArg.id}" />"
-													<c:if test="${gArg.id == arg.value}">selected</c:if> >
-													<c:out value="${gArg.id}" />
+													<c:if test="${gArg.id == arg.value || gArg.name == arg.value}">selected</c:if> >
+													<c:out value="${gArg.name}" />
 												</option>
 											</c:forEach>
 										</select>

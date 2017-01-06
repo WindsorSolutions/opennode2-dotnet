@@ -35,7 +35,7 @@
 								        <img alt="" src="img/icon_settings.gif" style="border: 0; vertical-align: middle; padding-right: 3px;" />
 								    </a>
 								</td>
-								<td width="*"><strong><a href="config-arg.htm?id=<c:out value="${arg.id}" />" class="blacktext" ><c:out value="${arg.id}" /></a></strong>:</td>
+								<td width="*"><strong><a href="config-arg.htm?id=<c:out value="${arg.name}" />" class="blacktext" ><c:out value="${arg.name}" /></a></strong>:</td>
 								<td width="*" align="right"><a href="config-arg.htm?id=<c:out value="${arg.id}" />" class="blacktext" ><c:out value="${arg.value}" /></a></td>
 								<td width="10" align="right"><input type="image"
 									title="Edit" src="img/application_form_edit.png" alt="Edit"

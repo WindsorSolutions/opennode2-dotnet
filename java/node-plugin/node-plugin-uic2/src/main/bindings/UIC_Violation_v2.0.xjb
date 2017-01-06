@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings 
+    version="2.1" 
+    xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" 
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" 
+	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	jaxb:extensionBindingPrefixes="hj orm" 
+	schemaLocation="../xsd/0/UIC_Violation_v2.0.xsd">
+		
+		<jaxb:bindings node="//xsd:complexType[@name='FacilityViolationDetailType']//xsd:element[@ref='uic:ViolationTypeCode']">
+	        <hj:basic>
+	            <orm:column name="VIOLATION_TYPE_CD" column-definition="CHAR(2)"/>
+	        </hj:basic>
+        </jaxb:bindings>
+        
+        <jaxb:bindings node="//xsd:complexType[@name='FacilityViolationDetailType']//xsd:element[@ref='uic:ViolationReturnComplianceDate']">
+            <hj:basic>
+                <orm:column name="VIOLATION_RTN_COMPL_DATE" column-definition="CHAR(8)"/>
+            </hj:basic>
+        </jaxb:bindings>
+        
+        <jaxb:bindings node="//xsd:complexType[@name='WellViolationDetailType']//xsd:element[@ref='uic:ViolationReturnComplianceDate']">
+            <hj:basic>
+                <orm:column name="VIOLATION_RTN_COMPL_DATE" column-definition="CHAR(8)"/>
+            </hj:basic>
+        </jaxb:bindings>
+        
+        <jaxb:bindings node="//xsd:element[@ref='uic:FacilityResponseDetail']">
+            <hj:one-to-many>
+                <orm:join-column name="VIOLATION_ID" column-definition="VARCHAR2(40)"/>
+            </hj:one-to-many>
+        </jaxb:bindings>     
+        
+        <jaxb:bindings node="//xsd:complexType[@name='WellViolationDetailType']//xsd:element[@ref='uic:ViolationTypeCode']">
+            <hj:basic>
+                <orm:column name="VIOLATION_TYPE_CD" column-definition="CHAR(2)"/>
+            </hj:basic>
+        </jaxb:bindings>
+        
+        <jaxb:bindings node="//xsd:element[@ref='uic:WellResponseDetail']">
+            <hj:one-to-many>
+                <orm:join-column name="VIOLATION_ID" column-definition="VARCHAR2(40)"/>
+            </hj:one-to-many>
+        </jaxb:bindings>    
+        
+</jaxb:bindings>

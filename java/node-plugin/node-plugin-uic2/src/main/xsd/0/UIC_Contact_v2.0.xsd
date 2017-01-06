@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:uic="http://www.exchangenetwork.net/schema/uic/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/uic/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+	<xsd:include schemaLocation="UIC_SimpleContent_v2.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>UIC contact (Table 2): UIC_Contact_v2.0.xsd
+		Current Version Available At :
+		Description : Schema for the contact information for wells.
+		Application : UIC data submission 
+		Developed by : Environmental Protection Agency, Lockheed Martin, CGI Federal
+		Point of Contact : Carl Reeverts, Trang Le (EPA/UIC), Lauren Hall (CGI Federal)	
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:annotation>
+		<xsd:documentation>Contact complex component</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="ContactDetail" type="uic:ContactDetailType">
+		<xsd:annotation>
+			<xsd:documentation>Container for Contact information.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:annotation>
+		<xsd:documentation>Contact complex type</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="ContactDetailType">
+		<xsd:annotation>
+			<xsd:documentation>Container for Contact information type definition.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="uic:ContactIdentifier"/>
+			<xsd:element ref="uic:TelephoneNumberText" minOccurs="0"/>
+			<xsd:element ref="uic:IndividualFullName"/>
+			<xsd:element ref="uic:ContactCityName" minOccurs="0"/>
+			<xsd:element ref="uic:ContactAddressStateCode" minOccurs="0"/>
+			<xsd:element ref="uic:ContactAddressText"/>
+			<xsd:element ref="uic:ContactAddressPostalCode"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:annotation>
+		<xsd:documentation>Contact data elements</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="ContactIdentifier" type="uic:UICIdentifierType">
+		<xsd:annotation>
+			<xsd:documentation>Unique identification of Contact table - The first four characters are the primacy agency code (appendix D). The rest is DI program or State’s choice (letters and numbers only) identifying unique contact for a well. (e.g. NMNR30005003490000).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TelephoneNumberText" type="uic:UICGenericStringType">
+		<xsd:annotation>
+			<xsd:documentation>The phone number of a contact for the well.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="IndividualFullName" type="uic:NormalizedString70Type">
+		<xsd:annotation>
+			<xsd:documentation>The legal and complete name of a contact person (including first name, middle name or initial, and surname) for the well.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ContactCityName" type="uic:UICGenericStringType">
+		<xsd:annotation>
+			<xsd:documentation>The name of the city, town, or village of the contact for a well.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ContactAddressStateCode" type="uic:UICGenericStringType">
+		<xsd:annotation>
+			<xsd:documentation>The name of the state where the contact is located or the name of the country, if outside the U.S. </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ContactAddressText" type="uic:String150Type">
+		<xsd:annotation>
+			<xsd:documentation>The street address of the contact for a well.  This can be physical location or a mailing address.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ContactAddressPostalCode" type="uic:ZipCodeType">
+		<xsd:annotation>
+			<xsd:documentation>The combination of the 5-digit Zone Improvement Plan (ZIP) code and the four-digit extension code (if available) that represents the geographic segment that is a subunit of the ZIP Code, assigned by the U.S. Postal Service to a geographic location to facilitate mail delivery; or the postal zone specific to the country, other than the U.S., where the mail is delivered. </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

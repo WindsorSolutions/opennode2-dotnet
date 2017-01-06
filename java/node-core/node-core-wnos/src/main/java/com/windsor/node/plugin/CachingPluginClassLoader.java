@@ -320,7 +320,15 @@ public class CachingPluginClassLoader implements WnosClassLoader
                         if(SelfDescribingPluginServiceImplementor.class.isAssignableFrom(c) && !Modifier.isAbstract(c.getModifiers()))
                         {
                             logger.debug("Adding:  " + className);
-                            implementorDescriptors.add(((SelfDescribingPluginServiceImplementor) c.newInstance()).getPluginServiceImplementorDescription());
+                            PluginServiceImplementorDescriptor implementor =
+                                    ((SelfDescribingPluginServiceImplementor) c.newInstance()).getPluginServiceImplementorDescription();
+                            PluginServiceImplementorDescriptor implementorDescriptor = new PluginServiceImplementorDescriptor();
+                            implementorDescriptor.setClassName(className);
+                            implementorDescriptor.setName(implementor.getName());
+                            implementorDescriptor.setDescription(implementor.getDescription());
+                            logger.info("Implementor: " + implementorDescriptor);
+                            logger.info("Corrected classname");
+                            implementorDescriptors.add(implementorDescriptor);
                         }
 
                     }

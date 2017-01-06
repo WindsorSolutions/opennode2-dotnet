@@ -133,22 +133,7 @@ public class ScheduleExecutionWorker extends NodeWorker implements ScheduleItemE
 
                 if (schedule != null) {
 
-                    Timestamp next = null;
-
-                    if (schedule.getNextRunOn() != null) {
-
-                        logger.debug("Calculating next run");
-                        next = ScheduleUtil.calculateNextRun(schedule);
-                    }
-
-                    logger.debug("Processing");
                     processSchedule(schedule);
-
-                    logger.debug("Updating next run: " + next);
-                    //scheduleDao.setRun(schedule.getId(), next);
-                    schedule.setRunNow(false);
-                    schedule.setNextRunOn(next);
-                    scheduleDao.save(schedule);
                 }
 
             } catch (Exception ex) {
@@ -182,17 +167,35 @@ public class ScheduleExecutionWorker extends NodeWorker implements ScheduleItemE
         //should not need a next run set as this is an "ad hoc" run
     }
 
+    public void run(String scheduleId) {
+
+        logger.debug("Processing ScheduledItem.id " + scheduleId);
+        processSchedule(scheduleDao.get(scheduleId));
+    }
+
     @SuppressWarnings("unchecked")
     private void processSchedule(ScheduledItem schedule) {
 
-        logger.debug("processing: " + schedule);
-
         if (schedule == null) {
-            throw new IllegalArgumentException("Schedule object not set");
+            throw new IllegalArgumentException("No schedule provided!");
         }
 
-        NodeTransaction tran = null;
+        // update schedule execution status
+        schedule.setExecuteStatus(ScheduleExecuteStatus.Running);
 
+        if(!schedule.isRunNow()) {
+
+            // calculate next run date
+            schedule = setNextRun(schedule);
+        }
+
+        // clear run now flag
+        schedule.setRunNow(false);
+
+        // save to let everyone know what schedule is running
+        scheduleDao.save(schedule);
+
+        NodeTransaction tran = null;
         Activity logEntry = new Activity();
         logEntry.setModifiedById(schedule.getModifiedById());
         logEntry.setIp(getNosConfig().getLocalhostIp());
@@ -278,12 +281,10 @@ public class ScheduleExecutionWorker extends NodeWorker implements ScheduleItemE
             }
             else
             {
-                logEntry.addEntry("No target defined");
+                logEntry.addEntry("No data target defined");
             }
 
             /*
-             * 
-             * 
              * POST PROCESS
              */
 
@@ -434,5 +435,16 @@ public class ScheduleExecutionWorker extends NodeWorker implements ScheduleItemE
 
     public void setExecutionMachineName(String executionMachineName) {
         this.executionMachineName = executionMachineName;
+    }
+
+    private ScheduledItem setNextRun(ScheduledItem scheduledItem) {
+        Timestamp next = null;
+
+        if (scheduledItem.getNextRunOn() != null) {
+            next = ScheduleUtil.calculateNextRun(scheduledItem);
+        }
+
+        scheduledItem.setNextRunOn(next);
+        return scheduledItem;
     }
 }

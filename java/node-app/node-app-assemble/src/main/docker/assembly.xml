@@ -11,6 +11,13 @@
             </includes>
         </fileSet>
         <fileSet>
+            <directory>${project.parent.basedir}/../target/dev/dev/tomcat</directory>
+            <outputDirectory>usr/local/tomcat/conf/Catalina/localhost</outputDirectory>
+            <includes>
+                <include>**</include>
+            </includes>
+        </fileSet>
+        <fileSet>
             <directory>${project.parent.basedir}/../target/dev/dev/</directory>
             <outputDirectory>var/</outputDirectory>
             <includes>

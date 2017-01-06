@@ -149,7 +149,7 @@ public class NetworkNode2Stub extends Stub {
     }
 
     /**
-     * Constructor taking the target endpoint
+     * Constructor taking the datatarget endpoint
      */
     public NetworkNode2Stub(java.lang.String targetEndpoint) throws AxisFault {
         this(null, targetEndpoint, false);

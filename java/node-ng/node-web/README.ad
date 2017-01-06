@@ -1,0 +1,9 @@
+= Running
+
+Create a directory containing the node property files, which are used to connect to the node database and to communicate with other nodes in the system: `jdbc.properties`, `naas.properties` and `nos.properties`.
+
+The default location of this directory is `/var/opennode2_home/conf`.
+
+Sample files can be found in `../../resources/distribution-overlay-dev/ecos-generic/opennode2_home/conf`.
+
+Add this directory to your classpath.

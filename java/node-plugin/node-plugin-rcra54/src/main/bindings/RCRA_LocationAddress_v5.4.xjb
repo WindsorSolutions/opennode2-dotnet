@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+    xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance" xmlns:annox="http://annox.dev.java.net"
+    jaxb:extensionBindingPrefixes="hj orm inheritance" schemaLocation="../xsd/5/4/RCRA_LocationAddress_v5.4.xsd">
+    
+    <jaxb:bindings node="//xsd:complexType[@name='LocationAddressDataType']">
+        <hj:embeddable />
+    </jaxb:bindings>
+    
+    <jaxb:bindings node="//xsd:element[@ref='RC:LocationAddressNumberText']">
+        <hj:basic>
+            <orm:column name="LOCATION_STREET_NUMBER"/>
+        </hj:basic>
+    </jaxb:bindings>
+    
+    <jaxb:bindings node="//xsd:element[@ref='RC:LocationAddressText']">
+        <hj:basic>
+            <orm:column name="LOCATION_STREET1"/>
+        </hj:basic>
+    </jaxb:bindings>
+    
+    <jaxb:bindings node="//xsd:element[@ref='RC:SupplementalLocationText']">
+        <hj:basic>
+            <orm:column name="LOCATION_STREET2"/>
+        </hj:basic>
+    </jaxb:bindings>
+    
+    <jaxb:bindings node="//xsd:element[@ref='RC:LocalityName']">
+        <hj:basic>
+            <orm:column name="LOCATION_CITY"/>
+        </hj:basic>
+    </jaxb:bindings>    
+
+    <jaxb:bindings node="//xsd:element[@ref='RC:StateUSPSCode']">
+        <hj:basic>
+            <orm:column name="LOCATION_STATE"/>
+        </hj:basic>
+    </jaxb:bindings> 
+    
+    <jaxb:bindings node="//xsd:element[@ref='RC:LocationZIPCode']">
+        <hj:basic>
+            <orm:column name="LOCATION_ZIP"/>
+        </hj:basic>
+    </jaxb:bindings>
+    
+    <jaxb:bindings node="//xsd:element[@ref='RC:CountryName']">
+        <hj:basic>
+            <orm:column name="LOCATION_COUNTRY"/>
+        </hj:basic>
+    </jaxb:bindings>    
+    
+</jaxb:bindings>
+

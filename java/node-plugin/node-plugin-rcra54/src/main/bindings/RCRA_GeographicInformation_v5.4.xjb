@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+    xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance" xmlns:annox="http://annox.dev.java.net"
+    jaxb:extensionBindingPrefixes="hj orm inheritance" schemaLocation="../xsd/5/4/RCRA_GeographicInformation_v5.4.xsd">
+
+    <jaxb:bindings node="//xsd:complexType[@name='GeographicInformationDataType']">
+        <hj:entity>
+            <orm:table name="RCRA_GIS_GEO_INFORMATION"/>
+        </hj:entity>
+        <hj:generated-id name="Dbid">
+            <orm:column name="GIS_GEO_INFORMATION_ID"/>
+        </hj:generated-id>
+    </jaxb:bindings>
+    
+    <jaxb:bindings node="//xsd:element[@ref='RC:LocationCommentsText']">
+        <hj:basic>
+            <orm:column name="LOC_COMM_TXT"/>
+        </hj:basic>
+    </jaxb:bindings>
+    
+</jaxb:bindings>
+

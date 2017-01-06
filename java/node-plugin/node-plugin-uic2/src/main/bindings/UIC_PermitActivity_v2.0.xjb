@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	jaxb:extensionBindingPrefixes="hj orm" schemaLocation="../xsd/0/UIC_PermitActivity_v2.0.xsd">
+	
+	<jaxb:bindings node="//xsd:complexType[@name='PermitActivityDetailType']">
+		<hj:entity>
+			<orm:table name="UIC_PERMIT_ACTIVITY" />
+		</hj:entity>
+		<hj:generated-id name="Dbid" transient="true">
+			<orm:column name="PERMIT_ACTIVITY_ID" />
+		</hj:generated-id>
+	</jaxb:bindings>
+	
+	<jaxb:bindings node="//xsd:element[@ref='uic:PermitActivityActionTypeCode']">
+        <hj:basic>
+            <orm:column name="PERMIT_ACT_ACT_TYPE_CD" column-definition="CHAR(2)"/>
+        </hj:basic>
+    </jaxb:bindings>
+
+</jaxb:bindings>

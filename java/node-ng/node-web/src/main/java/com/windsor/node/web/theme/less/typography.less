@@ -1,0 +1,91 @@
+
+// ------------------------------------
+//  Typography
+// ------------------------------------
+
+.bold {
+  font-weight: bold;
+}
+
+.error {
+  color: @brand-danger;
+}
+
+.good {
+  color: @brand-success;
+}
+
+
+// ------------------------------------
+//  Helpers
+// ------------------------------------
+
+.no-wrap {
+  white-space: nowrap;
+}
+
+// ------------------------------------
+//  Headings
+// ------------------------------------
+
+.heading {
+  border-left: 3px solid @color-brand;
+  padding: 8px;
+  margin-bottom: 30px;
+}
+
+.heading-line {
+  margin-top: 30px;
+  color: @color-brand;
+  border-bottom: 1px solid @color-brand;
+  font-family: 'Bulo';
+  padding-bottom: 10px;
+}
+
+.heading-page {
+  background-color: @color-white;
+  margin: 0;
+  padding: 20px;
+  color: @color-brand;
+  border-bottom: 2px solid @color-brand;
+}
+
+// ------------------------------------
+//  Definition Lists
+// ------------------------------------
+.date-overdue {
+
+  & > div::after {
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    padding-left: 3px;
+    padding-right: 3px;
+    content: "\f071";
+    float: right;
+    margin-top: 3px;
+  }
+}
+
+.data-incomplete::after {
+
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    padding-left: 3px;
+    padding-right: 3px;
+    content: "\f06a";
+    margin-top: 3px;    
+}
+
+// ------------------------------------
+//  Definition Lists
+// ------------------------------------
+
+.dl-horizontal {
+  dt, dd {
+    line-height: 1.9;
+  }
+}

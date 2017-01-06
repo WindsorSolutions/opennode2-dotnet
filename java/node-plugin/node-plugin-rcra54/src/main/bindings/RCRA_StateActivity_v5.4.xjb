@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+    xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance" xmlns:annox="http://annox.dev.java.net"
+    jaxb:extensionBindingPrefixes="hj orm inheritance" schemaLocation="../xsd/5/4/RCRA_StateActivity_v5.4.xsd">
+
+    <jaxb:bindings node="//xsd:complexType[@name='StateActivityDataType']">
+        <hj:entity>
+            <orm:table name="RCRA_HD_STATE_ACTIVITY"/>
+        </hj:entity>
+        <hj:generated-id name="Dbid">
+            <orm:column name="HD_STATE_ACTIVITY_ID"/>
+        </hj:generated-id>
+    </jaxb:bindings>
+    
+    <jaxb:bindings node="//xsd:element[@ref='RC:TransactionCode']">
+        <hj:basic>
+            <orm:column name="TRANSACTION_CODE"/>
+        </hj:basic>
+    </jaxb:bindings>
+    
+    <jaxb:bindings node="//xsd:element[@ref='RC:StateActivityOwnerName']">
+        <hj:basic>
+            <orm:column name="STATE_ACTIVITY_OWNER"/>
+        </hj:basic>
+    </jaxb:bindings>
+    
+    <jaxb:bindings node="//xsd:element[@ref='RC:StateActivityTypeCode']">
+        <hj:basic>
+            <orm:column name="STATE_ACTIVITY_TYPE"/>
+        </hj:basic>
+    </jaxb:bindings>        
+    
+    <jaxb:bindings node="//xsd:element[@ref='RC:StateActivityTypeText']">
+        <hj:ignored/>
+    </jaxb:bindings>
+   
+</jaxb:bindings>
+

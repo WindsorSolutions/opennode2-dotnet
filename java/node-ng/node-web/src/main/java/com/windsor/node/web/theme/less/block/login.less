@@ -1,0 +1,61 @@
+// --------------------------------
+//  Login panel
+// --------------------------------
+
+@min-width: 500px;
+@max-width: 650px;
+
+#LoginPanel {
+  min-width: @min-width;
+  max-width: @max-width;
+  margin: 100px auto;
+  opacity: 1;
+}
+
+#LoginPanel {
+  -moz-animation-name: expand;
+  -moz-animation-iteration-count: once;
+  -moz-animation-timing-function: ease-in;
+  -moz-animation-duration: 0.4s;
+
+  -webkit-animation-name: expand;
+  -webkit-animation-iteration-count: once;
+  -webkit-animation-timing-function: ease-in;
+  -webkit-animation-duration: 0.4s;
+
+  animation-name: expand;
+  animation-iteration-count: once;
+  animation-timing-function: ease-in;
+  animation-duration: 0.4s;
+}
+
+@-moz-keyframes expand {
+  0% {
+    width: @min-width;
+    opacity: .2;
+  }
+  100% {
+    width: @max-width;
+    opacity: 1;
+  }
+}
+@-webkit-keyframes expand {
+  0% {
+    width: @min-width;
+    opacity: .2;
+  }
+  100% {
+    width: @max-width;
+    opacity: 1;
+  }
+}
+@keyframes expand {
+  0% {
+    width: @min-width;
+    opacity: .2;
+  }
+  100% {
+    width: @max-width;
+    opacity: 1;
+  }
+}

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:uic="http://www.exchangenetwork.net/schema/uic/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/uic/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+	<xsd:include schemaLocation="UIC_SimpleContent_v2.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>UIC engineering (Table 15): UIC_Engineering_v2.0.xsd
+		Current Version Available At :
+		Description : Schema for information on Class I and deep well injection operational parameters that measure volumes of fluid going down a well.
+		Application : UIC data submission 
+		Developed by : Environmental Protection Agency, Lockheed Martin, CGI Federal
+		Point of Contact : Carl Reeverts, Trang Le (EPA/UIC), Lauren Hall (CGI Federal)	
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:annotation>
+		<xsd:documentation>Engineering complex component</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="EngineeringDetail" type="uic:EngineeringDetailType">
+		<xsd:annotation>
+			<xsd:documentation>Container for Engineering information.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:annotation>
+		<xsd:documentation>Engineering complex type</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="EngineeringDetailType">
+		<xsd:annotation>
+			<xsd:documentation>Container for Engineering information type definition.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="uic:EngineeringIdentifier"/>
+			<xsd:element ref="uic:EngineeringMaximumFlowRateNumeric" minOccurs="0"/>
+			<xsd:element ref="uic:EngineeringPermittedOnsiteInjectionVolumeNumeric" minOccurs="0"/>
+			<xsd:element ref="uic:EngineeringPermittedOffsiteInjectionVolumeNumeric" minOccurs="0"/>
+			<xsd:element ref="uic:EngineeringWellIdentifier"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:annotation>
+		<xsd:documentation>Enginerring data elements</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="EngineeringIdentifier" type="uic:UICIdentifierType">
+		<xsd:annotation>
+			<xsd:documentation>Unique identification of Engineering table - The first four characters are the primacy agency code (appendix D). The rest is DI program or State’s choice (letters and numbers only identifying unique engineering information  (e.g. WYEQ00000543, …).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="EngineeringMaximumFlowRateNumeric" type="uic:UICGenericStringType">
+		<xsd:annotation>
+			<xsd:documentation>Maximum flow rate of injectate in the current quartermeasured in gallons per minute.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="EngineeringPermittedOnsiteInjectionVolumeNumeric" type="uic:UICGenericStringType">
+		<xsd:annotation>
+			<xsd:documentation>Permitted on-site injected volume measured in million gallon per month.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="EngineeringPermittedOffsiteInjectionVolumeNumeric" type="uic:UICGenericStringType">
+		<xsd:annotation>
+			<xsd:documentation>Permitted off-site injected volume measured in million gallon per month.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="EngineeringWellIdentifier" type="uic:UICIdentifierType">
+		<xsd:annotation>
+			<xsd:documentation>Unique identification of an injection well.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

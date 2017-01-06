@@ -12,7 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.windsor.node.plugin.common.xml.stream.ElementStreamWriter;
 import com.windsor.node.plugin.common.xml.stream.ElementWriterException;
 import com.windsor.node.plugin.wqx.domain.Header;
-import com.windsor.node.plugin.wqx.domain.generated.OrganizationDataType;
+import com.windsor.node.plugin.wqx.domain.OrganizationDataType;
 
 public abstract class AbstractWqxOutputStreamWriter extends ElementStreamWriter {
 
@@ -20,7 +20,7 @@ public abstract class AbstractWqxOutputStreamWriter extends ElementStreamWriter 
 
     public AbstractWqxOutputStreamWriter(final Header headerData) throws ElementWriterException {
         /**
-         * Any class from the c.w.n.p.wqx.domain.generated package will work
+         * Any class from the c.w.n.p.wqx.domain package will work
          */
         super(new Class [] { OrganizationDataType.class } );
 
@@ -51,7 +51,7 @@ public abstract class AbstractWqxOutputStreamWriter extends ElementStreamWriter 
 
                 out.writeNamespace("xsd", XMLConstants.W3C_XML_SCHEMA_NS_URI);
                 out.writeNamespace("xsi", XMLConstants.W3C_XML_SCHEMA_INSTANCE_NS_URI);
-                out.writeAttribute(XmlConstants.NS_WQX_ENHEADER, "Id", headerData.getDocumentId());
+                out.writeAttribute("Id", headerData.getDocumentId());
 
                 /*
                  * <Header>

@@ -3,14 +3,14 @@ package com.windsor.node.plugin.wqx.dao;
 import java.util.Date;
 import java.util.List;
 
+import com.windsor.node.plugin.wqx.domain.ActivityDataType;
+import com.windsor.node.plugin.wqx.domain.ActivityGroupDataType;
+import com.windsor.node.plugin.wqx.domain.BiologicalHabitatIndexDataType;
 import com.windsor.node.plugin.wqx.domain.Component;
 import com.windsor.node.plugin.wqx.domain.DeleteComponentIdentifier;
-import com.windsor.node.plugin.wqx.domain.generated.ActivityDataType;
-import com.windsor.node.plugin.wqx.domain.generated.ActivityGroupDataType;
-import com.windsor.node.plugin.wqx.domain.generated.BiologicalHabitatIndexDataType;
-import com.windsor.node.plugin.wqx.domain.generated.MonitoringLocationDataType;
-import com.windsor.node.plugin.wqx.domain.generated.OrganizationDataType;
-import com.windsor.node.plugin.wqx.domain.generated.ProjectDataType;
+import com.windsor.node.plugin.wqx.domain.MonitoringLocationDataType;
+import com.windsor.node.plugin.wqx.domain.OrganizationDataType;
+import com.windsor.node.plugin.wqx.domain.ProjectDataType;
 
 public interface WqxDao {
 

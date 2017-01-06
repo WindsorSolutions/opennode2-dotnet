@@ -6,6 +6,8 @@
 
 	<jaxb:bindings schemaLocation="../xsd/index.xsd" node="/xsd:schema">
 
+	    <hj:ignored-package name=""/>
+
 		<!-- global settings -->
 
 		<jaxb:schemaBindings>

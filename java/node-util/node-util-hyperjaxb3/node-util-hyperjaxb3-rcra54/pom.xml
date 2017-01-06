@@ -1,0 +1,12 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.windsor.node.util.hyperjaxb3</groupId>
+		<artifactId>node-util-hyperjaxb3</artifactId>
+		<version>2.12</version>
+	</parent>
+	<artifactId>node-util-hyperjaxb3-rcra54</artifactId>
+	<packaging>jar</packaging>
+	<name>Node Util - Hyperjaxb3 - RCRA 5.4</name>
+</project>

@@ -1,4 +1,25 @@
 ================================================================================
+OpenNode2 v2.20 for Java - Release Notes                             2016-12-05
+================================================================================
+Release 2.20 enhances usability of the Java Node.
+
+This release includes a re-written user interface that fixes a wide variety of
+long standing bugs in the administration interface. In addition, it brings a
+more modern look-and-feel that we hope our customers will find more intuitive
+and easier to follow.
+
+There is a minor schema change for this release, update scripts are included in
+the "upgrade" folder for all supported database platforms.
+
+This new release also includes an additional Tomcat configuration file that must
+be deployed when upgrading. The file "wna.xml" in the "tomcat" directory
+of the distribution folder must be copied to the "conf/Catalina/localhost"
+directory of your Tomcat instance, this brings the all of the OpenNode2
+configuration files into the classpath of the new administration application. If
+you have customized the location of your configuration files, please customize
+this file as well.
+
+================================================================================
 OpenNode2 v2.02 for Java - Release Notes                             2011-11-17
 ================================================================================
 Release 2.02 enhances usability of the Java Node.

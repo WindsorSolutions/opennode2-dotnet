@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.windsor.node.core</groupId>
         <artifactId>node-core</artifactId>
-        <version>2.11</version>
+        <version>2.12</version>
     </parent>
     <artifactId>node-core-wnos</artifactId>
     <packaging>jar</packaging>
@@ -13,7 +13,7 @@
         <dependency>
             <groupId>com.windsor.node.core</groupId>
             <artifactId>node-core-common</artifactId>
-            <version>${project.version}</version>
+            <version>2.12</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>

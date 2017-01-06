@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:uic="http://www.exchangenetwork.net/schema/uic/2" targetNamespace="http://www.exchangenetwork.net/schema/uic/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+	<xsd:include schemaLocation="0/UIC_UIC_v2.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name : Index.xsd
+		Current Version Available At :
+		Description : For generic access to latest schema for the transfer of UIC information.
+		Application : UIC data submission 
+		Developed by : Environmental Protection Agency, Lockheed Martin, CGI Federal
+		Point of Contact : Carl Reeverts, Trang Le (EPA/UIC), Lauren Hall (CGI Federal)
+		</xsd:documentation>
+	</xsd:annotation>
+</xsd:schema>

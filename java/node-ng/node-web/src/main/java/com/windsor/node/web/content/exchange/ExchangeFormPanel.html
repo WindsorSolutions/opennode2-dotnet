@@ -1,0 +1,101 @@
+<html xmlns:wicket="http://wicket.apache.org">
+<wicket:panel>
+    <form wicket:id="form">
+        <div class="row">
+            <div class="col-xs-12 col-md-12 col-lg-12">
+                <div wicket:id="nameGroup">
+                    <input wicket:id="field" class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-12 col-lg-12">
+                <div wicket:id="targetGroup">
+                    <input wicket:id="field" class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-12 col-lg-12">
+                <div wicket:id="descriptionGroup">
+                    <input wicket:id="field" class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-12 col-lg-12">
+                <div wicket:id="contactGroup">
+                    <br/>
+                    <input wicket:id="field" type="hidden"/>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-12 col-lg-12">
+                <div wicket:id="urlGroup">
+                    <input wicket:id="field" class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-12 col-lg-12">
+                <div wicket:id="secureGroup">
+                    <input type="checkbox" wicket:id="field"/>
+                    <span wicket:id="label">[SECURE]</span>
+                </div>
+                <div><span wicket:id="labelProtected">[PROTECTED]</span></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-12 col-lg-12">
+                <div wicket:id="pluginGroup">
+                    <br/>
+                    <b><span wicket:id="labelPluginUpload">[PLUGIN]</span></b><br/>
+                    <input wicket:id="pluginUpload" type="file"/>
+                </div>
+            </div>
+        </div>
+
+        <div id="pluginMetadata">
+            <div class="row">
+                <div class="col-xs-12 col-md-12 col-lg-12">
+                    <br/>
+                    <h5><span wicket:id="labelPluginInformation">[PLUGIN INFO]</span></h5>
+                </div>
+            </div>
+            <div class="row">
+               <div class="col-xs-4 col-md-4 col-lg-4" style="text-align: right;">
+                   <b><span wicket:id="labelPluginName">[PLUGIN NAME]</span></b>
+               </div>
+               <div class="col-xs-4 col-md-8 col-lg-8">
+                   <span wicket:id="pluginName">[PLUGIN NAME]</span>
+               </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-4 col-md-4 col-lg-4" style="text-align: right;">
+                    <b><span wicket:id="labelPluginFullName">[PLUGIN FULL NAME]</span></b>
+                </div>
+                <div class="col-xs-4 col-md-8 col-lg-8">
+                    <span wicket:id="pluginFullName">[PLUGIN FULL NAME]</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-4 col-md-4 col-lg-4" style="text-align: right;">
+                    <b><span wicket:id="labelPluginDescription">[PLUGIN DESCRIPTION]</span></b>
+                </div>
+                <div class="col-xs-4 col-md-8 col-lg-8">
+                    <span wicket:id="pluginDescription">[PLUGIN DESCRIPTION]</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-4 col-md-4 col-lg-4" style="text-align: right;">
+                    <b><span wicket:id="labelPluginVersion">[PLUGIN VERSION]</span></b>
+                </div>
+                <div class="col-xs-4 col-md-8 col-lg-8">
+                    <span wicket:id="pluginVersion">[PLUGIN VERSION]</span>
+                </div>
+            </div>
+        </div>
+    </form>
+</wicket:panel>
+</html>

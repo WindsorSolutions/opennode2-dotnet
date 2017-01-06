@@ -10,9 +10,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.windsor.node.plugin.wqx.domain.generated.ResultLabInformationDataType;
-import com.windsor.node.plugin.wqx.domain.generated.WQXTimeDataType;
-
 /**
  * Handles nulling out the resultLabInformation.analysisEndTime field if the TZ
  * is set but the time is not.

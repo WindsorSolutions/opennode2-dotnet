@@ -1,0 +1,58 @@
+<html xmlns:wicket="http://wicket.apache.org">
+<wicket:panel>
+    <form wicket:id="form">
+        <div class="row">
+            <div class="col-xs-12 col-md-12 col-lg-12">
+                <div wicket:id="nameGroup">
+                    <input wicket:id="field" class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-12 col-lg-12">
+                <div wicket:id="implementorGroup">
+                    <br /> <input wicket:id="field" type="hidden" style="width: 100%;" />
+                    <br />
+                    <p wicket:id="labelImplementor" style="margin-top: 1em;">[DESCRIPTION]</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-12 col-lg-12">
+                <div wicket:id="typeGroup">
+                    <br /> <input wicket:id="field" type="hidden" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-md-12 col-lg-12">
+                <div wicket:id="activeGroup">
+                    <input type="checkbox" wicket:id="field" /> <span wicket:id="label">[ACTIVE]</span><br />
+                    <div>
+                        <span wicket:id="labelActive">[ACTIVE]</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div wicket:id="parameterPanel" class="row">
+            <div class="col-xs-12 col-md-12 col-lg-12">
+                <h4><wicket:message key="label.parameters">[PARAMETERS]</wicket:message></h4>
+                <div wicket:id="parameters" class="row">
+                    <div wicket:id="parameter">[PARAMETER]</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-xs-12 col-md-12 col-lg-12">
+                <h4><h4><wicket:message key="label.data_sources">[DATA SOURCES]</wicket:message></h4></h4>
+                <div wicket:id="dataSourceGroup">
+                    <input wicket:id="field" type="hidden"/>
+                </div>
+            </div>
+        </div>
+    </form>
+</wicket:panel>
+</html>

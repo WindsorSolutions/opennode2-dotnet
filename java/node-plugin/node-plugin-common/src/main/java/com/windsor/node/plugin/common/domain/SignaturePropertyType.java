@@ -94,7 +94,7 @@ public class SignaturePropertyType {
     }
 
     /**
-     * Gets the value of the target property.
+     * Gets the value of the datatarget property.
      * 
      * @return
      *     possible object is
@@ -106,7 +106,7 @@ public class SignaturePropertyType {
     }
 
     /**
-     * Sets the value of the target property.
+     * Sets the value of the datatarget property.
      * 
      * @param value
      *     allowed object is

@@ -294,7 +294,7 @@ public class ScheduledItem extends AuditableIdentity {
                 .append("frequency", frequency).append("active", active)
                 .append("runNow", runNow)
                 .append("executeStatus", executeStatus)
-                .append("lastExecutionActivity", lastExecutionActivity)
+                //.append("lastExecutionActivity", lastExecutionActivity)
                 .append("sourceFlow", sourceFlow)
                 .append("targetFlow", targetFlow)
                 .append("targetOperation", targetOperation).toString();

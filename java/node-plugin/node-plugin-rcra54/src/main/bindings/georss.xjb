@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+    xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance" xmlns:annox="http://annox.dev.java.net"
+    jaxb:extensionBindingPrefixes="hj orm inheritance" schemaLocation="../xsd/5/4/georss.xsd">
+    
+    <jaxb:bindings node="//xsd:complexType[@name='whereType']">
+        <hj:embeddable/>
+    </jaxb:bindings>
+    
+    <jaxb:bindings node="//xsd:complexType[@name='abstractFeaturePropertyType']">
+        <hj:embeddable/>
+    </jaxb:bindings>
+    
+    <jaxb:bindings node="//xsd:element[@ref='gml:Point']">
+        <hj:ignored />
+    </jaxb:bindings>
+    
+    <jaxb:bindings node="//xsd:element[@ref='gml:LineString']">
+        <hj:ignored />
+    </jaxb:bindings>
+    
+    <jaxb:bindings node="//xsd:element[@ref='gml:Polygon']">
+        <hj:ignored />
+    </jaxb:bindings>
+    
+</jaxb:bindings>
+

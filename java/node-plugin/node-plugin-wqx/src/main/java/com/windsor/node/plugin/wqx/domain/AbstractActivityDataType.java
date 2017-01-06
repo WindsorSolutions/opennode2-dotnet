@@ -8,9 +8,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.windsor.node.plugin.wqx.domain.generated.ActivityDescriptionDataType;
-import com.windsor.node.plugin.wqx.domain.generated.WQXTimeDataType;
-
 /**
  * Handles nulling out the activityDescription.activityEndTime field if the TZ
  * is set but the time is not.

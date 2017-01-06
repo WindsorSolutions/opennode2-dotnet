@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:RC="http://www.exchangenetwork.net/schema/RCRA/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/RCRA/5" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="5.4">
+	<xsd:include schemaLocation="./RCRA_Shared_v5.4.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name : 	RCRA_MechanismDetail_v5.4
+		Description : 	Financial Assurance Mechanism Details
+		Developed by : 	U.S. EPA
+	</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="MechanismDetail" type="RC:MechanismDetailDataType">
+		<xsd:annotation>
+			<xsd:documentation>Details of the mechanism used to address cost estimates of the Financial liability associated with a given Handler.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="MechanismDetailDataType">
+		<xsd:annotation>
+			<xsd:documentation>Details of the mechanism used to address cost estimates of the Financial liability associated with a given Handler.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="RC:TransactionCode" minOccurs="0"/>
+			<xsd:element ref="RC:MechanismDetailSequenceNumber"/>
+			<xsd:element ref="RC:MechanismIdentificationText" minOccurs="0"/>
+			<xsd:element ref="RC:FaceValueAmount" minOccurs="0"/>
+			<xsd:element ref="RC:EffectiveDate" minOccurs="0"/>
+			<xsd:element ref="RC:ExpirationDate" minOccurs="0"/>
+			<xsd:element ref="RC:SupplementalInformationText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

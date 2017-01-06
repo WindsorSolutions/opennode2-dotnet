@@ -1,0 +1,45 @@
+<html xmlns:wicket="http://wicket.apache.org">
+<wicket:panel>
+	<form wicket:id="form">
+		<div class="row">
+			<div class="col-xs-12 col-md-12 col-lg-12">
+				<h4>
+					<span wicket:id="targetLabel">[RESULTS TARGET]</span>
+				</h4>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-md-12 col-lg-12">
+				<div wicket:id="targetType">[TARGET TYPE]</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-md-12 col-lg-12" style="margin-top: 1em;">
+				<p wicket:id="targetTypeHelp">[TARGET TYPE HELP]</p>
+			</div>
+		</div>
+
+		<div class="row" wicket:id="partnerContainer">
+			<div class="col-xs-12 col-md-12 col-lg-12" style="margin-top: 1em;">
+				<div wicket:id="partnerGroup">
+				    <input type="hidden" wicket:id="field"/>
+				</div>
+			</div>
+		</div>
+		<div class="row" wicket:id="emailContainer">
+			<div class="col-xs-12 col-md-12 col-lg-12" style="margin-top: 1em;">
+				<div wicket:id="emailGroup">
+                    <input type="text" wicket:id="field"/>
+                </div>
+			</div>
+		</div>
+		<div class="row" wicket:id="fileContainer">
+			<div class="col-xs-12 col-md-12 col-lg-12" style="margin-top: 1em;">
+				<div wicket:id="filePathGroup">
+                    <input type="text" wicket:id="field"/>
+                </div>
+			</div>
+		</div>
+	</form>
+</wicket:panel>
+</html>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+    xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance" xmlns:annox="http://annox.dev.java.net"
+    jaxb:extensionBindingPrefixes="hj orm inheritance" schemaLocation="../xsd/5/4/RCRA_Certification_v5.4.xsd">
+
+    <jaxb:bindings node="//xsd:complexType[@name='CertificationDataType']">
+        <hj:entity>
+            <orm:table name="RCRA_HD_CERTIFICATION"/>
+        </hj:entity>
+        <hj:generated-id name="Dbid">
+            <orm:column name="HD_CERTIFICATION_ID"/>
+        </hj:generated-id>
+    </jaxb:bindings>
+
+    <jaxb:bindings node="//xsd:element[@ref='RC:TransactionCode']">
+        <hj:basic>
+            <orm:column name="TRANSACTION_CODE"/>
+        </hj:basic>
+    </jaxb:bindings>
+    
+    <jaxb:bindings node="//xsd:element[@ref='RC:CertificationSequenceNumber']">
+        <hj:basic>
+            <orm:column name="CERT_SEQ"/>
+        </hj:basic>
+    </jaxb:bindings>
+    
+    <jaxb:bindings node="//xsd:element[@ref='RC:SignedDate']">
+        <hj:basic>
+            <orm:column name="CERT_SIGNED_DATE"/>
+        </hj:basic>
+    </jaxb:bindings>    
+    
+    <jaxb:bindings node="//xsd:element[@ref='RC:IndividualTitleText']">
+        <hj:basic>
+            <orm:column name="CERT_TITLE"/>
+        </hj:basic>
+    </jaxb:bindings>
+    
+    <jaxb:bindings node="//xsd:element[@ref='RC:FirstName']">
+        <hj:basic>
+            <orm:column name="CERT_FIRST_NAME"/>
+        </hj:basic>
+    </jaxb:bindings>
+    
+    <jaxb:bindings node="//xsd:element[@ref='RC:MiddleInitial']">
+        <hj:basic>
+            <orm:column name="CERT_MIDDLE_INITIAL"/>
+        </hj:basic>
+    </jaxb:bindings>                
+    
+    <jaxb:bindings node="//xsd:element[@ref='RC:LastName']">
+        <hj:basic>
+            <orm:column name="CERT_LAST_NAME"/>
+        </hj:basic>
+    </jaxb:bindings>
+    
+    <jaxb:bindings node="//xsd:element[@ref='RC:CertificationEmailText']">
+        <hj:ignored/>
+    </jaxb:bindings>              
+
+</jaxb:bindings>
+

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance"
+	xmlns:annox="http://annox.dev.java.net" jaxb:extensionBindingPrefixes="hj orm inheritance annox"
+	schemaLocation="../xsd/0/UIC_Facility_v2.0.xsd">
+
+	<jaxb:bindings node="//xsd:complexType[@name='FacilityDetailType']">
+		<hj:embeddable />
+	</jaxb:bindings>
+
+	<jaxb:bindings node="//xsd:complexType[@name='FacilityListType']">
+		<hj:entity>
+			<orm:table name="UIC_FACILITY" />
+		</hj:entity>
+		<hj:generated-id name="Dbid" transient="true">
+			<orm:column name="FACILITY_ID" />
+		</hj:generated-id>
+	</jaxb:bindings>
+
+</jaxb:bindings>

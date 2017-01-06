@@ -7,14 +7,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
+import com.windsor.node.plugin.wqx.domain.ActivityDataType;
+import com.windsor.node.plugin.wqx.domain.ActivityGroupDataType;
+import com.windsor.node.plugin.wqx.domain.BiologicalHabitatIndexDataType;
 import com.windsor.node.plugin.wqx.domain.Component;
 import com.windsor.node.plugin.wqx.domain.DeleteComponentIdentifier;
-import com.windsor.node.plugin.wqx.domain.generated.ActivityDataType;
-import com.windsor.node.plugin.wqx.domain.generated.ActivityGroupDataType;
-import com.windsor.node.plugin.wqx.domain.generated.BiologicalHabitatIndexDataType;
-import com.windsor.node.plugin.wqx.domain.generated.MonitoringLocationDataType;
-import com.windsor.node.plugin.wqx.domain.generated.OrganizationDataType;
-import com.windsor.node.plugin.wqx.domain.generated.ProjectDataType;
+import com.windsor.node.plugin.wqx.domain.MonitoringLocationDataType;
+import com.windsor.node.plugin.wqx.domain.OrganizationDataType;
+import com.windsor.node.plugin.wqx.domain.ProjectDataType;
 
 public class WqxDaoJpaImpl implements WqxDao {
 
@@ -28,7 +28,7 @@ public class WqxDaoJpaImpl implements WqxDao {
 
     @Override
     public OrganizationDataType findOrganizationByOrgId(String orgId) throws OrganizationNotFoundException {
-        Query q = em.createQuery("select org from OrganizationDataType org where org.organizationDescription.organizationIdentifier = :orgId");
+        Query q = em.createQuery("select org from com.windsor.node.plugin.wqx.domain.OrganizationDataType org where org.organizationDescription.organizationIdentifier = :orgId");
         q.setParameter("orgId", orgId);
 
         try {
@@ -117,7 +117,7 @@ public class WqxDaoJpaImpl implements WqxDao {
 
     @Override
     public List<DeleteComponentIdentifier> findByOrgIdAndComponentAndUpdatedBetween(String orgId, Component component, Date start, Date end) {
-        Query q = em.createQuery("select x from DeleteComponentIdentifier x where x.organizationId = :orgId and x.component = :component and x.updatedDate between :start and :end");
+        Query q = em.createQuery("select x from com.windsor.node.plugin.wqx.domain.DeleteComponentIdentifier x where x.organizationId = :orgId and x.component = :component and x.updatedDate between :start and :end");
         q.setParameter("orgId", orgId);
         q.setParameter("component", component.componentName());
         q.setParameter("start", start);
@@ -130,7 +130,7 @@ public class WqxDaoJpaImpl implements WqxDao {
      */
     @Override
     public List<DeleteComponentIdentifier> findByOrgIdAndComponentAndUpdatedAfter(String orgId, Component component, Date after) {
-        Query q = em.createQuery("select x from DeleteComponentIdentifier x where x.organizationId = :orgId and x.component = :component and x.updatedDate >= :updatedDate");
+        Query q = em.createQuery("select x from com.windsor.node.plugin.wqx.domain.DeleteComponentIdentifier x where x.organizationId = :orgId and x.component = :component and x.updatedDate >= :updatedDate");
         q.setParameter("orgId", orgId);
         q.setParameter("component", component.componentName());
         q.setParameter("updatedDate", after);
@@ -142,7 +142,7 @@ public class WqxDaoJpaImpl implements WqxDao {
      */
     @Override
     public List<DeleteComponentIdentifier> findByOrgIdAndComponent(String orgId, Component component) {
-        Query q = em.createQuery("select x from DeleteComponentIdentifier x where x.organizationId = :orgId and x.component = :component");
+        Query q = em.createQuery("select x from com.windsor.node.plugin.wqx.domain.DeleteComponentIdentifier x where x.organizationId = :orgId and x.component = :component");
         q.setParameter("orgId", orgId);
         q.setParameter("component", component.componentName());
         return q.getResultList();

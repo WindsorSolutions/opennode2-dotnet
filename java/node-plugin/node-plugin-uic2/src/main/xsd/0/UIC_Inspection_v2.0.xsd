@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:uic="http://www.exchangenetwork.net/schema/uic/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/uic/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+	<xsd:include schemaLocation="UIC_Correction_v2.0.xsd"/>
+	<xsd:include schemaLocation="UIC_SimpleContent_v2.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>UIC inspection file (Table 12): UIC_Inspection_v2.0.xsd
+		Current Version Available At :
+		Description : Schema for the information about on site inspections conducted by primary states and EPA Regions.
+		Application : UIC data submission 
+		Developed by : Environmental Protection Agency, Lockheed Martin, CGI Federal
+		Point of Contact : Carl Reeverts, Trang Le (EPA/UIC), Lauren Hall (CGI Federal)	
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:annotation>
+		<xsd:documentation>Inspection complex components</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="FacilityInspectionDetail" type="uic:FacilityInspectionDetailType">
+		<xsd:annotation>
+			<xsd:documentation>Container for Facility Inspection information.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="WellInspectionDetail" type="uic:WellInspectionDetailType">
+		<xsd:annotation>
+			<xsd:documentation>Container for Well Inspection information.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:annotation>
+		<xsd:documentation>Inspection complex types</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="FacilityInspectionDetailType">
+		<xsd:annotation>
+			<xsd:documentation>Container for Facility Inspection information type definition.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="uic:InspectionIdentifier"/>
+			<xsd:element ref="uic:InspectionActionDate"/>
+			<xsd:element ref="uic:InspectionTypeActionCode"/>
+			<xsd:element ref="uic:InspectionFacilityIdentifier"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="WellInspectionDetailType">
+		<xsd:annotation>
+			<xsd:documentation>Container for Well Inspection information type definition.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="uic:InspectionIdentifier"/>
+			<xsd:element ref="uic:InspectionAssistanceCode" minOccurs="0"/>
+			<xsd:element ref="uic:InspectionDeficiencyCode" minOccurs="0"/>
+			<xsd:element ref="uic:InspectionActionDate"/>
+			<xsd:element ref="uic:InspectionICISComplianceMonitoringReasonCode" minOccurs="0"/>
+			<xsd:element ref="uic:InspectionICISComplianceMonitoringTypeCode" minOccurs="0"/>
+			<xsd:element ref="uic:InspectionICISComplianceActivityTypeCode" minOccurs="0"/>
+			<xsd:element ref="uic:InspectionICISMOAName" minOccurs="0"/>
+			<xsd:element ref="uic:InspectionICISRegionalPriorityName" minOccurs="0"/>
+			<xsd:element ref="uic:InspectionTypeActionCode"/>
+			<xsd:element ref="uic:InspectionWellIdentifier"/>
+			<xsd:element ref="uic:CorrectionDetail" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:annotation>
+		<xsd:documentation>Inspection data elements</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="InspectionIdentifier" type="uic:UICIdentifierType">
+		<xsd:annotation>
+			<xsd:documentation>Unique identification of Inspection table - The first four characters are the primacy agency code (appendix D). The rest is DI program or State’s choice (letters and numbers only) identifying unique  inspection (e.g. WYEQ00 000566, …).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="InspectionAssistanceCode" type="uic:UICGenericStringType">
+		<xsd:annotation>
+			<xsd:documentation>Compliance assistance provided by the inspector based on national policy:
+
+-- General Assistance: involves distributing prepared information on regulatory compliance, P2 or other written materials/websites.
+
+-- Site-specific Assistance: involves on-site assistance by the inspector to support actions taken to address deficiencies.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="InspectionDeficiencyCode" type="uic:UICGenericStringType">
+		<xsd:annotation>
+			<xsd:documentation>Potential violations found by EPA inspector during inspection.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="InspectionActionDate" type="uic:EPADateType">
+		<xsd:annotation>
+			<xsd:documentation>The date inspection action was completed.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="InspectionICISComplianceMonitoringReasonCode" type="uic:UICGenericStringType">
+		<xsd:annotation>
+			<xsd:documentation>The reason for performing a Compliance Monitoring action:
+
+-- Agency Priority: The compliance monitoring action was performed in furtherance of a priority or initiative of the Compliance Monitoring Agency or a partner agency.
+
+-- Core Program: The compliance monitoring action was performed as part of the Compliance Monitoring Agency's core programmatic activities.
+
+-- Selected Monitoring Action: The Compliance Monitoring Agency selected the facility or regulated entity for compliance monitoring in response to a referral from another unit. 
+</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="InspectionICISComplianceMonitoringTypeCode" type="uic:UICGenericStringType">
+		<xsd:annotation>
+			<xsd:documentation>Type of compliance monitoring taken by a regulatory agency.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="InspectionICISComplianceActivityTypeCode" type="uic:UICGenericStringType">
+		<xsd:annotation>
+			<xsd:documentation>Type of compliance activity taken by a regulatory agency.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="InspectionICISMOAName" type="uic:UICGenericStringType">
+		<xsd:annotation>
+			<xsd:documentation>The name of Memorandum of Agreement (MOA) associated with the activity.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="InspectionICISRegionalPriorityName" type="uic:UICGenericStringType">
+		<xsd:annotation>
+			<xsd:documentation>The name of regional priority associated with the activity.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="InspectionTypeActionCode">
+		<xsd:annotation>
+			<xsd:documentation>The type of inspection action that was conducted.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:restriction base="uic:InspectionTypeActionType"/>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="InspectionWellIdentifier" type="uic:UICIdentifierType">
+		<xsd:annotation>
+			<xsd:documentation>Unique identification of Well table.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="InspectionFacilityIdentifier" type="uic:UICIdentifierType">
+		<xsd:annotation>
+			<xsd:documentation>Unique identification of Facility table- This field ONLY applies for Class V “No Well” inspection.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:annotation>
+		<xsd:documentation>Inspection date type</xsd:documentation>
+	</xsd:annotation>
+	<xsd:simpleType name="InspectionTypeActionType">
+		<xsd:annotation>
+			<xsd:documentation>Enumeration of 8 codes type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="MI"/>
+			<xsd:enumeration value="EC"/>
+			<xsd:enumeration value="CO"/>
+			<xsd:enumeration value="WP"/>
+			<xsd:enumeration value="RP"/>
+			<xsd:enumeration value="NW"/>
+			<xsd:enumeration value="FI"/>
+			<xsd:enumeration value="OT"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

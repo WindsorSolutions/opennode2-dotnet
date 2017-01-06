@@ -22,10 +22,12 @@
         </fileSet>
     </fileSets>
     <files>
+        <!-- 
         <file>
             <outputDirectory>applications</outputDirectory>
             <source>../node-app-wna/target/wna.war</source>
         </file>
+         -->
         <file>
             <outputDirectory>applications</outputDirectory>
             <source>../node-app-wne/target/wne.war</source>
@@ -41,6 +43,11 @@
         <file>
             <outputDirectory>applications</outputDirectory>
             <source>../node-app-wnrest/target/wnrest.war</source>
+        </file>
+        <file>
+            <outputDirectory>applications</outputDirectory>
+            <source>../../node-ng/node-web/target/node-web.war</source>
+            <destName>wna.war</destName>
         </file>
     </files>
 </assembly>

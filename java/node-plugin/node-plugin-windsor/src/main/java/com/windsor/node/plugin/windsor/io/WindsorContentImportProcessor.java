@@ -201,7 +201,7 @@ public class WindsorContentImportProcessor extends BaseWnosPlugin {
             result.getAuditEntries().add(
                     makeEntry("Source resource: " + sourceUrl));
 
-            result.getAuditEntries().add(makeEntry("Parsing target folder..."));
+            result.getAuditEntries().add(makeEntry("Parsing datatarget folder..."));
             File targetDir = getTargetDir(transaction);
             result.getAuditEntries().add(
                     makeEntry("Target folder: " + targetDir));

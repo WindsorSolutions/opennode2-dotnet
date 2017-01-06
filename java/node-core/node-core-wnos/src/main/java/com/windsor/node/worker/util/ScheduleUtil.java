@@ -84,7 +84,11 @@ public final class ScheduleUtil {
         logger.debug("Start: " + start);
         logger.debug("End  : " + end);
         logger.debug("Last : " + last);
-        logger.debug("Next run from db : " + savedNextRun);
+        logger.debug("Next run: " + savedNextRun);
+
+        if(last == null || start.after(last)) {
+            last = new Timestamp(System.currentTimeMillis());
+        }
 
         /* If current time is after end time, we'll return null */
         if (now.after(end)) {
@@ -94,7 +98,8 @@ public final class ScheduleUtil {
         } else if (now.before(start)) {
             /* no need to set next if we haven't started */
             logger.debug("Start date is in the future.");
-
+            next = start;
+            return next;
         } else if (schedule.getFrequencyType().equals(
                 ScheduleFrequencyType.Once)) {
 
@@ -102,7 +107,7 @@ public final class ScheduleUtil {
 
         } else {
             /* it's time for either the first or a subsequent run */
-            if (last == null || now.after(savedNextRun)) {
+            if (last == null || (savedNextRun != null && now.after(savedNextRun))) {
                 last = now;
             }
 

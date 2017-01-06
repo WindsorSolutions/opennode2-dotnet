@@ -10,19 +10,11 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
+
+import com.windsor.node.plugin.wqx.domain.*;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;
 import com.windsor.node.plugin.test.XmlUtils;
-import com.windsor.node.plugin.wqx.domain.generated.ActivityDataType;
-import com.windsor.node.plugin.wqx.domain.generated.ActivityDescriptionDataType;
-import com.windsor.node.plugin.wqx.domain.generated.ActivityLocationDataType;
-import com.windsor.node.plugin.wqx.domain.generated.MonitoringLocationDataType;
-import com.windsor.node.plugin.wqx.domain.generated.MonitoringLocationGeospatialDataType;
-import com.windsor.node.plugin.wqx.domain.generated.MonitoringLocationIdentityDataType;
-import com.windsor.node.plugin.wqx.domain.generated.OrganizationDataType;
-import com.windsor.node.plugin.wqx.domain.generated.OrganizationDescriptionDataType;
-import com.windsor.node.plugin.wqx.domain.generated.ProjectDataType;
-import com.windsor.node.plugin.wqx.domain.generated.ResultDataType;
 
 /**
  * WQX Hibernate integration tests.

@@ -9,7 +9,7 @@
 		<!-- global settings -->
 
 		<jaxb:schemaBindings>
-			<jaxb:package name="com.windsor.node.plugin.wqx.domain.generated" />
+			<jaxb:package name="com.windsor.node.plugin.wqx.domain" />
 		</jaxb:schemaBindings>
 
 		<jaxb:globalBindings generateIsSetMethod="true" localScoping="toplevel">

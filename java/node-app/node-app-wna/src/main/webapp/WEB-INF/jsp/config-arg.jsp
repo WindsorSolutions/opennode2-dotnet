@@ -20,27 +20,31 @@
 
 		<table id="formTable" width="100%" cellpadding="2" cellspacing="0">
 
+		<spring:bind path="command.id">
+            <input type="hidden" name="id" value="<c:out value="${status.value}" />" />
+        </spring:bind>
+
 			<tr>
 				<td class="label" width="50" style="text-align: right; vertical-align: top;"><img alt=""
 					src="img/icon_settings.gif"
 					style="border: 0; vertical-align: middle; padding-right: 3px;" />Name:
 				</td>
 				<td class="ctrl" width="750">
-				<spring:bind path="command.id">
+				<spring:bind path="command.name">
 				<c:choose>
 				<c:when test="${(status.value == null || status.value == '') && status.errorMessage ==''}">
-					<input type="text" name="id" value="<c:out value="${status.value}" />" 
+					<input type="text" name="name" value="<c:out value="${status.value}" />"
 						class="textbox" size="50" maxlength="50" />
 					<input type="hidden" name="editmode" value="false" />
 				</c:when>
                 <c:when test="${(status.value != null || status.value != '') && (status.errorMessage != '' || status.errorMessage != null)}">
-                    <input type="text" name="id" value="<c:out value="${status.value}" />" 
+                    <input type="text" name="name" value="<c:out value="${status.value}" />"
                         class="textbox" size="50" maxlength="50" />
                     <input type="hidden" name="editmode" value="false" />
                 </c:when>
 				<c:otherwise>
 					<c:out value="${status.value}" />
-					<input type="hidden" name="id" value="<c:out value="${status.value}" />"/>
+					<input type="hidden" name="name" value="<c:out value="${status.value}" />"/>
 					<input type="hidden" name="editmode" value="true" />
 				</c:otherwise>
 			</c:choose>

@@ -175,7 +175,7 @@ public class SimpleHeaderDocumentHelper implements HeaderDocumentHelper,
                     .getTempDir().getAbsolutePath(), "Header-"
                     + payload.getName()));
 
-            logger.debug("Writting source bytes to target file: " + resultFile);
+            logger.debug("Writting source bytes to datatarget file: " + resultFile);
             FileUtils.writeByteArrayToFile(resultFile, target);
 
             logger.debug("Header made");

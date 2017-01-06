@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:uic="http://www.exchangenetwork.net/schema/uic/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/uic/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+	<xsd:include schemaLocation="UIC_SimpleContent_v2.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>UIC mechanical integrity test (Table 14): UIC_MITest_v2.0.xsd
+		Current Version Available At :
+		Description : Schema for information about mechanical integrity tests of wells.
+		Application : UIC data submission 
+		Developed by : Environmental Protection Agency, Lockheed Martin, CGI Federal
+		Point of Contact : Carl Reeverts, Trang Le (EPA/UIC), Lauren Hall (CGI Federal)	
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:annotation>
+		<xsd:documentation>Mechanical Integrity Test complex component</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="MITestDetail" type="uic:MITestDetailType">
+		<xsd:annotation>
+			<xsd:documentation>Container for MI Test information.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:annotation>
+		<xsd:documentation>Mechanical Integrity Test complex type</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="MITestDetailType">
+		<xsd:annotation>
+			<xsd:documentation>Container for MI Test information type definition.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="uic:MechanicalIntegrityTestIdentifier"/>
+			<xsd:element ref="uic:MechanicalIntegrityTestCompletedDate"/>
+			<xsd:element ref="uic:MechanicalIntegrityTestResultCode"/>
+			<xsd:element ref="uic:MechanicalIntegrityTestTypeCode"/>
+			<xsd:element ref="uic:MechanicalIntegrityTestRemedialActionDate" minOccurs="0"/>
+			<xsd:element ref="uic:MechanicalIntegrityTestRemedialActionTypeCode" minOccurs="0"/>
+			<xsd:element ref="uic:MechanicalIntegrityTestWellIdentifier"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:annotation>
+		<xsd:documentation>Mechanical Integrity Test data elements</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="MechanicalIntegrityTestIdentifier" type="uic:UICIdentifierType">
+		<xsd:annotation>
+			<xsd:documentation>Unique identification of Mechanical Integrity Test table - The first four characters are the primacy agency code (appendix D). The rest is DI program or State’s choice (letters and numbers only) identifying unique MIT (e.g. 03DIVA000235, …).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MechanicalIntegrityTestCompletedDate" type="uic:EPADateType">
+		<xsd:annotation>
+			<xsd:documentation>The date that mechanical integrity test was completed.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MechanicalIntegrityTestResultCode" type="uic:MechanicalIntegrityTestResultType">
+		<xsd:annotation>
+			<xsd:documentation>The result of mechanical integrity test on that date (see above).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MechanicalIntegrityTestTypeCode" type="uic:MechanicalIntegrityTestType">
+		<xsd:annotation>
+			<xsd:documentation>Type of mechanical integrity test.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MechanicalIntegrityTestRemedialActionDate" type="uic:UICGenericStringType">
+		<xsd:annotation>
+			<xsd:documentation>The date (corresponding to Remedial Action Type) when a well that failed an MI test received successful remedial action.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MechanicalIntegrityTestRemedialActionTypeCode" type="uic:UICGenericStringType">
+		<xsd:annotation>
+			<xsd:documentation>Type of successful remedial action that well has received on the remedial action date.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MechanicalIntegrityTestWellIdentifier" type="uic:UICIdentifierType">
+		<xsd:annotation>
+			<xsd:documentation>Unique identification of Well table.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:annotation>
+		<xsd:documentation>Mechanical Integrity Test data types</xsd:documentation>
+	</xsd:annotation>
+	<xsd:simpleType name="MechanicalIntegrityTestResultType">
+		<xsd:annotation>
+			<xsd:documentation>Enumeration of 4 codes type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="PS"/>
+			<xsd:enumeration value="FU"/>
+			<xsd:enumeration value="FP"/>
+			<xsd:enumeration value="FA"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MechanicalIntegrityTestType">
+		<xsd:annotation>
+			<xsd:documentation>Enumeration of 16 codes type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="AP"/>
+			<xsd:enumeration value="CT"/>
+			<xsd:enumeration value="MR"/>
+			<xsd:enumeration value="WI"/>
+			<xsd:enumeration value="WA"/>
+			<xsd:enumeration value="AT"/>
+			<xsd:enumeration value="SR"/>
+			<xsd:enumeration value="OL"/>
+			<xsd:enumeration value="CR"/>
+			<xsd:enumeration value="TN"/>
+			<xsd:enumeration value="RC"/>
+			<xsd:enumeration value="CB"/>
+			<xsd:enumeration value="OA"/>
+			<xsd:enumeration value="RS"/>
+			<xsd:enumeration value="DC"/>
+			<xsd:enumeration value="OF"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

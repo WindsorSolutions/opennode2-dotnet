@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+    xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance" xmlns:annox="http://annox.dev.java.net"
+    jaxb:extensionBindingPrefixes="hj orm inheritance" schemaLocation="../xsd/5/4/RCRA_SiteWasteActivity_v5.4.xsd">
+    
+    <jaxb:bindings node="//xsd:complexType[@name='SiteWasteActivityDataType']">
+        <hj:embeddable />
+    </jaxb:bindings>
+
+    <jaxb:bindings node="//xsd:element[@ref='RC:StateDistrictCode']">
+        <hj:basic>
+            <orm:column name="STATE_DISTRICT"/>
+        </hj:basic>
+    </jaxb:bindings>
+    
+    <jaxb:bindings node="//xsd:element[@ref='RC:RecyclerActivityCode']">
+        <hj:basic>
+            <orm:column name="RECYCLER_ACTIVITY"/>
+        </hj:basic>
+    </jaxb:bindings>
+    
+    <jaxb:bindings node="//xsd:element[@ref='RC:StateDistrictCodeText']">
+        <hj:ignored/>
+    </jaxb:bindings>
+    
+    <jaxb:bindings node="//xsd:element[@ref='RC:ImporterActivityCode']">
+        <hj:basic>
+            <orm:column name="IMPORTER_ACTIVITY"/>
+        </hj:basic>
+    </jaxb:bindings>
+    
+    <jaxb:bindings node="//xsd:element[@ref='RC:MixedWasteGeneratorCode']">
+        <hj:basic>
+            <orm:column name="MIXED_WASTE_GENERATOR"/>
+        </hj:basic>
+    </jaxb:bindings>
+    
+    <jaxb:bindings node="//xsd:element[@ref='RC:TransporterActivityCode']">
+        <hj:basic>
+            <orm:column name="TRANSPORTER_ACTIVITY"/>
+        </hj:basic>
+    </jaxb:bindings>
+    
+    <jaxb:bindings node="//xsd:element[@ref='RC:TreatmentStorageDisposalActivityCode']">
+        <hj:basic>
+            <orm:column name="TSD_ACTIVITY"/>
+        </hj:basic>
+    </jaxb:bindings>
+    
+    <jaxb:bindings node="//xsd:element[@ref='RC:UndergroundInjectionActivityCode']">
+        <hj:basic>
+            <orm:column name="UNDERGROUND_INJECTION_ACTIVITY"/>
+        </hj:basic>
+    </jaxb:bindings>
+    
+    <jaxb:bindings node="//xsd:element[@ref='RC:OnsiteBurnerExemptionCode']">
+        <hj:basic>
+            <orm:column name="ONSITE_BURNER_EXEMPTION"/>
+        </hj:basic>
+    </jaxb:bindings>
+    
+    <jaxb:bindings node="//xsd:element[@ref='RC:FurnaceExemptionCode']">
+        <hj:basic>
+            <orm:column name="FURNACE_EXEMPTION"/>
+        </hj:basic>
+    </jaxb:bindings>
+    
+    <jaxb:bindings node="//xsd:element[@ref='RC:TransferFacilityIndicator']">
+        <hj:basic>
+            <orm:column name="TRANSFER_FACILITY_IND"/>
+        </hj:basic>
+    </jaxb:bindings>
+    
+    <jaxb:bindings node="//xsd:element[@ref='RC:LandTypeText']">
+        <hj:ignored />
+    </jaxb:bindings>
+    
+    <jaxb:bindings node="//xsd:element[@ref='RC:StateDistrictOwnerName']">
+        <hj:basic>
+            <orm:column name="STATE_DISTRICT_OWNER"/>
+        </hj:basic>
+    </jaxb:bindings>
+    
+    <jaxb:bindings node="//xsd:element[@ref='RC:UniversalWasteDestinationFacilityIndicator']">
+        <hj:basic>
+            <orm:column name="UNIVERSAL_WASTE_DEST_FACILITY"/>
+        </hj:basic>
+    </jaxb:bindings>
+    
+    <jaxb:bindings node="//xsd:element[@ref='RC:ShortTermGeneratorIndicator']">
+        <hj:basic>
+            <orm:column name="SHORT_TERM_GEN_IND"/>
+        </hj:basic>
+    </jaxb:bindings>       
+
+</jaxb:bindings>
+

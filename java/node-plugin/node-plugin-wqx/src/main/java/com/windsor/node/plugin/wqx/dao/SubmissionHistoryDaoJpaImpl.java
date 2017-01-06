@@ -9,8 +9,8 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
+import com.windsor.node.plugin.wqx.domain.OrganizationDataType;
 import com.windsor.node.plugin.wqx.domain.SubmissionHistory;
-import com.windsor.node.plugin.wqx.domain.generated.OrganizationDataType;
 
 /**
  *
@@ -55,7 +55,7 @@ public class SubmissionHistoryDaoJpaImpl implements SubmissionHistoryDao {
         		"select " +
         		"  count(x) " +
         		"from" +
-        		"  SubmissionHistory x " +
+        		"  com.windsor.node.plugin.wqx.domain.SubmissionHistory x " +
         		"where " +
         		"  (x.cdxProcessingStatus = :pending or x.cdxProcessingStatus = :processing) " +
         		"   and x.submissionType = :operation " +
@@ -84,7 +84,7 @@ public class SubmissionHistoryDaoJpaImpl implements SubmissionHistoryDao {
                 "select " +
                 "  x " +
                 "from" +
-                "  SubmissionHistory x " +
+                "  com.windsor.node.plugin.wqx.domain.SubmissionHistory x " +
                 "where " +
                 "  x.cdxProcessingStatus = :status " +
                 "   and x.submissionType = :operation " +

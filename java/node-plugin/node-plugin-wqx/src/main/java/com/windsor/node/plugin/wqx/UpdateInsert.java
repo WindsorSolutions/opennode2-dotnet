@@ -6,20 +6,20 @@ import java.util.List;
 import com.windsor.node.common.domain.PluginServiceImplementorDescriptor;
 import com.windsor.node.common.domain.ServiceType;
 import com.windsor.node.plugin.common.xml.stream.ElementWriter;
+import com.windsor.node.plugin.wqx.domain.ActivityDataType;
+import com.windsor.node.plugin.wqx.domain.ActivityGroupDataType;
+import com.windsor.node.plugin.wqx.domain.BiologicalHabitatIndexDataType;
+import com.windsor.node.plugin.wqx.domain.ElectronicAddressDataType;
 import com.windsor.node.plugin.wqx.domain.Header;
+import com.windsor.node.plugin.wqx.domain.MonitoringLocationDataType;
+import com.windsor.node.plugin.wqx.domain.ObjectFactory;
 import com.windsor.node.plugin.wqx.domain.OperationType;
+import com.windsor.node.plugin.wqx.domain.OrganizationAddressDataType;
+import com.windsor.node.plugin.wqx.domain.OrganizationDataType;
+import com.windsor.node.plugin.wqx.domain.OrganizationDescriptionDataType;
+import com.windsor.node.plugin.wqx.domain.ProjectDataType;
 import com.windsor.node.plugin.wqx.domain.SubmissionHistory;
-import com.windsor.node.plugin.wqx.domain.generated.ActivityDataType;
-import com.windsor.node.plugin.wqx.domain.generated.ActivityGroupDataType;
-import com.windsor.node.plugin.wqx.domain.generated.BiologicalHabitatIndexDataType;
-import com.windsor.node.plugin.wqx.domain.generated.ElectronicAddressDataType;
-import com.windsor.node.plugin.wqx.domain.generated.MonitoringLocationDataType;
-import com.windsor.node.plugin.wqx.domain.generated.ObjectFactory;
-import com.windsor.node.plugin.wqx.domain.generated.OrganizationAddressDataType;
-import com.windsor.node.plugin.wqx.domain.generated.OrganizationDataType;
-import com.windsor.node.plugin.wqx.domain.generated.OrganizationDescriptionDataType;
-import com.windsor.node.plugin.wqx.domain.generated.ProjectDataType;
-import com.windsor.node.plugin.wqx.domain.generated.TelephonicDataType;
+import com.windsor.node.plugin.wqx.domain.TelephonicDataType;
 import com.windsor.node.plugin.wqx.service.AbstractSubmittingWqxService;
 import com.windsor.node.plugin.wqx.service.ScheduleParameters;
 import com.windsor.node.plugin.wqx.xml.UpdateInsertXmlOutputStreamWriter;
@@ -78,8 +78,6 @@ public class UpdateInsert extends AbstractSubmittingWqxService {
      */
     @Override
     protected List<List<?>> getSubmissionData(final ScheduleParameters parameters) {
-
-        final SubmissionHistory submissionHistory = getSubmissionHistoryDao().findLatestCompleted(parameters.getOrgId(), submissionType().operation());
 
         final OrganizationDataType org = getWqxDao().findOrganizationByOrgId(parameters.getOrgId());
 
@@ -142,6 +140,8 @@ public class UpdateInsert extends AbstractSubmittingWqxService {
             }
 
         } else {
+
+            final SubmissionHistory submissionHistory = getSubmissionHistoryDao().findLatestCompleted(parameters.getOrgId(), submissionType().operation());
 
             if (submissionHistory != null && submissionHistory.getWqxDateTime() != null) {
 

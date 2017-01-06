@@ -1,0 +1,41 @@
+// -------------------------------------------
+//  Bootstrap overrides and helpers
+// -------------------------------------------
+
+.form-group .control-label {
+  color: #555;
+}
+
+.form-group.required .control-label:after {
+  content:" *";
+  color:@brand-danger;
+  padding-top: 3px;
+  font-size: 1.2em;
+}
+
+.form-group.has-error {
+
+  .select2-container,
+  .select2-container .select2-choice {
+    border: 1px solid @brand-danger;
+  }
+}
+
+.select2-container .select2-default {
+    color: #6a6a6a !important;
+}
+
+ul.nav-tabs a button.btn-default {
+	border: none;
+	background-color: inherit;
+	
+	&:focus, &:active, &:hover {
+		outline: none;
+		box-shadow: none;
+	}
+	
+	&:disabled {
+		pointer-events: auto;
+	}
+	
+}

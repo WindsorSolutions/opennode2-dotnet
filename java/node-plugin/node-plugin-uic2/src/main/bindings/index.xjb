@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+	xmlns:namespace="http://jaxb2-commons.dev.java.net/namespace-prefix" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	jaxb:extensionBindingPrefixes="hj orm namespace">
+
+	<jaxb:bindings schemaLocation="../xsd/index.xsd" node="/xsd:schema">
+
+		<jaxb:schemaBindings>
+			<jaxb:package name="com.windsor.node.plugin.uic2.domain" />
+		</jaxb:schemaBindings>
+
+		<jaxb:globalBindings generateIsSetMethod="true" localScoping="toplevel">
+			<jaxb:serializable uid="1" />
+		</jaxb:globalBindings>
+
+		<hj:persistence>
+			<hj:default-generated-id name="Dbid" transient="true" javaType="java.lang.String" />
+			<hj:default-id>
+			    <hj:basic/>
+			</hj:default-id>
+			<hj:default-single-property type="uic:Char4Type">
+                <hj:basic/>
+            </hj:default-single-property>
+			<hj:default-single-property type="uic:EPADateType">
+                <hj:basic>
+                    <orm:column length="8" column-definition="CHAR(8)" />
+                </hj:basic>
+            </hj:default-single-property>
+            <hj:default-single-property type="uic:NormalizedString4Type">
+                <hj:basic/>
+            </hj:default-single-property>
+            <hj:default-single-property type="uic:NormalizedString50Type">
+                <hj:basic/>
+            </hj:default-single-property>
+            <hj:default-single-property type="uic:NormalizedString70Type">
+                <hj:basic/>
+            </hj:default-single-property>
+            <hj:default-single-property type="uic:NormalizedString80Type">
+                <hj:basic/>
+            </hj:default-single-property>
+            <hj:default-single-property type="uic:String150Type">
+                <hj:basic/>
+            </hj:default-single-property>
+            <hj:default-single-property type="uic:UICGenericStringType">
+                <hj:basic/>
+            </hj:default-single-property>
+            <hj:default-single-property type="uic:UICIdentifierType">
+                <hj:basic/>
+            </hj:default-single-property>            
+            <hj:default-single-property type="uic:ZipCodeType">
+                <hj:basic/>
+            </hj:default-single-property>
+		</hj:persistence>
+
+	</jaxb:bindings>
+
+</jaxb:bindings>

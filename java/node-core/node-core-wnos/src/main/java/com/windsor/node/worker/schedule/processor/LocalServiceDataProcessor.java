@@ -88,13 +88,16 @@ public class LocalServiceDataProcessor implements InitializingBean {
         }
 
         List info = new ArrayList();
+        DataService service = null;
+        DataRequest req = null;
+        ProcessContentResult result = null;
 
         try {
 
             logger.debug("Local service Id: " + localServiceId);
             info.add(ActivityEntry.make("Getting local service..."));
 
-            DataService service = serviceDao.get(localServiceId);
+            service = serviceDao.get(localServiceId);
 
             if (service == null) {
                 throw new IllegalArgumentException(
@@ -106,7 +109,7 @@ public class LocalServiceDataProcessor implements InitializingBean {
             info.add(ActivityEntry.make("Building request..."));
 
             // REQUEST
-            DataRequest req = new DataRequest();
+            req = new DataRequest();
 
             req.setParameters(serviceArgs);
             req.setModifiedById(createdById);
@@ -119,10 +122,19 @@ public class LocalServiceDataProcessor implements InitializingBean {
 
             info.add(ActivityEntry.make("Executing plugin..."));
             logger.info("Transaction before processing: " + transaction);
+        } catch(Exception exception) {
+            logger.error(exception.getMessage(), exception);
+            throw new RuntimeException("An error occurred setting up the environment for the plugin, this error " +
+                    "occurred before the plugin was run and usually indicates a problem with your data source, exchange " +
+                    "configuration or schedule configuration. Please double check these settings to ensure they are " +
+                    "correct. The error was: " + exception.getMessage(), exception);
+        }
+
+        try {
 
             // PLUGIN EXECUTION
             // bad things could happen here
-            ProcessContentResult result = pluginHelper
+            result = pluginHelper
                     .processTransaction(transaction);
 
             logger.info("Plugin result audit entries: " + result.getAuditEntries());
@@ -132,8 +144,7 @@ public class LocalServiceDataProcessor implements InitializingBean {
             logger.debug("Plugin result isSuccess: " + result.isSuccess());            
 
             if (!result.isSuccess()) {
-                throw new RuntimeException("Error while executing plugin: "
-                        + getDetailErrorMessage(result.getAuditEntries()));
+                throw new RuntimeException("Error while executing plugin: " + getDetailErrorMessage(result.getAuditEntries()));
             }
 
             info.addAll(result.getAuditEntries());
@@ -149,13 +160,13 @@ public class LocalServiceDataProcessor implements InitializingBean {
             }
 
             return info;
-
         } catch (Exception ex) {
 
             logger.error(ex.getMessage(), ex);
-
-            throw new RuntimeException("Error while retrieving source data: "
-                    + ex.getMessage(), ex);
+            throw new RuntimeException("An error occurred while the plugin was executing that prevented the plugin " +
+                    "from running. This usually indicates a " +
+                    "problem with your data source, exchange configuration or schedule configuration. Please double " +
+                    "check these settings to ensure they are correct. The error was: "+ ex.getMessage(), ex);
 
         }
     }

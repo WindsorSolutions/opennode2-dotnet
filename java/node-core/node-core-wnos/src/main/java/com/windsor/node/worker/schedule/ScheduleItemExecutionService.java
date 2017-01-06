@@ -10,4 +10,6 @@ public interface ScheduleItemExecutionService
      * @param schedule The ScheduledItem to run, may not be null
      */
     void run(ScheduledItem schedule);
+
+    void run(String scheduleId);
 }

@@ -509,7 +509,7 @@ public class JdbcTransactionDao extends BaseJdbcDao implements TransactionDao
         else
         {
             logger.debug("Transaction: \n" + tran + "\n is a \"" + schedule.getTargetType()
-                            + "\" target type with a Data Source (ScheduleItemSourceType) of \"" + schedule.getSourceType()
+                            + "\" datatarget type with a Data Source (ScheduleItemSourceType) of \"" + schedule.getSourceType()
                             + "\", no partner information to include.");
         }
         return save(tran);

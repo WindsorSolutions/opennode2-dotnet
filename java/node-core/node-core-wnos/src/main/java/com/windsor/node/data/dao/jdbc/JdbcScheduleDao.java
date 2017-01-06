@@ -36,9 +36,11 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.sql.Types;
 import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.jdbc.core.RowMapper;
+
 import com.windsor.node.common.domain.ScheduleArgument;
 import com.windsor.node.common.domain.ScheduleExecuteStatus;
 import com.windsor.node.common.domain.ScheduleFrequencyType;
@@ -88,7 +90,7 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
 
     private static final String SQL_SELECT_FOR_EXEC = SQL_SELECT
             + " WHERE ((IsRunNow = ?) OR (((NextRun IS NOT NULL) AND (? > NextRun)) "
-            + " AND (? BETWEEN StartOn AND EndOn) )) ";
+            + " AND (? BETWEEN StartOn AND EndOn) AND (IsActive = 'Y'))) ";
 
     private static final String SQL_UPDATE_FOR_EXEC = "UPDATE NSchedule SET ExecuteStatus = ?, IsRunNow = 'N' "
             + " WHERE Id = ? AND ExecuteStatus != ? ";
@@ -135,7 +137,8 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
     /**
      * get
      */
-    public ScheduledItem get(String id) {
+    @Override
+	public ScheduledItem get(String id) {
 
         validateStringArg(id);
 
@@ -143,7 +146,8 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
                 new Object[] { id }, new ScheduleMapper());
     }
 
-    @Deprecated
+    @Override
+	@Deprecated
     public void setRunInfo(String scheduleId, String info,
             ScheduleExecuteStatus executeStatus) {
 
@@ -177,7 +181,8 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
     /**
      * setRun
      */
-    @Deprecated
+    @Override
+	@Deprecated
     public void setRun(String scheduleId, Timestamp time) {
 
         if (StringUtils.isBlank(scheduleId)) {
@@ -203,7 +208,8 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
     /**
      * save
      */
-    public ScheduledItem save(ScheduledItem instance) {
+    @Override
+	public ScheduledItem save(ScheduledItem instance) {
 
         validateObjectArg(instance, "ScheduledItem");
 
@@ -400,7 +406,8 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
     /**
      * delete
      */
-    public void delete(String id) {
+    @Override
+	public void delete(String id) {
 
         validateStringArg(id);
 
@@ -414,7 +421,8 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
     /**
      * deleteByFlowId
      */
-    public void deleteByFlowId(String id) {
+    @Override
+	public void deleteByFlowId(String id) {
 
         validateStringArg(id);
         /*
@@ -424,7 +432,8 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
         delete(SQL_DELETE_FLOW, id);
     }
 
-    public List<ScheduledItem> get()
+    @Override
+	public List<ScheduledItem> get()
     {
         return getJdbcTemplate().query(SQL_SELECT_ALL, new ScheduleMapper());
     }
@@ -435,7 +444,8 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
      * 
      * @return the ScheduledItem to run
      */
-    public ScheduledItem getForNextExec() {
+    @Override
+	public ScheduledItem getForNextExec() {
 
         ScheduledItem item = null;
 
@@ -478,7 +488,8 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
      */
     private class ScheduleMapper implements RowMapper<ScheduledItem> {
 
-        public ScheduledItem mapRow(ResultSet rs, int rowNum) throws SQLException {
+        @Override
+		public ScheduledItem mapRow(ResultSet rs, int rowNum) throws SQLException {
 
             ScheduledItem item = new ScheduledItem();
 
@@ -494,7 +505,7 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
             item.setEndOn(rs.getTimestamp("EndOn"));
 
             // SourceType
-            item.setSourceType((ScheduledItemSourceType) ScheduledItemSourceType
+            item.setSourceType(ScheduledItemSourceType
                     .valueOf(rs.getString("SourceType")));
 
             // SourceId
@@ -504,7 +515,8 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
 
             // SourceArgs, changed this to be an actual object, this was very hard to work with beforehand.
             List<ScheduleArgument> args = getJdbcTemplate().query(SQL_SELECT_ARG, new Object[] {rs.getString("Id")}, new RowMapper<ScheduleArgument>(){
-                public ScheduleArgument mapRow(ResultSet rs, int rowNum) throws SQLException
+                @Override
+				public ScheduleArgument mapRow(ResultSet rs, int rowNum) throws SQLException
                 {
                     ScheduleArgument arg = new ScheduleArgument();
                     arg.setId(rs.getString("Id"));
@@ -550,7 +562,7 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
             }*/
 
             // TargetType
-            item.setTargetType((ScheduledItemTargetType) ScheduledItemTargetType
+            item.setTargetType(ScheduledItemTargetType
                     .valueOf(rs.getString("TargetType")));
 
             // TargetId
@@ -577,7 +589,7 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
             item.setRunNow(FormatUtil.toBooleanFromYN(rs.getString("IsRunNow")));
 
             // ExecuteStatus
-            item.setExecuteStatus((ScheduleExecuteStatus) ScheduleExecuteStatus
+            item.setExecuteStatus(ScheduleExecuteStatus
                     .valueOf(rs.getString("ExecuteStatus")));
 
             item.setSourceFlow(rs.getString("SourceFlow"));

@@ -38,6 +38,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.windsor.node.service.helper.id.UUIDGenerator;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.LoggerFactory;
 
@@ -194,7 +195,9 @@ public class ConfigArgController extends BaseSimpleFormController implements
                 o = configService.get(id, visit);
             } else {
                 logger.debug("Getting new item");
-                o = new ConfigItem();
+                ConfigItem configItem = new ConfigItem();
+                configItem.setId(UUIDGenerator.makeId());
+                o = configItem;
             }
         }
         return o;

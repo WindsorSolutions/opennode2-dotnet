@@ -43,17 +43,18 @@ public class ConfigItem extends AuditableIdentity implements Comparable {
 
     private static final long serialVersionUID = 1;
 
+    private String name;
     private String value;
     private String description;
     private boolean editable;
 
     public ConfigItem() {
-
+        super();
     }
 
-    public ConfigItem(String id, String value, String description,
-            boolean editable) {
-        super.setId(id);
+    public ConfigItem(String name, String value, String description,
+                      boolean editable) {
+        this.name = name;
         this.value = value;
         this.description = description;
         this.editable = editable;
@@ -61,6 +62,7 @@ public class ConfigItem extends AuditableIdentity implements Comparable {
 
     public ConfigItem(ConfigItem item) {
         super(item.getId(), item.getModifiedById(), item.getModifiedOn());
+        this.name = name;
         this.value = item.getValue();
         this.description = item.getDescription();
         this.editable = item.isEditable();
@@ -69,6 +71,14 @@ public class ConfigItem extends AuditableIdentity implements Comparable {
     public int compareTo(Object o) {
         String objId = ((ConfigItem) o).getId();
         return this.getId().compareTo(objId);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getValue() {
@@ -95,35 +105,38 @@ public class ConfigItem extends AuditableIdentity implements Comparable {
         this.editable = editable;
     }
 
+    @Override
     public String toString() {
-        return new ToStringBuilder(this, new DomainStringStyle()).appendSuper(
-                super.toString()).append("value", value).append("description",
-                description).append("editable", editable).toString();
+        return "ConfigItem{" +
+                "name='" + name + '\'' +
+                ", value='" + value + '\'' +
+                ", description='" + description + '\'' +
+                ", editable=" + editable +
+                '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        ConfigItem that = (ConfigItem) o;
+
+        if (editable != that.editable) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (value != null ? !value.equals(that.value) : that.value != null) return false;
+        return description != null ? description.equals(that.description) : that.description == null;
+
+    }
+
+    @Override
     public int hashCode() {
-        Random r = new Random();
-        int n = r.nextInt();
-        if (n % 2 == 0) {
-            n++;
-        }
-        return new HashCodeBuilder(n, n + 2).append(value).append(description)
-                .append(editable).toHashCode();
-    }
-
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (obj == this) {
-            return true;
-        }
-        if (obj.getClass() != getClass()) {
-            return false;
-        }
-        ConfigItem item = (ConfigItem) obj;
-        return new EqualsBuilder().appendSuper(super.equals(obj)).append(value,
-                item.value).append(description, item.description).append(
-                editable, item.editable).isEquals();
+        int result = super.hashCode();
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (value != null ? value.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (editable ? 1 : 0);
+        return result;
     }
 }

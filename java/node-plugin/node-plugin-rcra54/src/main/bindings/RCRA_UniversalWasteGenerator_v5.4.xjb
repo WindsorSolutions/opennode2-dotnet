@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+    xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance" xmlns:annox="http://annox.dev.java.net"
+    jaxb:extensionBindingPrefixes="hj orm inheritance" schemaLocation="../xsd/5/4/RCRA_WasteGenerator_v5.4.xsd">
+    
+    <!-- FIXME: what is this??? -->
+    
+    <jaxb:bindings node="//xsd:complexType[@name='WasteGeneratorDataType']">
+        <hj:embeddable />
+    </jaxb:bindings>
+    
+    <jaxb:bindings node="//xsd:element[@ref='RC:WasteGeneratorStatusText']">
+        <hj:ignored />
+    </jaxb:bindings>
+    
+    <jaxb:bindings node="//xsd:element[@ref='RC:WasteGeneratorOwnerName']">
+        <hj:basic>
+            <orm:column name="STATE_WASTE_GENERATOR_OWNER"/>
+        </hj:basic>
+    </jaxb:bindings>
+    
+    <jaxb:bindings node="//xsd:element[@ref='RC:WasteGeneratorStatusCode']">
+        <hj:basic>
+            <orm:column name="STATE_WASTE_GENERATOR"/>
+        </hj:basic>
+    </jaxb:bindings>
+
+</jaxb:bindings>
+
